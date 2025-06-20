@@ -2,6 +2,40 @@ import requests
 import sys
 import json
 
+# This code uses the open-elevation API to add/update all elevation values
+# for each campsite in the input JSON list data.  The format of the input
+# data is:
+#
+# [
+#  {
+#    "name": "FR 812 Dispersed Sites",
+#    "location": "37.6103,-79.3787",
+#    "elevation": 269,
+#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
+#  },
+#  {
+#    "name": "Meriwether Lewis Campground",
+#    "location": "35.5232,-87.4570",
+#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
+#  },
+#  ...
+# ]
+#
+# Note that elevation is optional.  If it exists it will be updated.
+# If it does not exist it will be added.  Units are in meters.
+#
+# Note that the format of the location string is important because it is
+# used as a key.  It must be a latitude with exactly four decimal places
+# of precision followed by a comma, no space, and a longitude with exactly
+# four decimal places of precision.
+#
+# This code uses the POST version of the open-elevation API to retrieve
+# all elevation values in one API call.  To obtain just one elevation
+# value on the command line, you can use the GET version as follows:
+#
+# curl 'https://api.open-elevation.com/api/v1/lookup?locations=38.2474,-78.6704'
+#
+
 input_filename = sys.argv[1]
 output_filename = sys.argv[2]
 
@@ -9,9 +43,6 @@ url = "https://api.open-elevation.com/api/v1/lookup"
 
 with open(input_filename, "rt") as f:
     input_data = json.loads(f.read())
-
-        #{"latitude": 40.714, "longitude": -74.006},  # New York City
-        #{"latitude": 48.858, "longitude": 2.295}     # Paris
 
 payload = {
     "locations": [

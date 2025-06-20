@@ -6,6 +6,22 @@ import time
 import random
 import json
 
+# This code attempts to clean up a Google Take-Out places CSV file
+# by converting it to JSON and querying the Google-provided URL to
+# obtain the lat/long of each place.  In order to not trip Google's
+# limit on how many of these requests can be done at once, there
+# is a random delay of roughly one minute in between each request.
+# Thus a long Take-Out file may take several hours to process.
+#
+# The code also attempts to extract an elevation from the string
+# value in the Note column.  However, this is somewhat redundant
+# if further processing is going to be done to obtain elevations
+# from open-elevation.com.
+#
+# The name value is created by first looking to see if the labels
+# file has an entry with the same lat/long.  If not, the value
+# from the Title column is used.
+
 LAT_LONG_1 = r'(-?\d{1,3}\.\d{1,9}),(-?\d{1,3}\.\d{1,9})'
 LAT_LONG_2 = r'@(-?\d{1,3}\.\d{1,9}),(-?\d{1,3}\.\d{1,9})'
 ELEVATION = r'(\d{3,5}) ?ft\.? elev\.?\n?'

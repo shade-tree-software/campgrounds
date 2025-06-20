@@ -2,6 +2,36 @@ import pandas as pd
 import json
 import sys
 
+# This is the main processing code for generating Google Maps friendly CSV files
+# from the standard campgrounds JSON list data.  The campgrounds JSON list data
+# should be in the following format:
+#
+# [
+#  {
+#    "name": "FR 812 Dispersed Sites",
+#    "location": "37.6103,-79.3787",
+#    "elevation": 269,
+#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
+#  },
+#  {
+#    "name": "Meriwether Lewis Campground",
+#    "location": "35.5232,-87.4570",
+#    "elevation": 260,
+#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
+#  },
+#  ...
+# ]
+#
+# Note that the elevation should be in meters.  This value is important and is
+# used to calculate the temperature differential which is included in the output
+# CSV file along with the elevation converted to feet.  The temperature 
+# differential is calculated from the base location indicated by BASE_LOC.
+# Note that the format of BASE_LOC is different, with separate float values for
+# latitude and longitude, and the elevation value is called altitude_meters
+# instead of elevation to reduce possible ambiguities in human understanding of
+# the math formulas.
+#
+
 meters_2_feet = lambda x: x * 3.281
 celsius_change_latitude = lambda x: -1.0 * x
 celsius_change_altitude = lambda x: -0.0065 * x
