@@ -59,7 +59,9 @@ for elem in input_data:
     if "index" in elem:
         del elem["index"]
 
-df = pd.DataFrame(columns=list({key for d in input_data for key in d.keys()}))
+columns = list({key for d in input_data for key in d.keys()})
+columns.append("delta_temp")
+df = pd.DataFrame(columns=columns)
 
 for elem in input_data:
     map_elem = elem.copy()
