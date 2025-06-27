@@ -7,6 +7,7 @@ import requests
 # Elevation is calculated by sending the lat/long to open-elevation.com.
 
 url = sys.argv[1]
+note = sys.argv[2] if len(sys.argv) >= 3 else ""
 
 PATTERN = r'place\/(.+)\/@(-?\d{1,3}\.\d{1,9}),(-?\d{1,3}\.\d{1,9})'
 
@@ -21,10 +22,11 @@ if match:
     elevation = data["results"][0]["elevation"]
   else:
     elevation = None
-  j = {
+  j = [{
           "name": name,
           "location": f"{lat},{lon}",
-          "elevation": elevation
-      }
+          "elevation": elevation,
+          "note": note
+      }]
   print(json.dumps(j, indent=2))
   

@@ -55,17 +55,25 @@ output_filename = sys.argv[2]
 with open(input_filename, "rt") as f:
     input_data = json.loads(f.read())
 
-df = pd.DataFrame(columns=["location","name","note","elevation","delta_temp"])
+for elem in input_data:
+    if "index" in elem:
+        del elem["index"]
+
+df = pd.DataFrame(columns=list({key for d in input_data for key in d.keys()}))
 
 for elem in input_data:
-    loc = elem.get("location")
-    lat,lon = list(map(lambda x: float(x), loc.split(",")))
+    map_elem = elem.copy()
+    map_elem["name"] = elem.get("name","")
+    map_elem["note"] = elem.get("note","")
+    location = elem.get("location")
+    lat,lon = list(map(lambda x: float(x), location.split(",")))
     elev_meters = elem.get("elevation",0)
     elev_feet = meters_2_feet(elev_meters)
-    elev = int(elev_feet)
+    map_elem["elevation"] = int(elev_feet)
     delta_celsius = cooling_effect(lat, elev_meters)
     delta_fahrenheit = delta_celsius * (9.0 / 5.0)
-    if loc is not None:
-        df.loc[len(df)] = pd.Series({"location":loc,"name":elem.get("name",""),"note":elem.get("note",""),"elevation":elev,"delta_temp":delta_fahrenheit})
+    map_elem["delta_temp"] = delta_fahrenheit
+    if location is not None:
+        df.loc[len(df)] = pd.Series(map_elem)
 
 df.to_csv(output_filename, index=False)
