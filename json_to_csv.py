@@ -61,6 +61,7 @@ for elem in input_data:
 
 columns = list({key for d in input_data for key in d.keys()})
 columns.append("delta_temp")
+columns.append("climate")
 df = pd.DataFrame(columns=columns)
 
 for elem in input_data:
@@ -75,6 +76,20 @@ for elem in input_data:
     delta_celsius = cooling_effect(lat, elev_meters)
     delta_fahrenheit = delta_celsius * (9.0 / 5.0)
     map_elem["delta_temp"] = delta_fahrenheit
+    # calculate climate
+    if map_elem["delta_temp"] <= -9.0:
+        map_elem["climate"] = "much cooler"
+    elif map_elem["delta_temp"] > -9.0 and map_elem["delta_temp"] <= -4.0:
+        map_elem["climate"] = "cooler"
+    elif map_elem["delta_temp"] > -4.0 and map_elem["delta_temp"] <= 4.0:
+        map_elem["climate"] = "similar"
+    elif map_elem["delta_temp"] >= 4.0 and map_elem["delta_temp"] < 10.0:
+        map_elem["climate"] = "slightly warmer"
+    elif map_elem["delta_temp"] >= 10.0 and map_elem["delta_temp"] < 20.0:
+        map_elem["climate"] = "warmer"
+    else:
+        map_elem["climate"] = "much warmer"
+
     if location is not None:
         df.loc[len(df)] = pd.Series(map_elem)
 

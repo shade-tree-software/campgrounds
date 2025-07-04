@@ -8,11 +8,14 @@ with open(input_file, "rt") as f:
     input_data = json.loads(f.read())
 
 for elem in input_data:
+    # Remove index, if any
     if "index" in elem:
         del elem["index"]
+    # Move URLs from note to website
     if "note" in elem:
         done = False
-        urls = []
+        if "website" in elem:
+            urls = elem["website"].split("\n")
         while not done:
             url_index = elem["note"].find("http")
             if url_index >= 0:
