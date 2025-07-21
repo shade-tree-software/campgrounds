@@ -77,18 +77,22 @@ for elem in input_data:
     delta_fahrenheit = delta_celsius * (9.0 / 5.0)
     map_elem["delta_temp"] = delta_fahrenheit
     # calculate climate
-    if map_elem["delta_temp"] <= -9.0:
+    if map_elem["delta_temp"] <= -14.0:
         map_elem["climate"] = "much cooler"
-    elif map_elem["delta_temp"] > -9.0 and map_elem["delta_temp"] <= -4.0:
+    elif map_elem["delta_temp"] > -14.0 and map_elem["delta_temp"] <= -9.0:
         map_elem["climate"] = "cooler"
+    elif map_elem["delta_temp"] > -9.0 and map_elem["delta_temp"] <= -4.0:
+        map_elem["climate"] = "slightly cooler"
     elif map_elem["delta_temp"] > -4.0 and map_elem["delta_temp"] <= 4.0:
         map_elem["climate"] = "similar"
-    elif map_elem["delta_temp"] >= 4.0 and map_elem["delta_temp"] < 10.0:
+    elif map_elem["delta_temp"] >= 4.0 and map_elem["delta_temp"] < 9.0:
         map_elem["climate"] = "slightly warmer"
-    elif map_elem["delta_temp"] >= 10.0 and map_elem["delta_temp"] < 20.0:
+    elif map_elem["delta_temp"] >= 9.0 and map_elem["delta_temp"] < 14.0:
         map_elem["climate"] = "warmer"
-    else:
+    elif map_elem["delta_temp"] >= 14.0 and map_elem["delta_temp"] < 19.0:
         map_elem["climate"] = "much warmer"
+    else:
+        map_elem["climate"] = "hot"
 
     if location is not None:
         df.loc[len(df)] = pd.Series(map_elem)
