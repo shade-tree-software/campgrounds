@@ -12,6 +12,7 @@ parser.add_argument('--config_file', type=str, default='config.json', help='Conf
 parser.add_argument('--max_miles', type=float, default=400, help='Maximum distance from home in miles.')
 parser.add_argument('--min_high_temp', type=float, default=70, help='Minimum high temperature for a nice summer day (Fahrenheit).')
 parser.add_argument('--max_high_temp', type=float, default=88, help='Maximum high temperature for a nice summer day (Fahrenheit).')
+parser.add_argument('--prefer_waterfront', action='store_true', help='Prefer waterfront campgrounds in results.')
 args = parser.parse_args()
 
 MAX_MILES = args.max_miles
@@ -48,7 +49,8 @@ summer_days = find_summer_days(
     home_long=home_long,
     config_file=args.config_file,
     input_file=args.input_file,
-    progress_callback=progress_callback
+    progress_callback=progress_callback,
+    prefer_waterfront=args.prefer_waterfront
 )
 
 if summer_days:

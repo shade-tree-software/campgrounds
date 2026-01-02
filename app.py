@@ -16,8 +16,11 @@ def search():
     max_miles = float(data.get('max_miles', 400))
     min_high_temp = float(data.get('min_high_temp', 70))
     max_high_temp = float(data.get('max_high_temp', 88))
-    home_lat = float(data.get('home_lat')) if data.get('home_lat') else None
-    home_long = float(data.get('home_long')) if data.get('home_long') else None
+    prefer_waterfront = data.get('prefer_waterfront', False)
+    
+    # Handle home coordinates from form data or config
+    form_home_lat = data.get('home_lat')
+    form_home_long = data.get('home_long')
     
     def generate():
         try:
@@ -25,29 +28,20 @@ def search():
             def progress_callback(message):
                 yield f"data: {message}\n\n"
             
-            # Get the generator from find_summer_days
-            summer_days_generator = find_summer_days(
-                max_miles=max_miles,
-                min_high_temp=min_high_temp,
-                max_high_temp=max_high_temp,
-                home_lat=home_lat,
-                home_long=home_long,
-                progress_callback=progress_callback
-            )
+            # Load config and determine home coordinates
+            config = load_config()
+            home_lat = form_home_lat or config.get("home_lat")
+            home_long = form_home_long or config.get("home_long")
+            
+            if home_lat and home_long:
+                home = (float(home_lat), float(home_long))
+            else:
+                home = None
             
             # find_summer_days returns a list, so we need to handle it differently
             # We'll create a custom implementation that yields progress
             from summer_finder import load_campgrounds, check_campground_weather, get_day_of_week
             from geopy.distance import great_circle
-            
-            config = load_config()
-            home_lat = home_lat or config.get("home_lat")
-            home_long = home_long or config.get("home_long")
-            
-            if home_lat and home_long:
-                home = (home_lat, home_long)
-            else:
-                home = None
             
             campgrounds = load_campgrounds()
             all_summer_days = []
@@ -76,7 +70,12 @@ def search():
                     )
                     
                     for summer_day in summer_days:
-                        yield f"data: Found summer day at {name} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)\n\n"
+                        # Add waterfront information to the result
+                        waterfront = campground.get("waterfront", "none")
+                        summer_day["waterfront"] = waterfront
+                        
+                        waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
+                        yield f"data: Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)\n\n"
                         all_summer_days.append(summer_day)
                         
                 except Exception as e:
@@ -84,7 +83,17 @@ def search():
                     continue
             
             if all_summer_days:
-                sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
+                # Sort by waterfront preference first, then by distance
+                if prefer_waterfront:
+                    # Waterfront campgrounds first (non-"none"), then by distance
+                    sorted_summer_days = sorted(
+                        all_summer_days, 
+                        key=lambda d: (d.get('waterfront', 'none') == 'none', d['dist'])
+                    )
+                else:
+                    # Just sort by distance
+                    sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
+                
                 yield f"data: SEARCH_COMPLETE:{json.dumps(sorted_summer_days)}\n\n"
             else:
                 yield f"data: SEARCH_COMPLETE:[]\n\n"

@@ -124,6 +124,15 @@
                                     <input type="number" class="form-control" id="max_high_temp" 
                                            value="88" min="70" max="110" required>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" id="prefer_waterfront">
+                                        <label class="form-check-label" for="prefer_waterfront">
+                                            <i class="bi bi-water"></i> Prefer waterfront campgrounds
+                                        </label>
+                                        <small class="text-muted d-block">Show lake, river, ocean, and other waterfront campsites first</small>
+                                    </div>
+                                </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary btn-search">
                                         <i class="bi bi-search"></i> Find Summer Weekends
@@ -162,7 +171,8 @@
                 home_long: document.getElementById('home_long').value,
                 max_miles: document.getElementById('max_miles').value,
                 min_high_temp: document.getElementById('min_high_temp').value,
-                max_high_temp: document.getElementById('max_high_temp').value
+                max_high_temp: document.getElementById('max_high_temp').value,
+                prefer_waterfront: document.getElementById('prefer_waterfront').checked
             };
             
             // Show loading spinner and progress elements
@@ -260,12 +270,16 @@
             let resultsHTML = '<div class="col-12"><h3 class="text-white mb-4">Found ' + results.length + ' Perfect Summer Weekends</h3></div>';
             
             results.forEach((result, index) => {
+                const waterfrontBadge = result.waterfront && result.waterfront !== 'none' 
+                    ? `<span class="badge bg-info text-white ms-2"><i class="bi bi-water"></i> ${result.waterfront}</span>`
+                    : '';
+                
                 resultsHTML += `
                     <div class="col-lg-6 col-xl-4 mb-4">
                         <div class="card result-card h-100">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-3">
-                                    <h5 class="card-title mb-0">${result.name}</h5>
+                                    <h5 class="card-title mb-0">${result.name}${waterfrontBadge}</h5>
                                     <span class="badge distance-badge text-white">
                                         <i class="bi bi-geo-alt"></i> ${result.dist} mi
                                     </span>

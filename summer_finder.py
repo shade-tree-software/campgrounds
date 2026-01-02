@@ -61,7 +61,7 @@ def check_campground_weather(campground, min_high_temp, max_high_temp, home=None
         raise Exception(f"Error fetching weather for {name}: {e}")
 
 def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat=None, home_long=None, 
-                    config_file='config.json', input_file='all-campgrounds.json', progress_callback=None):
+                    config_file='config.json', input_file='all-campgrounds.json', progress_callback=None, prefer_waterfront=False):
     """
     Find campgrounds with summer-like weekend temperatures within specified distance.
     
@@ -74,9 +74,10 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
         config_file: Path to config file
         input_file: Path to campgrounds JSON file
         progress_callback: Function to call with progress updates (optional)
+        prefer_waterfront: If True, prioritize waterfront campgrounds in results
     
     Returns:
-        List of summer day dictionaries sorted by distance
+        List of summer day dictionaries sorted by distance and waterfront preference
     """
     config = load_config(config_file)
     home_lat = home_lat or config.get("home_lat")
@@ -116,8 +117,13 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
             )
             
             for summer_day in summer_days:
+                # Add waterfront information to the result
+                waterfront = campground.get("waterfront", "none")
+                summer_day["waterfront"] = waterfront
+                
                 if progress_callback:
-                    progress_callback(f"Found summer day at {name} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)")
+                    waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
+                    progress_callback(f"Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)")
                 all_summer_days.append(summer_day)
                 
         except Exception as e:
@@ -126,7 +132,17 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
             continue
     
     if all_summer_days:
-        sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
+        # Sort by waterfront preference first, then by distance
+        if prefer_waterfront:
+            # Waterfront campgrounds first (non-"none"), then by distance
+            sorted_summer_days = sorted(
+                all_summer_days, 
+                key=lambda d: (d.get('waterfront', 'none') == 'none', d['dist'])
+            )
+        else:
+            # Just sort by distance
+            sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
+        
         return sorted_summer_days
     else:
         return []
