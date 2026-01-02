@@ -70,15 +70,40 @@
             color: #6c757d;
             padding: 3rem;
         }
+        .city-dropdown-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s;
+        }
+        .city-dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+        .city-dropdown-item:last-child {
+            border-bottom: none;
+        }
+        .city-name {
+            font-weight: 600;
+            color: #495057;
+        }
+        .city-details {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        .city-dropdown-loading {
+            padding: 10px 15px;
+            color: #6c757d;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
     <div class="container main-container">
         <header class="text-center mb-5">
             <h1 class="display-4 header-title">
-                <i class="bi bi-sun"></i> Summer Campground Finder
+                <i class="bi bi-sun"></i> Summer Seeker
             </h1>
-            <p class="lead text-white">Find campgrounds with perfect summer weather for your weekend getaway</p>
+            <p class="lead text-white">Discover campgrounds with perfect weather within your preferred distance from home</p>
         </header>
 
         <div class="row justify-content-center mb-4">
@@ -87,28 +112,29 @@
                     <div class="card-body p-4">
                         <form id="searchForm">
                             <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="home_lat" class="form-label">
-                                        <i class="bi bi-geo-alt"></i> Home Latitude
+                                <div class="col-12">
+                                    <label for="city_search" class="form-label">
+                                        <i class="bi bi-house"></i> Your Home City
                                     </label>
-                                    <input type="number" step="0.0001" class="form-control" id="home_lat" 
-                                           value="{{ config.home_lat if config.home_lat else '' }}" 
-                                           placeholder="e.g., 40.7128" required>
+                                    <div class="position-relative">
+                                        <input type="text" class="form-control" id="city_search" 
+                                               placeholder="Enter your home city to find nearby campgrounds..." autocomplete="off" required>
+                                        <div id="city_dropdown" class="position-absolute w-100 bg-white border border-top-0 rounded-bottom" 
+                                             style="max-height: 200px; overflow-y: auto; z-index: 1000; display: none;">
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">We'll find campgrounds within your specified distance from your home location</small>
+                                    <!-- Hidden fields to store coordinates -->
+                                    <input type="hidden" id="home_lat" name="home_lat">
+                                    <input type="hidden" id="home_long" name="home_long">
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="home_long" class="form-label">
-                                        <i class="bi bi-geo-alt"></i> Home Longitude
-                                    </label>
-                                    <input type="number" step="0.0001" class="form-control" id="home_long" 
-                                           value="{{ config.home_long if config.home_long else '' }}" 
-                                           placeholder="e.g., -74.0060" required>
-                                </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label for="max_miles" class="form-label">
-                                        <i class="bi bi-signpost-2"></i> Max Distance (miles)
+                                        <i class="bi bi-signpost-2"></i> Max Distance
                                     </label>
                                     <input type="number" class="form-control" id="max_miles" 
                                            value="400" min="10" max="1000" required>
+                                    <small class="text-muted">Miles from home</small>
                                 </div>
                                 <div class="col-md-4">
                                     <label for="min_high_temp" class="form-label">
@@ -119,10 +145,10 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="max_high_temp" class="form-label">
-                                        <i class="bi bi-thermometer-high"></i> Max Temp (°F)
+                                        <i class="bi bi-thermometer-sun"></i> Max Temp (°F)
                                     </label>
                                     <input type="number" class="form-control" id="max_high_temp" 
-                                           value="88" min="70" max="110" required>
+                                           value="88" min="70" max="100" required>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-check mt-3">
@@ -133,9 +159,18 @@
                                         <small class="text-muted d-block">Show lake, river, ocean, and other waterfront campsites first</small>
                                     </div>
                                 </div>
+                                <div class="col-md-12">
+                                    <div class="form-check mt-3">
+                                        <input class="form-check-input" type="checkbox" id="all_days">
+                                        <label class="form-check-label" for="all_days">
+                                            <i class="bi bi-calendar-week"></i> Include all days of the week
+                                        </label>
+                                        <small class="text-muted d-block">Search all days instead of just weekends (Saturday, Sunday)</small>
+                                    </div>
+                                </div>
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary btn-search">
-                                        <i class="bi bi-search"></i> Find Summer Weekends
+                                        <i class="bi bi-search"></i> Find Campgrounds Near Home
                                     </button>
                                     <div class="loading-spinner mt-3">
                                         <div class="spinner-border text-primary" role="status">
@@ -163,16 +198,193 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // City autocomplete functionality
+        let searchTimeout;
+        const citySearchInput = document.getElementById('city_search');
+        const cityDropdown = document.getElementById('city_dropdown');
+        const homeLatInput = document.getElementById('home_lat');
+        const homeLongInput = document.getElementById('home_long');
+
+        citySearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            
+            // Clear previous timeout
+            clearTimeout(searchTimeout);
+            
+            if (query.length < 2) {
+                hideDropdown();
+                return;
+            }
+            
+            // Show loading state
+            showDropdown('<div class="city-dropdown-loading">Searching...</div>');
+            
+            // Debounce search requests
+            searchTimeout = setTimeout(() => {
+                searchCities(query);
+            }, 300);
+        });
+
+        citySearchInput.addEventListener('focus', function() {
+            if (this.value.trim().length >= 2) {
+                searchCities(this.value.trim());
+            }
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!citySearchInput.contains(e.target) && !cityDropdown.contains(e.target)) {
+                hideDropdown();
+            }
+        });
+
+        async function searchCities(query) {
+            try {
+                const response = await fetch(`/geocode?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    showDropdown('<div class="city-dropdown-loading">Error: ' + data.error + '</div>');
+                    return;
+                }
+                
+                if (data.length === 0) {
+                    showDropdown('<div class="city-dropdown-loading">No cities found</div>');
+                    return;
+                }
+                
+                let dropdownHTML = '';
+                data.forEach(city => {
+                    const displayName = [city.name, city.admin1, city.country].filter(Boolean).join(', ');
+                    
+                    dropdownHTML += `
+                        <div class="city-dropdown-item" 
+                             data-lat="${city.latitude}" 
+                             data-lon="${city.longitude}" 
+                             data-name="${city.name}"
+                             data-admin1="${city.admin1 || ''}"
+                             data-country="${city.country || ''}">
+                            <div class="city-name">${city.name}</div>
+                            <div class="city-details">${displayName}</div>
+                        </div>
+                    `;
+                });
+                
+                showDropdown(dropdownHTML);
+                
+                // Add click handlers to dropdown items
+                document.querySelectorAll('.city-dropdown-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const city = {
+                            latitude: this.dataset.lat,
+                            longitude: this.dataset.lon,
+                            name: this.dataset.name,
+                            admin1: this.dataset.admin1,
+                            country: this.dataset.country
+                        };
+                        
+                        selectCity(city);
+                    });
+                });
+                
+            } catch (error) {
+                showDropdown('<div class="city-dropdown-loading">Search failed</div>');
+            }
+        }
+
+        function selectCity(city) {
+            // Populate the hidden coordinate fields
+            document.getElementById('home_lat').value = city.latitude;
+            document.getElementById('home_long').value = city.longitude;
+            
+            // Build full city display string
+            let cityDisplay = city.name;
+            if (city.admin1 && city.admin1 !== city.name) {
+                cityDisplay += ', ' + city.admin1;
+            }
+            if (city.country && city.country !== 'US') {
+                cityDisplay += ', ' + city.country;
+            }
+            
+            // Set the input field to the full city information
+            document.getElementById('city_search').value = cityDisplay;
+            
+            // Clear validation state and add valid state
+            document.getElementById('city_search').classList.remove('is-invalid');
+            document.getElementById('city_search').classList.add('is-valid');
+            
+            hideDropdown();
+        }
+
+        function showDropdown(content) {
+            cityDropdown.innerHTML = content;
+            cityDropdown.style.display = 'block';
+        }
+
+        function hideDropdown() {
+            cityDropdown.style.display = 'none';
+        }
+
         document.getElementById('searchForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             
+            // Validate that a city has been selected (coordinates are filled)
+            const cityInput = document.getElementById('city_search');
+            const latInput = document.getElementById('home_lat');
+            const longInput = document.getElementById('home_long');
+            
+            // Clear previous validation states
+            cityInput.classList.remove('is-invalid', 'is-valid');
+            
+            let isValid = true;
+            
+            // Check if coordinates are filled (city was selected)
+            const latValue = latInput.value.trim();
+            const longValue = longInput.value.trim();
+            
+            if (!latValue || !longValue || isNaN(parseFloat(latValue)) || isNaN(parseFloat(longValue))) {
+                cityInput.classList.add('is-invalid');
+                isValid = false;
+                
+                // Show error message
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger mt-3';
+                errorDiv.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Please select a city from the dropdown to set your home location.';
+                
+                // Remove any existing error message
+                const existingError = document.querySelector('.alert-danger');
+                if (existingError) {
+                    existingError.remove();
+                }
+                
+                // Add new error message
+                cityInput.closest('.row').appendChild(errorDiv);
+                
+                // Remove error message after 5 seconds
+                setTimeout(() => {
+                    if (errorDiv.parentNode) {
+                        errorDiv.remove();
+                    }
+                }, 5000);
+                
+                return;
+            }
+            
+            cityInput.classList.add('is-valid');
+            
+            // Remove any existing error message
+            const existingError = document.querySelector('.alert-danger');
+            if (existingError) {
+                existingError.remove();
+            }
+            
             const formData = {
-                home_lat: document.getElementById('home_lat').value,
-                home_long: document.getElementById('home_long').value,
+                home_lat: parseFloat(latValue),
+                home_long: parseFloat(longValue),
                 max_miles: document.getElementById('max_miles').value,
                 min_high_temp: document.getElementById('min_high_temp').value,
                 max_high_temp: document.getElementById('max_high_temp').value,
-                prefer_waterfront: document.getElementById('prefer_waterfront').checked
+                prefer_waterfront: document.getElementById('prefer_waterfront').checked,
+                all_days: document.getElementById('all_days').checked
             };
             
             // Show loading spinner and progress elements
@@ -258,8 +470,8 @@
                         <div class="card result-card">
                             <div class="card-body no-results">
                                 <i class="bi bi-cloud-sun" style="font-size: 3rem; color: #6c757d;"></i>
-                                <h4>No Perfect Summer Weekends Found</h4>
-                                <p>Try adjusting your search criteria or expanding the search radius.</p>
+                                <h4>No Perfect Summer Weekends Found Near Your Home</h4>
+                                <p>Try adjusting your search criteria or expanding the distance from your home location.</p>
                             </div>
                         </div>
                     </div>
@@ -267,7 +479,7 @@
                 return;
             }
             
-            let resultsHTML = '<div class="col-12"><h3 class="text-white mb-4">Found ' + results.length + ' Perfect Summer Weekends</h3></div>';
+            let resultsHTML = '<div class="col-12"><h3 class="text-white mb-4">Found ' + results.length + ' Perfect Summer Weekends Near Your Home</h3></div>';
             
             results.forEach((result, index) => {
                 const waterfrontBadge = result.waterfront && result.waterfront !== 'none' 

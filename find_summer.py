@@ -13,6 +13,7 @@ parser.add_argument('--max_miles', type=float, default=400, help='Maximum distan
 parser.add_argument('--min_high_temp', type=float, default=70, help='Minimum high temperature for a nice summer day (Fahrenheit).')
 parser.add_argument('--max_high_temp', type=float, default=88, help='Maximum high temperature for a nice summer day (Fahrenheit).')
 parser.add_argument('--prefer_waterfront', action='store_true', help='Prefer waterfront campgrounds in results.')
+parser.add_argument('--all_days', action='store_true', help='Include all days of the week, not just weekends.')
 args = parser.parse_args()
 
 MAX_MILES = args.max_miles
@@ -50,7 +51,8 @@ summer_days = find_summer_days(
     config_file=args.config_file,
     input_file=args.input_file,
     progress_callback=progress_callback,
-    prefer_waterfront=args.prefer_waterfront
+    prefer_waterfront=args.prefer_waterfront,
+    weekends_only=not args.all_days
 )
 
 if summer_days:

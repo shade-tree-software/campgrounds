@@ -1,13 +1,45 @@
 from flask import Flask, render_template, request, jsonify, Response
 import json
-from summer_finder import find_summer_days, load_config
+import requests
+from summer_finder import find_summer_days
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    config = load_config()
-    return render_template('index.html', config=config)
+    return render_template('index.html')
+
+@app.route('/geocode', methods=['GET'])
+def geocode():
+    """Geocoding API for city autocomplete using Open-Meteo Geocoding API"""
+    query = request.args.get('q', '').strip()
+    
+    if not query or len(query) < 2:
+        return jsonify([])
+    
+    try:
+        # Use Open-Meteo Geocoding API
+        url = f"https://geocoding-api.open-meteo.com/v1/search?name={query}&count=5&language=en&format=json"
+        response = requests.get(url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        
+        results = []
+        if 'results' in data:
+            for item in data['results']:
+                results.append({
+                    'name': item['name'],
+                    'country': item.get('country', ''),
+                    'admin1': item.get('admin1', ''),
+                    'latitude': item['latitude'],
+                    'longitude': item['longitude']
+                })
+        
+        return jsonify(results)
+    except requests.RequestException as e:
+        return jsonify({'error': f'Geocoding request failed: {str(e)}'})
+    except Exception as e:
+        return jsonify({'error': f'Geocoding error: {str(e)}'})
 
 @app.route('/search', methods=['POST'])
 def search():
@@ -17,8 +49,10 @@ def search():
     min_high_temp = float(data.get('min_high_temp', 70))
     max_high_temp = float(data.get('max_high_temp', 88))
     prefer_waterfront = data.get('prefer_waterfront', False)
+    all_days = data.get('all_days', False)
+    weekends_only = not all_days
     
-    # Handle home coordinates from form data or config
+    # Handle home coordinates from city search form data
     form_home_lat = data.get('home_lat')
     form_home_long = data.get('home_long')
     
@@ -28,15 +62,14 @@ def search():
             def progress_callback(message):
                 yield f"data: {message}\n\n"
             
-            # Load config and determine home coordinates
-            config = load_config()
-            home_lat = form_home_lat or config.get("home_lat")
-            home_long = form_home_long or config.get("home_long")
+            # Use only the coordinates from the city search (form data)
+            home_lat = form_home_lat
+            home_long = form_home_long
             
             if home_lat and home_long:
                 home = (float(home_lat), float(home_long))
             else:
-                home = None
+                return "ERROR: Home coordinates are required. Please select a city from the search."
             
             # find_summer_days returns a list, so we need to handle it differently
             # We'll create a custom implementation that yields progress
@@ -66,7 +99,7 @@ def search():
                 
                 try:
                     summer_days = check_campground_weather(
-                        campground, min_high_temp, max_high_temp, home, max_miles
+                        campground, min_high_temp, max_high_temp, home, max_miles, weekends_only
                     )
                     
                     for summer_day in summer_days:

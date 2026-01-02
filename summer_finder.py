@@ -24,8 +24,8 @@ def load_campgrounds(input_file='all-campgrounds.json'):
         j = f.read()
         return json.loads(j)
 
-def check_campground_weather(campground, min_high_temp, max_high_temp, home=None, max_miles=400):
-    """Check weather for a single campground and return summer days if any."""
+def check_campground_weather(campground, min_high_temp=70, max_high_temp=88, home=None, max_miles=400, weekends_only=True):
+    """Check weather for a campground and return summer days."""
     name = campground["name"]
     lat, long = campground["location"].split(",")
     point = (float(lat), float(long))
@@ -46,24 +46,28 @@ def check_campground_weather(campground, min_high_temp, max_high_temp, home=None
             if temp and temp >= min_high_temp and temp <= max_high_temp:
                 date = data["daily"]["time"][index]
                 day = get_day_of_week(date)
-                if day in ["Saturday","Sunday"]:
-                    summer_day = {
-                        "dist": round(dist, 1),
-                        "date": date,
-                        "day": day,
-                        "temp": temp,
-                        "name": name
-                    }
-                    summer_days.append(summer_day)
+                
+                # Filter by day type based on weekends_only parameter
+                if weekends_only and day not in ["Saturday", "Sunday"]:
+                    continue
+                
+                summer_day = {
+                    "dist": round(dist, 1),
+                    "date": date,
+                    "day": day,
+                    "temp": temp,
+                    "name": name
+                }
+                summer_days.append(summer_day)
         
         return summer_days
     except requests.RequestException as e:
         raise Exception(f"Error fetching weather for {name}: {e}")
 
 def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat=None, home_long=None, 
-                    config_file='config.json', input_file='all-campgrounds.json', progress_callback=None, prefer_waterfront=False):
+                    config_file='config.json', input_file='all-campgrounds.json', progress_callback=None, prefer_waterfront=False, weekends_only=True):
     """
-    Find campgrounds with summer-like weekend temperatures within specified distance.
+    Find campgrounds with summer-like temperatures within specified distance.
     
     Args:
         max_miles: Maximum distance from home in miles
@@ -75,6 +79,7 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
         input_file: Path to campgrounds JSON file
         progress_callback: Function to call with progress updates (optional)
         prefer_waterfront: If True, prioritize waterfront campgrounds in results
+        weekends_only: If True, only include Saturday and Sunday; if False, include all days
     
     Returns:
         List of summer day dictionaries sorted by distance and waterfront preference
@@ -113,7 +118,7 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
         
         try:
             summer_days = check_campground_weather(
-                campground, min_high_temp, max_high_temp, home, max_miles
+                campground, min_high_temp, max_high_temp, home, max_miles, weekends_only
             )
             
             for summer_day in summer_days:
