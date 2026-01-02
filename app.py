@@ -99,7 +99,7 @@ def search():
                 
                 try:
                     summer_days = check_campground_weather(
-                        campground, min_high_temp, max_high_temp, home, max_miles, weekends_only
+                        campground, min_high_temp, max_high_temp, home, max_miles, weekends_only, progress_callback
                     )
                     
                     for summer_day in summer_days:

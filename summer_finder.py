@@ -24,8 +24,11 @@ def load_campgrounds(input_file='all-campgrounds.json'):
         j = f.read()
         return json.loads(j)
 
-def check_campground_weather(campground, min_high_temp=70, max_high_temp=88, home=None, max_miles=400, weekends_only=True):
+def check_campground_weather(campground, min_high_temp=70, max_high_temp=88, home=None, max_miles=400, weekends_only=True, progress_callback=None):
     """Check weather for a campground and return summer days."""
+    if not progress_callback:
+        raise ValueError("progress_callback is required")
+    
     name = campground["name"]
     lat, long = campground["location"].split(",")
     point = (float(lat), float(long))
@@ -36,33 +39,51 @@ def check_campground_weather(campground, min_high_temp=70, max_high_temp=88, hom
     
     url = f"https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={long}&daily=temperature_2m_max&timezone=auto&forecast_days=16&temperature_unit=fahrenheit"
     
-    try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        summer_days = []
-        for index, temp in enumerate(data["daily"]["temperature_2m_max"]):
-            if temp and temp >= min_high_temp and temp <= max_high_temp:
-                date = data["daily"]["time"][index]
-                day = get_day_of_week(date)
-                
-                # Filter by day type based on weekends_only parameter
-                if weekends_only and day not in ["Saturday", "Sunday"]:
-                    continue
-                
-                summer_day = {
-                    "dist": round(dist, 1),
-                    "date": date,
-                    "day": day,
-                    "temp": temp,
-                    "name": name
-                }
-                summer_days.append(summer_day)
-        
-        return summer_days
-    except requests.RequestException as e:
-        raise Exception(f"Error fetching weather for {name}: {e}")
+    # Retry logic for weather API calls
+    max_retries = 3
+    for attempt in range(max_retries):
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            
+            # Notify user if this is a retry attempt that succeeded
+            if attempt > 0:
+                progress_callback(f"✅ Weather data retrieved for {name} (attempt {attempt + 1})")
+            
+            summer_days = []
+            for index, temp in enumerate(data["daily"]["temperature_2m_max"]):
+                if temp and temp >= min_high_temp and temp <= max_high_temp:
+                    date = data["daily"]["time"][index]
+                    day = get_day_of_week(date)
+                    
+                    # Filter by day type based on weekends_only parameter
+                    if weekends_only and day not in ["Saturday", "Sunday"]:
+                        continue
+                    
+                    summer_day = {
+                        "dist": round(dist, 1),
+                        "date": date,
+                        "day": day,
+                        "temp": temp,
+                        "name": name
+                    }
+                    summer_days.append(summer_day)
+            
+            return summer_days
+            
+        except requests.RequestException as e:
+            if attempt == max_retries - 1:
+                # Only return error on final attempt
+                return [{"error": f"Weather data temporarily unavailable for {name}", "name": name, "dist": round(dist, 1)}]
+            # Notify user of retry attempt
+            if attempt < max_retries - 1:
+                progress_callback(f"🔄 Retrying weather data for {name} (attempt {attempt + 2})...")
+            # Brief pause between retries
+            import time
+            time.sleep(1)
+    
+    return []
 
 def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat=None, home_long=None, 
                     config_file='config.json', input_file='all-campgrounds.json', progress_callback=None, prefer_waterfront=False, weekends_only=True):
@@ -77,13 +98,16 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
         home_long: Home longitude (overrides config file)
         config_file: Path to config file
         input_file: Path to campgrounds JSON file
-        progress_callback: Function to call with progress updates (optional)
+        progress_callback: Function to call with progress updates (required)
         prefer_waterfront: If True, prioritize waterfront campgrounds in results
         weekends_only: If True, only include Saturday and Sunday; if False, include all days
     
     Returns:
         List of summer day dictionaries sorted by distance and waterfront preference
     """
+    if not progress_callback:
+        raise ValueError("progress_callback is required")
+    
     config = load_config(config_file)
     home_lat = home_lat or config.get("home_lat")
     home_long = home_long or config.get("home_long")
@@ -107,33 +131,39 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
     
     total_campgrounds = len(eligible_campgrounds)
     
-    if progress_callback:
-        progress_callback(f"Considering {total_campgrounds} campgrounds within {max_miles} miles of home {home if home else 'any location'}.")
+    progress_callback(f"Considering {total_campgrounds} campgrounds within {max_miles} miles of home {home if home else 'any location'}.")
     
     for i, (campground, dist) in enumerate(eligible_campgrounds):
         name = campground["name"]
         
-        if progress_callback:
-            progress_callback(f"Checking {name} ({i+1}/{total_campgrounds})")
+        progress_callback(f"Checking {name} ({i+1}/{total_campgrounds})")
         
         try:
             summer_days = check_campground_weather(
-                campground, min_high_temp, max_high_temp, home, max_miles, weekends_only
+                campground, min_high_temp, max_high_temp, home, max_miles, weekends_only, progress_callback
             )
             
+            # Check if weather data was unavailable
+            if len(summer_days) == 1 and "error" in summer_days[0]:
+                error_entry = summer_days[0]
+                progress_callback(f"⚠️ {error_entry['error']}")
+                continue
+            
             for summer_day in summer_days:
+                # Skip error entries
+                if "error" in summer_day:
+                    continue
+                    
                 # Add waterfront information to the result
                 waterfront = campground.get("waterfront", "none")
                 summer_day["waterfront"] = waterfront
                 
-                if progress_callback:
-                    waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
-                    progress_callback(f"Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)")
+                waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
+                progress_callback(f"Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)")
                 all_summer_days.append(summer_day)
                 
         except Exception as e:
-            if progress_callback:
-                progress_callback(str(e))
+            progress_callback(str(e))
             continue
     
     if all_summer_days:
