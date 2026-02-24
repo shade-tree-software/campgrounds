@@ -10,26 +10,25 @@ import sys
 #  {
 #    "name": "FR 812 Dispersed Sites",
 #    "location": "37.6103,-79.3787",
-#    "elevation": 269,
+#    "elevation_meters": 269,
 #    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
 #  },
 #  {
 #    "name": "Meriwether Lewis Campground",
 #    "location": "35.5232,-87.4570",
-#    "elevation": 260,
+#    "elevation_meters": 260,
 #    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
 #  },
 #  ...
 # ]
 #
-# Note that the elevation should be in meters.  This value is important and is
+# Note that the campground elevation value in meters is important because it is
 # used to calculate the temperature differential which is included in the output
 # CSV file along with the elevation converted to feet.  The temperature 
 # differential is calculated from the base location indicated by BASE_LOC.
 # Note that the format of BASE_LOC is different, with separate float values for
 # latitude and longitude, and the elevation value is called altitude_meters
-# instead of elevation to reduce possible ambiguities in human understanding of
-# the math formulas.
+# to reduce possible ambiguities in human understanding of the math formulas.
 #
 
 meters_2_feet = lambda x: x * 3.281
@@ -59,9 +58,10 @@ for elem in input_data:
     if "index" in elem:
         del elem["index"]
 
-columns = list({key for d in input_data for key in d.keys()})
+columns = list({key for d in input_data for key in d.keys() if key != "elevation_meters"})
 columns.append("delta_temp")
 columns.append("climate")
+columns.append("elevation_feet")
 df = pd.DataFrame(columns=columns)
 
 for elem in input_data:
@@ -70,9 +70,9 @@ for elem in input_data:
     map_elem["note"] = elem.get("note","")
     location = elem.get("location")
     lat,lon = list(map(lambda x: float(x), location.split(",")))
-    elev_meters = elem.get("elevation",0)
+    elev_meters = elem.get("elevation_meters",0)
     elev_feet = meters_2_feet(elev_meters)
-    map_elem["elevation"] = int(elev_feet)
+    map_elem["elevation_feet"] = int(elev_feet)
     delta_celsius = cooling_effect(lat, elev_meters)
     delta_fahrenheit = delta_celsius * (9.0 / 5.0)
     map_elem["delta_temp"] = delta_fahrenheit
