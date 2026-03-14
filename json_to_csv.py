@@ -48,8 +48,8 @@ def cooling_effect(latitude: float, altitude_meters: float) -> float:
     delta_celsius_altitude = celsius_change_altitude(delta_altitude_meters)
     return delta_celsius_latitude + delta_celsius_altitude
 
-input_filename = sys.argv[1]
-output_filename = sys.argv[2]
+input_filename = sys.argv[1] if len(sys.argv) > 1 else "all-campgrounds.json"
+output_filename = sys.argv[2] if len(sys.argv) > 2 else "all-campgrounds.csv"
 
 with open(input_filename, "rt") as f:
     input_data = json.loads(f.read())
