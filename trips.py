@@ -67,8 +67,6 @@ def _parse_stays(csv_path):
                 continue
 
             place = row.get("Place", "").strip()
-            if place == "12129 Basset Ln":
-                continue
 
             try:
                 start_dt = _parse_date(start)
@@ -99,16 +97,21 @@ def _group_into_trips(stays):
     if not stays:
         return []
 
+    def _is_home(stay):
+        return "basset" in stay["place"].lower()
+
     trips = []
     current_trip_stays = [stays[0]]
 
     for stay in stays[1:]:
         prev_end = current_trip_stays[-1]["end"]
-        if stay["start"] == prev_end:
-            current_trip_stays.append(stay)
-        else:
+        consecutive = stay["start"] == prev_end
+        # Break into separate trip if: not consecutive, or home boundary
+        if not consecutive or _is_home(stay) != _is_home(current_trip_stays[-1]):
             trips.append(_make_trip(len(trips) + 1, current_trip_stays))
             current_trip_stays = [stay]
+        else:
+            current_trip_stays.append(stay)
 
     trips.append(_make_trip(len(trips) + 1, current_trip_stays))
     return trips
@@ -152,6 +155,8 @@ def _make_trip(trip_id, stays):
                 if name:
                     all_campers.add(name)
 
+    home_only = all("basset" in s["place"].lower() for s in stays)
+
     return {
         "id": trip_id,
         "stays": stays,
@@ -161,6 +166,7 @@ def _make_trip(trip_id, stays):
         "summary": summary,
         "description": description,
         "campers": sorted(all_campers),
+        "home_only": home_only,
     }
 
 

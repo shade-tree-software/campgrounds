@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Camping Trips Calendar</title>
+<title>EKKO Trips</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -183,6 +183,23 @@
     background: var(--navy);
   }
 
+  .month-card td.trip-day.home-only .day-num {
+    background: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
+  }
+
+  .month-card td.trip-day.home-only.trip-start .day-num {
+    border-color: var(--navy);
+    color: var(--navy);
+  }
+
+  .month-card td.trip-day.home-only:hover .day-num {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+
   .month-card td.today .day-num {
     box-shadow: 0 0 0 2px var(--gold);
   }
@@ -214,6 +231,14 @@
     box-shadow: 0 4px 16px rgba(0,0,0,.15);
   }
 
+  .trip-card .trip-number {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--gray);
+    min-width: 2.2rem;
+    text-align: center;
+  }
+
   .trip-card .dates {
     min-width: 6rem;
     font-size: .8rem;
@@ -233,6 +258,12 @@
     font-weight: 700;
     font-size: .85rem;
     flex-shrink: 0;
+  }
+
+  .trip-card.home-only .nights-badge {
+    background: var(--white);
+    color: var(--red);
+    border: 2px solid var(--red);
   }
 
   .trip-card .info {
@@ -307,7 +338,7 @@
 <body>
 
 <header>
-  <h1>Camping Trips</h1>
+  <h1>EKKO Trips</h1>
   <div class="stats">
     <div><span id="total-trips">{{ trips|length }}</span> trips</div>
     <div><span id="total-nights">{{ trips|map(attribute='total_nights')|sum }}</span> nights</div>
@@ -347,7 +378,7 @@ const dayToTrips = {};
 TRIPS.forEach(trip => {
   const start = new Date(trip.start + 'T00:00:00');
   const end = new Date(trip.end + 'T00:00:00');
-  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+  for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     const key = d.toISOString().slice(0, 10);
     if (!dayToTrips[key]) dayToTrips[key] = [];
     dayToTrips[key].push(trip);
@@ -431,10 +462,25 @@ const years = TRIPS.map(t => parseInt(t.start.slice(0, 4)));
 const minYear = Math.min(...years);
 const maxYear = Math.max(...years);
 
-let currentYear = maxYear;
+// Read year from URL hash, default to most recent year
+function yearFromHash() {
+  const h = parseInt(location.hash.replace('#', ''));
+  return (h >= minYear && h <= maxYear) ? h : maxYear;
+}
+
+let currentYear = yearFromHash();
 let currentView = 'calendar';
 
 const todayStr = new Date().toISOString().slice(0, 10);
+
+window.addEventListener('hashchange', () => {
+  currentYear = yearFromHash();
+  render();
+});
+
+function updateHash() {
+  history.replaceState(null, '', '#' + currentYear);
+}
 
 function setView(view) {
   currentView = view;
@@ -455,6 +501,7 @@ function nextYear() {
 
 function render() {
   document.getElementById('year-label').textContent = currentYear;
+  updateHash();
   if (currentView === 'calendar') renderCalendar();
   else renderList();
 }
@@ -498,8 +545,14 @@ function renderCalendar() {
       const trips = dayToTrips[dateStr];
 
       if (trips && trips.length > 0) {
+        // Prefer the trip that is starting on this day for display
+        const startingTrip = trips.find(t => t.start === dateStr);
+        const primaryTrip = startingTrip || trips[0];
+        const allHome = primaryTrip.home_only;
+
         td.className = 'trip-day';
         if (trips.some(t => t.start === dateStr)) td.classList.add('trip-start');
+        if (allHome) td.classList.add('home-only');
         if (dateStr === todayStr) td.classList.add('today');
 
         const span = document.createElement('span');
@@ -508,9 +561,9 @@ function renderCalendar() {
         td.appendChild(span);
 
         td.addEventListener('click', () => {
-          window.location.href = '/trips/' + trips[0].id;
+          window.location.href = '/trips/' + primaryTrip.id;
         });
-        td.addEventListener('mouseenter', (e) => showTooltip(e, trips[0]));
+        td.addEventListener('mouseenter', (e) => showTooltip(e, primaryTrip));
         td.addEventListener('mouseleave', hideTooltip);
       } else {
         td.textContent = d;
@@ -553,13 +606,14 @@ function renderList() {
   yearTrips.forEach(trip => {
     const a = document.createElement('a');
     a.href = '/trips/' + trip.id;
-    a.className = 'trip-card';
+    a.className = 'trip-card' + (trip.home_only ? ' home-only' : '');
 
     const startD = new Date(trip.start + 'T00:00:00');
     const endD = new Date(trip.end + 'T00:00:00');
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
     a.innerHTML = `
+      <div class="trip-number">#${trip.id}</div>
       <div class="nights-badge">${trip.total_nights}N</div>
       <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
       <div class="info">
