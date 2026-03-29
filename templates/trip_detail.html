@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trip: {{ trip.summary }}</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --navy: #002868;
+    --navy-light: #1a3f7a;
+    --red: #bf0a30;
+    --red-light: #d43a5a;
+    --red-bg: #fce8ec;
+    --blue-bg: #e8eef8;
+    --white: #fff;
+    --offwhite: #f7f8fc;
+    --gray: #555;
+    --gray-light: #d5d8de;
+    --gold: #c9a84c;
+    --shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--offwhite);
+    color: #333;
+  }
+
+  /* ── Header ─────────────────────────────────────── */
+  .back-bar {
+    background: var(--navy);
+    padding: .75rem 2rem;
+  }
+
+  .back-bar a {
+    color: var(--gold);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+  }
+
+  .back-bar a:hover { color: var(--white); }
+
+  .trip-header {
+    background: var(--red);
+    color: var(--white);
+    padding: 2rem;
+  }
+
+  .trip-header h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: .5rem;
+  }
+
+  .trip-header .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    font-size: .9rem;
+    opacity: .9;
+  }
+
+  .trip-header .meta span { font-weight: 600; }
+
+  /* ── Content ────────────────────────────────────── */
+  .content {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  /* ── Stay cards ─────────────────────────────────── */
+  .stay-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .stay-header {
+    background: var(--blue-bg);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .stay-number {
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .85rem;
+    flex-shrink: 0;
+  }
+
+  .stay-header .stay-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .stay-header .stay-info .stay-meta {
+    font-size: .8rem;
+    color: var(--gray);
+    margin-top: .15rem;
+  }
+
+  .stay-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .stay-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: .75rem;
+    margin-bottom: 1rem;
+  }
+
+  .detail-item label {
+    display: block;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--gray);
+    margin-bottom: .15rem;
+  }
+
+  .detail-item .value {
+    font-size: .9rem;
+    font-weight: 500;
+  }
+
+  .notes-text {
+    background: var(--offwhite);
+    border-radius: 6px;
+    padding: .75rem 1rem;
+    font-size: .85rem;
+    line-height: 1.5;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  /* ── Photos ─────────────────────────────────────── */
+  .photos-section h4 {
+    font-size: .85rem;
+    color: var(--navy);
+    margin-bottom: .75rem;
+    font-weight: 600;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: .75rem;
+    margin-bottom: 1rem;
+  }
+
+  .photo-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    background: #f0f0f0;
+  }
+
+  .photo-item img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+    cursor: pointer;
+  }
+
+  .photo-item .caption-area {
+    padding: .4rem .5rem;
+    font-size: .75rem;
+    background: var(--white);
+  }
+
+  .photo-item .caption-area input {
+    width: 100%;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    padding: .25rem .4rem;
+    font-size: .75rem;
+    font-family: inherit;
+  }
+
+  .photo-item .caption-area input:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  .photo-item .delete-photo {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(0,0,0,.6);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+    font-size: .75rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .photo-item:hover .delete-photo { display: flex; }
+
+  .upload-area {
+    border: 2px dashed var(--gray-light);
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    margin-bottom: .5rem;
+  }
+
+  .upload-area:hover {
+    border-color: var(--red);
+    background: var(--blue-bg);
+  }
+
+  .upload-area input { display: none; }
+
+  .upload-area p {
+    font-size: .8rem;
+    color: var(--gray);
+  }
+
+  /* ── Comments ───────────────────────────────────── */
+  .comments-section {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .comments-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1rem;
+  }
+
+  .comment-list {
+    list-style: none;
+    margin-bottom: 1rem;
+  }
+
+  .comment-list li {
+    padding: .6rem 0;
+    border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: .75rem;
+  }
+
+  .comment-list li:last-child { border-bottom: none; }
+
+  .comment-text {
+    font-size: .85rem;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .comment-time {
+    font-size: .7rem;
+    color: var(--gray);
+    white-space: nowrap;
+  }
+
+  .comment-delete {
+    background: none;
+    border: none;
+    color: #c62828;
+    cursor: pointer;
+    font-size: .8rem;
+    padding: .2rem;
+    opacity: .5;
+  }
+
+  .comment-delete:hover { opacity: 1; }
+
+  .comment-form {
+    display: flex;
+    gap: .5rem;
+  }
+
+  .comment-form textarea {
+    flex: 1;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    padding: .5rem .75rem;
+    font-size: .85rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 2.5rem;
+  }
+
+  .comment-form textarea:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  .comment-form button {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: .85rem;
+    align-self: flex-end;
+  }
+
+  .comment-form button:hover { background: var(--navy); }
+
+  /* ── Lightbox ───────────────────────────────────── */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .lightbox.visible { display: flex; }
+
+  .lightbox img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 6px;
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+  }
+
+  .lightbox .close-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    color: var(--white);
+    font-size: 2rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  /* ── Map ─────────────────────────────────────────── */
+  .map-container {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+  }
+
+  .map-container h3 {
+    padding: .75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  #trip-map {
+    height: 380px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a href="/trips">&larr; Back to Calendar</a>
+</div>
+
+<div class="trip-header">
+  <h1>{{ trip.summary }}</h1>
+  <div class="meta">
+    <div><span>{{ trip.total_nights }}</span> nights</div>
+    <div><span>{{ trip.stays|length }}</span> stop{{ 's' if trip.stays|length > 1 else '' }}</div>
+    <div>{{ trip.start }} to {{ trip.end }}</div>
+    {% if trip.campers %}
+    <div>{{ trip.campers|join(', ') }}</div>
+    {% endif %}
+  </div>
+  {% if trip.description %}
+  <p style="margin-top:.75rem;opacity:.85;font-size:.95rem;">{{ trip.description }}</p>
+  {% endif %}
+</div>
+
+<div class="content">
+
+  <!-- Map -->
+  {% set mapped_stays = trip.stays | selectattr('lat', 'defined') | selectattr('lat') | list %}
+  {% if mapped_stays %}
+  <div class="map-container">
+    <h3>Trip Route</h3>
+    <div id="trip-map"></div>
+  </div>
+  {% endif %}
+
+  <!-- Stay cards -->
+  {% for stay in trip.stays %}
+  <div class="stay-card" id="stay-{{ loop.index0 }}">
+    <div class="stay-header">
+      <div class="stay-number">{{ loop.index }}</div>
+      <div class="stay-info">
+        <h3>{{ stay.place }}</h3>
+        <div class="stay-meta">
+          {{ stay.locale }}, {{ stay.state }}
+          &mdash; {{ stay.nights }} night{{ 's' if stay.nights > 1 else '' }}
+          ({{ stay.start }} to {{ stay.end }})
+        </div>
+      </div>
+    </div>
+    <div class="stay-body">
+      <div class="stay-details">
+        {% if stay.site %}
+        <div class="detail-item">
+          <label>Site</label>
+          <div class="value">{{ stay.site }}</div>
+        </div>
+        {% endif %}
+        {% if stay.campers %}
+        <div class="detail-item">
+          <label>Campers</label>
+          <div class="value">{{ stay.campers }}</div>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if stay.notes %}
+      <div class="notes-text">{{ stay.notes }}</div>
+      {% endif %}
+
+      <!-- Photos -->
+      <div class="photos-section">
+        <h4>Photos</h4>
+        <div class="photo-grid" id="photos-{{ loop.index0 }}">
+          {% for photo in stay_photos[loop.index0] %}
+          <div class="photo-item" data-filename="{{ photo.filename }}">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or stay.place }}" onclick="openLightbox(this.src)">
+            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ loop.parent.loop.index0 }}, '{{ photo.filename }}', this)">&times;</button>
+            <div class="caption-area">
+              <input type="text" placeholder="Add a caption..."
+                     value="{{ photo.caption }}"
+                     onchange="saveCaption({{ trip.id }}, {{ loop.parent.loop.index0 }}, '{{ photo.filename }}', this.value)">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="upload-area" onclick="this.querySelector('input').click()">
+          <input type="file" accept="image/*" multiple
+                 onchange="uploadPhotos({{ trip.id }}, {{ loop.index0 }}, this.files)">
+          <p>Click to upload photos (or drag and drop)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Comments -->
+  <div class="comments-section">
+    <h3>Trip Comments</h3>
+    <ul class="comment-list" id="comment-list">
+      {% for c in trip_comments %}
+      <li>
+        <div>
+          <div class="comment-text">{{ c.text }}</div>
+          <div class="comment-time">{{ c.timestamp[:16].replace('T', ' ') }}</div>
+        </div>
+        <button class="comment-delete" onclick="deleteComment({{ trip.id }}, {{ loop.index0 }})">&times;</button>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="comment-form">
+      <textarea id="comment-input" placeholder="Add a comment about this trip..." rows="2"></textarea>
+      <button onclick="addComment({{ trip.id }})">Post</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="close-btn">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+// ── Map initialization ──────────────────────────────────────────────────────
+(function() {
+  const stays = {{ trip.stays | tojson }};
+  const mapped = stays.filter(s => s.lat && s.lng);
+  if (mapped.length === 0) return;
+
+  const map = L.map('trip-map');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  const HOME = [38.929576, -77.366840];
+  const bounds = [HOME];
+  const latlngs = [HOME];
+
+  // Home marker
+  const homeIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:24px;height:24px;border-radius:50%;
+      background:#c9a84c;color:#002868;
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;font-weight:700;
+      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+    ">H</div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+  L.marker(HOME, { icon: homeIcon }).addTo(map)
+    .bindPopup('<strong>Home</strong><br>Reston, VA');
+
+  mapped.forEach((stay, i) => {
+    const ll = [stay.lat, stay.lng];
+    bounds.push(ll);
+    latlngs.push(ll);
+
+    const marker = L.circleMarker(ll, {
+      radius: 9,
+      fillColor: '#bf0a30',
+      color: '#002868',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.85,
+    }).addTo(map);
+
+    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights > 1 ? 's' : ''}`;
+    marker.bindPopup(label);
+
+    // Number label
+    const icon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:20px;height:20px;border-radius:50%;
+        background:#002868;color:#fff;
+        display:flex;align-items:center;justify-content:center;
+        font-size:11px;font-weight:700;
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+      ">${i + 1}</div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+    });
+    L.marker(ll, { icon }).addTo(map).on('click', () => marker.openPopup());
+  });
+
+  // Close the route back to home
+  latlngs.push(HOME);
+
+  // Draw route line
+  L.polyline(latlngs, {
+    color: '#002868',
+    weight: 2,
+    opacity: 0.5,
+    dashArray: '6,8',
+  }).addTo(map);
+
+  map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+})();
+
+function uploadPhotos(tripId, stayIdx, files) {
+  Array.from(files).forEach(file => {
+    const form = new FormData();
+    form.append('photo', file);
+    fetch(`/trips/${tripId}/stays/${stayIdx}/upload`, { method: 'POST', body: form })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { alert(data.error); return; }
+        const grid = document.getElementById('photos-' + stayIdx);
+        const item = document.createElement('div');
+        item.className = 'photo-item';
+        item.dataset.filename = data.filename;
+        item.innerHTML = `
+          <img src="${data.url}" alt="" onclick="openLightbox(this.src)">
+          <button class="delete-photo" onclick="deletePhoto(${tripId}, ${stayIdx}, '${data.filename}', this)">&times;</button>
+          <div class="caption-area">
+            <input type="text" placeholder="Add a caption..."
+                   onchange="saveCaption(${tripId}, ${stayIdx}, '${data.filename}', this.value)">
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+  });
+}
+
+function saveCaption(tripId, stayIdx, filename, caption) {
+  fetch(`/trips/${tripId}/stays/${stayIdx}/caption`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, caption })
+  });
+}
+
+function deletePhoto(tripId, stayIdx, filename, btn) {
+  if (!confirm('Delete this photo?')) return;
+  fetch(`/trips/${tripId}/stays/${stayIdx}/photos/${filename}`, { method: 'DELETE' })
+    .then(() => {
+      btn.closest('.photo-item').remove();
+    });
+}
+
+function addComment(tripId) {
+  const input = document.getElementById('comment-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  fetch(`/trips/${tripId}/comments`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    input.value = '';
+    const list = document.getElementById('comment-list');
+    const li = document.createElement('li');
+    const time = data.comment.timestamp.slice(0, 16).replace('T', ' ');
+    const idx = list.children.length;
+    li.innerHTML = `
+      <div>
+        <div class="comment-text">${escapeHtml(data.comment.text)}</div>
+        <div class="comment-time">${time}</div>
+      </div>
+      <button class="comment-delete" onclick="deleteComment(${tripId}, ${idx})">&times;</button>
+    `;
+    list.appendChild(li);
+  });
+}
+
+function deleteComment(tripId, idx) {
+  if (!confirm('Delete this comment?')) return;
+  fetch(`/trips/${tripId}/comments/${idx}`, { method: 'DELETE' })
+    .then(() => location.reload());
+}
+
+function openLightbox(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('visible');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('visible');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Drag and drop support for upload areas
+document.querySelectorAll('.upload-area').forEach(area => {
+  area.addEventListener('dragover', e => {
+    e.preventDefault();
+    area.style.borderColor = '#4a7c23';
+    area.style.background = '#e8f5e9';
+  });
+  area.addEventListener('dragleave', e => {
+    area.style.borderColor = '';
+    area.style.background = '';
+  });
+  area.addEventListener('drop', e => {
+    e.preventDefault();
+    area.style.borderColor = '';
+    area.style.background = '';
+    const input = area.querySelector('input');
+    const tripId = parseInt(input.getAttribute('onchange').match(/uploadPhotos\((\d+)/)[1]);
+    const stayIdx = parseInt(input.getAttribute('onchange').match(/,\s*(\d+)/)[1]);
+    uploadPhotos(tripId, stayIdx, e.dataTransfer.files);
+  });
+});
+</script>
+</body>
+</html>

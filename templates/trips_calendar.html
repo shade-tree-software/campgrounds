@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camping Trips Calendar</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --navy: #002868;
+    --navy-light: #1a3f7a;
+    --red: #bf0a30;
+    --red-light: #d43a5a;
+    --red-bg: #fce8ec;
+    --blue-bg: #e8eef8;
+    --white: #fff;
+    --offwhite: #f7f8fc;
+    --gray: #555;
+    --gray-light: #d5d8de;
+    --gold: #c9a84c;
+    --shadow: 0 2px 8px rgba(0,0,0,.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--offwhite);
+    color: #333;
+  }
+
+  header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+  }
+
+  header h1 { font-size: 1.6rem; font-weight: 600; }
+
+  .stats {
+    display: flex;
+    gap: 1.5rem;
+    font-size: .9rem;
+    opacity: .9;
+  }
+
+  .stats span { font-weight: 700; color: var(--gold); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .controls button {
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: .6rem 1.25rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .controls button:hover { background: var(--navy); }
+
+  .controls .year-label {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--navy);
+    min-width: 4rem;
+    text-align: center;
+  }
+
+  .controls .view-toggle {
+    margin-left: auto;
+    display: flex;
+    gap: .25rem;
+  }
+
+  .controls .view-toggle button {
+    background: var(--gray-light);
+    color: #555;
+  }
+
+  .controls .view-toggle button.active {
+    background: var(--red);
+    color: var(--white);
+  }
+
+  /* ── Calendar Grid ─────────────────────────────── */
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .calendar-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .calendar-grid { grid-template-columns: 1fr; }
+  }
+
+  .month-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .month-card .month-header {
+    background: var(--red);
+    color: var(--white);
+    padding: .6rem 1rem;
+    font-weight: 600;
+    font-size: .95rem;
+  }
+
+  .month-card table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  .month-card th {
+    font-size: .7rem;
+    color: var(--gray);
+    padding: .3rem 0;
+    font-weight: 500;
+  }
+
+  .month-card td {
+    text-align: center;
+    padding: .25rem;
+    font-size: .8rem;
+    position: relative;
+    height: 2rem;
+    vertical-align: middle;
+  }
+
+  .month-card td.empty { color: transparent; }
+
+  .month-card td.trip-day {
+    cursor: pointer;
+  }
+
+  .month-card td.trip-day .day-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: var(--red);
+    color: var(--white);
+    font-weight: 600;
+    font-size: .75rem;
+    transition: transform .15s;
+  }
+
+  .month-card td.trip-day:hover .day-num {
+    transform: scale(1.2);
+    background: var(--navy);
+  }
+
+  .month-card td.trip-start .day-num {
+    background: var(--navy);
+  }
+
+  .month-card td.today .day-num {
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+
+  /* ── List View ──────────────────────────────────── */
+  .list-view {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+  }
+
+  .trip-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+    margin-bottom: .75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: transform .1s, box-shadow .1s;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .trip-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.15);
+  }
+
+  .trip-card .dates {
+    min-width: 6rem;
+    font-size: .8rem;
+    color: var(--gray);
+    line-height: 1.4;
+  }
+
+  .trip-card .nights-badge {
+    background: var(--red);
+    color: var(--white);
+    border-radius: 50%;
+    width: 2.4rem;
+    height: 2.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .85rem;
+    flex-shrink: 0;
+  }
+
+  .trip-card .info {
+    flex: 1;
+  }
+
+  .trip-card .info h3 {
+    font-size: .95rem;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  .trip-card .info .meta {
+    font-size: .8rem;
+    color: var(--gray);
+    margin-top: .15rem;
+  }
+
+  .trip-card .stays-count {
+    font-size: .75rem;
+    color: var(--navy-light);
+    white-space: nowrap;
+  }
+
+  /* ── Tooltip ────────────────────────────────────── */
+  .tooltip {
+    display: none;
+    position: fixed;
+    background: var(--navy);
+    color: var(--white);
+    padding: .5rem .75rem;
+    border-radius: 6px;
+    font-size: .8rem;
+    pointer-events: none;
+    z-index: 100;
+    max-width: 280px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.3);
+  }
+
+  .tooltip.visible { display: block; }
+
+  .hidden { display: none; }
+
+  /* ── Map ─────────────────────────────────────────── */
+  .map-section {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+  }
+
+  .map-container {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .map-container h3 {
+    padding: .75rem 1.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  #all-trips-map {
+    height: 420px;
+    width: 100%;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Camping Trips</h1>
+  <div class="stats">
+    <div><span id="total-trips">{{ trips|length }}</span> trips</div>
+    <div><span id="total-nights">{{ trips|map(attribute='total_nights')|sum }}</span> nights</div>
+  </div>
+</header>
+
+<div class="controls">
+  <button onclick="prevYear()">&larr;</button>
+  <div class="year-label" id="year-label"></div>
+  <button onclick="nextYear()">&rarr;</button>
+  <div class="view-toggle">
+    <button id="btn-calendar" class="active" onclick="setView('calendar')">Calendar</button>
+    <button id="btn-list" onclick="setView('list')">List</button>
+  </div>
+</div>
+
+<div class="map-section">
+  <div class="map-container">
+    <h3>All Camping Locations</h3>
+    <div id="all-trips-map"></div>
+  </div>
+</div>
+
+<div id="calendar-container" class="calendar-grid"></div>
+<div id="list-container" class="list-view hidden"></div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+const TRIPS = {{ trips | tojson }};
+const MONTH_NAMES = ['January','February','March','April','May','June',
+                     'July','August','September','October','November','December'];
+const DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+// Build a lookup: "YYYY-MM-DD" -> [trip, ...]
+const dayToTrips = {};
+TRIPS.forEach(trip => {
+  const start = new Date(trip.start + 'T00:00:00');
+  const end = new Date(trip.end + 'T00:00:00');
+  for (let d = new Date(start); d < end; d.setDate(d.getDate() + 1)) {
+    const key = d.toISOString().slice(0, 10);
+    if (!dayToTrips[key]) dayToTrips[key] = [];
+    dayToTrips[key].push(trip);
+  }
+});
+
+// ── All-trips map ───────────────────────────────────────────────────────────
+(function() {
+  const HOME = [38.929576, -77.366840];
+  const map = L.map('all-trips-map');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // Home marker
+  const homeIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:24px;height:24px;border-radius:50%;
+      background:#c9a84c;color:#002868;
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;font-weight:700;
+      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+    ">H</div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
+    .bindPopup('<strong>Home</strong><br>Reston, VA');
+
+  // Collect unique locations across all trips
+  const locMap = {};  // "lat,lng" -> { lat, lng, trips: [...] }
+  TRIPS.forEach(trip => {
+    trip.stays.forEach(stay => {
+      if (!stay.lat || !stay.lng) return;
+      const key = stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
+      if (!locMap[key]) {
+        locMap[key] = { lat: stay.lat, lng: stay.lng, place: stay.place, locale: stay.locale, state: stay.state, trips: [] };
+      }
+      // Avoid duplicate trip entries for same location
+      if (!locMap[key].trips.some(t => t.id === trip.id)) {
+        locMap[key].trips.push(trip);
+      }
+    });
+  });
+
+  const bounds = [HOME];
+  Object.values(locMap).forEach(loc => {
+    const ll = [loc.lat, loc.lng];
+    bounds.push(ll);
+
+    const visits = loc.trips.length;
+    const radius = Math.min(6 + visits * 2, 14);
+
+    const marker = L.circleMarker(ll, {
+      radius: radius,
+      fillColor: '#bf0a30',
+      color: '#002868',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0.8,
+    }).addTo(map);
+
+    let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits > 1 ? 's' : ''}`;
+    popup += '<div style="margin-top:4px;font-size:12px;">';
+    loc.trips.forEach(t => {
+      const d = new Date(t.start + 'T00:00:00');
+      const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">${fmt} — ${t.summary}</a>`;
+    });
+    popup += '</div>';
+    marker.bindPopup(popup, { maxWidth: 280 });
+  });
+
+  map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+})();
+
+// Find year range
+const years = TRIPS.map(t => parseInt(t.start.slice(0, 4)));
+const minYear = Math.min(...years);
+const maxYear = Math.max(...years);
+
+let currentYear = maxYear;
+let currentView = 'calendar';
+
+const todayStr = new Date().toISOString().slice(0, 10);
+
+function setView(view) {
+  currentView = view;
+  document.getElementById('btn-calendar').classList.toggle('active', view === 'calendar');
+  document.getElementById('btn-list').classList.toggle('active', view === 'list');
+  document.getElementById('calendar-container').classList.toggle('hidden', view !== 'calendar');
+  document.getElementById('list-container').classList.toggle('hidden', view !== 'list');
+  render();
+}
+
+function prevYear() {
+  if (currentYear > minYear) { currentYear--; render(); }
+}
+
+function nextYear() {
+  if (currentYear < maxYear) { currentYear++; render(); }
+}
+
+function render() {
+  document.getElementById('year-label').textContent = currentYear;
+  if (currentView === 'calendar') renderCalendar();
+  else renderList();
+}
+
+function renderCalendar() {
+  const container = document.getElementById('calendar-container');
+  container.innerHTML = '';
+
+  for (let m = 0; m < 12; m++) {
+    const card = document.createElement('div');
+    card.className = 'month-card';
+
+    const header = document.createElement('div');
+    header.className = 'month-header';
+    header.textContent = MONTH_NAMES[m];
+    card.appendChild(header);
+
+    const table = document.createElement('table');
+    const thead = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    DOW.forEach(d => {
+      const th = document.createElement('th');
+      th.textContent = d;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+    const firstDay = new Date(currentYear, m, 1).getDay();
+    const daysInMonth = new Date(currentYear, m + 1, 0).getDate();
+
+    let row = document.createElement('tr');
+    for (let i = 0; i < firstDay; i++) {
+      row.appendChild(document.createElement('td'));
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${currentYear}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const td = document.createElement('td');
+      const trips = dayToTrips[dateStr];
+
+      if (trips && trips.length > 0) {
+        td.className = 'trip-day';
+        if (trips.some(t => t.start === dateStr)) td.classList.add('trip-start');
+        if (dateStr === todayStr) td.classList.add('today');
+
+        const span = document.createElement('span');
+        span.className = 'day-num';
+        span.textContent = d;
+        td.appendChild(span);
+
+        td.addEventListener('click', () => {
+          window.location.href = '/trips/' + trips[0].id;
+        });
+        td.addEventListener('mouseenter', (e) => showTooltip(e, trips[0]));
+        td.addEventListener('mouseleave', hideTooltip);
+      } else {
+        td.textContent = d;
+        if (dateStr === todayStr) td.classList.add('today');
+      }
+
+      row.appendChild(td);
+      if ((firstDay + d) % 7 === 0) {
+        tbody.appendChild(row);
+        row = document.createElement('tr');
+      }
+    }
+
+    if (row.children.length > 0) {
+      while (row.children.length < 7) row.appendChild(document.createElement('td'));
+      tbody.appendChild(row);
+    }
+
+    table.appendChild(tbody);
+    card.appendChild(table);
+    container.appendChild(card);
+  }
+}
+
+function renderList() {
+  const container = document.getElementById('list-container');
+  container.innerHTML = '';
+
+  const yearTrips = TRIPS.filter(t => {
+    const y = parseInt(t.start.slice(0, 4));
+    const ey = parseInt(t.end.slice(0, 4));
+    return y === currentYear || ey === currentYear;
+  });
+
+  if (yearTrips.length === 0) {
+    container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No trips in ' + currentYear + '</p>';
+    return;
+  }
+
+  yearTrips.forEach(trip => {
+    const a = document.createElement('a');
+    a.href = '/trips/' + trip.id;
+    a.className = 'trip-card';
+
+    const startD = new Date(trip.start + 'T00:00:00');
+    const endD = new Date(trip.end + 'T00:00:00');
+    const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    a.innerHTML = `
+      <div class="nights-badge">${trip.total_nights}N</div>
+      <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
+      <div class="info">
+        <h3>${trip.summary}</h3>
+        <div class="meta">${trip.campers.join(', ')}</div>
+      </div>
+      <div class="stays-count">${trip.stays.length} stop${trip.stays.length > 1 ? 's' : ''}</div>
+    `;
+    container.appendChild(a);
+  });
+}
+
+function showTooltip(e, trip) {
+  const tt = document.getElementById('tooltip');
+  const startD = new Date(trip.start + 'T00:00:00');
+  const endD = new Date(trip.end + 'T00:00:00');
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+  let html = `<strong>${trip.summary}</strong><br>`;
+  html += `${fmt(startD)} &ndash; ${fmt(endD)} (${trip.total_nights} nights)<br>`;
+  if (trip.campers.length) html += `<em>${trip.campers.join(', ')}</em>`;
+
+  tt.innerHTML = html;
+  tt.classList.add('visible');
+
+  const rect = tt.getBoundingClientRect();
+  let x = e.clientX + 12;
+  let y = e.clientY + 12;
+  if (x + rect.width > window.innerWidth) x = e.clientX - rect.width - 12;
+  if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 12;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+}
+
+function hideTooltip() {
+  document.getElementById('tooltip').classList.remove('visible');
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
