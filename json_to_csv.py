@@ -62,10 +62,16 @@ columns = list({key for d in input_data for key in d.keys() if key != "elevation
 columns.append("delta_temp")
 columns.append("climate")
 columns.append("elevation_feet")
+columns.append("visited")
 df = pd.DataFrame(columns=columns)
 
 for elem in input_data:
     map_elem = elem.copy()
+    if "stays" in elem:
+      map_elem["visited"] = "yes"
+      del map_elem["stays"]
+    else:
+      map_elem["visited"] = "no"
     map_elem["name"] = elem.get("name","")
     map_elem["note"] = elem.get("note","")
     location = elem.get("location")
