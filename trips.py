@@ -187,13 +187,17 @@ def _load_campground_locations(json_path="all-campgrounds.json",
         lat, lng = c["location"].split(",")
         by_name[c["name"]] = (float(lat), float(lng))
 
-    # Include family locations from config so they resolve in trip enrichment
+    # Include family locations from config so they resolve in trip enrichment.
+    # Use driveway coordinates when available so the stay marker doesn't
+    # overlap the family house icon on the map.
     cfg_path = os.path.join(base, config_path)
     if os.path.exists(cfg_path):
         with open(cfg_path) as f:
             cfg = json.load(f)
         for fam in cfg.get("family_locations", []):
-            by_name[fam["label"]] = (fam["lat"], fam["lng"])
+            lat = fam.get("driveway_lat", fam["lat"])
+            lng = fam.get("driveway_lng", fam["lng"])
+            by_name[fam["label"]] = (lat, lng)
 
     return by_name
 
