@@ -1,106 +1,104 @@
-import pandas as pd
 import json
 import sys
 
-# This is the main processing code for generating Google Maps friendly CSV files
-# from the standard campgrounds JSON list data.  The campgrounds JSON list data
-# should be in the following format:
+import pandas as pd
+
+# Converts campground JSON data to a Google My Maps-compatible CSV.
 #
+# Input JSON format:
 # [
-#  {
-#    "name": "FR 812 Dispersed Sites",
-#    "location": "37.6103,-79.3787",
-#    "elevation_meters": 269,
-#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
-#  },
-#  {
-#    "name": "Meriwether Lewis Campground",
-#    "location": "35.5232,-87.4570",
-#    "elevation_meters": 260,
-#    "note": "https://thedyrt.com/press/2025-best-places-to-camp-in-the-southeast-region/"
-#  },
-#  ...
+#   {
+#     "name": "FR 812 Dispersed Sites",
+#     "location": "37.6103,-79.3787",
+#     "elevation_meters": 269,
+#     "note": "https://thedyrt.com/..."
+#   },
+#   ...
 # ]
 #
-# Note that the campground elevation value in meters is important because it is
-# used to calculate the temperature differential which is included in the output
-# CSV file along with the elevation converted to feet.  The temperature 
-# differential is calculated from the base location indicated by BASE_LOC.
-# Note that the format of BASE_LOC is different, with separate float values for
-# latitude and longitude, and the elevation value is called altitude_meters
-# to reduce possible ambiguities in human understanding of the math formulas.
-#
+# The output adds computed fields: elevation_feet, delta_temp (temperature
+# difference in °F relative to BASE_LOCATION, based on latitude and altitude),
+# climate (categorical label derived from delta_temp), and visited (yes/no
+# derived from presence of a "stays" field in the input).
 
-meters_2_feet = lambda x: x * 3.281
-celsius_change_latitude = lambda x: -1.0 * x
-celsius_change_altitude = lambda x: -0.0065 * x
-BASE_LOC = {
-        "name": "Reston, VA",
-        "latitude": 38.9527,
-        "longitude": -77.3412,
-        "altitude_meters": 110
-    }
+BASE_LOCATION = {
+    "name": "Reston, VA",
+    "latitude": 38.9527,
+    "longitude": -77.3412,
+    "altitude_meters": 110,
+}
 
-def cooling_effect(latitude: float, altitude_meters: float) -> float:
-    delta_latitude = latitude - BASE_LOC["latitude"]
-    delta_altitude_meters = altitude_meters - BASE_LOC["altitude_meters"]
-    delta_celsius_latitude = celsius_change_latitude(delta_latitude)
-    delta_celsius_altitude = celsius_change_altitude(delta_altitude_meters)
-    return delta_celsius_latitude + delta_celsius_altitude
+METERS_TO_FEET = 3.281
+CELSIUS_PER_DEGREE_LATITUDE = -1.0
+CELSIUS_PER_METER_ALTITUDE = -0.0065
+CELSIUS_TO_FAHRENHEIT = 9.0 / 5.0
 
-input_filename = sys.argv[1] if len(sys.argv) > 1 else "all-campgrounds.json"
-output_filename = sys.argv[2] if len(sys.argv) > 2 else "all-campgrounds.csv"
+# Fields from the input JSON that should not appear in the output CSV.
+EXCLUDED_FIELDS = {"index", "stays", "elevation_meters"}
 
-with open(input_filename, "rt") as f:
-    input_data = json.loads(f.read())
 
-for elem in input_data:
-    if "index" in elem:
-        del elem["index"]
+def cooling_effect_fahrenheit(latitude: float, altitude_meters: float) -> float:
+    """Temperature difference (°F) of a location relative to BASE_LOCATION."""
+    delta_lat = latitude - BASE_LOCATION["latitude"]
+    delta_alt = altitude_meters - BASE_LOCATION["altitude_meters"]
+    delta_celsius = (CELSIUS_PER_DEGREE_LATITUDE * delta_lat
+                     + CELSIUS_PER_METER_ALTITUDE * delta_alt)
+    return delta_celsius * CELSIUS_TO_FAHRENHEIT
 
-columns = list({key for d in input_data for key in d.keys() if key != "elevation_meters"})
-columns.append("delta_temp")
-columns.append("climate")
-columns.append("elevation_feet")
-columns.append("visited")
-df = pd.DataFrame(columns=columns)
 
-for elem in input_data:
-    map_elem = elem.copy()
-    if "stays" in elem:
-      map_elem["visited"] = "yes"
-      del map_elem["stays"]
-    else:
-      map_elem["visited"] = "no"
-    map_elem["name"] = elem.get("name","")
-    map_elem["note"] = elem.get("note","")
-    location = elem.get("location")
-    lat,lon = list(map(lambda x: float(x), location.split(",")))
-    elev_meters = elem.get("elevation_meters",0)
-    elev_feet = meters_2_feet(elev_meters)
-    map_elem["elevation_feet"] = int(elev_feet)
-    delta_celsius = cooling_effect(lat, elev_meters)
-    delta_fahrenheit = delta_celsius * (9.0 / 5.0)
-    map_elem["delta_temp"] = delta_fahrenheit
-    # calculate climate
-    if map_elem["delta_temp"] <= -14.0:
-        map_elem["climate"] = "much cooler"
-    elif map_elem["delta_temp"] > -14.0 and map_elem["delta_temp"] <= -9.0:
-        map_elem["climate"] = "cooler"
-    elif map_elem["delta_temp"] > -9.0 and map_elem["delta_temp"] <= -4.0:
-        map_elem["climate"] = "slightly cooler"
-    elif map_elem["delta_temp"] > -4.0 and map_elem["delta_temp"] <= 4.0:
-        map_elem["climate"] = "similar"
-    elif map_elem["delta_temp"] >= 4.0 and map_elem["delta_temp"] < 9.0:
-        map_elem["climate"] = "slightly warmer"
-    elif map_elem["delta_temp"] >= 9.0 and map_elem["delta_temp"] < 14.0:
-        map_elem["climate"] = "warmer"
-    elif map_elem["delta_temp"] >= 14.0 and map_elem["delta_temp"] < 19.0:
-        map_elem["climate"] = "much warmer"
-    else:
-        map_elem["climate"] = "hot"
+def classify_climate(delta_temp: float) -> str:
+    """Return a climate label based on the temperature differential (°F)."""
+    if delta_temp <= -14.0:
+        return "much cooler"
+    if delta_temp <= -9.0:
+        return "cooler"
+    if delta_temp <= -4.0:
+        return "slightly cooler"
+    if delta_temp <= 4.0:
+        return "similar"
+    if delta_temp < 9.0:
+        return "slightly warmer"
+    if delta_temp < 14.0:
+        return "warmer"
+    if delta_temp < 19.0:
+        return "much warmer"
+    return "hot"
 
-    if location is not None:
-        df.loc[len(df)] = pd.Series(map_elem)
 
-df.to_csv(output_filename, index=False)
+def process_campground(entry: dict) -> dict | None:
+    """Transform a campground JSON entry into a My Maps-compatible CSV row."""
+    location = entry.get("location")
+    if location is None:
+        return None
+
+    lat, lon = (float(x) for x in location.split(","))
+    elev_meters = entry.get("elevation_meters", 0)
+    delta_temp = cooling_effect_fahrenheit(lat, elev_meters)
+
+    row = {k: v for k, v in entry.items() if k not in EXCLUDED_FIELDS}
+    row["elevation_feet"] = int(elev_meters * METERS_TO_FEET)
+    row["delta_temp"] = delta_temp
+    row["climate"] = classify_climate(delta_temp)
+    row["visited"] = "yes" if "stays" in entry else "no"
+
+    return row
+
+
+def main():
+    input_filename = sys.argv[1] if len(sys.argv) > 1 else "all-campgrounds.json"
+    output_filename = sys.argv[2] if len(sys.argv) > 2 else "all-campgrounds.csv"
+
+    with open(input_filename) as f:
+        input_data = json.load(f)
+
+    rows = []
+    for entry in input_data:
+        row = process_campground(entry)
+        if row is not None:
+            rows.append(row)
+
+    pd.DataFrame(rows).to_csv(output_filename, index=False)
+
+
+if __name__ == "__main__":
+    main()
