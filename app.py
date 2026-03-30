@@ -25,14 +25,14 @@ CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
 
 WATERFRONT_COLORS = {
     "lake":          "#1976d2",
-    "river":         "#00897b",
-    "creek":         "#26a69a",
+    "river":         "#00695c",
+    "creek":         "#80cbc4",
     "pond":          "#9acd32",
     "bay":           "#0d47a1",
     "coastal dunes": "#e6a817",
     "coastal woods": "#6b8e23",
     "lakeview":      "#64b5f6",
-    "riverview":     "#80cbc4",
+    "riverview":     "#26a69a",
     "none":          "#795548",
 }
 
@@ -189,12 +189,21 @@ def search():
 # ── Trip calendar routes ─────────────────────────────────────────────────────
 
 @app.route('/trips')
+@app.route('/trips/map')
+def trips_map():
+    trips = parse_trips()
+    for trip in trips:
+        enrich_trip_locations(trip)
+    home, family = _map_config()
+    return render_template('trips_map.html', trips=trips, home=home, family_locations=family)
+
+
+@app.route('/trips/calendar')
 def trips_calendar():
     trips = parse_trips()
     for trip in trips:
         enrich_trip_locations(trip)
-    _, family = _map_config()
-    return render_template('trips_calendar.html', trips=trips, family_locations=family)
+    return render_template('trips_calendar.html', trips=trips)
 
 
 @app.route('/trips/<int:trip_id>')

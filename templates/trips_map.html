@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ title }} — EKKO Trips</title>
+<title>All Camping Locations — EKKO Trips</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -82,43 +82,12 @@
     font-weight: 600;
     color: var(--navy);
     border-bottom: 1px solid var(--gray-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
   }
 
-  #campground-map {
+  #all-trips-map {
     height: calc(100vh - 220px);
     min-height: 400px;
     width: 100%;
-  }
-
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem .75rem;
-    padding: .75rem 1.25rem;
-    border-top: 1px solid var(--gray-light);
-    font-size: .82rem;
-    color: var(--gray);
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: .3rem;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .legend-item.dimmed { opacity: .35; }
-
-  .legend-swatch {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 2px solid rgba(0,0,0,.25);
-    flex-shrink: 0;
   }
 </style>
 </head>
@@ -127,63 +96,31 @@
 <header>
   <h1>EKKO Trips</h1>
   <div class="stats">
-    <div><span>{{ campgrounds|length }}</span> campgrounds</div>
+    <div><span>{{ trips|length }}</span> trips</div>
+    <div><span>{{ trips|map(attribute='total_nights')|sum }}</span> nights</div>
   </div>
 </header>
 
 <nav>
-  <a href="/trips/map">Trips Map</a>
+  <a href="/trips/map" class="active">Trips Map</a>
   <a href="/trips/calendar">Trips Calendar</a>
-  <a href="/campgrounds/waterfront" {% if color_field == 'waterfront' %}class="active"{% endif %}>Waterfront Map</a>
-  <a href="/campgrounds/climate" {% if color_field == 'climate' %}class="active"{% endif %}>Climate Map</a>
+  <a href="/campgrounds/waterfront">Waterfront Map</a>
+  <a href="/campgrounds/climate">Climate Map</a>
 </nav>
 
 <div class="map-section">
   <div class="map-container">
-    <div class="map-header">
-      <span>{{ title }}</span>
-    </div>
-    <div id="campground-map"></div>
-    <div class="legend" id="legend"></div>
+    <div class="map-header">All Camping Locations</div>
+    <div id="all-trips-map"></div>
   </div>
 </div>
 
 <script>
-const CAMPGROUNDS = {{ campgrounds | tojson }};
-const COLOR_MAP = {{ color_map | tojson }};
-const COLOR_FIELD = {{ color_field | tojson }};
-const HOME = {{ home | tojson }};
+const TRIPS = {{ trips | tojson }};
 const FAMILY = {{ family_locations | tojson }};
+const HOME = {{ home | tojson }};
 
-// ── Build legend ──────────────────────────────────────────────────────────
-const legendEl = document.getElementById('legend');
-const activeCategories = new Set(Object.keys(COLOR_MAP));
-const categoryMarkers = {};  // category -> [marker, ...]
-
-Object.entries(COLOR_MAP).forEach(([category, color]) => {
-  const count = CAMPGROUNDS.filter(c => (c[COLOR_FIELD] || 'none') === category).length;
-  const item = document.createElement('div');
-  item.className = 'legend-item';
-  item.innerHTML = `<span class="legend-swatch" style="background:${color}"></span>${category} (${count})`;
-  item.addEventListener('click', () => toggleCategory(category, item));
-  legendEl.appendChild(item);
-  categoryMarkers[category] = [];
-});
-
-function toggleCategory(category, item) {
-  if (activeCategories.has(category)) {
-    activeCategories.delete(category);
-    item.classList.add('dimmed');
-    categoryMarkers[category].forEach(m => m.setStyle({ opacity: 0, fillOpacity: 0 }));
-  } else {
-    activeCategories.add(category);
-    item.classList.remove('dimmed');
-    categoryMarkers[category].forEach(m => m.setStyle({ opacity: 1, fillOpacity: 0.8 }));
-  }
-}
-
-// ── Build map ─────────────────────────────────────────────────────────────
-const map = L.map('campground-map');
+const map = L.map('all-trips-map');
 const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
   maxZoom: 18,
@@ -216,6 +153,49 @@ if (HOME) {
     .bindPopup('<strong>Home</strong>');
 }
 
+// Collect unique locations across all trips
+const locMap = {};
+TRIPS.forEach(trip => {
+  trip.stays.forEach(stay => {
+    if (!stay.lat || !stay.lng) return;
+    const key = stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
+    if (!locMap[key]) {
+      locMap[key] = { lat: stay.lat, lng: stay.lng, place: stay.place, locale: stay.locale, state: stay.state, trips: [] };
+    }
+    if (!locMap[key].trips.some(t => t.id === trip.id)) {
+      locMap[key].trips.push(trip);
+    }
+  });
+});
+
+const bounds = HOME ? [HOME] : [];
+Object.values(locMap).forEach(loc => {
+  const ll = [loc.lat, loc.lng];
+  bounds.push(ll);
+
+  const visits = loc.trips.length;
+  const radius = Math.min(6 + visits * 2, 14);
+
+  const marker = L.circleMarker(ll, {
+    radius: radius,
+    fillColor: '#bf0a30',
+    color: '#002868',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.8,
+  }).addTo(map);
+
+  let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits > 1 ? 's' : ''}`;
+  popup += '<div style="margin-top:4px;font-size:12px;">';
+  loc.trips.forEach(t => {
+    const d = new Date(t.start + 'T00:00:00');
+    const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">${fmt} — ${t.summary}</a>`;
+  });
+  popup += '</div>';
+  marker.bindPopup(popup, { maxWidth: 280 });
+});
+
 // Family location markers
 FAMILY.forEach(fam => {
   const ll = [fam.lat, fam.lng];
@@ -232,45 +212,7 @@ FAMILY.forEach(fam => {
   });
   L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
     .bindPopup(`<strong>${fam.label}</strong>`);
-});
-
-// Campground markers
-const familyCoords = FAMILY.map(f => [f.lat, f.lng]);
-const bounds = (HOME ? [HOME] : []).concat(familyCoords);
-
-CAMPGROUNDS.forEach(cg => {
-  const parts = cg.location.split(',');
-  const lat = parseFloat(parts[0]);
-  const lng = parseFloat(parts[1]);
-  const ll = [lat, lng];
   bounds.push(ll);
-
-  const category = cg[COLOR_FIELD] || 'none';
-  const color = COLOR_MAP[category] || '#888';
-
-  const marker = L.circleMarker(ll, {
-    radius: 6,
-    fillColor: color,
-    color: '#fff',
-    weight: 1.5,
-    opacity: 1,
-    fillOpacity: 0.8,
-  }).addTo(map);
-
-  let popup = `<strong>${cg.name}</strong>`;
-  if (cg.state) popup += `<br>${cg.state}`;
-  popup += `<br><em>${category}</em>`;
-  if (cg.elevation_feet) popup += `<br>${cg.elevation_feet} ft`;
-  if (cg.visited === 'yes') popup += `<br><span style="color:#2e7d32;">&#10003; visited</span>`;
-  if (cg.website) {
-    const url = cg.website.split('\n')[0];
-    popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
-  }
-  marker.bindPopup(popup, { maxWidth: 280 });
-
-  if (categoryMarkers[category]) {
-    categoryMarkers[category].push(marker);
-  }
 });
 
 if (bounds.length) {
