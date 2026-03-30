@@ -385,6 +385,13 @@ TRIPS.forEach(trip => {
   }
 });
 
+// Assign alternating navy/red to each trip
+const TRIP_COLORS = ['#002868', '#bf0a30'];
+const tripColor = {};
+TRIPS.forEach((trip, i) => {
+  tripColor[trip.id] = TRIP_COLORS[i % 2];
+});
+
 // ── All-trips map ───────────────────────────────────────────────────────────
 (function() {
   const HOME = [38.929576, -77.366840];
@@ -545,19 +552,24 @@ function renderCalendar() {
       const trips = dayToTrips[dateStr];
 
       if (trips && trips.length > 0) {
-        // Prefer the trip that is starting on this day for display
         const startingTrip = trips.find(t => t.start === dateStr);
         const primaryTrip = startingTrip || trips[0];
-        const allHome = primaryTrip.home_only;
+        const color = tripColor[primaryTrip.id];
 
         td.className = 'trip-day';
-        if (trips.some(t => t.start === dateStr)) td.classList.add('trip-start');
-        if (allHome) td.classList.add('home-only');
+        if (primaryTrip.home_only) td.classList.add('home-only');
         if (dateStr === todayStr) td.classList.add('today');
 
         const span = document.createElement('span');
         span.className = 'day-num';
         span.textContent = d;
+        if (primaryTrip.home_only) {
+          span.style.background = 'var(--white)';
+          span.style.color = color;
+          span.style.border = '2px solid ' + color;
+        } else {
+          span.style.background = color;
+        }
         td.appendChild(span);
 
         td.addEventListener('click', () => {
@@ -612,9 +624,14 @@ function renderList() {
     const endD = new Date(trip.end + 'T00:00:00');
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
+    const color = tripColor[trip.id];
+    const badgeStyle = trip.home_only
+      ? `background:var(--white);color:${color};border:2px solid ${color};`
+      : `background:${color};`;
+
     a.innerHTML = `
       <div class="trip-number">#${trip.id}</div>
-      <div class="nights-badge">${trip.total_nights}N</div>
+      <div class="nights-badge" style="${badgeStyle}">${trip.total_nights}N</div>
       <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
       <div class="info">
         <h3>${trip.summary}</h3>
