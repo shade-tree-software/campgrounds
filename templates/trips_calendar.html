@@ -386,24 +386,35 @@ const years = TRIPS.map(t => parseInt(t.start.slice(0, 4)));
 const minYear = Math.min(...years);
 const maxYear = Math.max(...years);
 
-// Read year from URL hash, default to most recent year
-function yearFromHash() {
-  const h = parseInt(location.hash.replace('#', ''));
-  return (h >= minYear && h <= maxYear) ? h : maxYear;
+// Read year and view from URL hash (e.g. #2024/list or #2024)
+function parseHash() {
+  const parts = location.hash.replace('#', '').split('/');
+  const y = parseInt(parts[0]);
+  const year = (y >= minYear && y <= maxYear) ? y : maxYear;
+  const view = parts[1] === 'list' ? 'list' : 'calendar';
+  return { year, view };
 }
 
-let currentYear = yearFromHash();
-let currentView = 'calendar';
+const parsed = parseHash();
+let currentYear = parsed.year;
+let currentView = parsed.view;
 
 const todayStr = new Date().toISOString().slice(0, 10);
 
 window.addEventListener('hashchange', () => {
-  currentYear = yearFromHash();
+  const parsed = parseHash();
+  currentYear = parsed.year;
+  currentView = parsed.view;
+  document.getElementById('btn-calendar').classList.toggle('active', currentView === 'calendar');
+  document.getElementById('btn-list').classList.toggle('active', currentView === 'list');
+  document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
+  document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
   render();
 });
 
 function updateHash() {
-  history.replaceState(null, '', '#' + currentYear);
+  const viewPart = currentView === 'list' ? '/list' : '';
+  history.replaceState(null, '', '#' + currentYear + viewPart);
 }
 
 function setView(view) {
@@ -548,13 +559,13 @@ function renderList() {
 
     a.innerHTML = `
       <div class="trip-number">#${trip.id}</div>
-      <div class="nights-badge" style="${badgeStyle}">${trip.total_nights}N</div>
+      <div class="nights-badge" style="${badgeStyle}">${trip.total_nights}</div>
       <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
       <div class="info">
         <h3>${trip.summary}</h3>
         <div class="meta">${trip.campers.join(', ')}</div>
       </div>
-      <div class="stays-count">${trip.stays.length} stop${trip.stays.length > 1 ? 's' : ''}</div>
+      <div class="stays-count">${trip.total_nights} night${trip.total_nights > 1 ? 's' : ''}, ${trip.stays.length} stop${trip.stays.length > 1 ? 's' : ''}</div>
     `;
     container.appendChild(a);
   });
@@ -586,7 +597,11 @@ function hideTooltip() {
   document.getElementById('tooltip').classList.remove('visible');
 }
 
-// Init
+// Init — apply view from URL hash
+document.getElementById('btn-calendar').classList.toggle('active', currentView === 'calendar');
+document.getElementById('btn-list').classList.toggle('active', currentView === 'list');
+document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
+document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
 render();
 </script>
 </body>
