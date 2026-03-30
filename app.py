@@ -1,4 +1,3 @@
-import csv
 import json
 import os
 from datetime import datetime
@@ -21,7 +20,7 @@ os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
-CAMPGROUNDS_CSV = os.path.join(os.path.dirname(__file__), "all-campgrounds.csv")
+CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "all-campgrounds.json")
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
 
 WATERFRONT_COLORS = {
@@ -337,9 +336,60 @@ def delete_photo(trip_id, stay_idx, filename):
 
 # ── Campground map routes ───────────────────────────────────────────────────
 
-def _load_campgrounds_csv():
-    with open(CAMPGROUNDS_CSV, newline="", encoding="utf-8-sig") as f:
-        return list(csv.DictReader(f))
+METERS_TO_FEET = 3.281
+CELSIUS_PER_DEGREE_LATITUDE = -1.0
+CELSIUS_PER_METER_ALTITUDE = -0.0065
+CELSIUS_TO_FAHRENHEIT = 9.0 / 5.0
+
+CLIMATE_THRESHOLDS = [
+    (-14.0, "much cooler"),
+    (-9.0,  "cooler"),
+    (-4.0,  "slightly cooler"),
+    (4.0,   "similar"),
+]
+
+
+def _classify_climate(delta_temp):
+    for threshold, label in CLIMATE_THRESHOLDS:
+        if delta_temp <= threshold:
+            return label
+    if delta_temp < 9.0:
+        return "slightly warmer"
+    if delta_temp < 14.0:
+        return "warmer"
+    if delta_temp < 19.0:
+        return "much warmer"
+    return "hot"
+
+
+def _load_campgrounds():
+    """Load campgrounds from JSON and compute derived fields."""
+    config = _load_json(CONFIG_FILE)
+    home_lat = config.get("home_lat")
+    home_alt = config.get("home_altitude_meters")
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+
+    excluded = {"index", "stays", "elevation_meters"}
+    rows = []
+    for entry in entries:
+        if "location" not in entry:
+            continue
+        lat, lng = (float(x) for x in entry["location"].split(","))
+        elev = entry.get("elevation_meters", 0)
+        delta_lat = lat - home_lat
+        delta_alt = elev - home_alt
+        delta_celsius = (CELSIUS_PER_DEGREE_LATITUDE * delta_lat
+                         + CELSIUS_PER_METER_ALTITUDE * delta_alt)
+        delta_temp = delta_celsius * CELSIUS_TO_FAHRENHEIT
+
+        row = {k: v for k, v in entry.items() if k not in excluded}
+        row["elevation_feet"] = int(elev * METERS_TO_FEET)
+        row["delta_temp"] = delta_temp
+        row["climate"] = _classify_climate(delta_temp)
+        row["visited"] = "yes" if "stays" in entry else "no"
+        rows.append(row)
+    return rows
 
 
 def _map_config():
@@ -358,7 +408,7 @@ def campgrounds_waterfront():
     return render_template(
         'campground_map.html',
         title='Campgrounds by Waterfront',
-        campgrounds=_load_campgrounds_csv(),
+        campgrounds=_load_campgrounds(),
         color_field='waterfront',
         color_map=WATERFRONT_COLORS,
         home=home,
@@ -372,7 +422,7 @@ def campgrounds_climate():
     return render_template(
         'campground_map.html',
         title='Campgrounds by Climate',
-        campgrounds=_load_campgrounds_csv(),
+        campgrounds=_load_campgrounds(),
         color_field='climate',
         color_map=CLIMATE_COLORS,
         home=home,
