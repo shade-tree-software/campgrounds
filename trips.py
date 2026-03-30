@@ -83,7 +83,8 @@ def _parse_stays(csv_path):
                 "state": row.get("State", "").strip(),
                 "site": row.get("Site", "").strip(),
                 "campers": row.get("Campers", "").strip(),
-                "notes": row.get("Notes", "").strip(),
+                "trip_note": row.get("Trip Note", "").strip(),
+                "notes": row.get("Note", "").strip(),
             })
     return stays
 
@@ -128,11 +129,12 @@ def _make_trip(trip_id, stays):
             seen.add(key)
             places.append(s["place"])
 
-    first_notes = stays[0].get("notes", "").strip()
+    # Use trip_note from the first stay for trip-level summary/description
+    trip_note = stays[0].get("trip_note", "").strip()
     description = ""
-    if first_notes:
+    if trip_note:
         # Split on first comma, period, or semicolon
-        m = re.split(r"[,.;]", first_notes, maxsplit=1)
+        m = re.split(r"[,.;]", trip_note, maxsplit=1)
         summary = m[0].strip()
         if len(m) > 1:
             description = m[1].strip()

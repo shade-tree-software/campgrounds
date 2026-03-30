@@ -458,17 +458,18 @@
       {% endif %}
 
       <!-- Photos -->
+      {% set stay_idx = loop.index0 %}
       <div class="photos-section">
         <h4>Photos</h4>
-        <div class="photo-grid" id="photos-{{ loop.index0 }}">
-          {% for photo in stay_photos[loop.index0] %}
+        <div class="photo-grid" id="photos-{{ stay_idx }}">
+          {% for photo in stay_photos[stay_idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}">
             <img src="{{ photo.url }}" alt="{{ photo.caption or stay.place }}" onclick="openLightbox(this.src)">
-            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ loop.parent.loop.index0 }}, '{{ photo.filename }}', this)">&times;</button>
+            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this)">&times;</button>
             <div class="caption-area">
               <input type="text" placeholder="Add a caption..."
                      value="{{ photo.caption }}"
-                     onchange="saveCaption({{ trip.id }}, {{ loop.parent.loop.index0 }}, '{{ photo.filename }}', this.value)">
+                     onchange="saveCaption({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this.value)">
             </div>
           </div>
           {% endfor %}
