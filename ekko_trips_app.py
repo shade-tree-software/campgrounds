@@ -2,11 +2,9 @@ import json
 import os
 from datetime import datetime
 
-from flask import Flask, render_template, request, jsonify, Response, send_from_directory
+from flask import Flask, render_template, request, jsonify
 from werkzeug.utils import secure_filename
-import requests
 
-from summer_finder import find_summer_days
 from trips import parse_trips, enrich_trip_locations
 
 app = Flask(__name__)
@@ -64,130 +62,74 @@ def _save_json(path, data):
         json.dump(data, f, indent=2)
 
 
-# ── Existing routes ──────────────────────────────────────────────────────────
+# ── Campground data ─────────────────────────────────────────────────────────
+
+METERS_TO_FEET = 3.281
+CELSIUS_PER_DEGREE_LATITUDE = -1.0
+CELSIUS_PER_METER_ALTITUDE = -0.0065
+CELSIUS_TO_FAHRENHEIT = 9.0 / 5.0
+
+CLIMATE_THRESHOLDS = [
+    (-14.0, "much cooler"),
+    (-9.0,  "cooler"),
+    (-4.0,  "slightly cooler"),
+    (4.0,   "similar"),
+    (9.0,   "slightly warmer"),
+    (14.0,  "warmer"),
+    (19.0,  "much warmer"),
+]
+
+
+def _classify_climate(delta_temp):
+    for threshold, label in CLIMATE_THRESHOLDS:
+        if delta_temp <= threshold:
+            return label
+    return "hot"
+
+
+def _load_campgrounds():
+    """Load campgrounds from JSON and compute derived fields."""
+    config = _load_json(CONFIG_FILE)
+    home_lat = config.get("home_lat")
+    home_alt = config.get("home_altitude_meters")
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+
+    excluded = {"index", "stays", "elevation_meters"}
+    rows = []
+    for entry in entries:
+        if "location" not in entry:
+            continue
+        lat, lng = (float(x) for x in entry["location"].split(","))
+        elev = entry.get("elevation_meters", 0)
+        delta_lat = lat - home_lat
+        delta_alt = elev - home_alt
+        delta_celsius = (CELSIUS_PER_DEGREE_LATITUDE * delta_lat
+                         + CELSIUS_PER_METER_ALTITUDE * delta_alt)
+        delta_temp = delta_celsius * CELSIUS_TO_FAHRENHEIT
+
+        row = {k: v for k, v in entry.items() if k not in excluded}
+        row["elevation_feet"] = int(elev * METERS_TO_FEET)
+        row["delta_temp"] = delta_temp
+        row["climate"] = _classify_climate(delta_temp)
+        row["visited"] = "yes" if "stays" in entry else "no"
+        rows.append(row)
+    return rows
+
+
+def _map_config():
+    """Return home coords and family locations from config.json."""
+    config = _load_json(CONFIG_FILE)
+    lat = config.get("home_lat")
+    lng = config.get("home_long")
+    home = [lat, lng] if lat is not None and lng is not None else None
+    family = config.get("family_locations", [])
+    return home, family
+
+
+# ── Trip routes ─────────────────────────────────────────────────────────────
 
 @app.route('/')
-def index():
-    return render_template('index.html')
-
-
-@app.route('/geocode', methods=['GET'])
-def geocode():
-    """Geocoding API for city autocomplete using Open-Meteo Geocoding API"""
-    query = request.args.get('q', '').strip()
-
-    if not query or len(query) < 2:
-        return jsonify([])
-
-    try:
-        url = f"https://geocoding-api.open-meteo.com/v1/search?name={query}&count=5&language=en&format=json"
-        response = requests.get(url, timeout=5)
-        response.raise_for_status()
-        data = response.json()
-
-        results = []
-        if 'results' in data:
-            for item in data['results']:
-                results.append({
-                    'name': item['name'],
-                    'country': item.get('country', ''),
-                    'admin1': item.get('admin1', ''),
-                    'latitude': item['latitude'],
-                    'longitude': item['longitude']
-                })
-
-        return jsonify(results)
-    except requests.RequestException as e:
-        return jsonify({'error': f'Geocoding request failed: {str(e)}'})
-    except Exception as e:
-        return jsonify({'error': f'Geocoding error: {str(e)}'})
-
-
-@app.route('/search', methods=['POST'])
-def search():
-    data = request.get_json()
-
-    max_miles = float(data.get('max_miles', 400))
-    min_high_temp = float(data.get('min_high_temp', 70))
-    max_high_temp = float(data.get('max_high_temp', 88))
-    prefer_waterfront = data.get('prefer_waterfront', False)
-    all_days = data.get('all_days', False)
-    weekends_only = not all_days
-
-    form_home_lat = data.get('home_lat')
-    form_home_long = data.get('home_long')
-
-    def generate():
-        try:
-            from summer_finder import load_campgrounds, check_campground_weather, get_day_of_week
-            from geopy.distance import great_circle
-
-            home_lat = form_home_lat
-            home_long = form_home_long
-
-            if home_lat and home_long:
-                home = (float(home_lat), float(home_long))
-            else:
-                return "ERROR: Home coordinates are required. Please select a city from the search."
-
-            campgrounds = load_campgrounds()
-            all_summer_days = []
-
-            eligible_campgrounds = []
-            for campground in campgrounds:
-                lat, long = campground["location"].split(",")
-                point = (float(lat), float(long))
-                dist = great_circle(home, point).miles if home else 0
-                if dist < max_miles:
-                    eligible_campgrounds.append((campground, dist))
-
-            total_campgrounds = len(eligible_campgrounds)
-
-            yield f"data: Considering {total_campgrounds} campgrounds within {max_miles} miles of home {home if home else 'any location'}.\n\n"
-
-            for i, (campground, dist) in enumerate(eligible_campgrounds):
-                name = campground["name"]
-
-                yield f"data: Checking {name} ({i+1}/{total_campgrounds})\n\n"
-
-                try:
-                    summer_days = check_campground_weather(
-                        campground, min_high_temp, max_high_temp, home, max_miles, weekends_only, progress_callback
-                    )
-
-                    for summer_day in summer_days:
-                        waterfront = campground.get("waterfront", "none")
-                        summer_day["waterfront"] = waterfront
-
-                        waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
-                        yield f"data: Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)\n\n"
-                        all_summer_days.append(summer_day)
-
-                except Exception as e:
-                    yield f"data: {str(e)}\n\n"
-                    continue
-
-            if all_summer_days:
-                if prefer_waterfront:
-                    sorted_summer_days = sorted(
-                        all_summer_days,
-                        key=lambda d: (d.get('waterfront', 'none') == 'none', d['dist'])
-                    )
-                else:
-                    sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
-
-                yield f"data: SEARCH_COMPLETE:{json.dumps(sorted_summer_days)}\n\n"
-            else:
-                yield f"data: SEARCH_COMPLETE:[]\n\n"
-
-        except Exception as e:
-            yield f"data: ERROR:{str(e)}\n\n"
-
-    return Response(generate(), mimetype='text/plain')
-
-
-# ── Trip calendar routes ─────────────────────────────────────────────────────
-
 @app.route('/trips')
 @app.route('/trips/map')
 def trips_map():
@@ -215,12 +157,10 @@ def trip_detail(trip_id):
 
     enrich_trip_locations(trip)
 
-    # Load photos for each stay
     comments = _load_json(COMMENTS_FILE)
     captions = _load_json(CAPTIONS_FILE)
     trip_comments = comments.get(str(trip_id), [])
 
-    # Build photo list per stay (keyed by stay index)
     stay_photos = {}
     for i, stay in enumerate(trip["stays"]):
         photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(i))
@@ -262,7 +202,6 @@ def upload_photo(trip_id, stay_idx):
     os.makedirs(photo_dir, exist_ok=True)
 
     filename = secure_filename(file.filename)
-    # Avoid overwriting: append timestamp if exists
     base, ext = os.path.splitext(filename)
     dest = os.path.join(photo_dir, filename)
     if os.path.exists(dest):
@@ -334,7 +273,6 @@ def delete_photo(trip_id, stay_idx, filename):
     if os.path.exists(photo_path):
         os.remove(photo_path)
 
-    # Remove caption too
     photo_key = f"{trip_id}/{stay_idx}/{filename}"
     captions = _load_json(CAPTIONS_FILE)
     captions.pop(photo_key, None)
@@ -344,69 +282,6 @@ def delete_photo(trip_id, stay_idx, filename):
 
 
 # ── Campground map routes ───────────────────────────────────────────────────
-
-METERS_TO_FEET = 3.281
-CELSIUS_PER_DEGREE_LATITUDE = -1.0
-CELSIUS_PER_METER_ALTITUDE = -0.0065
-CELSIUS_TO_FAHRENHEIT = 9.0 / 5.0
-
-CLIMATE_THRESHOLDS = [
-    (-14.0, "much cooler"),
-    (-9.0,  "cooler"),
-    (-4.0,  "slightly cooler"),
-    (4.0,   "similar"),
-    (9.0,   "slightly warmer"),
-    (14.0,  "warmer"),
-    (19.0,  "much warmer"),
-]
-
-
-def _classify_climate(delta_temp):
-    for threshold, label in CLIMATE_THRESHOLDS:
-        if delta_temp <= threshold:
-            return label
-    return "hot"
-
-
-def _load_campgrounds():
-    """Load campgrounds from JSON and compute derived fields."""
-    config = _load_json(CONFIG_FILE)
-    home_lat = config.get("home_lat")
-    home_alt = config.get("home_altitude_meters")
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
-
-    excluded = {"index", "stays", "elevation_meters"}
-    rows = []
-    for entry in entries:
-        if "location" not in entry:
-            continue
-        lat, lng = (float(x) for x in entry["location"].split(","))
-        elev = entry.get("elevation_meters", 0)
-        delta_lat = lat - home_lat
-        delta_alt = elev - home_alt
-        delta_celsius = (CELSIUS_PER_DEGREE_LATITUDE * delta_lat
-                         + CELSIUS_PER_METER_ALTITUDE * delta_alt)
-        delta_temp = delta_celsius * CELSIUS_TO_FAHRENHEIT
-
-        row = {k: v for k, v in entry.items() if k not in excluded}
-        row["elevation_feet"] = int(elev * METERS_TO_FEET)
-        row["delta_temp"] = delta_temp
-        row["climate"] = _classify_climate(delta_temp)
-        row["visited"] = "yes" if "stays" in entry else "no"
-        rows.append(row)
-    return rows
-
-
-def _map_config():
-    """Return home coords and family locations from config.json."""
-    config = _load_json(CONFIG_FILE)
-    lat = config.get("home_lat")
-    lng = config.get("home_long")
-    home = [lat, lng] if lat is not None and lng is not None else None
-    family = config.get("family_locations", [])
-    return home, family
-
 
 @app.route('/campgrounds/waterfront')
 def campgrounds_waterfront():
@@ -437,4 +312,4 @@ def campgrounds_climate():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5001)
