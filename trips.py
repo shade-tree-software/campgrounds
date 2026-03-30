@@ -170,20 +170,30 @@ def _make_trip(trip_id, stays):
     }
 
 
-def _load_campground_locations(json_path="all-campgrounds.json"):
-    """Load campground name -> (lat, lng) mapping with fuzzy lookup support."""
+def _load_campground_locations(json_path="all-campgrounds.json",
+                               config_path="config.json"):
+    """Load name -> (lat, lng) mapping from campgrounds and family locations."""
     import json
     import os
 
-    path = os.path.join(os.path.dirname(__file__), json_path)
+    base = os.path.dirname(__file__)
+
+    path = os.path.join(base, json_path)
     with open(path) as f:
         cgs = json.load(f)
 
-    # Exact name lookup
     by_name = {}
     for c in cgs:
         lat, lng = c["location"].split(",")
         by_name[c["name"]] = (float(lat), float(lng))
+
+    # Include family locations from config so they resolve in trip enrichment
+    cfg_path = os.path.join(base, config_path)
+    if os.path.exists(cfg_path):
+        with open(cfg_path) as f:
+            cfg = json.load(f)
+        for fam in cfg.get("family_locations", []):
+            by_name[fam["label"]] = (fam["lat"], fam["lng"])
 
     return by_name
 

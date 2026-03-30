@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 from datetime import datetime
@@ -20,6 +21,32 @@ os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
+CAMPGROUNDS_CSV = os.path.join(os.path.dirname(__file__), "all-campgrounds.csv")
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
+
+WATERFRONT_COLORS = {
+    "lake":          "#1976d2",
+    "river":         "#00897b",
+    "creek":         "#26a69a",
+    "pond":          "#9acd32",
+    "bay":           "#0d47a1",
+    "coastal dunes": "#e6a817",
+    "coastal woods": "#6b8e23",
+    "lakeview":      "#64b5f6",
+    "riverview":     "#80cbc4",
+    "none":          "#795548",
+}
+
+CLIMATE_COLORS = {
+    "much cooler":     "#1a237e",
+    "cooler":          "#1565c0",
+    "slightly cooler": "#42a5f5",
+    "similar":         "#4caf50",
+    "slightly warmer": "#fdd835",
+    "warmer":          "#fb8c00",
+    "much warmer":     "#e53935",
+    "hot":             "#b71c1c",
+}
 
 
 def _allowed_file(filename):
@@ -167,7 +194,8 @@ def trips_calendar():
     trips = parse_trips()
     for trip in trips:
         enrich_trip_locations(trip)
-    return render_template('trips_calendar.html', trips=trips)
+    _, family = _map_config()
+    return render_template('trips_calendar.html', trips=trips, family_locations=family)
 
 
 @app.route('/trips/<int:trip_id>')
@@ -200,11 +228,13 @@ def trip_detail(trip_id):
                     })
         stay_photos[i] = photos
 
+    _, family = _map_config()
     return render_template(
         'trip_detail.html',
         trip=trip,
         stay_photos=stay_photos,
         trip_comments=trip_comments,
+        family_locations=family,
     )
 
 
@@ -303,6 +333,51 @@ def delete_photo(trip_id, stay_idx, filename):
     _save_json(CAPTIONS_FILE, captions)
 
     return jsonify({"ok": True})
+
+
+# ── Campground map routes ───────────────────────────────────────────────────
+
+def _load_campgrounds_csv():
+    with open(CAMPGROUNDS_CSV, newline="", encoding="utf-8-sig") as f:
+        return list(csv.DictReader(f))
+
+
+def _map_config():
+    """Return home coords and family locations from config.json."""
+    config = _load_json(CONFIG_FILE)
+    lat = config.get("home_lat")
+    lng = config.get("home_long")
+    home = [lat, lng] if lat is not None and lng is not None else None
+    family = config.get("family_locations", [])
+    return home, family
+
+
+@app.route('/campgrounds/waterfront')
+def campgrounds_waterfront():
+    home, family = _map_config()
+    return render_template(
+        'campground_map.html',
+        title='Campgrounds by Waterfront',
+        campgrounds=_load_campgrounds_csv(),
+        color_field='waterfront',
+        color_map=WATERFRONT_COLORS,
+        home=home,
+        family_locations=family,
+    )
+
+
+@app.route('/campgrounds/climate')
+def campgrounds_climate():
+    home, family = _map_config()
+    return render_template(
+        'campground_map.html',
+        title='Campgrounds by Climate',
+        campgrounds=_load_campgrounds_csv(),
+        color_field='climate',
+        color_map=CLIMATE_COLORS,
+        home=home,
+        family_locations=family,
+    )
 
 
 if __name__ == '__main__':
