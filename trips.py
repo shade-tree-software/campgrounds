@@ -1,11 +1,14 @@
 """Parse EKKO_Trips.csv into trips (consecutive overnight stays)."""
 
 import csv
+import os
 import re
 from datetime import datetime, timedelta
 
+_DIR = os.path.dirname(os.path.abspath(__file__))
 
-def parse_trips(csv_path="EKKO_Trips.csv"):
+
+def parse_trips(csv_path=os.path.join(_DIR, "EKKO_Trips.csv")):
     """Parse the CSV and return a list of trips.
 
     A trip is a consecutive sequence of overnight stays (nights > 0)
