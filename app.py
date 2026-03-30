@@ -355,6 +355,9 @@ CLIMATE_THRESHOLDS = [
     (-9.0,  "cooler"),
     (-4.0,  "slightly cooler"),
     (4.0,   "similar"),
+    (9.0,   "slightly warmer"),
+    (14.0,  "warmer"),
+    (19.0,  "much warmer"),
 ]
 
 
@@ -362,12 +365,6 @@ def _classify_climate(delta_temp):
     for threshold, label in CLIMATE_THRESHOLDS:
         if delta_temp <= threshold:
             return label
-    if delta_temp < 9.0:
-        return "slightly warmer"
-    if delta_temp < 14.0:
-        return "warmer"
-    if delta_temp < 19.0:
-        return "much warmer"
     return "hot"
 
 

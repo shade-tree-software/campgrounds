@@ -129,15 +129,10 @@ def _make_trip(trip_id, stays):
             seen.add(key)
             places.append(s["place"])
 
-    # Use trip_note from the first stay for trip-level summary/description
+    # Use trip_note from the first stay as the trip name
     trip_note = stays[0].get("trip_note", "").strip()
-    description = ""
     if trip_note:
-        # Split on first comma, period, or semicolon
-        m = re.split(r"[,.;]", trip_note, maxsplit=1)
-        summary = m[0].strip()
-        if len(m) > 1:
-            description = m[1].strip()
+        summary = trip_note
     elif len(places) == 1:
         summary = places[0]
     elif len(places) == 2:
@@ -166,7 +161,6 @@ def _make_trip(trip_id, stays):
         "end": stays[-1]["end"],
         "total_nights": total_nights,
         "summary": summary,
-        "description": description,
         "campers": sorted(all_campers),
         "home_only": home_only,
     }
