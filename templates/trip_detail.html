@@ -478,16 +478,13 @@
   .photo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-auto-rows: min-content;
     gap: .75rem;
     margin-bottom: 1rem;
   }
 
   .photo-item {
     position: relative;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,.1);
-    background: #f0f0f0;
   }
 
   .photo-item img {
@@ -496,24 +493,38 @@
     object-fit: cover;
     display: block;
     cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.1);
   }
 
   .photo-item .caption-area {
-    padding: .4rem .5rem;
-    font-size: .75rem;
-    background: var(--white);
+    font-size: .78rem;
+    color: var(--gray);
+    padding-top: .3rem;
+    line-height: 1.3;
   }
 
-  .photo-item .caption-area input {
+  .photo-item .caption-text {
+    cursor: pointer;
+  }
+
+  .photo-item .caption-text.placeholder {
+    color: var(--gray-light);
+    font-style: italic;
+  }
+
+  .photo-item .caption-input {
+    display: none;
     width: 100%;
     border: 1px solid var(--gray-light);
     border-radius: 4px;
     padding: .25rem .4rem;
     font-size: .75rem;
     font-family: inherit;
+    resize: vertical;
   }
 
-  .photo-item .caption-area input:focus {
+  .photo-item .caption-input:focus {
     outline: none;
     border-color: var(--red);
   }
@@ -702,6 +713,22 @@
   .lightbox .nav-next { right: 1rem; }
   .lightbox .nav-btn.hidden { display: none; }
 
+  .lightbox .lb-caption {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background: rgba(0,0,0,.6);
+    padding: .4rem 1rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    max-width: 80vw;
+    text-align: center;
+  }
+
+  .lightbox .lb-caption:empty { display: none; }
+
   /* ── Map ─────────────────────────────────────────── */
   .map-container {
     background: var(--white);
@@ -813,7 +840,7 @@
           <input type="text" data-field="state" value="{{ item.state }}">
         </div>
         <div>
-          <label>Site</label>
+          <label>Campsite</label>
           <input type="text" data-field="site" value="{{ item.site }}">
         </div>
         <div>
@@ -847,7 +874,7 @@
       <div class="stay-details">
         {% if item.site %}
         <div class="detail-item">
-          <label>Site</label>
+          <label>Campsite</label>
           <div class="value">{{ item.site }}</div>
         </div>
         {% endif %}
@@ -873,15 +900,19 @@
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
+            {% if is_admin %}
             <div class="caption-area">
-              {% if is_admin %}
-              <input type="text" placeholder="Add a caption..."
-                     value="{{ photo.caption }}"
-                     onchange="saveCaption({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this.value)">
-              {% elif photo.caption %}
-              <span>{{ photo.caption }}</span>
-              {% endif %}
+              <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
+                    onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
+              <textarea class="caption-input" rows="1"
+                        onblur="saveCaptionField(this, {{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', 'stay')"
+                        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
             </div>
+            {% elif photo.caption %}
+            <div class="caption-area">
+              <span>{{ photo.caption }}</span>
+            </div>
+            {% endif %}
           </div>
           {% endfor %}
         </div>
@@ -934,15 +965,19 @@
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
+            {% if is_admin %}
             <div class="caption-area">
-              {% if is_admin %}
-              <input type="text" placeholder="Add a caption..."
-                     value="{{ photo.caption }}"
-                     onchange="saveEventCaption({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this.value)">
-              {% elif photo.caption %}
-              <span>{{ photo.caption }}</span>
-              {% endif %}
+              <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
+                    onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
+              <textarea class="caption-input" rows="1"
+                        onblur="saveCaptionField(this, {{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', 'event')"
+                        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
             </div>
+            {% elif photo.caption %}
+            <div class="caption-area">
+              <span class="caption-text">{{ photo.caption }}</span>
+            </div>
+            {% endif %}
           </div>
           {% endfor %}
         </div>
@@ -999,6 +1034,7 @@
   <button class="close-btn">&times;</button>
   <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)">&#8249;</button>
   <img id="lightbox-img" src="" alt="">
+  <div class="lb-caption" id="lb-caption"></div>
   <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)">&#8250;</button>
 </div>
 
@@ -1272,20 +1308,14 @@ function uploadEventPhotos(tripId, eventIdx, files) {
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
           <button class="delete-photo" onclick="deleteEventPhoto(${tripId}, ${eventIdx}, '${data.filename}', this)">&times;</button>
           <div class="caption-area">
-            <input type="text" placeholder="Add a caption..."
-                   onchange="saveEventCaption(${tripId}, ${eventIdx}, '${data.filename}', this.value)">
+            <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
+            <textarea class="caption-input" rows="1"
+                      onblur="saveCaptionField(this, ${tripId}, ${eventIdx}, '${data.filename}', 'event')"
+                      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
           </div>
         `;
         grid.appendChild(item);
       });
-  });
-}
-
-function saveEventCaption(tripId, eventIdx, filename, caption) {
-  fetch(`/trips/${tripId}/events/${eventIdx}/caption`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filename, caption })
   });
 }
 
@@ -1314,8 +1344,10 @@ function uploadPhotos(tripId, stayIdx, files) {
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
           <button class="delete-photo" onclick="deletePhoto(${tripId}, ${stayIdx}, '${data.filename}', this)">&times;</button>
           <div class="caption-area">
-            <input type="text" placeholder="Add a caption..."
-                   onchange="saveCaption(${tripId}, ${stayIdx}, '${data.filename}', this.value)">
+            <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
+            <textarea class="caption-input" rows="1"
+                      onblur="saveCaptionField(this, ${tripId}, ${stayIdx}, '${data.filename}', 'stay')"
+                      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
           </div>
         `;
         grid.appendChild(item);
@@ -1325,6 +1357,39 @@ function uploadPhotos(tripId, stayIdx, files) {
 
 function saveCaption(tripId, stayIdx, filename, caption) {
   fetch(`/trips/${tripId}/stays/${stayIdx}/caption`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, caption })
+  });
+}
+
+function editCaption(spanEl) {
+  const textarea = spanEl.nextElementSibling;
+  spanEl.style.display = 'none';
+  textarea.style.display = 'block';
+  textarea.focus();
+}
+
+function saveCaptionField(textarea, tripId, idx, filename, type) {
+  const caption = textarea.value.trim();
+  const spanEl = textarea.previousElementSibling;
+
+  // Update the display span
+  if (caption) {
+    spanEl.textContent = caption;
+    spanEl.classList.remove('placeholder');
+  } else {
+    spanEl.textContent = 'Add a caption...';
+    spanEl.classList.add('placeholder');
+  }
+  spanEl.style.display = '';
+  textarea.style.display = 'none';
+
+  // Save to server
+  const url = type === 'event'
+    ? `/trips/${tripId}/events/${idx}/caption`
+    : `/trips/${tripId}/stays/${idx}/caption`;
+  fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ filename, caption })
@@ -1387,7 +1452,16 @@ function openLightbox(imgEl) {
 }
 
 function showLightboxPhoto() {
-  document.getElementById('lightbox-img').src = lightboxPhotos[lightboxIndex].src;
+  const img = lightboxPhotos[lightboxIndex];
+  document.getElementById('lightbox-img').src = img.src;
+  // Get caption from the caption-text span in the same photo-item
+  const item = img.closest('.photo-item');
+  const spanEl = item.querySelector('.caption-text');
+  let caption = '';
+  if (spanEl && !spanEl.classList.contains('placeholder')) {
+    caption = spanEl.textContent;
+  }
+  document.getElementById('lb-caption').textContent = caption;
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
 }
@@ -1402,7 +1476,7 @@ function lightboxNav(e, dir) {
 }
 
 function closeLightbox(e) {
-  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img')) return;
+  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption')) return;
   document.getElementById('lightbox').classList.remove('visible');
 }
 
