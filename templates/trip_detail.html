@@ -338,15 +338,16 @@
   .trip-note-edit .btn-note-save { background: rgba(255,255,255,.2); color: #fff; }
   .trip-note-edit .btn-note-cancel { background: none; color: rgba(255,255,255,.7); }
 
-  .trip-header .admin-actions {
-    margin-top: .75rem;
-  }
-
   .trip-header {
     background: var(--red);
     color: var(--white);
     padding: 2rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
   }
+
+  .trip-header .trip-info { flex: 1; }
 
   .trip-header h1 {
     font-size: 1.6rem;
@@ -363,6 +364,22 @@
   }
 
   .trip-header .meta span { font-weight: 600; }
+
+  .trip-header .btn-delete-trip {
+    background: rgba(0,0,0,.2);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.4);
+    padding: .4rem 1rem;
+    border-radius: 4px;
+    font-size: .8rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .trip-header .btn-delete-trip:hover {
+    background: rgba(0,0,0,.4);
+  }
 
   /* ── Content ────────────────────────────────────── */
   .content {
@@ -731,24 +748,24 @@
 </nav>
 
 <div class="trip-header">
-  <h1 id="trip-title">Trip {{ trip.id }}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
-  <div class="trip-note-edit" id="trip-note-edit">
-    <input type="text" id="trip-note-input" value="{{ trip.trip_note }}" placeholder="Trip name (leave blank for auto-generated)">
-    <button class="btn-note-save" onclick="saveTripNote()">Save</button>
-    <button class="btn-note-cancel" onclick="cancelTripNote()">Cancel</button>
-  </div>
-  <div class="meta">
-    <div><span>{{ trip.total_nights }}</span> nights</div>
-    <div><span>{{ trip.stays|length }}</span> stop{{ 's' if trip.stays|length > 1 else '' }}</div>
-    <div>{{ trip.start }} to {{ trip.end }}</div>
-    {% if trip.campers %}
-    <div>{{ trip.campers|join(', ') }}</div>
-    {% endif %}
+  <div class="trip-info">
+    <h1 id="trip-title">Trip {{ trip.id }}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
+    <div class="trip-note-edit" id="trip-note-edit">
+      <input type="text" id="trip-note-input" value="{{ trip.trip_note }}" placeholder="Trip name (leave blank for auto-generated)">
+      <button class="btn-note-save" onclick="saveTripNote()">Save</button>
+      <button class="btn-note-cancel" onclick="cancelTripNote()">Cancel</button>
+    </div>
+    <div class="meta">
+      <div><span>{{ trip.total_nights }}</span> nights</div>
+      <div><span>{{ trip.stays|length }}</span> stop{{ 's' if trip.stays|length > 1 else '' }}</div>
+      <div>{{ trip.start }} to {{ trip.end }}</div>
+      {% if trip.campers %}
+      <div>{{ trip.campers|join(', ') }}</div>
+      {% endif %}
+    </div>
   </div>
   {% if is_admin %}
-  <div class="admin-actions">
-    <button class="btn-danger" onclick="deleteTrip()">Delete Trip</button>
-  </div>
+  <button class="btn-delete-trip" onclick="deleteTrip()">Delete Trip</button>
   {% endif %}
 </div>
 
