@@ -69,6 +69,171 @@
 
   nav a:hover { color: var(--white); }
 
+  /* ── Admin editing ──────────────────────────────── */
+  .edit-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,.4);
+    color: rgba(255,255,255,.8);
+    cursor: pointer;
+    font-size: .75rem;
+    padding: .2rem .6rem;
+    border-radius: 4px;
+    margin-left: .5rem;
+    vertical-align: middle;
+  }
+
+  .edit-btn:hover { background: rgba(255,255,255,.15); color: #fff; }
+
+  .edit-btn-dark {
+    background: none;
+    border: 1px solid var(--gray-light);
+    color: var(--gray);
+    cursor: pointer;
+    font-size: .75rem;
+    padding: .2rem .6rem;
+    border-radius: 4px;
+    margin-left: .5rem;
+  }
+
+  .edit-btn-dark:hover { background: var(--navy); color: #fff; }
+
+  .stay-edit-form {
+    display: none;
+    padding: 1rem;
+  }
+
+  .stay-edit-form.active { display: block; }
+
+  .stay-edit-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+
+  .stay-edit-form .form-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .stay-edit-form label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: .2rem;
+  }
+
+  .stay-edit-form input,
+  .stay-edit-form textarea {
+    width: 100%;
+    padding: .4rem .6rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    font-size: .85rem;
+    font-family: inherit;
+  }
+
+  .stay-edit-form input:focus,
+  .stay-edit-form textarea:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  .stay-edit-form .form-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: .75rem;
+  }
+
+  .btn-save {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: .4rem 1rem;
+    border-radius: 4px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .btn-save:hover { background: var(--navy); }
+
+  .btn-cancel {
+    background: var(--offwhite);
+    color: var(--gray);
+    border: 1px solid var(--gray-light);
+    padding: .4rem 1rem;
+    border-radius: 4px;
+    font-size: .85rem;
+    cursor: pointer;
+  }
+
+  .btn-cancel:hover { background: #eee; }
+
+  .btn-danger {
+    background: none;
+    color: var(--red);
+    border: 1px solid var(--red);
+    padding: .4rem 1rem;
+    border-radius: 4px;
+    font-size: .85rem;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  .btn-danger:hover { background: var(--red); color: #fff; }
+
+  .btn-add-stay {
+    display: block;
+    width: 100%;
+    background: var(--offwhite);
+    border: 2px dashed var(--gray-light);
+    color: var(--gray);
+    padding: .75rem;
+    border-radius: 10px;
+    font-size: .9rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: border-color .2s, color .2s;
+  }
+
+  .btn-add-stay:hover { border-color: var(--red); color: var(--red); }
+
+  .trip-note-edit {
+    display: none;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .trip-note-edit.active { display: flex; }
+
+  .trip-note-edit input {
+    font-size: 1.4rem;
+    font-weight: 700;
+    padding: .2rem .5rem;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 4px;
+    background: rgba(255,255,255,.15);
+    color: #fff;
+    flex: 1;
+    font-family: inherit;
+  }
+
+  .trip-note-edit button {
+    font-size: .85rem;
+    padding: .3rem .8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,.4);
+  }
+
+  .trip-note-edit .btn-note-save { background: rgba(255,255,255,.2); color: #fff; }
+  .trip-note-edit .btn-note-cancel { background: none; color: rgba(255,255,255,.7); }
+
+  .trip-header .admin-actions {
+    margin-top: .75rem;
+  }
+
   .trip-header {
     background: var(--red);
     color: var(--white);
@@ -438,7 +603,12 @@
 </nav>
 
 <div class="trip-header">
-  <h1>{{ trip.summary }}</h1>
+  <h1 id="trip-title">{{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
+  <div class="trip-note-edit" id="trip-note-edit">
+    <input type="text" id="trip-note-input" value="{{ trip.trip_note }}" placeholder="Trip name (leave blank for auto-generated)">
+    <button class="btn-note-save" onclick="saveTripNote()">Save</button>
+    <button class="btn-note-cancel" onclick="cancelTripNote()">Cancel</button>
+  </div>
   <div class="meta">
     <div><span>{{ trip.total_nights }}</span> nights</div>
     <div><span>{{ trip.stays|length }}</span> stop{{ 's' if trip.stays|length > 1 else '' }}</div>
@@ -447,7 +617,12 @@
     <div>{{ trip.campers|join(', ') }}</div>
     {% endif %}
   </div>
+  {% if is_admin %}
+  <div class="admin-actions">
+    <button class="btn-danger" onclick="deleteTrip()">Delete Trip</button>
   </div>
+  {% endif %}
+</div>
 
 <div class="content">
 
@@ -466,7 +641,7 @@
     <div class="stay-header">
       <div class="stay-number">{{ loop.index }}</div>
       <div class="stay-info">
-        <h3>{{ stay.place }}</h3>
+        <h3>{{ stay.place }}{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ loop.index0 }})">Edit</button>{% endif %}</h3>
         <div class="stay-meta">
           {{ stay.locale }}, {{ stay.state }}
           &mdash; {{ stay.nights }} night{{ 's' if stay.nights > 1 else '' }}
@@ -474,7 +649,52 @@
         </div>
       </div>
     </div>
-    <div class="stay-body">
+    <div class="stay-edit-form" id="stay-edit-{{ loop.index0 }}">
+      <div class="form-grid">
+        <div>
+          <label>Place</label>
+          <input type="text" data-field="place" value="{{ stay.place }}">
+        </div>
+        <div>
+          <label>Locale</label>
+          <input type="text" data-field="locale" value="{{ stay.locale }}">
+        </div>
+        <div>
+          <label>State</label>
+          <input type="text" data-field="state" value="{{ stay.state }}">
+        </div>
+        <div>
+          <label>Site</label>
+          <input type="text" data-field="site" value="{{ stay.site }}">
+        </div>
+        <div>
+          <label>Start Date</label>
+          <input type="date" data-field="start" value="{{ stay.start }}">
+        </div>
+        <div>
+          <label>End Date</label>
+          <input type="date" data-field="end" value="{{ stay.end }}">
+        </div>
+        <div>
+          <label>Nights</label>
+          <input type="number" data-field="nights" value="{{ stay.nights }}" min="1">
+        </div>
+        <div>
+          <label>Campers</label>
+          <input type="text" data-field="campers" value="{{ stay.campers }}">
+        </div>
+        <div class="full-width">
+          <label>Notes</label>
+          <textarea data-field="notes" rows="2">{{ stay.notes }}</textarea>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-save" onclick="saveStay({{ loop.index0 }})">Save</button>
+        <button class="btn-cancel" onclick="cancelStay({{ loop.index0 }})">Cancel</button>
+        <button class="btn-danger" onclick="deleteStay({{ loop.index0 }})">Delete Stay</button>
+      </div>
+    </div>
+    <div class="stay-body" id="stay-body-{{ loop.index0 }}">
       <div class="stay-details">
         {% if stay.site %}
         <div class="detail-item">
@@ -528,6 +748,10 @@
     </div>
   </div>
   {% endfor %}
+
+  {% if is_admin %}
+  <button class="btn-add-stay" onclick="addStay()">+ Add Stay</button>
+  {% endif %}
 
   <!-- Comments -->
   <div class="comments-section">
@@ -669,6 +893,100 @@
   map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
 })();
 
+// ── Trip editing ──────────────────────────────────────────────────────────
+const TRIP_ID = {{ trip.id }};
+
+function editTripNote() {
+  document.getElementById('trip-title').style.display = 'none';
+  document.getElementById('trip-note-edit').classList.add('active');
+  document.getElementById('trip-note-input').focus();
+}
+
+function cancelTripNote() {
+  document.getElementById('trip-note-edit').classList.remove('active');
+  document.getElementById('trip-title').style.display = '';
+}
+
+function saveTripNote() {
+  const val = document.getElementById('trip-note-input').value.trim();
+  fetch(`/api/trips/${TRIP_ID}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trip_note: val })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+function deleteTrip() {
+  if (!confirm('Delete this entire trip? This cannot be undone.')) return;
+  fetch(`/api/trips/${TRIP_ID}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      window.location.href = '/trips/calendar';
+    });
+}
+
+function editStay(idx) {
+  document.getElementById('stay-edit-' + idx).classList.add('active');
+  document.getElementById('stay-body-' + idx).style.display = 'none';
+}
+
+function cancelStay(idx) {
+  document.getElementById('stay-edit-' + idx).classList.remove('active');
+  document.getElementById('stay-body-' + idx).style.display = '';
+}
+
+function saveStay(idx) {
+  const form = document.getElementById('stay-edit-' + idx);
+  const fields = {};
+  form.querySelectorAll('[data-field]').forEach(el => {
+    fields[el.dataset.field] = el.value;
+  });
+  fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+function deleteStay(idx) {
+  if (!confirm('Delete this stay? Photos for this stay will also be removed.')) return;
+  fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      if (data.trip_deleted) {
+        window.location.href = '/trips/calendar';
+      } else {
+        location.reload();
+      }
+    });
+}
+
+function addStay() {
+  fetch(`/api/trips/${TRIP_ID}/stays`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+// ── Photo and comment functions ──────────────────────────────────────────
 function uploadPhotos(tripId, stayIdx, files) {
   Array.from(files).forEach(file => {
     const form = new FormData();

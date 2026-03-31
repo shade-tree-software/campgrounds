@@ -1,47 +1,218 @@
-"""Parse EKKO_Trips.csv into trips (consecutive overnight stays)."""
+"""Parse trip data from JSON (preferred) or CSV (legacy fallback)."""
 
 import csv
+import json
 import os
 import re
-from datetime import datetime, timedelta
+import shutil
+import sys
+from datetime import date, datetime, timedelta
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
+TRIPS_JSON = os.path.join(_DIR, "trip_data", "trips.json")
 
+
+# ── Public API ────────────────────────────────────────────────────────────
 
 def parse_trips(csv_path=os.path.join(_DIR, "EKKO_Trips.csv")):
-    """Parse the CSV and return a list of trips.
+    """Return a list of enriched trip dicts.
 
-    A trip is a consecutive sequence of overnight stays (nights > 0)
-    where each stay's start date equals the previous stay's end date.
-    Blank rows or gaps break trips apart.
-
-    Returns a list of dicts:
-    [
-        {
-            "id": int,
-            "stays": [
-                {
-                    "start": "YYYY-MM-DD",
-                    "end": "YYYY-MM-DD",
-                    "nights": int,
-                    "place": str,
-                    "locale": str,
-                    "state": str,
-                    "site": str,
-                    "campers": str,
-                    "notes": str,
-                }
-            ],
-            "start": "YYYY-MM-DD",
-            "end": "YYYY-MM-DD",
-            "total_nights": int,
-            "summary": str,  # e.g. "Acadia National Park & 3 more"
-        }
-    ]
+    Prefers trip_data/trips.json when it exists; falls back to CSV parsing.
     """
+    if os.path.exists(TRIPS_JSON):
+        return _load_trips_json()
     stays = _parse_stays(csv_path)
     return _group_into_trips(stays)
 
+
+# ── JSON persistence ──────────────────────────────────────────────────────
+
+def _load_raw_trips():
+    """Load the raw trip list from trips.json (no computed fields)."""
+    if os.path.exists(TRIPS_JSON):
+        with open(TRIPS_JSON) as f:
+            return json.load(f)
+    return []
+
+
+def _save_trips(data):
+    """Write the raw trip list to trips.json."""
+    os.makedirs(os.path.dirname(TRIPS_JSON), exist_ok=True)
+    with open(TRIPS_JSON, "w") as f:
+        json.dump(data, f, indent=2)
+
+
+def _load_trips_json():
+    """Load trips from JSON and compute derived fields."""
+    raw = _load_raw_trips()
+    return [_make_trip(t["id"], t["stays"], t.get("trip_note", "")) for t in raw]
+
+
+def _next_trip_id(raw_trips):
+    if not raw_trips:
+        return 1
+    return max(t["id"] for t in raw_trips) + 1
+
+
+def migrate_csv_to_json(csv_path=os.path.join(_DIR, "EKKO_Trips.csv")):
+    """One-time migration: parse CSV and write trip_data/trips.json."""
+    stays = _parse_stays(csv_path)
+    trips = _group_into_trips(stays)
+    raw = []
+    for t in trips:
+        trip_note = t["stays"][0].get("trip_note", "") if t["stays"] else ""
+        raw_stays = []
+        for s in t["stays"]:
+            raw_stays.append({
+                "start": s["start"],
+                "end": s["end"],
+                "nights": s["nights"],
+                "place": s["place"],
+                "locale": s["locale"],
+                "state": s["state"],
+                "site": s["site"],
+                "campers": s["campers"],
+                "notes": s["notes"],
+            })
+        raw.append({
+            "id": t["id"],
+            "trip_note": trip_note,
+            "stays": raw_stays,
+        })
+    _save_trips(raw)
+    return len(raw)
+
+
+# ── CRUD operations ───────────────────────────────────────────────────────
+
+def create_trip(trip_note="", stay=None):
+    """Create a new trip. Returns the new trip dict (with computed fields)."""
+    raw = _load_raw_trips()
+    new_id = _next_trip_id(raw)
+    if stay is None:
+        today = date.today().isoformat()
+        stay = {
+            "start": today,
+            "end": today,
+            "nights": 1,
+            "place": "New Campground",
+            "locale": "",
+            "state": "",
+            "site": "",
+            "campers": "",
+            "notes": "",
+        }
+    raw.append({"id": new_id, "trip_note": trip_note, "stays": [stay]})
+    _save_trips(raw)
+    return _make_trip(new_id, [stay], trip_note)
+
+
+def update_trip(trip_id, fields):
+    """Update trip-level fields (trip_note). Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            if "trip_note" in fields:
+                t["trip_note"] = fields["trip_note"]
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+    return None
+
+
+def delete_trip(trip_id):
+    """Delete a trip. Returns True if found and deleted."""
+    raw = _load_raw_trips()
+    before = len(raw)
+    raw = [t for t in raw if t["id"] != trip_id]
+    if len(raw) < before:
+        _save_trips(raw)
+        return True
+    return False
+
+
+def add_stay(trip_id, stay_data):
+    """Add a stay to a trip. Stays are sorted by start date. Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            stay = {
+                "start": stay_data.get("start", date.today().isoformat()),
+                "end": stay_data.get("end", date.today().isoformat()),
+                "nights": int(stay_data.get("nights", 1)),
+                "place": stay_data.get("place", "New Campground"),
+                "locale": stay_data.get("locale", ""),
+                "state": stay_data.get("state", ""),
+                "site": stay_data.get("site", ""),
+                "campers": stay_data.get("campers", ""),
+                "notes": stay_data.get("notes", ""),
+            }
+            t["stays"].append(stay)
+            t["stays"].sort(key=lambda s: s["start"])
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+    return None
+
+
+def update_stay(trip_id, stay_idx, fields):
+    """Update fields on a specific stay. Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            if stay_idx < 0 or stay_idx >= len(t["stays"]):
+                return None
+            stay = t["stays"][stay_idx]
+            for key in ("start", "end", "place", "locale", "state", "site", "campers", "notes"):
+                if key in fields:
+                    stay[key] = fields[key]
+            if "nights" in fields:
+                stay["nights"] = int(fields["nights"])
+            t["stays"].sort(key=lambda s: s["start"])
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+    return None
+
+
+def delete_stay(trip_id, stay_idx):
+    """Delete a stay from a trip. Handles photo directory renaming.
+    Returns updated trip, or None if trip not found, or 'empty' if last stay deleted (trip removed)."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            if stay_idx < 0 or stay_idx >= len(t["stays"]):
+                return None
+            t["stays"].pop(stay_idx)
+
+            # Rename photo directories to keep indices aligned
+            upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id))
+            if os.path.isdir(upload_base):
+                _shift_photo_dirs(upload_base, stay_idx, len(t["stays"]))
+
+            if not t["stays"]:
+                raw = [tr for tr in raw if tr["id"] != trip_id]
+                _save_trips(raw)
+                return "empty"
+
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+    return None
+
+
+def _shift_photo_dirs(upload_base, deleted_idx, remaining_count):
+    """After deleting stay at deleted_idx, shift higher-indexed photo dirs down."""
+    # Remove the deleted stay's photos
+    deleted_dir = os.path.join(upload_base, str(deleted_idx))
+    if os.path.isdir(deleted_dir):
+        shutil.rmtree(deleted_dir)
+
+    # Shift directories above deleted_idx down by one
+    for i in range(deleted_idx + 1, remaining_count + 2):
+        old_dir = os.path.join(upload_base, str(i))
+        new_dir = os.path.join(upload_base, str(i - 1))
+        if os.path.isdir(old_dir):
+            os.rename(old_dir, new_dir)
+
+
+# ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):
     """Parse M/D/YYYY to a date object."""
@@ -121,7 +292,7 @@ def _group_into_trips(stays):
     return trips
 
 
-def _make_trip(trip_id, stays):
+def _make_trip(trip_id, stays, trip_note=""):
     """Build a trip dict from a list of stays."""
     total_nights = sum(s["nights"] for s in stays)
     places = []
@@ -132,8 +303,9 @@ def _make_trip(trip_id, stays):
             seen.add(key)
             places.append(s["place"])
 
-    # Use trip_note from the first stay as the trip name
-    trip_note = stays[0].get("trip_note", "").strip()
+    # Use explicit trip_note, or fall back to first stay's trip_note (CSV legacy)
+    if not trip_note:
+        trip_note = stays[0].get("trip_note", "").strip() if stays else ""
     if trip_note:
         summary = trip_note
     elif len(places) == 1:
@@ -159,6 +331,7 @@ def _make_trip(trip_id, stays):
 
     return {
         "id": trip_id,
+        "trip_note": trip_note,
         "stays": stays,
         "start": stays[0]["start"],
         "end": stays[-1]["end"],
@@ -238,8 +411,12 @@ def enrich_trip_locations(trip):
 
 
 if __name__ == "__main__":
-    trips = parse_trips()
-    for t in trips:
-        print(f"Trip {t['id']}: {t['start']} to {t['end']} ({t['total_nights']} nights) - {t['summary']}")
-        for s in t["stays"]:
-            print(f"  {s['start']} to {s['end']} ({s['nights']}N) {s['place']}, {s['locale']}, {s['state']}")
+    if len(sys.argv) >= 2 and sys.argv[1] == "migrate":
+        count = migrate_csv_to_json()
+        print(f"Migrated {count} trips to {TRIPS_JSON}")
+    else:
+        trips = parse_trips()
+        for t in trips:
+            print(f"Trip {t['id']}: {t['start']} to {t['end']} ({t['total_nights']} nights) - {t['summary']}")
+            for s in t["stays"]:
+                print(f"  {s['start']} to {s['end']} ({s['nights']}N) {s['place']}, {s['locale']}, {s['state']}")

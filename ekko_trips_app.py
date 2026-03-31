@@ -8,7 +8,9 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
-from trips import parse_trips, enrich_trip_locations
+from trips import (parse_trips, enrich_trip_locations,
+                   create_trip, update_trip, delete_trip,
+                   add_stay, update_stay, delete_stay)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
@@ -373,6 +375,77 @@ def delete_photo(trip_id, stay_idx, filename):
     _save_json(CAPTIONS_FILE, captions)
 
     return jsonify({"ok": True})
+
+
+# ── Trip CRUD API ──────────────────────────────────────────────────────────
+
+@app.route('/api/trips', methods=['POST'])
+def api_create_trip():
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = create_trip(trip_note=data.get("trip_note", ""))
+    return jsonify({"ok": True, "id": trip["id"]})
+
+
+@app.route('/api/trips/<int:trip_id>', methods=['PUT'])
+def api_update_trip(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = update_trip(trip_id, data)
+    if not trip:
+        return jsonify({"error": "Trip not found"}), 404
+    return jsonify({"ok": True, "summary": trip["summary"]})
+
+
+@app.route('/api/trips/<int:trip_id>', methods=['DELETE'])
+def api_delete_trip(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    if not delete_trip(trip_id):
+        return jsonify({"error": "Trip not found"}), 404
+    return jsonify({"ok": True})
+
+
+@app.route('/api/trips/<int:trip_id>/stays', methods=['POST'])
+def api_add_stay(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = add_stay(trip_id, data)
+    if not trip:
+        return jsonify({"error": "Trip not found"}), 404
+    return jsonify({"ok": True, "stay_count": len(trip["stays"])})
+
+
+@app.route('/api/trips/<int:trip_id>/stays/<int:stay_idx>', methods=['PUT'])
+def api_update_stay(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = update_stay(trip_id, stay_idx, data)
+    if not trip:
+        return jsonify({"error": "Trip or stay not found"}), 404
+    return jsonify({"ok": True})
+
+
+@app.route('/api/trips/<int:trip_id>/stays/<int:stay_idx>', methods=['DELETE'])
+def api_delete_stay(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    result = delete_stay(trip_id, stay_idx)
+    if result is None:
+        return jsonify({"error": "Trip or stay not found"}), 404
+    if result == "empty":
+        return jsonify({"ok": True, "trip_deleted": True})
+    return jsonify({"ok": True, "trip_deleted": False})
 
 
 # ── Campground map routes ───────────────────────────────────────────────────

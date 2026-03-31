@@ -354,6 +354,19 @@
     <button id="btn-calendar" class="active" onclick="setView('calendar')">Calendar</button>
     <button id="btn-list" onclick="setView('list')">List</button>
   </div>
+  {% if current_user.is_authenticated and current_user.is_admin %}
+  <button id="btn-add-trip" onclick="addTrip()" style="
+    margin-left: auto;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: .4rem 1rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+  ">+ New Trip</button>
+  {% endif %}
 </div>
 
 <div id="calendar-container" class="calendar-grid"></div>
@@ -608,6 +621,19 @@ document.getElementById('btn-list').classList.toggle('active', currentView === '
 document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
 document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
 render();
+
+function addTrip() {
+  fetch('/api/trips', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    window.location.href = '/trips/' + data.id;
+  });
+}
 </script>
 </body>
 </html>
