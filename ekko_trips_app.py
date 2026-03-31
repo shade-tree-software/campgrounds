@@ -139,7 +139,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect(request.args.get('next', '/'))
 
 
 # ── Campground data ─────────────────────────────────────────────────────────
