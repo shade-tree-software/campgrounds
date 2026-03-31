@@ -10,7 +10,8 @@ from werkzeug.utils import secure_filename
 
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
-                   add_stay, update_stay, delete_stay)
+                   add_stay, update_stay, delete_stay,
+                   add_event, update_event, delete_event)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
@@ -255,12 +256,28 @@ def trip_detail(trip_id):
                     })
         stay_photos[i] = photos
 
+    event_photos = {}
+    for i, event in enumerate(trip.get("events", [])):
+        photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(i))
+        photos = []
+        if os.path.isdir(photo_dir):
+            for fname in sorted(os.listdir(photo_dir)):
+                if _allowed_file(fname):
+                    photo_key = f"{trip_id}/events/{i}/{fname}"
+                    photos.append({
+                        "filename": fname,
+                        "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
+                        "caption": captions.get(photo_key, ""),
+                    })
+        event_photos[i] = photos
+
     _, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'trip_detail.html',
         trip=trip,
         stay_photos=stay_photos,
+        event_photos=event_photos,
         trip_comments=trip_comments,
         family_locations=family,
         is_admin=is_admin,
@@ -377,6 +394,76 @@ def delete_photo(trip_id, stay_idx, filename):
     return jsonify({"ok": True})
 
 
+# ── Event photo routes ─────────────────────────────────────────────────────
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/upload', methods=['POST'])
+def upload_event_photo(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    if 'photo' not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+
+    file = request.files['photo']
+    if file.filename == '':
+        return jsonify({"error": "No file selected"}), 400
+
+    if not _allowed_file(file.filename):
+        return jsonify({"error": "File type not allowed"}), 400
+
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
+    os.makedirs(photo_dir, exist_ok=True)
+
+    filename = secure_filename(file.filename)
+    base, ext = os.path.splitext(filename)
+    dest = os.path.join(photo_dir, filename)
+    if os.path.exists(dest):
+        filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
+        dest = os.path.join(photo_dir, filename)
+
+    file.save(dest)
+
+    return jsonify({
+        "filename": filename,
+        "url": f"/static/uploads/{trip_id}/events/{event_idx}/{filename}",
+    })
+
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/caption', methods=['POST'])
+def save_event_caption(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json()
+    filename = data.get("filename", "")
+    caption = data.get("caption", "")
+
+    photo_key = f"{trip_id}/events/{event_idx}/{filename}"
+    captions = _load_json(CAPTIONS_FILE)
+    captions[photo_key] = caption
+    _save_json(CAPTIONS_FILE, captions)
+
+    return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/photos/<filename>', methods=['DELETE'])
+def delete_event_photo(trip_id, event_idx, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
+    filename = secure_filename(filename)
+    photo_path = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx), filename)
+    if os.path.exists(photo_path):
+        os.remove(photo_path)
+
+    photo_key = f"{trip_id}/events/{event_idx}/{filename}"
+    captions = _load_json(CAPTIONS_FILE)
+    captions.pop(photo_key, None)
+    _save_json(CAPTIONS_FILE, captions)
+
+    return jsonify({"ok": True})
+
+
 # ── Trip CRUD API ──────────────────────────────────────────────────────────
 
 @app.route('/api/trips', methods=['POST'])
@@ -446,6 +533,43 @@ def api_delete_stay(trip_id, stay_idx):
     if result == "empty":
         return jsonify({"ok": True, "trip_deleted": True})
     return jsonify({"ok": True, "trip_deleted": False})
+
+
+# ── Event CRUD API ─────────────────────────────────────────────────────────
+
+@app.route('/api/trips/<int:trip_id>/events', methods=['POST'])
+def api_add_event(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = add_event(trip_id, data)
+    if not trip:
+        return jsonify({"error": "Trip not found"}), 404
+    return jsonify({"ok": True, "event_count": len(trip["events"])})
+
+
+@app.route('/api/trips/<int:trip_id>/events/<int:event_idx>', methods=['PUT'])
+def api_update_event(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    trip = update_event(trip_id, event_idx, data)
+    if not trip:
+        return jsonify({"error": "Trip or event not found"}), 404
+    return jsonify({"ok": True})
+
+
+@app.route('/api/trips/<int:trip_id>/events/<int:event_idx>', methods=['DELETE'])
+def api_delete_event(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    trip = delete_event(trip_id, event_idx)
+    if not trip:
+        return jsonify({"error": "Trip or event not found"}), 404
+    return jsonify({"ok": True})
 
 
 # ── Campground map routes ───────────────────────────────────────────────────

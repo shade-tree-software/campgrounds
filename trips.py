@@ -45,7 +45,8 @@ def _save_trips(data):
 def _load_trips_json():
     """Load trips from JSON and compute derived fields."""
     raw = _load_raw_trips()
-    return [_make_trip(t["id"], t["stays"], t.get("trip_note", "")) for t in raw]
+    return [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                       t.get("events", [])) for t in raw]
 
 
 def _next_trip_id(raw_trips):
@@ -102,7 +103,7 @@ def create_trip(trip_note="", stay=None):
             "campers": "",
             "notes": "",
         }
-    raw.append({"id": new_id, "trip_note": trip_note, "stays": [stay]})
+    raw.append({"id": new_id, "trip_note": trip_note, "stays": [stay], "events": []})
     _save_trips(raw)
     return _make_trip(new_id, [stay], trip_note)
 
@@ -115,7 +116,8 @@ def update_trip(trip_id, fields):
             if "trip_note" in fields:
                 t["trip_note"] = fields["trip_note"]
             _save_trips(raw)
-            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t.get("events", []))
     return None
 
 
@@ -149,7 +151,8 @@ def add_stay(trip_id, stay_data):
             t["stays"].append(stay)
             t["stays"].sort(key=lambda s: s["start"])
             _save_trips(raw)
-            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t.get("events", []))
     return None
 
 
@@ -168,7 +171,8 @@ def update_stay(trip_id, stay_idx, fields):
                 stay["nights"] = int(fields["nights"])
             t["stays"].sort(key=lambda s: s["start"])
             _save_trips(raw)
-            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t.get("events", []))
     return None
 
 
@@ -193,7 +197,8 @@ def delete_stay(trip_id, stay_idx):
                 return "empty"
 
             _save_trips(raw)
-            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""))
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t.get("events", []))
     return None
 
 
@@ -210,6 +215,71 @@ def _shift_photo_dirs(upload_base, deleted_idx, remaining_count):
         new_dir = os.path.join(upload_base, str(i - 1))
         if os.path.isdir(old_dir):
             os.rename(old_dir, new_dir)
+
+
+# ── Event CRUD ────────────────────────────────────────────────────────────
+
+def add_event(trip_id, event_data):
+    """Add an event to a trip. Events are sorted by date. Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            event = {
+                "date": event_data.get("date", date.today().isoformat()),
+                "name": event_data.get("name", "New Event"),
+                "description": event_data.get("description", ""),
+            }
+            events = t.get("events", [])
+            events.append(event)
+            events.sort(key=lambda e: e["date"])
+            t["events"] = events
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t["events"])
+    return None
+
+
+def update_event(trip_id, event_idx, fields):
+    """Update fields on a specific event. Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            events = t.get("events", [])
+            if event_idx < 0 or event_idx >= len(events):
+                return None
+            event = events[event_idx]
+            for key in ("date", "name", "description"):
+                if key in fields:
+                    event[key] = fields[key]
+            events.sort(key=lambda e: e["date"])
+            t["events"] = events
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t["events"])
+    return None
+
+
+def delete_event(trip_id, event_idx):
+    """Delete an event from a trip. Returns updated trip or None."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            events = t.get("events", [])
+            if event_idx < 0 or event_idx >= len(events):
+                return None
+            events.pop(event_idx)
+
+            # Remove event photos and shift directories
+            upload_base = os.path.join(_DIR, "static", "uploads",
+                                       str(trip_id), "events")
+            if os.path.isdir(upload_base):
+                _shift_photo_dirs(upload_base, event_idx, len(events))
+
+            t["events"] = events
+            _save_trips(raw)
+            return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                              t["events"])
+    return None
 
 
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
@@ -292,8 +362,10 @@ def _group_into_trips(stays):
     return trips
 
 
-def _make_trip(trip_id, stays, trip_note=""):
-    """Build a trip dict from a list of stays."""
+def _make_trip(trip_id, stays, trip_note="", events=None):
+    """Build a trip dict from a list of stays and optional events."""
+    if events is None:
+        events = []
     total_nights = sum(s["nights"] for s in stays)
     places = []
     seen = set()
@@ -321,7 +393,6 @@ def _make_trip(trip_id, stays, trip_note=""):
         if s["campers"]:
             for c in s["campers"].split(","):
                 name = c.strip().lstrip("(").rstrip(")")
-                # Remove parenthetical notes like "--1st night only"
                 if "--" in name:
                     name = name.split("--")[0].strip()
                 if name:
@@ -329,10 +400,26 @@ def _make_trip(trip_id, stays, trip_note=""):
 
     home_only = all("basset" in s["place"].lower() for s in stays)
 
+    # Build chronological timeline interleaving stays and events.
+    # Secondary key: events (0) sort before stays (1) on the same date,
+    # so an event on an arrival day appears before the campground card,
+    # and an event on a departure day appears after it (since the stay
+    # sorts by its earlier start date).
+    timeline = []
+    for i, s in enumerate(stays):
+        timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
+                             _order=1))
+    for i, e in enumerate(events):
+        timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
+                             _order=0))
+    timeline.sort(key=lambda x: (x["sort_date"], x["_order"]))
+
     return {
         "id": trip_id,
         "trip_note": trip_note,
         "stays": stays,
+        "events": events,
+        "timeline": timeline,
         "start": stays[0]["start"],
         "end": stays[-1]["end"],
         "total_nights": total_nights,

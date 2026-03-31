@@ -182,6 +182,114 @@
 
   .btn-danger:hover { background: var(--red); color: #fff; }
 
+  /* ── Event cards ──────────────────────────────── */
+  .event-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .event-header {
+    background: #f5edd4;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+
+  .event-icon {
+    background: var(--gold);
+    color: var(--white);
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .9rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .event-info h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .event-meta {
+    font-size: .85rem;
+    color: var(--gray);
+  }
+
+  .event-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .event-description {
+    font-size: .9rem;
+    color: var(--gray);
+    margin-bottom: .75rem;
+    line-height: 1.5;
+  }
+
+  .event-edit-form {
+    display: none;
+    padding: 1rem;
+  }
+
+  .event-edit-form.active { display: block; }
+
+  .event-edit-form label {
+    display: block;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: .2rem;
+  }
+
+  .event-edit-form input,
+  .event-edit-form textarea {
+    width: 100%;
+    padding: .4rem .6rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    font-size: .85rem;
+    font-family: inherit;
+    margin-bottom: .75rem;
+  }
+
+  .event-edit-form input:focus,
+  .event-edit-form textarea:focus {
+    outline: none;
+    border-color: var(--red);
+  }
+
+  .event-edit-form .form-actions {
+    display: flex;
+    gap: .5rem;
+  }
+
+  .btn-add-event {
+    display: block;
+    width: 100%;
+    background: var(--offwhite);
+    border: 2px dashed var(--gold);
+    color: var(--gold);
+    padding: .75rem;
+    border-radius: 10px;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: border-color .2s, color .2s;
+  }
+
+  .btn-add-event:hover { border-color: var(--red); color: var(--red); }
+
   .btn-add-stay {
     display: block;
     width: 100%;
@@ -635,101 +743,104 @@
   </div>
   {% endif %}
 
-  <!-- Stay cards -->
-  {% for stay in trip.stays %}
-  <div class="stay-card" id="stay-{{ loop.index0 }}">
+  <!-- Timeline: interleaved stays and events -->
+  {% set stay_num = namespace(val=0) %}
+  {% for item in trip.timeline %}
+
+  {% if item.type == "stay" %}
+  {% set stay_num.val = stay_num.val + 1 %}
+  <div class="stay-card" id="stay-{{ item.idx }}">
     <div class="stay-header">
-      <div class="stay-number">{{ loop.index }}</div>
+      <div class="stay-number">{{ stay_num.val }}</div>
       <div class="stay-info">
-        <h3>{{ stay.place }}{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ loop.index0 }})">Edit</button>{% endif %}</h3>
+        <h3>{{ item.place }}{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}</h3>
         <div class="stay-meta">
-          {{ stay.locale }}, {{ stay.state }}
-          &mdash; {{ stay.nights }} night{{ 's' if stay.nights > 1 else '' }}
-          ({{ stay.start }} to {{ stay.end }})
+          {{ item.locale }}, {{ item.state }}
+          &mdash; {{ item.nights }} night{{ 's' if item.nights > 1 else '' }}
+          ({{ item.start }} to {{ item.end }})
         </div>
       </div>
     </div>
-    <div class="stay-edit-form" id="stay-edit-{{ loop.index0 }}">
+    <div class="stay-edit-form" id="stay-edit-{{ item.idx }}">
       <div class="form-grid">
         <div>
           <label>Place</label>
-          <input type="text" data-field="place" value="{{ stay.place }}">
+          <input type="text" data-field="place" value="{{ item.place }}">
         </div>
         <div>
           <label>Locale</label>
-          <input type="text" data-field="locale" value="{{ stay.locale }}">
+          <input type="text" data-field="locale" value="{{ item.locale }}">
         </div>
         <div>
           <label>State</label>
-          <input type="text" data-field="state" value="{{ stay.state }}">
+          <input type="text" data-field="state" value="{{ item.state }}">
         </div>
         <div>
           <label>Site</label>
-          <input type="text" data-field="site" value="{{ stay.site }}">
+          <input type="text" data-field="site" value="{{ item.site }}">
         </div>
         <div>
           <label>Start Date</label>
-          <input type="date" data-field="start" value="{{ stay.start }}">
+          <input type="date" data-field="start" value="{{ item.start }}">
         </div>
         <div>
           <label>End Date</label>
-          <input type="date" data-field="end" value="{{ stay.end }}">
+          <input type="date" data-field="end" value="{{ item.end }}">
         </div>
         <div>
           <label>Nights</label>
-          <input type="number" data-field="nights" value="{{ stay.nights }}" min="1">
+          <input type="number" data-field="nights" value="{{ item.nights }}" min="1">
         </div>
         <div>
           <label>Campers</label>
-          <input type="text" data-field="campers" value="{{ stay.campers }}">
+          <input type="text" data-field="campers" value="{{ item.campers }}">
         </div>
         <div class="full-width">
           <label>Notes</label>
-          <textarea data-field="notes" rows="2">{{ stay.notes }}</textarea>
+          <textarea data-field="notes" rows="2">{{ item.notes }}</textarea>
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn-save" onclick="saveStay({{ loop.index0 }})">Save</button>
-        <button class="btn-cancel" onclick="cancelStay({{ loop.index0 }})">Cancel</button>
-        <button class="btn-danger" onclick="deleteStay({{ loop.index0 }})">Delete Stay</button>
+        <button class="btn-save" onclick="saveStay({{ item.idx }})">Save</button>
+        <button class="btn-cancel" onclick="cancelStay({{ item.idx }})">Cancel</button>
+        <button class="btn-danger" onclick="deleteStay({{ item.idx }})">Delete Stay</button>
       </div>
     </div>
-    <div class="stay-body" id="stay-body-{{ loop.index0 }}">
+    <div class="stay-body" id="stay-body-{{ item.idx }}">
       <div class="stay-details">
-        {% if stay.site %}
+        {% if item.site %}
         <div class="detail-item">
           <label>Site</label>
-          <div class="value">{{ stay.site }}</div>
+          <div class="value">{{ item.site }}</div>
         </div>
         {% endif %}
-        {% if stay.campers %}
+        {% if item.campers %}
         <div class="detail-item">
           <label>Campers</label>
-          <div class="value">{{ stay.campers }}</div>
+          <div class="value">{{ item.campers }}</div>
         </div>
         {% endif %}
       </div>
 
-      {% if stay.notes %}
-      <div class="notes-text">{{ stay.notes }}</div>
+      {% if item.notes %}
+      <div class="notes-text">{{ item.notes }}</div>
       {% endif %}
 
       <!-- Photos -->
-      {% set stay_idx = loop.index0 %}
       <div class="photos-section">
         <h4>Photos</h4>
-        <div class="photo-grid" id="photos-{{ stay_idx }}">
-          {% for photo in stay_photos[stay_idx] %}
+        <div class="photo-grid" id="photos-{{ item.idx }}">
+          {% for photo in stay_photos[item.idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}">
-            <img src="{{ photo.url }}" alt="{{ photo.caption or stay.place }}" onclick="openLightbox(this.src)">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" onclick="openLightbox(this.src)">
             {% if is_admin %}
-            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this)">&times;</button>
+            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
             <div class="caption-area">
               {% if is_admin %}
               <input type="text" placeholder="Add a caption..."
                      value="{{ photo.caption }}"
-                     onchange="saveCaption({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this.value)">
+                     onchange="saveCaption({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this.value)">
               {% elif photo.caption %}
               <span>{{ photo.caption }}</span>
               {% endif %}
@@ -738,19 +849,86 @@
           {% endfor %}
         </div>
         {% if is_admin %}
-        <div class="upload-area" onclick="this.querySelector('input').click()">
+        <div class="upload-area" onclick="this.querySelector('input').click()"
+             data-trip="{{ trip.id }}" data-stay="{{ item.idx }}">
           <input type="file" accept="image/*" multiple
-                 onchange="uploadPhotos({{ trip.id }}, {{ loop.index0 }}, this.files)">
+                 onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos (or drag and drop)</p>
         </div>
         {% endif %}
       </div>
     </div>
   </div>
+
+  {% elif item.type == "event" %}
+  <div class="event-card" id="event-{{ item.idx }}">
+    <div class="event-header">
+      <div class="event-icon">&#9733;</div>
+      <div class="event-info">
+        <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
+        <div class="event-meta">{{ item.date }}</div>
+      </div>
+    </div>
+    <div class="event-edit-form" id="event-edit-{{ item.idx }}">
+      <label>Name</label>
+      <input type="text" data-field="name" value="{{ item.name }}">
+      <label>Date</label>
+      <input type="date" data-field="date" value="{{ item.date }}">
+      <label>Description</label>
+      <textarea data-field="description" rows="2">{{ item.description }}</textarea>
+      <div class="form-actions">
+        <button class="btn-save" onclick="saveEvent({{ item.idx }})">Save</button>
+        <button class="btn-cancel" onclick="cancelEvent({{ item.idx }})">Cancel</button>
+        <button class="btn-danger" onclick="deleteEvent({{ item.idx }})">Delete Event</button>
+      </div>
+    </div>
+    <div class="event-body" id="event-body-{{ item.idx }}">
+      {% if item.description %}
+      <div class="event-description">{{ item.description }}</div>
+      {% endif %}
+
+      <!-- Event Photos -->
+      <div class="photos-section">
+        <h4>Photos</h4>
+        <div class="photo-grid" id="event-photos-{{ item.idx }}">
+          {% for photo in event_photos[item.idx] %}
+          <div class="photo-item" data-filename="{{ photo.filename }}">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" onclick="openLightbox(this.src)">
+            {% if is_admin %}
+            <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
+            {% endif %}
+            <div class="caption-area">
+              {% if is_admin %}
+              <input type="text" placeholder="Add a caption..."
+                     value="{{ photo.caption }}"
+                     onchange="saveEventCaption({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this.value)">
+              {% elif photo.caption %}
+              <span>{{ photo.caption }}</span>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% if is_admin %}
+        <div class="upload-area" onclick="this.querySelector('input').click()"
+             data-trip="{{ trip.id }}" data-event="{{ item.idx }}">
+          <input type="file" accept="image/*" multiple
+                 onchange="uploadEventPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
+          <p>Click to upload photos (or drag and drop)</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
   {% endfor %}
 
   {% if is_admin %}
-  <button class="btn-add-stay" onclick="addStay()">+ Add Stay</button>
+  <div style="display:flex;gap:1rem;">
+    <button class="btn-add-stay" onclick="addStay()">+ Add Stay</button>
+    <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
+  </div>
   {% endif %}
 
   <!-- Comments -->
@@ -986,6 +1164,100 @@ function addStay() {
   });
 }
 
+// ── Event editing ─────────────────────────────────────────────────────────
+function editEvent(idx) {
+  document.getElementById('event-edit-' + idx).classList.add('active');
+  document.getElementById('event-body-' + idx).style.display = 'none';
+}
+
+function cancelEvent(idx) {
+  document.getElementById('event-edit-' + idx).classList.remove('active');
+  document.getElementById('event-body-' + idx).style.display = '';
+}
+
+function saveEvent(idx) {
+  const form = document.getElementById('event-edit-' + idx);
+  const fields = {};
+  form.querySelectorAll('[data-field]').forEach(el => {
+    fields[el.dataset.field] = el.value;
+  });
+  fetch(`/api/trips/${TRIP_ID}/events/${idx}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+function deleteEvent(idx) {
+  if (!confirm('Delete this event? Photos for this event will also be removed.')) return;
+  fetch(`/api/trips/${TRIP_ID}/events/${idx}`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      location.reload();
+    });
+}
+
+function addEvent() {
+  fetch(`/api/trips/${TRIP_ID}/events`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+// ── Event photo functions ────────────────────────────────────────────────
+function uploadEventPhotos(tripId, eventIdx, files) {
+  Array.from(files).forEach(file => {
+    const form = new FormData();
+    form.append('photo', file);
+    fetch(`/trips/${tripId}/events/${eventIdx}/upload`, { method: 'POST', body: form })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { alert(data.error); return; }
+        const grid = document.getElementById('event-photos-' + eventIdx);
+        const item = document.createElement('div');
+        item.className = 'photo-item';
+        item.dataset.filename = data.filename;
+        item.innerHTML = `
+          <img src="${data.url}" alt="" onclick="openLightbox(this.src)">
+          <button class="delete-photo" onclick="deleteEventPhoto(${tripId}, ${eventIdx}, '${data.filename}', this)">&times;</button>
+          <div class="caption-area">
+            <input type="text" placeholder="Add a caption..."
+                   onchange="saveEventCaption(${tripId}, ${eventIdx}, '${data.filename}', this.value)">
+          </div>
+        `;
+        grid.appendChild(item);
+      });
+  });
+}
+
+function saveEventCaption(tripId, eventIdx, filename, caption) {
+  fetch(`/trips/${tripId}/events/${eventIdx}/caption`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filename, caption })
+  });
+}
+
+function deleteEventPhoto(tripId, eventIdx, filename, btn) {
+  if (!confirm('Delete this photo?')) return;
+  fetch(`/trips/${tripId}/events/${eventIdx}/photos/${filename}`, { method: 'DELETE' })
+    .then(() => {
+      btn.closest('.photo-item').remove();
+    });
+}
+
 // ── Photo and comment functions ──────────────────────────────────────────
 function uploadPhotos(tripId, stayIdx, files) {
   Array.from(files).forEach(file => {
@@ -1097,10 +1369,12 @@ document.querySelectorAll('.upload-area').forEach(area => {
     e.preventDefault();
     area.style.borderColor = '';
     area.style.background = '';
-    const input = area.querySelector('input');
-    const tripId = parseInt(input.getAttribute('onchange').match(/uploadPhotos\((\d+)/)[1]);
-    const stayIdx = parseInt(input.getAttribute('onchange').match(/,\s*(\d+)/)[1]);
-    uploadPhotos(tripId, stayIdx, e.dataTransfer.files);
+    const tripId = parseInt(area.dataset.trip);
+    if (area.dataset.event !== undefined) {
+      uploadEventPhotos(tripId, parseInt(area.dataset.event), e.dataTransfer.files);
+    } else {
+      uploadPhotos(tripId, parseInt(area.dataset.stay), e.dataTransfer.files);
+    }
   });
 });
 </script>
