@@ -1,85 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
-<style>
-  :root {
-    --navy: #002868;
-    --navy-light: #1a3f7a;
-    --red: #bf0a30;
-    --white: #fff;
-    --offwhite: #f7f8fc;
-    --gray: #555;
-    --gray-light: #d5d8de;
-    --gold: #c9a84c;
-    --shadow: 0 2px 8px rgba(0,0,0,.12);
-  }
+{% extends "base.html" %}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+{% block title %}Login{% endblock %}
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--offwhite);
-    color: #333;
-  }
+{% block nav_auth %}{% endblock %}
 
-  header {
-    background: var(--navy);
-    color: var(--white);
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow);
-  }
-
-  header h1 { font-size: 1.6rem; font-weight: 600; }
-  header h1 a { color: inherit; text-decoration: none; }
-
-  .stats {
-    display: flex;
-    gap: 1.5rem;
-    font-size: .9rem;
-    opacity: .9;
-  }
-
-  .stats span { font-weight: 700; color: var(--gold); }
-
-  nav {
-    background: var(--navy-light);
-    padding: .5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: .9rem;
-  }
-
-  nav a {
-    color: rgba(255,255,255,.75);
-    text-decoration: none;
-    padding: .25rem 0;
-  }
-
-  nav a:hover { color: var(--white); }
-
-  .nav-group {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-  }
-
-
-  .nav-group + .nav-group { margin-left: 1.75rem; }
-
-  .nav-label {
-    color: rgba(255,255,255,.45);
-    font-size: .8rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-  }
-
+{% block style %}
   .login-wrapper {
     display: flex;
     align-items: center;
@@ -152,33 +77,9 @@
     margin-bottom: 1rem;
     text-align: center;
   }
+{% endblock %}
 
-</style>
-</head>
-<body>
-
-<header>
-  <h1><a href="/">EKKO Trips</a></h1>
-  <div class="stats">
-    <div><span>{{ trip_count }}</span> trips</div>
-    <div><span>{{ night_count }}</span> nights</div>
-  </div>
-</header>
-
-<nav>
-  <span class="nav-group">
-    <span class="nav-label">Trips:</span>
-    <a href="/trips/calendar">Calendar</a>
-    <a href="/trips/list">List</a>
-    <a href="/trips/map">Map</a>
-  </span>
-  <span class="nav-group">
-    <span class="nav-label">Campgrounds:</span>
-    <a href="/campgrounds/waterfront">Waterfront</a>
-    <a href="/campgrounds/climate">Climate</a>
-  </span>
-</nav>
-
+{% block content %}
 <div class="login-wrapper">
   <div class="login-card">
     <h1>Login</h1>
@@ -194,5 +95,4 @@
     </form>
   </div>
 </div>
-</body>
-</html>
+{% endblock %}

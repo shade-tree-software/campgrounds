@@ -1,87 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Camping Locations — EKKO Trips</title>
+{% extends "base.html" %}
+
+{% block title %}All Camping Locations — EKKO Trips{% endblock %}
+
+{% block head_extra %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>
-  :root {
-    --navy: #002868;
-    --navy-light: #1a3f7a;
-    --red: #bf0a30;
-    --white: #fff;
-    --offwhite: #f7f8fc;
-    --gray: #555;
-    --gray-light: #d5d8de;
-    --gold: #c9a84c;
-    --shadow: 0 2px 8px rgba(0,0,0,.12);
-  }
+{% endblock %}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--offwhite);
-    color: #333;
-  }
-
-  header {
-    background: var(--navy);
-    color: var(--white);
-    padding: 1.5rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: var(--shadow);
-  }
-
-  header h1 { font-size: 1.6rem; font-weight: 600; }
-
-  .stats {
-    display: flex;
-    gap: 1.5rem;
-    font-size: .9rem;
-    opacity: .9;
-  }
-
-  .stats span { font-weight: 700; color: var(--gold); }
-
-  nav {
-    background: var(--navy-light);
-    padding: .5rem 2rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: .9rem;
-  }
-
-  nav a {
-    color: rgba(255,255,255,.75);
-    text-decoration: none;
-    padding: .25rem 0;
-  }
-
-  nav a:hover { color: var(--white); }
-  nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
-
-  .nav-group {
-    display: flex;
-    align-items: center;
-    gap: .75rem;
-  }
-
-
-  .nav-group + .nav-group { margin-left: 1.75rem; }
-
-  .nav-label {
-    color: rgba(255,255,255,.45);
-    font-size: .8rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-  }
-
+{% block style %}
   .map-section {
     max-width: 1400px;
     margin: 0 auto;
@@ -108,44 +34,18 @@
     min-height: 400px;
     width: 100%;
   }
-</style>
-</head>
-<body>
+{% endblock %}
 
-<header>
-  <h1><a href="/" style="color:inherit;text-decoration:none">EKKO Trips</a></h1>
-  <div class="stats">
-    <div><span>{{ trip_count }}</span> trips</div>
-    <div><span>{{ night_count }}</span> nights</div>
-  </div>
-</header>
-
-<nav>
-  <span class="nav-group">
-    <span class="nav-label">Trips:</span>
-    <a href="/trips/calendar">Calendar</a>
-    <a href="/trips/list">List</a>
-    <a href="/trips/map" class="active">Map</a>
-  </span>
-  <span class="nav-group">
-    <span class="nav-label">Campgrounds:</span>
-    <a href="/campgrounds/waterfront">Waterfront</a>
-    <a href="/campgrounds/climate">Climate</a>
-  </span>
-  {% if current_user.is_authenticated %}
-  <a href="/logout?next={{ request.path }}" style="margin-left:auto">Logout</a>
-  {% else %}
-  <a href="/login?next={{ request.path }}" style="margin-left:auto">Login</a>
-  {% endif %}
-</nav>
-
+{% block content %}
 <div class="map-section">
   <div class="map-container">
     <div class="map-header">All Camping Locations</div>
     <div id="all-trips-map"></div>
   </div>
 </div>
+{% endblock %}
 
+{% block scripts %}
 <script>
 const TRIPS = {{ trips | tojson }};
 const FAMILY = {{ family_locations | tojson }};
@@ -268,6 +168,4 @@ if (bounds.length) {
   map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
 }
 </script>
-
-</body>
-</html>
+{% endblock %}

@@ -14,6 +14,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    add_event, update_event, delete_event)
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
 
 login_manager = LoginManager()
@@ -218,7 +219,7 @@ def trips_map():
     for trip in trips:
         enrich_trip_locations(trip)
     home, family = _map_config()
-    return render_template('trips_map.html', trips=trips, home=home, family_locations=family)
+    return render_template('trips_map.html', trips=trips, home=home, family_locations=family, active_nav='map')
 
 
 @app.route('/trips/calendar')
@@ -228,7 +229,7 @@ def trips_calendar():
     for trip in trips:
         enrich_trip_locations(trip)
     initial_view = 'list' if request.path == '/trips/list' else 'calendar'
-    return render_template('trips_calendar.html', trips=trips, initial_view=initial_view)
+    return render_template('trips_calendar.html', trips=trips, initial_view=initial_view, active_nav=initial_view)
 
 
 @app.route('/trips/<int:trip_id>')
@@ -646,6 +647,7 @@ def campgrounds_waterfront():
         color_map=WATERFRONT_COLORS,
         home=home,
         family_locations=family,
+        active_nav='waterfront',
     )
 
 
@@ -660,6 +662,7 @@ def campgrounds_climate():
         color_map=CLIMATE_COLORS,
         home=home,
         family_locations=family,
+        active_nav='climate',
     )
 
 
