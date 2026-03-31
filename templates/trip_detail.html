@@ -45,6 +45,10 @@
 
   .back-bar a:hover { color: var(--white); }
 
+  .back-bar .auth-link {
+    float: right;
+  }
+
   .trip-header {
     background: var(--red);
     color: var(--white);
@@ -395,6 +399,11 @@
 
 <div class="back-bar">
   <a href="/trips/calendar#{{ trip.start[:4] }}" onclick="if(document.referrer.includes('/trips/calendar')){history.back();return false;}">&larr; Back to Calendar</a>
+  {% if is_admin %}
+  <a class="auth-link" href="/logout">Logout</a>
+  {% else %}
+  <a class="auth-link" href="/login">Login</a>
+  {% endif %}
 </div>
 
 <div class="trip-header">
@@ -462,20 +471,28 @@
           {% for photo in stay_photos[stay_idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}">
             <img src="{{ photo.url }}" alt="{{ photo.caption or stay.place }}" onclick="openLightbox(this.src)">
+            {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this)">&times;</button>
+            {% endif %}
             <div class="caption-area">
+              {% if is_admin %}
               <input type="text" placeholder="Add a caption..."
                      value="{{ photo.caption }}"
                      onchange="saveCaption({{ trip.id }}, {{ stay_idx }}, '{{ photo.filename }}', this.value)">
+              {% elif photo.caption %}
+              <span>{{ photo.caption }}</span>
+              {% endif %}
             </div>
           </div>
           {% endfor %}
         </div>
+        {% if is_admin %}
         <div class="upload-area" onclick="this.querySelector('input').click()">
           <input type="file" accept="image/*" multiple
                  onchange="uploadPhotos({{ trip.id }}, {{ loop.index0 }}, this.files)">
           <p>Click to upload photos (or drag and drop)</p>
         </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -491,14 +508,18 @@
           <div class="comment-text">{{ c.text }}</div>
           <div class="comment-time">{{ c.timestamp[:16].replace('T', ' ') }}</div>
         </div>
+        {% if is_admin %}
         <button class="comment-delete" onclick="deleteComment({{ trip.id }}, {{ loop.index0 }})">&times;</button>
+        {% endif %}
       </li>
       {% endfor %}
     </ul>
+    {% if is_admin %}
     <div class="comment-form">
       <textarea id="comment-input" placeholder="Add a comment about this trip..." rows="2"></textarea>
       <button onclick="addComment({{ trip.id }})">Post</button>
     </div>
+    {% endif %}
   </div>
 
 </div>

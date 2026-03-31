@@ -1,18 +1,27 @@
 import json
 import os
+import sys
 from datetime import datetime
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
+from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
 from trips import parse_trips, enrich_trip_locations
 
 app = Flask(__name__)
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
 TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
 COMMENTS_FILE = os.path.join(TRIP_DATA_DIR, "comments.json")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
+USERS_FILE = os.path.join(TRIP_DATA_DIR, "users.json")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -60,6 +69,65 @@ def _load_json(path):
 def _save_json(path, data):
     with open(path, "w") as f:
         json.dump(data, f, indent=2)
+
+
+# ── User authentication ────────────────────────────────────────────────────
+
+class User(UserMixin):
+    def __init__(self, username, password_hash, is_admin=False):
+        self.id = username
+        self.username = username
+        self.password_hash = password_hash
+        self.is_admin = is_admin
+
+
+def _load_users():
+    data = _load_json(USERS_FILE)
+    return {name: User(name, info["password_hash"], info.get("is_admin", False))
+            for name, info in data.items()}
+
+
+def _save_user(username, password, is_admin=False):
+    data = _load_json(USERS_FILE)
+    data[username] = {
+        "password_hash": generate_password_hash(password),
+        "is_admin": is_admin,
+    }
+    _save_json(USERS_FILE, data)
+
+
+@login_manager.user_loader
+def load_user(username):
+    users = _load_users()
+    return users.get(username)
+
+
+def _require_admin():
+    """Return an error response if current user is not an admin, else None."""
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return jsonify({"error": "Admin access required"}), 403
+    return None
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        users = _load_users()
+        user = users.get(username)
+        if user and check_password_hash(user.password_hash, password):
+            login_user(user)
+            next_page = request.args.get('next', '/')
+            return redirect(next_page)
+        return render_template('login.html', error="Invalid username or password")
+    return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 # ── Campground data ─────────────────────────────────────────────────────────
@@ -177,17 +245,22 @@ def trip_detail(trip_id):
         stay_photos[i] = photos
 
     _, family = _map_config()
+    is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'trip_detail.html',
         trip=trip,
         stay_photos=stay_photos,
         trip_comments=trip_comments,
         family_locations=family,
+        is_admin=is_admin,
     )
 
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/upload', methods=['POST'])
 def upload_photo(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
     if 'photo' not in request.files:
         return jsonify({"error": "No file provided"}), 400
 
@@ -218,6 +291,9 @@ def upload_photo(trip_id, stay_idx):
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/caption', methods=['POST'])
 def save_caption(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
     data = request.get_json()
     filename = data.get("filename", "")
     caption = data.get("caption", "")
@@ -238,6 +314,9 @@ def get_comments(trip_id):
 
 @app.route('/trips/<int:trip_id>/comments', methods=['POST'])
 def add_comment(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
     data = request.get_json()
     text = data.get("text", "").strip()
     if not text:
@@ -257,6 +336,9 @@ def add_comment(trip_id):
 
 @app.route('/trips/<int:trip_id>/comments/<int:comment_idx>', methods=['DELETE'])
 def delete_comment(trip_id, comment_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
     comments = _load_json(COMMENTS_FILE)
     trip_comments = comments.get(str(trip_id), [])
     if 0 <= comment_idx < len(trip_comments):
@@ -268,6 +350,9 @@ def delete_comment(trip_id, comment_idx):
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/photos/<filename>', methods=['DELETE'])
 def delete_photo(trip_id, stay_idx, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
     filename = secure_filename(filename)
     photo_path = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx), filename)
     if os.path.exists(photo_path):
@@ -312,4 +397,17 @@ def campgrounds_climate():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    if len(sys.argv) >= 2 and sys.argv[1] == "create-admin":
+        import getpass
+        username = input("Admin username: ").strip()
+        if not username:
+            print("Username cannot be empty.")
+            sys.exit(1)
+        password = getpass.getpass("Password: ")
+        if not password:
+            print("Password cannot be empty.")
+            sys.exit(1)
+        _save_user(username, password, is_admin=True)
+        print(f"Admin user '{username}' created.")
+    else:
+        app.run(debug=True, host='0.0.0.0', port=5001)
