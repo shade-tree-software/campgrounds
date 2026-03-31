@@ -24,6 +24,7 @@ TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
 COMMENTS_FILE = os.path.join(TRIP_DATA_DIR, "comments.json")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
+PHOTO_ORDER_FILE = os.path.join(TRIP_DATA_DIR, "photo_order.json")
 USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
@@ -241,19 +242,29 @@ def trip_detail(trip_id):
     captions = _load_json(CAPTIONS_FILE)
     trip_comments = comments.get(str(trip_id), [])
 
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+
     stay_photos = {}
     for i, stay in enumerate(trip["stays"]):
         photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(i))
         photos = []
         if os.path.isdir(photo_dir):
-            for fname in sorted(os.listdir(photo_dir)):
-                if _allowed_file(fname):
-                    photo_key = f"{trip_id}/{i}/{fname}"
-                    photos.append({
-                        "filename": fname,
-                        "url": f"/static/uploads/{trip_id}/{i}/{fname}",
-                        "caption": captions.get(photo_key, ""),
-                    })
+            all_files = [f for f in os.listdir(photo_dir) if _allowed_file(f)]
+            order_key = f"{trip_id}/{i}"
+            ordered = photo_order.get(order_key)
+            if ordered:
+                ordered_set = set(ordered)
+                fnames = [f for f in ordered if f in set(all_files)]
+                fnames += sorted(f for f in all_files if f not in ordered_set)
+            else:
+                fnames = sorted(all_files)
+            for fname in fnames:
+                photo_key = f"{trip_id}/{i}/{fname}"
+                photos.append({
+                    "filename": fname,
+                    "url": f"/static/uploads/{trip_id}/{i}/{fname}",
+                    "caption": captions.get(photo_key, ""),
+                })
         stay_photos[i] = photos
 
     event_photos = {}
@@ -261,14 +272,22 @@ def trip_detail(trip_id):
         photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(i))
         photos = []
         if os.path.isdir(photo_dir):
-            for fname in sorted(os.listdir(photo_dir)):
-                if _allowed_file(fname):
-                    photo_key = f"{trip_id}/events/{i}/{fname}"
-                    photos.append({
-                        "filename": fname,
-                        "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
-                        "caption": captions.get(photo_key, ""),
-                    })
+            all_files = [f for f in os.listdir(photo_dir) if _allowed_file(f)]
+            order_key = f"{trip_id}/events/{i}"
+            ordered = photo_order.get(order_key)
+            if ordered:
+                ordered_set = set(ordered)
+                fnames = [f for f in ordered if f in set(all_files)]
+                fnames += sorted(f for f in all_files if f not in ordered_set)
+            else:
+                fnames = sorted(all_files)
+            for fname in fnames:
+                photo_key = f"{trip_id}/events/{i}/{fname}"
+                photos.append({
+                    "filename": fname,
+                    "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
+                    "caption": captions.get(photo_key, ""),
+                })
         event_photos[i] = photos
 
     _, family = _map_config()
@@ -391,6 +410,26 @@ def delete_photo(trip_id, stay_idx, filename):
     captions.pop(photo_key, None)
     _save_json(CAPTIONS_FILE, captions)
 
+    order_key = f"{trip_id}/{stay_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    if order_key in photo_order:
+        photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
+        _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/reorder', methods=['POST'])
+def reorder_stay_photos(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json()
+    filenames = data.get("filenames", [])
+    order_key = f"{trip_id}/{stay_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    photo_order[order_key] = filenames
+    _save_json(PHOTO_ORDER_FILE, photo_order)
     return jsonify({"ok": True})
 
 
@@ -461,6 +500,26 @@ def delete_event_photo(trip_id, event_idx, filename):
     captions.pop(photo_key, None)
     _save_json(CAPTIONS_FILE, captions)
 
+    order_key = f"{trip_id}/events/{event_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    if order_key in photo_order:
+        photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
+        _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/reorder', methods=['POST'])
+def reorder_event_photos(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json()
+    filenames = data.get("filenames", [])
+    order_key = f"{trip_id}/events/{event_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    photo_order[order_key] = filenames
+    _save_json(PHOTO_ORDER_FILE, photo_order)
     return jsonify({"ok": True})
 
 

@@ -529,6 +529,23 @@
     border-color: var(--red);
   }
 
+  .photo-item.dragging {
+    opacity: .4;
+  }
+
+  .photo-item.drag-over img {
+    outline: 3px solid var(--red);
+    outline-offset: -3px;
+  }
+
+  .photo-item[draggable="true"] img {
+    cursor: grab;
+  }
+
+  .photo-item[draggable="true"] img:active {
+    cursor: grabbing;
+  }
+
   .photo-item .delete-photo {
     position: absolute;
     top: 4px;
@@ -894,7 +911,7 @@
       <div class="photos-section">
         <div class="photo-grid" id="photos-{{ item.idx }}">
           {% for photo in stay_photos[item.idx] %}
-          <div class="photo-item" data-filename="{{ photo.filename }}">
+          <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
             <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
@@ -958,7 +975,7 @@
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
-          <div class="photo-item" data-filename="{{ photo.filename }}">
+          <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
             <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
@@ -1306,6 +1323,7 @@ function uploadEventPhotos(tripId, eventIdx, files) {
         const grid = document.getElementById('event-photos-' + eventIdx);
         const item = document.createElement('div');
         item.className = 'photo-item';
+        item.draggable = true;
         item.dataset.filename = data.filename;
         item.innerHTML = `
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
@@ -1342,6 +1360,7 @@ function uploadPhotos(tripId, stayIdx, files) {
         const grid = document.getElementById('photos-' + stayIdx);
         const item = document.createElement('div');
         item.className = 'photo-item';
+        item.draggable = true;
         item.dataset.filename = data.filename;
         item.innerHTML = `
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
@@ -1495,6 +1514,80 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 }
+
+// ── Photo reorder via drag and drop ─────────────────────────────────────
+let dragItem = null;
+
+function initPhotoDrag(grid) {
+  grid.addEventListener('dragstart', e => {
+    const item = e.target.closest('.photo-item');
+    if (!item || !item.draggable) return;
+    dragItem = item;
+    item.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', '');
+  });
+
+  grid.addEventListener('dragover', e => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+    const target = e.target.closest('.photo-item');
+    if (!target || target === dragItem) return;
+    // Clear previous highlights
+    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+    target.classList.add('drag-over');
+  });
+
+  grid.addEventListener('dragleave', e => {
+    const target = e.target.closest('.photo-item');
+    if (target) target.classList.remove('drag-over');
+  });
+
+  grid.addEventListener('drop', e => {
+    e.preventDefault();
+    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+    if (!dragItem) return;
+    const target = e.target.closest('.photo-item');
+    if (!target || target === dragItem) return;
+
+    // Reorder in the DOM
+    const items = Array.from(grid.querySelectorAll('.photo-item'));
+    const fromIdx = items.indexOf(dragItem);
+    const toIdx = items.indexOf(target);
+    if (fromIdx < toIdx) {
+      target.after(dragItem);
+    } else {
+      target.before(dragItem);
+    }
+
+    // Save new order
+    const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
+    const gridId = grid.id;
+    let url;
+    if (gridId.startsWith('event-photos-')) {
+      const idx = gridId.replace('event-photos-', '');
+      url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
+    } else {
+      const idx = gridId.replace('photos-', '');
+      url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
+    }
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filenames })
+    });
+  });
+
+  grid.addEventListener('dragend', () => {
+    if (dragItem) {
+      dragItem.classList.remove('dragging');
+      dragItem = null;
+    }
+    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+  });
+}
+
+document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
 
 // Drag and drop support for upload areas
 document.querySelectorAll('.upload-area').forEach(area => {
