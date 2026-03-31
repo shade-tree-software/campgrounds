@@ -52,6 +52,7 @@
   .controls {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 1rem;
     padding: 1rem 2rem;
     background: var(--white);
@@ -82,20 +83,9 @@
     text-align: center;
   }
 
-  .controls .view-toggle {
-    margin-left: auto;
-    display: flex;
-    gap: .25rem;
-  }
-
-  .controls .view-toggle button {
-    background: var(--gray-light);
-    color: #555;
-  }
-
-  .controls .view-toggle button.active {
-    background: var(--red);
-    color: var(--white);
+  .controls .btn-add-trip {
+    position: absolute;
+    right: 2rem;
   }
 
   /* ── Calendar Grid ─────────────────────────────── */
@@ -309,7 +299,8 @@
     background: var(--navy-light);
     padding: .5rem 2rem;
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: .5rem;
     font-size: .9rem;
   }
 
@@ -321,6 +312,22 @@
 
   nav a:hover { color: var(--white); }
   nav a.active { color: var(--gold); border-bottom: 2px solid var(--gold); }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+
+  .nav-group + .nav-group { margin-left: 1.75rem; }
+
+  .nav-label {
+    color: rgba(255,255,255,.45);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
 
 </style>
 </head>
@@ -335,10 +342,17 @@
 </header>
 
 <nav>
-  <a href="/trips/map">Trips Map</a>
-  <a href="/trips/calendar" class="active">Trips Calendar</a>
-  <a href="/campgrounds/waterfront">Waterfront Map</a>
-  <a href="/campgrounds/climate">Climate Map</a>
+  <span class="nav-group">
+    <span class="nav-label">Trips:</span>
+    <a href="/trips/calendar"{% if initial_view == 'calendar' %} class="active"{% endif %}>Calendar</a>
+    <a href="/trips/list"{% if initial_view == 'list' %} class="active"{% endif %}>List</a>
+    <a href="/trips/map">Map</a>
+  </span>
+  <span class="nav-group">
+    <span class="nav-label">Campgrounds:</span>
+    <a href="/campgrounds/waterfront">Waterfront</a>
+    <a href="/campgrounds/climate">Climate</a>
+  </span>
   {% if current_user.is_authenticated %}
   <a href="/logout?next={{ request.path }}" style="margin-left:auto">Logout</a>
   {% else %}
@@ -346,17 +360,12 @@
   {% endif %}
 </nav>
 
-<div class="controls">
+<div class="controls" style="position:relative">
   <button onclick="prevYear()">&larr;</button>
   <div class="year-label" id="year-label"></div>
   <button onclick="nextYear()">&rarr;</button>
-  <div class="view-toggle">
-    <button id="btn-calendar" class="active" onclick="setView('calendar')">Calendar</button>
-    <button id="btn-list" onclick="setView('list')">List</button>
-  </div>
   {% if current_user.is_authenticated and current_user.is_admin %}
-  <button id="btn-add-trip" onclick="addTrip()" style="
-    margin-left: auto;
+  <button class="btn-add-trip" onclick="addTrip()" style="
     background: var(--red);
     color: #fff;
     border: none;
@@ -404,44 +413,24 @@ const years = TRIPS.map(t => parseInt(t.start.slice(0, 4)));
 const minYear = Math.min(...years);
 const maxYear = Math.max(...years);
 
-// Read year and view from URL hash (e.g. #2024/list or #2024)
+// Read year from URL hash (e.g. #2024)
 function parseHash() {
-  const parts = location.hash.replace('#', '').split('/');
-  const y = parseInt(parts[0]);
-  const year = (y >= minYear && y <= maxYear) ? y : maxYear;
-  const view = parts[1] === 'list' ? 'list' : 'calendar';
-  return { year, view };
+  const y = parseInt(location.hash.replace('#', ''));
+  return (y >= minYear && y <= maxYear) ? y : maxYear;
 }
 
-const parsed = parseHash();
-let currentYear = parsed.year;
-let currentView = parsed.view;
+let currentYear = parseHash();
+const currentView = {{ initial_view | tojson }};
 
 const todayStr = new Date().toISOString().slice(0, 10);
 
 window.addEventListener('hashchange', () => {
-  const parsed = parseHash();
-  currentYear = parsed.year;
-  currentView = parsed.view;
-  document.getElementById('btn-calendar').classList.toggle('active', currentView === 'calendar');
-  document.getElementById('btn-list').classList.toggle('active', currentView === 'list');
-  document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
-  document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
+  currentYear = parseHash();
   render();
 });
 
 function updateHash() {
-  const viewPart = currentView === 'list' ? '/list' : '';
-  history.replaceState(null, '', '#' + currentYear + viewPart);
-}
-
-function setView(view) {
-  currentView = view;
-  document.getElementById('btn-calendar').classList.toggle('active', view === 'calendar');
-  document.getElementById('btn-list').classList.toggle('active', view === 'list');
-  document.getElementById('calendar-container').classList.toggle('hidden', view !== 'calendar');
-  document.getElementById('list-container').classList.toggle('hidden', view !== 'list');
-  render();
+  history.replaceState(null, '', '#' + currentYear);
 }
 
 function prevYear() {
@@ -615,9 +604,7 @@ function hideTooltip() {
   document.getElementById('tooltip').classList.remove('visible');
 }
 
-// Init — apply view from URL hash
-document.getElementById('btn-calendar').classList.toggle('active', currentView === 'calendar');
-document.getElementById('btn-list').classList.toggle('active', currentView === 'list');
+// Init — apply view from URL
 document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
 document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
 render();

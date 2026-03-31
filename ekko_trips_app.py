@@ -222,11 +222,13 @@ def trips_map():
 
 
 @app.route('/trips/calendar')
+@app.route('/trips/list')
 def trips_calendar():
     trips = parse_trips()
     for trip in trips:
         enrich_trip_locations(trip)
-    return render_template('trips_calendar.html', trips=trips)
+    initial_view = 'list' if request.path == '/trips/list' else 'calendar'
+    return render_template('trips_calendar.html', trips=trips, initial_view=initial_view)
 
 
 @app.route('/trips/<int:trip_id>')

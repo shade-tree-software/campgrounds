@@ -57,7 +57,8 @@
     background: var(--navy-light);
     padding: .5rem 2rem;
     display: flex;
-    gap: 1.5rem;
+    align-items: center;
+    gap: .5rem;
     font-size: .9rem;
   }
 
@@ -68,6 +69,22 @@
   }
 
   nav a:hover { color: var(--white); }
+
+  .nav-group {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+  }
+
+
+  .nav-group + .nav-group { margin-left: 1.75rem; }
+
+  .nav-label {
+    color: rgba(255,255,255,.45);
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
 
   /* ── Admin editing ──────────────────────────────── */
   .edit-btn {
@@ -780,10 +797,17 @@
 </header>
 
 <nav>
-  <a href="/trips/map">Trips Map</a>
-  <a href="/trips/calendar">Trips Calendar</a>
-  <a href="/campgrounds/waterfront">Waterfront Map</a>
-  <a href="/campgrounds/climate">Climate Map</a>
+  <span class="nav-group">
+    <span class="nav-label">Trips:</span>
+    <a href="/trips/calendar">Calendar</a>
+    <a href="/trips/list">List</a>
+    <a href="/trips/map">Map</a>
+  </span>
+  <span class="nav-group">
+    <span class="nav-label">Campgrounds:</span>
+    <a href="/campgrounds/waterfront">Waterfront</a>
+    <a href="/campgrounds/climate">Climate</a>
+  </span>
   {% if is_admin %}
   <a href="/logout?next={{ request.path }}" style="margin-left:auto">Logout</a>
   {% else %}
