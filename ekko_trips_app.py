@@ -23,7 +23,6 @@ login_manager.login_view = "login"
 
 TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
-COMMENTS_FILE = os.path.join(TRIP_DATA_DIR, "comments.json")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
 PHOTO_ORDER_FILE = os.path.join(TRIP_DATA_DIR, "photo_order.json")
 USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
@@ -241,9 +240,7 @@ def trip_detail(trip_id):
 
     enrich_trip_locations(trip)
 
-    comments = _load_json(COMMENTS_FILE)
     captions = _load_json(CAPTIONS_FILE)
-    trip_comments = comments.get(str(trip_id), [])
 
     photo_order = _load_json(PHOTO_ORDER_FILE)
 
@@ -300,7 +297,6 @@ def trip_detail(trip_id):
         trip=trip,
         stay_photos=stay_photos,
         event_photos=event_photos,
-        trip_comments=trip_comments,
         family_locations=family,
         is_admin=is_admin,
     )
@@ -353,48 +349,6 @@ def save_caption(trip_id, stay_idx):
     captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
 
-    return jsonify({"ok": True})
-
-
-@app.route('/trips/<int:trip_id>/comments', methods=['GET'])
-def get_comments(trip_id):
-    comments = _load_json(COMMENTS_FILE)
-    return jsonify(comments.get(str(trip_id), []))
-
-
-@app.route('/trips/<int:trip_id>/comments', methods=['POST'])
-def add_comment(trip_id):
-    denied = _require_admin()
-    if denied:
-        return denied
-    data = request.get_json()
-    text = data.get("text", "").strip()
-    if not text:
-        return jsonify({"error": "Empty comment"}), 400
-
-    comments = _load_json(COMMENTS_FILE)
-    trip_comments = comments.get(str(trip_id), [])
-    trip_comments.append({
-        "text": text,
-        "timestamp": datetime.now().isoformat(),
-    })
-    comments[str(trip_id)] = trip_comments
-    _save_json(COMMENTS_FILE, comments)
-
-    return jsonify({"ok": True, "comment": trip_comments[-1]})
-
-
-@app.route('/trips/<int:trip_id>/comments/<int:comment_idx>', methods=['DELETE'])
-def delete_comment(trip_id, comment_idx):
-    denied = _require_admin()
-    if denied:
-        return denied
-    comments = _load_json(COMMENTS_FILE)
-    trip_comments = comments.get(str(trip_id), [])
-    if 0 <= comment_idx < len(trip_comments):
-        trip_comments.pop(comment_idx)
-        comments[str(trip_id)] = trip_comments
-        _save_json(COMMENTS_FILE, comments)
     return jsonify({"ok": True})
 
 

@@ -526,97 +526,6 @@
     color: var(--gray);
   }
 
-  /* ── Comments ───────────────────────────────────── */
-  .comments-section {
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    padding: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .comments-section h3 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    margin-bottom: 1rem;
-  }
-
-  .comment-list {
-    list-style: none;
-    margin-bottom: 1rem;
-  }
-
-  .comment-list li {
-    padding: .6rem 0;
-    border-bottom: 1px solid var(--gray-light);
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: .75rem;
-  }
-
-  .comment-list li:last-child { border-bottom: none; }
-
-  .comment-text {
-    font-size: .85rem;
-    line-height: 1.5;
-    flex: 1;
-  }
-
-  .comment-time {
-    font-size: .7rem;
-    color: var(--gray);
-    white-space: nowrap;
-  }
-
-  .comment-delete {
-    background: none;
-    border: none;
-    color: #c62828;
-    cursor: pointer;
-    font-size: .8rem;
-    padding: .2rem;
-    opacity: .5;
-  }
-
-  .comment-delete:hover { opacity: 1; }
-
-  .comment-form {
-    display: flex;
-    gap: .5rem;
-  }
-
-  .comment-form textarea {
-    flex: 1;
-    border: 1px solid var(--gray-light);
-    border-radius: 6px;
-    padding: .5rem .75rem;
-    font-size: .85rem;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 2.5rem;
-  }
-
-  .comment-form textarea:focus {
-    outline: none;
-    border-color: var(--red);
-  }
-
-  .comment-form button {
-    background: var(--red);
-    color: var(--white);
-    border: none;
-    padding: .5rem 1rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: .85rem;
-    align-self: flex-end;
-  }
-
-  .comment-form button:hover { background: var(--navy); }
-
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
@@ -936,30 +845,6 @@
   </div>
   {% endif %}
 
-  <!-- Comments -->
-  <div class="comments-section">
-    <h3>Trip Comments</h3>
-    <ul class="comment-list" id="comment-list">
-      {% for c in trip_comments %}
-      <li>
-        <div>
-          <div class="comment-text">{{ c.text }}</div>
-          <div class="comment-time">{{ c.timestamp[:16].replace('T', ' ') }}</div>
-        </div>
-        {% if is_admin %}
-        <button class="comment-delete" onclick="deleteComment({{ trip.id }}, {{ loop.index0 }})">&times;</button>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-    {% if is_admin %}
-    <div class="comment-form">
-      <textarea id="comment-input" placeholder="Add a comment about this trip..." rows="2"></textarea>
-      <button onclick="addComment({{ trip.id }})">Post</button>
-    </div>
-    {% endif %}
-  </div>
-
 </div>
 
 <!-- Lightbox -->
@@ -1268,7 +1153,7 @@ function deleteEventPhoto(tripId, eventIdx, filename, btn) {
     });
 }
 
-// ── Photo and comment functions ──────────────────────────────────────────
+// ── Photo functions ──────────────────────────────────────────────────────
 function uploadPhotos(tripId, stayIdx, files) {
   Array.from(files).forEach(file => {
     const form = new FormData();
@@ -1344,41 +1229,6 @@ function deletePhoto(tripId, stayIdx, filename, btn) {
     .then(() => {
       btn.closest('.photo-item').remove();
     });
-}
-
-function addComment(tripId) {
-  const input = document.getElementById('comment-input');
-  const text = input.value.trim();
-  if (!text) return;
-
-  fetch(`/trips/${tripId}/comments`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ text })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.error) { alert(data.error); return; }
-    input.value = '';
-    const list = document.getElementById('comment-list');
-    const li = document.createElement('li');
-    const time = data.comment.timestamp.slice(0, 16).replace('T', ' ');
-    const idx = list.children.length;
-    li.innerHTML = `
-      <div>
-        <div class="comment-text">${escapeHtml(data.comment.text)}</div>
-        <div class="comment-time">${time}</div>
-      </div>
-      <button class="comment-delete" onclick="deleteComment(${tripId}, ${idx})">&times;</button>
-    `;
-    list.appendChild(li);
-  });
-}
-
-function deleteComment(tripId, idx) {
-  if (!confirm('Delete this comment?')) return;
-  fetch(`/trips/${tripId}/comments/${idx}`, { method: 'DELETE' })
-    .then(() => location.reload());
 }
 
 let lightboxPhotos = [];
