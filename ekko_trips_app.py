@@ -26,6 +26,15 @@ USERS_FILE = os.path.join(TRIP_DATA_DIR, "users.json")
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+
+@app.context_processor
+def inject_trip_stats():
+    trips = parse_trips()
+    return {
+        "trip_count": len(trips),
+        "night_count": sum(t["total_nights"] for t in trips),
+    }
+
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "all-campgrounds.json")
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
