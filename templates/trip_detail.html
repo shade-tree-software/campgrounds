@@ -892,7 +892,6 @@
 
       <!-- Photos -->
       <div class="photos-section">
-        <h4>Photos</h4>
         <div class="photo-grid" id="photos-{{ item.idx }}">
           {% for photo in stay_photos[item.idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}">
@@ -957,7 +956,6 @@
 
       <!-- Event Photos -->
       <div class="photos-section">
-        <h4>Photos</h4>
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}">
@@ -1116,12 +1114,17 @@
   // Close the route back to home
   latlngs.push(HOME);
 
-  // Draw route line
+  // Draw route line (white outline + colored dash for visibility on satellite)
+  L.polyline(latlngs, {
+    color: '#fff',
+    weight: 5,
+    opacity: 0.6,
+  }).addTo(map);
   L.polyline(latlngs, {
     color: '#002868',
-    weight: 2,
-    opacity: 0.5,
-    dashArray: '6,8',
+    weight: 3,
+    opacity: 0.8,
+    dashArray: '8,10',
   }).addTo(map);
 
   // Family location markers (not included in bounds)
