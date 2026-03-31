@@ -24,7 +24,7 @@ TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
 COMMENTS_FILE = os.path.join(TRIP_DATA_DIR, "comments.json")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
-USERS_FILE = os.path.join(TRIP_DATA_DIR, "users.json")
+USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
