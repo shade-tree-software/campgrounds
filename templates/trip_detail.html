@@ -470,7 +470,6 @@
 
   .photo-item.dragging {
     opacity: .4;
-    pointer-events: none;
   }
 
   .photo-item.drag-over-before::before,
@@ -1340,39 +1339,43 @@ function initPhotoDrag(grid) {
 
   grid.addEventListener('drop', e => {
     e.preventDefault();
-  });
-
-  grid.addEventListener('dragend', () => {
     grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
       el.classList.remove('drag-over-before', 'drag-over-after');
     });
+    if (!dragItem || !dropTarget || dropTarget === dragItem) return;
+
+    // Reorder in the DOM based on which side the indicator was on
+    if (dropBefore) {
+      dropTarget.before(dragItem);
+    } else {
+      dropTarget.after(dragItem);
+    }
+
+    // Save new order
+    const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
+    const gridId = grid.id;
+    let url;
+    if (gridId.startsWith('event-photos-')) {
+      const idx = gridId.replace('event-photos-', '');
+      url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
+    } else {
+      const idx = gridId.replace('photos-', '');
+      url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
+    }
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filenames })
+    });
+  });
+
+  grid.addEventListener('dragend', () => {
     if (dragItem) {
       dragItem.classList.remove('dragging');
     }
-    if (dragItem && dropTarget && dropTarget !== dragItem) {
-      if (dropBefore) {
-        dropTarget.before(dragItem);
-      } else {
-        dropTarget.after(dragItem);
-      }
-
-      // Save new order
-      const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
-      const gridId = grid.id;
-      let url;
-      if (gridId.startsWith('event-photos-')) {
-        const idx = gridId.replace('event-photos-', '');
-        url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
-      } else {
-        const idx = gridId.replace('photos-', '');
-        url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
-      }
-      fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ filenames })
-      });
-    }
+    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+      el.classList.remove('drag-over-before', 'drag-over-after');
+    });
     dragItem = null;
     dropTarget = null;
   });
