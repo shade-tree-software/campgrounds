@@ -194,7 +194,7 @@ def _load_campgrounds():
         row["elevation_feet"] = int(elev * METERS_TO_FEET)
         row["delta_temp"] = delta_temp
         row["climate"] = _classify_climate(delta_temp)
-        row["visited"] = "yes" if "stays" in entry else "no"
+        row["visit_count"] = len(entry["stays"]) if "stays" in entry else 0
         rows.append(row)
     return rows
 
