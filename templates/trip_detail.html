@@ -988,6 +988,7 @@
 
 // ── Trip editing ──────────────────────────────────────────────────────────
 const TRIP_ID = {{ trip.id }};
+const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
 
 function editTripNote() {
   document.getElementById('trip-title').style.display = 'none';
@@ -1143,7 +1144,7 @@ function uploadEventPhotos(tripId, eventIdx, files) {
         const grid = document.getElementById('event-photos-' + eventIdx);
         const item = document.createElement('div');
         item.className = 'photo-item';
-        item.draggable = true;
+        item.draggable = IS_ADMIN;
         item.dataset.filename = data.filename;
         item.innerHTML = `
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
@@ -1180,7 +1181,7 @@ function uploadPhotos(tripId, stayIdx, files) {
         const grid = document.getElementById('photos-' + stayIdx);
         const item = document.createElement('div');
         item.className = 'photo-item';
-        item.draggable = true;
+        item.draggable = IS_ADMIN;
         item.dataset.filename = data.filename;
         item.innerHTML = `
           <img src="${data.url}" alt="" onclick="openLightbox(this)">
@@ -1381,7 +1382,7 @@ function initPhotoDrag(grid) {
   });
 }
 
-document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
+if (IS_ADMIN) document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
 
 // Drag and drop support for upload areas
 document.querySelectorAll('.upload-area').forEach(area => {
