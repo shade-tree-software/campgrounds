@@ -30,29 +30,34 @@
   }
 
   #all-trips-map {
-    height: calc(100vh - 570px);
+    height: calc(100vh - 470px);
     min-height: 300px;
     width: 100%;
   }
 
   .slideshow {
     position: relative;
-    height: 350px;
-    background: #000;
+    height: 250px;
     overflow: hidden;
-    cursor: pointer;
   }
 
-  .slideshow img {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    object-fit: contain;
-    opacity: 0;
-    transition: opacity 1s ease;
+  .slideshow-track {
+    display: flex;
+    height: 100%;
+    transition: transform 1s ease;
   }
 
-  .slideshow img.active { opacity: 1; }
+  .slideshow-track a {
+    flex: 0 0 var(--slide-width);
+    height: 100%;
+    display: block;
+  }
+
+  .slideshow-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 {% endblock %}
 
 {% block content %}
@@ -194,29 +199,40 @@ if (bounds.length) {
 const PHOTOS = {{ slideshow_photos | tojson }};
 if (PHOTOS.length) {
   const container = document.getElementById('slideshow');
-  // Preload first few images, create two img elements for crossfade
-  const imgA = document.createElement('img');
-  const imgB = document.createElement('img');
-  container.appendChild(imgA);
-  container.appendChild(imgB);
+  const VISIBLE = Math.min(5, PHOTOS.length);
+  container.style.setProperty('--slide-width', (100 / VISIBLE) + '%');
 
-  let current = 0;
-  let activeImg = imgA;
+  const track = document.createElement('div');
+  track.className = 'slideshow-track';
 
-  function showPhoto(idx) {
-    const photo = PHOTOS[idx];
-    const nextImg = activeImg === imgA ? imgB : imgA;
-    nextImg.src = photo.url;
-    nextImg.classList.add('active');
-    activeImg.classList.remove('active');
-    activeImg = nextImg;
-    container.onclick = () => { window.location.href = '/trips/' + photo.trip_id; };
-  }
+  // Build slides: full set + clone first VISIBLE for seamless wrap
+  const slides = [...PHOTOS, ...PHOTOS.slice(0, VISIBLE)];
+  slides.forEach(photo => {
+    const a = document.createElement('a');
+    a.href = '/trips/' + photo.trip_id;
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.loading = 'lazy';
+    a.appendChild(img);
+    track.appendChild(a);
+  });
+  container.appendChild(track);
 
-  showPhoto(0);
+  let pos = 0;
+  const step = 100 / VISIBLE;
+
   setInterval(() => {
-    current = (current + 1) % PHOTOS.length;
-    showPhoto(current);
+    pos++;
+    track.style.transition = 'transform 1s ease';
+    track.style.transform = `translateX(-${pos * step}%)`;
+
+    if (pos >= PHOTOS.length) {
+      setTimeout(() => {
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(0)';
+        pos = 0;
+      }, 1050);
+    }
   }, 4000);
 }
 </script>
