@@ -137,9 +137,10 @@ def add_stay(trip_id, stay_data):
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
+            default_date = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
             stay = {
-                "start": stay_data.get("start", date.today().isoformat()),
-                "end": stay_data.get("end", date.today().isoformat()),
+                "start": stay_data.get("start", default_date),
+                "end": stay_data.get("end", default_date),
                 "nights": int(stay_data.get("nights", 1)),
                 "place": stay_data.get("place", "New Campground"),
                 "locale": stay_data.get("locale", ""),
@@ -224,8 +225,9 @@ def add_event(trip_id, event_data):
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
+            default_date = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
             event = {
-                "date": event_data.get("date", date.today().isoformat()),
+                "date": event_data.get("date", default_date),
                 "name": event_data.get("name", "New Event"),
                 "description": event_data.get("description", ""),
             }
