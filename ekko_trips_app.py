@@ -320,6 +320,13 @@ def trip_detail(trip_id):
 
     _, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
+
+    # Find prev/next trip IDs
+    trip_ids = [t["id"] for t in trips]
+    idx = trip_ids.index(trip_id)
+    prev_trip_id = trip_ids[idx - 1] if idx > 0 else None
+    next_trip_id = trip_ids[idx + 1] if idx < len(trip_ids) - 1 else None
+
     return render_template(
         'trip_detail.html',
         trip=trip,
@@ -327,6 +334,8 @@ def trip_detail(trip_id):
         event_photos=event_photos,
         family_locations=family,
         is_admin=is_admin,
+        prev_trip_id=prev_trip_id,
+        next_trip_id=next_trip_id,
     )
 
 
