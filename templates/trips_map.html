@@ -30,15 +30,37 @@
   }
 
   #all-trips-map {
-    height: calc(100vh - 220px);
-    min-height: 400px;
+    height: calc(100vh - 570px);
+    min-height: 300px;
     width: 100%;
   }
+
+  .slideshow {
+    position: relative;
+    height: 350px;
+    background: #000;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .slideshow img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .slideshow img.active { opacity: 1; }
 {% endblock %}
 
 {% block content %}
 <div class="map-section">
   <div class="map-container">
+    {% if slideshow_photos %}
+    <div class="slideshow" id="slideshow"></div>
+    {% endif %}
     <div class="map-header">All Camping Locations</div>
     <div id="all-trips-map"></div>
   </div>
@@ -166,6 +188,36 @@ FAMILY.forEach(fam => {
 
 if (bounds.length) {
   map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+}
+
+// ── Slideshow ────────────────────────────────────────────────────────────
+const PHOTOS = {{ slideshow_photos | tojson }};
+if (PHOTOS.length) {
+  const container = document.getElementById('slideshow');
+  // Preload first few images, create two img elements for crossfade
+  const imgA = document.createElement('img');
+  const imgB = document.createElement('img');
+  container.appendChild(imgA);
+  container.appendChild(imgB);
+
+  let current = 0;
+  let activeImg = imgA;
+
+  function showPhoto(idx) {
+    const photo = PHOTOS[idx];
+    const nextImg = activeImg === imgA ? imgB : imgA;
+    nextImg.src = photo.url;
+    nextImg.classList.add('active');
+    activeImg.classList.remove('active');
+    activeImg = nextImg;
+    container.onclick = () => { window.location.href = '/trips/' + photo.trip_id; };
+  }
+
+  showPhoto(0);
+  setInterval(() => {
+    current = (current + 1) % PHOTOS.length;
+    showPhoto(current);
+  }, 4000);
 }
 </script>
 {% endblock %}

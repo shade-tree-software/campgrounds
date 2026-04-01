@@ -219,7 +219,34 @@ def trips_map():
     for trip in trips:
         enrich_trip_locations(trip)
     home, family = _map_config()
-    return render_template('trips_map.html', trips=trips, home=home, family_locations=family, active_nav='map')
+
+    # Collect all photos for the slideshow
+    import random
+    all_photos = []
+    for trip in trips:
+        for i, stay in enumerate(trip["stays"]):
+            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        all_photos.append({
+                            "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
+                            "trip_id": trip["id"],
+                        })
+        for i, event in enumerate(trip.get("events", [])):
+            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), "events", str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        all_photos.append({
+                            "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
+                            "trip_id": trip["id"],
+                        })
+    random.shuffle(all_photos)
+
+    return render_template('trips_map.html', trips=trips, home=home,
+                           family_locations=family, active_nav='map',
+                           slideshow_photos=all_photos)
 
 
 @app.route('/trips/calendar')
