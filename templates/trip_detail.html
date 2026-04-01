@@ -77,6 +77,25 @@
     border-color: var(--red);
   }
 
+  .cg-autocomplete { position: relative; }
+  .cg-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+    background: #fff; border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 4px 4px; max-height: 200px; overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15); display: none;
+  }
+  .cg-dropdown.open { display: block; }
+  .cg-dropdown .cg-option {
+    padding: .35rem .6rem; cursor: pointer; font-size: .85rem;
+  }
+  .cg-dropdown .cg-option:hover,
+  .cg-dropdown .cg-option.active {
+    background: var(--blue-bg);
+  }
+  .cg-dropdown .cg-option .cg-state {
+    color: var(--gray); font-size: .75rem; margin-left: .4rem;
+  }
+
   .stay-edit-form .form-actions {
     display: flex;
     gap: .5rem;
@@ -688,7 +707,10 @@
       <div class="form-grid">
         <div>
           <label>Place</label>
-          <input type="text" data-field="place" value="{{ item.place }}">
+          <div class="cg-autocomplete">
+            <input type="text" data-field="place" value="{{ item.place }}" autocomplete="off" oninput="cgFilter(this)" onfocus="cgFilter(this)" data-stay-idx="{{ item.idx }}">
+            <div class="cg-dropdown"></div>
+          </div>
         </div>
         <div>
           <label>Locale</label>
@@ -989,6 +1011,85 @@
 // ── Trip editing ──────────────────────────────────────────────────────────
 const TRIP_ID = {{ trip.id }};
 const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
+
+// ── Campground autocomplete ──────────────────────────────────────────────
+let CG_LIST = [];  // [{name, state}]
+if (IS_ADMIN) {
+  fetch('/api/campgrounds')
+    .then(r => r.json())
+    .then(data => { CG_LIST = data; });
+}
+
+let cgActiveIdx = -1;
+
+function cgFilter(input) {
+  const dropdown = input.parentElement.querySelector('.cg-dropdown');
+  const query = input.value.toLowerCase();
+  if (!query || CG_LIST.length === 0) {
+    dropdown.classList.remove('open');
+    return;
+  }
+  const matches = CG_LIST.filter(c => c.name.toLowerCase().includes(query)).slice(0, 15);
+  if (matches.length === 0) {
+    dropdown.classList.remove('open');
+    return;
+  }
+  cgActiveIdx = -1;
+  dropdown.innerHTML = matches.map((c, i) =>
+    `<div class="cg-option" data-idx="${i}" data-name="${c.name}" data-state="${c.state}" onmousedown="cgSelect(this)">${escapeHtml(c.name)}<span class="cg-state">${c.state}</span></div>`
+  ).join('');
+  dropdown.classList.add('open');
+}
+
+function cgSelect(optionEl) {
+  const wrapper = optionEl.closest('.cg-autocomplete');
+  const input = wrapper.querySelector('input[data-field="place"]');
+  const dropdown = wrapper.querySelector('.cg-dropdown');
+  input.value = optionEl.dataset.name;
+  dropdown.classList.remove('open');
+  // Auto-fill state field in the same form
+  const form = input.closest('.form-grid');
+  if (form) {
+    const stateInput = form.querySelector('[data-field="state"]');
+    if (stateInput && optionEl.dataset.state) {
+      stateInput.value = optionEl.dataset.state;
+    }
+  }
+}
+
+// Keyboard navigation for autocomplete
+document.addEventListener('keydown', e => {
+  const focused = document.activeElement;
+  if (!focused || focused.dataset.field !== 'place') return;
+  const dropdown = focused.parentElement.querySelector('.cg-dropdown');
+  if (!dropdown.classList.contains('open')) return;
+  const options = dropdown.querySelectorAll('.cg-option');
+  if (options.length === 0) return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    cgActiveIdx = Math.min(cgActiveIdx + 1, options.length - 1);
+    options.forEach((o, i) => o.classList.toggle('active', i === cgActiveIdx));
+    options[cgActiveIdx].scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    cgActiveIdx = Math.max(cgActiveIdx - 1, 0);
+    options.forEach((o, i) => o.classList.toggle('active', i === cgActiveIdx));
+    options[cgActiveIdx].scrollIntoView({ block: 'nearest' });
+  } else if (e.key === 'Enter' && cgActiveIdx >= 0) {
+    e.preventDefault();
+    cgSelect(options[cgActiveIdx]);
+  } else if (e.key === 'Escape') {
+    dropdown.classList.remove('open');
+  }
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', e => {
+  if (!e.target.closest('.cg-autocomplete')) {
+    document.querySelectorAll('.cg-dropdown.open').forEach(d => d.classList.remove('open'));
+  }
+});
 
 function editTripNote() {
   document.getElementById('trip-title').style.display = 'none';

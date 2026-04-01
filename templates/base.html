@@ -108,6 +108,9 @@
     <span class="nav-label">Campgrounds:</span>
     <a href="/campgrounds/waterfront"{% if active_nav == 'waterfront' %} class="active"{% endif %}>Waterfront</a>
     <a href="/campgrounds/climate"{% if active_nav == 'climate' %} class="active"{% endif %}>Climate</a>
+    {% if current_user.is_authenticated and current_user.is_admin %}
+    <a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}>Manage</a>
+    {% endif %}
   </span>
   {% block nav_auth %}
   {% if current_user.is_authenticated %}

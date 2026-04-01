@@ -261,6 +261,20 @@ def update_event(trip_id, event_idx, fields):
     return None
 
 
+def rename_campground_in_trips(old_name, new_name):
+    """Update all stays that reference old_name to use new_name."""
+    raw = _load_raw_trips()
+    changed = False
+    for t in raw:
+        for s in t["stays"]:
+            if s["place"] == old_name:
+                s["place"] = new_name
+                changed = True
+    if changed:
+        _save_trips(raw)
+    return changed
+
+
 def delete_event(trip_id, event_idx):
     """Delete an event from a trip. Returns updated trip or None."""
     raw = _load_raw_trips()

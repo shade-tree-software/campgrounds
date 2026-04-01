@@ -11,7 +11,8 @@ from werkzeug.utils import secure_filename
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
-                   add_event, update_event, delete_event)
+                   add_event, update_event, delete_event,
+                   rename_campground_in_trips)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -618,6 +619,127 @@ def campgrounds_climate():
         family_locations=family,
         active_nav='climate',
     )
+
+
+# ── Campground CRUD API ────────────────────────────────────────────────────
+
+@app.route('/api/campgrounds')
+def api_campground_list():
+    """Return a lightweight list of campground names and states for pickers."""
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+    result = [{"name": e["name"], "state": e.get("state", "")}
+              for e in entries if "name" in e]
+    result.sort(key=lambda x: x["name"])
+    return jsonify(result)
+
+
+@app.route('/campgrounds/manage')
+def campgrounds_manage():
+    denied = _require_admin()
+    if denied:
+        return redirect(url_for('login', next=request.path))
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    return render_template('campground_manage.html', active_nav='manage',
+                           is_admin=is_admin)
+
+
+@app.route('/api/campgrounds/all')
+def api_campground_all():
+    """Return full campground data for the management page."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+    return jsonify(entries)
+
+
+@app.route('/api/campgrounds', methods=['POST'])
+def api_create_campground():
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    name = data.get("name", "").strip()
+    if not name:
+        return jsonify({"error": "Name is required"}), 400
+
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+
+    if any(e["name"] == name for e in entries):
+        return jsonify({"error": "A campground with that name already exists"}), 409
+
+    entry = {
+        "name": name,
+        "location": data.get("location", ""),
+        "elevation_meters": float(data.get("elevation_meters", 0)),
+        "waterfront": data.get("waterfront", "none"),
+        "state": data.get("state", ""),
+        "ownership": data.get("ownership", ""),
+        "website": data.get("website", ""),
+        "note": data.get("note", ""),
+        "phone": data.get("phone", ""),
+    }
+    entries.append(entry)
+    _save_json(CAMPGROUNDS_JSON, entries)
+    return jsonify({"ok": True})
+
+
+@app.route('/api/campgrounds/<path:name>', methods=['PUT'])
+def api_update_campground(name):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+
+    target = None
+    for e in entries:
+        if e["name"] == name:
+            target = e
+            break
+    if not target:
+        return jsonify({"error": "Campground not found"}), 404
+
+    new_name = data.get("name", "").strip()
+    if new_name and new_name != name:
+        if any(e["name"] == new_name for e in entries if e is not target):
+            return jsonify({"error": "A campground with that name already exists"}), 409
+        rename_campground_in_trips(name, new_name)
+        target["name"] = new_name
+
+    for key in ("location", "elevation_meters", "waterfront", "state",
+                "ownership", "website", "note", "phone"):
+        if key in data:
+            val = data[key]
+            if key == "elevation_meters":
+                val = float(val)
+            target[key] = val
+
+    _save_json(CAMPGROUNDS_JSON, entries)
+    return jsonify({"ok": True})
+
+
+@app.route('/api/campgrounds/<path:name>', methods=['DELETE'])
+def api_delete_campground(name):
+    denied = _require_admin()
+    if denied:
+        return denied
+
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+
+    before = len(entries)
+    entries = [e for e in entries if e["name"] != name]
+    if len(entries) == before:
+        return jsonify({"error": "Campground not found"}), 404
+
+    _save_json(CAMPGROUNDS_JSON, entries)
+    return jsonify({"ok": True})
 
 
 if __name__ == '__main__':

@@ -1,0 +1,342 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Campgrounds{% endblock %}
+
+{% block style %}
+  .manage-page { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
+  .table-wrap { overflow-x: auto; }
+  .manage-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .manage-header h2 { font-size: 1.4rem; color: var(--navy); }
+
+  .search-box {
+    padding: .45rem .75rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    font-size: .9rem;
+    width: 280px;
+  }
+
+  .btn { padding: .4rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: .85rem; }
+  .btn-add { background: var(--red); color: #fff; }
+  .btn-add:hover { background: var(--red-light); }
+  .btn-save { background: #2e7d32; color: #fff; }
+  .btn-save:hover { background: #388e3c; }
+  .btn-cancel { background: #757575; color: #fff; }
+  .btn-cancel:hover { background: #616161; }
+  .btn-delete { background: #c62828; color: #fff; }
+  .btn-delete:hover { background: #d32f2f; }
+
+  .cg-table { width: 100%; border-collapse: collapse; font-size: .85rem; table-layout: fixed; }
+  .cg-table th { text-align: left; padding: .5rem .4rem; border-bottom: 2px solid var(--navy); color: var(--navy); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; white-space: nowrap; user-select: none; }
+  .cg-table th:hover { color: var(--red); }
+  .cg-table th .sort-arrow { font-size: .65rem; margin-left: .2rem; }
+  .cg-table td { padding: .4rem; border-bottom: 1px solid #eee; vertical-align: top; overflow-wrap: break-word; }
+  .cg-table tr:hover { background: var(--blue-bg); }
+  .cg-table tr.editing { background: #fffde7; }
+
+  .cg-table .col-name { width: 25%; }
+  .cg-table .col-state { width: 5%; }
+  .cg-table .col-waterfront { width: 11%; }
+  .cg-table .col-ownership { width: 9%; }
+  .cg-table .col-elev { width: 7%; text-align: right; }
+  .cg-table .col-note { width: 30%; }
+  .cg-table .col-actions { width: 13%; white-space: nowrap; }
+
+  .cg-table input, .cg-table select, .cg-table textarea {
+    font-size: .85rem;
+    padding: .2rem .35rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .cg-table textarea { resize: vertical; min-height: 2.5rem; }
+
+  .edit-actions { display: flex; gap: .3rem; margin-top: .3rem; }
+  .row-actions { display: flex; gap: .3rem; }
+  .row-actions button { padding: .2rem .5rem; font-size: .8rem; }
+
+  .count-info { color: var(--gray); font-size: .85rem; }
+  .note-cell { font-size: .8rem; color: var(--gray); line-height: 1.3; }
+
+  .empty-msg { text-align: center; padding: 3rem; color: var(--gray); }
+{% endblock %}
+
+{% block content %}
+<div class="manage-page">
+  <div class="manage-header">
+    <h2>Manage Campgrounds</h2>
+    <div style="display:flex;gap:1rem;align-items:center;">
+      <span class="count-info" id="count-info"></span>
+      <input type="text" class="search-box" id="search-box" placeholder="Search campgrounds..." oninput="filterTable()">
+      <button class="btn btn-add" onclick="startAdd()">+ Add Campground</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+  <table class="cg-table">
+    <thead>
+      <tr>
+        <th class="col-name" onclick="sortBy('name')">Name <span class="sort-arrow" id="sort-name"></span></th>
+        <th class="col-state" onclick="sortBy('state')">ST <span class="sort-arrow" id="sort-state"></span></th>
+        <th class="col-waterfront" onclick="sortBy('waterfront')">Waterfront <span class="sort-arrow" id="sort-waterfront"></span></th>
+        <th class="col-ownership" onclick="sortBy('ownership')">Owner <span class="sort-arrow" id="sort-ownership"></span></th>
+        <th class="col-elev" onclick="sortBy('elevation_meters')">Elev <span class="sort-arrow" id="sort-elevation_meters"></span></th>
+        <th class="col-note">Note</th>
+        <th class="col-actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="cg-body"></tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const WATERFRONT_OPTIONS = ['none','lake','lakeview','river','riverview','creek','pond','bay','coastal dunes','coastal woods'];
+const OWNERSHIP_OPTIONS = ['state','federal','private','local'];
+
+let campgrounds = [];
+let sortField = 'name';
+let sortAsc = true;
+let editingName = null;  // original name of the row being edited
+let addingNew = false;
+
+// ── Load data ──────────────────────────────────────────────────────────────
+fetch('/api/campgrounds/all')
+  .then(r => r.json())
+  .then(data => { campgrounds = data; render(); });
+
+// ── Render ─────────────────────────────────────────────────────────────────
+function render() {
+  const query = (document.getElementById('search-box').value || '').toLowerCase();
+  let rows = campgrounds;
+  if (query) {
+    rows = rows.filter(c =>
+      c.name.toLowerCase().includes(query) ||
+      (c.state || '').toLowerCase().includes(query) ||
+      (c.waterfront || '').toLowerCase().includes(query) ||
+      (c.note || '').toLowerCase().includes(query)
+    );
+  }
+
+  rows = rows.slice().sort((a, b) => {
+    let va = a[sortField] ?? '';
+    let vb = b[sortField] ?? '';
+    if (sortField === 'elevation_meters') { va = +va || 0; vb = +vb || 0; }
+    else { va = String(va).toLowerCase(); vb = String(vb).toLowerCase(); }
+    if (va < vb) return sortAsc ? -1 : 1;
+    if (va > vb) return sortAsc ? 1 : -1;
+    return 0;
+  });
+
+  document.getElementById('count-info').textContent =
+    query ? `${rows.length} of ${campgrounds.length} campgrounds` : `${campgrounds.length} campgrounds`;
+
+  // Update sort arrows
+  document.querySelectorAll('.sort-arrow').forEach(el => el.textContent = '');
+  const arrow = document.getElementById('sort-' + sortField);
+  if (arrow) arrow.textContent = sortAsc ? '▲' : '▼';
+
+  const body = document.getElementById('cg-body');
+  let html = '';
+
+  if (addingNew) {
+    html += newRowHtml();
+  }
+
+  for (const c of rows) {
+    if (editingName === c.name) {
+      html += editRowHtml(c);
+    } else {
+      html += viewRowHtml(c);
+    }
+  }
+
+  if (!addingNew && rows.length === 0) {
+    html = '<tr><td colspan="7" class="empty-msg">No campgrounds found</td></tr>';
+  }
+
+  body.innerHTML = html;
+}
+
+function viewRowHtml(c) {
+  const elev = c.elevation_meters ? Math.round(c.elevation_meters * 3.281) : '';
+  const note = escapeHtml(c.note || '');
+  return `<tr>
+    <td class="col-name">${escapeHtml(c.name)}</td>
+    <td class="col-state">${escapeHtml(c.state || '')}</td>
+    <td class="col-waterfront">${escapeHtml(c.waterfront || '')}</td>
+    <td class="col-ownership">${escapeHtml(c.ownership || '')}</td>
+    <td class="col-elev">${elev}</td>
+    <td class="col-note note-cell">${note}</td>
+    <td class="col-actions"><div class="row-actions">
+      <button class="btn btn-save" onclick="startEdit('${escapeJs(c.name)}')">Edit</button>
+      <button class="btn btn-delete" onclick="deleteCg('${escapeJs(c.name)}')">Delete</button>
+    </div></td>
+  </tr>`;
+}
+
+function editRowHtml(c) {
+  return `<tr class="editing">
+    <td><input id="ed-name" value="${escapeAttr(c.name)}"></td>
+    <td><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
+    <td><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select></td>
+    <td><select id="ed-ownership">${ownershipOptions(c.ownership)}</select></td>
+    <td><input id="ed-elev" type="number" value="${c.elevation_meters || 0}"></td>
+    <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
+        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"></div>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
+        <textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
+        <input id="ed-phone" value="${escapeAttr(c.phone || '')}"></div></td>
+    <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
+      <button class="btn btn-save" onclick="saveEdit()">Save</button>
+      <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+    </div></td>
+  </tr>`;
+}
+
+function newRowHtml() {
+  return `<tr class="editing">
+    <td><input id="ed-name" value="" placeholder="Campground name"></td>
+    <td><input id="ed-state" value="" maxlength="2" placeholder="ST"></td>
+    <td><select id="ed-waterfront">${waterfrontOptions('none')}</select></td>
+    <td><select id="ed-ownership">${ownershipOptions('')}</select></td>
+    <td><input id="ed-elev" type="number" value="0"></td>
+    <td><textarea id="ed-note" placeholder="Notes..."></textarea>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
+        <input id="ed-location" value="" placeholder="lat,lng"></div>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
+        <textarea id="ed-website" rows="1"></textarea></div>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
+        <input id="ed-phone" value=""></div></td>
+    <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
+      <button class="btn btn-save" onclick="saveNew()">Save</button>
+      <button class="btn btn-cancel" onclick="cancelAdd()">Cancel</button>
+    </div></td>
+  </tr>`;
+}
+
+function waterfrontOptions(selected) {
+  return WATERFRONT_OPTIONS.map(w =>
+    `<option value="${w}"${w === selected ? ' selected' : ''}>${w}</option>`
+  ).join('');
+}
+
+function ownershipOptions(selected) {
+  return ['', ...OWNERSHIP_OPTIONS].map(o =>
+    `<option value="${o}"${o === selected ? ' selected' : ''}>${o || '—'}</option>`
+  ).join('');
+}
+
+// ── Actions ────────────────────────────────────────────────────────────────
+function sortBy(field) {
+  if (sortField === field) { sortAsc = !sortAsc; }
+  else { sortField = field; sortAsc = true; }
+  render();
+}
+
+function filterTable() { render(); }
+
+function startEdit(name) {
+  addingNew = false;
+  editingName = name;
+  render();
+  document.getElementById('ed-name').focus();
+}
+
+function cancelEdit() {
+  editingName = null;
+  render();
+}
+
+function getEditFields() {
+  return {
+    name: document.getElementById('ed-name').value.trim(),
+    state: document.getElementById('ed-state').value.trim(),
+    waterfront: document.getElementById('ed-waterfront').value,
+    ownership: document.getElementById('ed-ownership').value,
+    elevation_meters: document.getElementById('ed-elev').value,
+    location: document.getElementById('ed-location').value.trim(),
+    note: document.getElementById('ed-note').value,
+    website: document.getElementById('ed-website').value,
+    phone: document.getElementById('ed-phone').value.trim(),
+  };
+}
+
+function saveEdit() {
+  const fields = getEditFields();
+  if (!fields.name) { alert('Name is required'); return; }
+  fetch('/api/campgrounds/' + encodeURIComponent(editingName), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    // Update local data
+    const c = campgrounds.find(e => e.name === editingName);
+    if (c) {
+      Object.assign(c, fields);
+      c.elevation_meters = parseFloat(fields.elevation_meters) || 0;
+    }
+    editingName = null;
+    render();
+  });
+}
+
+function startAdd() {
+  editingName = null;
+  addingNew = true;
+  render();
+  document.getElementById('ed-name').focus();
+}
+
+function cancelAdd() {
+  addingNew = false;
+  render();
+}
+
+function saveNew() {
+  const fields = getEditFields();
+  if (!fields.name) { alert('Name is required'); return; }
+  fetch('/api/campgrounds', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields)
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    fields.elevation_meters = parseFloat(fields.elevation_meters) || 0;
+    campgrounds.push(fields);
+    addingNew = false;
+    render();
+  });
+}
+
+function deleteCg(name) {
+  if (!confirm(`Delete campground "${name}"?`)) return;
+  fetch('/api/campgrounds/' + encodeURIComponent(name), { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      campgrounds = campgrounds.filter(e => e.name !== name);
+      render();
+    });
+}
+
+// ── Helpers ────────────────────────────────────────────────────────────────
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+function escapeAttr(s) { return escapeHtml(s).replace(/"/g, '&quot;'); }
+function escapeJs(s) { return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
+</script>
+{% endblock %}
