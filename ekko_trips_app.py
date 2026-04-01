@@ -623,7 +623,7 @@ def campgrounds_waterfront():
     home, family = _map_config()
     return render_template(
         'campground_map.html',
-        title='Campgrounds by Waterfront',
+        title='Campgrounds by Proximity to Water',
         campgrounds=_load_campgrounds(),
         color_field='waterfront',
         color_map=WATERFRONT_COLORS,
