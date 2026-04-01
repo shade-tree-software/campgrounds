@@ -470,11 +470,27 @@
 
   .photo-item.dragging {
     opacity: .4;
+    pointer-events: none;
   }
 
-  .photo-item.drag-over img {
-    outline: 3px solid var(--red);
-    outline-offset: -3px;
+  .photo-item.drag-over-before::before,
+  .photo-item.drag-over-after::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--red);
+    border-radius: 2px;
+    z-index: 10;
+  }
+
+  .photo-item.drag-over-before::before {
+    left: calc(-.375rem - 1.5px);
+  }
+
+  .photo-item.drag-over-after::after {
+    right: calc(-.375rem - 1.5px);
   }
 
   .photo-item[draggable="true"] img {
@@ -1287,12 +1303,15 @@ function escapeHtml(text) {
 
 // ── Photo reorder via drag and drop ─────────────────────────────────────
 let dragItem = null;
+let dropTarget = null;
+let dropBefore = false;
 
 function initPhotoDrag(grid) {
   grid.addEventListener('dragstart', e => {
     const item = e.target.closest('.photo-item');
     if (!item || !item.draggable) return;
     dragItem = item;
+    dropTarget = null;
     item.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', '');
@@ -1304,56 +1323,58 @@ function initPhotoDrag(grid) {
     const target = e.target.closest('.photo-item');
     if (!target || target === dragItem) return;
     // Clear previous highlights
-    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
-    target.classList.add('drag-over');
+    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+      el.classList.remove('drag-over-before', 'drag-over-after');
+    });
+    const rect = target.getBoundingClientRect();
+    const midX = rect.left + rect.width / 2;
+    dropBefore = e.clientX < midX;
+    target.classList.add(dropBefore ? 'drag-over-before' : 'drag-over-after');
+    dropTarget = target;
   });
 
   grid.addEventListener('dragleave', e => {
     const target = e.target.closest('.photo-item');
-    if (target) target.classList.remove('drag-over');
+    if (target) target.classList.remove('drag-over-before', 'drag-over-after');
   });
 
   grid.addEventListener('drop', e => {
     e.preventDefault();
-    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
-    if (!dragItem) return;
-    const target = e.target.closest('.photo-item');
-    if (!target || target === dragItem) return;
-
-    // Reorder in the DOM
-    const items = Array.from(grid.querySelectorAll('.photo-item'));
-    const fromIdx = items.indexOf(dragItem);
-    const toIdx = items.indexOf(target);
-    if (fromIdx < toIdx) {
-      target.after(dragItem);
-    } else {
-      target.before(dragItem);
-    }
-
-    // Save new order
-    const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
-    const gridId = grid.id;
-    let url;
-    if (gridId.startsWith('event-photos-')) {
-      const idx = gridId.replace('event-photos-', '');
-      url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
-    } else {
-      const idx = gridId.replace('photos-', '');
-      url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
-    }
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filenames })
-    });
   });
 
   grid.addEventListener('dragend', () => {
+    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+      el.classList.remove('drag-over-before', 'drag-over-after');
+    });
     if (dragItem) {
       dragItem.classList.remove('dragging');
-      dragItem = null;
     }
-    grid.querySelectorAll('.photo-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+    if (dragItem && dropTarget && dropTarget !== dragItem) {
+      if (dropBefore) {
+        dropTarget.before(dragItem);
+      } else {
+        dropTarget.after(dragItem);
+      }
+
+      // Save new order
+      const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
+      const gridId = grid.id;
+      let url;
+      if (gridId.startsWith('event-photos-')) {
+        const idx = gridId.replace('event-photos-', '');
+        url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
+      } else {
+        const idx = gridId.replace('photos-', '');
+        url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
+      }
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filenames })
+      });
+    }
+    dragItem = null;
+    dropTarget = null;
   });
 }
 
