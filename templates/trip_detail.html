@@ -515,6 +515,12 @@
     cursor: grab;
   }
 
+  .photo-grid.drag-target {
+    outline: 3px dashed var(--red);
+    outline-offset: -3px;
+    min-height: 60px;
+  }
+
   .photo-item[draggable="true"] img:active {
     cursor: grabbing;
   }
@@ -1404,14 +1410,35 @@ function escapeHtml(text) {
 
 // ── Photo reorder via drag and drop ─────────────────────────────────────
 let dragItem = null;
+let dragSourceGrid = null;
 let dropTarget = null;
 let dropBefore = false;
+
+function parseGridId(grid) {
+  const id = grid.id;
+  if (id.startsWith('event-photos-')) return { type: 'event', idx: parseInt(id.replace('event-photos-', '')) };
+  return { type: 'stay', idx: parseInt(id.replace('photos-', '')) };
+}
+
+function saveGridOrder(grid) {
+  const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
+  const info = parseGridId(grid);
+  const url = info.type === 'event'
+    ? `/trips/${TRIP_ID}/events/${info.idx}/reorder`
+    : `/trips/${TRIP_ID}/stays/${info.idx}/reorder`;
+  fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ filenames })
+  });
+}
 
 function initPhotoDrag(grid) {
   grid.addEventListener('dragstart', e => {
     const item = e.target.closest('.photo-item');
     if (!item || !item.draggable) return;
     dragItem = item;
+    dragSourceGrid = grid;
     dropTarget = null;
     item.classList.add('dragging');
     e.dataTransfer.effectAllowed = 'move';
@@ -1419,66 +1446,106 @@ function initPhotoDrag(grid) {
   });
 
   grid.addEventListener('dragover', e => {
+    if (!dragItem) return;
     e.preventDefault();
     e.dataTransfer.dropEffect = 'move';
+
     const target = e.target.closest('.photo-item');
-    if (!target || target === dragItem) return;
-    // Clear previous highlights
-    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
-      el.classList.remove('drag-over-before', 'drag-over-after');
-    });
-    const rect = target.getBoundingClientRect();
-    const midX = rect.left + rect.width / 2;
-    dropBefore = e.clientX < midX;
-    target.classList.add(dropBefore ? 'drag-over-before' : 'drag-over-after');
-    dropTarget = target;
+    if (target && target !== dragItem) {
+      // Clear all highlights across all grids
+      document.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+        el.classList.remove('drag-over-before', 'drag-over-after');
+      });
+      document.querySelectorAll('.photo-grid.drag-target').forEach(el => {
+        el.classList.remove('drag-target');
+      });
+      const rect = target.getBoundingClientRect();
+      const midX = rect.left + rect.width / 2;
+      dropBefore = e.clientX < midX;
+      target.classList.add(dropBefore ? 'drag-over-before' : 'drag-over-after');
+      dropTarget = target;
+    } else if (!target || target === dragItem) {
+      // Hovering over empty area or self — show grid-level indicator if cross-grid
+      if (grid !== dragSourceGrid) {
+        document.querySelectorAll('.photo-grid.drag-target').forEach(el => {
+          el.classList.remove('drag-target');
+        });
+        grid.classList.add('drag-target');
+      }
+      dropTarget = null;
+    }
   });
 
   grid.addEventListener('dragleave', e => {
     const target = e.target.closest('.photo-item');
     if (target) target.classList.remove('drag-over-before', 'drag-over-after');
+    // Only remove grid highlight if truly leaving the grid
+    if (e.target === grid && !grid.contains(e.relatedTarget)) {
+      grid.classList.remove('drag-target');
+    }
   });
 
   grid.addEventListener('drop', e => {
     e.preventDefault();
-    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+    document.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
       el.classList.remove('drag-over-before', 'drag-over-after');
     });
-    if (!dragItem || !dropTarget || dropTarget === dragItem) return;
-
-    // Reorder in the DOM based on which side the indicator was on
-    if (dropBefore) {
-      dropTarget.before(dragItem);
-    } else {
-      dropTarget.after(dragItem);
-    }
-
-    // Save new order
-    const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
-    const gridId = grid.id;
-    let url;
-    if (gridId.startsWith('event-photos-')) {
-      const idx = gridId.replace('event-photos-', '');
-      url = `/trips/${TRIP_ID}/events/${idx}/reorder`;
-    } else {
-      const idx = gridId.replace('photos-', '');
-      url = `/trips/${TRIP_ID}/stays/${idx}/reorder`;
-    }
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ filenames })
+    document.querySelectorAll('.photo-grid.drag-target').forEach(el => {
+      el.classList.remove('drag-target');
     });
+    if (!dragItem) return;
+
+    const crossGrid = dragSourceGrid && dragSourceGrid !== grid;
+
+    // Place the item in the DOM
+    if (dropTarget && dropTarget !== dragItem) {
+      if (dropBefore) dropTarget.before(dragItem);
+      else dropTarget.after(dragItem);
+    } else if (crossGrid) {
+      grid.appendChild(dragItem);
+    } else {
+      return;  // same-grid drop on empty space, nothing to do
+    }
+
+    if (crossGrid) {
+      // Move file on server, then save both grid orders
+      const src = parseGridId(dragSourceGrid);
+      const dst = parseGridId(grid);
+      const filename = dragItem.dataset.filename;
+      fetch(`/trips/${TRIP_ID}/move-photo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: filename,
+          src_type: src.type, src_idx: src.idx,
+          dst_type: dst.type, dst_idx: dst.idx,
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { alert(data.error); location.reload(); return; }
+        // Update filename if server renamed it to avoid collision
+        if (data.filename !== filename) {
+          dragItem.dataset.filename = data.filename;
+        }
+        saveGridOrder(dragSourceGrid);
+        saveGridOrder(grid);
+      });
+    } else {
+      saveGridOrder(grid);
+    }
   });
 
   grid.addEventListener('dragend', () => {
-    if (dragItem) {
-      dragItem.classList.remove('dragging');
-    }
-    grid.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
+    if (dragItem) dragItem.classList.remove('dragging');
+    document.querySelectorAll('.drag-over-before,.drag-over-after').forEach(el => {
       el.classList.remove('drag-over-before', 'drag-over-after');
     });
+    document.querySelectorAll('.photo-grid.drag-target').forEach(el => {
+      el.classList.remove('drag-target');
+    });
     dragItem = null;
+    dragSourceGrid = null;
     dropTarget = null;
   });
 }
@@ -1487,24 +1554,71 @@ if (IS_ADMIN) document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
 
 // Drag and drop support for upload areas
 document.querySelectorAll('.upload-area').forEach(area => {
+  // Find the sibling photo-grid for this upload area
+  const siblingGrid = area.closest('.photos-section').querySelector('.photo-grid');
+
   area.addEventListener('dragover', e => {
     e.preventDefault();
-    area.style.borderColor = '#4a7c23';
-    area.style.background = '#e8f5e9';
+    if (dragItem) {
+      // Internal photo drag — show drop indicator
+      e.dataTransfer.dropEffect = 'move';
+      if (siblingGrid && siblingGrid !== dragSourceGrid) {
+        document.querySelectorAll('.photo-grid.drag-target').forEach(el => el.classList.remove('drag-target'));
+        if (siblingGrid.querySelector('.photo-item')) {
+          siblingGrid.classList.add('drag-target');
+        } else {
+          area.style.borderColor = 'var(--red)';
+          area.style.background = 'var(--red-bg)';
+        }
+      }
+    } else {
+      // External file drag
+      area.style.borderColor = '#4a7c23';
+      area.style.background = '#e8f5e9';
+    }
   });
   area.addEventListener('dragleave', e => {
     area.style.borderColor = '';
     area.style.background = '';
+    if (siblingGrid) siblingGrid.classList.remove('drag-target');
   });
   area.addEventListener('drop', e => {
     e.preventDefault();
     area.style.borderColor = '';
     area.style.background = '';
-    const tripId = parseInt(area.dataset.trip);
-    if (area.dataset.event !== undefined) {
-      uploadEventPhotos(tripId, parseInt(area.dataset.event), e.dataTransfer.files);
+    if (dragItem && siblingGrid) {
+      // Internal photo move — append to sibling grid
+      document.querySelectorAll('.photo-grid.drag-target').forEach(el => el.classList.remove('drag-target'));
+      const crossGrid = dragSourceGrid && dragSourceGrid !== siblingGrid;
+      if (!crossGrid) return;
+      siblingGrid.appendChild(dragItem);
+      const src = parseGridId(dragSourceGrid);
+      const dst = parseGridId(siblingGrid);
+      const filename = dragItem.dataset.filename;
+      fetch(`/trips/${TRIP_ID}/move-photo`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          filename: filename,
+          src_type: src.type, src_idx: src.idx,
+          dst_type: dst.type, dst_idx: dst.idx,
+        })
+      })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { alert(data.error); location.reload(); return; }
+        if (data.filename !== filename) dragItem.dataset.filename = data.filename;
+        saveGridOrder(dragSourceGrid);
+        saveGridOrder(siblingGrid);
+      });
     } else {
-      uploadPhotos(tripId, parseInt(area.dataset.stay), e.dataTransfer.files);
+      // External file upload
+      const tripId = parseInt(area.dataset.trip);
+      if (area.dataset.event !== undefined) {
+        uploadEventPhotos(tripId, parseInt(area.dataset.event), e.dataTransfer.files);
+      } else {
+        uploadPhotos(tripId, parseInt(area.dataset.stay), e.dataTransfer.files);
+      }
     }
   });
 });

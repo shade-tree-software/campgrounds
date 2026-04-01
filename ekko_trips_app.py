@@ -648,6 +648,85 @@ def campgrounds_climate():
     )
 
 
+# ── Photo move between stays/events ───────────────────────────────────────
+
+@app.route('/trips/<int:trip_id>/move-photo', methods=['POST'])
+def move_photo(trip_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    filename = data.get("filename", "")
+    src_type = data.get("src_type", "")   # "stay" or "event"
+    src_idx = data.get("src_idx")
+    dst_type = data.get("dst_type", "")
+    dst_idx = data.get("dst_idx")
+
+    if not all([filename, src_type, dst_type,
+                src_idx is not None, dst_idx is not None]):
+        return jsonify({"error": "Missing fields"}), 400
+
+    # Build source and destination paths
+    def photo_dir(ptype, idx):
+        if ptype == "event":
+            return os.path.join(UPLOAD_DIR, str(trip_id), "events", str(idx))
+        return os.path.join(UPLOAD_DIR, str(trip_id), str(idx))
+
+    def order_key(ptype, idx):
+        if ptype == "event":
+            return f"{trip_id}/events/{idx}"
+        return f"{trip_id}/{idx}"
+
+    def caption_key(ptype, idx, fname):
+        if ptype == "event":
+            return f"{trip_id}/events/{idx}/{fname}"
+        return f"{trip_id}/{idx}/{fname}"
+
+    src_dir = photo_dir(src_type, src_idx)
+    dst_dir = photo_dir(dst_type, dst_idx)
+    src_path = os.path.join(src_dir, secure_filename(filename))
+
+    if not os.path.exists(src_path):
+        return jsonify({"error": "Source photo not found"}), 404
+
+    os.makedirs(dst_dir, exist_ok=True)
+
+    # Handle filename collision in destination
+    dst_filename = secure_filename(filename)
+    dst_path = os.path.join(dst_dir, dst_filename)
+    if os.path.exists(dst_path):
+        base, ext = os.path.splitext(dst_filename)
+        dst_filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
+        dst_path = os.path.join(dst_dir, dst_filename)
+
+    os.rename(src_path, dst_path)
+
+    # Update captions
+    captions = _load_json(CAPTIONS_FILE)
+    old_cap_key = caption_key(src_type, src_idx, filename)
+    new_cap_key = caption_key(dst_type, dst_idx, dst_filename)
+    cap = captions.pop(old_cap_key, None)
+    if cap:
+        captions[new_cap_key] = cap
+    _save_json(CAPTIONS_FILE, captions)
+
+    # Update photo order — remove from source
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    src_ok = order_key(src_type, src_idx)
+    if src_ok in photo_order:
+        photo_order[src_ok] = [f for f in photo_order[src_ok] if f != filename]
+
+    # Add to destination order
+    dst_ok = order_key(dst_type, dst_idx)
+    if dst_ok not in photo_order:
+        photo_order[dst_ok] = []
+    photo_order[dst_ok].append(dst_filename)
+
+    _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    return jsonify({"ok": True, "filename": dst_filename})
+
+
 # ── Campground CRUD API ────────────────────────────────────────────────────
 
 @app.route('/api/campgrounds')
