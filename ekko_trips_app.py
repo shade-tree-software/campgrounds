@@ -35,8 +35,11 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @app.context_processor
 def inject_trip_stats():
     trips = parse_trips()
+    overnight = sum(1 for t in trips if t["stays"])
+    daytrips = sum(1 for t in trips if not t["stays"])
     return {
-        "trip_count": len(trips),
+        "overnight_count": overnight,
+        "daytrip_count": daytrips,
         "night_count": sum(t["total_nights"] for t in trips),
     }
 

@@ -45,8 +45,12 @@ def _save_trips(data):
 def _load_trips_json():
     """Load trips from JSON and compute derived fields."""
     raw = _load_raw_trips()
-    return [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                       t.get("events", [])) for t in raw]
+    trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
+                        t.get("events", [])) for t in raw]
+    trips.sort(key=lambda t: t["start"])
+    for i, t in enumerate(trips, 1):
+        t["number"] = i
+    return trips
 
 
 def _next_trip_id(raw_trips):
@@ -192,7 +196,7 @@ def delete_stay(trip_id, stay_idx):
             if os.path.isdir(upload_base):
                 _shift_photo_dirs(upload_base, stay_idx, len(t["stays"]))
 
-            if not t["stays"]:
+            if not t["stays"] and not t.get("events"):
                 raw = [tr for tr in raw if tr["id"] != trip_id]
                 _save_trips(raw)
                 return "empty"
@@ -396,6 +400,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
         trip_note = stays[0].get("trip_note", "").strip() if stays else ""
     if trip_note:
         summary = trip_note
+    elif not places:
+        summary = "Events Only"
     elif len(places) == 1:
         summary = places[0]
     elif len(places) == 2:
@@ -414,7 +420,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
                 if name:
                     all_campers.add(name)
 
-    home_only = all("basset" in s["place"].lower() for s in stays)
+    home_only = bool(stays) and all("basset" in s["place"].lower() for s in stays)
 
     # Build chronological timeline interleaving stays and events.
     # Secondary key: events (0) sort before stays (1) on the same date,
@@ -430,14 +436,23 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
                              _order=0))
     timeline.sort(key=lambda x: (x["sort_date"], x["_order"]))
 
+    if stays:
+        start = stays[0]["start"]
+        end = stays[-1]["end"]
+    elif events:
+        start = events[0]["date"]
+        end = events[-1]["date"]
+    else:
+        start = end = ""
+
     return {
         "id": trip_id,
         "trip_note": trip_note,
         "stays": stays,
         "events": events,
         "timeline": timeline,
-        "start": stays[0]["start"],
-        "end": stays[-1]["end"],
+        "start": start,
+        "end": end,
         "total_nights": total_nights,
         "summary": summary,
         "campers": sorted(all_campers),
