@@ -82,8 +82,24 @@
     font-weight: 600;
     color: var(--navy);
     border-bottom: 1px solid var(--gray-light);
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
   }
-  #location-map { height: 350px; }
+  .location-map-header:active { cursor: grabbing; }
+  .location-map-close {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 0 .2rem;
+    line-height: 1;
+  }
+  .location-map-close:hover { color: var(--navy); }
+  #location-map { height: 350px; cursor: crosshair; }
 {% endblock %}
 
 {% block content %}
@@ -117,7 +133,10 @@
 </div>
 
 <div class="location-map-container" id="location-map-container">
-  <div class="location-map-header">Click the map to set the campground location</div>
+  <div class="location-map-header" id="location-map-header">
+    <span>Click the map to set the campground location</span>
+    <button class="location-map-close" onclick="hideLocationMap()">&times;</button>
+  </div>
   <div id="location-map"></div>
 </div>
 {% endblock %}
@@ -217,6 +236,38 @@ function hideLocationMap() {
   document.getElementById('location-map-container').style.display = 'none';
 }
 
+// ── Drag to reposition ────────────────────────────────────────────────────
+(function() {
+  const header = document.getElementById('location-map-header');
+  const container = document.getElementById('location-map-container');
+  let dragging = false, startX, startY, startLeft, startTop;
+
+  header.addEventListener('mousedown', function(e) {
+    if (e.target.closest('.location-map-close')) return;
+    dragging = true;
+    const rect = container.getBoundingClientRect();
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = rect.left;
+    startTop = rect.top;
+    // Switch from right-positioned to left-positioned for dragging
+    container.style.left = rect.left + 'px';
+    container.style.right = 'auto';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function(e) {
+    if (!dragging) return;
+    container.style.left = (startLeft + e.clientX - startX) + 'px';
+    container.style.top = (startTop + e.clientY - startY) + 'px';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mouseup', function() {
+    dragging = false;
+  });
+})();
+
 function onLocationBlur() {
   const val = (document.getElementById('ed-location').value || '').trim();
   if (!val) return;
@@ -241,12 +292,12 @@ fetch('/api/campgrounds/all')
     const editName = params.get('edit');
     if (editName && campgrounds.some(c => c.name === editName)) {
       editingName = editName;
+      history.replaceState(null, '', window.location.pathname);
     }
     render();
     if (editingName) {
       const row = document.getElementById('ed-name');
       if (row) row.closest('tr').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      showLocationMap(campgrounds.find(c => c.name === editingName)?.location || '');
     }
   });
 
@@ -330,7 +381,7 @@ function editRowHtml(c) {
     <td><input id="ed-elev" type="number" value="${elevFeet}"></td>
     <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng" onblur="onLocationBlur()"></div>
+        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng" onfocus="showLocationMap(this.value)" onblur="onLocationBlur()"></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
         <textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
@@ -351,7 +402,7 @@ function newRowHtml() {
     <td><input id="ed-elev" type="number" value=""></td>
     <td><textarea id="ed-note" placeholder="Notes..."></textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="" placeholder="lat,lng" onblur="onLocationBlur()"></div>
+        <input id="ed-location" value="" placeholder="lat,lng" onfocus="showLocationMap(this.value)" onblur="onLocationBlur()"></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
         <textarea id="ed-website" rows="1"></textarea></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
@@ -389,8 +440,6 @@ function startEdit(name) {
   editingName = name;
   render();
   document.getElementById('ed-name').focus();
-  const c = campgrounds.find(e => e.name === name);
-  showLocationMap(c ? c.location : '');
 }
 
 function cancelEdit() {
@@ -442,7 +491,6 @@ function startAdd() {
   addingNew = true;
   render();
   document.getElementById('ed-name').focus();
-  showLocationMap('');
 }
 
 function cancelAdd() {
