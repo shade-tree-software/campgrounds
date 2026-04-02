@@ -141,7 +141,9 @@ def add_stay(trip_id, stay_data):
                 "notes": stay_data.get("notes", ""),
             }
             t["stays"].append(stay)
+            old_order = list(t["stays"])
             t["stays"].sort(key=lambda s: s["start"])
+            _remap_indices_after_sort(trip_id, old_order, t["stays"], "stay")
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []))
@@ -161,7 +163,9 @@ def update_stay(trip_id, stay_idx, fields):
                     stay[key] = fields[key]
             if "nights" in fields:
                 stay["nights"] = int(fields["nights"])
+            old_order = list(t["stays"])
             t["stays"].sort(key=lambda s: s["start"])
+            _remap_indices_after_sort(trip_id, old_order, t["stays"], "stay")
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []))
@@ -209,6 +213,82 @@ def _shift_photo_dirs(upload_base, deleted_idx, remaining_count):
             os.rename(old_dir, new_dir)
 
 
+def _remap_indices_after_sort(trip_id, old_items, new_items, kind):
+    """Remap photo directories and caption/order keys after a sort changes indices.
+
+    kind is 'stay' or 'event'. old_items and new_items are the lists before and
+    after sorting (items must be the same object references so identity comparison works).
+    """
+    # Build old_idx -> new_idx mapping using object identity
+    mapping = {}
+    for old_idx, item in enumerate(old_items):
+        new_idx = next(i for i, x in enumerate(new_items) if x is item)
+        if old_idx != new_idx:
+            mapping[old_idx] = new_idx
+
+    if not mapping:
+        return
+
+    # Determine path prefix for dirs and keys
+    if kind == "stay":
+        upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id))
+        key_prefix = str(trip_id)
+    else:
+        upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id), "events")
+        key_prefix = f"{trip_id}/events"
+
+    # Phase 1: rename directories to temporary names to avoid collisions
+    tmp_names = {}
+    for old_idx in mapping:
+        old_dir = os.path.join(upload_base, str(old_idx))
+        if os.path.isdir(old_dir):
+            tmp_dir = os.path.join(upload_base, f"_tmp_{old_idx}")
+            os.rename(old_dir, tmp_dir)
+            tmp_names[old_idx] = tmp_dir
+
+    # Phase 2: rename from temporary to final names
+    for old_idx, tmp_dir in tmp_names.items():
+        new_dir = os.path.join(upload_base, str(mapping[old_idx]))
+        os.rename(tmp_dir, new_dir)
+
+    # Phase 3: remap caption and photo_order keys
+    captions_file = os.path.join(_DIR, "trip_data", "captions.json")
+    order_file = os.path.join(_DIR, "trip_data", "photo_order.json")
+    _remap_json_keys(captions_file, key_prefix, mapping)
+    _remap_json_keys(order_file, key_prefix, mapping)
+
+
+def _remap_json_keys(filepath, key_prefix, mapping):
+    """Remap numeric index in JSON keys matching key_prefix/{idx}[/...]."""
+    if not os.path.exists(filepath):
+        return
+    with open(filepath, "r") as f:
+        data = json.load(f)
+
+    prefix_slash = key_prefix + "/"
+    new_data = {}
+    for key, value in data.items():
+        if not key.startswith(prefix_slash):
+            new_data[key] = value
+            continue
+        rest = key[len(prefix_slash):]
+        parts = rest.split("/", 1)
+        try:
+            idx = int(parts[0])
+        except ValueError:
+            new_data[key] = value
+            continue
+        if idx in mapping:
+            suffix = ("/" + parts[1]) if len(parts) > 1 else ""
+            new_key = f"{prefix_slash}{mapping[idx]}{suffix}"
+            new_data[new_key] = value
+        else:
+            new_data[key] = value
+
+    with open(filepath, "w") as f:
+        json.dump(new_data, f, indent=2)
+
+
 # ── Event CRUD ────────────────────────────────────────────────────────────
 
 def add_event(trip_id, event_data):
@@ -224,7 +304,9 @@ def add_event(trip_id, event_data):
             }
             events = t.get("events", [])
             events.append(event)
+            old_order = list(events)
             events.sort(key=lambda e: e["date"])
+            _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
@@ -244,7 +326,9 @@ def update_event(trip_id, event_idx, fields):
             for key in ("date", "name", "description"):
                 if key in fields:
                     event[key] = fields[key]
+            old_order = list(events)
             events.sort(key=lambda e: e["date"])
+            _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
