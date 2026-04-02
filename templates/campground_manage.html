@@ -2,6 +2,11 @@
 
 {% block title %}Manage Campgrounds{% endblock %}
 
+{% block head_extra %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% endblock %}
+
 {% block style %}
   .manage-page { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
   .table-wrap { overflow-x: auto; }
@@ -59,7 +64,26 @@
   .count-info { color: var(--gray); font-size: .85rem; }
   .note-cell { font-size: .8rem; color: var(--gray); line-height: 1.3; }
 
-  .empty-msg { text-align: center; padding: 3rem; color: var(--gray); }
+  .location-map-container {
+    display: none;
+    position: fixed;
+    top: 5rem;
+    right: 1.5rem;
+    width: 420px;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.25);
+    overflow: hidden;
+    z-index: 1000;
+  }
+  .location-map-header {
+    padding: .5rem 1rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid var(--gray-light);
+  }
+  #location-map { height: 350px; }
 {% endblock %}
 
 {% block content %}
@@ -81,7 +105,7 @@
         <th class="col-state" onclick="sortBy('state')">ST <span class="sort-arrow" id="sort-state"></span></th>
         <th class="col-waterfront" onclick="sortBy('waterfront')">Water <span class="sort-arrow" id="sort-waterfront"></span></th>
         <th class="col-ownership" onclick="sortBy('ownership')">Owner <span class="sort-arrow" id="sort-ownership"></span></th>
-        <th class="col-elev" onclick="sortBy('elevation_meters')">Elev <span class="sort-arrow" id="sort-elevation_meters"></span></th>
+        <th class="col-elev" onclick="sortBy('elevation_meters')">Elev (ft) <span class="sort-arrow" id="sort-elevation_meters"></span></th>
         <th class="col-note">Note</th>
         <th class="col-actions">Actions</th>
       </tr>
@@ -89,6 +113,12 @@
     <tbody id="cg-body"></tbody>
   </table>
   </div>
+
+</div>
+
+<div class="location-map-container" id="location-map-container">
+  <div class="location-map-header">Click the map to set the campground location</div>
+  <div id="location-map"></div>
 </div>
 {% endblock %}
 
@@ -96,12 +126,111 @@
 <script>
 const WATERFRONT_OPTIONS = ['none','lake','lakeview','river','riverview','creek','pond','bay','coastal dunes','coastal woods'];
 const OWNERSHIP_OPTIONS = ['state','federal','private','local'];
+const METERS_TO_FEET = 3.281;
+const HOME_LAT = {{ home[0] if home else 38.93 }};
+const HOME_LNG = {{ home[1] if home else -77.37 }};
 
 let campgrounds = [];
 let sortField = 'name';
 let sortAsc = true;
 let editingName = null;  // original name of the row being edited
 let addingNew = false;
+
+// ── Map state ─────────────────────────────────────────────────────────────
+let locationMap = null;
+let locationMarker = null;
+
+function initLocationMap() {
+  if (locationMap) return;
+  locationMap = L.map('location-map').setView([HOME_LAT, HOME_LNG], 7);
+  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18,
+  }).addTo(locationMap);
+  const satellite = L.layerGroup([
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri',
+      maxZoom: 19,
+    }),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+    }),
+  ]);
+  L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(locationMap);
+
+  locationMap.on('click', function(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    placeMarker(lat, lng);
+    const locInput = document.getElementById('ed-location');
+    if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+    fetchElevation(lat, lng);
+  });
+}
+
+function placeMarker(lat, lng) {
+  if (locationMarker) locationMap.removeLayer(locationMarker);
+  locationMarker = L.marker([lat, lng]).addTo(locationMap);
+}
+
+function fetchElevation(lat, lng) {
+  const elevInput = document.getElementById('ed-elev');
+  if (!elevInput) return;
+  elevInput.value = '';
+  elevInput.placeholder = 'loading...';
+  fetch('/api/elevation?lat=' + lat + '&lng=' + lng)
+    .then(r => r.json())
+    .then(data => {
+      elevInput.placeholder = '';
+      if (data.elevation_meters !== undefined) {
+        elevInput.value = Math.round(data.elevation_meters * METERS_TO_FEET);
+      }
+    })
+    .catch(() => { elevInput.placeholder = ''; });
+}
+
+function showLocationMap(location) {
+  const container = document.getElementById('location-map-container');
+  container.style.display = 'block';
+  initLocationMap();
+  setTimeout(() => locationMap.invalidateSize(), 100);
+
+  if (locationMarker) {
+    locationMap.removeLayer(locationMarker);
+    locationMarker = null;
+  }
+
+  if (location) {
+    const parts = location.split(',');
+    const lat = parseFloat(parts[0]);
+    const lng = parseFloat(parts[1]);
+    if (!isNaN(lat) && !isNaN(lng)) {
+      locationMap.setView([lat, lng], 12);
+      placeMarker(lat, lng);
+      return;
+    }
+  }
+  locationMap.setView([HOME_LAT, HOME_LNG], 7);
+}
+
+function hideLocationMap() {
+  document.getElementById('location-map-container').style.display = 'none';
+}
+
+function onLocationBlur() {
+  const val = (document.getElementById('ed-location').value || '').trim();
+  if (!val) return;
+  const parts = val.split(',');
+  if (parts.length !== 2) return;
+  const lat = parseFloat(parts[0]);
+  const lng = parseFloat(parts[1]);
+  if (isNaN(lat) || isNaN(lng)) return;
+  if (locationMap) {
+    locationMap.setView([lat, lng], 12);
+    placeMarker(lat, lng);
+  }
+  fetchElevation(lat, lng);
+}
 
 // ── Load data ──────────────────────────────────────────────────────────────
 fetch('/api/campgrounds/all')
@@ -162,7 +291,7 @@ function render() {
 }
 
 function viewRowHtml(c) {
-  const elev = c.elevation_meters ? Math.round(c.elevation_meters * 3.281) : '';
+  const elev = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
   const note = escapeHtml(c.note || '');
   return `<tr>
     <td class="col-name">${escapeHtml(c.name)}</td>
@@ -179,15 +308,16 @@ function viewRowHtml(c) {
 }
 
 function editRowHtml(c) {
+  const elevFeet = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
   return `<tr class="editing">
     <td><input id="ed-name" value="${escapeAttr(c.name)}"></td>
     <td><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
     <td><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select></td>
     <td><select id="ed-ownership">${ownershipOptions(c.ownership)}</select></td>
-    <td><input id="ed-elev" type="number" value="${c.elevation_meters || 0}"></td>
+    <td><input id="ed-elev" type="number" value="${elevFeet}"></td>
     <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"></div>
+        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng" onblur="onLocationBlur()"></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
         <textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
@@ -205,10 +335,10 @@ function newRowHtml() {
     <td><input id="ed-state" value="" maxlength="2" placeholder="ST"></td>
     <td><select id="ed-waterfront">${waterfrontOptions('none')}</select></td>
     <td><select id="ed-ownership">${ownershipOptions('')}</select></td>
-    <td><input id="ed-elev" type="number" value="0"></td>
+    <td><input id="ed-elev" type="number" value=""></td>
     <td><textarea id="ed-note" placeholder="Notes..."></textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="" placeholder="lat,lng"></div>
+        <input id="ed-location" value="" placeholder="lat,lng" onblur="onLocationBlur()"></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
         <textarea id="ed-website" rows="1"></textarea></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
@@ -246,20 +376,24 @@ function startEdit(name) {
   editingName = name;
   render();
   document.getElementById('ed-name').focus();
+  const c = campgrounds.find(e => e.name === name);
+  showLocationMap(c ? c.location : '');
 }
 
 function cancelEdit() {
   editingName = null;
   render();
+  hideLocationMap();
 }
 
 function getEditFields() {
+  const elevFeet = parseFloat(document.getElementById('ed-elev').value) || 0;
   return {
     name: document.getElementById('ed-name').value.trim(),
     state: document.getElementById('ed-state').value.trim(),
     waterfront: document.getElementById('ed-waterfront').value,
     ownership: document.getElementById('ed-ownership').value,
-    elevation_meters: document.getElementById('ed-elev').value,
+    elevation_meters: elevFeet / METERS_TO_FEET,
     location: document.getElementById('ed-location').value.trim(),
     note: document.getElementById('ed-note').value,
     website: document.getElementById('ed-website').value,
@@ -286,6 +420,7 @@ function saveEdit() {
     }
     editingName = null;
     render();
+    hideLocationMap();
   });
 }
 
@@ -294,11 +429,13 @@ function startAdd() {
   addingNew = true;
   render();
   document.getElementById('ed-name').focus();
+  showLocationMap('');
 }
 
 function cancelAdd() {
   addingNew = false;
   render();
+  hideLocationMap();
 }
 
 function saveNew() {
@@ -316,6 +453,7 @@ function saveNew() {
     campgrounds.push(fields);
     addingNew = false;
     render();
+    hideLocationMap();
   });
 }
 

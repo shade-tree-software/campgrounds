@@ -758,8 +758,10 @@ def campgrounds_manage():
     if denied:
         return redirect(url_for('login', next=request.path))
     is_admin = current_user.is_authenticated and current_user.is_admin
+    config = _load_json(CONFIG_FILE)
+    home = [config.get("home_lat"), config.get("home_long")]
     return render_template('campground_manage.html', active_nav='manage',
-                           is_admin=is_admin)
+                           is_admin=is_admin, home=home)
 
 
 @app.route('/api/campgrounds/all')
@@ -840,6 +842,24 @@ def api_update_campground(name):
 
     _save_json(CAMPGROUNDS_JSON, entries)
     return jsonify({"ok": True})
+
+
+@app.route('/api/elevation')
+def api_elevation():
+    """Proxy elevation lookup via Open-Elevation API."""
+    lat = request.args.get('lat', type=float)
+    lng = request.args.get('lng', type=float)
+    if lat is None or lng is None:
+        return jsonify({"error": "lat and lng required"}), 400
+    try:
+        import urllib.request
+        url = f"https://api.open-elevation.com/api/v1/lookup?locations={lat},{lng}"
+        with urllib.request.urlopen(url, timeout=10) as resp:
+            data = json.loads(resp.read())
+        elev = data["results"][0]["elevation"]
+        return jsonify({"elevation_meters": elev})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 502
 
 
 @app.route('/api/campgrounds/<path:name>', methods=['DELETE'])

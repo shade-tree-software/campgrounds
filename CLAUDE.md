@@ -26,7 +26,7 @@ A Flask web app for documenting family camping trips in an RV called "EKKO" and 
 - `templates/trips_map.html` — Main page: photo filmstrip slideshow (5 photos visible, slides every 4s, clicking navigates to trip) + Leaflet map of all camping locations. No redundant title between slideshow and map.
 - `templates/trips_calendar.html` — Calendar and list views of trips. Switching between views is client-side (no page reload), preserving the selected year. List view shows night/campspot/event counts per trip, each omitted when zero.
 - `templates/campground_map.html` — Campground map with color-coded markers by proximity to water or climate. Popups show: name, state, elevation, visit count, note, phone numbers, websites (displayed by domain name). Does not show waterfront/climate fields since they are conveyed by dot color.
-- `templates/campground_manage.html` — Admin-only campground CRUD: searchable/sortable table with inline editing. Location, website, and phone are sub-fields within the note column during editing.
+- `templates/campground_manage.html` — Admin-only campground CRUD: searchable/sortable table with inline editing. Location, website, and phone are sub-fields within the note column during editing. Leaflet map picker appears below the table during add/edit for click-to-set location; auto-fetches elevation via `/api/elevation`. Elevation is displayed in feet (stored as meters internally).
 
 ## Architecture
 
@@ -88,6 +88,7 @@ Trips have two distinct identifiers:
 - `POST /api/campgrounds` — create campground (enforces unique names)
 - `PUT /api/campgrounds/<name>` — update campground (name changes propagate to trips)
 - `DELETE /api/campgrounds/<name>` — delete campground
+- `GET /api/elevation?lat=X&lng=Y` — proxy to Open-Elevation API, returns `{elevation_meters}`
 
 ## Conventions
 
