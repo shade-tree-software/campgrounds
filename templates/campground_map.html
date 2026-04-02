@@ -86,6 +86,7 @@ const COLOR_MAP = {{ color_map | tojson }};
 const COLOR_FIELD = {{ color_field | tojson }};
 const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
+const IS_ADMIN = {{ is_admin | tojson }};
 
 // ── Build legend ──────────────────────────────────────────────────────────
 const legendEl = document.getElementById('legend');
@@ -211,6 +212,9 @@ CAMPGROUNDS.forEach(cg => {
         popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
       }
     });
+  }
+  if (IS_ADMIN) {
+    popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;"><a href="/campgrounds/manage?edit=${encodeURIComponent(cg.name)}" style="font-size:.85em;">edit</a></span><div style="clear:both;"></div>`;
   }
   marker.bindPopup(popup, { maxWidth: 300 });
 

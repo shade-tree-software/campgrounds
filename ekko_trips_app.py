@@ -633,6 +633,7 @@ def api_delete_event(trip_id, event_idx):
 @app.route('/campgrounds/waterfront')
 def campgrounds_waterfront():
     home, family = _map_config()
+    is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'campground_map.html',
         title='Campgrounds by Proximity to Water',
@@ -642,12 +643,14 @@ def campgrounds_waterfront():
         home=home,
         family_locations=family,
         active_nav='waterfront',
+        is_admin=is_admin,
     )
 
 
 @app.route('/campgrounds/climate')
 def campgrounds_climate():
     home, family = _map_config()
+    is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'campground_map.html',
         title='Campgrounds by Climate',
@@ -657,6 +660,7 @@ def campgrounds_climate():
         home=home,
         family_locations=family,
         active_nav='climate',
+        is_admin=is_admin,
     )
 
 

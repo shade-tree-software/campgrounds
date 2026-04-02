@@ -235,7 +235,20 @@ function onLocationBlur() {
 // ── Load data ──────────────────────────────────────────────────────────────
 fetch('/api/campgrounds/all')
   .then(r => r.json())
-  .then(data => { campgrounds = data; render(); });
+  .then(data => {
+    campgrounds = data;
+    const params = new URLSearchParams(window.location.search);
+    const editName = params.get('edit');
+    if (editName && campgrounds.some(c => c.name === editName)) {
+      editingName = editName;
+    }
+    render();
+    if (editingName) {
+      const row = document.getElementById('ed-name');
+      if (row) row.closest('tr').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      showLocationMap(campgrounds.find(c => c.name === editingName)?.location || '');
+    }
+  });
 
 // ── Render ─────────────────────────────────────────────────────────────────
 function render() {
