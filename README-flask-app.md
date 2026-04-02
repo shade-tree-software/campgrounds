@@ -22,8 +22,8 @@ pip install -r requirements-flask.txt
 ```
 
 2. Ensure you have the required data files:
-   - `all-campgrounds.json` - List of campgrounds
-   - `config.json` - Default home location (optional)
+   - `campgrounds.json` - List of campgrounds
+   - `family_locations.json` - Default home location (optional)
 
 ## Running the Application
 
@@ -50,7 +50,7 @@ The app will be available at `http://localhost:5000`
 
 ## Configuration
 
-The app reads from `config.json` for default values:
+The app reads from `family_locations.json` for default values:
 ```json
 {
   "home_lat": 40.7128,

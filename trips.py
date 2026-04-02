@@ -533,8 +533,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
     }
 
 
-def _load_campground_locations(json_path="all-campgrounds.json",
-                               config_path="config.json"):
+def _load_campground_locations(json_path="campgrounds.json",
+                               config_path="family_locations.json"):
     """Load name -> (lat, lng) mapping from campgrounds and family locations."""
     import json
     import os

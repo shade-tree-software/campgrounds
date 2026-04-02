@@ -44,8 +44,8 @@ def inject_trip_stats():
     }
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
-CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "all-campgrounds.json")
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "config.json")
+CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
+CONFIG_FILE = os.path.join(os.path.dirname(__file__), "family_locations.json")
 
 WATERFRONT_COLORS = {
     "lake":          "#1976d2",
@@ -203,7 +203,7 @@ def _load_campgrounds():
 
 
 def _map_config():
-    """Return home coords and family locations from config.json."""
+    """Return home coords and family locations from family_locations.json."""
     config = _load_json(CONFIG_FILE)
     lat = config.get("home_lat")
     lng = config.get("home_long")
