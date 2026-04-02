@@ -691,7 +691,7 @@
     </div>
     <div class="meta">
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
-      <div><span>{{ trip.stays|length }}</span> stop{{ '' if trip.stays|length == 1 else 's' }}</div>
+      <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if trip.events %}<div><span>{{ trip.events|length }}</span> event{{ '' if trip.events|length == 1 else 's' }}</div>{% endif %}
       <div>{{ trip.start }} to {{ trip.end }}</div>
       {% if trip.campers %}
@@ -781,7 +781,7 @@
       <div class="form-actions">
         <button class="btn-save" onclick="saveStay({{ item.idx }})">Save</button>
         <button class="btn-cancel" onclick="cancelStay({{ item.idx }})">Cancel</button>
-        <button class="btn-danger" onclick="deleteStay({{ item.idx }})">Delete Stay</button>
+        <button class="btn-danger" onclick="deleteStay({{ item.idx }})">Delete Campspot</button>
       </div>
     </div>
     <div class="stay-body" id="stay-body-{{ item.idx }}">
@@ -910,7 +910,7 @@
 
   {% if is_admin %}
   <div style="display:flex;gap:1rem;">
-    <button class="btn-add-stay" onclick="addStay()">+ Add Stay</button>
+    <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
     <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
   </div>
   {% endif %}
@@ -984,7 +984,7 @@
       fillOpacity: 0.85,
     }).addTo(map);
 
-    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights > 1 ? 's' : ''}`;
+    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}`;
     marker.bindPopup(label);
 
     // Number label
@@ -1188,7 +1188,7 @@ function saveStay(idx) {
 }
 
 function deleteStay(idx) {
-  if (!confirm('Delete this stay? Photos for this stay will also be removed.')) return;
+  if (!confirm('Delete this campspot? Photos for this campspot will also be removed.')) return;
   fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {

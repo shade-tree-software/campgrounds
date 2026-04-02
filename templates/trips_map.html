@@ -143,7 +143,7 @@ Object.values(locMap).forEach(loc => {
     fillOpacity: 0.8,
   }).addTo(map);
 
-  let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits > 1 ? 's' : ''}`;
+  let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits !== 1 ? 's' : ''}`;
   popup += '<div style="margin-top:4px;font-size:12px;">';
   loc.trips.forEach(t => {
     const d = new Date(t.start + 'T00:00:00');
@@ -177,7 +177,7 @@ FAMILY.forEach(fam => {
   let popup = `<strong>${fam.label}</strong>`;
   if (loc) {
     const visits = loc.trips.length;
-    popup += `<br>${visits} visit${visits > 1 ? 's' : ''}`;
+    popup += `<br>${visits} visit${visits !== 1 ? 's' : ''}`;
     popup += '<div style="margin-top:4px;font-size:12px;">';
     loc.trips.forEach(t => {
       const d = new Date(t.start + 'T00:00:00');

@@ -172,10 +172,10 @@
   }
 
   .trip-card .trip-number {
-    font-size: .75rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 700;
     color: var(--gray);
-    min-width: 2.2rem;
+    min-width: 2.5rem;
     text-align: center;
   }
 
@@ -186,25 +186,6 @@
     line-height: 1.4;
   }
 
-  .trip-card .nights-badge {
-    background: var(--red);
-    color: var(--white);
-    border-radius: 50%;
-    width: 2.4rem;
-    height: 2.4rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: .85rem;
-    flex-shrink: 0;
-  }
-
-  .trip-card.home-only .nights-badge {
-    background: var(--white);
-    color: var(--red);
-    border: 2px solid var(--red);
-  }
 
   .trip-card .info {
     flex: 1;
@@ -311,7 +292,7 @@ function parseHash() {
 }
 
 let currentYear = parseHash();
-const currentView = {{ initial_view | tojson }};
+let currentView = {{ initial_view | tojson }};
 
 const todayStr = new Date().toISOString().slice(0, 10);
 
@@ -450,20 +431,19 @@ function renderList() {
     const endD = new Date(trip.end + 'T00:00:00');
     const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-    const color = tripColor[trip.id];
-    const badgeStyle = trip.home_only
-      ? `background:var(--white);color:${color};border:2px solid ${color};`
-      : `background:${color};`;
+    const counts = [];
+    if (trip.total_nights) counts.push(`${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''}`);
+    if (trip.stays.length) counts.push(`${trip.stays.length} campspot${trip.stays.length !== 1 ? 's' : ''}`);
+    if (trip.events.length) counts.push(`${trip.events.length} event${trip.events.length !== 1 ? 's' : ''}`);
 
     a.innerHTML = `
       <div class="trip-number">#${trip.number}</div>
-      <div class="nights-badge" style="${badgeStyle}">${trip.total_nights}</div>
       <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
       <div class="info">
         <h3>${trip.summary}</h3>
         <div class="meta">${trip.campers.join(', ')}</div>
       </div>
-      <div class="stays-count">${trip.total_nights} night${trip.total_nights > 1 ? 's' : ''}, ${trip.stays.length} stop${trip.stays.length > 1 ? 's' : ''}</div>
+      ${counts.length ? `<div class="stays-count">${counts.join(', ')}</div>` : ''}
     `;
     container.appendChild(a);
   });
@@ -495,10 +475,22 @@ function hideTooltip() {
   document.getElementById('tooltip').classList.remove('visible');
 }
 
-// Init — apply view from URL
-document.getElementById('calendar-container').classList.toggle('hidden', currentView !== 'calendar');
-document.getElementById('list-container').classList.toggle('hidden', currentView !== 'list');
-render();
+function switchView(view) {
+  currentView = view;
+  document.getElementById('calendar-container').classList.toggle('hidden', view !== 'calendar');
+  document.getElementById('list-container').classList.toggle('hidden', view !== 'list');
+  document.getElementById('nav-calendar').classList.toggle('active', view === 'calendar');
+  document.getElementById('nav-list').classList.toggle('active', view === 'list');
+  history.replaceState(null, '', '/trips/' + view + '#' + currentYear);
+  render();
+}
+
+// Intercept calendar/list nav links to switch client-side
+document.getElementById('nav-calendar').addEventListener('click', e => { e.preventDefault(); switchView('calendar'); });
+document.getElementById('nav-list').addEventListener('click', e => { e.preventDefault(); switchView('list'); });
+
+// Init
+switchView(currentView);
 
 function addTrip() {
   fetch('/api/trips', {
