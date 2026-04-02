@@ -697,7 +697,7 @@
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if trip.events %}<div><span>{{ trip.events|length }}</span> event{{ '' if trip.events|length == 1 else 's' }}</div>{% endif %}
-      <div>{{ trip.start }} to {{ trip.end }}</div>
+      {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
       {% if trip.campers %}
       <div>{{ trip.campers|join(', ') }}</div>
       {% endif %}

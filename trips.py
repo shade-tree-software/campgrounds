@@ -90,26 +90,13 @@ def migrate_csv_to_json(csv_path=os.path.join(_DIR, "EKKO_Trips.csv")):
 
 # ── CRUD operations ───────────────────────────────────────────────────────
 
-def create_trip(trip_note="", stay=None):
+def create_trip(trip_note=""):
     """Create a new trip. Returns the new trip dict (with computed fields)."""
     raw = _load_raw_trips()
     new_id = _next_trip_id(raw)
-    if stay is None:
-        today = date.today().isoformat()
-        stay = {
-            "start": today,
-            "end": today,
-            "nights": 1,
-            "place": "New Campground",
-            "locale": "",
-            "state": "",
-            "site": "",
-            "campers": "",
-            "notes": "",
-        }
-    raw.append({"id": new_id, "trip_note": trip_note, "stays": [stay], "events": []})
+    raw.append({"id": new_id, "trip_note": trip_note, "stays": [], "events": []})
     _save_trips(raw)
-    return _make_trip(new_id, [stay], trip_note)
+    return _make_trip(new_id, [], trip_note)
 
 
 def update_trip(trip_id, fields):
@@ -400,8 +387,10 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
         trip_note = stays[0].get("trip_note", "").strip() if stays else ""
     if trip_note:
         summary = trip_note
-    elif not places:
+    elif not places and events:
         summary = "Events Only"
+    elif not places:
+        summary = "New Trip"
     elif len(places) == 1:
         summary = places[0]
     elif len(places) == 2:

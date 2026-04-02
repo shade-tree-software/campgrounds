@@ -264,6 +264,7 @@ const DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 // Build a lookup: "YYYY-MM-DD" -> [trip, ...]
 const dayToTrips = {};
 TRIPS.forEach(trip => {
+  if (!trip.start) return;
   const start = new Date(trip.start + 'T00:00:00');
   const end = new Date(trip.end + 'T00:00:00');
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
@@ -280,10 +281,10 @@ TRIPS.forEach((trip, i) => {
   tripColor[trip.id] = TRIP_COLORS[i % 2];
 });
 
-// Find year range
-const years = TRIPS.map(t => parseInt(t.start.slice(0, 4)));
-const minYear = Math.min(...years);
-const maxYear = Math.max(...years);
+// Find year range (exclude trips with no dates)
+const years = TRIPS.filter(t => t.start).map(t => parseInt(t.start.slice(0, 4)));
+const minYear = years.length ? Math.min(...years) : new Date().getFullYear();
+const maxYear = years.length ? Math.max(...years) : new Date().getFullYear();
 
 // Read year from URL hash (e.g. #2024)
 function parseHash() {
@@ -411,25 +412,31 @@ function renderList() {
   const container = document.getElementById('list-container');
   container.innerHTML = '';
 
+  const emptyTrips = TRIPS.filter(t => !t.start);
   const yearTrips = TRIPS.filter(t => {
+    if (!t.start) return false;
     const y = parseInt(t.start.slice(0, 4));
     const ey = parseInt(t.end.slice(0, 4));
     return y === currentYear || ey === currentYear;
   });
 
-  if (yearTrips.length === 0) {
+  if (yearTrips.length === 0 && emptyTrips.length === 0) {
     container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No trips in ' + currentYear + '</p>';
     return;
   }
 
-  yearTrips.forEach(trip => {
+  [...yearTrips, ...emptyTrips].forEach(trip => {
     const a = document.createElement('a');
     a.href = '/trips/' + trip.id;
     a.className = 'trip-card' + (trip.home_only ? ' home-only' : '');
 
-    const startD = new Date(trip.start + 'T00:00:00');
-    const endD = new Date(trip.end + 'T00:00:00');
-    const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    let datesHtml = '';
+    if (trip.start) {
+      const startD = new Date(trip.start + 'T00:00:00');
+      const endD = new Date(trip.end + 'T00:00:00');
+      const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+      datesHtml = `${fmt(startD)}<br>&ndash; ${fmt(endD)}`;
+    }
 
     const counts = [];
     if (trip.total_nights) counts.push(`${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''}`);
@@ -438,7 +445,7 @@ function renderList() {
 
     a.innerHTML = `
       <div class="trip-number">#${trip.number}</div>
-      <div class="dates">${fmt(startD)}<br>&ndash; ${fmt(endD)}</div>
+      <div class="dates">${datesHtml}</div>
       <div class="info">
         <h3>${trip.summary}</h3>
         <div class="meta">${trip.campers.join(', ')}</div>
