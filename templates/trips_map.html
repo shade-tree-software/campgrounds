@@ -41,6 +41,10 @@
     overflow: hidden;
   }
 
+  @media (max-width: 600px) {
+    .slideshow { height: 180px; }
+  }
+
   .slideshow-track {
     display: flex;
     height: 100%;
@@ -199,7 +203,7 @@ if (bounds.length) {
 const PHOTOS = {{ slideshow_photos | tojson }};
 if (PHOTOS.length) {
   const container = document.getElementById('slideshow');
-  const VISIBLE = Math.min(5, PHOTOS.length);
+  const VISIBLE = Math.min(window.innerWidth < 600 ? 2 : window.innerWidth < 900 ? 3 : 5, PHOTOS.length);
   container.style.setProperty('--slide-width', (100 / VISIBLE) + '%');
 
   const track = document.createElement('div');
