@@ -29,10 +29,16 @@
     color: #333;
   }
 
+  .site-top {
+    position: sticky;
+    top: 0;
+    z-index: 900;
+  }
+
   header {
     background: var(--navy);
     color: var(--white);
-    padding: 1.5rem 2rem;
+    padding: 1rem 2rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -53,7 +59,7 @@
 
   nav {
     background: var(--navy-light);
-    padding: .5rem 2rem;
+    padding: .35rem 2rem;
     display: flex;
     align-items: center;
     gap: .5rem;
@@ -89,6 +95,7 @@
 </head>
 <body>
 
+<div class="site-top">
 <header>
   <h1><a href="/">EKKO Trips</a></h1>
   <div class="stats">
@@ -121,8 +128,22 @@
   {% endif %}
   {% endblock %}
 </nav>
+</div>
 
 {% block content %}{% endblock %}
+
+<script>
+  // Set CSS variable for sticky sub-headers to sit below the site-top bar
+  (function() {
+    const siteTop = document.querySelector('.site-top');
+    if (siteTop) {
+      document.documentElement.style.setProperty('--site-top-height', siteTop.offsetHeight + 'px');
+      window.addEventListener('resize', () => {
+        document.documentElement.style.setProperty('--site-top-height', siteTop.offsetHeight + 'px');
+      });
+    }
+  })();
+</script>
 
 {% block scripts %}{% endblock %}
 
