@@ -229,40 +229,30 @@
   .event-edit-form .form-actions {
     display: flex;
     gap: .5rem;
+    margin-top: .75rem;
   }
 
-  .btn-add-event {
-    display: block;
-    width: 100%;
-    background: var(--offwhite);
-    border: 2px dashed var(--gold);
-    color: var(--gold);
-    padding: .75rem;
-    border-radius: 10px;
-    font-size: .9rem;
+  .btn-add-event,
+  .btn-add-stay {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    color: var(--gray);
+    padding: .4rem .9rem;
+    border-radius: 4px;
+    font-size: .8rem;
     font-weight: 600;
     cursor: pointer;
-    margin-bottom: 1.5rem;
-    transition: border-color .2s, color .2s;
+    transition: border-color .2s, color .2s, background .2s;
   }
 
-  .btn-add-event:hover { border-color: var(--red); color: var(--red); }
-
-  .btn-add-stay {
-    display: block;
-    width: 100%;
-    background: var(--offwhite);
-    border: 2px dashed var(--gray-light);
-    color: var(--gray);
-    padding: .75rem;
-    border-radius: 10px;
-    font-size: .9rem;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    transition: border-color .2s, color .2s;
-  }
-
+  .btn-add-event:hover,
   .btn-add-stay:hover { border-color: var(--red); color: var(--red); }
+
+  .add-buttons {
+    display: flex;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+  }
 
   .trip-note-edit {
     display: none;
@@ -679,6 +669,87 @@
     width: 100%;
     z-index: 0;
   }
+
+  /* ── Event location map picker ─────────────────── */
+  .event-location-map-container {
+    display: none;
+    position: fixed;
+    top: 5rem;
+    right: 1.5rem;
+    width: 420px;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.25);
+    overflow: hidden;
+    z-index: 1000;
+  }
+  .event-location-map-header {
+    padding: .5rem 1rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid var(--gray-light);
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+  .event-location-map-header:active { cursor: grabbing; }
+  .event-location-map-close {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--gray);
+    cursor: pointer;
+    padding: 0 .2rem;
+    line-height: 1;
+  }
+  .event-location-map-close:hover { color: var(--navy); }
+  #event-location-map { height: 350px; cursor: crosshair; }
+
+  .event-edit-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+
+  .event-edit-form .form-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .event-edit-form .form-grid label {
+    margin-bottom: .2rem;
+  }
+
+  .event-edit-form .form-grid input,
+  .event-edit-form .form-grid textarea {
+    margin-bottom: 0;
+  }
+
+  .event-location-field {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+  }
+
+  .event-location-field input {
+    flex: 1;
+  }
+
+  .btn-pick-location {
+    background: var(--offwhite);
+    border: 1px solid var(--gray-light);
+    color: var(--gray);
+    padding: .4rem .6rem;
+    border-radius: 4px;
+    font-size: .75rem;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-pick-location:hover { border-color: var(--red); color: var(--red); }
 {% endblock %}
 
 {% block content %}
@@ -715,10 +786,18 @@
 
   <!-- Map -->
   {% set mapped_stays = trip.stays | selectattr('lat', 'defined') | selectattr('lat') | list %}
-  {% if mapped_stays %}
+  {% set mapped_events = trip.events | selectattr('lat', 'defined') | selectattr('lat') | list %}
+  {% if mapped_stays or mapped_events %}
   <div class="map-container">
     <h3>Trip Route</h3>
     <div id="trip-map"></div>
+  </div>
+  {% endif %}
+
+  {% if is_admin %}
+  <div class="add-buttons">
+    <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
+    <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
   </div>
   {% endif %}
 
@@ -809,6 +888,7 @@
       {% endif %}
 
       <!-- Photos -->
+      {% if is_admin or stay_photos[item.idx] %}
       <div class="photos-section">
         <div class="photo-grid" id="photos-{{ item.idx }}">
           {% for photo in stay_photos[item.idx] %}
@@ -842,6 +922,7 @@
         </div>
         {% endif %}
       </div>
+      {% endif %}
     </div>
   </div>
 
@@ -851,27 +932,48 @@
       <div class="event-icon">&#9733;</div>
       <div class="event-info">
         <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
-        <div class="event-meta">{{ item.date }}</div>
+        <div class="event-meta">{{ item.date }}{% if item.end_date and item.end_date != item.date %} to {{ item.end_date }}{% endif %}</div>
       </div>
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
-      <label>Name</label>
-      <input type="text" data-field="name" value="{{ item.name }}">
-      <label>Date</label>
-      <input type="date" data-field="date" value="{{ item.date }}">
-      <label>Description</label>
-      <textarea data-field="description" rows="2">{{ item.description }}</textarea>
+      <div class="form-grid">
+        <div class="full-width">
+          <label>Name</label>
+          <input type="text" data-field="name" value="{{ item.name }}">
+        </div>
+        <div>
+          <label>Start Date</label>
+          <input type="date" data-field="date" value="{{ item.date }}">
+        </div>
+        <div>
+          <label>End Date</label>
+          <input type="date" data-field="end_date" value="{{ item.end_date }}">
+        </div>
+        <div class="full-width">
+          <label>Location</label>
+          <div class="event-location-field">
+            <input type="text" data-field="location" value="{{ item.location }}" placeholder="lat,lng">
+            {% if is_admin %}<button type="button" class="btn-pick-location" onclick="showEventLocationMap({{ item.idx }})">Pick on Map</button>{% endif %}
+          </div>
+        </div>
+        <div class="full-width">
+          <label>Description</label>
+          <textarea data-field="description" rows="2">{{ item.description }}</textarea>
+        </div>
+      </div>
       <div class="form-actions">
         <button class="btn-save" onclick="saveEvent({{ item.idx }})">Save</button>
         <button class="btn-cancel" onclick="cancelEvent({{ item.idx }})">Cancel</button>
         <button class="btn-danger" onclick="deleteEvent({{ item.idx }})">Delete Event</button>
       </div>
     </div>
+    {% if is_admin or item.description or event_photos[item.idx] %}
     <div class="event-body" id="event-body-{{ item.idx }}">
       {% if item.description %}
       <div class="event-description">{{ item.description }}</div>
       {% endif %}
 
+      {% if is_admin or event_photos[item.idx] %}
       <!-- Event Photos -->
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
@@ -906,20 +1008,27 @@
         </div>
         {% endif %}
       </div>
+      {% endif %}
     </div>
+    {% endif %}
   </div>
   {% endif %}
 
   {% endfor %}
 
-  {% if is_admin %}
-  <div style="display:flex;gap:1rem;">
-    <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
-    <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
-  </div>
-  {% endif %}
 
 </div>
+
+<!-- Event location map picker -->
+{% if is_admin %}
+<div class="event-location-map-container" id="event-location-map-container">
+  <div class="event-location-map-header" id="event-location-map-header">
+    <span>Click the map to set the event location</span>
+    <button class="event-location-map-close" onclick="hideEventLocationMap()">&times;</button>
+  </div>
+  <div id="event-location-map"></div>
+</div>
+{% endif %}
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
@@ -933,11 +1042,13 @@
 
 {% block scripts %}
 <script>
-// ── Map initialization ──────────────────────────────────────────────────────
+// ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   const stays = {{ trip.stays | tojson }};
+  const events = {{ trip.events | tojson }};
   const mapped = stays.filter(s => s.lat && s.lng);
-  if (mapped.length === 0) return;
+  const mappedEvents = events.filter(e => e.lat && e.lng);
+  if (mapped.length === 0 && mappedEvents.length === 0) return;
 
   const map = L.map('trip-map');
   const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -1025,6 +1136,30 @@
     opacity: 0.8,
     dashArray: '8,10',
   }).addTo(map);
+
+  // Event markers (gold dots with star)
+  mappedEvents.forEach(evt => {
+    const ll = [evt.lat, evt.lng];
+    bounds.push(ll);
+
+    const evtIcon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:24px;height:24px;border-radius:50%;
+        background:#c9a84c;
+        display:flex;align-items:center;justify-content:center;
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        color:#fff;font-size:13px;line-height:1;
+      ">&#9733;</div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+    const marker = L.marker(ll, { icon: evtIcon }).addTo(map);
+
+    let dateStr = evt.date;
+    if (evt.end_date && evt.end_date !== evt.date) dateStr += ' to ' + evt.end_date;
+    marker.bindPopup(`<strong>&#9733; ${evt.name}</strong><br>${dateStr}`);
+  });
 
   // Family location markers (not included in bounds)
   const FAMILY = {{ family_locations | tojson }};
@@ -1273,7 +1408,113 @@ function addEvent() {
   });
 }
 
-// ── Event photo functions ────────────────────────────────────────────────
+// ── Event location map picker ────────────────────���───────────────────────
+let eventLocMap = null;
+let eventLocMarker = null;
+let eventLocTargetIdx = null;
+
+function initEventLocationMap() {
+  if (eventLocMap) return;
+  eventLocMap = L.map('event-location-map').setView([38.93, -77.37], 7);
+  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+    maxZoom: 18,
+  }).addTo(eventLocMap);
+  const satellite = L.layerGroup([
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: '&copy; Esri', maxZoom: 19,
+    }),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+    }),
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
+    }),
+  ]);
+  L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(eventLocMap);
+
+  eventLocMap.on('click', function(e) {
+    const lat = e.latlng.lat;
+    const lng = e.latlng.lng;
+    if (eventLocMarker) eventLocMap.removeLayer(eventLocMarker);
+    eventLocMarker = L.marker([lat, lng]).addTo(eventLocMap);
+    // Update the location input for the target event
+    if (eventLocTargetIdx !== null) {
+      const form = document.getElementById('event-edit-' + eventLocTargetIdx);
+      const locInput = form.querySelector('[data-field="location"]');
+      if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+    }
+  });
+}
+
+function showEventLocationMap(eventIdx) {
+  eventLocTargetIdx = eventIdx;
+  const container = document.getElementById('event-location-map-container');
+  container.style.display = 'block';
+  initEventLocationMap();
+  setTimeout(() => eventLocMap.invalidateSize(), 100);
+
+  if (eventLocMarker) {
+    eventLocMap.removeLayer(eventLocMarker);
+    eventLocMarker = null;
+  }
+
+  // If the event already has a location, center on it
+  const form = document.getElementById('event-edit-' + eventIdx);
+  const locInput = form.querySelector('[data-field="location"]');
+  const loc = locInput ? locInput.value.trim() : '';
+  if (loc) {
+    const parts = loc.split(',');
+    const lat = parseFloat(parts[0]);
+    const lng = parseFloat(parts[1]);
+    if (!isNaN(lat) && !isNaN(lng)) {
+      eventLocMap.setView([lat, lng], 12);
+      eventLocMarker = L.marker([lat, lng]).addTo(eventLocMap);
+      return;
+    }
+  }
+  eventLocMap.setView([38.93, -77.37], 7);
+}
+
+function hideEventLocationMap() {
+  document.getElementById('event-location-map-container').style.display = 'none';
+}
+
+// Drag to reposition event location map
+if (IS_ADMIN) {
+  (function() {
+    const header = document.getElementById('event-location-map-header');
+    const container = document.getElementById('event-location-map-container');
+    if (!header || !container) return;
+    let dragging = false, startX, startY, startLeft, startTop;
+
+    header.addEventListener('mousedown', function(e) {
+      if (e.target.closest('.event-location-map-close')) return;
+      dragging = true;
+      const rect = container.getBoundingClientRect();
+      startX = e.clientX;
+      startY = e.clientY;
+      startLeft = rect.left;
+      startTop = rect.top;
+      container.style.right = 'auto';
+      container.style.left = startLeft + 'px';
+      container.style.top = startTop + 'px';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (!dragging) return;
+      container.style.left = (startLeft + e.clientX - startX) + 'px';
+      container.style.top = (startTop + e.clientY - startY) + 'px';
+    });
+
+    document.addEventListener('mouseup', function() {
+      dragging = false;
+    });
+  })();
+}
+
+// ── Event photo functions ─��───────────────��──────────────────────────────
 function uploadEventPhotos(tripId, eventIdx, files) {
   Array.from(files).forEach(file => {
     const form = new FormData();

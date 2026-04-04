@@ -299,8 +299,10 @@ def add_event(trip_id, event_data):
             default_date = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
             event = {
                 "date": event_data.get("date", default_date),
+                "end_date": event_data.get("end_date", ""),
                 "name": event_data.get("name", "New Event"),
                 "description": event_data.get("description", ""),
+                "location": event_data.get("location", ""),
             }
             events = t.get("events", [])
             events.append(event)
@@ -323,7 +325,7 @@ def update_event(trip_id, event_idx, fields):
             if event_idx < 0 or event_idx >= len(events):
                 return None
             event = events[event_idx]
-            for key in ("date", "name", "description"):
+            for key in ("date", "end_date", "name", "description", "location"):
                 if key in fields:
                     event[key] = fields[key]
             old_order = list(events)
@@ -507,6 +509,11 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
     for i, e in enumerate(events):
         timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
                              _order=0))
+        # Add end_date/location defaults for older events missing these fields
+        if "end_date" not in e:
+            e["end_date"] = ""
+        if "location" not in e:
+            e["location"] = ""
     timeline.sort(key=lambda x: (x["sort_date"], x["_order"]))
 
     if stays:
@@ -514,7 +521,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
         end = stays[-1]["end"]
     elif events:
         start = events[0]["date"]
-        end = events[-1]["date"]
+        # Use the latest end_date or date across all events
+        end = max(e.get("end_date") or e["date"] for e in events)
     else:
         start = end = ""
 
@@ -590,7 +598,7 @@ def _parse_site_coords(site):
 
 
 def enrich_trip_locations(trip):
-    """Add lat/lng to each stay in a trip where a match is found."""
+    """Add lat/lng to each stay and event in a trip where a match is found."""
     by_name = _load_campground_locations()
     for stay in trip["stays"]:
         coords = _match_location(stay["place"], by_name)
@@ -599,6 +607,13 @@ def enrich_trip_locations(trip):
         if coords:
             stay["lat"] = coords[0]
             stay["lng"] = coords[1]
+    for event in trip.get("events", []):
+        loc = event.get("location", "")
+        if loc:
+            coords = _parse_site_coords(loc)
+            if coords:
+                event["lat"] = coords[0]
+                event["lng"] = coords[1]
 
 
 if __name__ == "__main__":
