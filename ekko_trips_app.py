@@ -16,6 +16,7 @@ from trips import (parse_trips, enrich_trip_locations,
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+app.jinja_env.policies['json.dumps_kwargs'] = {'sort_keys': False}
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
 
 login_manager = LoginManager()
@@ -48,15 +49,15 @@ CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), "family_locations.json")
 
 WATERFRONT_COLORS = {
-    "lake":          "#1976d2",
-    "river":         "#00695c",
-    "creek":         "#80cbc4",
-    "pond":          "#9acd32",
-    "bay":           "#0d47a1",
     "coastal dunes": "#e6a817",
     "coastal woods": "#6b8e23",
+    "bay":           "#0d47a1",
+    "lake":          "#1976d2",
     "lakeview":      "#64b5f6",
+    "river":         "#00695c",
     "riverview":     "#26a69a",
+    "creek":         "#80cbc4",
+    "pond":          "#9acd32",
     "none":          "#795548",
 }
 
@@ -64,7 +65,7 @@ CLIMATE_COLORS = {
     "much cooler":     "#1a237e",
     "cooler":          "#1565c0",
     "slightly cooler": "#42a5f5",
-    "similar":         "#4caf50",
+    "similar to home": "#4caf50",
     "slightly warmer": "#fdd835",
     "warmer":          "#fb8c00",
     "much warmer":     "#e53935",
@@ -223,7 +224,7 @@ CLIMATE_THRESHOLDS = [
     (-14.0, "much cooler"),
     (-9.0,  "cooler"),
     (-4.0,  "slightly cooler"),
-    (4.0,   "similar"),
+    (4.0,   "similar to home"),
     (9.0,   "slightly warmer"),
     (14.0,  "warmer"),
     (19.0,  "much warmer"),

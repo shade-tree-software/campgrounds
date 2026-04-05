@@ -38,31 +38,31 @@
     width: 100%;
   }
 
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5rem .75rem;
-    padding: .75rem 1.25rem;
-    border-top: 1px solid var(--gray-light);
-    font-size: .82rem;
-    color: var(--gray);
+  .map-legend {
+    background: #fff;
+    padding: .5rem .75rem;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    font-size: .8rem;
+    line-height: 1.6;
   }
 
-  .legend-item {
+  .map-legend .legend-row {
     display: flex;
     align-items: center;
-    gap: .3rem;
+    gap: .4rem;
     cursor: pointer;
     user-select: none;
   }
 
-  .legend-item.dimmed { opacity: .35; }
+  .map-legend .legend-row.dimmed { opacity: .35; }
 
-  .legend-swatch {
-    width: 14px;
-    height: 14px;
+  .map-legend .legend-dot {
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
-    border: 2px solid rgba(0,0,0,.25);
+    border: 1.5px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15);
     flex-shrink: 0;
   }
 {% endblock %}
@@ -74,7 +74,6 @@
       <span>{{ title }}</span>
     </div>
     <div id="campground-map"></div>
-    <div class="legend" id="legend"></div>
   </div>
 </div>
 {% endblock %}
@@ -87,33 +86,6 @@ const COLOR_FIELD = {{ color_field | tojson }};
 const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const IS_ADMIN = {{ is_admin | tojson }};
-
-// ── Build legend ──────────────────────────────────────────────────────────
-const legendEl = document.getElementById('legend');
-const activeCategories = new Set(Object.keys(COLOR_MAP));
-const categoryMarkers = {};  // category -> [marker, ...]
-
-Object.entries(COLOR_MAP).forEach(([category, color]) => {
-  const count = CAMPGROUNDS.filter(c => (c[COLOR_FIELD] || 'none') === category).length;
-  const item = document.createElement('div');
-  item.className = 'legend-item';
-  item.innerHTML = `<span class="legend-swatch" style="background:${color}"></span>${category} (${count})`;
-  item.addEventListener('click', () => toggleCategory(category, item));
-  legendEl.appendChild(item);
-  categoryMarkers[category] = [];
-});
-
-function toggleCategory(category, item) {
-  if (activeCategories.has(category)) {
-    activeCategories.delete(category);
-    item.classList.add('dimmed');
-    categoryMarkers[category].forEach(m => m.setStyle({ opacity: 0, fillOpacity: 0 }));
-  } else {
-    activeCategories.add(category);
-    item.classList.remove('dimmed');
-    categoryMarkers[category].forEach(m => m.setStyle({ opacity: 1, fillOpacity: 0.8 }));
-  }
-}
 
 // ── Build map ─────────────────────────────────────────────────────────────
 const map = L.map('campground-map');
@@ -135,16 +107,47 @@ const satellite = L.layerGroup([
 ]);
 L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
 
+// ── Legend ────────────────────────────────────────────────────────────────
+const activeCategories = new Set(Object.keys(COLOR_MAP));
+const categoryMarkers = {};  // category -> [marker, ...]
+
+const legendControl = L.control({ position: 'bottomleft' });
+legendControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'map-legend');
+  L.DomEvent.disableClickPropagation(div);
+  Object.entries(COLOR_MAP).forEach(([category, color]) => {
+    const count = CAMPGROUNDS.filter(c => (c[COLOR_FIELD] || 'none') === category).length;
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+    row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
+    row.addEventListener('click', () => {
+      if (activeCategories.has(category)) {
+        activeCategories.delete(category);
+        row.classList.add('dimmed');
+        categoryMarkers[category].forEach(m => m.setStyle({ opacity: 0, fillOpacity: 0 }));
+      } else {
+        activeCategories.add(category);
+        row.classList.remove('dimmed');
+        categoryMarkers[category].forEach(m => m.setStyle({ opacity: 1, fillOpacity: 0.8 }));
+      }
+    });
+    div.appendChild(row);
+    categoryMarkers[category] = [];
+  });
+  return div;
+};
+legendControl.addTo(map);
+
 // Home marker
 if (HOME) {
   const homeIcon = L.divIcon({
     className: '',
     html: `<div style="
       width:24px;height:24px;border-radius:50%;
-      background:#c9a84c;
+      background:#bf0a30;
       display:flex;align-items:center;justify-content:center;
       border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#002868"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
@@ -159,10 +162,10 @@ FAMILY.forEach(fam => {
     className: '',
     html: `<div style="
       width:24px;height:24px;border-radius:50%;
-      background:#c9a84c;
+      background:#bf0a30;
       display:flex;align-items:center;justify-content:center;
       border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#002868"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
