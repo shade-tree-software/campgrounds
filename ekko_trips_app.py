@@ -76,6 +76,53 @@ def _allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def _save_photo(file_storage, photo_dir):
+    """Save an uploaded photo to photo_dir, handling filename collisions.
+    Returns (filename, dest_path) or None if the file type is not allowed."""
+    filename = secure_filename(file_storage.filename)
+    if not filename or not _allowed_file(filename):
+        return None
+    os.makedirs(photo_dir, exist_ok=True)
+    base, ext = os.path.splitext(filename)
+    dest = os.path.join(photo_dir, filename)
+    if os.path.exists(dest):
+        filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
+        dest = os.path.join(photo_dir, filename)
+    file_storage.save(dest)
+    return filename
+
+
+def _extract_zip_photos(file_storage, photo_dir):
+    """Extract image files from a zip archive into photo_dir.
+    Returns a list of saved filenames."""
+    import zipfile
+    import io
+    saved = []
+    data = io.BytesIO(file_storage.read())
+    with zipfile.ZipFile(data) as zf:
+        for info in zf.infolist():
+            if info.is_dir():
+                continue
+            basename = os.path.basename(info.filename)
+            if not basename or basename.startswith('.') or basename.startswith('__'):
+                continue
+            if not _allowed_file(basename):
+                continue
+            os.makedirs(photo_dir, exist_ok=True)
+            filename = secure_filename(basename)
+            if not filename:
+                continue
+            base, ext = os.path.splitext(filename)
+            dest = os.path.join(photo_dir, filename)
+            if os.path.exists(dest):
+                filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
+                dest = os.path.join(photo_dir, filename)
+            with zf.open(info) as src, open(dest, 'wb') as dst:
+                dst.write(src.read())
+            saved.append(filename)
+    return saved
+
+
 def _load_json(path):
     if os.path.exists(path):
         with open(path) as f:
@@ -354,24 +401,26 @@ def upload_photo(trip_id, stay_idx):
     if file.filename == '':
         return jsonify({"error": "No file selected"}), 400
 
-    if not _allowed_file(file.filename):
-        return jsonify({"error": "File type not allowed"}), 400
-
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
-    os.makedirs(photo_dir, exist_ok=True)
+    url_prefix = f"/static/uploads/{trip_id}/{stay_idx}"
 
-    filename = secure_filename(file.filename)
-    base, ext = os.path.splitext(filename)
-    dest = os.path.join(photo_dir, filename)
-    if os.path.exists(dest):
-        filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
-        dest = os.path.join(photo_dir, filename)
+    # Zip upload — extract all images
+    if file.filename.lower().endswith('.zip'):
+        saved = _extract_zip_photos(file, photo_dir)
+        if not saved:
+            return jsonify({"error": "No image files found in zip"}), 400
+        return jsonify({
+            "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
+        })
 
-    file.save(dest)
+    # Single image upload
+    filename = _save_photo(file, photo_dir)
+    if not filename:
+        return jsonify({"error": "File type not allowed"}), 400
 
     return jsonify({
         "filename": filename,
-        "url": f"/static/uploads/{trip_id}/{stay_idx}/{filename}",
+        "url": f"{url_prefix}/{filename}",
     })
 
 
@@ -444,24 +493,26 @@ def upload_event_photo(trip_id, event_idx):
     if file.filename == '':
         return jsonify({"error": "No file selected"}), 400
 
-    if not _allowed_file(file.filename):
-        return jsonify({"error": "File type not allowed"}), 400
-
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
-    os.makedirs(photo_dir, exist_ok=True)
+    url_prefix = f"/static/uploads/{trip_id}/events/{event_idx}"
 
-    filename = secure_filename(file.filename)
-    base, ext = os.path.splitext(filename)
-    dest = os.path.join(photo_dir, filename)
-    if os.path.exists(dest):
-        filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
-        dest = os.path.join(photo_dir, filename)
+    # Zip upload — extract all images
+    if file.filename.lower().endswith('.zip'):
+        saved = _extract_zip_photos(file, photo_dir)
+        if not saved:
+            return jsonify({"error": "No image files found in zip"}), 400
+        return jsonify({
+            "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
+        })
 
-    file.save(dest)
+    # Single image upload
+    filename = _save_photo(file, photo_dir)
+    if not filename:
+        return jsonify({"error": "File type not allowed"}), 400
 
     return jsonify({
         "filename": filename,
-        "url": f"/static/uploads/{trip_id}/events/{event_idx}/{filename}",
+        "url": f"{url_prefix}/{filename}",
     })
 
 

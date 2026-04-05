@@ -879,9 +879,9 @@
         {% if is_admin %}
         <div class="upload-area" onclick="this.querySelector('input').click()"
              data-trip="{{ trip.id }}" data-stay="{{ item.idx }}">
-          <input type="file" accept="image/*" multiple
+          <input type="file" accept="image/*,.zip" multiple
                  onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
-          <p>Click to upload photos (or drag and drop)</p>
+          <p>Click to upload photos or a zip file</p>
         </div>
         {% endif %}
       </div>
@@ -965,9 +965,9 @@
         {% if is_admin %}
         <div class="upload-area" onclick="this.querySelector('input').click()"
              data-trip="{{ trip.id }}" data-event="{{ item.idx }}">
-          <input type="file" accept="image/*" multiple
+          <input type="file" accept="image/*,.zip" multiple
                  onchange="uploadEventPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
-          <p>Click to upload photos (or drag and drop)</p>
+          <p>Click to upload photos or a zip file</p>
         </div>
         {% endif %}
       </div>
@@ -1416,6 +1416,7 @@ function hideEventLocationMap() {
 
 // ── Event photo functions ─��───────────────��──────────────────────────────
 function uploadEventPhotos(tripId, eventIdx, files) {
+  const grid = document.getElementById('event-photos-' + eventIdx);
   Array.from(files).forEach(file => {
     const form = new FormData();
     form.append('photo', file);
@@ -1423,22 +1424,8 @@ function uploadEventPhotos(tripId, eventIdx, files) {
       .then(r => r.json())
       .then(data => {
         if (data.error) { alert(data.error); return; }
-        const grid = document.getElementById('event-photos-' + eventIdx);
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.draggable = IS_ADMIN;
-        item.dataset.filename = data.filename;
-        item.innerHTML = `
-          <img src="${data.url}" alt="" onclick="openLightbox(this)">
-          <button class="delete-photo" onclick="deleteEventPhoto(${tripId}, ${eventIdx}, '${data.filename}', this)">&times;</button>
-          <div class="caption-area">
-            <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
-            <textarea class="caption-input" rows="1"
-                      onblur="saveCaptionField(this, ${tripId}, ${eventIdx}, '${data.filename}', 'event')"
-                      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
-          </div>
-        `;
-        grid.appendChild(item);
+        const items = data.files || [data];
+        items.forEach(f => _addPhotoToGrid(grid, tripId, eventIdx, f.filename, f.url, 'event'));
       });
   });
 }
@@ -1452,7 +1439,27 @@ function deleteEventPhoto(tripId, eventIdx, filename, btn) {
 }
 
 // ── Photo functions ──────────────────────────────────────────────────────
+function _addPhotoToGrid(grid, tripId, idx, filename, url, type) {
+  const item = document.createElement('div');
+  item.className = 'photo-item';
+  item.draggable = IS_ADMIN;
+  item.dataset.filename = filename;
+  const deleteFn = type === 'event' ? 'deleteEventPhoto' : 'deletePhoto';
+  item.innerHTML = `
+    <img src="${url}" alt="" onclick="openLightbox(this)">
+    <button class="delete-photo" onclick="${deleteFn}(${tripId}, ${idx}, '${filename}', this)">&times;</button>
+    <div class="caption-area">
+      <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
+      <textarea class="caption-input" rows="1"
+                onblur="saveCaptionField(this, ${tripId}, ${idx}, '${filename}', '${type}')"
+                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
+    </div>
+  `;
+  grid.appendChild(item);
+}
+
 function uploadPhotos(tripId, stayIdx, files) {
+  const grid = document.getElementById('photos-' + stayIdx);
   Array.from(files).forEach(file => {
     const form = new FormData();
     form.append('photo', file);
@@ -1460,22 +1467,8 @@ function uploadPhotos(tripId, stayIdx, files) {
       .then(r => r.json())
       .then(data => {
         if (data.error) { alert(data.error); return; }
-        const grid = document.getElementById('photos-' + stayIdx);
-        const item = document.createElement('div');
-        item.className = 'photo-item';
-        item.draggable = IS_ADMIN;
-        item.dataset.filename = data.filename;
-        item.innerHTML = `
-          <img src="${data.url}" alt="" onclick="openLightbox(this)">
-          <button class="delete-photo" onclick="deletePhoto(${tripId}, ${stayIdx}, '${data.filename}', this)">&times;</button>
-          <div class="caption-area">
-            <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
-            <textarea class="caption-input" rows="1"
-                      onblur="saveCaptionField(this, ${tripId}, ${stayIdx}, '${data.filename}', 'stay')"
-                      onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
-          </div>
-        `;
-        grid.appendChild(item);
+        const items = data.files || [data];
+        items.forEach(f => _addPhotoToGrid(grid, tripId, stayIdx, f.filename, f.url, 'stay'));
       });
   });
 }
