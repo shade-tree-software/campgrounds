@@ -1051,10 +1051,10 @@
     className: '',
     html: `<div style="
       width:24px;height:24px;border-radius:50%;
-      background:#c9a84c;
+      background:#bf0a30;
       display:flex;align-items:center;justify-content:center;
       border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#002868"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
@@ -1066,32 +1066,21 @@
     bounds.push(ll);
     latlngs.push(ll);
 
-    const marker = L.circleMarker(ll, {
-      radius: 9,
-      fillColor: '#bf0a30',
-      color: '#002868',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0.85,
-    }).addTo(map);
-
     const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}`;
-    marker.bindPopup(label);
 
-    // Number label
     const icon = L.divIcon({
       className: '',
       html: `<div style="
-        width:20px;height:20px;border-radius:50%;
+        width:24px;height:24px;border-radius:50%;
         background:#002868;color:#fff;
         display:flex;align-items:center;justify-content:center;
-        font-size:11px;font-weight:700;
+        font-size:12px;font-weight:700;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
       ">${i + 1}</div>`,
-      iconSize: [20, 20],
-      iconAnchor: [10, 10],
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
     });
-    L.marker(ll, { icon }).addTo(map).on('click', () => marker.openPopup());
+    L.marker(ll, { icon }).addTo(map).bindPopup(label);
   });
 
   // Close the route back to home
@@ -1142,10 +1131,10 @@
       className: '',
       html: `<div style="
         width:24px;height:24px;border-radius:50%;
-        background:#c9a84c;
+        background:#bf0a30;
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-      "><svg width="14" height="14" viewBox="0 0 20 20" fill="#002868"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+      "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });

@@ -143,11 +143,11 @@ Object.values(locMap).forEach(loc => {
 
   const marker = L.circleMarker(ll, {
     radius: radius,
-    fillColor: '#bf0a30',
-    color: '#002868',
+    fillColor: '#002868',
+    color: '#fff',
     weight: 2,
     opacity: 1,
-    fillOpacity: 0.8,
+    fillOpacity: 0.85,
   }).addTo(map);
 
   let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits !== 1 ? 's' : ''}`;
@@ -158,6 +158,42 @@ Object.values(locMap).forEach(loc => {
     popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
   });
   popup += '</div>';
+  marker.bindPopup(popup, { maxWidth: 280 });
+});
+
+// Event markers (gold dots)
+const eventLocMap = {};
+TRIPS.forEach(trip => {
+  (trip.events || []).forEach(evt => {
+    if (!evt.lat || !evt.lng) return;
+    const key = evt.lat.toFixed(4) + ',' + evt.lng.toFixed(4);
+    if (!eventLocMap[key]) {
+      eventLocMap[key] = { lat: evt.lat, lng: evt.lng, events: [] };
+    }
+    eventLocMap[key].events.push({ name: evt.name, date: evt.date, end_date: evt.end_date, trip: trip });
+  });
+});
+
+Object.values(eventLocMap).forEach(loc => {
+  const ll = [loc.lat, loc.lng];
+  bounds.push(ll);
+
+  const marker = L.circleMarker(ll, {
+    radius: 8,
+    fillColor: '#c9a84c',
+    color: '#fff',
+    weight: 2,
+    opacity: 1,
+    fillOpacity: 0.85,
+  }).addTo(map);
+
+  let popup = '';
+  loc.events.forEach(e => {
+    let dateStr = e.date;
+    if (e.end_date && e.end_date !== e.date) dateStr += ' to ' + e.end_date;
+    popup += `<a href="/trips/${e.trip.id}" style="display:block;color:#002868;font-size:12px;">&#9733; ${e.name} (${dateStr})</a>`;
+  });
+
   marker.bindPopup(popup, { maxWidth: 280 });
 });
 
