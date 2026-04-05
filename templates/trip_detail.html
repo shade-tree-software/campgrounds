@@ -648,6 +648,20 @@
 
   .lightbox .lb-caption:empty { display: none; }
 
+  .lightbox .lb-date {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    background: rgba(0,0,0,.6);
+    padding: .3rem .8rem;
+    border-radius: 6px;
+    font-size: .85rem;
+  }
+
+  .lightbox .lb-date:empty { display: none; }
+
   /* ── Map ─────────────────────────────────────────── */
   .map-container {
     background: var(--white);
@@ -856,7 +870,7 @@
         <div class="photo-grid" id="photos-{{ item.idx }}">
           {% for photo in stay_photos[item.idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" onclick="openLightbox(this)">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
@@ -942,7 +956,7 @@
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" onclick="openLightbox(this)">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
@@ -1008,6 +1022,7 @@
   <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)">&#8249;</button>
   <img id="lightbox-img" src="" alt="">
   <div class="lb-caption" id="lb-caption"></div>
+  <div class="lb-date" id="lb-date"></div>
   <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)">&#8250;</button>
 </div>
 {% endblock %}
@@ -1548,6 +1563,14 @@ function showLightboxPhoto() {
     caption = spanEl.textContent;
   }
   document.getElementById('lb-caption').textContent = caption;
+  // Show date taken
+  const raw = img.dataset.dateTaken || '';
+  let dateStr = '';
+  if (raw) {
+    const d = new Date(raw + 'T00:00:00');
+    dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  }
+  document.getElementById('lb-date').textContent = dateStr;
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
 }
@@ -1562,7 +1585,7 @@ function lightboxNav(e, dir) {
 }
 
 function closeLightbox(e) {
-  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption')) return;
+  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption' || e.target.id === 'lb-date')) return;
   document.getElementById('lightbox').classList.remove('visible');
 }
 

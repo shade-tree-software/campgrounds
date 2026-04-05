@@ -76,6 +76,24 @@ def _allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def _photo_date_taken(filepath):
+    """Extract the date a photo was taken from EXIF data. Returns 'YYYY-MM-DD' or ''."""
+    try:
+        from PIL import Image
+        from PIL.ExifTags import Base as ExifBase
+        img = Image.open(filepath)
+        exif = img.getexif()
+        # Try DateTimeOriginal first, then DateTimeDigitized, then DateTime
+        for tag in (ExifBase.DateTimeOriginal, ExifBase.DateTimeDigitized, ExifBase.DateTime):
+            val = exif.get(tag)
+            if val:
+                # EXIF dates are "YYYY:MM:DD HH:MM:SS"
+                return val.split(" ")[0].replace(":", "-")
+    except Exception:
+        pass
+    return ""
+
+
 def _save_photo(file_storage, photo_dir):
     """Save an uploaded photo to photo_dir, handling filename collisions.
     Returns (filename, dest_path) or None if the file type is not allowed."""
@@ -342,6 +360,7 @@ def trip_detail(trip_id):
                     "filename": fname,
                     "url": f"/static/uploads/{trip_id}/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
+                    "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                 })
         stay_photos[i] = photos
 
@@ -365,6 +384,7 @@ def trip_detail(trip_id):
                     "filename": fname,
                     "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
+                    "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                 })
         event_photos[i] = photos
 
