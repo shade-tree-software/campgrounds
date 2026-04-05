@@ -70,12 +70,31 @@
     top: 5rem;
     right: 1.5rem;
     width: 420px;
+    height: 400px;
+    min-width: 280px;
+    min-height: 250px;
     background: var(--white);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0,0,0,.25);
-    overflow: hidden;
+    overflow: visible;
     z-index: 1000;
+    flex-direction: column;
   }
+  .location-map-container .map-clip {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 0 0 10px 10px;
+  }
+  .resize-handle {
+    position: absolute;
+    z-index: 10;
+  }
+  .resize-handle.rh-right  { top: 0; right: -4px; width: 8px; height: 100%; cursor: ew-resize; }
+  .resize-handle.rh-bottom { bottom: -4px; left: 0; width: 100%; height: 8px; cursor: ns-resize; }
+  .resize-handle.rh-left   { top: 0; left: -4px; width: 8px; height: 100%; cursor: ew-resize; }
+  .resize-handle.rh-br     { bottom: -4px; right: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
+  .resize-handle.rh-bl     { bottom: -4px; left: -4px; width: 14px; height: 14px; cursor: nesw-resize; }
   .location-map-header {
     padding: .5rem 1rem;
     font-size: .85rem;
@@ -99,7 +118,7 @@
     line-height: 1;
   }
   .location-map-close:hover { color: var(--navy); }
-  #location-map { height: 350px; cursor: crosshair; }
+  #location-map { height: 100%; cursor: crosshair; }
 {% endblock %}
 
 {% block content %}
@@ -137,12 +156,67 @@
     <span>Click the map to set the campground location</span>
     <button class="location-map-close" onclick="hideLocationMap()">&times;</button>
   </div>
-  <div id="location-map"></div>
+  <div class="map-clip"><div id="location-map"></div></div>
+  <div class="resize-handle rh-right" data-dir="right"></div>
+  <div class="resize-handle rh-bottom" data-dir="bottom"></div>
+  <div class="resize-handle rh-left" data-dir="left"></div>
+  <div class="resize-handle rh-br" data-dir="br"></div>
+  <div class="resize-handle rh-bl" data-dir="bl"></div>
 </div>
 {% endblock %}
 
 {% block scripts %}
 <script>
+// ── Reusable resize-handle logic ─────────────────────────────────────────
+function initResizeHandles(containerId, onResize) {
+  const container = document.getElementById(containerId);
+  const handles = container.querySelectorAll('.resize-handle');
+  const MIN_W = 280, MIN_H = 250;
+
+  handles.forEach(handle => {
+    handle.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const dir = handle.dataset.dir;
+      const startX = e.clientX, startY = e.clientY;
+      const rect = container.getBoundingClientRect();
+      const startW = rect.width, startH = rect.height;
+      const startL = rect.left, startT = rect.top;
+
+      // Ensure we're using left positioning (not right)
+      container.style.left = startL + 'px';
+      container.style.right = 'auto';
+      container.style.top = startT + 'px';
+
+      function onMove(ev) {
+        const dx = ev.clientX - startX;
+        const dy = ev.clientY - startY;
+        let newW = startW, newH = startH, newL = startL;
+
+        if (dir === 'right' || dir === 'br') newW = Math.max(MIN_W, startW + dx);
+        if (dir === 'bottom' || dir === 'br' || dir === 'bl') newH = Math.max(MIN_H, startH + dy);
+        if (dir === 'left' || dir === 'bl') {
+          newW = Math.max(MIN_W, startW - dx);
+          if (newW > MIN_W) newL = startL + dx;
+        }
+
+        container.style.width = newW + 'px';
+        container.style.height = newH + 'px';
+        container.style.left = newL + 'px';
+        if (onResize) onResize();
+      }
+
+      function onUp() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+      }
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    });
+  });
+}
+
 const WATERFRONT_OPTIONS = ['none','lake','lakeview','river','riverview','creek','pond','bay','coastal dunes','coastal woods'];
 const OWNERSHIP_OPTIONS = ['state','federal','private','local'];
 const METERS_TO_FEET = 3.281;
@@ -213,7 +287,7 @@ function fetchElevation(lat, lng) {
 
 function showLocationMap(location) {
   const container = document.getElementById('location-map-container');
-  container.style.display = 'block';
+  container.style.display = 'flex';
   initLocationMap();
   setTimeout(() => locationMap.invalidateSize(), 100);
 
@@ -270,6 +344,11 @@ function hideLocationMap() {
     dragging = false;
   });
 })();
+
+// ── Resize handles ───────────────────────────────────────────────────────
+initResizeHandles('location-map-container', function() {
+  if (locationMap) locationMap.invalidateSize();
+});
 
 function onLocationBlur() {
   const val = (document.getElementById('ed-location').value || '').trim();
