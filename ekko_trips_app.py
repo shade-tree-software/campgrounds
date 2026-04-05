@@ -848,6 +848,23 @@ def api_update_campground(name):
     return jsonify({"ok": True})
 
 
+@app.route('/api/geocode')
+def api_geocode():
+    """Proxy geocoding lookup via Nominatim."""
+    q = request.args.get('q', '').strip()
+    if not q:
+        return jsonify([])
+    try:
+        import urllib.request
+        url = f"https://nominatim.openstreetmap.org/search?format=json&limit=8&q={urllib.parse.quote(q)}"
+        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        return jsonify([{"name": r["display_name"], "lat": r["lat"], "lon": r["lon"]} for r in data])
+    except Exception as e:
+        return jsonify([])
+
+
 @app.route('/api/elevation')
 def api_elevation():
     """Proxy elevation lookup via Open-Elevation API."""

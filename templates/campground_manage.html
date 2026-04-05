@@ -5,6 +5,7 @@
 {% block head_extra %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/static/map-picker.css" />
 {% endblock %}
 
 {% block style %}
@@ -64,61 +65,6 @@
   .count-info { color: var(--gray); font-size: .85rem; }
   .note-cell { font-size: .8rem; color: var(--gray); line-height: 1.3; }
 
-  .location-map-container {
-    display: none;
-    position: fixed;
-    top: 5rem;
-    right: 1.5rem;
-    width: 420px;
-    height: 400px;
-    min-width: 280px;
-    min-height: 250px;
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.25);
-    overflow: visible;
-    z-index: 1000;
-    flex-direction: column;
-  }
-  .location-map-container .map-clip {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    border-radius: 0 0 10px 10px;
-  }
-  .resize-handle {
-    position: absolute;
-    z-index: 10;
-  }
-  .resize-handle.rh-right  { top: 0; right: -4px; width: 8px; height: 100%; cursor: ew-resize; }
-  .resize-handle.rh-bottom { bottom: -4px; left: 0; width: 100%; height: 8px; cursor: ns-resize; }
-  .resize-handle.rh-left   { top: 0; left: -4px; width: 8px; height: 100%; cursor: ew-resize; }
-  .resize-handle.rh-br     { bottom: -4px; right: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
-  .resize-handle.rh-bl     { bottom: -4px; left: -4px; width: 14px; height: 14px; cursor: nesw-resize; }
-  .location-map-header {
-    padding: .5rem 1rem;
-    font-size: .85rem;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid var(--gray-light);
-    cursor: grab;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-  }
-  .location-map-header:active { cursor: grabbing; }
-  .location-map-close {
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    color: var(--gray);
-    cursor: pointer;
-    padding: 0 .2rem;
-    line-height: 1;
-  }
-  .location-map-close:hover { color: var(--navy); }
-  #location-map { height: 100%; cursor: crosshair; }
 {% endblock %}
 
 {% block content %}
@@ -151,10 +97,14 @@
 
 </div>
 
-<div class="location-map-container" id="location-map-container">
-  <div class="location-map-header" id="location-map-header">
+<div class="map-picker-container" id="location-map-container">
+  <div class="map-picker-header" id="location-map-header">
     <span>Click the map to set the campground location</span>
-    <button class="location-map-close" onclick="hideLocationMap()">&times;</button>
+    <button class="map-picker-close" onclick="locationPicker.hide()">&times;</button>
+  </div>
+  <div class="geo-search">
+    <input type="text" id="geo-search-input" placeholder="Search for a place..." autocomplete="off">
+    <div class="geo-results" id="geo-search-results"></div>
   </div>
   <div class="map-clip"><div id="location-map"></div></div>
   <div class="resize-handle rh-right" data-dir="right"></div>
@@ -166,57 +116,8 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/static/map-picker.js"></script>
 <script>
-// ── Reusable resize-handle logic ─────────────────────────────────────────
-function initResizeHandles(containerId, onResize) {
-  const container = document.getElementById(containerId);
-  const handles = container.querySelectorAll('.resize-handle');
-  const MIN_W = 280, MIN_H = 250;
-
-  handles.forEach(handle => {
-    handle.addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const dir = handle.dataset.dir;
-      const startX = e.clientX, startY = e.clientY;
-      const rect = container.getBoundingClientRect();
-      const startW = rect.width, startH = rect.height;
-      const startL = rect.left, startT = rect.top;
-
-      // Ensure we're using left positioning (not right)
-      container.style.left = startL + 'px';
-      container.style.right = 'auto';
-      container.style.top = startT + 'px';
-
-      function onMove(ev) {
-        const dx = ev.clientX - startX;
-        const dy = ev.clientY - startY;
-        let newW = startW, newH = startH, newL = startL;
-
-        if (dir === 'right' || dir === 'br') newW = Math.max(MIN_W, startW + dx);
-        if (dir === 'bottom' || dir === 'br' || dir === 'bl') newH = Math.max(MIN_H, startH + dy);
-        if (dir === 'left' || dir === 'bl') {
-          newW = Math.max(MIN_W, startW - dx);
-          if (newW > MIN_W) newL = startL + dx;
-        }
-
-        container.style.width = newW + 'px';
-        container.style.height = newH + 'px';
-        container.style.left = newL + 'px';
-        if (onResize) onResize();
-      }
-
-      function onUp() {
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onUp);
-      }
-
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-    });
-  });
-}
-
 const WATERFRONT_OPTIONS = ['none','lake','lakeview','river','riverview','creek','pond','bay','coastal dunes','coastal woods'];
 const OWNERSHIP_OPTIONS = ['state','federal','private','local'];
 const METERS_TO_FEET = 3.281;
@@ -229,45 +130,23 @@ let sortAsc = true;
 let editingName = null;  // original name of the row being edited
 let addingNew = false;
 
-// ── Map state ─────────────────────────────────────────────────────────────
-let locationMap = null;
-let locationMarker = null;
-
-function initLocationMap() {
-  if (locationMap) return;
-  locationMap = L.map('location-map').setView([HOME_LAT, HOME_LNG], 7);
-  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 18,
-  }).addTo(locationMap);
-  const satellite = L.layerGroup([
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri',
-      maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-  ]);
-  L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(locationMap);
-
-  locationMap.on('click', function(e) {
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
-    placeMarker(lat, lng);
+// ── Location map picker ──────────────────────────────────────────────────
+const locationPicker = createMapPicker({
+  containerId: 'location-map-container',
+  mapId: 'location-map',
+  headerId: 'location-map-header',
+  searchId: 'geo-search-input',
+  resultsId: 'geo-search-results',
+  defaultView: [HOME_LAT, HOME_LNG],
+  onPick: function(lat, lng) {
     const locInput = document.getElementById('ed-location');
     if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
     fetchElevation(lat, lng);
-  });
-}
+  }
+});
 
-function placeMarker(lat, lng) {
-  if (locationMarker) locationMap.removeLayer(locationMarker);
-  locationMarker = L.marker([lat, lng]).addTo(locationMap);
-}
+function showLocationMap(location) { locationPicker.show(location); }
+function hideLocationMap() { locationPicker.hide(); }
 
 function fetchElevation(lat, lng) {
   const elevInput = document.getElementById('ed-elev');
@@ -285,71 +164,6 @@ function fetchElevation(lat, lng) {
     .catch(() => { elevInput.placeholder = ''; });
 }
 
-function showLocationMap(location) {
-  const container = document.getElementById('location-map-container');
-  container.style.display = 'flex';
-  initLocationMap();
-  setTimeout(() => locationMap.invalidateSize(), 100);
-
-  if (locationMarker) {
-    locationMap.removeLayer(locationMarker);
-    locationMarker = null;
-  }
-
-  if (location) {
-    const parts = location.split(',');
-    const lat = parseFloat(parts[0]);
-    const lng = parseFloat(parts[1]);
-    if (!isNaN(lat) && !isNaN(lng)) {
-      locationMap.setView([lat, lng], 12);
-      placeMarker(lat, lng);
-      return;
-    }
-  }
-  locationMap.setView([HOME_LAT, HOME_LNG], 7);
-}
-
-function hideLocationMap() {
-  document.getElementById('location-map-container').style.display = 'none';
-}
-
-// ── Drag to reposition ────────────────────────────────────────────────────
-(function() {
-  const header = document.getElementById('location-map-header');
-  const container = document.getElementById('location-map-container');
-  let dragging = false, startX, startY, startLeft, startTop;
-
-  header.addEventListener('mousedown', function(e) {
-    if (e.target.closest('.location-map-close')) return;
-    dragging = true;
-    const rect = container.getBoundingClientRect();
-    startX = e.clientX;
-    startY = e.clientY;
-    startLeft = rect.left;
-    startTop = rect.top;
-    // Switch from right-positioned to left-positioned for dragging
-    container.style.left = rect.left + 'px';
-    container.style.right = 'auto';
-    e.preventDefault();
-  });
-
-  document.addEventListener('mousemove', function(e) {
-    if (!dragging) return;
-    container.style.left = (startLeft + e.clientX - startX) + 'px';
-    container.style.top = (startTop + e.clientY - startY) + 'px';
-    e.preventDefault();
-  });
-
-  document.addEventListener('mouseup', function() {
-    dragging = false;
-  });
-})();
-
-// ── Resize handles ───────────────────────────────────────────────────────
-initResizeHandles('location-map-container', function() {
-  if (locationMap) locationMap.invalidateSize();
-});
-
 function onLocationBlur() {
   const val = (document.getElementById('ed-location').value || '').trim();
   if (!val) return;
@@ -358,10 +172,7 @@ function onLocationBlur() {
   const lat = parseFloat(parts[0]);
   const lng = parseFloat(parts[1]);
   if (isNaN(lat) || isNaN(lng)) return;
-  if (locationMap) {
-    locationMap.setView([lat, lng], 12);
-    placeMarker(lat, lng);
-  }
+  locationPicker.panTo(lat, lng);
   fetchElevation(lat, lng);
 }
 

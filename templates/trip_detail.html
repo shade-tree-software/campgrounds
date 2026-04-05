@@ -5,6 +5,7 @@
 {% block head_extra %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/static/map-picker.css" />
 {% endblock %}
 
 {% block style %}
@@ -670,64 +671,6 @@
     z-index: 0;
   }
 
-  /* ── Event location map picker ─────────────────── */
-  .event-location-map-container {
-    display: none;
-    position: fixed;
-    top: 5rem;
-    right: 1.5rem;
-    width: 420px;
-    height: 400px;
-    min-width: 280px;
-    min-height: 250px;
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.25);
-    overflow: visible;
-    z-index: 1000;
-    flex-direction: column;
-  }
-  .event-location-map-container .map-clip {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    border-radius: 0 0 10px 10px;
-  }
-  .event-location-map-header {
-    padding: .5rem 1rem;
-    font-size: .85rem;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid var(--gray-light);
-    cursor: grab;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    user-select: none;
-  }
-  .event-location-map-header:active { cursor: grabbing; }
-  .event-location-map-close {
-    background: none;
-    border: none;
-    font-size: 1.1rem;
-    color: var(--gray);
-    cursor: pointer;
-    padding: 0 .2rem;
-    line-height: 1;
-  }
-  .event-location-map-close:hover { color: var(--navy); }
-  #event-location-map { height: 100%; cursor: crosshair; }
-
-  .resize-handle {
-    position: absolute;
-    z-index: 10;
-  }
-  .resize-handle.rh-right  { top: 0; right: -4px; width: 8px; height: 100%; cursor: ew-resize; }
-  .resize-handle.rh-bottom { bottom: -4px; left: 0; width: 100%; height: 8px; cursor: ns-resize; }
-  .resize-handle.rh-left   { top: 0; left: -4px; width: 8px; height: 100%; cursor: ew-resize; }
-  .resize-handle.rh-br     { bottom: -4px; right: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
-  .resize-handle.rh-bl     { bottom: -4px; left: -4px; width: 14px; height: 14px; cursor: nesw-resize; }
-
   .event-edit-form .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1041,10 +984,14 @@
 
 <!-- Event location map picker -->
 {% if is_admin %}
-<div class="event-location-map-container" id="event-location-map-container">
-  <div class="event-location-map-header" id="event-location-map-header">
+<div class="map-picker-container" id="event-location-map-container">
+  <div class="map-picker-header" id="event-location-map-header">
     <span>Click the map to set the event location</span>
-    <button class="event-location-map-close" onclick="hideEventLocationMap()">&times;</button>
+    <button class="map-picker-close" onclick="eventLocationPicker.hide()">&times;</button>
+  </div>
+  <div class="geo-search">
+    <input type="text" id="event-geo-search-input" placeholder="Search for a place..." autocomplete="off">
+    <div class="geo-results" id="event-geo-search-results"></div>
   </div>
   <div class="map-clip"><div id="event-location-map"></div></div>
   <div class="resize-handle rh-right" data-dir="right"></div>
@@ -1066,57 +1013,8 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="/static/map-picker.js"></script>
 <script>
-// ── Reusable resize-handle logic ─────────────────────────────────────────
-function initResizeHandles(containerId, onResize) {
-  const container = document.getElementById(containerId);
-  if (!container) return;
-  const handles = container.querySelectorAll('.resize-handle');
-  const MIN_W = 280, MIN_H = 250;
-
-  handles.forEach(handle => {
-    handle.addEventListener('mousedown', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const dir = handle.dataset.dir;
-      const startX = e.clientX, startY = e.clientY;
-      const rect = container.getBoundingClientRect();
-      const startW = rect.width, startH = rect.height;
-      const startL = rect.left, startT = rect.top;
-
-      container.style.left = startL + 'px';
-      container.style.right = 'auto';
-      container.style.top = startT + 'px';
-
-      function onMove(ev) {
-        const dx = ev.clientX - startX;
-        const dy = ev.clientY - startY;
-        let newW = startW, newH = startH, newL = startL;
-
-        if (dir === 'right' || dir === 'br') newW = Math.max(MIN_W, startW + dx);
-        if (dir === 'bottom' || dir === 'br' || dir === 'bl') newH = Math.max(MIN_H, startH + dy);
-        if (dir === 'left' || dir === 'bl') {
-          newW = Math.max(MIN_W, startW - dx);
-          if (newW > MIN_W) newL = startL + dx;
-        }
-
-        container.style.width = newW + 'px';
-        container.style.height = newH + 'px';
-        container.style.left = newL + 'px';
-        if (onResize) onResize();
-      }
-
-      function onUp() {
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onUp);
-      }
-
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-    });
-  });
-}
-
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   const stays = {{ trip.stays | tojson }};
@@ -1483,114 +1381,37 @@ function addEvent() {
   });
 }
 
-// ── Event location map picker ────────────────────���───────────────────────
-let eventLocMap = null;
-let eventLocMarker = null;
+// ── Event location map picker ────────────────────────────────────────────
 let eventLocTargetIdx = null;
+let eventLocationPicker = null;
 
-function initEventLocationMap() {
-  if (eventLocMap) return;
-  eventLocMap = L.map('event-location-map').setView([38.93, -77.37], 7);
-  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 18,
-  }).addTo(eventLocMap);
-  const satellite = L.layerGroup([
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri', maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-  ]);
-  L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(eventLocMap);
-
-  eventLocMap.on('click', function(e) {
-    const lat = e.latlng.lat;
-    const lng = e.latlng.lng;
-    if (eventLocMarker) eventLocMap.removeLayer(eventLocMarker);
-    eventLocMarker = L.marker([lat, lng]).addTo(eventLocMap);
-    // Update the location input for the target event
-    if (eventLocTargetIdx !== null) {
-      const form = document.getElementById('event-edit-' + eventLocTargetIdx);
-      const locInput = form.querySelector('[data-field="location"]');
-      if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+if (IS_ADMIN) {
+  eventLocationPicker = createMapPicker({
+    containerId: 'event-location-map-container',
+    mapId: 'event-location-map',
+    headerId: 'event-location-map-header',
+    searchId: 'event-geo-search-input',
+    resultsId: 'event-geo-search-results',
+    onPick: function(lat, lng) {
+      if (eventLocTargetIdx !== null) {
+        const form = document.getElementById('event-edit-' + eventLocTargetIdx);
+        const locInput = form.querySelector('[data-field="location"]');
+        if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+      }
     }
   });
 }
 
 function showEventLocationMap(eventIdx) {
   eventLocTargetIdx = eventIdx;
-  const container = document.getElementById('event-location-map-container');
-  container.style.display = 'flex';
-  initEventLocationMap();
-  setTimeout(() => eventLocMap.invalidateSize(), 100);
-
-  if (eventLocMarker) {
-    eventLocMap.removeLayer(eventLocMarker);
-    eventLocMarker = null;
-  }
-
-  // If the event already has a location, center on it
   const form = document.getElementById('event-edit-' + eventIdx);
   const locInput = form.querySelector('[data-field="location"]');
   const loc = locInput ? locInput.value.trim() : '';
-  if (loc) {
-    const parts = loc.split(',');
-    const lat = parseFloat(parts[0]);
-    const lng = parseFloat(parts[1]);
-    if (!isNaN(lat) && !isNaN(lng)) {
-      eventLocMap.setView([lat, lng], 12);
-      eventLocMarker = L.marker([lat, lng]).addTo(eventLocMap);
-      return;
-    }
-  }
-  eventLocMap.setView([38.93, -77.37], 7);
+  eventLocationPicker.show(loc);
 }
 
 function hideEventLocationMap() {
-  document.getElementById('event-location-map-container').style.display = 'none';
-}
-
-// Drag to reposition event location map
-if (IS_ADMIN) {
-  (function() {
-    const header = document.getElementById('event-location-map-header');
-    const container = document.getElementById('event-location-map-container');
-    if (!header || !container) return;
-    let dragging = false, startX, startY, startLeft, startTop;
-
-    header.addEventListener('mousedown', function(e) {
-      if (e.target.closest('.event-location-map-close')) return;
-      dragging = true;
-      const rect = container.getBoundingClientRect();
-      startX = e.clientX;
-      startY = e.clientY;
-      startLeft = rect.left;
-      startTop = rect.top;
-      container.style.right = 'auto';
-      container.style.left = startLeft + 'px';
-      container.style.top = startTop + 'px';
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', function(e) {
-      if (!dragging) return;
-      container.style.left = (startLeft + e.clientX - startX) + 'px';
-      container.style.top = (startTop + e.clientY - startY) + 'px';
-    });
-
-    document.addEventListener('mouseup', function() {
-      dragging = false;
-    });
-  })();
-
-  initResizeHandles('event-location-map-container', function() {
-    if (eventLocMap) eventLocMap.invalidateSize();
-  });
+  eventLocationPicker.hide();
 }
 
 // ── Event photo functions ─��───────────────��──────────────────────────────
