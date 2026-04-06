@@ -1150,6 +1150,26 @@
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
+  // Dashed lines from events to nearest stay
+  if (mapped.length > 0) {
+    mappedEvents.forEach(evt => {
+      const ell = [evt.lat, evt.lng];
+      let nearest = null, minDist = Infinity;
+      mapped.forEach(s => {
+        const d = haversineKm(evt.lat, evt.lng, s.lat, s.lng);
+        if (d < minDist) { minDist = d; nearest = [s.lat, s.lng]; }
+      });
+      if (nearest) {
+        L.polyline([ell, nearest], {
+          color: '#002868',
+          weight: 2,
+          opacity: 0.7,
+          dashArray: '6,8',
+        }).addTo(map);
+      }
+    });
+  }
+
   const NEARBY_KM = 80;
   FAMILY.forEach(fam => {
     const nearby = tripPoints.some(p => haversineKm(p[0], p[1], fam.lat, fam.lng) <= NEARBY_KM);
