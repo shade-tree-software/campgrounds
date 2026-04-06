@@ -1150,17 +1150,47 @@
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   }
 
-  // Dashed lines from events to nearest stay
+  // Dashed lines from events to nearest route segment (perpendicular) or nearest stay
   if (mapped.length > 0) {
+    // Find nearest point on segment AB to point P, using scaled coords for accuracy
+    function nearestOnSegment(p, a, b) {
+      const cosLat = Math.cos(p[0] * Math.PI / 180);
+      // Scale lng by cos(lat) so distances are roughly equal in both axes
+      const px = p[1] * cosLat, py = p[0];
+      const ax = a[1] * cosLat, ay = a[0];
+      const bx = b[1] * cosLat, by = b[0];
+      const dx = bx - ax, dy = by - ay;
+      const lenSq = dx * dx + dy * dy;
+      if (lenSq === 0) return { pt: a, t: 0 };
+      const t = ((px - ax) * dx + (py - ay) * dy) / lenSq;
+      if (t <= 0) return { pt: a, t: 0 };
+      if (t >= 1) return { pt: b, t: 1 };
+      return { pt: [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])], t };
+    }
+
     mappedEvents.forEach(evt => {
       const ell = [evt.lat, evt.lng];
-      let nearest = null, minDist = Infinity;
+      let bestPt = null, bestDist = Infinity, bestPerp = false;
+
+      // Check perpendicular drop to each route segment (latlngs is the stay route including home)
+      for (let i = 0; i < latlngs.length - 1; i++) {
+        const res = nearestOnSegment(ell, latlngs[i], latlngs[i + 1]);
+        const d = haversineKm(evt.lat, evt.lng, res.pt[0], res.pt[1]);
+        if (d < bestDist) {
+          bestDist = d;
+          bestPt = res.pt;
+          bestPerp = res.t > 0 && res.t < 1;
+        }
+      }
+
+      // Also check direct distance to each stay marker
       mapped.forEach(s => {
         const d = haversineKm(evt.lat, evt.lng, s.lat, s.lng);
-        if (d < minDist) { minDist = d; nearest = [s.lat, s.lng]; }
+        if (d < bestDist) { bestDist = d; bestPt = [s.lat, s.lng]; bestPerp = false; }
       });
-      if (nearest) {
-        L.polyline([ell, nearest], {
+
+      if (bestPt) {
+        L.polyline([ell, bestPt], {
           color: '#002868',
           weight: 2,
           opacity: 0.7,
