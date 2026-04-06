@@ -1168,26 +1168,45 @@
       return { pt: [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])], t };
     }
 
+    // Check if a date string falls within a stay's date range
+    function dateDuringStay(dateStr, stay) {
+      return dateStr >= stay.start && dateStr <= stay.end;
+    }
+
+    // Route segments: index 0 = HOME→stay[0], 1 = stay[0]→stay[1], ..., N = stay[N-1]→HOME
+    // For perpendicular eligibility, the event must be single-day and its date must
+    // fall within both endpoint stays' date ranges. HOME endpoints always pass.
+    function perpEligible(evt, segIdx) {
+      if (evt.end_date && evt.end_date !== evt.date) return false; // multi-day event
+      const d = evt.date;
+      // segIdx 0: HOME → mapped[0], segIdx mapped.length: mapped[N-1] → HOME
+      const leftStay = segIdx > 0 ? mapped[segIdx - 1] : null;
+      const rightStay = segIdx < mapped.length ? mapped[segIdx] : null;
+      if (leftStay && !dateDuringStay(d, leftStay)) return false;
+      if (rightStay && !dateDuringStay(d, rightStay)) return false;
+      return true;
+    }
+
     mappedEvents.forEach(evt => {
       const ell = [evt.lat, evt.lng];
-      let bestPt = null, bestDist = Infinity, bestPerp = false;
+      let bestPt = null, bestDist = Infinity;
 
-      // Check perpendicular drop to each route segment (latlngs is the stay route including home)
+      // Check perpendicular drop to each route segment (only if date-eligible)
       for (let i = 0; i < latlngs.length - 1; i++) {
+        if (!perpEligible(evt, i)) continue;
         const res = nearestOnSegment(ell, latlngs[i], latlngs[i + 1]);
+        if (res.t <= 0 || res.t >= 1) continue; // not a true perpendicular
         const d = haversineKm(evt.lat, evt.lng, res.pt[0], res.pt[1]);
-        if (d < bestDist) {
-          bestDist = d;
-          bestPt = res.pt;
-          bestPerp = res.t > 0 && res.t < 1;
-        }
+        if (d < bestDist) { bestDist = d; bestPt = res.pt; }
       }
 
-      // Also check direct distance to each stay marker
-      mapped.forEach(s => {
-        const d = haversineKm(evt.lat, evt.lng, s.lat, s.lng);
-        if (d < bestDist) { bestDist = d; bestPt = [s.lat, s.lng]; bestPerp = false; }
-      });
+      // Fall back to nearest stay/home marker
+      if (!bestPt) {
+        latlngs.forEach(ll => {
+          const d = haversineKm(evt.lat, evt.lng, ll[0], ll[1]);
+          if (d < bestDist) { bestDist = d; bestPt = ll; }
+        });
+      }
 
       if (bestPt) {
         L.polyline([ell, bestPt], {
