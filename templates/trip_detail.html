@@ -1175,16 +1175,27 @@
 
     // Route segments: index 0 = HOME→stay[0], 1 = stay[0]→stay[1], ..., N = stay[N-1]→HOME
     // For perpendicular eligibility, the event must be single-day and its date must
-    // fall within both endpoint stays' date ranges. HOME endpoints always pass.
+    // fall within both endpoint stays' date ranges.
+    // Special rules for HOME segments:
+    //   HOME→first stay: event date must equal the first stay's start date
+    //   last stay→HOME: event date must equal the last stay's end date
     function perpEligible(evt, segIdx) {
       if (evt.end_date && evt.end_date !== evt.date) return false; // multi-day event
       const d = evt.date;
-      // segIdx 0: HOME → mapped[0], segIdx mapped.length: mapped[N-1] → HOME
-      const leftStay = segIdx > 0 ? mapped[segIdx - 1] : null;
-      const rightStay = segIdx < mapped.length ? mapped[segIdx] : null;
-      if (leftStay && !dateDuringStay(d, leftStay)) return false;
-      if (rightStay && !dateDuringStay(d, rightStay)) return false;
-      return true;
+      const isHomeLeft = segIdx === 0;
+      const isHomeRight = segIdx === mapped.length;
+      if (isHomeLeft) {
+        // HOME → first stay: event date must be first stay's start date
+        return d === mapped[0].start;
+      }
+      if (isHomeRight) {
+        // last stay → HOME: event date must be last stay's end date
+        return d === mapped[mapped.length - 1].end;
+      }
+      // Stay-to-stay: event date must fall within both stays' date ranges
+      const leftStay = mapped[segIdx - 1];
+      const rightStay = mapped[segIdx];
+      return dateDuringStay(d, leftStay) && dateDuringStay(d, rightStay);
     }
 
     mappedEvents.forEach(evt => {
