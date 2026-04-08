@@ -942,9 +942,7 @@
                  onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos or a zip file</p>
         </div>
-        {% if stay_photos[item.idx] %}
-        <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})">Remove All Photos</button>
-        {% endif %}
+        <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
         {% endif %}
       </div>
       {% endif %}
@@ -1031,9 +1029,7 @@
                  onchange="uploadEventPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos or a zip file</p>
         </div>
-        {% if event_photos[item.idx] %}
-        <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})">Remove All Photos</button>
-        {% endif %}
+        <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
         {% endif %}
       </div>
       {% endif %}
@@ -1675,7 +1671,11 @@ function deleteAllEventPhotos(tripId, eventIdx) {
   fetch(`/trips/${tripId}/events/${eventIdx}/photos`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.ok) grid.innerHTML = '';
+      if (data.ok) {
+        grid.innerHTML = '';
+        const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
+        if (btn) btn.style.display = 'none';
+      }
     });
 }
 
@@ -1697,6 +1697,8 @@ function _addPhotoToGrid(grid, tripId, idx, filename, url, type) {
     </div>
   `;
   grid.appendChild(item);
+  const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
+  if (btn) btn.style.display = '';
 }
 
 function uploadPhotos(tripId, stayIdx, files) {
@@ -1760,7 +1762,11 @@ function deleteAllPhotos(tripId, stayIdx) {
   fetch(`/trips/${tripId}/stays/${stayIdx}/photos`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.ok) grid.innerHTML = '';
+      if (data.ok) {
+        grid.innerHTML = '';
+        const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
+        if (btn) btn.style.display = 'none';
+      }
     });
 }
 
