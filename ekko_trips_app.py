@@ -1,5 +1,6 @@
 import json
 import os
+import shutil
 import sys
 from datetime import datetime
 
@@ -486,6 +487,28 @@ def delete_photo(trip_id, stay_idx, filename):
     return jsonify({"ok": True})
 
 
+@app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/photos', methods=['DELETE'])
+def delete_all_stay_photos(trip_id, stay_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
+    if os.path.isdir(photo_dir):
+        shutil.rmtree(photo_dir)
+
+    prefix = f"{trip_id}/{stay_idx}/"
+    captions = _load_json(CAPTIONS_FILE)
+    captions = {k: v for k, v in captions.items() if not k.startswith(prefix)}
+    _save_json(CAPTIONS_FILE, captions)
+
+    order_key = f"{trip_id}/{stay_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    photo_order.pop(order_key, None)
+    _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    return jsonify({"ok": True})
+
+
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/reorder', methods=['POST'])
 def reorder_stay_photos(trip_id, stay_idx):
     denied = _require_admin()
@@ -574,6 +597,28 @@ def delete_event_photo(trip_id, event_idx, filename):
     if order_key in photo_order:
         photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
         _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/photos', methods=['DELETE'])
+def delete_all_event_photos(trip_id, event_idx):
+    denied = _require_admin()
+    if denied:
+        return denied
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
+    if os.path.isdir(photo_dir):
+        shutil.rmtree(photo_dir)
+
+    prefix = f"{trip_id}/events/{event_idx}/"
+    captions = _load_json(CAPTIONS_FILE)
+    captions = {k: v for k, v in captions.items() if not k.startswith(prefix)}
+    _save_json(CAPTIONS_FILE, captions)
+
+    order_key = f"{trip_id}/events/{event_idx}"
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    photo_order.pop(order_key, None)
+    _save_json(PHOTO_ORDER_FILE, photo_order)
 
     return jsonify({"ok": True})
 

@@ -580,6 +580,51 @@
     color: var(--gray);
   }
 
+  .upload-progress {
+    width: 100%;
+    margin-top: .5rem;
+  }
+
+  .upload-progress-bar {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--gray-light);
+    overflow: hidden;
+  }
+
+  .upload-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--navy);
+    border-radius: 3px;
+    transition: width .15s;
+  }
+
+  .upload-progress-text {
+    font-size: .75rem;
+    color: var(--gray);
+    margin-top: .25rem;
+  }
+
+  .upload-error {
+    font-size: .8rem;
+    color: var(--red);
+    margin-top: .5rem;
+  }
+
+  .btn-delete-all-photos {
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: .75rem;
+    cursor: pointer;
+    padding: .25rem 0;
+  }
+
+  .btn-delete-all-photos:hover {
+    color: var(--red);
+  }
+
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
@@ -897,6 +942,9 @@
                  onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos or a zip file</p>
         </div>
+        {% if stay_photos[item.idx] %}
+        <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})">Remove All Photos</button>
+        {% endif %}
         {% endif %}
       </div>
       {% endif %}
@@ -983,6 +1031,9 @@
                  onchange="uploadEventPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos or a zip file</p>
         </div>
+        {% if event_photos[item.idx] %}
+        <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})">Remove All Photos</button>
+        {% endif %}
         {% endif %}
       </div>
       {% endif %}
@@ -1513,19 +1564,100 @@ function hideEventLocationMap() {
 }
 
 // ── Event photo functions ─��───────────────��──────────────────────────────
-function uploadEventPhotos(tripId, eventIdx, files) {
-  const grid = document.getElementById('event-photos-' + eventIdx);
-  Array.from(files).forEach(file => {
+function _uploadWithProgress(url, files, grid, tripId, idx, type) {
+  const uploadArea = grid.closest('.photos-section').querySelector('.upload-area');
+  const totalFiles = files.length;
+  let completed = 0;
+
+  // Create progress UI
+  const oldError = uploadArea.querySelector('.upload-error');
+  if (oldError) oldError.remove();
+  let progressEl = uploadArea.querySelector('.upload-progress');
+  if (!progressEl) {
+    progressEl = document.createElement('div');
+    progressEl.className = 'upload-progress';
+    progressEl.innerHTML = '<div class="upload-progress-bar"><div class="upload-progress-fill"></div></div><div class="upload-progress-text"></div>';
+    uploadArea.appendChild(progressEl);
+  }
+  const fill = progressEl.querySelector('.upload-progress-fill');
+  const text = progressEl.querySelector('.upload-progress-text');
+  progressEl.style.display = '';
+
+  // Per-file progress tracking
+  const fileProgress = new Array(totalFiles).fill(0);
+  function updateProgress() {
+    const total = fileProgress.reduce((a, b) => a + b, 0) / totalFiles;
+    fill.style.width = Math.round(total) + '%';
+    text.textContent = totalFiles === 1
+      ? 'Uploading\u2026 ' + Math.round(total) + '%'
+      : 'Uploading file ' + Math.min(completed + 1, totalFiles) + ' of ' + totalFiles + '\u2026 ' + Math.round(total) + '%';
+  }
+  updateProgress();
+
+  const errors = [];
+
+  Array.from(files).forEach((file, i) => {
     const form = new FormData();
     form.append('photo', file);
-    fetch(`/trips/${tripId}/events/${eventIdx}/upload`, { method: 'POST', body: form })
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) { alert(data.error); return; }
-        const items = data.files || [data];
-        items.forEach(f => _addPhotoToGrid(grid, tripId, eventIdx, f.filename, f.url, 'event'));
-      });
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', url);
+
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        fileProgress[i] = (e.loaded / e.total) * 100;
+        updateProgress();
+      }
+    };
+
+    xhr.onload = () => {
+      completed++;
+      fileProgress[i] = 100;
+      updateProgress();
+      try {
+        const data = JSON.parse(xhr.responseText);
+        if (data.error) {
+          errors.push(file.name + ': ' + data.error);
+        } else {
+          const items = data.files || [data];
+          items.forEach(f => _addPhotoToGrid(grid, tripId, idx, f.filename, f.url, type));
+        }
+      } catch (e) {
+        errors.push(file.name + ': unexpected server response');
+      }
+      if (completed === totalFiles) _uploadDone(progressEl, uploadArea, errors);
+    };
+
+    xhr.onerror = () => {
+      completed++;
+      fileProgress[i] = 100;
+      errors.push(file.name + ': upload failed (network error)');
+      if (completed === totalFiles) _uploadDone(progressEl, uploadArea, errors);
+    };
+
+    xhr.send(form);
   });
+}
+
+function _uploadDone(progressEl, uploadArea, errors) {
+  progressEl.style.display = 'none';
+  progressEl.querySelector('.upload-progress-fill').style.width = '0%';
+  if (errors.length) {
+    let errorEl = uploadArea.querySelector('.upload-error');
+    if (!errorEl) {
+      errorEl = document.createElement('div');
+      errorEl.className = 'upload-error';
+      uploadArea.appendChild(errorEl);
+    }
+    errorEl.textContent = errors.length === 1
+      ? 'Upload failed: ' + errors[0]
+      : errors.length + ' uploads failed: ' + errors.join('; ');
+  }
+}
+
+function uploadEventPhotos(tripId, eventIdx, files) {
+  const grid = document.getElementById('event-photos-' + eventIdx);
+  _uploadWithProgress(`/trips/${tripId}/events/${eventIdx}/upload`, files, grid, tripId, eventIdx, 'event');
 }
 
 function deleteEventPhoto(tripId, eventIdx, filename, btn) {
@@ -1533,6 +1665,17 @@ function deleteEventPhoto(tripId, eventIdx, filename, btn) {
   fetch(`/trips/${tripId}/events/${eventIdx}/photos/${filename}`, { method: 'DELETE' })
     .then(() => {
       btn.closest('.photo-item').remove();
+    });
+}
+
+function deleteAllEventPhotos(tripId, eventIdx) {
+  const grid = document.getElementById('event-photos-' + eventIdx);
+  const count = grid.querySelectorAll('.photo-item').length;
+  if (!count || !confirm('Delete all ' + count + ' photo' + (count !== 1 ? 's' : '') + ' from this event?')) return;
+  fetch(`/trips/${tripId}/events/${eventIdx}/photos`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok) grid.innerHTML = '';
     });
 }
 
@@ -1558,17 +1701,7 @@ function _addPhotoToGrid(grid, tripId, idx, filename, url, type) {
 
 function uploadPhotos(tripId, stayIdx, files) {
   const grid = document.getElementById('photos-' + stayIdx);
-  Array.from(files).forEach(file => {
-    const form = new FormData();
-    form.append('photo', file);
-    fetch(`/trips/${tripId}/stays/${stayIdx}/upload`, { method: 'POST', body: form })
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) { alert(data.error); return; }
-        const items = data.files || [data];
-        items.forEach(f => _addPhotoToGrid(grid, tripId, stayIdx, f.filename, f.url, 'stay'));
-      });
-  });
+  _uploadWithProgress(`/trips/${tripId}/stays/${stayIdx}/upload`, files, grid, tripId, stayIdx, 'stay');
 }
 
 function saveCaption(tripId, stayIdx, filename, caption) {
@@ -1617,6 +1750,17 @@ function deletePhoto(tripId, stayIdx, filename, btn) {
   fetch(`/trips/${tripId}/stays/${stayIdx}/photos/${filename}`, { method: 'DELETE' })
     .then(() => {
       btn.closest('.photo-item').remove();
+    });
+}
+
+function deleteAllPhotos(tripId, stayIdx) {
+  const grid = document.getElementById('photos-' + stayIdx);
+  const count = grid.querySelectorAll('.photo-item').length;
+  if (!count || !confirm('Delete all ' + count + ' photo' + (count !== 1 ? 's' : '') + ' from this campspot?')) return;
+  fetch(`/trips/${tripId}/stays/${stayIdx}/photos`, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.ok) grid.innerHTML = '';
     });
 }
 
