@@ -184,6 +184,21 @@
     color: var(--gray);
   }
 
+  .event-card.waypoint {
+    margin-left: 2rem;
+    font-size: .9em;
+  }
+  .event-card.waypoint .event-header {
+    background: #f0f0f0;
+    padding: .75rem 1rem;
+  }
+  .event-card.waypoint .event-icon {
+    background: #aaa;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: .75rem;
+  }
+
   .event-body {
     padding: 1rem 1.25rem;
   }
@@ -225,6 +240,12 @@
   .event-edit-form textarea:focus {
     outline: none;
     border-color: var(--red);
+  }
+
+  .event-edit-form input[type="checkbox"] {
+    width: auto;
+    padding: 0;
+    margin: 0;
   }
 
   .event-edit-form .form-actions {
@@ -820,6 +841,7 @@
   <div class="add-buttons">
     <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
     <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
+    <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
   </div>
   {% endif %}
 
@@ -950,7 +972,7 @@
   </div>
 
   {% elif item.type == "event" %}
-  <div class="event-card" id="event-{{ item.idx }}">
+  <div class="event-card{% if item.waypoint %} waypoint{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">&#9733;</div>
       <div class="event-info">
@@ -986,6 +1008,10 @@
         <div class="full-width">
           <label>Description</label>
           <textarea data-field="description" rows="2">{{ item.description }}</textarea>
+        </div>
+        <div class="full-width" style="display:flex;align-items:center;gap:.25rem;">
+          <input type="checkbox" data-field="waypoint" id="waypoint-{{ item.idx }}" {% if item.waypoint %}checked{% endif %}>
+          <label for="waypoint-{{ item.idx }}" style="margin:0;">Waypoint</label>
         </div>
       </div>
       <div class="form-actions">
@@ -1213,16 +1239,17 @@
     dashArray: '8,10',
   }).addTo(map);
 
-  // Event markers (gold dots with star)
+  // Event markers (gold dots with star, gray for waypoints)
   mappedEvents.forEach(evt => {
     const ll = [evt.lat, evt.lng];
     bounds.push(ll);
 
+    const color = evt.waypoint ? '#aaa' : '#c9a84c';
     const evtIcon = L.divIcon({
       className: '',
       html: `<div style="
         width:24px;height:24px;border-radius:50%;
-        background:#c9a84c;
+        background:${color};
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
         color:#fff;font-size:13px;line-height:1;
@@ -1544,7 +1571,7 @@ function saveEvent(idx) {
   const form = document.getElementById('event-edit-' + idx);
   const fields = {};
   form.querySelectorAll('[data-field]').forEach(el => {
-    fields[el.dataset.field] = el.value;
+    fields[el.dataset.field] = el.type === 'checkbox' ? el.checked : el.value;
   });
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, {
     method: 'PUT',
@@ -1573,6 +1600,19 @@ function addEvent() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({})
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+function addWaypoint() {
+  fetch(`/api/trips/${TRIP_ID}/events`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ waypoint: true, name: 'New Waypoint' })
   })
   .then(r => r.json())
   .then(data => {

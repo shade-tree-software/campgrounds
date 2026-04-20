@@ -217,7 +217,7 @@ Object.values(locMap).forEach(loc => {
 const eventLocMap = {};
 TRIPS.forEach(trip => {
   (trip.events || []).forEach(evt => {
-    if (!evt.lat || !evt.lng) return;
+    if (!evt.lat || !evt.lng || evt.waypoint) return;
     const key = evt.lat.toFixed(4) + ',' + evt.lng.toFixed(4);
     if (!eventLocMap[key]) {
       eventLocMap[key] = { lat: evt.lat, lng: evt.lng, events: [] };

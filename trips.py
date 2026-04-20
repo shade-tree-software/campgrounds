@@ -318,6 +318,7 @@ def add_event(trip_id, event_data):
                 "name": event_data.get("name", "New Event"),
                 "description": event_data.get("description", ""),
                 "location": event_data.get("location", ""),
+                "waypoint": bool(event_data.get("waypoint", False)),
             }
             events = t.get("events", [])
             events.append(event)
@@ -343,6 +344,8 @@ def update_event(trip_id, event_idx, fields):
             for key in ("date", "time", "end_time", "name", "description", "location"):
                 if key in fields:
                     event[key] = fields[key]
+            if "waypoint" in fields:
+                event["waypoint"] = bool(fields["waypoint"])
             # end_time requires time
             if event.get("end_time") and not event.get("time"):
                 event["end_time"] = ""
@@ -532,6 +535,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
             e["time"] = ""
         if "end_time" not in e:
             e["end_time"] = ""
+        if "waypoint" not in e:
+            e["waypoint"] = False
         timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
                              _order=0, _time=e.get("time") or "12:00"))
     timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_time"]))
