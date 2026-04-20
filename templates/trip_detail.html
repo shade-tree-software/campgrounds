@@ -743,12 +743,49 @@
     font-weight: 600;
     color: var(--navy);
     border-bottom: 1px solid var(--gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .btn-map-expand {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    padding: .25rem .6rem;
+    font-size: .8rem;
+    color: var(--navy);
+    cursor: pointer;
+    font-family: inherit;
+  }
+
+  .btn-map-expand:hover {
+    background: var(--gray-lightest, #f5f5f5);
   }
 
   #trip-map {
     height: 380px;
     width: 100%;
     z-index: 0;
+  }
+
+  .map-container.expanded {
+    position: fixed;
+    top: var(--site-top-height, 0px);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    border-radius: 0;
+    z-index: 600;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .map-container.expanded #trip-map {
+    flex: 1;
+    height: auto;
   }
 
   .event-edit-form .form-grid {
@@ -831,8 +868,11 @@
   {% set mapped_stays = trip.stays | selectattr('lat', 'defined') | selectattr('lat') | list %}
   {% set mapped_events = trip.events | selectattr('lat', 'defined') | selectattr('lat') | list %}
   {% if mapped_stays or mapped_events %}
-  <div class="map-container">
-    <h3>Trip Route</h3>
+  <div class="map-container" id="map-container">
+    <h3>
+      <span>Trip Route</span>
+      <button type="button" class="btn-map-expand" id="btn-map-expand" onclick="toggleMapExpand()">Expand</button>
+    </h3>
     <div id="trip-map"></div>
   </div>
   {% endif %}
@@ -1107,6 +1147,18 @@
 {% block scripts %}
 <script src="/static/map-picker.js"></script>
 <script>
+function toggleMapExpand() {
+  const container = document.getElementById('map-container');
+  const btn = document.getElementById('btn-map-expand');
+  if (!container) return;
+  const expanded = container.classList.toggle('expanded');
+  if (btn) btn.textContent = expanded ? 'Collapse' : 'Expand';
+  if (window.tripMap) {
+    setTimeout(() => window.tripMap.invalidateSize(), 50);
+  }
+}
+</script>
+<script>
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   const stays = {{ trip.stays | tojson }};
@@ -1116,6 +1168,7 @@
   if (mapped.length === 0 && mappedEvents.length === 0) return;
 
   const map = L.map('trip-map');
+  window.tripMap = map;
   const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors',
     maxZoom: 18,
