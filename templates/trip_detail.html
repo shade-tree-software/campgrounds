@@ -1299,6 +1299,7 @@ function toggleMapExpand() {
     const isWaypoint = !!evt.waypoint;
     const color = isWaypoint ? '#aaa' : '#c9a84c';
     const size = isWaypoint ? 18 : 24;
+    const fontSize = isWaypoint ? 10 : 13;
     const evtIcon = L.divIcon({
       className: '',
       html: `<div style="
@@ -1306,8 +1307,8 @@ function toggleMapExpand() {
         background:${color};
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-        color:#fff;font-size:13px;line-height:1;
-      ">${isWaypoint ? '' : '&#9733;'}</div>`,
+        color:#fff;font-size:${fontSize}px;line-height:1;
+      ">${isWaypoint ? '&#9670;' : '&#9733;'}</div>`,
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
     });
@@ -1318,7 +1319,7 @@ function toggleMapExpand() {
 
     let dateStr = evt.date;
     if (evt.time) dateStr += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
-    const labelPrefix = isWaypoint ? '' : '&#9733; ';
+    const labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
     marker.bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${dateStr}`);
   });
 
