@@ -222,7 +222,7 @@ TRIPS.forEach(trip => {
     if (!eventLocMap[key]) {
       eventLocMap[key] = { lat: evt.lat, lng: evt.lng, events: [] };
     }
-    eventLocMap[key].events.push({ name: evt.name, date: evt.date, end_date: evt.end_date, trip: trip });
+    eventLocMap[key].events.push({ name: evt.name, date: evt.date, time: evt.time, end_time: evt.end_time, trip: trip });
   });
 });
 
@@ -242,7 +242,7 @@ Object.values(eventLocMap).forEach(loc => {
   let popup = '';
   loc.events.forEach(e => {
     let dateStr = e.date;
-    if (e.end_date && e.end_date !== e.date) dateStr += ' to ' + e.end_date;
+    if (e.time) dateStr += ' ' + e.time + (e.end_time ? '\u2013' + e.end_time : '');
     popup += `<a href="/trips/${e.trip.id}" style="display:block;color:#002868;font-size:12px;">&#9733; ${e.name} (${dateStr})</a>`;
   });
 

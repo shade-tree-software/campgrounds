@@ -835,9 +835,9 @@
       <div class="stay-info">
         <h3>{{ item.place }}{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}</h3>
         <div class="stay-meta">
-          {{ item.locale }}, {{ item.state }}
+          {% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}
           &mdash; {{ item.nights }} night{{ 's' if item.nights > 1 else '' }}
-          ({{ item.start }}{% if item.start_time %} {{ item.start_time }}{% endif %} to {{ item.end }}{% if item.end_time %} {{ item.end_time }}{% endif %})
+          ({{ item.start }} to {{ item.end }})
         </div>
       </div>
     </div>
@@ -867,16 +867,8 @@
           <input type="date" data-field="start" value="{{ item.start }}">
         </div>
         <div>
-          <label>Start Time</label>
-          <input type="time" data-field="start_time" value="{{ item.start_time }}">
-        </div>
-        <div>
           <label>End Date</label>
           <input type="date" data-field="end" value="{{ item.end }}">
-        </div>
-        <div>
-          <label>End Time</label>
-          <input type="time" data-field="end_time" value="{{ item.end_time }}">
         </div>
         <div>
           <label>Nights</label>
@@ -963,7 +955,7 @@
       <div class="event-icon">&#9733;</div>
       <div class="event-info">
         <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
-        <div class="event-meta">{{ item.date }}{% if item.time %} {{ item.time }}{% endif %}{% if item.end_date and item.end_date != item.date %} to {{ item.end_date }}{% if item.end_time %} {{ item.end_time }}{% endif %}{% elif item.end_time %} to {{ item.end_time }}{% endif %}</div>
+        <div class="event-meta">{{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}</div>
       </div>
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
@@ -973,20 +965,16 @@
           <input type="text" data-field="name" value="{{ item.name }}">
         </div>
         <div>
-          <label>Start Date</label>
+          <label>Date</label>
           <input type="date" data-field="date" value="{{ item.date }}">
         </div>
         <div>
-          <label>Start Time</label>
-          <input type="time" data-field="time" value="{{ item.time }}">
-        </div>
-        <div>
-          <label>End Date</label>
-          <input type="date" data-field="end_date" value="{{ item.end_date }}">
-        </div>
-        <div>
-          <label>End Time</label>
-          <input type="time" data-field="end_time" value="{{ item.end_time }}">
+          <label>Time</label>
+          <div style="display:flex;gap:.5rem;align-items:center;">
+            <input type="time" data-field="time" value="{{ item.time }}">
+            <span>&ndash;</span>
+            <input type="time" data-field="end_time" value="{{ item.end_time }}">
+          </div>
         </div>
         <div class="full-width">
           <label>Location</label>
@@ -1197,7 +1185,7 @@
     const marker = L.marker(ll, { icon: evtIcon }).addTo(map);
 
     let dateStr = evt.date;
-    if (evt.end_date && evt.end_date !== evt.date) dateStr += ' to ' + evt.end_date;
+    if (evt.time) dateStr += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
     marker.bindPopup(`<strong>&#9733; ${evt.name}</strong><br>${dateStr}`);
   });
 
@@ -1231,38 +1219,27 @@
       return { pt: [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])], t };
     }
 
-    // Build a comparable datetime string from date + optional time
-    // Defaults: stay start=23:59, stay end=00:01, event=12:00
-    function stayStartDT(stay) { return stay.start + 'T' + (stay.start_time || '23:59'); }
-    function stayEndDT(stay) { return stay.end + 'T' + (stay.end_time || '00:01'); }
-    function eventDT(evt) { return evt.date + 'T' + (evt.time || '12:00'); }
-
-    // Check if an event's datetime falls within a stay's datetime range
+    // Check if an event's date falls within a stay's date range
     function eventDuringStay(evt, stay) {
-      const eDT = eventDT(evt);
-      return eDT >= stayStartDT(stay) && eDT <= stayEndDT(stay);
+      return evt.date >= stay.start && evt.date <= stay.end;
     }
 
     // Route segments: index 0 = HOME→stay[0], 1 = stay[0]→stay[1], ..., N = stay[N-1]→HOME
-    // For perpendicular eligibility, the event must be single-day and its datetime must
-    // fall within both endpoint stays' datetime ranges.
-    // Special rules for HOME segments:
+    // For perpendicular eligibility, the event date must fall within both endpoint
+    // stays' date ranges. Special rules for HOME segments:
     //   HOME→first stay: event date must equal the first stay's start date
     //   last stay→HOME: event date must equal the last stay's end date
     function perpEligible(evt, segIdx) {
-      if (evt.end_date && evt.end_date !== evt.date) return false; // multi-day event
       const d = evt.date;
       const isHomeLeft = segIdx === 0;
       const isHomeRight = segIdx === mapped.length;
       if (isHomeLeft) {
-        // HOME → first stay: event date must be first stay's start date
         return d === mapped[0].start;
       }
       if (isHomeRight) {
-        // last stay → HOME: event date must be last stay's end date
         return d === mapped[mapped.length - 1].end;
       }
-      // Stay-to-stay: event datetime must fall within both stays' datetime ranges
+      // Stay-to-stay: event date must fall within both stays' date ranges
       const leftStay = mapped[segIdx - 1];
       const rightStay = mapped[segIdx];
       return eventDuringStay(evt, leftStay) && eventDuringStay(evt, rightStay);

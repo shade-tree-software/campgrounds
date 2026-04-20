@@ -128,12 +128,16 @@ def add_stay(trip_id, stay_data):
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
-            default_date = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
+            default_start = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
+            default_end = (date.fromisoformat(default_start) + timedelta(days=1)).isoformat()
+            start = stay_data.get("start", default_start)
+            end = stay_data.get("end", default_end)
+            # Ensure start is always before end
+            if end <= start:
+                end = (date.fromisoformat(start) + timedelta(days=1)).isoformat()
             stay = {
-                "start": stay_data.get("start", default_date),
-                "end": stay_data.get("end", default_date),
-                "start_time": stay_data.get("start_time", ""),
-                "end_time": stay_data.get("end_time", ""),
+                "start": start,
+                "end": end,
                 "nights": int(stay_data.get("nights", 1)),
                 "place": stay_data.get("place", "New Campground"),
                 "locale": stay_data.get("locale", ""),
@@ -160,11 +164,14 @@ def update_stay(trip_id, stay_idx, fields):
             if stay_idx < 0 or stay_idx >= len(t["stays"]):
                 return None
             stay = t["stays"][stay_idx]
-            for key in ("start", "end", "start_time", "end_time", "place", "locale", "state", "site", "campers", "notes"):
+            for key in ("start", "end", "place", "locale", "state", "site", "campers", "notes"):
                 if key in fields:
                     stay[key] = fields[key]
             if "nights" in fields:
                 stay["nights"] = int(fields["nights"])
+            # Ensure start is always before end
+            if stay["end"] <= stay["start"]:
+                stay["end"] = (date.fromisoformat(stay["start"]) + timedelta(days=1)).isoformat()
             old_order = list(t["stays"])
             t["stays"].sort(key=lambda s: s["start"])
             _remap_indices_after_sort(trip_id, old_order, t["stays"], "stay")
@@ -299,11 +306,15 @@ def add_event(trip_id, event_data):
     for t in raw:
         if t["id"] == trip_id:
             default_date = t["stays"][0]["start"] if t["stays"] else date.today().isoformat()
+            time = event_data.get("time", "")
+            end_time = event_data.get("end_time", "")
+            # end_time requires time
+            if end_time and not time:
+                end_time = ""
             event = {
                 "date": event_data.get("date", default_date),
-                "end_date": event_data.get("end_date", ""),
-                "time": event_data.get("time", ""),
-                "end_time": event_data.get("end_time", ""),
+                "time": time,
+                "end_time": end_time,
                 "name": event_data.get("name", "New Event"),
                 "description": event_data.get("description", ""),
                 "location": event_data.get("location", ""),
@@ -311,7 +322,7 @@ def add_event(trip_id, event_data):
             events = t.get("events", [])
             events.append(event)
             old_order = list(events)
-            events.sort(key=lambda e: e["date"])
+            events.sort(key=lambda e: (e["date"], e.get("time") or "12:00"))
             _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
@@ -329,11 +340,14 @@ def update_event(trip_id, event_idx, fields):
             if event_idx < 0 or event_idx >= len(events):
                 return None
             event = events[event_idx]
-            for key in ("date", "end_date", "time", "end_time", "name", "description", "location"):
+            for key in ("date", "time", "end_time", "name", "description", "location"):
                 if key in fields:
                     event[key] = fields[key]
+            # end_time requires time
+            if event.get("end_time") and not event.get("time"):
+                event["end_time"] = ""
             old_order = list(events)
-            events.sort(key=lambda e: e["date"])
+            events.sort(key=lambda e: (e["date"], e.get("time") or "12:00"))
             _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
@@ -502,23 +516,16 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
     home_only = bool(stays) and all("basset" in s["place"].lower() for s in stays)
 
     # Build chronological timeline interleaving stays and events.
-    # Secondary key: events (0) sort before stays (1) on the same date,
-    # so an event on an arrival day appears before the campground card,
-    # and an event on a departure day appears after it (since the stay
-    # sorts by its earlier start date).
+    # Sorting rules:
+    #   - Event on same date as stay's start → event first (_order=0 vs 1)
+    #   - Event on same date as stay's end → stay already sorted earlier by start date
+    #   - Events on same date ordered by time (default noon)
     timeline = []
     for i, s in enumerate(stays):
-        # Add time defaults for older stays missing these fields
-        if "start_time" not in s:
-            s["start_time"] = ""
-        if "end_time" not in s:
-            s["end_time"] = ""
         timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
-                             _order=1))
+                             _order=1, _time="00:00"))
     for i, e in enumerate(events):
-        # Add end_date/location/time defaults for older events missing these fields
-        if "end_date" not in e:
-            e["end_date"] = ""
+        # Add location/time defaults for older events missing these fields
         if "location" not in e:
             e["location"] = ""
         if "time" not in e:
@@ -526,16 +533,15 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
         if "end_time" not in e:
             e["end_time"] = ""
         timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
-                             _order=0))
-    timeline.sort(key=lambda x: (x["sort_date"], x["_order"]))
+                             _order=0, _time=e.get("time") or "12:00"))
+    timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_time"]))
 
     if stays:
         start = stays[0]["start"]
         end = stays[-1]["end"]
     elif events:
         start = events[0]["date"]
-        # Use the latest end_date or date across all events
-        end = max(e.get("end_date") or e["date"] for e in events)
+        end = max(e["date"] for e in events)
     else:
         start = end = ""
 
