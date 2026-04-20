@@ -1239,29 +1239,35 @@
     dashArray: '8,10',
   }).addTo(map);
 
-  // Event markers (gold dots with star, gray for waypoints)
+  // Event markers (gold dots with star; smaller gray dots for waypoints)
   mappedEvents.forEach(evt => {
     const ll = [evt.lat, evt.lng];
     bounds.push(ll);
 
-    const color = evt.waypoint ? '#aaa' : '#c9a84c';
+    const isWaypoint = !!evt.waypoint;
+    const color = isWaypoint ? '#aaa' : '#c9a84c';
+    const size = isWaypoint ? 12 : 24;
     const evtIcon = L.divIcon({
       className: '',
       html: `<div style="
-        width:24px;height:24px;border-radius:50%;
+        width:${size}px;height:${size}px;border-radius:50%;
         background:${color};
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
         color:#fff;font-size:13px;line-height:1;
-      ">&#9733;</div>`,
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
+      ">${isWaypoint ? '' : '&#9733;'}</div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
     });
-    const marker = L.marker(ll, { icon: evtIcon }).addTo(map);
+    const marker = L.marker(ll, {
+      icon: evtIcon,
+      zIndexOffset: isWaypoint ? 100 : 700,
+    }).addTo(map);
 
     let dateStr = evt.date;
     if (evt.time) dateStr += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
-    marker.bindPopup(`<strong>&#9733; ${evt.name}</strong><br>${dateStr}`);
+    const labelPrefix = isWaypoint ? '' : '&#9733; ';
+    marker.bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${dateStr}`);
   });
 
   // Family location markers — only show if a stay or event is nearby
