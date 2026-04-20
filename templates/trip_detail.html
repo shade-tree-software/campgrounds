@@ -185,7 +185,6 @@
   }
 
   .event-card.waypoint {
-    margin-left: 2rem;
     font-size: .9em;
   }
   .event-card.waypoint .event-header {
@@ -1014,7 +1013,7 @@
   {% elif item.type == "event" %}
   <div class="event-card{% if item.waypoint %} waypoint{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
-      <div class="event-icon">&#9733;</div>
+      <div class="event-icon">{% if item.waypoint %}&#9670;{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
         <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
         <div class="event-meta">{{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}</div>
