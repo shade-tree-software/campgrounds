@@ -132,6 +132,8 @@ def add_stay(trip_id, stay_data):
             stay = {
                 "start": stay_data.get("start", default_date),
                 "end": stay_data.get("end", default_date),
+                "start_time": stay_data.get("start_time", ""),
+                "end_time": stay_data.get("end_time", ""),
                 "nights": int(stay_data.get("nights", 1)),
                 "place": stay_data.get("place", "New Campground"),
                 "locale": stay_data.get("locale", ""),
@@ -158,7 +160,7 @@ def update_stay(trip_id, stay_idx, fields):
             if stay_idx < 0 or stay_idx >= len(t["stays"]):
                 return None
             stay = t["stays"][stay_idx]
-            for key in ("start", "end", "place", "locale", "state", "site", "campers", "notes"):
+            for key in ("start", "end", "start_time", "end_time", "place", "locale", "state", "site", "campers", "notes"):
                 if key in fields:
                     stay[key] = fields[key]
             if "nights" in fields:
@@ -300,6 +302,8 @@ def add_event(trip_id, event_data):
             event = {
                 "date": event_data.get("date", default_date),
                 "end_date": event_data.get("end_date", ""),
+                "time": event_data.get("time", ""),
+                "end_time": event_data.get("end_time", ""),
                 "name": event_data.get("name", "New Event"),
                 "description": event_data.get("description", ""),
                 "location": event_data.get("location", ""),
@@ -325,7 +329,7 @@ def update_event(trip_id, event_idx, fields):
             if event_idx < 0 or event_idx >= len(events):
                 return None
             event = events[event_idx]
-            for key in ("date", "end_date", "name", "description", "location"):
+            for key in ("date", "end_date", "time", "end_time", "name", "description", "location"):
                 if key in fields:
                     event[key] = fields[key]
             old_order = list(events)
@@ -504,16 +508,25 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
     # sorts by its earlier start date).
     timeline = []
     for i, s in enumerate(stays):
+        # Add time defaults for older stays missing these fields
+        if "start_time" not in s:
+            s["start_time"] = ""
+        if "end_time" not in s:
+            s["end_time"] = ""
         timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
                              _order=1))
     for i, e in enumerate(events):
-        timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
-                             _order=0))
-        # Add end_date/location defaults for older events missing these fields
+        # Add end_date/location/time defaults for older events missing these fields
         if "end_date" not in e:
             e["end_date"] = ""
         if "location" not in e:
             e["location"] = ""
+        if "time" not in e:
+            e["time"] = ""
+        if "end_time" not in e:
+            e["end_time"] = ""
+        timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
+                             _order=0))
     timeline.sort(key=lambda x: (x["sort_date"], x["_order"]))
 
     if stays:
