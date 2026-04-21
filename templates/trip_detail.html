@@ -843,10 +843,13 @@
       <button class="btn-note-save" onclick="saveTripNote()">Save</button>
       <button class="btn-note-cancel" onclick="cancelTripNote()">Cancel</button>
     </div>
+    {% set real_events = trip.events | rejectattr('waypoint') | list %}
+    {% set waypoints = trip.events | selectattr('waypoint') | list %}
     <div class="meta">
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
-      {% if trip.events %}<div><span>{{ trip.events|length }}</span> event{{ '' if trip.events|length == 1 else 's' }}</div>{% endif %}
+      {% if real_events %}<div><span>{{ real_events|length }}</span> event{{ '' if real_events|length == 1 else 's' }}</div>{% endif %}
+      {% if waypoints %}<div><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
       {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
       {% if trip.campers %}
       <div>{{ trip.campers|join(', ') }}</div>
