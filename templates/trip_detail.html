@@ -1019,7 +1019,13 @@
       <div class="event-icon">{% if item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
         <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
-        <div class="event-meta">{{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}</div>
+        <div class="event-meta">
+          {% if item.locale or item.state %}
+            {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
+            &mdash;
+          {% endif %}
+          {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
+        </div>
       </div>
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
@@ -1039,6 +1045,14 @@
             <span>&ndash;</span>
             <input type="time" data-field="end_time" value="{{ item.end_time }}" autocomplete="off">
           </div>
+        </div>
+        <div>
+          <label>Locale</label>
+          <input type="text" data-field="locale" value="{{ item.locale }}" autocomplete="off">
+        </div>
+        <div>
+          <label>State</label>
+          <input type="text" data-field="state" value="{{ item.state }}" autocomplete="off">
         </div>
         <div class="full-width">
           <label>Location</label>
