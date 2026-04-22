@@ -49,6 +49,7 @@ Trips have two distinct identifiers:
 - Trips contain campspots (campground visits) and events. Campspots are sorted by start date, events by date. A timeline merges both chronologically.
 - When adding a new campspot or event, dates default to the trip's first campspot start date (not today's date).
 - Events have optional `end_date` (for multi-day events) and `location` (lat,lng string). Events with a location are plotted as gold star dots on the trip detail map and gold dots on the main trips map. The event location map picker (fixed floating panel, draggable, resizable) lets admins click to set coordinates — similar to the campground manage map picker but without elevation lookup.
+- **Family visits** are events with a non-empty `family_visit` field (set to the family location label). Location coordinates are auto-set from `family_locations.json` (using `driveway_lat/lng` when available). They appear as red house icons on the map (z-index 850, between stays and family markers) and have a salmon-toned card with a simplified edit form (family location dropdown, date, time). The proximity-based family marker is suppressed for locations that have a family visit on the trip.
 
 ### Admin Protection
 

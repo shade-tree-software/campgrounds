@@ -321,6 +321,7 @@ def add_event(trip_id, event_data):
                 "locale": event_data.get("locale", ""),
                 "state": event_data.get("state", ""),
                 "waypoint": bool(event_data.get("waypoint", False)),
+                "family_visit": event_data.get("family_visit", ""),
             }
             events = t.get("events", [])
             events.append(event)
@@ -343,7 +344,7 @@ def update_event(trip_id, event_idx, fields):
             if event_idx < 0 or event_idx >= len(events):
                 return None
             event = events[event_idx]
-            for key in ("date", "time", "end_time", "name", "description", "location", "locale", "state"):
+            for key in ("date", "time", "end_time", "name", "description", "location", "locale", "state", "family_visit"):
                 if key in fields:
                     event[key] = fields[key]
             if "waypoint" in fields:
@@ -539,6 +540,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
             e["end_time"] = ""
         if "waypoint" not in e:
             e["waypoint"] = False
+        if "family_visit" not in e:
+            e["family_visit"] = ""
         if "locale" not in e:
             e["locale"] = ""
         if "state" not in e:
