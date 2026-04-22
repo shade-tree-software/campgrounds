@@ -1205,7 +1205,6 @@ function toggleMapExpand() {
 
   const HOME = [38.929576, -77.366840];
   const bounds = [HOME];
-  const latlngs = [HOME];
 
   // Home marker
   const homeIcon = L.divIcon({
@@ -1225,7 +1224,6 @@ function toggleMapExpand() {
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
     bounds.push(ll);
-    latlngs.push(ll);
 
     const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}`;
 
@@ -1244,69 +1242,69 @@ function toggleMapExpand() {
     L.marker(ll, { icon, zIndexOffset: 800 }).addTo(map).bindPopup(label);
   });
 
-  // Close the route back to home
-  latlngs.push(HOME);
-
-  // Split events into timed (have time+location, become route waypoints) and
-  // untimed (have location but no time, connect via perpendicular/fallback)
-  const timedEvents = mappedEvents.filter(e => e.time);
-  const untimedEvents = mappedEvents.filter(e => !e.time);
-
-  // Determine which route segment a timed event belongs to based on date eligibility
-  function eventSegmentIdx(evt) {
-    const d = evt.date;
-    // HOME→first stay (seg 0): event date == first stay's start
-    if (d === mapped[0].start) return 0;
-    // last stay→HOME (seg N): event date == last stay's end
-    if (d === mapped[mapped.length - 1].end) return mapped.length;
-    // Stay-to-stay: find segment where event date falls within both stays
-    for (let i = 1; i < mapped.length; i++) {
-      if (d >= mapped[i - 1].start && d <= mapped[i - 1].end &&
-          d >= mapped[i].start && d <= mapped[i].end) {
-        return i;
-      }
+  // Build day-by-day chronological route
+  // Morning location: stay where start < date <= end (you slept there). Else HOME.
+  // Evening location: stay where start <= date < end (you sleep there tonight). Else HOME.
+  function morningLocation(dateStr) {
+    for (const s of mapped) {
+      if (s.start < dateStr && dateStr <= s.end) return [s.lat, s.lng];
     }
-    // Fall back: find a stay whose date range contains the event
-    for (let i = 0; i < mapped.length; i++) {
-      if (d >= mapped[i].start && d <= mapped[i].end) return i;
+    return HOME;
+  }
+  function eveningLocation(dateStr) {
+    for (const s of mapped) {
+      if (s.start <= dateStr && dateStr < s.end) return [s.lat, s.lng];
     }
-    return -1; // no eligible segment
+    return HOME;
   }
 
-  // Build enriched route: insert timed events as waypoints within their segments
-  // routeLatlngs[i] is the array of points for segment i (from latlngs[i] to latlngs[i+1])
-  const segmentWaypoints = [];
-  for (let i = 0; i < latlngs.length - 1; i++) {
-    segmentWaypoints.push([]);
-  }
-  timedEvents.forEach(evt => {
-    const seg = eventSegmentIdx(evt);
-    if (seg >= 0 && seg < segmentWaypoints.length) {
-      segmentWaypoints[seg].push(evt);
+  // Collect all dates in the trip (stay date ranges + event dates)
+  const allDates = new Set();
+  mapped.forEach(s => {
+    let d = new Date(s.start + 'T00:00:00');
+    const end = new Date(s.end + 'T00:00:00');
+    while (d <= end) {
+      allDates.add(d.toISOString().slice(0, 10));
+      d.setDate(d.getDate() + 1);
     }
   });
-  // Sort waypoints within each segment by time
-  segmentWaypoints.forEach(wps => wps.sort((a, b) => a.time.localeCompare(b.time)));
+  mappedEvents.forEach(e => allDates.add(e.date));
+  const sortedDates = [...allDates].sort();
 
-  // Build the full route path with timed events inserted
-  const routePath = [latlngs[0]];
-  for (let i = 0; i < latlngs.length - 1; i++) {
-    segmentWaypoints[i].forEach(evt => routePath.push([evt.lat, evt.lng]));
-    routePath.push(latlngs[i + 1]);
+  // For each day: morning location → events/waypoints sorted by time → evening location
+  const routePath = [];
+  function pushIfNew(pt) {
+    const last = routePath[routePath.length - 1];
+    if (!last || pt[0] !== last[0] || pt[1] !== last[1]) {
+      routePath.push(pt);
+    }
   }
+  sortedDates.forEach(dateStr => {
+    const morning = morningLocation(dateStr);
+    const evening = eveningLocation(dateStr);
+    const dayEvents = mappedEvents
+      .filter(e => e.date === dateStr)
+      .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'));
+
+    pushIfNew(morning);
+    dayEvents.forEach(evt => pushIfNew([evt.lat, evt.lng]));
+    pushIfNew(evening);
+  });
 
   // Draw route line (white outline + colored dash for visibility on satellite)
-  L.polyline(routePath, {
-    color: '#fff',
-    weight: 5,
-    opacity: 0.6,
-  }).addTo(map);
-  L.polyline(routePath, {
-    color: '#002868',
-    weight: 3,
-    opacity: 0.8,
-    dashArray: '8,10',
-  }).addTo(map);
+  if (routePath.length >= 2) {
+    L.polyline(routePath, {
+      color: '#fff',
+      weight: 5,
+      opacity: 0.6,
+    }).addTo(map);
+    L.polyline(routePath, {
+      color: '#002868',
+      weight: 3,
+      opacity: 0.8,
+      dashArray: '8,10',
+    }).addTo(map);
+  }
 
   // Event markers (gold dots with star; smaller gray dots for waypoints)
   mappedEvents.forEach(evt => {
@@ -1350,89 +1348,6 @@ function toggleMapExpand() {
     const dLng = (lng2 - lng1) * Math.PI / 180;
     const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
     return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  }
-
-  // Dashed connector lines for untimed events (location but no time)
-  if (mapped.length > 0 && untimedEvents.length > 0) {
-    // Find nearest point on segment AB to point P, using scaled coords for accuracy
-    function nearestOnSegment(p, a, b) {
-      const cosLat = Math.cos(p[0] * Math.PI / 180);
-      const px = p[1] * cosLat, py = p[0];
-      const ax = a[1] * cosLat, ay = a[0];
-      const bx = b[1] * cosLat, by = b[0];
-      const dx = bx - ax, dy = by - ay;
-      const lenSq = dx * dx + dy * dy;
-      if (lenSq === 0) return { pt: a, t: 0 };
-      const t = ((px - ax) * dx + (py - ay) * dy) / lenSq;
-      if (t <= 0) return { pt: a, t: 0 };
-      if (t >= 1) return { pt: b, t: 1 };
-      return { pt: [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])], t };
-    }
-
-    // Check if an event's date falls within a stay's date range
-    function eventDuringStay(evt, stay) {
-      return evt.date >= stay.start && evt.date <= stay.end;
-    }
-
-    // Perpendicular eligibility for route segments (using routePath)
-    // For segments involving HOME endpoints, use date-based rules
-    function perpEligible(evt, segIdx) {
-      const d = evt.date;
-      const isHomeLeft = segIdx === 0;
-      const isHomeRight = segIdx === mapped.length;
-      if (isHomeLeft) {
-        return d === mapped[0].start;
-      }
-      if (isHomeRight) {
-        return d === mapped[mapped.length - 1].end;
-      }
-      // Stay-to-stay: event date must fall within both stays' date ranges
-      const leftStay = mapped[segIdx - 1];
-      const rightStay = mapped[segIdx];
-      return eventDuringStay(evt, leftStay) && eventDuringStay(evt, rightStay);
-    }
-
-    // Collect all route points (stays + timed events) for fallback nearest-point check
-    const allRoutePoints = [...latlngs, ...timedEvents.map(e => [e.lat, e.lng])];
-
-    untimedEvents.forEach(evt => {
-      const ell = [evt.lat, evt.lng];
-      let bestPt = null, bestDist = Infinity;
-
-      // Check perpendicular drop to each segment of the full route path
-      for (let i = 0; i < routePath.length - 1; i++) {
-        // Determine which original segment this sub-segment belongs to
-        // by finding which latlngs segment index it falls within
-        let origSeg = 0, pointCount = 0;
-        for (let s = 0; s < latlngs.length - 1; s++) {
-          const segLen = 1 + segmentWaypoints[s].length; // waypoints + end node
-          if (i < pointCount + segLen) { origSeg = s; break; }
-          pointCount += segLen;
-        }
-        if (!perpEligible(evt, origSeg)) continue;
-        const res = nearestOnSegment(ell, routePath[i], routePath[i + 1]);
-        if (res.t <= 0 || res.t >= 1) continue;
-        const d = haversineKm(evt.lat, evt.lng, res.pt[0], res.pt[1]);
-        if (d < bestDist) { bestDist = d; bestPt = res.pt; }
-      }
-
-      // Fall back to nearest stay/home marker or timed event
-      if (!bestPt) {
-        allRoutePoints.forEach(ll => {
-          const d = haversineKm(evt.lat, evt.lng, ll[0], ll[1]);
-          if (d < bestDist) { bestDist = d; bestPt = ll; }
-        });
-      }
-
-      if (bestPt) {
-        L.polyline([ell, bestPt], {
-          color: '#002868',
-          weight: 2,
-          opacity: 0.7,
-          dashArray: '6,8',
-        }).addTo(map);
-      }
-    });
   }
 
   const NEARBY_KM = 80;

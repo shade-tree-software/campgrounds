@@ -81,7 +81,7 @@ Trips have two distinct identifiers:
 - **Event markers:** Gold (`#c9a84c`) on all maps. Star divIcons on trip detail maps, circleMarkers on main trips map.
 - **Home/family markers:** Red (`#bf0a30`) background with white house SVG icon on all maps (trip detail, trips map, campground maps).
 - **Family markers on trip detail:** Only shown when a stay or event from the trip is within 80km (haversine distance).
-- **Event connector lines on trip detail:** Navy dashed lines connect each event marker (with a location) to the trip route. If the event is single-day and its date is eligible for a route segment, the line drops perpendicularly onto that segment; otherwise it connects to the nearest stay/home marker. Perpendicular eligibility rules: for stay-to-stay segments, the event date must fall within both stays' date ranges; for HOME→first stay, the event date must equal the first stay's start date; for last stay→HOME, the event date must equal the last stay's end date. Uses longitude scaling by cos(latitude) for accurate projection math.
+- **Trip detail route:** Built day-by-day in chronological order. For each date in the trip: morning location (stay you woke at, or HOME) → events/waypoints sorted by time → evening location (stay you sleep at, or HOME). Events/waypoints without a time are assumed to be at noon. This creates loops on days spent at the same stay with excursions, and direct trails on travel days between stays.
 - **Z-index layering on trip detail:** Home (1000) > Family (900) > Stays (800) > Events (default).
 
 ### Map Picker Popup
