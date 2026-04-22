@@ -1792,7 +1792,10 @@ function openAddModal(kind) {
         <div><label>State</label><input type="text" data-field="state" autocomplete="off"></div>
         <div class="full-width">
           <label>Location</label>
-          <input type="text" data-field="location" placeholder="lat,lng" autocomplete="off">
+          <div class="event-location-field">
+            <input type="text" data-field="location" placeholder="lat,lng" autocomplete="off">
+            <button type="button" class="btn-pick-location" onclick="showAddModalLocationMap()">Pick on Map</button>
+          </div>
         </div>
         <div class="full-width"><label>Description</label><textarea data-field="description" rows="2" autocomplete="off"></textarea></div>
       </div>`;
@@ -1926,11 +1929,15 @@ if (IS_ADMIN) {
     searchId: 'event-geo-search-input',
     resultsId: 'event-geo-search-results',
     onPick: function(lat, lng) {
-      if (eventLocTargetIdx !== null) {
+      const value = lat.toFixed(6) + ',' + lng.toFixed(6);
+      let locInput = null;
+      if (eventLocTargetIdx === 'modal') {
+        locInput = document.querySelector('#add-modal-body [data-field="location"]');
+      } else if (eventLocTargetIdx !== null) {
         const form = document.getElementById('event-edit-' + eventLocTargetIdx);
-        const locInput = form.querySelector('[data-field="location"]');
-        if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+        locInput = form ? form.querySelector('[data-field="location"]') : null;
       }
+      if (locInput) locInput.value = value;
     }
   });
 }
@@ -1939,6 +1946,13 @@ function showEventLocationMap(eventIdx) {
   eventLocTargetIdx = eventIdx;
   const form = document.getElementById('event-edit-' + eventIdx);
   const locInput = form.querySelector('[data-field="location"]');
+  const loc = locInput ? locInput.value.trim() : '';
+  eventLocationPicker.show(loc);
+}
+
+function showAddModalLocationMap() {
+  eventLocTargetIdx = 'modal';
+  const locInput = document.querySelector('#add-modal-body [data-field="location"]');
   const loc = locInput ? locInput.value.trim() : '';
   eventLocationPicker.show(loc);
 }

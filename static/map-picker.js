@@ -20,6 +20,15 @@ function createMapPicker(opts) {
   const container = document.getElementById(opts.containerId);
   let map = null;
   let marker = null;
+  const allMarkers = [];
+
+  function clearAllMarkers() {
+    if (!map) return;
+    while (allMarkers.length) {
+      map.removeLayer(allMarkers.pop());
+    }
+    marker = null;
+  }
 
   // ── Map init ──────────────────────────────────────────────────────────
   function initMap() {
@@ -49,8 +58,9 @@ function createMapPicker(opts) {
   }
 
   function placeMarker(lat, lng) {
-    if (marker) map.removeLayer(marker);
+    clearAllMarkers();
     marker = L.marker([lat, lng]).addTo(map);
+    allMarkers.push(marker);
   }
 
   // ── Show / hide ──────��────────────────────────────────────────────────
@@ -59,7 +69,12 @@ function createMapPicker(opts) {
     initMap();
     setTimeout(() => map.invalidateSize(), 100);
 
-    if (marker) { map.removeLayer(marker); marker = null; }
+    // Reset: clear any markers left from a previous open and dismiss search results
+    clearAllMarkers();
+    const results = opts.resultsId ? document.getElementById(opts.resultsId) : null;
+    if (results) results.classList.remove('open');
+    const searchInput = opts.searchId ? document.getElementById(opts.searchId) : null;
+    if (searchInput) searchInput.value = '';
 
     if (location) {
       const parts = location.split(',');
@@ -202,7 +217,10 @@ function createMapPicker(opts) {
       const lng = parseFloat(opt.dataset.lng);
       results.classList.remove('open');
       input.value = '';
-      if (map) map.setView([lat, lng], 14);
+      if (map) {
+        map.setView([lat, lng], 14);
+        placeMarker(lat, lng);
+      }
     });
 
     input.addEventListener('keydown', function(e) {
