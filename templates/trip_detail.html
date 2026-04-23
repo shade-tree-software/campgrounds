@@ -1112,8 +1112,11 @@
             <option value="{{ fam.id }}" {% if item.family_id == fam.id %}selected{% endif %}>{{ fam.label }}</option>
             {% endfor %}
           </select>
-          <input type="hidden" data-field="name" value="{{ item.name }}">
           <input type="hidden" data-field="location" value="{{ item.location }}">
+        </div>
+        <div class="full-width">
+          <label>Event Name <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank to use family location name)</span></label>
+          <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off">
         </div>
         <div>
           <label>Date</label>
@@ -1738,6 +1741,12 @@ function saveEvent(idx) {
   });
   if ('family_id' in fields) {
     fields.family_id = fields.family_id ? parseInt(fields.family_id, 10) : null;
+    // A family-visit event saved with a blank name falls back to the family label
+    // so the event card always has a title to display.
+    if (fields.family_id != null && !(fields.name || '').trim()) {
+      const fam = FAMILY_LOCATIONS.find(f => f.id === fields.family_id);
+      if (fam) fields.name = fam.label;
+    }
   }
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, {
     method: 'PUT',
@@ -1864,6 +1873,10 @@ function openAddModal(kind) {
           <label>Family Location</label>
           <select data-field="family_id">${opts}</select>
         </div>
+        <div class="full-width">
+          <label>Event Name <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank to use family location name)</span></label>
+          <input type="text" data-field="name" autocomplete="off">
+        </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
           <label>Time</label>
@@ -1931,9 +1944,10 @@ function submitAddModal() {
     url = `/api/trips/${TRIP_ID}/events`;
     const fid = fields.family_id ? parseInt(fields.family_id, 10) : null;
     const fam = FAMILY_LOCATIONS.find(f => f.id === fid);
+    const typedName = (fields.name || '').trim();
     payload = {
       family_id: fid,
-      name: fam ? fam.label : '',
+      name: typedName || (fam ? fam.label : ''),
       location: fam ? familyVisitCoordsById(fid) : '',
       date: fields.date,
       time: fields.time,
@@ -1966,7 +1980,14 @@ function onFamilyVisitChange(select, idx) {
   const fid = parseInt(select.value, 10);
   const fam = FAMILY_LOCATIONS.find(f => f.id === fid);
   if (locInput) locInput.value = familyVisitCoordsById(fid);
-  if (nameInput && fam) nameInput.value = fam.label;
+  // Only overwrite name if it looks auto-filled — i.e. it's blank or matches
+  // any family label (including the previously selected one). A custom name
+  // the user has typed is left alone.
+  if (nameInput && fam) {
+    const current = (nameInput.value || '').trim();
+    const isAutoFilled = !current || FAMILY_LOCATIONS.some(f => f.label === current);
+    if (isAutoFilled) nameInput.value = fam.label;
+  }
 }
 
 // ── Event location map picker ────────────────────────────────────────────
