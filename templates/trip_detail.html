@@ -669,6 +669,26 @@
 
   .lightbox.visible { display: flex; }
 
+  /* ── Map popup admin actions ─────────────────────── */
+  .popup-admin-actions {
+    margin-top: .4rem;
+    display: flex;
+    gap: .35rem;
+    flex-wrap: wrap;
+  }
+  .popup-admin-actions button {
+    font-size: .75rem;
+    padding: .2rem .5rem;
+    border: 1px solid #bbb;
+    background: #f6f6f6;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .popup-admin-actions button:hover { background: #eaeaea; }
+  .popup-visit-row { margin-top: .25rem; }
+  .popup-visit-row:first-child { margin-top: .15rem; }
+
   /* ── Add modal ───────────────────────────────────── */
   .add-modal {
     display: none;
@@ -966,6 +986,7 @@
 
   {% if item.type == "stay" %}
   {% set stay_num.val = stay_num.val + 1 %}
+  {% if stay_photos[item.idx] %}
   <div class="stay-card" id="stay-{{ item.idx }}">
     <div class="stay-header">
       <div class="stay-number">{{ stay_num.val }}</div>
@@ -1086,9 +1107,10 @@
       {% endif %}
     </div>
   </div>
+  {% endif %}
 
   {% elif item.type == "event" %}
-  {% if not item.waypoint or event_photos[item.idx] %}
+  {% if event_photos[item.idx] %}
   <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
@@ -1265,8 +1287,9 @@
     </div>
     <div class="add-modal-body" id="add-modal-body"></div>
     <div class="add-modal-actions">
+      <button type="button" class="btn-danger" id="modal-delete-btn" onclick="deleteFromModal()" style="display:none; margin-right:auto;">Delete</button>
       <button type="button" class="btn-cancel" onclick="closeAddModal()">Cancel</button>
-      <button type="button" class="btn-save" onclick="submitAddModal()">Add</button>
+      <button type="button" class="btn-save" id="modal-submit-btn" onclick="submitAddModal()">Add</button>
     </div>
   </div>
 </div>
@@ -1298,10 +1321,20 @@ function toggleMapExpand() {
 }
 </script>
 <script>
+// Globals used by both the map IIFE (popups) and the editing UI below.
+const TRIP_ID = {{ trip.id }};
+const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
+const FIRST_STAY_DATE = {{ (trip.stays[0].start if trip.stays else '') | tojson }};
+const STAYS_ALL = {{ trip.stays | tojson }};
+const EVENTS_ALL = {{ trip.events | tojson }};
+const FAMILY_LOCATIONS = {{ family_locations | tojson }};
+
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
-  const stays = {{ trip.stays | tojson }};
-  const events = {{ trip.events | tojson }};
+  // Attach the original array index so popup actions can address each item
+  // (filtering by lat/lng would otherwise lose the position).
+  const stays = {{ trip.stays | tojson }}.map((s, i) => Object.assign({}, s, { idx: i }));
+  const events = {{ trip.events | tojson }}.map((e, i) => Object.assign({}, e, { idx: i }));
   const mapped = stays.filter(s => s.lat && s.lng);
   const mappedEvents = events.filter(e => e.lat && e.lng);
   if (mapped.length === 0 && mappedEvents.length === 0) return;
@@ -1344,11 +1377,23 @@ function toggleMapExpand() {
   L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
     .bindPopup('<strong>Home</strong><br>Reston, VA');
 
+  // Admin-only Edit + Upload Photos buttons inside a map popup.
+  // `editKind` drives the modal (stay / event / waypoint / family_visit);
+  // `uploadKind` is the upload-endpoint family ('stay' | 'event').
+  function popupAdminActions(editKind, idx, uploadKind) {
+    if (!IS_ADMIN) return '';
+    return `<div class="popup-admin-actions">`
+      + `<button type="button" onclick="openEditModal('${editKind}', ${idx})">Edit</button>`
+      + `<button type="button" onclick="uploadFromPopup('${uploadKind}', ${idx})">Upload Photos</button>`
+      + `</div>`;
+  }
+
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
     bounds.push(ll);
 
-    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}`;
+    const stayActions = popupAdminActions('stay', stay.idx, 'stay');
+    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}${stayActions}`;
 
     const icon = L.divIcon({
       className: '',
@@ -1471,9 +1516,11 @@ function toggleMapExpand() {
 
     const place = [evt.locale, evt.state].filter(Boolean).join(', ');
     const placeLine = place ? `${place}<br>` : '';
+    const evtKind = evt.waypoint ? 'waypoint' : 'event';
+    const evtActions = popupAdminActions(evtKind, evt.idx, 'event');
     L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
       .addTo(map)
-      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}`);
+      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}${evtActions}`);
   });
 
   familyVisitGroups.forEach(group => {
@@ -1498,7 +1545,8 @@ function toggleMapExpand() {
     const header = `<strong>&#8962; ${sorted[0].family_visit}</strong>`;
     const items = sorted.map(e => {
       const showName = e.name && e.name !== e.family_visit;
-      return `<div>${eventDateLabel(e)}${showName ? ' &mdash; ' + e.name : ''}</div>`;
+      const actions = popupAdminActions('family_visit', e.idx, 'event');
+      return `<div class="popup-visit-row">${eventDateLabel(e)}${showName ? ' &mdash; ' + e.name : ''}${actions}</div>`;
     }).join('');
     L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
       .addTo(map)
@@ -1544,9 +1592,6 @@ function toggleMapExpand() {
 })();
 
 // ── Trip editing ──────────────────────────────────────────────────────────
-const TRIP_ID = {{ trip.id }};
-const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
-const FIRST_STAY_DATE = {{ (trip.stays[0].start if trip.stays else '') | tojson }};
 
 // ── Campground autocomplete ──────────────────────────────────────────────
 let CG_LIST = [];  // [{id, name, state, kind}]
@@ -1798,8 +1843,6 @@ function deleteEvent(idx) {
 function addEvent() { openAddModal('event'); }
 function addWaypoint() { openAddModal('waypoint'); }
 
-const FAMILY_LOCATIONS = {{ family_locations | tojson }};
-
 function familyVisitCoordsById(id) {
   const fam = FAMILY_LOCATIONS.find(f => f.id === id);
   if (!fam) return '';
@@ -1810,8 +1853,10 @@ function familyVisitCoordsById(id) {
 
 function addFamilyVisit() { openAddModal('family_visit'); }
 
-// ── Add modal ─────────────────────────────────────────────────────────────
+// ── Add/Edit modal ────────────────────────────────────────────────────────
 let addModalKind = null;
+let addModalMode = 'add';        // 'add' | 'edit'
+let addModalEditIdx = null;
 
 function defaultAddDate() {
   return FIRST_STAY_DATE || new Date().toISOString().slice(0, 10);
@@ -1823,76 +1868,76 @@ function addDays(isoDate, days) {
   return d.toISOString().slice(0, 10);
 }
 
-function openAddModal(kind) {
-  const modal = document.getElementById('add-modal');
-  if (!modal) return;
-  addModalKind = kind;
-  const body = document.getElementById('add-modal-body');
-  const title = document.getElementById('add-modal-title');
-  const date = defaultAddDate();
-
+// Build the form HTML for a given kind, pre-filling values from `v` (or empty)
+function _modalFormHtml(kind, v) {
+  v = v || {};
   if (kind === 'stay') {
-    title.textContent = 'Add Campspot';
-    const end = addDays(date, 1);
-    body.innerHTML = `
+    const start = v.start || defaultAddDate();
+    const end = v.end || addDays(start, 1);
+    const cgId = v.campground_id != null ? v.campground_id : '';
+    return `
       <div class="form-grid">
         <div class="full-width">
           <label>Place</label>
           <div class="cg-autocomplete">
-            <input type="text" data-field="place" autocomplete="off" oninput="cgFilter(this); cgClearId(this)" onfocus="cgFilter(this)">
-            <input type="hidden" data-field="campground_id" value="">
+            <input type="text" data-field="place" value="${escapeHtml(v.place || '')}" autocomplete="off" oninput="cgFilter(this); cgClearId(this)" onfocus="cgFilter(this)">
+            <input type="hidden" data-field="campground_id" value="${cgId}">
             <div class="cg-dropdown"></div>
           </div>
         </div>
-        <div><label>Locale</label><input type="text" data-field="locale" autocomplete="off"></div>
-        <div><label>State</label><input type="text" data-field="state" autocomplete="off"></div>
-        <div><label>Campsite</label><input type="text" data-field="site" autocomplete="off"></div>
-        <div><label>Campers</label><input type="text" data-field="campers" autocomplete="off"></div>
-        <div><label>Start Date</label><input type="date" data-field="start" value="${date}" autocomplete="off" onchange="syncStayNights(this)"></div>
+        <div><label>Locale</label><input type="text" data-field="locale" value="${escapeHtml(v.locale || '')}" autocomplete="off"></div>
+        <div><label>State</label><input type="text" data-field="state" value="${escapeHtml(v.state || '')}" autocomplete="off"></div>
+        <div><label>Campsite</label><input type="text" data-field="site" value="${escapeHtml(v.site || '')}" autocomplete="off"></div>
+        <div><label>Campers</label><input type="text" data-field="campers" value="${escapeHtml(v.campers || '')}" autocomplete="off"></div>
+        <div><label>Start Date</label><input type="date" data-field="start" value="${start}" autocomplete="off" onchange="syncStayNights(this)"></div>
         <div><label>End Date</label><input type="date" data-field="end" value="${end}" autocomplete="off" onchange="syncStayNights(this)"></div>
-        <div><label>Nights</label><input type="number" data-field="nights" value="1" min="1" autocomplete="off"></div>
-        <div class="full-width"><label>Notes</label><textarea data-field="notes" rows="2" autocomplete="off"></textarea></div>
+        <div><label>Nights</label><input type="number" data-field="nights" value="${v.nights || 1}" min="1" autocomplete="off"></div>
+        <div class="full-width"><label>Notes</label><textarea data-field="notes" rows="2" autocomplete="off">${escapeHtml(v.notes || '')}</textarea></div>
       </div>`;
   } else if (kind === 'event' || kind === 'waypoint') {
-    title.textContent = kind === 'waypoint' ? 'Add Waypoint' : 'Add Event';
-    const defaultName = kind === 'waypoint' ? 'New Waypoint' : '';
-    body.innerHTML = `
+    const date = v.date || defaultAddDate();
+    const nameVal = v.name != null ? v.name : (kind === 'waypoint' ? 'New Waypoint' : '');
+    const isWp = v.waypoint != null ? !!v.waypoint : (kind === 'waypoint');
+    return `
       <div class="form-grid">
         <div class="full-width">
           <label>Name</label>
-          <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(defaultName)}">
+          <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}">
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
           <label>Time</label>
           <div style="display:flex;gap:.5rem;align-items:center;">
-            <input type="time" data-field="time" autocomplete="off">
+            <input type="time" data-field="time" value="${escapeHtml(v.time || '')}" autocomplete="off">
             <span>&ndash;</span>
-            <input type="time" data-field="end_time" autocomplete="off">
+            <input type="time" data-field="end_time" value="${escapeHtml(v.end_time || '')}" autocomplete="off">
           </div>
         </div>
-        <div><label>Locale</label><input type="text" data-field="locale" autocomplete="off"></div>
-        <div><label>State</label><input type="text" data-field="state" autocomplete="off"></div>
+        <div><label>Locale</label><input type="text" data-field="locale" value="${escapeHtml(v.locale || '')}" autocomplete="off"></div>
+        <div><label>State</label><input type="text" data-field="state" value="${escapeHtml(v.state || '')}" autocomplete="off"></div>
         <div class="full-width">
           <label>Location</label>
           <div class="event-location-field">
-            <input type="text" data-field="location" placeholder="lat,lng" autocomplete="off">
+            <input type="text" data-field="location" value="${escapeHtml(v.location || '')}" placeholder="lat,lng" autocomplete="off">
             <button type="button" class="btn-pick-location" onclick="showAddModalLocationMap()">Pick on Map</button>
           </div>
         </div>
-        <div class="full-width"><label>Description</label><textarea data-field="description" rows="2" autocomplete="off"></textarea></div>
+        <div class="full-width"><label>Description</label><textarea data-field="description" rows="2" autocomplete="off">${escapeHtml(v.description || '')}</textarea></div>
+        <div class="full-width" style="display:flex;align-items:center;gap:.25rem;">
+          <input type="checkbox" data-field="waypoint" id="modal-waypoint-cb"${isWp ? ' checked' : ''}>
+          <label for="modal-waypoint-cb" style="margin:0;">Waypoint</label>
+        </div>
       </div>`;
   } else if (kind === 'family_visit') {
-    if (FAMILY_LOCATIONS.length === 0) {
-      alert('No family locations configured.');
-      addModalKind = null;
-      return;
-    }
-    title.textContent = 'Add Family Visit';
+    const date = v.date || defaultAddDate();
     const opts = FAMILY_LOCATIONS.map(f =>
-      `<option value="${f.id}">${escapeHtml(f.label)}</option>`
+      `<option value="${f.id}"${f.id === v.family_id ? ' selected' : ''}>${escapeHtml(f.label)}</option>`
     ).join('');
-    body.innerHTML = `
+    // For an existing family visit, the auto-filled name equals the family label.
+    // Show it as blank in that case so the placeholder hint reads naturally.
+    const fam = v.family_id != null ? FAMILY_LOCATIONS.find(f => f.id === v.family_id) : null;
+    const nameVal = (v.name && fam && v.name === fam.label) ? '' : (v.name || '');
+    return `
       <div class="form-grid">
         <div class="full-width">
           <label>Family Location</label>
@@ -1900,27 +1945,62 @@ function openAddModal(kind) {
         </div>
         <div class="full-width">
           <label>Event Name <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank to use family location name)</span></label>
-          <input type="text" data-field="name" autocomplete="off">
+          <input type="text" data-field="name" value="${escapeHtml(nameVal)}" autocomplete="off">
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
           <label>Time</label>
           <div style="display:flex;gap:.5rem;align-items:center;">
-            <input type="time" data-field="time" autocomplete="off">
+            <input type="time" data-field="time" value="${escapeHtml(v.time || '')}" autocomplete="off">
             <span>&ndash;</span>
-            <input type="time" data-field="end_time" autocomplete="off">
+            <input type="time" data-field="end_time" value="${escapeHtml(v.end_time || '')}" autocomplete="off">
           </div>
         </div>
       </div>`;
-  } else {
+  }
+  return '';
+}
+
+const MODAL_TITLES = {
+  stay:         { add: 'Add Campspot',     edit: 'Edit Campspot' },
+  event:        { add: 'Add Event',        edit: 'Edit Event' },
+  waypoint:     { add: 'Add Waypoint',     edit: 'Edit Waypoint' },
+  family_visit: { add: 'Add Family Visit', edit: 'Edit Family Visit' },
+};
+
+function _openModal(kind, mode, idx) {
+  const modal = document.getElementById('add-modal');
+  if (!modal) return;
+  if (kind === 'family_visit' && FAMILY_LOCATIONS.length === 0) {
+    alert('No family locations configured.');
     return;
   }
 
+  let values = {};
+  if (mode === 'edit') {
+    values = (kind === 'stay' ? STAYS_ALL[idx] : EVENTS_ALL[idx]) || {};
+  }
+
+  addModalKind = kind;
+  addModalMode = mode;
+  addModalEditIdx = idx;
+
+  document.getElementById('add-modal-title').textContent = MODAL_TITLES[kind][mode];
+  document.getElementById('add-modal-body').innerHTML = _modalFormHtml(kind, values);
+  document.getElementById('modal-submit-btn').textContent = mode === 'edit' ? 'Save' : 'Add';
+  document.getElementById('modal-delete-btn').style.display = mode === 'edit' ? '' : 'none';
+
   modal.classList.add('visible');
   setTimeout(() => {
-    const first = body.querySelector('input, select, textarea');
+    const first = document.querySelector('#add-modal-body input, #add-modal-body select, #add-modal-body textarea');
     if (first) first.focus();
   }, 50);
+}
+
+function openAddModal(kind) { _openModal(kind, 'add', null); }
+function openEditModal(kind, idx) {
+  if (!IS_ADMIN) return;
+  _openModal(kind, 'edit', idx);
 }
 
 function syncStayNights(dateInput) {
@@ -1941,6 +2021,8 @@ function closeAddModal() {
   modal.classList.remove('visible');
   document.getElementById('add-modal-body').innerHTML = '';
   addModalKind = null;
+  addModalMode = 'add';
+  addModalEditIdx = null;
 }
 
 function closeAddModalBackdrop(e) {
@@ -1954,19 +2036,18 @@ function submitAddModal() {
     fields[el.dataset.field] = el.type === 'checkbox' ? el.checked : el.value;
   });
 
+  const isEdit = addModalMode === 'edit';
+  const idx = addModalEditIdx;
   let url, payload;
   if (addModalKind === 'stay') {
-    url = `/api/trips/${TRIP_ID}/stays`;
+    url = isEdit ? `/api/trips/${TRIP_ID}/stays/${idx}` : `/api/trips/${TRIP_ID}/stays`;
     payload = stayFieldsToPayload(fields);
-  } else if (addModalKind === 'event') {
-    url = `/api/trips/${TRIP_ID}/events`;
+  } else if (addModalKind === 'event' || addModalKind === 'waypoint') {
+    url = isEdit ? `/api/trips/${TRIP_ID}/events/${idx}` : `/api/trips/${TRIP_ID}/events`;
     payload = fields;
-  } else if (addModalKind === 'waypoint') {
-    url = `/api/trips/${TRIP_ID}/events`;
-    payload = Object.assign({}, fields, { waypoint: true });
-    if (!payload.name) payload.name = 'New Waypoint';
+    if (payload.waypoint && !(payload.name || '').trim()) payload.name = 'New Waypoint';
   } else if (addModalKind === 'family_visit') {
-    url = `/api/trips/${TRIP_ID}/events`;
+    url = isEdit ? `/api/trips/${TRIP_ID}/events/${idx}` : `/api/trips/${TRIP_ID}/events`;
     const fid = fields.family_id ? parseInt(fields.family_id, 10) : null;
     const fam = FAMILY_LOCATIONS.find(f => f.id === fid);
     const typedName = (fields.name || '').trim();
@@ -1983,7 +2064,7 @@ function submitAddModal() {
   }
 
   fetch(url, {
-    method: 'POST',
+    method: isEdit ? 'PUT' : 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
@@ -1992,6 +2073,12 @@ function submitAddModal() {
       if (data.error) { alert(data.error); return; }
       location.reload();
     });
+}
+
+function deleteFromModal() {
+  if (addModalMode !== 'edit') return;
+  if (addModalKind === 'stay') deleteStay(addModalEditIdx);
+  else deleteEvent(addModalEditIdx);
 }
 
 document.addEventListener('keydown', e => {
@@ -2204,6 +2291,49 @@ function _addPhotoToGrid(grid, tripId, idx, filename, url, type) {
 function uploadPhotos(tripId, stayIdx, files) {
   const grid = document.getElementById('photos-' + stayIdx);
   _uploadWithProgress(`/trips/${tripId}/stays/${stayIdx}/upload`, files, grid, tripId, stayIdx, 'stay');
+}
+
+// Upload from a map popup — works for items with no card on the page.
+// Triggers a hidden file input, uploads each file, then reloads on completion.
+function uploadFromPopup(kind, idx) {
+  if (!IS_ADMIN) return;
+  const url = kind === 'stay'
+    ? `/trips/${TRIP_ID}/stays/${idx}/upload`
+    : `/trips/${TRIP_ID}/events/${idx}/upload`;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.multiple = true;
+  input.accept = 'image/*,.zip,application/zip';
+  input.style.display = 'none';
+  document.body.appendChild(input);
+  input.onchange = () => {
+    if (!input.files || !input.files.length) {
+      input.remove();
+      return;
+    }
+    const total = input.files.length;
+    let done = 0;
+    const errors = [];
+    Array.from(input.files).forEach(file => {
+      const form = new FormData();
+      form.append('photo', file);
+      fetch(url, { method: 'POST', body: form })
+        .then(r => r.json())
+        .then(data => {
+          if (data.error) errors.push(file.name + ': ' + data.error);
+        })
+        .catch(() => errors.push(file.name + ': upload failed'))
+        .finally(() => {
+          done++;
+          if (done === total) {
+            input.remove();
+            if (errors.length) alert('Upload errors:\n' + errors.join('\n'));
+            location.reload();
+          }
+        });
+    });
+  };
+  input.click();
 }
 
 function saveCaption(tripId, stayIdx, filename, caption) {
