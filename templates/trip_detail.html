@@ -1088,6 +1088,7 @@
   </div>
 
   {% elif item.type == "event" %}
+  {% if not item.waypoint or event_photos[item.idx] %}
   <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
@@ -1226,6 +1227,7 @@
     </div>
     {% endif %}
   </div>
+  {% endif %}
   {% endif %}
 
   {% endfor %}
@@ -1428,56 +1430,79 @@ function toggleMapExpand() {
   }
 
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
+  function eventDateLabel(evt) {
+    let s = evt.date;
+    if (evt.time) s += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
+    return s;
+  }
+
+  // Group family-visit events by location so a shared marker can list them all
+  const familyVisitGroups = new Map();
   mappedEvents.forEach(evt => {
+    if (!evt.family_visit) return;
+    const key = evt.lat + ',' + evt.lng;
+    if (!familyVisitGroups.has(key)) familyVisitGroups.set(key, []);
+    familyVisitGroups.get(key).push(evt);
+  });
+
+  mappedEvents.forEach(evt => {
+    if (evt.family_visit) return;
     const ll = [evt.lat, evt.lng];
     bounds.push(ll);
 
-    const isFamilyVisit = !!evt.family_visit;
     const isWaypoint = !!evt.waypoint;
-    let evtIcon, zOffset, labelPrefix;
+    const color = isWaypoint ? '#aaa' : '#c9a84c';
+    const size = isWaypoint ? 18 : 24;
+    const fontSize = isWaypoint ? 10 : 13;
+    const evtIcon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:${size}px;height:${size}px;border-radius:50%;
+        background:${color};
+        display:flex;align-items:center;justify-content:center;
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        color:#fff;font-size:${fontSize}px;line-height:1;
+      ">${isWaypoint ? '<span style="display:block;transform:translateY(-1.5px);">&#9670;</span>' : '&#9733;'}</div>`,
+      iconSize: [size, size],
+      iconAnchor: [size / 2, size / 2],
+    });
+    const zOffset = isWaypoint ? 100 : 700;
+    const labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
 
-    if (isFamilyVisit) {
-      evtIcon = L.divIcon({
-        className: '',
-        html: `<div style="
-          width:24px;height:24px;border-radius:50%;
-          background:#bf0a30;
-          display:flex;align-items:center;justify-content:center;
-          border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-        "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12],
-      });
-      zOffset = 850;
-      labelPrefix = '&#8962; ';
-    } else {
-      const color = isWaypoint ? '#aaa' : '#c9a84c';
-      const size = isWaypoint ? 18 : 24;
-      const fontSize = isWaypoint ? 10 : 13;
-      evtIcon = L.divIcon({
-        className: '',
-        html: `<div style="
-          width:${size}px;height:${size}px;border-radius:50%;
-          background:${color};
-          display:flex;align-items:center;justify-content:center;
-          border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-          color:#fff;font-size:${fontSize}px;line-height:1;
-        ">${isWaypoint ? '<span style="display:block;transform:translateY(-1.5px);">&#9670;</span>' : '&#9733;'}</div>`,
-        iconSize: [size, size],
-        iconAnchor: [size / 2, size / 2],
-      });
-      zOffset = isWaypoint ? 100 : 700;
-      labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
-    }
+    const place = [evt.locale, evt.state].filter(Boolean).join(', ');
+    const placeLine = place ? `${place}<br>` : '';
+    L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
+      .addTo(map)
+      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}`);
+  });
 
-    const marker = L.marker(ll, {
-      icon: evtIcon,
-      zIndexOffset: zOffset,
-    }).addTo(map);
+  familyVisitGroups.forEach(group => {
+    const ll = [group[0].lat, group[0].lng];
+    bounds.push(ll);
 
-    let dateStr = evt.date;
-    if (evt.time) dateStr += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
-    marker.bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${dateStr}`);
+    const famIcon = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:24px;height:24px;border-radius:50%;
+        background:#bf0a30;
+        display:flex;align-items:center;justify-content:center;
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+      "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+    });
+
+    const sorted = [...group].sort((a, b) =>
+      (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''))
+    );
+    const header = `<strong>&#8962; ${sorted[0].family_visit}</strong>`;
+    const items = sorted.map(e => {
+      const showName = e.name && e.name !== e.family_visit;
+      return `<div>${eventDateLabel(e)}${showName ? ' &mdash; ' + e.name : ''}</div>`;
+    }).join('');
+    L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
+      .addTo(map)
+      .bindPopup(header + items);
   });
 
   // Family location markers — only show if a stay or event is nearby
