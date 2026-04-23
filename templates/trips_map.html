@@ -249,6 +249,16 @@ Object.values(eventLocMap).forEach(loc => {
   marker.bindPopup(popup, { maxWidth: 280 });
 });
 
+// Build a map of family_id → trips that contain a family-visit event for it.
+const familyVisitTripMap = {};
+TRIPS.forEach(trip => {
+  (trip.events || []).forEach(evt => {
+    if (evt.family_id == null) return;
+    const list = familyVisitTripMap[evt.family_id] || (familyVisitTripMap[evt.family_id] = []);
+    if (!list.some(t => t.id === trip.id)) list.push(trip);
+  });
+});
+
 // Family location markers
 FAMILY.forEach(fam => {
   const ll = [fam.lat, fam.lng];
@@ -263,18 +273,26 @@ FAMILY.forEach(fam => {
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  // Check if any stays match this family location (or its driveway)
+  // Combine trips that stayed here (matched by coords) with trips whose
+  // family-visit events reference this family entry by id. Dedupe by trip id.
   const famKey = fam.lat.toFixed(4) + ',' + fam.lng.toFixed(4);
   const drivewayKey = fam.driveway_lat != null
     ? fam.driveway_lat.toFixed(4) + ',' + fam.driveway_lng.toFixed(4)
     : null;
-  const loc = locMap[famKey] || (drivewayKey && locMap[drivewayKey]);
+  const stayLoc = locMap[famKey] || (drivewayKey && locMap[drivewayKey]);
+  const stayTrips = stayLoc ? stayLoc.trips : [];
+  const visitTrips = familyVisitTripMap[fam.id] || [];
+  const tripById = new Map();
+  stayTrips.forEach(t => tripById.set(t.id, t));
+  visitTrips.forEach(t => { if (!tripById.has(t.id)) tripById.set(t.id, t); });
+  const trips = Array.from(tripById.values())
+    .sort((a, b) => (a.start || '').localeCompare(b.start || ''));
+
   let popup = `<strong>${fam.label}</strong>`;
-  if (loc) {
-    const visits = loc.trips.length;
-    popup += `<br>${visits} visit${visits !== 1 ? 's' : ''}`;
+  if (trips.length) {
+    popup += `<br>${trips.length} visit${trips.length !== 1 ? 's' : ''}`;
     popup += '<div style="margin-top:4px;font-size:12px;">';
-    loc.trips.forEach(t => {
+    trips.forEach(t => {
       const d = new Date(t.start + 'T00:00:00');
       const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
       popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
