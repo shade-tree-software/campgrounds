@@ -8,7 +8,7 @@ from summer_finder import find_summer_days, load_config, send_sms_notification
 # Set up argument parsing
 parser = argparse.ArgumentParser(description="Find upcoming summer-like weekends at campgrounds near home.")
 parser.add_argument('--input_file', type=str, default='campgrounds.json', help='Input file containing the list of campgrounds.')
-parser.add_argument('--config_file', type=str, default='family_locations.json', help='Config file containing phone, home_lat, and home_long values.')
+parser.add_argument('--config_file', type=str, default='home.json', help='Config file containing phone, home_lat, and home_long values.')
 parser.add_argument('--max_miles', type=float, default=400, help='Maximum distance from home in miles.')
 parser.add_argument('--min_high_temp', type=float, default=70, help='Minimum high temperature for a nice summer day (Fahrenheit).')
 parser.add_argument('--max_high_temp', type=float, default=88, help='Maximum high temperature for a nice summer day (Fahrenheit).')

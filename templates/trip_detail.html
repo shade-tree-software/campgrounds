@@ -96,6 +96,9 @@
   .cg-dropdown .cg-option .cg-state {
     color: var(--gray); font-size: .75rem; margin-left: .4rem;
   }
+  .cg-dropdown .cg-option .cg-family-icon {
+    margin-right: .3rem;
+  }
 
   .stay-edit-form .form-actions {
     display: flex;
@@ -980,7 +983,8 @@
         <div>
           <label>Place</label>
           <div class="cg-autocomplete">
-            <input type="text" data-field="place" value="{{ item.place }}" autocomplete="off" oninput="cgFilter(this)" onfocus="cgFilter(this)" data-stay-idx="{{ item.idx }}">
+            <input type="text" data-field="place" value="{{ item.place }}" autocomplete="off" oninput="cgFilter(this); cgClearId(this)" onfocus="cgFilter(this)" data-stay-idx="{{ item.idx }}">
+            <input type="hidden" data-field="campground_id" value="{{ item.campground_id if item.campground_id is not none else '' }}">
             <div class="cg-dropdown"></div>
           </div>
         </div>
@@ -1103,9 +1107,9 @@
       <div class="form-grid">
         <div class="full-width">
           <label>Family Location</label>
-          <select data-field="family_visit" onchange="onFamilyVisitChange(this, {{ item.idx }})">
+          <select data-field="family_id" onchange="onFamilyVisitChange(this, {{ item.idx }})">
             {% for fam in family_locations %}
-            <option value="{{ fam.label }}" {% if item.family_visit == fam.label %}selected{% endif %}>{{ fam.label }}</option>
+            <option value="{{ fam.id }}" {% if item.family_id == fam.id %}selected{% endif %}>{{ fam.label }}</option>
             {% endfor %}
           </select>
           <input type="hidden" data-field="name" value="{{ item.name }}">
@@ -1517,7 +1521,7 @@ const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
 const FIRST_STAY_DATE = {{ (trip.stays[0].start if trip.stays else '') | tojson }};
 
 // ── Campground autocomplete ──────────────────────────────────────────────
-let CG_LIST = [];  // [{name, state}]
+let CG_LIST = [];  // [{id, name, state, kind}]
 if (IS_ADMIN) {
   fetch('/api/campgrounds')
     .then(r => r.json())
@@ -1539,17 +1543,22 @@ function cgFilter(input) {
     return;
   }
   cgActiveIdx = -1;
-  dropdown.innerHTML = matches.map((c, i) =>
-    `<div class="cg-option" data-idx="${i}" data-name="${c.name}" data-state="${c.state}" onmousedown="cgSelect(this)">${escapeHtml(c.name)}<span class="cg-state">${c.state}</span></div>`
-  ).join('');
+  dropdown.innerHTML = matches.map((c, i) => {
+    const prefix = c.kind === 'family'
+      ? '<span class="cg-family-icon" title="Family location">&#127968;</span>'
+      : '';
+    return `<div class="cg-option" data-idx="${i}" data-id="${c.id}" data-name="${escapeHtml(c.name)}" data-state="${escapeHtml(c.state)}" onmousedown="cgSelect(this)">${prefix}${escapeHtml(c.name)}<span class="cg-state">${escapeHtml(c.state)}</span></div>`;
+  }).join('');
   dropdown.classList.add('open');
 }
 
 function cgSelect(optionEl) {
   const wrapper = optionEl.closest('.cg-autocomplete');
   const input = wrapper.querySelector('input[data-field="place"]');
+  const idInput = wrapper.querySelector('input[data-field="campground_id"]');
   const dropdown = wrapper.querySelector('.cg-dropdown');
   input.value = optionEl.dataset.name;
+  if (idInput) idInput.value = optionEl.dataset.id;
   dropdown.classList.remove('open');
   // Auto-fill state field in the same form
   const form = input.closest('.form-grid');
@@ -1559,6 +1568,14 @@ function cgSelect(optionEl) {
       stateInput.value = optionEl.dataset.state;
     }
   }
+}
+
+// Clear the hidden campground_id when the user edits the place text directly.
+// If they later re-type a name that matches an existing entry exactly, we
+// re-resolve it on save so hand-typed existing names still link cleanly.
+function cgClearId(input) {
+  const idInput = input.parentElement.querySelector('input[data-field="campground_id"]');
+  if (idInput) idInput.value = '';
 }
 
 // Keyboard navigation for autocomplete
@@ -1646,16 +1663,44 @@ function saveStay(idx) {
   form.querySelectorAll('[data-field]').forEach(el => {
     fields[el.dataset.field] = el.value;
   });
+  const payload = stayFieldsToPayload(fields);
   fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(fields)
+    body: JSON.stringify(payload)
   })
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
     location.reload();
   });
+}
+
+// Transform raw stay form fields into the API payload:
+//   - If the hidden campground_id was set by autocomplete selection, use it.
+//   - Otherwise, if the typed place text exactly matches a known campground,
+//     resolve it to that id. This lets hand-typed existing names still link.
+//   - Otherwise, send campground_id=null and put the typed text in custom_place.
+function stayFieldsToPayload(fields) {
+  const payload = Object.assign({}, fields);
+  delete payload.place;
+  delete payload.campground_id;
+  delete payload.custom_place;
+
+  const place = (fields.place || '').trim();
+  let cid = fields.campground_id ? parseInt(fields.campground_id, 10) : null;
+  if (!cid && place) {
+    const match = CG_LIST.find(c => c.name === place);
+    if (match) cid = match.id;
+  }
+  if (cid) {
+    payload.campground_id = cid;
+    payload.custom_place = '';
+  } else {
+    payload.campground_id = null;
+    payload.custom_place = place;
+  }
+  return payload;
 }
 
 function deleteStay(idx) {
@@ -1691,6 +1736,9 @@ function saveEvent(idx) {
   form.querySelectorAll('[data-field]').forEach(el => {
     fields[el.dataset.field] = el.type === 'checkbox' ? el.checked : el.value;
   });
+  if ('family_id' in fields) {
+    fields.family_id = fields.family_id ? parseInt(fields.family_id, 10) : null;
+  }
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -1718,8 +1766,8 @@ function addWaypoint() { openAddModal('waypoint'); }
 
 const FAMILY_LOCATIONS = {{ family_locations | tojson }};
 
-function familyVisitCoords(label) {
-  const fam = FAMILY_LOCATIONS.find(f => f.label === label);
+function familyVisitCoordsById(id) {
+  const fam = FAMILY_LOCATIONS.find(f => f.id === id);
   if (!fam) return '';
   const lat = fam.driveway_lat || fam.lat;
   const lng = fam.driveway_lng || fam.lng;
@@ -1757,7 +1805,8 @@ function openAddModal(kind) {
         <div class="full-width">
           <label>Place</label>
           <div class="cg-autocomplete">
-            <input type="text" data-field="place" autocomplete="off" oninput="cgFilter(this)" onfocus="cgFilter(this)">
+            <input type="text" data-field="place" autocomplete="off" oninput="cgFilter(this); cgClearId(this)" onfocus="cgFilter(this)">
+            <input type="hidden" data-field="campground_id" value="">
             <div class="cg-dropdown"></div>
           </div>
         </div>
@@ -1807,13 +1856,13 @@ function openAddModal(kind) {
     }
     title.textContent = 'Add Family Visit';
     const opts = FAMILY_LOCATIONS.map(f =>
-      `<option value="${escapeHtml(f.label)}">${escapeHtml(f.label)}</option>`
+      `<option value="${f.id}">${escapeHtml(f.label)}</option>`
     ).join('');
     body.innerHTML = `
       <div class="form-grid">
         <div class="full-width">
           <label>Family Location</label>
-          <select data-field="family_visit">${opts}</select>
+          <select data-field="family_id">${opts}</select>
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
@@ -1870,7 +1919,7 @@ function submitAddModal() {
   let url, payload;
   if (addModalKind === 'stay') {
     url = `/api/trips/${TRIP_ID}/stays`;
-    payload = fields;
+    payload = stayFieldsToPayload(fields);
   } else if (addModalKind === 'event') {
     url = `/api/trips/${TRIP_ID}/events`;
     payload = fields;
@@ -1880,11 +1929,12 @@ function submitAddModal() {
     if (!payload.name) payload.name = 'New Waypoint';
   } else if (addModalKind === 'family_visit') {
     url = `/api/trips/${TRIP_ID}/events`;
-    const label = fields.family_visit;
+    const fid = fields.family_id ? parseInt(fields.family_id, 10) : null;
+    const fam = FAMILY_LOCATIONS.find(f => f.id === fid);
     payload = {
-      family_visit: label,
-      name: label,
-      location: familyVisitCoords(label),
+      family_id: fid,
+      name: fam ? fam.label : '',
+      location: fam ? familyVisitCoordsById(fid) : '',
       date: fields.date,
       time: fields.time,
       end_time: fields.end_time,
@@ -1913,8 +1963,10 @@ function onFamilyVisitChange(select, idx) {
   const form = document.getElementById('event-edit-' + idx);
   const locInput = form.querySelector('[data-field="location"]');
   const nameInput = form.querySelector('[data-field="name"]');
-  if (locInput) locInput.value = familyVisitCoords(select.value);
-  if (nameInput) nameInput.value = select.value;
+  const fid = parseInt(select.value, 10);
+  const fam = FAMILY_LOCATIONS.find(f => f.id === fid);
+  if (locInput) locInput.value = familyVisitCoordsById(fid);
+  if (nameInput && fam) nameInput.value = fam.label;
 }
 
 // ── Event location map picker ────────────────────────────────────────────

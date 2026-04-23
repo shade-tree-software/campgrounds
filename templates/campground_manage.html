@@ -120,6 +120,7 @@
 <script>
 const WATERFRONT_OPTIONS = ['none','lake','lakeview','river','riverview','creek','pond','bay','coastal dunes','coastal woods'];
 const OWNERSHIP_OPTIONS = ['state','federal','private','local'];
+const KIND_OPTIONS = ['campground','family'];
 const METERS_TO_FEET = 3.281;
 const HOME_LAT = {{ home[0] if home else 38.93 }};
 const HOME_LNG = {{ home[1] if home else -77.37 }};
@@ -127,10 +128,14 @@ const HOME_LNG = {{ home[1] if home else -77.37 }};
 let campgrounds = [];
 let sortField = 'name';
 let sortAsc = true;
-let editingName = null;  // original name of the row being edited
+let editingId = null;  // id of the row being edited
 let addingNew = false;
 
 // ── Location map picker ──────────────────────────────────────────────────
+// The picker writes to whichever input was most recently focused (ed-location
+// or ed-driveway). We track that target so "pick on map" + geocode results go
+// to the right field.
+let locationTargetId = 'ed-location';
 const locationPicker = createMapPicker({
   containerId: 'location-map-container',
   mapId: 'location-map',
@@ -139,13 +144,16 @@ const locationPicker = createMapPicker({
   resultsId: 'geo-search-results',
   defaultView: [HOME_LAT, HOME_LNG],
   onPick: function(lat, lng) {
-    const locInput = document.getElementById('ed-location');
+    const locInput = document.getElementById(locationTargetId);
     if (locInput) locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
-    fetchElevation(lat, lng);
+    if (locationTargetId === 'ed-location') fetchElevation(lat, lng);
   }
 });
 
-function showLocationMap(location) { locationPicker.show(location); }
+function showLocationMap(location, targetId) {
+  locationTargetId = targetId || 'ed-location';
+  locationPicker.show(location);
+}
 function hideLocationMap() { locationPicker.hide(); }
 
 function fetchElevation(lat, lng) {
@@ -164,8 +172,8 @@ function fetchElevation(lat, lng) {
     .catch(() => { elevInput.placeholder = ''; });
 }
 
-function onLocationBlur() {
-  const val = (document.getElementById('ed-location').value || '').trim();
+function onLocationBlur(inputId) {
+  const val = (document.getElementById(inputId).value || '').trim();
   if (!val) return;
   const parts = val.split(',');
   if (parts.length !== 2) return;
@@ -173,7 +181,7 @@ function onLocationBlur() {
   const lng = parseFloat(parts[1]);
   if (isNaN(lat) || isNaN(lng)) return;
   locationPicker.panTo(lat, lng);
-  fetchElevation(lat, lng);
+  if (inputId === 'ed-location') fetchElevation(lat, lng);
 }
 
 // ── Load data ──────────────────────────────────────────────────────────────
@@ -182,13 +190,16 @@ fetch('/api/campgrounds/all')
   .then(data => {
     campgrounds = data;
     const params = new URLSearchParams(window.location.search);
-    const editName = params.get('edit');
-    if (editName && campgrounds.some(c => c.name === editName)) {
-      editingName = editName;
-      history.replaceState(null, '', window.location.pathname);
+    const editIdStr = params.get('edit');
+    if (editIdStr) {
+      const editId = parseInt(editIdStr, 10);
+      if (!isNaN(editId) && campgrounds.some(c => c.id === editId)) {
+        editingId = editId;
+        history.replaceState(null, '', window.location.pathname);
+      }
     }
     render();
-    if (editingName) {
+    if (editingId !== null) {
       const row = document.getElementById('ed-name');
       if (row) row.closest('tr').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -233,7 +244,7 @@ function render() {
   }
 
   for (const c of rows) {
-    if (editingName === c.name) {
+    if (editingId === c.id) {
       html += editRowHtml(c);
     } else {
       html += viewRowHtml(c);
@@ -248,37 +259,54 @@ function render() {
 }
 
 function viewRowHtml(c) {
+  const isFamily = c.kind === 'family';
   const elev = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
+  const nameDisplay = isFamily
+    ? `<span title="Family location">&#127968;</span> ${escapeHtml(c.name)}`
+    : escapeHtml(c.name);
   const note = escapeHtml(c.note || '');
   return `<tr>
-    <td class="col-name">${escapeHtml(c.name)}</td>
+    <td class="col-name">${nameDisplay}</td>
     <td class="col-state">${escapeHtml(c.state || '')}</td>
-    <td class="col-waterfront">${escapeHtml(c.waterfront || '')}</td>
-    <td class="col-ownership">${escapeHtml(c.ownership || '')}</td>
-    <td class="col-elev">${elev}</td>
+    <td class="col-waterfront">${isFamily ? '' : escapeHtml(c.waterfront || '')}</td>
+    <td class="col-ownership">${isFamily ? '' : escapeHtml(c.ownership || '')}</td>
+    <td class="col-elev">${isFamily ? '' : elev}</td>
     <td class="col-note note-cell">${note}</td>
     <td class="col-actions"><div class="row-actions">
-      <button class="btn btn-save" onclick="startEdit('${escapeJs(c.name)}')">Edit</button>
-      <button class="btn btn-delete" onclick="deleteCg('${escapeJs(c.name)}')">Delete</button>
+      <button class="btn btn-save" onclick="startEdit(${c.id})">Edit</button>
+      <button class="btn btn-delete" onclick="deleteCg(${c.id})">Delete</button>
     </div></td>
   </tr>`;
 }
 
 function editRowHtml(c) {
+  const isFamily = c.kind === 'family';
   const elevFeet = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
-  return `<tr class="editing">
-    <td><input id="ed-name" value="${escapeAttr(c.name)}"></td>
-    <td><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
-    <td><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select></td>
-    <td><select id="ed-ownership">${ownershipOptions(c.ownership)}</select></td>
-    <td><input id="ed-elev" type="number" value="${elevFeet}"></td>
-    <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng" onfocus="showLocationMap(this.value)" onblur="onLocationBlur()"></div>
+  const driveway = c.driveway_location || '';
+  const campgroundFieldsHtml = isFamily ? '' : `
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
         <textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
-        <input id="ed-phone" value="${escapeAttr(c.phone || '')}"></div></td>
+        <input id="ed-phone" value="${escapeAttr(c.phone || '')}"></div>`;
+  const familyFieldsHtml = isFamily ? `
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Driveway (lat,lng) — optional</label>
+        <input id="ed-driveway" value="${escapeAttr(driveway)}" placeholder="lat,lng"
+               onfocus="showLocationMap(this.value, 'ed-driveway')"
+               onblur="onLocationBlur('ed-driveway')"></div>` : '';
+  return `<tr class="editing">
+    <td>
+      <select id="ed-kind" onchange="onKindChange()" style="margin-bottom:.2rem">${kindOptions(c.kind || 'campground')}</select>
+      <input id="ed-name" value="${escapeAttr(c.name)}">
+    </td>
+    <td><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
+    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
+    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
+    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<input id="ed-elev" type="number" value="${elevFeet}">`}</td>
+    <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
+        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
+        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"
+               onfocus="showLocationMap(this.value, 'ed-location')"
+               onblur="onLocationBlur('ed-location')"></div>${familyFieldsHtml}${campgroundFieldsHtml}</td>
     <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
       <button class="btn btn-save" onclick="saveEdit()">Save</button>
       <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
@@ -287,24 +315,26 @@ function editRowHtml(c) {
 }
 
 function newRowHtml() {
-  return `<tr class="editing">
-    <td><input id="ed-name" value="" placeholder="Campground name"></td>
-    <td><input id="ed-state" value="" maxlength="2" placeholder="ST"></td>
-    <td><select id="ed-waterfront">${waterfrontOptions('none')}</select></td>
-    <td><select id="ed-ownership">${ownershipOptions('')}</select></td>
-    <td><input id="ed-elev" type="number" value=""></td>
-    <td><textarea id="ed-note" placeholder="Notes..."></textarea>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="" placeholder="lat,lng" onfocus="showLocationMap(this.value)" onblur="onLocationBlur()"></div>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
-        <textarea id="ed-website" rows="1"></textarea></div>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
-        <input id="ed-phone" value=""></div></td>
-    <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
-      <button class="btn btn-save" onclick="saveNew()">Save</button>
-      <button class="btn btn-cancel" onclick="cancelAdd()">Cancel</button>
-    </div></td>
-  </tr>`;
+  return editRowHtml({
+    id: null, kind: 'campground', name: '', state: '', waterfront: 'none',
+    ownership: '', elevation_meters: 0, note: '', location: '', website: '',
+    phone: '', driveway_location: '',
+  }).replace('onclick="saveEdit()"', 'onclick="saveNew()"')
+    .replace('onclick="cancelEdit()"', 'onclick="cancelAdd()"');
+}
+
+function onKindChange() {
+  // Re-render the edit row so kind-specific fields appear/hide without
+  // forcing the user to cancel and reopen.
+  const fields = readEditFields();
+  if (editingId !== null) {
+    const c = campgrounds.find(e => e.id === editingId);
+    if (c) Object.assign(c, fields);
+  }
+  render();
+  // Focus back to name so the user can keep typing.
+  const nameInput = document.getElementById('ed-name');
+  if (nameInput) nameInput.focus();
 }
 
 function waterfrontOptions(selected) {
@@ -319,6 +349,12 @@ function ownershipOptions(selected) {
   ).join('');
 }
 
+function kindOptions(selected) {
+  return KIND_OPTIONS.map(k =>
+    `<option value="${k}"${k === selected ? ' selected' : ''}>${k}</option>`
+  ).join('');
+}
+
 // ── Actions ────────────────────────────────────────────────────────────────
 function sortBy(field) {
   if (sortField === field) { sortAsc = !sortAsc; }
@@ -328,38 +364,47 @@ function sortBy(field) {
 
 function filterTable() { render(); }
 
-function startEdit(name) {
+function startEdit(id) {
   addingNew = false;
-  editingName = name;
+  editingId = id;
   render();
-  document.getElementById('ed-name').focus();
+  const nameInput = document.getElementById('ed-name');
+  if (nameInput) nameInput.focus();
 }
 
 function cancelEdit() {
-  editingName = null;
+  editingId = null;
   render();
   hideLocationMap();
 }
 
-function getEditFields() {
-  const elevFeet = parseFloat(document.getElementById('ed-elev').value) || 0;
-  return {
+function readEditFields() {
+  const kind = document.getElementById('ed-kind').value;
+  const fields = {
+    kind: kind,
     name: document.getElementById('ed-name').value.trim(),
     state: document.getElementById('ed-state').value.trim(),
-    waterfront: document.getElementById('ed-waterfront').value,
-    ownership: document.getElementById('ed-ownership').value,
-    elevation_meters: elevFeet / METERS_TO_FEET,
     location: document.getElementById('ed-location').value.trim(),
     note: document.getElementById('ed-note').value,
-    website: document.getElementById('ed-website').value,
-    phone: document.getElementById('ed-phone').value.trim(),
   };
+  if (kind === 'family') {
+    const dw = document.getElementById('ed-driveway');
+    fields.driveway_location = dw ? dw.value.trim() : '';
+  } else {
+    const elevFeet = parseFloat(document.getElementById('ed-elev').value) || 0;
+    fields.elevation_meters = elevFeet / METERS_TO_FEET;
+    fields.waterfront = document.getElementById('ed-waterfront').value;
+    fields.ownership = document.getElementById('ed-ownership').value;
+    fields.website = document.getElementById('ed-website').value;
+    fields.phone = document.getElementById('ed-phone').value.trim();
+  }
+  return fields;
 }
 
 function saveEdit() {
-  const fields = getEditFields();
+  const fields = readEditFields();
   if (!fields.name) { alert('Name is required'); return; }
-  fetch('/api/campgrounds/' + encodeURIComponent(editingName), {
+  fetch('/api/campgrounds/' + editingId, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(fields)
@@ -367,23 +412,20 @@ function saveEdit() {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    // Update local data
-    const c = campgrounds.find(e => e.name === editingName);
-    if (c) {
-      Object.assign(c, fields);
-      c.elevation_meters = parseFloat(fields.elevation_meters) || 0;
-    }
-    editingName = null;
+    const c = campgrounds.find(e => e.id === editingId);
+    if (c) Object.assign(c, fields);
+    editingId = null;
     render();
     hideLocationMap();
   });
 }
 
 function startAdd() {
-  editingName = null;
+  editingId = null;
   addingNew = true;
   render();
-  document.getElementById('ed-name').focus();
+  const nameInput = document.getElementById('ed-name');
+  if (nameInput) nameInput.focus();
 }
 
 function cancelAdd() {
@@ -393,7 +435,7 @@ function cancelAdd() {
 }
 
 function saveNew() {
-  const fields = getEditFields();
+  const fields = readEditFields();
   if (!fields.name) { alert('Name is required'); return; }
   fetch('/api/campgrounds', {
     method: 'POST',
@@ -403,21 +445,22 @@ function saveNew() {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    fields.elevation_meters = parseFloat(fields.elevation_meters) || 0;
-    campgrounds.push(fields);
+    campgrounds.push(Object.assign({ id: data.id }, fields));
     addingNew = false;
     render();
     hideLocationMap();
   });
 }
 
-function deleteCg(name) {
-  if (!confirm(`Delete campground "${name}"?`)) return;
-  fetch('/api/campgrounds/' + encodeURIComponent(name), { method: 'DELETE' })
+function deleteCg(id) {
+  const c = campgrounds.find(e => e.id === id);
+  if (!c) return;
+  if (!confirm(`Delete "${c.name}"?`)) return;
+  fetch('/api/campgrounds/' + id, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      campgrounds = campgrounds.filter(e => e.name !== name);
+      campgrounds = campgrounds.filter(e => e.id !== id);
       render();
     });
 }

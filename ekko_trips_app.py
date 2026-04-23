@@ -12,8 +12,7 @@ from werkzeug.utils import secure_filename
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
-                   add_event, update_event, delete_event,
-                   rename_campground_in_trips)
+                   add_event, update_event, delete_event)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -47,7 +46,7 @@ def inject_trip_stats():
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
-CONFIG_FILE = os.path.join(os.path.dirname(__file__), "family_locations.json")
+HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
 
 WATERFRONT_COLORS = {
     "coastal dunes": "#e6a817",
@@ -240,8 +239,11 @@ def _classify_climate(delta_temp):
 
 
 def _load_campgrounds():
-    """Load campgrounds from JSON and compute derived fields."""
-    config = _load_json(CONFIG_FILE)
+    """Load campground-kind entries from JSON with derived climate fields.
+
+    Family-kind entries are excluded so they don't appear on waterfront/climate maps.
+    """
+    config = _load_json(HOME_FILE)
     home_lat = config.get("home_lat")
     home_alt = config.get("home_altitude_meters")
     with open(CAMPGROUNDS_JSON) as f:
@@ -251,6 +253,8 @@ def _load_campgrounds():
     rows = []
     for entry in entries:
         if "location" not in entry:
+            continue
+        if entry.get("kind") == "family":
             continue
         lat, lng = (float(x) for x in entry["location"].split(","))
         elev = entry.get("elevation_meters", 0)
@@ -270,12 +274,31 @@ def _load_campgrounds():
 
 
 def _map_config():
-    """Return home coords and family locations from family_locations.json."""
-    config = _load_json(CONFIG_FILE)
-    lat = config.get("home_lat")
-    lng = config.get("home_long")
+    """Return home coords and family locations for map rendering.
+
+    Family entries now live in campgrounds.json with `kind: "family"`; this
+    projects them into the legacy shape (`label`, `lat`, `lng`, optional
+    `driveway_lat`/`driveway_lng`) consumed by the templates, plus `id`.
+    """
+    home_cfg = _load_json(HOME_FILE)
+    lat = home_cfg.get("home_lat")
+    lng = home_cfg.get("home_long")
     home = [lat, lng] if lat is not None and lng is not None else None
-    family = config.get("family_locations", [])
+
+    family = []
+    with open(CAMPGROUNDS_JSON) as f:
+        entries = json.load(f)
+    for e in entries:
+        if e.get("kind") != "family" or "location" not in e:
+            continue
+        flat, flng = (float(x) for x in e["location"].split(","))
+        fam = {"id": e["id"], "label": e["name"], "lat": flat, "lng": flng}
+        dl = e.get("driveway_location")
+        if dl:
+            dlat, dlng = (float(x) for x in dl.split(","))
+            fam["driveway_lat"] = dlat
+            fam["driveway_lng"] = dlng
+        family.append(fam)
     return home, family
 
 
@@ -749,7 +772,7 @@ def api_delete_event(trip_id, event_idx):
 
 @app.route('/campgrounds/waterfront')
 def campgrounds_waterfront():
-    home, family = _map_config()
+    home, _ = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'campground_map.html',
@@ -758,7 +781,7 @@ def campgrounds_waterfront():
         color_field='waterfront',
         color_map=WATERFRONT_COLORS,
         home=home,
-        family_locations=family,
+        family_locations=[],
         active_nav='waterfront',
         is_admin=is_admin,
     )
@@ -766,7 +789,7 @@ def campgrounds_waterfront():
 
 @app.route('/campgrounds/climate')
 def campgrounds_climate():
-    home, family = _map_config()
+    home, _ = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template(
         'campground_map.html',
@@ -775,7 +798,7 @@ def campgrounds_climate():
         color_field='climate',
         color_map=CLIMATE_COLORS,
         home=home,
-        family_locations=family,
+        family_locations=[],
         active_nav='climate',
         is_admin=is_admin,
     )
@@ -864,11 +887,13 @@ def move_photo(trip_id):
 
 @app.route('/api/campgrounds')
 def api_campground_list():
-    """Return a lightweight list of campground names and states for pickers."""
+    """Return a lightweight list of campground/family entries for pickers."""
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
-    result = [{"name": e["name"], "state": e.get("state", "")}
-              for e in entries if "name" in e]
+    result = [{"id": e["id"], "name": e["name"],
+               "state": e.get("state", ""),
+               "kind": e.get("kind", "campground")}
+              for e in entries if "id" in e and "name" in e]
     result.sort(key=lambda x: x["name"])
     return jsonify(result)
 
@@ -879,7 +904,7 @@ def campgrounds_manage():
     if denied:
         return redirect(url_for('login', next=request.path))
     is_admin = current_user.is_authenticated and current_user.is_admin
-    config = _load_json(CONFIG_FILE)
+    config = _load_json(HOME_FILE)
     home = [config.get("home_lat"), config.get("home_long")]
     return render_template('campground_manage.html', active_nav='manage',
                            is_admin=is_admin, home=home)
@@ -912,24 +937,32 @@ def api_create_campground():
     if any(e["name"] == name for e in entries):
         return jsonify({"error": "A campground with that name already exists"}), 409
 
+    kind = data.get("kind", "campground")
+    next_id = max((e["id"] for e in entries if "id" in e), default=0) + 1
     entry = {
+        "id": next_id,
+        "kind": kind,
         "name": name,
         "location": data.get("location", ""),
-        "elevation_meters": float(data.get("elevation_meters", 0)),
-        "waterfront": data.get("waterfront", "none"),
         "state": data.get("state", ""),
-        "ownership": data.get("ownership", ""),
-        "website": data.get("website", ""),
-        "note": data.get("note", ""),
-        "phone": data.get("phone", ""),
     }
+    if kind == "family":
+        if data.get("driveway_location"):
+            entry["driveway_location"] = data["driveway_location"]
+    else:
+        entry["elevation_meters"] = float(data.get("elevation_meters", 0))
+        entry["waterfront"] = data.get("waterfront", "none")
+        entry["ownership"] = data.get("ownership", "")
+        entry["website"] = data.get("website", "")
+        entry["note"] = data.get("note", "")
+        entry["phone"] = data.get("phone", "")
     entries.append(entry)
     _save_json(CAMPGROUNDS_JSON, entries)
-    return jsonify({"ok": True})
+    return jsonify({"ok": True, "id": next_id})
 
 
-@app.route('/api/campgrounds/<path:name>', methods=['PUT'])
-def api_update_campground(name):
+@app.route('/api/campgrounds/<int:cg_id>', methods=['PUT'])
+def api_update_campground(cg_id):
     denied = _require_admin()
     if denied:
         return denied
@@ -938,27 +971,23 @@ def api_update_campground(name):
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
 
-    target = None
-    for e in entries:
-        if e["name"] == name:
-            target = e
-            break
+    target = next((e for e in entries if e.get("id") == cg_id), None)
     if not target:
         return jsonify({"error": "Campground not found"}), 404
 
     new_name = data.get("name", "").strip()
-    if new_name and new_name != name:
-        if any(e["name"] == new_name for e in entries if e is not target):
+    if new_name and new_name != target["name"]:
+        if any(e["name"] == new_name and e is not target for e in entries):
             return jsonify({"error": "A campground with that name already exists"}), 409
-        rename_campground_in_trips(name, new_name)
         target["name"] = new_name
 
     for key in ("location", "elevation_meters", "waterfront", "state",
-                "ownership", "website", "note", "phone"):
+                "ownership", "website", "note", "phone",
+                "kind", "driveway_location"):
         if key in data:
             val = data[key]
             if key == "elevation_meters":
-                val = float(val)
+                val = float(val) if val not in ("", None) else 0.0
             target[key] = val
 
     _save_json(CAMPGROUNDS_JSON, entries)
@@ -1000,8 +1029,8 @@ def api_elevation():
         return jsonify({"error": str(e)}), 502
 
 
-@app.route('/api/campgrounds/<path:name>', methods=['DELETE'])
-def api_delete_campground(name):
+@app.route('/api/campgrounds/<int:cg_id>', methods=['DELETE'])
+def api_delete_campground(cg_id):
     denied = _require_admin()
     if denied:
         return denied
@@ -1010,7 +1039,7 @@ def api_delete_campground(name):
         entries = json.load(f)
 
     before = len(entries)
-    entries = [e for e in entries if e["name"] != name]
+    entries = [e for e in entries if e.get("id") != cg_id]
     if len(entries) == before:
         return jsonify({"error": "Campground not found"}), 404
 

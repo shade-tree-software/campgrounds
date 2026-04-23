@@ -14,10 +14,10 @@ A Flask web app for documenting family camping trips in an RV called "EKKO" and 
 ## Key Files
 
 - `ekko_trips_app.py` — Main Flask app: routes, auth, photo endpoints, campground CRUD API, geocode proxy
-- `trips.py` — Trip data CRUD, JSON persistence, trip parsing logic, `rename_campground_in_trips()`, photo index remapping on sort
+- `trips.py` — Trip data CRUD, JSON persistence, trip parsing logic, location resolution via `_load_locations_by_id()`, photo index remapping on sort
 - `summer_finder.py` — Shared weather search logic (used by CLI and web)
-- `family_locations.json` — App config (home location, family locations)
-- `campgrounds.json` — Campground database (~808 sites with name, location, elevation_meters, waterfront, state, ownership, website, note, phone, stays)
+- `home.json` — App config (home coords + altitude only)
+- `campgrounds.json` — Unified location database (~813 entries). Each entry has `id` (stable auto-incrementing int), `kind` ("campground" or "family"), `name`, `location` ("lat,lng"), `state`. Campground-kind also carries `elevation_meters`, `waterfront`, `ownership`, `website`, `note`, `phone`, `stays`. Family-kind may carry `driveway_location` ("lat,lng") used instead of `location` for stay-marker placement.
 - `static/map-picker.js` — Shared map picker popup factory (`createMapPicker()`) used by campground manage and event location picker
 - `static/map-picker.css` — Shared map picker styles (positioning, resize handles, geocode search dropdown)
 
@@ -27,8 +27,8 @@ A Flask web app for documenting family camping trips in an RV called "EKKO" and 
 - `templates/trip_detail.html` — Trip detail page (~1800 lines): photo galleries with lightbox (shows EXIF date taken), inline editing, campground autocomplete picker, drag-drop reorder (within and across stays/events), prev/next trip navigation arrows, Leaflet map. Sticky trip header (red bar) positioned below site-top. Map container has `z-index: 0` to create a stacking context so Leaflet controls don't overflow above sticky headers. Shows night, campspot, and event counts in trip header. Date range hidden when trip has no stays or events. Add Campspot/Event buttons are small regular buttons below the map (admin-only). Events with locations show as gold star dots on the map. Event edit form includes optional end date and location with a click-on-map picker. Stay markers have higher z-index than event markers. Family markers only shown when a stay or event is within 80km.
 - `templates/trips_map.html` — Main page: photo filmstrip slideshow (5 photos visible, slides every 4s, small arrow icon indicates clickability, clicking navigates to trip) + Leaflet map of all camping locations with legend. Navy dots for campspots, gold dots for events, red house icons for home/family. No redundant title between slideshow and map.
 - `templates/trips_calendar.html` — Calendar and list views of trips. All calendar circles are navy blue. Switching between views is client-side (no page reload), preserving the selected year. Year selector bar is sticky below site-top. List view shows night/campspot/event counts per trip, each omitted when zero. Empty trips (no dates) are excluded from calendar dots and year range calculation but appear at the bottom of every year's list view.
-- `templates/campground_map.html` — Campground map with color-coded markers by proximity to water or climate. Legend is a Leaflet control (bottom-left) with clickable toggles to show/hide categories. Waterfront legend ordered: coastal dunes, coastal woods, bay, lake, lakeview, river, riverview, creek, pond, none. Climate legend ordered coldest to hottest: much cooler through hot, with "similar to home" in the middle. Popups show: name, state, elevation, visit count, note, phone numbers, websites (displayed by domain name), and an "edit" link (admin-only, bottom-right, floated) that navigates to the manage page with `?edit=name`. Does not show waterfront/climate fields since they are conveyed by dot color. `is_admin` is passed from both waterfront and climate routes.
-- `templates/campground_manage.html` — Admin-only campground CRUD: searchable/sortable table with inline editing. Location, website, and phone are sub-fields within the note column during editing. Leaflet map picker with crosshair cursor appears when the location input is focused (not on row edit); has a close button and is draggable by its header. Auto-fetches elevation via `/api/elevation`. Elevation is displayed in feet (stored as meters internally). Supports `?edit=name` query param to auto-open a campground for editing (param is stripped from URL after use via `history.replaceState`).
+- `templates/campground_map.html` — Campground map with color-coded markers by proximity to water or climate. Family-kind entries are excluded entirely from these maps. Legend is a Leaflet control (bottom-left) with clickable toggles to show/hide categories. Waterfront legend ordered: coastal dunes, coastal woods, bay, lake, lakeview, river, riverview, creek, pond, none. Climate legend ordered coldest to hottest: much cooler through hot, with "similar to home" in the middle. Popups show: name, state, elevation, visit count, note, phone numbers, websites (displayed by domain name), and an "edit" link (admin-only, bottom-right, floated) that navigates to the manage page with `?edit=<id>`. Does not show waterfront/climate fields since they are conveyed by dot color. `is_admin` is passed from both waterfront and climate routes.
+- `templates/campground_manage.html` — Admin-only CRUD over campgrounds and family locations (both kinds share the table). Searchable/sortable with inline editing. A kind selector at the top of the name cell toggles between `campground` (shows waterfront/ownership/elevation/website/phone fields) and `family` (shows a driveway-location picker instead). Location, website, phone, and family driveway are sub-fields within the note column during editing. Family-kind rows show a 🏠 prefix on the name and blank cells for the campground-only columns. Leaflet map picker appears when the location or driveway input is focused; auto-fetches elevation via `/api/elevation` only for the main location input. Elevation is displayed in feet (stored as meters internally). Supports `?edit=<id>` query param to auto-open an entry for editing (param is stripped from URL after use via `history.replaceState`).
 
 ## Architecture
 
@@ -48,8 +48,9 @@ Trips have two distinct identifiers:
 
 - Trips contain campspots (campground visits) and events. Campspots are sorted by start date, events by date. A timeline merges both chronologically.
 - When adding a new campspot or event, dates default to the trip's first campspot start date (not today's date).
+- **Campspots** reference a location via `campground_id` (int, null for custom stays). When `campground_id` is null, the free-text `custom_place` field holds the display name (used for Airbnbs, hotels, and other non-campground lodging). `_make_trip()` materializes a display-only `place` string onto each stay from `campground_id` → campgrounds.json name, with `custom_place` fallback.
 - Events have optional `end_date` (for multi-day events) and `location` (lat,lng string). Events with a location are plotted as gold star dots on the trip detail map and gold dots on the main trips map. The event location map picker (fixed floating panel, draggable, resizable) lets admins click to set coordinates — similar to the campground manage map picker but without elevation lookup.
-- **Family visits** are events with a non-empty `family_visit` field (set to the family location label). Location coordinates are auto-set from `family_locations.json` (using `driveway_lat/lng` when available). They appear as red house icons on the map (z-index 850, between stays and family markers) and have a salmon-toned card with a simplified edit form (family location dropdown, date, time). The proximity-based family marker is suppressed for locations that have a family visit on the trip.
+- **Family visits** are events with a non-null `family_id` (int, referencing a `kind: "family"` entry in `campgrounds.json`). `_make_trip()` materializes a display-only `family_visit` label string from `family_id`. Location coordinates are auto-set from the family entry (using `driveway_location` when available). They appear as red house icons on the map (z-index 850, between stays and family markers) and have a salmon-toned card with a simplified edit form (family location dropdown, date, time). The proximity-based family marker is suppressed for locations that have a family visit on the trip.
 
 ### Admin Protection
 
@@ -66,8 +67,10 @@ Trips have two distinct identifiers:
 
 ### Campground System
 
-- Campspots reference campgrounds by name (no IDs). The `place` field in a campspot must match a `name` in `campgrounds.json` for coordinates to resolve. Renaming a campground via the management page propagates to all trips via `rename_campground_in_trips()`.
-- Campspot edit forms use an autocomplete picker that fetches from `GET /api/campgrounds`. Selecting a campground auto-fills the state field. Custom (non-campground) values are still allowed for non-campground campspots (family homes, hotels).
+- `campgrounds.json` is a unified location database holding both `kind: "campground"` and `kind: "family"` entries, each with a stable `id`. Campspots reference entries by `campground_id`, and events reference family entries by `family_id`. Because references are ID-based, renaming an entry via the management page needs no propagation logic — existing references remain valid automatically.
+- Custom stays (e.g. Airbnb, hotel) use `campground_id: null` and a free-text `custom_place` field. The frontend's `stayFieldsToPayload()` decides which fields to send based on whether the place text matches a known entry.
+- Campspot edit forms use an autocomplete picker that fetches from `GET /api/campgrounds` (includes both kinds). Selecting an entry stores its `id` in a hidden field and auto-fills the state field. Family-kind entries are shown with a 🏠 prefix in the dropdown. When the user types free text that matches no entry, it's saved as `custom_place`.
+- `trips.py:_load_locations_by_id()` is the single source of truth for resolving IDs to coordinates — prefers `driveway_location` for family-kind entries so stay markers don't collide with the red family house marker.
 
 ### Sticky Layout
 
@@ -120,11 +123,11 @@ All Leaflet maps offer a satellite layer that includes three Esri tile layers: W
 - `DELETE /trips/<id>/events/<idx>/photos/<file>` — delete event photo
 
 ### Campground CRUD
-- `GET /api/campgrounds` — lightweight name+state list (for autocomplete picker)
+- `GET /api/campgrounds` — lightweight `{id, name, state, kind}` list (for autocomplete picker; includes both kinds)
 - `GET /api/campgrounds/all` — full data (admin, for management page)
-- `POST /api/campgrounds` — create campground (enforces unique names)
-- `PUT /api/campgrounds/<name>` — update campground (name changes propagate to trips)
-- `DELETE /api/campgrounds/<name>` — delete campground
+- `POST /api/campgrounds` — create entry (auto-assigns next id; accepts `kind`; family entries may carry `driveway_location`)
+- `PUT /api/campgrounds/<int:id>` — update entry by id (no name-propagation needed; references are id-based)
+- `DELETE /api/campgrounds/<int:id>` — delete entry by id
 - `GET /api/elevation?lat=X&lng=Y` — proxy to Open-Elevation API, returns `{elevation_meters}`
 - `GET /api/geocode?q=X` — proxy to Nominatim geocoding API, returns `[{name, lat, lon}]`
 

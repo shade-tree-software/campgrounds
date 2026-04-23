@@ -45,8 +45,9 @@ def _save_trips(data):
 def _load_trips_json():
     """Load trips from JSON and compute derived fields."""
     raw = _load_raw_trips()
+    locations = _load_locations_by_id()
     trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                        t.get("events", [])) for t in raw]
+                        t.get("events", []), locations) for t in raw]
     trips.sort(key=lambda t: t["start"])
     for i, t in enumerate(trips, 1):
         t["number"] = i
@@ -139,7 +140,8 @@ def add_stay(trip_id, stay_data):
                 "start": start,
                 "end": end,
                 "nights": int(stay_data.get("nights", 1)),
-                "place": stay_data.get("place", "New Campground"),
+                "campground_id": stay_data.get("campground_id"),
+                "custom_place": stay_data.get("custom_place", ""),
                 "locale": stay_data.get("locale", ""),
                 "state": stay_data.get("state", ""),
                 "site": stay_data.get("site", ""),
@@ -164,7 +166,8 @@ def update_stay(trip_id, stay_idx, fields):
             if stay_idx < 0 or stay_idx >= len(t["stays"]):
                 return None
             stay = t["stays"][stay_idx]
-            for key in ("start", "end", "place", "locale", "state", "site", "campers", "notes"):
+            for key in ("start", "end", "campground_id", "custom_place",
+                        "locale", "state", "site", "campers", "notes"):
                 if key in fields:
                     stay[key] = fields[key]
             if "nights" in fields:
@@ -321,7 +324,7 @@ def add_event(trip_id, event_data):
                 "locale": event_data.get("locale", ""),
                 "state": event_data.get("state", ""),
                 "waypoint": bool(event_data.get("waypoint", False)),
-                "family_visit": event_data.get("family_visit", ""),
+                "family_id": event_data.get("family_id"),
             }
             events = t.get("events", [])
             events.append(event)
@@ -344,7 +347,8 @@ def update_event(trip_id, event_idx, fields):
             if event_idx < 0 or event_idx >= len(events):
                 return None
             event = events[event_idx]
-            for key in ("date", "time", "end_time", "name", "description", "location", "locale", "state", "family_visit"):
+            for key in ("date", "time", "end_time", "name", "description",
+                        "location", "locale", "state", "family_id"):
                 if key in fields:
                     event[key] = fields[key]
             if "waypoint" in fields:
@@ -360,20 +364,6 @@ def update_event(trip_id, event_idx, fields):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t["events"])
     return None
-
-
-def rename_campground_in_trips(old_name, new_name):
-    """Update all stays that reference old_name to use new_name."""
-    raw = _load_raw_trips()
-    changed = False
-    for t in raw:
-        for s in t["stays"]:
-            if s["place"] == old_name:
-                s["place"] = new_name
-                changed = True
-    if changed:
-        _save_trips(raw)
-    return changed
 
 
 def delete_event(trip_id, event_idx):
@@ -479,10 +469,28 @@ def _group_into_trips(stays):
     return trips
 
 
-def _make_trip(trip_id, stays, trip_note="", events=None):
-    """Build a trip dict from a list of stays and optional events."""
+def _make_trip(trip_id, stays, trip_note="", events=None, locations=None):
+    """Build a trip dict from a list of stays and optional events.
+
+    If `locations` (id → info map from `_load_locations_by_id`) is supplied,
+    each stay gets a `place` string materialized from its `campground_id`
+    (or `custom_place` fallback), and each event gets a `family_visit`
+    label materialized from its `family_id`. These materialized fields are
+    display-only — the authoritative values remain `campground_id` /
+    `custom_place` / `family_id`.
+    """
     if events is None:
         events = []
+    if locations is None:
+        locations = _load_locations_by_id()
+
+    for s in stays:
+        cid = s.get("campground_id")
+        if cid is not None and cid in locations:
+            s["place"] = locations[cid]["name"]
+        else:
+            s["place"] = s.get("custom_place", "") or ""
+
     total_nights = sum(s["nights"] for s in stays)
     places = []
     seen = set()
@@ -531,21 +539,18 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
         timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
                              _order=1, _time="00:00"))
     for i, e in enumerate(events):
-        # Add location/time defaults for older events missing these fields
-        if "location" not in e:
-            e["location"] = ""
-        if "time" not in e:
-            e["time"] = ""
-        if "end_time" not in e:
-            e["end_time"] = ""
-        if "waypoint" not in e:
-            e["waypoint"] = False
-        if "family_visit" not in e:
+        # Default optional fields and materialize family_visit label for display
+        e.setdefault("location", "")
+        e.setdefault("time", "")
+        e.setdefault("end_time", "")
+        e.setdefault("waypoint", False)
+        e.setdefault("locale", "")
+        e.setdefault("state", "")
+        fid = e.get("family_id")
+        if fid is not None and fid in locations:
+            e["family_visit"] = locations[fid]["name"]
+        else:
             e["family_visit"] = ""
-        if "locale" not in e:
-            e["locale"] = ""
-        if "state" not in e:
-            e["state"] = ""
         timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
                              _order=0, _time=e.get("time") or "12:00"))
     timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_time"]))
@@ -574,50 +579,30 @@ def _make_trip(trip_id, stays, trip_note="", events=None):
     }
 
 
-def _load_campground_locations(json_path="campgrounds.json",
-                               config_path="family_locations.json"):
-    """Load name -> (lat, lng) mapping from campgrounds and family locations."""
-    import json
-    import os
-
+def _load_locations_by_id(json_path="campgrounds.json"):
+    """Load id → {name, lat, lng, kind, driveway: (lat,lng)|None} from campgrounds.json."""
     base = os.path.dirname(__file__)
-
-    path = os.path.join(base, json_path)
-    with open(path) as f:
+    with open(os.path.join(base, json_path)) as f:
         cgs = json.load(f)
 
-    by_name = {}
+    by_id = {}
     for c in cgs:
+        if "id" not in c or "location" not in c:
+            continue
         lat, lng = c["location"].split(",")
-        by_name[c["name"]] = (float(lat), float(lng))
-
-    # Include family locations from config so they resolve in trip enrichment.
-    # Use driveway coordinates when available so the stay marker doesn't
-    # overlap the family house icon on the map.
-    cfg_path = os.path.join(base, config_path)
-    if os.path.exists(cfg_path):
-        with open(cfg_path) as f:
-            cfg = json.load(f)
-        for fam in cfg.get("family_locations", []):
-            lat = fam.get("driveway_lat", fam["lat"])
-            lng = fam.get("driveway_lng", fam["lng"])
-            by_name[fam["label"]] = (lat, lng)
-
-    return by_name
-
-
-def _match_location(place, by_name):
-    """Try to find coordinates for a place name using exact then substring matching."""
-    if place in by_name:
-        return by_name[place]
-
-    place_lower = place.lower()
-    for name, coords in by_name.items():
-        name_lower = name.lower()
-        if place_lower in name_lower or name_lower in place_lower:
-            return coords
-
-    return None
+        driveway = None
+        dl = c.get("driveway_location")
+        if dl:
+            dlat, dlng = dl.split(",")
+            driveway = (float(dlat), float(dlng))
+        by_id[c["id"]] = {
+            "name": c["name"],
+            "lat": float(lat),
+            "lng": float(lng),
+            "kind": c.get("kind", "campground"),
+            "driveway": driveway,
+        }
+    return by_id
 
 
 def _parse_site_coords(site):
@@ -631,10 +616,23 @@ def _parse_site_coords(site):
 
 
 def enrich_trip_locations(trip):
-    """Add lat/lng to each stay and event in a trip where a match is found."""
-    by_name = _load_campground_locations()
+    """Add lat/lng to each stay and event in a trip where a match is found.
+
+    Stays resolve via `campground_id` → campgrounds.json. For family-kind
+    entries, the `driveway_location` is preferred so the stay marker
+    doesn't collide with the family house icon. As a last resort the
+    `site` field is parsed for embedded GPS coordinates.
+    """
+    by_id = _load_locations_by_id()
     for stay in trip["stays"]:
-        coords = _match_location(stay["place"], by_name)
+        coords = None
+        cid = stay.get("campground_id")
+        if cid is not None and cid in by_id:
+            info = by_id[cid]
+            if info["kind"] == "family" and info["driveway"]:
+                coords = info["driveway"]
+            else:
+                coords = (info["lat"], info["lng"])
         if not coords:
             coords = _parse_site_coords(stay.get("site", ""))
         if coords:

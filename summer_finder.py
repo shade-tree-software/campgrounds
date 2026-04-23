@@ -10,7 +10,7 @@ def get_day_of_week(date_str):
     day_name = date_obj.strftime('%A')
     return day_name
 
-def load_config(config_file='family_locations.json'):
+def load_config(config_file='home.json'):
     """Load configuration from JSON file."""
     config = {}
     if os.path.exists(config_file):
@@ -86,7 +86,7 @@ def check_campground_weather(campground, min_high_temp=70, max_high_temp=88, hom
     return []
 
 def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat=None, home_long=None, 
-                    config_file='family_locations.json', input_file='campgrounds.json', progress_callback=None, prefer_waterfront=False, weekends_only=True):
+                    config_file='home.json', input_file='campgrounds.json', progress_callback=None, prefer_waterfront=False, weekends_only=True):
     """
     Find campgrounds with summer-like temperatures within specified distance.
     
