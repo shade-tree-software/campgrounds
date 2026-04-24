@@ -390,6 +390,79 @@
     padding: 1.5rem;
   }
 
+  /* Two-column layout (only when the trip has photo-bearing cards):
+     map is viewport-fixed on the left while the cards column scrolls. */
+  .content.two-col {
+    max-width: 1600px;
+    /* Keep horizontal 1.5rem padding for readability; tighten vertical
+       padding to 1rem so the top-card and bottom-card gutters match the
+       1rem gutters above and below the fixed map. */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  /* Drop the last card's bottom margin so the bottom gutter is exactly
+     the .content padding-bottom (1rem), not 1rem + the card's 1.5rem. */
+  .content.two-col .cards-column > :last-child {
+    margin-bottom: 0;
+  }
+  /* .map-column reserves the grid slot. .map-column-fixed is the actual
+     viewport-pinned content; JS syncs its left/width from the placeholder. */
+  .content.two-col .map-column {
+    align-self: stretch;
+  }
+  .content.two-col .map-column-fixed {
+    position: fixed;
+    top: calc(var(--site-top-height, 0px) + var(--trip-header-height, 0px) + 1rem);
+    bottom: 1rem;  /* match the 1rem above so the map sits with equal gutters */
+    display: flex;
+    flex-direction: column;
+    /* left + width are set by syncMapColumnPosition() on load + resize */
+  }
+  .content.two-col .map-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin-bottom: 0;
+  }
+  .content.two-col #trip-map {
+    flex: 1 1 auto;
+    height: auto;
+    min-height: 380px;
+  }
+  .content.two-col .add-buttons {
+    flex-shrink: 0;
+    margin-top: 1rem;
+  }
+  .content.two-col .cards-column { min-width: 0; }
+
+  /* Single-column fallback for narrow viewports. */
+  @media (max-width: 900px) {
+    .content.two-col {
+      display: block;
+      max-width: 960px;
+    }
+    .content.two-col .map-column-fixed {
+      position: static;
+      display: block;
+      left: auto !important;
+      width: auto !important;
+    }
+    .content.two-col .map-container {
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .content.two-col #trip-map {
+      flex: none;
+      height: 380px;
+      min-height: 0;
+    }
+  }
+
   /* ── Stay cards ─────────────────────────────────── */
   .stay-card {
     background: var(--white);
@@ -956,31 +1029,44 @@
   </div>
 </div>
 
-<div class="content">
+{# Detect whether any cards will render — drives the two-column layout. #}
+{% set photo_check = namespace(any=False) %}
+{% for v in stay_photos.values() %}{% if v %}{% set photo_check.any = True %}{% endif %}{% endfor %}
+{% for v in event_photos.values() %}{% if v %}{% set photo_check.any = True %}{% endif %}{% endfor %}
+{% set has_cards = photo_check.any %}
 
-  <!-- Map -->
+<div class="content{% if has_cards %} two-col{% endif %}">
+
+  <!-- Map column. In two-col mode .map-column is a layout placeholder; the
+       inner .map-column-fixed is position:fixed and JS-synced to the
+       placeholder's left/width so it stays anchored to the viewport. -->
   {% set mapped_stays = trip.stays | selectattr('lat', 'defined') | selectattr('lat') | list %}
   {% set mapped_events = trip.events | selectattr('lat', 'defined') | selectattr('lat') | list %}
-  {% if mapped_stays or mapped_events %}
-  <div class="map-container" id="map-container">
-    <h3>
-      <span>Trip Route</span>
-      <button type="button" class="btn-map-expand" id="btn-map-expand" onclick="toggleMapExpand()">Expand</button>
-    </h3>
-    <div id="trip-map"></div>
-  </div>
-  {% endif %}
+  <div class="map-column">
+    <div class="map-column-fixed">
+      {% if mapped_stays or mapped_events %}
+      <div class="map-container" id="map-container">
+        <h3>
+          <span>Trip Route</span>
+          <button type="button" class="btn-map-expand" id="btn-map-expand" onclick="toggleMapExpand()">Expand</button>
+        </h3>
+        <div id="trip-map"></div>
+      </div>
+      {% endif %}
 
-  {% if is_admin %}
-  <div class="add-buttons">
-    <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
-    <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
-    <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
-    <button class="btn-add-event" onclick="addFamilyVisit()">+ Add Family Visit</button>
+      {% if is_admin %}
+      <div class="add-buttons">
+        <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
+        <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
+        <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
+        <button class="btn-add-event" onclick="addFamilyVisit()">+ Add Family Visit</button>
+      </div>
+      {% endif %}
+    </div>
   </div>
-  {% endif %}
 
-  <!-- Timeline: interleaved stays and events -->
+  <!-- Cards column: timeline of interleaved stays and events -->
+  <div class="cards-column">
   {% set stay_num = namespace(val=0) %}
   {% for item in trip.timeline %}
 
@@ -1253,6 +1339,7 @@
   {% endif %}
 
   {% endfor %}
+  </div><!-- /.cards-column -->
 
 
 </div>
@@ -1318,6 +1405,53 @@ function toggleMapExpand() {
   if (window.tripMap) {
     setTimeout(() => window.tripMap.invalidateSize(), 50);
   }
+}
+
+// Publish the trip-header height as --trip-header-height so the fixed map
+// column (two-col layout) can offset itself below the red header bar.
+(function() {
+  const header = document.querySelector('.trip-header');
+  if (!header) return;
+  const update = () => {
+    document.documentElement.style.setProperty(
+      '--trip-header-height', header.offsetHeight + 'px');
+    syncMapColumnPosition();
+    if (window.tripMap) window.tripMap.invalidateSize();
+  };
+  update();
+  window.addEventListener('resize', update);
+})();
+
+// Sync the position:fixed map wrapper to its grid placeholder so it
+// occupies exactly the left grid column. Runs on load + resize only;
+// scrolling does not move the map (which is the whole point).
+function syncMapColumnPosition() {
+  const placeholder = document.querySelector('.content.two-col .map-column');
+  const fixed = document.querySelector('.content.two-col .map-column-fixed');
+  if (!placeholder || !fixed) return;
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    fixed.style.left = '';
+    fixed.style.width = '';
+    return;
+  }
+  const rect = placeholder.getBoundingClientRect();
+  fixed.style.left = rect.left + 'px';
+  fixed.style.width = rect.width + 'px';
+}
+window.addEventListener('resize', syncMapColumnPosition);
+window.addEventListener('load', syncMapColumnPosition);
+syncMapColumnPosition();
+
+// Smooth-scroll a card into view, accounting for the sticky site-top
+// and trip-header so the card title doesn't end up hidden behind them.
+function scrollToCard(cardId) {
+  const el = document.getElementById(cardId);
+  if (!el) return;
+  const rs = getComputedStyle(document.documentElement);
+  const siteTop = parseFloat(rs.getPropertyValue('--site-top-height')) || 0;
+  const tripHdr = parseFloat(rs.getPropertyValue('--trip-header-height')) || 0;
+  const target = window.scrollY + el.getBoundingClientRect().top - siteTop - tripHdr - 16;
+  window.scrollTo({ top: target, behavior: 'smooth' });
 }
 </script>
 <script>
@@ -1407,7 +1541,10 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    L.marker(ll, { icon, zIndexOffset: 800 }).addTo(map).bindPopup(label);
+    L.marker(ll, { icon, zIndexOffset: 800 })
+      .addTo(map)
+      .bindPopup(label)
+      .on('click', () => scrollToCard('stay-' + stay.idx));
   });
 
   // Build day-by-day chronological route
@@ -1520,7 +1657,8 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     const evtActions = popupAdminActions(evtKind, evt.idx, 'event');
     L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
       .addTo(map)
-      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}${evtActions}`);
+      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}${evtActions}`)
+      .on('click', () => scrollToCard('event-' + evt.idx));
   });
 
   familyVisitGroups.forEach(group => {
@@ -1548,9 +1686,13 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
       const actions = popupAdminActions('family_visit', e.idx, 'event');
       return `<div class="popup-visit-row">${eventDateLabel(e)}${showName ? ' &mdash; ' + e.name : ''}${actions}</div>`;
     }).join('');
+    // Scroll to the first visit in the group that has a card on the page
+    // (cards only render when an item has photos).
+    const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
     L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
       .addTo(map)
-      .bindPopup(header + items);
+      .bindPopup(header + items)
+      .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
   });
 
   // Family location markers — only show if a stay or event is nearby

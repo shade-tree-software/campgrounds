@@ -89,6 +89,23 @@ Trips have two distinct identifiers:
 - **Z-index layering on trip detail:** Home (1000) > Family (900) > Stays (800) > Events (default).
 - **Trip detail popup contents:** Stay popups show place name, locale/state, nights. Event/waypoint popups show name, locale/state (when present), and date/time. Family-visit events at the same family location share one red house marker whose popup lists every visit (sorted by date/time, with custom event names appended after an em dash when distinct from the family label). The map IIFE attaches each item's original array index as `idx` (before lat/lng filtering) so popup actions can address the right slot.
 
+### Trip Detail Layout
+
+- When a trip has at least one photo-bearing card, `.content` gets a `two-col` class and renders as a CSS grid (`minmax(0, 1.1fr) minmax(0, 1fr)`, `max-width: 1600px`): map on the left, cards on the right.
+- Detection runs in Jinja via a `photo_check` namespace that scans `stay_photos.values()` + `event_photos.values()`. Trips with zero photos render the original single-column layout.
+- The `.map-column` wrapper is a layout placeholder only — its inner `.map-column-fixed` is `position: fixed` so the map is anchored to the viewport (true fixed, not sticky — sticky produced visible jitter while scrolling). `syncMapColumnPosition()` reads the placeholder's `getBoundingClientRect()` and writes inline `left`/`width` on the fixed wrapper; it runs on `load` + `resize` and after `--trip-header-height` updates, but **never on scroll** (that's the whole point).
+- `.map-column-fixed` holds the map container *and* the admin add-buttons (logically "where these items exist"); the `.cards-column` wrapper holds only the timeline. Both wrappers exist in single-column mode too but are visually inert.
+- The fixed wrapper anchors with **both** `top: calc(var(--site-top-height) + var(--trip-header-height) + 1rem)` and `bottom: 1rem`, so the gutter above and below match. It's a `flex` column: `.map-container` is `flex: 1 1 auto` (with `margin-bottom: 0` to drop its default 1.5rem gap), `#trip-map` inside is `flex: 1 1 auto` with `min-height: 380px`, and `.add-buttons` is `flex-shrink: 0` with `margin-top: 1rem`. The map fills all available vertical space between the two 1rem gutters; on admin pages the add-buttons take their natural height at the bottom and the map shrinks accordingly.
+- Single-column mode keeps the fixed 380px map height (overrides set `display: block` on the wrapper and `flex: none` on `#trip-map` so the flex fill doesn't collapse without a defined parent height).
+- Below the 900px viewport breakpoint the two-col grid collapses to a single column. CSS resets `.map-column-fixed` to `position: static` (with `display: block`, `left/width: auto !important`) and `#trip-map` to `flex: none; height: 380px`. `syncMapColumnPosition()` checks the same `(max-width: 900px)` media query and clears its inline writes so the CSS reset isn't fought by stale inline styles.
+- A small IIFE in the scripts block measures `.trip-header` and publishes its height as `--trip-header-height` on `document.documentElement`, re-measuring on resize. It also re-runs `syncMapColumnPosition()` and calls `window.tripMap.invalidateSize()` so Leaflet repaints when the map's box changes height.
+
+### Trip Detail Map → Card Scrolling
+
+- Clicking a marker on the trip-detail map auto-scrolls the cards column to the corresponding card. The popup still opens (Leaflet's default click behavior is preserved); the scroll runs alongside it via a `.on('click', ...)` handler.
+- `scrollToCard(cardId)` computes the card's absolute Y from `getBoundingClientRect()`, subtracts `--site-top-height` and `--trip-header-height` (read from CSSOM with `getComputedStyle(document.documentElement).getPropertyValue(...)`) plus a 16px gap, and calls `window.scrollTo({ behavior: 'smooth' })`. It silently no-ops when the card element doesn't exist (e.g. waypoints with no photos).
+- Card IDs follow `stay-{idx}` and `event-{idx}` (matching the Jinja template). For grouped family-visit markers, the click handler picks the first visit in the sorted group whose card actually rendered (`sorted.find(e => document.getElementById('event-' + e.idx))`).
+
 ### Trip Detail Editing UX
 
 - The cards area below the map is strictly a photo-frame zone — stay and event cards render only when the item has photos. Items without photos exist only on the map.
