@@ -2,7 +2,7 @@ import json
 import os
 import shutil
 import sys
-from datetime import datetime
+from datetime import date, datetime, time as dt_time, timedelta
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -93,6 +93,29 @@ def _photo_date_taken(filepath):
     except Exception:
         pass
     return ""
+
+
+def _photo_datetime_taken(filepath):
+    """Like _photo_date_taken but returns the full datetime or None.
+
+    Used for bucketing photos across multi-copy stay cards.
+    """
+    try:
+        from PIL import Image
+        from PIL.ExifTags import Base as ExifBase
+        img = Image.open(filepath)
+        exif = img.getexif()
+        for tag in (ExifBase.DateTimeOriginal, ExifBase.DateTimeDigitized, ExifBase.DateTime):
+            val = exif.get(tag)
+            if not val:
+                continue
+            try:
+                return datetime.strptime(val, "%Y:%m:%d %H:%M:%S")
+            except ValueError:
+                return None
+    except Exception:
+        pass
+    return None
 
 
 def _save_photo(file_storage, photo_dir):
@@ -412,6 +435,56 @@ def trip_detail(trip_id):
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                 })
         event_photos[i] = photos
+
+    # Bucket stay photos across per-night copies for split multi-night stays.
+    # Each copy is represented by (arrival + copy_num - 1) at 20:00; each photo
+    # is assigned to the copy whose representative time is closest to its EXIF
+    # timestamp. Photos without a timestamp fall into copy 1.
+    stay_photo_times = {}
+    for i, stay in enumerate(trip["stays"]):
+        photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(i))
+        times = {}
+        if os.path.isdir(photo_dir):
+            for p in stay_photos[i]:
+                times[p["filename"]] = _photo_datetime_taken(
+                    os.path.join(photo_dir, p["filename"]))
+        stay_photo_times[i] = times
+
+    def _bucket_photos(stay_idx, copy_num, copy_count, start_date_str):
+        photos = stay_photos[stay_idx]
+        if copy_count <= 1 or not start_date_str:
+            return photos
+        try:
+            arrival = date.fromisoformat(start_date_str)
+        except ValueError:
+            return photos
+        rep_times = [datetime.combine(arrival + timedelta(days=n - 1),
+                                      dt_time(hour=20))
+                     for n in range(1, copy_count + 1)]
+        buckets = [[] for _ in range(copy_count)]
+        for p in photos:
+            t = stay_photo_times[stay_idx].get(p["filename"])
+            if t is None:
+                buckets[0].append(p)
+                continue
+            best = 0
+            best_dist = abs((t - rep_times[0]).total_seconds())
+            for k in range(1, copy_count):
+                d = abs((t - rep_times[k]).total_seconds())
+                if d < best_dist:
+                    best = k
+                    best_dist = d
+            buckets[best].append(p)
+        return buckets[copy_num - 1]
+
+    for item in trip.get("timeline", []):
+        if item.get("type") == "stay":
+            item["photos"] = _bucket_photos(
+                item["idx"],
+                item.get("copy_num", 1),
+                item.get("copy_count", 1),
+                item.get("start", ""),
+            )
 
     _, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin

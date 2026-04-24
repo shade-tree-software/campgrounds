@@ -1130,23 +1130,26 @@
     </div>
   </div>
   {% endif %}
-  {% set stay_num = namespace(val=0) %}
   {% for item in trip.timeline %}
 
   {% if item.type == "stay" %}
-  {% set stay_num.val = stay_num.val + 1 %}
-  <div class="stay-card" id="stay-{{ item.idx }}">
+  <div class="stay-card" id="stay-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}">
     <div class="stay-header">
-      <div class="stay-number">{{ stay_num.val }}</div>
+      <div class="stay-number">{{ item.idx + 1 }}</div>
       <div class="stay-info">
-        <h3>{{ item.place }}{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}</h3>
+        <h3>{{ item.place }}{% if is_admin and item.copy_num == 1 %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}</h3>
         <div class="stay-meta">
           {% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}
-          &mdash; {{ item.nights }} night{{ 's' if item.nights > 1 else '' }}
-          ({{ item.start }} to {{ item.end }})
+          {% if item.copy_count and item.copy_count > 1 %}
+            &mdash; Night {{ item.copy_num }} of {{ item.copy_count }} ({{ item.sort_date }})
+          {% else %}
+            &mdash; {{ item.nights }} night{{ 's' if item.nights > 1 else '' }}
+            ({{ item.start }} to {{ item.end }})
+          {% endif %}
         </div>
       </div>
     </div>
+    {% if item.copy_num == 1 %}
     <div class="stay-edit-form" id="stay-edit-{{ item.idx }}">
       <div class="form-grid">
         <div>
@@ -1196,7 +1199,12 @@
         <button class="btn-danger" onclick="deleteStay({{ item.idx }})">Delete Campspot</button>
       </div>
     </div>
-    <div class="stay-body" id="stay-body-{{ item.idx }}">
+    {% endif %}
+    {# Skip the body on copy 2+ stays that have nothing to show — otherwise
+       the card would render an empty bottom region below the header. #}
+    {% if item.copy_num == 1 or item.photos %}
+    <div class="stay-body"{% if item.copy_num == 1 %} id="stay-body-{{ item.idx }}"{% endif %}>
+      {% if item.copy_num == 1 %}
       <div class="stay-details">
         {% if item.site %}
         <div class="detail-item">
@@ -1215,12 +1223,13 @@
       {% if item.notes %}
       <div class="notes-text">{{ item.notes }}</div>
       {% endif %}
+      {% endif %}
 
-      <!-- Photos -->
-      {% if is_admin or stay_photos[item.idx] %}
+      <!-- Photos (bucketed per copy for split multi-night stays) -->
+      {% if is_admin or item.photos %}
       <div class="photos-section">
-        <div class="photo-grid" id="photos-{{ item.idx }}">
-          {% for photo in stay_photos[item.idx] %}
+        <div class="photo-grid" id="photos-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}" data-stay-idx="{{ item.idx }}">
+          {% for photo in item.photos %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
             <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
             {% if is_admin %}
@@ -1249,11 +1258,14 @@
                  onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
           <p>Click to upload photos or a zip file</p>
         </div>
+        {% if item.copy_num == 1 %}
         <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+        {% endif %}
         {% endif %}
       </div>
       {% endif %}
     </div>
+    {% endif %}
   </div>
 
   {% elif item.type == "event" %}
@@ -2687,14 +2699,31 @@ let dropTarget = null;
 let dropBefore = false;
 
 function parseGridId(grid) {
+  if (grid.dataset.stayIdx != null) {
+    return { type: 'stay', idx: parseInt(grid.dataset.stayIdx, 10) };
+  }
   const id = grid.id;
   if (id.startsWith('event-photos-')) return { type: 'event', idx: parseInt(id.replace('event-photos-', '')) };
+  // Fallback for single-copy stay grids whose ID is "photos-{idx}".
   return { type: 'stay', idx: parseInt(id.replace('photos-', '')) };
 }
 
 function saveGridOrder(grid) {
-  const filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
   const info = parseGridId(grid);
+  // For multi-copy stays, each copy has its own grid (all share data-stay-idx).
+  // Concatenate filenames across every grid for this stay in document order
+  // so the whole-stay photo_order reflects the visible arrangement.
+  let filenames;
+  if (info.type === 'stay') {
+    const grids = document.querySelectorAll(`.photo-grid[data-stay-idx="${info.idx}"]`);
+    const collector = grids.length > 0 ? Array.from(grids) : [grid];
+    filenames = [];
+    collector.forEach(g => {
+      g.querySelectorAll('.photo-item').forEach(el => filenames.push(el.dataset.filename));
+    });
+  } else {
+    filenames = Array.from(grid.querySelectorAll('.photo-item')).map(el => el.dataset.filename);
+  }
   const url = info.type === 'event'
     ? `/trips/${TRIP_ID}/events/${info.idx}/reorder`
     : `/trips/${TRIP_ID}/stays/${info.idx}/reorder`;

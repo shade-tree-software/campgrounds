@@ -534,10 +534,48 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None):
     #   - Event on same date as stay's start → event first (_order=0 vs 1)
     #   - Event on same date as stay's end → stay already sorted earlier by start date
     #   - Events on same date ordered by time (default noon)
+    # Multi-night stays with at least one event on a strictly-interior day
+    # (i.e., arrival < event_date < departure) are split into per-night
+    # copies so the timeline shows which night you slept there in between
+    # daytime excursions. Each copy sorts at "end of its own day" so that
+    # all daytime events on date D land before the copy representing the
+    # night of date D.
+    def _stay_needs_split(s):
+        nights = int(s.get("nights") or 0)
+        if nights <= 1 or not s.get("start") or not s.get("end"):
+            return False
+        try:
+            start_d = date.fromisoformat(s["start"])
+            end_d = date.fromisoformat(s["end"])
+        except ValueError:
+            return False
+        for e in events:
+            ed = e.get("date")
+            if not ed:
+                continue
+            try:
+                e_d = date.fromisoformat(ed)
+            except ValueError:
+                continue
+            if start_d < e_d < end_d:
+                return True
+        return False
+
     timeline = []
     for i, s in enumerate(stays):
-        timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
-                             _order=1, _time="00:00"))
+        if _stay_needs_split(s):
+            start_d = date.fromisoformat(s["start"])
+            nights = int(s["nights"])
+            for n in range(1, nights + 1):
+                night_date = (start_d + timedelta(days=n - 1)).isoformat()
+                timeline.append(dict(s, type="stay", idx=i,
+                                     sort_date=night_date,
+                                     _order=1, _time="23:59",
+                                     copy_num=n, copy_count=nights))
+        else:
+            timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
+                                 _order=1, _time="00:00",
+                                 copy_num=1, copy_count=1))
     for i, e in enumerate(events):
         # Default optional fields and materialize family_visit label for display
         e.setdefault("location", "")
