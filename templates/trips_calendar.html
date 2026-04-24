@@ -175,7 +175,8 @@
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--gray);
-    min-width: 2.5rem;
+    width: 4rem;
+    flex-shrink: 0;
     text-align: center;
   }
 
@@ -442,8 +443,9 @@ function renderList() {
     if (trip.stays.length) counts.push(`${trip.stays.length} campspot${trip.stays.length !== 1 ? 's' : ''}`);
     if (trip.events.length) counts.push(`${trip.events.length} event${trip.events.length !== 1 ? 's' : ''}`);
 
+    const numLabel = trip.number ? '#' + trip.number : 'Home';
     a.innerHTML = `
-      <div class="trip-number">#${trip.number}</div>
+      <div class="trip-number">${numLabel}</div>
       <div class="dates">${datesHtml}</div>
       <div class="info">
         <h3>${trip.summary}</h3>

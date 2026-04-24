@@ -35,10 +35,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 @app.context_processor
 def inject_trip_stats():
-    trips = parse_trips()
-    is_admin = current_user.is_authenticated and current_user.is_admin
-    if not is_admin:
-        trips = [t for t in trips if not t.get("home_only")]
+    trips = [t for t in parse_trips() if not t.get("home_only")]
     overnight = sum(1 for t in trips if t["stays"])
     daytrips = sum(1 for t in trips if not t["stays"])
     return {

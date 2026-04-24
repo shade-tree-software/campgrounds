@@ -49,8 +49,13 @@ def _load_trips_json():
     trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                         t.get("events", []), locations) for t in raw]
     trips.sort(key=lambda t: t["start"])
-    for i, t in enumerate(trips, 1):
-        t["number"] = i
+    n = 0
+    for t in trips:
+        if t.get("home_only"):
+            t["number"] = None
+        else:
+            n += 1
+            t["number"] = n
     return trips
 
 

@@ -1029,7 +1029,7 @@
     {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip">&#8249;</a>{% endif %}
   </div>
   <div class="trip-info">
-    <h1 id="trip-title">Trip {{ trip.number }}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
+    <h1 id="trip-title">{% if trip.number %}Trip {{ trip.number }}{% else %}Home{% endif %}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
     <div class="trip-note-edit" id="trip-note-edit">
       <input type="text" id="trip-note-input" value="{{ trip.trip_note }}" placeholder="Trip name (leave blank for auto-generated)">
       <button class="btn-note-save" onclick="saveTripNote()">Save</button>
