@@ -1516,6 +1516,21 @@ function scrollToCard(cardId) {
   const target = window.scrollY + el.getBoundingClientRect().top - siteTop - tripHdr - 16;
   window.scrollTo({ top: target, behavior: 'smooth' });
 }
+
+// Click a card → center & zoom the map on its marker.
+// Copy ids (stay-3-2) resolve to their base stay (stay-3).
+document.querySelectorAll('.stay-card, .event-card').forEach(card => {
+  card.addEventListener('click', (e) => {
+    if (e.target.closest('a, button, img, input, textarea, select, label')) return;
+    const id = card.id || '';
+    const m = id.match(/^stay-(\d+)-\d+$/);
+    const lookupId = m ? 'stay-' + m[1] : id;
+    const ll = window.tripCardTargets && window.tripCardTargets[lookupId];
+    if (ll && window.tripMap) {
+      window.tripMap.setView(ll, 14, { animate: true });
+    }
+  });
+});
 </script>
 <script>
 // Globals used by both the map IIFE (popups) and the editing UI below.
@@ -1559,6 +1574,12 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
   const HOME = [38.929576, -77.366840];
   const bounds = [HOME];
 
+  // Lookup: card id → [lat, lng] for click-to-focus on the map
+  const cardTargets = {};
+  window.tripCardTargets = cardTargets;
+  cardTargets['home-card-start'] = HOME;
+  cardTargets['home-card-end'] = HOME;
+
   // Home marker
   const homeIcon = L.divIcon({
     className: '',
@@ -1594,6 +1615,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     L.marker(ll, { icon, zIndexOffset: 800 })
       .addTo(map)
       .on('click', () => scrollToCard('stay-' + stay.idx));
+    cardTargets['stay-' + stay.idx] = ll;
   });
 
   // Build day-by-day chronological route
@@ -1703,6 +1725,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
       .addTo(map)
       .on('click', () => scrollToCard('event-' + evt.idx));
+    cardTargets['event-' + evt.idx] = ll;
   });
 
   familyVisitGroups.forEach(group => {
@@ -1731,6 +1754,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
       .addTo(map)
       .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
+    group.forEach(evt => { cardTargets['event-' + evt.idx] = ll; });
   });
 
   // Family location markers — only show if a stay or event is nearby
