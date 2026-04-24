@@ -351,6 +351,7 @@ def trips_map():
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
                             "trip_id": trip["id"],
+                            "card": f"stay-{i}",
                         })
         for i, event in enumerate(trip.get("events", [])):
             photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), "events", str(i))
@@ -360,6 +361,7 @@ def trips_map():
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
                             "trip_id": trip["id"],
+                            "card": f"event-{i}",
                         })
     random.shuffle(all_photos)
 

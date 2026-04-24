@@ -180,17 +180,22 @@ if (HOME) {
     .bindPopup('<strong>Home</strong>');
 }
 
-// Collect unique locations across all trips
+// Collect unique locations across all trips. Each trip entry under a
+// location records the stay index so popup links can deep-link to the
+// matching card on the trip detail page.
 const locMap = {};
 TRIPS.forEach(trip => {
-  trip.stays.forEach(stay => {
+  trip.stays.forEach((stay, stayIdx) => {
     if (!stay.lat || !stay.lng) return;
     const key = stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
     if (!locMap[key]) {
       locMap[key] = { lat: stay.lat, lng: stay.lng, place: stay.place, locale: stay.locale, state: stay.state, trips: [] };
     }
     if (!locMap[key].trips.some(t => t.id === trip.id)) {
-      locMap[key].trips.push(trip);
+      locMap[key].trips.push({
+        id: trip.id, number: trip.number, summary: trip.summary,
+        start: trip.start, stay_idx: stayIdx,
+      });
     }
   });
 });
@@ -217,7 +222,7 @@ Object.values(locMap).forEach(loc => {
   loc.trips.forEach(t => {
     const d = new Date(t.start + 'T00:00:00');
     const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
+    popup += `<a href="/trips/${t.id}#stay-${t.stay_idx}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
   });
   popup += '</div>';
   marker.bindPopup(popup, { maxWidth: 280 });
@@ -226,13 +231,13 @@ Object.values(locMap).forEach(loc => {
 // Event markers (gold dots)
 const eventLocMap = {};
 TRIPS.forEach(trip => {
-  (trip.events || []).forEach(evt => {
+  (trip.events || []).forEach((evt, eventIdx) => {
     if (!evt.lat || !evt.lng || evt.waypoint) return;
     const key = evt.lat.toFixed(4) + ',' + evt.lng.toFixed(4);
     if (!eventLocMap[key]) {
       eventLocMap[key] = { lat: evt.lat, lng: evt.lng, events: [] };
     }
-    eventLocMap[key].events.push({ name: evt.name, date: evt.date, time: evt.time, end_time: evt.end_time, trip: trip });
+    eventLocMap[key].events.push({ name: evt.name, date: evt.date, time: evt.time, end_time: evt.end_time, trip: trip, event_idx: eventIdx });
   });
 });
 
@@ -258,7 +263,7 @@ Object.values(eventLocMap).forEach(loc => {
     if (i > 0) popup += '<div style="height:6px;"></div>';
     popup += `<strong>${e.name}</strong><br>${dateStr}`;
     popup += `<div style="margin-top:4px;font-size:12px;">`;
-    popup += `<a href="/trips/${e.trip.id}" style="display:block;color:#002868;">Trip ${e.trip.number}: ${fmt} \u2014 ${e.trip.summary}</a>`;
+    popup += `<a href="/trips/${e.trip.id}#event-${e.event_idx}" style="display:block;color:#002868;">Trip ${e.trip.number}: ${fmt} \u2014 ${e.trip.summary}</a>`;
     popup += `</div>`;
   });
 
@@ -266,12 +271,18 @@ Object.values(eventLocMap).forEach(loc => {
 });
 
 // Build a map of family_id → trips that contain a family-visit event for it.
+// Each entry records the event index so popup links can deep-link to the card.
 const familyVisitTripMap = {};
 TRIPS.forEach(trip => {
-  (trip.events || []).forEach(evt => {
+  (trip.events || []).forEach((evt, eventIdx) => {
     if (evt.family_id == null) return;
     const list = familyVisitTripMap[evt.family_id] || (familyVisitTripMap[evt.family_id] = []);
-    if (!list.some(t => t.id === trip.id)) list.push(trip);
+    if (!list.some(t => t.id === trip.id)) {
+      list.push({
+        id: trip.id, number: trip.number, summary: trip.summary,
+        start: trip.start, card: 'event-' + eventIdx,
+      });
+    }
   });
 });
 
@@ -299,7 +310,7 @@ FAMILY.forEach(fam => {
   const stayTrips = stayLoc ? stayLoc.trips : [];
   const visitTrips = familyVisitTripMap[fam.id] || [];
   const tripById = new Map();
-  stayTrips.forEach(t => tripById.set(t.id, t));
+  stayTrips.forEach(t => tripById.set(t.id, { ...t, card: 'stay-' + t.stay_idx }));
   visitTrips.forEach(t => { if (!tripById.has(t.id)) tripById.set(t.id, t); });
   const trips = Array.from(tripById.values())
     .sort((a, b) => (a.start || '').localeCompare(b.start || ''));
@@ -311,7 +322,7 @@ FAMILY.forEach(fam => {
     trips.forEach(t => {
       const d = new Date(t.start + 'T00:00:00');
       const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      popup += `<a href="/trips/${t.id}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
+      popup += `<a href="/trips/${t.id}#${t.card}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
     });
     popup += '</div>';
   }
@@ -372,7 +383,7 @@ if (PHOTOS.length && leftStack && rightStack) {
     const slot = slots[idx];
     const prev = slot.querySelector('a');
     const a = document.createElement('a');
-    a.href = '/trips/' + photo.trip_id;
+    a.href = '/trips/' + photo.trip_id + (photo.card ? '#' + photo.card : '');
     const img = document.createElement('img');
     img.src = photo.url;
     img.loading = 'lazy';

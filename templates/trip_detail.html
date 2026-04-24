@@ -1531,6 +1531,22 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
     }
   });
 });
+
+// Deep-link from the main map: /trips/<id>#stay-N or #event-N.
+// Capture and strip the hash before the browser's native anchor jump, then
+// smooth-scroll through scrollToCard() so the sticky site-top + trip-header
+// offsets are honored.
+(function() {
+  const hash = location.hash;
+  if (!hash || hash.length <= 1) return;
+  const cardId = hash.slice(1);
+  history.replaceState(null, '', location.pathname + location.search);
+  window.addEventListener('load', () => {
+    if (document.getElementById(cardId)) {
+      setTimeout(() => scrollToCard(cardId), 50);
+    }
+  });
+})();
 </script>
 <script>
 // Globals used by both the map IIFE (popups) and the editing UI below.
