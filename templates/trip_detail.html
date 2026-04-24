@@ -705,60 +705,6 @@
 
   .photo-item:hover .delete-photo { display: flex; }
 
-  .upload-area {
-    border: 2px dashed var(--gray-light);
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    cursor: pointer;
-    transition: border-color .2s, background .2s;
-    margin-bottom: .5rem;
-  }
-
-  .upload-area:hover {
-    border-color: var(--red);
-    background: var(--blue-bg);
-  }
-
-  .upload-area input { display: none; }
-
-  .upload-area p {
-    font-size: .8rem;
-    color: var(--gray);
-  }
-
-  .upload-progress {
-    width: 100%;
-    margin-top: .5rem;
-  }
-
-  .upload-progress-bar {
-    height: 6px;
-    border-radius: 3px;
-    background: var(--gray-light);
-    overflow: hidden;
-  }
-
-  .upload-progress-fill {
-    height: 100%;
-    width: 0%;
-    background: var(--navy);
-    border-radius: 3px;
-    transition: width .15s;
-  }
-
-  .upload-progress-text {
-    font-size: .75rem;
-    color: var(--gray);
-    margin-top: .25rem;
-  }
-
-  .upload-error {
-    font-size: .8rem;
-    color: var(--red);
-    margin-top: .5rem;
-  }
-
   .btn-delete-all-photos {
     background: none;
     border: none;
@@ -766,6 +712,9 @@
     font-size: .75rem;
     cursor: pointer;
     padding: .25rem 0;
+    margin-left: auto;
+    flex-shrink: 0;
+    align-self: flex-start;
   }
 
   .btn-delete-all-photos:hover {
@@ -935,21 +884,6 @@
     gap: 1rem;
   }
 
-  .btn-map-expand {
-    background: var(--white);
-    border: 1px solid var(--gray-light);
-    border-radius: 4px;
-    padding: .25rem .6rem;
-    font-size: .8rem;
-    color: var(--navy);
-    cursor: pointer;
-    font-family: inherit;
-  }
-
-  .btn-map-expand:hover {
-    background: var(--gray-lightest, #f5f5f5);
-  }
-
   #trip-map {
     /* Default (single-column / no cards): fill the viewport between the
        sticky headers and the page bottom, matching the two-col map size.
@@ -959,24 +893,6 @@
     min-height: 380px;
     width: 100%;
     z-index: 0;
-  }
-
-  .map-container.expanded {
-    position: fixed;
-    top: var(--site-top-height, 0px);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: 0;
-    border-radius: 0;
-    z-index: 600;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .map-container.expanded #trip-map {
-    flex: 1;
-    height: auto;
   }
 
   .event-edit-form .form-grid {
@@ -1073,10 +989,7 @@
     <div class="map-column-fixed">
       {% if mapped_stays or mapped_events %}
       <div class="map-container" id="map-container">
-        <h3>
-          <span>Trip Route</span>
-          <button type="button" class="btn-map-expand" id="btn-map-expand" onclick="toggleMapExpand()">Expand</button>
-        </h3>
+        <h3><span>Trip Route</span></h3>
         <div id="trip-map"></div>
       </div>
       {% endif %}
@@ -1125,6 +1038,9 @@
           {% endif %}
         </div>
       </div>
+      {% if is_admin and item.copy_num == 1 %}
+      <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+      {% endif %}
     </div>
     {% if item.copy_num == 1 %}
     <div class="stay-edit-form" id="stay-edit-{{ item.idx }}">
@@ -1228,17 +1144,6 @@
           </div>
           {% endfor %}
         </div>
-        {% if is_admin %}
-        <div class="upload-area" onclick="this.querySelector('input').click()"
-             data-trip="{{ trip.id }}" data-stay="{{ item.idx }}">
-          <input type="file" accept="image/*,.zip" multiple
-                 onchange="uploadPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
-          <p>Click to upload photos or a zip file</p>
-        </div>
-        {% if item.copy_num == 1 %}
-        <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
-        {% endif %}
-        {% endif %}
       </div>
       {% endif %}
     </div>
@@ -1260,6 +1165,9 @@
           {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
         </div>
       </div>
+      {% if is_admin and not is_bare %}
+      <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+      {% endif %}
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
       {% if item.family_visit %}
@@ -1371,15 +1279,6 @@
           </div>
           {% endfor %}
         </div>
-        {% if is_admin %}
-        <div class="upload-area" onclick="this.querySelector('input').click()"
-             data-trip="{{ trip.id }}" data-event="{{ item.idx }}">
-          <input type="file" accept="image/*,.zip" multiple
-                 onchange="uploadEventPhotos({{ trip.id }}, {{ item.idx }}, this.files)">
-          <p>Click to upload photos or a zip file</p>
-        </div>
-        <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
-        {% endif %}
       </div>
       {% endif %}
     </div>
@@ -1459,17 +1358,6 @@
 {% block scripts %}
 <script src="/static/map-picker.js"></script>
 <script>
-function toggleMapExpand() {
-  const container = document.getElementById('map-container');
-  const btn = document.getElementById('btn-map-expand');
-  if (!container) return;
-  const expanded = container.classList.toggle('expanded');
-  if (btn) btn.textContent = expanded ? 'Collapse' : 'Expand';
-  if (window.tripMap) {
-    setTimeout(() => window.tripMap.invalidateSize(), 50);
-  }
-}
-
 // Publish the trip-header height as --trip-header-height so the fixed map
 // column (two-col layout) can offset itself below the red header bar.
 (function() {
@@ -2400,102 +2288,6 @@ function hideEventLocationMap() {
 }
 
 // ── Event photo functions ─��───────────────��──────────────────────────────
-function _uploadWithProgress(url, files, grid, tripId, idx, type) {
-  const uploadArea = grid.closest('.photos-section').querySelector('.upload-area');
-  const totalFiles = files.length;
-  let completed = 0;
-
-  // Create progress UI
-  const oldError = uploadArea.querySelector('.upload-error');
-  if (oldError) oldError.remove();
-  let progressEl = uploadArea.querySelector('.upload-progress');
-  if (!progressEl) {
-    progressEl = document.createElement('div');
-    progressEl.className = 'upload-progress';
-    progressEl.innerHTML = '<div class="upload-progress-bar"><div class="upload-progress-fill"></div></div><div class="upload-progress-text"></div>';
-    uploadArea.appendChild(progressEl);
-  }
-  const fill = progressEl.querySelector('.upload-progress-fill');
-  const text = progressEl.querySelector('.upload-progress-text');
-  progressEl.style.display = '';
-
-  // Per-file progress tracking
-  const fileProgress = new Array(totalFiles).fill(0);
-  function updateProgress() {
-    const total = fileProgress.reduce((a, b) => a + b, 0) / totalFiles;
-    fill.style.width = Math.round(total) + '%';
-    text.textContent = totalFiles === 1
-      ? 'Uploading\u2026 ' + Math.round(total) + '%'
-      : 'Uploading file ' + Math.min(completed + 1, totalFiles) + ' of ' + totalFiles + '\u2026 ' + Math.round(total) + '%';
-  }
-  updateProgress();
-
-  const errors = [];
-
-  Array.from(files).forEach((file, i) => {
-    const form = new FormData();
-    form.append('photo', file);
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-
-    xhr.upload.onprogress = e => {
-      if (e.lengthComputable) {
-        fileProgress[i] = (e.loaded / e.total) * 100;
-        updateProgress();
-      }
-    };
-
-    xhr.onload = () => {
-      completed++;
-      fileProgress[i] = 100;
-      updateProgress();
-      try {
-        const data = JSON.parse(xhr.responseText);
-        if (data.error) {
-          errors.push(file.name + ': ' + data.error);
-        } else {
-          const items = data.files || [data];
-          items.forEach(f => _addPhotoToGrid(grid, tripId, idx, f.filename, f.url, type));
-        }
-      } catch (e) {
-        errors.push(file.name + ': unexpected server response');
-      }
-      if (completed === totalFiles) _uploadDone(progressEl, uploadArea, errors);
-    };
-
-    xhr.onerror = () => {
-      completed++;
-      fileProgress[i] = 100;
-      errors.push(file.name + ': upload failed (network error)');
-      if (completed === totalFiles) _uploadDone(progressEl, uploadArea, errors);
-    };
-
-    xhr.send(form);
-  });
-}
-
-function _uploadDone(progressEl, uploadArea, errors) {
-  progressEl.style.display = 'none';
-  progressEl.querySelector('.upload-progress-fill').style.width = '0%';
-  if (errors.length) {
-    let errorEl = uploadArea.querySelector('.upload-error');
-    if (!errorEl) {
-      errorEl = document.createElement('div');
-      errorEl.className = 'upload-error';
-      uploadArea.appendChild(errorEl);
-    }
-    errorEl.textContent = errors.length === 1
-      ? 'Upload failed: ' + errors[0]
-      : errors.length + ' uploads failed: ' + errors.join('; ');
-  }
-}
-
-function uploadEventPhotos(tripId, eventIdx, files) {
-  const grid = document.getElementById('event-photos-' + eventIdx);
-  _uploadWithProgress(`/trips/${tripId}/events/${eventIdx}/upload`, files, grid, tripId, eventIdx, 'event');
-}
-
 function deleteEventPhoto(tripId, eventIdx, filename, btn) {
   if (!confirm('Delete this photo?')) return;
   fetch(`/trips/${tripId}/events/${eventIdx}/photos/${filename}`, { method: 'DELETE' })
@@ -2517,33 +2309,6 @@ function deleteAllEventPhotos(tripId, eventIdx) {
         if (btn) btn.style.display = 'none';
       }
     });
-}
-
-// ── Photo functions ──────────────────────────────────────────────────────
-function _addPhotoToGrid(grid, tripId, idx, filename, url, type) {
-  const item = document.createElement('div');
-  item.className = 'photo-item';
-  item.draggable = IS_ADMIN;
-  item.dataset.filename = filename;
-  const deleteFn = type === 'event' ? 'deleteEventPhoto' : 'deletePhoto';
-  item.innerHTML = `
-    <img src="${url}" alt="" onclick="openLightbox(this)">
-    <button class="delete-photo" onclick="${deleteFn}(${tripId}, ${idx}, '${filename}', this)">&times;</button>
-    <div class="caption-area">
-      <span class="caption-text placeholder" onclick="editCaption(this)">Add a caption...</span>
-      <textarea class="caption-input" rows="1"
-                onblur="saveCaptionField(this, ${tripId}, ${idx}, '${filename}', '${type}')"
-                onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}"></textarea>
-    </div>
-  `;
-  grid.appendChild(item);
-  const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
-  if (btn) btn.style.display = '';
-}
-
-function uploadPhotos(tripId, stayIdx, files) {
-  const grid = document.getElementById('photos-' + stayIdx);
-  _uploadWithProgress(`/trips/${tripId}/stays/${stayIdx}/upload`, files, grid, tripId, stayIdx, 'stay');
 }
 
 // Upload photos for a stay or event directly from its card's header button.
@@ -2875,76 +2640,5 @@ function initPhotoDrag(grid) {
 }
 
 if (IS_ADMIN) document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
-
-// Drag and drop support for upload areas
-document.querySelectorAll('.upload-area').forEach(area => {
-  // Find the sibling photo-grid for this upload area
-  const siblingGrid = area.closest('.photos-section').querySelector('.photo-grid');
-
-  area.addEventListener('dragover', e => {
-    e.preventDefault();
-    if (dragItem) {
-      // Internal photo drag — show drop indicator
-      e.dataTransfer.dropEffect = 'move';
-      if (siblingGrid && siblingGrid !== dragSourceGrid) {
-        document.querySelectorAll('.photo-grid.drag-target').forEach(el => el.classList.remove('drag-target'));
-        if (siblingGrid.querySelector('.photo-item')) {
-          siblingGrid.classList.add('drag-target');
-        } else {
-          area.style.borderColor = 'var(--red)';
-          area.style.background = 'var(--red-bg)';
-        }
-      }
-    } else {
-      // External file drag
-      area.style.borderColor = '#4a7c23';
-      area.style.background = '#e8f5e9';
-    }
-  });
-  area.addEventListener('dragleave', e => {
-    area.style.borderColor = '';
-    area.style.background = '';
-    if (siblingGrid) siblingGrid.classList.remove('drag-target');
-  });
-  area.addEventListener('drop', e => {
-    e.preventDefault();
-    area.style.borderColor = '';
-    area.style.background = '';
-    if (dragItem && siblingGrid) {
-      // Internal photo move — append to sibling grid
-      document.querySelectorAll('.photo-grid.drag-target').forEach(el => el.classList.remove('drag-target'));
-      const crossGrid = dragSourceGrid && dragSourceGrid !== siblingGrid;
-      if (!crossGrid) return;
-      siblingGrid.appendChild(dragItem);
-      const src = parseGridId(dragSourceGrid);
-      const dst = parseGridId(siblingGrid);
-      const filename = dragItem.dataset.filename;
-      fetch(`/trips/${TRIP_ID}/move-photo`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          filename: filename,
-          src_type: src.type, src_idx: src.idx,
-          dst_type: dst.type, dst_idx: dst.idx,
-        })
-      })
-      .then(r => r.json())
-      .then(data => {
-        if (data.error) { alert(data.error); location.reload(); return; }
-        if (data.filename !== filename) dragItem.dataset.filename = data.filename;
-        saveGridOrder(dragSourceGrid);
-        saveGridOrder(siblingGrid);
-      });
-    } else {
-      // External file upload
-      const tripId = parseInt(area.dataset.trip);
-      if (area.dataset.event !== undefined) {
-        uploadEventPhotos(tripId, parseInt(area.dataset.event), e.dataTransfer.files);
-      } else {
-        uploadPhotos(tripId, parseInt(area.dataset.stay), e.dataTransfer.files);
-      }
-    }
-  });
-});
 </script>
 {% endblock %}
