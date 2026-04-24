@@ -87,7 +87,7 @@ Trips have two distinct identifiers:
 - **Family markers on trip detail:** Only shown when a stay or event from the trip is within 80km (haversine distance).
 - **Trip detail route:** Built day-by-day in chronological order. For each date in the trip: morning location (stay you woke at, or HOME) → events/waypoints sorted by time → evening location (stay you sleep at, or HOME). Events/waypoints without a time are assumed to be at noon. This creates loops on days spent at the same stay with excursions, and direct trails on travel days between stays.
 - **Z-index layering on trip detail:** Home (1000) > Family (900) > Stays (800) > Events (default).
-- **Trip detail popup contents:** Stay popups show place name, locale/state, nights. Event/waypoint popups show name, locale/state (when present), and date/time. Family-visit events at the same family location share one red house marker whose popup lists every visit (sorted by date/time, with custom event names appended after an em dash when distinct from the family label). The map IIFE attaches each item's original array index as `idx` (before lat/lng filtering) so popup actions can address the right slot.
+- **Trip detail markers have no popups.** Clicks scroll to cards instead (see "Trip Detail Map → Card Scrolling"). Family-visit events at the same family location are still collapsed into one shared red-house marker (via `familyVisitGroups`); its click scrolls to the earliest visit's card. The map IIFE still attaches each item's original array index as `idx` (before lat/lng filtering) so click handlers can address the right slot.
 
 ### Trip Detail Layout
 
@@ -121,8 +121,12 @@ Trips have two distinct identifiers:
 
 ### Trip Detail Editing UX
 
-- The timeline acts as the photo-bearing narrative. Admin actions (edit, upload) are also available directly from every map popup — see below — so items that render as bare cards (or have no photos yet) are still fully editable without any inline UI inside the card.
-- Map popups are the primary admin control surface. Each stay, event, waypoint, and family-visit popup gets admin-only **Edit** and **Upload Photos** buttons via the `popupAdminActions(editKind, idx, uploadKind)` helper inside the map IIFE. Home and family-only (no events) popups have no admin actions because those aren't trip items.
+- Trip-detail map markers have **no popups** — clicking a marker just scrolls the cards column to the corresponding card (home marker → `#home-card-start`, stay → `stay-{idx}`, event/waypoint → `event-{idx}`, grouped family-visit → earliest visit card in the group). Family-proximity markers render silently (no popup, no click handler).
+- Admin **Edit** and **Upload Photos** buttons live on the timeline cards themselves, inline with each card's title `<h3>`. `uploadPhotosForItem(kind, idx)` triggers a hidden file input and posts to the existing upload endpoint, then reloads.
+  - Stay cards render both buttons on copy 1 only (duplicate IDs would otherwise collide with the inline edit form).
+  - Non-bare event cards keep the inline edit flow (`editEvent(idx)` reveals the `.event-edit-form` block).
+  - Bare event cards (waypoints/family-visits without photos) use the shared modal: Edit calls `openEditModal('waypoint' | 'family_visit' | 'event', idx)`. The CSS rule that used to hide `.edit-btn-dark` on bare cards was removed so these buttons show.
+  - Home cards are structural — no edit/upload controls.
 - Editing flows through a single shared modal. `openAddModal(kind)` and `openEditModal(kind, idx)` both call `_openModal(kind, mode, idx)`, which renders the form via `_modalFormHtml(kind, values)` (pre-filled in edit mode) and toggles a Delete button. `submitAddModal()` switches POST/PUT on `addModalMode`. The modal event/waypoint form includes a Waypoint checkbox so admins can flip event ↔ waypoint without going through a card.
 - `uploadFromPopup(kind, idx)` creates a hidden `<input type="file" multiple accept="image/*,.zip">`, posts each file to the existing `/upload` endpoint with field name `photo`, then `location.reload()`s once all complete. After reload the card appears as a frame for the freshly uploaded photos.
 - Cards-with-photos retain the original inline edit form (`editStay`/`editEvent` reveal `stay-edit-{idx}` / `event-edit-{idx}` blocks). Both the inline path and the modal path are wired to the same backing API endpoints.

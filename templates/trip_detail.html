@@ -225,7 +225,6 @@
     padding: 1rem 1.25rem;
   }
   .event-card.bare .event-body { display: none; }
-  .event-card.bare .edit-btn-dark { display: none; }
 
   .home-card .event-icon { background: #bf0a30; }
 
@@ -787,26 +786,6 @@
 
   .lightbox.visible { display: flex; }
 
-  /* ── Map popup admin actions ─────────────────────── */
-  .popup-admin-actions {
-    margin-top: .4rem;
-    display: flex;
-    gap: .35rem;
-    flex-wrap: wrap;
-  }
-  .popup-admin-actions button {
-    font-size: .75rem;
-    padding: .2rem .5rem;
-    border: 1px solid #bbb;
-    background: #f6f6f6;
-    border-radius: 3px;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .popup-admin-actions button:hover { background: #eaeaea; }
-  .popup-visit-row { margin-top: .25rem; }
-  .popup-visit-row:first-child { margin-top: .15rem; }
-
   /* ── Add modal ───────────────────────────────────── */
   .add-modal {
     display: none;
@@ -1137,7 +1116,7 @@
     <div class="stay-header">
       <div class="stay-number">{{ item.idx + 1 }}</div>
       <div class="stay-info">
-        <h3>{{ item.place }}{% if is_admin and item.copy_num == 1 %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}</h3>
+        <h3>{{ item.place }}{% if is_admin and item.copy_num == 1 %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button><button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button>{% endif %}</h3>
         <div class="stay-meta">
           {% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}
           {% if item.copy_count and item.copy_count > 1 %}
@@ -1274,7 +1253,7 @@
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
-        <h3>{{ item.name }}{% if is_admin %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}</h3>
+        <h3>{{ item.name }}{% if is_admin %}{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button>{% endif %}</h3>
         <div class="event-meta">
           {% if item.locale or item.state %}
             {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
@@ -1596,26 +1575,11 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
   });
   L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
     .addTo(map)
-    .bindPopup('<strong>Home</strong><br>Reston, VA')
     .on('click', () => scrollToCard('home-card-start'));
-
-  // Admin-only Edit + Upload Photos buttons inside a map popup.
-  // `editKind` drives the modal (stay / event / waypoint / family_visit);
-  // `uploadKind` is the upload-endpoint family ('stay' | 'event').
-  function popupAdminActions(editKind, idx, uploadKind) {
-    if (!IS_ADMIN) return '';
-    return `<div class="popup-admin-actions">`
-      + `<button type="button" onclick="openEditModal('${editKind}', ${idx})">Edit</button>`
-      + `<button type="button" onclick="uploadFromPopup('${uploadKind}', ${idx})">Upload Photos</button>`
-      + `</div>`;
-  }
 
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
     bounds.push(ll);
-
-    const stayActions = popupAdminActions('stay', stay.idx, 'stay');
-    const label = `<strong>${i + 1}. ${stay.place}</strong><br>${stay.locale}, ${stay.state}<br>${stay.nights} night${stay.nights !== 1 ? 's' : ''}${stayActions}`;
 
     const icon = L.divIcon({
       className: '',
@@ -1631,7 +1595,6 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     });
     L.marker(ll, { icon, zIndexOffset: 800 })
       .addTo(map)
-      .bindPopup(label)
       .on('click', () => scrollToCard('stay-' + stay.idx));
   });
 
@@ -1739,13 +1702,8 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     const zOffset = isWaypoint ? 100 : 700;
     const labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
 
-    const place = [evt.locale, evt.state].filter(Boolean).join(', ');
-    const placeLine = place ? `${place}<br>` : '';
-    const evtKind = evt.waypoint ? 'waypoint' : 'event';
-    const evtActions = popupAdminActions(evtKind, evt.idx, 'event');
     L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
       .addTo(map)
-      .bindPopup(`<strong>${labelPrefix}${evt.name}</strong><br>${placeLine}${eventDateLabel(evt)}${evtActions}`)
       .on('click', () => scrollToCard('event-' + evt.idx));
   });
 
@@ -1768,18 +1726,12 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     const sorted = [...group].sort((a, b) =>
       (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''))
     );
-    const header = `<strong>&#8962; ${sorted[0].family_visit}</strong>`;
-    const items = sorted.map(e => {
-      const showName = e.name && e.name !== e.family_visit;
-      const actions = popupAdminActions('family_visit', e.idx, 'event');
-      return `<div class="popup-visit-row">${eventDateLabel(e)}${showName ? ' &mdash; ' + e.name : ''}${actions}</div>`;
-    }).join('');
-    // Scroll to the first visit in the group that has a card on the page
-    // (cards only render when an item has photos).
+    // Click scrolls to the first visit's card; every family-visit event now
+    // has a card (bare or with-photos), so the lookup is effectively always
+    // the earliest visit in the group.
     const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
     L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
       .addTo(map)
-      .bindPopup(header + items)
       .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
   });
 
@@ -1814,8 +1766,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
-      .bindPopup(`<strong>${fam.label}</strong>`);
+    L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map);
   });
 
   map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
@@ -2523,9 +2474,9 @@ function uploadPhotos(tripId, stayIdx, files) {
   _uploadWithProgress(`/trips/${tripId}/stays/${stayIdx}/upload`, files, grid, tripId, stayIdx, 'stay');
 }
 
-// Upload from a map popup — works for items with no card on the page.
+// Upload photos for a stay or event directly from its card's header button.
 // Triggers a hidden file input, uploads each file, then reloads on completion.
-function uploadFromPopup(kind, idx) {
+function uploadPhotosForItem(kind, idx) {
   if (!IS_ADMIN) return;
   const url = kind === 'stay'
     ? `/trips/${TRIP_ID}/stays/${idx}/upload`
