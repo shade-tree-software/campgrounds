@@ -14,52 +14,57 @@
     padding: .5rem 2rem 0;
   }
 
+  .map-layout {
+    display: flex;
+    gap: 1rem;
+    align-items: stretch;
+    justify-content: center;
+  }
+
   .map-container {
     background: var(--white);
     border-radius: 10px;
     box-shadow: var(--shadow);
     overflow: hidden;
-  }
-
-  .map-header {
-    padding: .75rem 1.25rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid var(--gray-light);
+    flex: 0 0 auto;
+    width: min(calc(100vh - 180px), 900px, 100%);
+    aspect-ratio: 1 / 1;
   }
 
   #all-trips-map {
-    height: calc(100vh - 390px);
-    min-height: 300px;
+    height: 100%;
     width: 100%;
   }
 
-  .slideshow {
-    position: relative;
-    height: 250px;
-    overflow: hidden;
-  }
-
-  @media (max-width: 600px) {
-    .slideshow { height: 180px; }
-  }
-
-  .slideshow-track {
+  .photo-stack {
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
-    height: 100%;
-    transition: transform 1s ease;
+    flex-direction: column;
+    gap: .75rem;
   }
 
-  .slideshow-track a {
-    flex: 0 0 var(--slide-width);
-    height: 100%;
-    display: block;
+  .photo-slot {
+    flex: 1 1 0;
+    min-height: 0;
     position: relative;
-    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    background: var(--gray-light);
   }
 
-  .slideshow-track a::after {
+  .photo-slot a {
+    position: absolute;
+    inset: 0;
+    display: block;
+    opacity: 0;
+    transition: opacity .8s ease;
+  }
+
+  .photo-slot a.visible { opacity: 1; }
+
+  .photo-slot a::after {
     content: '';
     position: absolute;
     bottom: 6px;
@@ -76,19 +81,24 @@
     transition: opacity .2s;
   }
 
-  .slideshow-track a:hover::after {
-    opacity: 1;
-  }
+  .photo-slot a:hover::after { opacity: 1; }
+  .photo-slot a:hover img { filter: brightness(1.1); }
 
-  .slideshow-track a:hover img {
-    filter: brightness(1.1);
-  }
-
-  .slideshow-track img {
+  .photo-slot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     transition: filter .2s;
+  }
+
+  @media (max-width: 900px) {
+    .photo-stack { display: none; }
+    .map-container {
+      width: 100%;
+      aspect-ratio: auto;
+      height: calc(100vh - 200px);
+      min-height: 300px;
+    }
   }
 
   .map-legend {
@@ -118,12 +128,12 @@
 
 {% block content %}
 <div class="map-section">
-  <div class="map-container">
-    {% if slideshow_photos %}
-    <div class="slideshow" id="slideshow"></div>
-    <div style="height:4px;background:var(--gray-light);"></div>
-    {% endif %}
-    <div id="all-trips-map"></div>
+  <div class="map-layout">
+    {% if slideshow_photos %}<div class="photo-stack" id="stack-left"></div>{% endif %}
+    <div class="map-container">
+      <div id="all-trips-map"></div>
+    </div>
+    {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
   </div>
 </div>
 {% endblock %}
@@ -321,45 +331,66 @@ legend.onAdd = function() {
 };
 legend.addTo(map);
 
-// ── Slideshow ────────────────────────────────────────────────────────────
+// ── Photo stacks ─────────────────────────────────────────────────────────
 const PHOTOS = {{ slideshow_photos | tojson }};
-if (PHOTOS.length) {
-  const container = document.getElementById('slideshow');
-  const VISIBLE = Math.min(window.innerWidth < 600 ? 2 : window.innerWidth < 900 ? 3 : 5, PHOTOS.length);
-  container.style.setProperty('--slide-width', (100 / VISIBLE) + '%');
+const leftStack = document.getElementById('stack-left');
+const rightStack = document.getElementById('stack-right');
+if (PHOTOS.length && leftStack && rightStack) {
+  const STACK_SIZE = 3;
+  const slots = [];
+  for (let i = 0; i < STACK_SIZE; i++) {
+    const s = document.createElement('div');
+    s.className = 'photo-slot';
+    leftStack.appendChild(s);
+    slots.push(s);
+  }
+  for (let i = 0; i < STACK_SIZE; i++) {
+    const s = document.createElement('div');
+    s.className = 'photo-slot';
+    rightStack.appendChild(s);
+    slots.push(s);
+  }
 
-  const track = document.createElement('div');
-  track.className = 'slideshow-track';
+  const slotPhotos = new Array(slots.length).fill(null);
 
-  // Build slides: full set + clone first VISIBLE for seamless wrap
-  const slides = [...PHOTOS, ...PHOTOS.slice(0, VISIBLE)];
-  slides.forEach(photo => {
+  function pickPhoto(excludeIdx) {
+    const visible = new Set();
+    slotPhotos.forEach((p, i) => { if (p && i !== excludeIdx) visible.add(p.url); });
+    if (excludeIdx != null && slotPhotos[excludeIdx]) visible.add(slotPhotos[excludeIdx].url);
+    const candidates = PHOTOS.filter(p => !visible.has(p.url));
+    const pool = candidates.length ? candidates : PHOTOS;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  function setSlot(idx, photo) {
+    const slot = slots[idx];
+    const prev = slot.querySelector('a');
     const a = document.createElement('a');
     a.href = '/trips/' + photo.trip_id;
     const img = document.createElement('img');
     img.src = photo.url;
     img.loading = 'lazy';
     a.appendChild(img);
-    track.appendChild(a);
-  });
-  container.appendChild(track);
+    slot.appendChild(a);
+    slotPhotos[idx] = photo;
 
-  let pos = 0;
-  const step = 100 / VISIBLE;
+    const reveal = () => requestAnimationFrame(() => a.classList.add('visible'));
+    if (img.complete) reveal();
+    else img.addEventListener('load', reveal, { once: true });
 
-  setInterval(() => {
-    pos++;
-    track.style.transition = 'transform 1s ease';
-    track.style.transform = `translateX(-${pos * step}%)`;
-
-    if (pos >= PHOTOS.length) {
-      setTimeout(() => {
-        track.style.transition = 'none';
-        track.style.transform = 'translateX(0)';
-        pos = 0;
-      }, 1050);
+    if (prev) {
+      setTimeout(() => { if (prev.parentNode === slot) prev.remove(); }, 900);
     }
-  }, 4000);
+  }
+
+  slots.forEach((_, i) => setSlot(i, pickPhoto(i)));
+
+  if (PHOTOS.length > 1) {
+    setInterval(() => {
+      const idx = Math.floor(Math.random() * slots.length);
+      setSlot(idx, pickPhoto(idx));
+    }, 2500);
+  }
 }
 </script>
 {% endblock %}
