@@ -192,13 +192,9 @@
   }
   .event-card.waypoint .event-header {
     background: #f0f0f0;
-    padding: .75rem 1rem;
   }
   .event-card.waypoint .event-icon {
     background: #aaa;
-    width: 1.6rem;
-    height: 1.6rem;
-    font-size: .75rem;
   }
 
   .event-card.family-visit .event-header {
@@ -207,6 +203,31 @@
   .event-card.family-visit .event-icon {
     background: #bf0a30;
   }
+
+  /* Bare event cards: waypoints and family-visits with no photos, plus
+     the start/end home-cards. Render as just the colored circle + text,
+     no card chrome. Circle x-position still matches regular cards so
+     every timeline marker lines up on the same vertical axis. */
+  .event-card.bare {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    overflow: visible;
+    margin-bottom: 1rem;
+  }
+  .event-card.bare .event-header {
+    background: transparent;
+    border-bottom: none;
+    /* Keep 1rem top/bottom padding so the circle center lines up at
+       2rem from the card edge — the timeline line's endpoints assume
+       this. Horizontal 1.25rem matches regular cards so circles
+       align on the same vertical axis. */
+    padding: 1rem 1.25rem;
+  }
+  .event-card.bare .event-body { display: none; }
+  .event-card.bare .edit-btn-dark { display: none; }
+
+  .home-card .event-icon { background: #bf0a30; }
 
   .event-body {
     padding: 1rem 1.25rem;
@@ -409,6 +430,30 @@
   .content.two-col .cards-column > :last-child {
     margin-bottom: 0;
   }
+
+  /* Timeline vertical line running through the circle centers. The cards
+     column is the positioning context; the line is a ::before pseudo
+     behind all cards. Cards + circles have higher z-index so the line
+     only shows in the gaps between them. Circle center x-offset is
+     (card header padding-left) + (circle width / 2) = 1.25rem + 1rem
+     = 2.25rem. Line height runs from the first circle's center to the
+     last circle's center (2rem down from top of first card, 2rem up
+     from bottom of last card — bare cards are ~4rem tall).  */
+  .cards-column { position: relative; }
+  .cards-column::before {
+    content: '';
+    position: absolute;
+    left: calc(2.25rem - 1px);
+    top: 2rem;
+    bottom: 2rem;
+    width: 2px;
+    background: var(--gray-light, #d0d0d0);
+    z-index: 0;
+  }
+  .cards-column .stay-card,
+  .cards-column .event-card { position: relative; z-index: 1; }
+  .cards-column .stay-number,
+  .cards-column .event-icon { position: relative; z-index: 2; }
   /* .map-column reserves the grid slot. .map-column-fixed is the actual
      viewport-pinned content; JS syncs its left/width from the placeholder. */
   .content.two-col .map-column {
@@ -1034,11 +1079,11 @@
   </div>
 </div>
 
-{# Detect whether any cards will render — drives the two-column layout. #}
-{% set photo_check = namespace(any=False) %}
-{% for v in stay_photos.values() %}{% if v %}{% set photo_check.any = True %}{% endif %}{% endfor %}
-{% for v in event_photos.values() %}{% if v %}{% set photo_check.any = True %}{% endif %}{% endfor %}
-{% set has_cards = photo_check.any %}
+{# Two-column layout whenever the trip has any timeline content. Photo
+   presence no longer gates this — the timeline always renders cards
+   (bare or full) now, so the split view is meaningful even before any
+   photos are uploaded. Truly empty trips fall back to single column. #}
+{% set has_cards = trip.timeline|length > 0 %}
 
 <div class="content{% if has_cards %} two-col{% endif %}">
 
@@ -1072,12 +1117,24 @@
 
   <!-- Cards column: timeline of interleaved stays and events -->
   <div class="cards-column">
+  {% if trip.timeline %}
+  <div class="event-card bare home-card home-card-start" id="home-card-start">
+    <div class="event-header">
+      <div class="event-icon home-icon">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
+      </div>
+      <div class="event-info">
+        <h3>Home</h3>
+        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
   {% set stay_num = namespace(val=0) %}
   {% for item in trip.timeline %}
 
   {% if item.type == "stay" %}
   {% set stay_num.val = stay_num.val + 1 %}
-  {% if stay_photos[item.idx] %}
   <div class="stay-card" id="stay-{{ item.idx }}">
     <div class="stay-header">
       <div class="stay-number">{{ stay_num.val }}</div>
@@ -1198,11 +1255,10 @@
       {% endif %}
     </div>
   </div>
-  {% endif %}
 
   {% elif item.type == "event" %}
-  {% if event_photos[item.idx] %}
-  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}" id="event-{{ item.idx }}">
+  {% set is_bare = (item.waypoint or item.family_visit) and not event_photos[item.idx] %}
+  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
@@ -1341,9 +1397,22 @@
     {% endif %}
   </div>
   {% endif %}
-  {% endif %}
 
   {% endfor %}
+
+  {% if trip.timeline %}
+  <div class="event-card bare home-card home-card-end">
+    <div class="event-header">
+      <div class="event-icon home-icon">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
+      </div>
+      <div class="event-info">
+        <h3>Home</h3>
+        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}</div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
   </div><!-- /.cards-column -->
 
 
@@ -1513,8 +1582,10 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
-    .bindPopup('<strong>Home</strong><br>Reston, VA');
+  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
+    .addTo(map)
+    .bindPopup('<strong>Home</strong><br>Reston, VA')
+    .on('click', () => scrollToCard('home-card-start'));
 
   // Admin-only Edit + Upload Photos buttons inside a map popup.
   // `editKind` drives the modal (stay / event / waypoint / family_visit);
