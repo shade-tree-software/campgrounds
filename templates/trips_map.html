@@ -403,9 +403,20 @@ if (PHOTOS.length && leftStack && rightStack) {
   slots.forEach((_, i) => setSlot(i, pickPhoto(i)));
 
   if (PHOTOS.length > 1) {
+    // Track the last few slot indices that were updated so we don't
+    // immediately swap the same one again. Cooldown is capped to one
+    // less than the total slot count so there's always a valid pick.
+    const recentSlots = [];
+    const COOLDOWN = Math.min(3, slots.length - 1);
     setInterval(() => {
-      const idx = Math.floor(Math.random() * slots.length);
+      const eligible = [];
+      for (let i = 0; i < slots.length; i++) {
+        if (!recentSlots.includes(i)) eligible.push(i);
+      }
+      const idx = eligible[Math.floor(Math.random() * eligible.length)];
       setSlot(idx, pickPhoto(idx));
+      recentSlots.push(idx);
+      if (recentSlots.length > COOLDOWN) recentSlots.shift();
     }, 2500);
   }
 }
