@@ -1535,16 +1535,50 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
 // Deep-link from the main map: /trips/<id>#stay-N or #event-N.
 // Capture and strip the hash before the browser's native anchor jump, then
 // smooth-scroll through scrollToCard() so the sticky site-top + trip-header
-// offsets are honored.
+// offsets are honored. Cards above the target may reflow as lazy images
+// load, which would push the target down mid-scroll — re-pin the card to
+// the top each time an image load fires, until the user takes over or a
+// safety timeout elapses.
 (function() {
   const hash = location.hash;
   if (!hash || hash.length <= 1) return;
   const cardId = hash.slice(1);
   history.replaceState(null, '', location.pathname + location.search);
+
   window.addEventListener('load', () => {
-    if (document.getElementById(cardId)) {
-      setTimeout(() => scrollToCard(cardId), 50);
+    const el = document.getElementById(cardId);
+    if (!el) return;
+
+    function targetY() {
+      const rs = getComputedStyle(document.documentElement);
+      const siteTop = parseFloat(rs.getPropertyValue('--site-top-height')) || 0;
+      const tripHdr = parseFloat(rs.getPropertyValue('--trip-header-height')) || 0;
+      return window.scrollY + el.getBoundingClientRect().top - siteTop - tripHdr - 16;
     }
+
+    setTimeout(() => {
+      window.scrollTo({ top: targetY(), behavior: 'smooth' });
+    }, 50);
+
+    let userMoved = false;
+    const stop = () => { userMoved = true; };
+    window.addEventListener('wheel', stop, { passive: true });
+    window.addEventListener('touchstart', stop, { passive: true });
+    window.addEventListener('keydown', stop);
+
+    function adjust() {
+      if (userMoved) return;
+      window.scrollTo(0, targetY());
+    }
+
+    document.querySelectorAll('img').forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', adjust, { once: true });
+        img.addEventListener('error', adjust, { once: true });
+      }
+    });
+
+    setTimeout(stop, 4000);
   });
 })();
 </script>
