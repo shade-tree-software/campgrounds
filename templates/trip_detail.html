@@ -927,7 +927,12 @@
   }
 
   #trip-map {
-    height: 380px;
+    /* Default (single-column / no cards): fill the viewport between the
+       sticky headers and the page bottom, matching the two-col map size.
+       The two-col override below switches to a flex-fill within the
+       fixed wrapper instead. */
+    height: calc(100vh - var(--site-top-height, 0px) - var(--trip-header-height, 0px) - 8rem);
+    min-height: 380px;
     width: 100%;
     z-index: 0;
   }
