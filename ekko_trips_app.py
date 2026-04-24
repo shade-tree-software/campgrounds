@@ -36,6 +36,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @app.context_processor
 def inject_trip_stats():
     trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
     overnight = sum(1 for t in trips if t["stays"])
     daytrips = sum(1 for t in trips if not t["stays"])
     return {
@@ -332,6 +335,9 @@ def _map_config():
 @app.route('/trips/map')
 def trips_map():
     trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
     for trip in trips:
         enrich_trip_locations(trip)
     home, family = _map_config()
@@ -369,6 +375,9 @@ def trips_map():
 @app.route('/trips/list')
 def trips_calendar():
     trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
     for trip in trips:
         enrich_trip_locations(trip)
     initial_view = 'list' if request.path == '/trips/list' else 'calendar'
@@ -489,11 +498,12 @@ def trip_detail(trip_id):
     _, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
 
-    # Find prev/next trip IDs
-    trip_ids = [t["id"] for t in trips]
-    idx = trip_ids.index(trip_id)
-    prev_trip_id = trip_ids[idx - 1] if idx > 0 else None
-    next_trip_id = trip_ids[idx + 1] if idx < len(trip_ids) - 1 else None
+    # Find prev/next trip IDs (non-admins skip home-only trips in navigation)
+    nav_trips = trips if is_admin else [t for t in trips if not t.get("home_only") or t["id"] == trip_id]
+    nav_ids = [t["id"] for t in nav_trips]
+    nav_idx = nav_ids.index(trip_id)
+    prev_trip_id = nav_ids[nav_idx - 1] if nav_idx > 0 else None
+    next_trip_id = nav_ids[nav_idx + 1] if nav_idx < len(nav_ids) - 1 else None
 
     return render_template(
         'trip_detail.html',

@@ -250,10 +250,16 @@ Object.values(eventLocMap).forEach(loc => {
   }).addTo(map);
 
   let popup = '';
-  loc.events.forEach(e => {
+  loc.events.forEach((e, i) => {
     let dateStr = e.date;
     if (e.time) dateStr += ' ' + e.time + (e.end_time ? '\u2013' + e.end_time : '');
-    popup += `<a href="/trips/${e.trip.id}" style="display:block;color:#002868;font-size:12px;">&#9733; ${e.name} (${dateStr})</a>`;
+    const d = new Date(e.trip.start + 'T00:00:00');
+    const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+    if (i > 0) popup += '<div style="height:6px;"></div>';
+    popup += `<strong>${e.name}</strong><br>${dateStr}`;
+    popup += `<div style="margin-top:4px;font-size:12px;">`;
+    popup += `<a href="/trips/${e.trip.id}" style="display:block;color:#002868;">Trip ${e.trip.number}: ${fmt} \u2014 ${e.trip.summary}</a>`;
+    popup += `</div>`;
   });
 
   marker.bindPopup(popup, { maxWidth: 280 });
