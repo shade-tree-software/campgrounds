@@ -108,12 +108,31 @@
      single-line layout (with margin-left:auto on Login/Logout). */
   .nav-collapse { display: contents; }
 
+  /* Constrain Leaflet popups on narrow viewports so they don't spill off
+     the right edge — Leaflet's auto-pan can't help when the popup itself
+     is wider than the screen. */
+  @media (max-width: 700px) {
+    .leaflet-popup-content-wrapper {
+      max-width: calc(100vw - 32px) !important;
+    }
+    /* Leaflet measures the content's natural width and writes it inline on
+       .leaflet-popup-content. Override that so popups actually fill most of
+       the map width on mobile, not just hug the content. */
+    .leaflet-popup-content {
+      width: calc(100vw - 70px) !important;
+      max-width: 100% !important;
+      word-wrap: break-word;
+    }
+    .leaflet-popup-content a { word-break: break-word; }
+  }
+
   @media (max-width: 700px) {
     header {
-      padding: .6rem 1rem;
+      padding: .6rem .75rem;
     }
     header h1 { font-size: 1.2rem; }
-    .nav-toggle { display: block; }
+    .header-title { gap: .25rem; }
+    .nav-toggle { display: block; padding: .15rem .15rem; margin-left: -.25rem; }
     .stats {
       gap: .75rem;
       font-size: .75rem;
