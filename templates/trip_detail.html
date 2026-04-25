@@ -37,6 +37,15 @@
 
   .edit-btn-dark:hover { background: var(--navy); color: #fff; }
 
+  /* Keep Edit + Upload Photos together as one inline atomic unit so they
+     wrap as a group (instead of Edit hugging the title's last word and
+     Upload dropping alone to the next line). The leading whitespace
+     between title and span gives the browser a valid break point; the
+     first button's left margin is zeroed so it doesn't indent when the
+     span lands at the start of a new line after wrapping. */
+  .card-actions { white-space: nowrap; }
+  .card-actions > .edit-btn-dark:first-child { margin-left: 0; }
+
   .stay-edit-form {
     display: none;
     padding: 1rem;
@@ -531,6 +540,18 @@
     }
   }
 
+  /* Mobile: tighter side gutters so the map and cards get more usable
+     horizontal width on a phone screen. */
+  @media (max-width: 700px) {
+    .content { padding: 1rem .5rem; }
+    .content.two-col { padding: .75rem .5rem; }
+
+    /* Pre-emptively break the stay-meta line: locale/state on row 1,
+       night count + dates on row 2 (the em-dash separator hidden). */
+    .stay-meta .stay-sep { display: none; }
+    .stay-meta .stay-dates { display: block; }
+  }
+
   /* ── Stay cards ─────────────────────────────────── */
   .stay-card {
     background: var(--white);
@@ -570,7 +591,7 @@
   }
 
   .stay-header .stay-info .stay-meta {
-    font-size: .8rem;
+    font-size: .85rem;
     color: var(--gray);
     margin-top: .15rem;
   }
@@ -729,6 +750,11 @@
 
   .photo-item:hover .delete-photo { display: flex; }
 
+  /* Remove All Photos sits at the bottom-right corner of the photos
+     section, beneath the photo grid. Photos-section is a flex column
+     so the button can be align-self: flex-end without affecting the
+     grid's full-width layout. */
+  .photos-section { display: flex; flex-direction: column; }
   .btn-delete-all-photos {
     background: none;
     border: none;
@@ -736,42 +762,48 @@
     font-size: .75rem;
     cursor: pointer;
     padding: .25rem 0;
-    margin-left: auto;
-    flex-shrink: 0;
-    align-self: flex-start;
+    align-self: flex-end;
+    margin-top: -.5rem;
   }
 
   .btn-delete-all-photos:hover {
     color: var(--red);
   }
 
+  /* Edit + Upload buttons live at the top-right of the card header on
+     desktop. The span is a flex sibling of .stay-info / .event-info,
+     pushed right by margin-left: auto and aligned to the top. */
+  .stay-header .card-actions,
+  .event-header .card-actions {
+    margin-left: auto;
+    align-self: flex-start;
+    flex-shrink: 0;
+  }
+
   @media (max-width: 700px) {
-    /* Reflow stay/event headers as a 2-row grid: circle + title/meta on the
-       first row, "Remove All Photos" right-aligned on a second row. Frees up
-       the horizontal column the button used to occupy on the right. */
+    /* Reflow stay/event headers as a 2-row grid: circle + title/meta on
+       row 1, Edit/Upload buttons on their own row 2 (left-aligned under
+       the info column) so they don't compete with the title for space. */
     .stay-header,
     .event-header {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
       grid-template-areas:
         "num info"
-        ".   del";
+        ".   actions";
       column-gap: 1rem;
-      row-gap: .35rem;
+      row-gap: .5rem;
       align-items: center;
     }
     .stay-header .stay-number,
     .event-header .event-icon { grid-area: num; }
     .stay-header .stay-info,
     .event-header .event-info { grid-area: info; min-width: 0; }
-    .stay-header .btn-delete-all-photos,
-    .event-header .btn-delete-all-photos {
-      grid-area: del;
+    .stay-header .card-actions,
+    .event-header .card-actions {
+      grid-area: actions;
       margin-left: 0;
-      justify-self: end;
-      align-self: start;
-      padding: 0;
-      font-size: .7rem;
+      justify-self: start;
     }
   }
 
@@ -1099,19 +1131,13 @@
     <div class="stay-header">
       <div class="stay-number">{{ item.idx + 1 }}</div>
       <div class="stay-info">
-        <h3>{{ item.place }}{% if is_admin and item.copy_num == 1 %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button><button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button>{% endif %}</h3>
+        <h3>{{ item.place }}</h3>
         <div class="stay-meta">
-          {% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}
-          {% if item.copy_count and item.copy_count > 1 %}
-            &mdash; Night {{ item.copy_num }} of {{ item.copy_count }} ({{ item.sort_date }})
-          {% else %}
-            &mdash; {{ item.nights }} night{{ 's' if item.nights > 1 else '' }}
-            ({{ item.start }} to {{ item.end }})
-          {% endif %}
+          <span class="stay-locale">{% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}</span><span class="stay-sep"> &mdash; </span><span class="stay-dates">{% if item.copy_count and item.copy_count > 1 %}Night {{ item.copy_num }} of {{ item.copy_count }} ({{ item.sort_date }}){% else %}{{ item.nights }} night{{ 's' if item.nights > 1 else '' }} ({{ item.start }} to {{ item.end }}){% endif %}</span>
         </div>
       </div>
       {% if is_admin and item.copy_num == 1 %}
-      <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+      <span class="card-actions"><button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button><button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
     {% if item.copy_num == 1 %}
@@ -1216,6 +1242,9 @@
           </div>
           {% endfor %}
         </div>
+        {% if is_admin and item.copy_num == 1 %}
+        <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+        {% endif %}
       </div>
       {% endif %}
     </div>
@@ -1228,7 +1257,7 @@
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
-        <h3>{{ item.name }}{% if is_admin %}{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button>{% endif %}</h3>
+        <h3>{{ item.name }}</h3>
         <div class="event-meta">
           {% if item.locale or item.state %}
             {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
@@ -1237,8 +1266,8 @@
           {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
         </div>
       </div>
-      {% if is_admin and not is_bare %}
-      <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+      {% if is_admin %}
+      <span class="card-actions">{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
@@ -1351,6 +1380,9 @@
           </div>
           {% endfor %}
         </div>
+        {% if is_admin %}
+        <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
+        {% endif %}
       </div>
       {% endif %}
     </div>
