@@ -234,8 +234,7 @@ def login():
         user = users.get(username)
         if user and check_password_hash(user.password_hash, password):
             login_user(user)
-            next_page = request.args.get('next', '/')
-            return redirect(next_page)
+            return redirect('/')
         return render_template('login.html', error="Invalid username or password")
     return render_template('login.html')
 
