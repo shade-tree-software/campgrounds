@@ -90,6 +90,61 @@
     letter-spacing: .04em;
   }
 
+  .header-title { display: flex; align-items: center; gap: .75rem; }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: .15rem .4rem;
+    line-height: 1;
+  }
+
+  /* On desktop, .nav-collapse is invisible to layout — its children
+     flow as direct flex items of <nav>, preserving the original
+     single-line layout (with margin-left:auto on Login/Logout). */
+  .nav-collapse { display: contents; }
+
+  @media (max-width: 700px) {
+    header {
+      padding: .6rem 1rem;
+    }
+    header h1 { font-size: 1.2rem; }
+    .nav-toggle { display: block; }
+    .stats {
+      gap: .75rem;
+      font-size: .75rem;
+    }
+    .stats div { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+
+    /* Entire nav bar collapses on mobile; only renders when toggled open. */
+    nav#site-nav {
+      display: none;
+      padding: .5rem 1rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .5rem;
+    }
+    nav#site-nav.open { display: flex; }
+    .nav-collapse {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .5rem;
+      width: 100%;
+    }
+    .nav-group {
+      flex-wrap: wrap;
+      gap: .75rem;
+      width: 100%;
+    }
+    .nav-group + .nav-group { margin-left: 0; margin-top: .25rem; }
+    .nav-collapse > a { width: 100%; margin-left: 0 !important; }
+  }
+
   {% block style %}{% endblock %}
 </style>
 </head>
@@ -97,7 +152,10 @@
 
 <div class="site-top">
 <header>
-  <h1><a href="/">EKKO Trips</a></h1>
+  <div class="header-title">
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>
+    <h1><a href="/">EKKO Trips</a></h1>
+  </div>
   <div class="stats">
     <div><span>{{ daytrip_count }}</span> day trip{{ '' if daytrip_count == 1 else 's' }}</div>
     <div><span>{{ overnight_count }}</span> overnight trip{{ '' if overnight_count == 1 else 's' }}</div>
@@ -105,8 +163,9 @@
   </div>
 </header>
 
-<nav>
+<nav id="site-nav">
   {% set is_admin = current_user.is_authenticated and current_user.is_admin %}
+  <div class="nav-collapse" id="nav-collapse">
   <span class="nav-group">
     {% if is_admin %}<span class="nav-label">Trips:</span>{% endif %}
     <a href="/trips/map"{% if active_nav == 'map' %} class="active"{% endif %}>Map</a>
@@ -128,6 +187,7 @@
   <a href="/login?next={{ request.path }}" style="margin-left:auto">Login</a>
   {% endif %}
   {% endblock %}
+  </div>
 </nav>
 </div>
 
@@ -137,10 +197,18 @@
   // Set CSS variable for sticky sub-headers to sit below the site-top bar
   (function() {
     const siteTop = document.querySelector('.site-top');
-    if (siteTop) {
-      document.documentElement.style.setProperty('--site-top-height', siteTop.offsetHeight + 'px');
-      window.addEventListener('resize', () => {
-        document.documentElement.style.setProperty('--site-top-height', siteTop.offsetHeight + 'px');
+    const setHeight = () => {
+      if (siteTop) document.documentElement.style.setProperty('--site-top-height', siteTop.offsetHeight + 'px');
+    };
+    setHeight();
+    window.addEventListener('resize', setHeight);
+
+    const toggle = document.getElementById('nav-toggle');
+    const siteNav = document.getElementById('site-nav');
+    if (toggle && siteNav) {
+      toggle.addEventListener('click', () => {
+        siteNav.classList.toggle('open');
+        setHeight();
       });
     }
   })();

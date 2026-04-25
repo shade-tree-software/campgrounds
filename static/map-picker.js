@@ -179,6 +179,48 @@ function createMapPicker(opts) {
     });
   })();
 
+  // ── Current-location button ──────────────────────────────────────────
+  // Inject a "use my location" button into the .geo-search row (if present).
+  (function() {
+    const input = document.getElementById(opts.searchId);
+    if (!input) return;
+    const row = input.closest('.geo-search');
+    if (!row || row.querySelector('.geo-locate')) return;
+
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'geo-locate';
+    btn.title = 'Use my current location';
+    btn.setAttribute('aria-label', 'Use my current location');
+    btn.textContent = '\u{1F4CD}';
+    row.insertBefore(btn, input.nextSibling);
+
+    btn.addEventListener('click', function() {
+      if (!navigator.geolocation) {
+        alert('Geolocation is not supported by this browser.');
+        return;
+      }
+      btn.disabled = true;
+      const prev = btn.textContent;
+      btn.textContent = '⏳';
+      navigator.geolocation.getCurrentPosition(function(pos) {
+        btn.disabled = false;
+        btn.textContent = prev;
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        if (map) {
+          map.setView([lat, lng], 15);
+          placeMarker(lat, lng);
+        }
+        if (opts.onPick) opts.onPick(lat, lng);
+      }, function(err) {
+        btn.disabled = false;
+        btn.textContent = prev;
+        alert('Could not get your location: ' + (err.message || 'permission denied'));
+      }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+    });
+  })();
+
   // ── Geocode search ────────────────────────────────────────────────────
   (function() {
     const input = document.getElementById(opts.searchId);

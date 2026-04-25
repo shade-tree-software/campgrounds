@@ -81,6 +81,20 @@
 
 .geo-search input:focus { outline: none; border-color: var(--red); }
 
+.geo-locate {
+  background: var(--offwhite);
+  border: 1px solid var(--gray-light);
+  border-radius: 4px;
+  padding: .25rem .45rem;
+  font-size: .9rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.geo-locate:hover:not(:disabled) { border-color: var(--red); }
+.geo-locate:disabled { cursor: wait; opacity: .6; }
+
 .geo-results {
   position: absolute;
   top: 100%;
@@ -122,3 +136,20 @@
 .resize-handle.rh-left   { top: 0; left: -4px; width: 8px; height: 100%; cursor: ew-resize; }
 .resize-handle.rh-br     { bottom: -4px; right: -4px; width: 14px; height: 14px; cursor: nwse-resize; }
 .resize-handle.rh-bl     { bottom: -4px; left: -4px; width: 14px; height: 14px; cursor: nesw-resize; }
+
+/* On mobile, fill the screen with sensible margins and disable
+   drag/resize affordances since the popup occupies the viewport. */
+@media (max-width: 700px) {
+  .map-picker-container {
+    top: .5rem !important;
+    left: .5rem !important;
+    right: .5rem !important;
+    bottom: .5rem !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none;
+    max-height: none;
+  }
+  .map-picker-header { cursor: default; }
+  .resize-handle { display: none; }
+}

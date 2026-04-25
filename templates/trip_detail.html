@@ -404,6 +404,27 @@
     background: rgba(255,255,255,.15);
   }
 
+  @media (max-width: 700px) {
+    .trip-header {
+      padding: .5rem .75rem;
+      gap: .5rem;
+      align-items: center;
+    }
+    .trip-header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: .15rem;
+      line-height: 1.2;
+    }
+    .trip-header .meta {
+      gap: .25rem .75rem;
+      font-size: .75rem;
+      line-height: 1.2;
+    }
+    .trip-header .btn-delete-trip { font-size: .65rem; padding: .15rem 0; }
+    .trip-nav a { font-size: 1.4rem; padding: 0 .25rem; }
+  }
+
   /* ── Content ────────────────────────────────────── */
   .content {
     max-width: 960px;
@@ -792,8 +813,23 @@
     gap: .75rem;
   }
   .add-modal-body .form-grid .full-width { grid-column: 1 / -1; }
+  /* Allow inputs inside flex rows (e.g. the time-range pair, location +
+     Pick-on-Map button) to shrink below their intrinsic width so they
+     don't push the panel sideways on narrow screens. */
+  .add-modal-body .form-grid > div { min-width: 0; }
+  .add-modal-body .form-grid input,
+  .add-modal-body .form-grid select,
+  .add-modal-body .form-grid textarea { min-width: 0; max-width: 100%; }
   .add-modal-actions {
     display: flex; gap: .5rem; justify-content: flex-end; margin-top: 1.25rem;
+  }
+
+  @media (max-width: 600px) {
+    .add-modal { padding: .5rem; }
+    .add-modal-panel { padding: 1rem; }
+    .add-modal-body .form-grid { grid-template-columns: 1fr; gap: .6rem; }
+    .event-location-field { flex-wrap: wrap; }
+    .event-location-field input { flex: 1 1 100%; }
   }
 
   .lightbox img {
