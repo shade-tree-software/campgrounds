@@ -248,6 +248,16 @@
         siteNav.classList.toggle('open');
         setHeight();
       });
+      // Close the menu when any nav link is clicked. This matters for
+      // client-side nav (calendar/list view switch) where the page doesn't
+      // reload; for full navigations the next page just renders without
+      // the .open class anyway.
+      siteNav.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          siteNav.classList.remove('open');
+          setHeight();
+        });
+      });
     }
   })();
 </script>
