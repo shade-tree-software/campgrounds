@@ -745,6 +745,36 @@
     color: var(--red);
   }
 
+  @media (max-width: 700px) {
+    /* Reflow stay/event headers as a 2-row grid: circle + title/meta on the
+       first row, "Remove All Photos" right-aligned on a second row. Frees up
+       the horizontal column the button used to occupy on the right. */
+    .stay-header,
+    .event-header {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "num info"
+        ".   del";
+      column-gap: 1rem;
+      row-gap: .35rem;
+      align-items: center;
+    }
+    .stay-header .stay-number,
+    .event-header .event-icon { grid-area: num; }
+    .stay-header .stay-info,
+    .event-header .event-info { grid-area: info; min-width: 0; }
+    .stay-header .btn-delete-all-photos,
+    .event-header .btn-delete-all-photos {
+      grid-area: del;
+      margin-left: 0;
+      justify-self: end;
+      align-self: start;
+      padding: 0;
+      font-size: .7rem;
+    }
+  }
+
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
