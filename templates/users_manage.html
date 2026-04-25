@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users{% endblock %}
+
+{% block style %}
+  .users-page { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+  .users-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+  .users-header h2 { font-size: 1.4rem; color: var(--navy); }
+
+  .btn { padding: .4rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: .85rem; font-family: inherit; }
+  .btn-add { background: var(--red); color: #fff; }
+  .btn-add:hover { background: var(--red-light); }
+  .btn-save { background: #2e7d32; color: #fff; }
+  .btn-save:hover { background: #388e3c; }
+  .btn-cancel { background: #757575; color: #fff; }
+  .btn-cancel:hover { background: #616161; }
+  .btn-danger { background: #c62828; color: #fff; }
+  .btn-danger:hover { background: #d32f2f; }
+
+  .users-table { width: 100%; border-collapse: collapse; font-size: .9rem; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .users-table th { text-align: left; padding: .75rem 1rem; background: var(--navy); color: #fff; font-size: .75rem; text-transform: uppercase; letter-spacing: .04em; }
+  .users-table td { padding: .65rem 1rem; border-bottom: 1px solid #eee; vertical-align: middle; }
+  .users-table tr:last-child td { border-bottom: none; }
+  .users-table tr:hover { background: var(--blue-bg); }
+
+  .col-actions { text-align: right; white-space: nowrap; }
+  .col-actions .btn { margin-left: .35rem; }
+
+  .badge-admin {
+    display: inline-block;
+    padding: .15rem .5rem;
+    background: var(--gold);
+    color: var(--navy);
+    border-radius: 999px;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .self-tag {
+    margin-left: .4rem;
+    color: var(--gray);
+    font-size: .75rem;
+    font-style: italic;
+  }
+
+  .add-form, .reset-form {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .add-form h3, .reset-form h3 {
+    font-size: 1rem;
+    color: var(--navy);
+    margin-bottom: .75rem;
+  }
+
+  .add-form .form-row, .reset-form .form-row {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .add-form input, .reset-form input {
+    padding: .4rem .6rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 4px;
+    font-size: .9rem;
+    font-family: inherit;
+    flex: 1 1 180px;
+    min-width: 0;
+  }
+
+  .add-form label.cb-label {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .9rem;
+    color: var(--navy);
+    flex-shrink: 0;
+  }
+
+  .reset-form { display: none; }
+  .reset-form.open { display: block; }
+  .reset-form .target-name { font-weight: 700; color: var(--navy); }
+
+  @media (max-width: 600px) {
+    .users-page { padding: 0 .75rem; margin: 1rem auto; }
+    .users-table th, .users-table td { padding: .5rem .6rem; }
+    .col-actions .btn { margin: .15rem 0 .15rem .25rem; padding: .3rem .65rem; font-size: .75rem; }
+    .add-form .form-row, .reset-form .form-row { flex-direction: column; align-items: stretch; }
+    .add-form input, .reset-form input { width: 100%; flex: none; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="users-page">
+  <div class="users-header">
+    <h2>Manage Users</h2>
+  </div>
+
+  <div class="add-form">
+    <h3>Add User</h3>
+    <div class="form-row">
+      <input type="text" id="new-username" placeholder="Username" autocomplete="off">
+      <input type="password" id="new-password" placeholder="Password" autocomplete="new-password">
+      <label class="cb-label"><input type="checkbox" id="new-is-admin"> Admin</label>
+      <button class="btn btn-add" onclick="createUser()">Add User</button>
+    </div>
+  </div>
+
+  <div class="reset-form" id="reset-form">
+    <h3>Reset Password for <span class="target-name" id="reset-target"></span></h3>
+    <div class="form-row">
+      <input type="password" id="reset-password" placeholder="New password" autocomplete="new-password">
+      <button class="btn btn-save" onclick="submitReset()">Save</button>
+      <button class="btn btn-cancel" onclick="cancelReset()">Cancel</button>
+    </div>
+  </div>
+
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th class="col-actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="users-tbody">
+      <tr><td colspan="3" style="text-align:center; padding: 1rem; color: var(--gray);">Loading…</td></tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const ME = {{ current_user.username | tojson }};
+let resetTarget = null;
+
+function loadUsers() {
+  fetch('/api/users')
+    .then(r => r.json())
+    .then(rows => {
+      const tbody = document.getElementById('users-tbody');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--gray);">No users</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(u => {
+        const isMe = u.username === ME;
+        const adminToggleLabel = u.is_admin ? 'Demote' : 'Promote';
+        const adminToggleDisabled = (isMe && u.is_admin) ? 'disabled title="Cannot remove admin from your own account"' : '';
+        const deleteDisabled = isMe ? 'disabled title="Cannot delete your own account"' : '';
+        return `
+          <tr>
+            <td>${escapeHtml(u.username)}${isMe ? '<span class="self-tag">(you)</span>' : ''}</td>
+            <td>${u.is_admin ? '<span class="badge-admin">Admin</span>' : '<span style="color:var(--gray);font-size:.85rem;">User</span>'}</td>
+            <td class="col-actions">
+              <button class="btn btn-cancel" onclick="openReset('${escapeAttr(u.username)}')">Reset Password</button>
+              <button class="btn btn-save" onclick="toggleAdmin('${escapeAttr(u.username)}', ${!u.is_admin})" ${adminToggleDisabled}>${adminToggleLabel}</button>
+              <button class="btn btn-danger" onclick="deleteUser('${escapeAttr(u.username)}')" ${deleteDisabled}>Delete</button>
+            </td>
+          </tr>`;
+      }).join('');
+    });
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function escapeAttr(s) {
+  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+}
+
+function createUser() {
+  const username = document.getElementById('new-username').value.trim();
+  const password = document.getElementById('new-password').value;
+  const isAdmin = document.getElementById('new-is-admin').checked;
+  if (!username || !password) { alert('Username and password are required'); return; }
+  fetch('/api/users', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password, is_admin: isAdmin }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { alert(d.error); return; }
+      document.getElementById('new-username').value = '';
+      document.getElementById('new-password').value = '';
+      document.getElementById('new-is-admin').checked = false;
+      loadUsers();
+    });
+}
+
+function openReset(username) {
+  resetTarget = username;
+  document.getElementById('reset-target').textContent = username;
+  document.getElementById('reset-password').value = '';
+  document.getElementById('reset-form').classList.add('open');
+  document.getElementById('reset-password').focus();
+}
+
+function cancelReset() {
+  resetTarget = null;
+  document.getElementById('reset-form').classList.remove('open');
+}
+
+function submitReset() {
+  const password = document.getElementById('reset-password').value;
+  if (!password) { alert('Password cannot be empty'); return; }
+  if (!resetTarget) return;
+  fetch('/api/users/' + encodeURIComponent(resetTarget), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ password }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { alert(d.error); return; }
+      cancelReset();
+      alert('Password updated.');
+    });
+}
+
+function toggleAdmin(username, makeAdmin) {
+  const verb = makeAdmin ? 'promote' : 'demote';
+  if (!confirm(`Are you sure you want to ${verb} ${username}?`)) return;
+  fetch('/api/users/' + encodeURIComponent(username), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ is_admin: makeAdmin }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { alert(d.error); return; }
+      loadUsers();
+    });
+}
+
+function deleteUser(username) {
+  if (!confirm(`Delete user "${username}"? This cannot be undone.`)) return;
+  fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { alert(d.error); return; }
+      loadUsers();
+    });
+}
+
+loadUsers();
+</script>
+{% endblock %}

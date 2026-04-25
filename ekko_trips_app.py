@@ -208,6 +208,16 @@ def load_user(username):
     return users.get(username)
 
 
+@app.before_request
+def _require_login_globally():
+    # Public endpoints that must remain accessible without authentication.
+    if request.endpoint in ('login', 'static', None):
+        return None
+    if not current_user.is_authenticated:
+        return redirect(url_for('login', next=request.path))
+    return None
+
+
 def _require_admin():
     """Return an error response if current user is not an admin, else None."""
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -966,6 +976,90 @@ def move_photo(trip_id):
 
 
 # ── Campground CRUD API ────────────────────────────────────────────────────
+
+# ── User management API (admin-only) ────────────────────────────────────────
+
+@app.route('/admin/users')
+def users_manage():
+    denied = _require_admin()
+    if denied:
+        return redirect(url_for('login', next=request.path))
+    return render_template('users_manage.html', active_nav='users')
+
+
+@app.route('/api/users')
+def api_user_list():
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = _load_json(USERS_FILE)
+    return jsonify([
+        {"username": name, "is_admin": info.get("is_admin", False)}
+        for name, info in sorted(data.items())
+    ])
+
+
+@app.route('/api/users', methods=['POST'])
+def api_user_create():
+    denied = _require_admin()
+    if denied:
+        return denied
+    body = request.get_json() or {}
+    username = body.get('username', '').strip()
+    password = body.get('password', '')
+    is_admin = bool(body.get('is_admin'))
+    if not username:
+        return jsonify({"error": "Username required"}), 400
+    if not password:
+        return jsonify({"error": "Password required"}), 400
+    data = _load_json(USERS_FILE)
+    if username in data:
+        return jsonify({"error": "User already exists"}), 400
+    data[username] = {
+        "password_hash": generate_password_hash(password),
+        "is_admin": is_admin,
+    }
+    _save_json(USERS_FILE, data)
+    return jsonify({"ok": True})
+
+
+@app.route('/api/users/<username>', methods=['PUT'])
+def api_user_update(username):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = _load_json(USERS_FILE)
+    if username not in data:
+        return jsonify({"error": "User not found"}), 404
+    body = request.get_json() or {}
+    if 'password' in body:
+        password = body.get('password') or ''
+        if not password:
+            return jsonify({"error": "Password cannot be empty"}), 400
+        data[username]['password_hash'] = generate_password_hash(password)
+    if 'is_admin' in body:
+        new_admin = bool(body.get('is_admin'))
+        if username == current_user.username and not new_admin:
+            return jsonify({"error": "Cannot remove admin from your own account"}), 400
+        data[username]['is_admin'] = new_admin
+    _save_json(USERS_FILE, data)
+    return jsonify({"ok": True})
+
+
+@app.route('/api/users/<username>', methods=['DELETE'])
+def api_user_delete(username):
+    denied = _require_admin()
+    if denied:
+        return denied
+    if username == current_user.username:
+        return jsonify({"error": "Cannot delete your own account"}), 400
+    data = _load_json(USERS_FILE)
+    if username not in data:
+        return jsonify({"error": "User not found"}), 404
+    del data[username]
+    _save_json(USERS_FILE, data)
+    return jsonify({"ok": True})
+
 
 @app.route('/api/campgrounds')
 def api_campground_list():
