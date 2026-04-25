@@ -1143,4 +1143,9 @@ if __name__ == '__main__':
         _save_user(username, password, is_admin=True)
         print(f"Admin user '{username}' created.")
     else:
-        app.run(debug=True, host='0.0.0.0', port=5001)
+        # Pass --http to skip TLS (HTTPS is on by default so mobile devices
+        # on the LAN can use Geolocation, which requires a secure origin).
+        # `ssl_context='adhoc'` requires `pyopenssl`.
+        use_https = '--http' not in sys.argv
+        ssl_context = 'adhoc' if use_https else None
+        app.run(debug=True, host='0.0.0.0', port=5001, ssl_context=ssl_context)

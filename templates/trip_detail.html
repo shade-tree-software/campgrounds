@@ -795,7 +795,7 @@
     display: block; margin-bottom: .2rem; font-size: .85rem; font-weight: 500;
     color: var(--navy);
   }
-  .add-modal-body input,
+  .add-modal-body input:not([type="checkbox"]),
   .add-modal-body textarea,
   .add-modal-body select {
     width: 100%; padding: .4rem .6rem; border: 1px solid var(--gray-light);
@@ -807,6 +807,9 @@
   .add-modal-body select:focus {
     outline: none; border-color: var(--red);
   }
+  .add-modal-body input[type="checkbox"] {
+    width: auto; margin: 0; flex-shrink: 0;
+  }
   .add-modal-body .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -817,7 +820,7 @@
      Pick-on-Map button) to shrink below their intrinsic width so they
      don't push the panel sideways on narrow screens. */
   .add-modal-body .form-grid > div { min-width: 0; }
-  .add-modal-body .form-grid input,
+  .add-modal-body .form-grid input:not([type="checkbox"]),
   .add-modal-body .form-grid select,
   .add-modal-body .form-grid textarea { min-width: 0; max-width: 100%; }
   .add-modal-actions {
@@ -1284,13 +1287,13 @@
         <button class="btn-danger" onclick="deleteEvent({{ item.idx }})">Delete {% if item.family_visit %}Visit{% else %}Event{% endif %}</button>
       </div>
     </div>
-    {% if is_admin or item.description or event_photos[item.idx] %}
+    {% if item.description or event_photos[item.idx] %}
     <div class="event-body" id="event-body-{{ item.idx }}">
       {% if item.description %}
       <div class="event-description">{{ item.description }}</div>
       {% endif %}
 
-      {% if is_admin or event_photos[item.idx] %}
+      {% if event_photos[item.idx] %}
       <!-- Event Photos -->
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
@@ -2101,9 +2104,9 @@ function _modalFormHtml(kind, v) {
           </div>
         </div>
         <div class="full-width"><label>Description</label><textarea data-field="description" rows="2" autocomplete="off">${escapeHtml(v.description || '')}</textarea></div>
-        <div class="full-width" style="display:flex;align-items:center;gap:.25rem;">
+        <div class="full-width" style="display:flex;align-items:center;justify-content:flex-start;gap:.4rem;">
           <input type="checkbox" data-field="waypoint" id="modal-waypoint-cb"${isWp ? ' checked' : ''}>
-          <label for="modal-waypoint-cb" style="margin:0;">Waypoint</label>
+          <label for="modal-waypoint-cb" style="display:inline;margin:0;font-weight:500;">Waypoint</label>
         </div>
       </div>`;
   } else if (kind === 'family_visit') {
