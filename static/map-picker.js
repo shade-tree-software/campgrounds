@@ -209,7 +209,7 @@ function createMapPicker(opts) {
         const lat = pos.coords.latitude;
         const lng = pos.coords.longitude;
         if (map) {
-          map.setView([lat, lng], 15);
+          map.setView([lat, lng], 17);
           placeMarker(lat, lng);
         }
         if (opts.onPick) opts.onPick(lat, lng);
@@ -260,7 +260,7 @@ function createMapPicker(opts) {
       results.classList.remove('open');
       input.value = '';
       if (map) {
-        map.setView([lat, lng], 14);
+        map.setView([lat, lng], 16);
         placeMarker(lat, lng);
       }
     });
