@@ -137,12 +137,30 @@ Shared across campground manage and event location picker via `static/map-picker
 - `createMapPicker(opts)` factory returns `{show, hide, panTo}`
 - Click-to-pick coordinates with callback
 - Draggable by header, resizable via edge/corner handles (min 280x250)
-- Geocode search bar using `/api/geocode` (Nominatim proxy) — searches zoom the map but don't auto-set coordinates
+- Geocode search bar using `/api/geocode` (Nominatim proxy) — selecting a result places a marker, fires `onPick`, and zooms to level 16
+- 📍 Current-location button (auto-injected next to the search input by `createMapPicker`) calls `navigator.geolocation.getCurrentPosition`, places a marker, fires `onPick`, and zooms to level 17. Geolocation requires a secure origin — see "Local HTTPS" below.
 - Street/satellite layer toggle
+- On viewports `≤ 700px`, the picker fills the screen (`top/left/right/bottom: .5rem !important`) and drag/resize affordances are disabled — touch UX, not draggable.
 
 ### Map Satellite Views
 
 All Leaflet maps offer a satellite layer that includes three Esri tile layers: World_Imagery (base), World_Boundaries_and_Places (labels), and World_Transportation (roads). This applies to trip detail, trips map, campground map, and campground manage templates.
+
+### Responsive / Mobile Design
+
+The site has a single mobile breakpoint at `max-width: 700px` (with a tablet-portrait breakpoint at `900px` on the trips map for filmstrip reflow). Each template encapsulates its own mobile rules.
+
+- **Header (`base.html`):** the `☰` hamburger button lives inside `.header-title` next to the EKKO Trips title. On `≤ 700px` it becomes visible (display: block) and the entire `<nav id="site-nav">` defaults to `display: none`; tapping the hamburger toggles `.open` on `<nav>` to reveal a vertical column of links. On desktop the hamburger is hidden and `.nav-collapse { display: contents }` makes the wrapper invisible to layout, restoring the original single-line nav with right-aligned login/logout. The toggle handler also re-publishes `--site-top-height` so sticky sub-headers reflow when the menu opens. Header stats stack vertically on mobile (number above label) for compactness.
+- **Trip detail header:** on mobile the red `.trip-header` collapses to just the trip number + name. The `.meta` row (counts, dates, campers) is `display: none`, and `.trip-nav` (prev/next arrows) is hidden. The Edit button beside the title is also hidden — instead the `<h1>` itself is tappable: it carries `onclick="if (window.innerWidth <= 700) editTripNote()"` (the viewport check prevents desktop click-to-edit so text selection still works). The desktop Edit button calls `event.stopPropagation()` so it doesn't double-fire through the bubbled h1 handler.
+- **Modal forms (`.add-modal-body .form-grid`):** `.form-grid > div` and `.form-grid input/select/textarea` carry `min-width: 0` (with `max-width: 100%`) at all viewport sizes — flex/grid items default to `min-width: auto` (intrinsic width), so without this rule `<input type="time">` and the time-range pair would overflow the panel. On `≤ 600px` the two-column grid collapses to one column and `.event-location-field` wraps so the "Pick on Map" button drops below the lat/lng input. The waypoint checkbox is excluded from the global `width: 100%` input rule via `:not([type="checkbox"])` so it renders at natural size with the label flush to its right.
+- **Trip cards (`trips_calendar.html`):** below 600px the trip card flex row wraps, with info dropping to its own row and `.stays-count` to a third row (with `white-space: normal` so counts can wrap inside the card).
+- **Main map (`trips_map.html`):** `.map-container` has `position: relative; z-index: 0` so Leaflet's controls (default z-index ~1000) are contained within a stacking context and don't float above the sticky site header (z-index 900). On `≤ 900px` the layout switches to `flex-direction: column`: the *left* photo stack (DOM-order first, so it lands above the map) reflows from a vertical column of 3 photos into a horizontal row of 3 photos at 110px tall; the right stack is hidden. On `≤ 700px` the strip drops to 90px and the map height computes as `calc(100vh - var(--site-top-height) - 200px)` to leave room above the browser chrome for the legend.
+- **Empty event cards:** for admins, the `.event-body` and inner `.photos-section` are gated on `item.description or event_photos[item.idx]` (no longer on `is_admin`). When an event has no description and no photos, no padded body region renders; admins use the inline "Upload Photos" button on the card title to add photos.
+- **Leaflet popups (`base.html`):** on `≤ 700px`, `.leaflet-popup-content { width: calc(100vw - 70px) !important }` and `.leaflet-popup-content-wrapper { max-width: calc(100vw - 32px) !important }` force popups to fill most of the viewport (Leaflet otherwise sizes content to its measured width capped at the per-popup `maxWidth`). Desktop popup `maxWidth` was bumped from 280/300 → 420 across `trips_map.html` and `campground_map.html` so trip-link rows usually fit on one line.
+
+### Local HTTPS
+
+`ekko_trips_app.py`'s dev runner defaults to `app.run(ssl_context='adhoc')`, which generates a fresh self-signed cert each launch. This is required for browser features that need a secure origin — most importantly the Geolocation API used by the map picker's 📍 button. Pass `--http` on the command line to fall back to plain HTTP. The `adhoc` context requires `pyopenssl` in the venv. Production hosts (PythonAnywhere) handle TLS at the platform level and ignore this code path.
 
 ## API Routes
 
