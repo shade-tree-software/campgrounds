@@ -552,6 +552,40 @@
     .stay-meta .stay-dates { display: block; }
   }
 
+  /* ── Cross-highlight: card click → marker pulse, marker click → card glow */
+  /* Marker pulse: an expanding yellow ring drawn via ::after on the
+     marker's leaflet wrapper. The wrapper is positioned absolutely by
+     Leaflet, so the pseudo-element anchors to it. Ring expands outward
+     and fades over ~1.2s, repeated twice. */
+  .marker-pulse { overflow: visible; }
+  .marker-pulse::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 24px; height: 24px;
+    margin: -12px 0 0 -12px;
+    border-radius: 50%;
+    border: 3px solid #ffd700;
+    opacity: 0;
+    animation: markerPulse 1.2s ease-out 2;
+    pointer-events: none;
+    box-sizing: border-box;
+  }
+  @keyframes markerPulse {
+    0%   { transform: scale(.5); opacity: 1; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+  /* Card glow: a gold outline that fades from solid to transparent. */
+  .card-highlight { animation: cardHighlight 2s ease-out; }
+  @keyframes cardHighlight {
+    0%   { box-shadow: 0 0 0 3px var(--gold), 0 4px 12px rgba(0,0,0,.15); }
+    100% { box-shadow: 0 0 0 0 transparent, 0 2px 8px rgba(0,0,0,.12); }
+  }
+  /* Bare cards have no background/border-radius normally, so the highlight
+     box-shadow would render as a sharp rectangle. Round the corners
+     during the highlight so the glow matches the photo-bearing cards. */
+  .event-card.bare.card-highlight { border-radius: 10px; }
+
   /* ── Stay cards ─────────────────────────────────── */
   .stay-card {
     background: var(--white);
@@ -1499,6 +1533,8 @@ syncMapColumnPosition();
 
 // Smooth-scroll a card into view, accounting for the sticky site-top
 // and trip-header so the card title doesn't end up hidden behind them.
+// Also briefly glow the destination card so it's obvious where the
+// scroll landed (used by marker click → card scroll, and any other call site).
 function scrollToCard(cardId) {
   const el = document.getElementById(cardId);
   if (!el) return;
@@ -1507,9 +1543,30 @@ function scrollToCard(cardId) {
   const tripHdr = parseFloat(rs.getPropertyValue('--trip-header-height')) || 0;
   const target = window.scrollY + el.getBoundingClientRect().top - siteTop - tripHdr - 16;
   window.scrollTo({ top: target, behavior: 'smooth' });
+
+  // Restart the highlight animation by toggling the class.
+  el.classList.remove('card-highlight');
+  void el.offsetWidth;
+  el.classList.add('card-highlight');
+  setTimeout(() => el.classList.remove('card-highlight'), 2200);
 }
 
-// Click a card → center & zoom the map on its marker.
+// Briefly pulse the marker associated with a card id (used by card click
+// → map zoom). cardMarkers is populated alongside cardTargets when each
+// marker is created; for grouped family-visit markers, every event id
+// in the group points to the same shared marker.
+function highlightMarker(cardId) {
+  const marker = window.tripCardMarkers && window.tripCardMarkers[cardId];
+  if (!marker) return;
+  const el = marker.getElement && marker.getElement();
+  if (!el) return;
+  el.classList.remove('marker-pulse');
+  void el.offsetWidth;
+  el.classList.add('marker-pulse');
+  setTimeout(() => el.classList.remove('marker-pulse'), 2400);
+}
+
+// Click a card → center & zoom the map on its marker, then pulse the marker.
 // Copy ids (stay-3-2) resolve to their base stay (stay-3).
 document.querySelectorAll('.stay-card, .event-card').forEach(card => {
   card.addEventListener('click', (e) => {
@@ -1520,6 +1577,7 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
     const ll = window.tripCardTargets && window.tripCardTargets[lookupId];
     if (ll && window.tripMap) {
       window.tripMap.setView(ll, 14, { animate: true });
+      highlightMarker(lookupId);
     }
   });
 });
@@ -1618,7 +1676,9 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
 
   // Lookup: card id → [lat, lng] for click-to-focus on the map
   const cardTargets = {};
+  const cardMarkers = {};
   window.tripCardTargets = cardTargets;
+  window.tripCardMarkers = cardMarkers;
   cardTargets['home-card-start'] = HOME;
   cardTargets['home-card-end'] = HOME;
 
@@ -1629,14 +1689,16 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
       width:24px;height:24px;border-radius:50%;
       background:#bf0a30;
       display:flex;align-items:center;justify-content:center;
-      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
     "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
+  const homeMarker = L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
     .addTo(map)
     .on('click', () => scrollToCard('home-card-start'));
+  cardMarkers['home-card-start'] = homeMarker;
+  cardMarkers['home-card-end'] = homeMarker;
 
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
@@ -1649,15 +1711,16 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
         background:#002868;color:#fff;
         display:flex;align-items:center;justify-content:center;
         font-size:12px;font-weight:700;
-        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
       ">${i + 1}</div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    L.marker(ll, { icon, zIndexOffset: 800 })
+    const stayMarker = L.marker(ll, { icon, zIndexOffset: 800 })
       .addTo(map)
       .on('click', () => scrollToCard('stay-' + stay.idx));
     cardTargets['stay-' + stay.idx] = ll;
+    cardMarkers['stay-' + stay.idx] = stayMarker;
   });
 
   // Build day-by-day chronological route
@@ -1755,7 +1818,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
         width:${size}px;height:${size}px;border-radius:50%;
         background:${color};
         display:flex;align-items:center;justify-content:center;
-        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
         color:#fff;font-size:${fontSize}px;line-height:1;
       ">${isWaypoint ? '<span style="display:block;transform:translateY(-1.5px);">&#9670;</span>' : '&#9733;'}</div>`,
       iconSize: [size, size],
@@ -1764,10 +1827,11 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     const zOffset = isWaypoint ? 100 : 700;
     const labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
 
-    L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
+    const evtMarker = L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
       .addTo(map)
       .on('click', () => scrollToCard('event-' + evt.idx));
     cardTargets['event-' + evt.idx] = ll;
+    cardMarkers['event-' + evt.idx] = evtMarker;
   });
 
   familyVisitGroups.forEach(group => {
@@ -1780,7 +1844,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
         width:24px;height:24px;border-radius:50%;
         background:#bf0a30;
         display:flex;align-items:center;justify-content:center;
-        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
       "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
@@ -1793,10 +1857,13 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     // has a card (bare or with-photos), so the lookup is effectively always
     // the earliest visit in the group.
     const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
-    L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
+    const famMarker = L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
       .addTo(map)
       .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
-    group.forEach(evt => { cardTargets['event-' + evt.idx] = ll; });
+    group.forEach(evt => {
+      cardTargets['event-' + evt.idx] = ll;
+      cardMarkers['event-' + evt.idx] = famMarker;
+    });
   });
 
   // Family location markers — only show if a stay or event is nearby
@@ -1825,7 +1892,7 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
         width:24px;height:24px;border-radius:50%;
         background:#bf0a30;
         display:flex;align-items:center;justify-content:center;
-        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
       "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
