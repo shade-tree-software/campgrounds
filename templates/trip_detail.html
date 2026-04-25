@@ -420,6 +420,8 @@
     .trip-header .meta { display: none; }
     .trip-header .trip-nav { display: none; }
     .trip-header .btn-delete-trip { font-size: .7rem; padding: .15rem 0; }
+    .trip-header h1 .edit-btn { display: none; }
+    .trip-header h1 { cursor: pointer; }
     .trip-note-edit { flex-wrap: wrap; gap: .35rem; }
     .trip-note-edit input { font-size: 1rem; flex: 1 1 100%; }
     .trip-note-edit button { font-size: .75rem; padding: .25rem .6rem; }
@@ -985,7 +987,7 @@
     {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip">&#8249;</a>{% endif %}
   </div>
   <div class="trip-info">
-    <h1 id="trip-title">{% if trip.number %}Trip {{ trip.number }}{% else %}Home{% endif %}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="editTripNote()">Edit</button>{% endif %}</h1>
+    <h1 id="trip-title"{% if is_admin %} onclick="if (window.innerWidth <= 700) editTripNote();"{% endif %}>{% if trip.number %}Trip {{ trip.number }}{% else %}Home{% endif %}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="event.stopPropagation(); editTripNote();">Edit</button>{% endif %}</h1>
     <div class="trip-note-edit" id="trip-note-edit">
       <input type="text" id="trip-note-input" value="{{ trip.trip_note }}" placeholder="Trip name (leave blank for auto-generated)">
       <button class="btn-note-save" onclick="saveTripNote()">Save</button>
