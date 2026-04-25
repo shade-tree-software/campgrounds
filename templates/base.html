@@ -142,25 +142,37 @@
     /* Entire nav bar collapses on mobile; only renders when toggled open. */
     nav#site-nav {
       display: none;
-      padding: .5rem 1rem;
+      padding: 0 1rem;
       flex-direction: column;
-      align-items: flex-start;
-      gap: .5rem;
+      align-items: stretch;
+      gap: 0;
     }
     nav#site-nav.open { display: flex; }
     .nav-collapse {
       display: flex;
       flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      width: 100%;
+    }
+    /* One link per line inside each section. */
+    .nav-group {
+      display: flex;
+      flex-direction: column;
       align-items: flex-start;
       gap: .5rem;
       width: 100%;
+      padding: .6rem 0;
     }
-    .nav-group {
-      flex-wrap: wrap;
-      gap: .75rem;
-      width: 100%;
+    .nav-label { padding-bottom: .15rem; }
+    /* Separator between sections (Trips → Campgrounds → Login/Logout). */
+    .nav-group + .nav-group,
+    .nav-collapse > .nav-group + a {
+      border-top: 1px solid rgba(255,255,255,.18);
     }
-    .nav-group + .nav-group { margin-left: 0; margin-top: .25rem; }
+    .nav-collapse > .nav-group + a {
+      padding: .65rem 0;
+    }
     .nav-collapse > a { width: 100%; margin-left: 0 !important; }
   }
 
