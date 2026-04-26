@@ -45,7 +45,29 @@
     box-shadow: 0 1px 4px rgba(0,0,0,.3);
     font-size: .8rem;
     line-height: 1.6;
+    max-width: 70vw;
   }
+
+  .map-legend .legend-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    color: var(--navy);
+  }
+
+  .map-legend .legend-header::after {
+    content: '\25BE';
+    font-size: .9rem;
+    color: var(--gray);
+  }
+
+  .map-legend.collapsed .legend-header::after { content: '\25B8'; }
+  .map-legend.collapsed .legend-rows { display: none; }
+  .map-legend:not(.collapsed) .legend-header { margin-bottom: .25rem; }
 
   .map-legend .legend-row {
     display: flex;
@@ -115,6 +137,17 @@ const legendControl = L.control({ position: 'bottomleft' });
 legendControl.onAdd = function() {
   const div = L.DomUtil.create('div', 'map-legend');
   L.DomEvent.disableClickPropagation(div);
+
+  const header = document.createElement('div');
+  header.className = 'legend-header';
+  header.textContent = 'Legend';
+  header.addEventListener('click', () => div.classList.toggle('collapsed'));
+  div.appendChild(header);
+
+  const rows = document.createElement('div');
+  rows.className = 'legend-rows';
+  div.appendChild(rows);
+
   Object.entries(COLOR_MAP).forEach(([category, color]) => {
     const count = CAMPGROUNDS.filter(c => (c[COLOR_FIELD] || 'none') === category).length;
     const row = document.createElement('div');
@@ -131,9 +164,13 @@ legendControl.onAdd = function() {
         categoryMarkers[category].forEach(m => m.setStyle({ opacity: 1, fillOpacity: 0.8 }));
       }
     });
-    div.appendChild(row);
+    rows.appendChild(row);
     categoryMarkers[category] = [];
   });
+
+  // Default to collapsed on mobile to free up map space.
+  if (window.innerWidth <= 700) div.classList.add('collapsed');
+
   return div;
 };
 legendControl.addTo(map);
