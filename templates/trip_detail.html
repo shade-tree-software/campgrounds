@@ -1669,7 +1669,9 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
       maxZoom: 19,
     }),
   ]);
-  L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
+  const baseLayers = { 'Map': streets, 'Satellite': satellite };
+  const overlayLayers = {};
+  const layerControl = L.control.layers(baseLayers, overlayLayers).addTo(map);
 
   const HOME = [38.929576, -77.366840];
   const bounds = [HOME];
@@ -1772,20 +1774,40 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     pushIfNew(evening);
   });
 
-  // Draw route line (white outline + colored dash for visibility on satellite)
+  // Draw straight-line route; show it immediately as the default while we
+  // wait on the GPS track. If the GPS track loads, swap it in (the user can
+  // still toggle either via the layer control).
+  let straightRouteLayer = null;
   if (routePath.length >= 2) {
-    L.polyline(routePath, {
-      color: '#fff',
-      weight: 5,
-      opacity: 0.6,
-    }).addTo(map);
-    L.polyline(routePath, {
-      color: '#002868',
-      weight: 3,
-      opacity: 0.8,
-      dashArray: '8,10',
-    }).addTo(map);
+    straightRouteLayer = L.layerGroup([
+      L.polyline(routePath, { color: '#fff', weight: 5, opacity: 0.6 }),
+      L.polyline(routePath, {
+        color: '#002868',
+        weight: 3,
+        opacity: 0.8,
+        dashArray: '8,10',
+      }),
+    ]);
+    layerControl.addOverlay(straightRouteLayer, 'Straight route');
+    straightRouteLayer.addTo(map);
   }
+
+  fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : [])
+    .then(points => {
+      if (!Array.isArray(points) || points.length < 2) return;
+      const latlngs = points.map(p => [p.lat, p.lon]);
+      const gpsRouteLayer = L.layerGroup([
+        L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
+        L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
+      ]);
+      layerControl.addOverlay(gpsRouteLayer, 'GPS track');
+      if (straightRouteLayer && map.hasLayer(straightRouteLayer)) {
+        map.removeLayer(straightRouteLayer);
+      }
+      gpsRouteLayer.addTo(map);
+    })
+    .catch(() => {});
 
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
   function eventDateLabel(evt) {

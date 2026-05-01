@@ -1186,6 +1186,82 @@ def api_geocode():
         return jsonify([])
 
 
+TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
+os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
+
+
+@app.route('/api/trips/<int:trip_id>/track')
+@login_required
+def api_trip_track(trip_id):
+    """Return the GPS track for a trip from the timeline API.
+
+    Caches results on disk. For trips that ended >7 days ago, the cache is
+    served permanently; recent trips re-fetch every call so newly logged
+    points show up.
+    """
+    trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
+    if not trip:
+        return jsonify({"error": "trip not found"}), 404
+    if not trip.get("start") or not trip.get("end"):
+        return jsonify([])
+
+    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
+    try:
+        end_date = date.fromisoformat(trip["end"])
+        is_old = (date.today() - end_date) > timedelta(days=7)
+    except ValueError:
+        is_old = False
+
+    if is_old and os.path.isfile(cache_file):
+        with open(cache_file) as f:
+            return jsonify(json.load(f))
+
+    token = os.environ.get("TIMELINE_API_TOKEN")
+    tid = os.environ.get("TIMELINE_TID")
+    if not token or not tid:
+        # Fall back to cache if we have one, else empty (frontend handles this).
+        if os.path.isfile(cache_file):
+            with open(cache_file) as f:
+                return jsonify(json.load(f))
+        return jsonify([])
+
+    try:
+        import urllib.request
+        from urllib.parse import urlencode
+        # Date-only trip range; widen by ~1 day on each side to absorb timezone
+        # offsets (the trip is stored in local dates, the API speaks UTC).
+        start_dt = datetime.fromisoformat(trip["start"]) - timedelta(days=1)
+        end_dt = datetime.fromisoformat(trip["end"]) + timedelta(days=2)
+        from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+        to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+        all_points = []
+        cursor = from_ts
+        # Page through results; the API silently caps at `limit`, so when we
+        # get a full page we restart from last_tst + 1.
+        for _ in range(20):  # hard ceiling to avoid runaway loops
+            qs = urlencode({"tid": tid, "from": cursor, "to": to_ts, "limit": 10000})
+            url = f"https://timeline-shadetreesoftware.pythonanywhere.com/api/v1/locations?{qs}"
+            req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                page = json.loads(resp.read())
+            if not page:
+                break
+            all_points.extend(page)
+            if len(page) < 10000:
+                break
+            cursor = page[-1]["tst"] + 1
+    except Exception as e:
+        if os.path.isfile(cache_file):
+            with open(cache_file) as f:
+                return jsonify(json.load(f))
+        return jsonify({"error": str(e)}), 502
+
+    with open(cache_file, "w") as f:
+        json.dump(all_points, f)
+    return jsonify(all_points)
+
+
 @app.route('/api/elevation')
 def api_elevation():
     """Proxy elevation lookup via Open-Elevation API."""
