@@ -1866,16 +1866,113 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     return points.slice(lo, hi + 1);
   }
 
+  // Equirectangular distance in meters between two [lat,lng] points.
+  function distMeters(a, b) {
+    const latKm = (a[0] - b[0]) * 111;
+    const lngKm = (a[1] - b[1]) * 111 *
+                  Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
+    return Math.sqrt(latKm * latKm + lngKm * lngKm) * 1000;
+  }
+  function nearestTrackPoint(anchor, latlngs) {
+    let best = null, bestDist = Infinity;
+    for (const p of latlngs) {
+      const d = distMeters(anchor, p);
+      if (d < bestDist) { bestDist = d; best = p; }
+    }
+    return { point: best, dist: bestDist };
+  }
+
+  // Build "blackout" time windows from stays (full date range) and from
+  // events that have both a start and end time. Track points whose tst falls
+  // inside any window are dropped before drawing.
+  function blackoutWindows() {
+    const wins = [];
+    STAYS_ALL.forEach(s => {
+      if (!s.start || !s.end) return;
+      const start = localEpoch(s.start, '00:00');
+      const [y, m, d] = s.end.split('-').map(Number);
+      const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+      if (start != null && !isNaN(end)) wins.push([start, end]);
+    });
+    EVENTS_ALL.forEach(e => {
+      if (!e.date || !e.time || !e.end_time) return;
+      const start = localEpoch(e.date, e.time);
+      const end = localEpoch(e.end_date || e.date, e.end_time);
+      if (start != null && end != null && end > start) wins.push([start, end]);
+    });
+    return wins;
+  }
+  function inAnyWindow(tst, windows) {
+    for (const [s, e] of windows) {
+      if (tst >= s && tst <= e) return true;
+    }
+    return false;
+  }
+
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : [])
     .then(rawPoints => {
-      const points = trimHomeBoundaries(Array.isArray(rawPoints) ? rawPoints : []);
+      const trimmed = trimHomeBoundaries(Array.isArray(rawPoints) ? rawPoints : []);
+      const windows = blackoutWindows();
+      const points = trimmed.filter(p => !inAnyWindow(p.tst, windows));
       if (points.length < 2) return;
+
+      // Split into segments wherever consecutive kept points are >1h apart —
+      // the natural breakpoints around the dropped stay/event windows.
+      const SEG_BREAK_SEC = 60 * 60;
+      const segments = [];
+      let current = [];
+      points.forEach((p, i) => {
+        if (i > 0 && p.tst - points[i - 1].tst > SEG_BREAK_SEC) {
+          if (current.length >= 2) segments.push(current);
+          current = [];
+        }
+        current.push([p.lat, p.lon]);
+      });
+      if (current.length >= 2) segments.push(current);
+      if (!segments.length) return;
+
+      // Flat list of all kept latlngs for nearest-point search.
       const latlngs = points.map(p => [p.lat, p.lon]);
-      const gpsRouteLayer = L.layerGroup([
-        L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
-        L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
-      ]);
+
+      // Close visual gaps between the GPS track and each anchor (home,
+      // stays, events). For HOME we connect the first segment's first point
+      // and the last segment's last point (depart/return). For stays/events
+      // we connect the spatially-nearest kept track point. Connectors are
+      // skipped when the gap is essentially zero (<5 m) or implausibly large
+      // (>50 km).
+      const MIN_CONNECTOR_M = 5;
+      const MAX_CONNECTOR_M = 50000;
+      const connectors = [];
+      function maybePush(anchor, point) {
+        if (!point) return;
+        const d = distMeters(anchor, point);
+        if (d < MIN_CONNECTOR_M || d > MAX_CONNECTOR_M) return;
+        connectors.push([anchor, point]);
+      }
+      maybePush(HOME, segments[0][0]);
+      maybePush(HOME, segments[segments.length - 1][segments[segments.length - 1].length - 1]);
+      mapped.forEach(s => {
+        const { point } = nearestTrackPoint([s.lat, s.lng], latlngs);
+        maybePush([s.lat, s.lng], point);
+      });
+      mappedEvents.forEach(e => {
+        const { point } = nearestTrackPoint([e.lat, e.lng], latlngs);
+        maybePush([e.lat, e.lng], point);
+      });
+
+      const gpsLayers = [];
+      segments.forEach(seg => {
+        gpsLayers.push(L.polyline(seg, { color: '#fff', weight: 5, opacity: 0.6 }));
+        gpsLayers.push(L.polyline(seg, { color: '#002868', weight: 3, opacity: 0.9 }));
+      });
+      connectors.forEach(seg => {
+        gpsLayers.push(L.polyline(seg, { color: '#fff', weight: 5, opacity: 0.6 }));
+        gpsLayers.push(L.polyline(seg, {
+          color: '#002868', weight: 3, opacity: 0.9, dashArray: '4,6',
+        }));
+      });
+      const gpsRouteLayer = L.layerGroup(gpsLayers);
       layerControl.addOverlay(gpsRouteLayer, 'GPS track');
       if (straightRouteLayer && map.hasLayer(straightRouteLayer)) {
         map.removeLayer(straightRouteLayer);
