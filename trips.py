@@ -47,7 +47,9 @@ def _load_trips_json():
     raw = _load_raw_trips()
     locations = _load_locations_by_id()
     trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                        t.get("events", []), locations) for t in raw]
+                        t.get("events", []), locations,
+                        home_start_time=t.get("home_start_time", ""),
+                        home_end_time=t.get("home_end_time", "")) for t in raw]
     trips.sort(key=lambda t: t["start"])
     n = 0
     for t in trips:
@@ -106,15 +108,25 @@ def create_trip(trip_note=""):
 
 
 def update_trip(trip_id, fields):
-    """Update trip-level fields (trip_note). Returns updated trip or None."""
+    """Update trip-level fields (trip_note, home_start_time, home_end_time).
+    Returns updated trip or None."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
             if "trip_note" in fields:
                 t["trip_note"] = fields["trip_note"]
+            for key in ("home_start_time", "home_end_time"):
+                if key in fields:
+                    val = (fields[key] or "").strip()
+                    if val:
+                        t[key] = val
+                    else:
+                        t.pop(key, None)
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                              t.get("events", []))
+                              t.get("events", []),
+                              home_start_time=t.get("home_start_time", ""),
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -159,7 +171,9 @@ def add_stay(trip_id, stay_data):
             _remap_indices_after_sort(trip_id, old_order, t["stays"], "stay")
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                              t.get("events", []))
+                              t.get("events", []),
+                              home_start_time=t.get("home_start_time", ""),
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -185,7 +199,9 @@ def update_stay(trip_id, stay_idx, fields):
             _remap_indices_after_sort(trip_id, old_order, t["stays"], "stay")
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                              t.get("events", []))
+                              t.get("events", []),
+                              home_start_time=t.get("home_start_time", ""),
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -211,7 +227,9 @@ def delete_stay(trip_id, stay_idx):
 
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
-                              t.get("events", []))
+                              t.get("events", []),
+                              home_start_time=t.get("home_start_time", ""),
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -474,7 +492,8 @@ def _group_into_trips(stays):
     return trips
 
 
-def _make_trip(trip_id, stays, trip_note="", events=None, locations=None):
+def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
+               home_start_time="", home_end_time=""):
     """Build a trip dict from a list of stays and optional events.
 
     If `locations` (id → info map from `_load_locations_by_id`) is supplied,
@@ -619,6 +638,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None):
         "summary": summary,
         "campers": sorted(all_campers),
         "home_only": home_only,
+        "home_start_time": home_start_time,
+        "home_end_time": home_end_time,
     }
 
 

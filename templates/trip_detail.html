@@ -1153,8 +1153,11 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}</div>
+        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% if trip.home_start_time %} {{ trip.home_start_time }}{% endif %}{% endif %}</div>
       </div>
+      {% if is_admin %}
+      <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
+      {% endif %}
     </div>
   </div>
   {% endif %}
@@ -1434,8 +1437,11 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}</div>
+        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% if trip.home_end_time %} {{ trip.home_end_time }}{% endif %}{% endif %}</div>
       </div>
+      {% if is_admin %}
+      <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
+      {% endif %}
     </div>
   </div>
   {% endif %}
@@ -1640,6 +1646,10 @@ const FIRST_STAY_DATE = {{ (trip.stays[0].start if trip.stays else '') | tojson 
 const STAYS_ALL = {{ trip.stays | tojson }};
 const EVENTS_ALL = {{ trip.events | tojson }};
 const FAMILY_LOCATIONS = {{ family_locations | tojson }};
+const TRIP_START = {{ trip.start | tojson }};
+const TRIP_END = {{ trip.end | tojson }};
+const HOME_START_TIME = {{ trip.home_start_time | tojson }};
+const HOME_END_TIME = {{ trip.home_end_time | tojson }};
 
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
@@ -1792,10 +1802,75 @@ const FAMILY_LOCATIONS = {{ family_locations | tojson }};
     straightRouteLayer.addTo(map);
   }
 
+  // Trim points near home on the trip's first/last dates only — drops the
+  // pre-departure puttering on day 1 and the post-arrival puttering on the
+  // final day, while keeping any home pass-through on interior days.
+  const HOME_TRIM_KM = 1.5;
+  function isNearHome(lat, lon) {
+    const latKm = (lat - HOME[0]) * 111;
+    const lngKm = (lon - HOME[1]) * 111 * Math.cos(HOME[0] * Math.PI / 180);
+    return Math.sqrt(latKm * latKm + lngKm * lngKm) < HOME_TRIM_KM;
+  }
+  function localDateOf(tst) {
+    const d = new Date(tst * 1000);
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  // Build a local-time Unix epoch (seconds) for a "YYYY-MM-DD" date and a
+  // "H:MM" or "HH:MM" time string. Returns null if either input is missing.
+  function localEpoch(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return null;
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const [hh, mm] = timeStr.split(':').map(Number);
+    if ([y, m, d, hh, mm].some(isNaN)) return null;
+    return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
+  }
+  function trimHomeBoundaries(points) {
+    if (!points.length || !sortedDates.length) return points;
+    const tripStart = sortedDates[0];
+    const tripEnd = sortedDates[sortedDates.length - 1];
+
+    // Absolute lower cutoff: explicit departure time if set, else start of
+    // tripStart day in local time (drops anything from the buffer day before).
+    let lowerCut = HOME_START_TIME
+      ? localEpoch(tripStart, HOME_START_TIME)
+      : localEpoch(tripStart, '00:00');
+    // Absolute upper cutoff: explicit arrival time if set, else end of tripEnd
+    // day (start of the day after, exclusive).
+    let upperCut;
+    if (HOME_END_TIME) {
+      upperCut = localEpoch(tripEnd, HOME_END_TIME);
+    } else {
+      const [y, m, d] = tripEnd.split('-').map(Number);
+      upperCut = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+    }
+
+    let lo = 0;
+    while (lo < points.length && points[lo].tst < lowerCut) lo++;
+    let hi = points.length - 1;
+    while (hi >= lo && points[hi].tst > upperCut) hi--;
+
+    // When no explicit times are set, also peel off the home-radius "puttering"
+    // at the boundaries (existing behavior).
+    if (!HOME_START_TIME) {
+      while (lo < points.length &&
+             localDateOf(points[lo].tst) === tripStart &&
+             isNearHome(points[lo].lat, points[lo].lon)) lo++;
+    }
+    if (!HOME_END_TIME) {
+      while (hi >= lo &&
+             localDateOf(points[hi].tst) === tripEnd &&
+             isNearHome(points[hi].lat, points[hi].lon)) hi--;
+    }
+    return points.slice(lo, hi + 1);
+  }
+
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : [])
-    .then(points => {
-      if (!Array.isArray(points) || points.length < 2) return;
+    .then(rawPoints => {
+      const points = trimHomeBoundaries(Array.isArray(rawPoints) ? rawPoints : []);
+      if (points.length < 2) return;
       const latlngs = points.map(p => [p.lat, p.lon]);
       const gpsRouteLayer = L.layerGroup([
         L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
@@ -2036,6 +2111,29 @@ function saveTripNote() {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ trip_note: val })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); return; }
+    location.reload();
+  });
+}
+
+function editHomeTime(which) {
+  const current = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+  const label = which === 'start' ? 'Departure time from home' : 'Arrival time at home';
+  const val = prompt(label + ' (HH:MM, 24-hour). Leave blank to clear.', current || '');
+  if (val === null) return;
+  const trimmed = val.trim();
+  if (trimmed && !/^\d{1,2}:\d{2}$/.test(trimmed)) {
+    alert('Use HH:MM 24-hour format (e.g. 08:30 or 17:45).');
+    return;
+  }
+  const field = which === 'start' ? 'home_start_time' : 'home_end_time';
+  fetch(`/api/trips/${TRIP_ID}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ [field]: trimmed })
   })
   .then(r => r.json())
   .then(data => {
