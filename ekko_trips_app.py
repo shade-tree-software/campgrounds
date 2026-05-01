@@ -782,6 +782,9 @@ def api_delete_trip(trip_id):
         return denied
     if not delete_trip(trip_id):
         return jsonify({"error": "Trip not found"}), 404
+    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
+    if os.path.isfile(cache_file):
+        os.remove(cache_file)
     return jsonify({"ok": True})
 
 
