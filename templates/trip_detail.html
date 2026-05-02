@@ -1153,7 +1153,7 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% if trip.home_start_time %} {{ trip.home_start_time }}{% endif %}{% endif %}</div>
+        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
@@ -1437,7 +1437,7 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% if trip.home_end_time %} {{ trip.home_end_time }}{% endif %}{% endif %}</div>
+        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
@@ -1951,17 +1951,42 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     return result;
   }
 
-  function buildAnchors(rawPoints) {
+  // HOME boundary times = the first and last raw OwnTracks ping in the trip's
+  // date range, when those pings are near home. The user's pattern is that
+  // OwnTracks only starts logging when leaving for the trip, so the first
+  // ping is the actual departure moment (even if the next stop is geographic-
+  // ally within the home radius — that's a trip-related stop, not "at home").
+  // Symmetrically the last ping is the arrival-home moment. If the boundary
+  // ping is far from home (>HOME_TRIM_KM) the user departed/returned without
+  // GPS coverage of the home approach — return null and fall back to the day
+  // boundary.
+  function findHomeBoundaryTimes(rawPoints) {
+    let homeStartTst = null, homeEndTst = null;
+    for (const p of rawPoints) {
+      if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
+      if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
+      if (isNearHome(p.lat, p.lon)) homeStartTst = p.tst;
+      break;
+    }
+    for (let i = rawPoints.length - 1; i >= 0; i--) {
+      const p = rawPoints[i];
+      if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
+      if (TRIP_START && localDateOf(p.tst) < TRIP_START) break;
+      if (isNearHome(p.lat, p.lon)) homeEndTst = p.tst;
+      break;
+    }
+    return { homeStartTst, homeEndTst };
+  }
+
+  function buildAnchors(rawPoints, autoHomeStartTst, autoHomeEndTst) {
     const anchors = [];
-    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
 
     if (TRIP_START) {
       let homeStart;
       if (HOME_START_TIME) {
         homeStart = localEpoch(TRIP_START, HOME_START_TIME);
       } else {
-        homeStart = findPingTime(rawPoints, HOME[0], HOME[1], HOME_RADIUS_M, 'last', null, TRIP_START);
-        if (homeStart == null) homeStart = localEpoch(TRIP_START, '00:00');
+        homeStart = autoHomeStartTst != null ? autoHomeStartTst : localEpoch(TRIP_START, '00:00');
       }
       if (homeStart != null) anchors.push({ tst: homeStart, lat: HOME[0], lng: HOME[1] });
     }
@@ -1969,12 +1994,11 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
       let homeEnd;
       if (HOME_END_TIME) {
         homeEnd = localEpoch(TRIP_END, HOME_END_TIME);
+      } else if (autoHomeEndTst != null) {
+        homeEnd = autoHomeEndTst;
       } else {
-        homeEnd = findPingTime(rawPoints, HOME[0], HOME[1], HOME_RADIUS_M, 'first', TRIP_END, null);
-        if (homeEnd == null) {
-          const [y, m, d] = TRIP_END.split('-').map(Number);
-          homeEnd = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
-        }
+        const [y, m, d] = TRIP_END.split('-').map(Number);
+        homeEnd = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
       }
       if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
     }
@@ -2016,15 +2040,39 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     return anchors;
   }
 
+  function formatHM(tst) {
+    const d = new Date(tst * 1000);
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+
+  // Populate the home cards' time display: manual override (rendered server-
+  // side) wins; otherwise show the GPS-derived time with an "(auto)" suffix
+  // so admins know they can override it via Edit if it looks wrong. Stored
+  // on window so editHomeTime() can show the auto value as the prompt default.
+  function updateHomeTimeDisplay(which, autoTst) {
+    const span = document.getElementById(`home-${which}-time-display`);
+    if (!span) return;
+    const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+    if (manual) return;
+    if (autoTst == null) return;
+    const hm = formatHM(autoTst);
+    span.textContent = ` · ${hm} (auto)`;
+    if (which === 'start') window.HOME_START_TIME_AUTO = hm;
+    else window.HOME_END_TIME_AUTO = hm;
+  }
+
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : [])
     .then(rawPoints => {
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
+      const { homeStartTst, homeEndTst } = findHomeBoundaryTimes(raw);
+      if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', homeStartTst);
+      if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', homeEndTst);
       const trimmed = trimHomeBoundaries(raw);
       const windows = blackoutWindows();
       const kept = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
       if (!kept.length) return;
-      const anchors = buildAnchors(raw);
+      const anchors = buildAnchors(raw, homeStartTst, homeEndTst);
 
       const combined = [
         ...kept.map(p => ({ tst: p.tst, lat: p.lat, lng: p.lon })),
@@ -2281,9 +2329,15 @@ function saveTripNote() {
 }
 
 function editHomeTime(which) {
-  const current = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+  const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+  const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;
   const label = which === 'start' ? 'Departure time from home' : 'Arrival time at home';
-  const val = prompt(label + ' (HH:MM, 24-hour). Leave blank to clear.', current || '');
+  const hint = manual
+    ? '(currently overriding auto-detection — leave blank to clear and use GPS-derived time)'
+    : auto
+      ? `(GPS-derived time is ${auto}; set a manual override only if that looks wrong)`
+      : '(no GPS data near home — set manually for a sensible boundary)';
+  const val = prompt(`${label} (HH:MM, 24-hour) ${hint}`, manual || '');
   if (val === null) return;
   const trimmed = val.trim();
   if (trimmed && !/^\d{1,2}:\d{2}$/.test(trimmed)) {
