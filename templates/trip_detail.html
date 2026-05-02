@@ -1873,9 +1873,14 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
                   Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
     return Math.sqrt(latKm * latKm + lngKm * lngKm) * 1000;
   }
-  // Build "blackout" time windows from stays (full date range) and from
-  // events that have both a start and end time. Track points whose tst falls
-  // inside any window are dropped before drawing.
+  // Build "blackout" windows from stays (full date range) and from events
+  // that have both a start and end time. A point is dropped only if its tst
+  // falls inside a window AND it sits within BLACKOUT_RADIUS_M of that
+  // window's location — so pings clustered at the campground/event are
+  // suppressed while travel-day pings (e.g., the drive between two
+  // back-to-back stays) survive. When a window has no location, the
+  // proximity check is skipped (time-only blackout).
+  const BLACKOUT_RADIUS_M = 1500;
   function blackoutWindows() {
     const wins = [];
     STAYS_ALL.forEach(s => {
@@ -1883,37 +1888,81 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
       const start = localEpoch(s.start, '00:00');
       const [y, m, d] = s.end.split('-').map(Number);
       const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
-      if (start != null && !isNaN(end)) wins.push([start, end]);
+      if (start != null && !isNaN(end)) {
+        wins.push({ start, end, lat: s.lat, lng: s.lng });
+      }
     });
     EVENTS_ALL.forEach(e => {
       if (!e.date || !e.time || !e.end_time) return;
       const start = localEpoch(e.date, e.time);
       const end = localEpoch(e.end_date || e.date, e.end_time);
-      if (start != null && end != null && end > start) wins.push([start, end]);
+      if (start != null && end != null && end > start) {
+        wins.push({ start, end, lat: e.lat, lng: e.lng });
+      }
     });
     return wins;
   }
-  function inAnyWindow(tst, windows) {
-    for (const [s, e] of windows) {
-      if (tst >= s && tst <= e) return true;
+  function inAnyWindow(tst, lat, lng, windows) {
+    for (const w of windows) {
+      if (tst < w.start || tst > w.end) continue;
+      if (w.lat == null || w.lng == null) return true;
+      if (distMeters([lat, lng], [w.lat, w.lng]) <= BLACKOUT_RADIUS_M) return true;
     }
     return false;
   }
 
   // Treat stay/event locations and their timestamps as part of the track —
   // splice them in as anchor points instead of drawing dashed connectors.
-  // - Stays anchor at 00:00 of arrival day and 00:00 of day-after-departure.
-  // - Events with start+end times anchor at both.
-  // - Single-time events anchor at that time.
-  // - Untimed events snap to the timestamp of the spatially-closest track
+  // - Stays anchor at the time of the FIRST raw ping inside the stay's
+  //   blackout radius (arrival) and the LAST such ping (departure). When no
+  //   pings landed at the stay, fall back to 00:00 of arrival / day-after-
+  //   departure as a structural connector.
+  // - HOME anchors bookend the trip at HOME_START_TIME / HOME_END_TIME if
+  //   set; otherwise at the time of the LAST near-home raw ping on/before
+  //   TRIP_START (departure) and the FIRST near-home raw ping on/after
+  //   TRIP_END (arrival home). Falls back to day boundaries if no near-home
+  //   pings exist.
+  // - Events with timed start/end anchor at those times.
+  // - Untimed events snap to the timestamp of the spatially-closest raw
   //   point on the event's date (falling back to noon if there are none).
-  // - HOME anchors bookend the trip at HOME_START_TIME / HOME_END_TIME
-  //   (defaulting to 00:00 of the start day and end-of end day).
-  function buildAnchors(trackPoints) {
+  //
+  // Why GPS-derived times: anchors at fixed midnight boundaries collide in
+  // time when consecutive anchors fall on the same day boundary (e.g., HOME
+  // at trip-start 00:00 and stay#1 at arrival 00:00 when trip starts on the
+  // arrival day). Sorting then places the two anchors adjacent with no real
+  // pings between them, drawing a straight line between distant locations
+  // even when the real GPS track also covers that travel later in the day.
+  // Snapping to actual ping timestamps interleaves anchors with real data.
+  function findPingTime(rawPoints, lat, lng, radiusM, mode, dateFrom, dateTo) {
+    let result = null;
+    for (const p of rawPoints) {
+      if (dateFrom || dateTo) {
+        const date = localDateOf(p.tst);
+        if (dateFrom && date < dateFrom) continue;
+        if (dateTo && date > dateTo) continue;
+      }
+      if (distMeters([p.lat, p.lon], [lat, lng]) > radiusM) continue;
+      if (mode === 'first') {
+        if (result == null || p.tst < result) result = p.tst;
+      } else {
+        if (result == null || p.tst > result) result = p.tst;
+      }
+    }
+    return result;
+  }
+
+  function buildAnchors(rawPoints) {
     const anchors = [];
+    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
 
     if (TRIP_START) {
-      const homeStart = localEpoch(TRIP_START, HOME_START_TIME || '00:00');
+      let homeStart;
+      if (HOME_START_TIME) {
+        homeStart = localEpoch(TRIP_START, HOME_START_TIME);
+      } else {
+        homeStart = findPingTime(rawPoints, HOME[0], HOME[1], HOME_RADIUS_M, 'last', null, TRIP_START);
+        if (homeStart == null) homeStart = localEpoch(TRIP_START, '00:00');
+      }
       if (homeStart != null) anchors.push({ tst: homeStart, lat: HOME[0], lng: HOME[1] });
     }
     if (TRIP_END) {
@@ -1921,17 +1970,24 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
       if (HOME_END_TIME) {
         homeEnd = localEpoch(TRIP_END, HOME_END_TIME);
       } else {
-        const [y, m, d] = TRIP_END.split('-').map(Number);
-        homeEnd = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+        homeEnd = findPingTime(rawPoints, HOME[0], HOME[1], HOME_RADIUS_M, 'first', TRIP_END, null);
+        if (homeEnd == null) {
+          const [y, m, d] = TRIP_END.split('-').map(Number);
+          homeEnd = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+        }
       }
       if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
     }
 
     mapped.forEach(s => {
       if (!s.start || !s.end) return;
-      const start = localEpoch(s.start, '00:00');
-      const [y, m, d] = s.end.split('-').map(Number);
-      const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+      let start = findPingTime(rawPoints, s.lat, s.lng, BLACKOUT_RADIUS_M, 'first', s.start, s.end);
+      if (start == null) start = localEpoch(s.start, '00:00');
+      let end = findPingTime(rawPoints, s.lat, s.lng, BLACKOUT_RADIUS_M, 'last', s.start, s.end);
+      if (end == null) {
+        const [y, m, d] = s.end.split('-').map(Number);
+        end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+      }
       if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
       if (end != null && !isNaN(end)) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
     });
@@ -1947,7 +2003,7 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
         }
       } else {
         let bestDist = Infinity, bestTst = null;
-        for (const p of trackPoints) {
+        for (const p of rawPoints) {
           if (localDateOf(p.tst) !== e.date) continue;
           const d = distMeters([p.lat, p.lon], [e.lat, e.lng]);
           if (d < bestDist) { bestDist = d; bestTst = p.tst; }
@@ -1963,11 +2019,12 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : [])
     .then(rawPoints => {
-      const trimmed = trimHomeBoundaries(Array.isArray(rawPoints) ? rawPoints : []);
+      const raw = Array.isArray(rawPoints) ? rawPoints : [];
+      const trimmed = trimHomeBoundaries(raw);
       const windows = blackoutWindows();
-      const kept = trimmed.filter(p => !inAnyWindow(p.tst, windows));
+      const kept = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
       if (!kept.length) return;
-      const anchors = buildAnchors(kept);
+      const anchors = buildAnchors(raw);
 
       const combined = [
         ...kept.map(p => ({ tst: p.tst, lat: p.lat, lng: p.lon })),
