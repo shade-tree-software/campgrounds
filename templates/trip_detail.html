@@ -1951,30 +1951,76 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     return result;
   }
 
-  // HOME boundary times = the first and last raw OwnTracks ping in the trip's
-  // date range, when those pings are near home. The user's pattern is that
-  // OwnTracks only starts logging when leaving for the trip, so the first
-  // ping is the actual departure moment (even if the next stop is geographic-
-  // ally within the home radius — that's a trip-related stop, not "at home").
-  // Symmetrically the last ping is the arrival-home moment. If the boundary
-  // ping is far from home (>HOME_TRIM_KM) the user departed/returned without
-  // GPS coverage of the home approach — return null and fall back to the day
-  // boundary.
+  // HOME boundary times distinguish two OwnTracks usage patterns:
+  //   (a) Continuous logging — pings come in at the house all morning before
+  //       the trip and again all evening on return. GPS jitter occasionally
+  //       bounces a ping past the 100 ft house radius.
+  //   (b) On-demand logging — OwnTracks only starts when the user leaves, so
+  //       the first ping is post-departure, near home but not exactly at home.
+  //
+  // The rule for HOME-start: walk forward, tracking a candidate boundary.
+  // Reset the candidate every time we see an at-house ping (within
+  // HOME_EXACT_RADIUS_M) — we're still on the property. Set the candidate
+  // on the first >100 ft ping (within HOME_TRIM_KM) after a reset. Once a
+  // candidate has *sustained* away for HOME_BOUNDARY_LOCK_S without a
+  // further at-house ping resetting it, lock it as homeStartTst and stop
+  // iterating. This prevents the trip's *return-home* at-house pings from
+  // resetting the actual morning departure — the issue that caused single-
+  // day trips to show "nothing" and multi-day trips to surface a stale
+  // late-evening jitter spike on the return day. Pattern (a) yields the
+  // post-morning-cluster departure (e.g., 8:49 am, locked one hour later);
+  // pattern (b) yields the very first ping (locked one hour later).
+  //
+  // HOME-end (walk backward): identify the trailing at-house cluster and
+  // use its earliest member (= moment of arrival home). When no trailing
+  // at-house cluster exists (pattern b at trip end — the user's last raw
+  // ping is between 100 ft and HOME_TRIM_KM, with no at-house pings after),
+  // fall back to that last in-range near-home ping. The walk-backward
+  // halts at the first non-at-house ping it encounters at the tail, so
+  // any earlier (mid-trip or pre-trip) at-house pings can't influence it.
+  const HOME_EXACT_RADIUS_M = 100 * 0.3048;  // 100 feet
+  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away
   function findHomeBoundaryTimes(rawPoints) {
+    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
     let homeStartTst = null, homeEndTst = null;
+
+    let startCandidate = null;
     for (const p of rawPoints) {
       if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
       if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
-      if (isNearHome(p.lat, p.lon)) homeStartTst = p.tst;
-      break;
+      const d = distMeters([p.lat, p.lon], HOME);
+      if (d < HOME_EXACT_RADIUS_M) {
+        startCandidate = null;
+      } else {
+        if (startCandidate == null && d <= HOME_RADIUS_M) {
+          startCandidate = p.tst;
+        }
+        if (startCandidate != null && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
+          homeStartTst = startCandidate;
+          break;
+        }
+      }
     }
+    if (homeStartTst == null) homeStartTst = startCandidate;
+
+    let trailingAtHouseDone = false;
+    let lastNearHomeBeforeBreak = null;
     for (let i = rawPoints.length - 1; i >= 0; i--) {
       const p = rawPoints[i];
       if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
       if (TRIP_START && localDateOf(p.tst) < TRIP_START) break;
-      if (isNearHome(p.lat, p.lon)) homeEndTst = p.tst;
-      break;
+      const d = distMeters([p.lat, p.lon], HOME);
+      if (d < HOME_EXACT_RADIUS_M) {
+        if (!trailingAtHouseDone) homeEndTst = p.tst;
+      } else {
+        if (!trailingAtHouseDone && lastNearHomeBeforeBreak == null && d <= HOME_RADIUS_M) {
+          lastNearHomeBeforeBreak = p.tst;
+        }
+        trailingAtHouseDone = true;
+      }
     }
+    if (homeEndTst == null) homeEndTst = lastNearHomeBeforeBreak;
+
     return { homeStartTst, homeEndTst };
   }
 
@@ -2056,7 +2102,7 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     if (manual) return;
     if (autoTst == null) return;
     const hm = formatHM(autoTst);
-    span.textContent = ` · ${hm} (auto)`;
+    span.textContent = IS_ADMIN ? ` · ${hm} (auto)` : ` · ${hm}`;
     if (which === 'start') window.HOME_START_TIME_AUTO = hm;
     else window.HOME_END_TIME_AUTO = hm;
   }
