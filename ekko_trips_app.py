@@ -1193,6 +1193,27 @@ TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
 os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 
 
+def _fetch_timeline_points(tid, token, from_ts, to_ts):
+    """Page through the timeline API for a single tid across a UTC range."""
+    import urllib.request
+    from urllib.parse import urlencode
+    points = []
+    cursor = from_ts
+    for _ in range(20):  # hard ceiling to avoid runaway loops
+        qs = urlencode({"tid": tid, "from": cursor, "to": to_ts, "limit": 10000})
+        url = f"https://timeline-shadetreesoftware.pythonanywhere.com/api/v1/locations?{qs}"
+        req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            page = json.loads(resp.read())
+        if not page:
+            break
+        points.extend(page)
+        if len(page) < 10000:
+            break
+        cursor = page[-1]["tst"] + 1
+    return points
+
+
 @app.route('/api/trips/<int:trip_id>/track')
 @login_required
 def api_trip_track(trip_id):
@@ -1221,6 +1242,7 @@ def api_trip_track(trip_id):
 
     token = os.environ.get("TIMELINE_API_TOKEN")
     tid = os.environ.get("TIMELINE_TID")
+    alt_tid = os.environ.get("TIMELINE_TID_ALT")
     if not token or not tid:
         # Fall back to cache if we have one, else empty (frontend handles this).
         if os.path.isfile(cache_file):
@@ -1229,8 +1251,6 @@ def api_trip_track(trip_id):
         return jsonify([])
 
     try:
-        import urllib.request
-        from urllib.parse import urlencode
         # Date-only trip range; widen by ~1 day on each side to absorb timezone
         # offsets (the trip is stored in local dates, the API speaks UTC).
         start_dt = datetime.fromisoformat(trip["start"]) - timedelta(days=1)
@@ -1238,22 +1258,23 @@ def api_trip_track(trip_id):
         from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
         to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        all_points = []
-        cursor = from_ts
-        # Page through results; the API silently caps at `limit`, so when we
-        # get a full page we restart from last_tst + 1.
-        for _ in range(20):  # hard ceiling to avoid runaway loops
-            qs = urlencode({"tid": tid, "from": cursor, "to": to_ts, "limit": 10000})
-            url = f"https://timeline-shadetreesoftware.pythonanywhere.com/api/v1/locations?{qs}"
-            req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
-            with urllib.request.urlopen(req, timeout=15) as resp:
-                page = json.loads(resp.read())
-            if not page:
-                break
-            all_points.extend(page)
-            if len(page) < 10000:
-                break
-            cursor = page[-1]["tst"] + 1
+        all_points = _fetch_timeline_points(tid, token, from_ts, to_ts)
+
+        if alt_tid:
+            primary_days = {datetime.utcfromtimestamp(p["tst"]).date() for p in all_points}
+            gap_days = set()
+            d = start_dt.date()
+            while d <= end_dt.date():
+                if d not in primary_days:
+                    gap_days.add(d)
+                d += timedelta(days=1)
+            if gap_days:
+                alt_points = _fetch_timeline_points(alt_tid, token, from_ts, to_ts)
+                all_points.extend(
+                    p for p in alt_points
+                    if datetime.utcfromtimestamp(p["tst"]).date() in gap_days
+                )
+                all_points.sort(key=lambda p: p["tst"])
     except Exception as e:
         if os.path.isfile(cache_file):
             with open(cache_file) as f:
