@@ -1919,14 +1919,14 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         wins.push({ start, end, lat: s.lat, lng: s.lng });
       }
     });
-    EVENTS_ALL.forEach(e => {
-      if (!e.date || !e.time || !e.end_time) return;
-      const start = localEpoch(e.date, e.time);
-      const end = localEpoch(e.end_date || e.date, e.end_time);
-      if (start != null && end != null && end > start) {
-        wins.push({ start, end, lat: e.lat, lng: e.lng });
-      }
-    });
+    // Events deliberately do NOT participate in polyline blackout. Many
+    // events are mobile (canoe trip on a river, hike, bike ride) where
+    // the configured event coord is just a starting point and real GPS
+    // pings spread out over a kilometer or more — blacking those out
+    // would erase the actual route and force the polyline to draw a
+    // single straight line from camp to event coord. For stationary
+    // events (concert venue), at-venue pings are typically tightly
+    // clustered and add only minor visual noise to the polyline.
     return wins;
   }
   function inAnyWindow(tst, lat, lng, windows) {
@@ -2126,27 +2126,105 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
     }
 
+    // Pre-compute timed-event blackout windows so the stay-residency loop
+    // below can exclude pings that belong to an event. A ping that's both
+    // within 1500 m of camp AND inside an event's blackout would otherwise
+    // anchor the polyline back to camp mid-event, drawing a spurious
+    // camp↔event hop (e.g., a ping in transit ~1 km from camp during the
+    // tail of a canoe-event window would attach as the "first ping of the
+    // post-event camp residency cluster" even though the user was still on
+    // their way back from the event).
+    const eventBlackoutWindows = [];
+    mappedEvents.forEach(e => {
+      if (!e.date || !e.time || !e.end_time) return;
+      const eStart = localEpoch(e.date, e.time);
+      const eEnd = localEpoch(e.end_date || e.date, e.end_time);
+      if (eStart != null && eEnd != null && eEnd > eStart) {
+        eventBlackoutWindows.push({ start: eStart, end: eEnd, lat: e.lat, lng: e.lng });
+      }
+    });
+    function inAnyEventBlackout(p) {
+      for (const w of eventBlackoutWindows) {
+        if (p.tst < w.start || p.tst > w.end) continue;
+        if (w.lat == null || w.lng == null) continue;
+        if (distMeters([p.lat, p.lon], [w.lat, w.lng]) <= BLACKOUT_RADIUS_M) return true;
+      }
+      return false;
+    }
+
+    // Per stay, find every "residency cluster" — a maximal run of
+    // consecutive raw pings inside the stay's blackout disc (within
+    // BLACKOUT_RADIUS_M and within the stay's date range), bracketed by
+    // off-stay pings. Emit one anchor pair per cluster at the stay's coords
+    // so the polyline returns to camp between excursions. Without this, a
+    // multi-excursion stay collapses to a single (start, end) anchor pair
+    // and the polyline draws a straight line directly between two
+    // off-camp pings on either side of an at-camp residency, when both
+    // off-camp pings happen to sit just outside the blackout disc (a
+    // common arrival/departure pattern).
+    const sortedRawForClusters = rawPoints.slice().sort((a, b) => a.tst - b.tst);
     mapped.forEach(s => {
       if (!s.start || !s.end) return;
-      let start = findPingTime(rawPoints, s.lat, s.lng, BLACKOUT_RADIUS_M, 'first', s.start, s.end);
-      if (start == null) start = localEpoch(s.start, '00:00');
-      let end = findPingTime(rawPoints, s.lat, s.lng, BLACKOUT_RADIUS_M, 'last', s.start, s.end);
-      if (end == null) {
-        const [y, m, d] = s.end.split('-').map(Number);
-        end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+      const clusters = [];
+      let cur = null;
+      for (const p of sortedRawForClusters) {
+        const date = localDateOf(p.tst);
+        if (date < s.start || date > s.end) {
+          if (cur) { clusters.push(cur); cur = null; }
+          continue;
+        }
+        const inside = distMeters([p.lat, p.lon], [s.lat, s.lng]) <= BLACKOUT_RADIUS_M
+                       && !inAnyEventBlackout(p);
+        if (inside) {
+          if (cur == null) cur = { first: p.tst, last: p.tst };
+          else cur.last = p.tst;
+        } else if (cur) {
+          clusters.push(cur);
+          cur = null;
+        }
       }
-      if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
-      if (end != null && !isNaN(end)) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
+      if (cur) clusters.push(cur);
+      if (clusters.length === 0) {
+        const start = localEpoch(s.start, '00:00');
+        const [y, m, d] = s.end.split('-').map(Number);
+        const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+        if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
+        if (!isNaN(end)) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
+      } else {
+        clusters.forEach(c => {
+          anchors.push({ tst: c.first, lat: s.lat, lng: s.lng });
+          if (c.last !== c.first) anchors.push({ tst: c.last, lat: s.lat, lng: s.lng });
+        });
+      }
     });
 
     mappedEvents.forEach(e => {
       if (!e.date) return;
       if (e.time) {
-        const start = localEpoch(e.date, e.time);
-        if (start != null) anchors.push({ tst: start, lat: e.lat, lng: e.lng });
-        if (e.end_time) {
-          const end = localEpoch(e.end_date || e.date, e.end_time);
-          if (end != null) anchors.push({ tst: end, lat: e.lat, lng: e.lng });
+        const cfgStart = localEpoch(e.date, e.time);
+        const cfgEnd = e.end_time ? localEpoch(e.end_date || e.date, e.end_time) : null;
+        if (cfgStart == null) return;
+        if (cfgEnd != null) {
+          // Trim the configured window inward to the GPS-observed at-event
+          // span: first/last raw ping inside BLACKOUT_RADIUS_M of the event
+          // during the configured window. Keeps the polyline from bouncing
+          // back to the event after the user has actually left (e.g., a
+          // canoe trip whose end_time is set to 14:25 but the GPS shows the
+          // user clearly in transit back toward camp by 14:02 — anchoring
+          // at 14:25 would drag the polyline back to the event location).
+          let firstAtEvent = null, lastAtEvent = null;
+          for (const p of rawPoints) {
+            if (p.tst < cfgStart || p.tst > cfgEnd) continue;
+            if (distMeters([p.lat, p.lon], [e.lat, e.lng]) > BLACKOUT_RADIUS_M) continue;
+            if (firstAtEvent == null || p.tst < firstAtEvent) firstAtEvent = p.tst;
+            if (lastAtEvent == null || p.tst > lastAtEvent) lastAtEvent = p.tst;
+          }
+          const startTst = firstAtEvent != null ? firstAtEvent : cfgStart;
+          const endTst = lastAtEvent != null ? lastAtEvent : cfgEnd;
+          anchors.push({ tst: startTst, lat: e.lat, lng: e.lng });
+          if (endTst !== startTst) anchors.push({ tst: endTst, lat: e.lat, lng: e.lng });
+        } else {
+          anchors.push({ tst: cfgStart, lat: e.lat, lng: e.lng });
         }
       } else {
         let bestDist = Infinity, bestTst = null;
