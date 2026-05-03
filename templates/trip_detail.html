@@ -2248,26 +2248,33 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       // outlier if it has at-stay anchors on both sides AND the active
       // span between them (total time minus any sleep gaps where no raw
       // ping landed for >= STAY_OUTLIER_SLEEP_GAP_S) is below
-      // STAY_OUTLIER_ACTIVE_MAX_S. Sleep gaps don't count as "user away
-      // from camp," so a 1838 m spike at 7:48 am between 23:55 (at camp)
-      // and 08:03 (at camp) gets flagged even though wall-clock span is 8h.
+      // STAY_OUTLIER_ACTIVE_MAX_S AND no other off-stay ping in the same
+      // cluster reached beyond STAY_OUTLIER_MAX_DIST_M from the stay.
+      // Sleep gaps don't count as "user away from camp," so a 1838 m spike
+      // at 7:48 am between 23:55 (at camp) and 08:03 (at camp) gets flagged
+      // even though wall-clock span is 8h. The max-distance gate keeps
+      // genuine short excursions (e.g., a 4 km drive to a viewpoint and
+      // back, or a venue-hour gap during a concert 10 km away that makes
+      // active span look small) from being misclassified as spikes —
+      // real GPS jitter / cell-tower fixes typically misreport by under
+      // 2 km, so anything reaching further is treated as real travel.
       const STAY_OUTLIER_ACTIVE_MAX_S = 90 * 60;  // ≤90 min "active" between anchors → spurious
       const STAY_OUTLIER_SLEEP_GAP_S = 60 * 60;   // ≥60 min between consecutive raw pings = inactive
+      const STAY_OUTLIER_MAX_DIST_M = 2500;       // cluster reaching beyond this = real travel
+
+      const sortedRaw = raw.slice().sort((a, b) => a.tst - b.tst);
+      const sortedRawTst = sortedRaw.map(q => q.tst);
 
       const stayAnchorsByLoc = STAYS_ALL
         .filter(s => Number.isFinite(s.lat) && Number.isFinite(s.lng))
         .map(s => {
+          const dists = sortedRaw.map(q => distMeters([q.lat, q.lon], [s.lat, s.lng]));
           const anchors = [];
-          for (const q of raw) {
-            if (distMeters([q.lat, q.lon], [s.lat, s.lng]) <= BLACKOUT_RADIUS_M) {
-              anchors.push(q.tst);
-            }
+          for (let i = 0; i < sortedRaw.length; i++) {
+            if (dists[i] <= BLACKOUT_RADIUS_M) anchors.push(sortedRawTst[i]);
           }
-          anchors.sort((a, b) => a - b);
-          return { lat: s.lat, lng: s.lng, anchors };
+          return { lat: s.lat, lng: s.lng, anchors, dists };
         });
-
-      const sortedRawTst = raw.map(q => q.tst).slice().sort((a, b) => a - b);
 
       function activeSpanBetween(t1, t2) {
         if (t2 <= t1) return 0;
@@ -2290,6 +2297,22 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return active;
       }
 
+      function maxOffStayDistBetween(sa, t1, t2) {
+        if (t2 <= t1) return 0;
+        let lo = 0, hi = sortedRawTst.length;
+        while (lo < hi) {
+          const mid = (lo + hi) >> 1;
+          if (sortedRawTst[mid] <= t1) lo = mid + 1;
+          else hi = mid;
+        }
+        let max = 0;
+        for (let i = lo; i < sortedRawTst.length && sortedRawTst[i] < t2; i++) {
+          const d = sa.dists[i];
+          if (d > BLACKOUT_RADIUS_M && d > max) max = d;
+        }
+        return max;
+      }
+
       function isStayOutlier(p) {
         for (const sa of stayAnchorsByLoc) {
           if (distMeters([p.lat, p.lon], [sa.lat, sa.lng]) <= BLACKOUT_RADIUS_M) continue;
@@ -2304,7 +2327,9 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           const beforeIdx = lo - 1;
           const afterIdx = lo < a.length ? lo : -1;
           if (beforeIdx < 0 || afterIdx < 0) continue;
-          if (activeSpanBetween(a[beforeIdx], a[afterIdx]) <= STAY_OUTLIER_ACTIVE_MAX_S) return true;
+          if (activeSpanBetween(a[beforeIdx], a[afterIdx]) > STAY_OUTLIER_ACTIVE_MAX_S) continue;
+          if (maxOffStayDistBetween(sa, a[beforeIdx], a[afterIdx]) > STAY_OUTLIER_MAX_DIST_M) continue;
+          return true;
         }
         return false;
       }
