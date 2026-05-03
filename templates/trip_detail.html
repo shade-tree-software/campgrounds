@@ -2355,6 +2355,55 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         map.removeLayer(straightRouteLayer);
       }
       gpsRouteLayer.addTo(map);
+
+      // Per-point click targets: small circles at each kept GPS ping that
+      // pop up coords + local time when clicked. Hidden when zoomed out so
+      // they don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
+      // re-hidden when the user zooms back out. Tied to the GPS-track
+      // layer in the layer control so toggling the track also toggles
+      // the point markers.
+      const GPS_POINT_MIN_ZOOM = 14;
+      const gpsPointLayer = L.layerGroup();
+      // Build a fast lookup from kept point's tst → its raw timezone (server
+      // attaches an IANA `tz` to each cached ping via timezonefinder; absent
+      // when the package isn't installed, in which case we fall back to the
+      // browser's timezone).
+      const tzByTst = new Map();
+      raw.forEach(q => { if (q.tz) tzByTst.set(q.tst, q.tz); });
+      kept.forEach(p => {
+        const m = L.circleMarker([p.lat, p.lon], {
+          radius: 3,
+          color: '#002868',
+          weight: 1,
+          fillColor: '#ffffff',
+          fillOpacity: 1,
+        });
+        const dt = new Date(p.tst * 1000);
+        const tz = tzByTst.get(p.tst);
+        const fmtOpts = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          timeZoneName: 'short',
+        };
+        if (tz) fmtOpts.timeZone = tz;
+        const local = dt.toLocaleString(undefined, fmtOpts);
+        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+        m.bindPopup(
+          `<div style="font-size:.85rem;line-height:1.4">` +
+          `<div><strong>${local}</strong></div>` +
+          `<div style="font-family:monospace">${coords}</div>` +
+          `</div>`);
+        gpsPointLayer.addLayer(m);
+      });
+      function syncGpsPoints() {
+        const trackVisible = map.hasLayer(gpsRouteLayer);
+        const wantVisible = trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM;
+        if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
+        if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
+      }
+      map.on('zoomend', syncGpsPoints);
+      map.on('overlayadd overlayremove', syncGpsPoints);
+      syncGpsPoints();
     })
     .catch(err => {
       trackLog('GPS track fetch threw an error — using straight track', err);

@@ -1194,6 +1194,37 @@ TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
 os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 
 
+# Resolves lat/lng to an IANA timezone name (e.g. "America/New_York"). The
+# library carries ~50 MB of polygon data; first import is slow, but the
+# instance is reused. Optional dependency: if `timezonefinder` is missing
+# (or fails to import on a constrained host), we silently skip enrichment
+# and the frontend falls back to the browser's timezone.
+_tz_finder = None
+def _enrich_with_timezone(points):
+    """Add an IANA `tz` field to each ping that lacks one. Returns True if
+    any ping was updated (so callers can re-write the cache file)."""
+    global _tz_finder
+    if _tz_finder is None:
+        try:
+            from timezonefinder import TimezoneFinder
+            _tz_finder = TimezoneFinder()
+        except Exception:
+            _tz_finder = False  # sentinel: don't retry
+    if not _tz_finder:
+        return False
+    changed = False
+    for p in points:
+        if p.get("tz"):
+            continue
+        try:
+            tz = _tz_finder.timezone_at(lat=p["lat"], lng=p["lon"])
+        except Exception:
+            tz = None
+        p["tz"] = tz or "UTC"
+        changed = True
+    return changed
+
+
 def _fetch_timeline_points(tid, token, from_ts, to_ts):
     """Page through the timeline API for a single tid across a UTC range."""
     import urllib.request
@@ -1237,9 +1268,16 @@ def api_trip_track(trip_id):
     except ValueError:
         is_old = False
 
-    if is_old and os.path.isfile(cache_file):
+    def _serve_cache():
         with open(cache_file) as f:
-            return jsonify(json.load(f))
+            cached = json.load(f)
+        if _enrich_with_timezone(cached):
+            with open(cache_file, "w") as f:
+                json.dump(cached, f)
+        return jsonify(cached)
+
+    if is_old and os.path.isfile(cache_file):
+        return _serve_cache()
 
     token = os.environ.get("TIMELINE_API_TOKEN")
     tid = os.environ.get("TIMELINE_TID")
@@ -1247,8 +1285,7 @@ def api_trip_track(trip_id):
     if not token or not tid:
         # Fall back to cache if we have one, else empty (frontend handles this).
         if os.path.isfile(cache_file):
-            with open(cache_file) as f:
-                return jsonify(json.load(f))
+            return _serve_cache()
         return jsonify([])
 
     try:
@@ -1278,10 +1315,10 @@ def api_trip_track(trip_id):
                 all_points.sort(key=lambda p: p["tst"])
     except Exception as e:
         if os.path.isfile(cache_file):
-            with open(cache_file) as f:
-                return jsonify(json.load(f))
+            return _serve_cache()
         return jsonify({"error": str(e)}), 502
 
+    _enrich_with_timezone(all_points)
     with open(cache_file, "w") as f:
         json.dump(all_points, f)
     return jsonify(all_points)
