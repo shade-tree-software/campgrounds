@@ -2008,6 +2008,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   const HOME_EXACT_RADIUS_M = 100 * 0.3048;  // 100 feet
   const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away
   const HOME_REENTRY_DWELL_S = 30 * 60;      // 30 min sustained near-home re-entry resets candidate
+  const HOME_REENTRY_MAX_AWAY_S = 12 * 3600; // only reset if AWAY duration was < 12 hours (a same-day excursion, not a multi-day trip return)
   function findHomeBoundaryTimes(rawPoints) {
     const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
     let homeStartTst = null, homeEndTst = null;
@@ -2021,28 +2022,41 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     // the real departure later in the day produces a new lockable candidate.
     let startCandidate = null;
     let hasGoneAway = false;
+    let awayStartTst = null;     // tst of the first AWAY ping in the current away-streak
     let nearReentryStart = null;
+    let tripEndReturned = false; // flips true on the first near-home ping after AWAY >= MAX_AWAY_S — past this, homeStartTst is frozen so trip-end home-hovering can't overwrite it
     for (const p of rawPoints) {
       if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
       if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
       const d = distMeters([p.lat, p.lon], HOME);
+      const isAway = d > HOME_RADIUS_M;
+      // Long-away return detection (must run before classification mutates state).
+      if (!isAway && hasGoneAway && awayStartTst != null
+          && (p.tst - awayStartTst) > HOME_REENTRY_MAX_AWAY_S) {
+        tripEndReturned = true;
+      }
       if (d < HOME_EXACT_RADIUS_M) {
         // At-house ping — full reset.
         startCandidate = null;
         hasGoneAway = false;
+        awayStartTst = null;
         nearReentryStart = null;
-      } else if (d <= HOME_RADIUS_M) {
+      } else if (!isAway) {
         // Near home (within HOME_TRIM, outside HOME_EXACT). If we've already
-        // been AWAY, dwell here counts toward a "returned home" reset; once
-        // we've sat in the home neighborhood for HOME_REENTRY_DWELL_S without
-        // re-departing, treat it as a return and reset the candidate. Brief
-        // pass-throughs (dry cleaners en route) don't dwell long enough to
-        // trigger the reset.
-        if (hasGoneAway) {
+        // been AWAY for a same-day-excursion-length stretch, dwell here
+        // counts toward a "returned home" reset; once we've sat in the
+        // home neighborhood for HOME_REENTRY_DWELL_S without re-departing,
+        // treat it as a return and reset the candidate. We only allow this
+        // reset when the AWAY streak has been shorter than
+        // HOME_REENTRY_MAX_AWAY_S (12 h) — multi-day trip-end home arrivals
+        // must NOT wipe the morning departure candidate.
+        if (hasGoneAway && awayStartTst != null
+            && (p.tst - awayStartTst) <= HOME_REENTRY_MAX_AWAY_S) {
           if (nearReentryStart == null) nearReentryStart = p.tst;
           if ((p.tst - nearReentryStart) >= HOME_REENTRY_DWELL_S) {
             startCandidate = null;
             hasGoneAway = false;
+            awayStartTst = null;
             nearReentryStart = null;
           }
         }
@@ -2051,10 +2065,16 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         }
       } else {
         // AWAY (d > HOME_RADIUS_M).
+        if (!hasGoneAway) awayStartTst = p.tst;
         hasGoneAway = true;
         nearReentryStart = null;
       }
-      if (startCandidate != null && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
+      // Once tripEndReturned is true, the user has come home from a long
+      // away — any further NEAR/AWAY hovering near the house is post-trip
+      // noise, not a new trip departure, so don't keep updating homeStartTst.
+      if (!tripEndReturned
+          && startCandidate != null
+          && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
         homeStartTst = startCandidate;
       }
     }
