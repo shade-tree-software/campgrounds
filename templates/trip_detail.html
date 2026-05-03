@@ -2168,11 +2168,30 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   // track entirely and leave the straight-line route as the only polyline.
   // Useful for trips with no/poor track data or where the rendered track is
   // misleading.
-  if (!FORCE_STRAIGHT_ROUTE)
+  //
+  // Each early-return below logs to the console with prefix "[trip-track]"
+  // so admins can diagnose why a trip is rendering as straight-track only.
+  const trackLog = (msg, extra) => console.log(
+    `[trip-track] trip {{ trip.id }}: ${msg}`, extra ?? '');
+  if (FORCE_STRAIGHT_ROUTE) {
+    trackLog('skipping GPS track — force_straight_route flag is set on this trip');
+  } else
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
-    .then(r => r.ok ? r.json() : [])
+    .then(r => {
+      if (!r.ok) {
+        trackLog(`track fetch returned non-OK status ${r.status} ${r.statusText} — using straight track`);
+        return [];
+      }
+      return r.json();
+    })
     .then(rawPoints => {
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
+      if (!raw.length) {
+        trackLog('no raw GPS points returned by /api/trips/{{ trip.id }}/track — using straight track. ' +
+          'Likely causes: missing track_cache file on this server, TIMELINE_API_TOKEN/TIMELINE_TID env vars not set, ' +
+          'timeline service aged out the data, or trip has no start/end dates.');
+        return;
+      }
       // Auto-fallback: if the trip has campgrounds but no GPS ping ever lands
       // within TRACK_NEAR_STAY_KM of any of them, the track doesn't actually
       // cover this trip (e.g., logging was off). Skip rendering so the
@@ -2185,7 +2204,12 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         const radiusM = TRACK_NEAR_STAY_KM * 1000;
         const nearAny = raw.some(p =>
           stayCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
-        if (!nearAny) return;
+        if (!nearAny) {
+          trackLog(
+            `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay coordinate — using straight track`,
+            { rawCount: raw.length, stayCoords });
+          return;
+        }
       }
       const { homeStartTst, homeEndTst } = findHomeBoundaryTimes(raw);
       if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', homeStartTst);
@@ -2267,14 +2291,24 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
       const kept = trimmed.filter(p =>
         !inAnyWindow(p.tst, p.lat, p.lon, windows) && !isStayOutlier(p));
-      if (!kept.length) return;
+      if (!kept.length) {
+        trackLog(
+          'every GPS point was filtered out (home-boundary trim + blackout windows + stay-outlier suppression) — using straight track',
+          { rawCount: raw.length, trimmedCount: trimmed.length });
+        return;
+      }
       const anchors = buildAnchors(raw, homeStartTst, homeEndTst);
 
       const combined = [
         ...kept.map(p => ({ tst: p.tst, lat: p.lat, lng: p.lon })),
         ...anchors,
       ].sort((a, b) => a.tst - b.tst);
-      if (combined.length < 2) return;
+      if (combined.length < 2) {
+        trackLog(
+          'fewer than 2 points remain after merging anchors — using straight track',
+          { keptCount: kept.length, anchorCount: anchors.length });
+        return;
+      }
 
       const latlngs = combined.map(p => [p.lat, p.lng]);
       const gpsRouteLayer = L.layerGroup([
@@ -2287,7 +2321,9 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       }
       gpsRouteLayer.addTo(map);
     })
-    .catch(() => {});
+    .catch(err => {
+      trackLog('GPS track fetch threw an error — using straight track', err);
+    });
 
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
   function eventDateLabel(evt) {
