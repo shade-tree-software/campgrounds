@@ -1394,10 +1394,6 @@
           <input type="checkbox" data-field="waypoint" id="waypoint-{{ item.idx }}" {% if item.waypoint %}checked{% endif %}>
           <label for="waypoint-{{ item.idx }}" style="margin:0;">Waypoint</label>
         </div>
-        <div class="full-width" style="display:flex;align-items:center;gap:.25rem;">
-          <input type="checkbox" data-field="excursion_near_camp" id="excursion-{{ item.idx }}" {% if item.excursion_near_camp %}checked{% endif %}>
-          <label for="excursion-{{ item.idx }}" style="margin:0;">Excursion near camp</label>
-        </div>
       </div>
       {% endif %}
       <div class="form-actions">
@@ -2338,35 +2334,8 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return false;
       }
 
-      // "Excursion near camp" override: events flagged with excursion_near_camp
-      // are activities so close to camp that GPS can't visually distinguish
-      // them from the campground cluster. During the event's time window we
-      // bypass the blackout filter and the stay-outlier filter so any pings
-      // that DO exist during the excursion (whether camp-clustered or moving
-      // toward the event location) survive into the polyline. The event's
-      // own start/end anchors (added by buildAnchors() for any timed event)
-      // splice the event location into the route, producing a visible leg
-      // even when there are no off-cluster pings. Requires both `time` and
-      // `end_time` to define the override window; flagged events with only
-      // a start time fall back to standard single-anchor rendering.
-      const excursionWins = EVENTS_ALL
-        .filter(e => e.excursion_near_camp && e.time && e.end_time && e.date)
-        .map(e => ({
-          start: localEpoch(e.date, e.time),
-          end: localEpoch(e.end_date || e.date, e.end_time),
-        }))
-        .filter(w => w.start != null && w.end != null && w.end > w.start);
-      function inExcursionWindow(tst) {
-        for (const w of excursionWins) {
-          if (tst >= w.start && tst <= w.end) return true;
-        }
-        return false;
-      }
-
-      const afterBlackout = trimmed.filter(p =>
-        inExcursionWindow(p.tst) || !inAnyWindow(p.tst, p.lat, p.lon, windows));
-      const kept = afterBlackout.filter(p =>
-        inExcursionWindow(p.tst) || !isStayOutlier(p));
+      const afterBlackout = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
+      const kept = afterBlackout.filter(p => !isStayOutlier(p));
       if (!kept.length) {
         const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
         trackLog(
@@ -2960,10 +2929,6 @@ function _modalFormHtml(kind, v) {
         <div class="full-width" style="display:flex;align-items:center;justify-content:flex-start;gap:.4rem;">
           <input type="checkbox" data-field="waypoint" id="modal-waypoint-cb"${isWp ? ' checked' : ''}>
           <label for="modal-waypoint-cb" style="display:inline;margin:0;font-weight:500;">Waypoint</label>
-        </div>
-        <div class="full-width" style="display:flex;align-items:center;justify-content:flex-start;gap:.4rem;">
-          <input type="checkbox" data-field="excursion_near_camp" id="modal-excursion-cb"${v.excursion_near_camp ? ' checked' : ''}>
-          <label for="modal-excursion-cb" style="display:inline;margin:0;font-weight:500;">Excursion near camp</label>
         </div>
       </div>`;
   } else if (kind === 'family_visit') {
