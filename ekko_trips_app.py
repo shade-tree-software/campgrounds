@@ -503,7 +503,7 @@ def trip_detail(trip_id):
                 item.get("start", ""),
             )
 
-    _, family = _map_config()
+    home, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
 
     # Find prev/next trip IDs (non-admins skip home-only trips in navigation)
@@ -519,6 +519,7 @@ def trip_detail(trip_id):
         stay_photos=stay_photos,
         event_photos=event_photos,
         family_locations=family,
+        home=home,
         is_admin=is_admin,
         prev_trip_id=prev_trip_id,
         next_trip_id=next_trip_id,

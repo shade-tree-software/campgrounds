@@ -1683,7 +1683,7 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
   const overlayLayers = {};
   const layerControl = L.control.layers(baseLayers, overlayLayers).addTo(map);
 
-  const HOME = [38.929576, -77.366840];
+  const HOME = {{ home | tojson }};
   const bounds = [HOME];
 
   // Lookup: card id → [lat, lng] for click-to-focus on the map
@@ -1826,21 +1826,30 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     if ([y, m, d, hh, mm].some(isNaN)) return null;
     return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
   }
-  function trimHomeBoundaries(points) {
+  function trimHomeBoundaries(points, autoHomeStartTst, autoHomeEndTst) {
     if (!points.length || !sortedDates.length) return points;
     const tripStart = sortedDates[0];
     const tripEnd = sortedDates[sortedDates.length - 1];
 
-    // Absolute lower cutoff: explicit departure time if set, else start of
-    // tripStart day in local time (drops anything from the buffer day before).
-    let lowerCut = HOME_START_TIME
-      ? localEpoch(tripStart, HOME_START_TIME)
-      : localEpoch(tripStart, '00:00');
-    // Absolute upper cutoff: explicit arrival time if set, else end of tripEnd
-    // day (start of the day after, exclusive).
+    // Absolute lower cutoff: explicit departure time wins; otherwise the
+    // GPS-derived auto boundary (so morning-of-trip excursions that returned
+    // home before the real departure are dropped from the polyline); else
+    // start of tripStart day.
+    let lowerCut;
+    if (HOME_START_TIME) {
+      lowerCut = localEpoch(tripStart, HOME_START_TIME);
+    } else if (autoHomeStartTst != null) {
+      lowerCut = autoHomeStartTst;
+    } else {
+      lowerCut = localEpoch(tripStart, '00:00');
+    }
+    // Absolute upper cutoff: explicit arrival time if set, else GPS-derived
+    // auto boundary, else end of tripEnd day (start of the day after).
     let upperCut;
     if (HOME_END_TIME) {
       upperCut = localEpoch(tripEnd, HOME_END_TIME);
+    } else if (autoHomeEndTst != null) {
+      upperCut = autoHomeEndTst;
     } else {
       const [y, m, d] = tripEnd.split('-').map(Number);
       upperCut = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
@@ -2114,7 +2123,7 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
       const { homeStartTst, homeEndTst } = findHomeBoundaryTimes(raw);
       if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', homeStartTst);
       if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', homeEndTst);
-      const trimmed = trimHomeBoundaries(raw);
+      const trimmed = trimHomeBoundaries(raw, homeStartTst, homeEndTst);
       const windows = blackoutWindows();
       const kept = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
       if (!kept.length) return;
