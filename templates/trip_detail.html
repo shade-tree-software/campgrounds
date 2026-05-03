@@ -310,9 +310,22 @@
 
   .add-buttons {
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: .5rem;
     margin-bottom: 1.5rem;
   }
+  .force-straight-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    margin-left: auto;
+    font-size: .85rem;
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+  }
+  .force-straight-toggle input { width: auto; margin: 0; }
 
   .trip-note-edit {
     display: none;
@@ -1138,6 +1151,10 @@
         <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
         <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
         <button class="btn-add-event" onclick="addFamilyVisit()">+ Add Family Visit</button>
+        <label class="force-straight-toggle" title="Skip GPS track and draw a straight-line route only">
+          <input type="checkbox" id="force-straight-input" {% if trip.force_straight_route %}checked{% endif %} onchange="toggleForceStraight(this)">
+          Straight track only
+        </label>
       </div>
       {% endif %}
     </div>
@@ -1650,6 +1667,7 @@ const TRIP_START = {{ trip.start | tojson }};
 const TRIP_END = {{ trip.end | tojson }};
 const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
+const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
@@ -2116,10 +2134,29 @@ const HOME_END_TIME = {{ trip.home_end_time | tojson }};
     else window.HOME_END_TIME_AUTO = hm;
   }
 
+  // Admin-only override: when FORCE_STRAIGHT_ROUTE is set, skip the GPS
+  // track entirely and leave the straight-line route as the only polyline.
+  // Useful for trips with no/poor track data or where the rendered track is
+  // misleading.
+  if (!FORCE_STRAIGHT_ROUTE)
   fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : [])
     .then(rawPoints => {
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
+      // Auto-fallback: if the trip has campgrounds but no GPS ping ever lands
+      // within TRACK_NEAR_STAY_KM of any of them, the track doesn't actually
+      // cover this trip (e.g., logging was off). Skip rendering so the
+      // straight-line route remains as the only polyline.
+      const TRACK_NEAR_STAY_KM = 5;
+      const stayCoords = STAYS_ALL
+        .map(s => [parseFloat(s.lat), parseFloat(s.lng)])
+        .filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
+      if (raw.length && stayCoords.length) {
+        const radiusM = TRACK_NEAR_STAY_KM * 1000;
+        const nearAny = raw.some(p =>
+          stayCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
+        if (!nearAny) return;
+      }
       const { homeStartTst, homeEndTst } = findHomeBoundaryTimes(raw);
       if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', homeStartTst);
       if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', homeEndTst);
@@ -2381,6 +2418,21 @@ function saveTripNote() {
     if (data.error) { alert(data.error); return; }
     location.reload();
   });
+}
+
+function toggleForceStraight(el) {
+  const force = !!el.checked;
+  fetch(`/api/trips/${TRIP_ID}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ force_straight_route: force })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { alert(data.error); el.checked = !force; return; }
+    location.reload();
+  })
+  .catch(() => { el.checked = !force; });
 }
 
 function editHomeTime(which) {
