@@ -358,6 +358,7 @@ def add_event(trip_id, event_data):
                 "state": event_data.get("state", ""),
                 "waypoint": bool(event_data.get("waypoint", False)),
                 "family_id": event_data.get("family_id"),
+                "excursion_near_camp": bool(event_data.get("excursion_near_camp", False)),
             }
             events = t.get("events", [])
             events.append(event)
@@ -386,6 +387,8 @@ def update_event(trip_id, event_idx, fields):
                     event[key] = fields[key]
             if "waypoint" in fields:
                 event["waypoint"] = bool(fields["waypoint"])
+            if "excursion_near_camp" in fields:
+                event["excursion_near_camp"] = bool(fields["excursion_near_camp"])
             # end_time requires time
             if event.get("end_time") and not event.get("time"):
                 event["end_time"] = ""
@@ -616,6 +619,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         e.setdefault("time", "")
         e.setdefault("end_time", "")
         e.setdefault("waypoint", False)
+        e.setdefault("excursion_near_camp", False)
         e.setdefault("locale", "")
         e.setdefault("state", "")
         fid = e.get("family_id")
