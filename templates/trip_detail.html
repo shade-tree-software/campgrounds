@@ -2289,12 +2289,27 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return false;
       }
 
-      const kept = trimmed.filter(p =>
-        !inAnyWindow(p.tst, p.lat, p.lon, windows) && !isStayOutlier(p));
+      const afterBlackout = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
+      const kept = afterBlackout.filter(p => !isStayOutlier(p));
       if (!kept.length) {
+        const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
         trackLog(
-          'every GPS point was filtered out (home-boundary trim + blackout windows + stay-outlier suppression) — using straight track',
-          { rawCount: raw.length, trimmedCount: trimmed.length });
+          'every GPS point was filtered out — using straight track. Stage counts and inputs follow:',
+          {
+            rawCount: raw.length,
+            afterTrimHomeBoundaries: trimmed.length,
+            afterBlackoutWindows: afterBlackout.length,
+            afterStayOutlierFilter: kept.length,
+            HOME,
+            HOME_START_TIME, HOME_END_TIME,
+            autoHomeStart: fmt(homeStartTst),
+            autoHomeEnd: fmt(homeEndTst),
+            TRIP_START, TRIP_END,
+            stayCoords: STAYS_ALL.map(s => ({ place: s.place, lat: s.lat, lng: s.lng })),
+            blackoutWindowCount: windows.length,
+            sampleRaw: raw.slice(0, 3).concat(raw.slice(-3)).map(p => ({
+              tst: fmt(p.tst), lat: p.lat, lon: p.lon })),
+          });
         return;
       }
       const anchors = buildAnchors(raw, homeStartTst, homeEndTst);
