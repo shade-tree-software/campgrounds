@@ -1798,7 +1798,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     const morning = morningLocation(dateStr);
     const evening = eveningLocation(dateStr);
     const dayEvents = mappedEvents
-      .filter(e => e.date === dateStr && !e.excursion_near_camp)
+      .filter(e => e.date === dateStr)
       .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'));
 
     pushIfNew(morning);
@@ -1823,23 +1823,6 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     layerControl.addOverlay(straightRouteLayer, 'Straight route');
     straightRouteLayer.addTo(map);
   }
-
-  // Excursion-near-camp lines: each flagged event draws a single line from
-  // the campground covering its date to the event's own location. These
-  // lines stand alone — they don't connect to any other event/marker, and
-  // they're omitted from the GPS-track polyline and the chronological
-  // straight route. Skip if the event has no coords, no date, or falls on
-  // a non-stay night (no campground to anchor to).
-  mappedEvents.forEach(e => {
-    if (!e.excursion_near_camp) return;
-    if (!Number.isFinite(e.lat) || !Number.isFinite(e.lng)) return;
-    if (!e.date) return;
-    const stay = mapped.find(s => s.start <= e.date && e.date < s.end);
-    if (!stay) return;
-    const linePts = [[stay.lat, stay.lng], [e.lat, e.lng]];
-    L.polyline(linePts, { color: '#fff', weight: 5, opacity: 0.6 }).addTo(map);
-    L.polyline(linePts, { color: '#002868', weight: 3, opacity: 0.9 }).addTo(map);
-  });
 
   // Trim points near home on the trip's first/last dates only — drops the
   // pre-departure puttering on day 1 and the post-arrival puttering on the
@@ -2162,10 +2145,6 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
     mappedEvents.forEach(e => {
       if (!e.date) return;
-      // Flagged "excursion near camp" events are drawn as a separate single
-      // line from the matching campground to the event location; they must
-      // not splice into the GPS polyline.
-      if (e.excursion_near_camp) return;
       if (e.time) {
         const start = localEpoch(e.date, e.time);
         if (start != null) anchors.push({ tst: start, lat: e.lat, lng: e.lng });
@@ -2359,8 +2338,35 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return false;
       }
 
-      const afterBlackout = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
-      const kept = afterBlackout.filter(p => !isStayOutlier(p));
+      // "Excursion near camp" override: events flagged with excursion_near_camp
+      // are activities so close to camp that GPS can't visually distinguish
+      // them from the campground cluster. During the event's time window we
+      // bypass the blackout filter and the stay-outlier filter so any pings
+      // that DO exist during the excursion (whether camp-clustered or moving
+      // toward the event location) survive into the polyline. The event's
+      // own start/end anchors (added by buildAnchors() for any timed event)
+      // splice the event location into the route, producing a visible leg
+      // even when there are no off-cluster pings. Requires both `time` and
+      // `end_time` to define the override window; flagged events with only
+      // a start time fall back to standard single-anchor rendering.
+      const excursionWins = EVENTS_ALL
+        .filter(e => e.excursion_near_camp && e.time && e.end_time && e.date)
+        .map(e => ({
+          start: localEpoch(e.date, e.time),
+          end: localEpoch(e.end_date || e.date, e.end_time),
+        }))
+        .filter(w => w.start != null && w.end != null && w.end > w.start);
+      function inExcursionWindow(tst) {
+        for (const w of excursionWins) {
+          if (tst >= w.start && tst <= w.end) return true;
+        }
+        return false;
+      }
+
+      const afterBlackout = trimmed.filter(p =>
+        inExcursionWindow(p.tst) || !inAnyWindow(p.tst, p.lat, p.lon, windows));
+      const kept = afterBlackout.filter(p =>
+        inExcursionWindow(p.tst) || !isStayOutlier(p));
       if (!kept.length) {
         const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
         trackLog(
