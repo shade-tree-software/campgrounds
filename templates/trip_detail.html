@@ -6,6 +6,17 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <link rel="stylesheet" href="/static/map-picker.css" />
+<script>
+  // Kick the GPS-track fetch off as early as possible so the request lands
+  // before the browser starts pulling photo thumbnails. The map IIFE later
+  // consumes window.__trackPromise instead of starting its own fetch — so
+  // by the time the script tag below runs (post-DOM-parse, after the photo
+  // <img> tags have already been queued by the parser), the network round
+  // trip is usually well underway.
+  window.__trackPromise = fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } })
+    .catch(err => ({ __error: { thrown: String(err) } }));
+</script>
 {% endblock %}
 
 {% block style %}
@@ -2275,15 +2286,18 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   if (FORCE_STRAIGHT_ROUTE) {
     trackLog('skipping GPS track — force_straight_route flag is set on this trip');
   } else
-  fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
-    .then(r => {
-      if (!r.ok) {
-        trackLog(`track fetch returned non-OK status ${r.status} ${r.statusText} — using straight track`);
-        return [];
-      }
-      return r.json();
-    })
+  // Reuse the early-kicked-off promise from <head> so the network round
+  // trip happens in parallel with HTML parsing instead of waiting until
+  // this script block runs (after photo <img> tags have queued).
+  (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } }))
     .then(rawPoints => {
+      if (rawPoints && rawPoints.__error) {
+        const e = rawPoints.__error;
+        if (e.status != null) trackLog(`track fetch returned non-OK status ${e.status} ${e.statusText} — using straight track`);
+        else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
+        return;
+      }
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
       if (!raw.length) {
         trackLog('no raw GPS points returned by /api/trips/{{ trip.id }}/track — using straight track. ' +
@@ -2536,7 +2550,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       syncGpsPoints();
     })
     .catch(err => {
-      trackLog('GPS track fetch threw an error — using straight track', err);
+      trackLog('GPS track render threw an error — using straight track', err);
     });
 
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
