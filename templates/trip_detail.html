@@ -2101,7 +2101,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     return { homeStartTst, homeEndTst };
   }
 
-  function buildAnchors(rawPoints, autoHomeStartTst, autoHomeEndTst) {
+  function buildAnchors(rawPoints, autoHomeStartTst, autoHomeEndTst, keptPoints) {
     const anchors = [];
 
     if (TRIP_START) {
@@ -2126,30 +2126,26 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
     }
 
-    // Pre-compute timed-event blackout windows so the stay-residency loop
-    // below can exclude pings that belong to an event. A ping that's both
-    // within 1500 m of camp AND inside an event's blackout would otherwise
-    // anchor the polyline back to camp mid-event, drawing a spurious
-    // camp↔event hop (e.g., a ping in transit ~1 km from camp during the
-    // tail of a canoe-event window would attach as the "first ping of the
-    // post-event camp residency cluster" even though the user was still on
-    // their way back from the event).
-    const eventBlackoutWindows = [];
-    mappedEvents.forEach(e => {
-      if (!e.date || !e.time || !e.end_time) return;
-      const eStart = localEpoch(e.date, e.time);
-      const eEnd = localEpoch(e.end_date || e.date, e.end_time);
-      if (eStart != null && eEnd != null && eEnd > eStart) {
-        eventBlackoutWindows.push({ start: eStart, end: eEnd, lat: e.lat, lng: e.lng });
+    // A ping counts as at-stay residency only if the stay is the spatially
+    // closest reference point — i.e., no event coord is closer to the ping
+    // than the stay coord is. This handles the common pattern where the
+    // stay is very near an event venue (e.g., Lampe Campground sits ~1 km
+    // from Perry Monument, well inside Lampe's 1500 m blackout disc); a
+    // ping at Perry Monument is geographically inside Lampe's disc but is
+    // clearly closer to Perry Monument and shouldn't anchor the polyline
+    // back to camp. The check is purely spatial — events that happen at
+    // a different time still apply, because a ping near event coord X
+    // belongs at X regardless of when X was scheduled. (Same physical
+    // place = same physical activity.)
+    const eventCoords = mappedEvents
+      .filter(e => Number.isFinite(e.lat) && Number.isFinite(e.lng))
+      .map(e => [e.lat, e.lng]);
+    function stayIsClosest(p, sLat, sLng) {
+      const dStay = distMeters([p.lat, p.lon], [sLat, sLng]);
+      for (const c of eventCoords) {
+        if (distMeters([p.lat, p.lon], c) < dStay) return false;
       }
-    });
-    function inAnyEventBlackout(p) {
-      for (const w of eventBlackoutWindows) {
-        if (p.tst < w.start || p.tst > w.end) continue;
-        if (w.lat == null || w.lng == null) continue;
-        if (distMeters([p.lat, p.lon], [w.lat, w.lng]) <= BLACKOUT_RADIUS_M) return true;
-      }
-      return false;
+      return true;
     }
 
     // Per stay, find every "residency cluster" — a maximal run of
@@ -2174,7 +2170,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           continue;
         }
         const inside = distMeters([p.lat, p.lon], [s.lat, s.lng]) <= BLACKOUT_RADIUS_M
-                       && !inAnyEventBlackout(p);
+                       && stayIsClosest(p, s.lat, s.lng);
         if (inside) {
           if (cur == null) cur = { first: p.tst, last: p.tst };
           else cur.last = p.tst;
@@ -2198,35 +2194,40 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       }
     });
 
+    // For each event, only emit a structural anchor when the polyline
+    // wouldn't otherwise pass near it (i.e., no kept GPS ping landed
+    // within BLACKOUT_RADIUS_M of the event during its window). When
+    // kept pings are present near the event the polyline naturally
+    // traces the actual route — adding an anchor at the configured
+    // event coord would draw spurious zigzags between real pings and
+    // the marker (and, when the event coord is near a stay, can pull
+    // the polyline straight from the event back to camp during transit
+    // gaps). Events without GPS coverage still get the configured anchor
+    // so the route visibly visits the event.
+    const kpts = Array.isArray(keptPoints) ? keptPoints : [];
     mappedEvents.forEach(e => {
       if (!e.date) return;
       if (e.time) {
         const cfgStart = localEpoch(e.date, e.time);
         const cfgEnd = e.end_time ? localEpoch(e.end_date || e.date, e.end_time) : null;
         if (cfgStart == null) return;
+        const winStart = cfgStart;
+        const winEnd = cfgEnd != null ? cfgEnd : cfgStart + 1800; // ±30min for untimed end
+        const hasNearbyKept = kpts.some(p =>
+          p.tst >= winStart && p.tst <= winEnd &&
+          distMeters([p.lat, p.lon], [e.lat, e.lng]) <= BLACKOUT_RADIUS_M);
+        if (hasNearbyKept) return;
+        anchors.push({ tst: cfgStart, lat: e.lat, lng: e.lng });
         if (cfgEnd != null) {
-          // Trim the configured window inward to the GPS-observed at-event
-          // span: first/last raw ping inside BLACKOUT_RADIUS_M of the event
-          // during the configured window. Keeps the polyline from bouncing
-          // back to the event after the user has actually left (e.g., a
-          // canoe trip whose end_time is set to 14:25 but the GPS shows the
-          // user clearly in transit back toward camp by 14:02 — anchoring
-          // at 14:25 would drag the polyline back to the event location).
-          let firstAtEvent = null, lastAtEvent = null;
-          for (const p of rawPoints) {
-            if (p.tst < cfgStart || p.tst > cfgEnd) continue;
-            if (distMeters([p.lat, p.lon], [e.lat, e.lng]) > BLACKOUT_RADIUS_M) continue;
-            if (firstAtEvent == null || p.tst < firstAtEvent) firstAtEvent = p.tst;
-            if (lastAtEvent == null || p.tst > lastAtEvent) lastAtEvent = p.tst;
-          }
-          const startTst = firstAtEvent != null ? firstAtEvent : cfgStart;
-          const endTst = lastAtEvent != null ? lastAtEvent : cfgEnd;
-          anchors.push({ tst: startTst, lat: e.lat, lng: e.lng });
-          if (endTst !== startTst) anchors.push({ tst: endTst, lat: e.lat, lng: e.lng });
-        } else {
-          anchors.push({ tst: cfgStart, lat: e.lat, lng: e.lng });
+          anchors.push({ tst: cfgEnd, lat: e.lat, lng: e.lng });
         }
       } else {
+        const dayStart = localEpoch(e.date, '00:00');
+        const dayEnd = dayStart != null ? dayStart + 86400 : null;
+        const hasNearbyKept = dayStart != null && kpts.some(p =>
+          p.tst >= dayStart && p.tst <= dayEnd &&
+          distMeters([p.lat, p.lon], [e.lat, e.lng]) <= BLACKOUT_RADIUS_M);
+        if (hasNearbyKept) return;
         let bestDist = Infinity, bestTst = null;
         for (const p of rawPoints) {
           if (localDateOf(p.tst) !== e.date) continue;
@@ -2412,7 +2413,33 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return false;
       }
 
-      const afterBlackout = trimmed.filter(p => !inAnyWindow(p.tst, p.lat, p.lon, windows));
+      // Pings inside a stay's blackout disc are normally dropped (camp
+      // residency clutter). But when an event venue sits inside the same
+      // disc (e.g., Perry Monument 1 km from Lampe Campground), pings at
+      // the event get spatially absorbed by the camp disc and disappear
+      // from the polyline — leaving the polyline to draw direct camp↔
+      // off-disc-ping lines that look like spurious teleports to camp.
+      // Spare any ping that's closer to some event coord than to the
+      // stay coord — those pings clearly belong to the event, not the
+      // stay.
+      const eventCoordsForKeep = mappedEvents
+        .filter(e => Number.isFinite(e.lat) && Number.isFinite(e.lng))
+        .map(e => [e.lat, e.lng]);
+      function shouldDropForStay(p) {
+        for (const w of windows) {
+          if (p.tst < w.start || p.tst > w.end) continue;
+          if (w.lat == null || w.lng == null) return true;
+          const dStay = distMeters([p.lat, p.lon], [w.lat, w.lng]);
+          if (dStay > BLACKOUT_RADIUS_M) continue;
+          let closerEvent = false;
+          for (const c of eventCoordsForKeep) {
+            if (distMeters([p.lat, p.lon], c) < dStay) { closerEvent = true; break; }
+          }
+          if (!closerEvent) return true;
+        }
+        return false;
+      }
+      const afterBlackout = trimmed.filter(p => !shouldDropForStay(p));
       const kept = afterBlackout.filter(p => !isStayOutlier(p));
       if (!kept.length) {
         const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
@@ -2435,7 +2462,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           });
         return;
       }
-      const anchors = buildAnchors(raw, homeStartTst, homeEndTst);
+      const anchors = buildAnchors(raw, homeStartTst, homeEndTst, kept);
 
       const combined = [
         ...kept.map(p => ({ tst: p.tst, lat: p.lat, lng: p.lon })),
