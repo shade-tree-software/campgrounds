@@ -1685,6 +1685,7 @@ const TRIP_START = {{ trip.start | tojson }};
 const TRIP_END = {{ trip.end | tojson }};
 const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
+const HOME_TZ = {{ home_tz | tojson }};
 const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
 // ── Map initialization ─────────────────────────────────────────────────────��
@@ -1853,14 +1854,54 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       String(d.getMonth() + 1).padStart(2, '0') + '-' +
       String(d.getDate()).padStart(2, '0');
   }
-  // Build a local-time Unix epoch (seconds) for a "YYYY-MM-DD" date and a
-  // "H:MM" or "HH:MM" time string. Returns null if either input is missing.
-  function localEpoch(dateStr, timeStr) {
+  // Build a Unix epoch (seconds) for a "YYYY-MM-DD" date and a "H:MM" or
+  // "HH:MM" time string interpreted in the supplied IANA timezone. When
+  // `tz` is falsy, falls back to the browser's local timezone — used only
+  // when the server couldn't resolve a zone (e.g., timezonefinder not
+  // installed, or stay/event without coords).
+  //
+  // Why this matters: card times (event start/end, stay date midnight,
+  // home departure/arrival) are entered in the local time that was in
+  // effect at the location when the trip happened — NOT in the viewer's
+  // browser timezone. Without zone-aware conversion, opening a Pacific-
+  // coast trip from an East-coast browser shifts every card-derived
+  // anchor by 3 hours, misaligning blackout windows and event anchors
+  // against the GPS pings (whose `tst` is UTC).
+  function localEpochInZone(dateStr, timeStr, tz) {
     if (!dateStr || !timeStr) return null;
     const [y, m, d] = dateStr.split('-').map(Number);
     const [hh, mm] = timeStr.split(':').map(Number);
     if ([y, m, d, hh, mm].some(isNaN)) return null;
-    return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
+    if (!tz) return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
+    // Treat the wall clock as if UTC, then ask Intl what wall clock that
+    // UTC moment corresponds to in the target zone — the difference is
+    // the zone's offset at that moment, which we subtract to recover the
+    // true UTC epoch. (Ambiguous DST "fall-back" hours collapse onto a
+    // single canonical value, which is acceptable for this use case.)
+    const guess = Date.UTC(y, m - 1, d, hh, mm, 0) / 1000;
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+    }).formatToParts(new Date(guess * 1000));
+    const obj = {};
+    for (const p of parts) {
+      if (p.type !== 'literal') obj[p.type] = parseInt(p.value, 10);
+    }
+    if (obj.hour === 24) obj.hour = 0;
+    const displayed = Date.UTC(obj.year, obj.month - 1, obj.day,
+                               obj.hour, obj.minute, obj.second) / 1000;
+    return guess - (displayed - guess);
+  }
+  // Add `n` days to a "YYYY-MM-DD" date string, returning a new date
+  // string. Performs date arithmetic in UTC so it isn't affected by the
+  // viewer's browser timezone.
+  function addDaysISO(dateStr, n) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const t = Date.UTC(y, m - 1, d) + n * 86400000;
+    const dt = new Date(t);
+    return dt.getUTCFullYear() + '-'
+         + String(dt.getUTCMonth() + 1).padStart(2, '0') + '-'
+         + String(dt.getUTCDate()).padStart(2, '0');
   }
   function trimHomeBoundaries(points, autoHomeStartTst, autoHomeEndTst) {
     if (!points.length || !sortedDates.length) return points;
@@ -1873,22 +1914,21 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     // start of tripStart day.
     let lowerCut;
     if (HOME_START_TIME) {
-      lowerCut = localEpoch(tripStart, HOME_START_TIME);
+      lowerCut = localEpochInZone(tripStart, HOME_START_TIME, HOME_TZ);
     } else if (autoHomeStartTst != null) {
       lowerCut = autoHomeStartTst;
     } else {
-      lowerCut = localEpoch(tripStart, '00:00');
+      lowerCut = localEpochInZone(tripStart, '00:00', HOME_TZ);
     }
     // Absolute upper cutoff: explicit arrival time if set, else GPS-derived
     // auto boundary, else end of tripEnd day (start of the day after).
     let upperCut;
     if (HOME_END_TIME) {
-      upperCut = localEpoch(tripEnd, HOME_END_TIME);
+      upperCut = localEpochInZone(tripEnd, HOME_END_TIME, HOME_TZ);
     } else if (autoHomeEndTst != null) {
       upperCut = autoHomeEndTst;
     } else {
-      const [y, m, d] = tripEnd.split('-').map(Number);
-      upperCut = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+      upperCut = localEpochInZone(addDaysISO(tripEnd, 1), '00:00', HOME_TZ);
     }
 
     let lo = 0;
@@ -1945,10 +1985,9 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     const wins = [];
     STAYS_ALL.forEach(s => {
       if (!s.start || !s.end) return;
-      const start = localEpoch(s.start, '00:00');
-      const [y, m, d] = s.end.split('-').map(Number);
-      const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
-      if (start != null && !isNaN(end)) {
+      const start = localEpochInZone(s.start, '00:00', s.tz);
+      const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
+      if (start != null && end != null) {
         wins.push({ start, end, lat: s.lat, lng: s.lng,
                     radius: stayBlackoutRadius(s) });
       }
@@ -2141,21 +2180,20 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     if (TRIP_START) {
       let homeStart;
       if (HOME_START_TIME) {
-        homeStart = localEpoch(TRIP_START, HOME_START_TIME);
+        homeStart = localEpochInZone(TRIP_START, HOME_START_TIME, HOME_TZ);
       } else {
-        homeStart = autoHomeStartTst != null ? autoHomeStartTst : localEpoch(TRIP_START, '00:00');
+        homeStart = autoHomeStartTst != null ? autoHomeStartTst : localEpochInZone(TRIP_START, '00:00', HOME_TZ);
       }
       if (homeStart != null) anchors.push({ tst: homeStart, lat: HOME[0], lng: HOME[1] });
     }
     if (TRIP_END) {
       let homeEnd;
       if (HOME_END_TIME) {
-        homeEnd = localEpoch(TRIP_END, HOME_END_TIME);
+        homeEnd = localEpochInZone(TRIP_END, HOME_END_TIME, HOME_TZ);
       } else if (autoHomeEndTst != null) {
         homeEnd = autoHomeEndTst;
       } else {
-        const [y, m, d] = TRIP_END.split('-').map(Number);
-        homeEnd = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+        homeEnd = localEpochInZone(addDaysISO(TRIP_END, 1), '00:00', HOME_TZ);
       }
       if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
     }
@@ -2221,11 +2259,10 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       }
       if (cur) clusters.push(cur);
       if (clusters.length === 0) {
-        const start = localEpoch(s.start, '00:00');
-        const [y, m, d] = s.end.split('-').map(Number);
-        const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
+        const start = localEpochInZone(s.start, '00:00', s.tz);
+        const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
         if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
-        if (!isNaN(end)) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
+        if (end != null) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
       } else {
         clusters.forEach(c => {
           anchors.push({ tst: c.first, lat: s.lat, lng: s.lng });
@@ -2248,8 +2285,8 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     mappedEvents.forEach(e => {
       if (!e.date) return;
       if (e.time) {
-        const cfgStart = localEpoch(e.date, e.time);
-        const cfgEnd = e.end_time ? localEpoch(e.end_date || e.date, e.end_time) : null;
+        const cfgStart = localEpochInZone(e.date, e.time, e.tz);
+        const cfgEnd = e.end_time ? localEpochInZone(e.end_date || e.date, e.end_time, e.tz) : null;
         if (cfgStart == null) return;
         const winStart = cfgStart;
         const winEnd = cfgEnd != null ? cfgEnd : cfgStart + 1800; // ±30min for untimed end
@@ -2262,7 +2299,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           anchors.push({ tst: cfgEnd, lat: e.lat, lng: e.lng });
         }
       } else {
-        const dayStart = localEpoch(e.date, '00:00');
+        const dayStart = localEpochInZone(e.date, '00:00', e.tz);
         const dayEnd = dayStart != null ? dayStart + 86400 : null;
         const hasNearbyKept = dayStart != null && kpts.some(p =>
           p.tst >= dayStart && p.tst <= dayEnd &&
@@ -2274,7 +2311,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           const d = distMeters([p.lat, p.lon], [e.lat, e.lng]);
           if (d < bestDist) { bestDist = d; bestTst = p.tst; }
         }
-        const tst = bestTst != null ? bestTst : localEpoch(e.date, '12:00');
+        const tst = bestTst != null ? bestTst : localEpochInZone(e.date, '12:00', e.tz);
         if (tst != null) anchors.push({ tst, lat: e.lat, lng: e.lng });
       }
     });

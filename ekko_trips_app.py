@@ -400,6 +400,7 @@ def trip_detail(trip_id):
         return "Trip not found", 404
 
     enrich_trip_locations(trip)
+    _stamp_trip_timezones(trip)
 
     captions = _load_json(CAPTIONS_FILE)
 
@@ -523,6 +524,7 @@ def trip_detail(trip_id):
         is_admin=is_admin,
         prev_trip_id=prev_trip_id,
         next_trip_id=next_trip_id,
+        home_tz=_home_tz() or "",
     )
 
 
@@ -1201,9 +1203,9 @@ os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 # (or fails to import on a constrained host), we silently skip enrichment
 # and the frontend falls back to the browser's timezone.
 _tz_finder = None
-def _enrich_with_timezone(points):
-    """Add an IANA `tz` field to each ping that lacks one. Returns True if
-    any ping was updated (so callers can re-write the cache file)."""
+def _tz_for_coord(lat, lng):
+    """Return an IANA timezone name for the given coords, or None if the
+    library is unavailable / lookup fails."""
     global _tz_finder
     if _tz_finder is None:
         try:
@@ -1212,18 +1214,58 @@ def _enrich_with_timezone(points):
         except Exception:
             _tz_finder = False  # sentinel: don't retry
     if not _tz_finder:
-        return False
+        return None
+    if lat is None or lng is None:
+        return None
+    try:
+        return _tz_finder.timezone_at(lat=lat, lng=lng)
+    except Exception:
+        return None
+
+
+def _enrich_with_timezone(points):
+    """Add an IANA `tz` field to each ping that lacks one. Returns True if
+    any ping was updated (so callers can re-write the cache file)."""
     changed = False
     for p in points:
         if p.get("tz"):
             continue
-        try:
-            tz = _tz_finder.timezone_at(lat=p["lat"], lng=p["lon"])
-        except Exception:
-            tz = None
+        tz = _tz_for_coord(p.get("lat"), p.get("lon"))
+        if tz is None and _tz_finder is False:
+            return False  # library unavailable; nothing to stamp
         p["tz"] = tz or "UTC"
         changed = True
     return changed
+
+
+def _stamp_trip_timezones(trip):
+    """Stamp an IANA `tz` field onto each stay (using its enriched lat/lng)
+    and each event (using its parsed location lat/lng). Silently no-ops
+    when timezonefinder is unavailable."""
+    for stay in trip.get("stays", []):
+        if stay.get("tz"):
+            continue
+        tz = _tz_for_coord(stay.get("lat"), stay.get("lng"))
+        if tz:
+            stay["tz"] = tz
+    for event in trip.get("events", []):
+        if event.get("tz"):
+            continue
+        tz = _tz_for_coord(event.get("lat"), event.get("lng"))
+        if tz:
+            event["tz"] = tz
+
+
+_home_tz_cached = None
+def _home_tz():
+    """Resolve home.json coords to an IANA tz once and cache."""
+    global _home_tz_cached
+    if _home_tz_cached is not None:
+        return _home_tz_cached or None
+    cfg = _load_json(HOME_FILE)
+    tz = _tz_for_coord(cfg.get("home_lat"), cfg.get("home_long"))
+    _home_tz_cached = tz or ""
+    return tz
 
 
 def _fetch_timeline_points(tid, token, from_ts, to_ts):
