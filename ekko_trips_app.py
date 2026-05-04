@@ -1071,7 +1071,8 @@ def api_campground_list():
         entries = json.load(f)
     result = [{"id": e["id"], "name": e["name"],
                "state": e.get("state", ""),
-               "kind": e.get("kind", "campground")}
+               "kind": e.get("kind", "campground"),
+               "location": e.get("location", "")}
               for e in entries if "id" in e and "name" in e]
     result.sort(key=lambda x: x["name"])
     return jsonify(result)

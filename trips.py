@@ -169,6 +169,7 @@ def add_stay(trip_id, stay_data):
                 "locale": stay_data.get("locale", ""),
                 "state": stay_data.get("state", ""),
                 "site": stay_data.get("site", ""),
+                "campsite_location": (stay_data.get("campsite_location") or "").strip(),
                 "campers": stay_data.get("campers", ""),
                 "notes": stay_data.get("notes", ""),
             }
@@ -197,6 +198,12 @@ def update_stay(trip_id, stay_idx, fields):
                         "locale", "state", "site", "campers", "notes"):
                 if key in fields:
                     stay[key] = fields[key]
+            if "campsite_location" in fields:
+                val = (fields["campsite_location"] or "").strip()
+                if val:
+                    stay["campsite_location"] = val
+                else:
+                    stay.pop("campsite_location", None)
             if "nights" in fields:
                 stay["nights"] = int(fields["nights"])
             # Ensure start is always before end
@@ -701,13 +708,21 @@ def enrich_trip_locations(trip):
     by_id = _load_locations_by_id()
     for stay in trip["stays"]:
         coords = None
-        cid = stay.get("campground_id")
-        if cid is not None and cid in by_id:
-            info = by_id[cid]
-            if info["kind"] == "family" and info["driveway"]:
-                coords = info["driveway"]
-            else:
-                coords = (info["lat"], info["lng"])
+        # Per-stay override takes precedence — used to correct cases where the
+        # campground's listed coords are at the office/entrance and the actual
+        # campsite is meaningfully offset (matters for blackout/outlier
+        # suppression in GPS track rendering).
+        override = (stay.get("campsite_location") or "").strip()
+        if override:
+            coords = _parse_site_coords(override)
+        if not coords:
+            cid = stay.get("campground_id")
+            if cid is not None and cid in by_id:
+                info = by_id[cid]
+                if info["kind"] == "family" and info["driveway"]:
+                    coords = info["driveway"]
+                else:
+                    coords = (info["lat"], info["lng"])
         if not coords:
             coords = _parse_site_coords(stay.get("site", ""))
         if coords:

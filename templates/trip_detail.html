@@ -1228,6 +1228,13 @@
           <label>Campsite</label>
           <input type="text" data-field="site" value="{{ item.site }}">
         </div>
+        <div class="full-width">
+          <label>Campsite Location <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank = use campground location)</span></label>
+          <div class="event-location-field">
+            <input type="text" data-field="campsite_location" value="{{ item.campsite_location or '' }}" placeholder="lat,lng" autocomplete="off">
+            {% if is_admin %}<button type="button" class="btn-pick-location" onclick="showStayLocationMap({{ item.idx }})">Pick on Map</button>{% endif %}
+          </div>
+        </div>
         <div>
           <label>Start Date</label>
           <input type="date" data-field="start" value="{{ item.start }}">
@@ -1913,12 +1920,27 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   }
   // Build "blackout" windows from stays (full date range) and from events
   // that have both a start and end time. A point is dropped only if its tst
-  // falls inside a window AND it sits within BLACKOUT_RADIUS_M of that
+  // falls inside a window AND it sits within the window's radius of that
   // window's location — so pings clustered at the campground/event are
   // suppressed while travel-day pings (e.g., the drive between two
   // back-to-back stays) survive. When a window has no location, the
   // proximity check is skipped (time-only blackout).
+  //
+  // Default radius is BLACKOUT_RADIUS_M (1500 m). Stays with a
+  // `campsite_location` override use STAY_OVERRIDE_BLACKOUT_RADIUS_M (50 m
+  // ≈ 165 ft) — wide enough to cover a typical campsite plus normal GPS
+  // noise, narrow enough that walks around the campground appear in the
+  // polyline. Anchor identification and outlier suppression deliberately
+  // keep the loose 1500 m radius so (a) arrival/departure anchors still
+  // fire even if the GPS lands a few hundred meters from the picked
+  // campsite point, and (b) walks within ~1.5 km of camp aren't
+  // outlier-suppressed (they fall inside the at-stay zone the outlier
+  // classifier treats as exempt).
   const BLACKOUT_RADIUS_M = 1500;
+  const STAY_OVERRIDE_BLACKOUT_RADIUS_M = 50;
+  function stayBlackoutRadius(s) {
+    return (s && s.campsite_location) ? STAY_OVERRIDE_BLACKOUT_RADIUS_M : BLACKOUT_RADIUS_M;
+  }
   function blackoutWindows() {
     const wins = [];
     STAYS_ALL.forEach(s => {
@@ -1927,7 +1949,8 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       const [y, m, d] = s.end.split('-').map(Number);
       const end = new Date(y, m - 1, d + 1, 0, 0, 0).getTime() / 1000;
       if (start != null && !isNaN(end)) {
-        wins.push({ start, end, lat: s.lat, lng: s.lng });
+        wins.push({ start, end, lat: s.lat, lng: s.lng,
+                    radius: stayBlackoutRadius(s) });
       }
     });
     // Events deliberately do NOT participate in polyline blackout. Many
@@ -1944,7 +1967,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     for (const w of windows) {
       if (tst < w.start || tst > w.end) continue;
       if (w.lat == null || w.lng == null) return true;
-      if (distMeters([lat, lng], [w.lat, w.lng]) <= BLACKOUT_RADIUS_M) return true;
+      if (distMeters([lat, lng], [w.lat, w.lng]) <= (w.radius || BLACKOUT_RADIUS_M)) return true;
     }
     return false;
   }
@@ -2160,18 +2183,24 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     }
 
     // Per stay, find every "residency cluster" — a maximal run of
-    // consecutive raw pings inside the stay's blackout disc (within
-    // BLACKOUT_RADIUS_M and within the stay's date range), bracketed by
-    // off-stay pings. Emit one anchor pair per cluster at the stay's coords
-    // so the polyline returns to camp between excursions. Without this, a
-    // multi-excursion stay collapses to a single (start, end) anchor pair
-    // and the polyline draws a straight line directly between two
-    // off-camp pings on either side of an at-camp residency, when both
-    // off-camp pings happen to sit just outside the blackout disc (a
-    // common arrival/departure pattern).
+    // consecutive raw pings inside the stay's blackout disc (within the
+    // stay's per-stay radius and within the stay's date range), bracketed
+    // by off-stay pings. Emit one anchor pair per cluster at the stay's
+    // coords so the polyline returns to camp between excursions. Without
+    // this, a multi-excursion stay collapses to a single (start, end)
+    // anchor pair and the polyline draws a straight line directly between
+    // two off-camp pings on either side of an at-camp residency.
+    //
+    // The radius matches the stay's blackout radius (50 m for stays with
+    // a `campsite_location` override, 1500 m otherwise) so cluster
+    // boundaries align with the suppression boundary: a hike ping that
+    // wasn't blackout-suppressed (>radius) will also break the cluster,
+    // preventing cluster anchors from getting interleaved with hike
+    // pings and drawing spurious straight lines back to camp.
     const sortedRawForClusters = rawPoints.slice().sort((a, b) => a.tst - b.tst);
     mapped.forEach(s => {
       if (!s.start || !s.end) return;
+      const radius = stayBlackoutRadius(s);
       const clusters = [];
       let cur = null;
       for (const p of sortedRawForClusters) {
@@ -2180,7 +2209,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           if (cur) { clusters.push(cur); cur = null; }
           continue;
         }
-        const inside = distMeters([p.lat, p.lon], [s.lat, s.lng]) <= BLACKOUT_RADIUS_M
+        const inside = distMeters([p.lat, p.lon], [s.lat, s.lng]) <= radius
                        && stayIsClosest(p, s.lat, s.lng);
         if (inside) {
           if (cur == null) cur = { first: p.tst, last: p.tst };
@@ -2330,103 +2359,6 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       const trimmed = trimHomeBoundaries(raw, homeStartTst, homeEndTst);
       const windows = blackoutWindows();
 
-      // Spurious-spike suppression: pings that are far from a stay's
-      // location but sandwiched in time between at-stay anchors with too
-      // little "active" time between them are likely GPS errors (cell-tower
-      // fixes, single jumps) rather than real outings. For each stay with
-      // a known location, we precompute the timestamps of raw pings that
-      // fell within BLACKOUT_RADIUS_M of the stay (anywhere in time, not
-      // just within the stay's date window — overnight pings on the
-      // checkout morning are still anchors). A kept ping is flagged as an
-      // outlier if it has at-stay anchors on both sides AND the active
-      // span between them (total time minus any sleep gaps where no raw
-      // ping landed for >= STAY_OUTLIER_SLEEP_GAP_S) is below
-      // STAY_OUTLIER_ACTIVE_MAX_S AND no other off-stay ping in the same
-      // cluster reached beyond STAY_OUTLIER_MAX_DIST_M from the stay.
-      // Sleep gaps don't count as "user away from camp," so a 1838 m spike
-      // at 7:48 am between 23:55 (at camp) and 08:03 (at camp) gets flagged
-      // even though wall-clock span is 8h. The max-distance gate keeps
-      // genuine short excursions (e.g., a 4 km drive to a viewpoint and
-      // back, or a venue-hour gap during a concert 10 km away that makes
-      // active span look small) from being misclassified as spikes —
-      // real GPS jitter / cell-tower fixes typically misreport by under
-      // 2 km, so anything reaching further is treated as real travel.
-      const STAY_OUTLIER_ACTIVE_MAX_S = 90 * 60;  // ≤90 min "active" between anchors → spurious
-      const STAY_OUTLIER_SLEEP_GAP_S = 60 * 60;   // ≥60 min between consecutive raw pings = inactive
-      const STAY_OUTLIER_MAX_DIST_M = 2500;       // cluster reaching beyond this = real travel
-
-      const sortedRaw = raw.slice().sort((a, b) => a.tst - b.tst);
-      const sortedRawTst = sortedRaw.map(q => q.tst);
-
-      const stayAnchorsByLoc = STAYS_ALL
-        .filter(s => Number.isFinite(s.lat) && Number.isFinite(s.lng))
-        .map(s => {
-          const dists = sortedRaw.map(q => distMeters([q.lat, q.lon], [s.lat, s.lng]));
-          const anchors = [];
-          for (let i = 0; i < sortedRaw.length; i++) {
-            if (dists[i] <= BLACKOUT_RADIUS_M) anchors.push(sortedRawTst[i]);
-          }
-          return { lat: s.lat, lng: s.lng, anchors, dists };
-        });
-
-      function activeSpanBetween(t1, t2) {
-        if (t2 <= t1) return 0;
-        let lo = 0, hi = sortedRawTst.length;
-        while (lo < hi) {
-          const mid = (lo + hi) >> 1;
-          if (sortedRawTst[mid] < t1) lo = mid + 1;
-          else hi = mid;
-        }
-        let active = 0;
-        let prev = t1;
-        for (let i = lo; i < sortedRawTst.length && sortedRawTst[i] <= t2; i++) {
-          const cur = sortedRawTst[i];
-          const gap = cur - prev;
-          if (gap < STAY_OUTLIER_SLEEP_GAP_S) active += gap;
-          prev = cur;
-        }
-        const tail = t2 - prev;
-        if (tail < STAY_OUTLIER_SLEEP_GAP_S) active += tail;
-        return active;
-      }
-
-      function maxOffStayDistBetween(sa, t1, t2) {
-        if (t2 <= t1) return 0;
-        let lo = 0, hi = sortedRawTst.length;
-        while (lo < hi) {
-          const mid = (lo + hi) >> 1;
-          if (sortedRawTst[mid] <= t1) lo = mid + 1;
-          else hi = mid;
-        }
-        let max = 0;
-        for (let i = lo; i < sortedRawTst.length && sortedRawTst[i] < t2; i++) {
-          const d = sa.dists[i];
-          if (d > BLACKOUT_RADIUS_M && d > max) max = d;
-        }
-        return max;
-      }
-
-      function isStayOutlier(p) {
-        for (const sa of stayAnchorsByLoc) {
-          if (distMeters([p.lat, p.lon], [sa.lat, sa.lng]) <= BLACKOUT_RADIUS_M) continue;
-          const a = sa.anchors;
-          if (a.length === 0) continue;
-          let lo = 0, hi = a.length;
-          while (lo < hi) {
-            const mid = (lo + hi) >> 1;
-            if (a[mid] <= p.tst) lo = mid + 1;
-            else hi = mid;
-          }
-          const beforeIdx = lo - 1;
-          const afterIdx = lo < a.length ? lo : -1;
-          if (beforeIdx < 0 || afterIdx < 0) continue;
-          if (activeSpanBetween(a[beforeIdx], a[afterIdx]) > STAY_OUTLIER_ACTIVE_MAX_S) continue;
-          if (maxOffStayDistBetween(sa, a[beforeIdx], a[afterIdx]) > STAY_OUTLIER_MAX_DIST_M) continue;
-          return true;
-        }
-        return false;
-      }
-
       // Pings inside a stay's blackout disc are normally dropped (camp
       // residency clutter). But when an event venue sits inside the same
       // disc (e.g., Perry Monument 1 km from Lampe Campground), pings at
@@ -2444,7 +2376,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           if (p.tst < w.start || p.tst > w.end) continue;
           if (w.lat == null || w.lng == null) return true;
           const dStay = distMeters([p.lat, p.lon], [w.lat, w.lng]);
-          if (dStay > BLACKOUT_RADIUS_M) continue;
+          if (dStay > (w.radius || BLACKOUT_RADIUS_M)) continue;
           let closerEvent = false;
           for (const c of eventCoordsForKeep) {
             if (distMeters([p.lat, p.lon], c) < dStay) { closerEvent = true; break; }
@@ -2453,8 +2385,10 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         }
         return false;
       }
-      const afterBlackout = trimmed.filter(p => !shouldDropForStay(p));
-      const kept = afterBlackout.filter(p => !isStayOutlier(p));
+      // Spurious GPS pings (cell-tower fixes, single jumps) are filtered
+      // upstream by a separate pre-processing app, so the only remaining
+      // step here is to drop pings clustered at-camp during stay windows.
+      const kept = trimmed.filter(p => !shouldDropForStay(p));
       if (!kept.length) {
         const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
         trackLog(
@@ -2462,8 +2396,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           {
             rawCount: raw.length,
             afterTrimHomeBoundaries: trimmed.length,
-            afterBlackoutWindows: afterBlackout.length,
-            afterStayOutlierFilter: kept.length,
+            afterBlackoutWindows: kept.length,
             HOME,
             HOME_START_TIME, HOME_END_TIME,
             autoHomeStart: fmt(homeStartTst),
@@ -2881,6 +2814,9 @@ function stayFieldsToPayload(fields) {
   delete payload.place;
   delete payload.campground_id;
   delete payload.custom_place;
+  if ('campsite_location' in payload) {
+    payload.campsite_location = (payload.campsite_location || '').trim();
+  }
 
   const place = (fields.place || '').trim();
   let cid = fields.campground_id ? parseInt(fields.campground_id, 10) : null;
@@ -3011,6 +2947,13 @@ function _modalFormHtml(kind, v) {
         <div><label>State</label><input type="text" data-field="state" value="${escapeHtml(v.state || '')}" autocomplete="off"></div>
         <div><label>Campsite</label><input type="text" data-field="site" value="${escapeHtml(v.site || '')}" autocomplete="off"></div>
         <div><label>Campers</label><input type="text" data-field="campers" value="${escapeHtml(v.campers || '')}" autocomplete="off"></div>
+        <div class="full-width">
+          <label>Campsite Location <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank = use campground location)</span></label>
+          <div class="event-location-field">
+            <input type="text" data-field="campsite_location" value="${escapeHtml(v.campsite_location || '')}" placeholder="lat,lng" autocomplete="off">
+            <button type="button" class="btn-pick-location" onclick="showAddModalStayLocationMap()">Pick on Map</button>
+          </div>
+        </div>
         <div><label>Start Date</label><input type="date" data-field="start" value="${start}" autocomplete="off" onchange="syncStayNights(this)"></div>
         <div><label>End Date</label><input type="date" data-field="end" value="${end}" autocomplete="off" onchange="syncStayNights(this)"></div>
         <div><label>Nights</label><input type="number" data-field="nights" value="${v.nights || 1}" min="1" autocomplete="off"></div>
@@ -3224,8 +3167,13 @@ function onFamilyVisitChange(select, idx) {
   }
 }
 
-// ── Event location map picker ────────────────────────────────────────────
-let eventLocTargetIdx = null;
+// ── Location map picker (shared by events and stays) ─────────────────────
+// pickerTarget identifies which input the next onPick should fill:
+//   { kind: 'event',       idx: <eventIdx> }   → inline event edit form
+//   { kind: 'event-modal' }                    → add/edit modal event form
+//   { kind: 'stay',        idx: <stayIdx>  }   → inline stay edit form (campsite_location)
+//   { kind: 'stay-modal'   }                   → add/edit modal stay form (campsite_location)
+let pickerTarget = null;
 let eventLocationPicker = null;
 
 if (IS_ADMIN) {
@@ -3237,31 +3185,69 @@ if (IS_ADMIN) {
     resultsId: 'event-geo-search-results',
     onPick: function(lat, lng) {
       const value = lat.toFixed(6) + ',' + lng.toFixed(6);
-      let locInput = null;
-      if (eventLocTargetIdx === 'modal') {
-        locInput = document.querySelector('#add-modal-body [data-field="location"]');
-      } else if (eventLocTargetIdx !== null) {
-        const form = document.getElementById('event-edit-' + eventLocTargetIdx);
-        locInput = form ? form.querySelector('[data-field="location"]') : null;
-      }
+      const locInput = pickerTargetInput();
       if (locInput) locInput.value = value;
     }
   });
 }
 
-function showEventLocationMap(eventIdx) {
-  eventLocTargetIdx = eventIdx;
-  const form = document.getElementById('event-edit-' + eventIdx);
-  const locInput = form.querySelector('[data-field="location"]');
-  const loc = locInput ? locInput.value.trim() : '';
+function pickerTargetInput() {
+  if (!pickerTarget) return null;
+  switch (pickerTarget.kind) {
+    case 'event': {
+      const form = document.getElementById('event-edit-' + pickerTarget.idx);
+      return form ? form.querySelector('[data-field="location"]') : null;
+    }
+    case 'event-modal':
+      return document.querySelector('#add-modal-body [data-field="location"]');
+    case 'stay': {
+      const form = document.getElementById('stay-edit-' + pickerTarget.idx);
+      return form ? form.querySelector('[data-field="campsite_location"]') : null;
+    }
+    case 'stay-modal':
+      return document.querySelector('#add-modal-body [data-field="campsite_location"]');
+  }
+  return null;
+}
+
+function _showPicker(target, fallbackLoc) {
+  pickerTarget = target;
+  const input = pickerTargetInput();
+  let loc = (input && input.value.trim()) || '';
+  if (!loc && fallbackLoc) loc = fallbackLoc;
   eventLocationPicker.show(loc);
 }
 
+function showEventLocationMap(eventIdx) {
+  _showPicker({ kind: 'event', idx: eventIdx });
+}
+
 function showAddModalLocationMap() {
-  eventLocTargetIdx = 'modal';
-  const locInput = document.querySelector('#add-modal-body [data-field="location"]');
-  const loc = locInput ? locInput.value.trim() : '';
-  eventLocationPicker.show(loc);
+  _showPicker({ kind: 'event-modal' });
+}
+
+function showStayLocationMap(stayIdx) {
+  // Fall back to the campground's coords so the picker opens zoomed near the
+  // stay rather than at the default view.
+  const stay = STAYS_ALL[stayIdx];
+  let fallback = '';
+  if (stay && stay.lat != null && stay.lng != null) {
+    fallback = stay.lat + ',' + stay.lng;
+  }
+  _showPicker({ kind: 'stay', idx: stayIdx }, fallback);
+}
+
+function showAddModalStayLocationMap() {
+  // When adding/editing via modal, try to seed from the picked campground
+  // (resolved through CG_LIST) so the picker opens near the campground.
+  let fallback = '';
+  const cgIdInput = document.querySelector('#add-modal-body [data-field="campground_id"]');
+  const cid = cgIdInput && cgIdInput.value ? parseInt(cgIdInput.value, 10) : null;
+  if (cid && typeof CG_LIST !== 'undefined') {
+    const cg = CG_LIST.find(c => c.id === cid);
+    if (cg && cg.location) fallback = cg.location;
+  }
+  _showPicker({ kind: 'stay-modal' }, fallback);
 }
 
 function hideEventLocationMap() {
