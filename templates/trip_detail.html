@@ -2259,10 +2259,25 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       }
       if (cur) clusters.push(cur);
       if (clusters.length === 0) {
-        const start = localEpochInZone(s.start, '00:00', s.tz);
-        const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
-        if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
-        if (end != null) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
+        // No GPS ping landed inside the stay's residency disc. For override
+        // stays this typically means the campsite_location is set wrong (the
+        // 50 m disc missed the actual at-camp pings). Emitting structural
+        // midnight anchors at the stay coord here would teleport the polyline
+        // back to the (wrong) override point and draw spurious straight
+        // lines to/from neighboring trip segments — better to skip the
+        // anchors entirely so the misalignment is visible to the admin who
+        // set the override. The straight-line route layer remains available
+        // as a fallback via the layer control.
+        if (s.campsite_location) {
+          trackLog(
+            `stay "${s.place || s.locale || ''}" has a campsite_location override but no GPS ping landed within ${STAY_OVERRIDE_BLACKOUT_RADIUS_M} m — skipping anchors. Override coord may be wrong.`,
+            { stayStart: s.start, stayEnd: s.end, override: s.campsite_location });
+        } else {
+          const start = localEpochInZone(s.start, '00:00', s.tz);
+          const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
+          if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
+          if (end != null) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
+        }
       } else {
         clusters.forEach(c => {
           anchors.push({ tst: c.first, lat: s.lat, lng: s.lng });
