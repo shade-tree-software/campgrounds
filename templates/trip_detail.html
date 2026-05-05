@@ -1838,6 +1838,179 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     straightRouteLayer.addTo(map);
   }
 
+  // ── Auto trip-start/end time detection from GPS pings ───────────────────
+  // Helpers + detector for the home-card "· HH:MM (auto)" display. These
+  // are independent of polyline rendering — they only read raw pings to
+  // estimate when the user departed from / returned to home, then write
+  // the result into the home-card display spans. Manual overrides
+  // (HOME_START_TIME / HOME_END_TIME) take precedence and short-circuit
+  // the display update.
+  const HOME_TRIM_KM = 1.5;
+  const HOME_EXACT_RADIUS_M = 100 * 0.3048;  // 100 feet
+  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away
+  const HOME_REENTRY_DWELL_S = 30 * 60;      // 30 min sustained near-home re-entry resets candidate
+  const HOME_REENTRY_MAX_AWAY_S = 12 * 3600; // only reset if AWAY duration was < 12 hours
+  function distMeters(a, b) {
+    const latKm = (a[0] - b[0]) * 111;
+    const lngKm = (a[1] - b[1]) * 111 *
+                  Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
+    return Math.sqrt(latKm * latKm + lngKm * lngKm) * 1000;
+  }
+  function localDateOf(tst) {
+    const d = new Date(tst * 1000);
+    return d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2, '0') + '-' +
+      String(d.getDate()).padStart(2, '0');
+  }
+  function formatHM(tst) {
+    const d = new Date(tst * 1000);
+    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+  // Build a browser-local epoch (seconds) for "YYYY-MM-DD" + "HH:MM".
+  // Used to bound the trip window when filtering pings; tz-aware
+  // conversion was retired with geo-suppression so we accept the small
+  // skew when viewing a far-away trip.
+  function localEpoch(dateStr, timeStr) {
+    if (!dateStr || !timeStr) return null;
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const [hh, mm] = timeStr.split(':').map(Number);
+    if ([y, m, d, hh, mm].some(isNaN)) return null;
+    return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
+  }
+  function addDaysISO(dateStr, n) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const t = Date.UTC(y, m - 1, d) + n * 86400000;
+    const dt = new Date(t);
+    return dt.getUTCFullYear() + '-'
+         + String(dt.getUTCMonth() + 1).padStart(2, '0') + '-'
+         + String(dt.getUTCDate()).padStart(2, '0');
+  }
+  // Resolve the trip window [lowerCut, upperCut] in epoch seconds. Manual
+  // home_start_time / home_end_time win; auto-detected boundaries fill in
+  // when no manual override is set; full local days bracket the window
+  // when neither is available.
+  function computeTripWindow(autoHomeStartTst, autoHomeEndTst) {
+    let lowerCut = null, upperCut = null;
+    if (TRIP_START) {
+      if (HOME_START_TIME) lowerCut = localEpoch(TRIP_START, HOME_START_TIME);
+      else if (autoHomeStartTst != null) lowerCut = autoHomeStartTst;
+      else lowerCut = localEpoch(TRIP_START, '00:00');
+    }
+    if (TRIP_END) {
+      if (HOME_END_TIME) upperCut = localEpoch(TRIP_END, HOME_END_TIME);
+      else if (autoHomeEndTst != null) upperCut = autoHomeEndTst;
+      else upperCut = localEpoch(addDaysISO(TRIP_END, 1), '00:00');
+    }
+    return { lowerCut, upperCut };
+  }
+  // HOME boundary times distinguish two OwnTracks usage patterns:
+  //   (a) Continuous logging — pings come in at the house all morning before
+  //       the trip and again all evening on return. GPS jitter occasionally
+  //       bounces a ping past the 100 ft house radius.
+  //   (b) On-demand logging — OwnTracks only starts when the user leaves, so
+  //       the first ping is post-departure, near home but not exactly at home.
+  //
+  // The rule for HOME-start: walk forward, tracking a candidate boundary.
+  // Reset the candidate every time we see an at-house ping (within
+  // HOME_EXACT_RADIUS_M) — we're still on the property. Set the candidate
+  // on the first >100 ft ping (within HOME_TRIM_KM) after a reset. Once a
+  // candidate has *sustained* away for HOME_BOUNDARY_LOCK_S without a
+  // further at-house ping resetting it, lock it as homeStartTst. Sustained-
+  // near-home re-entry can wipe a morning AWAY candidate so an early
+  // excursion doesn't lock as the trip start; a long-AWAY return freezes
+  // homeStartTst so trip-end home-hovering can't overwrite it.
+  //
+  // HOME-end (walk backward): identify the trailing at-house cluster and
+  // use its earliest member (= moment of arrival home). When no trailing
+  // at-house cluster exists (pattern b at trip end), fall back to that
+  // last in-range near-home ping.
+  function findHomeBoundaryTimes(rawPoints) {
+    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
+    let homeStartTst = null, homeEndTst = null;
+
+    let startCandidate = null;
+    let hasGoneAway = false;
+    let awayStartTst = null;
+    let nearReentryStart = null;
+    let tripEndReturned = false;
+    for (const p of rawPoints) {
+      if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
+      if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
+      const d = distMeters([p.lat, p.lon], HOME);
+      const isAway = d > HOME_RADIUS_M;
+      if (!isAway && hasGoneAway && awayStartTst != null
+          && (p.tst - awayStartTst) > HOME_REENTRY_MAX_AWAY_S) {
+        tripEndReturned = true;
+      }
+      if (d < HOME_EXACT_RADIUS_M) {
+        startCandidate = null;
+        hasGoneAway = false;
+        awayStartTst = null;
+        nearReentryStart = null;
+      } else if (!isAway) {
+        if (hasGoneAway && awayStartTst != null
+            && (p.tst - awayStartTst) <= HOME_REENTRY_MAX_AWAY_S) {
+          if (nearReentryStart == null) nearReentryStart = p.tst;
+          if ((p.tst - nearReentryStart) >= HOME_REENTRY_DWELL_S) {
+            startCandidate = null;
+            hasGoneAway = false;
+            awayStartTst = null;
+            nearReentryStart = null;
+          }
+        }
+        if (!hasGoneAway && startCandidate == null) {
+          startCandidate = p.tst;
+        }
+      } else {
+        if (!hasGoneAway) awayStartTst = p.tst;
+        hasGoneAway = true;
+        nearReentryStart = null;
+      }
+      if (!tripEndReturned
+          && startCandidate != null
+          && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
+        homeStartTst = startCandidate;
+      }
+    }
+    if (homeStartTst == null) homeStartTst = startCandidate;
+
+    let trailingAtHouseDone = false;
+    let lastNearHomeBeforeBreak = null;
+    for (let i = rawPoints.length - 1; i >= 0; i--) {
+      const p = rawPoints[i];
+      if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
+      if (TRIP_START && localDateOf(p.tst) < TRIP_START) break;
+      const d = distMeters([p.lat, p.lon], HOME);
+      if (d < HOME_EXACT_RADIUS_M) {
+        if (!trailingAtHouseDone) homeEndTst = p.tst;
+      } else {
+        if (!trailingAtHouseDone && lastNearHomeBeforeBreak == null && d <= HOME_RADIUS_M) {
+          lastNearHomeBeforeBreak = p.tst;
+        }
+        trailingAtHouseDone = true;
+      }
+    }
+    if (homeEndTst == null) homeEndTst = lastNearHomeBeforeBreak;
+
+    return { homeStartTst, homeEndTst };
+  }
+
+  // Populate the home cards' time display: manual override (rendered server-
+  // side) wins; otherwise show the GPS-derived time with an "(auto)" suffix
+  // so admins know they can override it via Edit if it looks wrong. Stored
+  // on window so editHomeTime() can show the auto value as the prompt default.
+  function updateHomeTimeDisplay(which, autoTst) {
+    const span = document.getElementById(`home-${which}-time-display`);
+    if (!span) return;
+    const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+    if (manual) return;
+    if (autoTst == null) return;
+    const hm = formatHM(autoTst);
+    span.textContent = IS_ADMIN ? ` · ${hm} (auto)` : ` · ${hm}`;
+    if (which === 'start') window.HOME_START_TIME_AUTO = hm;
+    else window.HOME_END_TIME_AUTO = hm;
+  }
+
   // Admin-only override: when FORCE_STRAIGHT_ROUTE is set, skip the GPS
   // track entirely and leave the straight-line route as the only polyline.
   // Useful for trips with no/poor track data or where the rendered track is
@@ -1866,12 +2039,28 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return;
       }
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
-      if (raw.length < 2) {
-        trackLog('not enough raw GPS points to draw a track — using straight track', { rawCount: raw.length });
+      // Compute auto trip-start/end times before any short-circuits so the
+      // home-card display still updates even when the polyline is skipped.
+      let autoHomeStartTst = null, autoHomeEndTst = null;
+      if (raw.length) {
+        ({ homeStartTst: autoHomeStartTst, homeEndTst: autoHomeEndTst } =
+          findHomeBoundaryTimes(raw));
+        if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', autoHomeStartTst);
+        if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', autoHomeEndTst);
+      }
+      // Filter pings to the trip window so the polyline and per-point
+      // markers don't show pre-departure or post-arrival activity.
+      const { lowerCut, upperCut } = computeTripWindow(autoHomeStartTst, autoHomeEndTst);
+      const inWindow = raw.filter(p =>
+        (lowerCut == null || p.tst >= lowerCut) &&
+        (upperCut == null || p.tst <= upperCut));
+      if (inWindow.length < 2) {
+        trackLog('not enough in-window GPS points to draw a track — using straight track',
+          { rawCount: raw.length, inWindowCount: inWindow.length, lowerCut, upperCut });
         return;
       }
 
-      const sorted = raw.slice().sort((a, b) => a.tst - b.tst);
+      const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
       const latlngs = sorted.map(p => [p.lat, p.lon]);
       const gpsRouteLayer = L.layerGroup([
         L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
@@ -2180,9 +2369,14 @@ function toggleForceStraight(el) {
 
 function editHomeTime(which) {
   const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
+  const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;
   const label = which === 'start' ? 'Departure time from home' : 'Arrival time at home';
-  const hint = manual ? '(leave blank to clear)' : '';
-  const val = prompt(`${label} (HH:MM, 24-hour) ${hint}`.trim(), manual || '');
+  const hint = manual
+    ? '(currently overriding auto-detection — leave blank to clear and use GPS-derived time)'
+    : auto
+      ? `(GPS-derived time is ${auto}; set a manual override only if that looks wrong)`
+      : '(no GPS data near home — set manually for a sensible boundary)';
+  const val = prompt(`${label} (HH:MM, 24-hour) ${hint}`, manual || '');
   if (val === null) return;
   const trimmed = val.trim();
   if (trimmed && !/^\d{1,2}:\d{2}$/.test(trimmed)) {
