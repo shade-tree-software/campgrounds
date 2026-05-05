@@ -1685,7 +1685,6 @@ const TRIP_START = {{ trip.start | tojson }};
 const TRIP_END = {{ trip.end | tojson }};
 const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
-const HOME_TZ = {{ home_tz | tojson }};
 const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
 // ── Map initialization ─────────────────────────────────────────────────────��
@@ -1839,529 +1838,16 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     straightRouteLayer.addTo(map);
   }
 
-  // Trim points near home on the trip's first/last dates only — drops the
-  // pre-departure puttering on day 1 and the post-arrival puttering on the
-  // final day, while keeping any home pass-through on interior days.
-  const HOME_TRIM_KM = 1.5;
-  function isNearHome(lat, lon) {
-    const latKm = (lat - HOME[0]) * 111;
-    const lngKm = (lon - HOME[1]) * 111 * Math.cos(HOME[0] * Math.PI / 180);
-    return Math.sqrt(latKm * latKm + lngKm * lngKm) < HOME_TRIM_KM;
-  }
-  function localDateOf(tst) {
-    const d = new Date(tst * 1000);
-    return d.getFullYear() + '-' +
-      String(d.getMonth() + 1).padStart(2, '0') + '-' +
-      String(d.getDate()).padStart(2, '0');
-  }
-  // Build a Unix epoch (seconds) for a "YYYY-MM-DD" date and a "H:MM" or
-  // "HH:MM" time string interpreted in the supplied IANA timezone. When
-  // `tz` is falsy, falls back to the browser's local timezone — used only
-  // when the server couldn't resolve a zone (e.g., timezonefinder not
-  // installed, or stay/event without coords).
-  //
-  // Why this matters: card times (event start/end, stay date midnight,
-  // home departure/arrival) are entered in the local time that was in
-  // effect at the location when the trip happened — NOT in the viewer's
-  // browser timezone. Without zone-aware conversion, opening a Pacific-
-  // coast trip from an East-coast browser shifts every card-derived
-  // anchor by 3 hours, misaligning blackout windows and event anchors
-  // against the GPS pings (whose `tst` is UTC).
-  function localEpochInZone(dateStr, timeStr, tz) {
-    if (!dateStr || !timeStr) return null;
-    const [y, m, d] = dateStr.split('-').map(Number);
-    const [hh, mm] = timeStr.split(':').map(Number);
-    if ([y, m, d, hh, mm].some(isNaN)) return null;
-    if (!tz) return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
-    // Treat the wall clock as if UTC, then ask Intl what wall clock that
-    // UTC moment corresponds to in the target zone — the difference is
-    // the zone's offset at that moment, which we subtract to recover the
-    // true UTC epoch. (Ambiguous DST "fall-back" hours collapse onto a
-    // single canonical value, which is acceptable for this use case.)
-    const guess = Date.UTC(y, m - 1, d, hh, mm, 0) / 1000;
-    const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
-      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
-    }).formatToParts(new Date(guess * 1000));
-    const obj = {};
-    for (const p of parts) {
-      if (p.type !== 'literal') obj[p.type] = parseInt(p.value, 10);
-    }
-    if (obj.hour === 24) obj.hour = 0;
-    const displayed = Date.UTC(obj.year, obj.month - 1, obj.day,
-                               obj.hour, obj.minute, obj.second) / 1000;
-    return guess - (displayed - guess);
-  }
-  // Add `n` days to a "YYYY-MM-DD" date string, returning a new date
-  // string. Performs date arithmetic in UTC so it isn't affected by the
-  // viewer's browser timezone.
-  function addDaysISO(dateStr, n) {
-    const [y, m, d] = dateStr.split('-').map(Number);
-    const t = Date.UTC(y, m - 1, d) + n * 86400000;
-    const dt = new Date(t);
-    return dt.getUTCFullYear() + '-'
-         + String(dt.getUTCMonth() + 1).padStart(2, '0') + '-'
-         + String(dt.getUTCDate()).padStart(2, '0');
-  }
-  function trimHomeBoundaries(points, autoHomeStartTst, autoHomeEndTst) {
-    if (!points.length || !sortedDates.length) return points;
-    const tripStart = sortedDates[0];
-    const tripEnd = sortedDates[sortedDates.length - 1];
-
-    // Absolute lower cutoff: explicit departure time wins; otherwise the
-    // GPS-derived auto boundary (so morning-of-trip excursions that returned
-    // home before the real departure are dropped from the polyline); else
-    // start of tripStart day.
-    let lowerCut;
-    if (HOME_START_TIME) {
-      lowerCut = localEpochInZone(tripStart, HOME_START_TIME, HOME_TZ);
-    } else if (autoHomeStartTst != null) {
-      lowerCut = autoHomeStartTst;
-    } else {
-      lowerCut = localEpochInZone(tripStart, '00:00', HOME_TZ);
-    }
-    // Absolute upper cutoff: explicit arrival time if set, else GPS-derived
-    // auto boundary, else end of tripEnd day (start of the day after).
-    let upperCut;
-    if (HOME_END_TIME) {
-      upperCut = localEpochInZone(tripEnd, HOME_END_TIME, HOME_TZ);
-    } else if (autoHomeEndTst != null) {
-      upperCut = autoHomeEndTst;
-    } else {
-      upperCut = localEpochInZone(addDaysISO(tripEnd, 1), '00:00', HOME_TZ);
-    }
-
-    let lo = 0;
-    while (lo < points.length && points[lo].tst < lowerCut) lo++;
-    let hi = points.length - 1;
-    while (hi >= lo && points[hi].tst > upperCut) hi--;
-
-    // When no explicit times are set, also peel off the home-radius "puttering"
-    // at the boundaries (existing behavior).
-    if (!HOME_START_TIME) {
-      while (lo < points.length &&
-             localDateOf(points[lo].tst) === tripStart &&
-             isNearHome(points[lo].lat, points[lo].lon)) lo++;
-    }
-    if (!HOME_END_TIME) {
-      while (hi >= lo &&
-             localDateOf(points[hi].tst) === tripEnd &&
-             isNearHome(points[hi].lat, points[hi].lon)) hi--;
-    }
-    return points.slice(lo, hi + 1);
-  }
-
-  // Equirectangular distance in meters between two [lat,lng] points.
-  function distMeters(a, b) {
-    const latKm = (a[0] - b[0]) * 111;
-    const lngKm = (a[1] - b[1]) * 111 *
-                  Math.cos(((a[0] + b[0]) / 2) * Math.PI / 180);
-    return Math.sqrt(latKm * latKm + lngKm * lngKm) * 1000;
-  }
-  // Build "blackout" windows from stays (full date range) and from events
-  // that have both a start and end time. A point is dropped only if its tst
-  // falls inside a window AND it sits within the window's radius of that
-  // window's location — so pings clustered at the campground/event are
-  // suppressed while travel-day pings (e.g., the drive between two
-  // back-to-back stays) survive. When a window has no location, the
-  // proximity check is skipped (time-only blackout).
-  //
-  // Default radius is BLACKOUT_RADIUS_M (1500 m). Stays with a
-  // `campsite_location` override use STAY_OVERRIDE_BLACKOUT_RADIUS_M (50 m
-  // ≈ 165 ft) — wide enough to cover a typical campsite plus normal GPS
-  // noise, narrow enough that walks around the campground appear in the
-  // polyline. Anchor identification and outlier suppression deliberately
-  // keep the loose 1500 m radius so (a) arrival/departure anchors still
-  // fire even if the GPS lands a few hundred meters from the picked
-  // campsite point, and (b) walks within ~1.5 km of camp aren't
-  // outlier-suppressed (they fall inside the at-stay zone the outlier
-  // classifier treats as exempt).
-  const BLACKOUT_RADIUS_M = 1500;
-  const STAY_OVERRIDE_BLACKOUT_RADIUS_M = 50;
-  function stayBlackoutRadius(s) {
-    return (s && s.campsite_location) ? STAY_OVERRIDE_BLACKOUT_RADIUS_M : BLACKOUT_RADIUS_M;
-  }
-  function blackoutWindows() {
-    const wins = [];
-    STAYS_ALL.forEach(s => {
-      if (!s.start || !s.end) return;
-      const start = localEpochInZone(s.start, '00:00', s.tz);
-      const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
-      if (start != null && end != null) {
-        wins.push({ start, end, lat: s.lat, lng: s.lng,
-                    radius: stayBlackoutRadius(s) });
-      }
-    });
-    // Events deliberately do NOT participate in polyline blackout. Many
-    // events are mobile (canoe trip on a river, hike, bike ride) where
-    // the configured event coord is just a starting point and real GPS
-    // pings spread out over a kilometer or more — blacking those out
-    // would erase the actual route and force the polyline to draw a
-    // single straight line from camp to event coord. For stationary
-    // events (concert venue), at-venue pings are typically tightly
-    // clustered and add only minor visual noise to the polyline.
-    return wins;
-  }
-  function inAnyWindow(tst, lat, lng, windows) {
-    for (const w of windows) {
-      if (tst < w.start || tst > w.end) continue;
-      if (w.lat == null || w.lng == null) return true;
-      if (distMeters([lat, lng], [w.lat, w.lng]) <= (w.radius || BLACKOUT_RADIUS_M)) return true;
-    }
-    return false;
-  }
-
-  // Treat stay/event locations and their timestamps as part of the track —
-  // splice them in as anchor points instead of drawing dashed connectors.
-  // - Stays anchor at the time of the FIRST raw ping inside the stay's
-  //   blackout radius (arrival) and the LAST such ping (departure). When no
-  //   pings landed at the stay, fall back to 00:00 of arrival / day-after-
-  //   departure as a structural connector.
-  // - HOME anchors bookend the trip at HOME_START_TIME / HOME_END_TIME if
-  //   set; otherwise at the time of the LAST near-home raw ping on/before
-  //   TRIP_START (departure) and the FIRST near-home raw ping on/after
-  //   TRIP_END (arrival home). Falls back to day boundaries if no near-home
-  //   pings exist.
-  // - Events with timed start/end anchor at those times.
-  // - Untimed events snap to the timestamp of the spatially-closest raw
-  //   point on the event's date (falling back to noon if there are none).
-  //
-  // Why GPS-derived times: anchors at fixed midnight boundaries collide in
-  // time when consecutive anchors fall on the same day boundary (e.g., HOME
-  // at trip-start 00:00 and stay#1 at arrival 00:00 when trip starts on the
-  // arrival day). Sorting then places the two anchors adjacent with no real
-  // pings between them, drawing a straight line between distant locations
-  // even when the real GPS track also covers that travel later in the day.
-  // Snapping to actual ping timestamps interleaves anchors with real data.
-  function findPingTime(rawPoints, lat, lng, radiusM, mode, dateFrom, dateTo) {
-    let result = null;
-    for (const p of rawPoints) {
-      if (dateFrom || dateTo) {
-        const date = localDateOf(p.tst);
-        if (dateFrom && date < dateFrom) continue;
-        if (dateTo && date > dateTo) continue;
-      }
-      if (distMeters([p.lat, p.lon], [lat, lng]) > radiusM) continue;
-      if (mode === 'first') {
-        if (result == null || p.tst < result) result = p.tst;
-      } else {
-        if (result == null || p.tst > result) result = p.tst;
-      }
-    }
-    return result;
-  }
-
-  // HOME boundary times distinguish two OwnTracks usage patterns:
-  //   (a) Continuous logging — pings come in at the house all morning before
-  //       the trip and again all evening on return. GPS jitter occasionally
-  //       bounces a ping past the 100 ft house radius.
-  //   (b) On-demand logging — OwnTracks only starts when the user leaves, so
-  //       the first ping is post-departure, near home but not exactly at home.
-  //
-  // The rule for HOME-start: walk forward, tracking a candidate boundary.
-  // Reset the candidate every time we see an at-house ping (within
-  // HOME_EXACT_RADIUS_M) — we're still on the property. Set the candidate
-  // on the first >100 ft ping (within HOME_TRIM_KM) after a reset. Once a
-  // candidate has *sustained* away for HOME_BOUNDARY_LOCK_S without a
-  // further at-house ping resetting it, lock it as homeStartTst and stop
-  // iterating. This prevents the trip's *return-home* at-house pings from
-  // resetting the actual morning departure — the issue that caused single-
-  // day trips to show "nothing" and multi-day trips to surface a stale
-  // late-evening jitter spike on the return day. Pattern (a) yields the
-  // post-morning-cluster departure (e.g., 8:49 am, locked one hour later);
-  // pattern (b) yields the very first ping (locked one hour later).
-  //
-  // HOME-end (walk backward): identify the trailing at-house cluster and
-  // use its earliest member (= moment of arrival home). When no trailing
-  // at-house cluster exists (pattern b at trip end — the user's last raw
-  // ping is between 100 ft and HOME_TRIM_KM, with no at-house pings after),
-  // fall back to that last in-range near-home ping. The walk-backward
-  // halts at the first non-at-house ping it encounters at the tail, so
-  // any earlier (mid-trip or pre-trip) at-house pings can't influence it.
-  const HOME_EXACT_RADIUS_M = 100 * 0.3048;  // 100 feet
-  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away
-  const HOME_REENTRY_DWELL_S = 30 * 60;      // 30 min sustained near-home re-entry resets candidate
-  const HOME_REENTRY_MAX_AWAY_S = 12 * 3600; // only reset if AWAY duration was < 12 hours (a same-day excursion, not a multi-day trip return)
-  function findHomeBoundaryTimes(rawPoints) {
-    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
-    let homeStartTst = null, homeEndTst = null;
-
-    // Forward pass: find the LAST candidate that managed a HOME_BOUNDARY_LOCK_S
-    // sustained-away. We don't break on first lock — instead we keep scanning
-    // and let dwell-resets (sustained near-home re-entry) wipe earlier
-    // candidates. This catches the case where an early-day excursion
-    // returned home before the actual trip departure: the morning AWAY
-    // sequence locks a candidate, but the subsequent return resets it, and
-    // the real departure later in the day produces a new lockable candidate.
-    let startCandidate = null;
-    let hasGoneAway = false;
-    let awayStartTst = null;     // tst of the first AWAY ping in the current away-streak
-    let nearReentryStart = null;
-    let tripEndReturned = false; // flips true on the first near-home ping after AWAY >= MAX_AWAY_S — past this, homeStartTst is frozen so trip-end home-hovering can't overwrite it
-    for (const p of rawPoints) {
-      if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
-      if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
-      const d = distMeters([p.lat, p.lon], HOME);
-      const isAway = d > HOME_RADIUS_M;
-      // Long-away return detection (must run before classification mutates state).
-      if (!isAway && hasGoneAway && awayStartTst != null
-          && (p.tst - awayStartTst) > HOME_REENTRY_MAX_AWAY_S) {
-        tripEndReturned = true;
-      }
-      if (d < HOME_EXACT_RADIUS_M) {
-        // At-house ping — full reset.
-        startCandidate = null;
-        hasGoneAway = false;
-        awayStartTst = null;
-        nearReentryStart = null;
-      } else if (!isAway) {
-        // Near home (within HOME_TRIM, outside HOME_EXACT). If we've already
-        // been AWAY for a same-day-excursion-length stretch, dwell here
-        // counts toward a "returned home" reset; once we've sat in the
-        // home neighborhood for HOME_REENTRY_DWELL_S without re-departing,
-        // treat it as a return and reset the candidate. We only allow this
-        // reset when the AWAY streak has been shorter than
-        // HOME_REENTRY_MAX_AWAY_S (12 h) — multi-day trip-end home arrivals
-        // must NOT wipe the morning departure candidate.
-        if (hasGoneAway && awayStartTst != null
-            && (p.tst - awayStartTst) <= HOME_REENTRY_MAX_AWAY_S) {
-          if (nearReentryStart == null) nearReentryStart = p.tst;
-          if ((p.tst - nearReentryStart) >= HOME_REENTRY_DWELL_S) {
-            startCandidate = null;
-            hasGoneAway = false;
-            awayStartTst = null;
-            nearReentryStart = null;
-          }
-        }
-        if (!hasGoneAway && startCandidate == null) {
-          startCandidate = p.tst;
-        }
-      } else {
-        // AWAY (d > HOME_RADIUS_M).
-        if (!hasGoneAway) awayStartTst = p.tst;
-        hasGoneAway = true;
-        nearReentryStart = null;
-      }
-      // Once tripEndReturned is true, the user has come home from a long
-      // away — any further NEAR/AWAY hovering near the house is post-trip
-      // noise, not a new trip departure, so don't keep updating homeStartTst.
-      if (!tripEndReturned
-          && startCandidate != null
-          && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
-        homeStartTst = startCandidate;
-      }
-    }
-    if (homeStartTst == null) homeStartTst = startCandidate;
-
-    let trailingAtHouseDone = false;
-    let lastNearHomeBeforeBreak = null;
-    for (let i = rawPoints.length - 1; i >= 0; i--) {
-      const p = rawPoints[i];
-      if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
-      if (TRIP_START && localDateOf(p.tst) < TRIP_START) break;
-      const d = distMeters([p.lat, p.lon], HOME);
-      if (d < HOME_EXACT_RADIUS_M) {
-        if (!trailingAtHouseDone) homeEndTst = p.tst;
-      } else {
-        if (!trailingAtHouseDone && lastNearHomeBeforeBreak == null && d <= HOME_RADIUS_M) {
-          lastNearHomeBeforeBreak = p.tst;
-        }
-        trailingAtHouseDone = true;
-      }
-    }
-    if (homeEndTst == null) homeEndTst = lastNearHomeBeforeBreak;
-
-    return { homeStartTst, homeEndTst };
-  }
-
-  function buildAnchors(rawPoints, autoHomeStartTst, autoHomeEndTst, keptPoints) {
-    const anchors = [];
-
-    if (TRIP_START) {
-      let homeStart;
-      if (HOME_START_TIME) {
-        homeStart = localEpochInZone(TRIP_START, HOME_START_TIME, HOME_TZ);
-      } else {
-        homeStart = autoHomeStartTst != null ? autoHomeStartTst : localEpochInZone(TRIP_START, '00:00', HOME_TZ);
-      }
-      if (homeStart != null) anchors.push({ tst: homeStart, lat: HOME[0], lng: HOME[1] });
-    }
-    if (TRIP_END) {
-      let homeEnd;
-      if (HOME_END_TIME) {
-        homeEnd = localEpochInZone(TRIP_END, HOME_END_TIME, HOME_TZ);
-      } else if (autoHomeEndTst != null) {
-        homeEnd = autoHomeEndTst;
-      } else {
-        homeEnd = localEpochInZone(addDaysISO(TRIP_END, 1), '00:00', HOME_TZ);
-      }
-      if (homeEnd != null && !isNaN(homeEnd)) anchors.push({ tst: homeEnd, lat: HOME[0], lng: HOME[1] });
-    }
-
-    // A ping counts as at-stay residency only if the stay is the spatially
-    // closest reference point — i.e., no event coord is closer to the ping
-    // than the stay coord is. This handles the common pattern where the
-    // stay is very near an event venue (e.g., Lampe Campground sits ~1 km
-    // from Perry Monument, well inside Lampe's 1500 m blackout disc); a
-    // ping at Perry Monument is geographically inside Lampe's disc but is
-    // clearly closer to Perry Monument and shouldn't anchor the polyline
-    // back to camp. The check is purely spatial — events that happen at
-    // a different time still apply, because a ping near event coord X
-    // belongs at X regardless of when X was scheduled. (Same physical
-    // place = same physical activity.)
-    const eventCoords = mappedEvents
-      .filter(e => Number.isFinite(e.lat) && Number.isFinite(e.lng))
-      .map(e => [e.lat, e.lng]);
-    function stayIsClosest(p, sLat, sLng) {
-      const dStay = distMeters([p.lat, p.lon], [sLat, sLng]);
-      for (const c of eventCoords) {
-        if (distMeters([p.lat, p.lon], c) < dStay) return false;
-      }
-      return true;
-    }
-
-    // Per stay, find every "residency cluster" — a maximal run of
-    // consecutive raw pings inside the stay's blackout disc (within the
-    // stay's per-stay radius and within the stay's date range), bracketed
-    // by off-stay pings. Emit one anchor pair per cluster at the stay's
-    // coords so the polyline returns to camp between excursions. Without
-    // this, a multi-excursion stay collapses to a single (start, end)
-    // anchor pair and the polyline draws a straight line directly between
-    // two off-camp pings on either side of an at-camp residency.
-    //
-    // The radius matches the stay's blackout radius (50 m for stays with
-    // a `campsite_location` override, 1500 m otherwise) so cluster
-    // boundaries align with the suppression boundary: a hike ping that
-    // wasn't blackout-suppressed (>radius) will also break the cluster,
-    // preventing cluster anchors from getting interleaved with hike
-    // pings and drawing spurious straight lines back to camp.
-    const sortedRawForClusters = rawPoints.slice().sort((a, b) => a.tst - b.tst);
-    mapped.forEach(s => {
-      if (!s.start || !s.end) return;
-      const radius = stayBlackoutRadius(s);
-      const clusters = [];
-      let cur = null;
-      for (const p of sortedRawForClusters) {
-        const date = localDateOf(p.tst);
-        if (date < s.start || date > s.end) {
-          if (cur) { clusters.push(cur); cur = null; }
-          continue;
-        }
-        const inside = distMeters([p.lat, p.lon], [s.lat, s.lng]) <= radius
-                       && stayIsClosest(p, s.lat, s.lng);
-        if (inside) {
-          if (cur == null) cur = { first: p.tst, last: p.tst };
-          else cur.last = p.tst;
-        } else if (cur) {
-          clusters.push(cur);
-          cur = null;
-        }
-      }
-      if (cur) clusters.push(cur);
-      if (clusters.length === 0) {
-        // No GPS ping landed inside the stay's residency disc. For override
-        // stays this typically means the campsite_location is set wrong (the
-        // 50 m disc missed the actual at-camp pings). Emitting structural
-        // midnight anchors at the stay coord here would teleport the polyline
-        // back to the (wrong) override point and draw spurious straight
-        // lines to/from neighboring trip segments — better to skip the
-        // anchors entirely so the misalignment is visible to the admin who
-        // set the override. The straight-line route layer remains available
-        // as a fallback via the layer control.
-        if (s.campsite_location) {
-          trackLog(
-            `stay "${s.place || s.locale || ''}" has a campsite_location override but no GPS ping landed within ${STAY_OVERRIDE_BLACKOUT_RADIUS_M} m — skipping anchors. Override coord may be wrong.`,
-            { stayStart: s.start, stayEnd: s.end, override: s.campsite_location });
-        } else {
-          const start = localEpochInZone(s.start, '00:00', s.tz);
-          const end = localEpochInZone(addDaysISO(s.end, 1), '00:00', s.tz);
-          if (start != null) anchors.push({ tst: start, lat: s.lat, lng: s.lng });
-          if (end != null) anchors.push({ tst: end, lat: s.lat, lng: s.lng });
-        }
-      } else {
-        clusters.forEach(c => {
-          anchors.push({ tst: c.first, lat: s.lat, lng: s.lng });
-          if (c.last !== c.first) anchors.push({ tst: c.last, lat: s.lat, lng: s.lng });
-        });
-      }
-    });
-
-    // For each event, only emit a structural anchor when the polyline
-    // wouldn't otherwise pass near it (i.e., no kept GPS ping landed
-    // within BLACKOUT_RADIUS_M of the event during its window). When
-    // kept pings are present near the event the polyline naturally
-    // traces the actual route — adding an anchor at the configured
-    // event coord would draw spurious zigzags between real pings and
-    // the marker (and, when the event coord is near a stay, can pull
-    // the polyline straight from the event back to camp during transit
-    // gaps). Events without GPS coverage still get the configured anchor
-    // so the route visibly visits the event.
-    const kpts = Array.isArray(keptPoints) ? keptPoints : [];
-    mappedEvents.forEach(e => {
-      if (!e.date) return;
-      if (e.time) {
-        const cfgStart = localEpochInZone(e.date, e.time, e.tz);
-        const cfgEnd = e.end_time ? localEpochInZone(e.end_date || e.date, e.end_time, e.tz) : null;
-        if (cfgStart == null) return;
-        const winStart = cfgStart;
-        const winEnd = cfgEnd != null ? cfgEnd : cfgStart + 1800; // ±30min for untimed end
-        const hasNearbyKept = kpts.some(p =>
-          p.tst >= winStart && p.tst <= winEnd &&
-          distMeters([p.lat, p.lon], [e.lat, e.lng]) <= BLACKOUT_RADIUS_M);
-        if (hasNearbyKept) return;
-        anchors.push({ tst: cfgStart, lat: e.lat, lng: e.lng });
-        if (cfgEnd != null) {
-          anchors.push({ tst: cfgEnd, lat: e.lat, lng: e.lng });
-        }
-      } else {
-        const dayStart = localEpochInZone(e.date, '00:00', e.tz);
-        const dayEnd = dayStart != null ? dayStart + 86400 : null;
-        const hasNearbyKept = dayStart != null && kpts.some(p =>
-          p.tst >= dayStart && p.tst <= dayEnd &&
-          distMeters([p.lat, p.lon], [e.lat, e.lng]) <= BLACKOUT_RADIUS_M);
-        if (hasNearbyKept) return;
-        let bestDist = Infinity, bestTst = null;
-        for (const p of rawPoints) {
-          if (localDateOf(p.tst) !== e.date) continue;
-          const d = distMeters([p.lat, p.lon], [e.lat, e.lng]);
-          if (d < bestDist) { bestDist = d; bestTst = p.tst; }
-        }
-        const tst = bestTst != null ? bestTst : localEpochInZone(e.date, '12:00', e.tz);
-        if (tst != null) anchors.push({ tst, lat: e.lat, lng: e.lng });
-      }
-    });
-
-    return anchors;
-  }
-
-  function formatHM(tst) {
-    const d = new Date(tst * 1000);
-    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
-  }
-
-  // Populate the home cards' time display: manual override (rendered server-
-  // side) wins; otherwise show the GPS-derived time with an "(auto)" suffix
-  // so admins know they can override it via Edit if it looks wrong. Stored
-  // on window so editHomeTime() can show the auto value as the prompt default.
-  function updateHomeTimeDisplay(which, autoTst) {
-    const span = document.getElementById(`home-${which}-time-display`);
-    if (!span) return;
-    const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
-    if (manual) return;
-    if (autoTst == null) return;
-    const hm = formatHM(autoTst);
-    span.textContent = IS_ADMIN ? ` · ${hm} (auto)` : ` · ${hm}`;
-    if (which === 'start') window.HOME_START_TIME_AUTO = hm;
-    else window.HOME_END_TIME_AUTO = hm;
-  }
-
   // Admin-only override: when FORCE_STRAIGHT_ROUTE is set, skip the GPS
   // track entirely and leave the straight-line route as the only polyline.
   // Useful for trips with no/poor track data or where the rendered track is
   // misleading.
   //
-  // Each early-return below logs to the console with prefix "[trip-track]"
-  // so admins can diagnose why a trip is rendering as straight-track only.
+  // Otherwise, render the GPS track as the raw, unfiltered polyline of every
+  // returned ping (sorted by timestamp). Markers for stays/events/home/family
+  // are placed independently — the polyline is not anchored to or trimmed
+  // against any of them. Spurious cell-tower pings and single jumps are
+  // filtered upstream by a separate pre-processing app.
   const trackLog = (msg, extra) => console.log(
     `[trip-track] trip {{ trip.id }}: ${msg}`, extra ?? '');
   if (FORCE_STRAIGHT_ROUTE) {
@@ -2380,101 +1866,13 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return;
       }
       const raw = Array.isArray(rawPoints) ? rawPoints : [];
-      if (!raw.length) {
-        trackLog('no raw GPS points returned by /api/trips/{{ trip.id }}/track — using straight track. ' +
-          'Likely causes: missing track_cache file on this server, TIMELINE_API_TOKEN/TIMELINE_TID env vars not set, ' +
-          'timeline service aged out the data, or trip has no start/end dates.');
-        return;
-      }
-      // Auto-fallback: if the trip has campgrounds but no GPS ping ever lands
-      // within TRACK_NEAR_STAY_KM of any of them, the track doesn't actually
-      // cover this trip (e.g., logging was off). Skip rendering so the
-      // straight-line route remains as the only polyline.
-      const TRACK_NEAR_STAY_KM = 5;
-      const stayCoords = STAYS_ALL
-        .map(s => [parseFloat(s.lat), parseFloat(s.lng)])
-        .filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
-      if (raw.length && stayCoords.length) {
-        const radiusM = TRACK_NEAR_STAY_KM * 1000;
-        const nearAny = raw.some(p =>
-          stayCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
-        if (!nearAny) {
-          trackLog(
-            `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay coordinate — using straight track`,
-            { rawCount: raw.length, stayCoords });
-          return;
-        }
-      }
-      const { homeStartTst, homeEndTst } = findHomeBoundaryTimes(raw);
-      if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', homeStartTst);
-      if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', homeEndTst);
-      const trimmed = trimHomeBoundaries(raw, homeStartTst, homeEndTst);
-      const windows = blackoutWindows();
-
-      // Pings inside a stay's blackout disc are normally dropped (camp
-      // residency clutter). But when an event venue sits inside the same
-      // disc (e.g., Perry Monument 1 km from Lampe Campground), pings at
-      // the event get spatially absorbed by the camp disc and disappear
-      // from the polyline — leaving the polyline to draw direct camp↔
-      // off-disc-ping lines that look like spurious teleports to camp.
-      // Spare any ping that's closer to some event coord than to the
-      // stay coord — those pings clearly belong to the event, not the
-      // stay.
-      const eventCoordsForKeep = mappedEvents
-        .filter(e => Number.isFinite(e.lat) && Number.isFinite(e.lng))
-        .map(e => [e.lat, e.lng]);
-      function shouldDropForStay(p) {
-        for (const w of windows) {
-          if (p.tst < w.start || p.tst > w.end) continue;
-          if (w.lat == null || w.lng == null) return true;
-          const dStay = distMeters([p.lat, p.lon], [w.lat, w.lng]);
-          if (dStay > (w.radius || BLACKOUT_RADIUS_M)) continue;
-          let closerEvent = false;
-          for (const c of eventCoordsForKeep) {
-            if (distMeters([p.lat, p.lon], c) < dStay) { closerEvent = true; break; }
-          }
-          if (!closerEvent) return true;
-        }
-        return false;
-      }
-      // Spurious GPS pings (cell-tower fixes, single jumps) are filtered
-      // upstream by a separate pre-processing app, so the only remaining
-      // step here is to drop pings clustered at-camp during stay windows.
-      const kept = trimmed.filter(p => !shouldDropForStay(p));
-      if (!kept.length) {
-        const fmt = ts => ts == null ? null : new Date(ts * 1000).toISOString();
-        trackLog(
-          'every GPS point was filtered out — using straight track. Stage counts and inputs follow:',
-          {
-            rawCount: raw.length,
-            afterTrimHomeBoundaries: trimmed.length,
-            afterBlackoutWindows: kept.length,
-            HOME,
-            HOME_START_TIME, HOME_END_TIME,
-            autoHomeStart: fmt(homeStartTst),
-            autoHomeEnd: fmt(homeEndTst),
-            TRIP_START, TRIP_END,
-            stayCoords: STAYS_ALL.map(s => ({ place: s.place, lat: s.lat, lng: s.lng })),
-            blackoutWindowCount: windows.length,
-            sampleRaw: raw.slice(0, 3).concat(raw.slice(-3)).map(p => ({
-              tst: fmt(p.tst), lat: p.lat, lon: p.lon })),
-          });
-        return;
-      }
-      const anchors = buildAnchors(raw, homeStartTst, homeEndTst, kept);
-
-      const combined = [
-        ...kept.map(p => ({ tst: p.tst, lat: p.lat, lng: p.lon })),
-        ...anchors,
-      ].sort((a, b) => a.tst - b.tst);
-      if (combined.length < 2) {
-        trackLog(
-          'fewer than 2 points remain after merging anchors — using straight track',
-          { keptCount: kept.length, anchorCount: anchors.length });
+      if (raw.length < 2) {
+        trackLog('not enough raw GPS points to draw a track — using straight track', { rawCount: raw.length });
         return;
       }
 
-      const latlngs = combined.map(p => [p.lat, p.lng]);
+      const sorted = raw.slice().sort((a, b) => a.tst - b.tst);
+      const latlngs = sorted.map(p => [p.lat, p.lon]);
       const gpsRouteLayer = L.layerGroup([
         L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
         L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
@@ -2485,21 +1883,14 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       }
       gpsRouteLayer.addTo(map);
 
-      // Per-point click targets: small circles at each kept GPS ping that
-      // pop up coords + local time when clicked. Hidden when zoomed out so
-      // they don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
-      // re-hidden when the user zooms back out. Tied to the GPS-track
-      // layer in the layer control so toggling the track also toggles
-      // the point markers.
+      // Per-point click targets: small circles at each GPS ping that pop up
+      // coords + local time when clicked. Hidden when zoomed out so they
+      // don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
+      // re-hidden when the user zooms back out. Tied to the GPS-track layer
+      // in the layer control so toggling the track also toggles the points.
       const GPS_POINT_MIN_ZOOM = 14;
       const gpsPointLayer = L.layerGroup();
-      // Build a fast lookup from kept point's tst → its raw timezone (server
-      // attaches an IANA `tz` to each cached ping via timezonefinder; absent
-      // when the package isn't installed, in which case we fall back to the
-      // browser's timezone).
-      const tzByTst = new Map();
-      raw.forEach(q => { if (q.tz) tzByTst.set(q.tst, q.tz); });
-      kept.forEach(p => {
+      sorted.forEach(p => {
         const m = L.circleMarker([p.lat, p.lon], {
           radius: 3,
           color: '#002868',
@@ -2508,13 +1899,12 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           fillOpacity: 1,
         });
         const dt = new Date(p.tst * 1000);
-        const tz = tzByTst.get(p.tst);
         const fmtOpts = {
           year: 'numeric', month: 'short', day: 'numeric',
           hour: '2-digit', minute: '2-digit', second: '2-digit',
           timeZoneName: 'short',
         };
-        if (tz) fmtOpts.timeZone = tz;
+        if (p.tz) fmtOpts.timeZone = p.tz;
         const local = dt.toLocaleString(undefined, fmtOpts);
         const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
         m.bindPopup(
@@ -2790,14 +2180,9 @@ function toggleForceStraight(el) {
 
 function editHomeTime(which) {
   const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
-  const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;
   const label = which === 'start' ? 'Departure time from home' : 'Arrival time at home';
-  const hint = manual
-    ? '(currently overriding auto-detection — leave blank to clear and use GPS-derived time)'
-    : auto
-      ? `(GPS-derived time is ${auto}; set a manual override only if that looks wrong)`
-      : '(no GPS data near home — set manually for a sensible boundary)';
-  const val = prompt(`${label} (HH:MM, 24-hour) ${hint}`, manual || '');
+  const hint = manual ? '(leave blank to clear)' : '';
+  const val = prompt(`${label} (HH:MM, 24-hour) ${hint}`.trim(), manual || '');
   if (val === null) return;
   const trimmed = val.trim();
   if (trimmed && !/^\d{1,2}:\d{2}$/.test(trimmed)) {

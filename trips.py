@@ -710,8 +710,7 @@ def enrich_trip_locations(trip):
         coords = None
         # Per-stay override takes precedence — used to correct cases where the
         # campground's listed coords are at the office/entrance and the actual
-        # campsite is meaningfully offset (matters for blackout/outlier
-        # suppression in GPS track rendering).
+        # campsite is meaningfully offset.
         override = (stay.get("campsite_location") or "").strip()
         if override:
             coords = _parse_site_coords(override)
