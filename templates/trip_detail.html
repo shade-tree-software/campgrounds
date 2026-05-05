@@ -2060,6 +2060,27 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         return;
       }
 
+      // Auto-fallback: if no in-window ping lands within TRACK_NEAR_STAY_KM
+      // of any stay or event, the GPS data doesn't actually cover this trip
+      // (e.g. logging was off, wrong device). Skip GPS rendering so the
+      // straight-line route remains visible as the only polyline.
+      const TRACK_NEAR_STAY_KM = 5;
+      const anchorCoords = [
+        ...mapped.map(s => [s.lat, s.lng]),
+        ...mappedEvents.map(e => [e.lat, e.lng]),
+      ].filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
+      if (anchorCoords.length) {
+        const radiusM = TRACK_NEAR_STAY_KM * 1000;
+        const nearAny = inWindow.some(p =>
+          anchorCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
+        if (!nearAny) {
+          trackLog(
+            `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay or event — using straight track`,
+            { inWindowCount: inWindow.length, anchorCount: anchorCoords.length });
+          return;
+        }
+      }
+
       const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
       const latlngs = sorted.map(p => [p.lat, p.lon]);
       const gpsRouteLayer = L.layerGroup([
