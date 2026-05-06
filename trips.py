@@ -478,6 +478,62 @@ def remove_suppressed_pings(trip_id, tsts):
     return None
 
 
+# ── GPS-ping relocation ──────────────────────────────────────────────────
+# Each trip carries an optional `relocated_pings` list of {tst, lat, lon}
+# entries. The track endpoint rewrites each matching ping's lat/lon to the
+# override target before returning the polyline. Originals are preserved
+# server-side only (in the OwnTracks cache); removing the entry restores
+# the ping to its original coords on the next fetch. Also keyed by `tst`
+# so it survives cache invalidation and OwnTracks pagination.
+
+def get_relocated_pings(trip_id):
+    """Return the trip's relocated-ping list (each entry is {tst, lat, lon})."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return list(t.get("relocated_pings", []))
+    return []
+
+
+def add_relocated_pings(trip_id, items):
+    """Add or update relocations. `items` is an iterable of dicts with keys
+    `tst`, `lat`, `lon`. If a tst already has a relocation, its target is
+    replaced (so re-relocating an already-moved ping just updates the
+    override). Returns the resulting list, or None if the trip is missing."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
+                       for it in t.get("relocated_pings", [])}
+            for it in items:
+                current[int(it["tst"])] = (float(it["lat"]), float(it["lon"]))
+            t["relocated_pings"] = [
+                {"tst": k, "lat": v[0], "lon": v[1]}
+                for k, v in sorted(current.items())
+            ]
+            _save_trips(raw)
+            return list(t["relocated_pings"])
+    return None
+
+
+def remove_relocated_pings(trip_id, tsts):
+    """Remove relocations by tst. Idempotent. Returns the resulting list,
+    or None if the trip is missing."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            wanted = {int(x) for x in tsts}
+            keep = [it for it in t.get("relocated_pings", [])
+                    if int(it["tst"]) not in wanted]
+            if keep:
+                t["relocated_pings"] = keep
+            else:
+                t.pop("relocated_pings", None)
+            _save_trips(raw)
+            return keep
+    return None
+
+
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):

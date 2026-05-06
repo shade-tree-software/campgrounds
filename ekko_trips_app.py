@@ -14,7 +14,9 @@ from trips import (parse_trips, enrich_trip_locations,
                    add_stay, update_stay, delete_stay,
                    add_event, update_event, delete_event,
                    get_suppressed_pings, add_suppressed_pings,
-                   remove_suppressed_pings)
+                   remove_suppressed_pings,
+                   get_relocated_pings, add_relocated_pings,
+                   remove_relocated_pings)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -1329,17 +1331,40 @@ def api_trip_track(trip_id):
     except ValueError:
         is_old = False
 
-    # Suppression: drop pings whose `tst` is in the trip's suppressed list,
-    # unless the caller asked for everything (so the unsuppress UI can show
-    # them tagged). When `include_suppressed=1`, each ping carries a
-    # `suppressed: true/false` flag instead of being filtered out.
-    include_suppressed = request.args.get("include_suppressed") == "1"
+    # `?admin=1` is the "include admin annotations" flag — used by the trip
+    # detail page when an admin is viewing it. With the flag, suppressed
+    # pings are returned tagged (so they can be revealed by the "Show
+    # suppressed pings" toggle), and relocated pings are tagged with their
+    # original lat/lon so the "Show relocated pings" toggle can offer undo
+    # plus draw a from-here-to-there dashed line. Without the flag,
+    # suppressed pings are dropped and relocations are applied silently.
+    include_admin = request.args.get("admin") == "1"
     suppressed = set(get_suppressed_pings(trip_id))
+    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
+                   for it in get_relocated_pings(trip_id)}
 
-    def _apply_suppression(points):
+    def _apply_overrides(points):
+        # Relocations rewrite lat/lon in place. Always applied (the polyline
+        # should follow the override). Original coords are preserved only for
+        # admin clients so the undo UI can draw the provenance line.
+        if relocations:
+            for p in points:
+                ov = relocations.get(p.get("tst"))
+                if ov is not None:
+                    if include_admin:
+                        p["original_lat"] = p["lat"]
+                        p["original_lon"] = p["lon"]
+                        p["relocated"] = True
+                    p["lat"] = ov[0]
+                    p["lon"] = ov[1]
+                elif include_admin:
+                    p["relocated"] = False
+        # Suppressions filter the polyline / regular markers entirely; admin
+        # clients still see them tagged so the suppressed-pings ghost layer
+        # has data to render.
         if not suppressed:
             return points
-        if include_suppressed:
+        if include_admin:
             for p in points:
                 p["suppressed"] = (p.get("tst") in suppressed)
             return points
@@ -1351,7 +1376,7 @@ def api_trip_track(trip_id):
         if _enrich_with_timezone(cached):
             with open(cache_file, "w") as f:
                 json.dump(cached, f)
-        return jsonify(_apply_suppression(cached))
+        return jsonify(_apply_overrides(cached))
 
     if is_old and os.path.isfile(cache_file):
         return _serve_cache()
@@ -1398,7 +1423,7 @@ def api_trip_track(trip_id):
     _enrich_with_timezone(all_points)
     with open(cache_file, "w") as f:
         json.dump(all_points, f)
-    return jsonify(_apply_suppression(all_points))
+    return jsonify(_apply_overrides(all_points))
 
 
 @app.route('/api/trips/<int:trip_id>/suppress-pings', methods=['POST'])
@@ -1431,6 +1456,52 @@ def api_unsuppress_pings(trip_id):
     if result is None:
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "suppressed_pings": result})
+
+
+@app.route('/api/trips/<int:trip_id>/relocate-pings', methods=['POST'])
+def api_relocate_pings(trip_id):
+    """Override the lat/lon for a list of GPS pings. Body: {items: [{tst, lat, lon}, ...]}.
+    Re-relocating an existing tst replaces its previous override."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    items = data.get("items") or []
+    if not isinstance(items, list):
+        return jsonify({"error": "items must be a list of {tst, lat, lon}"}), 400
+    cleaned = []
+    for it in items:
+        if not isinstance(it, dict):
+            return jsonify({"error": "each item must be an object"}), 400
+        try:
+            cleaned.append({
+                "tst": int(it["tst"]),
+                "lat": float(it["lat"]),
+                "lon": float(it["lon"]),
+            })
+        except (KeyError, TypeError, ValueError):
+            return jsonify({"error": "each item needs integer tst and numeric lat/lon"}), 400
+    result = add_relocated_pings(trip_id, cleaned)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "relocated_pings": result})
+
+
+@app.route('/api/trips/<int:trip_id>/relocate-pings', methods=['DELETE'])
+def api_unrelocate_pings(trip_id):
+    """Remove relocations by tst. Body: {tst: [...]}.
+    The next /track call returns the original OwnTracks coords."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    tsts = data.get("tst") or []
+    if not isinstance(tsts, list):
+        return jsonify({"error": "tst must be a list of integers"}), 400
+    result = remove_relocated_pings(trip_id, tsts)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "relocated_pings": result})
 
 
 @app.route('/api/elevation')

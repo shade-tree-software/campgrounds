@@ -13,10 +13,12 @@
   // by the time the script tag below runs (post-DOM-parse, after the photo
   // <img> tags have already been queued by the parser), the network round
   // trip is usually well underway.
-  // Admins get every ping back tagged with `suppressed: true/false` so the
-  // "Show suppressed pings" toggle can flip visibility instantly without
-  // re-fetching. Non-admins get the filtered list (server-side).
-  window.__trackPromise = fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?include_suppressed=1{% endif %}', { credentials: 'same-origin' })
+  // Admins get every ping back with admin annotations: `suppressed: true/false`,
+  // `relocated: true/false`, plus `original_lat`/`original_lon` on relocated
+  // pings. The two "Show …" toggles use these to flip the ghost layers
+  // instantly without re-fetching. Non-admins get the filtered/overridden
+  // list (server-side) — clean polyline only.
+  window.__trackPromise = fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?admin=1{% endif %}', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } })
     .catch(err => ({ __error: { thrown: String(err) } }));
 </script>
@@ -1118,11 +1120,15 @@
     z-index: 0;
   }
 
-  /* In "Select pings" mode the click-and-drag gesture draws a lasso circle,
-     so swap the grab cursor for a crosshair to telegraph the new behavior. */
+  /* In "Select pings" or "Relocate pings" mode the click-and-drag gesture
+     draws a lasso circle, so swap the grab cursor for a crosshair to
+     telegraph the new behavior. */
   body.map-selection-mode #trip-map,
   body.map-selection-mode #trip-map .leaflet-grab,
-  body.map-selection-mode #trip-map .leaflet-interactive {
+  body.map-selection-mode #trip-map .leaflet-interactive,
+  body.map-relocate-mode #trip-map,
+  body.map-relocate-mode #trip-map .leaflet-grab,
+  body.map-relocate-mode #trip-map .leaflet-interactive {
     cursor: crosshair;
   }
 
@@ -1237,11 +1243,23 @@
                  onchange="toggleSelectionMode(this)">
           Select pings
         </label>
+        <label class="selection-mode-toggle disabled" id="relocate-mode-label"
+               title="Loading GPS track…">
+          <input type="checkbox" id="relocate-mode-toggle" disabled
+                 onchange="toggleRelocateMode(this)">
+          Relocate pings
+        </label>
         <label class="selection-mode-toggle disabled" id="show-suppressed-label"
                title="Loading GPS track…">
           <input type="checkbox" id="show-suppressed-toggle" disabled
                  onchange="toggleShowSuppressed(this)">
           Show suppressed pings
+        </label>
+        <label class="selection-mode-toggle disabled" id="show-relocated-label"
+               title="Loading GPS track…">
+          <input type="checkbox" id="show-relocated-toggle" disabled
+                 onchange="toggleShowRelocated(this)">
+          Show relocated pings
         </label>
         <label class="force-straight-toggle" title="Skip GPS track and draw a straight-line route only">
           <input type="checkbox" id="force-straight-input" {% if trip.force_straight_route %}checked{% endif %} onchange="toggleForceStraight(this)">
@@ -2123,7 +2141,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   // Reuse the early-kicked-off promise from <head> so the network round
   // trip happens in parallel with HTML parsing instead of waiting until
   // this script block runs (after photo <img> tags have queued).
-  (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?include_suppressed=1{% endif %}', { credentials: 'same-origin' })
+  (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?admin=1{% endif %}', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } }))
     .then(rawPoints => {
       if (rawPoints && rawPoints.__error) {
@@ -2138,8 +2156,13 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       // gray "ghost" dots that the admin can toggle on via the "Show suppressed
       // pings" checkbox and click to unsuppress. (For non-admins the server
       // already filtered them out, so `suppressed` is never set.)
+      // Relocated pings, by contrast, ARE in the polyline — at their override
+      // coords (the server already rewrote lat/lon). For admins they also
+      // carry `original_lat`/`original_lon` so the "Show relocated pings"
+      // toggle can mark them and draw a dashed line back to the source.
       const raw = rawAll.filter(p => !p.suppressed);
       const rawSuppressed = rawAll.filter(p => p.suppressed);
+      const rawRelocated = rawAll.filter(p => p.relocated && !p.suppressed);
       // Compute auto trip-start/end times before any short-circuits so the
       // home-card display still updates even when the polyline is skipped.
       let autoHomeStartTst = null, autoHomeEndTst = null;
@@ -2156,6 +2179,9 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         (lowerCut == null || p.tst >= lowerCut) &&
         (upperCut == null || p.tst <= upperCut));
       const suppressedInWindow = rawSuppressed.filter(p =>
+        (lowerCut == null || p.tst >= lowerCut) &&
+        (upperCut == null || p.tst <= upperCut));
+      const relocatedInWindow = rawRelocated.filter(p =>
         (lowerCut == null || p.tst >= lowerCut) &&
         (upperCut == null || p.tst <= upperCut));
       if (inWindow.length < 2) {
@@ -2268,6 +2294,42 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       window.__suppressedPointLayer = suppressedPointLayer;
       window.__suppressedCount = suppressedSorted.length;
 
+      // Relocated-pings ghost layer. One amber marker per relocated ping at
+      // its override position, plus a dashed line back to the original
+      // OwnTracks coords for provenance. Click → unrelocate (restore one).
+      const relocatedSorted = relocatedInWindow.slice().sort((a, b) => a.tst - b.tst);
+      const relocatedPointLayer = L.layerGroup();
+      relocatedSorted.forEach(p => {
+        const dt = new Date(p.tst * 1000);
+        const fmtOpts = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          timeZoneName: 'short',
+        };
+        if (p.tz) fmtOpts.timeZone = p.tz;
+        const local = dt.toLocaleString(undefined, fmtOpts);
+        const newCoords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+        const origCoords = (p.original_lat != null && p.original_lon != null)
+          ? `${p.original_lat.toFixed(5)}, ${p.original_lon.toFixed(5)}`
+          : '(unknown)';
+        const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE });
+        m.__ping = p;
+        m.bindTooltip(
+          `Relocated · ${local}<br>` +
+          `<span style="font-family:monospace">from ${origCoords}<br>to&nbsp;&nbsp;${newCoords}</span><br>` +
+          `<em>click to restore</em>`,
+          { sticky: true });
+        m.on('click', () => unrelocatePing(p.tst));
+        relocatedPointLayer.addLayer(m);
+        if (p.original_lat != null && p.original_lon != null) {
+          relocatedPointLayer.addLayer(L.polyline(
+            [[p.original_lat, p.original_lon], [p.lat, p.lon]],
+            { ...RELOCATION_LINE_STYLE }));
+        }
+      });
+      window.__relocatedPointLayer = relocatedPointLayer;
+      window.__relocatedCount = relocatedSorted.length;
+
       function syncGpsPoints() {
         const trackVisible = map.hasLayer(gpsRouteLayer);
         const wantVisible = window.__selectionModeActive ||
@@ -2287,6 +2349,15 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         selLabel.classList.remove('disabled');
         selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle';
       }
+      // …and the "Relocate pings" companion. Same mode-toggle pattern as
+      // Select pings (it's the input mode for the lasso gesture).
+      const relTog = document.getElementById('relocate-mode-toggle');
+      const relLab = document.getElementById('relocate-mode-label');
+      if (relTog) relTog.disabled = false;
+      if (relLab) {
+        relLab.classList.remove('disabled');
+        relLab.title = 'Click-and-drag a circle on the map; every ping inside snaps to the circle’s center';
+      }
       // …and the "Show suppressed pings" companion toggle. Stays disabled when
       // the trip has nothing suppressed — no UI to reveal.
       const showSupToggle = document.getElementById('show-suppressed-toggle');
@@ -2299,14 +2370,28 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           ? `Reveal ${supN} previously-suppressed ping${supN === 1 ? '' : 's'} as gray dots; click one to unsuppress`
           : 'No pings are currently suppressed for this trip';
       }
+      // …and the "Show relocated pings" companion toggle. Same disabled-when-
+      // empty pattern.
+      const showRelToggle = document.getElementById('show-relocated-toggle');
+      const showRelLabel = document.getElementById('show-relocated-label');
+      const relN = window.__relocatedCount || 0;
+      if (showRelToggle) showRelToggle.disabled = (relN === 0);
+      if (showRelLabel) {
+        showRelLabel.classList.toggle('disabled', relN === 0);
+        showRelLabel.title = relN
+          ? `Reveal ${relN} relocated ping${relN === 1 ? '' : 's'} (amber, with provenance lines); click one to restore its original location`
+          : 'No pings are currently relocated for this trip';
+      }
       // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
-      // call once we have markers; it's gated internally on selection mode.
+      // call once we have markers; it's gated internally on the active mode.
       _initSelectionLasso(map);
       // Browsers preserve checkbox state across location.reload() (which we do
-      // after creating an event/waypoint from a selection). If the toggle came
-      // up checked, sync the JS state so the toolbar shows and pings respond.
+      // after creating an event/waypoint from a selection). If a toggle came
+      // up checked, sync the JS state so the toolbar/layer/dragging match.
       if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
+      if (relTog && relTog.checked) toggleRelocateMode(relTog);
       if (showSupToggle && showSupToggle.checked) toggleShowSuppressed(showSupToggle);
+      if (showRelToggle && showRelToggle.checked) toggleShowRelocated(showRelToggle);
     })
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
@@ -2752,28 +2837,68 @@ function addFamilyVisit() { openAddModal('family_visit'); }
 const DEFAULT_PING_STYLE = { radius: 3, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
 const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
 const SUPPRESSED_PING_STYLE = { radius: 4, color: '#888', weight: 1, fillColor: '#bbb', fillOpacity: 0.55, dashArray: '2,2' };
-const LASSO_CIRCLE_STYLE = { color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
+const RELOCATED_PING_STYLE = { radius: 5, color: '#e65100', weight: 2, fillColor: '#ffb74d', fillOpacity: 0.9 };
+const RELOCATION_LINE_STYLE = { color: '#e65100', weight: 1, dashArray: '3,4', opacity: 0.7, interactive: false };
+const LASSO_SELECT_STYLE  = { color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
+const LASSO_RELOCATE_STYLE = { color: '#e65100', weight: 2, fillColor: '#ffb74d', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
 window.__selectionModeActive = false;
+window.__relocateModeActive = false;
+
+// Shared bookkeeping for the two lasso modes: keeps the cursor crosshair, the
+// map-drag suppression, and the per-point markers' visibility consistent.
+function _syncLassoModes() {
+  const sel = window.__selectionModeActive;
+  const rel = window.__relocateModeActive;
+  if (window.tripMap) {
+    if (sel || rel) window.tripMap.dragging.disable();
+    else window.tripMap.dragging.enable();
+  }
+  document.body.classList.toggle('map-selection-mode', sel);
+  document.body.classList.toggle('map-relocate-mode', rel);
+  if (window.__syncGpsPoints) window.__syncGpsPoints();
+}
 
 function toggleSelectionMode(checkbox) {
   window.__selectionModeActive = !!checkbox.checked;
   const tb = document.getElementById('selection-toolbar');
   if (tb) tb.classList.toggle('visible', window.__selectionModeActive);
   if (!window.__selectionModeActive) clearPingSelection();
-  // While in selection mode the map shouldn't pan when the user drags —
-  // the drag gesture is reserved for drawing the lasso circle.
-  if (window.tripMap) {
-    if (window.__selectionModeActive) window.tripMap.dragging.disable();
-    else window.tripMap.dragging.enable();
+  // Mutual exclusion with Relocate mode — only one lasso interpretation at a time.
+  if (window.__selectionModeActive) {
+    const relTog = document.getElementById('relocate-mode-toggle');
+    if (relTog && relTog.checked) {
+      relTog.checked = false;
+      window.__relocateModeActive = false;
+    }
   }
-  document.body.classList.toggle('map-selection-mode', window.__selectionModeActive);
-  // Show/hide the ping circles regardless of zoom while in selection mode.
-  if (window.__syncGpsPoints) window.__syncGpsPoints();
+  _syncLassoModes();
+}
+
+function toggleRelocateMode(checkbox) {
+  window.__relocateModeActive = !!checkbox.checked;
+  // Mutual exclusion with Select pings — drop any in-flight selection too,
+  // since the user is switching gestures.
+  if (window.__relocateModeActive) {
+    const selTog = document.getElementById('selection-mode-toggle');
+    if (selTog && selTog.checked) {
+      selTog.checked = false;
+      window.__selectionModeActive = false;
+      const tb = document.getElementById('selection-toolbar');
+      if (tb) tb.classList.remove('visible');
+      clearPingSelection();
+    }
+  }
+  _syncLassoModes();
 }
 
 // Wire up the click-and-drag lasso circle on the trip map. Called once from
 // the GPS-track-loaded callback so it has access to `map` and the per-ping
-// markers — it's a no-op until the user enables selection mode.
+// markers — it's a no-op until the user enables one of the lasso modes.
+//
+// On mouseup the lasso dispatches based on the active mode:
+//   - Select pings   → add every ping inside the circle to the selection.
+//   - Relocate pings → POST `relocate-pings` for every ping inside, with
+//                      lat/lon = the circle's center. Page reloads.
 function _initSelectionLasso(map) {
   if (window.__selectionLassoReady) return;
   window.__selectionLassoReady = true;
@@ -2782,6 +2907,12 @@ function _initSelectionLasso(map) {
   let dragStartLatLng = null;
   let dragStartPoint = null;
   let lassoCircle = null;
+
+  function _activeMode() {
+    if (window.__selectionModeActive) return 'select';
+    if (window.__relocateModeActive) return 'relocate';
+    return null;
+  }
 
   function cleanup() {
     if (lassoCircle) {
@@ -2793,40 +2924,49 @@ function _initSelectionLasso(map) {
   }
 
   map.on('mousedown', (e) => {
-    if (!window.__selectionModeActive) return;
+    if (!_activeMode()) return;
     dragStartLatLng = e.latlng;
     dragStartPoint = e.containerPoint;
   });
 
   map.on('mousemove', (e) => {
-    if (!window.__selectionModeActive || !dragStartPoint) return;
+    const mode = _activeMode();
+    if (!mode || !dragStartPoint) return;
     const dx = e.containerPoint.x - dragStartPoint.x;
     const dy = e.containerPoint.y - dragStartPoint.y;
     if (Math.hypot(dx, dy) < PIXEL_THRESHOLD) return;
     const radiusMeters = dragStartLatLng.distanceTo(e.latlng);
+    const style = mode === 'relocate' ? LASSO_RELOCATE_STYLE : LASSO_SELECT_STYLE;
     if (!lassoCircle) {
-      lassoCircle = L.circle(dragStartLatLng, { ...LASSO_CIRCLE_STYLE, radius: radiusMeters }).addTo(map);
+      lassoCircle = L.circle(dragStartLatLng, { ...style, radius: radiusMeters }).addTo(map);
     } else {
       lassoCircle.setRadius(radiusMeters);
     }
   });
 
   map.on('mouseup', () => {
-    if (!window.__selectionModeActive) { cleanup(); return; }
+    const mode = _activeMode();
+    // Capture the circle data and clean the visual *before* any synchronous
+    // confirm() so the user isn't staring at the lasso while answering.
+    let circleData = null;
     if (lassoCircle) {
-      const center = lassoCircle.getLatLng();
-      const radius = lassoCircle.getRadius();
-      (window.__gpsPointMarkers || []).forEach(m => {
-        if (m.__selected) return;
-        if (center.distanceTo(m.getLatLng()) <= radius) {
-          m.__selected = true;
-          m.setStyle(SELECTED_PING_STYLE);
-          if (m.bringToFront) m.bringToFront();
-        }
-      });
-      updateSelectionToolbar();
+      circleData = { center: lassoCircle.getLatLng(), radius: lassoCircle.getRadius() };
     }
     cleanup();
+    if (!mode || !circleData) return;
+    const inside = (window.__gpsPointMarkers || []).filter(m =>
+      circleData.center.distanceTo(m.getLatLng()) <= circleData.radius);
+    if (mode === 'select') {
+      inside.forEach(m => {
+        if (m.__selected) return;
+        m.__selected = true;
+        m.setStyle(SELECTED_PING_STYLE);
+        if (m.bringToFront) m.bringToFront();
+      });
+      updateSelectionToolbar();
+    } else if (mode === 'relocate') {
+      relocatePingsToCircle(inside, circleData.center);
+    }
   });
 
   // Cancel a half-drawn circle if the cursor leaves the map mid-drag.
@@ -3051,6 +3191,75 @@ function toggleShowSuppressed(checkbox) {
   } else {
     if (window.tripMap.hasLayer(layer)) window.tripMap.removeLayer(layer);
   }
+}
+
+// ── GPS-ping relocation ───────────────────────────────────────────────────
+// While "Relocate pings" mode is on, finishing a lasso draw immediately
+// posts {tst, lat, lon} overrides for every ping inside (with the circle's
+// center as the target lat/lon). The polyline on the next render flows
+// through the new positions instead of the OwnTracks-reported ones.
+//
+// Re-relocating an already-moved ping: the override entry is keyed by
+// `tst`, so a second lasso simply replaces the previous target — no need
+// to undo first. Lasso may pick up a mix of fresh and previously-moved
+// pings; both end up at the new center.
+//
+// Undo: turn on "Show relocated pings" and click any amber dot.
+
+function relocatePingsToCircle(markers, center) {
+  if (!markers.length) return;
+  const items = markers.map(m => ({
+    tst: m.__ping.tst,
+    lat: center.lat,
+    lon: center.lng,
+  }));
+  const ok = confirm(
+    `Relocate ${items.length} GPS ping${items.length === 1 ? '' : 's'} to ` +
+    `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}? ` +
+    `Use the "Show relocated pings" toggle to review or undo.`
+  );
+  if (!ok) return;
+  fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ items }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      // Auto-off the Relocate mode after a successful action — symmetric
+      // with the other "consume the gesture" flows. The reload preserves
+      // the unchecked state via standard browser form-state restoration.
+      const tog = document.getElementById('relocate-mode-toggle');
+      if (tog) tog.checked = false;
+      location.reload();
+    })
+    .catch(err => alert('Failed to relocate pings: ' + err));
+}
+
+function toggleShowRelocated(checkbox) {
+  const layer = window.__relocatedPointLayer;
+  if (!layer || !window.tripMap) return;
+  if (checkbox.checked) {
+    if (!window.tripMap.hasLayer(layer)) layer.addTo(window.tripMap);
+  } else {
+    if (window.tripMap.hasLayer(layer)) window.tripMap.removeLayer(layer);
+  }
+}
+
+function unrelocatePing(tst) {
+  if (!confirm('Restore this GPS ping to its original location?')) return;
+  fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tst: [tst] }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      location.reload();
+    })
+    .catch(err => alert('Failed to restore ping: ' + err));
 }
 
 // Click handler bound to each suppressed-ping marker. Single ping at a
