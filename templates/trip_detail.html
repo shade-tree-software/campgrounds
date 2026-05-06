@@ -13,7 +13,10 @@
   // by the time the script tag below runs (post-DOM-parse, after the photo
   // <img> tags have already been queued by the parser), the network round
   // trip is usually well underway.
-  window.__trackPromise = fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
+  // Admins get every ping back tagged with `suppressed: true/false` so the
+  // "Show suppressed pings" toggle can flip visibility instantly without
+  // re-fetching. Non-admins get the filtered list (server-side).
+  window.__trackPromise = fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?include_suppressed=1{% endif %}', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } })
     .catch(err => ({ __error: { thrown: String(err) } }));
 </script>
@@ -1234,6 +1237,12 @@
                  onchange="toggleSelectionMode(this)">
           Select pings
         </label>
+        <label class="selection-mode-toggle disabled" id="show-suppressed-label"
+               title="Loading GPS track…">
+          <input type="checkbox" id="show-suppressed-toggle" disabled
+                 onchange="toggleShowSuppressed(this)">
+          Show suppressed pings
+        </label>
         <label class="force-straight-toggle" title="Skip GPS track and draw a straight-line route only">
           <input type="checkbox" id="force-straight-input" {% if trip.force_straight_route %}checked{% endif %} onchange="toggleForceStraight(this)">
           Straight track only
@@ -1247,6 +1256,8 @@
                 onclick="createFromSelection('waypoint')">+ Waypoint from selection</button>
         <button type="button" data-needs-selection disabled
                 onclick="setCampsiteFromSelection()">Set campsite location</button>
+        <button type="button" data-needs-selection disabled
+                onclick="suppressFromSelection()">Suppress</button>
         <button type="button" data-needs-selection disabled
                 onclick="clearPingSelection()">Clear</button>
       </div>
@@ -2112,7 +2123,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
   // Reuse the early-kicked-off promise from <head> so the network round
   // trip happens in parallel with HTML parsing instead of waiting until
   // this script block runs (after photo <img> tags have queued).
-  (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track', { credentials: 'same-origin' })
+  (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?include_suppressed=1{% endif %}', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } }))
     .then(rawPoints => {
       if (rawPoints && rawPoints.__error) {
@@ -2121,7 +2132,14 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
         return;
       }
-      const raw = Array.isArray(rawPoints) ? rawPoints : [];
+      const rawAll = Array.isArray(rawPoints) ? rawPoints : [];
+      // Suppressed pings are kept out of the polyline / home-boundary detection
+      // / regular per-point markers entirely; they're rendered separately as
+      // gray "ghost" dots that the admin can toggle on via the "Show suppressed
+      // pings" checkbox and click to unsuppress. (For non-admins the server
+      // already filtered them out, so `suppressed` is never set.)
+      const raw = rawAll.filter(p => !p.suppressed);
+      const rawSuppressed = rawAll.filter(p => p.suppressed);
       // Compute auto trip-start/end times before any short-circuits so the
       // home-card display still updates even when the polyline is skipped.
       let autoHomeStartTst = null, autoHomeEndTst = null;
@@ -2135,6 +2153,9 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       // markers don't show pre-departure or post-arrival activity.
       const { lowerCut, upperCut } = computeTripWindow(autoHomeStartTst, autoHomeEndTst);
       const inWindow = raw.filter(p =>
+        (lowerCut == null || p.tst >= lowerCut) &&
+        (upperCut == null || p.tst <= upperCut));
+      const suppressedInWindow = rawSuppressed.filter(p =>
         (lowerCut == null || p.tst >= lowerCut) &&
         (upperCut == null || p.tst <= upperCut));
       if (inWindow.length < 2) {
@@ -2221,6 +2242,32 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       window.__gpsPings = sorted;
       window.__gpsPointMarkers = gpsPointMarkers;
       window.__gpsPointLayer = gpsPointLayer;
+
+      // Suppressed-pings ghost layer. Built unconditionally for admins so the
+      // "Show suppressed pings" toggle can flip it instantly. Each marker
+      // has a click handler that DELETEs its tst from the suppressed list
+      // and reloads — no polling, no manual list editing.
+      const suppressedSorted = suppressedInWindow.slice().sort((a, b) => a.tst - b.tst);
+      const suppressedPointLayer = L.layerGroup();
+      suppressedSorted.forEach(p => {
+        const m = L.circleMarker([p.lat, p.lon], { ...SUPPRESSED_PING_STYLE });
+        m.__ping = p;
+        const dt = new Date(p.tst * 1000);
+        const fmtOpts = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          timeZoneName: 'short',
+        };
+        if (p.tz) fmtOpts.timeZone = p.tz;
+        const local = dt.toLocaleString(undefined, fmtOpts);
+        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+        m.bindTooltip(`Suppressed · ${local}<br><span style="font-family:monospace">${coords}</span><br><em>click to unsuppress</em>`, { sticky: true });
+        m.on('click', () => unsuppressPing(p.tst));
+        suppressedPointLayer.addLayer(m);
+      });
+      window.__suppressedPointLayer = suppressedPointLayer;
+      window.__suppressedCount = suppressedSorted.length;
+
       function syncGpsPoints() {
         const trackVisible = map.hasLayer(gpsRouteLayer);
         const wantVisible = window.__selectionModeActive ||
@@ -2240,6 +2287,18 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         selLabel.classList.remove('disabled');
         selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle';
       }
+      // …and the "Show suppressed pings" companion toggle. Stays disabled when
+      // the trip has nothing suppressed — no UI to reveal.
+      const showSupToggle = document.getElementById('show-suppressed-toggle');
+      const showSupLabel = document.getElementById('show-suppressed-label');
+      const supN = window.__suppressedCount || 0;
+      if (showSupToggle) showSupToggle.disabled = (supN === 0);
+      if (showSupLabel) {
+        showSupLabel.classList.toggle('disabled', supN === 0);
+        showSupLabel.title = supN
+          ? `Reveal ${supN} previously-suppressed ping${supN === 1 ? '' : 's'} as gray dots; click one to unsuppress`
+          : 'No pings are currently suppressed for this trip';
+      }
       // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
       // call once we have markers; it's gated internally on selection mode.
       _initSelectionLasso(map);
@@ -2247,6 +2306,7 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       // after creating an event/waypoint from a selection). If the toggle came
       // up checked, sync the JS state so the toolbar shows and pings respond.
       if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
+      if (showSupToggle && showSupToggle.checked) toggleShowSuppressed(showSupToggle);
     })
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
@@ -2691,6 +2751,7 @@ function addFamilyVisit() { openAddModal('family_visit'); }
 // deselects just that one; unchecking the toggle clears the whole selection.
 const DEFAULT_PING_STYLE = { radius: 3, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
 const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
+const SUPPRESSED_PING_STYLE = { radius: 4, color: '#888', weight: 1, fillColor: '#bbb', fillOpacity: 0.55, dashArray: '2,2' };
 const LASSO_CIRCLE_STYLE = { color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
 window.__selectionModeActive = false;
 
@@ -2951,6 +3012,67 @@ function setCampsiteFromSelection() {
       location.reload();
     })
     .catch(err => alert('Failed to update campsite location: ' + err));
+}
+
+// ── GPS-ping suppression ──────────────────────────────────────────────────
+// Server keeps a per-trip list of `tst` values to filter out of the GPS
+// track. Suppressing is a "consume the selection" action just like
+// creating an event/waypoint, so it auto-uncheck Select pings on success.
+
+function suppressFromSelection() {
+  const pings = getSelectedPings();
+  if (!pings.length) return;
+  const tsts = pings.map(p => p.tst);
+  const ok = confirm(
+    `Suppress ${tsts.length} GPS ping${tsts.length === 1 ? '' : 's'}? ` +
+    `They'll be hidden from the polyline and per-point markers on every load. ` +
+    `Use the "Show suppressed pings" toggle to review or undo.`
+  );
+  if (!ok) return;
+  fetch(`/api/trips/${TRIP_ID}/suppress-pings`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tst: tsts }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      _disableSelectionToggleBeforeReload();
+      location.reload();
+    })
+    .catch(err => alert('Failed to suppress pings: ' + err));
+}
+
+function toggleShowSuppressed(checkbox) {
+  const layer = window.__suppressedPointLayer;
+  if (!layer || !window.tripMap) return;
+  if (checkbox.checked) {
+    if (!window.tripMap.hasLayer(layer)) layer.addTo(window.tripMap);
+  } else {
+    if (window.tripMap.hasLayer(layer)) window.tripMap.removeLayer(layer);
+  }
+}
+
+// Click handler bound to each suppressed-ping marker. Single ping at a
+// time — bulk un-suppress via Select-pings + lasso isn't supported here
+// because the lasso targets `__gpsPointMarkers` (non-suppressed only) by
+// design.
+function unsuppressPing(tst) {
+  if (!confirm('Restore this GPS ping?')) return;
+  fetch(`/api/trips/${TRIP_ID}/suppress-pings`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tst: [tst] }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      // Reload so the polyline + regular markers pick the restored ping
+      // back up. Leave the "Show suppressed" toggle as-is — if the user
+      // had it on, they're probably reviewing more.
+      location.reload();
+    })
+    .catch(err => alert('Failed to unsuppress ping: ' + err));
 }
 
 // ── Add/Edit modal ────────────────────────────────────────────────────────

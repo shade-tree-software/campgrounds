@@ -429,6 +429,55 @@ def delete_event(trip_id, event_idx):
     return None
 
 
+# ── GPS-ping suppression ─────────────────────────────────────────────────
+# Each trip carries an optional `suppressed_pings` list of integer Unix
+# timestamps. The GPS-track endpoint filters these out before returning the
+# polyline / per-point markers, so admins can hide pings they've identified
+# as spurious (cell-tower jumps, single outliers) without re-running the
+# upstream pre-processor. Suppression is by `tst` so it survives cache
+# invalidation and OwnTracks pagination — the same physical ping always
+# reports the same timestamp.
+
+def get_suppressed_pings(trip_id):
+    """Return the trip's suppressed-ping timestamp list (empty if none)."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return list(t.get("suppressed_pings", []))
+    return []
+
+
+def add_suppressed_pings(trip_id, tsts):
+    """Add timestamps to a trip's suppressed list. Idempotent (set semantics).
+    Returns the resulting list, or None if the trip doesn't exist."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = set(t.get("suppressed_pings", []))
+            current.update(int(x) for x in tsts)
+            t["suppressed_pings"] = sorted(current)
+            _save_trips(raw)
+            return t["suppressed_pings"]
+    return None
+
+
+def remove_suppressed_pings(trip_id, tsts):
+    """Remove timestamps from a trip's suppressed list. Idempotent.
+    Returns the resulting list, or None if the trip doesn't exist."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = set(t.get("suppressed_pings", []))
+            current.difference_update(int(x) for x in tsts)
+            if current:
+                t["suppressed_pings"] = sorted(current)
+            else:
+                t.pop("suppressed_pings", None)
+            _save_trips(raw)
+            return sorted(current)
+    return None
+
+
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):

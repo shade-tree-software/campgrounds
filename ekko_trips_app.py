@@ -12,7 +12,9 @@ from werkzeug.utils import secure_filename
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
-                   add_event, update_event, delete_event)
+                   add_event, update_event, delete_event,
+                   get_suppressed_pings, add_suppressed_pings,
+                   remove_suppressed_pings)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -1327,13 +1329,29 @@ def api_trip_track(trip_id):
     except ValueError:
         is_old = False
 
+    # Suppression: drop pings whose `tst` is in the trip's suppressed list,
+    # unless the caller asked for everything (so the unsuppress UI can show
+    # them tagged). When `include_suppressed=1`, each ping carries a
+    # `suppressed: true/false` flag instead of being filtered out.
+    include_suppressed = request.args.get("include_suppressed") == "1"
+    suppressed = set(get_suppressed_pings(trip_id))
+
+    def _apply_suppression(points):
+        if not suppressed:
+            return points
+        if include_suppressed:
+            for p in points:
+                p["suppressed"] = (p.get("tst") in suppressed)
+            return points
+        return [p for p in points if p.get("tst") not in suppressed]
+
     def _serve_cache():
         with open(cache_file) as f:
             cached = json.load(f)
         if _enrich_with_timezone(cached):
             with open(cache_file, "w") as f:
                 json.dump(cached, f)
-        return jsonify(cached)
+        return jsonify(_apply_suppression(cached))
 
     if is_old and os.path.isfile(cache_file):
         return _serve_cache()
@@ -1380,7 +1398,39 @@ def api_trip_track(trip_id):
     _enrich_with_timezone(all_points)
     with open(cache_file, "w") as f:
         json.dump(all_points, f)
-    return jsonify(all_points)
+    return jsonify(_apply_suppression(all_points))
+
+
+@app.route('/api/trips/<int:trip_id>/suppress-pings', methods=['POST'])
+def api_suppress_pings(trip_id):
+    """Mark a list of GPS-ping timestamps as suppressed for this trip."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    tsts = data.get("tst") or []
+    if not isinstance(tsts, list):
+        return jsonify({"error": "tst must be a list of integers"}), 400
+    result = add_suppressed_pings(trip_id, tsts)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "suppressed_pings": result})
+
+
+@app.route('/api/trips/<int:trip_id>/suppress-pings', methods=['DELETE'])
+def api_unsuppress_pings(trip_id):
+    """Remove a list of GPS-ping timestamps from this trip's suppressed list."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    tsts = data.get("tst") or []
+    if not isinstance(tsts, list):
+        return jsonify({"error": "tst must be a list of integers"}), 400
+    result = remove_suppressed_pings(trip_id, tsts)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "suppressed_pings": result})
 
 
 @app.route('/api/elevation')
