@@ -331,18 +331,6 @@
     gap: .5rem;
     margin-bottom: 1.5rem;
   }
-  .force-straight-toggle {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    margin-left: auto;
-    font-size: .85rem;
-    color: #555;
-    cursor: pointer;
-    user-select: none;
-  }
-  .force-straight-toggle input { width: auto; margin: 0; }
-
   /* Selection mode for GPS pings (admin only): when active, clicking a ping
      toggles its selection, and a toolbar in .add-buttons offers to create
      an event/waypoint from the selected pings. */
@@ -1261,10 +1249,6 @@
                  onchange="toggleShowRelocated(this)">
           Show relocated pings
         </label>
-        <label class="force-straight-toggle" title="Skip GPS track and draw a straight-line route only">
-          <input type="checkbox" id="force-straight-input" {% if trip.force_straight_route %}checked{% endif %} onchange="toggleForceStraight(this)">
-          Straight track only
-        </label>
       </div>
       <div id="selection-toolbar" class="selection-toolbar">
         <span class="sel-count">0 pings selected</span>
@@ -1797,7 +1781,6 @@ const TRIP_START = {{ trip.start | tojson }};
 const TRIP_END = {{ trip.end | tojson }};
 const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
-const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
 // Per-trip, per-tab map view (center + zoom). Captured on every page unload
 // so reloads — programmatic (suppress / relocate / set campsite / event from
@@ -2150,21 +2133,17 @@ window.addEventListener('beforeunload', _saveMapView);
     else window.HOME_END_TIME_AUTO = hm;
   }
 
-  // Admin-only override: when FORCE_STRAIGHT_ROUTE is set, skip the GPS
-  // track entirely and leave the straight-line route as the only polyline.
-  // Useful for trips with no/poor track data or where the rendered track is
-  // misleading.
-  //
-  // Otherwise, render the GPS track as the raw, unfiltered polyline of every
-  // returned ping (sorted by timestamp). Markers for stays/events/home/family
-  // are placed independently — the polyline is not anchored to or trimmed
+  // Render the GPS track as the raw, unfiltered polyline of every returned
+  // ping (sorted by timestamp). Markers for stays/events/home/family are
+  // placed independently — the polyline is not anchored to or trimmed
   // against any of them. Spurious cell-tower pings and single jumps are
   // filtered upstream by a separate pre-processing app.
+  //
+  // Two automatic short-circuits leave the dashed straight-line route as the
+  // only polyline: (1) the fetch fails / returns nothing in the trip window,
+  // (2) no in-window ping lands within TRACK_NEAR_STAY_KM of any anchor.
   const trackLog = (msg, extra) => console.log(
     `[trip-track] trip {{ trip.id }}: ${msg}`, extra ?? '');
-  if (FORCE_STRAIGHT_ROUTE) {
-    trackLog('skipping GPS track — force_straight_route flag is set on this trip');
-  } else
   // Reuse the early-kicked-off promise from <head> so the network round
   // trip happens in parallel with HTML parsing instead of waiting until
   // this script block runs (after photo <img> tags have queued).
@@ -2665,21 +2644,6 @@ function saveTripNote() {
     if (data.error) { alert(data.error); return; }
     location.reload();
   });
-}
-
-function toggleForceStraight(el) {
-  const force = !!el.checked;
-  fetch(`/api/trips/${TRIP_ID}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ force_straight_route: force })
-  })
-  .then(r => r.json())
-  .then(data => {
-    if (data.error) { alert(data.error); el.checked = !force; return; }
-    location.reload();
-  })
-  .catch(() => { el.checked = !force; });
 }
 
 function editHomeTime(which) {

@@ -49,8 +49,7 @@ def _load_trips_json():
     trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                         t.get("events", []), locations,
                         home_start_time=t.get("home_start_time", ""),
-                        home_end_time=t.get("home_end_time", ""),
-                        force_straight_route=bool(t.get("force_straight_route"))) for t in raw]
+                        home_end_time=t.get("home_end_time", "")) for t in raw]
     trips.sort(key=lambda t: t["start"])
     n = 0
     for t in trips:
@@ -109,8 +108,8 @@ def create_trip(trip_note=""):
 
 
 def update_trip(trip_id, fields):
-    """Update trip-level fields (trip_note, home_start_time, home_end_time,
-    force_straight_route). Returns updated trip or None."""
+    """Update trip-level fields (trip_note, home_start_time, home_end_time).
+    Returns updated trip or None."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
@@ -123,17 +122,11 @@ def update_trip(trip_id, fields):
                         t[key] = val
                     else:
                         t.pop(key, None)
-            if "force_straight_route" in fields:
-                if fields["force_straight_route"]:
-                    t["force_straight_route"] = True
-                else:
-                    t.pop("force_straight_route", None)
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""),
-                              force_straight_route=bool(t.get("force_straight_route")))
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -181,8 +174,7 @@ def add_stay(trip_id, stay_data):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""),
-                              force_straight_route=bool(t.get("force_straight_route")))
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -216,8 +208,7 @@ def update_stay(trip_id, stay_idx, fields):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""),
-                              force_straight_route=bool(t.get("force_straight_route")))
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -245,8 +236,7 @@ def delete_stay(trip_id, stay_idx):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""),
-                              force_straight_route=bool(t.get("force_straight_route")))
+                              home_end_time=t.get("home_end_time", ""))
     return None
 
 
@@ -615,7 +605,7 @@ def _group_into_trips(stays):
 
 
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
-               home_start_time="", home_end_time="", force_straight_route=False):
+               home_start_time="", home_end_time=""):
     """Build a trip dict from a list of stays and optional events.
 
     If `locations` (id → info map from `_load_locations_by_id`) is supplied,
@@ -762,7 +752,6 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         "home_only": home_only,
         "home_start_time": home_start_time,
         "home_end_time": home_end_time,
-        "force_straight_route": bool(force_straight_route),
     }
 
 
