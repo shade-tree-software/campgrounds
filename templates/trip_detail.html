@@ -2228,6 +2228,14 @@ window.addEventListener('beforeunload', _saveMapView);
       const relocatedInWindow = rawRelocated.filter(p =>
         (lowerCut == null || p.tst >= lowerCut) &&
         (upperCut == null || p.tst <= upperCut));
+
+      // Build the suppressed / relocated ghost layers and wire their "Show …"
+      // toggles BEFORE the polyline short-circuits below. If the trip has no
+      // good in-window pings (or none near a stay), the GPS track is skipped
+      // — but the admin still needs a way to surface and undo any suppressed
+      // or relocated pings the trip carries.
+      _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow);
+
       if (inWindow.length < 2) {
         trackLog('not enough in-window GPS points to draw a track — using straight track',
           { rawCount: raw.length, inWindowCount: inWindow.length, lowerCut, upperCut });
@@ -2313,67 +2321,6 @@ window.addEventListener('beforeunload', _saveMapView);
       window.__gpsPointMarkers = gpsPointMarkers;
       window.__gpsPointLayer = gpsPointLayer;
 
-      // Suppressed-pings ghost layer. Built unconditionally for admins so the
-      // "Show suppressed pings" toggle can flip it instantly. Each marker
-      // has a click handler that DELETEs its tst from the suppressed list
-      // and reloads — no polling, no manual list editing.
-      const suppressedSorted = suppressedInWindow.slice().sort((a, b) => a.tst - b.tst);
-      const suppressedPointLayer = L.layerGroup();
-      suppressedSorted.forEach(p => {
-        const m = L.circleMarker([p.lat, p.lon], { ...SUPPRESSED_PING_STYLE });
-        m.__ping = p;
-        const dt = new Date(p.tst * 1000);
-        const fmtOpts = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          timeZoneName: 'short',
-        };
-        if (p.tz) fmtOpts.timeZone = p.tz;
-        const local = dt.toLocaleString(undefined, fmtOpts);
-        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-        m.bindTooltip(`Suppressed · ${local}<br><span style="font-family:monospace">${coords}</span><br><em>click to unsuppress</em>`, { sticky: true });
-        m.on('click', () => unsuppressPing(p.tst));
-        suppressedPointLayer.addLayer(m);
-      });
-      window.__suppressedPointLayer = suppressedPointLayer;
-      window.__suppressedCount = suppressedSorted.length;
-
-      // Relocated-pings ghost layer. One amber marker per relocated ping at
-      // its override position, plus a dashed line back to the original
-      // OwnTracks coords for provenance. Click → unrelocate (restore one).
-      const relocatedSorted = relocatedInWindow.slice().sort((a, b) => a.tst - b.tst);
-      const relocatedPointLayer = L.layerGroup();
-      relocatedSorted.forEach(p => {
-        const dt = new Date(p.tst * 1000);
-        const fmtOpts = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          timeZoneName: 'short',
-        };
-        if (p.tz) fmtOpts.timeZone = p.tz;
-        const local = dt.toLocaleString(undefined, fmtOpts);
-        const newCoords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-        const origCoords = (p.original_lat != null && p.original_lon != null)
-          ? `${p.original_lat.toFixed(5)}, ${p.original_lon.toFixed(5)}`
-          : '(unknown)';
-        const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE });
-        m.__ping = p;
-        m.bindTooltip(
-          `Relocated · ${local}<br>` +
-          `<span style="font-family:monospace">from ${origCoords}<br>to&nbsp;&nbsp;${newCoords}</span><br>` +
-          `<em>click to restore</em>`,
-          { sticky: true });
-        m.on('click', () => unrelocatePing(p.tst));
-        relocatedPointLayer.addLayer(m);
-        if (p.original_lat != null && p.original_lon != null) {
-          relocatedPointLayer.addLayer(L.polyline(
-            [[p.original_lat, p.original_lon], [p.lat, p.lon]],
-            { ...RELOCATION_LINE_STYLE }));
-        }
-      });
-      window.__relocatedPointLayer = relocatedPointLayer;
-      window.__relocatedCount = relocatedSorted.length;
-
       function syncGpsPoints() {
         const trackVisible = map.hasLayer(gpsRouteLayer);
         const wantVisible = window.__selectionModeActive ||
@@ -2402,30 +2349,6 @@ window.addEventListener('beforeunload', _saveMapView);
         relLab.classList.remove('disabled');
         relLab.title = 'Click-and-drag a circle on the map; every ping inside snaps to the circle’s center';
       }
-      // …and the "Show suppressed pings" companion toggle. Stays disabled when
-      // the trip has nothing suppressed — no UI to reveal.
-      const showSupToggle = document.getElementById('show-suppressed-toggle');
-      const showSupLabel = document.getElementById('show-suppressed-label');
-      const supN = window.__suppressedCount || 0;
-      if (showSupToggle) showSupToggle.disabled = (supN === 0);
-      if (showSupLabel) {
-        showSupLabel.classList.toggle('disabled', supN === 0);
-        showSupLabel.title = supN
-          ? `Reveal ${supN} previously-suppressed ping${supN === 1 ? '' : 's'} as gray dots; click one to unsuppress`
-          : 'No pings are currently suppressed for this trip';
-      }
-      // …and the "Show relocated pings" companion toggle. Same disabled-when-
-      // empty pattern.
-      const showRelToggle = document.getElementById('show-relocated-toggle');
-      const showRelLabel = document.getElementById('show-relocated-label');
-      const relN = window.__relocatedCount || 0;
-      if (showRelToggle) showRelToggle.disabled = (relN === 0);
-      if (showRelLabel) {
-        showRelLabel.classList.toggle('disabled', relN === 0);
-        showRelLabel.title = relN
-          ? `Reveal ${relN} relocated ping${relN === 1 ? '' : 's'} (amber, with provenance lines); click one to restore its original location`
-          : 'No pings are currently relocated for this trip';
-      }
       // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
       // call once we have markers; it's gated internally on the active mode.
       _initSelectionLasso(map);
@@ -2434,8 +2357,6 @@ window.addEventListener('beforeunload', _saveMapView);
       // up checked, sync the JS state so the toolbar/layer/dragging match.
       if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
       if (relTog && relTog.checked) toggleRelocateMode(relTog);
-      if (showSupToggle && showSupToggle.checked) toggleShowSuppressed(showSupToggle);
-      if (showRelToggle && showRelToggle.checked) toggleShowRelocated(showRelToggle);
     })
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
@@ -2880,6 +2801,104 @@ const LASSO_SELECT_STYLE  = { color: '#1b5e20', weight: 2, fillColor: '#66bb6a',
 const LASSO_RELOCATE_STYLE = { color: '#e65100', weight: 2, fillColor: '#ffb74d', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
 window.__selectionModeActive = false;
 window.__relocateModeActive = false;
+
+// Build the gray suppressed-pings ghost layer and the amber relocated-pings
+// ghost layer (with provenance lines), publish them on `window.__…`, then
+// enable/disable the two "Show …" toggles based on whether the trip actually
+// has any. Called from the GPS-track .then() before any short-circuit, so the
+// admin can still surface and undo overrides on trips whose polyline is
+// skipped (too few in-window pings, or none near a stay/event).
+function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) {
+  // Suppressed pings: gray dashed dots, click → unsuppress.
+  const suppressedSorted = suppressedInWindow.slice().sort((a, b) => a.tst - b.tst);
+  const suppressedPointLayer = L.layerGroup();
+  suppressedSorted.forEach(p => {
+    const m = L.circleMarker([p.lat, p.lon], { ...SUPPRESSED_PING_STYLE });
+    m.__ping = p;
+    const dt = new Date(p.tst * 1000);
+    const fmtOpts = {
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      timeZoneName: 'short',
+    };
+    if (p.tz) fmtOpts.timeZone = p.tz;
+    const local = dt.toLocaleString(undefined, fmtOpts);
+    const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+    m.bindTooltip(`Suppressed · ${local}<br><span style="font-family:monospace">${coords}</span><br><em>click to unsuppress</em>`, { sticky: true });
+    m.on('click', () => unsuppressPing(p.tst));
+    suppressedPointLayer.addLayer(m);
+  });
+  window.__suppressedPointLayer = suppressedPointLayer;
+  window.__suppressedCount = suppressedSorted.length;
+
+  // Relocated pings: amber dots at the override coords + dashed line back to
+  // the original OwnTracks coords, click → unrelocate (restore one).
+  const relocatedSorted = relocatedInWindow.slice().sort((a, b) => a.tst - b.tst);
+  const relocatedPointLayer = L.layerGroup();
+  relocatedSorted.forEach(p => {
+    const dt = new Date(p.tst * 1000);
+    const fmtOpts = {
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit',
+      timeZoneName: 'short',
+    };
+    if (p.tz) fmtOpts.timeZone = p.tz;
+    const local = dt.toLocaleString(undefined, fmtOpts);
+    const newCoords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+    const origCoords = (p.original_lat != null && p.original_lon != null)
+      ? `${p.original_lat.toFixed(5)}, ${p.original_lon.toFixed(5)}`
+      : '(unknown)';
+    const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE });
+    m.__ping = p;
+    m.bindTooltip(
+      `Relocated · ${local}<br>` +
+      `<span style="font-family:monospace">from ${origCoords}<br>to&nbsp;&nbsp;${newCoords}</span><br>` +
+      `<em>click to restore</em>`,
+      { sticky: true });
+    m.on('click', () => unrelocatePing(p.tst));
+    relocatedPointLayer.addLayer(m);
+    if (p.original_lat != null && p.original_lon != null) {
+      relocatedPointLayer.addLayer(L.polyline(
+        [[p.original_lat, p.original_lon], [p.lat, p.lon]],
+        { ...RELOCATION_LINE_STYLE }));
+    }
+  });
+  window.__relocatedPointLayer = relocatedPointLayer;
+  window.__relocatedCount = relocatedSorted.length;
+
+  // Enable/disable the "Show suppressed pings" / "Show relocated pings"
+  // toggles. Stay disabled when the trip has nothing of that kind — no UI
+  // to reveal — but otherwise become clickable regardless of polyline state.
+  const showSupToggle = document.getElementById('show-suppressed-toggle');
+  const showSupLabel = document.getElementById('show-suppressed-label');
+  const supN = suppressedSorted.length;
+  if (showSupToggle) showSupToggle.disabled = (supN === 0);
+  if (showSupLabel) {
+    showSupLabel.classList.toggle('disabled', supN === 0);
+    showSupLabel.title = supN
+      ? `Reveal ${supN} previously-suppressed ping${supN === 1 ? '' : 's'} as gray dots; click one to unsuppress`
+      : 'No pings are currently suppressed for this trip';
+  }
+  const showRelToggle = document.getElementById('show-relocated-toggle');
+  const showRelLabel = document.getElementById('show-relocated-label');
+  const relN = relocatedSorted.length;
+  if (showRelToggle) showRelToggle.disabled = (relN === 0);
+  if (showRelLabel) {
+    showRelLabel.classList.toggle('disabled', relN === 0);
+    showRelLabel.title = relN
+      ? `Reveal ${relN} relocated ping${relN === 1 ? '' : 's'} (amber, with provenance lines); click one to restore its original location`
+      : 'No pings are currently relocated for this trip';
+  }
+  // Re-apply pre-checked state across location.reload(): if the toggle came
+  // up checked (browser form-state restoration), add the ghost layer now so
+  // the dots appear without needing a click.
+  if (showSupToggle && showSupToggle.checked && !showSupToggle.disabled) {
+    toggleShowSuppressed(showSupToggle);
+  }
+  if (showRelToggle && showRelToggle.checked && !showRelToggle.disabled) {
+    toggleShowRelocated(showRelToggle);
+  }
+}
 
 // Shared bookkeeping for the two lasso modes: keeps the cursor crosshair, the
 // map-drag suppression, and the per-point markers' visibility consistent.
