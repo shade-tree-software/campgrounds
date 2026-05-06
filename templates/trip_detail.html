@@ -831,6 +831,18 @@
     min-height: 60px;
   }
 
+  /* While a photo is being dragged, every grid (including empty ones, even on
+     bare cards that normally hide their body) needs visible drop area so the
+     dragover/drop events can actually fire on it. The source grid is excluded
+     from the dashed hint. */
+  body.photo-dragging .event-card.bare .event-body { display: block; }
+  body.photo-dragging .photo-grid { min-height: 60px; }
+  body.photo-dragging .photo-grid:not(.drag-source):not(.drag-target) {
+    outline: 2px dashed var(--gray-light);
+    outline-offset: -2px;
+    border-radius: 8px;
+  }
+
   .photo-item[draggable="true"] img:active {
     cursor: grabbing;
   }
@@ -1483,14 +1495,14 @@
         <button class="btn-danger" onclick="deleteEvent({{ item.idx }})">Delete {% if item.family_visit %}Visit{% else %}Event{% endif %}</button>
       </div>
     </div>
-    {% if item.description or event_photos[item.idx] %}
+    {% if is_admin or item.description or event_photos[item.idx] %}
     <div class="event-body" id="event-body-{{ item.idx }}">
       {% if item.description %}
       <div class="event-description">{{ item.description }}</div>
       {% endif %}
 
-      {% if event_photos[item.idx] %}
-      <!-- Event Photos -->
+      {% if is_admin or event_photos[item.idx] %}
+      <!-- Event Photos (grid is always rendered for admins so it can serve as a drop target for cross-card photo moves, even when empty) -->
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
@@ -3432,6 +3444,9 @@ function initPhotoDrag(grid) {
     dragSourceGrid = grid;
     dropTarget = null;
     item.classList.add('dragging');
+    // Enlarge / outline empty grids on other cards so they're droppable.
+    grid.classList.add('drag-source');
+    document.body.classList.add('photo-dragging');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', '');
   });
@@ -3535,6 +3550,10 @@ function initPhotoDrag(grid) {
     document.querySelectorAll('.photo-grid.drag-target').forEach(el => {
       el.classList.remove('drag-target');
     });
+    document.querySelectorAll('.photo-grid.drag-source').forEach(el => {
+      el.classList.remove('drag-source');
+    });
+    document.body.classList.remove('photo-dragging');
     dragItem = null;
     dragSourceGrid = null;
     dropTarget = null;
