@@ -2811,6 +2811,14 @@ function updateSelectionToolbar() {
   tb.querySelectorAll('button[data-needs-selection]').forEach(b => { b.disabled = n === 0; });
 }
 
+// Uncheck the "Select pings" toggle so the upcoming location.reload() comes
+// back with selection mode off — the user just consumed their selection by
+// creating an event/waypoint or setting a campsite location.
+function _disableSelectionToggleBeforeReload() {
+  const selToggle = document.getElementById('selection-mode-toggle');
+  if (selToggle) selToggle.checked = false;
+}
+
 // Format a ping's timestamp as YYYY-MM-DD in the ping's local timezone.
 function _pingLocalDate(p) {
   const opts = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -2856,6 +2864,9 @@ function createFromSelection(kind) {
     description: '',
     waypoint: isWp,
   };
+  // Tell submitAddModal to turn off selection mode after a successful save.
+  // Cleared in closeAddModal so a canceled modal doesn't poison a later one.
+  window.__createFromSelection = true;
   _openModal(kind, 'add', null, values);
 
   // Reverse-geocode the centroid to suggest name/locale/state. Run async so
@@ -2936,6 +2947,7 @@ function setCampsiteFromSelection() {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
+      _disableSelectionToggleBeforeReload();
       location.reload();
     })
     .catch(err => alert('Failed to update campsite location: ' + err));
@@ -3120,6 +3132,9 @@ function closeAddModal() {
   addModalKind = null;
   addModalMode = 'add';
   addModalEditIdx = null;
+  // Drop the "from selection" marker so a later, unrelated modal doesn't
+  // accidentally trigger Select-pings to turn off on submit.
+  window.__createFromSelection = false;
 }
 
 function closeAddModalBackdrop(e) {
@@ -3168,6 +3183,12 @@ function submitAddModal() {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
+      // If this modal was opened from "+ Event/Waypoint from selection",
+      // turn off Select pings so the reloaded page comes up clean.
+      if (window.__createFromSelection) {
+        window.__createFromSelection = false;
+        _disableSelectionToggleBeforeReload();
+      }
       location.reload();
     });
 }
