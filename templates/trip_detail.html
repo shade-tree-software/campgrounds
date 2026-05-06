@@ -1115,6 +1115,14 @@
     z-index: 0;
   }
 
+  /* In "Select pings" mode the click-and-drag gesture draws a lasso circle,
+     so swap the grab cursor for a crosshair to telegraph the new behavior. */
+  body.map-selection-mode #trip-map,
+  body.map-selection-mode #trip-map .leaflet-grab,
+  body.map-selection-mode #trip-map .leaflet-interactive {
+    cursor: crosshair;
+  }
+
   .event-edit-form .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2230,8 +2238,11 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       if (selToggle) selToggle.disabled = false;
       if (selLabel) {
         selLabel.classList.remove('disabled');
-        selLabel.title = 'Click GPS points on the map to select them, then create an event or waypoint from the selection';
+        selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle';
       }
+      // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
+      // call once we have markers; it's gated internally on selection mode.
+      _initSelectionLasso(map);
       // Browsers preserve checkbox state across location.reload() (which we do
       // after creating an event/waypoint from a selection). If the toggle came
       // up checked, sync the JS state so the toolbar shows and pings respond.
@@ -2672,8 +2683,15 @@ function addFamilyVisit() { openAddModal('family_visit'); }
 // is the centroid of the selection and whose start/end times are the oldest
 // and newest pings. Name/locale/state are filled by reverse-geocoding the
 // centroid via /api/reverse-geocode (Nominatim).
+//
+// In addition to single-clicking individual ping markers, the user can press
+// and drag on the map to draw a circle (mousedown = center, drag = radius)
+// and on release every ping inside the circle is added to the selection.
+// Multiple circles add cumulatively; clicking an already-selected ping
+// deselects just that one; unchecking the toggle clears the whole selection.
 const DEFAULT_PING_STYLE = { radius: 3, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
 const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
+const LASSO_CIRCLE_STYLE = { color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 0.18, dashArray: '4,4', interactive: false };
 window.__selectionModeActive = false;
 
 function toggleSelectionMode(checkbox) {
@@ -2681,8 +2699,80 @@ function toggleSelectionMode(checkbox) {
   const tb = document.getElementById('selection-toolbar');
   if (tb) tb.classList.toggle('visible', window.__selectionModeActive);
   if (!window.__selectionModeActive) clearPingSelection();
+  // While in selection mode the map shouldn't pan when the user drags —
+  // the drag gesture is reserved for drawing the lasso circle.
+  if (window.tripMap) {
+    if (window.__selectionModeActive) window.tripMap.dragging.disable();
+    else window.tripMap.dragging.enable();
+  }
+  document.body.classList.toggle('map-selection-mode', window.__selectionModeActive);
   // Show/hide the ping circles regardless of zoom while in selection mode.
   if (window.__syncGpsPoints) window.__syncGpsPoints();
+}
+
+// Wire up the click-and-drag lasso circle on the trip map. Called once from
+// the GPS-track-loaded callback so it has access to `map` and the per-ping
+// markers — it's a no-op until the user enables selection mode.
+function _initSelectionLasso(map) {
+  if (window.__selectionLassoReady) return;
+  window.__selectionLassoReady = true;
+
+  const PIXEL_THRESHOLD = 4;  // ignore micro-movements so plain clicks still toggle pings
+  let dragStartLatLng = null;
+  let dragStartPoint = null;
+  let lassoCircle = null;
+
+  function cleanup() {
+    if (lassoCircle) {
+      map.removeLayer(lassoCircle);
+      lassoCircle = null;
+    }
+    dragStartLatLng = null;
+    dragStartPoint = null;
+  }
+
+  map.on('mousedown', (e) => {
+    if (!window.__selectionModeActive) return;
+    dragStartLatLng = e.latlng;
+    dragStartPoint = e.containerPoint;
+  });
+
+  map.on('mousemove', (e) => {
+    if (!window.__selectionModeActive || !dragStartPoint) return;
+    const dx = e.containerPoint.x - dragStartPoint.x;
+    const dy = e.containerPoint.y - dragStartPoint.y;
+    if (Math.hypot(dx, dy) < PIXEL_THRESHOLD) return;
+    const radiusMeters = dragStartLatLng.distanceTo(e.latlng);
+    if (!lassoCircle) {
+      lassoCircle = L.circle(dragStartLatLng, { ...LASSO_CIRCLE_STYLE, radius: radiusMeters }).addTo(map);
+    } else {
+      lassoCircle.setRadius(radiusMeters);
+    }
+  });
+
+  map.on('mouseup', () => {
+    if (!window.__selectionModeActive) { cleanup(); return; }
+    if (lassoCircle) {
+      const center = lassoCircle.getLatLng();
+      const radius = lassoCircle.getRadius();
+      (window.__gpsPointMarkers || []).forEach(m => {
+        if (m.__selected) return;
+        if (center.distanceTo(m.getLatLng()) <= radius) {
+          m.__selected = true;
+          m.setStyle(SELECTED_PING_STYLE);
+          if (m.bringToFront) m.bringToFront();
+        }
+      });
+      updateSelectionToolbar();
+    }
+    cleanup();
+  });
+
+  // Cancel a half-drawn circle if the cursor leaves the map mid-drag.
+  map.on('mouseout', (e) => {
+    if (e.originalEvent && map.getContainer().contains(e.originalEvent.relatedTarget)) return;
+    if (lassoCircle || dragStartPoint) cleanup();
+  });
 }
 
 function togglePingSelection(i) {
