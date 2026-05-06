@@ -834,8 +834,33 @@
   /* While a photo is being dragged, every grid (including empty ones, even on
      bare cards that normally hide their body) needs visible drop area so the
      dragover/drop events can actually fire on it. The source grid is excluded
-     from the dashed hint. */
-  body.photo-dragging .event-card.bare .event-body { display: block; }
+     from the dashed hint.
+
+     Bare-card bodies are revealed via absolute positioning that overlays the
+     card itself — using `display: block` alone would push every later card
+     down by the body's height, which adds up to a large layout shift when the
+     timeline has many bare waypoints/family-visits. */
+  body.photo-dragging .event-card.bare { position: relative; }
+  body.photo-dragging .event-card.bare .event-body {
+    display: block;
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+  }
+  body.photo-dragging .event-card.bare .photos-section {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+  }
+  body.photo-dragging .event-card.bare .photo-grid {
+    position: absolute;
+    inset: 0;
+    min-height: 0 !important;
+    pointer-events: auto;
+  }
   body.photo-dragging .photo-grid { min-height: 60px; }
   body.photo-dragging .photo-grid:not(.drag-source):not(.drag-target) {
     outline: 2px dashed var(--gray-light);
@@ -3893,28 +3918,48 @@ function initPhotoDrag(grid) {
     dragItem = item;
     dragSourceGrid = grid;
     dropTarget = null;
-    // Pin the drag image to a thumbnail-sized clone of the photo's <img>
-    // with the cursor's offset relative to it. Two reasons we don't use the
-    // <img> directly: (1) it would render at intrinsic resolution, not the
-    // grid thumbnail size; (2) the browser snapshots .photo-item AFTER the
-    // body/source-grid class changes below shift layout, which would leave
-    // the ghost visibly offset from the pointer.
+    // Pin the drag image to a canvas rasterized at the on-screen thumbnail
+    // size. Two reasons we don't pass the <img> (or a styled clone) directly:
+    // (1) browsers snapshot <img> elements at their intrinsic resolution
+    // regardless of inline width/height, so the ghost would render full-size;
+    // (2) the body/source-grid class changes below would shift layout before
+    // a DOM-element snapshot, leaving the ghost offset from the pointer.
     const img = item.querySelector('img');
-    if (img && e.dataTransfer.setDragImage) {
+    if (img && img.complete && img.naturalWidth && e.dataTransfer.setDragImage) {
       const r = img.getBoundingClientRect();
-      const ghost = img.cloneNode(true);
-      ghost.style.width = r.width + 'px';
-      ghost.style.height = r.height + 'px';
-      ghost.style.position = 'absolute';
-      ghost.style.top = '-1000px';
-      ghost.style.left = '-1000px';
-      ghost.style.pointerEvents = 'none';
-      document.body.appendChild(ghost);
       const ox = Math.max(0, Math.min(r.width,  e.clientX - r.left));
       const oy = Math.max(0, Math.min(r.height, e.clientY - r.top));
-      e.dataTransfer.setDragImage(ghost, ox, oy);
-      // Remove on next tick — by then the browser has cached the snapshot.
-      setTimeout(() => ghost.remove(), 0);
+      const dpr = window.devicePixelRatio || 1;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(r.width * dpr);
+      canvas.height = Math.round(r.height * dpr);
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      canvas.style.position = 'absolute';
+      canvas.style.top = '-1000px';
+      canvas.style.left = '-1000px';
+      canvas.style.pointerEvents = 'none';
+      const ctx = canvas.getContext('2d');
+      ctx.scale(dpr, dpr);
+      // Reproduce object-fit: cover by center-cropping the source rect.
+      const sw = img.naturalWidth, sh = img.naturalHeight;
+      const dstAR = r.width / r.height;
+      const srcAR = sw / sh;
+      let sx, sy, sWidth, sHeight;
+      if (srcAR > dstAR) {
+        sHeight = sh; sWidth = sh * dstAR;
+        sx = (sw - sWidth) / 2; sy = 0;
+      } else {
+        sWidth = sw; sHeight = sw / dstAR;
+        sx = 0; sy = (sh - sHeight) / 2;
+      }
+      try {
+        ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, r.width, r.height);
+        document.body.appendChild(canvas);
+        e.dataTransfer.setDragImage(canvas, ox, oy);
+        // Remove on next tick — by then the browser has cached the snapshot.
+        setTimeout(() => canvas.remove(), 0);
+      } catch (_) { /* CORS-tainted canvas — fall back to default snapshot */ }
     }
     item.classList.add('dragging');
     // Enlarge / outline empty grids on other cards so they're droppable.
