@@ -3143,9 +3143,14 @@ function pickerTargetInput() {
 function _showPicker(target, fallbackLoc) {
   pickerTarget = target;
   const input = pickerTargetInput();
-  let loc = (input && input.value.trim()) || '';
-  if (!loc && fallbackLoc) loc = fallbackLoc;
-  eventLocationPicker.show(loc);
+  const existing = (input && input.value.trim()) || '';
+  // If the user has already chosen a location, zoom in close so they can fine-
+  // tune it. The fallback (campground center) gets the looser default zoom.
+  if (existing) {
+    eventLocationPicker.show(existing, 17);
+  } else {
+    eventLocationPicker.show(fallbackLoc || '');
+  }
 }
 
 function showEventLocationMap(eventIdx) {

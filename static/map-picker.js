@@ -12,7 +12,8 @@
  *     onPick:      function(lat, lng) { ... }
  *   });
  *
- *   picker.show(existingLocation);   // "lat,lng" string or falsy
+ *   picker.show(existingLocation);            // "lat,lng" string or falsy
+ *   picker.show(existingLocation, 17);        // override default zoom (12)
  *   picker.hide();
  */
 
@@ -64,7 +65,7 @@ function createMapPicker(opts) {
   }
 
   // ── Show / hide ──────��────────────────────────────────────────────────
-  function show(location) {
+  function show(location, zoom) {
     container.style.display = 'flex';
     initMap();
     setTimeout(() => map.invalidateSize(), 100);
@@ -81,7 +82,7 @@ function createMapPicker(opts) {
       const lat = parseFloat(parts[0]);
       const lng = parseFloat(parts[1]);
       if (!isNaN(lat) && !isNaN(lng)) {
-        map.setView([lat, lng], 12);
+        map.setView([lat, lng], zoom || 12);
         placeMarker(lat, lng);
         return;
       }
