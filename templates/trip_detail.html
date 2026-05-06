@@ -338,6 +338,52 @@
   }
   .force-straight-toggle input { width: auto; margin: 0; }
 
+  /* Selection mode for GPS pings (admin only): when active, clicking a ping
+     toggles its selection, and a toolbar in .add-buttons offers to create
+     an event/waypoint from the selected pings. */
+  .selection-mode-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .85rem;
+    color: #555;
+    cursor: pointer;
+    user-select: none;
+  }
+  .selection-mode-toggle input { width: auto; margin: 0; }
+  .selection-mode-toggle.disabled { opacity: .5; cursor: not-allowed; }
+
+  .selection-toolbar {
+    display: none;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    width: 100%;
+    padding: .5rem .75rem;
+    margin-top: -.5rem;
+    margin-bottom: 1rem;
+    background: #f1f8e9;
+    border: 1px solid #c5e1a5;
+    border-radius: 6px;
+    font-size: .85rem;
+    color: #33691e;
+  }
+  .selection-toolbar.visible { display: flex; }
+  .selection-toolbar .sel-count { font-weight: 600; margin-right: auto; }
+  .selection-toolbar button {
+    background: var(--white);
+    border: 1px solid #aed581;
+    color: #33691e;
+    padding: .35rem .75rem;
+    border-radius: 4px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  .selection-toolbar button:hover:not(:disabled) { border-color: #33691e; }
+  .selection-toolbar button:disabled { opacity: .5; cursor: not-allowed; }
+
   .trip-note-edit {
     display: none;
     align-items: center;
@@ -1162,10 +1208,25 @@
         <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
         <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
         <button class="btn-add-event" onclick="addFamilyVisit()">+ Add Family Visit</button>
+        <label class="selection-mode-toggle disabled" id="selection-mode-label"
+               title="Loading GPS track…">
+          <input type="checkbox" id="selection-mode-toggle" disabled
+                 onchange="toggleSelectionMode(this)">
+          Select pings
+        </label>
         <label class="force-straight-toggle" title="Skip GPS track and draw a straight-line route only">
           <input type="checkbox" id="force-straight-input" {% if trip.force_straight_route %}checked{% endif %} onchange="toggleForceStraight(this)">
           Straight track only
         </label>
+      </div>
+      <div id="selection-toolbar" class="selection-toolbar">
+        <span class="sel-count">0 pings selected</span>
+        <button type="button" data-needs-selection disabled
+                onclick="createFromSelection('event')">+ Event from selection</button>
+        <button type="button" data-needs-selection disabled
+                onclick="createFromSelection('waypoint')">+ Waypoint from selection</button>
+        <button type="button" data-needs-selection disabled
+                onclick="clearPingSelection()">Clear</button>
       </div>
       {% endif %}
     </div>
@@ -2098,16 +2159,17 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
       // don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
       // re-hidden when the user zooms back out. Tied to the GPS-track layer
       // in the layer control so toggling the track also toggles the points.
+      // When the admin "Select pings" toggle is on, the points are forced
+      // visible at any zoom and click toggles selection (see
+      // togglePingSelection / createFromSelection below).
       const GPS_POINT_MIN_ZOOM = 14;
       const gpsPointLayer = L.layerGroup();
-      sorted.forEach(p => {
-        const m = L.circleMarker([p.lat, p.lon], {
-          radius: 3,
-          color: '#002868',
-          weight: 1,
-          fillColor: '#ffffff',
-          fillOpacity: 1,
-        });
+      const gpsPointMarkers = [];
+      sorted.forEach((p, i) => {
+        const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
+        m.__ping = p;
+        m.__pingIdx = i;
+        m.__selected = false;
         const dt = new Date(p.tst * 1000);
         const fmtOpts = {
           year: 'numeric', month: 'short', day: 'numeric',
@@ -2122,17 +2184,40 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
           `<div><strong>${local}</strong></div>` +
           `<div style="font-family:monospace">${coords}</div>` +
           `</div>`);
+        // Intercept clicks before Leaflet opens the popup when we're in
+        // selection mode. The popup-open event itself isn't suppressible
+        // cleanly from a popup binding, so we close it after-the-fact.
+        m.on('click', () => {
+          if (window.__selectionModeActive) {
+            togglePingSelection(i);
+            m.closePopup();
+          }
+        });
         gpsPointLayer.addLayer(m);
+        gpsPointMarkers.push(m);
       });
+      window.__gpsPings = sorted;
+      window.__gpsPointMarkers = gpsPointMarkers;
+      window.__gpsPointLayer = gpsPointLayer;
       function syncGpsPoints() {
         const trackVisible = map.hasLayer(gpsRouteLayer);
-        const wantVisible = trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM;
+        const wantVisible = window.__selectionModeActive ||
+          (trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
         if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
         if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
       }
+      window.__syncGpsPoints = syncGpsPoints;
       map.on('zoomend', syncGpsPoints);
       map.on('overlayadd overlayremove', syncGpsPoints);
       syncGpsPoints();
+      // Pings are loaded — enable the admin "Select pings" toggle.
+      const selToggle = document.getElementById('selection-mode-toggle');
+      const selLabel = document.getElementById('selection-mode-label');
+      if (selToggle) selToggle.disabled = false;
+      if (selLabel) {
+        selLabel.classList.remove('disabled');
+        selLabel.title = 'Click GPS points on the map to select them, then create an event or waypoint from the selection';
+      }
     })
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
@@ -2563,6 +2648,131 @@ function familyVisitCoordsById(id) {
 
 function addFamilyVisit() { openAddModal('family_visit'); }
 
+// ── GPS-ping selection (admin) ────────────────────────────────────────────
+// "Select pings" mode lets admins click GPS points on the trip-detail map to
+// pick out a contiguous set, then create an event or waypoint whose location
+// is the centroid of the selection and whose start/end times are the oldest
+// and newest pings. Name/locale/state are filled by reverse-geocoding the
+// centroid via /api/reverse-geocode (Nominatim).
+const DEFAULT_PING_STYLE = { radius: 3, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
+const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
+window.__selectionModeActive = false;
+
+function toggleSelectionMode(checkbox) {
+  window.__selectionModeActive = !!checkbox.checked;
+  const tb = document.getElementById('selection-toolbar');
+  if (tb) tb.classList.toggle('visible', window.__selectionModeActive);
+  if (!window.__selectionModeActive) clearPingSelection();
+  // Show/hide the ping circles regardless of zoom while in selection mode.
+  if (window.__syncGpsPoints) window.__syncGpsPoints();
+}
+
+function togglePingSelection(i) {
+  const markers = window.__gpsPointMarkers;
+  if (!markers || !markers[i]) return;
+  const m = markers[i];
+  m.__selected = !m.__selected;
+  m.setStyle(m.__selected ? SELECTED_PING_STYLE : DEFAULT_PING_STYLE);
+  if (m.__selected && m.bringToFront) m.bringToFront();
+  updateSelectionToolbar();
+}
+
+function getSelectedPings() {
+  const markers = window.__gpsPointMarkers || [];
+  // Sort by tst so the first/last are well-defined.
+  return markers.filter(m => m.__selected).map(m => m.__ping)
+    .sort((a, b) => a.tst - b.tst);
+}
+
+function clearPingSelection() {
+  (window.__gpsPointMarkers || []).forEach(m => {
+    if (m.__selected) {
+      m.__selected = false;
+      m.setStyle(DEFAULT_PING_STYLE);
+    }
+  });
+  updateSelectionToolbar();
+}
+
+function updateSelectionToolbar() {
+  const tb = document.getElementById('selection-toolbar');
+  if (!tb) return;
+  const n = getSelectedPings().length;
+  const count = tb.querySelector('.sel-count');
+  if (count) count.textContent = n + ' ping' + (n === 1 ? '' : 's') + ' selected';
+  tb.querySelectorAll('button[data-needs-selection]').forEach(b => { b.disabled = n === 0; });
+}
+
+// Format a ping's timestamp as YYYY-MM-DD in the ping's local timezone.
+function _pingLocalDate(p) {
+  const opts = { year: 'numeric', month: '2-digit', day: '2-digit' };
+  if (p.tz) opts.timeZone = p.tz;
+  // en-CA gives ISO-style YYYY-MM-DD ordering.
+  const parts = new Intl.DateTimeFormat('en-CA', opts).formatToParts(new Date(p.tst * 1000));
+  const get = t => (parts.find(x => x.type === t) || {}).value || '';
+  return get('year') + '-' + get('month') + '-' + get('day');
+}
+function _pingLocalTime(p) {
+  const opts = { hour: '2-digit', minute: '2-digit', hour12: false };
+  if (p.tz) opts.timeZone = p.tz;
+  // en-GB gives 24-hour HH:MM.
+  return new Date(p.tst * 1000).toLocaleTimeString('en-GB', opts).slice(0, 5);
+}
+
+function createFromSelection(kind) {
+  const pings = getSelectedPings();
+  if (!pings.length) return;
+  const avgLat = pings.reduce((s, p) => s + p.lat, 0) / pings.length;
+  const avgLng = pings.reduce((s, p) => s + p.lon, 0) / pings.length;
+  const first = pings[0];
+  const last = pings[pings.length - 1];
+  const startDate = _pingLocalDate(first);
+  const endDate = _pingLocalDate(last);
+  const startTime = _pingLocalTime(first);
+  const endTime = _pingLocalTime(last);
+  // Events are single-date in this app's data model; if the selection spans
+  // multiple days, use the start date and let the time range carry the rest.
+  if (startDate !== endDate) {
+    console.warn('Ping selection spans multiple days (' + startDate + ' → ' + endDate +
+                 '); using start date with full time range.');
+  }
+  const isWp = (kind === 'waypoint');
+  const values = {
+    name: isWp ? 'New Waypoint' : '',
+    date: startDate,
+    time: startTime,
+    end_time: endTime,
+    location: avgLat.toFixed(6) + ',' + avgLng.toFixed(6),
+    locale: '',
+    state: '',
+    description: '',
+    waypoint: isWp,
+  };
+  _openModal(kind, 'add', null, values);
+
+  // Reverse-geocode the centroid to suggest name/locale/state. Run async so
+  // the modal opens immediately; fill only fields the user hasn't started
+  // editing (and treat "New Waypoint" as auto-filled too).
+  fetch('/api/reverse-geocode?lat=' + avgLat + '&lng=' + avgLng,
+        { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) return;
+      const body = document.getElementById('add-modal-body');
+      if (!body) return;
+      const nameI = body.querySelector('[data-field="name"]');
+      const locI = body.querySelector('[data-field="locale"]');
+      const stI = body.querySelector('[data-field="state"]');
+      if (nameI && data.name) {
+        const cur = (nameI.value || '').trim();
+        if (!cur || cur === 'New Waypoint') nameI.value = data.name;
+      }
+      if (locI && data.locale && !locI.value) locI.value = data.locale;
+      if (stI && data.state && !stI.value) stI.value = data.state;
+    })
+    .catch(() => { /* keep what we have if the lookup fails */ });
+}
+
 // ── Add/Edit modal ────────────────────────────────────────────────────────
 let addModalKind = null;
 let addModalMode = 'add';        // 'add' | 'edit'
@@ -2685,7 +2895,7 @@ const MODAL_TITLES = {
   family_visit: { add: 'Add Family Visit', edit: 'Edit Family Visit' },
 };
 
-function _openModal(kind, mode, idx) {
+function _openModal(kind, mode, idx, prefillValues) {
   const modal = document.getElementById('add-modal');
   if (!modal) return;
   if (kind === 'family_visit' && FAMILY_LOCATIONS.length === 0) {
@@ -2696,6 +2906,8 @@ function _openModal(kind, mode, idx) {
   let values = {};
   if (mode === 'edit') {
     values = (kind === 'stay' ? STAYS_ALL[idx] : EVENTS_ALL[idx]) || {};
+  } else if (prefillValues) {
+    values = prefillValues;
   }
 
   addModalKind = kind;

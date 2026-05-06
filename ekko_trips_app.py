@@ -1191,6 +1191,54 @@ def api_geocode():
         return jsonify([])
 
 
+@app.route('/api/reverse-geocode')
+def api_reverse_geocode():
+    """Reverse-geocode lat/lng via Nominatim. Returns the nearest named entity
+    (`name`), the enclosing locale (city/town/village/hamlet — `locale`), and
+    the enclosing state (`state`). Used by the trip-detail map's
+    "create event from selected GPS points" feature to suggest a name and
+    administrative context for the centroid of a selection."""
+    try:
+        lat = float(request.args.get('lat', ''))
+        lng = float(request.args.get('lng', ''))
+    except (TypeError, ValueError):
+        return jsonify({"error": "lat and lng required"}), 400
+    try:
+        import urllib.request
+        # zoom=18 ≈ building-level; addressdetails surfaces the
+        # admin hierarchy; namedetails gives us the canonical short name
+        # of whatever feature was hit (poi, road, etc.).
+        url = (
+            "https://nominatim.openstreetmap.org/reverse"
+            f"?format=json&lat={lat}&lon={lng}"
+            "&zoom=18&addressdetails=1&namedetails=1"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        addr = data.get("address", {}) or {}
+        names = data.get("namedetails", {}) or {}
+        # Prefer a real POI/feature name; fall back to display_name's first
+        # comma-segment so we always return *something* useful (e.g. for a
+        # ping in the middle of nowhere this becomes a road name).
+        name = (names.get("name") or data.get("name") or "").strip()
+        if not name:
+            disp = (data.get("display_name") or "").split(",", 1)[0].strip()
+            name = disp
+        # Locale: drop down the admin hierarchy until something matches.
+        locale = (addr.get("city") or addr.get("town") or addr.get("village")
+                  or addr.get("hamlet") or addr.get("municipality")
+                  or addr.get("township") or addr.get("county") or "")
+        return jsonify({
+            "name": name,
+            "locale": locale,
+            "state": addr.get("state", ""),
+            "display_name": data.get("display_name", ""),
+        })
+    except Exception:
+        return jsonify({"name": "", "locale": "", "state": "", "display_name": ""})
+
+
 TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
 os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 
