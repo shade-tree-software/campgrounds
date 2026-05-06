@@ -3893,6 +3893,17 @@ function initPhotoDrag(grid) {
     dragItem = item;
     dragSourceGrid = grid;
     dropTarget = null;
+    // Pin the drag image to the photo's <img> with the cursor's offset
+    // relative to it. Without this, the browser snapshots .photo-item AFTER
+    // the body/source-grid class changes below shift layout, which leaves
+    // the ghost image visibly offset from the pointer.
+    const img = item.querySelector('img');
+    if (img && e.dataTransfer.setDragImage) {
+      const r = img.getBoundingClientRect();
+      const ox = Math.max(0, Math.min(r.width,  e.clientX - r.left));
+      const oy = Math.max(0, Math.min(r.height, e.clientY - r.top));
+      e.dataTransfer.setDragImage(img, ox, oy);
+    }
     item.classList.add('dragging');
     // Enlarge / outline empty grids on other cards so they're droppable.
     grid.classList.add('drag-source');
