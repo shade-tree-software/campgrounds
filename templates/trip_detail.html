@@ -1226,6 +1226,8 @@
         <button type="button" data-needs-selection disabled
                 onclick="createFromSelection('waypoint')">+ Waypoint from selection</button>
         <button type="button" data-needs-selection disabled
+                onclick="setCampsiteFromSelection()">Set campsite location</button>
+        <button type="button" data-needs-selection disabled
                 onclick="clearPingSelection()">Clear</button>
       </div>
       {% endif %}
@@ -2218,6 +2220,10 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
         selLabel.classList.remove('disabled');
         selLabel.title = 'Click GPS points on the map to select them, then create an event or waypoint from the selection';
       }
+      // Browsers preserve checkbox state across location.reload() (which we do
+      // after creating an event/waypoint from a selection). If the toggle came
+      // up checked, sync the JS state so the toolbar shows and pings respond.
+      if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
     })
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
@@ -2771,6 +2777,66 @@ function createFromSelection(kind) {
       if (stI && data.state && !stI.value) stI.value = data.state;
     })
     .catch(() => { /* keep what we have if the lookup fails */ });
+}
+
+// Set the campsite_location override on whichever campspot is currently
+// closest to the selection's centroid. Useful when the campground's listed
+// coordinates point to the office/entrance and the GPS pings reveal where
+// EKKO actually parked.
+function _haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180) * Math.cos(lat2*Math.PI/180) * Math.sin(dLng/2)**2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function setCampsiteFromSelection() {
+  const pings = getSelectedPings();
+  if (!pings.length) return;
+  const avgLat = pings.reduce((s, p) => s + p.lat, 0) / pings.length;
+  const avgLng = pings.reduce((s, p) => s + p.lon, 0) / pings.length;
+
+  // Only campspots with a real campground reference are eligible — custom
+  // places (Airbnb/hotel) already represent specific locations, and stays
+  // without resolved coordinates can't be ranked.
+  const candidates = STAYS_ALL
+    .map((s, i) => ({ stay: s, idx: i }))
+    .filter(({ stay }) => stay.campground_id != null && stay.lat != null && stay.lng != null);
+  if (!candidates.length) {
+    alert('No campspots with a campground reference are available on this trip.');
+    return;
+  }
+
+  let best = null;
+  candidates.forEach(c => {
+    const d = _haversineKm(avgLat, avgLng, c.stay.lat, c.stay.lng);
+    if (!best || d < best.d) best = { ...c, d };
+  });
+
+  const newLoc = avgLat.toFixed(6) + ',' + avgLng.toFixed(6);
+  const distKm = best.d.toFixed(2);
+  const place = best.stay.place || '(unnamed)';
+  const existing = (best.stay.campsite_location || '').trim();
+  const existingLine = existing ? `\nReplaces existing override: ${existing}` : '';
+  const ok = confirm(
+    `Set campsite location for "${place}" to ${newLoc}?\n\n` +
+    `Nearest campspot is ${distKm} km from the selection centroid.` +
+    existingLine
+  );
+  if (!ok) return;
+
+  fetch(`/api/trips/${TRIP_ID}/stays/${best.idx}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ campsite_location: newLoc }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); return; }
+      location.reload();
+    })
+    .catch(err => alert('Failed to update campsite location: ' + err));
 }
 
 // ── Add/Edit modal ────────────────────────────────────────────────────────
