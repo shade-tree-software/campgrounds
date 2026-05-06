@@ -3893,16 +3893,28 @@ function initPhotoDrag(grid) {
     dragItem = item;
     dragSourceGrid = grid;
     dropTarget = null;
-    // Pin the drag image to the photo's <img> with the cursor's offset
-    // relative to it. Without this, the browser snapshots .photo-item AFTER
-    // the body/source-grid class changes below shift layout, which leaves
-    // the ghost image visibly offset from the pointer.
+    // Pin the drag image to a thumbnail-sized clone of the photo's <img>
+    // with the cursor's offset relative to it. Two reasons we don't use the
+    // <img> directly: (1) it would render at intrinsic resolution, not the
+    // grid thumbnail size; (2) the browser snapshots .photo-item AFTER the
+    // body/source-grid class changes below shift layout, which would leave
+    // the ghost visibly offset from the pointer.
     const img = item.querySelector('img');
     if (img && e.dataTransfer.setDragImage) {
       const r = img.getBoundingClientRect();
+      const ghost = img.cloneNode(true);
+      ghost.style.width = r.width + 'px';
+      ghost.style.height = r.height + 'px';
+      ghost.style.position = 'absolute';
+      ghost.style.top = '-1000px';
+      ghost.style.left = '-1000px';
+      ghost.style.pointerEvents = 'none';
+      document.body.appendChild(ghost);
       const ox = Math.max(0, Math.min(r.width,  e.clientX - r.left));
       const oy = Math.max(0, Math.min(r.height, e.clientY - r.top));
-      e.dataTransfer.setDragImage(img, ox, oy);
+      e.dataTransfer.setDragImage(ghost, ox, oy);
+      // Remove on next tick — by then the browser has cached the snapshot.
+      setTimeout(() => ghost.remove(), 0);
     }
     item.classList.add('dragging');
     // Enlarge / outline empty grids on other cards so they're droppable.
