@@ -143,7 +143,7 @@ All Leaflet maps offer a satellite layer that includes three Esri tile layers: W
 Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-width: 900px` breakpoint for filmstrip reflow. Each template owns its own mobile rules — see those CSS blocks for specifics. Notable behaviors:
 
 - **Header:** `☰` hamburger toggles `.open` on `<nav>` ≤ 700 px; toggle handler re-publishes `--site-top-height` so sticky sub-headers reflow. Header stats stack vertically on mobile.
-- **Trip detail header:** on mobile, `.meta` and `.trip-nav` are hidden and the `<h1>` itself is tappable to edit (with a viewport check so desktop text-selection still works).
+- **Trip detail header:** on mobile, `.meta` is hidden and the `<h1>` itself is tappable to edit (with a viewport check so desktop text-selection still works). `.trip-nav` (prev/next trip chevrons) stays visible at reduced size, flanking the title.
 - **Modal form-grid items:** carry `min-width: 0` so `<input type="time">` and time-range pairs don't overflow. ≤ 600 px collapses to one column. The waypoint checkbox is excluded from the global `width: 100%` input rule.
 - **Leaflet popups:** ≤ 700 px forces popup content to near-viewport width via `!important` overrides on `.leaflet-popup-content` (Leaflet caps content at its measured width otherwise). Desktop popup `maxWidth` is 420 on trips/campground maps so trip-link rows fit on one line.
 
