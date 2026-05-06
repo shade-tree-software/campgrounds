@@ -1799,6 +1799,33 @@ const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
 const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
 
+// Per-trip, per-tab map view (center + zoom). Captured on every page unload
+// so reloads — programmatic (suppress / relocate / set campsite / event from
+// selection / etc.) and manual (F5) — restore the user's view instead of
+// snapping back to the fitBounds default. Different trips get different
+// keys, so navigating between trips still uses each trip's auto-fit. Stored
+// in sessionStorage (per tab) so a fresh tab opens with the auto-fit.
+const _MAP_VIEW_KEY = `tripMapView:${TRIP_ID}`;
+function _saveMapView() {
+  if (!window.tripMap) return;
+  try {
+    const c = window.tripMap.getCenter();
+    sessionStorage.setItem(_MAP_VIEW_KEY, JSON.stringify({
+      lat: c.lat, lng: c.lng, zoom: window.tripMap.getZoom(),
+    }));
+  } catch (_) { /* sessionStorage may be disabled or full — fine, fall back to fitBounds */ }
+}
+function _loadMapView() {
+  try {
+    const raw = sessionStorage.getItem(_MAP_VIEW_KEY);
+    if (!raw) return null;
+    const v = JSON.parse(raw);
+    if (typeof v.lat !== 'number' || typeof v.lng !== 'number' || typeof v.zoom !== 'number') return null;
+    return v;
+  } catch (_) { return null; }
+}
+window.addEventListener('beforeunload', _saveMapView);
+
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   // Attach the original array index so popup actions can address each item
@@ -2510,7 +2537,15 @@ const FORCE_STRAIGHT_ROUTE = {{ trip.force_straight_route | tojson }};
     L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map);
   });
 
-  map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+  // Use the saved view (center + zoom from the previous unload) when present
+  // so reloads after suppress/relocate/etc. keep the user where they were.
+  // First-time visits and other trips get the trip-bounds auto-fit.
+  const _saved = _loadMapView();
+  if (_saved) {
+    map.setView([_saved.lat, _saved.lng], _saved.zoom);
+  } else {
+    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+  }
 })();
 
 // ── Trip editing ──────────────────────────────────────────────────────────
