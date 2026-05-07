@@ -1828,12 +1828,24 @@ const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
 
 // Per-trip, per-tab map view (center + zoom). Captured on every page unload
-// so reloads — programmatic (suppress / relocate / set campsite / event from
-// selection / etc.) and manual (F5) — restore the user's view instead of
-// snapping back to the fitBounds default. Different trips get different
-// keys, so navigating between trips still uses each trip's auto-fit. Stored
-// in sessionStorage (per tab) so a fresh tab opens with the auto-fit.
+// AND consulted on load — but only when the reload was a programmatic one
+// (suppress / relocate / set campsite / event from selection / etc.). A
+// manual F5 / Cmd-R or a navigation to a different trip falls through to
+// the fitBounds default so the user gets a fresh "show the whole trip" view.
+//
+// The distinction is signalled with a one-shot session flag (`_KEEP_KEY`):
+// every programmatic reload routes through `_reloadKeepingMapView()`, which
+// sets the flag right before `location.reload()`. `_loadMapView()` consumes
+// the flag synchronously on the next load — present → restore the saved
+// view; absent → return null and let the caller auto-fit.
+//
+// Different trips get different `_MAP_VIEW_KEY`s, so cross-trip navigation
+// can't pull up a stale view; the keep flag is global within the tab so any
+// stray persistence (e.g. tab navigation interrupted mid-reload) gets eaten
+// on the very next load and can't poison future visits. sessionStorage is
+// per tab so a fresh tab always opens with the auto-fit.
 const _MAP_VIEW_KEY = `tripMapView:${TRIP_ID}`;
+const _MAP_VIEW_KEEP_KEY = 'tripMapViewKeep';
 function _saveMapView() {
   if (!window.tripMap) return;
   try {
@@ -1845,12 +1857,27 @@ function _saveMapView() {
 }
 function _loadMapView() {
   try {
+    // Consume the keep flag unconditionally so a leftover from an aborted
+    // reload can't make the very next load restore a stale view.
+    const keep = sessionStorage.getItem(_MAP_VIEW_KEEP_KEY);
+    sessionStorage.removeItem(_MAP_VIEW_KEEP_KEY);
+    if (!keep) return null;
     const raw = sessionStorage.getItem(_MAP_VIEW_KEY);
     if (!raw) return null;
     const v = JSON.parse(raw);
     if (typeof v.lat !== 'number' || typeof v.lng !== 'number' || typeof v.zoom !== 'number') return null;
     return v;
   } catch (_) { return null; }
+}
+// Programmatic-reload helper used by every "save → reload" mutation flow on
+// this page. Sets the keep flag synchronously so the post-reload load picks
+// up the current view; manual F5 / link navigation never goes through here
+// and therefore falls back to fitBounds.
+function _reloadKeepingMapView() {
+  try { sessionStorage.setItem(_MAP_VIEW_KEEP_KEY, '1'); } catch (_) {}
+  // NB: `window.location.reload()` (not the bare `location.reload()`) so this
+  // line survives any future global rename of the latter.
+  window.location.reload();
 }
 window.addEventListener('beforeunload', _saveMapView);
 
@@ -2619,7 +2646,7 @@ function saveTripNote() {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    location.reload();
+    _reloadKeepingMapView();
   });
 }
 
@@ -2648,7 +2675,7 @@ function editHomeTime(which) {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    location.reload();
+    _reloadKeepingMapView();
   });
 }
 
@@ -2687,7 +2714,7 @@ function saveStay(idx) {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    location.reload();
+    _reloadKeepingMapView();
   });
 }
 
@@ -2730,7 +2757,7 @@ function deleteStay(idx) {
       if (data.trip_deleted) {
         window.location.href = '/trips/calendar';
       } else {
-        location.reload();
+        _reloadKeepingMapView();
       }
     });
 }
@@ -2771,7 +2798,7 @@ function saveEvent(idx) {
   .then(r => r.json())
   .then(data => {
     if (data.error) { alert(data.error); return; }
-    location.reload();
+    _reloadKeepingMapView();
   });
 }
 
@@ -2781,7 +2808,7 @@ function deleteEvent(idx) {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      location.reload();
+      _reloadKeepingMapView();
     });
 }
 
@@ -3133,7 +3160,7 @@ function _initSelectionDrag(map) {
       .then(r => r.json())
       .then(data => {
         if (data.error) { alert(data.error); snapBack(ds); return; }
-        location.reload();
+        _reloadKeepingMapView();
       })
       .catch(err => { snapBack(ds); alert('Failed to move pings: ' + err); });
   }
@@ -3343,7 +3370,7 @@ function setCampsiteFromSelection() {
     .then(data => {
       if (data.error) { alert(data.error); return; }
       _disableSelectionToggleBeforeReload();
-      location.reload();
+      _reloadKeepingMapView();
     })
     .catch(err => alert('Failed to update campsite location: ' + err));
 }
@@ -3372,7 +3399,7 @@ function suppressFromSelection() {
     .then(data => {
       if (data.error) { alert(data.error); return; }
       _disableSelectionToggleBeforeReload();
-      location.reload();
+      _reloadKeepingMapView();
     })
     .catch(err => alert('Failed to suppress pings: ' + err));
 }
@@ -3426,7 +3453,7 @@ function relocatePingsToCircle(markers, center) {
       // the unchecked state via standard browser form-state restoration.
       const tog = document.getElementById('relocate-mode-toggle');
       if (tog) tog.checked = false;
-      location.reload();
+      _reloadKeepingMapView();
     })
     .catch(err => alert('Failed to relocate pings: ' + err));
 }
@@ -3451,7 +3478,7 @@ function unrelocatePing(tst) {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      location.reload();
+      _reloadKeepingMapView();
     })
     .catch(err => alert('Failed to restore ping: ' + err));
 }
@@ -3473,7 +3500,7 @@ function unsuppressPing(tst) {
       // Reload so the polyline + regular markers pick the restored ping
       // back up. Leave the "Show suppressed" toggle as-is — if the user
       // had it on, they're probably reviewing more.
-      location.reload();
+      _reloadKeepingMapView();
     })
     .catch(err => alert('Failed to unsuppress ping: ' + err));
 }
@@ -3714,7 +3741,7 @@ function submitAddModal() {
         window.__createFromSelection = false;
         _disableSelectionToggleBeforeReload();
       }
-      location.reload();
+      _reloadKeepingMapView();
     });
 }
 
@@ -3896,7 +3923,7 @@ function uploadPhotosForItem(kind, idx) {
           if (done === total) {
             input.remove();
             if (errors.length) alert('Upload errors:\n' + errors.join('\n'));
-            location.reload();
+            _reloadKeepingMapView();
           }
         });
     });
@@ -4208,7 +4235,7 @@ function initPhotoDrag(grid) {
       })
       .then(r => r.json())
       .then(data => {
-        if (data.error) { alert(data.error); location.reload(); return; }
+        if (data.error) { alert(data.error); _reloadKeepingMapView(); return; }
         // Update filename if server renamed it to avoid collision
         if (data.filename !== filename) {
           dragItem.dataset.filename = data.filename;
