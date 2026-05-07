@@ -324,12 +324,15 @@
   .btn-add-event:hover,
   .btn-add-stay:hover { border-color: var(--red); color: var(--red); }
 
-  /* .map-actions-row holds .add-buttons + #selection-toolbar overlaid in the
-     same box. Its height is set by .add-buttons (always rendered, just hidden
-     via visibility in select mode) so the .ping-toggles checkbox row sitting
-     below never shifts when the user toggles "Select pings". */
+  /* .map-actions-row holds either .add-buttons (default) or #selection-toolbar
+     (in select-pings mode) — exactly one renders at a time, in natural flow,
+     so when the toolbar wraps to multiple lines on narrow viewports the
+     .ping-toggles checkbox row below it slides down to make room instead of
+     getting overlapped. The previous overlay approach kept the checkbox row
+     pinned but caused that collision; the count indicator that originally
+     drove the pin lives on .ping-toggles itself now, so its updates no longer
+     reflow this region. */
   .map-actions-row {
-    position: relative;
     margin-bottom: .75rem;
   }
   .add-buttons {
@@ -340,8 +343,8 @@
   }
   /* Screen real estate is tight in select-pings mode — the selection toolbar
      already replaces the Add buttons functionally (Event/Waypoint from
-     selection), so hide the standalone Add row but keep its layout space. */
-  body.map-selection-mode .add-buttons { visibility: hidden; }
+     selection), so hide the standalone Add row entirely. */
+  body.map-selection-mode .add-buttons { display: none; }
   .ping-toggles {
     display: flex;
     flex-wrap: wrap;
@@ -364,13 +367,12 @@
   .selection-mode-toggle input { width: auto; margin: 0; }
   .selection-mode-toggle.disabled { opacity: .5; cursor: not-allowed; }
 
-  /* Absolutely positioned over .add-buttons inside .map-actions-row so
-     activating select-pings mode swaps the Add buttons for the selection
-     buttons without changing the row's vertical footprint. */
+  /* Sibling of .add-buttons inside .map-actions-row — only one is in flow at
+     a time. When the toolbar wraps on narrow screens it grows the row's
+     height, pushing .ping-toggles below it down naturally instead of
+     overlapping it. */
   .selection-toolbar {
     display: none;
-    position: absolute;
-    inset: 0;
     align-items: center;
     flex-wrap: wrap;
     gap: .5rem;
@@ -1278,11 +1280,12 @@
       {% endif %}
 
       {% if is_admin %}
-      {# .map-actions-row stacks .add-buttons and #selection-toolbar in the
-         same box: the toolbar is absolutely positioned over the add buttons
-         so when select-pings mode hides the add row (visibility: hidden) the
-         toolbar slots into the exact same vertical space, leaving the
-         checkbox row below it pinned in place. #}
+      {# .map-actions-row holds .add-buttons and #selection-toolbar as
+         siblings in natural flow — exactly one is visible at a time, swapped
+         by body.map-selection-mode hiding the other. When the toolbar wraps
+         on a narrow viewport the .ping-toggles row below slides down with
+         it; the count indicator sits on .ping-toggles itself so its updates
+         never reflow this region. #}
       <div class="map-actions-row">
         <div class="add-buttons">
           <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
