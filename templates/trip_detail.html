@@ -1915,6 +1915,12 @@ window.addEventListener('beforeunload', _saveMapView);
 
   const map = L.map('trip-map');
   window.tripMap = map;
+  // Dedicated SVG pane for the suppressed/relocated ghost layers so they
+  // render above every regular marker (markerPane is zIndex 600; this sits
+  // above home/family/stay/event icons so admins can always click through to
+  // unsuppress/unrelocate even when an override sits at the same coords as a
+  // stay or family location).
+  map.createPane('overrides').style.zIndex = 700;
   const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors',
     maxZoom: 18,
@@ -2868,7 +2874,7 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
   const suppressedSorted = suppressedInWindow.slice().sort((a, b) => a.tst - b.tst);
   const suppressedPointLayer = L.layerGroup();
   suppressedSorted.forEach(p => {
-    const m = L.circleMarker([p.lat, p.lon], { ...SUPPRESSED_PING_STYLE });
+    const m = L.circleMarker([p.lat, p.lon], { ...SUPPRESSED_PING_STYLE, pane: 'overrides' });
     m.__ping = p;
     const dt = new Date(p.tst * 1000);
     const fmtOpts = {
@@ -2903,7 +2909,7 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
     const origCoords = (p.original_lat != null && p.original_lon != null)
       ? `${p.original_lat.toFixed(5)}, ${p.original_lon.toFixed(5)}`
       : '(unknown)';
-    const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE });
+    const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE, pane: 'overrides' });
     m.__ping = p;
     m.bindTooltip(
       `Relocated · ${local}<br>` +
@@ -2915,7 +2921,7 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
     if (p.original_lat != null && p.original_lon != null) {
       relocatedPointLayer.addLayer(L.polyline(
         [[p.original_lat, p.original_lon], [p.lat, p.lon]],
-        { ...RELOCATION_LINE_STYLE }));
+        { ...RELOCATION_LINE_STYLE, pane: 'overrides' }));
     }
   });
   window.__relocatedPointLayer = relocatedPointLayer;
