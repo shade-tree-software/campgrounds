@@ -293,11 +293,14 @@ def _remap_indices_after_sort(trip_id, old_items, new_items, kind):
         new_dir = os.path.join(upload_base, str(mapping[old_idx]))
         os.rename(tmp_dir, new_dir)
 
-    # Phase 3: remap caption and photo_order keys
+    # Phase 3: remap caption, photo_order, and per-photo uploader keys
+    # (all three share the "{trip_id}/{idx}/..." key shape).
     captions_file = os.path.join(_DIR, "trip_data", "captions.json")
     order_file = os.path.join(_DIR, "trip_data", "photo_order.json")
+    uploaders_file = os.path.join(_DIR, "trip_data", "photo_uploaders.json")
     _remap_json_keys(captions_file, key_prefix, mapping)
     _remap_json_keys(order_file, key_prefix, mapping)
+    _remap_json_keys(uploaders_file, key_prefix, mapping)
 
 
 def _remap_json_keys(filepath, key_prefix, mapping):

@@ -32,6 +32,10 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
 PHOTO_ORDER_FILE = os.path.join(TRIP_DATA_DIR, "photo_order.json")
 USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
+# Per-photo uploader record. Keyed identically to captions:
+#   "{trip_id}/{stay_idx}/{filename}" or "{trip_id}/events/{event_idx}/{filename}".
+# Used to gate non-admin (uploader-role) caption edits to their own contributions.
+PHOTO_UPLOADERS_FILE = os.path.join(TRIP_DATA_DIR, "photo_uploaders.json")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -184,24 +188,29 @@ def _save_json(path, data):
 # ── User authentication ────────────────────────────────────────────────────
 
 class User(UserMixin):
-    def __init__(self, username, password_hash, is_admin=False):
+    def __init__(self, username, password_hash, is_admin=False, can_upload=False):
         self.id = username
         self.username = username
         self.password_hash = password_hash
         self.is_admin = is_admin
+        # Admins implicitly carry upload rights — checking can_upload alone is
+        # always sufficient for upload-gated endpoints.
+        self.can_upload = bool(is_admin) or bool(can_upload)
 
 
 def _load_users():
-    data = _load_json(USERS_FILE)
-    return {name: User(name, info["password_hash"], info.get("is_admin", False))
-            for name, info in data.items()}
+    return {name: User(name, info["password_hash"],
+                       info.get("is_admin", False),
+                       info.get("can_upload", False))
+            for name, info in _load_json(USERS_FILE).items()}
 
 
-def _save_user(username, password, is_admin=False):
+def _save_user(username, password, is_admin=False, can_upload=False):
     data = _load_json(USERS_FILE)
     data[username] = {
         "password_hash": generate_password_hash(password),
         "is_admin": is_admin,
+        "can_upload": can_upload,
     }
     _save_json(USERS_FILE, data)
 
@@ -227,6 +236,67 @@ def _require_admin():
     if not current_user.is_authenticated or not current_user.is_admin:
         return jsonify({"error": "Admin access required"}), 403
     return None
+
+
+def _require_uploader_or_admin():
+    """Gate endpoints that uploader-role users may also use (photo POST + own-photo
+    caption edits). Admins always pass since User.can_upload is True for them."""
+    if not current_user.is_authenticated or not getattr(current_user, "can_upload", False):
+        return jsonify({"error": "Upload access required"}), 403
+    return None
+
+
+# ── Photo upload ownership ────────────────────────────────────────────────
+# Each successful photo upload records the uploader's username keyed by
+# "{trip_id}/{stay_idx}/{filename}" (or events variant). Uploader-role users
+# can edit captions on photos they own; only admins can delete or reorder.
+
+def _record_uploader(photo_key, username):
+    data = _load_json(PHOTO_UPLOADERS_FILE)
+    data[photo_key] = username
+    _save_json(PHOTO_UPLOADERS_FILE, data)
+
+
+def _record_uploaders(photo_keys, username):
+    if not photo_keys:
+        return
+    data = _load_json(PHOTO_UPLOADERS_FILE)
+    for k in photo_keys:
+        data[k] = username
+    _save_json(PHOTO_UPLOADERS_FILE, data)
+
+
+def _remove_uploader(photo_key):
+    data = _load_json(PHOTO_UPLOADERS_FILE)
+    if photo_key in data:
+        del data[photo_key]
+        _save_json(PHOTO_UPLOADERS_FILE, data)
+
+
+def _remove_uploaders_by_prefix(prefix):
+    data = _load_json(PHOTO_UPLOADERS_FILE)
+    pruned = {k: v for k, v in data.items() if not k.startswith(prefix)}
+    if len(pruned) != len(data):
+        _save_json(PHOTO_UPLOADERS_FILE, pruned)
+
+
+def _rename_uploader_key(old_key, new_key):
+    data = _load_json(PHOTO_UPLOADERS_FILE)
+    if old_key in data:
+        data[new_key] = data.pop(old_key)
+        _save_json(PHOTO_UPLOADERS_FILE, data)
+
+
+def _can_edit_photo(photo_key):
+    """True if current user may edit the caption / metadata of a given photo:
+    admins always; uploader-role users only if they recorded the upload."""
+    if not current_user.is_authenticated:
+        return False
+    if current_user.is_admin:
+        return True
+    if not getattr(current_user, "can_upload", False):
+        return False
+    return _load_json(PHOTO_UPLOADERS_FILE).get(photo_key) == current_user.username
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -424,6 +494,10 @@ def trip_detail(trip_id):
 
     photo_order = _load_json(PHOTO_ORDER_FILE)
 
+    # Per-photo uploader record so the template can show editable captions on
+    # an uploader-role user's own contributions while leaving others read-only.
+    photo_uploaders = _load_json(PHOTO_UPLOADERS_FILE)
+
     stay_photos = {}
     for i, stay in enumerate(trip["stays"]):
         photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(i))
@@ -445,6 +519,7 @@ def trip_detail(trip_id):
                     "url": f"/static/uploads/{trip_id}/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
+                    "uploader": photo_uploaders.get(photo_key, ""),
                 })
         stay_photos[i] = photos
 
@@ -469,6 +544,7 @@ def trip_detail(trip_id):
                     "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
+                    "uploader": photo_uploaders.get(photo_key, ""),
                 })
         event_photos[i] = photos
 
@@ -524,6 +600,12 @@ def trip_detail(trip_id):
 
     home, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
+    # Uploader-role users see the upload UI but not delete/reorder/edit
+    # controls; admins are always uploaders too via the User model.
+    is_uploader = (current_user.is_authenticated
+                   and getattr(current_user, "can_upload", False)
+                   and not is_admin)
+    current_username = current_user.username if current_user.is_authenticated else ""
 
     # Find prev/next trip IDs (non-admins skip home-only trips in navigation)
     nav_trips = trips if is_admin else [t for t in trips if not t.get("home_only") or t["id"] == trip_id]
@@ -540,6 +622,8 @@ def trip_detail(trip_id):
         family_locations=family,
         home=home,
         is_admin=is_admin,
+        is_uploader=is_uploader,
+        current_username=current_username,
         prev_trip_id=prev_trip_id,
         next_trip_id=next_trip_id,
     )
@@ -547,7 +631,7 @@ def trip_detail(trip_id):
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/upload', methods=['POST'])
 def upload_photo(trip_id, stay_idx):
-    denied = _require_admin()
+    denied = _require_uploader_or_admin()
     if denied:
         return denied
     if 'photo' not in request.files:
@@ -565,6 +649,8 @@ def upload_photo(trip_id, stay_idx):
         saved = _extract_zip_photos(file, photo_dir)
         if not saved:
             return jsonify({"error": "No image files found in zip"}), 400
+        _record_uploaders([f"{trip_id}/{stay_idx}/{f}" for f in saved],
+                          current_user.username)
         return jsonify({
             "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
         })
@@ -574,6 +660,7 @@ def upload_photo(trip_id, stay_idx):
     if not filename:
         return jsonify({"error": "File type not allowed"}), 400
 
+    _record_uploader(f"{trip_id}/{stay_idx}/{filename}", current_user.username)
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",
@@ -582,7 +669,8 @@ def upload_photo(trip_id, stay_idx):
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/caption', methods=['POST'])
 def save_caption(trip_id, stay_idx):
-    denied = _require_admin()
+    # Logged-in non-admin uploaders may only caption photos they uploaded.
+    denied = _require_uploader_or_admin()
     if denied:
         return denied
     data = request.get_json()
@@ -590,6 +678,8 @@ def save_caption(trip_id, stay_idx):
     caption = data.get("caption", "")
 
     photo_key = f"{trip_id}/{stay_idx}/{filename}"
+    if not _can_edit_photo(photo_key):
+        return jsonify({"error": "You can only edit captions on photos you uploaded"}), 403
     captions = _load_json(CAPTIONS_FILE)
     captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
@@ -618,6 +708,8 @@ def delete_photo(trip_id, stay_idx, filename):
         photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
         _save_json(PHOTO_ORDER_FILE, photo_order)
 
+    _remove_uploader(photo_key)
+
     return jsonify({"ok": True})
 
 
@@ -640,6 +732,8 @@ def delete_all_stay_photos(trip_id, stay_idx):
     photo_order.pop(order_key, None)
     _save_json(PHOTO_ORDER_FILE, photo_order)
 
+    _remove_uploaders_by_prefix(prefix)
+
     return jsonify({"ok": True})
 
 
@@ -661,7 +755,7 @@ def reorder_stay_photos(trip_id, stay_idx):
 
 @app.route('/trips/<int:trip_id>/events/<int:event_idx>/upload', methods=['POST'])
 def upload_event_photo(trip_id, event_idx):
-    denied = _require_admin()
+    denied = _require_uploader_or_admin()
     if denied:
         return denied
     if 'photo' not in request.files:
@@ -679,6 +773,8 @@ def upload_event_photo(trip_id, event_idx):
         saved = _extract_zip_photos(file, photo_dir)
         if not saved:
             return jsonify({"error": "No image files found in zip"}), 400
+        _record_uploaders([f"{trip_id}/events/{event_idx}/{f}" for f in saved],
+                          current_user.username)
         return jsonify({
             "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
         })
@@ -688,6 +784,8 @@ def upload_event_photo(trip_id, event_idx):
     if not filename:
         return jsonify({"error": "File type not allowed"}), 400
 
+    _record_uploader(f"{trip_id}/events/{event_idx}/{filename}",
+                     current_user.username)
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",
@@ -696,7 +794,8 @@ def upload_event_photo(trip_id, event_idx):
 
 @app.route('/trips/<int:trip_id>/events/<int:event_idx>/caption', methods=['POST'])
 def save_event_caption(trip_id, event_idx):
-    denied = _require_admin()
+    # Logged-in non-admin uploaders may only caption photos they uploaded.
+    denied = _require_uploader_or_admin()
     if denied:
         return denied
     data = request.get_json()
@@ -704,6 +803,8 @@ def save_event_caption(trip_id, event_idx):
     caption = data.get("caption", "")
 
     photo_key = f"{trip_id}/events/{event_idx}/{filename}"
+    if not _can_edit_photo(photo_key):
+        return jsonify({"error": "You can only edit captions on photos you uploaded"}), 403
     captions = _load_json(CAPTIONS_FILE)
     captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
@@ -732,6 +833,8 @@ def delete_event_photo(trip_id, event_idx, filename):
         photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
         _save_json(PHOTO_ORDER_FILE, photo_order)
 
+    _remove_uploader(photo_key)
+
     return jsonify({"ok": True})
 
 
@@ -753,6 +856,8 @@ def delete_all_event_photos(trip_id, event_idx):
     photo_order = _load_json(PHOTO_ORDER_FILE)
     photo_order.pop(order_key, None)
     _save_json(PHOTO_ORDER_FILE, photo_order)
+
+    _remove_uploaders_by_prefix(prefix)
 
     return jsonify({"ok": True})
 
@@ -980,6 +1085,9 @@ def move_photo(trip_id):
         captions[new_cap_key] = cap
     _save_json(CAPTIONS_FILE, captions)
 
+    # Update uploader record (same key shape as captions).
+    _rename_uploader_key(old_cap_key, new_cap_key)
+
     # Update photo order — remove from source
     photo_order = _load_json(PHOTO_ORDER_FILE)
     src_ok = order_key(src_type, src_idx)
@@ -1016,7 +1124,9 @@ def api_user_list():
         return denied
     data = _load_json(USERS_FILE)
     return jsonify([
-        {"username": name, "is_admin": info.get("is_admin", False)}
+        {"username": name,
+         "is_admin": info.get("is_admin", False),
+         "can_upload": info.get("can_upload", False)}
         for name, info in sorted(data.items())
     ])
 
@@ -1030,6 +1140,7 @@ def api_user_create():
     username = body.get('username', '').strip()
     password = body.get('password', '')
     is_admin = bool(body.get('is_admin'))
+    can_upload = bool(body.get('can_upload'))
     if not username:
         return jsonify({"error": "Username required"}), 400
     if not password:
@@ -1040,6 +1151,7 @@ def api_user_create():
     data[username] = {
         "password_hash": generate_password_hash(password),
         "is_admin": is_admin,
+        "can_upload": can_upload,
     }
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
@@ -1064,6 +1176,8 @@ def api_user_update(username):
         if username == current_user.username and not new_admin:
             return jsonify({"error": "Cannot remove admin from your own account"}), 400
         data[username]['is_admin'] = new_admin
+    if 'can_upload' in body:
+        data[username]['can_upload'] = bool(body.get('can_upload'))
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
 

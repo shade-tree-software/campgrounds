@@ -1369,8 +1369,8 @@
           <span class="stay-locale">{% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}</span><span class="stay-sep"> &mdash; </span><span class="stay-dates">{% if item.copy_count and item.copy_count > 1 %}Night {{ item.copy_num }} of {{ item.copy_count }} ({{ item.sort_date }}){% else %}{{ item.nights }} night{{ 's' if item.nights > 1 else '' }} ({{ item.start }} to {{ item.end }}){% endif %}</span>
         </div>
       </div>
-      {% if is_admin and item.copy_num == 1 %}
-      <span class="card-actions"><button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button><button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button></span>
+      {% if item.copy_num == 1 and (is_admin or is_uploader) %}
+      <span class="card-actions">{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
     {% if item.copy_num == 1 %}
@@ -1461,12 +1461,13 @@
       <div class="photos-section">
         <div class="photo-grid" id="photos-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}" data-stay-idx="{{ item.idx }}">
           {% for photo in item.photos %}
+          {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
             <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
-            {% if is_admin %}
+            {% if can_edit_caption %}
             <div class="caption-area">
               <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
                     onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
@@ -1506,8 +1507,8 @@
           {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
         </div>
       </div>
-      {% if is_admin %}
-      <span class="card-actions">{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button></span>
+      {% if is_admin or is_uploader %}
+      <span class="card-actions">{% if is_admin %}{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
@@ -1599,12 +1600,13 @@
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
+          {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
             <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
-            {% if is_admin %}
+            {% if can_edit_caption %}
             <div class="caption-area">
               <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
                     onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
@@ -1845,6 +1847,11 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
 // Globals used by both the map IIFE (popups) and the editing UI below.
 const TRIP_ID = {{ trip.id }};
 const IS_ADMIN = {{ 'true' if is_admin else 'false' }};
+// Uploader-role users may POST photos and edit captions on their own uploads;
+// they cannot delete, reorder, move, or otherwise edit the trip. Admins also
+// satisfy the upload checks but use the full IS_ADMIN paths everywhere else.
+const IS_UPLOADER = {{ 'true' if is_uploader else 'false' }};
+const CURRENT_USERNAME = {{ current_username | tojson }};
 const FIRST_STAY_DATE = {{ (trip.stays[0].start if trip.stays else '') | tojson }};
 const STAYS_ALL = {{ trip.stays | tojson }};
 const EVENTS_ALL = {{ trip.events | tojson }};
@@ -3915,7 +3922,7 @@ function deleteAllEventPhotos(tripId, eventIdx) {
 // Upload photos for a stay or event directly from its card's header button.
 // Triggers a hidden file input, uploads each file, then reloads on completion.
 function uploadPhotosForItem(kind, idx) {
-  if (!IS_ADMIN) return;
+  if (!IS_ADMIN && !IS_UPLOADER) return;
   const url = kind === 'stay'
     ? `/trips/${TRIP_ID}/stays/${idx}/upload`
     : `/trips/${TRIP_ID}/events/${idx}/upload`;

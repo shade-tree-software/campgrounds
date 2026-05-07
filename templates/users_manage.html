@@ -26,17 +26,17 @@
   .col-actions { text-align: right; white-space: nowrap; }
   .col-actions .btn { margin-left: .35rem; }
 
-  .badge-admin {
+  .badge-admin, .badge-uploader {
     display: inline-block;
     padding: .15rem .5rem;
-    background: var(--gold);
-    color: var(--navy);
     border-radius: 999px;
     font-size: .7rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .04em;
   }
+  .badge-admin { background: var(--gold); color: var(--navy); }
+  .badge-uploader { background: var(--blue-bg); color: var(--navy); margin-left: .25rem; }
 
   .self-tag {
     margin-left: .4rem;
@@ -110,6 +110,7 @@
       <input type="text" id="new-username" placeholder="Username" autocomplete="off">
       <input type="password" id="new-password" placeholder="Password" autocomplete="new-password">
       <label class="cb-label"><input type="checkbox" id="new-is-admin"> Admin</label>
+      <label class="cb-label"><input type="checkbox" id="new-can-upload"> Uploader</label>
       <button class="btn btn-add" onclick="createUser()">Add User</button>
     </div>
   </div>
@@ -157,12 +158,24 @@ function loadUsers() {
         const adminToggleLabel = u.is_admin ? 'Demote' : 'Promote';
         const adminToggleDisabled = (isMe && u.is_admin) ? 'disabled title="Cannot remove admin from your own account"' : '';
         const deleteDisabled = isMe ? 'disabled title="Cannot delete your own account"' : '';
+        // Uploader toggle is meaningless for admins (they implicitly can
+        // upload), so hide it on admin rows to keep the controls honest.
+        const uploaderToggleLabel = u.can_upload ? 'Revoke Uploader' : 'Make Uploader';
+        let roleHtml;
+        if (u.is_admin) {
+          roleHtml = '<span class="badge-admin">Admin</span>';
+        } else if (u.can_upload) {
+          roleHtml = '<span class="badge-uploader">Uploader</span>';
+        } else {
+          roleHtml = '<span style="color:var(--gray);font-size:.85rem;">User</span>';
+        }
         return `
           <tr>
             <td>${escapeHtml(u.username)}${isMe ? '<span class="self-tag">(you)</span>' : ''}</td>
-            <td>${u.is_admin ? '<span class="badge-admin">Admin</span>' : '<span style="color:var(--gray);font-size:.85rem;">User</span>'}</td>
+            <td>${roleHtml}</td>
             <td class="col-actions">
               <button class="btn btn-cancel" onclick="openReset('${escapeAttr(u.username)}')">Reset Password</button>
+              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleUploader('${escapeAttr(u.username)}', ${!u.can_upload})">${uploaderToggleLabel}</button>`}
               <button class="btn btn-save" onclick="toggleAdmin('${escapeAttr(u.username)}', ${!u.is_admin})" ${adminToggleDisabled}>${adminToggleLabel}</button>
               <button class="btn btn-danger" onclick="deleteUser('${escapeAttr(u.username)}')" ${deleteDisabled}>Delete</button>
             </td>
@@ -185,11 +198,12 @@ function createUser() {
   const username = document.getElementById('new-username').value.trim();
   const password = document.getElementById('new-password').value;
   const isAdmin = document.getElementById('new-is-admin').checked;
+  const canUpload = document.getElementById('new-can-upload').checked;
   if (!username || !password) { alert('Username and password are required'); return; }
   fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, is_admin: isAdmin }),
+    body: JSON.stringify({ username, password, is_admin: isAdmin, can_upload: canUpload }),
   })
     .then(r => r.json())
     .then(d => {
@@ -197,6 +211,7 @@ function createUser() {
       document.getElementById('new-username').value = '';
       document.getElementById('new-password').value = '';
       document.getElementById('new-is-admin').checked = false;
+      document.getElementById('new-can-upload').checked = false;
       loadUsers();
     });
 }
@@ -238,6 +253,21 @@ function toggleAdmin(username, makeAdmin) {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ is_admin: makeAdmin }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { alert(d.error); return; }
+      loadUsers();
+    });
+}
+
+function toggleUploader(username, grant) {
+  const verb = grant ? 'grant uploader rights to' : 'revoke uploader rights from';
+  if (!confirm(`Are you sure you want to ${verb} ${username}?`)) return;
+  fetch('/api/users/' + encodeURIComponent(username), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ can_upload: grant }),
   })
     .then(r => r.json())
     .then(d => {
