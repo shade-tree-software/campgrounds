@@ -1155,6 +1155,13 @@
   body.map-relocate-mode #trip-map .leaflet-interactive {
     cursor: crosshair;
   }
+  /* Mid-drag cursor while moving the selection by mousedown-on-selected-ping. */
+  body.selection-dragging,
+  body.selection-dragging #trip-map,
+  body.selection-dragging #trip-map .leaflet-grab,
+  body.selection-dragging #trip-map .leaflet-interactive {
+    cursor: grabbing !important;
+  }
 
   .event-edit-form .form-grid {
     display: grid;
@@ -2313,6 +2320,9 @@ window.addEventListener('beforeunload', _saveMapView);
         // selection mode. The popup-open event itself isn't suppressible
         // cleanly from a popup binding, so we close it after-the-fact.
         m.on('click', () => {
+          // A drag-move that just ended fires a click on the dragged marker
+          // — swallow it so we don't deselect the ping the user just moved.
+          if (window.__selectionDragJustEnded) return;
           if (window.__selectionModeActive) {
             togglePingSelection(i);
             m.closePopup();
@@ -2342,7 +2352,7 @@ window.addEventListener('beforeunload', _saveMapView);
       if (selToggle) selToggle.disabled = false;
       if (selLabel) {
         selLabel.classList.remove('disabled');
-        selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle';
+        selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle. Drag a selected ping to move the whole selection to a new location.';
       }
       // …and the "Relocate pings" companion. Same mode-toggle pattern as
       // Select pings (it's the input mode for the lasso gesture).
@@ -2356,6 +2366,10 @@ window.addEventListener('beforeunload', _saveMapView);
       // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
       // call once we have markers; it's gated internally on the active mode.
       _initSelectionLasso(map);
+      // …and wire mousedown-drag on selected pings to move the whole
+      // selection. Mutually compatible with the lasso (lasso fires from
+      // non-selected mousedowns; drag fires from selected ones).
+      _initSelectionDrag(map);
       // Browsers preserve checkbox state across location.reload() (which we do
       // after creating an event/waypoint from a selection). If a toggle came
       // up checked, sync the JS state so the toolbar/layer/dragging match.
@@ -2985,6 +2999,10 @@ function _initSelectionLasso(map) {
 
   map.on('mousedown', (e) => {
     if (!_activeMode()) return;
+    // The selection-drag gesture (mousedown on a SELECTED ping in select
+    // mode) sets this flag in its marker handler before the event bubbles
+    // up; bail so we don't also start a lasso underneath the drag.
+    if (window.__selectionDragInProgress) return;
     dragStartLatLng = e.latlng;
     dragStartPoint = e.containerPoint;
   });
@@ -3033,6 +3051,122 @@ function _initSelectionLasso(map) {
   map.on('mouseout', (e) => {
     if (e.originalEvent && map.getContainer().contains(e.originalEvent.relatedTarget)) return;
     if (lassoCircle || dragStartPoint) cleanup();
+  });
+}
+
+// Wire mousedown-on-selected-ping → drag the entire selection by the cursor
+// delta. Preserves each ping's offset relative to the dragged one so the
+// shape of the cluster is kept; on drop, every selected ping is POSTed to
+// /api/trips/<id>/relocate-pings at its new lat/lon. A stationary mousedown
+// (under PIXEL_THRESHOLD) is left alone so the existing click-toggle still
+// fires; the same threshold gates the post-drag click suppression so an
+// accidental nudge doesn't pop a confirm dialog the user can't escape from.
+function _initSelectionDrag(map) {
+  if (window.__selectionDragReady) return;
+  window.__selectionDragReady = true;
+
+  const PIXEL_THRESHOLD = 4;
+  let dragState = null;
+
+  function onMouseMove(e) {
+    if (!dragState) return;
+    const dx = e.clientX - dragState.startClientX;
+    const dy = e.clientY - dragState.startClientY;
+    if (!dragState.dragging && Math.hypot(dx, dy) < PIXEL_THRESHOLD) return;
+    if (!dragState.dragging) {
+      dragState.dragging = true;
+      document.body.classList.add('selection-dragging');
+    }
+    const cur = map.containerPointToLatLng(map.mouseEventToContainerPoint(e));
+    const dLat = cur.lat - dragState.startLatLng.lat;
+    const dLng = cur.lng - dragState.startLatLng.lng;
+    dragState.markers.forEach(({marker, origLat, origLng}) => {
+      marker.setLatLng([origLat + dLat, origLng + dLng]);
+    });
+  }
+
+  function snapBack(ds) {
+    ds.markers.forEach(({marker, origLat, origLng}) => {
+      marker.setLatLng([origLat, origLng]);
+    });
+  }
+
+  function onMouseUp(e) {
+    if (!dragState) return;
+    document.removeEventListener('mousemove', onMouseMove, true);
+    document.removeEventListener('mouseup', onMouseUp, true);
+    document.body.classList.remove('selection-dragging');
+
+    const wasDragged = dragState.dragging;
+    const ds = dragState;
+    dragState = null;
+    // Always release the lasso-suppression flag on the next tick (after the
+    // map's mousedown handler — which is already past — has had its turn).
+    setTimeout(() => { window.__selectionDragInProgress = false; }, 0);
+
+    if (!wasDragged) return;  // pure click — let the existing toggle fire.
+
+    // Suppress the click event Leaflet fires on the dragged marker right
+    // after this mouseup, so we don't deselect it under the user's cursor.
+    window.__selectionDragJustEnded = true;
+    setTimeout(() => { window.__selectionDragJustEnded = false; }, 0);
+
+    const cur = map.containerPointToLatLng(map.mouseEventToContainerPoint(e));
+    const dLat = cur.lat - ds.startLatLng.lat;
+    const dLng = cur.lng - ds.startLatLng.lng;
+    const items = ds.markers.map(({marker, origLat, origLng}) => ({
+      tst: marker.__ping.tst,
+      lat: origLat + dLat,
+      lon: origLng + dLng,
+    }));
+    const ok = confirm(
+      `Move ${items.length} GPS ping${items.length === 1 ? '' : 's'} to a new ` +
+      `location? Use the "Show relocated pings" toggle to review or undo.`
+    );
+    if (!ok) { snapBack(ds); return; }
+
+    fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items }),
+    })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) { alert(data.error); snapBack(ds); return; }
+        location.reload();
+      })
+      .catch(err => { snapBack(ds); alert('Failed to move pings: ' + err); });
+  }
+
+  // Attach a mousedown to every per-ping marker. Bails unless the user is in
+  // select mode AND has the marker selected — non-selected mousedowns flow
+  // through to the lasso as before.
+  (window.__gpsPointMarkers || []).forEach(marker => {
+    marker.on('mousedown', ev => {
+      if (!window.__selectionModeActive) return;
+      if (!marker.__selected) return;
+      // Tell the lasso's map.on('mousedown') to skip — set BEFORE the event
+      // bubbles up. Cleared in onMouseUp's timeout.
+      window.__selectionDragInProgress = true;
+      L.DomEvent.stop(ev.originalEvent || ev);
+
+      const cursor = map.containerPointToLatLng(
+        map.mouseEventToContainerPoint(ev.originalEvent || ev));
+      const allSelected = (window.__gpsPointMarkers || [])
+        .filter(m => m.__selected);
+      dragState = {
+        startClientX: (ev.originalEvent || ev).clientX,
+        startClientY: (ev.originalEvent || ev).clientY,
+        startLatLng: cursor,
+        dragging: false,
+        markers: allSelected.map(m => {
+          const ll = m.getLatLng();
+          return { marker: m, origLat: ll.lat, origLng: ll.lng };
+        }),
+      };
+      document.addEventListener('mousemove', onMouseMove, true);
+      document.addEventListener('mouseup', onMouseUp, true);
+    });
   });
 }
 
