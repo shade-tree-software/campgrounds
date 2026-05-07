@@ -2893,9 +2893,19 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
   window.__suppressedCount = suppressedSorted.length;
 
   // Relocated pings: amber dots at the override coords + dashed line back to
-  // the original OwnTracks coords, click → unrelocate (restore one).
+  // the original OwnTracks coords, click → unrelocate (restores every ping
+  // sharing this clicked one's override coords; see `unrelocatePing`).
   const relocatedSorted = relocatedInWindow.slice().sort((a, b) => a.tst - b.tst);
   const relocatedPointLayer = L.layerGroup();
+  // Pre-tally the cluster size at each override (lat,lon) so the per-marker
+  // tooltip can hint when a single click will restore the whole cluster (the
+  // common shape after "Center selected" collapses many pings onto one point).
+  const _coordKey = (lat, lon) => `${lat},${lon}`;
+  const clusterCounts = new Map();
+  relocatedSorted.forEach(p => {
+    const k = _coordKey(p.lat, p.lon);
+    clusterCounts.set(k, (clusterCounts.get(k) || 0) + 1);
+  });
   relocatedSorted.forEach(p => {
     const dt = new Date(p.tst * 1000);
     const fmtOpts = {
@@ -2911,10 +2921,14 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
       : '(unknown)';
     const m = L.circleMarker([p.lat, p.lon], { ...RELOCATED_PING_STYLE, pane: 'overrides' });
     m.__ping = p;
+    const clusterN = clusterCounts.get(_coordKey(p.lat, p.lon)) || 1;
+    const restoreHint = clusterN > 1
+      ? `<em>click to restore all ${clusterN} pings at this location</em>`
+      : '<em>click to restore</em>';
     m.bindTooltip(
       `Relocated · ${local}<br>` +
       `<span style="font-family:monospace">from ${origCoords}<br>to&nbsp;&nbsp;${newCoords}</span><br>` +
-      `<em>click to restore</em>`,
+      restoreHint,
       { sticky: true });
     m.on('click', () => unrelocatePing(p.tst));
     relocatedPointLayer.addLayer(m);
@@ -3447,11 +3461,38 @@ function toggleShowRelocated(checkbox) {
 }
 
 function unrelocatePing(tst) {
-  if (!confirm('Restore this GPS ping to its original location?')) return;
+  // Restoring just the clicked ping's tst would leave any siblings collapsed
+  // onto the same override coords (typical after "Center selected") stranded
+  // at a now-orphaned point — the user almost always wants the whole cluster
+  // back. Walk the relocated layer for every ping that shares the clicked
+  // one's override lat/lon and DELETE the lot in one call. Float equality is
+  // fine here: every member of a cluster gets the identical centroid value
+  // assigned at creation time and survives JSON roundtrip bit-exactly.
+  const layer = window.__relocatedPointLayer;
+  let target = null;
+  if (layer) {
+    layer.eachLayer(m => {
+      if (m.__ping && m.__ping.tst === tst) target = m.__ping;
+    });
+  }
+  const tsts = [];
+  if (target && layer) {
+    layer.eachLayer(m => {
+      if (!m.__ping) return;
+      if (m.__ping.lat === target.lat && m.__ping.lon === target.lon) {
+        tsts.push(m.__ping.tst);
+      }
+    });
+  }
+  if (!tsts.length) tsts.push(tst);  // fallback: just the clicked one
+  const msg = tsts.length > 1
+    ? `Restore ${tsts.length} GPS pings (all sharing this override location) to their original positions?`
+    : 'Restore this GPS ping to its original location?';
+  if (!confirm(msg)) return;
   fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tst: [tst] }),
+    body: JSON.stringify({ tst: tsts }),
   })
     .then(r => r.json())
     .then(data => {
