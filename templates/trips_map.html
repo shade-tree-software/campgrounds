@@ -279,23 +279,36 @@ if (HOME) {
     .bindPopup('<strong>Home</strong>');
 }
 
-// Collect unique locations across all trips. Each trip entry under a
-// location records the stay index so popup links can deep-link to the
-// matching card on the trip detail page.
+// Collect unique locations across all trips. Stays at the same campground
+// (by `campground_id`) collapse onto a single marker placed at the
+// campground's listed coords (`cg_lat`/`cg_lng`) regardless of any per-stay
+// `campsite_location` overrides. Each entry under a location records the
+// (trip, stay) so popup links deep-link to the right card and the visit
+// count reflects every stay there — even multiple stays within one trip.
+// Custom places (no campground_id) fall back to coord-based grouping so
+// hotels/Airbnbs with the same name but different coords stay distinct.
 const locMap = {};
 TRIPS.forEach(trip => {
   trip.stays.forEach((stay, stayIdx) => {
-    if (!stay.lat || !stay.lng) return;
-    const key = stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
+    let key, lat, lng;
+    if (stay.campground_id != null && stay.cg_lat != null && stay.cg_lng != null) {
+      key = 'cg:' + stay.campground_id;
+      lat = stay.cg_lat;
+      lng = stay.cg_lng;
+    } else if (stay.lat != null && stay.lng != null) {
+      key = 'coords:' + stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
+      lat = stay.lat;
+      lng = stay.lng;
+    } else {
+      return;
+    }
     if (!locMap[key]) {
-      locMap[key] = { lat: stay.lat, lng: stay.lng, place: stay.place, locale: stay.locale, state: stay.state, trips: [] };
+      locMap[key] = { lat, lng, place: stay.place, locale: stay.locale, state: stay.state, visits: [] };
     }
-    if (!locMap[key].trips.some(t => t.id === trip.id)) {
-      locMap[key].trips.push({
-        id: trip.id, number: trip.number, summary: trip.summary,
-        start: trip.start, stay_idx: stayIdx,
-      });
-    }
+    locMap[key].visits.push({
+      id: trip.id, number: trip.number, summary: trip.summary,
+      start: trip.start, stay_idx: stayIdx, stay_start: stay.start,
+    });
   });
 });
 
@@ -304,7 +317,9 @@ Object.values(locMap).forEach(loc => {
   const ll = [loc.lat, loc.lng];
   bounds.push(ll);
 
-  const visits = loc.trips.length;
+  // One stay = one visit, so multiple campsites at the same campground all
+  // count toward the popup's tally and the marker size.
+  const visits = loc.visits.length;
   const radius = Math.min(6 + visits * 2, 14);
 
   const marker = L.circleMarker(ll, {
@@ -316,12 +331,19 @@ Object.values(locMap).forEach(loc => {
     fillOpacity: 0.85,
   }).addTo(map);
 
+  // Sort by stay start (falling back to trip start for anything missing) so
+  // visits read chronologically in the popup.
+  const sortedVisits = loc.visits.slice().sort((a, b) =>
+    (a.stay_start || a.start || '').localeCompare(b.stay_start || b.start || ''));
+
   let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits !== 1 ? 's' : ''}`;
   popup += '<div style="margin-top:4px;font-size:12px;">';
-  loc.trips.forEach(t => {
-    const d = new Date(t.start + 'T00:00:00');
-    const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-    popup += `<a href="/trips/${t.id}#stay-${t.stay_idx}" style="display:block;color:#002868;">Trip ${t.number}: ${fmt} — ${t.summary}</a>`;
+  sortedVisits.forEach(v => {
+    const dateStr = v.stay_start || v.start;
+    const fmt = dateStr
+      ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+      : '';
+    popup += `<a href="/trips/${v.id}#stay-${v.stay_idx}" style="display:block;color:#002868;">Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
   });
   popup += '</div>';
   marker.bindPopup(popup, { maxWidth: 420 });
@@ -399,17 +421,19 @@ FAMILY.forEach(fam => {
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  // Combine trips that stayed here (matched by coords) with trips whose
-  // family-visit events reference this family entry by id. Dedupe by trip id.
-  const famKey = fam.lat.toFixed(4) + ',' + fam.lng.toFixed(4);
-  const drivewayKey = fam.driveway_lat != null
-    ? fam.driveway_lat.toFixed(4) + ',' + fam.driveway_lng.toFixed(4)
-    : null;
-  const stayLoc = locMap[famKey] || (drivewayKey && locMap[drivewayKey]);
-  const stayTrips = stayLoc ? stayLoc.trips : [];
+  // Combine trips that stayed here (matched by campground_id) with trips
+  // whose family-visit events reference this family entry by id. Family-kind
+  // stays now share the same `cg:` keying as regular campgrounds, so the
+  // lookup is a single id-based hit instead of the previous coord pairs.
+  // The family popup keeps its per-trip dedupe (one line per trip).
+  const stayLoc = locMap['cg:' + fam.id];
+  const stayVisits = stayLoc ? stayLoc.visits : [];
   const visitTrips = familyVisitTripMap[fam.id] || [];
   const tripById = new Map();
-  stayTrips.forEach(t => tripById.set(t.id, { ...t, card: 'stay-' + t.stay_idx }));
+  stayVisits.forEach(v => tripById.set(v.id, {
+    id: v.id, number: v.number, summary: v.summary, start: v.start,
+    card: 'stay-' + v.stay_idx,
+  }));
   visitTrips.forEach(t => { if (!tripById.has(t.id)) tripById.set(t.id, t); });
   const trips = Array.from(tripById.values())
     .sort((a, b) => (a.start || '').localeCompare(b.start || ''));

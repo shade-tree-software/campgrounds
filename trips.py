@@ -804,6 +804,24 @@ def enrich_trip_locations(trip):
     """
     by_id = _load_locations_by_id()
     for stay in trip["stays"]:
+        # Resolve the campground-level coords first (independent of any per-stay
+        # override) so the main map can group all stays at the same campground
+        # onto a single marker — even when individual stays carry a different
+        # `campsite_location` for the trip-detail view. Family-kind entries
+        # still prefer their `driveway_location` to avoid colliding with the
+        # red house marker.
+        cg_coords = None
+        cid = stay.get("campground_id")
+        if cid is not None and cid in by_id:
+            info = by_id[cid]
+            if info["kind"] == "family" and info["driveway"]:
+                cg_coords = info["driveway"]
+            else:
+                cg_coords = (info["lat"], info["lng"])
+        if cg_coords:
+            stay["cg_lat"] = cg_coords[0]
+            stay["cg_lng"] = cg_coords[1]
+
         coords = None
         # Per-stay override takes precedence — used to correct cases where the
         # campground's listed coords are at the office/entrance and the actual
@@ -811,14 +829,8 @@ def enrich_trip_locations(trip):
         override = (stay.get("campsite_location") or "").strip()
         if override:
             coords = _parse_site_coords(override)
-        if not coords:
-            cid = stay.get("campground_id")
-            if cid is not None and cid in by_id:
-                info = by_id[cid]
-                if info["kind"] == "family" and info["driveway"]:
-                    coords = info["driveway"]
-                else:
-                    coords = (info["lat"], info["lng"])
+        if not coords and cg_coords:
+            coords = cg_coords
         if not coords:
             coords = _parse_site_coords(stay.get("site", ""))
         if coords:
