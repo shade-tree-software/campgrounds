@@ -2222,19 +2222,23 @@ window.addEventListener('beforeunload', _saveMapView);
       const inWindow = raw.filter(p =>
         (lowerCut == null || p.tst >= lowerCut) &&
         (upperCut == null || p.tst <= upperCut));
-      const suppressedInWindow = rawSuppressed.filter(p =>
-        (lowerCut == null || p.tst >= lowerCut) &&
-        (upperCut == null || p.tst <= upperCut));
-      const relocatedInWindow = rawRelocated.filter(p =>
-        (lowerCut == null || p.tst >= lowerCut) &&
-        (upperCut == null || p.tst <= upperCut));
 
       // Build the suppressed / relocated ghost layers and wire their "Show …"
       // toggles BEFORE the polyline short-circuits below. If the trip has no
       // good in-window pings (or none near a stay), the GPS track is skipped
       // — but the admin still needs a way to surface and undo any suppressed
       // or relocated pings the trip carries.
-      _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow);
+      //
+      // Note: we deliberately pass the UNWINDOWED `rawSuppressed`/`rawRelocated`
+      // lists. A suppressed/relocated ping that falls just outside the
+      // auto-detected trip window (e.g. the ping tst is a few minutes before
+      // `autoHomeStartTst`) would otherwise drop from the ghost layer and
+      // leave the toggle disabled, with no way for the admin to undo it.
+      // Polyline state is the only thing that needs the window filter.
+      trackLog('ping counts',
+        { rawAll: rawAll.length, raw: raw.length,
+          suppressed: rawSuppressed.length, relocated: rawRelocated.length });
+      _buildSuppressedRelocatedLayers(rawSuppressed, rawRelocated);
 
       if (inWindow.length < 2) {
         trackLog('not enough in-window GPS points to draw a track — using straight track',
