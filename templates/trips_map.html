@@ -14,6 +14,51 @@
     padding: .5rem 2rem 0;
   }
 
+  /* Click-through banner above the map pointing at the most recently-started
+     trip. Hidden when no dated trips exist (Jinja gates the markup). Three
+     flex children: a fixed-size pill, the elastic truncatable text, and a
+     fixed-size arrow — narrow viewports shrink the middle and ellipsize. */
+  .latest-trip-banner {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    margin: 0;
+    padding: .55rem 1rem;
+    /* Match the trip-detail header's flat red so the banner reads as a
+       direct visual handoff to that page. */
+    background: var(--red);
+    color: var(--white);
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: .95rem;
+    box-shadow: var(--shadow);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .latest-trip-banner:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.18);
+  }
+  .latest-trip-banner .label {
+    flex-shrink: 0;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    opacity: .9;
+    padding: .15rem .5rem;
+    border: 1px solid rgba(255,255,255,.45);
+    border-radius: 999px;
+  }
+  .latest-trip-banner .text {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .latest-trip-banner .summary { font-weight: 600; }
+  .latest-trip-banner .meta { opacity: .85; margin-left: .5rem; font-weight: 400; }
+  .latest-trip-banner .arrow { flex-shrink: 0; font-size: 1.2em; opacity: .85; }
+
   .map-layout {
     display: flex;
     gap: 1rem;
@@ -21,13 +66,23 @@
     justify-content: center;
   }
 
+  /* Center column holds the (optional) latest-trip banner stacked on top of
+     the map. Owns the width constraint so the banner spans only the map's
+     width — never the photo stacks. */
+  .map-col {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    flex: 0 0 auto;
+    width: min(calc(100vh - 180px), 900px, 100%);
+  }
+
   .map-container {
     background: var(--white);
     border-radius: 10px;
     box-shadow: var(--shadow);
     overflow: hidden;
-    flex: 0 0 auto;
-    width: min(calc(100vh - 180px), 900px, 100%);
+    width: 100%;
     aspect-ratio: 1 / 1;
     /* Contain Leaflet's internal z-indices (zoom/layer controls default to
        ~1000) so they don't render above the sticky site header (z-index 900). */
@@ -100,6 +155,7 @@
        horizontal row of photos below. The right photo column is
        hidden; the left column reflows into a row. */
     .map-layout { flex-direction: column; gap: .5rem; }
+    .map-col { width: 100%; }
     .map-container {
       width: 100%;
       aspect-ratio: auto;
@@ -127,6 +183,9 @@
       height: calc(100vh - var(--site-top-height, 60px) - 200px);
     }
     .photo-stack { height: 90px; gap: .35rem; }
+    /* Banner is desktop-only — phones already lose enough vertical room
+       to the map and photo strip. */
+    .latest-trip-banner { display: none; }
   }
 
   .map-legend {
@@ -158,8 +217,20 @@
 <div class="map-section">
   <div class="map-layout">
     {% if slideshow_photos %}<div class="photo-stack" id="stack-left"></div>{% endif %}
-    <div class="map-container">
-      <div id="all-trips-map"></div>
+    <div class="map-col">
+      {% if latest_trip %}
+      <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
+        <span class="label">Latest trip</span>
+        <span class="text">
+          <span class="summary">{% if latest_trip.number %}Trip {{ latest_trip.number }}: {% endif %}{{ latest_trip.summary }}</span>
+          {% if latest_trip_date %}<span class="meta">· {{ latest_trip_date }}</span>{% endif %}
+        </span>
+        <span class="arrow">&rsaquo;</span>
+      </a>
+      {% endif %}
+      <div class="map-container">
+        <div id="all-trips-map"></div>
+      </div>
     </div>
     {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
   </div>

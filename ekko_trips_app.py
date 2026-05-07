@@ -378,9 +378,24 @@ def trips_map():
                         })
     random.shuffle(all_photos)
 
+    # Banner above the map links to the most recently-started visible trip.
+    # `parse_trips()` already sorts ascending by start; empty new trips have
+    # an empty start string and would otherwise sort first, but we walk in
+    # reverse so they're skipped naturally — the banner only appears when
+    # there's an actual dated trip to point at.
+    latest_trip = next((t for t in reversed(trips) if t.get("start")), None)
+    latest_trip_date = ""
+    if latest_trip:
+        try:
+            latest_trip_date = date.fromisoformat(latest_trip["start"]).strftime("%b %-d, %Y")
+        except (ValueError, TypeError):
+            latest_trip_date = latest_trip["start"]
+
     return render_template('trips_map.html', trips=trips, home=home,
                            family_locations=family, active_nav='map',
-                           slideshow_photos=all_photos)
+                           slideshow_photos=all_photos,
+                           latest_trip=latest_trip,
+                           latest_trip_date=latest_trip_date)
 
 
 @app.route('/trips/calendar')
