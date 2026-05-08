@@ -3108,8 +3108,21 @@ function _initSelectionLasso(map) {
 // (under PIXEL_THRESHOLD) is left alone so the existing click-toggle still
 // fires; the same threshold gates the post-drag click suppression so an
 // accidental nudge doesn't pop a confirm dialog the user can't escape from.
+// Two-phase init:
+//   Phase 1 (once per page load): set up the closure-scoped `dragState`,
+//   `onMouseMove`, `onMouseUp` plus a `__rebindSelectionDrag` window-exposed
+//   binder that attaches `mousedown` handlers to the *current* per-ping
+//   marker objects.
+//   Phase 2 (every renderGpsTrack): call `__rebindSelectionDrag` to wire the
+//   handlers onto the freshly-built `__gpsPointMarkers`. Without this, a
+//   suppress/relocate-driven re-render would leave drag handlers stuck on
+//   the previous render's marker objects (now orphaned), so dragging a
+//   selection would do nothing.
 function _initSelectionDrag(map) {
-  if (window.__selectionDragReady) return;
+  if (window.__selectionDragReady) {
+    if (window.__rebindSelectionDrag) window.__rebindSelectionDrag();
+    return;
+  }
   window.__selectionDragReady = true;
 
   const PIXEL_THRESHOLD = 4;
@@ -3180,15 +3193,18 @@ function _initSelectionDrag(map) {
       .then(r => r.json())
       .then(data => {
         if (data.error) { alert(data.error); snapBack(ds); return; }
-        _reloadKeepingMapView();
+        // Drag-relocate is GPS-only; refetch the track and re-render in
+        // place rather than reloading the whole page.
+        refetchAndRenderTrack();
       })
       .catch(err => { snapBack(ds); alert('Failed to move pings: ' + err); });
   }
 
-  // Attach a mousedown to every per-ping marker. Bails unless the user is in
-  // select mode AND has the marker selected — non-selected mousedowns flow
-  // through to the lasso as before.
-  (window.__gpsPointMarkers || []).forEach(marker => {
+  function bindMarker(marker) {
+    // Guard against double-binding the same marker if `__rebindSelectionDrag`
+    // is ever invoked twice with the same array (cheap belt-and-braces).
+    if (marker.__selectionDragBound) return;
+    marker.__selectionDragBound = true;
     marker.on('mousedown', ev => {
       if (!window.__selectionModeActive) return;
       if (!marker.__selected) return;
@@ -3214,7 +3230,15 @@ function _initSelectionDrag(map) {
       document.addEventListener('mousemove', onMouseMove, true);
       document.addEventListener('mouseup', onMouseUp, true);
     });
-  });
+  }
+
+  // Expose so renderGpsTrack can re-bind to the freshly-built marker objects
+  // on every refetch. The closure above (dragState/onMouseMove/onMouseUp) is
+  // shared across all renders.
+  window.__rebindSelectionDrag = function() {
+    (window.__gpsPointMarkers || []).forEach(bindMarker);
+  };
+  window.__rebindSelectionDrag();
 }
 
 function togglePingSelection(i) {
