@@ -1866,6 +1866,31 @@ function _reloadKeepingMapView() {
 }
 window.addEventListener('beforeunload', _saveMapView);
 
+// Refetch the GPS-track payload and re-render the map's GPS layers in place
+// (polyline, per-point markers, suppressed/relocated ghost layers). Used by
+// the GPS-only mutation flows — suppress / unsuppress / relocate /
+// unrelocate — so they don't trigger a full page reload (and therefore
+// don't need the saved-view dance above). Mutations that change stay/event
+// data still go through `_reloadKeepingMapView()` because the cards and
+// stay markers are server-rendered and would need fresh HTML.
+function refetchAndRenderTrack() {
+  if (!window.__renderGpsTrack) return Promise.resolve();
+  // Clear any active ping selection so a freshly-suppressed batch doesn't
+  // leave the user with a stale "X pings selected" toolbar referring to
+  // markers that no longer exist after re-render.
+  const selToggle = document.getElementById('selection-mode-toggle');
+  if (selToggle && selToggle.checked) {
+    selToggle.checked = false;
+    toggleSelectionMode(selToggle);
+  }
+  const url = `/api/trips/${TRIP_ID}/track${IS_ADMIN ? '?admin=1' : ''}`;
+  return fetch(url, { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } })
+    .then(window.__renderGpsTrack)
+    .catch(err => console.log(`[trip-track] trip ${TRIP_ID}: refetch threw an error`, err));
+}
+window.__refetchAndRenderTrack = refetchAndRenderTrack;
+
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   // Attach the original array index so popup actions can address each item
@@ -2207,183 +2232,225 @@ window.addEventListener('beforeunload', _saveMapView);
   // (2) no in-window ping lands within TRACK_NEAR_STAY_KM of any anchor.
   const trackLog = (msg, extra) => console.log(
     `[trip-track] trip {{ trip.id }}: ${msg}`, extra ?? '');
+
+  // Render (or re-render) the GPS track from a raw-points payload. Idempotent:
+  // tears down any previously-rendered GPS layers (polyline, per-point markers,
+  // suppressed/relocated ghost layers, sync handlers) before rebuilding, so
+  // suppress / unsuppress / relocate / unrelocate flows can refresh the map
+  // in place via `window.__refetchAndRenderTrack` instead of doing a full
+  // `location.reload()`. Closes over `map`, `layerControl`, `straightRouteLayer`,
+  // `mapped`, `mappedEvents`, and the home/window helper functions.
+  function renderGpsTrack(rawPoints) {
+    // ── Teardown any previously-rendered GPS layers ────────────────────────
+    if (window.__gpsRouteLayer) {
+      if (map.hasLayer(window.__gpsRouteLayer)) map.removeLayer(window.__gpsRouteLayer);
+      layerControl.removeLayer(window.__gpsRouteLayer);
+      window.__gpsRouteLayer = null;
+    }
+    if (window.__gpsPointLayer) {
+      if (map.hasLayer(window.__gpsPointLayer)) map.removeLayer(window.__gpsPointLayer);
+      window.__gpsPointLayer = null;
+    }
+    if (window.__suppressedPointLayer && map.hasLayer(window.__suppressedPointLayer)) {
+      map.removeLayer(window.__suppressedPointLayer);
+    }
+    if (window.__relocatedPointLayer && map.hasLayer(window.__relocatedPointLayer)) {
+      map.removeLayer(window.__relocatedPointLayer);
+    }
+    if (window.__syncGpsPoints) {
+      map.off('zoomend', window.__syncGpsPoints);
+      map.off('overlayadd overlayremove', window.__syncGpsPoints);
+      window.__syncGpsPoints = null;
+    }
+    // The straight-line route is the visible default whenever no GPS polyline
+    // is up. A previous GPS render may have removed it; restore it now and
+    // let a successful new GPS render re-hide it if appropriate.
+    if (straightRouteLayer && !map.hasLayer(straightRouteLayer)) {
+      straightRouteLayer.addTo(map);
+    }
+
+    if (rawPoints && rawPoints.__error) {
+      const e = rawPoints.__error;
+      if (e.status != null) trackLog(`track fetch returned non-OK status ${e.status} ${e.statusText} — using straight track`);
+      else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
+      return;
+    }
+    const rawAll = Array.isArray(rawPoints) ? rawPoints : [];
+    // Suppressed pings are kept out of the polyline / home-boundary detection
+    // / regular per-point markers entirely; they're rendered separately as
+    // gray "ghost" dots that the admin can toggle on via the "Show suppressed
+    // pings" checkbox and click to unsuppress. (For non-admins the server
+    // already filtered them out, so `suppressed` is never set.)
+    // Relocated pings, by contrast, ARE in the polyline — at their override
+    // coords (the server already rewrote lat/lon). For admins they also
+    // carry `original_lat`/`original_lon` so the "Show relocated pings"
+    // toggle can mark them and draw a dashed line back to the source.
+    const raw = rawAll.filter(p => !p.suppressed);
+    const rawSuppressed = rawAll.filter(p => p.suppressed);
+    const rawRelocated = rawAll.filter(p => p.relocated && !p.suppressed);
+    // Compute auto trip-start/end times before any short-circuits so the
+    // home-card display still updates even when the polyline is skipped.
+    let autoHomeStartTst = null, autoHomeEndTst = null;
+    if (raw.length) {
+      ({ homeStartTst: autoHomeStartTst, homeEndTst: autoHomeEndTst } =
+        findHomeBoundaryTimes(raw));
+      if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', autoHomeStartTst);
+      if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', autoHomeEndTst);
+    }
+    // Filter pings to the trip window so the polyline and per-point
+    // markers don't show pre-departure or post-arrival activity.
+    const { lowerCut, upperCut } = computeTripWindow(autoHomeStartTst, autoHomeEndTst);
+    const inWindow = raw.filter(p =>
+      (lowerCut == null || p.tst >= lowerCut) &&
+      (upperCut == null || p.tst <= upperCut));
+
+    // Build the suppressed / relocated ghost layers and wire their "Show …"
+    // toggles BEFORE the polyline short-circuits below. If the trip has no
+    // good in-window pings (or none near a stay), the GPS track is skipped
+    // — but the admin still needs a way to surface and undo any suppressed
+    // or relocated pings the trip carries.
+    //
+    // Note: we deliberately pass the UNWINDOWED `rawSuppressed`/`rawRelocated`
+    // lists. A suppressed/relocated ping that falls just outside the
+    // auto-detected trip window (e.g. the ping tst is a few minutes before
+    // `autoHomeStartTst`) would otherwise drop from the ghost layer and
+    // leave the toggle disabled, with no way for the admin to undo it.
+    // Polyline state is the only thing that needs the window filter.
+    trackLog('ping counts',
+      { rawAll: rawAll.length, raw: raw.length,
+        suppressed: rawSuppressed.length, relocated: rawRelocated.length });
+    _buildSuppressedRelocatedLayers(rawSuppressed, rawRelocated);
+
+    if (inWindow.length < 2) {
+      trackLog('not enough in-window GPS points to draw a track — using straight track',
+        { rawCount: raw.length, inWindowCount: inWindow.length, lowerCut, upperCut });
+      return;
+    }
+
+    // Auto-fallback: if no in-window ping lands within TRACK_NEAR_STAY_KM
+    // of any stay or event, the GPS data doesn't actually cover this trip
+    // (e.g. logging was off, wrong device). Skip GPS rendering so the
+    // straight-line route remains visible as the only polyline.
+    const TRACK_NEAR_STAY_KM = 5;
+    const anchorCoords = [
+      ...mapped.map(s => [s.lat, s.lng]),
+      ...mappedEvents.map(e => [e.lat, e.lng]),
+    ].filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
+    if (anchorCoords.length) {
+      const radiusM = TRACK_NEAR_STAY_KM * 1000;
+      const nearAny = inWindow.some(p =>
+        anchorCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
+      if (!nearAny) {
+        trackLog(
+          `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay or event — using straight track`,
+          { inWindowCount: inWindow.length, anchorCount: anchorCoords.length });
+        return;
+      }
+    }
+
+    const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
+    const latlngs = sorted.map(p => [p.lat, p.lon]);
+    const gpsRouteLayer = L.layerGroup([
+      L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
+      L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
+    ]);
+    window.__gpsRouteLayer = gpsRouteLayer;
+    layerControl.addOverlay(gpsRouteLayer, 'GPS track');
+    if (straightRouteLayer && map.hasLayer(straightRouteLayer)) {
+      map.removeLayer(straightRouteLayer);
+    }
+    gpsRouteLayer.addTo(map);
+
+    // Per-point click targets: small circles at each GPS ping that pop up
+    // coords + local time when clicked. Hidden when zoomed out so they
+    // don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
+    // re-hidden when the user zooms back out. Tied to the GPS-track layer
+    // in the layer control so toggling the track also toggles the points.
+    // When the admin "Select pings" toggle is on, the points are forced
+    // visible at any zoom and click toggles selection (see
+    // togglePingSelection / createFromSelection below).
+    const GPS_POINT_MIN_ZOOM = 14;
+    const gpsPointLayer = L.layerGroup();
+    const gpsPointMarkers = [];
+    sorted.forEach((p, i) => {
+      const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
+      m.__ping = p;
+      m.__pingIdx = i;
+      m.__selected = false;
+      const dt = new Date(p.tst * 1000);
+      const fmtOpts = {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        timeZoneName: 'short',
+      };
+      if (p.tz) fmtOpts.timeZone = p.tz;
+      const local = dt.toLocaleString(undefined, fmtOpts);
+      const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+      m.bindPopup(
+        `<div style="font-size:.85rem;line-height:1.4">` +
+        `<div><strong>${local}</strong></div>` +
+        `<div style="font-family:monospace">${coords}</div>` +
+        `</div>`);
+      // Intercept clicks before Leaflet opens the popup when we're in
+      // selection mode. The popup-open event itself isn't suppressible
+      // cleanly from a popup binding, so we close it after-the-fact.
+      m.on('click', () => {
+        // A drag-move that just ended fires a click on the dragged marker
+        // — swallow it so we don't deselect the ping the user just moved.
+        if (window.__selectionDragJustEnded) return;
+        if (window.__selectionModeActive) {
+          togglePingSelection(i);
+          m.closePopup();
+        }
+      });
+      gpsPointLayer.addLayer(m);
+      gpsPointMarkers.push(m);
+    });
+    window.__gpsPings = sorted;
+    window.__gpsPointMarkers = gpsPointMarkers;
+    window.__gpsPointLayer = gpsPointLayer;
+
+    function syncGpsPoints() {
+      const trackVisible = map.hasLayer(gpsRouteLayer);
+      const wantVisible = window.__selectionModeActive ||
+        (trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
+      if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
+      if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
+    }
+    window.__syncGpsPoints = syncGpsPoints;
+    map.on('zoomend', syncGpsPoints);
+    map.on('overlayadd overlayremove', syncGpsPoints);
+    syncGpsPoints();
+    // Pings are loaded — enable the admin "Select pings" toggle.
+    const selToggle = document.getElementById('selection-mode-toggle');
+    const selLabel = document.getElementById('selection-mode-label');
+    if (selToggle) selToggle.disabled = false;
+    if (selLabel) {
+      selLabel.classList.remove('disabled');
+      selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle. Drag a selected ping to move the whole selection to a new location, or use "Center selected" to collapse them onto their centroid.';
+    }
+    // Wire the click-and-drag "lasso circle" handlers to this map. Both
+    // helpers are internally idempotent (`__selectionLassoReady` /
+    // `__selectionDragReady` guards), so re-render calls are no-ops after
+    // the first.
+    _initSelectionLasso(map);
+    _initSelectionDrag(map);
+    // If selection mode was on when this re-render started (only possible on
+    // the very first load — `refetchAndRenderTrack` clears it before
+    // refetching), sync the JS-side state so the toolbar/layer/dragging
+    // match the checkbox.
+    if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
+  }
+  // Expose so post-mutation refetch (window.__refetchAndRenderTrack, defined
+  // outside the IIFE) can drive a re-render.
+  window.__renderGpsTrack = renderGpsTrack;
+
   // Reuse the early-kicked-off promise from <head> so the network round
   // trip happens in parallel with HTML parsing instead of waiting until
   // this script block runs (after photo <img> tags have queued).
   (window.__trackPromise || fetch('/api/trips/{{ trip.id }}/track{% if is_admin %}?admin=1{% endif %}', { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : { __error: { status: r.status, statusText: r.statusText } }))
-    .then(rawPoints => {
-      if (rawPoints && rawPoints.__error) {
-        const e = rawPoints.__error;
-        if (e.status != null) trackLog(`track fetch returned non-OK status ${e.status} ${e.statusText} — using straight track`);
-        else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
-        return;
-      }
-      const rawAll = Array.isArray(rawPoints) ? rawPoints : [];
-      // Suppressed pings are kept out of the polyline / home-boundary detection
-      // / regular per-point markers entirely; they're rendered separately as
-      // gray "ghost" dots that the admin can toggle on via the "Show suppressed
-      // pings" checkbox and click to unsuppress. (For non-admins the server
-      // already filtered them out, so `suppressed` is never set.)
-      // Relocated pings, by contrast, ARE in the polyline — at their override
-      // coords (the server already rewrote lat/lon). For admins they also
-      // carry `original_lat`/`original_lon` so the "Show relocated pings"
-      // toggle can mark them and draw a dashed line back to the source.
-      const raw = rawAll.filter(p => !p.suppressed);
-      const rawSuppressed = rawAll.filter(p => p.suppressed);
-      const rawRelocated = rawAll.filter(p => p.relocated && !p.suppressed);
-      // Compute auto trip-start/end times before any short-circuits so the
-      // home-card display still updates even when the polyline is skipped.
-      let autoHomeStartTst = null, autoHomeEndTst = null;
-      if (raw.length) {
-        ({ homeStartTst: autoHomeStartTst, homeEndTst: autoHomeEndTst } =
-          findHomeBoundaryTimes(raw));
-        if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', autoHomeStartTst);
-        if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', autoHomeEndTst);
-      }
-      // Filter pings to the trip window so the polyline and per-point
-      // markers don't show pre-departure or post-arrival activity.
-      const { lowerCut, upperCut } = computeTripWindow(autoHomeStartTst, autoHomeEndTst);
-      const inWindow = raw.filter(p =>
-        (lowerCut == null || p.tst >= lowerCut) &&
-        (upperCut == null || p.tst <= upperCut));
-
-      // Build the suppressed / relocated ghost layers and wire their "Show …"
-      // toggles BEFORE the polyline short-circuits below. If the trip has no
-      // good in-window pings (or none near a stay), the GPS track is skipped
-      // — but the admin still needs a way to surface and undo any suppressed
-      // or relocated pings the trip carries.
-      //
-      // Note: we deliberately pass the UNWINDOWED `rawSuppressed`/`rawRelocated`
-      // lists. A suppressed/relocated ping that falls just outside the
-      // auto-detected trip window (e.g. the ping tst is a few minutes before
-      // `autoHomeStartTst`) would otherwise drop from the ghost layer and
-      // leave the toggle disabled, with no way for the admin to undo it.
-      // Polyline state is the only thing that needs the window filter.
-      trackLog('ping counts',
-        { rawAll: rawAll.length, raw: raw.length,
-          suppressed: rawSuppressed.length, relocated: rawRelocated.length });
-      _buildSuppressedRelocatedLayers(rawSuppressed, rawRelocated);
-
-      if (inWindow.length < 2) {
-        trackLog('not enough in-window GPS points to draw a track — using straight track',
-          { rawCount: raw.length, inWindowCount: inWindow.length, lowerCut, upperCut });
-        return;
-      }
-
-      // Auto-fallback: if no in-window ping lands within TRACK_NEAR_STAY_KM
-      // of any stay or event, the GPS data doesn't actually cover this trip
-      // (e.g. logging was off, wrong device). Skip GPS rendering so the
-      // straight-line route remains visible as the only polyline.
-      const TRACK_NEAR_STAY_KM = 5;
-      const anchorCoords = [
-        ...mapped.map(s => [s.lat, s.lng]),
-        ...mappedEvents.map(e => [e.lat, e.lng]),
-      ].filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
-      if (anchorCoords.length) {
-        const radiusM = TRACK_NEAR_STAY_KM * 1000;
-        const nearAny = inWindow.some(p =>
-          anchorCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
-        if (!nearAny) {
-          trackLog(
-            `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay or event — using straight track`,
-            { inWindowCount: inWindow.length, anchorCount: anchorCoords.length });
-          return;
-        }
-      }
-
-      const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
-      const latlngs = sorted.map(p => [p.lat, p.lon]);
-      const gpsRouteLayer = L.layerGroup([
-        L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
-        L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
-      ]);
-      layerControl.addOverlay(gpsRouteLayer, 'GPS track');
-      if (straightRouteLayer && map.hasLayer(straightRouteLayer)) {
-        map.removeLayer(straightRouteLayer);
-      }
-      gpsRouteLayer.addTo(map);
-
-      // Per-point click targets: small circles at each GPS ping that pop up
-      // coords + local time when clicked. Hidden when zoomed out so they
-      // don't crowd the map; auto-revealed at GPS_POINT_MIN_ZOOM and
-      // re-hidden when the user zooms back out. Tied to the GPS-track layer
-      // in the layer control so toggling the track also toggles the points.
-      // When the admin "Select pings" toggle is on, the points are forced
-      // visible at any zoom and click toggles selection (see
-      // togglePingSelection / createFromSelection below).
-      const GPS_POINT_MIN_ZOOM = 14;
-      const gpsPointLayer = L.layerGroup();
-      const gpsPointMarkers = [];
-      sorted.forEach((p, i) => {
-        const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
-        m.__ping = p;
-        m.__pingIdx = i;
-        m.__selected = false;
-        const dt = new Date(p.tst * 1000);
-        const fmtOpts = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          timeZoneName: 'short',
-        };
-        if (p.tz) fmtOpts.timeZone = p.tz;
-        const local = dt.toLocaleString(undefined, fmtOpts);
-        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-        m.bindPopup(
-          `<div style="font-size:.85rem;line-height:1.4">` +
-          `<div><strong>${local}</strong></div>` +
-          `<div style="font-family:monospace">${coords}</div>` +
-          `</div>`);
-        // Intercept clicks before Leaflet opens the popup when we're in
-        // selection mode. The popup-open event itself isn't suppressible
-        // cleanly from a popup binding, so we close it after-the-fact.
-        m.on('click', () => {
-          // A drag-move that just ended fires a click on the dragged marker
-          // — swallow it so we don't deselect the ping the user just moved.
-          if (window.__selectionDragJustEnded) return;
-          if (window.__selectionModeActive) {
-            togglePingSelection(i);
-            m.closePopup();
-          }
-        });
-        gpsPointLayer.addLayer(m);
-        gpsPointMarkers.push(m);
-      });
-      window.__gpsPings = sorted;
-      window.__gpsPointMarkers = gpsPointMarkers;
-      window.__gpsPointLayer = gpsPointLayer;
-
-      function syncGpsPoints() {
-        const trackVisible = map.hasLayer(gpsRouteLayer);
-        const wantVisible = window.__selectionModeActive ||
-          (trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
-        if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
-        if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
-      }
-      window.__syncGpsPoints = syncGpsPoints;
-      map.on('zoomend', syncGpsPoints);
-      map.on('overlayadd overlayremove', syncGpsPoints);
-      syncGpsPoints();
-      // Pings are loaded — enable the admin "Select pings" toggle.
-      const selToggle = document.getElementById('selection-mode-toggle');
-      const selLabel = document.getElementById('selection-mode-label');
-      if (selToggle) selToggle.disabled = false;
-      if (selLabel) {
-        selLabel.classList.remove('disabled');
-        selLabel.title = 'Click GPS points to toggle individually, or click-and-drag on the map to lasso every ping inside a circle. Drag a selected ping to move the whole selection to a new location, or use "Center selected" to collapse them onto their centroid.';
-      }
-      // Wire the click-and-drag "lasso circle" handlers to this map. Safe to
-      // call once we have markers; it's gated internally on the active mode.
-      _initSelectionLasso(map);
-      // …and wire mousedown-drag on selected pings to move the whole
-      // selection. Mutually compatible with the lasso (lasso fires from
-      // non-selected mousedowns; drag fires from selected ones).
-      _initSelectionDrag(map);
-      // Browsers preserve checkbox state across location.reload() (which we do
-      // after creating an event/waypoint from a selection). If the toggle came
-      // up checked, sync the JS state so the toolbar/layer/dragging match.
-      if (selToggle && selToggle.checked) toggleSelectionMode(selToggle);
-    })
+    .then(renderGpsTrack)
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
     });
@@ -3353,8 +3420,8 @@ function suppressFromSelection() {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      _disableSelectionToggleBeforeReload();
-      _reloadKeepingMapView();
+      // refetchAndRenderTrack() clears the selection toggle internally.
+      refetchAndRenderTrack();
     })
     .catch(err => alert('Failed to suppress pings: ' + err));
 }
@@ -3399,7 +3466,6 @@ function centerSelectedPings() {
     `Use the "Show relocated pings" toggle to review or undo.`
   );
   if (!ok) return;
-  _disableSelectionToggleBeforeReload();
   fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -3408,7 +3474,8 @@ function centerSelectedPings() {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      _reloadKeepingMapView();
+      // refetchAndRenderTrack() clears the selection toggle internally.
+      refetchAndRenderTrack();
     })
     .catch(err => alert('Failed to center pings: ' + err));
 }
@@ -3460,7 +3527,7 @@ function unrelocatePing(tst) {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      _reloadKeepingMapView();
+      refetchAndRenderTrack();
     })
     .catch(err => alert('Failed to restore ping: ' + err));
 }
@@ -3479,10 +3546,11 @@ function unsuppressPing(tst) {
     .then(r => r.json())
     .then(data => {
       if (data.error) { alert(data.error); return; }
-      // Reload so the polyline + regular markers pick the restored ping
+      // Re-render so the polyline + regular markers pick the restored ping
       // back up. Leave the "Show suppressed" toggle as-is — if the user
-      // had it on, they're probably reviewing more.
-      _reloadKeepingMapView();
+      // had it on, they're probably reviewing more — `_buildSuppressedRelocatedLayers`
+      // re-applies the checked state to the freshly-built layer.
+      refetchAndRenderTrack();
     })
     .catch(err => alert('Failed to unsuppress ping: ' + err));
 }
