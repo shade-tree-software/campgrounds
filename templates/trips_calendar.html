@@ -27,6 +27,14 @@
 
   .controls button:hover { background: var(--navy); }
 
+  .controls button:disabled {
+    background: var(--gray-light);
+    color: var(--gray);
+    cursor: not-allowed;
+    opacity: .6;
+  }
+  .controls button:disabled:hover { background: var(--gray-light); }
+
   .controls .year-label {
     font-size: 1.3rem;
     font-weight: 700;
@@ -261,9 +269,9 @@
 
 {% block content %}
 <div class="controls">
-  <button onclick="prevYear()">&larr;</button>
+  <button id="prev-year-btn" onclick="prevYear()">&larr;</button>
   <div class="year-label" id="year-label"></div>
-  <button onclick="nextYear()">&rarr;</button>
+  <button id="next-year-btn" onclick="nextYear()">&rarr;</button>
   {% if current_user.is_authenticated and current_user.is_admin %}
   <button class="btn-add-trip" onclick="addTrip()" style="
     background: var(--red);
@@ -345,6 +353,8 @@ function nextYear() {
 
 function render() {
   document.getElementById('year-label').textContent = currentYear;
+  document.getElementById('prev-year-btn').disabled = currentYear <= minYear;
+  document.getElementById('next-year-btn').disabled = currentYear >= maxYear;
   updateHash();
   if (currentView === 'calendar') renderCalendar();
   else renderList();
