@@ -1324,6 +1324,33 @@ def api_geocode():
         return jsonify([])
 
 
+# Full state/territory name → USPS two-letter abbreviation. Used by
+# /api/reverse-geocode to normalize Nominatim's full state name to the
+# 2-letter form that the rest of the project stores. Includes DC and the
+# inhabited US territories so Nominatim hits in those regions also map.
+_US_STATE_ABBR = {
+    "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+    "California": "CA", "Colorado": "CO", "Connecticut": "CT",
+    "Delaware": "DE", "Florida": "FL", "Georgia": "GA", "Hawaii": "HI",
+    "Idaho": "ID", "Illinois": "IL", "Indiana": "IN", "Iowa": "IA",
+    "Kansas": "KS", "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME",
+    "Maryland": "MD", "Massachusetts": "MA", "Michigan": "MI",
+    "Minnesota": "MN", "Mississippi": "MS", "Missouri": "MO",
+    "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+    "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM",
+    "New York": "NY", "North Carolina": "NC", "North Dakota": "ND",
+    "Ohio": "OH", "Oklahoma": "OK", "Oregon": "OR", "Pennsylvania": "PA",
+    "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD",
+    "Tennessee": "TN", "Texas": "TX", "Utah": "UT", "Vermont": "VT",
+    "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+    "Wisconsin": "WI", "Wyoming": "WY",
+    "District of Columbia": "DC",
+    "American Samoa": "AS", "Guam": "GU",
+    "Northern Mariana Islands": "MP", "Puerto Rico": "PR",
+    "U.S. Virgin Islands": "VI", "United States Virgin Islands": "VI",
+}
+
+
 @app.route('/api/reverse-geocode')
 def api_reverse_geocode():
     """Reverse-geocode lat/lng via Nominatim. Returns the nearest named entity
@@ -1362,10 +1389,21 @@ def api_reverse_geocode():
         locale = (addr.get("city") or addr.get("town") or addr.get("village")
                   or addr.get("hamlet") or addr.get("municipality")
                   or addr.get("township") or addr.get("county") or "")
+        # State: project convention is the 2-letter USPS abbreviation
+        # (campgrounds.json stores "CA", "NY", …). Prefer Nominatim's
+        # ISO 3166-2 subdivision code (e.g. "US-CA"); fall back to mapping
+        # the full state name; finally fall back to the raw value.
+        state_full = (addr.get("state") or "").strip()
+        iso = (addr.get("ISO3166-2-lvl4") or "").strip()
+        state = ""
+        if iso and "-" in iso:
+            state = iso.split("-", 1)[1].upper()
+        if not state:
+            state = _US_STATE_ABBR.get(state_full, state_full)
         return jsonify({
             "name": name,
             "locale": locale,
-            "state": addr.get("state", ""),
+            "state": state,
             "display_name": data.get("display_name", ""),
         })
     except Exception:
