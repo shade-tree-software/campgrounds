@@ -2426,52 +2426,56 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
     gpsRouteLayer.addTo(map);
 
-    // Current-location marker: when today falls inside the trip's date range,
-    // drop a pulsing green dot at the most recent in-window ping so anyone
-    // following the trip can see where the travelers currently are. `sorted`
-    // is ordered ascending by tst, so the last entry is the latest reading.
-    // Boundary-padded pings can sit at either end: the lead-out ping (tst >
-    // upperCut) only exists for trips already over — and an over trip fails
-    // the `_isTripActive` check below — so for active trips the last
-    // entry of `sorted` is always a true in-trip ping.
-    if (TRIP_START && TRIP_END) {
-      const today = _todayLocalISO();
-      const tripActive = today >= TRIP_START && today <= TRIP_END;
-      if (tripActive && sorted.length) {
-        const latest = sorted[sorted.length - 1];
-        const dt = new Date(latest.tst * 1000);
-        const fmtOpts = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit',
-        };
-        if (latest.tz) fmtOpts.timeZone = latest.tz;
-        const local = dt.toLocaleString(undefined, fmtOpts);
-        // Tooltip's "X ago" hint so a stale ping (poor coverage, phone off)
-        // doesn't masquerade as a fresh fix without context.
-        const ageMin = Math.max(0, (Date.now() / 1000 - latest.tst) / 60);
-        const ageLabel = ageMin < 60
-          ? `${Math.round(ageMin)} min ago`
-          : ageMin < 60 * 24
-            ? `${Math.round(ageMin / 60)} hr ago`
-            : `${Math.round(ageMin / 60 / 24)} d ago`;
-        const icon = L.divIcon({
-          className: '',
-          html: '<div class="current-location-marker">' +
-                '<div class="pulse"></div><div class="dot"></div></div>',
-          iconSize: [18, 18],
-          iconAnchor: [9, 9],
-        });
-        // zIndexOffset 950 sits above stays (800) and events (700) so the
-        // pulse is never hidden behind a same-coords stay marker, while
-        // staying below the home (1000) anchor.
-        const m = L.marker([latest.lat, latest.lon], { icon, zIndexOffset: 950 });
-        m.bindTooltip(
-          `<strong>Current location</strong><br>${local}<br><em>${ageLabel}</em>`,
-          { direction: 'top', offset: [0, -8] }
-        );
-        m.addTo(map);
-        window.__currentLocationMarker = m;
-      }
+    // Current-location marker: when *now* sits inside the trip window, drop
+    // a pulsing green dot at the most recent in-window ping so anyone
+    // following the trip can see where the travelers currently are. The
+    // window comes from `computeTripWindow` above and respects manual
+    // HOME_START_TIME / HOME_END_TIME overrides, auto-detected home
+    // boundaries, and date-fallback bounds — so the marker won't appear
+    // before the trip's departure time on day 1 or after its arrival time
+    // on the last day. `sorted` is ascending by tst; the last entry is the
+    // latest reading. The lead-out boundary-pad ping (tst > upperCut) only
+    // exists for trips already past `upperCut`, which would fail the
+    // `nowInWindow` check below, so for active trips the last entry is
+    // always a true in-trip ping.
+    const nowTst = Date.now() / 1000;
+    const nowInWindow = TRIP_START && TRIP_END && sorted.length &&
+      (lowerCut == null || nowTst >= lowerCut) &&
+      (upperCut == null || nowTst <= upperCut);
+    if (nowInWindow) {
+      const latest = sorted[sorted.length - 1];
+      const dt = new Date(latest.tst * 1000);
+      const fmtOpts = {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      };
+      if (latest.tz) fmtOpts.timeZone = latest.tz;
+      const local = dt.toLocaleString(undefined, fmtOpts);
+      // Tooltip's "X ago" hint so a stale ping (poor coverage, phone off)
+      // doesn't masquerade as a fresh fix without context.
+      const ageMin = Math.max(0, (Date.now() / 1000 - latest.tst) / 60);
+      const ageLabel = ageMin < 60
+        ? `${Math.round(ageMin)} min ago`
+        : ageMin < 60 * 24
+          ? `${Math.round(ageMin / 60)} hr ago`
+          : `${Math.round(ageMin / 60 / 24)} d ago`;
+      const icon = L.divIcon({
+        className: '',
+        html: '<div class="current-location-marker">' +
+              '<div class="pulse"></div><div class="dot"></div></div>',
+        iconSize: [18, 18],
+        iconAnchor: [9, 9],
+      });
+      // zIndexOffset 950 sits above stays (800) and events (700) so the
+      // pulse is never hidden behind a same-coords stay marker, while
+      // staying below the home (1000) anchor.
+      const m = L.marker([latest.lat, latest.lon], { icon, zIndexOffset: 950 });
+      m.bindTooltip(
+        `<strong>Current location</strong><br>${local}<br><em>${ageLabel}</em>`,
+        { direction: 'top', offset: [0, -8] }
+      );
+      m.addTo(map);
+      window.__currentLocationMarker = m;
     }
 
     // Per-point click targets: small circles at each GPS ping that pop up
