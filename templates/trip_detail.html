@@ -1227,6 +1227,38 @@
   }
 
   .btn-pick-location:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── Current-location marker ───────────────────────
+     Pulsing green dot dropped at the most recent in-window GPS ping when
+     today falls inside the trip's date range. Stands out against the navy
+     stays / gold events / red home palette. Built as a divIcon so the
+     pulse can be a pure-CSS halo animation. */
+  .current-location-marker {
+    position: relative;
+    width: 18px;
+    height: 18px;
+  }
+  .current-location-marker .dot {
+    position: absolute;
+    inset: 0;
+    background: #00c853;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0,0,0,.45);
+    box-sizing: border-box;
+  }
+  .current-location-marker .pulse {
+    position: absolute;
+    inset: 0;
+    background: #00c853;
+    border-radius: 50%;
+    opacity: .55;
+    animation: current-location-pulse 1.8s ease-out infinite;
+  }
+  @keyframes current-location-pulse {
+    0%   { transform: scale(1); opacity: .55; }
+    100% { transform: scale(3); opacity: 0; }
+  }
 {% endblock %}
 
 {% block content %}
@@ -2262,6 +2294,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       map.off('overlayadd overlayremove', window.__syncGpsPoints);
       window.__syncGpsPoints = null;
     }
+    if (window.__currentLocationMarker) {
+      if (map.hasLayer(window.__currentLocationMarker)) map.removeLayer(window.__currentLocationMarker);
+      window.__currentLocationMarker = null;
+    }
     // The straight-line route is the visible default whenever no GPS polyline
     // is up. A previous GPS render may have removed it; restore it now and
     // let a successful new GPS render re-hide it if appropriate.
@@ -2389,6 +2425,54 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       map.removeLayer(straightRouteLayer);
     }
     gpsRouteLayer.addTo(map);
+
+    // Current-location marker: when today falls inside the trip's date range,
+    // drop a pulsing green dot at the most recent in-window ping so anyone
+    // following the trip can see where the travelers currently are. `sorted`
+    // is ordered ascending by tst, so the last entry is the latest reading.
+    // Boundary-padded pings can sit at either end: the lead-out ping (tst >
+    // upperCut) only exists for trips already over — and an over trip fails
+    // the `_isTripActive` check below — so for active trips the last
+    // entry of `sorted` is always a true in-trip ping.
+    if (TRIP_START && TRIP_END) {
+      const today = _todayLocalISO();
+      const tripActive = today >= TRIP_START && today <= TRIP_END;
+      if (tripActive && sorted.length) {
+        const latest = sorted[sorted.length - 1];
+        const dt = new Date(latest.tst * 1000);
+        const fmtOpts = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit',
+        };
+        if (latest.tz) fmtOpts.timeZone = latest.tz;
+        const local = dt.toLocaleString(undefined, fmtOpts);
+        // Tooltip's "X ago" hint so a stale ping (poor coverage, phone off)
+        // doesn't masquerade as a fresh fix without context.
+        const ageMin = Math.max(0, (Date.now() / 1000 - latest.tst) / 60);
+        const ageLabel = ageMin < 60
+          ? `${Math.round(ageMin)} min ago`
+          : ageMin < 60 * 24
+            ? `${Math.round(ageMin / 60)} hr ago`
+            : `${Math.round(ageMin / 60 / 24)} d ago`;
+        const icon = L.divIcon({
+          className: '',
+          html: '<div class="current-location-marker">' +
+                '<div class="pulse"></div><div class="dot"></div></div>',
+          iconSize: [18, 18],
+          iconAnchor: [9, 9],
+        });
+        // zIndexOffset 950 sits above stays (800) and events (700) so the
+        // pulse is never hidden behind a same-coords stay marker, while
+        // staying below the home (1000) anchor.
+        const m = L.marker([latest.lat, latest.lon], { icon, zIndexOffset: 950 });
+        m.bindTooltip(
+          `<strong>Current location</strong><br>${local}<br><em>${ageLabel}</em>`,
+          { direction: 'top', offset: [0, -8] }
+        );
+        m.addTo(map);
+        window.__currentLocationMarker = m;
+      }
+    }
 
     // Per-point click targets: small circles at each GPS ping that pop up
     // coords + local time when clicked. Hidden when zoomed out so they
