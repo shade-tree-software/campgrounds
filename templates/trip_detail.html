@@ -2459,10 +2459,31 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
         : ageMin < 60 * 24
           ? `${Math.round(ageMin / 60)} hr ago`
           : `${Math.round(ageMin / 60 / 24)} d ago`;
+      // Drop the pulse animation when the traveler is parked at one of the
+      // trip's campgrounds / campsites. The pulse reads as "live and moving";
+      // a still dot reads as "here for now". Vicinity uses each stay's
+      // resolved lat/lng — which is the `campsite_location` override when
+      // set, else the campground's listed coords — within 300 m (roughly a
+      // typical campground footprint, big enough to cover entrance-to-actual-
+      // site offsets, small enough that driving past doesn't trigger it).
+      const AT_CAMPSITE_RADIUS_M = 300;
+      let nearestStay = null;
+      let nearestMeters = Infinity;
+      mapped.forEach(s => {
+        const d = distMeters([latest.lat, latest.lon], [s.lat, s.lng]);
+        if (d <= AT_CAMPSITE_RADIUS_M && d < nearestMeters) {
+          nearestStay = s;
+          nearestMeters = d;
+        }
+      });
+      const atCampsite = !!nearestStay;
+      const markerHtml = atCampsite
+        ? '<div class="current-location-marker"><div class="dot"></div></div>'
+        : '<div class="current-location-marker">' +
+          '<div class="pulse"></div><div class="dot"></div></div>';
       const icon = L.divIcon({
         className: '',
-        html: '<div class="current-location-marker">' +
-              '<div class="pulse"></div><div class="dot"></div></div>',
+        html: markerHtml,
         iconSize: [18, 18],
         iconAnchor: [9, 9],
       });
@@ -2470,8 +2491,11 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       // pulse is never hidden behind a same-coords stay marker, while
       // staying below the home (1000) anchor.
       const m = L.marker([latest.lat, latest.lon], { icon, zIndexOffset: 950 });
+      const title = atCampsite && nearestStay.place
+        ? `At ${escapeHtml(nearestStay.place)}`
+        : 'Current location';
       m.bindTooltip(
-        `<strong>Current location</strong><br>${local}<br><em>${ageLabel}</em>`,
+        `<strong>${title}</strong><br>${local}<br><em>${ageLabel}</em>`,
         { direction: 'top', offset: [0, -8] }
       );
       m.addTo(map);
