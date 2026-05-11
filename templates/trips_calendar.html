@@ -457,7 +457,7 @@ function renderList() {
     const y = parseInt(t.start.slice(0, 4));
     const ey = parseInt(t.end.slice(0, 4));
     return y === currentYear || ey === currentYear;
-  });
+  }).slice().reverse();
 
   if (yearTrips.length === 0 && emptyTrips.length === 0) {
     container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No trips in ' + currentYear + '</p>';
