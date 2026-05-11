@@ -3338,26 +3338,9 @@ function createFromSelection(kind) {
   _openModal(kind, 'add', null, values);
 
   // Reverse-geocode the centroid to suggest name/locale/state. Run async so
-  // the modal opens immediately; fill only fields the user hasn't started
-  // editing (and treat "New Waypoint" as auto-filled too).
-  fetch('/api/reverse-geocode?lat=' + avgLat + '&lng=' + avgLng,
-        { credentials: 'same-origin' })
-    .then(r => r.ok ? r.json() : null)
-    .then(data => {
-      if (!data) return;
-      const body = document.getElementById('add-modal-body');
-      if (!body) return;
-      const nameI = body.querySelector('[data-field="name"]');
-      const locI = body.querySelector('[data-field="locale"]');
-      const stI = body.querySelector('[data-field="state"]');
-      if (nameI && data.name) {
-        const cur = (nameI.value || '').trim();
-        if (!cur || cur === 'New Waypoint') nameI.value = data.name;
-      }
-      if (locI && data.locale && !locI.value) locI.value = data.locale;
-      if (stI && data.state && !stI.value) stI.value = data.state;
-    })
-    .catch(() => { /* keep what we have if the lookup fails */ });
+  // the modal opens immediately; the helper only fills fields the user
+  // hasn't started editing.
+  _fillModalFromReverseGeocode(avgLat, avgLng);
 }
 
 // Set the campsite_location override on whichever campspot is currently
@@ -3585,7 +3568,54 @@ let addModalMode = 'add';        // 'add' | 'edit'
 let addModalEditIdx = null;
 
 function defaultAddDate() {
-  return FIRST_STAY_DATE || new Date().toISOString().slice(0, 10);
+  return FIRST_STAY_DATE || _todayLocalISO();
+}
+
+// Today / now in *local* components (not UTC). `new Date().toISOString()`
+// would shift around midnight in negative-UTC time zones — bad for
+// "current date" prefills meant to reflect what's on the user's clock.
+function _todayLocalISO() {
+  const d = new Date();
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function _nowLocalHM() {
+  const d = new Date();
+  return String(d.getHours()).padStart(2, '0') + ':' +
+    String(d.getMinutes()).padStart(2, '0');
+}
+
+// Mirrors the 700px mobile breakpoint used throughout the project CSS.
+function _isMobileViewport() {
+  return window.matchMedia('(max-width: 700px)').matches;
+}
+
+// Reverse-geocode a lat/lng and fill the currently-open Add modal's name /
+// locale / state fields, only touching fields the user hasn't started
+// editing. Shared by `createFromSelection` (post-ping-lasso) and the mobile
+// "Add Event/Waypoint" geolocation path. The modal may have been closed
+// before the fetch resolves — checks for the body/field presence each time.
+function _fillModalFromReverseGeocode(lat, lng) {
+  return fetch('/api/reverse-geocode?lat=' + lat + '&lng=' + lng,
+               { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : null)
+    .then(data => {
+      if (!data) return;
+      const body = document.getElementById('add-modal-body');
+      if (!body) return;
+      const nameI = body.querySelector('[data-field="name"]');
+      const locI = body.querySelector('[data-field="locale"]');
+      const stI = body.querySelector('[data-field="state"]');
+      if (nameI && data.name) {
+        const cur = (nameI.value || '').trim();
+        if (!cur || cur === 'New Waypoint') nameI.value = data.name;
+      }
+      if (locI && data.locale && !locI.value) locI.value = data.locale;
+      if (stI && data.state && !stI.value) stI.value = data.state;
+    })
+    .catch(() => { /* keep what we have if the lookup fails */ });
 }
 
 function addDays(isoDate, days) {
@@ -3732,7 +3762,47 @@ function _openModal(kind, mode, idx, prefillValues) {
   }, 50);
 }
 
-function openAddModal(kind) { _openModal(kind, 'add', null); }
+function openAddModal(kind) {
+  // On mobile, an Add Event / Add Waypoint is almost always "log what I'm
+  // doing right now, right here" — so prefill the date+time from the user's
+  // clock and (async) the location + locale + state from Geolocation +
+  // reverse-geocode, mirroring `createFromSelection`'s ping-lasso flow.
+  // Stay and family-visit adds are typically planned in advance and skip
+  // this. Desktop also skips: the user has a keyboard and a map picker
+  // right there, and "the current GPS fix" is rarely what they want.
+  if (_isMobileViewport() && (kind === 'event' || kind === 'waypoint') &&
+      navigator.geolocation) {
+    const isWp = (kind === 'waypoint');
+    const values = {
+      name: isWp ? 'New Waypoint' : '',
+      date: _todayLocalISO(),
+      time: _nowLocalHM(),
+      waypoint: isWp,
+    };
+    _openModal(kind, 'add', null, values);
+    // Geolocation may take a couple seconds (or fail entirely if the user
+    // denies the prompt). Fire it after the modal is already on screen so
+    // the user isn't staring at a blank tap. Fills only empty fields, so a
+    // user who starts typing before the fix lands won't be overwritten.
+    navigator.geolocation.getCurrentPosition(pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      const body = document.getElementById('add-modal-body');
+      if (!body) return;  // modal already closed
+      const locInput = body.querySelector('[data-field="location"]');
+      if (locInput && !locInput.value) {
+        locInput.value = lat.toFixed(6) + ',' + lng.toFixed(6);
+      }
+      _fillModalFromReverseGeocode(lat, lng);
+    }, err => {
+      // Permission denied / unavailable / timed out — leave the prefilled
+      // date+time in place and let the user fill the rest by hand.
+      console.log('Geolocation unavailable for new ' + kind + ':', err.message);
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+    return;
+  }
+  _openModal(kind, 'add', null);
+}
 function openEditModal(kind, idx) {
   if (!IS_ADMIN) return;
   _openModal(kind, 'edit', idx);
