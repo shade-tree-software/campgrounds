@@ -2512,6 +2512,35 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       );
       m.addTo(map);
       window.__currentLocationMarker = m;
+
+      // Keep the dot fresh while the viewer sits on this page: every
+      // POLL_MS, refetch the GPS track and re-render via the existing
+      // refetchAndRenderTrack path (which tears down and rebuilds the
+      // polyline, per-point markers, and this current-location marker
+      // together, so they all stay in sync with the latest payload).
+      //
+      // One-shot scheduler (guarded by the global handle) so subsequent
+      // re-renders triggered by the poll itself can't pile up additional
+      // timers. The interval persists until page unload; if the trip ends
+      // mid-session the next render will simply not draw a marker, and
+      // the poll keeps no-op'ing — minor wasted load on an edge case.
+      //
+      // Polling pauses (skip the fetch but keep the timer) when:
+      //  - tab is backgrounded (no point spending the round trip),
+      //  - admin is in selection mode (a refresh would clear it),
+      //  - a selection drag is in flight,
+      //  - the add/edit modal is open (don't pull the rug under the form).
+      if (!window.__currentLocationPollHandle) {
+        const POLL_MS = 2 * 60 * 1000;
+        window.__currentLocationPollHandle = setInterval(() => {
+          if (document.visibilityState !== 'visible') return;
+          if (window.__selectionModeActive) return;
+          if (window.__selectionDragInProgress) return;
+          const modal = document.getElementById('add-modal');
+          if (modal && modal.classList.contains('visible')) return;
+          refetchAndRenderTrack();
+        }, POLL_MS);
+      }
     }
 
     // Per-point click targets: small circles at each GPS ping that pop up
