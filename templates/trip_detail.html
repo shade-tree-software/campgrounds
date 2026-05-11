@@ -264,6 +264,13 @@
     line-height: 1.5;
   }
 
+  /* Description rendered inside .event-info on bare waypoint cards (where
+     .event-body is hidden). Tighter spacing — no photos follow it. */
+  .event-description-inline {
+    margin-top: .35rem;
+    margin-bottom: 0;
+  }
+
   .event-edit-form {
     display: none;
     padding: 1rem;
@@ -1538,6 +1545,11 @@
           {% endif %}
           {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
         </div>
+        {# Bare waypoint cards hide .event-body, so render description inline here.
+           Non-bare cards still render description inside .event-body below. #}
+        {% if is_bare and item.waypoint and item.description %}
+        <div class="event-description event-description-inline">{{ item.description }}</div>
+        {% endif %}
       </div>
       {% if is_admin or is_uploader %}
       <span class="card-actions">{% if is_admin %}{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button></span>
