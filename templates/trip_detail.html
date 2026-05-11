@@ -2348,6 +2348,35 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       }
     }
 
+    // Pad the polyline by one ping at each boundary so it starts with a
+    // "leaving home" leg and ends with an "arriving home" leg instead of
+    // snapping in at the locked departure point and out at the locked
+    // arrival point. For auto-detected boundaries the extra ping is the
+    // last at-home / first back-at-home reading; for manual HOME_START_TIME
+    // / HOME_END_TIME overrides it's whatever the user logged just outside
+    // that timestamp. We pad *after* the < 2 and near-stay gates so a trip
+    // with no real in-window data still falls back to the straight route
+    // (boundary pings would be at home, never near a stay, so they can't
+    // tip those checks on their own).
+    if (lowerCut != null) {
+      let beforeLower = null;
+      for (const p of raw) {
+        if (p.tst < lowerCut && (!beforeLower || p.tst > beforeLower.tst)) {
+          beforeLower = p;
+        }
+      }
+      if (beforeLower) inWindow.push(beforeLower);
+    }
+    if (upperCut != null) {
+      let afterUpper = null;
+      for (const p of raw) {
+        if (p.tst > upperCut && (!afterUpper || p.tst < afterUpper.tst)) {
+          afterUpper = p;
+        }
+      }
+      if (afterUpper) inWindow.push(afterUpper);
+    }
+
     const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
     const latlngs = sorted.map(p => [p.lat, p.lon]);
     const gpsRouteLayer = L.layerGroup([
