@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EKKO Trips — Poster</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --navy: #002868;
+    --red: #bf0a30;
+    --gold: #c9a84c;
+    --paper: #fafaf6;
+    --ink: #1d1d1f;
+    --rule: #c8c0a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    background: #2a2a2e;
+    min-height: 100vh;
+    color: var(--ink);
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    /* Hide overflow on the body so the poster's drop-shadow never spills
+       scrollbars; the sheet sizes itself to fit the viewport. */
+    overflow: hidden;
+  }
+
+  /* The poster sheet — fixed 8.5×11 portrait aspect ratio. Sized to fit
+     within the viewport while preserving its proportions. On a typical
+     desktop screen, the height limit kicks in first; on narrow viewports
+     the width limit takes over. Margin auto centers it both axes via the
+     wrapping flex container below. */
+  .poster-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    padding: .75rem;
+  }
+  .poster-sheet {
+    aspect-ratio: 8.5 / 11;
+    background: var(--paper);
+    box-shadow: 0 12px 40px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
+    /* Constrain by whichever viewport axis is the binding limit. The
+       aspect-ratio property handles the other axis. Letter sheet is
+       portrait so on most screens it's height-bound. */
+    width: min(calc((100vh - 1.5rem) * 8.5 / 11), calc(100vw - 1.5rem));
+    height: min(calc(100vh - 1.5rem), calc((100vw - 1.5rem) * 11 / 8.5));
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Title bar ────────────────────────────────────────────────── */
+  .poster-title {
+    text-align: center;
+    padding: 2.2% 4% 1%;
+    border-bottom: 2px solid var(--rule);
+  }
+  .poster-title h1 {
+    font-size: 2.2cqw;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .poster-title h1 .amp {
+    color: var(--red);
+    margin: 0 .15em;
+  }
+  .poster-title .sub {
+    font-size: .95cqw;
+    font-style: italic;
+    color: var(--gray, #555);
+    margin-top: .25em;
+    letter-spacing: .04em;
+  }
+  /* cqw doesn't always work — fall back to viewport units sized to the
+     poster's width, which is height-driven on most screens. */
+  .poster-sheet { container-type: inline-size; }
+
+  /* ── Photo strips ─────────────────────────────────────────────── */
+  .poster-photos {
+    display: grid;
+    gap: 2px;
+    background: var(--rule);
+    padding: 2px;
+    overflow: hidden;
+  }
+  .poster-photos--top {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    min-height: 10%;
+  }
+  .poster-photos--bottom {
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    min-height: 22%;
+  }
+  .poster-thumb {
+    background: #222;
+    overflow: hidden;
+    position: relative;
+  }
+  .poster-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── Map + callouts ───────────────────────────────────────────── */
+  .poster-map-wrap {
+    position: relative;
+    overflow: hidden;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  #poster-map {
+    width: 100%;
+    height: 100%;
+    background: #d4dee5;
+  }
+  /* Leaflet's controls (zoom +/-, attribution) look out of place on a
+     poster. Hide them entirely — readers won't be panning. */
+  .poster-map-wrap .leaflet-control-zoom,
+  .poster-map-wrap .leaflet-control-attribution { display: none; }
+
+  /* SVG overlay carrying leader lines + callout boxes. Sits on top of
+     the leaflet pane and intercepts no pointer events so the map below
+     stays interactive (zoom-on-scroll is still disabled in JS). */
+  .callout-svg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+  }
+  .callout-leader {
+    fill: none;
+    stroke: var(--navy);
+    stroke-width: 1.1;
+    stroke-linecap: round;
+  }
+  .callout-leader-dot {
+    fill: var(--navy);
+    stroke: #fff;
+    stroke-width: 1;
+  }
+  .callout-box {
+    fill: #fff;
+    stroke: var(--navy);
+    stroke-width: 1.1;
+    rx: 4;
+    ry: 4;
+  }
+  .callout-number {
+    fill: var(--navy);
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 700;
+    font-size: 11px;
+    text-anchor: middle;
+    dominant-baseline: central;
+  }
+  .callout-label {
+    fill: var(--ink);
+    font-family: -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 500;
+    font-size: 9px;
+    dominant-baseline: central;
+  }
+
+  /* Print: hide the dark background, set page to letter portrait, and
+     remove drop shadow so it prints cleanly edge-to-edge. */
+  @media print {
+    @page { size: letter portrait; margin: 0; }
+    html, body { background: white; overflow: visible; }
+    .poster-wrap { height: auto; padding: 0; }
+    .poster-sheet {
+      box-shadow: none;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 8.5 / 11;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="poster-wrap">
+  <div class="poster-sheet">
+    <div class="poster-title">
+      <h1>EKKO <span class="amp">&middot;</span> Trips</h1>
+      <div class="sub">A travel record</div>
+    </div>
+
+    <div class="poster-photos poster-photos--top" id="photos-top"></div>
+
+    <div class="poster-map-wrap">
+      <div id="poster-map"></div>
+      <svg class="callout-svg" id="callout-svg"></svg>
+    </div>
+
+    <div class="poster-photos poster-photos--bottom" id="photos-bottom"></div>
+  </div>
+</div>
+
+<script>
+const TRIPS = {{ trips | tojson }};
+const FAMILY = {{ family_locations | tojson }};
+const HOME = {{ home | tojson }};
+const PHOTOS = {{ poster_photos | tojson }};
+
+// ── Photo strips ────────────────────────────────────────────────────────────
+// Top strip = 12 × 2 = 24 thumbs. Bottom strip = 12 × 5 = 60 thumbs. Picks
+// from the shuffled `PHOTOS` pool without repeating until we've exhausted it.
+function fillPhotoGrid(elId, count) {
+  const grid = document.getElementById(elId);
+  if (!grid || !PHOTOS.length) return;
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement('div');
+    div.className = 'poster-thumb';
+    const photo = PHOTOS[i % PHOTOS.length];
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.loading = 'lazy';
+    img.alt = '';
+    div.appendChild(img);
+    grid.appendChild(div);
+  }
+}
+fillPhotoGrid('photos-top', 24);
+fillPhotoGrid('photos-bottom', 60);
+
+// ── Map ─────────────────────────────────────────────────────────────────────
+// Same data plumbing as trips_map.html but stripped to the essentials: small
+// markers (no popups — viewers don't click a poster), no layer toggle, no
+// banner. Zoom controls disabled because the poster is meant to be a static
+// snapshot.
+const map = L.map('poster-map', {
+  zoomControl: false,
+  attributionControl: false,
+  scrollWheelZoom: false,
+  doubleClickZoom: false,
+  boxZoom: false,
+  keyboard: false,
+  dragging: false,
+  touchZoom: false,
+});
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+
+const bounds = HOME ? [HOME] : [];
+
+// Home marker (red house)
+if (HOME) {
+  const homeIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:20px;height:20px;border-radius:50%;
+      background:#bf0a30;
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);
+    "><svg width="11" height="11" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+  });
+  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map);
+}
+
+// Campspot markers — collapse stays at the same campground onto one dot,
+// sized by visit count (same logic as trips_map.html).
+const locMap = {};
+TRIPS.forEach(trip => {
+  trip.stays.forEach((stay) => {
+    let key, lat, lng;
+    if (stay.campground_id != null && stay.cg_lat != null && stay.cg_lng != null) {
+      key = 'cg:' + stay.campground_id;
+      lat = stay.cg_lat;
+      lng = stay.cg_lng;
+    } else if (stay.lat != null && stay.lng != null) {
+      key = 'coords:' + stay.lat.toFixed(4) + ',' + stay.lng.toFixed(4);
+      lat = stay.lat;
+      lng = stay.lng;
+    } else {
+      return;
+    }
+    if (!locMap[key]) locMap[key] = { lat, lng, visits: 0 };
+    locMap[key].visits += 1;
+  });
+});
+Object.values(locMap).forEach(loc => {
+  const ll = [loc.lat, loc.lng];
+  bounds.push(ll);
+  L.circleMarker(ll, {
+    radius: Math.min(4 + loc.visits, 9),
+    fillColor: '#002868',
+    color: '#fff',
+    weight: 1.2,
+    opacity: 1,
+    fillOpacity: 0.9,
+  }).addTo(map);
+});
+
+// Event markers (gold)
+TRIPS.forEach(trip => {
+  (trip.events || []).forEach(evt => {
+    if (!evt.lat || !evt.lng || evt.waypoint) return;
+    bounds.push([evt.lat, evt.lng]);
+    L.circleMarker([evt.lat, evt.lng], {
+      radius: 5,
+      fillColor: '#c9a84c',
+      color: '#fff',
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.9,
+    }).addTo(map);
+  });
+});
+
+// Family markers (red houses)
+FAMILY.forEach(fam => {
+  bounds.push([fam.lat, fam.lng]);
+  const famIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:18px;height:18px;border-radius:50%;
+      background:#bf0a30;
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);
+    "><svg width="10" height="10" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    iconSize: [18, 18],
+    iconAnchor: [9, 9],
+  });
+  L.marker([fam.lat, fam.lng], { icon: famIcon, zIndexOffset: 900 }).addTo(map);
+});
+
+if (bounds.length) {
+  map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
+}
+
+// ── Callouts ───────────────────────────────────────────────────────────────
+// One callout per dated trip. Each is anchored to a chosen "pinpoint" (first
+// stay if available, else first non-waypoint event), then placed at an evenly
+// spaced slot along whichever map perimeter side is closest by angle. Even
+// spacing along each side means no two callouts can overlap — and binning by
+// closest side keeps the leader lines short enough that the angular ordering
+// still mostly mirrors the pinpoint geography.
+//
+// Wait until Leaflet has settled the view (`moveend` fires after the
+// programmatic fitBounds above) — otherwise latLngToContainerPoint reads
+// the pre-fit center.
+function placeCallouts() {
+  const svg = document.getElementById('callout-svg');
+  const mapEl = document.getElementById('poster-map');
+  const mw = mapEl.clientWidth;
+  const mh = mapEl.clientHeight;
+  if (!mw || !mh) return;
+  svg.setAttribute('viewBox', `0 0 ${mw} ${mh}`);
+  svg.setAttribute('width', mw);
+  svg.setAttribute('height', mh);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  // Build the list of trip-anchors. Skip empty trips (no dates → no
+  // chronological number) and trips with no stay/event coordinates to point
+  // at. `trip.number` is the user-facing display number computed by
+  // parse_trips() based on sort position.
+  const anchors = [];
+  TRIPS.forEach(trip => {
+    if (!trip.number || !trip.start) return;
+    let pin = null;
+    for (const s of trip.stays) {
+      if (s.lat != null && s.lng != null) { pin = { lat: s.lat, lng: s.lng }; break; }
+    }
+    if (!pin) {
+      for (const e of (trip.events || [])) {
+        if (e.lat != null && e.lng != null && !e.waypoint) {
+          pin = { lat: e.lat, lng: e.lng }; break;
+        }
+      }
+    }
+    if (!pin) return;
+    anchors.push({ trip, pin });
+  });
+
+  const cx = mw / 2;
+  const cy = mh / 2;
+  anchors.forEach(a => {
+    const pt = map.latLngToContainerPoint([a.pin.lat, a.pin.lng]);
+    a.px = pt.x;
+    a.py = pt.y;
+    a.angle = Math.atan2(pt.y - cy, pt.x - cx);  // -π .. π (0 = east)
+  });
+
+  // Bin each anchor onto one of the four sides based on its angle from the
+  // map center. Angles divide the plane into four 90° sectors with origin
+  // at east; we shift by π/4 so the boundaries fall on the corners.
+  const sides = { right: [], bottom: [], left: [], top: [] };
+  anchors.forEach(a => {
+    const ang = a.angle;
+    if (ang >= -Math.PI/4 && ang < Math.PI/4) sides.right.push(a);
+    else if (ang >= Math.PI/4 && ang < 3*Math.PI/4) sides.bottom.push(a);
+    else if (ang >= -3*Math.PI/4 && ang < -Math.PI/4) sides.top.push(a);
+    else sides.left.push(a);
+  });
+
+  // Layout constants. Callouts are small pill-shaped boxes: a navy circle
+  // with the trip number on the left, summary text on the right.
+  const NUM_R = 9;
+  const BOX_H = 22;
+  const PAD_X = 6;
+  const TEXT_FONT = '500 9px -apple-system, Segoe UI, sans-serif';
+  const MARGIN = 14;  // pixels from the map edge to the callout's outer side
+
+  // Measure each callout's natural width (number circle + summary text).
+  // Cap the summary to keep the longest box within reasonable bounds —
+  // the poster doesn't have room for full novel-length stay names.
+  const measure = document.createElement('canvas').getContext('2d');
+  measure.font = TEXT_FONT;
+  anchors.forEach(a => {
+    const num = String(a.trip.number);
+    const summary = (a.trip.summary || '').slice(0, 28);
+    a.numText = num;
+    a.summary = summary;
+    const numW = 2 * NUM_R;
+    const textW = measure.measureText(summary).width;
+    a.boxW = numW + PAD_X + textW + PAD_X;
+  });
+
+  // Within each side, sort anchors by their position along that side's
+  // primary axis (x for top/bottom, y for left/right) so leader lines
+  // mostly run inward without crossing.
+  function placeSide(list, side) {
+    if (!list.length) return;
+    const isVertical = side === 'left' || side === 'right';
+    list.sort((a, b) => isVertical ? a.py - b.py : a.px - b.px);
+    if (isVertical) {
+      const x = side === 'left' ? MARGIN : (mw - MARGIN);
+      // Stack callouts vertically, spaced so even a dense side fits.
+      const totalH = list.length * BOX_H + (list.length - 1) * 4;
+      let y = Math.max(MARGIN, (mh - totalH) / 2) + BOX_H / 2;
+      list.forEach(a => {
+        a.boxCenter = { x: side === 'left' ? x + a.boxW / 2 : x - a.boxW / 2, y };
+        a.side = side;
+        y += BOX_H + 4;
+      });
+    } else {
+      const y = side === 'top' ? MARGIN + BOX_H / 2 : (mh - MARGIN - BOX_H / 2);
+      // Spread evenly along the horizontal extent, but keep boxes from
+      // running off the edge. Even spacing means equal centerline gaps.
+      const totalW = list.reduce((s, a) => s + a.boxW, 0) + 4 * (list.length - 1);
+      let x = Math.max(MARGIN + list[0].boxW / 2, (mw - totalW) / 2 + list[0].boxW / 2);
+      list.forEach((a, i) => {
+        if (i > 0) x += list[i - 1].boxW / 2 + 4 + a.boxW / 2;
+        a.boxCenter = { x, y };
+        a.side = side;
+      });
+    }
+  }
+  placeSide(sides.top, 'top');
+  placeSide(sides.right, 'right');
+  placeSide(sides.bottom, 'bottom');
+  placeSide(sides.left, 'left');
+
+  // Draw each callout: leader line first (so it sits behind), then the
+  // pinpoint dot (small navy circle marking the actual location), then the
+  // box and text.
+  const NS = 'http://www.w3.org/2000/svg';
+  anchors.forEach(a => {
+    if (!a.boxCenter) return;
+    const bx = a.boxCenter.x;
+    const by = a.boxCenter.y;
+    // Leader attaches to whichever box edge faces the pinpoint, so the
+    // line never visually crosses the box.
+    let lx2 = bx, ly2 = by;
+    if (a.side === 'top') ly2 = by + BOX_H / 2;
+    else if (a.side === 'bottom') ly2 = by - BOX_H / 2;
+    else if (a.side === 'left') lx2 = bx + a.boxW / 2;
+    else lx2 = bx - a.boxW / 2;
+
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', a.px);
+    line.setAttribute('y1', a.py);
+    line.setAttribute('x2', lx2);
+    line.setAttribute('y2', ly2);
+    line.setAttribute('class', 'callout-leader');
+    svg.appendChild(line);
+
+    // Small dot at the pinpoint itself — distinguishes the actual location
+    // from the regular markers below.
+    const dot = document.createElementNS(NS, 'circle');
+    dot.setAttribute('cx', a.px);
+    dot.setAttribute('cy', a.py);
+    dot.setAttribute('r', 2.5);
+    dot.setAttribute('class', 'callout-leader-dot');
+    svg.appendChild(dot);
+
+    // Rounded box.
+    const rect = document.createElementNS(NS, 'rect');
+    rect.setAttribute('x', bx - a.boxW / 2);
+    rect.setAttribute('y', by - BOX_H / 2);
+    rect.setAttribute('width', a.boxW);
+    rect.setAttribute('height', BOX_H);
+    rect.setAttribute('class', 'callout-box');
+    svg.appendChild(rect);
+
+    // Number circle on the left edge of the box.
+    const numCx = bx - a.boxW / 2 + NUM_R + 1;
+    const numCircle = document.createElementNS(NS, 'circle');
+    numCircle.setAttribute('cx', numCx);
+    numCircle.setAttribute('cy', by);
+    numCircle.setAttribute('r', NUM_R);
+    numCircle.setAttribute('fill', '#002868');
+    svg.appendChild(numCircle);
+
+    const numText = document.createElementNS(NS, 'text');
+    numText.setAttribute('x', numCx);
+    numText.setAttribute('y', by);
+    numText.setAttribute('class', 'callout-number');
+    numText.setAttribute('fill', '#fff');
+    numText.textContent = a.numText;
+    svg.appendChild(numText);
+
+    // Summary text to the right of the number circle.
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', numCx + NUM_R + PAD_X);
+    label.setAttribute('y', by);
+    label.setAttribute('class', 'callout-label');
+    label.textContent = a.summary;
+    svg.appendChild(label);
+  });
+}
+
+// Render the callouts once Leaflet has finished the fitBounds animation, and
+// again on any window resize (re-fit then redraw).
+map.whenReady(() => {
+  // `whenReady` fires before the fitBounds tween completes; wait for
+  // moveend to be sure latLngToContainerPoint reflects the final view.
+  map.once('moveend', placeCallouts);
+  // Belt-and-braces in case fitBounds was effectively a no-op (single point):
+  setTimeout(placeCallouts, 400);
+});
+window.addEventListener('resize', () => {
+  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
+  // moveend handler above (or the setTimeout) will redraw.
+  setTimeout(placeCallouts, 350);
+});
+</script>
+</body>
+</html>

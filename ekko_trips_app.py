@@ -468,6 +468,57 @@ def trips_map():
                            latest_trip_date=latest_trip_date)
 
 
+@app.route('/trips/poster')
+def trips_poster():
+    """Standalone 8.5×11 portrait "poster" view of all trips.
+
+    Intentionally not linked from the site nav — it's a direct-URL artifact for
+    printing / sharing. Shares the trips-map data shape (so each trip gets the
+    same resolved stay/event coordinates and the same photo pool) but renders
+    a print-oriented layout: title at the top, photo thumbnail strips above
+    and below, and the main map in the middle with a numbered callout per
+    trip pointing to one of its stays or events. Callouts are placed by JS
+    along the map perimeter after `fitBounds` settles so they never overlap.
+    """
+    trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
+    for trip in trips:
+        enrich_trip_locations(trip)
+    home, family = _map_config()
+
+    # Photo pool — gather every uploaded image across all trips, shuffled.
+    # Same shape as `trips_map`'s slideshow but typically rendered as many
+    # more thumbs (the poster wants a densely-tiled border).
+    import random
+    all_photos = []
+    for trip in trips:
+        for i, stay in enumerate(trip["stays"]):
+            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        all_photos.append({
+                            "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
+                            "trip_id": trip["id"],
+                        })
+        for i, event in enumerate(trip.get("events", [])):
+            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), "events", str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        all_photos.append({
+                            "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
+                            "trip_id": trip["id"],
+                        })
+    random.shuffle(all_photos)
+
+    return render_template('trips_poster.html', trips=trips, home=home,
+                           family_locations=family,
+                           poster_photos=all_photos)
+
+
 @app.route('/trips/calendar')
 @app.route('/trips/list')
 def trips_calendar():
