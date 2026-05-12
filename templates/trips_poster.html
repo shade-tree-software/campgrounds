@@ -55,8 +55,14 @@
        whatever's left. Without these explicit rows the four children
        would land in implicit auto-rows and the map would collapse to 0px
        while the photo cells inherited each image's natural aspect ratio
-       (tall portrait shots = tall cells). */
-    grid-template-rows: auto 14% 1fr 28%;
+       (tall portrait shots = tall cells). The 12%/24% split gives a
+       cell aspect of ~1.07 (slightly landscape) on the 8.5×11 sheet —
+       a square split would need ~13%/26% but lands on a value where
+       sub-pixel rounding can drift portrait; biasing landscape is
+       explicitly preferred over portrait. The two strip percentages
+       stay in a 1:2 ratio so per-cell height matches across both. */
+    display: grid;
+    grid-template-rows: auto 12% 1fr 24%;
     overflow: hidden;
     position: relative;
   }
@@ -108,7 +114,10 @@
   }
   .poster-photos--bottom {
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    /* 4 rows over the 24% bottom band gives the same 6%/row as the top
+       strip (2 rows over 12%). Same column count + same per-cell height
+       = identical thumbnail aspect ratio across both strips. */
+    grid-template-rows: repeat(4, 1fr);
   }
   .poster-thumb {
     background: #222;
@@ -173,19 +182,14 @@
     rx: 4;
     ry: 4;
   }
-  .callout-number {
-    fill: var(--navy);
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-weight: 700;
-    font-size: 11px;
-    text-anchor: middle;
-    dominant-baseline: central;
-  }
   .callout-label {
     fill: var(--ink);
     font-family: -apple-system, 'Segoe UI', sans-serif;
     font-weight: 500;
-    font-size: 9px;
+    /* Sized for the printed poster: at letter scale these glyphs land
+       around 11–12pt, well above the legibility floor. On-screen they
+       look small but the poster's screen view is just a preview. */
+    font-size: 6px;
     dominant-baseline: central;
   }
 
@@ -231,14 +235,18 @@ const PHOTOS = {{ poster_photos | tojson }};
 
 // ── Photo strips ────────────────────────────────────────────────────────────
 // Top strip = 12 × 2 = 24 thumbs. Bottom strip = 12 × 5 = 60 thumbs. Picks
-// from the shuffled `PHOTOS` pool without repeating until we've exhausted it.
+// from the shuffled `PHOTOS` pool sequentially via a shared cursor so the
+// bottom strip continues past whatever the top consumed instead of repeating
+// the same first images. Wraps with modulo only if the pool is exhausted.
+let photoCursor = 0;
 function fillPhotoGrid(elId, count) {
   const grid = document.getElementById(elId);
   if (!grid || !PHOTOS.length) return;
   for (let i = 0; i < count; i++) {
     const div = document.createElement('div');
     div.className = 'poster-thumb';
-    const photo = PHOTOS[i % PHOTOS.length];
+    const photo = PHOTOS[photoCursor % PHOTOS.length];
+    photoCursor++;
     const img = document.createElement('img');
     img.src = photo.url;
     img.loading = 'lazy';
@@ -248,7 +256,7 @@ function fillPhotoGrid(elId, count) {
   }
 }
 fillPhotoGrid('photos-top', 24);
-fillPhotoGrid('photos-bottom', 60);
+fillPhotoGrid('photos-bottom', 48);
 
 // ── Map ─────────────────────────────────────────────────────────────────────
 // Same data plumbing as trips_map.html but stripped to the essentials: small
@@ -352,9 +360,18 @@ FAMILY.forEach(fam => {
   L.marker([fam.lat, fam.lng], { icon: famIcon, zIndexOffset: 900 }).addTo(map);
 });
 
-// fitBounds is fired from inside map.whenReady() below — after
-// invalidateSize() forces Leaflet to re-read the container box. Running
-// it here first would compute bounds against a possibly-stale size.
+// Initial fitBounds — Leaflet won't mark the map as "loaded" (and so
+// won't fire `whenReady`) until a view has been set, and without
+// `whenReady` neither invalidateSize nor the tile loader ever runs. We
+// re-run fitBounds inside the whenReady handler below after
+// invalidateSize so the final framing reflects the actual container
+// box; this first call exists purely to kick the load lifecycle off.
+if (bounds.length) {
+  // No maxZoom: let Leaflet zoom in as tight as the marker bounds allow.
+  map.fitBounds(bounds, { padding: [2, 2] });
+} else {
+  map.setView([39.5, -98.35], 4);  // CONUS-ish fallback if no anchors
+}
 
 // ── Callouts ───────────────────────────────────────────────────────────────
 // One callout per dated trip. Each is anchored to a chosen "pinpoint" (first
@@ -381,24 +398,53 @@ function placeCallouts() {
   // Build the list of trip-anchors. Skip empty trips (no dates → no
   // chronological number) and trips with no stay/event coordinates to point
   // at. `trip.number` is the user-facing display number computed by
-  // parse_trips() based on sort position.
-  const anchors = [];
+  // parse_trips() based on sort position. Among each trip's candidate
+  // coords (stays + non-waypoint events) we prefer the one *farthest from
+  // HOME* so the callout highlights the destination rather than an early
+  // stopover — but never let two callouts share a pinpoint. To resolve
+  // collisions we rank each trip's candidates farthest-first, then walk
+  // trips in priority order (longest first, matching the placement
+  // greediness below) and have each trip claim its farthest unclaimed
+  // candidate. Trips whose every candidate is already claimed are dropped.
+  // Squared lat/lng distance is fine — we only need an ordering.
+  function rankByDistanceFromHome(candidates) {
+    if (!HOME) return candidates.slice();
+    const [hLat, hLng] = HOME;
+    return candidates.slice().sort((a, b) => {
+      const da = (a.lat - hLat) ** 2 + (a.lng - hLng) ** 2;
+      const db = (b.lat - hLat) ** 2 + (b.lng - hLng) ** 2;
+      return db - da;  // farthest from home first
+    });
+  }
+  const tripCandidates = [];
   TRIPS.forEach(trip => {
     if (!trip.number || !trip.start) return;
-    let pin = null;
+    const candidates = [];
     for (const s of trip.stays) {
-      if (s.lat != null && s.lng != null) { pin = { lat: s.lat, lng: s.lng }; break; }
+      if (s.lat != null && s.lng != null) candidates.push({ lat: s.lat, lng: s.lng });
     }
-    if (!pin) {
-      for (const e of (trip.events || [])) {
-        if (e.lat != null && e.lng != null && !e.waypoint) {
-          pin = { lat: e.lat, lng: e.lng }; break;
-        }
+    for (const e of (trip.events || [])) {
+      if (e.lat != null && e.lng != null && !e.waypoint) {
+        candidates.push({ lat: e.lat, lng: e.lng });
       }
     }
-    if (!pin) return;
-    anchors.push({ trip, pin });
+    if (!candidates.length) return;
+    tripCandidates.push({ trip, ranked: rankByDistanceFromHome(candidates) });
   });
+  // 4-decimal coord key (~11 m) — same fuzz factor used by the dedupe in
+  // the campspot loop above; coincident stays land on one bucket.
+  const claimedPins = new Set();
+  const pinKey = (p) => p.lat.toFixed(4) + ',' + p.lng.toFixed(4);
+  const anchors = [];
+  tripCandidates
+    .slice()
+    .sort((a, b) => (b.trip.total_nights || 0) - (a.trip.total_nights || 0))
+    .forEach(({ trip, ranked }) => {
+      const pin = ranked.find(c => !claimedPins.has(pinKey(c)));
+      if (!pin) return;  // every candidate already claimed by another trip
+      claimedPins.add(pinKey(pin));
+      anchors.push({ trip, pin });
+    });
 
   const cx = mw / 2;
   const cy = mh / 2;
@@ -409,75 +455,140 @@ function placeCallouts() {
     a.angle = Math.atan2(pt.y - cy, pt.x - cx);  // -π .. π (0 = east)
   });
 
-  // Bin each anchor onto one of the four sides based on its angle from the
-  // map center. Angles divide the plane into four 90° sectors with origin
-  // at east; we shift by π/4 so the boundaries fall on the corners.
-  const sides = { right: [], bottom: [], left: [], top: [] };
-  anchors.forEach(a => {
-    const ang = a.angle;
-    if (ang >= -Math.PI/4 && ang < Math.PI/4) sides.right.push(a);
-    else if (ang >= Math.PI/4 && ang < 3*Math.PI/4) sides.bottom.push(a);
-    else if (ang >= -3*Math.PI/4 && ang < -Math.PI/4) sides.top.push(a);
-    else sides.left.push(a);
-  });
+  // Layout constants. Callouts are small pill-shaped boxes containing
+  // just the trip summary text — no trip number, no number circle.
+  // Sized tight: the poster is intended for print at letter size, so
+  // on-screen pills look small but render legibly at print scale.
+  const BOX_H = 14;
+  const PAD_X = 3;
+  const GAP = 2;  // inter-pill spacing on every side
+  const TEXT_FONT = '500 6px -apple-system, Segoe UI, sans-serif';
+  const MARGIN = 8;  // pixels from the map edge to the callout's outer side
 
-  // Layout constants. Callouts are small pill-shaped boxes: a navy circle
-  // with the trip number on the left, summary text on the right.
-  const NUM_R = 9;
-  const BOX_H = 22;
-  const PAD_X = 6;
-  const TEXT_FONT = '500 9px -apple-system, Segoe UI, sans-serif';
-  const MARGIN = 14;  // pixels from the map edge to the callout's outer side
-
-  // Measure each callout's natural width (number circle + summary text).
-  // Cap the summary to keep the longest box within reasonable bounds —
-  // the poster doesn't have room for full novel-length stay names.
+  // Measure each callout's natural width — left-padding + summary text
+  // + right-padding. The summary is rendered untruncated so the full
+  // trip name is always visible; pills wider than `mw - 2*MARGIN` are
+  // rejected by canPlace below and fall through to a vertical side,
+  // where capacity is by count rather than accumulated width.
   const measure = document.createElement('canvas').getContext('2d');
   measure.font = TEXT_FONT;
   anchors.forEach(a => {
-    const num = String(a.trip.number);
-    const summary = (a.trip.summary || '').slice(0, 28);
-    a.numText = num;
+    const summary = a.trip.summary || '';
     a.summary = summary;
-    const numW = 2 * NUM_R;
-    const textW = measure.measureText(summary).width;
-    a.boxW = numW + PAD_X + textW + PAD_X;
+    a.boxW = PAD_X + measure.measureText(summary).width + PAD_X;
   });
+
+  // Greedy, capacity-aware placement. Trips with the most nights are
+  // placed first; once no side has room for an anchor, the remaining
+  // (shortest) trips are dropped so callouts never overflow the map.
+  // Each anchor prefers the side its angle from the map center points
+  // at, then falls back to the two adjacent verticals (vertical sides
+  // fit anything until their box count hits VERT_CAP), then the
+  // opposite horizontal. Day trips (no `total_nights`) sort last and
+  // are the first to drop. Dropped anchors are silently skipped by
+  // the render loop below — it guards on `a.boxCenter`, which is only
+  // set by `placeSide` for anchors that landed on some side.
+  // Verticals are constrained to a y-band that stops short of the top
+  // and bottom horizontal y-bands by one pill-height + 4px gap on each
+  // end, so corner overlap is geometrically impossible. The available
+  // vertical band is therefore `mh - 2*MARGIN - 2*(BOX_H + 4)` tall.
+  const VERT_BAND_TOP = MARGIN + BOX_H + GAP;
+  const VERT_BAND_BOT = mh - MARGIN - BOX_H - GAP;
+  const VERT_BAND_H = Math.max(0, VERT_BAND_BOT - VERT_BAND_TOP);
+  const VERT_CAP = Math.max(0, Math.floor((VERT_BAND_H + GAP) / (BOX_H + GAP)));
+  function horizFits(list, candidate) {
+    const ws = list.map(a => a.boxW);
+    if (candidate) ws.push(candidate.boxW);
+    if (!ws.length) return true;
+    const totalW = ws.reduce((s, w) => s + w, 0) + GAP * (ws.length - 1);
+    return totalW <= (mw - 2 * MARGIN);
+  }
+  function preferredSide(angle) {
+    // Map center is origin; angle is screen-space (y grows down), so
+    // π/2 = bottom and -π/2 = top. Each side claims a 90° wedge.
+    if (angle >= -Math.PI/4 && angle < Math.PI/4) return 'right';
+    if (angle >= Math.PI/4 && angle < 3*Math.PI/4) return 'bottom';
+    if (angle >= -3*Math.PI/4 && angle < -Math.PI/4) return 'top';
+    return 'left';
+  }
+  const sides = { right: [], bottom: [], left: [], top: [] };
+  const fallback = {
+    top:    ['top',    'left', 'right', 'bottom'],
+    bottom: ['bottom', 'left', 'right', 'top'],
+    left:   ['left',   'top',  'bottom', 'right'],
+    right:  ['right',  'top',  'bottom', 'left'],
+  };
+  function canPlace(side, a) {
+    if (side === 'left' || side === 'right') return sides[side].length < VERT_CAP;
+    return horizFits(sides[side], a);
+  }
+  [...anchors]
+    .sort((a, b) => (b.trip.total_nights || 0) - (a.trip.total_nights || 0))
+    .forEach(a => {
+      for (const side of fallback[preferredSide(a.angle)]) {
+        if (canPlace(side, a)) { sides[side].push(a); return; }
+      }
+      // No side has room — this anchor is dropped.
+    });
 
   // Within each side, sort anchors by their position along that side's
   // primary axis (x for top/bottom, y for left/right) so leader lines
-  // mostly run inward without crossing.
+  // mostly run inward without crossing. Vertical stacks are clamped to
+  // the safe y-band, which keeps them out of the top/bottom rows'
+  // y-bands; horizontal rows can therefore use the full inner width.
   function placeSide(list, side) {
     if (!list.length) return;
     const isVertical = side === 'left' || side === 'right';
-    list.sort((a, b) => isVertical ? a.py - b.py : a.px - b.px);
     if (isVertical) {
+      // Two-stage arrangement:
+      //  (1) Geography — split the list into a northern half (smaller
+      //      pin py = farther up the map) and a southern half by
+      //      median y, so callouts in the top of the stack point to
+      //      northern locations and callouts in the bottom of the
+      //      stack point to southern ones. Leader lines stay short
+      //      and roughly stop crossing.
+      //  (2) Bow-tie within each half — widest pill at the outer
+      //      end (topmost of the north half / bottommost of the
+      //      south half), narrowest toward the stack center, so
+      //      short pills cluster around the middle of the stack
+      //      regardless of their pin's latitude.
+      const sortedByY = [...list].sort((a, b) => a.py - b.py);
+      const half = Math.ceil(sortedByY.length / 2);
+      const northern = sortedByY.slice(0, half).sort((a, b) => b.boxW - a.boxW);
+      const southern = sortedByY.slice(half).sort((a, b) => a.boxW - b.boxW);
+      const arranged = [...northern, ...southern];
       const x = side === 'left' ? MARGIN : (mw - MARGIN);
-      // Stack callouts vertically, spaced so even a dense side fits.
-      const totalH = list.length * BOX_H + (list.length - 1) * 4;
-      let y = Math.max(MARGIN, (mh - totalH) / 2) + BOX_H / 2;
-      list.forEach(a => {
+      const totalH = arranged.length * BOX_H + (arranged.length - 1) * GAP;
+      // Center the stack within the safe band — bumping the start down
+      // by VERT_BAND_TOP guarantees the topmost pill clears MARGIN +
+      // BOX_H + GAP even when the stack is shorter than the band.
+      let y = VERT_BAND_TOP + Math.max(0, (VERT_BAND_H - totalH) / 2) + BOX_H / 2;
+      arranged.forEach(a => {
         a.boxCenter = { x: side === 'left' ? x + a.boxW / 2 : x - a.boxW / 2, y };
         a.side = side;
-        y += BOX_H + 4;
+        y += BOX_H + GAP;
       });
     } else {
+      list.sort((a, b) => a.px - b.px);
       const y = side === 'top' ? MARGIN + BOX_H / 2 : (mh - MARGIN - BOX_H / 2);
-      // Spread evenly along the horizontal extent, but keep boxes from
-      // running off the edge. Even spacing means equal centerline gaps.
-      const totalW = list.reduce((s, a) => s + a.boxW, 0) + 4 * (list.length - 1);
-      let x = Math.max(MARGIN + list[0].boxW / 2, (mw - totalW) / 2 + list[0].boxW / 2);
+      // Full inner width is available — no corner inset needed because
+      // the verticals can't reach the top/bottom y-bands.
+      const xMin = MARGIN;
+      const xMax = mw - MARGIN;
+      const usableW = xMax - xMin;
+      const totalW = list.reduce((s, a) => s + a.boxW, 0) + GAP * (list.length - 1);
+      let x = xMin + Math.max(0, (usableW - totalW) / 2) + list[0].boxW / 2;
       list.forEach((a, i) => {
-        if (i > 0) x += list[i - 1].boxW / 2 + 4 + a.boxW / 2;
+        if (i > 0) x += list[i - 1].boxW / 2 + GAP + a.boxW / 2;
         a.boxCenter = { x, y };
         a.side = side;
       });
     }
   }
-  placeSide(sides.top, 'top');
-  placeSide(sides.right, 'right');
-  placeSide(sides.bottom, 'bottom');
   placeSide(sides.left, 'left');
+  placeSide(sides.right, 'right');
+  placeSide(sides.top, 'top');
+  placeSide(sides.bottom, 'bottom');
 
   // Draw each callout: leader line first (so it sits behind), then the
   // pinpoint dot (small navy circle marking the actual location), then the
@@ -521,26 +632,9 @@ function placeCallouts() {
     rect.setAttribute('class', 'callout-box');
     svg.appendChild(rect);
 
-    // Number circle on the left edge of the box.
-    const numCx = bx - a.boxW / 2 + NUM_R + 1;
-    const numCircle = document.createElementNS(NS, 'circle');
-    numCircle.setAttribute('cx', numCx);
-    numCircle.setAttribute('cy', by);
-    numCircle.setAttribute('r', NUM_R);
-    numCircle.setAttribute('fill', '#002868');
-    svg.appendChild(numCircle);
-
-    const numText = document.createElementNS(NS, 'text');
-    numText.setAttribute('x', numCx);
-    numText.setAttribute('y', by);
-    numText.setAttribute('class', 'callout-number');
-    numText.setAttribute('fill', '#fff');
-    numText.textContent = a.numText;
-    svg.appendChild(numText);
-
-    // Summary text to the right of the number circle.
+    // Trip summary only — no number.
     const label = document.createElementNS(NS, 'text');
-    label.setAttribute('x', numCx + NUM_R + PAD_X);
+    label.setAttribute('x', bx - a.boxW / 2 + PAD_X);
     label.setAttribute('y', by);
     label.setAttribute('class', 'callout-label');
     label.textContent = a.summary;
@@ -557,7 +651,7 @@ map.whenReady(() => {
   // container box so tiles/markers don't end up cropped from a
   // moment-in-time stale measurement.
   map.invalidateSize();
-  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
+  if (bounds.length) map.fitBounds(bounds, { padding: [2, 2] });
   // `whenReady` fires before the fitBounds tween completes; wait for
   // moveend to be sure latLngToContainerPoint reflects the final view.
   map.once('moveend', placeCallouts);
@@ -566,7 +660,7 @@ map.whenReady(() => {
 });
 window.addEventListener('resize', () => {
   map.invalidateSize();
-  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
+  if (bounds.length) map.fitBounds(bounds, { padding: [2, 2] });
   // moveend handler above (or the setTimeout) will redraw.
   setTimeout(placeCallouts, 350);
 });
