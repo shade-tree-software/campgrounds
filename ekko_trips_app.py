@@ -1788,6 +1788,43 @@ def _detect_stops(points,
     return stops
 
 
+def _filter_points_to_trip_window(points, trip_start, trip_end):
+    """Drop pings whose *local* date falls outside the trip's
+    [trip_start, trip_end] inclusive range. The track loader pads the
+    API fetch by ~1 day on each side for timezone slop; this tightens
+    back to the trip's real window so pre-/post-trip home stops don't
+    become suggestions.
+
+    Each ping carries a `tz` field stamped by `_enrich_with_timezone`
+    that names the IANA zone at the ping's coords. We compare local
+    dates (YYYY-MM-DD) rather than absolute timestamps so the
+    comparison matches how the trip's `start`/`end` are stored."""
+    try:
+        from zoneinfo import ZoneInfo
+        _has_zi = True
+    except Exception:
+        ZoneInfo = None
+        _has_zi = False
+
+    out = []
+    for p in points:
+        tst = p.get("tst")
+        if tst is None:
+            continue
+        utc = datetime.utcfromtimestamp(tst)
+        local = utc
+        tz_name = p.get("tz") or "UTC"
+        if _has_zi and tz_name != "UTC":
+            try:
+                local = utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
+            except Exception:
+                pass
+        local_date = local.date().isoformat()
+        if trip_start <= local_date <= trip_end:
+            out.append(p)
+    return out
+
+
 def _drop_stops_at_known_locations(stops, trip, family_locations,
                                    near_radius_m=STOP_NEAR_ANCHOR_M):
     """Filter out clusters that fall within `near_radius_m` of any
@@ -1925,6 +1962,15 @@ def api_detect_stops(trip_id):
     points = _load_trip_track_for_detection(trip_id)
     if not points:
         return jsonify({"stops": [], "warning": "no track data available"})
+
+    # Tighten the window to the trip's own local-date range before
+    # detection runs. The track loader pads by ~1 day on each side for
+    # timezone slop; that's the right shape for the polyline view but
+    # would let home-based stops on the days before/after the trip leak
+    # into the suggestion list.
+    points = _filter_points_to_trip_window(points, trip["start"], trip["end"])
+    if not points:
+        return jsonify({"stops": [], "warning": "no track data within trip window"})
 
     raw_stops = _detect_stops(points)
     raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family)
