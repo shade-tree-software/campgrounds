@@ -50,8 +50,13 @@
        portrait so on most screens it's height-bound. */
     width: min(calc((100vh - 1.5rem) * 8.5 / 11), calc(100vw - 1.5rem));
     height: min(calc(100vh - 1.5rem), calc((100vw - 1.5rem) * 11 / 8.5));
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+    /* Four explicit rows — title auto-sized to content, the two photo
+       strips at fixed percentages of the sheet height, and the map filling
+       whatever's left. Without these explicit rows the four children
+       would land in implicit auto-rows and the map would collapse to 0px
+       while the photo cells inherited each image's natural aspect ratio
+       (tall portrait shots = tall cells). */
+    grid-template-rows: auto 14% 1fr 28%;
     overflow: hidden;
     position: relative;
   }
@@ -92,21 +97,27 @@
     background: var(--rule);
     padding: 2px;
     overflow: hidden;
+    /* min-height: 0 lets the grid item shrink to exactly its assigned
+       row height (the 14% / 28% above) rather than expanding to fit the
+       intrinsic size of the photos inside. */
+    min-height: 0;
   }
   .poster-photos--top {
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    min-height: 10%;
   }
   .poster-photos--bottom {
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    min-height: 22%;
   }
   .poster-thumb {
     background: #222;
     overflow: hidden;
     position: relative;
+    /* Same min-height: 0 reason — the cell's height is the 1fr row
+       height, not the image's natural size. */
+    min-width: 0;
+    min-height: 0;
   }
   .poster-thumb img {
     width: 100%;
@@ -121,6 +132,9 @@
     overflow: hidden;
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
+    /* min-height: 0 again — without it, Leaflet's tile pane could push
+       the grid row past its 1fr allocation. */
+    min-height: 0;
   }
   #poster-map {
     width: 100%;
@@ -338,9 +352,9 @@ FAMILY.forEach(fam => {
   L.marker([fam.lat, fam.lng], { icon: famIcon, zIndexOffset: 900 }).addTo(map);
 });
 
-if (bounds.length) {
-  map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
-}
+// fitBounds is fired from inside map.whenReady() below — after
+// invalidateSize() forces Leaflet to re-read the container box. Running
+// it here first would compute bounds against a possibly-stale size.
 
 // ── Callouts ───────────────────────────────────────────────────────────────
 // One callout per dated trip. Each is anchored to a chosen "pinpoint" (first
@@ -537,6 +551,13 @@ function placeCallouts() {
 // Render the callouts once Leaflet has finished the fitBounds animation, and
 // again on any window resize (re-fit then redraw).
 map.whenReady(() => {
+  // The map container is in a grid cell whose height depends on the
+  // sheet's aspect-ratio resolving — which can lag by one frame on
+  // first paint. invalidateSize() forces Leaflet to re-read the
+  // container box so tiles/markers don't end up cropped from a
+  // moment-in-time stale measurement.
+  map.invalidateSize();
+  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
   // `whenReady` fires before the fitBounds tween completes; wait for
   // moveend to be sure latLngToContainerPoint reflects the final view.
   map.once('moveend', placeCallouts);
@@ -544,6 +565,7 @@ map.whenReady(() => {
   setTimeout(placeCallouts, 400);
 });
 window.addEventListener('resize', () => {
+  map.invalidateSize();
   if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 7 });
   // moveend handler above (or the setTimeout) will redraw.
   setTimeout(placeCallouts, 350);
