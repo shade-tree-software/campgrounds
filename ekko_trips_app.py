@@ -1825,14 +1825,21 @@ def _filter_points_to_trip_window(points, trip_start, trip_end):
     return out
 
 
-def _drop_stops_at_known_locations(stops, trip, family_locations,
+def _drop_stops_at_known_locations(stops, trip, family_locations, home,
                                    near_radius_m=STOP_NEAR_ANCHOR_M):
     """Filter out clusters that fall within `near_radius_m` of any
     existing stay (campsite_location override or campground coords),
-    event (waypoints included), or family location (both the listed
-    and driveway coords). `trip` must be enriched via
-    `enrich_trip_locations` so stays/events carry lat/lng."""
+    event (waypoints included), family location (listed coords +
+    driveway coords), or HOME. `trip` must be enriched via
+    `enrich_trip_locations` so stays/events carry lat/lng.
+
+    HOME is in the anchor set so pre-departure / post-arrival dwell at
+    the house — which falls inside the trip's date range but isn't a
+    real trip stop — doesn't get suggested. `home` may be None when
+    home isn't configured; in that case the HOME check is skipped."""
     anchors = []
+    if home and home[0] is not None and home[1] is not None:
+        anchors.append((home[0], home[1]))
     for s in trip.get("stays", []):
         if s.get("lat") is not None and s.get("lng") is not None:
             anchors.append((s["lat"], s["lng"]))
@@ -1957,7 +1964,7 @@ def api_detect_stops(trip_id):
     if not trip:
         return jsonify({"error": "trip not found"}), 404
     enrich_trip_locations(trip)
-    _, family = _map_config()
+    home, family = _map_config()
 
     points = _load_trip_track_for_detection(trip_id)
     if not points:
@@ -1965,15 +1972,19 @@ def api_detect_stops(trip_id):
 
     # Tighten the window to the trip's own local-date range before
     # detection runs. The track loader pads by ~1 day on each side for
-    # timezone slop; that's the right shape for the polyline view but
-    # would let home-based stops on the days before/after the trip leak
-    # into the suggestion list.
+    # timezone slop; this drops anything that falls on a date outside
+    # the trip itself. Same-day at-home dwell (e.g., morning of day 1
+    # before leaving) is also handled — but via the at-home anchor
+    # filter below, since it's still within the date range.
     points = _filter_points_to_trip_window(points, trip["start"], trip["end"])
     if not points:
         return jsonify({"stops": [], "warning": "no track data within trip window"})
 
     raw_stops = _detect_stops(points)
-    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family)
+    # HOME is included as an anchor so pre-departure / post-arrival
+    # dwell at the house — which falls inside the trip's date range
+    # but isn't a real trip stop — doesn't get suggested.
+    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family, home)
 
     # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
     # not have it. Fall back to UTC formatting if it's missing.
