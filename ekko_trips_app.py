@@ -1705,13 +1705,20 @@ def _haversine_m(lat1, lng1, lat2, lng2):
 
 
 def _load_trip_track_for_detection(trip_id):
-    """Return the trip's GPS pings post-overrides (relocations applied,
-    suppressed dropped), or [] if neither cache nor API is available.
+    """Return the trip's GPS pings with admin overrides honored: both
+    suppressed and relocated pings are dropped entirely. Returns [] if
+    neither cache nor API is available.
 
-    Mirrors the read path of api_trip_track but is callable server-side
-    and never returns admin annotation tags. Prefers the on-disk cache
-    (the trip detail page's loadTrack() will have populated it on load)
-    and only falls back to a fresh fetch when the cache is missing."""
+    Unlike api_trip_track (which rewrites relocated pings' coords so the
+    polyline follows the override), stop detection treats any admin-
+    touched ping as untrusted and ignores it — a relocated ping was
+    moved precisely because its original reading was wrong, and the
+    new coords are usually a hand-placed pin at a stay/event, not a
+    real GPS sample that should contribute to dwell clustering.
+
+    Prefers the on-disk cache (the trip detail page's loadTrack() will
+    have populated it on load) and only falls back to a fresh fetch
+    when the cache is missing."""
     trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
     if not trip or not trip.get("start") or not trip.get("end"):
         return []
@@ -1742,16 +1749,10 @@ def _load_trip_track_for_detection(trip_id):
             return []
 
     suppressed = set(get_suppressed_pings(trip_id))
-    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
-                   for it in get_relocated_pings(trip_id)}
-    if relocations:
-        for p in points:
-            ov = relocations.get(p.get("tst"))
-            if ov is not None:
-                p["lat"] = ov[0]
-                p["lon"] = ov[1]
-    if suppressed:
-        points = [p for p in points if p.get("tst") not in suppressed]
+    relocated_tsts = {int(it["tst"]) for it in get_relocated_pings(trip_id)}
+    excluded = suppressed | relocated_tsts
+    if excluded:
+        points = [p for p in points if p.get("tst") not in excluded]
     return points
 
 
