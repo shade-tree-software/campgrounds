@@ -1684,6 +1684,12 @@ STOP_HOME_BOUNDARY_LOCK_S = 3600  # sustained-away duration that confirms
                                   # departure (where the user stays away
                                   # from home for >=1 hr) does. Mirrors
                                   # the frontend's HOME_BOUNDARY_LOCK_S.
+STOP_HOME_REENTRY_DWELL_S = 1800  # at-home gap shorter than this between
+                                  # two away streaks is treated as a brief
+                                  # mid-trip home return rather than a
+                                  # trip boundary — the streaks are merged
+                                  # into one. 30 min mirrors the frontend's
+                                  # HOME_REENTRY_DWELL_S.
 
 
 def _haversine_m(lat1, lng1, lat2, lng2):
@@ -1807,25 +1813,42 @@ def _detect_stops(points,
 
 def _find_home_boundary_tsts(points, home,
                              home_radius_m=STOP_NEAR_HOME_M,
-                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S):
+                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S,
+                             merge_dwell_seconds=STOP_HOME_REENTRY_DWELL_S):
     """Return (home_departure_tst, home_arrival_tst) — when the user
     finally left HOME for the trip, and when they finally returned.
     Either may be None when home isn't configured, no pings exist, or
-    no sustained-away period qualifies.
+    no qualifying away period exists.
 
-    Departure: the start of the first away-from-HOME streak that lasts
-    at least `lock_seconds`. Handles the "morning at home → quick
-    coffee errand → back home → real departure" case: a brief away
-    burst doesn't qualify, but the sustained departure does.
+    ⚠ DUPLICATE LOGIC. The frontend's `findHomeBoundaryTimes()` in
+    templates/trip_detail.html computes the same notion (home card's
+    "(auto)" times) with a different algorithm and its own set of
+    constants — see the "Stop Detection (Admin)" section in CLAUDE.md
+    for the alignment table. If you change behavior here, check the
+    frontend; if you change the frontend, check here.
 
-    Arrival: symmetric — the end of the last sustained-away streak.
-    Pings after that point are post-trip (the user has returned home
-    to stay).
+    Algorithm:
 
-    Simpler than the frontend's findHomeBoundaryTimes (no re-entry
-    dwell logic, no separate exact-radius layer) but covers the common
-    case driving the stop-detection use case. The caller falls back to
-    its own filters when the result is None."""
+      1. Build raw away-from-HOME streaks: maximal runs of consecutive
+         pings whose distance to HOME exceeds `home_radius_m`.
+      2. Merge streaks separated by less than `merge_dwell_seconds` of
+         at-home time. A brief mid-trip home return (the user pops
+         home to grab a forgotten item, 10 min) merges back into the
+         trip; a real return-home-for-the-evening (>30 min) does not.
+      3. Filter to merged streaks lasting at least `lock_seconds`. A
+         5-minute coffee errand doesn't qualify; the actual trip does.
+      4. Pick the LAST qualifying merged streak as the trip. Its start
+         is `home_departure_tst`; its end is `home_arrival_tst`.
+
+    Picking the LAST (vs. first) handles the "work-day-on-trip-morning"
+    case: the user spends 9 hr at the office, comes home, then leaves
+    for the trip in the evening. The workday is a separate away streak
+    that gets correctly ignored because the trip is the streak that
+    comes after it.
+
+    Simpler than the frontend's findHomeBoundaryTimes (no separate
+    HOME_EXACT_RADIUS_M layer, no "lock once away > 12 hr" guard) but
+    covers the common cases the stop-detection feature cares about."""
     if not home or home[0] is None or home[1] is None:
         return None, None
     home_lat, home_lng = home[0], home[1]
@@ -1842,34 +1865,62 @@ def _find_home_boundary_tsts(points, home,
     def at_home(p):
         return _haversine_m(p["lat"], p["lon"], home_lat, home_lng) <= home_radius_m
 
-    # Departure: first sustained-away streak in forward order.
-    home_departure = None
-    streak_start_tst = None
+    # 1. Raw away streaks.
+    streaks = []
+    cur = None
     for p in pts:
         if at_home(p):
-            streak_start_tst = None
-            continue
-        if streak_start_tst is None:
-            streak_start_tst = p["tst"]
-        if p["tst"] - streak_start_tst >= lock_seconds:
-            home_departure = streak_start_tst
-            break
+            if cur is not None:
+                streaks.append(cur)
+                cur = None
+        else:
+            if cur is None:
+                cur = [p["tst"], p["tst"]]
+            else:
+                cur[1] = p["tst"]
+    if cur is not None:
+        streaks.append(cur)
 
-    # Arrival: last sustained-away streak (walk backward; the first
-    # such streak we hit is chronologically the last).
-    home_arrival = None
-    streak_end_tst = None
-    for p in reversed(pts):
-        if at_home(p):
-            streak_end_tst = None
-            continue
-        if streak_end_tst is None:
-            streak_end_tst = p["tst"]
-        if streak_end_tst - p["tst"] >= lock_seconds:
-            home_arrival = streak_end_tst
-            break
+    if not streaks:
+        return None, None
 
-    return home_departure, home_arrival
+    # 2. Merge streaks separated by short at-home dwell.
+    merged = [list(streaks[0])]
+    for s in streaks[1:]:
+        if s[0] - merged[-1][1] < merge_dwell_seconds:
+            merged[-1][1] = s[1]
+        else:
+            merged.append(list(s))
+
+    # 3. Keep only streaks that are >=lock_seconds.
+    qualified = [s for s in merged if s[1] - s[0] >= lock_seconds]
+    if not qualified:
+        return None, None
+
+    # 4. Last qualifying merged streak == the trip.
+    main = qualified[-1]
+    return main[0], main[1]
+
+
+def _trip_local_to_tst(date_str, time_str, tz_name):
+    """Convert a `YYYY-MM-DD` date + `HH:MM` time (interpreted in the
+    given IANA timezone) to a UTC epoch second. Returns None when any
+    input is missing/malformed or `zoneinfo` is unavailable.
+
+    Used to interpret a trip's manual `home_start_time` /
+    `home_end_time` overrides against the trip's date — the home card
+    treats those as the authoritative trip window edges, so detection
+    should too."""
+    if not date_str or not time_str:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+        y, m, d = (int(x) for x in date_str.split('-'))
+        hh, mm = (int(x) for x in time_str.split(':'))
+        tz = ZoneInfo(tz_name) if tz_name else None
+        return int(datetime(y, m, d, hh, mm, 0, tzinfo=tz).timestamp())
+    except Exception:
+        return None
 
 
 def _filter_points_to_trip_window(points, trip_start, trip_end):
@@ -2066,16 +2117,31 @@ def api_detect_stops(trip_id):
     raw_stops = _detect_stops(points)
 
     # Tighten the time window further by inferring the *real* trip
-    # start and end from the GPS data: the moment of sustained-away-
-    # from-home departure (and the symmetric return). A pre-departure
-    # quick errand — e.g. a 7-min Starbucks visit at 8:22 a.m. when the
-    # actual trip departure isn't until 13:03 — falls inside the
-    # trip's date range and outside the HOME at-anchor radius, so
-    # without this filter it would otherwise sneak through as a
-    # suggestion. Clusters fully before departure or fully after
-    # arrival are dropped here. Cluster end_tst < departure → pre-trip;
-    # cluster start_tst > arrival → post-trip.
+    # start and end. Auto-detected sustained-away boundaries first
+    # (last qualifying merged streak via _find_home_boundary_tsts),
+    # then manual `home_start_time` / `home_end_time` overrides win if
+    # the admin set them — those are what the home card displays as
+    # the trip's authoritative edges, so detection treats them the
+    # same way. Without this, a pre-departure quick errand (e.g. a
+    # 7-min Starbucks at 8:22 a.m. when the actual trip departure
+    # isn't until the evening) would fall inside the trip's date range
+    # and slip through. Clusters fully before departure or fully after
+    # arrival are dropped: end_tst < departure → pre-trip;
+    # start_tst > arrival → post-trip.
     home_departure_tst, home_arrival_tst = _find_home_boundary_tsts(points, home)
+    home_tz_name = None
+    if home and home[0] is not None and home[1] is not None:
+        home_tz_name = _tz_for_coord(home[0], home[1])
+    manual_start = (trip.get("home_start_time") or "").strip()
+    manual_end = (trip.get("home_end_time") or "").strip()
+    if manual_start:
+        t = _trip_local_to_tst(trip["start"], manual_start, home_tz_name)
+        if t is not None:
+            home_departure_tst = t
+    if manual_end:
+        t = _trip_local_to_tst(trip["end"], manual_end, home_tz_name)
+        if t is not None:
+            home_arrival_tst = t
     if home_departure_tst is not None:
         raw_stops = [s for s in raw_stops if s["end_tst"] >= home_departure_tst]
     if home_arrival_tst is not None:

@@ -2276,6 +2276,13 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
     return { lowerCut, upperCut };
   }
+  // ⚠ DUPLICATE LOGIC. _find_home_boundary_tsts() in ekko_trips_app.py
+  // computes the same trip-departure / trip-arrival notion for the
+  // Detect Stops feature using a different algorithm and its own
+  // constants. See "Stop Detection (Admin)" in CLAUDE.md for the
+  // alignment table. If you change behavior here, check the backend;
+  // if you change the backend, check here.
+  //
   // HOME boundary times distinguish two OwnTracks usage patterns:
   //   (a) Continuous logging — pings come in at the house all morning before
   //       the trip and again all evening on return. GPS jitter occasionally
