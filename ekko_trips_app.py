@@ -1667,6 +1667,23 @@ STOP_MIN_MINUTES = 5              # cluster span must reach this to qualify
 STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
                                   # existing stay/event/family location
+STOP_NEAR_HOME_M = 1500           # "near HOME" radius used by
+                                  # _find_home_boundary_tsts to classify
+                                  # pings as at-home vs. away. Used only
+                                  # to infer the trip's real departure /
+                                  # arrival moments — NOT applied as a
+                                  # drop-anchor on cluster centroids, so a
+                                  # stop 800 m from home that happens
+                                  # mid-trip (after departure, before
+                                  # arrival) is still a valid suggestion.
+                                  # Matches the frontend's HOME_TRIM_KM.
+STOP_HOME_BOUNDARY_LOCK_S = 3600  # sustained-away duration that confirms
+                                  # the trip really started / ended. A
+                                  # brief at-Starbucks errand on trip
+                                  # morning doesn't qualify; the actual
+                                  # departure (where the user stays away
+                                  # from home for >=1 hr) does. Mirrors
+                                  # the frontend's HOME_BOUNDARY_LOCK_S.
 
 
 def _haversine_m(lat1, lng1, lat2, lng2):
@@ -1788,6 +1805,73 @@ def _detect_stops(points,
     return stops
 
 
+def _find_home_boundary_tsts(points, home,
+                             home_radius_m=STOP_NEAR_HOME_M,
+                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S):
+    """Return (home_departure_tst, home_arrival_tst) — when the user
+    finally left HOME for the trip, and when they finally returned.
+    Either may be None when home isn't configured, no pings exist, or
+    no sustained-away period qualifies.
+
+    Departure: the start of the first away-from-HOME streak that lasts
+    at least `lock_seconds`. Handles the "morning at home → quick
+    coffee errand → back home → real departure" case: a brief away
+    burst doesn't qualify, but the sustained departure does.
+
+    Arrival: symmetric — the end of the last sustained-away streak.
+    Pings after that point are post-trip (the user has returned home
+    to stay).
+
+    Simpler than the frontend's findHomeBoundaryTimes (no re-entry
+    dwell logic, no separate exact-radius layer) but covers the common
+    case driving the stop-detection use case. The caller falls back to
+    its own filters when the result is None."""
+    if not home or home[0] is None or home[1] is None:
+        return None, None
+    home_lat, home_lng = home[0], home[1]
+    pts = sorted(
+        (p for p in points
+         if p.get("lat") is not None
+         and p.get("lon") is not None
+         and p.get("tst") is not None),
+        key=lambda p: p["tst"],
+    )
+    if not pts:
+        return None, None
+
+    def at_home(p):
+        return _haversine_m(p["lat"], p["lon"], home_lat, home_lng) <= home_radius_m
+
+    # Departure: first sustained-away streak in forward order.
+    home_departure = None
+    streak_start_tst = None
+    for p in pts:
+        if at_home(p):
+            streak_start_tst = None
+            continue
+        if streak_start_tst is None:
+            streak_start_tst = p["tst"]
+        if p["tst"] - streak_start_tst >= lock_seconds:
+            home_departure = streak_start_tst
+            break
+
+    # Arrival: last sustained-away streak (walk backward; the first
+    # such streak we hit is chronologically the last).
+    home_arrival = None
+    streak_end_tst = None
+    for p in reversed(pts):
+        if at_home(p):
+            streak_end_tst = None
+            continue
+        if streak_end_tst is None:
+            streak_end_tst = p["tst"]
+        if streak_end_tst - p["tst"] >= lock_seconds:
+            home_arrival = streak_end_tst
+            break
+
+    return home_departure, home_arrival
+
+
 def _filter_points_to_trip_window(points, trip_start, trip_end):
     """Drop pings whose *local* date falls outside the trip's
     [trip_start, trip_end] inclusive range. The track loader pads the
@@ -1825,21 +1909,20 @@ def _filter_points_to_trip_window(points, trip_start, trip_end):
     return out
 
 
-def _drop_stops_at_known_locations(stops, trip, family_locations, home,
+def _drop_stops_at_known_locations(stops, trip, family_locations,
                                    near_radius_m=STOP_NEAR_ANCHOR_M):
     """Filter out clusters that fall within `near_radius_m` of any
     existing stay (campsite_location override or campground coords),
-    event (waypoints included), family location (listed coords +
-    driveway coords), or HOME. `trip` must be enriched via
+    event (waypoints included), or family location (listed coords +
+    driveway coords). `trip` must be enriched via
     `enrich_trip_locations` so stays/events carry lat/lng.
 
-    HOME is in the anchor set so pre-departure / post-arrival dwell at
-    the house — which falls inside the trip's date range but isn't a
-    real trip stop — doesn't get suggested. `home` may be None when
-    home isn't configured; in that case the HOME check is skipped."""
+    HOME is intentionally NOT an anchor here — anything that happens
+    inside the inferred trip window (between home_departure_tst and
+    home_arrival_tst) is fair game even if relatively close to home.
+    Pre-departure / post-arrival home-area dwell is filtered earlier
+    via the boundary-tst time window, not by spatial proximity."""
     anchors = []
-    if home and home[0] is not None and home[1] is not None:
-        anchors.append((home[0], home[1]))
     for s in trip.get("stays", []):
         if s.get("lat") is not None and s.get("lng") is not None:
             anchors.append((s["lat"], s["lng"]))
@@ -1855,8 +1938,8 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home,
     out = []
     for c in stops:
         too_close = False
-        for a in anchors:
-            if _haversine_m(c["center_lat"], c["center_lng"], a[0], a[1]) < near_radius_m:
+        for a_lat, a_lng in anchors:
+            if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
                 too_close = True
                 break
         if not too_close:
@@ -1981,10 +2064,28 @@ def api_detect_stops(trip_id):
         return jsonify({"stops": [], "warning": "no track data within trip window"})
 
     raw_stops = _detect_stops(points)
-    # HOME is included as an anchor so pre-departure / post-arrival
-    # dwell at the house — which falls inside the trip's date range
-    # but isn't a real trip stop — doesn't get suggested.
-    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family, home)
+
+    # Tighten the time window further by inferring the *real* trip
+    # start and end from the GPS data: the moment of sustained-away-
+    # from-home departure (and the symmetric return). A pre-departure
+    # quick errand — e.g. a 7-min Starbucks visit at 8:22 a.m. when the
+    # actual trip departure isn't until 13:03 — falls inside the
+    # trip's date range and outside the HOME at-anchor radius, so
+    # without this filter it would otherwise sneak through as a
+    # suggestion. Clusters fully before departure or fully after
+    # arrival are dropped here. Cluster end_tst < departure → pre-trip;
+    # cluster start_tst > arrival → post-trip.
+    home_departure_tst, home_arrival_tst = _find_home_boundary_tsts(points, home)
+    if home_departure_tst is not None:
+        raw_stops = [s for s in raw_stops if s["end_tst"] >= home_departure_tst]
+    if home_arrival_tst is not None:
+        raw_stops = [s for s in raw_stops if s["start_tst"] <= home_arrival_tst]
+
+    # Anything inside the boundary-tst window is a candidate even if
+    # it happens close to home — HOME is intentionally not a spatial
+    # anchor here, so a legitimate near-home stop on the way out (or
+    # back) that falls inside the window is still suggested.
+    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family)
 
     # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
     # not have it. Fall back to UTC formatting if it's missing.
