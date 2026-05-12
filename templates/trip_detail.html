@@ -491,6 +491,34 @@
     color: #fff;
   }
 
+  /* "Detect Stops" admin-only desktop-only header action. Sits next
+     to Delete Trip. Hidden ≤700 px because the modal it opens is too
+     dense for phone screens and the workflow is admin-vetting which
+     happens at a desk. */
+  .trip-header .btn-detect-stops {
+    background: none;
+    border: 1px solid rgba(255,255,255,.4);
+    color: rgba(255,255,255,.85);
+    font-size: .75rem;
+    cursor: pointer;
+    padding: .25rem .6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .trip-header .btn-detect-stops:hover {
+    border-color: #fff;
+    color: #fff;
+  }
+  .trip-header .btn-detect-stops:disabled {
+    opacity: .5;
+    cursor: wait;
+  }
+  @media (max-width: 700px) {
+    .trip-header .btn-detect-stops { display: none; }
+  }
+
   .trip-nav {
     display: flex;
     align-items: center;
@@ -1077,6 +1105,72 @@
     .event-location-field input { flex: 1 1 100%; }
   }
 
+  /* ── Detect-stops review rows ───────────────────────────────────── */
+  .stop-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: .65rem;
+    align-items: center;
+    padding: .55rem .6rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .stop-row:last-child { border-bottom: none; }
+  .stop-row input[type="checkbox"] {
+    width: 16px; height: 16px; cursor: pointer; margin: 0;
+  }
+  .stop-row .stop-meta {
+    font-size: .82rem; color: var(--gray); line-height: 1.35;
+  }
+  .stop-row .stop-name {
+    font-weight: 600; color: var(--ink, #1d1d1f); font-size: .92rem;
+    margin-bottom: .1rem;
+  }
+  .stop-row .stop-kind {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding: .15rem .45rem;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .stop-row .stop-kind.event {
+    background: #fcf3d6; color: #8a6d0a;
+  }
+  .stop-row .stop-kind.waypoint {
+    background: #ececec; color: #555;
+  }
+
+  /* ── Needs-vetting visual treatment ─────────────────────────────── */
+  /* Dashed amber border + "NEEDS REVIEW" badge in the card header so
+     auto-detected events/waypoints visibly stand out from human-curated
+     ones until the admin opens + saves the edit form (which clears the
+     flag via update_event). Bare cards (no card chrome) use an outline
+     on the header instead since the card itself is transparent. */
+  .event-card.needs-vetting { box-shadow: 0 0 0 2px #e0a020; border-radius: 10px; }
+  .event-card.needs-vetting .event-header { background: #fff5db; }
+  .event-card.needs-vetting.waypoint .event-header { background: #f5ecd0; }
+  .event-card.bare.needs-vetting { box-shadow: none; }
+  .event-card.bare.needs-vetting .event-header {
+    outline: 2px dashed #e0a020;
+    outline-offset: -3px;
+    border-radius: 8px;
+    background: #fff5db;
+  }
+  .needs-vetting-badge {
+    display: inline-block;
+    background: #e0a020;
+    color: #fff;
+    font-size: .65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: .1rem .4rem;
+    border-radius: 3px;
+    margin-left: .5rem;
+    vertical-align: middle;
+  }
+
   .lightbox img {
     max-width: 90vw;
     max-height: 90vh;
@@ -1294,6 +1388,7 @@
     </div>
   </div>
   {% if is_admin %}
+  <button class="btn-detect-stops" id="btn-detect-stops" onclick="detectStops()" title="Scan GPS track for missing waypoints/events">Detect Stops</button>
   <button class="btn-delete-trip" onclick="deleteTrip()">Delete Trip</button>
   {% endif %}
   <div class="trip-nav">
@@ -1533,11 +1628,11 @@
 
   {% elif item.type == "event" %}
   {% set is_bare = (item.waypoint or item.family_visit) and not event_photos[item.idx] %}
-  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}" id="event-{{ item.idx }}">
+  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
-        <h3>{{ item.name }}</h3>
+        <h3>{{ item.name }}{% if item.needs_vetting %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
           {% if item.locale or item.state %}
             {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
@@ -1732,6 +1827,30 @@
       <button type="button" class="btn-danger" id="modal-delete-btn" onclick="deleteFromModal()" style="display:none; margin-right:auto;">Delete</button>
       <button type="button" class="btn-cancel" onclick="closeAddModal()">Cancel</button>
       <button type="button" class="btn-save" id="modal-submit-btn" onclick="submitAddModal()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Detect-stops modal: lists clusters of GPS pings that don't match an
+     existing stay/event/family location. Admin checks the ones to keep
+     and submits to create them as needs-vetting events/waypoints. -->
+<div class="add-modal" id="detect-stops-modal" onclick="closeDetectStopsBackdrop(event)">
+  <div class="add-modal-panel" onclick="event.stopPropagation()" style="max-width:720px;width:95vw;">
+    <div class="add-modal-header">
+      <h3 id="detect-stops-title">Detect Stops</h3>
+      <button type="button" class="modal-close" onclick="closeDetectStops()" aria-label="Close">&times;</button>
+    </div>
+    <div class="add-modal-body" id="detect-stops-body">
+      <div id="detect-stops-loading" style="text-align:center;padding:2rem 0;color:var(--gray);">
+        Scanning track and reverse-geocoding stops…<br>
+        <span style="font-size:.85rem;">This may take a moment (1 s per stop).</span>
+      </div>
+      <div id="detect-stops-list" style="display:none;"></div>
+      <div id="detect-stops-empty" style="display:none;text-align:center;padding:2rem 0;color:var(--gray);"></div>
+    </div>
+    <div class="add-modal-actions">
+      <button type="button" class="btn-cancel" onclick="closeDetectStops()">Cancel</button>
+      <button type="button" class="btn-save" id="detect-stops-submit" onclick="submitDetectStops()" disabled>Create selected</button>
     </div>
   </div>
 </div>
@@ -2662,13 +2781,21 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const color = isWaypoint ? '#aaa' : '#c9a84c';
     const size = isWaypoint ? 18 : 24;
     const fontSize = isWaypoint ? 10 : 13;
+    // Auto-detected (still-unvetted) items get an amber ring + a
+    // double box-shadow halo instead of the default white border, so
+    // admins can spot them on the map at a glance — matches the
+    // dashed-amber treatment on the timeline card.
+    const needsVetting = !!evt.needs_vetting;
+    const borderCss = needsVetting
+      ? 'border:2px dashed #e0a020;box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.4);'
+      : 'border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
     const evtIcon = L.divIcon({
       className: '',
       html: `<div style="
         width:${size}px;height:${size}px;border-radius:50%;
         background:${color};
         display:flex;align-items:center;justify-content:center;
-        border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
+        ${borderCss}box-sizing:border-box;
         color:#fff;font-size:${fontSize}px;line-height:1;
       ">${isWaypoint ? '<span style="display:block;transform:translateY(-1.5px);">&#9670;</span>' : '&#9733;'}</div>`,
       iconSize: [size, size],
@@ -2919,6 +3046,125 @@ function deleteTrip() {
     });
 }
 
+// ── Detect Stops (admin, desktop) ─────────────────────────────────────────
+// One-shot scan of the trip's GPS track for clusters of consecutive pings
+// in close proximity that aren't already represented by a stay, event,
+// waypoint, or family location. Server proposes them as waypoints (short
+// stops) or events (longer stops) and reverse-geocodes each suggestion;
+// admin picks which to keep. Created entries are flagged needs_vetting
+// so the admin can see at a glance which still need attention.
+let DETECT_STOPS_DATA = [];
+
+function detectStops() {
+  const btn = document.getElementById('btn-detect-stops');
+  if (!btn) return;
+  // Open the modal immediately and show the loading state — the
+  // detection request can run for tens of seconds (1 req/sec to
+  // Nominatim per stop), so we want visible progress, not a frozen
+  // page.
+  const modal = document.getElementById('detect-stops-modal');
+  document.getElementById('detect-stops-loading').style.display = '';
+  document.getElementById('detect-stops-list').style.display = 'none';
+  document.getElementById('detect-stops-list').innerHTML = '';
+  document.getElementById('detect-stops-empty').style.display = 'none';
+  document.getElementById('detect-stops-submit').disabled = true;
+  modal.classList.add('visible');
+  btn.disabled = true;
+
+  fetch(`/api/trips/${TRIP_ID}/detect-stops`, { method: 'POST' })
+    .then(r => r.json())
+    .then(data => {
+      btn.disabled = false;
+      document.getElementById('detect-stops-loading').style.display = 'none';
+      DETECT_STOPS_DATA = data.stops || [];
+      const listEl = document.getElementById('detect-stops-list');
+      const emptyEl = document.getElementById('detect-stops-empty');
+      if (data.warning) {
+        emptyEl.textContent = data.warning;
+        emptyEl.style.display = '';
+        return;
+      }
+      if (!DETECT_STOPS_DATA.length) {
+        emptyEl.textContent = 'No unaccounted stops detected on this trip.';
+        emptyEl.style.display = '';
+        return;
+      }
+      // Render one row per suggestion. Default-checked so the admin
+      // can hit "Create selected" without clicking each one.
+      listEl.innerHTML = DETECT_STOPS_DATA.map((s, i) => {
+        const d = s.display;
+        const dur = d.duration_minutes < 60
+          ? `${Math.round(d.duration_minutes)} min`
+          : `${(d.duration_minutes / 60).toFixed(1)} hr`;
+        const name = s.event.name || '(unnamed)';
+        const place = [d.start_local, dur].filter(Boolean).join(' · ');
+        const loc = [s.event.locale, s.event.state].filter(Boolean).join(', ');
+        const coords = `${d.center_lat.toFixed(4)}, ${d.center_lng.toFixed(4)}`;
+        return `
+          <label class="stop-row">
+            <input type="checkbox" data-idx="${i}" checked onchange="updateDetectStopsCount()">
+            <div>
+              <div class="stop-name">${escapeHtml(name)}</div>
+              <div class="stop-meta">${escapeHtml(place)}${loc ? ' — ' + escapeHtml(loc) : ''}</div>
+              <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
+            </div>
+            <span class="stop-kind ${d.classification}">${d.classification === 'event' ? 'Event' : 'Waypoint'}</span>
+          </label>
+        `;
+      }).join('');
+      listEl.style.display = '';
+      updateDetectStopsCount();
+    })
+    .catch(err => {
+      btn.disabled = false;
+      document.getElementById('detect-stops-loading').style.display = 'none';
+      const emptyEl = document.getElementById('detect-stops-empty');
+      emptyEl.textContent = 'Stop detection failed: ' + err.message;
+      emptyEl.style.display = '';
+    });
+}
+
+function updateDetectStopsCount() {
+  const checked = document.querySelectorAll('#detect-stops-list input[type="checkbox"]:checked');
+  const btn = document.getElementById('detect-stops-submit');
+  btn.disabled = checked.length === 0;
+  btn.textContent = checked.length ? `Create ${checked.length} selected` : 'Create selected';
+}
+
+function submitDetectStops() {
+  const checked = document.querySelectorAll('#detect-stops-list input[type="checkbox"]:checked');
+  if (!checked.length) return;
+  const events = Array.from(checked).map(cb => DETECT_STOPS_DATA[+cb.dataset.idx].event);
+  const btn = document.getElementById('detect-stops-submit');
+  btn.disabled = true;
+  btn.textContent = 'Creating…';
+  fetch(`/api/trips/${TRIP_ID}/accept-stops`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ events }),
+  })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { alert(data.error); btn.disabled = false; updateDetectStopsCount(); return; }
+      // Refresh the page so the new flagged events/waypoints render in
+      // the timeline and on the map.
+      window.location.reload();
+    })
+    .catch(err => {
+      alert('Failed to create events: ' + err.message);
+      btn.disabled = false;
+      updateDetectStopsCount();
+    });
+}
+
+function closeDetectStops() {
+  document.getElementById('detect-stops-modal').classList.remove('visible');
+}
+function closeDetectStopsBackdrop(e) {
+  if (e.target.id === 'detect-stops-modal') closeDetectStops();
+}
+// escapeHtml() is defined later in this file (DOM-based).
+
 function editStay(idx) {
   document.getElementById('stay-edit-' + idx).classList.add('active');
   document.getElementById('stay-body-' + idx).style.display = 'none';
@@ -3020,6 +3266,10 @@ function saveEvent(idx) {
       if (fam) fields.name = fam.label;
     }
   }
+  // Admin save = the act of vetting. Clear the flag every time so
+  // detected-stop entries lose their "Needs review" treatment after
+  // the admin opens & saves the edit form.
+  fields.needs_vetting = false;
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -4051,6 +4301,13 @@ function submitAddModal() {
     };
   } else {
     return;
+  }
+  // Admin save on an event/waypoint/family-visit clears any
+  // pending needs_vetting flag — same intent as saveEvent() above.
+  // For new events POST'd from the modal this is also fine (the
+  // server defaults to False anyway, but being explicit costs nothing).
+  if (addModalKind === 'event' || addModalKind === 'waypoint' || addModalKind === 'family_visit') {
+    payload.needs_vetting = false;
   }
 
   fetch(url, {

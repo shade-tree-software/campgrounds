@@ -1402,18 +1402,10 @@ _US_STATE_ABBR = {
 }
 
 
-@app.route('/api/reverse-geocode')
-def api_reverse_geocode():
-    """Reverse-geocode lat/lng via Nominatim. Returns the nearest named entity
-    (`name`), the enclosing locale (city/town/village/hamlet — `locale`), and
-    the enclosing state (`state`). Used by the trip-detail map's
-    "create event from selected GPS points" feature to suggest a name and
-    administrative context for the centroid of a selection."""
-    try:
-        lat = float(request.args.get('lat', ''))
-        lng = float(request.args.get('lng', ''))
-    except (TypeError, ValueError):
-        return jsonify({"error": "lat and lng required"}), 400
+def _reverse_geocode(lat, lng):
+    """Reverse-geocode coords via Nominatim. Returns
+    {name, locale, state, display_name} or an empty-strings dict on failure.
+    Shared by /api/reverse-geocode and the stop-detection endpoint."""
     try:
         import urllib.request
         # zoom=18 ≈ building-level; addressdetails surfaces the
@@ -1451,14 +1443,29 @@ def api_reverse_geocode():
             state = iso.split("-", 1)[1].upper()
         if not state:
             state = _US_STATE_ABBR.get(state_full, state_full)
-        return jsonify({
+        return {
             "name": name,
             "locale": locale,
             "state": state,
             "display_name": data.get("display_name", ""),
-        })
+        }
     except Exception:
-        return jsonify({"name": "", "locale": "", "state": "", "display_name": ""})
+        return {"name": "", "locale": "", "state": "", "display_name": ""}
+
+
+@app.route('/api/reverse-geocode')
+def api_reverse_geocode():
+    """Reverse-geocode lat/lng via Nominatim. Returns the nearest named entity
+    (`name`), the enclosing locale (city/town/village/hamlet — `locale`), and
+    the enclosing state (`state`). Used by the trip-detail map's
+    "create event from selected GPS points" feature to suggest a name and
+    administrative context for the centroid of a selection."""
+    try:
+        lat = float(request.args.get('lat', ''))
+        lng = float(request.args.get('lng', ''))
+    except (TypeError, ValueError):
+        return jsonify({"error": "lat and lng required"}), 400
+    return jsonify(_reverse_geocode(lat, lng))
 
 
 TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
@@ -1644,6 +1651,175 @@ def api_trip_track(trip_id):
     return jsonify(_apply_overrides(all_points))
 
 
+# ── GPS-track stop detection ────────────────────────────────────────────────
+# Admin-only feature reachable from the trip-detail page: scans the trip's
+# GPS pings for dwell-time clusters that don't already correspond to a
+# stay/event/family location and proposes them as new waypoints (short
+# stops) or events (longer stops). The admin reviews suggestions in a
+# modal and accepts the ones to create; everything created carries
+# `needs_vetting: true` until the admin opens & saves the edit form.
+
+# Tunables. Conservative defaults — adjust if detection is too noisy or
+# misses real stops.
+STOP_CLUSTER_RADIUS_M = 100       # max distance from a cluster's running
+                                  # centroid for a ping to join the cluster
+STOP_MIN_MINUTES = 5              # cluster span must reach this to qualify
+STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
+STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
+                                  # existing stay/event/family location
+
+
+def _haversine_m(lat1, lng1, lat2, lng2):
+    """Great-circle distance between two coords in meters."""
+    import math
+    R = 6371000.0
+    a1 = math.radians(lat1)
+    a2 = math.radians(lat2)
+    da = math.radians(lat2 - lat1)
+    do = math.radians(lng2 - lng1)
+    h = math.sin(da/2)**2 + math.cos(a1) * math.cos(a2) * math.sin(do/2)**2
+    return 2 * R * math.asin(math.sqrt(h))
+
+
+def _load_trip_track_for_detection(trip_id):
+    """Return the trip's GPS pings post-overrides (relocations applied,
+    suppressed dropped), or [] if neither cache nor API is available.
+
+    Mirrors the read path of api_trip_track but is callable server-side
+    and never returns admin annotation tags. Prefers the on-disk cache
+    (the trip detail page's loadTrack() will have populated it on load)
+    and only falls back to a fresh fetch when the cache is missing."""
+    trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
+    if not trip or not trip.get("start") or not trip.get("end"):
+        return []
+
+    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
+    points = None
+    if os.path.isfile(cache_file):
+        try:
+            with open(cache_file) as f:
+                points = json.load(f)
+        except Exception:
+            points = None
+    if points is None:
+        token = os.environ.get("TIMELINE_API_TOKEN")
+        tid = os.environ.get("TIMELINE_TID")
+        if not token or not tid:
+            return []
+        try:
+            start_dt = datetime.fromisoformat(trip["start"]) - timedelta(days=1)
+            end_dt = datetime.fromisoformat(trip["end"]) + timedelta(days=2)
+            from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+            to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+            points = _fetch_timeline_points(tid, token, from_ts, to_ts)
+            _enrich_with_timezone(points)
+            with open(cache_file, "w") as f:
+                json.dump(points, f)
+        except Exception:
+            return []
+
+    suppressed = set(get_suppressed_pings(trip_id))
+    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
+                   for it in get_relocated_pings(trip_id)}
+    if relocations:
+        for p in points:
+            ov = relocations.get(p.get("tst"))
+            if ov is not None:
+                p["lat"] = ov[0]
+                p["lon"] = ov[1]
+    if suppressed:
+        points = [p for p in points if p.get("tst") not in suppressed]
+    return points
+
+
+def _detect_stops(points,
+                  cluster_radius_m=STOP_CLUSTER_RADIUS_M,
+                  min_stop_minutes=STOP_MIN_MINUTES):
+    """Walk pings in time order, group them into clusters where every
+    ping is within `cluster_radius_m` of the cluster's running centroid.
+    Clusters whose time span >= `min_stop_minutes` are returned.
+
+    Consecutive-in-time only: the same physical location visited twice
+    on the same trip produces two clusters, which is the right behavior
+    for trip-stop suggestions (one suggestion per visit)."""
+    pts = sorted(
+        (p for p in points
+         if p.get("lat") is not None
+         and p.get("lon") is not None
+         and p.get("tst") is not None),
+        key=lambda p: p["tst"],
+    )
+    stops = []
+    cur = None
+
+    def _close(c):
+        if not c:
+            return
+        dur_min = (c["end_tst"] - c["start_tst"]) / 60.0
+        if dur_min >= min_stop_minutes:
+            stops.append({
+                "center_lat": c["sum_lat"] / c["count"],
+                "center_lng": c["sum_lng"] / c["count"],
+                "start_tst": c["start_tst"],
+                "end_tst": c["end_tst"],
+                "duration_minutes": round(dur_min, 1),
+                "ping_count": c["count"],
+                "tz": c["tz"] or "UTC",
+            })
+
+    for p in pts:
+        lat, lng, tst = p["lat"], p["lon"], p["tst"]
+        if cur is None:
+            cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
+                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz")}
+            continue
+        c_lat = cur["sum_lat"] / cur["count"]
+        c_lng = cur["sum_lng"] / cur["count"]
+        if _haversine_m(lat, lng, c_lat, c_lng) <= cluster_radius_m:
+            cur["sum_lat"] += lat
+            cur["sum_lng"] += lng
+            cur["count"] += 1
+            cur["end_tst"] = tst
+        else:
+            _close(cur)
+            cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
+                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz")}
+    _close(cur)
+    return stops
+
+
+def _drop_stops_at_known_locations(stops, trip, family_locations,
+                                   near_radius_m=STOP_NEAR_ANCHOR_M):
+    """Filter out clusters that fall within `near_radius_m` of any
+    existing stay (campsite_location override or campground coords),
+    event (waypoints included), or family location (both the listed
+    and driveway coords). `trip` must be enriched via
+    `enrich_trip_locations` so stays/events carry lat/lng."""
+    anchors = []
+    for s in trip.get("stays", []):
+        if s.get("lat") is not None and s.get("lng") is not None:
+            anchors.append((s["lat"], s["lng"]))
+    for e in trip.get("events", []):
+        if e.get("lat") is not None and e.get("lng") is not None:
+            anchors.append((e["lat"], e["lng"]))
+    for fam in family_locations:
+        if fam.get("lat") is not None and fam.get("lng") is not None:
+            anchors.append((fam["lat"], fam["lng"]))
+        if fam.get("driveway_lat") is not None and fam.get("driveway_lng") is not None:
+            anchors.append((fam["driveway_lat"], fam["driveway_lng"]))
+
+    out = []
+    for c in stops:
+        too_close = False
+        for a in anchors:
+            if _haversine_m(c["center_lat"], c["center_lng"], a[0], a[1]) < near_radius_m:
+                too_close = True
+                break
+        if not too_close:
+            out.append(c)
+    return out
+
+
 @app.route('/api/trips/<int:trip_id>/suppress-pings', methods=['POST'])
 def api_suppress_pings(trip_id):
     """Mark a list of GPS-ping timestamps as suppressed for this trip."""
@@ -1720,6 +1896,132 @@ def api_unrelocate_pings(trip_id):
     if result is None:
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "relocated_pings": result})
+
+
+@app.route('/api/trips/<int:trip_id>/detect-stops', methods=['POST'])
+def api_detect_stops(trip_id):
+    """Scan the trip's GPS track for dwell-time clusters that don't already
+    correspond to a stay, event, or family location, and propose them as
+    new waypoints (≤30 min) or events (>30 min). Each suggestion is
+    reverse-geocoded so the admin sees a candidate name + locale + state
+    in the review modal.
+
+    This call can take ~1 s per detected stop because Nominatim's usage
+    policy is one request per second; the frontend shows a spinner.
+
+    The response is advisory only — no events are persisted here. The
+    admin reviews the list in the modal and POSTs the accepted subset to
+    /accept-stops.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
+    if not trip:
+        return jsonify({"error": "trip not found"}), 404
+    enrich_trip_locations(trip)
+    _, family = _map_config()
+
+    points = _load_trip_track_for_detection(trip_id)
+    if not points:
+        return jsonify({"stops": [], "warning": "no track data available"})
+
+    raw_stops = _detect_stops(points)
+    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family)
+
+    # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
+    # not have it. Fall back to UTC formatting if it's missing.
+    try:
+        from zoneinfo import ZoneInfo
+        _HAS_ZONEINFO = True
+    except Exception:
+        ZoneInfo = None
+        _HAS_ZONEINFO = False
+
+    import time as _time
+
+    def _local(tst, tz_name):
+        utc = datetime.utcfromtimestamp(tst)
+        if _HAS_ZONEINFO and tz_name and tz_name != "UTC":
+            try:
+                return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
+            except Exception:
+                pass
+        return utc
+
+    enriched = []
+    for s in raw_stops:
+        info = _reverse_geocode(s["center_lat"], s["center_lng"])
+        # Polite throttle — Nominatim's policy is 1 req/sec. _reverse_geocode
+        # itself can return in well under 1 s on warm caches.
+        _time.sleep(1.05)
+        start_local = _local(s["start_tst"], s["tz"])
+        end_local = _local(s["end_tst"], s["tz"])
+        classification = "waypoint" if s["duration_minutes"] <= STOP_WAYPOINT_MAX_MINUTES else "event"
+        # The "event" sub-dict is the exact payload format that
+        # /accept-stops feeds into add_event(), so the frontend can just
+        # forward through the rows it kept. needs_vetting is hard-coded
+        # True so the admin sees the flag on the created event.
+        enriched.append({
+            "display": {
+                "duration_minutes": s["duration_minutes"],
+                "ping_count": s["ping_count"],
+                "start_local": start_local.strftime("%Y-%m-%d %H:%M"),
+                "end_local": end_local.strftime("%H:%M"),
+                "classification": classification,
+                "center_lat": s["center_lat"],
+                "center_lng": s["center_lng"],
+                "display_name": info.get("display_name", ""),
+            },
+            "event": {
+                "date": start_local.strftime("%Y-%m-%d"),
+                "time": start_local.strftime("%H:%M"),
+                "end_time": end_local.strftime("%H:%M"),
+                "name": info.get("name", "") or "Detected stop",
+                "description": (
+                    f"Auto-detected from GPS track: "
+                    f"{s['duration_minutes']:.0f} min, {s['ping_count']} pings."
+                ),
+                "location": f"{s['center_lat']:.6f},{s['center_lng']:.6f}",
+                "locale": info.get("locale", ""),
+                "state": info.get("state", ""),
+                "waypoint": classification == "waypoint",
+                "family_id": None,
+                "needs_vetting": True,
+            },
+        })
+    return jsonify({"stops": enriched})
+
+
+@app.route('/api/trips/<int:trip_id>/accept-stops', methods=['POST'])
+def api_accept_stops(trip_id):
+    """Create events/waypoints from a list of accepted stop suggestions.
+    Body: {events: [<add_event payload>, ...]}. Each payload should be a
+    `display`-stripped object from /detect-stops, optionally tweaked by
+    the admin in the modal. Returns the count created.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    events_payload = data.get("events") or []
+    if not isinstance(events_payload, list):
+        return jsonify({"error": "events must be a list"}), 400
+    created = 0
+    last_trip = None
+    for evt in events_payload:
+        # Hard-set needs_vetting True so a tampered client can't smuggle in
+        # already-vetted entries. The flag's whole purpose is to mark
+        # auto-created events.
+        evt = dict(evt)
+        evt["needs_vetting"] = True
+        result = add_event(trip_id, evt)
+        if result is None:
+            return jsonify({"error": "trip not found"}), 404
+        last_trip = result
+        created += 1
+    return jsonify({"ok": True, "created": created,
+                    "event_count": len(last_trip["events"]) if last_trip else 0})
 
 
 @app.route('/api/elevation')

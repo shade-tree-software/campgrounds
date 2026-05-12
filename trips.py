@@ -358,6 +358,11 @@ def add_event(trip_id, event_data):
                 "state": event_data.get("state", ""),
                 "waypoint": bool(event_data.get("waypoint", False)),
                 "family_id": event_data.get("family_id"),
+                # True for events/waypoints auto-created by GPS-track stop
+                # detection; admin clears it by editing/saving. The detection
+                # endpoint creates these in bulk; the admin reviews each
+                # before clearing the flag.
+                "needs_vetting": bool(event_data.get("needs_vetting", False)),
             }
             events = t.get("events", [])
             events.append(event)
@@ -386,6 +391,11 @@ def update_event(trip_id, event_idx, fields):
                     event[key] = fields[key]
             if "waypoint" in fields:
                 event["waypoint"] = bool(fields["waypoint"])
+            if "needs_vetting" in fields:
+                # Saving an edited event clears the flag — the admin's act of
+                # opening/saving is how vetting happens. Bulk-detected stops
+                # are created with this set to True; subsequent edits flip it.
+                event["needs_vetting"] = bool(fields["needs_vetting"])
             # end_time requires time
             if event.get("end_time") and not event.get("time"):
                 event["end_time"] = ""
@@ -723,6 +733,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         e.setdefault("waypoint", False)
         e.setdefault("locale", "")
         e.setdefault("state", "")
+        e.setdefault("needs_vetting", False)
         fid = e.get("family_id")
         if fid is not None and fid in locations:
             e["family_visit"] = locations[fid]["name"]

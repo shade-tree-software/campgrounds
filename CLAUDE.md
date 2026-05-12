@@ -123,6 +123,12 @@ Clicking a marker scrolls the cards column to the corresponding card via `scroll
   - Home cards are structural — no edit/upload controls (manual override is set via the home-card time prompt).
 - Both inline and modal paths hit the same backing API endpoints.
 
+### Stop Detection (Admin)
+
+Admin + desktop-only feature on the trip detail page: the **Detect Stops** button in `.trip-header` scans the trip's GPS track for clusters of consecutive pings within `STOP_CLUSTER_RADIUS_M` (100 m) of a running centroid whose time span is at least `STOP_MIN_MINUTES` (5 min). Clusters within `STOP_NEAR_ANCHOR_M` (300 m) of any existing stay, event (incl. waypoints), or family location are dropped — those are already accounted for. Survivors are reverse-geocoded one-per-second via Nominatim (so the call can take tens of seconds; the modal shows a spinner) and classified: `duration_minutes <= STOP_WAYPOINT_MAX_MINUTES` (30 min) → waypoint, longer → event. Endpoint: `POST /api/trips/<id>/detect-stops` (advisory only; persists nothing). The modal lists each suggestion with a checkbox; the admin's selection is posted to `POST /api/trips/<id>/accept-stops`, which creates each via `add_event` with `needs_vetting: true` forced on (server-side) so it can't be smuggled off.
+
+`needs_vetting` is a boolean field on events. `true` items render with a dashed amber outline and a "Needs review" badge on the timeline card, plus a dashed amber ring on the map marker — mirroring on every surface so the admin can find them. The flag is cleared by *any* PUT to the event: both the inline and modal save handlers inject `needs_vetting: false` into the payload, so simply opening + saving the edit form is the act of vetting. The field defaults to `false` in `_make_trip()` for older trip records that predate the field, so existing data renders unchanged. Tunables (radius/duration constants) live at module level in `ekko_trips_app.py` near the helpers.
+
 ### Map Picker Popup
 
 Shared across campground manage and event location picker via `static/map-picker.js` and `static/map-picker.css`. Features:
@@ -164,6 +170,8 @@ Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-widt
 - `POST/DELETE /api/trips/<id>/suppress-pings` — mark / unmark `tst`s as suppressed (body `{tst: [...]}`); idempotent
 - `POST /api/trips/<id>/relocate-pings` — set lat/lon overrides (body `{items: [{tst, lat, lon}, ...]}`); replaces existing entries by `tst`
 - `DELETE /api/trips/<id>/relocate-pings` — clear overrides (body `{tst: [...]}`)
+- `POST /api/trips/<id>/detect-stops` — admin-only; scan the trip's GPS track for dwell-time clusters not already represented by a stay/event/family location. Returns a list of suggestions, each with a `display` block (for the modal) and an `event` block (the exact payload `/accept-stops` will feed into `add_event`). Reverse-geocodes one stop per second so the call can take tens of seconds.
+- `POST /api/trips/<id>/accept-stops` — admin-only; body `{events: [<event payload>, ...]}`. Creates each as a new event/waypoint with `needs_vetting: true` (server always forces the flag on, regardless of payload).
 
 ### Photo Operations
 - `POST /trips/<id>/stays/<idx>/upload` — upload campspot photo or zip file
