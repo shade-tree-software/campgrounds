@@ -187,9 +187,11 @@
     font-family: -apple-system, 'Segoe UI', sans-serif;
     font-weight: 500;
     /* Sized for the printed poster: at letter scale these glyphs land
-       around 11–12pt, well above the legibility floor. On-screen they
-       look small but the poster's screen view is just a preview. */
-    font-size: 6px;
+       around 13–14pt, well above the legibility floor. On-screen they
+       look small but the poster's screen view is just a preview.
+       Must stay in sync with TEXT_FONT in the script below so the
+       canvas measurement matches the rendered glyph width. */
+    font-size: 7px;
     dominant-baseline: central;
   }
 
@@ -272,6 +274,11 @@ const map = L.map('poster-map', {
   keyboard: false,
   dragging: false,
   touchZoom: false,
+  // Quarter-step zoom so fitBounds can land between integer levels
+  // for tighter framing. Tiles for the next-coarser integer level
+  // are CSS-scaled up; no extra tile fetches and no pixel-doubling
+  // artifacts.
+  zoomSnap: 0.25,
 });
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
 
@@ -462,7 +469,7 @@ function placeCallouts() {
   const BOX_H = 14;
   const PAD_X = 3;
   const GAP = 2;  // inter-pill spacing on every side
-  const TEXT_FONT = '500 6px -apple-system, Segoe UI, sans-serif';
+  const TEXT_FONT = '500 7px -apple-system, Segoe UI, sans-serif';
   const MARGIN = 8;  // pixels from the map edge to the callout's outer side
 
   // Measure each callout's natural width — left-padding + summary text
@@ -479,56 +486,37 @@ function placeCallouts() {
   });
 
   // Greedy, capacity-aware placement. Trips with the most nights are
-  // placed first; once no side has room for an anchor, the remaining
+  // placed first; once neither vertical stack has room, the remaining
   // (shortest) trips are dropped so callouts never overflow the map.
-  // Each anchor prefers the side its angle from the map center points
-  // at, then falls back to the two adjacent verticals (vertical sides
-  // fit anything until their box count hits VERT_CAP), then the
-  // opposite horizontal. Day trips (no `total_nights`) sort last and
-  // are the first to drop. Dropped anchors are silently skipped by
-  // the render loop below — it guards on `a.boxCenter`, which is only
-  // set by `placeSide` for anchors that landed on some side.
-  // Verticals are constrained to a y-band that stops short of the top
-  // and bottom horizontal y-bands by one pill-height + 4px gap on each
-  // end, so corner overlap is geometrically impossible. The available
-  // vertical band is therefore `mh - 2*MARGIN - 2*(BOX_H + 4)` tall.
-  const VERT_BAND_TOP = MARGIN + BOX_H + GAP;
-  const VERT_BAND_BOT = mh - MARGIN - BOX_H - GAP;
+  // Each anchor prefers the side its pin sits in (right half-plane =
+  // right stack, left half-plane = left stack), then falls back to the
+  // other side. Top/bottom rows are intentionally not used — every
+  // callout lives in one of the two vertical stacks. The vertical band
+  // can therefore use the full inner height (MARGIN..mh-MARGIN);
+  // there's no horizontal row to clear at the corners.
+  const VERT_BAND_TOP = MARGIN;
+  const VERT_BAND_BOT = mh - MARGIN;
   const VERT_BAND_H = Math.max(0, VERT_BAND_BOT - VERT_BAND_TOP);
   const VERT_CAP = Math.max(0, Math.floor((VERT_BAND_H + GAP) / (BOX_H + GAP)));
-  function horizFits(list, candidate) {
-    const ws = list.map(a => a.boxW);
-    if (candidate) ws.push(candidate.boxW);
-    if (!ws.length) return true;
-    const totalW = ws.reduce((s, w) => s + w, 0) + GAP * (ws.length - 1);
-    return totalW <= (mw - 2 * MARGIN);
-  }
   function preferredSide(angle) {
-    // Map center is origin; angle is screen-space (y grows down), so
-    // π/2 = bottom and -π/2 = top. Each side claims a 90° wedge.
-    if (angle >= -Math.PI/4 && angle < Math.PI/4) return 'right';
-    if (angle >= Math.PI/4 && angle < 3*Math.PI/4) return 'bottom';
-    if (angle >= -3*Math.PI/4 && angle < -Math.PI/4) return 'top';
-    return 'left';
+    // Right half-plane (-π/2 .. π/2) → right stack; otherwise left.
+    return (angle >= -Math.PI/2 && angle < Math.PI/2) ? 'right' : 'left';
   }
-  const sides = { right: [], bottom: [], left: [], top: [] };
+  const sides = { right: [], left: [] };
   const fallback = {
-    top:    ['top',    'left', 'right', 'bottom'],
-    bottom: ['bottom', 'left', 'right', 'top'],
-    left:   ['left',   'top',  'bottom', 'right'],
-    right:  ['right',  'top',  'bottom', 'left'],
+    left:  ['left',  'right'],
+    right: ['right', 'left'],
   };
-  function canPlace(side, a) {
-    if (side === 'left' || side === 'right') return sides[side].length < VERT_CAP;
-    return horizFits(sides[side], a);
+  function canPlace(side) {
+    return sides[side].length < VERT_CAP;
   }
   [...anchors]
     .sort((a, b) => (b.trip.total_nights || 0) - (a.trip.total_nights || 0))
     .forEach(a => {
       for (const side of fallback[preferredSide(a.angle)]) {
-        if (canPlace(side, a)) { sides[side].push(a); return; }
+        if (canPlace(side)) { sides[side].push(a); return; }
       }
-      // No side has room — this anchor is dropped.
+      // Both stacks are full — this anchor is dropped.
     });
 
   // Within each side, sort anchors by their position along that side's
@@ -538,57 +526,34 @@ function placeCallouts() {
   // y-bands; horizontal rows can therefore use the full inner width.
   function placeSide(list, side) {
     if (!list.length) return;
-    const isVertical = side === 'left' || side === 'right';
-    if (isVertical) {
-      // Two-stage arrangement:
-      //  (1) Geography — split the list into a northern half (smaller
-      //      pin py = farther up the map) and a southern half by
-      //      median y, so callouts in the top of the stack point to
-      //      northern locations and callouts in the bottom of the
-      //      stack point to southern ones. Leader lines stay short
-      //      and roughly stop crossing.
-      //  (2) Bow-tie within each half — widest pill at the outer
-      //      end (topmost of the north half / bottommost of the
-      //      south half), narrowest toward the stack center, so
-      //      short pills cluster around the middle of the stack
-      //      regardless of their pin's latitude.
-      const sortedByY = [...list].sort((a, b) => a.py - b.py);
-      const half = Math.ceil(sortedByY.length / 2);
-      const northern = sortedByY.slice(0, half).sort((a, b) => b.boxW - a.boxW);
-      const southern = sortedByY.slice(half).sort((a, b) => a.boxW - b.boxW);
-      const arranged = [...northern, ...southern];
-      const x = side === 'left' ? MARGIN : (mw - MARGIN);
-      const totalH = arranged.length * BOX_H + (arranged.length - 1) * GAP;
-      // Center the stack within the safe band — bumping the start down
-      // by VERT_BAND_TOP guarantees the topmost pill clears MARGIN +
-      // BOX_H + GAP even when the stack is shorter than the band.
-      let y = VERT_BAND_TOP + Math.max(0, (VERT_BAND_H - totalH) / 2) + BOX_H / 2;
-      arranged.forEach(a => {
-        a.boxCenter = { x: side === 'left' ? x + a.boxW / 2 : x - a.boxW / 2, y };
-        a.side = side;
-        y += BOX_H + GAP;
-      });
-    } else {
-      list.sort((a, b) => a.px - b.px);
-      const y = side === 'top' ? MARGIN + BOX_H / 2 : (mh - MARGIN - BOX_H / 2);
-      // Full inner width is available — no corner inset needed because
-      // the verticals can't reach the top/bottom y-bands.
-      const xMin = MARGIN;
-      const xMax = mw - MARGIN;
-      const usableW = xMax - xMin;
-      const totalW = list.reduce((s, a) => s + a.boxW, 0) + GAP * (list.length - 1);
-      let x = xMin + Math.max(0, (usableW - totalW) / 2) + list[0].boxW / 2;
-      list.forEach((a, i) => {
-        if (i > 0) x += list[i - 1].boxW / 2 + GAP + a.boxW / 2;
-        a.boxCenter = { x, y };
-        a.side = side;
-      });
-    }
+    // Two-stage arrangement:
+    //  (1) Geography — split the list into a northern half (smaller
+    //      pin py = farther up the map) and a southern half by
+    //      median y, so callouts in the top of the stack point to
+    //      northern locations and callouts in the bottom of the
+    //      stack point to southern ones. Leader lines stay short
+    //      and roughly stop crossing.
+    //  (2) Bow-tie within each half — widest pill at the outer
+    //      end (topmost of the north half / bottommost of the
+    //      south half), narrowest toward the stack center, so
+    //      short pills cluster around the middle of the stack
+    //      regardless of their pin's latitude.
+    const sortedByY = [...list].sort((a, b) => a.py - b.py);
+    const half = Math.ceil(sortedByY.length / 2);
+    const northern = sortedByY.slice(0, half).sort((a, b) => b.boxW - a.boxW);
+    const southern = sortedByY.slice(half).sort((a, b) => a.boxW - b.boxW);
+    const arranged = [...northern, ...southern];
+    const x = side === 'left' ? MARGIN : (mw - MARGIN);
+    const totalH = arranged.length * BOX_H + (arranged.length - 1) * GAP;
+    let y = VERT_BAND_TOP + Math.max(0, (VERT_BAND_H - totalH) / 2) + BOX_H / 2;
+    arranged.forEach(a => {
+      a.boxCenter = { x: side === 'left' ? x + a.boxW / 2 : x - a.boxW / 2, y };
+      a.side = side;
+      y += BOX_H + GAP;
+    });
   }
   placeSide(sides.left, 'left');
   placeSide(sides.right, 'right');
-  placeSide(sides.top, 'top');
-  placeSide(sides.bottom, 'bottom');
 
   // Draw each callout: leader line first (so it sits behind), then the
   // pinpoint dot (small navy circle marking the actual location), then the
