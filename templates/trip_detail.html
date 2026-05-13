@@ -3130,8 +3130,13 @@ function detectStops() {
   document.getElementById('detect-stops-list').style.display = 'none';
   document.getElementById('detect-stops-list').innerHTML = '';
   document.getElementById('detect-stops-empty').style.display = 'none';
-  document.getElementById('detect-stops-submit').disabled = true;
-  document.getElementById('detect-stops-submit').textContent = 'Create selected';
+  const submitBtn = document.getElementById('detect-stops-submit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Create selected';
+  // Reset to visible at the start of every run — a prior "no stops"
+  // run may have hidden it, and the empty/warning/error branches below
+  // hide it again only when applicable.
+  submitBtn.style.display = '';
   modal.classList.add('visible');
   btn.disabled = true;
 
@@ -3147,11 +3152,13 @@ function detectStops() {
       if (data.warning) {
         emptyEl.textContent = data.warning;
         emptyEl.style.display = '';
+        submitBtn.style.display = 'none';
         return;
       }
       if (!DETECT_STOPS_DATA.length) {
         emptyEl.textContent = 'No unaccounted stops detected on this trip.';
         emptyEl.style.display = '';
+        submitBtn.style.display = 'none';
         return;
       }
       // Render rows with placeholders; reverse-geocoding fills them in
@@ -3169,6 +3176,7 @@ function detectStops() {
       const emptyEl = document.getElementById('detect-stops-empty');
       emptyEl.textContent = 'Stop detection failed: ' + err.message;
       emptyEl.style.display = '';
+      submitBtn.style.display = 'none';
     });
 }
 
