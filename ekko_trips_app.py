@@ -1668,28 +1668,44 @@ STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
                                   # existing stay/event/family location
 STOP_NEAR_HOME_M = 1500           # "near HOME" radius used by
-                                  # _find_home_boundary_tsts to classify
-                                  # pings as at-home vs. away. Used only
-                                  # to infer the trip's real departure /
-                                  # arrival moments — NOT applied as a
-                                  # drop-anchor on cluster centroids, so a
-                                  # stop 800 m from home that happens
-                                  # mid-trip (after departure, before
-                                  # arrival) is still a valid suggestion.
-                                  # Matches the frontend's HOME_TRIM_KM.
+                                  # _find_home_boundary_tsts: a ping
+                                  # inside this radius is *eligible* to
+                                  # be tagged at-home (subject to the
+                                  # centroid test below). Outside this
+                                  # radius is always not-at-home. Used
+                                  # only to infer the trip's real
+                                  # departure / arrival moments — NOT
+                                  # applied as a drop-anchor on cluster
+                                  # centroids, so a stop 800 m from home
+                                  # that happens mid-trip (after
+                                  # departure, before arrival) is still
+                                  # a valid suggestion. Matches the
+                                  # frontend's HOME_TRIM_KM.
+STOP_AT_HOME_CENTROID_M = 600     # consecutive within-NEAR_HOME pings
+                                  # are grouped into a "near-home run"
+                                  # and tagged at-home iff the run's
+                                  # centroid is within this radius of
+                                  # home. Runs whose centroid sits
+                                  # farther out (e.g., a coffee shop
+                                  # 1.2 km from home that happens to be
+                                  # inside the 1.5 km near-home radius)
+                                  # are near-home *stops*, not home
+                                  # arrivals — they never bound the
+                                  # trip regardless of duration. The
+                                  # 600 m value matches the start of
+                                  # the commercial zone around home;
+                                  # the full 0–600 m residential band
+                                  # is at-home, ≥600 m is eligible to
+                                  # be a near-home stop. Re-tune if
+                                  # the host home's neighborhood
+                                  # geography differs.
 STOP_HOME_BOUNDARY_LOCK_S = 3600  # sustained-away duration that confirms
-                                  # the trip really started / ended. A
-                                  # brief at-Starbucks errand on trip
+                                  # a not-at-home streak is "the trip."
+                                  # A brief at-Starbucks errand on trip
                                   # morning doesn't qualify; the actual
                                   # departure (where the user stays away
                                   # from home for >=1 hr) does. Mirrors
                                   # the frontend's HOME_BOUNDARY_LOCK_S.
-STOP_HOME_REENTRY_DWELL_S = 1800  # at-home gap shorter than this between
-                                  # two away streaks is treated as a brief
-                                  # mid-trip home return rather than a
-                                  # trip boundary — the streaks are merged
-                                  # into one. 30 min mirrors the frontend's
-                                  # HOME_REENTRY_DWELL_S.
 
 
 def _haversine_m(lat1, lng1, lat2, lng2):
@@ -1814,42 +1830,53 @@ def _detect_stops(points,
 
 def _find_home_boundary_tsts(points, home,
                              home_radius_m=STOP_NEAR_HOME_M,
-                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S,
-                             merge_dwell_seconds=STOP_HOME_REENTRY_DWELL_S):
+                             at_home_centroid_m=STOP_AT_HOME_CENTROID_M,
+                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S):
     """Return (home_departure_tst, home_arrival_tst) — when the user
-    finally left HOME for the trip, and when they finally returned.
-    Either may be None when home isn't configured, no pings exist, or
-    no qualifying away period exists.
+    left HOME for the trip and when they returned. Either may be None
+    when home isn't configured, no pings exist, or no away period meets
+    `lock_seconds`.
 
     ⚠ DUPLICATE LOGIC. The frontend's `findHomeBoundaryTimes()` in
     templates/trip_detail.html computes the same notion (home card's
-    "(auto)" times) with a different algorithm and its own set of
-    constants — see the "Stop Detection (Admin)" section in CLAUDE.md
-    for the alignment table. If you change behavior here, check the
-    frontend; if you change the frontend, check here.
+    "(auto)" times) with a *different* algorithm — see the "Stop
+    Detection (Admin)" section in CLAUDE.md. The two have diverged:
+    this implementation uses centroid-classified at-home runs and picks
+    the longest qualifying away streak; the frontend still uses the
+    strict HOME_EXACT_RADIUS_M walk-backward-from-end approach. They
+    can disagree on trip end when the arrival pings sit just outside
+    HOME_EXACT_RADIUS_M (≈30 m) but within HOME_TRIM_KM.
 
     Algorithm:
 
-      1. Build raw away-from-HOME streaks: maximal runs of consecutive
-         pings whose distance to HOME exceeds `home_radius_m`.
-      2. Merge streaks separated by less than `merge_dwell_seconds` of
-         at-home time. A brief mid-trip home return (the user pops
-         home to grab a forgotten item, 10 min) merges back into the
-         trip; a real return-home-for-the-evening (>30 min) does not.
-      3. Filter to merged streaks lasting at least `lock_seconds`. A
-         5-minute coffee errand doesn't qualify; the actual trip does.
-      4. Pick the LAST qualifying merged streak as the trip. Its start
-         is `home_departure_tst`; its end is `home_arrival_tst`.
+      1. Group consecutive within-`home_radius_m` pings into near-home
+         runs. Pings outside the radius break the run.
+      2. Tag each run AT_HOME iff its centroid is within
+         `at_home_centroid_m` of HOME. Runs that fail the centroid test
+         are *near-home stops* (e.g., a coffee shop 1.2 km from home
+         inside the 1.5 km radius). Per the user rule, a near-home
+         stop is never a home arrival/departure, regardless of how
+         long the user dwells there.
+      3. Build maximal NOT_AT_HOME streaks (these include near-home
+         stops). Filter to streaks lasting `lock_seconds` (1 hr) or
+         longer — a brief out-and-back errand doesn't qualify as the
+         trip.
+      4. Pick the LONGEST qualifying streak as the trip.
+         `home_departure_tst` = its first NOT_AT_HOME ping.
+         `home_arrival_tst` = the first AT_HOME ping immediately after
+         it (the moment the user got home). If no AT_HOME pings follow
+         the streak, fall back to the streak's last ping.
 
-    Picking the LAST (vs. first) handles the "work-day-on-trip-morning"
-    case: the user spends 9 hr at the office, comes home, then leaves
-    for the trip in the evening. The workday is a separate away streak
-    that gets correctly ignored because the trip is the streak that
-    comes after it.
+    Any AT_HOME run — even a single ping — bounds the streak. There is
+    no merge-across-brief-at-home-dwell step (a previous version
+    merged streaks separated by <30 min at-home time; that caused a
+    real arrival home followed by an afternoon errand to be missed
+    because the algorithm picked the errand instead of the trip).
 
-    Simpler than the frontend's findHomeBoundaryTimes (no separate
-    HOME_EXACT_RADIUS_M layer, no "lock once away > 12 hr" guard) but
-    covers the common cases the stop-detection feature cares about."""
+    Picking the LONGEST streak (vs. first or last) handles both the
+    workday-before-trip case (the workday is shorter than the trip)
+    and the errand-after-arrival case (the errand is shorter than the
+    trip), without needing time-window heuristics."""
     if not home or home[0] is None or home[1] is None:
         return None, None
     home_lat, home_lng = home[0], home[1]
@@ -1860,47 +1887,64 @@ def _find_home_boundary_tsts(points, home,
          and p.get("tst") is not None),
         key=lambda p: p["tst"],
     )
-    if not pts:
+    n = len(pts)
+    if n == 0:
         return None, None
 
-    def at_home(p):
-        return _haversine_m(p["lat"], p["lon"], home_lat, home_lng) <= home_radius_m
+    # 1-2. Classify each ping. Group consecutive within-radius pings
+    # into a run, compute its centroid, and tag the whole run AT_HOME
+    # only if the centroid passes the at-home test. Pings outside
+    # home_radius_m are NOT_AT_HOME by default.
+    at_home = [False] * n
+    i = 0
+    while i < n:
+        if _haversine_m(pts[i]["lat"], pts[i]["lon"],
+                        home_lat, home_lng) > home_radius_m:
+            i += 1
+            continue
+        j = i
+        sum_lat = 0.0
+        sum_lng = 0.0
+        while j < n and _haversine_m(pts[j]["lat"], pts[j]["lon"],
+                                     home_lat, home_lng) <= home_radius_m:
+            sum_lat += pts[j]["lat"]
+            sum_lng += pts[j]["lon"]
+            j += 1
+        cnt = j - i
+        c_dist = _haversine_m(sum_lat / cnt, sum_lng / cnt,
+                              home_lat, home_lng)
+        if c_dist <= at_home_centroid_m:
+            for k in range(i, j):
+                at_home[k] = True
+        i = j
 
-    # 1. Raw away streaks.
+    # 3. NOT_AT_HOME streaks.
     streaks = []
-    cur = None
-    for p in pts:
-        if at_home(p):
-            if cur is not None:
-                streaks.append(cur)
-                cur = None
+    cur_start = None
+    for k in range(n):
+        if at_home[k]:
+            if cur_start is not None:
+                streaks.append((cur_start, k - 1))
+                cur_start = None
         else:
-            if cur is None:
-                cur = [p["tst"], p["tst"]]
-            else:
-                cur[1] = p["tst"]
-    if cur is not None:
-        streaks.append(cur)
+            if cur_start is None:
+                cur_start = k
+    if cur_start is not None:
+        streaks.append((cur_start, n - 1))
 
-    if not streaks:
-        return None, None
-
-    # 2. Merge streaks separated by short at-home dwell.
-    merged = [list(streaks[0])]
-    for s in streaks[1:]:
-        if s[0] - merged[-1][1] < merge_dwell_seconds:
-            merged[-1][1] = s[1]
-        else:
-            merged.append(list(s))
-
-    # 3. Keep only streaks that are >=lock_seconds.
-    qualified = [s for s in merged if s[1] - s[0] >= lock_seconds]
+    qualified = [(s, e) for s, e in streaks
+                 if pts[e]["tst"] - pts[s]["tst"] >= lock_seconds]
     if not qualified:
         return None, None
 
-    # 4. Last qualifying merged streak == the trip.
-    main = qualified[-1]
-    return main[0], main[1]
+    # 4. Longest qualifying streak is the trip.
+    main_s, main_e = max(
+        qualified, key=lambda se: pts[se[1]]["tst"] - pts[se[0]]["tst"]
+    )
+    home_departure_tst = pts[main_s]["tst"]
+    home_arrival_tst = (pts[main_e + 1]["tst"]
+                        if main_e + 1 < n else pts[main_e]["tst"])
+    return home_departure_tst, home_arrival_tst
 
 
 def _trip_local_to_tst(date_str, time_str, tz_name):
@@ -2119,13 +2163,14 @@ def api_detect_stops(trip_id):
 
     # Tighten the time window further by inferring the *real* trip
     # start and end. Auto-detected sustained-away boundaries first
-    # (last qualifying merged streak via _find_home_boundary_tsts),
-    # then manual `home_start_time` / `home_end_time` overrides win if
-    # the admin set them — those are what the home card displays as
-    # the trip's authoritative edges, so detection treats them the
-    # same way. Without this, a pre-departure quick errand (e.g. a
-    # 7-min Starbucks at 8:22 a.m. when the actual trip departure
-    # isn't until the evening) would fall inside the trip's date range
+    # (longest qualifying not-at-home streak via
+    # _find_home_boundary_tsts), then manual `home_start_time` /
+    # `home_end_time` overrides win if the admin set them — those are
+    # what the home card displays as the trip's authoritative edges,
+    # so detection treats them the same way. Without this, a pre-
+    # departure quick errand (e.g. a 7-min Starbucks at 8:22 a.m. when
+    # the actual trip departure isn't until the evening) or a post-
+    # arrival afternoon errand would fall inside the trip's date range
     # and slip through. Clusters fully before departure or fully after
     # arrival are dropped: end_tst < departure → pre-trip;
     # start_tst > arrival → post-trip.

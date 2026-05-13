@@ -2218,11 +2218,18 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // the result into the home-card display spans. Manual overrides
   // (HOME_START_TIME / HOME_END_TIME) take precedence and short-circuit
   // the display update.
-  const HOME_TRIM_KM = 1.5;
-  const HOME_EXACT_RADIUS_M = 100 * 0.3048;  // 100 feet
-  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away
-  const HOME_REENTRY_DWELL_S = 30 * 60;      // 30 min sustained near-home re-entry resets candidate
-  const HOME_REENTRY_MAX_AWAY_S = 12 * 3600; // only reset if AWAY duration was < 12 hours
+  const HOME_TRIM_KM = 1.5;                  // outer "could be home" radius
+  const HOME_AT_HOME_CENTROID_M = 600;       // a within-radius run is at-home iff
+                                             // its centroid is within this of HOME;
+                                             // matches the start of the commercial
+                                             // zone around the host home so the
+                                             // full residential band classifies as
+                                             // at-home and only commercial-distance
+                                             // dwells count as near-home stops.
+                                             // Mirrors backend STOP_AT_HOME_CENTROID_M.
+  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away minimum for a
+                                             // not-at-home streak to count as "the
+                                             // trip." Mirrors backend constant.
   function distMeters(a, b) {
     const latKm = (a[0] - b[0]) * 111;
     const lngKm = (a[1] - b[1]) * 111 *
@@ -2283,95 +2290,94 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // alignment table. If you change behavior here, check the backend;
   // if you change the backend, check here.
   //
-  // HOME boundary times distinguish two OwnTracks usage patterns:
-  //   (a) Continuous logging — pings come in at the house all morning before
-  //       the trip and again all evening on return. GPS jitter occasionally
-  //       bounces a ping past the 100 ft house radius.
-  //   (b) On-demand logging — OwnTracks only starts when the user leaves, so
-  //       the first ping is post-departure, near home but not exactly at home.
+  // HOME boundary detection (centroid algorithm — mirrors the backend's
+  // _find_home_boundary_tsts so the home card and Detect Stops agree on
+  // when the trip started / ended):
   //
-  // The rule for HOME-start: walk forward, tracking a candidate boundary.
-  // Reset the candidate every time we see an at-house ping (within
-  // HOME_EXACT_RADIUS_M) — we're still on the property. Set the candidate
-  // on the first >100 ft ping (within HOME_TRIM_KM) after a reset. Once a
-  // candidate has *sustained* away for HOME_BOUNDARY_LOCK_S without a
-  // further at-house ping resetting it, lock it as homeStartTst. Sustained-
-  // near-home re-entry can wipe a morning AWAY candidate so an early
-  // excursion doesn't lock as the trip start; a long-AWAY return freezes
-  // homeStartTst so trip-end home-hovering can't overwrite it.
+  //   1. Filter rawPoints to the trip's local-date range; sort by tst.
+  //   2. Group consecutive within-(HOME_TRIM_KM) pings into near-home
+  //      runs. Tag each run AT_HOME iff its centroid is within
+  //      HOME_AT_HOME_CENTROID_M of HOME. Runs whose centroid sits
+  //      farther out (a coffee shop 1.2 km from home that happens to
+  //      fall inside the 1.5 km near-home radius) are *near-home stops*,
+  //      not home arrivals — they never bound the trip regardless of
+  //      duration. Pings outside HOME_TRIM_KM are NOT_AT_HOME by default.
+  //   3. Build maximal NOT_AT_HOME streaks (these absorb near-home
+  //      stops). Keep only streaks lasting HOME_BOUNDARY_LOCK_S or
+  //      longer — an out-and-back errand under an hour doesn't count.
+  //   4. Pick the LONGEST qualifying streak as the trip. homeStartTst
+  //      is its first NOT_AT_HOME ping; homeEndTst is the first
+  //      AT_HOME ping immediately after it (= moment of arrival home).
+  //      If no AT_HOME pings follow the streak, homeEndTst falls back
+  //      to the streak's last ping.
   //
-  // HOME-end (walk backward): identify the trailing at-house cluster and
-  // use its earliest member (= moment of arrival home). When no trailing
-  // at-house cluster exists (pattern b at trip end), fall back to that
-  // last in-range near-home ping.
+  // Picking the LONGEST streak (vs. first or last) handles both a
+  // workday-before-trip on the start date AND an errand-after-arrival
+  // on the end date without any time-window heuristics. Any AT_HOME
+  // run, even a single ping, bounds the streak — there is no merge-
+  // across-brief-at-home step.
   function findHomeBoundaryTimes(rawPoints) {
     const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
-    let homeStartTst = null, homeEndTst = null;
-
-    let startCandidate = null;
-    let hasGoneAway = false;
-    let awayStartTst = null;
-    let nearReentryStart = null;
-    let tripEndReturned = false;
+    const pts = [];
     for (const p of rawPoints) {
       if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
-      if (TRIP_END && localDateOf(p.tst) > TRIP_END) break;
-      const d = distMeters([p.lat, p.lon], HOME);
-      const isAway = d > HOME_RADIUS_M;
-      if (!isAway && hasGoneAway && awayStartTst != null
-          && (p.tst - awayStartTst) > HOME_REENTRY_MAX_AWAY_S) {
-        tripEndReturned = true;
-      }
-      if (d < HOME_EXACT_RADIUS_M) {
-        startCandidate = null;
-        hasGoneAway = false;
-        awayStartTst = null;
-        nearReentryStart = null;
-      } else if (!isAway) {
-        if (hasGoneAway && awayStartTst != null
-            && (p.tst - awayStartTst) <= HOME_REENTRY_MAX_AWAY_S) {
-          if (nearReentryStart == null) nearReentryStart = p.tst;
-          if ((p.tst - nearReentryStart) >= HOME_REENTRY_DWELL_S) {
-            startCandidate = null;
-            hasGoneAway = false;
-            awayStartTst = null;
-            nearReentryStart = null;
-          }
-        }
-        if (!hasGoneAway && startCandidate == null) {
-          startCandidate = p.tst;
-        }
-      } else {
-        if (!hasGoneAway) awayStartTst = p.tst;
-        hasGoneAway = true;
-        nearReentryStart = null;
-      }
-      if (!tripEndReturned
-          && startCandidate != null
-          && (p.tst - startCandidate) >= HOME_BOUNDARY_LOCK_S) {
-        homeStartTst = startCandidate;
-      }
-    }
-    if (homeStartTst == null) homeStartTst = startCandidate;
-
-    let trailingAtHouseDone = false;
-    let lastNearHomeBeforeBreak = null;
-    for (let i = rawPoints.length - 1; i >= 0; i--) {
-      const p = rawPoints[i];
       if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
-      if (TRIP_START && localDateOf(p.tst) < TRIP_START) break;
-      const d = distMeters([p.lat, p.lon], HOME);
-      if (d < HOME_EXACT_RADIUS_M) {
-        if (!trailingAtHouseDone) homeEndTst = p.tst;
-      } else {
-        if (!trailingAtHouseDone && lastNearHomeBeforeBreak == null && d <= HOME_RADIUS_M) {
-          lastNearHomeBeforeBreak = p.tst;
-        }
-        trailingAtHouseDone = true;
+      pts.push(p);
+    }
+    pts.sort((a, b) => a.tst - b.tst);
+    const n = pts.length;
+    if (n === 0) return { homeStartTst: null, homeEndTst: null };
+
+    // Classify each ping. Walk consecutive within-radius runs; tag the
+    // whole run AT_HOME only if its centroid passes the test.
+    const atHome = new Array(n).fill(false);
+    let i = 0;
+    while (i < n) {
+      if (distMeters([pts[i].lat, pts[i].lon], HOME) > HOME_RADIUS_M) {
+        i += 1;
+        continue;
+      }
+      let j = i, sumLat = 0, sumLng = 0;
+      while (j < n && distMeters([pts[j].lat, pts[j].lon], HOME) <= HOME_RADIUS_M) {
+        sumLat += pts[j].lat;
+        sumLng += pts[j].lon;
+        j += 1;
+      }
+      const cnt = j - i;
+      const cDist = distMeters([sumLat / cnt, sumLng / cnt], HOME);
+      if (cDist <= HOME_AT_HOME_CENTROID_M) {
+        for (let k = i; k < j; k += 1) atHome[k] = true;
+      }
+      i = j;
+    }
+
+    // NOT_AT_HOME streaks; filter by minimum sustained-away duration.
+    const streaks = [];
+    let curStart = null;
+    for (let k = 0; k < n; k += 1) {
+      if (atHome[k]) {
+        if (curStart != null) { streaks.push([curStart, k - 1]); curStart = null; }
+      } else if (curStart == null) {
+        curStart = k;
       }
     }
-    if (homeEndTst == null) homeEndTst = lastNearHomeBeforeBreak;
+    if (curStart != null) streaks.push([curStart, n - 1]);
 
+    const qualified = streaks.filter(
+      ([s, e]) => pts[e].tst - pts[s].tst >= HOME_BOUNDARY_LOCK_S
+    );
+    if (!qualified.length) return { homeStartTst: null, homeEndTst: null };
+
+    // Longest qualifying streak = the trip.
+    let best = qualified[0];
+    let bestDur = pts[best[1]].tst - pts[best[0]].tst;
+    for (const se of qualified) {
+      const dur = pts[se[1]].tst - pts[se[0]].tst;
+      if (dur > bestDur) { best = se; bestDur = dur; }
+    }
+    const [s, e] = best;
+    const homeStartTst = pts[s].tst;
+    const homeEndTst = e + 1 < n ? pts[e + 1].tst : pts[e].tst;
     return { homeStartTst, homeEndTst };
   }
 
