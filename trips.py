@@ -49,7 +49,9 @@ def _load_trips_json():
     trips = [_make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                         t.get("events", []), locations,
                         home_start_time=t.get("home_start_time", ""),
-                        home_end_time=t.get("home_end_time", "")) for t in raw]
+                        home_end_time=t.get("home_end_time", ""),
+                        bad_track_windows=t.get("bad_track_windows"))
+             for t in raw]
     trips.sort(key=lambda t: t["start"])
     n = 0
     for t in trips:
@@ -126,7 +128,8 @@ def update_trip(trip_id, fields):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""))
+                              home_end_time=t.get("home_end_time", ""),
+                              bad_track_windows=t.get("bad_track_windows"))
     return None
 
 
@@ -174,7 +177,8 @@ def add_stay(trip_id, stay_data):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""))
+                              home_end_time=t.get("home_end_time", ""),
+                              bad_track_windows=t.get("bad_track_windows"))
     return None
 
 
@@ -208,7 +212,8 @@ def update_stay(trip_id, stay_idx, fields):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""))
+                              home_end_time=t.get("home_end_time", ""),
+                              bad_track_windows=t.get("bad_track_windows"))
     return None
 
 
@@ -236,7 +241,8 @@ def delete_stay(trip_id, stay_idx):
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t.get("events", []),
                               home_start_time=t.get("home_start_time", ""),
-                              home_end_time=t.get("home_end_time", ""))
+                              home_end_time=t.get("home_end_time", ""),
+                              bad_track_windows=t.get("bad_track_windows"))
     return None
 
 
@@ -618,7 +624,8 @@ def _group_into_trips(stays):
 
 
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
-               home_start_time="", home_end_time=""):
+               home_start_time="", home_end_time="",
+               bad_track_windows=None):
     """Build a trip dict from a list of stays and optional events.
 
     If `locations` (id → info map from `_load_locations_by_id`) is supplied,
@@ -766,6 +773,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         "home_only": home_only,
         "home_start_time": home_start_time,
         "home_end_time": home_end_time,
+        "bad_track_windows": list(bad_track_windows) if bad_track_windows else [],
     }
 
 
