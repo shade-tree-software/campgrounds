@@ -3393,7 +3393,14 @@ function stayFieldsToPayload(fields) {
 }
 
 function deleteStay(idx) {
-  if (!confirm('Delete this campspot? Photos for this campspot will also be removed.')) return;
+  // Only mention photo deletion when there are photos to delete — the
+  // warning is misleading otherwise.
+  const grid = document.getElementById('photos-' + idx);
+  const photoCount = grid ? grid.querySelectorAll('.photo-item').length : 0;
+  const msg = photoCount
+    ? 'Delete this campspot? Photos for this campspot will also be removed.'
+    : 'Delete this campspot?';
+  if (!confirm(msg)) return;
   fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
@@ -3451,7 +3458,14 @@ function saveEvent(idx) {
 }
 
 function deleteEvent(idx) {
-  if (!confirm('Delete this event? Photos for this event will also be removed.')) return;
+  // Only mention photo deletion when there are photos to delete — the
+  // warning is misleading otherwise.
+  const grid = document.getElementById('event-photos-' + idx);
+  const photoCount = grid ? grid.querySelectorAll('.photo-item').length : 0;
+  const msg = photoCount
+    ? 'Delete this event? Photos for this event will also be removed.'
+    : 'Delete this event?';
+  if (!confirm(msg)) return;
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
