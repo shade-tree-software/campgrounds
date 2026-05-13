@@ -2461,11 +2461,18 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // gray "ghost" dots that the admin can toggle on via the "Show suppressed
     // pings" checkbox and click to unsuppress. (For non-admins the server
     // already filtered them out, so `suppressed` is never set.)
+    // Bad-window pings (from `bad_track_windows` on the trip — admin-marked
+    // ranges where the phone was off-trip with the wrong person) are dropped
+    // the same way: filtered out for non-admins by the server, tagged
+    // `bad_window: true` for admins and stripped here so they don't pollute
+    // the polyline or the home-boundary auto-detection. No ghost layer for
+    // them currently — the feature is rare enough that the admin edits
+    // trips.json by hand instead of having a UI.
     // Relocated pings, by contrast, ARE in the polyline — at their override
     // coords (the server already rewrote lat/lon). For admins they also
     // carry `original_lat`/`original_lon` so the "Show relocated pings"
     // toggle can mark them and draw a dashed line back to the source.
-    const raw = rawAll.filter(p => !p.suppressed);
+    const raw = rawAll.filter(p => !p.suppressed && !p.bad_window);
     const rawSuppressed = rawAll.filter(p => p.suppressed);
     const rawRelocated = rawAll.filter(p => p.relocated && !p.suppressed);
     // Compute auto trip-start/end times before any short-circuits so the

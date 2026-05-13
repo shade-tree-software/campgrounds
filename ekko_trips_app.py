@@ -1567,6 +1567,7 @@ def api_trip_track(trip_id):
     suppressed = set(get_suppressed_pings(trip_id))
     relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
                    for it in get_relocated_pings(trip_id)}
+    bad_windows = _bad_track_window_tsts(trip)
 
     def _apply_overrides(points):
         # Relocations rewrite lat/lon in place. Always applied (the polyline
@@ -1584,6 +1585,19 @@ def api_trip_track(trip_id):
                     p["lon"] = ov[1]
                 elif include_admin:
                     p["relocated"] = False
+        # Bad-track windows: pings inside an admin-marked window are known
+        # to come from the wrong device (the phone was briefly with someone
+        # not on the trip). Filter them out for non-admin clients; tag-and-
+        # keep for admin clients so the trip-detail frontend can drop them
+        # from the polyline (parallel to `suppressed`) and a future UI
+        # could surface them.
+        if bad_windows:
+            if include_admin:
+                for p in points:
+                    p["bad_window"] = _in_bad_track_window(p.get("tst"), bad_windows)
+            else:
+                points = [p for p in points
+                          if not _in_bad_track_window(p.get("tst"), bad_windows)]
         # Suppressions filter the polyline / regular markers entirely; admin
         # clients still see them tagged so the suppressed-pings ghost layer
         # has data to render.
@@ -1721,16 +1735,18 @@ def _haversine_m(lat1, lng1, lat2, lng2):
 
 
 def _load_trip_track_for_detection(trip_id):
-    """Return the trip's GPS pings with admin overrides honored: both
-    suppressed and relocated pings are dropped entirely. Returns [] if
-    neither cache nor API is available.
+    """Return the trip's GPS pings with admin overrides honored:
+    suppressed, relocated, and bad-track-window pings are all dropped
+    entirely. Returns [] if neither cache nor API is available.
 
     Unlike api_trip_track (which rewrites relocated pings' coords so the
-    polyline follows the override), stop detection treats any admin-
-    touched ping as untrusted and ignores it — a relocated ping was
-    moved precisely because its original reading was wrong, and the
-    new coords are usually a hand-placed pin at a stay/event, not a
-    real GPS sample that should contribute to dwell clustering.
+    polyline follows the override and tags-but-keeps suppressed /
+    bad-window pings for admin ghost layers), stop detection treats any
+    admin-touched ping as untrusted and ignores it — a relocated ping
+    was moved precisely because its original reading was wrong (and the
+    new coords are usually a hand-placed pin at an existing anchor),
+    while bad-window pings come from a phone that was off-trip for that
+    period. None of them should contribute to dwell clustering.
 
     Prefers the on-disk cache (the trip detail page's loadTrack() will
     have populated it on load) and only falls back to a fresh fetch
@@ -1769,6 +1785,10 @@ def _load_trip_track_for_detection(trip_id):
     excluded = suppressed | relocated_tsts
     if excluded:
         points = [p for p in points if p.get("tst") not in excluded]
+    bad_windows = _bad_track_window_tsts(trip)
+    if bad_windows:
+        points = [p for p in points
+                  if not _in_bad_track_window(p.get("tst"), bad_windows)]
     return points
 
 
@@ -1966,6 +1986,71 @@ def _trip_local_to_tst(date_str, time_str, tz_name):
         return int(datetime(y, m, d, hh, mm, 0, tzinfo=tz).timestamp())
     except Exception:
         return None
+
+
+def _bad_track_window_tsts(trip, home=None):
+    """Convert a trip's `bad_track_windows` JSON into a list of
+    `(start_tst, end_tst)` tuples. Each entry in the source list is
+    `{start: "YYYY-MM-DDTHH:MM", end: "...", note: "..."}` with times
+    interpreted in the home timezone — same convention as
+    `home_start_time` / `home_end_time`, and the same `_trip_local_to_tst`
+    helper does the conversion.
+
+    Returns `[]` when the trip has no `bad_track_windows`, when home is
+    unconfigured, or when no entry parses cleanly. Malformed entries
+    are silently skipped: a bad-window list is admin-edited JSON, so a
+    typo costs one window but doesn't break the rest of the trip's
+    track rendering.
+
+    Pass a pre-loaded `home = (lat, lng)` to avoid the `_map_config()`
+    call on hot paths; default lazy-loads it."""
+    windows_raw = trip.get("bad_track_windows") or []
+    if not windows_raw:
+        return []
+    if home is None:
+        home, _ = _map_config()
+    home_tz_name = (
+        _tz_for_coord(home[0], home[1])
+        if home and home[0] is not None and home[1] is not None
+        else None
+    )
+
+    def _split(dt_str):
+        # Accept either "YYYY-MM-DDTHH:MM" or "YYYY-MM-DD HH:MM" — both
+        # natural to type by hand.
+        for sep in ("T", " "):
+            if sep in dt_str:
+                parts = dt_str.split(sep, 1)
+                if len(parts) == 2 and parts[0] and parts[1]:
+                    return parts[0], parts[1]
+        return None, None
+
+    out = []
+    for w in windows_raw:
+        s_raw = (w.get("start") or "").strip()
+        e_raw = (w.get("end") or "").strip()
+        sd, st = _split(s_raw)
+        ed, et = _split(e_raw)
+        if not sd or not ed:
+            continue
+        s_tst = _trip_local_to_tst(sd, st, home_tz_name)
+        e_tst = _trip_local_to_tst(ed, et, home_tz_name)
+        if s_tst is None or e_tst is None:
+            continue
+        if s_tst > e_tst:
+            s_tst, e_tst = e_tst, s_tst
+        out.append((s_tst, e_tst))
+    return out
+
+
+def _in_bad_track_window(tst, windows):
+    """True iff `tst` falls inside any `(start, end)` window."""
+    if tst is None or not windows:
+        return False
+    for s, e in windows:
+        if s <= tst <= e:
+            return True
+    return False
 
 
 def _filter_points_to_trip_window(points, trip_start, trip_end):
