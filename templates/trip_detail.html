@@ -1872,7 +1872,7 @@
       <div id="detect-stops-empty" style="display:none;text-align:center;padding:2rem 0;color:var(--gray);"></div>
     </div>
     <div class="add-modal-actions">
-      <button type="button" class="btn-cancel" onclick="closeDetectStops()">Cancel</button>
+      <button type="button" class="btn-cancel" id="detect-stops-cancel" onclick="closeDetectStops()">Cancel</button>
       <button type="button" class="btn-save" id="detect-stops-submit" onclick="submitDetectStops()" disabled>Create selected</button>
     </div>
   </div>
@@ -3157,6 +3157,12 @@ function detectStops() {
   // run may have hidden it, and the empty/warning/error branches below
   // hide it again only when applicable.
   submitBtn.style.display = '';
+  // The cancel button doubles as the "OK" acknowledgment in the
+  // terminal no-stops / warning / error branches (where there's
+  // nothing to submit). Reset to "Cancel" at the start of every run;
+  // those branches flip it to "OK" when they hide the submit button.
+  const cancelBtn = document.getElementById('detect-stops-cancel');
+  cancelBtn.textContent = 'Cancel';
   modal.classList.add('visible');
   btn.disabled = true;
 
@@ -3173,12 +3179,14 @@ function detectStops() {
         emptyEl.textContent = data.warning;
         emptyEl.style.display = '';
         submitBtn.style.display = 'none';
+        cancelBtn.textContent = 'OK';
         return;
       }
       if (!DETECT_STOPS_DATA.length) {
         emptyEl.textContent = 'No unaccounted stops detected on this trip.';
         emptyEl.style.display = '';
         submitBtn.style.display = 'none';
+        cancelBtn.textContent = 'OK';
         return;
       }
       // Render rows with placeholders; reverse-geocoding fills them in
@@ -3197,6 +3205,7 @@ function detectStops() {
       emptyEl.textContent = 'Stop detection failed: ' + err.message;
       emptyEl.style.display = '';
       submitBtn.style.display = 'none';
+      cancelBtn.textContent = 'OK';
     });
 }
 
