@@ -1661,9 +1661,9 @@ def api_trip_track(trip_id):
 
 # Tunables. Conservative defaults — adjust if detection is too noisy or
 # misses real stops.
-STOP_CLUSTER_RADIUS_M = 100       # max distance from a cluster's running
+STOP_CLUSTER_RADIUS_M = 150       # max distance from a cluster's running
                                   # centroid for a ping to join the cluster
-STOP_MIN_MINUTES = 5              # cluster span must reach this to qualify
+STOP_MIN_MINUTES = 4              # cluster span must reach this to qualify
 STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
                                   # existing stay/event/family location
