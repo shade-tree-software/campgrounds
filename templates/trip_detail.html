@@ -129,6 +129,7 @@
     display: flex;
     gap: .5rem;
     margin-top: .75rem;
+    justify-content: flex-end;  /* match the shared modal: Delete (margin-right:auto) on the left, Cancel/Save on the right */
   }
 
   .btn-save {
@@ -322,6 +323,7 @@
     display: flex;
     gap: .5rem;
     margin-top: .75rem;
+    justify-content: flex-end;  /* match the shared modal: Delete (margin-right:auto) on the left, Cancel/Save on the right */
   }
 
   .btn-add-event,
@@ -1568,9 +1570,9 @@
         </div>
       </div>
       <div class="form-actions">
-        <button class="btn-save" onclick="saveStay({{ item.idx }})">Save</button>
+        <button class="btn-danger" style="margin-right:auto;" onclick="deleteStay({{ item.idx }})">Delete Campspot</button>
         <button class="btn-cancel" onclick="cancelStay({{ item.idx }})">Cancel</button>
-        <button class="btn-danger" onclick="deleteStay({{ item.idx }})">Delete Campspot</button>
+        <button class="btn-save" onclick="saveStay({{ item.idx }})">Save</button>
       </div>
     </div>
     {% endif %}
@@ -1636,7 +1638,16 @@
   </div>
 
   {% elif item.type == "event" %}
-  {% set is_bare = (item.waypoint or item.family_visit) and not event_photos[item.idx] %}
+  {# A card goes "bare" when it has no body content to show:
+       - Waypoints and family-visits without photos (their description, when
+         present, is rendered inline inside the header).
+       - Regular events without photos AND without a description — no point in
+         drawing an empty body. (Locale/state/date/time live in the header
+         meta line, not the body, so a regular event with only those still
+         has nothing to put in the body.)
+     Admins still get a hidden body in the DOM so the photo-dragging CSS
+     can reveal it as a drop target — see the `.photo-dragging` rules above. #}
+  {% set is_bare = (not event_photos[item.idx]) and (item.waypoint or item.family_visit or not item.description) %}
   <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
@@ -1732,9 +1743,9 @@
       </div>
       {% endif %}
       <div class="form-actions">
-        <button class="btn-save" onclick="saveEvent({{ item.idx }})">Save</button>
+        <button class="btn-danger" style="margin-right:auto;" onclick="deleteEvent({{ item.idx }})">Delete {% if item.family_visit %}Visit{% else %}Event{% endif %}</button>
         <button class="btn-cancel" onclick="cancelEvent({{ item.idx }})">Cancel</button>
-        <button class="btn-danger" onclick="deleteEvent({{ item.idx }})">Delete {% if item.family_visit %}Visit{% else %}Event{% endif %}</button>
+        <button class="btn-save" onclick="saveEvent({{ item.idx }})">Save</button>
       </div>
     </div>
     {% if is_admin or item.description or event_photos[item.idx] %}
@@ -4960,6 +4971,20 @@ function initPhotoDrag(grid) {
     }
 
     if (crossGrid) {
+      // The destination card may have been bare (waypoint / family-visit /
+      // empty event with no description), in which case its .event-body is
+      // styled `display: none` and was only visible during the drag via the
+      // body.photo-dragging reveal rule. Once `dragend` strips that class,
+      // the body slides back to hidden and the dropped photo disappears
+      // until the next page load. Promoting the card out of bare mode here
+      // (and revealing the previously-hidden "Remove All Photos" button)
+      // keeps the body — and the photo it now contains — on screen.
+      const dstCard = grid.closest('.event-card');
+      if (dstCard) dstCard.classList.remove('bare');
+      const removeAllBtn = grid.closest('.photos-section')
+        && grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
+      if (removeAllBtn) removeAllBtn.style.display = '';
+
       // Move file on server, then save both grid orders
       const src = parseGridId(dragSourceGrid);
       const dst = parseGridId(grid);
