@@ -2090,19 +2090,29 @@ def _filter_points_to_trip_window(points, trip_start, trip_end):
     return out
 
 
-def _drop_stops_at_known_locations(stops, trip, family_locations,
-                                   near_radius_m=STOP_NEAR_ANCHOR_M):
+def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
+                                   near_radius_m=STOP_NEAR_ANCHOR_M,
+                                   home_radius_m=STOP_AT_HOME_CENTROID_M):
     """Filter out clusters that fall within `near_radius_m` of any
     existing stay (campsite_location override or campground coords),
     event (waypoints included), or family location (listed coords +
     driveway coords). `trip` must be enriched via
     `enrich_trip_locations` so stays/events carry lat/lng.
 
-    HOME is intentionally NOT an anchor here — anything that happens
-    inside the inferred trip window (between home_departure_tst and
-    home_arrival_tst) is fair game even if relatively close to home.
-    Pre-departure / post-arrival home-area dwell is filtered earlier
-    via the boundary-tst time window, not by spatial proximity."""
+    HOME is treated specially: clusters whose centroid is within
+    `home_radius_m` (default `STOP_AT_HOME_CENTROID_M` = 600 m) of HOME
+    are dropped. That's the same residential-band threshold the
+    boundary detector uses to classify pings as at-home, so any
+    cluster centered there is a home-arrival/departure dwell, not a
+    real stop. This catches the edge case where the manual
+    `home_start_time` / `home_end_time` override is rounded a minute
+    or two off the true arrival, so a cluster centered at home that
+    starts just inside the trip window (start_tst <= home_arrival_tst)
+    survives the boundary-tst filter. Clusters between
+    `home_radius_m` and `STOP_NEAR_HOME_M` — e.g., a coffee shop 1.2
+    km from home that's inside the 1.5 km near-home radius — are
+    still fair game when they fall inside the inferred trip window;
+    those are near-home stops, not home dwell."""
     anchors = []
     for s in trip.get("stays", []):
         if s.get("lat") is not None and s.get("lng") is not None:
@@ -2116,8 +2126,15 @@ def _drop_stops_at_known_locations(stops, trip, family_locations,
         if fam.get("driveway_lat") is not None and fam.get("driveway_lng") is not None:
             anchors.append((fam["driveway_lat"], fam["driveway_lng"]))
 
+    home_lat = home[0] if home and home[0] is not None else None
+    home_lng = home[1] if home and home[1] is not None else None
+
     out = []
     for c in stops:
+        if home_lat is not None and home_lng is not None:
+            if _haversine_m(c["center_lat"], c["center_lng"],
+                            home_lat, home_lng) < home_radius_m:
+                continue
         too_close = False
         for a_lat, a_lng in anchors:
             if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
@@ -2283,10 +2300,15 @@ def api_detect_stops(trip_id):
         raw_stops = [s for s in raw_stops if s["start_tst"] <= home_arrival_tst]
 
     # Anything inside the boundary-tst window is a candidate even if
-    # it happens close to home — HOME is intentionally not a spatial
-    # anchor here, so a legitimate near-home stop on the way out (or
-    # back) that falls inside the window is still suggested.
-    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family)
+    # it happens near home (e.g., a real coffee-shop stop 1.2 km out
+    # on the way back). But clusters centered *at* home — within
+    # STOP_AT_HOME_CENTROID_M — are dropped by
+    # _drop_stops_at_known_locations using HOME as a spatial anchor at
+    # the at-home radius. That guards the case where a manual
+    # home_start_time / home_end_time override is rounded a minute or
+    # two off the true arrival, so an at-home dwell straddles the
+    # boundary-tst and slips through the time-window filter above.
+    raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family, home)
 
     # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
     # not have it. Fall back to UTC formatting if it's missing.
