@@ -4616,11 +4616,39 @@ function hideEventLocationMap() {
 }
 
 // ── Event photo functions ─��───────────────��──────────────────────────────
+// Recompute bare-ness for a photo-grid that may have just been emptied.
+// Called from every code path that removes the last photo from a grid —
+// the drop handler (cross-card drag), the single-photo delete buttons,
+// and the "Remove All Photos" buttons. Mirrors the Jinja `is_bare`
+// predicate from initial render: bare iff no photos AND (it's a
+// waypoint/family-visit OR there's no description). Stay cards
+// (closest('.event-card') returns null) are never bare, but their
+// "Remove All Photos" button still gets hidden when the grid empties.
+// No-op when the grid still has photos.
+function _maybeBarifyEmptyGrid(grid) {
+  if (!grid || grid.querySelectorAll('.photo-item').length > 0) return;
+  const card = grid.closest('.event-card');
+  if (card) {
+    const isWaypointOrFamily = card.classList.contains('waypoint')
+      || card.classList.contains('family-visit');
+    const hasDescription = !!card.querySelector('.event-body .event-description');
+    if (isWaypointOrFamily || !hasDescription) {
+      card.classList.add('bare');
+    }
+  }
+  const section = grid.closest('.photos-section');
+  const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
+  if (removeAllBtn) removeAllBtn.style.display = 'none';
+}
+
 function deleteEventPhoto(tripId, eventIdx, filename, btn) {
   if (!confirm('Delete this photo?')) return;
   fetch(`/trips/${tripId}/events/${eventIdx}/photos/${filename}`, { method: 'DELETE' })
     .then(() => {
-      btn.closest('.photo-item').remove();
+      const item = btn.closest('.photo-item');
+      const grid = item.closest('.photo-grid');
+      item.remove();
+      _maybeBarifyEmptyGrid(grid);
     });
 }
 
@@ -4633,8 +4661,7 @@ function deleteAllEventPhotos(tripId, eventIdx) {
     .then(data => {
       if (data.ok) {
         grid.innerHTML = '';
-        const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
-        if (btn) btn.style.display = 'none';
+        _maybeBarifyEmptyGrid(grid);
       }
     });
 }
@@ -4727,7 +4754,10 @@ function deletePhoto(tripId, stayIdx, filename, btn) {
   if (!confirm('Delete this photo?')) return;
   fetch(`/trips/${tripId}/stays/${stayIdx}/photos/${filename}`, { method: 'DELETE' })
     .then(() => {
-      btn.closest('.photo-item').remove();
+      const item = btn.closest('.photo-item');
+      const grid = item.closest('.photo-grid');
+      item.remove();
+      _maybeBarifyEmptyGrid(grid);
     });
 }
 
@@ -4740,8 +4770,7 @@ function deleteAllPhotos(tripId, stayIdx) {
     .then(data => {
       if (data.ok) {
         grid.innerHTML = '';
-        const btn = grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
-        if (btn) btn.style.display = 'none';
+        _maybeBarifyEmptyGrid(grid);
       }
     });
 }
@@ -4981,9 +5010,14 @@ function initPhotoDrag(grid) {
       // keeps the body — and the photo it now contains — on screen.
       const dstCard = grid.closest('.event-card');
       if (dstCard) dstCard.classList.remove('bare');
-      const removeAllBtn = grid.closest('.photos-section')
+      const dstRemoveAll = grid.closest('.photos-section')
         && grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
-      if (removeAllBtn) removeAllBtn.style.display = '';
+      if (dstRemoveAll) dstRemoveAll.style.display = '';
+
+      // Symmetric handling for the *source*: if that was its last photo,
+      // the card may need to go bare again so an empty body doesn't sit
+      // below the header. Helper is no-op when the grid still has photos.
+      _maybeBarifyEmptyGrid(dragSourceGrid);
 
       // Move file on server, then save both grid orders
       const src = parseGridId(dragSourceGrid);
