@@ -2210,12 +2210,16 @@ def api_unrelocate_pings(trip_id):
 def api_detect_stops(trip_id):
     """Scan the trip's GPS track for dwell-time clusters that don't already
     correspond to a stay, event, or family location, and propose them as
-    new waypoints (≤30 min) or events (>30 min). Each suggestion is
-    reverse-geocoded so the admin sees a candidate name + locale + state
-    in the review modal.
-
-    This call can take ~1 s per detected stop because Nominatim's usage
-    policy is one request per second; the frontend shows a spinner.
+    new waypoints (≤30 min) or events (>30 min). Each suggestion's
+    `event.name` defaults to the placeholder `"Detected stop"` and its
+    `locale` / `state` / `display_name` come back empty — reverse-
+    geocoding runs client-side after this returns, hitting
+    `/api/reverse-geocode` once per stop with a 1 s throttle (Nominatim's
+    usage policy). That lets the modal render the full list immediately
+    and show progress as each row fills in, instead of blocking on a
+    long server-side loop. The frontend disables "Create selected" until
+    every row finishes geocoding so the admin doesn't accept un-named
+    suggestions.
 
     The response is advisory only — no events are persisted here. The
     admin reviews the list in the modal and POSTs the accepted subset to
@@ -2293,8 +2297,6 @@ def api_detect_stops(trip_id):
         ZoneInfo = None
         _HAS_ZONEINFO = False
 
-    import time as _time
-
     def _local(tst, tz_name):
         utc = datetime.utcfromtimestamp(tst)
         if _HAS_ZONEINFO and tz_name and tz_name != "UTC":
@@ -2304,19 +2306,23 @@ def api_detect_stops(trip_id):
                 pass
         return utc
 
+    # Reverse-geocoding deliberately runs on the client (one call per
+    # stop, throttled to 1 req/sec) so the modal can render immediately
+    # and report progress. `event.name` carries a placeholder; the
+    # frontend overwrites it with the geocoded name when each row's
+    # geocode completes, and disables "Create selected" until the whole
+    # list has been geocoded.
     enriched = []
     for s in raw_stops:
-        info = _reverse_geocode(s["center_lat"], s["center_lng"])
-        # Polite throttle — Nominatim's policy is 1 req/sec. _reverse_geocode
-        # itself can return in well under 1 s on warm caches.
-        _time.sleep(1.05)
         start_local = _local(s["start_tst"], s["tz"])
         end_local = _local(s["end_tst"], s["tz"])
         classification = "waypoint" if s["duration_minutes"] <= STOP_WAYPOINT_MAX_MINUTES else "event"
         # The "event" sub-dict is the exact payload format that
         # /accept-stops feeds into add_event(), so the frontend can just
-        # forward through the rows it kept. needs_vetting is hard-coded
-        # True so the admin sees the flag on the created event.
+        # forward through the rows it kept (after the client-side
+        # reverse-geocoding fills in name/locale/state). needs_vetting
+        # is hard-coded True so the admin sees the flag on the created
+        # event.
         enriched.append({
             "display": {
                 "duration_minutes": s["duration_minutes"],
@@ -2326,20 +2332,20 @@ def api_detect_stops(trip_id):
                 "classification": classification,
                 "center_lat": s["center_lat"],
                 "center_lng": s["center_lng"],
-                "display_name": info.get("display_name", ""),
+                "display_name": "",
             },
             "event": {
                 "date": start_local.strftime("%Y-%m-%d"),
                 "time": start_local.strftime("%H:%M"),
                 "end_time": end_local.strftime("%H:%M"),
-                "name": info.get("name", "") or "Detected stop",
+                "name": "Detected stop",
                 "description": (
                     f"Auto-detected from GPS track: "
                     f"{s['duration_minutes']:.0f} min, {s['ping_count']} pings."
                 ),
                 "location": f"{s['center_lat']:.6f},{s['center_lng']:.6f}",
-                "locale": info.get("locale", ""),
-                "state": info.get("state", ""),
+                "locale": "",
+                "state": "",
                 "waypoint": classification == "waypoint",
                 "family_id": None,
                 "needs_vetting": True,

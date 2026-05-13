@@ -1842,9 +1842,12 @@
     </div>
     <div class="add-modal-body" id="detect-stops-body">
       <div id="detect-stops-loading" style="text-align:center;padding:2rem 0;color:var(--gray);">
-        Scanning track and reverse-geocoding stops…<br>
-        <span style="font-size:.85rem;">This may take a moment (1 s per stop).</span>
+        Scanning track for stops…
       </div>
+      <!-- Progress banner — visible only while the client-side reverse-
+           geocoding loop is running. "Create selected" stays disabled
+           until the loop finishes (or the modal is closed). -->
+      <div id="detect-stops-progress" style="display:none;text-align:center;padding:.5rem 0;margin-bottom:.5rem;font-size:.85rem;color:var(--gray);border-bottom:1px solid #eee;"></div>
       <div id="detect-stops-list" style="display:none;"></div>
       <div id="detect-stops-empty" style="display:none;text-align:center;padding:2rem 0;color:var(--gray);"></div>
     </div>
@@ -3070,30 +3073,72 @@ function deleteTrip() {
 // One-shot scan of the trip's GPS track for clusters of consecutive pings
 // in close proximity that aren't already represented by a stay, event,
 // waypoint, or family location. Server proposes them as waypoints (short
-// stops) or events (longer stops) and reverse-geocodes each suggestion;
-// admin picks which to keep. Created entries are flagged needs_vetting
-// so the admin can see at a glance which still need attention.
+// stops) or events (longer stops); the client then reverse-geocodes each
+// suggestion sequentially (1 s throttle per Nominatim policy) so the
+// modal can render immediately and show progress. Admin picks which to
+// keep. Created entries are flagged needs_vetting so the admin can see
+// at a glance which still need attention.
 let DETECT_STOPS_DATA = [];
+let DETECT_STOPS_ABORT = null;          // AbortController for the current run
+let DETECT_STOPS_GEOCODING = false;     // true while the reverse-geocoding loop is running
+
+function _renderDetectStopRow(s, i) {
+  const d = s.display;
+  const dur = d.duration_minutes < 60
+    ? `${Math.round(d.duration_minutes)} min`
+    : `${(d.duration_minutes / 60).toFixed(1)} hr`;
+  // A row is "pending" until its reverse-geocode lookup resolves; in
+  // that state we replace the locale/state line with a "(reverse-
+  // geocoding…)" badge so the admin can see which rows are still being
+  // looked up. Once name has been overwritten from its placeholder OR
+  // locale/state arrive, the row is no longer pending.
+  const pending = (s.event.name === 'Detected stop'
+                   && !s.event.locale && !s.event.state);
+  const name = s.event.name || '(unnamed)';
+  const place = [d.start_local, dur].filter(Boolean).join(' · ');
+  const loc = [s.event.locale, s.event.state].filter(Boolean).join(', ');
+  const coords = `${d.center_lat.toFixed(4)}, ${d.center_lng.toFixed(4)}`;
+  const tail = pending
+    ? '<span style="opacity:.6;font-style:italic;">reverse-geocoding…</span>'
+    : (loc ? escapeHtml(loc) : '<span style="opacity:.5;">(no locale found)</span>');
+  return `
+    <label class="stop-row" data-stop-idx="${i}">
+      <input type="checkbox" data-idx="${i}" checked onchange="updateDetectStopsCount()">
+      <div>
+        <div class="stop-name">${escapeHtml(name)}</div>
+        <div class="stop-meta">${escapeHtml(place)} — ${tail}</div>
+        <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
+      </div>
+      <span class="stop-kind ${d.classification}">${d.classification === 'event' ? 'Event' : 'Waypoint'}</span>
+    </label>
+  `;
+}
 
 function detectStops() {
   const btn = document.getElementById('btn-detect-stops');
   if (!btn) return;
-  // Open the modal immediately and show the loading state — the
-  // detection request can run for tens of seconds (1 req/sec to
-  // Nominatim per stop), so we want visible progress, not a frozen
-  // page.
+  // Cancel any prior in-flight run (detect-stops POST or reverse-
+  // geocode loop) before starting fresh.
+  if (DETECT_STOPS_ABORT) DETECT_STOPS_ABORT.abort();
+  DETECT_STOPS_ABORT = new AbortController();
+  const signal = DETECT_STOPS_ABORT.signal;
+  DETECT_STOPS_GEOCODING = false;
+
   const modal = document.getElementById('detect-stops-modal');
   document.getElementById('detect-stops-loading').style.display = '';
+  document.getElementById('detect-stops-progress').style.display = 'none';
   document.getElementById('detect-stops-list').style.display = 'none';
   document.getElementById('detect-stops-list').innerHTML = '';
   document.getElementById('detect-stops-empty').style.display = 'none';
   document.getElementById('detect-stops-submit').disabled = true;
+  document.getElementById('detect-stops-submit').textContent = 'Create selected';
   modal.classList.add('visible');
   btn.disabled = true;
 
-  fetch(`/api/trips/${TRIP_ID}/detect-stops`, { method: 'POST' })
+  fetch(`/api/trips/${TRIP_ID}/detect-stops`, { method: 'POST', signal })
     .then(r => r.json())
     .then(data => {
+      if (signal.aborted) return;
       btn.disabled = false;
       document.getElementById('detect-stops-loading').style.display = 'none';
       DETECT_STOPS_DATA = data.stops || [];
@@ -3109,33 +3154,16 @@ function detectStops() {
         emptyEl.style.display = '';
         return;
       }
-      // Render one row per suggestion. Default-checked so the admin
-      // can hit "Create selected" without clicking each one.
-      listEl.innerHTML = DETECT_STOPS_DATA.map((s, i) => {
-        const d = s.display;
-        const dur = d.duration_minutes < 60
-          ? `${Math.round(d.duration_minutes)} min`
-          : `${(d.duration_minutes / 60).toFixed(1)} hr`;
-        const name = s.event.name || '(unnamed)';
-        const place = [d.start_local, dur].filter(Boolean).join(' · ');
-        const loc = [s.event.locale, s.event.state].filter(Boolean).join(', ');
-        const coords = `${d.center_lat.toFixed(4)}, ${d.center_lng.toFixed(4)}`;
-        return `
-          <label class="stop-row">
-            <input type="checkbox" data-idx="${i}" checked onchange="updateDetectStopsCount()">
-            <div>
-              <div class="stop-name">${escapeHtml(name)}</div>
-              <div class="stop-meta">${escapeHtml(place)}${loc ? ' — ' + escapeHtml(loc) : ''}</div>
-              <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
-            </div>
-            <span class="stop-kind ${d.classification}">${d.classification === 'event' ? 'Event' : 'Waypoint'}</span>
-          </label>
-        `;
-      }).join('');
+      // Render rows with placeholders; reverse-geocoding fills them in
+      // asynchronously. Default-checked so once geocoding finishes the
+      // admin can hit "Create selected" without clicking each one.
+      listEl.innerHTML = DETECT_STOPS_DATA.map((s, i) => _renderDetectStopRow(s, i)).join('');
       listEl.style.display = '';
       updateDetectStopsCount();
+      _runDetectStopsGeocoding(signal);
     })
     .catch(err => {
+      if (err.name === 'AbortError') return;
       btn.disabled = false;
       document.getElementById('detect-stops-loading').style.display = 'none';
       const emptyEl = document.getElementById('detect-stops-empty');
@@ -3144,14 +3172,96 @@ function detectStops() {
     });
 }
 
+// Sequentially reverse-geocode every row in DETECT_STOPS_DATA, updating
+// the row in place as each lookup resolves. Throttles to 1 req/sec to
+// stay inside Nominatim's usage policy. The progress banner counts
+// completed lookups; "Create selected" stays disabled until the whole
+// loop finishes or the user closes the modal.
+async function _runDetectStopsGeocoding(signal) {
+  if (!DETECT_STOPS_DATA.length) return;
+  DETECT_STOPS_GEOCODING = true;
+  updateDetectStopsCount();  // force the disabled-state recompute
+  const total = DETECT_STOPS_DATA.length;
+  const progressEl = document.getElementById('detect-stops-progress');
+  function showProgress(done) {
+    progressEl.style.display = '';
+    progressEl.textContent =
+      done >= total
+        ? `Reverse-geocoded ${total} of ${total} stops.`
+        : `Reverse-geocoding ${done} of ${total} stops… (${total - done} remaining)`;
+  }
+  showProgress(0);
+  for (let i = 0; i < DETECT_STOPS_DATA.length; i++) {
+    if (signal.aborted) return;
+    const s = DETECT_STOPS_DATA[i];
+    try {
+      const url = `/api/reverse-geocode?lat=${s.display.center_lat}&lng=${s.display.center_lng}`;
+      const resp = await fetch(url, { signal });
+      const info = await resp.json();
+      if (signal.aborted) return;
+      // Only overwrite fields we got something useful for; leave the
+      // "Detected stop" placeholder otherwise so a failed lookup still
+      // produces an acceptable event.
+      if (info.name) s.event.name = info.name;
+      if (info.locale) s.event.locale = info.locale;
+      if (info.state) s.event.state = info.state;
+      if (info.display_name) s.display.display_name = info.display_name;
+      // Re-render the row in place, preserving its checkbox state.
+      const row = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
+      if (row) {
+        const wasChecked = row.querySelector('input[type="checkbox"]').checked;
+        row.outerHTML = _renderDetectStopRow(s, i);
+        const newRow = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
+        if (newRow) newRow.querySelector('input[type="checkbox"]').checked = wasChecked;
+      }
+    } catch (e) {
+      if (e.name === 'AbortError') return;
+      // Network/server failure for this row — leave the placeholder
+      // in place and keep going so other rows can still get names.
+    }
+    showProgress(i + 1);
+    // Throttle to Nominatim's 1 req/sec policy. Skip after the final
+    // call to avoid an unnecessary trailing wait before enabling the
+    // submit button.
+    if (i < DETECT_STOPS_DATA.length - 1) {
+      try {
+        await new Promise((resolve, reject) => {
+          const tid = setTimeout(resolve, 1050);
+          signal.addEventListener('abort',
+            () => { clearTimeout(tid); reject(new DOMException('aborted', 'AbortError')); },
+            { once: true });
+        });
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+      }
+    }
+  }
+  if (signal.aborted) return;
+  DETECT_STOPS_GEOCODING = false;
+  // Hide the banner once the loop's done; the row content already
+  // reflects the final state.
+  progressEl.style.display = 'none';
+  updateDetectStopsCount();
+}
+
 function updateDetectStopsCount() {
   const checked = document.querySelectorAll('#detect-stops-list input[type="checkbox"]:checked');
   const btn = document.getElementById('detect-stops-submit');
+  // Stay disabled while reverse-geocoding is still running, regardless
+  // of how many rows the admin has checked — an un-geocoded row would
+  // be created with the literal placeholder name "Detected stop", which
+  // is rarely what they want.
+  if (DETECT_STOPS_GEOCODING) {
+    btn.disabled = true;
+    btn.textContent = 'Create selected';
+    return;
+  }
   btn.disabled = checked.length === 0;
   btn.textContent = checked.length ? `Create ${checked.length} selected` : 'Create selected';
 }
 
 function submitDetectStops() {
+  if (DETECT_STOPS_GEOCODING) return;  // belt-and-braces; the button should be disabled anyway
   const checked = document.querySelectorAll('#detect-stops-list input[type="checkbox"]:checked');
   if (!checked.length) return;
   const events = Array.from(checked).map(cb => DETECT_STOPS_DATA[+cb.dataset.idx].event);
@@ -3178,6 +3288,16 @@ function submitDetectStops() {
 }
 
 function closeDetectStops() {
+  // Aborting the controller cancels the detect-stops POST (if still in
+  // flight) AND the sequential reverse-geocoding loop AND any open
+  // /api/reverse-geocode fetch — so closing the modal doesn't leave a
+  // background loop hitting Nominatim for stops the admin no longer
+  // cares about.
+  if (DETECT_STOPS_ABORT) {
+    DETECT_STOPS_ABORT.abort();
+    DETECT_STOPS_ABORT = null;
+  }
+  DETECT_STOPS_GEOCODING = false;
   document.getElementById('detect-stops-modal').classList.remove('visible');
 }
 function closeDetectStopsBackdrop(e) {
