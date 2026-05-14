@@ -2588,28 +2588,36 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       return;
     }
 
-    // Auto-fallback: if no in-window ping lands within TRACK_NEAR_STAY_KM
-    // of HOME or any stay or event, the GPS data doesn't actually cover
-    // this trip (e.g. logging was off, wrong device). Skip GPS rendering
-    // so the straight-line route remains visible as the only polyline.
-    // HOME counts as an anchor here (unlike in the backend's tid selector,
-    // which excludes it) because a phone on its way out of the driveway
-    // or arriving back is legitimately on the trip — without this, an
-    // in-progress trip whose only event is far from home shows nothing
-    // until the user actually arrives at the destination.
+    // Auto-fallback: skip the GPS layer (leaving the dashed straight-
+    // line route as the only polyline) when the GPS data doesn't
+    // actually cover this trip. The gate passes if EITHER:
+    //   - at least one ping is within TRACK_NEAR_STAY_KM (5 km) of any
+    //     stay/event anchor (the phone arrived somewhere on the
+    //     itinerary), OR
+    //   - at least one ping is more than TRACK_NEAR_STAY_KM (5 km)
+    //     from HOME (the phone went somewhere — covers in-progress
+    //     trips that haven't reached an anchor yet).
+    // If neither, the data is consistent with "phone stayed home" or
+    // "logging was off" / "wrong device" — fall back to straight track.
+    // The two conditions are deliberately disjoint: nearness to HOME
+    // is NOT enough on its own (that's the trip-61 case — the phone
+    // logged all day at home without ever going on the trip).
     const TRACK_NEAR_STAY_KM = 5;
+    const radiusM = TRACK_NEAR_STAY_KM * 1000;
     const anchorCoords = [
-      HOME,
       ...mapped.map(s => [s.lat, s.lng]),
       ...mappedEvents.map(e => [e.lat, e.lng]),
     ].filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
-    if (anchorCoords.length) {
-      const radiusM = TRACK_NEAR_STAY_KM * 1000;
-      const nearAny = inWindow.some(p =>
+    const homeValid = Array.isArray(HOME) &&
+      Number.isFinite(HOME[0]) && Number.isFinite(HOME[1]);
+    if (anchorCoords.length || homeValid) {
+      const nearAnchor = anchorCoords.length > 0 && inWindow.some(p =>
         anchorCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
-      if (!nearAny) {
+      const movedFromHome = homeValid && inWindow.some(p =>
+        distMeters([p.lat, p.lon], HOME) > radiusM);
+      if (!nearAnchor && !movedFromHome) {
         trackLog(
-          `no GPS ping landed within ${TRACK_NEAR_STAY_KM} km of any stay or event — using straight track`,
+          `no GPS ping reached an anchor or left HOME — using straight track`,
           { inWindowCount: inWindow.length, anchorCount: anchorCoords.length });
         return;
       }
