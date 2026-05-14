@@ -1741,8 +1741,23 @@ def api_trip_track(trip_id):
 
 # Tunables. Conservative defaults — adjust if detection is too noisy or
 # misses real stops.
-STOP_CLUSTER_RADIUS_M = 150       # max distance from a cluster's running
-                                  # centroid for a ping to join the cluster
+STOP_CLUSTER_RADIUS_M = 200       # max distance from a cluster's running
+                                  # centroid for a ping to join the cluster.
+                                  # Sized for stationary-GPS jitter rather
+                                  # than the geometric extent of a stop:
+                                  # two consecutive at-rest pings can land
+                                  # 100–200 m apart (parking lot near a
+                                  # building, urban canyon, indoor/garage
+                                  # fix), and the first two pings of a
+                                  # would-be cluster have no centroid
+                                  # averaging yet to absorb that gap — so
+                                  # the bootstrap check effectively requires
+                                  # pairwise distance ≤ this. Tighter values
+                                  # (tried 150) miss real ~9-minute parking
+                                  # stops; wider values risk merging
+                                  # genuinely-separate close stops, but the
+                                  # consecutive-in-time constraint plus the
+                                  # 4-minute minimum keep that risk low.
 STOP_MIN_MINUTES = 4              # cluster span must reach this to qualify
 STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
