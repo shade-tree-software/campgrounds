@@ -13,7 +13,8 @@ _select_track_per_day's docstring):
   - B: only one tid has pings → that tid wins (the existing gap-fill case)
   - C: neither tid has pings → no contribution, prev_choice records
   - D-i:   one tid encountered an anchor, the other didn't
-  - D-ii:  both encountered → earliest-tst wins; tie → primary
+  - D-ii:  both encountered → higher distinct-anchor count wins;
+           tie at any positive count → primary
   - D-iii: neither encountered → inherit previous day
   - D-iv:  first day no encounter, home set → farther-from-home wins
   - D-v:   first day no encounter, no home → primary
@@ -153,24 +154,36 @@ class TestSelectTrackPerDay(unittest.TestCase):
         self.assertEqual(chosen, [a])
         self.assertEqual(choices, {d: "alt"})
 
-    def test_both_encounter_earliest_wins(self):
+    def test_higher_anchor_count_wins_even_when_alt_was_earlier(self):
+        """Divergence case: alt was at the campground earlier than
+        primary in the morning, then drove off the trip. Primary stayed
+        on the trip and visited a second anchor in the afternoon.
+        Anchor count beats earliest-tst, so primary wins even though
+        alt's only encounter was the earlier one."""
         d = "2025-08-02"
-        # Primary hits the anchor at 14:00, alt at 12:00 → alt wins.
-        p = _ping(_epoch_for_local(d, 14), *ANCHOR_BOONSBORO_MD)
-        a = _ping(_epoch_for_local(d, 12), *ANCHOR_BOONSBORO_MD)
+        # Primary visits both anchors today.
+        p_morning = _ping(_epoch_for_local(d, 9), *ANCHOR_BOONSBORO_MD)
+        p_afternoon = _ping(_epoch_for_local(d, 14), *ANCHOR_HARPERS_FERRY)
+        # Alt was at Boonsboro earlier than primary, then diverged away.
+        a_morning = _ping(_epoch_for_local(d, 7), *ANCHOR_BOONSBORO_MD)
+        a_afternoon = _ping(_epoch_for_local(d, 15), 40.0, -78.0)  # off-trip
         chosen, choices = _select_track_per_day(
-            primary_points=[p], alt_points=[a],
-            anchors=[ANCHOR_BOONSBORO_MD], home=HOME,
+            primary_points=[p_morning, p_afternoon],
+            alt_points=[a_morning, a_afternoon],
+            anchors=[ANCHOR_BOONSBORO_MD, ANCHOR_HARPERS_FERRY],
+            home=HOME,
             trip_start=d, trip_end=d,
         )
-        self.assertEqual(chosen, [a])
-        self.assertEqual(choices, {d: "alt"})
+        self.assertEqual(chosen, [p_morning, p_afternoon])
+        self.assertEqual(choices, {d: "primary"})
 
-    def test_both_encounter_tie_goes_to_primary(self):
+    def test_both_encounter_same_anchors_tie_goes_to_primary(self):
+        """Both phones visited the same single anchor today. Counts
+        tie at 1 → primary wins regardless of who was there first."""
         d = "2025-08-02"
-        same_tst = _epoch_for_local(d, 12)
-        p = _ping(same_tst, *ANCHOR_BOONSBORO_MD)
-        a = _ping(same_tst, *ANCHOR_BOONSBORO_MD)
+        # Alt is earlier, but counts tie at 1 → primary wins.
+        p = _ping(_epoch_for_local(d, 14), *ANCHOR_BOONSBORO_MD)
+        a = _ping(_epoch_for_local(d, 12), *ANCHOR_BOONSBORO_MD)
         chosen, choices = _select_track_per_day(
             primary_points=[p], alt_points=[a],
             anchors=[ANCHOR_BOONSBORO_MD], home=HOME,
@@ -282,11 +295,10 @@ class TestSelectTrackPerDay(unittest.TestCase):
     # ── Multi-day chain combining cases ─────────────────────────────
 
     def test_realistic_three_day_trip(self):
-        """Day 1: both phones leave home, neither hits an anchor yet —
-        day-1 fallback picks farther-from-home, alt wins. Day 2: both
-        at the campground (Boonsboro), both encounter it — primary's
-        encounter is earlier, primary wins. Day 3: phones split, only
-        primary visits Harpers Ferry — primary wins."""
+        """Day 1: alt got within 5 km of Boonsboro, primary didn't —
+        alt wins by count (1 vs 0). Day 2: both at Boonsboro, both
+        encounter 1 anchor → tie at 1, primary wins. Day 3: only
+        primary visits Harpers Ferry → primary wins by count (1 vs 0)."""
         d1, d2, d3 = "2025-08-01", "2025-08-02", "2025-08-03"
         # Day 1 — alt leaves home, primary stays close.
         p_d1 = _ping(_epoch_for_local(d1, 16), 39.0, -77.5)  # ~30 km from home

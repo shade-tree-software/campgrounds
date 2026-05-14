@@ -2252,16 +2252,20 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
       C. Neither has pings → record the previous day's choice for
          continuity, contribute nothing.
       D. Both have pings:
-         - Compute each tid's earliest ping within `near_radius_km` of
-           any anchor today.
-         - One encountered, the other didn't → encountered tid wins.
-         - Both encountered → earliest-by-tst wins; tie → primary.
-         - Neither encountered, previous day has a locked-in choice
-           → inherit it.
-         - Neither encountered, first day with no prior decision:
-             home configured → tid with greater max-distance-from-home
-                               on this day wins; tie → primary.
-             home not configured → primary.
+         - For each tid, count the number of distinct anchors that
+           have at least one ping within `near_radius_km` today.
+         - Higher count wins. This is a proxy for "which phone
+           actually followed the trip today" — a phone that shared
+           a morning at the campground and then diverged hits only
+           that one anchor, while the trip phone goes on to hit the
+           day's other events too.
+         - Tied at any positive count → primary wins. (Both phones
+           visited the same anchor set; no signal to distinguish.)
+         - Tied at zero (neither encountered any anchor today):
+             previous day has a locked-in choice → inherit it.
+             else, day-1 fallback: tid with greater max-distance-
+               from-home today wins; tie → primary. If home not
+               configured → primary.
 
     Returns (chosen_points, tid_choices):
       chosen_points: list of pings sorted by `tst`, the chosen tid's
@@ -2296,20 +2300,22 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
     home_lng = home[1] if home and home[1] is not None else None
     overrides = tid_overrides or {}
 
-    def _first_anchor_encounter_tst(pts):
-        """Earliest tst among pings within near_radius_m of any anchor."""
-        best = None
-        for p in pts:
-            lat, lon = p.get("lat"), p.get("lon")
-            tst = p.get("tst")
-            if lat is None or lon is None or tst is None:
-                continue
-            for a_lat, a_lng in anchor_list:
+    def _distinct_anchor_count(pts):
+        """Number of distinct anchors with at least one within-
+        near_radius_m ping in `pts`. The per-day primary/alt
+        discriminator: a phone that diverged from the trip after a
+        shared morning encounter will hit fewer subsequent anchors
+        than the phone that stayed on the trip."""
+        n = 0
+        for a_lat, a_lng in anchor_list:
+            for p in pts:
+                lat, lon = p.get("lat"), p.get("lon")
+                if lat is None or lon is None:
+                    continue
                 if _haversine_m(lat, lon, a_lat, a_lng) <= near_radius_m:
-                    if best is None or tst < best:
-                        best = tst
+                    n += 1
                     break
-        return best
+        return n
 
     def _max_dist_from_home(pts):
         if home_lat is None or home_lng is None:
@@ -2354,16 +2360,18 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
             # buckets are empty.)
             tid_choices[date_iso] = prev_choice or "primary"
         else:
-            p_enc = _first_anchor_encounter_tst(p_pts)
-            a_enc = _first_anchor_encounter_tst(a_pts)
-            if p_enc is not None and a_enc is None:
+            p_count = _distinct_anchor_count(p_pts)
+            a_count = _distinct_anchor_count(a_pts)
+            if p_count > a_count:
                 choice = "primary"
-            elif a_enc is not None and p_enc is None:
+            elif a_count > p_count:
                 choice = "alt"
-            elif p_enc is not None and a_enc is not None:
-                # Earliest encounter wins; tie → primary.
-                choice = "primary" if p_enc <= a_enc else "alt"
+            elif p_count > 0:
+                # Tied at >0 → primary. Both phones visited the same
+                # set of anchors today; no good signal to distinguish.
+                choice = "primary"
             elif prev_choice is not None:
+                # Tied at 0 (neither encountered an anchor) → inherit.
                 choice = prev_choice
             else:
                 # Day-1 fallback: farthest from home, tie → primary.
