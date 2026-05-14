@@ -502,11 +502,12 @@
     color: #fff;
   }
 
-  /* "Detect Stops" admin-only desktop-only header action. Sits next
-     to Delete Trip. Hidden ≤700 px because the modal it opens is too
-     dense for phone screens and the workflow is admin-vetting which
-     happens at a desk. */
-  .trip-header .btn-detect-stops {
+  /* "Detect Stops" / "Track Source" admin-only desktop-only header
+     actions. Sit next to Delete Trip. Hidden ≤700 px because the
+     modals they open are too dense for phone screens and both
+     workflows are admin-vetting that happens at a desk. */
+  .trip-header .btn-detect-stops,
+  .trip-header .btn-track-source {
     background: none;
     border: 1px solid rgba(255,255,255,.4);
     color: rgba(255,255,255,.85);
@@ -518,17 +519,39 @@
     flex-shrink: 0;
     align-self: center;
   }
-  .trip-header .btn-detect-stops:hover {
+  .trip-header .btn-detect-stops:hover,
+  .trip-header .btn-track-source:hover {
     border-color: #fff;
     color: #fff;
   }
-  .trip-header .btn-detect-stops:disabled {
+  .trip-header .btn-detect-stops:disabled,
+  .trip-header .btn-track-source:disabled {
     opacity: .5;
     cursor: wait;
   }
   @media (max-width: 700px) {
-    .trip-header .btn-detect-stops { display: none; }
+    .trip-header .btn-detect-stops,
+    .trip-header .btn-track-source { display: none; }
   }
+
+  /* Track Source modal: each row is a date + per-tid counts + a 3-way
+     radio. Wider gap between rows than the default form-grid since
+     each row carries three labels. */
+  .ts-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .35rem 1rem;
+    padding: .5rem .75rem;
+    border-bottom: 1px solid #eee;
+    font-size: .85rem;
+  }
+  .ts-row:last-child { border-bottom: none; }
+  .ts-row .ts-date { font-weight: 600; }
+  .ts-row .ts-counts { color: var(--gray); font-size: .8rem; }
+  .ts-row .ts-radios { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: .85rem; }
+  .ts-row .ts-radios label { display: inline-flex; align-items: center; gap: .3rem; cursor: pointer; }
+  .ts-row .ts-radios input[type="radio"]:disabled + span { color: var(--gray); opacity: .55; cursor: not-allowed; }
+  .ts-row.ts-changed { background: #fff8e7; }
 
   .trip-nav {
     display: flex;
@@ -1399,6 +1422,7 @@
     </div>
   </div>
   {% if is_admin %}
+  <button class="btn-track-source" id="btn-track-source" onclick="openTrackSource()" title="Choose which phone's GPS track to use per day">Track Source</button>
   <button class="btn-detect-stops" id="btn-detect-stops" onclick="detectStops()" title="Scan GPS track for missing waypoints/events">Detect Stops</button>
   <button class="btn-delete-trip" onclick="deleteTrip()">Delete Trip</button>
   {% endif %}
@@ -1854,6 +1878,33 @@
 <!-- Detect-stops modal: lists clusters of GPS pings that don't match an
      existing stay/event/family location. Admin checks the ones to keep
      and submits to create them as needs-vetting events/waypoints. -->
+<!-- Track Source picker. Admin-only. Lists each trip day with the auto
+     tid pick + radio for [auto / force primary / force alt]. Save PUTs
+     to /api/trips/<id>/tid-overrides per row that changed, then
+     window.__refetchAndRenderTrack() redraws the polyline. -->
+<div class="add-modal" id="track-source-modal" onclick="closeTrackSourceBackdrop(event)">
+  <div class="add-modal-panel" onclick="event.stopPropagation()" style="max-width:560px;width:95vw;">
+    <div class="add-modal-header">
+      <h3>Track Source</h3>
+      <button type="button" class="modal-close" onclick="closeTrackSource()" aria-label="Close">&times;</button>
+    </div>
+    <div class="add-modal-body" id="track-source-body">
+      <p style="color:var(--gray);font-size:.85rem;margin:0 0 .75rem;">
+        Pick which phone's GPS track to use for each day. <b>Auto</b> selects
+        whichever tid came nearest the trip's stays or events; override per
+        day if it picks wrong.
+      </p>
+      <div id="track-source-loading" style="text-align:center;padding:2rem 0;color:var(--gray);">Loading…</div>
+      <div id="track-source-rows" style="display:none;"></div>
+      <div id="track-source-empty" style="display:none;text-align:center;padding:2rem 0;color:var(--gray);"></div>
+    </div>
+    <div class="add-modal-actions">
+      <button type="button" class="btn-cancel" id="track-source-cancel" onclick="closeTrackSource()">Cancel</button>
+      <button type="button" class="btn-save" id="track-source-save" onclick="saveTrackSource()" disabled>Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="add-modal" id="detect-stops-modal" onclick="closeDetectStopsBackdrop(event)">
   <div class="add-modal-panel" onclick="event.stopPropagation()" style="max-width:720px;width:95vw;">
     <div class="add-modal-header">
@@ -3132,6 +3183,154 @@ function _renderDetectStopRow(s, i) {
       <span class="stop-kind ${d.classification}">${d.classification === 'event' ? 'Event' : 'Waypoint'}</span>
     </label>
   `;
+}
+
+// ── Track Source modal ─────────────────────────────────────────────────────
+//
+// Admin-only per-day override for which tid (primary / alt phone) the
+// GPS-track endpoint uses. The server's _select_track_per_day picks
+// automatically; this UI lets the admin override when auto picks
+// wrong. Render: one row per trip day, each with the auto pick, raw
+// per-tid ping counts, and a radio for [auto / primary / alt]. Save
+// PUTs the diff against the saved overrides, then refetches and
+// redraws the polyline.
+
+let TRACK_SOURCE_STATE = null;  // { choices, overrides, counts, alt_configured, pending }
+
+function openTrackSource() {
+  const modal = document.getElementById('track-source-modal');
+  document.getElementById('track-source-loading').style.display = '';
+  document.getElementById('track-source-rows').style.display = 'none';
+  document.getElementById('track-source-rows').innerHTML = '';
+  document.getElementById('track-source-empty').style.display = 'none';
+  document.getElementById('track-source-save').disabled = true;
+  modal.classList.add('visible');
+
+  fetch(`/api/trips/${TRIP_ID}/tid-choices`, { credentials: 'same-origin' })
+    .then(r => r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`)))
+    .then(data => {
+      document.getElementById('track-source-loading').style.display = 'none';
+      const dates = Object.keys(data.tid_choices || {}).sort();
+      if (!dates.length) {
+        const emptyEl = document.getElementById('track-source-empty');
+        emptyEl.textContent = 'No GPS data cached for this trip yet — visit the page once with the track loaded, then try again.';
+        emptyEl.style.display = '';
+        return;
+      }
+      TRACK_SOURCE_STATE = {
+        choices: data.tid_choices,
+        overrides: data.tid_overrides || {},
+        counts: data.counts || {},
+        alt_configured: data.alt_configured !== false,
+        pending: {},  // {date: 'auto'|'primary'|'alt'} — only entries that differ from saved
+      };
+      _renderTrackSourceRows(dates);
+    })
+    .catch(err => {
+      document.getElementById('track-source-loading').style.display = 'none';
+      const emptyEl = document.getElementById('track-source-empty');
+      emptyEl.textContent = 'Failed to load track source info: ' + err.message;
+      emptyEl.style.display = '';
+    });
+}
+
+function _renderTrackSourceRows(dates) {
+  const s = TRACK_SOURCE_STATE;
+  const rowsEl = document.getElementById('track-source-rows');
+  const altWarn = s.alt_configured ? '' : ' (alt tid not configured)';
+  rowsEl.innerHTML = dates.map(d => {
+    const auto = s.choices[d] || 'primary';
+    const savedOverride = s.overrides[d] || null;     // 'primary'|'alt'|null
+    const currentChoice = savedOverride || 'auto';    // initial radio state
+    const counts = s.counts[d] || { primary: 0, alt: 0 };
+    const altDisabled = !s.alt_configured;
+    // Each radio's `name` is unique per row so radios don't bleed across days.
+    const nm = `ts-${d}`;
+    return `
+      <div class="ts-row" data-date="${d}">
+        <div class="ts-date">${d}</div>
+        <div class="ts-counts">primary: ${counts.primary} ping${counts.primary === 1 ? '' : 's'}, alt: ${counts.alt} ping${counts.alt === 1 ? '' : 's'}${altWarn}</div>
+        <div class="ts-radios">
+          <label><input type="radio" name="${nm}" value="auto"    ${currentChoice === 'auto'    ? 'checked' : ''} onchange="onTrackSourceChange('${d}', this.value)"><span>Auto (${auto})</span></label>
+          <label><input type="radio" name="${nm}" value="primary" ${currentChoice === 'primary' ? 'checked' : ''} onchange="onTrackSourceChange('${d}', this.value)"><span>Force primary</span></label>
+          <label><input type="radio" name="${nm}" value="alt"     ${currentChoice === 'alt'     ? 'checked' : ''} ${altDisabled ? 'disabled' : ''} onchange="onTrackSourceChange('${d}', this.value)"><span>Force alt</span></label>
+        </div>
+      </div>
+    `;
+  }).join('');
+  rowsEl.style.display = '';
+}
+
+function onTrackSourceChange(date, value) {
+  const s = TRACK_SOURCE_STATE;
+  if (!s) return;
+  const savedOverride = s.overrides[date] || null;
+  const savedAsChoice = savedOverride || 'auto';
+  if (value === savedAsChoice) {
+    delete s.pending[date];
+  } else {
+    s.pending[date] = value;
+  }
+  // Visual flag on changed rows so the admin can see at a glance which
+  // they've touched before saving.
+  const row = document.querySelector(`.ts-row[data-date="${date}"]`);
+  if (row) row.classList.toggle('ts-changed', value !== savedAsChoice);
+  document.getElementById('track-source-save').disabled =
+    Object.keys(s.pending).length === 0;
+}
+
+function saveTrackSource() {
+  const s = TRACK_SOURCE_STATE;
+  if (!s) return;
+  const saveBtn = document.getElementById('track-source-save');
+  const cancelBtn = document.getElementById('track-source-cancel');
+  saveBtn.disabled = true;
+  saveBtn.textContent = 'Saving…';
+  cancelBtn.disabled = true;
+
+  const entries = Object.entries(s.pending);
+  // Sequential PUTs — the override list is short (one per day) and
+  // serializing keeps trips.json writes ordered.
+  (async () => {
+    for (const [date, value] of entries) {
+      const body = { date, value: value === 'auto' ? null : value };
+      const r = await fetch(`/api/trips/${TRIP_ID}/tid-overrides`, {
+        method: 'PUT',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      if (!r.ok) {
+        const t = await r.text().catch(() => '');
+        throw new Error(`PUT ${date} failed: HTTP ${r.status} ${t}`);
+      }
+    }
+  })()
+    .then(() => {
+      closeTrackSource();
+      // Refresh polyline so the new tid choices are visible immediately.
+      if (window.__refetchAndRenderTrack) window.__refetchAndRenderTrack();
+    })
+    .catch(err => {
+      alert(err.message);
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Save';
+      cancelBtn.disabled = false;
+    });
+}
+
+function closeTrackSource() {
+  const modal = document.getElementById('track-source-modal');
+  modal.classList.remove('visible');
+  TRACK_SOURCE_STATE = null;
+  const saveBtn = document.getElementById('track-source-save');
+  saveBtn.textContent = 'Save';
+  saveBtn.disabled = true;
+  document.getElementById('track-source-cancel').disabled = false;
+}
+
+function closeTrackSourceBackdrop(e) {
+  if (e.target === e.currentTarget) closeTrackSource();
 }
 
 function detectStops() {

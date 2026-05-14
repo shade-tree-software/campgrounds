@@ -16,7 +16,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    get_suppressed_pings, add_suppressed_pings,
                    remove_suppressed_pings,
                    get_relocated_pings, add_relocated_pings,
-                   remove_relocated_pings)
+                   remove_relocated_pings,
+                   get_tid_overrides, set_tid_override)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -1471,6 +1472,12 @@ def api_reverse_geocode():
 TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
 os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 
+# Frontend's auto-fallback near-anchor radius (templates/trip_detail.html
+# uses the same 5 km). Promoted to a Python constant so the per-day tid
+# selector (_select_track_per_day) can use the same threshold for deciding
+# whether a tid's pings "encountered" a stay/event on a given day.
+TRACK_NEAR_STAY_KM = 5
+
 
 # Resolves lat/lng to an IANA timezone name (e.g. "America/New_York"). The
 # library carries ~50 MB of polygon data; first import is slow, but the
@@ -1609,13 +1616,74 @@ def api_trip_track(trip_id):
             return points
         return [p for p in points if p.get("tst") not in suppressed]
 
+    def _select_chosen(all_points):
+        """Run per-day tid selection on the cached/fetched raw points
+        (tid-tagged) and return only the chosen tid's pings.
+
+        The selector's *decision* runs on a cleaned view (suppressed +
+        bad-window pings dropped, relocations applied) so admin-marked-
+        untrusted pings can't tip the choice. Then we filter the RAW
+        points by the per-day choice so the response still carries
+        original coords / admin-mode tags — `_apply_overrides` below
+        will re-apply relocations and emit the admin annotations.
+
+        Pings on pad days (the ±1 day fetch overage outside the trip's
+        own date range) keep today's behavior: primary-only pass-through,
+        no per-day selection. They're only used by the frontend to draw
+        the "leaving home" / "arriving home" boundary leg of the polyline."""
+        enrich_trip_locations(trip)
+        home, _fam = _map_config()
+        anchors = _anchors_for_trip(trip)
+
+        def _split_clean(want_tid):
+            out = []
+            for p in all_points:
+                if p.get("tid") != want_tid:
+                    continue
+                tst = p.get("tst")
+                if tst is None or tst in suppressed:
+                    continue
+                if _in_bad_track_window(tst, bad_windows):
+                    continue
+                ov = relocations.get(tst)
+                if ov is not None:
+                    p = dict(p)
+                    p["lat"], p["lon"] = ov[0], ov[1]
+                out.append(p)
+            return out
+
+        _, tid_choices = _select_track_per_day(
+            _split_clean("primary"), _split_clean("alt"),
+            anchors, home, trip["start"], trip["end"],
+            tid_overrides=trip.get("tid_overrides") or {},
+        )
+
+        chosen = []
+        for p in all_points:
+            d = _local_date_of_ping(p)
+            if d is None:
+                continue
+            choice = tid_choices.get(d)
+            if choice is None:
+                # Outside trip date range (pad day) — primary only.
+                if p.get("tid") == "primary":
+                    chosen.append(p)
+                continue
+            wanted = choice.split(":")[-1]  # 'override:alt' → 'alt'
+            if p.get("tid") == wanted:
+                chosen.append(p)
+        chosen.sort(key=lambda x: x.get("tst", 0))
+        return chosen
+
     def _serve_cache():
         with open(cache_file) as f:
             cached = json.load(f)
-        if _enrich_with_timezone(cached):
+        migrated = _migrate_track_cache_tids(cached)
+        tz_changed = _enrich_with_timezone(cached)
+        if migrated or tz_changed:
             with open(cache_file, "w") as f:
                 json.dump(cached, f)
-        return jsonify(_apply_overrides(cached))
+        return jsonify(_apply_overrides(_select_chosen(cached)))
 
     if is_old and os.path.isfile(cache_file):
         return _serve_cache()
@@ -1637,23 +1705,21 @@ def api_trip_track(trip_id):
         from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
         to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
-        all_points = _fetch_timeline_points(tid, token, from_ts, to_ts)
+        primary_pts = _fetch_timeline_points(tid, token, from_ts, to_ts)
+        for p in primary_pts:
+            p["tid"] = "primary"
 
+        alt_pts = []
         if alt_tid:
-            primary_days = {datetime.utcfromtimestamp(p["tst"]).date() for p in all_points}
-            gap_days = set()
-            d = start_dt.date()
-            while d <= end_dt.date():
-                if d not in primary_days:
-                    gap_days.add(d)
-                d += timedelta(days=1)
-            if gap_days:
-                alt_points = _fetch_timeline_points(alt_tid, token, from_ts, to_ts)
-                all_points.extend(
-                    p for p in alt_points
-                    if datetime.utcfromtimestamp(p["tst"]).date() in gap_days
-                )
-                all_points.sort(key=lambda p: p["tst"])
+            # Always fetch the full alt range now (was: only gap days),
+            # since the per-day selector wants to weigh both phones on
+            # every day to pick the trip phone, not just to fill holes.
+            alt_pts = _fetch_timeline_points(alt_tid, token, from_ts, to_ts)
+            for p in alt_pts:
+                p["tid"] = "alt"
+
+        all_points = primary_pts + alt_pts
+        all_points.sort(key=lambda p: p["tst"])
     except Exception as e:
         if os.path.isfile(cache_file):
             return _serve_cache()
@@ -1662,7 +1728,7 @@ def api_trip_track(trip_id):
     _enrich_with_timezone(all_points)
     with open(cache_file, "w") as f:
         json.dump(all_points, f)
-    return jsonify(_apply_overrides(all_points))
+    return jsonify(_apply_overrides(_select_chosen(all_points)))
 
 
 # ── GPS-track stop detection ────────────────────────────────────────────────
@@ -1750,7 +1816,12 @@ def _load_trip_track_for_detection(trip_id):
 
     Prefers the on-disk cache (the trip detail page's loadTrack() will
     have populated it on load) and only falls back to a fresh fetch
-    when the cache is missing."""
+    when the cache is missing.
+
+    Per-day tid selection (`_select_track_per_day`) runs after the
+    admin-overrides drop, so detection sees only the chosen tid's pings
+    for each day — matches what the polyline shows and avoids stop
+    suggestions seeded by the wrong phone."""
     trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
     if not trip or not trip.get("start") or not trip.get("end"):
         return []
@@ -1766,6 +1837,7 @@ def _load_trip_track_for_detection(trip_id):
     if points is None:
         token = os.environ.get("TIMELINE_API_TOKEN")
         tid = os.environ.get("TIMELINE_TID")
+        alt_tid = os.environ.get("TIMELINE_TID_ALT")
         if not token or not tid:
             return []
         try:
@@ -1773,12 +1845,27 @@ def _load_trip_track_for_detection(trip_id):
             end_dt = datetime.fromisoformat(trip["end"]) + timedelta(days=2)
             from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
             to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-            points = _fetch_timeline_points(tid, token, from_ts, to_ts)
+            primary_pts = _fetch_timeline_points(tid, token, from_ts, to_ts)
+            for p in primary_pts:
+                p["tid"] = "primary"
+            alt_pts = []
+            if alt_tid:
+                alt_pts = _fetch_timeline_points(alt_tid, token, from_ts, to_ts)
+                for p in alt_pts:
+                    p["tid"] = "alt"
+            points = primary_pts + alt_pts
+            points.sort(key=lambda p: p["tst"])
             _enrich_with_timezone(points)
             with open(cache_file, "w") as f:
                 json.dump(points, f)
         except Exception:
             return []
+    else:
+        # Cache hit: migrate legacy untagged entries before the selector
+        # runs (it groups by tid).
+        if _migrate_track_cache_tids(points):
+            with open(cache_file, "w") as f:
+                json.dump(points, f)
 
     suppressed = set(get_suppressed_pings(trip_id))
     relocated_tsts = {int(it["tst"]) for it in get_relocated_pings(trip_id)}
@@ -1789,7 +1876,21 @@ def _load_trip_track_for_detection(trip_id):
     if bad_windows:
         points = [p for p in points
                   if not _in_bad_track_window(p.get("tst"), bad_windows)]
-    return points
+
+    # Per-day tid selection. `_select_track_per_day` already returns
+    # only chosen-tid pings within [start, end] — pad days are dropped,
+    # which is correct for detection (we only consider clusters inside
+    # the trip itself).
+    enrich_trip_locations(trip)
+    home, _fam = _map_config()
+    anchors = _anchors_for_trip(trip)
+    p_pts = [p for p in points if p.get("tid") == "primary"]
+    a_pts = [p for p in points if p.get("tid") == "alt"]
+    chosen, _choices = _select_track_per_day(
+        p_pts, a_pts, anchors, home, trip["start"], trip["end"],
+        tid_overrides=trip.get("tid_overrides") or {},
+    )
+    return chosen
 
 
 def _detect_stops(points,
@@ -2053,41 +2154,230 @@ def _in_bad_track_window(tst, windows):
     return False
 
 
+def _local_date_of_ping(p):
+    """Return the local-date (YYYY-MM-DD) of a single ping, using its
+    `tz` field stamped by `_enrich_with_timezone`. Falls back to UTC
+    if the field is missing or zoneinfo is unavailable. Returns None
+    if the ping has no `tst`.
+
+    Shared by `_filter_points_to_trip_window` (date-range gate) and
+    `_select_track_per_day` (per-day bucketing) so both agree on which
+    day a midnight-adjacent ping belongs to."""
+    tst = p.get("tst")
+    if tst is None:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+    except Exception:
+        ZoneInfo = None
+    utc = datetime.utcfromtimestamp(tst)
+    tz_name = p.get("tz") or "UTC"
+    if ZoneInfo and tz_name != "UTC":
+        try:
+            return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(
+                ZoneInfo(tz_name)).date().isoformat()
+        except Exception:
+            pass
+    return utc.date().isoformat()
+
+
+def _anchors_for_trip(trip):
+    """Stay coords + event coords for a trip, suitable as anchor input
+    to `_select_track_per_day`. HOME is intentionally excluded (a day
+    where one phone stayed home would otherwise wrongly "encounter"
+    home all day and win). Trip must be `enrich_trip_locations`-ed."""
+    anchors = []
+    for s in trip.get("stays", []):
+        if s.get("lat") is not None and s.get("lng") is not None:
+            anchors.append((s["lat"], s["lng"]))
+    for e in trip.get("events", []):
+        if e.get("lat") is not None and e.get("lng") is not None:
+            anchors.append((e["lat"], e["lng"]))
+    return anchors
+
+
+def _migrate_track_cache_tids(points):
+    """Stamp legacy untagged cached pings with `tid: "primary"`.
+    Returns True if anything changed (so the caller can rewrite the
+    cache file). Safe because the alt tid had zero pings before this
+    change shipped (verified empirically across all production trips);
+    every cached point was sourced from primary."""
+    changed = False
+    for p in points:
+        if "tid" not in p:
+            p["tid"] = "primary"
+            changed = True
+    return changed
+
+
 def _filter_points_to_trip_window(points, trip_start, trip_end):
     """Drop pings whose *local* date falls outside the trip's
     [trip_start, trip_end] inclusive range. The track loader pads the
     API fetch by ~1 day on each side for timezone slop; this tightens
     back to the trip's real window so pre-/post-trip home stops don't
-    become suggestions.
-
-    Each ping carries a `tz` field stamped by `_enrich_with_timezone`
-    that names the IANA zone at the ping's coords. We compare local
-    dates (YYYY-MM-DD) rather than absolute timestamps so the
-    comparison matches how the trip's `start`/`end` are stored."""
-    try:
-        from zoneinfo import ZoneInfo
-        _has_zi = True
-    except Exception:
-        ZoneInfo = None
-        _has_zi = False
-
+    become suggestions."""
     out = []
     for p in points:
-        tst = p.get("tst")
-        if tst is None:
-            continue
-        utc = datetime.utcfromtimestamp(tst)
-        local = utc
-        tz_name = p.get("tz") or "UTC"
-        if _has_zi and tz_name != "UTC":
-            try:
-                local = utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
-            except Exception:
-                pass
-        local_date = local.date().isoformat()
-        if trip_start <= local_date <= trip_end:
+        d = _local_date_of_ping(p)
+        if d is not None and trip_start <= d <= trip_end:
             out.append(p)
     return out
+
+
+def _select_track_per_day(primary_points, alt_points, anchors, home,
+                          trip_start, trip_end, tid_overrides=None,
+                          near_radius_km=TRACK_NEAR_STAY_KM):
+    """Pick the right tid (primary or alt) for each day of the trip and
+    return only that tid's pings.
+
+    Inputs:
+      primary_points, alt_points: lists of ping dicts with `lat`, `lon`,
+        `tst`, and ideally `tz` (used to bucket by local date).
+      anchors: iterable of (lat, lng) tuples — the trip's stay coords
+        and event coords. HOME is intentionally NOT an anchor (a day
+        where one phone stayed home would otherwise wrongly "encounter"
+        home all day and win every comparison).
+      home: (home_lat, home_lng) or None. Used only by case E (day-1
+        fallback when neither tid has hit any anchor yet).
+      trip_start, trip_end: 'YYYY-MM-DD' strings, inclusive.
+      tid_overrides: dict {'YYYY-MM-DD': 'primary'|'alt'} from the trip
+        record. Empty/missing keys defer to the heuristic.
+      near_radius_km: anchor-encounter radius (default
+        TRACK_NEAR_STAY_KM = 5 km).
+
+    Algorithm per day in chronological order:
+      A. tid_overrides[date] set → use that tid.
+      B. Exactly one tid has pings today → use it (subsumes the
+         existing alt-tid gap-fill).
+      C. Neither has pings → record the previous day's choice for
+         continuity, contribute nothing.
+      D. Both have pings:
+         - Compute each tid's earliest ping within `near_radius_km` of
+           any anchor today.
+         - One encountered, the other didn't → encountered tid wins.
+         - Both encountered → earliest-by-tst wins; tie → primary.
+         - Neither encountered, previous day has a locked-in choice
+           → inherit it.
+         - Neither encountered, first day with no prior decision:
+             home configured → tid with greater max-distance-from-home
+                               on this day wins; tie → primary.
+             home not configured → primary.
+
+    Returns (chosen_points, tid_choices):
+      chosen_points: list of pings sorted by `tst`, the chosen tid's
+        pings concatenated across all days in the trip window.
+      tid_choices: {'YYYY-MM-DD': 'primary'|'alt'|'override:primary'|
+        'override:alt'} — full per-day record for admin visibility,
+        including days where no pings exist.
+    """
+    near_radius_m = near_radius_km * 1000.0
+
+    def _bucket(pts):
+        out = {}
+        for p in pts:
+            d = _local_date_of_ping(p)
+            if d is None:
+                continue
+            out.setdefault(d, []).append(p)
+        return out
+
+    primary_by_day = _bucket(primary_points or [])
+    alt_by_day = _bucket(alt_points or [])
+
+    try:
+        start = date.fromisoformat(trip_start)
+        end = date.fromisoformat(trip_end)
+    except (TypeError, ValueError):
+        return [], {}
+
+    anchor_list = [(a[0], a[1]) for a in (anchors or [])
+                   if a is not None and a[0] is not None and a[1] is not None]
+    home_lat = home[0] if home and home[0] is not None else None
+    home_lng = home[1] if home and home[1] is not None else None
+    overrides = tid_overrides or {}
+
+    def _first_anchor_encounter_tst(pts):
+        """Earliest tst among pings within near_radius_m of any anchor."""
+        best = None
+        for p in pts:
+            lat, lon = p.get("lat"), p.get("lon")
+            tst = p.get("tst")
+            if lat is None or lon is None or tst is None:
+                continue
+            for a_lat, a_lng in anchor_list:
+                if _haversine_m(lat, lon, a_lat, a_lng) <= near_radius_m:
+                    if best is None or tst < best:
+                        best = tst
+                    break
+        return best
+
+    def _max_dist_from_home(pts):
+        if home_lat is None or home_lng is None:
+            return 0.0
+        best = 0.0
+        for p in pts:
+            lat, lon = p.get("lat"), p.get("lon")
+            if lat is None or lon is None:
+                continue
+            d = _haversine_m(lat, lon, home_lat, home_lng)
+            if d > best:
+                best = d
+        return best
+
+    tid_choices = {}
+    chosen = []
+    prev_choice = None
+
+    cur = start
+    while cur <= end:
+        date_iso = cur.isoformat()
+        p_pts = primary_by_day.get(date_iso, [])
+        a_pts = alt_by_day.get(date_iso, [])
+
+        ov = overrides.get(date_iso)
+        if ov in ("primary", "alt"):
+            chosen.extend(p_pts if ov == "primary" else a_pts)
+            tid_choices[date_iso] = "override:" + ov
+            prev_choice = ov
+        elif p_pts and not a_pts:
+            chosen.extend(p_pts)
+            tid_choices[date_iso] = "primary"
+            prev_choice = "primary"
+        elif a_pts and not p_pts:
+            chosen.extend(a_pts)
+            tid_choices[date_iso] = "alt"
+            prev_choice = "alt"
+        elif not p_pts and not a_pts:
+            # No data either way — record prev for inheritance continuity,
+            # but contribute nothing. (Default to "primary" if we haven't
+            # made any decision yet; doesn't affect output since both
+            # buckets are empty.)
+            tid_choices[date_iso] = prev_choice or "primary"
+        else:
+            p_enc = _first_anchor_encounter_tst(p_pts)
+            a_enc = _first_anchor_encounter_tst(a_pts)
+            if p_enc is not None and a_enc is None:
+                choice = "primary"
+            elif a_enc is not None and p_enc is None:
+                choice = "alt"
+            elif p_enc is not None and a_enc is not None:
+                # Earliest encounter wins; tie → primary.
+                choice = "primary" if p_enc <= a_enc else "alt"
+            elif prev_choice is not None:
+                choice = prev_choice
+            else:
+                # Day-1 fallback: farthest from home, tie → primary.
+                pd = _max_dist_from_home(p_pts)
+                ad = _max_dist_from_home(a_pts)
+                choice = "primary" if pd >= ad else "alt"
+            chosen.extend(p_pts if choice == "primary" else a_pts)
+            tid_choices[date_iso] = choice
+            prev_choice = choice
+
+        cur += timedelta(days=1)
+
+    chosen.sort(key=lambda p: p.get("tst", 0))
+    return chosen, tid_choices
 
 
 def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
@@ -2221,6 +2511,129 @@ def api_unrelocate_pings(trip_id):
     if result is None:
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "relocated_pings": result})
+
+
+@app.route('/api/trips/<int:trip_id>/tid-overrides', methods=['PUT'])
+def api_set_tid_override(trip_id):
+    """Set or clear one day's per-day tid override. Body:
+    {date: 'YYYY-MM-DD', value: 'primary'|'alt'|null}. null clears.
+
+    The override forces `_select_track_per_day` to use that tid for
+    the day regardless of the heuristic — admin escape hatch when
+    auto picks the wrong phone. Returns the resulting overrides
+    dict (omitted from trips.json entirely when empty)."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    day = (data.get("date") or "").strip()
+    value = data.get("value")
+    if not day:
+        return jsonify({"error": "date is required (YYYY-MM-DD)"}), 400
+    try:
+        date.fromisoformat(day)
+    except ValueError:
+        return jsonify({"error": "date must be YYYY-MM-DD"}), 400
+    if value is not None and value not in ("primary", "alt"):
+        return jsonify({"error": "value must be 'primary', 'alt', or null"}), 400
+    result = set_tid_override(trip_id, day, value)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "tid_overrides": result})
+
+
+@app.route('/api/trips/<int:trip_id>/tid-choices', methods=['GET'])
+def api_tid_choices(trip_id):
+    """Admin-only: return what the per-day tid selector would pick for
+    each trip day ignoring overrides, plus the current saved overrides,
+    plus per-tid ping counts per day. The Track Source UI uses this
+    to render "auto would pick X" alongside the override radios.
+
+    Computes against the cached track (same source the track endpoint
+    serves). Returns:
+      {
+        "tid_choices":  {"YYYY-MM-DD": "primary"|"alt", ...},  # auto only
+        "tid_overrides":{"YYYY-MM-DD": "primary"|"alt", ...},  # saved
+        "counts":       {"YYYY-MM-DD": {"primary": N, "alt": M}, ...},
+        "alt_configured": bool,
+      }
+    No `?include_admin=1` flag — this endpoint is admin-only and the
+    track endpoint's bare-array response shape stays unchanged."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
+    if not trip:
+        return jsonify({"error": "trip not found"}), 404
+    if not trip.get("start") or not trip.get("end"):
+        return jsonify({"tid_choices": {}, "tid_overrides": {},
+                        "counts": {}, "alt_configured": False})
+
+    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
+    cached = []
+    if os.path.isfile(cache_file):
+        try:
+            with open(cache_file) as f:
+                cached = json.load(f)
+            _migrate_track_cache_tids(cached)
+        except Exception:
+            cached = []
+
+    enrich_trip_locations(trip)
+    home, _fam = _map_config()
+    anchors = _anchors_for_trip(trip)
+    # Clean pings (drop suppressed/bad-window, apply relocations) to
+    # match what the wired selector actually decides on. Without this
+    # the UI's "auto" preview can diverge from the polyline's choice.
+    suppressed = set(get_suppressed_pings(trip_id))
+    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
+                   for it in get_relocated_pings(trip_id)}
+    bad_windows = _bad_track_window_tsts(trip)
+
+    def _clean(want_tid):
+        out = []
+        for p in cached:
+            if p.get("tid") != want_tid:
+                continue
+            tst = p.get("tst")
+            if tst is None or tst in suppressed:
+                continue
+            if _in_bad_track_window(tst, bad_windows):
+                continue
+            ov = relocations.get(tst)
+            if ov is not None:
+                p = dict(p)
+                p["lat"], p["lon"] = ov[0], ov[1]
+            out.append(p)
+        return out
+
+    # Force-empty overrides so the response shows what auto WOULD pick;
+    # the UI uses this alongside the saved overrides to render the
+    # "Auto (would be X)" label on unforced rows.
+    _, choices = _select_track_per_day(
+        _clean("primary"), _clean("alt"),
+        anchors, home, trip["start"], trip["end"],
+        tid_overrides={},
+    )
+
+    # Per-tid per-day raw counts (informational; lets the UI tell the
+    # admin "alt has 0 pings today, forcing alt will leave a gap").
+    counts = {}
+    for p in cached:
+        d = _local_date_of_ping(p)
+        if d is None:
+            continue
+        bucket = counts.setdefault(d, {"primary": 0, "alt": 0})
+        tid_field = p.get("tid") or "primary"
+        if tid_field in bucket:
+            bucket[tid_field] += 1
+
+    return jsonify({
+        "tid_choices": choices,
+        "tid_overrides": get_tid_overrides(trip_id),
+        "counts": counts,
+        "alt_configured": bool(os.environ.get("TIMELINE_TID_ALT")),
+    })
 
 
 @app.route('/api/trips/<int:trip_id>/detect-stops', methods=['POST'])

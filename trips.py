@@ -543,6 +543,49 @@ def remove_relocated_pings(trip_id, tsts):
     return None
 
 
+# ── Per-day tid overrides ────────────────────────────────────────────────
+# Each trip can carry an optional `tid_overrides` dict mapping
+# 'YYYY-MM-DD' → 'primary'|'alt'. Keys present here force the per-day
+# tid selector to use that tid regardless of the heuristic. Missing
+# keys defer to the heuristic (see _select_track_per_day in
+# ekko_trips_app.py). This is the admin's escape hatch when the
+# heuristic picks the wrong phone for a day.
+
+def get_tid_overrides(trip_id):
+    """Return the trip's tid_overrides dict (empty if none)."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return dict(t.get("tid_overrides", {}))
+    return {}
+
+
+def set_tid_override(trip_id, day, value):
+    """Set or clear a single date's tid override.
+
+    `day` is a 'YYYY-MM-DD' string. `value` must be 'primary' or 'alt'
+    to set, or None to clear (deletes the key). Other values raise
+    ValueError. Returns the resulting overrides dict, or None if the
+    trip is missing."""
+    if value is not None and value not in ("primary", "alt"):
+        raise ValueError("tid override value must be 'primary', 'alt', or None")
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = dict(t.get("tid_overrides", {}))
+            if value is None:
+                current.pop(day, None)
+            else:
+                current[day] = value
+            if current:
+                t["tid_overrides"] = current
+            else:
+                t.pop("tid_overrides", None)
+            _save_trips(raw)
+            return current
+    return None
+
+
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):
