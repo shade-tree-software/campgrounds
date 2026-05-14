@@ -2589,11 +2589,17 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
 
     // Auto-fallback: if no in-window ping lands within TRACK_NEAR_STAY_KM
-    // of any stay or event, the GPS data doesn't actually cover this trip
-    // (e.g. logging was off, wrong device). Skip GPS rendering so the
-    // straight-line route remains visible as the only polyline.
+    // of HOME or any stay or event, the GPS data doesn't actually cover
+    // this trip (e.g. logging was off, wrong device). Skip GPS rendering
+    // so the straight-line route remains visible as the only polyline.
+    // HOME counts as an anchor here (unlike in the backend's tid selector,
+    // which excludes it) because a phone on its way out of the driveway
+    // or arriving back is legitimately on the trip — without this, an
+    // in-progress trip whose only event is far from home shows nothing
+    // until the user actually arrives at the destination.
     const TRACK_NEAR_STAY_KM = 5;
     const anchorCoords = [
+      HOME,
       ...mapped.map(s => [s.lat, s.lng]),
       ...mappedEvents.map(e => [e.lat, e.lng]),
     ].filter(([la, ln]) => Number.isFinite(la) && Number.isFinite(ln));
