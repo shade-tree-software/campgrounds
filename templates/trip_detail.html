@@ -2590,18 +2590,23 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
     // Auto-fallback: skip the GPS layer (leaving the dashed straight-
     // line route as the only polyline) when the GPS data doesn't
-    // actually cover this trip. The gate passes if EITHER:
-    //   - at least one ping is within TRACK_NEAR_STAY_KM (5 km) of any
-    //     stay/event anchor (the phone arrived somewhere on the
-    //     itinerary), OR
-    //   - at least one ping is more than TRACK_NEAR_STAY_KM (5 km)
-    //     from HOME (the phone went somewhere — covers in-progress
-    //     trips that haven't reached an anchor yet).
-    // If neither, the data is consistent with "phone stayed home" or
-    // "logging was off" / "wrong device" — fall back to straight track.
-    // The two conditions are deliberately disjoint: nearness to HOME
-    // is NOT enough on its own (that's the trip-61 case — the phone
-    // logged all day at home without ever going on the trip).
+    // actually cover this trip.
+    //
+    // The strict gate is: at least one in-window ping must land within
+    // TRACK_NEAR_STAY_KM (5 km) of a stay/event anchor. If the phone
+    // never reached anywhere on the itinerary, the data isn't of this
+    // trip — even if it moved around (driving to unrelated places on
+    // those dates). That's the trip-61 case: primary roamed away from
+    // home on a non-trip errand but never went near the trip's stay.
+    //
+    // We relax the gate for in-progress trips only: if the trip is
+    // still happening (now is on or before TRIP_END's local day) AND
+    // at least one in-window ping is more than 5 km from HOME, we let
+    // it through. This covers an in-progress drive toward a distant
+    // sole anchor (trip 90) — the user can watch the polyline build
+    // in real time before reaching the destination. Once the trip's
+    // end day is past, the relaxation drops away: if no anchor was
+    // ever reached, the data was the wrong device or wrong period.
     const TRACK_NEAR_STAY_KM = 5;
     const radiusM = TRACK_NEAR_STAY_KM * 1000;
     const anchorCoords = [
@@ -2613,12 +2618,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     if (anchorCoords.length || homeValid) {
       const nearAnchor = anchorCoords.length > 0 && inWindow.some(p =>
         anchorCoords.some(c => distMeters([p.lat, p.lon], c) <= radiusM));
-      const movedFromHome = homeValid && inWindow.some(p =>
+      const tripInProgress = !!TRIP_END &&
+        new Date(TRIP_END + 'T23:59:59').getTime() >= Date.now();
+      const movedFromHome = tripInProgress && homeValid && inWindow.some(p =>
         distMeters([p.lat, p.lon], HOME) > radiusM);
       if (!nearAnchor && !movedFromHome) {
         trackLog(
-          `no GPS ping reached an anchor or left HOME — using straight track`,
-          { inWindowCount: inWindow.length, anchorCount: anchorCoords.length });
+          `no GPS ping reached an anchor (and trip is not in progress) — using straight track`,
+          { inWindowCount: inWindow.length, anchorCount: anchorCoords.length,
+            tripInProgress });
         return;
       }
     }
