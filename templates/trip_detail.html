@@ -2660,7 +2660,69 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
 
     const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);
-    const latlngs = sorted.map(p => [p.lat, p.lon]);
+
+    // Gap-fill the polyline with planned stops. When good GPS only covers
+    // part of the trip — because of a `bad_track_windows` entry or simply a
+    // stretch with no logged geos — the Leaflet polyline would otherwise
+    // draw a single straight line across the gap (last good ping → first
+    // good ping). Instead, for any period not covered by good pings, route
+    // the line through the trip's own anchors (stay nights, events,
+    // waypoints, family visits, and HOME at the trip edges) that fall
+    // chronologically inside that period, in time order.
+    //
+    // We reuse the same day-by-day morning→events→evening walk that builds
+    // the dashed "Straight route" overlay, but stamp each anchor with a
+    // timestamp so it can be sliced into a time gap. Anchors are injected
+    // for the leading gap (before the first good ping) and trailing gap
+    // (after the last) unconditionally — there the only candidate is
+    // usually HOME at the trip edge, which is coincident with the at-home
+    // boundary-pad ping for a well-tracked trip, so a normal trip is
+    // unaffected. Interior gaps only inject when the gap between two
+    // consecutive good pings is at least GAP_FILL_MIN_S, so routine sparse
+    // OwnTracks logging (idle hours at a campground, where the only anchors
+    // are that same campground location anyway) doesn't add detours.
+    const GAP_FILL_MIN_S = 90 * 60;
+    const routeStops = [];
+    function pushStop(tst, pt) {
+      if (tst == null || !pt) return;
+      const last = routeStops[routeStops.length - 1];
+      // Collapse consecutive same-coord anchors (e.g. a stay's evening and
+      // the next morning); keep the earlier tst for ordering.
+      if (last && pt[0] === last.ll[0] && pt[1] === last.ll[1]) return;
+      routeStops.push({ tst, ll: pt });
+    }
+    sortedDates.forEach(dateStr => {
+      pushStop(localEpoch(dateStr, '00:00'), morningLocation(dateStr));
+      mappedEvents
+        .filter(e => e.date === dateStr)
+        .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'))
+        .forEach(evt => pushStop(localEpoch(dateStr, evt.time || '12:00'),
+                                 [evt.lat, evt.lng]));
+      pushStop(localEpoch(dateStr, '23:59'), eveningLocation(dateStr));
+    });
+
+    const latlngs = [];
+    function pushLL(pt) {
+      const last = latlngs[latlngs.length - 1];
+      if (last && pt[0] === last[0] && pt[1] === last[1]) return;
+      latlngs.push(pt);
+    }
+    const firstTst = sorted[0].tst;
+    const lastTst = sorted[sorted.length - 1].tst;
+    routeStops.filter(s => s.tst < firstTst).forEach(s => pushLL(s.ll));
+    for (let i = 0; i < sorted.length; i += 1) {
+      pushLL([sorted[i].lat, sorted[i].lon]);
+      if (i + 1 < sorted.length) {
+        const a = sorted[i].tst, b = sorted[i + 1].tst;
+        if (b - a >= GAP_FILL_MIN_S) {
+          routeStops
+            .filter(s => s.tst > a && s.tst < b)
+            .forEach(s => pushLL(s.ll));
+        }
+      }
+    }
+    routeStops.filter(s => s.tst > lastTst).forEach(s => pushLL(s.ll));
+
     const gpsRouteLayer = L.layerGroup([
       L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
       L.polyline(latlngs, { color: '#002868', weight: 3, opacity: 0.9 }),
