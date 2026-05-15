@@ -326,43 +326,15 @@
     justify-content: flex-end;  /* match the shared modal: Delete (margin-right:auto) on the left, Cancel/Save on the right */
   }
 
-  .btn-add-event,
-  .btn-add-stay {
-    background: var(--white);
-    border: 1px solid var(--gray-light);
-    color: var(--gray);
-    padding: .4rem .9rem;
-    border-radius: 4px;
-    font-size: .8rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: border-color .2s, color .2s, background .2s;
-  }
-
-  .btn-add-event:hover,
-  .btn-add-stay:hover { border-color: var(--red); color: var(--red); }
-
-  /* .map-actions-row holds either .add-buttons (default) or #selection-toolbar
-     (in select-pings mode) — exactly one renders at a time, in natural flow,
-     so when the toolbar wraps to multiple lines on narrow viewports the
-     .ping-toggles checkbox row below it slides down to make room instead of
-     getting overlapped. The previous overlay approach kept the checkbox row
-     pinned but caused that collision; the count indicator that originally
-     drove the pin lives on .ping-toggles itself now, so its updates no longer
-     reflow this region. */
+  /* .map-actions-row now holds only #selection-toolbar (shown in
+     select-pings mode). The Add Campspot/Event/Waypoint/Family Visit
+     buttons that used to live here as .add-buttons moved into the
+     trip-header Actions ▾ dropdown. The toolbar renders in natural
+     flow so when it wraps on narrow viewports the .ping-toggles
+     checkbox row below it slides down instead of getting overlapped. */
   .map-actions-row {
     margin-bottom: .75rem;
   }
-  .add-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: .5rem;
-  }
-  /* Screen real estate is tight in select-pings mode — the selection toolbar
-     already replaces the Add buttons functionally (Event/Waypoint from
-     selection), so hide the standalone Add row entirely. */
-  body.map-selection-mode .add-buttons { display: none; }
   .ping-toggles {
     display: flex;
     flex-wrap: wrap;
@@ -371,7 +343,7 @@
     margin-bottom: 1.5rem;
   }
   /* Selection mode for GPS pings (admin only): when active, clicking a ping
-     toggles its selection, and a toolbar in .add-buttons offers to create
+     toggles its selection, and #selection-toolbar offers to create
      an event/waypoint from the selected pings. */
   .selection-mode-toggle {
     display: inline-flex;
@@ -385,10 +357,10 @@
   .selection-mode-toggle input { width: auto; margin: 0; }
   .selection-mode-toggle.disabled { opacity: .5; cursor: not-allowed; }
 
-  /* Sibling of .add-buttons inside .map-actions-row — only one is in flow at
-     a time. When the toolbar wraps on narrow screens it grows the row's
-     height, pushing .ping-toggles below it down naturally instead of
-     overlapping it. */
+  /* The only child of .map-actions-row now (the Add buttons moved to
+     the trip-header Actions ▾ menu). When the toolbar wraps on narrow
+     screens it grows the row's height, pushing .ping-toggles below it
+     down naturally instead of overlapping it. */
   .selection-toolbar {
     display: none;
     align-items: center;
@@ -486,52 +458,71 @@
 
   .trip-header .meta span { font-weight: 600; }
 
-  .trip-header .btn-delete-trip {
-    background: none;
-    border: none;
-    color: rgba(255,255,255,.6);
-    font-size: .75rem;
-    cursor: pointer;
-    padding: .25rem 0;
-    white-space: nowrap;
+  /* Admin-only "Actions ▾" dropdown in the trip header. Consolidates
+     every trip-level admin action (add campspot/event/waypoint/family
+     visit, track source, detect stops, delete trip) into one menu so
+     the header and map column stay uncluttered. The panel is
+     absolutely positioned inside the sticky .trip-header's stacking
+     context (z-index 500) and opens downward over the content below.
+     Available on every viewport — the previous desktop-only gate on
+     Detect Stops / Track Source is gone now that they're menu items. */
+  .trip-actions {
+    position: relative;
     flex-shrink: 0;
     align-self: center;
   }
-
-  .trip-header .btn-delete-trip:hover {
-    color: #fff;
-  }
-
-  /* "Detect Stops" / "Track Source" admin-only desktop-only header
-     actions. Sit next to Delete Trip. Hidden ≤700 px because the
-     modals they open are too dense for phone screens and both
-     workflows are admin-vetting that happens at a desk. */
-  .trip-header .btn-detect-stops,
-  .trip-header .btn-track-source {
+  .trip-actions .btn-trip-actions {
     background: none;
     border: 1px solid rgba(255,255,255,.4);
     color: rgba(255,255,255,.85);
     font-size: .75rem;
     cursor: pointer;
-    padding: .25rem .6rem;
+    padding: .3rem .7rem;
     border-radius: 4px;
     white-space: nowrap;
-    flex-shrink: 0;
-    align-self: center;
   }
-  .trip-header .btn-detect-stops:hover,
-  .trip-header .btn-track-source:hover {
+  .trip-actions .btn-trip-actions:hover { border-color: #fff; color: #fff; }
+  .trip-actions .btn-trip-actions[aria-expanded="true"] {
+    background: rgba(255,255,255,.15);
     border-color: #fff;
     color: #fff;
   }
-  .trip-header .btn-detect-stops:disabled,
-  .trip-header .btn-track-source:disabled {
-    opacity: .5;
-    cursor: wait;
+  .trip-actions-panel {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + .4rem);
+    min-width: 190px;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.18);
+    padding: .35rem;
+    z-index: 10;
   }
-  @media (max-width: 700px) {
-    .trip-header .btn-detect-stops,
-    .trip-header .btn-track-source { display: none; }
+  .trip-actions.open .trip-actions-panel { display: block; }
+  .trip-actions-panel button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    color: var(--gray);
+    font-size: .82rem;
+    font-weight: 600;
+    padding: .5rem .7rem;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .trip-actions-panel button:hover { background: #f4f4f6; color: var(--red); }
+  .trip-actions-panel button:disabled { opacity: .5; cursor: wait; }
+  .trip-actions-panel button.trip-actions-danger { color: #b00; }
+  .trip-actions-panel button.trip-actions-danger:hover { background: #fdeaea; color: #b00; }
+  .trip-actions-sep {
+    height: 1px;
+    background: var(--gray-light);
+    margin: .35rem .25rem;
   }
 
   /* Track Source modal: each row is a date + per-tid counts + a 3-way
@@ -592,7 +583,6 @@
       font-size: 1.5rem;
       padding: 0 .35rem;
     }
-    .trip-header .btn-delete-trip { font-size: .7rem; padding: .15rem 0; }
     .trip-header h1 .edit-btn { display: none; }
     .trip-header h1 { cursor: pointer; }
     .trip-note-edit { flex-wrap: wrap; gap: .35rem; }
@@ -717,7 +707,7 @@
 
     /* Select-pings / relocate / suppress aren't supported on phones — drag
        and lasso need a precise pointer. Hide the whole checkbox row (and
-       its sel-count tagalong) to declutter mobile; .add-buttons stays. */
+       its sel-count tagalong) to declutter mobile. */
     .ping-toggles { display: none; }
   }
 
@@ -1422,9 +1412,24 @@
     </div>
   </div>
   {% if is_admin %}
-  <button class="btn-track-source" id="btn-track-source" onclick="openTrackSource()" title="Choose which phone's GPS track to use per day">Track Source</button>
-  <button class="btn-detect-stops" id="btn-detect-stops" onclick="detectStops()" title="Scan GPS track for missing waypoints/events">Detect Stops</button>
-  <button class="btn-delete-trip" onclick="deleteTrip()">Delete Trip</button>
+  <div class="trip-actions" id="trip-actions">
+    <button type="button" class="btn-trip-actions" aria-haspopup="true" aria-expanded="false"
+            onclick="toggleTripActions(event)">Actions &#9662;</button>
+    <div class="trip-actions-panel" role="menu">
+      <button type="button" role="menuitem" onclick="tripAction(addStay)">+ Add Campspot</button>
+      <button type="button" role="menuitem" onclick="tripAction(addEvent)">+ Add Event</button>
+      <button type="button" role="menuitem" onclick="tripAction(addWaypoint)">+ Add Waypoint</button>
+      <button type="button" role="menuitem" onclick="tripAction(addFamilyVisit)">+ Add Family Visit</button>
+      <div class="trip-actions-sep"></div>
+      <button type="button" role="menuitem" onclick="tripAction(openTrackSource)"
+              title="Choose which phone's GPS track to use per day">Track Source</button>
+      <button type="button" role="menuitem" id="btn-detect-stops" onclick="tripAction(detectStops)"
+              title="Scan GPS track for missing waypoints/events">Detect Stops</button>
+      <div class="trip-actions-sep"></div>
+      <button type="button" role="menuitem" class="trip-actions-danger"
+              onclick="tripAction(deleteTrip)">Delete Trip</button>
+    </div>
+  </div>
   {% endif %}
   <div class="trip-nav">
     {% if next_trip_id %}<a href="/trips/{{ next_trip_id }}" title="Next trip">&#8250;</a>{% endif %}
@@ -1454,19 +1459,13 @@
       {% endif %}
 
       {% if is_admin %}
-      {# .map-actions-row holds .add-buttons and #selection-toolbar as
-         siblings in natural flow — exactly one is visible at a time, swapped
-         by body.map-selection-mode hiding the other. When the toolbar wraps
-         on a narrow viewport the .ping-toggles row below slides down with
-         it; the count indicator sits on .ping-toggles itself so its updates
-         never reflow this region. #}
+      {# .map-actions-row now holds only #selection-toolbar (visible in
+         select-pings mode). The Add Campspot/Event/Waypoint/Family
+         Visit buttons moved to the trip-header Actions ▾ menu. When the
+         toolbar wraps on a narrow viewport the .ping-toggles row below
+         slides down with it; the count indicator sits on .ping-toggles
+         itself so its updates never reflow this region. #}
       <div class="map-actions-row">
-        <div class="add-buttons">
-          <button class="btn-add-stay" onclick="addStay()">+ Add Campspot</button>
-          <button class="btn-add-event" onclick="addEvent()">+ Add Event</button>
-          <button class="btn-add-event" onclick="addWaypoint()">+ Add Waypoint</button>
-          <button class="btn-add-event" onclick="addFamilyVisit()">+ Add Family Visit</button>
-        </div>
         <div id="selection-toolbar" class="selection-toolbar">
           <button type="button" data-needs-selection disabled
                   onclick="createFromSelection('event')">+ Event from selection</button>
@@ -3096,6 +3095,46 @@ document.addEventListener('click', e => {
   if (!e.target.closest('.cg-autocomplete')) {
     document.querySelectorAll('.cg-dropdown.open').forEach(d => d.classList.remove('open'));
   }
+});
+
+// ── Trip-header "Actions ▾" dropdown ────────────────────────────────────────
+// Admin-only menu consolidating add-campspot/event/waypoint/family,
+// track source, detect stops, delete trip. The element only exists for
+// admins (Jinja-gated), so every handler no-ops gracefully otherwise.
+function toggleTripActions(e) {
+  if (e) e.stopPropagation();
+  const menu = document.getElementById('trip-actions');
+  if (!menu) return;
+  const open = menu.classList.toggle('open');
+  const trigger = menu.querySelector('.btn-trip-actions');
+  if (trigger) trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+function closeTripActions() {
+  const menu = document.getElementById('trip-actions');
+  if (!menu || !menu.classList.contains('open')) return;
+  menu.classList.remove('open');
+  const trigger = menu.querySelector('.btn-trip-actions');
+  if (trigger) trigger.setAttribute('aria-expanded', 'false');
+}
+
+// Close the menu first, then run the chosen action. Closing first keeps
+// the menu out of the way of any modal/confirm the action opens, and
+// for Detect Stops it leaves the (hidden) #btn-detect-stops element in
+// the DOM so detectStops()'s disable/enable logic still works.
+function tripAction(fn) {
+  closeTripActions();
+  if (typeof fn === 'function') fn();
+}
+
+// Outside-click and Escape both dismiss the menu. Click handler is
+// capture-phase-free (the trigger's onclick stopPropagation prevents
+// this from immediately re-closing it on the opening click).
+document.addEventListener('click', e => {
+  if (!e.target.closest('#trip-actions')) closeTripActions();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeTripActions();
 });
 
 function editTripNote() {
