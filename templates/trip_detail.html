@@ -2284,32 +2284,11 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     straightRouteLayer.addTo(map);
   }
 
-  // ── Auto trip-start/end time detection from GPS pings ───────────────────
-  // Helpers + detector for the home-card "· HH:MM (auto)" display. These
-  // are independent of polyline rendering — they only read raw pings to
-  // estimate when the user departed from / returned to home, then write
-  // the result into the home-card display spans. Manual overrides
-  // (HOME_START_TIME / HOME_END_TIME) take precedence and short-circuit
-  // the display update.
-  const HOME_TRIM_KM = 1.5;                  // outer "could be home" radius
-  const HOME_AT_HOME_CENTROID_M = 600;       // a within-radius run is at-home iff
-                                             // its centroid is within this of HOME;
-                                             // matches the start of the commercial
-                                             // zone around the host home so the
-                                             // full residential band classifies as
-                                             // at-home and only commercial-distance
-                                             // dwells count as near-home stops.
-                                             // Mirrors backend STOP_AT_HOME_CENTROID_M.
-  const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away minimum for a
-                                             // not-at-home streak to count as "the
-                                             // trip." Mirrors backend constant.
-  const HOME_BOUNDARY_ANCHOR_M = 5000;       // a qualifying not-at-home streak is
-                                             // "near the itinerary" if a ping comes
-                                             // within this of a stay/event anchor;
-                                             // anchor-aware streak selection then
-                                             // prefers it over a longer streak that
-                                             // never reached an anchor. Mirrors
-                                             // backend TRACK_NEAR_STAY_KM (5 km).
+  // ── Trip window padding ─────────────────────────────────────────────────
+  // The trip's home-departure / home-arrival tsts are computed server-side
+  // (_find_home_boundary_tsts) and arrive in the track payload; the frontend
+  // no longer recomputes them. computeTripWindow() below turns them (or the
+  // manual HOME_START_TIME / HOME_END_TIME overrides) into polyline cuts.
   const BOUNDARY_PAD_MAX_S = 90 * 60;        // the leaving/arriving-home pad ping
                                              // (one ping just outside the window)
                                              // is only added when it sits within
@@ -2376,140 +2355,6 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       else upperCut = localEpoch(addDaysISO(TRIP_END, 1), '00:00');
     }
     return { lowerCut, upperCut };
-  }
-  // ⚠ DUPLICATE LOGIC. _find_home_boundary_tsts() in ekko_trips_app.py
-  // computes the same trip-departure / trip-arrival notion for the
-  // Detect Stops feature using a different algorithm and its own
-  // constants. See "Stop Detection (Admin)" in CLAUDE.md for the
-  // alignment table. If you change behavior here, check the backend;
-  // if you change the backend, check here.
-  //
-  // HOME boundary detection (centroid algorithm — mirrors the backend's
-  // _find_home_boundary_tsts so the home card and Detect Stops agree on
-  // when the trip started / ended):
-  //
-  //   1. Filter rawPoints to the trip's local-date range; sort by tst.
-  //   2. Group consecutive within-(HOME_TRIM_KM) pings into near-home
-  //      runs. Tag each run AT_HOME iff its centroid is within
-  //      HOME_AT_HOME_CENTROID_M of HOME. Runs whose centroid sits
-  //      farther out (a coffee shop 1.2 km from home that happens to
-  //      fall inside the 1.5 km near-home radius) are *near-home stops*,
-  //      not home arrivals — they never bound the trip regardless of
-  //      duration. Pings outside HOME_TRIM_KM are NOT_AT_HOME by default.
-  //   3. Build maximal NOT_AT_HOME streaks (these absorb near-home
-  //      stops). Keep only streaks lasting HOME_BOUNDARY_LOCK_S or
-  //      longer — an out-and-back errand under an hour doesn't count.
-  //   4. Anchor-aware selection. If any qualifying streak has a ping
-  //      within HOME_BOUNDARY_ANCHOR_M of a trip anchor (stay/event/
-  //      family coord, passed in `anchors`), restrict to those near-
-  //      anchor streaks and pick the closest approach (ties → longest).
-  //      Otherwise fall back to the LONGEST qualifying streak — the
-  //      original behavior, identical when no anchor discriminates.
-  //      homeStartTst is the chosen streak's first NOT_AT_HOME ping;
-  //      homeEndTst is the first AT_HOME ping immediately after it (=
-  //      moment of arrival home). If no AT_HOME pings follow the
-  //      streak, homeEndTst falls back to the streak's last ping.
-  //
-  // The anchor step keeps a long same-day errand that never reached
-  // the itinerary from being mistaken for the trip when the real trip
-  // is a shorter excursion that does reach an anchor (trip 87). The
-  // longest-streak fallback still handles workday-before-trip and
-  // errand-after-arrival when those are shorter than the trip. Any
-  // AT_HOME run, even a single ping, bounds the streak — there is no
-  // merge-across-brief-at-home step. ⚠ This mirrors the backend
-  // _find_home_boundary_tsts exactly; change both together.
-  function findHomeBoundaryTimes(rawPoints, anchors) {
-    const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
-    const pts = [];
-    for (const p of rawPoints) {
-      if (TRIP_START && localDateOf(p.tst) < TRIP_START) continue;
-      if (TRIP_END && localDateOf(p.tst) > TRIP_END) continue;
-      pts.push(p);
-    }
-    pts.sort((a, b) => a.tst - b.tst);
-    const n = pts.length;
-    if (n === 0) return { homeStartTst: null, homeEndTst: null };
-
-    // Classify each ping. Walk consecutive within-radius runs; tag the
-    // whole run AT_HOME only if its centroid passes the test.
-    const atHome = new Array(n).fill(false);
-    let i = 0;
-    while (i < n) {
-      if (distMeters([pts[i].lat, pts[i].lon], HOME) > HOME_RADIUS_M) {
-        i += 1;
-        continue;
-      }
-      let j = i, sumLat = 0, sumLng = 0;
-      while (j < n && distMeters([pts[j].lat, pts[j].lon], HOME) <= HOME_RADIUS_M) {
-        sumLat += pts[j].lat;
-        sumLng += pts[j].lon;
-        j += 1;
-      }
-      const cnt = j - i;
-      const cDist = distMeters([sumLat / cnt, sumLng / cnt], HOME);
-      if (cDist <= HOME_AT_HOME_CENTROID_M) {
-        for (let k = i; k < j; k += 1) atHome[k] = true;
-      }
-      i = j;
-    }
-
-    // NOT_AT_HOME streaks; filter by minimum sustained-away duration.
-    const streaks = [];
-    let curStart = null;
-    for (let k = 0; k < n; k += 1) {
-      if (atHome[k]) {
-        if (curStart != null) { streaks.push([curStart, k - 1]); curStart = null; }
-      } else if (curStart == null) {
-        curStart = k;
-      }
-    }
-    if (curStart != null) streaks.push([curStart, n - 1]);
-
-    const qualified = streaks.filter(
-      ([s, e]) => pts[e].tst - pts[s].tst >= HOME_BOUNDARY_LOCK_S
-    );
-    if (!qualified.length) return { homeStartTst: null, homeEndTst: null };
-
-    // Anchor-aware selection (mirrors backend _find_home_boundary_tsts):
-    // closest-to-anchor among near-anchor streaks; else longest overall.
-    const anchorList = (anchors || []).filter(
-      a => a && Number.isFinite(a[0]) && Number.isFinite(a[1]));
-    const dur = se => pts[se[1]].tst - pts[se[0]].tst;
-    const minAnchorM = se => {
-      if (!anchorList.length) return Infinity;
-      let bestM = Infinity;
-      for (let k = se[0]; k <= se[1]; k += 1) {
-        for (const a of anchorList) {
-          const d = distMeters([pts[k].lat, pts[k].lon], a);
-          if (d < bestM) bestM = d;
-        }
-      }
-      return bestM;
-    };
-    const near = qualified.filter(se => minAnchorM(se) <= HOME_BOUNDARY_ANCHOR_M);
-    let best;
-    if (near.length) {
-      // Closest approach wins; ties broken by longer duration.
-      best = near[0];
-      let bestM = minAnchorM(best), bestDur = dur(best);
-      for (const se of near) {
-        const m = minAnchorM(se), d = dur(se);
-        if (m < bestM || (m === bestM && d > bestDur)) {
-          best = se; bestM = m; bestDur = d;
-        }
-      }
-    } else {
-      best = qualified[0];
-      let bestDur = dur(best);
-      for (const se of qualified) {
-        const d = dur(se);
-        if (d > bestDur) { best = se; bestDur = d; }
-      }
-    }
-    const [s, e] = best;
-    const homeStartTst = pts[s].tst;
-    const homeEndTst = e + 1 < n ? pts[e + 1].tst : pts[e].tst;
-    return { homeStartTst, homeEndTst };
   }
 
   // Populate the home cards' time display: manual override (rendered server-
@@ -2586,7 +2431,14 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
       return;
     }
-    const rawAll = Array.isArray(rawPoints) ? rawPoints : [];
+    // The track endpoint returns { points, home_auto_start_tst,
+    // home_auto_end_tst }. Legacy/degenerate responses (no token + no
+    // cache, or no trip dates) are still a bare [] array; the __error
+    // case above is an object with no `points`. Normalize all three.
+    const payloadObj = (rawPoints && !Array.isArray(rawPoints)
+      && Array.isArray(rawPoints.points)) ? rawPoints : null;
+    const rawAll = Array.isArray(rawPoints) ? rawPoints
+      : (payloadObj ? payloadObj.points : []);
     // Suppressed pings are kept out of the polyline / home-boundary detection
     // / regular per-point markers entirely; they're rendered separately as
     // gray "ghost" dots that the admin can toggle on via the "Show suppressed
@@ -2606,15 +2458,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const raw = rawAll.filter(p => !p.suppressed && !p.bad_window);
     const rawSuppressed = rawAll.filter(p => p.suppressed);
     const rawRelocated = rawAll.filter(p => p.relocated && !p.suppressed);
-    // Compute auto trip-start/end times before any short-circuits so the
-    // home-card display still updates even when the polyline is skipped.
-    let autoHomeStartTst = null, autoHomeEndTst = null;
-    if (raw.length) {
-      ({ homeStartTst: autoHomeStartTst, homeEndTst: autoHomeEndTst } =
-        findHomeBoundaryTimes(raw, [
-          ...mapped.map(s => [s.lat, s.lng]),
-          ...mappedEvents.map(ev => [ev.lat, ev.lng]),
-        ]));
+    // Trip-start/end times are computed server-side by
+    // _find_home_boundary_tsts and returned in the payload — the single
+    // source of truth (the frontend used to recompute this and could
+    // drift from the Python detector). A bare-array legacy/empty
+    // response carries no boundary; leave the server-rendered home-card
+    // time untouched in that case.
+    const autoHomeStartTst = payloadObj ? payloadObj.home_auto_start_tst : null;
+    const autoHomeEndTst = payloadObj ? payloadObj.home_auto_end_tst : null;
+    if (payloadObj) {
       if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', autoHomeStartTst);
       if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', autoHomeEndTst);
     }

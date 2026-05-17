@@ -1675,6 +1675,42 @@ def api_trip_track(trip_id):
         chosen.sort(key=lambda x: x.get("tst", 0))
         return chosen
 
+    def _build_response(all_points):
+        """Build the track JSON: the chosen/override-applied pings plus
+        the auto-detected home-boundary tsts.
+
+        The boundary is the single source of truth for the trip window
+        (polyline cuts) and the home-card "(auto)" time — the frontend
+        used to recompute it in JS, which risked drifting from the
+        Python detector. It's computed here on the same point view the
+        old client used: chosen pings with relocations applied,
+        suppressed + bad-window pings dropped, trimmed to the trip's
+        local-date range, then the shared `_find_home_boundary_tsts`
+        with the trip's anchors. Independent of `?admin=1` so every
+        viewer sees the same window."""
+        chosen = _select_chosen(all_points)
+        cleaned = []
+        for p in chosen:
+            tst = p.get("tst")
+            if tst is None or tst in suppressed:
+                continue
+            if _in_bad_track_window(tst, bad_windows):
+                continue
+            ov = relocations.get(tst)
+            if ov is not None:
+                p = {**p, "lat": ov[0], "lon": ov[1]}
+            cleaned.append(p)
+        cleaned = _filter_points_to_trip_window(
+            cleaned, trip["start"], trip["end"])
+        home, _fam = _map_config()
+        hs, he = _find_home_boundary_tsts(
+            cleaned, home, anchors=_anchors_for_trip(trip))
+        return jsonify({
+            "points": _apply_overrides(chosen),
+            "home_auto_start_tst": hs,
+            "home_auto_end_tst": he,
+        })
+
     def _serve_cache():
         with open(cache_file) as f:
             cached = json.load(f)
@@ -1683,7 +1719,7 @@ def api_trip_track(trip_id):
         if migrated or tz_changed:
             with open(cache_file, "w") as f:
                 json.dump(cached, f)
-        return jsonify(_apply_overrides(_select_chosen(cached)))
+        return _build_response(cached)
 
     if is_old and os.path.isfile(cache_file):
         return _serve_cache()
@@ -1728,7 +1764,7 @@ def api_trip_track(trip_id):
     _enrich_with_timezone(all_points)
     with open(cache_file, "w") as f:
         json.dump(all_points, f)
-    return jsonify(_apply_overrides(_select_chosen(all_points)))
+    return _build_response(all_points)
 
 
 # ── GPS-track stop detection ────────────────────────────────────────────────
@@ -1975,13 +2011,14 @@ def _find_home_boundary_tsts(points, home,
     when home isn't configured, no pings exist, or no away period meets
     `lock_seconds`.
 
-    ⚠ DUPLICATE LOGIC. The frontend's `findHomeBoundaryTimes()` in
-    templates/trip_detail.html computes the same notion (home card's
-    "(auto)" times) with the *same* algorithm — see the "Stop
-    Detection (Admin)" section in CLAUDE.md. Both use centroid-
-    classified at-home runs, the same anchor-aware streak selection
-    (below), and the aligned constants. Keep them in lockstep: a
-    change here must be mirrored there and vice versa.
+    SINGLE SOURCE OF TRUTH. This is the only home-boundary detector.
+    The trip-detail frontend used to recompute it in JS and could
+    drift from this; it now consumes the result instead. `api_trip_track`
+    calls this and returns `home_auto_start_tst` / `home_auto_end_tst`
+    in the track payload, which the frontend uses for both the polyline
+    window cuts and the home card's "(auto)" time. Detect-stops calls
+    it directly. If you change the algorithm, every consumer follows
+    automatically — there is no second implementation to keep in sync.
 
     Algorithm:
 
