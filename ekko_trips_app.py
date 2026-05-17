@@ -87,7 +87,11 @@ def _allowed_file(filename):
 
 
 def _photo_date_taken(filepath):
-    """Extract the date a photo was taken from EXIF data. Returns 'YYYY-MM-DD' or ''."""
+    """Extract when a photo was taken from EXIF data.
+
+    Returns 'YYYY-MM-DD HH:MM:SS' when a time is present, 'YYYY-MM-DD' when
+    only a date is available, or '' if there's no EXIF timestamp.
+    """
     try:
         from PIL import Image
         from PIL.ExifTags import Base as ExifBase
@@ -97,8 +101,11 @@ def _photo_date_taken(filepath):
         for tag in (ExifBase.DateTimeOriginal, ExifBase.DateTimeDigitized, ExifBase.DateTime):
             val = exif.get(tag)
             if val:
-                # EXIF dates are "YYYY:MM:DD HH:MM:SS"
-                return val.split(" ")[0].replace(":", "-")
+                # EXIF timestamps are "YYYY:MM:DD HH:MM:SS"
+                date_part, _, time_part = val.partition(" ")
+                date_str = date_part.replace(":", "-")
+                time_part = time_part.strip()
+                return f"{date_str} {time_part}" if time_part else date_str
     except Exception:
         pass
     return ""
