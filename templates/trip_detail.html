@@ -2303,6 +2303,27 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   const HOME_BOUNDARY_LOCK_S = 60 * 60;      // 1 hour sustained-away minimum for a
                                              // not-at-home streak to count as "the
                                              // trip." Mirrors backend constant.
+  const HOME_BOUNDARY_ANCHOR_M = 5000;       // a qualifying not-at-home streak is
+                                             // "near the itinerary" if a ping comes
+                                             // within this of a stay/event anchor;
+                                             // anchor-aware streak selection then
+                                             // prefers it over a longer streak that
+                                             // never reached an anchor. Mirrors
+                                             // backend TRACK_NEAR_STAY_KM (5 km).
+  const BOUNDARY_PAD_MAX_S = 90 * 60;        // the leaving/arriving-home pad ping
+                                             // (one ping just outside the window)
+                                             // is only added when it sits within
+                                             // this much time of the cut. With a
+                                             // tight manual home window the nearest
+                                             // outside ping can be hours/days away
+                                             // (trip 87: a 15:51 at-home blip and a
+                                             // next-morning 08:34 ping), which is
+                                             // not a boundary leg — it's a stale
+                                             // jump. Beyond this cap we skip the
+                                             // pad and let the HOME/anchor gap-fill
+                                             // draw the edge leg instead. Same
+                                             // "what counts as a real gap" notion
+                                             // as GAP_FILL_MIN_S.
   function distMeters(a, b) {
     const latKm = (a[0] - b[0]) * 111;
     const lngKm = (a[1] - b[1]) * 111 *
@@ -2378,18 +2399,26 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   //   3. Build maximal NOT_AT_HOME streaks (these absorb near-home
   //      stops). Keep only streaks lasting HOME_BOUNDARY_LOCK_S or
   //      longer — an out-and-back errand under an hour doesn't count.
-  //   4. Pick the LONGEST qualifying streak as the trip. homeStartTst
-  //      is its first NOT_AT_HOME ping; homeEndTst is the first
-  //      AT_HOME ping immediately after it (= moment of arrival home).
-  //      If no AT_HOME pings follow the streak, homeEndTst falls back
-  //      to the streak's last ping.
+  //   4. Anchor-aware selection. If any qualifying streak has a ping
+  //      within HOME_BOUNDARY_ANCHOR_M of a trip anchor (stay/event/
+  //      family coord, passed in `anchors`), restrict to those near-
+  //      anchor streaks and pick the closest approach (ties → longest).
+  //      Otherwise fall back to the LONGEST qualifying streak — the
+  //      original behavior, identical when no anchor discriminates.
+  //      homeStartTst is the chosen streak's first NOT_AT_HOME ping;
+  //      homeEndTst is the first AT_HOME ping immediately after it (=
+  //      moment of arrival home). If no AT_HOME pings follow the
+  //      streak, homeEndTst falls back to the streak's last ping.
   //
-  // Picking the LONGEST streak (vs. first or last) handles both a
-  // workday-before-trip on the start date AND an errand-after-arrival
-  // on the end date without any time-window heuristics. Any AT_HOME
-  // run, even a single ping, bounds the streak — there is no merge-
-  // across-brief-at-home step.
-  function findHomeBoundaryTimes(rawPoints) {
+  // The anchor step keeps a long same-day errand that never reached
+  // the itinerary from being mistaken for the trip when the real trip
+  // is a shorter excursion that does reach an anchor (trip 87). The
+  // longest-streak fallback still handles workday-before-trip and
+  // errand-after-arrival when those are shorter than the trip. Any
+  // AT_HOME run, even a single ping, bounds the streak — there is no
+  // merge-across-brief-at-home step. ⚠ This mirrors the backend
+  // _find_home_boundary_tsts exactly; change both together.
+  function findHomeBoundaryTimes(rawPoints, anchors) {
     const HOME_RADIUS_M = HOME_TRIM_KM * 1000;
     const pts = [];
     for (const p of rawPoints) {
@@ -2441,12 +2470,41 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     );
     if (!qualified.length) return { homeStartTst: null, homeEndTst: null };
 
-    // Longest qualifying streak = the trip.
-    let best = qualified[0];
-    let bestDur = pts[best[1]].tst - pts[best[0]].tst;
-    for (const se of qualified) {
-      const dur = pts[se[1]].tst - pts[se[0]].tst;
-      if (dur > bestDur) { best = se; bestDur = dur; }
+    // Anchor-aware selection (mirrors backend _find_home_boundary_tsts):
+    // closest-to-anchor among near-anchor streaks; else longest overall.
+    const anchorList = (anchors || []).filter(
+      a => a && Number.isFinite(a[0]) && Number.isFinite(a[1]));
+    const dur = se => pts[se[1]].tst - pts[se[0]].tst;
+    const minAnchorM = se => {
+      if (!anchorList.length) return Infinity;
+      let bestM = Infinity;
+      for (let k = se[0]; k <= se[1]; k += 1) {
+        for (const a of anchorList) {
+          const d = distMeters([pts[k].lat, pts[k].lon], a);
+          if (d < bestM) bestM = d;
+        }
+      }
+      return bestM;
+    };
+    const near = qualified.filter(se => minAnchorM(se) <= HOME_BOUNDARY_ANCHOR_M);
+    let best;
+    if (near.length) {
+      // Closest approach wins; ties broken by longer duration.
+      best = near[0];
+      let bestM = minAnchorM(best), bestDur = dur(best);
+      for (const se of near) {
+        const m = minAnchorM(se), d = dur(se);
+        if (m < bestM || (m === bestM && d > bestDur)) {
+          best = se; bestM = m; bestDur = d;
+        }
+      }
+    } else {
+      best = qualified[0];
+      let bestDur = dur(best);
+      for (const se of qualified) {
+        const d = dur(se);
+        if (d > bestDur) { best = se; bestDur = d; }
+      }
     }
     const [s, e] = best;
     const homeStartTst = pts[s].tst;
@@ -2553,7 +2611,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     let autoHomeStartTst = null, autoHomeEndTst = null;
     if (raw.length) {
       ({ homeStartTst: autoHomeStartTst, homeEndTst: autoHomeEndTst } =
-        findHomeBoundaryTimes(raw));
+        findHomeBoundaryTimes(raw, [
+          ...mapped.map(s => [s.lat, s.lng]),
+          ...mappedEvents.map(ev => [ev.lat, ev.lng]),
+        ]));
       if (TRIP_START && !HOME_START_TIME) updateHomeTimeDisplay('start', autoHomeStartTst);
       if (TRIP_END && !HOME_END_TIME) updateHomeTimeDisplay('end', autoHomeEndTst);
     }
@@ -2647,7 +2708,13 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
           beforeLower = p;
         }
       }
-      if (beforeLower) inWindow.push(beforeLower);
+      // Only pad when the ping is close enough in time to the cut to be a
+      // genuine "leaving home" leg. A far-away nearest-outside ping (tight
+      // manual window with at-home gaps) would otherwise draw a long stale
+      // jump; the leading HOME/anchor gap-fill covers that edge instead.
+      if (beforeLower && lowerCut - beforeLower.tst <= BOUNDARY_PAD_MAX_S) {
+        inWindow.push(beforeLower);
+      }
     }
     if (upperCut != null) {
       let afterUpper = null;
@@ -2656,7 +2723,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
           afterUpper = p;
         }
       }
-      if (afterUpper) inWindow.push(afterUpper);
+      if (afterUpper && afterUpper.tst - upperCut <= BOUNDARY_PAD_MAX_S) {
+        inWindow.push(afterUpper);
+      }
     }
 
     const sorted = inWindow.slice().sort((a, b) => a.tst - b.tst);

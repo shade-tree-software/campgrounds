@@ -1967,7 +1967,9 @@ def _detect_stops(points,
 def _find_home_boundary_tsts(points, home,
                              home_radius_m=STOP_NEAR_HOME_M,
                              at_home_centroid_m=STOP_AT_HOME_CENTROID_M,
-                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S):
+                             lock_seconds=STOP_HOME_BOUNDARY_LOCK_S,
+                             anchors=None,
+                             anchor_radius_m=TRACK_NEAR_STAY_KM * 1000):
     """Return (home_departure_tst, home_arrival_tst) — when the user
     left HOME for the trip and when they returned. Either may be None
     when home isn't configured, no pings exist, or no away period meets
@@ -1975,13 +1977,11 @@ def _find_home_boundary_tsts(points, home,
 
     ⚠ DUPLICATE LOGIC. The frontend's `findHomeBoundaryTimes()` in
     templates/trip_detail.html computes the same notion (home card's
-    "(auto)" times) with a *different* algorithm — see the "Stop
-    Detection (Admin)" section in CLAUDE.md. The two have diverged:
-    this implementation uses centroid-classified at-home runs and picks
-    the longest qualifying away streak; the frontend still uses the
-    strict HOME_EXACT_RADIUS_M walk-backward-from-end approach. They
-    can disagree on trip end when the arrival pings sit just outside
-    HOME_EXACT_RADIUS_M (≈30 m) but within HOME_TRIM_KM.
+    "(auto)" times) with the *same* algorithm — see the "Stop
+    Detection (Admin)" section in CLAUDE.md. Both use centroid-
+    classified at-home runs, the same anchor-aware streak selection
+    (below), and the aligned constants. Keep them in lockstep: a
+    change here must be mirrored there and vice versa.
 
     Algorithm:
 
@@ -1997,11 +1997,26 @@ def _find_home_boundary_tsts(points, home,
          stops). Filter to streaks lasting `lock_seconds` (1 hr) or
          longer — a brief out-and-back errand doesn't qualify as the
          trip.
-      4. Pick the LONGEST qualifying streak as the trip.
-         `home_departure_tst` = its first NOT_AT_HOME ping.
+      4. Anchor-aware selection. If any qualifying streak has a ping
+         within `anchor_radius_m` of a trip anchor (a stay/event/
+         family location, passed in `anchors`), restrict the candidate
+         set to those near-anchor streaks and pick the one whose
+         closest approach to an anchor is smallest (ties → longest).
+         Otherwise — no anchors given, or no streak ever reached the
+         itinerary — fall back to the LONGEST qualifying streak, which
+         is the original behavior, byte-for-byte. `home_departure_tst`
+         = the chosen streak's first NOT_AT_HOME ping;
          `home_arrival_tst` = the first AT_HOME ping immediately after
          it (the moment the user got home). If no AT_HOME pings follow
          the streak, fall back to the streak's last ping.
+
+    The anchor step exists because "longest streak" alone mistakes a
+    long same-day errand that never went to the itinerary for the
+    trip, while the real trip is a shorter excursion that does reach
+    an anchor (trip 87: an ~8.5 hr daytime errand ~9 km from home vs.
+    the ~4 hr evening drive to a fireworks event 39 km out). It is a
+    strict superset: when no anchor discriminates, output is identical
+    to the old longest-streak rule.
 
     Any AT_HOME run — even a single ping — bounds the streak. There is
     no merge-across-brief-at-home-dwell step (a previous version
@@ -2009,10 +2024,11 @@ def _find_home_boundary_tsts(points, home,
     real arrival home followed by an afternoon errand to be missed
     because the algorithm picked the errand instead of the trip).
 
-    Picking the LONGEST streak (vs. first or last) handles both the
+    The longest-streak fallback (vs. first or last) still handles the
     workday-before-trip case (the workday is shorter than the trip)
     and the errand-after-arrival case (the errand is shorter than the
-    trip), without needing time-window heuristics."""
+    trip) without time-window heuristics; the anchor step in 4 sits in
+    front of it for the case those size assumptions don't hold."""
     if not home or home[0] is None or home[1] is None:
         return None, None
     home_lat, home_lng = home[0], home[1]
@@ -2073,10 +2089,39 @@ def _find_home_boundary_tsts(points, home,
     if not qualified:
         return None, None
 
-    # 4. Longest qualifying streak is the trip.
-    main_s, main_e = max(
-        qualified, key=lambda se: pts[se[1]]["tst"] - pts[se[0]]["tst"]
-    )
+    # 4. Anchor-aware selection. For each qualifying streak, find its
+    # closest approach (in metres) to any trip anchor. If at least one
+    # streak comes within anchor_radius_m of an anchor, restrict the
+    # candidate set to those and pick the closest (ties → longest);
+    # otherwise fall back to the longest qualifying streak, which is
+    # exactly the original behavior. Degrades to longest-streak when
+    # `anchors` is empty/None, so callers that don't care are unaffected.
+    anchor_list = [(a[0], a[1]) for a in (anchors or [])
+                   if a and a[0] is not None and a[1] is not None]
+
+    def _streak_min_anchor_m(se):
+        if not anchor_list:
+            return float("inf")
+        best = float("inf")
+        for k in range(se[0], se[1] + 1):
+            for a_lat, a_lng in anchor_list:
+                d = _haversine_m(pts[k]["lat"], pts[k]["lon"], a_lat, a_lng)
+                if d < best:
+                    best = d
+        return best
+
+    def _dur(se):
+        return pts[se[1]]["tst"] - pts[se[0]]["tst"]
+
+    near = [se for se in qualified
+            if _streak_min_anchor_m(se) <= anchor_radius_m]
+    if near:
+        # Closest approach wins; ties broken by longer duration.
+        main_s, main_e = min(
+            near, key=lambda se: (_streak_min_anchor_m(se), -_dur(se))
+        )
+    else:
+        main_s, main_e = max(qualified, key=_dur)
     home_departure_tst = pts[main_s]["tst"]
     home_arrival_tst = (pts[main_e + 1]["tst"]
                         if main_e + 1 < n else pts[main_e]["tst"])
@@ -2716,7 +2761,8 @@ def api_detect_stops(trip_id):
     # and slip through. Clusters fully before departure or fully after
     # arrival are dropped: end_tst < departure → pre-trip;
     # start_tst > arrival → post-trip.
-    home_departure_tst, home_arrival_tst = _find_home_boundary_tsts(points, home)
+    home_departure_tst, home_arrival_tst = _find_home_boundary_tsts(
+        points, home, anchors=_anchors_for_trip(trip))
     home_tz_name = None
     if home and home[0] is not None and home[1] is not None:
         home_tz_name = _tz_for_coord(home[0], home[1])
