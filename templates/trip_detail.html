@@ -2048,6 +2048,18 @@ const TRIP_END = {{ trip.end | tojson }};
 const HOME_START_TIME = {{ trip.home_start_time | tojson }};
 const HOME_END_TIME = {{ trip.home_end_time | tojson }};
 
+// Point the Calendar/List nav links at this trip's year. The calendar/list
+// page reads the year from the URL hash (#YYYY) and clamps it to its valid
+// range, so an out-of-range or absent year degrades to that page's default.
+(function linkNavToTripYear() {
+  const year = (TRIP_START || '').slice(0, 4);
+  if (!/^\d{4}$/.test(year)) return;  // empty trips have no date range
+  for (const id of ['nav-calendar', 'nav-list']) {
+    const a = document.getElementById(id);
+    if (a) a.href = a.href.split('#')[0] + '#' + year;
+  }
+})();
+
 // Per-trip, per-tab map view (center + zoom). Captured on every page unload
 // AND consulted on load — but only when the reload was a programmatic one
 // (suppress / relocate / set campsite / event from selection / etc.). A
