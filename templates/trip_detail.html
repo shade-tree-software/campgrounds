@@ -1517,7 +1517,7 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time }}{% endif %}</span></div>
+        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
@@ -1681,7 +1681,7 @@
             {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
             &mdash;
           {% endif %}
-          {{ item.date }}{% if item.time %} {{ item.time }}{% if item.end_time %}&ndash;{{ item.end_time }}{% endif %}{% endif %}
+          {{ item.date }}{% if item.time %} {{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% endif %}
         </div>
         {# Bare waypoint cards hide .event-body, so render description inline here.
            Non-bare cards still render description inside .event-body below. #}
@@ -1824,7 +1824,7 @@
       </div>
       <div class="event-info">
         <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time }}{% endif %}</span></div>
+        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
@@ -2317,7 +2317,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   }
   function formatHM(tst) {
     const d = new Date(tst * 1000);
-    return String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+    const h = d.getHours();
+    const suffix = h < 12 ? 'AM' : 'PM';
+    const h12 = h % 12 || 12;
+    return h12 + ':' + String(d.getMinutes()).padStart(2, '0') + ' ' + suffix;
   }
   // Build a browser-local epoch (seconds) for "YYYY-MM-DD" + "HH:MM".
   // Used to bound the trip window when filtering pings; tz-aware

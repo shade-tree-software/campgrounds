@@ -24,6 +24,27 @@ app.url_map.strict_slashes = False
 app.jinja_env.policies['json.dumps_kwargs'] = {'sort_keys': False}
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
 
+
+@app.template_filter('to12h')
+def _to12h(value):
+    """Format a stored 24-hour 'HH:MM' time string as 12-hour 'h:MM AM/PM'.
+
+    Returns the input unchanged if it isn't a parseable HH:MM string so
+    blank/legacy values pass through harmlessly.
+    """
+    if not value or ":" not in str(value):
+        return value
+    try:
+        h, m = str(value).split(":")[:2]
+        h, m = int(h), int(m)
+        if not (0 <= h < 24 and 0 <= m < 60):
+            return value
+    except (ValueError, TypeError):
+        return value
+    suffix = "AM" if h < 12 else "PM"
+    h12 = h % 12 or 12
+    return f"{h12}:{m:02d} {suffix}"
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
