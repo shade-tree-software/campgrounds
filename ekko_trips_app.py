@@ -1838,8 +1838,7 @@ STOP_NEAR_HOME_M = 1500           # "near HOME" radius used by
                                   # centroids, so a stop 800 m from home
                                   # that happens mid-trip (after
                                   # departure, before arrival) is still
-                                  # a valid suggestion. Matches the
-                                  # frontend's HOME_TRIM_KM.
+                                  # a valid suggestion.
 STOP_AT_HOME_CENTROID_M = 600     # consecutive within-NEAR_HOME pings
                                   # are grouped into a "near-home run"
                                   # and tagged at-home iff the run's
@@ -1863,8 +1862,7 @@ STOP_HOME_BOUNDARY_LOCK_S = 3600  # sustained-away duration that confirms
                                   # A brief at-Starbucks errand on trip
                                   # morning doesn't qualify; the actual
                                   # departure (where the user stays away
-                                  # from home for >=1 hr) does. Mirrors
-                                  # the frontend's HOME_BOUNDARY_LOCK_S.
+                                  # from home for >=1 hr) does.
 
 
 def _haversine_m(lat1, lng1, lat2, lng2):
