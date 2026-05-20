@@ -1987,6 +1987,52 @@ def _detect_stops(points,
          and p.get("tst") is not None),
         key=lambda p: p["tst"],
     )
+    # Collapse same-tst pings into one representative. Two readings
+    # sharing one second — typically a phone emitting a stationary fix
+    # and a stale "still moving" fix at the same wall-clock instant —
+    # used to break the cluster walker: each ping must be within
+    # cluster_radius_m of the running centroid, so a noisy duplicate
+    # offset by a few hundred meters reset the cluster and isolated
+    # the good neighbors on either side in time.
+    #
+    # Selection rule: pick the ping in the group whose distance to its
+    # nearest unique-tst neighbor (previous or next) is smallest.
+    # When duplicates straddle a stop boundary, one reading is close
+    # to the surrounding stationary cluster and the other is the "in
+    # transit" outlier; min-distance-to-neighbor picks the one that
+    # aligns with the cluster. Arithmetic mean was tried first but
+    # landed the centroid in between the two readings — for trip 19's
+    # 14:39 stop that meant 264 m from the actual stop position, just
+    # outside the 200 m radius, and the cluster still didn't form.
+    if pts:
+        deduped = []
+        i = 0
+        while i < len(pts):
+            j = i
+            while j + 1 < len(pts) and pts[j + 1]["tst"] == pts[i]["tst"]:
+                j += 1
+            group = pts[i:j + 1]
+            if len(group) == 1:
+                deduped.append(group[0])
+            else:
+                prev_p = deduped[-1] if deduped else None
+                next_p = pts[j + 1] if j + 1 < len(pts) else None
+                best = group[0]
+                best_d = float("inf")
+                for p in group:
+                    d = float("inf")
+                    if prev_p is not None:
+                        d = min(d, _haversine_m(p["lat"], p["lon"],
+                                                prev_p["lat"], prev_p["lon"]))
+                    if next_p is not None:
+                        d = min(d, _haversine_m(p["lat"], p["lon"],
+                                                next_p["lat"], next_p["lon"]))
+                    if d < best_d:
+                        best_d = d
+                        best = p
+                deduped.append(best)
+            i = j + 1
+        pts = deduped
     stops = []
     cur = None
 
