@@ -2520,6 +2520,25 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
     driveway coords). `trip` must be enriched via
     `enrich_trip_locations` so stays/events carry lat/lng.
 
+    Stay and event anchors are *date-bounded*: a cluster is only
+    suppressed by a stay/event whose own date range overlaps the
+    cluster's local-date range. This lets the same physical location
+    surface as a separate suggestion when it's visited on two
+    different days of the trip and only one of those visits has an
+    event recorded — e.g., trip 19 stopped near "Lake Rowena" on Sept
+    29 and again on Oct 1; the Oct 1 visit is captured as an event,
+    so the Sept 29 cluster used to be dropped by the same anchor
+    even though it represents an unrecorded stop. Cluster local
+    dates are derived from `start_tst`/`end_tst` via the cluster's
+    `tz` (IANA zone at the recording location). Stay range is
+    `[start, end]` inclusive; event range is `[date, end_date or
+    date]` inclusive.
+
+    Family locations have no inherent date (they live in
+    campgrounds.json, not on the trip), so they remain date-agnostic
+    anchors — a near-pass to a family house always suppresses the
+    cluster regardless of which day it happened.
+
     HOME is treated specially: clusters whose centroid is within
     `home_radius_m` (default `STOP_AT_HOME_CENTROID_M` = 600 m) of HOME
     are dropped. That's the same residential-band threshold the
@@ -2534,21 +2553,74 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
     km from home that's inside the 1.5 km near-home radius — are
     still fair game when they fall inside the inferred trip window;
     those are near-home stops, not home dwell."""
-    anchors = []
+    def _iso_to_date(s):
+        if not s:
+            return None
+        try:
+            return datetime.fromisoformat(s).date()
+        except Exception:
+            return None
+
+    dated_anchors = []  # (lat, lng, start_date, end_date) — inclusive
     for s in trip.get("stays", []):
-        if s.get("lat") is not None and s.get("lng") is not None:
-            anchors.append((s["lat"], s["lng"]))
+        if s.get("lat") is None or s.get("lng") is None:
+            continue
+        sd = _iso_to_date(s.get("start"))
+        if sd is None:
+            continue
+        ed = _iso_to_date(s.get("end")) or sd
+        if ed < sd:
+            ed = sd
+        dated_anchors.append((s["lat"], s["lng"], sd, ed))
     for e in trip.get("events", []):
-        if e.get("lat") is not None and e.get("lng") is not None:
-            anchors.append((e["lat"], e["lng"]))
+        if e.get("lat") is None or e.get("lng") is None:
+            continue
+        sd = _iso_to_date(e.get("date"))
+        if sd is None:
+            continue
+        ed = _iso_to_date(e.get("end_date")) or sd
+        if ed < sd:
+            ed = sd
+        dated_anchors.append((e["lat"], e["lng"], sd, ed))
+
+    date_agnostic_anchors = []
     for fam in family_locations:
         if fam.get("lat") is not None and fam.get("lng") is not None:
-            anchors.append((fam["lat"], fam["lng"]))
+            date_agnostic_anchors.append((fam["lat"], fam["lng"]))
         if fam.get("driveway_lat") is not None and fam.get("driveway_lng") is not None:
-            anchors.append((fam["driveway_lat"], fam["driveway_lng"]))
+            date_agnostic_anchors.append((fam["driveway_lat"], fam["driveway_lng"]))
 
     home_lat = home[0] if home and home[0] is not None else None
     home_lng = home[1] if home and home[1] is not None else None
+
+    try:
+        from zoneinfo import ZoneInfo
+    except Exception:
+        ZoneInfo = None
+
+    def _cluster_date_range(c):
+        tz_name = c.get("tz") or "UTC"
+        tz = None
+        if ZoneInfo:
+            try:
+                tz = ZoneInfo(tz_name)
+            except Exception:
+                tz = None
+
+        def _to_local_date(tst):
+            utc = datetime.utcfromtimestamp(tst)
+            if tz is not None:
+                try:
+                    return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(tz).date()
+                except Exception:
+                    pass
+            return utc.date()
+
+        sd = _to_local_date(c["start_tst"])
+        ed = _to_local_date(c["end_tst"])
+        if ed < sd:
+            ed = sd
+        return sd, ed
 
     out = []
     for c in stops:
@@ -2557,10 +2629,18 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                             home_lat, home_lng) < home_radius_m:
                 continue
         too_close = False
-        for a_lat, a_lng in anchors:
+        for a_lat, a_lng in date_agnostic_anchors:
             if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
                 too_close = True
                 break
+        if not too_close and dated_anchors:
+            c_start, c_end = _cluster_date_range(c)
+            for a_lat, a_lng, a_start, a_end in dated_anchors:
+                if a_end < c_start or a_start > c_end:
+                    continue
+                if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
+                    too_close = True
+                    break
         if not too_close:
             out.append(c)
     return out
