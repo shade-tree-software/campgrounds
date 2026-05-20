@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import shutil
 import sys
 from datetime import date, datetime, time as dt_time, timedelta
@@ -1431,10 +1432,81 @@ _US_STATE_ABBR = {
 }
 
 
+_BARE_NUMBER_NAME_RE = re.compile(r'\d[\d\-\s]*[A-Za-z]?')
+
+
+def _looks_like_bare_number(s):
+    """True for strings that are essentially just a street-address number
+    with no street name — e.g. "1234", "123 45", "1234-A". These come up
+    when Nominatim reverse-resolves onto a numbered building footprint
+    whose only name tag is its house number; the result is unhelpful as
+    a stop label so we'd rather use a nearby POI."""
+    s = (s or "").strip()
+    if not s or not s[0].isdigit():
+        return False
+    return bool(_BARE_NUMBER_NAME_RE.fullmatch(s))
+
+
+def _nominatim_nearest_poi(lat, lng):
+    """Reverse-geocode restricted to POI features (Nominatim `layer=poi`).
+    Returns {name, lat, lng, distance_m} for the nearest named POI or
+    None if Nominatim has no POI in range or the call fails. Used as a
+    fallback when the default reverse hit is a road or a bare number."""
+    try:
+        import urllib.request
+        url = (
+            "https://nominatim.openstreetmap.org/reverse"
+            f"?format=json&lat={lat}&lon={lng}"
+            "&zoom=18&namedetails=1&layer=poi"
+        )
+        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read())
+        if "error" in data:
+            return None
+        names = data.get("namedetails", {}) or {}
+        name = (names.get("name") or data.get("name") or "").strip()
+        if not name:
+            name = (data.get("display_name") or "").split(",", 1)[0].strip()
+        try:
+            poi_lat = float(data.get("lat"))
+            poi_lng = float(data.get("lon"))
+        except (TypeError, ValueError):
+            return None
+        return {
+            "name": name,
+            "lat": poi_lat,
+            "lng": poi_lng,
+            "distance_m": _haversine_m(lat, lng, poi_lat, poi_lng),
+        }
+    except Exception:
+        return None
+
+
+# Max distance (meters) a POI fallback hit can be from the stop centroid
+# for us to substitute it for the primary reverse-geocode name. Sized for
+# a typical strip-mall / gas-station parking lot: the centroid lands a
+# few dozen meters from the building, occasionally further. Tighter
+# values miss real cases; looser risks picking a neighboring business
+# instead of the one the user actually visited.
+POI_FALLBACK_MAX_M = 150
+
+
 def _reverse_geocode(lat, lng):
     """Reverse-geocode coords via Nominatim. Returns
     {name, locale, state, display_name} or an empty-strings dict on failure.
-    Shared by /api/reverse-geocode and the stop-detection endpoint."""
+    Shared by /api/reverse-geocode and the stop-detection endpoint.
+
+    Name selection: prefer a real POI/feature name. If the default
+    reverse hit is a road (Nominatim `class=highway`) or a bare
+    house-address number with no street, do a second reverse call
+    restricted to `layer=poi` and substitute that POI's name when it
+    sits within `POI_FALLBACK_MAX_M` of the stop centroid. The second
+    call only fires when the first result is unhelpful, so most
+    invocations stay at one Nominatim request. Caller (frontend's
+    detect-stops loop) throttles to 1 req/sec; a one-second sleep
+    between the two server-side calls keeps cadence at the same rate
+    when the fallback fires."""
     try:
         import urllib.request
         # zoom=18 ≈ building-level; addressdetails surfaces the
@@ -1457,6 +1529,19 @@ def _reverse_geocode(lat, lng):
         if not name:
             disp = (data.get("display_name") or "").split(",", 1)[0].strip()
             name = disp
+        primary_class = (data.get("class") or "").strip()
+        if primary_class == "highway" or _looks_like_bare_number(name):
+            # Stay under Nominatim's 1 req/sec policy when the fallback
+            # fires — the caller's loop throttles to 1 req/sec between
+            # stops, so without an internal pause two back-to-back hits
+            # could come in under a second.
+            import time
+            time.sleep(1.0)
+            poi = _nominatim_nearest_poi(lat, lng)
+            if (poi and poi["name"]
+                    and not _looks_like_bare_number(poi["name"])
+                    and poi["distance_m"] <= POI_FALLBACK_MAX_M):
+                name = poi["name"]
         # Locale: drop down the admin hierarchy until something matches.
         locale = (addr.get("city") or addr.get("town") or addr.get("village")
                   or addr.get("hamlet") or addr.get("municipality")
