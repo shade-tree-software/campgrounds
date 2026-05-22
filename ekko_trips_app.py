@@ -1908,6 +1908,37 @@ STOP_CLUSTER_RADIUS_M = 200       # max distance from a cluster's running
                                   # consecutive-in-time constraint plus the
                                   # 4-minute minimum keep that risk low.
 STOP_MIN_MINUTES = 4              # cluster span must reach this to qualify
+STOP_BRIEF_MIN_MINUTES = 3        # relaxed floor for clusters bracketed
+                                  # by fast-moving pings on both sides
+                                  # (see STOP_BRIEF_BOUNDARY_KMH). Trip
+                                  # 17, 8/24: a real ~3 min rest-stop
+                                  # surfaced only two pings 138 m apart,
+                                  # so the cluster's measured span sits
+                                  # right at the floor; without the
+                                  # brief-cluster carve-out the floor
+                                  # had to be raised across the board
+                                  # to catch it, which surfaced lots of
+                                  # slow-traffic noise. The carve-out
+                                  # keeps the 4 min default for ambient
+                                  # clusters and only relaxes when the
+                                  # surrounding speed evidence makes the
+                                  # stop unambiguous.
+STOP_BRIEF_BOUNDARY_KMH = 30      # min km/h between the cluster centroid
+                                  # and the immediately adjacent prev/
+                                  # next out-of-cluster pings for a
+                                  # brief (<STOP_MIN_MINUTES) cluster to
+                                  # qualify. 30 km/h is comfortably
+                                  # above urban-creep / heavy-traffic
+                                  # speeds (which can produce 3 min,
+                                  # 2 ping clusters at red lights) but
+                                  # well below normal driving — any real
+                                  # arrival from / departure to a road
+                                  # clears it easily. Clusters at the
+                                  # very start or end of the trip have
+                                  # no neighbor on one side; that side
+                                  # is treated as passing (a 3 min stop
+                                  # at the trip's first ping is still a
+                                  # real stop).
 STOP_DWELL_GAP_RADIUS_M = 500     # secondary join radius, applied only
                                   # when the next ping arrives
                                   # ≥STOP_MIN_MINUTES after the cluster's
@@ -2079,6 +2110,8 @@ def _load_trip_track_for_detection(trip_id):
 def _detect_stops(points,
                   cluster_radius_m=STOP_CLUSTER_RADIUS_M,
                   min_stop_minutes=STOP_MIN_MINUTES,
+                  brief_min_minutes=STOP_BRIEF_MIN_MINUTES,
+                  brief_boundary_kmh=STOP_BRIEF_BOUNDARY_KMH,
                   dwell_gap_radius_m=STOP_DWELL_GAP_RADIUS_M):
     """Walk pings in time order, group them into clusters where every
     ping is within `cluster_radius_m` of the cluster's running centroid.
@@ -2092,6 +2125,15 @@ def _detect_stops(points,
     even though nothing moved. The time-gap requirement keeps the wider
     radius from absorbing moving pings: at any drivable speed, the next
     ping after `min_stop_minutes` is well past `dwell_gap_radius_m`.
+
+    Brief-cluster exception: clusters whose span is in
+    `[brief_min_minutes, min_stop_minutes)` still qualify if both
+    adjacent out-of-cluster pings imply ≥`brief_boundary_kmh` of travel
+    from the cluster centroid. A real ~3 min rest-stop is bracketed by
+    fast highway pings; an apparent ~3 min "stop" in stop-and-go
+    traffic is bracketed by slow nearby pings and fails the gate. At
+    the very first/last cluster of the trip there's no neighbor on one
+    side; that side passes by default.
 
     Consecutive-in-time only: the same physical location visited twice
     on the same trip produces two clusters, which is the right behavior
@@ -2152,11 +2194,34 @@ def _detect_stops(points,
     stops = []
     cur = None
 
+    def _boundary_speed_ok(c):
+        c_lat = c["sum_lat"] / c["count"]
+        c_lng = c["sum_lng"] / c["count"]
+
+        def _ok(neighbor_idx, neighbor_tst):
+            if neighbor_idx is None:
+                return True
+            n = pts[neighbor_idx]
+            dt = abs(neighbor_tst - n["tst"])
+            if dt <= 0:
+                return False
+            dm = _haversine_m(c_lat, c_lng, n["lat"], n["lon"])
+            return (dm / dt) * 3.6 >= brief_boundary_kmh
+
+        prev_idx = c["start_idx"] - 1 if c["start_idx"] > 0 else None
+        next_idx = c["end_idx"] + 1 if c["end_idx"] + 1 < len(pts) else None
+        return _ok(prev_idx, c["start_tst"]) and _ok(next_idx, c["end_tst"])
+
     def _close(c):
         if not c:
             return
         dur_min = (c["end_tst"] - c["start_tst"]) / 60.0
-        if dur_min >= min_stop_minutes:
+        qualifies = dur_min >= min_stop_minutes
+        if (not qualifies
+                and dur_min >= brief_min_minutes
+                and _boundary_speed_ok(c)):
+            qualifies = True
+        if qualifies:
             stops.append({
                 "center_lat": c["sum_lat"] / c["count"],
                 "center_lng": c["sum_lng"] / c["count"],
@@ -2167,11 +2232,12 @@ def _detect_stops(points,
                 "tz": c["tz"] or "UTC",
             })
 
-    for p in pts:
+    for idx, p in enumerate(pts):
         lat, lng, tst = p["lat"], p["lon"], p["tst"]
         if cur is None:
             cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
-                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz")}
+                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz"),
+                   "start_idx": idx, "end_idx": idx}
             continue
         c_lat = cur["sum_lat"] / cur["count"]
         c_lng = cur["sum_lng"] / cur["count"]
@@ -2184,10 +2250,12 @@ def _detect_stops(points,
             cur["sum_lng"] += lng
             cur["count"] += 1
             cur["end_tst"] = tst
+            cur["end_idx"] = idx
         else:
             _close(cur)
             cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
-                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz")}
+                   "start_tst": tst, "end_tst": tst, "tz": p.get("tz"),
+                   "start_idx": idx, "end_idx": idx}
     _close(cur)
     return stops
 
