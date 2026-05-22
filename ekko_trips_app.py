@@ -2039,27 +2039,33 @@ STOP_BRIEF_BOUNDARY_KMH = 30      # min km/h between the cluster centroid
                                   # is treated as passing (a 3 min stop
                                   # at the trip's first ping is still a
                                   # real stop).
-STOP_DWELL_GAP_RADIUS_M = 500     # secondary join radius, applied only
+STOP_DWELL_GAP_RADIUS_M = 600     # secondary join radius, applied only
                                   # when the next ping arrives
                                   # ≥STOP_MIN_MINUTES after the cluster's
                                   # last ping. OwnTracks may emit a ping
                                   # on arrival, sleep for many minutes
                                   # while the device is stationary, then
                                   # emit on departure — and the two
-                                  # readings can jitter farther apart
-                                  # than STOP_CLUSTER_RADIUS_M even
-                                  # though the device never moved (trip
-                                  # 17, 8/29: 12:31 ping and 13:19 ping
-                                  # bookending the same parking lot but
-                                  # 214 m apart, so the 200 m walker
-                                  # split them). The min-minutes time
-                                  # gap blocks this from looser-
-                                  # clustering moving pings: at 25+ mph
-                                  # the next ping after 4 min is well
-                                  # past 500 m, so the gap+cap pair
-                                  # fires only at actual dwells. Long
-                                  # standstill traffic can surface here;
-                                  # admin can dismiss in the modal.
+                                  # readings can jitter or drift farther
+                                  # apart than STOP_CLUSTER_RADIUS_M
+                                  # even though the device never moved
+                                  # in any meaningful way. Calibration
+                                  # cases: trip 17, 8/29 (12:31+13:19
+                                  # at the same parking lot, 214 m
+                                  # apart — split by the 200 m walker);
+                                  # trip 16, 8/11 (18:03+18:04 dwell
+                                  # followed by an 18:09 ping 525 m
+                                  # away as the user pulled out of the
+                                  # lot at town-driving speed — needed
+                                  # the radius wider than 500 m). The
+                                  # min-minutes time gap blocks this
+                                  # from looser-clustering moving pings:
+                                  # at 25+ mph the next ping after
+                                  # 4 min is well past 600 m, so the
+                                  # gap+cap pair fires only at actual
+                                  # dwells. Long standstill traffic can
+                                  # surface here; admin can dismiss in
+                                  # the modal.
 STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
                                   # existing stay/event/family location
