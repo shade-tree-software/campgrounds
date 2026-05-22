@@ -1908,6 +1908,27 @@ STOP_CLUSTER_RADIUS_M = 200       # max distance from a cluster's running
                                   # consecutive-in-time constraint plus the
                                   # 4-minute minimum keep that risk low.
 STOP_MIN_MINUTES = 4              # cluster span must reach this to qualify
+STOP_DWELL_GAP_RADIUS_M = 500     # secondary join radius, applied only
+                                  # when the next ping arrives
+                                  # ≥STOP_MIN_MINUTES after the cluster's
+                                  # last ping. OwnTracks may emit a ping
+                                  # on arrival, sleep for many minutes
+                                  # while the device is stationary, then
+                                  # emit on departure — and the two
+                                  # readings can jitter farther apart
+                                  # than STOP_CLUSTER_RADIUS_M even
+                                  # though the device never moved (trip
+                                  # 17, 8/29: 12:31 ping and 13:19 ping
+                                  # bookending the same parking lot but
+                                  # 214 m apart, so the 200 m walker
+                                  # split them). The min-minutes time
+                                  # gap blocks this from looser-
+                                  # clustering moving pings: at 25+ mph
+                                  # the next ping after 4 min is well
+                                  # past 500 m, so the gap+cap pair
+                                  # fires only at actual dwells. Long
+                                  # standstill traffic can surface here;
+                                  # admin can dismiss in the modal.
 STOP_WAYPOINT_MAX_MINUTES = 30    # ≤ this → waypoint; longer → event
 STOP_NEAR_ANCHOR_M = 300          # drop clusters within this of any
                                   # existing stay/event/family location
@@ -2057,10 +2078,20 @@ def _load_trip_track_for_detection(trip_id):
 
 def _detect_stops(points,
                   cluster_radius_m=STOP_CLUSTER_RADIUS_M,
-                  min_stop_minutes=STOP_MIN_MINUTES):
+                  min_stop_minutes=STOP_MIN_MINUTES,
+                  dwell_gap_radius_m=STOP_DWELL_GAP_RADIUS_M):
     """Walk pings in time order, group them into clusters where every
     ping is within `cluster_radius_m` of the cluster's running centroid.
     Clusters whose time span >= `min_stop_minutes` are returned.
+
+    Dwell-gap exception: when the next ping arrives ≥`min_stop_minutes`
+    after the cluster's last ping, the join radius widens to
+    `dwell_gap_radius_m`. OwnTracks suspends reporting at a stationary
+    device, so a real dwell may produce only an arrival ping and a
+    departure ping — and those two can sit beyond `cluster_radius_m`
+    even though nothing moved. The time-gap requirement keeps the wider
+    radius from absorbing moving pings: at any drivable speed, the next
+    ping after `min_stop_minutes` is well past `dwell_gap_radius_m`.
 
     Consecutive-in-time only: the same physical location visited twice
     on the same trip produces two clusters, which is the right behavior
@@ -2144,7 +2175,11 @@ def _detect_stops(points,
             continue
         c_lat = cur["sum_lat"] / cur["count"]
         c_lng = cur["sum_lng"] / cur["count"]
-        if _haversine_m(lat, lng, c_lat, c_lng) <= cluster_radius_m:
+        d = _haversine_m(lat, lng, c_lat, c_lng)
+        gap_s = tst - cur["end_tst"]
+        if (d <= cluster_radius_m
+                or (gap_s >= min_stop_minutes * 60
+                    and d <= dwell_gap_radius_m)):
             cur["sum_lat"] += lat
             cur["sum_lng"] += lng
             cur["count"] += 1
