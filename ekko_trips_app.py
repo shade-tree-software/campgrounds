@@ -1450,8 +1450,13 @@ def _looks_like_bare_number(s):
 def _nominatim_nearest_poi(lat, lng):
     """Reverse-geocode restricted to POI features (Nominatim `layer=poi`).
     Returns {name, lat, lng, distance_m} for the nearest named POI or
-    None if Nominatim has no POI in range or the call fails. Used as a
-    fallback when the default reverse hit is a road or a bare number."""
+    None when Nominatim has no real POI name in range or the call fails.
+
+    Falls through to None — rather than to display_name — when the hit
+    has no namedetails/name: an unnamed bench or sign on a highway has
+    `display_name` start with the highway, and substituting that for a
+    real POI just relabels the stop as the road. Leaving it None lets
+    the caller try the next fallback tier (Overpass)."""
     try:
         import urllib.request
         url = (
@@ -1467,7 +1472,7 @@ def _nominatim_nearest_poi(lat, lng):
         names = data.get("namedetails", {}) or {}
         name = (names.get("name") or data.get("name") or "").strip()
         if not name:
-            name = (data.get("display_name") or "").split(",", 1)[0].strip()
+            return None
         try:
             poi_lat = float(data.get("lat"))
             poi_lng = float(data.get("lon"))
@@ -1492,21 +1497,102 @@ def _nominatim_nearest_poi(lat, lng):
 POI_FALLBACK_MAX_M = 150
 
 
+def _overpass_nearest_named_poi(lat, lng, radius_m=POI_FALLBACK_MAX_M):
+    """Query Overpass for the nearest named non-road OSM feature within
+    `radius_m` of (lat,lng). Returns {name, lat, lng, distance_m} for
+    the closest hit or None on miss/error.
+
+    Final-tier fallback in `_reverse_geocode`. Fires only when both the
+    primary Nominatim reverse and the layer=poi retry resolve to a
+    road or an unnamed feature — e.g., the trip-17 8/24 stop whose
+    centroid lands on the highway right next to South Mountain Welcome
+    Center: Nominatim's reverse hits an unnamed roadside bench (no
+    name → falls through to the highway's display_name), and
+    layer=poi reverse hits the same bench, so neither surfaces the
+    rest area. Overpass queries OSM directly with arbitrary tag
+    filters and finds it (the welcome center is `tourism=information`
+    53 m away in OSM).
+
+    Filters to named features with a real-POI tag (amenity/tourism/
+    shop/leisure) or the rest-area / services highway subtypes that
+    Nominatim's `layer=poi` omits. Excludes plain roads, waterways,
+    benches, and other anonymous infrastructure."""
+    try:
+        import urllib.request
+        import urllib.parse
+        query = (
+            "[out:json][timeout:15];"
+            "("
+            f"  nwr['name']['amenity'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['tourism'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['shop'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['leisure'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['highway'='rest_area'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['highway'='services'](around:{radius_m},{lat},{lng});"
+            ");"
+            "out center tags;"
+        )
+        data = urllib.parse.urlencode({"data": query}).encode()
+        req = urllib.request.Request(
+            "https://overpass-api.de/api/interpreter",
+            data=data,
+            headers={"User-Agent": "EkkoTrips/1.0"},
+        )
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            result = json.loads(resp.read())
+        best = None
+        best_d = float("inf")
+        for e in result.get("elements", []):
+            if e.get("type") == "node":
+                e_lat = e.get("lat")
+                e_lng = e.get("lon")
+            elif "center" in e:
+                e_lat = e["center"].get("lat")
+                e_lng = e["center"].get("lon")
+            else:
+                continue
+            if e_lat is None or e_lng is None:
+                continue
+            name = ((e.get("tags") or {}).get("name") or "").strip()
+            if not name:
+                continue
+            d = _haversine_m(lat, lng, e_lat, e_lng)
+            if d < best_d:
+                best_d = d
+                best = {"name": name, "lat": e_lat, "lng": e_lng,
+                        "distance_m": d}
+        return best
+    except Exception:
+        return None
+
+
 def _reverse_geocode(lat, lng):
     """Reverse-geocode coords via Nominatim. Returns
     {name, locale, state, display_name} or an empty-strings dict on failure.
     Shared by /api/reverse-geocode and the stop-detection endpoint.
 
-    Name selection: prefer a real POI/feature name. If the default
-    reverse hit is a road (Nominatim `class=highway`) or a bare
-    house-address number with no street, do a second reverse call
-    restricted to `layer=poi` and substitute that POI's name when it
-    sits within `POI_FALLBACK_MAX_M` of the stop centroid. The second
-    call only fires when the first result is unhelpful, so most
-    invocations stay at one Nominatim request. Caller (frontend's
-    detect-stops loop) throttles to 1 req/sec; a one-second sleep
-    between the two server-side calls keeps cadence at the same rate
-    when the fallback fires."""
+    Name selection runs in three tiers, each only invoked when the
+    previous one yielded a useless name:
+      1. Nominatim reverse. Returns a real POI name (e.g. "Starbucks")
+         in the common case and stops here.
+      2. Nominatim layer=poi reverse. Fires when tier 1 hit a road
+         (class=highway), a bare house number, or an unnamed feature
+         whose name we had to extract from display_name (the centroid
+         landed on an unnamed bench/sign/etc. — display_name's first
+         segment is then the road it sits on).
+      3. Overpass nearest-named-POI. Fires when tier 2 also returned
+         nothing useful. Catches `highway=rest_area` / `services` and
+         tourism/amenity features that Nominatim's layer=poi reverse
+         can't surface because a closer unnamed feature outranks them.
+         See trip-17 8/24 (South Mountain Welcome Center) in the
+         `_overpass_nearest_named_poi` docstring.
+
+    Locale and state always come from tier 1 — Overpass returns raw
+    OSM without an admin hierarchy, so even Overpass-named results
+    inherit the Nominatim addressdetails. Each tier's network call is
+    paced with a 1-second sleep against the previous Nominatim call to
+    stay under their 1 req/sec policy; Overpass is a separate service,
+    but we still pace it to be polite under detection's loop cadence."""
     try:
         import urllib.request
         # zoom=18 ≈ building-level; addressdetails surfaces the
@@ -1525,12 +1611,19 @@ def _reverse_geocode(lat, lng):
         # Prefer a real POI/feature name; fall back to display_name's first
         # comma-segment so we always return *something* useful (e.g. for a
         # ping in the middle of nowhere this becomes a road name).
-        name = (names.get("name") or data.get("name") or "").strip()
+        primary_name = (names.get("name") or data.get("name") or "").strip()
+        name = primary_name
         if not name:
             disp = (data.get("display_name") or "").split(",", 1)[0].strip()
             name = disp
         primary_class = (data.get("class") or "").strip()
-        if primary_class == "highway" or _looks_like_bare_number(name):
+        # Trigger the fallback chain when the primary hit is a road, a
+        # bare house number, or had no real POI name (display_name
+        # fallthrough — typically yields the road of an unnamed
+        # adjacent feature like a bench or traffic sign).
+        if (primary_class == "highway"
+                or _looks_like_bare_number(name)
+                or not primary_name):
             # Stay under Nominatim's 1 req/sec policy when the fallback
             # fires — the caller's loop throttles to 1 req/sec between
             # stops, so without an internal pause two back-to-back hits
@@ -1542,6 +1635,13 @@ def _reverse_geocode(lat, lng):
                     and not _looks_like_bare_number(poi["name"])
                     and poi["distance_m"] <= POI_FALLBACK_MAX_M):
                 name = poi["name"]
+            else:
+                time.sleep(1.0)
+                op = _overpass_nearest_named_poi(lat, lng)
+                if (op and op["name"]
+                        and not _looks_like_bare_number(op["name"])
+                        and op["distance_m"] <= POI_FALLBACK_MAX_M):
+                    name = op["name"]
         # Locale: drop down the admin hierarchy until something matches.
         locale = (addr.get("city") or addr.get("town") or addr.get("village")
                   or addr.get("hamlet") or addr.get("municipality")
