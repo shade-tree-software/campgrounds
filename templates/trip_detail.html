@@ -1482,7 +1482,10 @@
       <div class="ping-toggles">
         <label class="selection-mode-toggle disabled" id="selection-mode-label"
                title="Loading GPS track…">
-          <input type="checkbox" id="selection-mode-toggle" disabled
+          {# autocomplete=off so location.reload() doesn't restore a stale
+             checked state — every save-from-selection flow unchecks this
+             just before reloading and we want that to stick. #}
+          <input type="checkbox" id="selection-mode-toggle" disabled autocomplete="off"
                  onchange="toggleSelectionMode(this)">
           Select pings
         </label>
