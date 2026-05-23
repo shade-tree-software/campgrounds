@@ -489,15 +489,24 @@ def remove_suppressed_pings(trip_id, tsts):
 
 
 # ── GPS-ping relocation ──────────────────────────────────────────────────
-# Each trip carries an optional `relocated_pings` list of {tst, lat, lon}
-# entries. The track endpoint rewrites each matching ping's lat/lon to the
-# override target before returning the polyline. Originals are preserved
-# server-side only (in the OwnTracks cache); removing the entry restores
-# the ping to its original coords on the next fetch. Also keyed by `tst`
-# so it survives cache invalidation and OwnTracks pagination.
+# Each trip carries an optional `relocated_pings` list of
+# {tst, lat, lon, orig_lat, orig_lon} entries. The track endpoint rewrites
+# each matching ping's lat/lon to the override target before returning the
+# polyline. Originals are preserved server-side only (in the OwnTracks
+# cache); removing the entry restores the ping to its original coords on
+# the next fetch.
+#
+# `orig_lat`/`orig_lon` are the ping's RAW OwnTracks coords at the moment
+# the relocation was recorded. They disambiguate the (otherwise common)
+# case of multiple OwnTracks pings sharing a `tst`: matching on tst alone
+# would relocate every sibling to the same target. Legacy entries written
+# before this disambiguator was added carry only `tst`/`lat`/`lon` and the
+# applier falls back to the old by-tst behavior for those.
 
 def get_relocated_pings(trip_id):
-    """Return the trip's relocated-ping list (each entry is {tst, lat, lon})."""
+    """Return the trip's relocated-ping list (each entry is
+    {tst, lat, lon} for legacy entries or
+    {tst, lat, lon, orig_lat, orig_lon} for newer ones)."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
@@ -505,36 +514,83 @@ def get_relocated_pings(trip_id):
     return []
 
 
+def _relocation_entry_key(item):
+    """Hashable identity for a relocation entry. Newer entries are keyed
+    by (tst, orig_lat, orig_lon); legacy entries that lack the originals
+    fall back to (tst, None, None). Used by add/remove for idempotent
+    upserts and precise removal."""
+    tst = int(item["tst"])
+    if item.get("orig_lat") is not None and item.get("orig_lon") is not None:
+        return (tst, float(item["orig_lat"]), float(item["orig_lon"]))
+    return (tst, None, None)
+
+
 def add_relocated_pings(trip_id, items):
-    """Add or update relocations. `items` is an iterable of dicts with keys
-    `tst`, `lat`, `lon`. If a tst already has a relocation, its target is
-    replaced (so re-relocating an already-moved ping just updates the
-    override). Returns the resulting list, or None if the trip is missing."""
+    """Add or update relocations. `items` is an iterable of dicts with
+    keys `tst`, `lat`, `lon`, and optionally `orig_lat`/`orig_lon`. If an
+    entry's key (tst + originals) already exists, its target is replaced.
+    Returns the resulting list, or None if the trip is missing."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
-            current = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
+            current = {_relocation_entry_key(it): it
                        for it in t.get("relocated_pings", [])}
             for it in items:
-                current[int(it["tst"])] = (float(it["lat"]), float(it["lon"]))
+                entry = {
+                    "tst": int(it["tst"]),
+                    "lat": float(it["lat"]),
+                    "lon": float(it["lon"]),
+                }
+                if it.get("orig_lat") is not None and it.get("orig_lon") is not None:
+                    entry["orig_lat"] = float(it["orig_lat"])
+                    entry["orig_lon"] = float(it["orig_lon"])
+                current[_relocation_entry_key(entry)] = entry
+            # Stable order: (tst, then any-orig-coord) so trips.json diffs
+            # stay readable. None-keyed legacy entries sort before keyed ones
+            # for any given tst.
             t["relocated_pings"] = [
-                {"tst": k, "lat": v[0], "lon": v[1]}
-                for k, v in sorted(current.items())
+                current[k] for k in sorted(
+                    current.keys(),
+                    key=lambda x: (x[0], x[1] is not None, x[1] or 0, x[2] or 0))
             ]
             _save_trips(raw)
             return list(t["relocated_pings"])
     return None
 
 
-def remove_relocated_pings(trip_id, tsts):
-    """Remove relocations by tst. Idempotent. Returns the resulting list,
-    or None if the trip is missing."""
+def remove_relocated_pings(trip_id, tsts=None, items=None):
+    """Remove relocations. Pass `tsts=[...]` to remove every entry with
+    those `tst`s (legacy / coarse), or `items=[{tst, orig_lat, orig_lon},
+    ...]` to remove specific entries (precise — leaves any sibling
+    relocation that shares the `tst` but has different originals).
+
+    Idempotent. Returns the resulting list, or None if the trip is missing."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
-            wanted = {int(x) for x in tsts}
-            keep = [it for it in t.get("relocated_pings", [])
-                    if int(it["tst"]) not in wanted]
+            existing = t.get("relocated_pings", [])
+            if items is not None:
+                precise_keys = set()  # (tst, orig_lat, orig_lon)
+                broad_tsts = set()    # tsts to drop wholesale (no orig given)
+                for it in items:
+                    tst = int(it["tst"])
+                    if it.get("orig_lat") is not None and it.get("orig_lon") is not None:
+                        precise_keys.add((tst, float(it["orig_lat"]), float(it["orig_lon"])))
+                    else:
+                        broad_tsts.add(tst)
+                def _keep(e):
+                    tst = int(e["tst"])
+                    if tst in broad_tsts:
+                        return False
+                    if e.get("orig_lat") is not None and e.get("orig_lon") is not None:
+                        return (tst, float(e["orig_lat"]), float(e["orig_lon"])) not in precise_keys
+                    return True  # legacy entry, only droppable via broad_tsts
+                keep = [e for e in existing if _keep(e)]
+            elif tsts is not None:
+                wanted = {int(x) for x in tsts}
+                keep = [it for it in existing if int(it["tst"]) not in wanted]
+            else:
+                return list(existing)
             if keep:
                 t["relocated_pings"] = keep
             else:

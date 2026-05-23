@@ -4058,11 +4058,23 @@ function _initSelectionDrag(map) {
     const cur = map.containerPointToLatLng(map.mouseEventToContainerPoint(e));
     const dLat = cur.lat - ds.startLatLng.lat;
     const dLng = cur.lng - ds.startLatLng.lng;
-    const items = ds.markers.map(({marker, origLat, origLng}) => ({
-      tst: marker.__ping.tst,
-      lat: origLat + dLat,
-      lon: origLng + dLng,
-    }));
+    // `orig_lat`/`orig_lon` are the ping's RAW OwnTracks coords — sent so
+    // the server can disambiguate duplicate-tst pings (OwnTracks emits
+    // these routinely). For an already-relocated marker the admin-mode
+    // response tags the raw coords on __ping; for a never-touched ping
+    // the drag-start position IS the raw coord.
+    const items = ds.markers.map(({marker, origLat, origLng}) => {
+      const p = marker.__ping;
+      const trueOrigLat = (p.original_lat != null) ? p.original_lat : origLat;
+      const trueOrigLng = (p.original_lon != null) ? p.original_lon : origLng;
+      return {
+        tst: p.tst,
+        lat: origLat + dLat,
+        lon: origLng + dLng,
+        orig_lat: trueOrigLat,
+        orig_lon: trueOrigLng,
+      };
+    });
     const ok = confirm(
       `Move ${items.length} GPS ping${items.length === 1 ? '' : 's'} to a new ` +
       `location? Use the "Show relocated pings" toggle to review or undo.`
@@ -4350,7 +4362,16 @@ function centerSelectedPings() {
     lat: pings.reduce((s, p) => s + p.lat, 0) / pings.length,
     lng: pings.reduce((s, p) => s + p.lon, 0) / pings.length,
   };
-  const items = pings.map(p => ({ tst: p.tst, lat: center.lat, lon: center.lng }));
+  // See the drag-relocate item builder above for why orig_lat/orig_lon
+  // are sent: it lets the server pick the exact ping among duplicate-tst
+  // siblings instead of relocating all of them.
+  const items = pings.map(p => ({
+    tst: p.tst,
+    lat: center.lat,
+    lon: center.lng,
+    orig_lat: (p.original_lat != null) ? p.original_lat : p.lat,
+    orig_lon: (p.original_lon != null) ? p.original_lon : p.lon,
+  }));
   const ok = confirm(
     `Center ${items.length} selected GPS ping${items.length === 1 ? '' : 's'} on ` +
     `${center.lat.toFixed(5)}, ${center.lng.toFixed(5)}? ` +
@@ -4389,6 +4410,12 @@ function unrelocatePing(tst) {
   // one's override lat/lon and DELETE the lot in one call. Float equality is
   // fine here: every member of a cluster gets the identical centroid value
   // assigned at creation time and survives JSON roundtrip bit-exactly.
+  //
+  // Sends precise (tst, orig_lat, orig_lon) items so a sibling ping that
+  // happens to share this tst but was relocated *separately* (different
+  // override coords) is left alone. Falls back to the by-tst legacy shape
+  // for ghost-layer entries that lack the originals (older trips.json
+  // entries written before the disambiguator).
   const layer = window.__relocatedPointLayer;
   let target = null;
   if (layer) {
@@ -4396,24 +4423,29 @@ function unrelocatePing(tst) {
       if (m.__ping && m.__ping.tst === tst) target = m.__ping;
     });
   }
-  const tsts = [];
+  const items = [];
   if (target && layer) {
     layer.eachLayer(m => {
       if (!m.__ping) return;
       if (m.__ping.lat === target.lat && m.__ping.lon === target.lon) {
-        tsts.push(m.__ping.tst);
+        const it = { tst: m.__ping.tst };
+        if (m.__ping.original_lat != null && m.__ping.original_lon != null) {
+          it.orig_lat = m.__ping.original_lat;
+          it.orig_lon = m.__ping.original_lon;
+        }
+        items.push(it);
       }
     });
   }
-  if (!tsts.length) tsts.push(tst);  // fallback: just the clicked one
-  const msg = tsts.length > 1
-    ? `Restore ${tsts.length} GPS pings (all sharing this override location) to their original positions?`
+  if (!items.length) items.push({ tst });  // fallback: just the clicked one
+  const msg = items.length > 1
+    ? `Restore ${items.length} GPS pings (all sharing this override location) to their original positions?`
     : 'Restore this GPS ping to its original location?';
   if (!confirm(msg)) return;
   fetch(`/api/trips/${TRIP_ID}/relocate-pings`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ tst: tsts }),
+    body: JSON.stringify({ items }),
   })
     .then(r => r.json())
     .then(data => {

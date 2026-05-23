@@ -1733,6 +1733,47 @@ def _enrich_with_timezone(points):
     return changed
 
 
+def _relocation_lookup(items):
+    """Build a precise relocation matcher from `get_relocated_pings(...)`.
+
+    Returns a callable `lookup(ping) -> (new_lat, new_lon) | None`. Newer
+    entries carry the ping's raw `orig_lat`/`orig_lon` so we can pick the
+    exact one of several pings sharing a `tst`; legacy entries (no orig
+    coords) match any ping with that `tst` as a wildcard — preserves the
+    pre-disambiguator behavior for relocations recorded before the schema
+    grew the originals.
+
+    Bug context: OwnTracks emits duplicate-`tst` pings routinely (sometimes
+    hundreds per trip, several hundred meters apart). Matching on `tst`
+    alone meant dragging one ping silently dragged every sibling to the
+    same coords."""
+    EPS = 1e-6
+    by_tst = {}
+    for it in items:
+        tst = int(it["tst"])
+        new_pt = (float(it["lat"]), float(it["lon"]))
+        if it.get("orig_lat") is not None and it.get("orig_lon") is not None:
+            orig = (float(it["orig_lat"]), float(it["orig_lon"]))
+        else:
+            orig = None
+        by_tst.setdefault(tst, []).append((orig, new_pt))
+
+    def lookup(p):
+        matches = by_tst.get(p.get("tst"))
+        if not matches:
+            return None
+        wildcard = None
+        for orig, new_pt in matches:
+            if orig is None:
+                wildcard = new_pt
+            elif (abs(p.get("lat", 0) - orig[0]) < EPS
+                  and abs(p.get("lon", 0) - orig[1]) < EPS):
+                return new_pt
+        return wildcard
+
+    return lookup
+
+
 def _fetch_timeline_points(tid, token, from_ts, to_ts):
     """Page through the timeline API for a single tid across a UTC range."""
     import urllib.request
@@ -1785,17 +1826,17 @@ def api_trip_track(trip_id):
     # suppressed pings are dropped and relocations are applied silently.
     include_admin = request.args.get("admin") == "1"
     suppressed = set(get_suppressed_pings(trip_id))
-    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
-                   for it in get_relocated_pings(trip_id)}
+    relocation_items = get_relocated_pings(trip_id)
+    _relocate = _relocation_lookup(relocation_items)
     bad_windows = _bad_track_window_tsts(trip)
 
     def _apply_overrides(points):
         # Relocations rewrite lat/lon in place. Always applied (the polyline
         # should follow the override). Original coords are preserved only for
         # admin clients so the undo UI can draw the provenance line.
-        if relocations:
+        if relocation_items:
             for p in points:
-                ov = relocations.get(p.get("tst"))
+                ov = _relocate(p)
                 if ov is not None:
                     if include_admin:
                         p["original_lat"] = p["lat"]
@@ -1858,7 +1899,7 @@ def api_trip_track(trip_id):
                     continue
                 if _in_bad_track_window(tst, bad_windows):
                     continue
-                ov = relocations.get(tst)
+                ov = _relocate(p)
                 if ov is not None:
                     p = dict(p)
                     p["lat"], p["lon"] = ov[0], ov[1]
@@ -1909,7 +1950,7 @@ def api_trip_track(trip_id):
                 continue
             if _in_bad_track_window(tst, bad_windows):
                 continue
-            ov = relocations.get(tst)
+            ov = _relocate(p)
             if ov is not None:
                 p = {**p, "lat": ov[0], "lon": ov[1]}
             cleaned.append(p)
@@ -2188,10 +2229,12 @@ def _load_trip_track_for_detection(trip_id):
                 json.dump(points, f)
 
     suppressed = set(get_suppressed_pings(trip_id))
-    relocated_tsts = {int(it["tst"]) for it in get_relocated_pings(trip_id)}
-    excluded = suppressed | relocated_tsts
-    if excluded:
-        points = [p for p in points if p.get("tst") not in excluded]
+    _relocate = _relocation_lookup(get_relocated_pings(trip_id))
+    # Drop suppressed pings outright; treat *precisely* relocated pings as
+    # admin-touched-untrusted and exclude them too. Siblings sharing a tst
+    # whose specific (tst, orig_lat, orig_lon) wasn't relocated stay in.
+    points = [p for p in points
+              if p.get("tst") not in suppressed and _relocate(p) is None]
     bad_windows = _bad_track_window_tsts(trip)
     if bad_windows:
         points = [p for p in points
@@ -3020,8 +3063,11 @@ def api_unsuppress_pings(trip_id):
 
 @app.route('/api/trips/<int:trip_id>/relocate-pings', methods=['POST'])
 def api_relocate_pings(trip_id):
-    """Override the lat/lon for a list of GPS pings. Body: {items: [{tst, lat, lon}, ...]}.
-    Re-relocating an existing tst replaces its previous override."""
+    """Override the lat/lon for a list of GPS pings. Body:
+    {items: [{tst, lat, lon, orig_lat, orig_lon}, ...]}. The orig coords
+    are the ping's raw OwnTracks position at drag-start; they disambiguate
+    duplicate-tst pings so a single drag only moves the picked one.
+    Re-relocating an existing (tst, orig_lat, orig_lon) replaces its target."""
     denied = _require_admin()
     if denied:
         return denied
@@ -3034,11 +3080,15 @@ def api_relocate_pings(trip_id):
         if not isinstance(it, dict):
             return jsonify({"error": "each item must be an object"}), 400
         try:
-            cleaned.append({
+            entry = {
                 "tst": int(it["tst"]),
                 "lat": float(it["lat"]),
                 "lon": float(it["lon"]),
-            })
+            }
+            if it.get("orig_lat") is not None and it.get("orig_lon") is not None:
+                entry["orig_lat"] = float(it["orig_lat"])
+                entry["orig_lon"] = float(it["orig_lon"])
+            cleaned.append(entry)
         except (KeyError, TypeError, ValueError):
             return jsonify({"error": "each item needs integer tst and numeric lat/lon"}), 400
     result = add_relocated_pings(trip_id, cleaned)
@@ -3049,16 +3099,39 @@ def api_relocate_pings(trip_id):
 
 @app.route('/api/trips/<int:trip_id>/relocate-pings', methods=['DELETE'])
 def api_unrelocate_pings(trip_id):
-    """Remove relocations by tst. Body: {tst: [...]}.
+    """Remove relocations. Either body shape works:
+      {items: [{tst, orig_lat, orig_lon}, ...]}  — precise removal
+      {tst: [...]}                                — coarse (removes every
+                                                    entry with that tst)
     The next /track call returns the original OwnTracks coords."""
     denied = _require_admin()
     if denied:
         return denied
     data = request.get_json() or {}
-    tsts = data.get("tst") or []
-    if not isinstance(tsts, list):
-        return jsonify({"error": "tst must be a list of integers"}), 400
-    result = remove_relocated_pings(trip_id, tsts)
+    items = data.get("items")
+    tsts = data.get("tst")
+    if items is not None:
+        if not isinstance(items, list):
+            return jsonify({"error": "items must be a list"}), 400
+        cleaned = []
+        for it in items:
+            if not isinstance(it, dict):
+                return jsonify({"error": "each item must be an object"}), 400
+            try:
+                entry = {"tst": int(it["tst"])}
+                if it.get("orig_lat") is not None and it.get("orig_lon") is not None:
+                    entry["orig_lat"] = float(it["orig_lat"])
+                    entry["orig_lon"] = float(it["orig_lon"])
+                cleaned.append(entry)
+            except (KeyError, TypeError, ValueError):
+                return jsonify({"error": "each item needs integer tst"}), 400
+        result = remove_relocated_pings(trip_id, items=cleaned)
+    elif tsts is not None:
+        if not isinstance(tsts, list):
+            return jsonify({"error": "tst must be a list of integers"}), 400
+        result = remove_relocated_pings(trip_id, tsts=tsts)
+    else:
+        return jsonify({"error": "must provide items or tst"}), 400
     if result is None:
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "relocated_pings": result})
@@ -3137,8 +3210,7 @@ def api_tid_choices(trip_id):
     # match what the wired selector actually decides on. Without this
     # the UI's "auto" preview can diverge from the polyline's choice.
     suppressed = set(get_suppressed_pings(trip_id))
-    relocations = {int(it["tst"]): (float(it["lat"]), float(it["lon"]))
-                   for it in get_relocated_pings(trip_id)}
+    _relocate = _relocation_lookup(get_relocated_pings(trip_id))
     bad_windows = _bad_track_window_tsts(trip)
 
     def _clean(want_tid):
@@ -3151,7 +3223,7 @@ def api_tid_choices(trip_id):
                 continue
             if _in_bad_track_window(tst, bad_windows):
                 continue
-            ov = relocations.get(tst)
+            ov = _relocate(p)
             if ov is not None:
                 p = dict(p)
                 p["lat"], p["lon"] = ov[0], ov[1]
