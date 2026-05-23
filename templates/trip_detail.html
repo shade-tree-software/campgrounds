@@ -3766,9 +3766,7 @@ function addFamilyVisit() { openAddModal('family_visit'); }
 // and on release every ping inside the circle is added to the selection.
 // Multiple circles add cumulatively; clicking an already-selected ping
 // deselects just that one; unchecking the toggle clears the whole selection.
-const DEFAULT_PING_STYLE = { radius: 3, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
-// Slightly bigger unselected dot while select-pings mode is on — easier to tap.
-const SELECT_MODE_PING_STYLE = { radius: 5, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
+const DEFAULT_PING_STYLE = { radius: 5, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
 const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
 const SUPPRESSED_PING_STYLE = { radius: 6, color: '#444', weight: 2, fillColor: '#888', fillOpacity: 0.85, dashArray: '3,2' };
 const RELOCATED_PING_STYLE = { radius: 5, color: '#e65100', weight: 2, fillColor: '#ffb74d', fillOpacity: 0.9 };
@@ -3905,11 +3903,6 @@ function toggleSelectionMode(checkbox) {
   const tb = document.getElementById('selection-toolbar');
   if (tb) tb.classList.toggle('visible', window.__selectionModeActive);
   if (!window.__selectionModeActive) clearPingSelection();
-  // Enlarge / restore the unselected pings so they're easier to tap in mode.
-  const baseStyle = window.__selectionModeActive ? SELECT_MODE_PING_STYLE : DEFAULT_PING_STYLE;
-  (window.__gpsPointMarkers || []).forEach(m => {
-    if (!m.__selected) m.setStyle(baseStyle);
-  });
   _syncLassoModes();
 }
 
@@ -4134,8 +4127,7 @@ function togglePingSelection(i) {
   if (!markers || !markers[i]) return;
   const m = markers[i];
   m.__selected = !m.__selected;
-  const unselectedStyle = window.__selectionModeActive ? SELECT_MODE_PING_STYLE : DEFAULT_PING_STYLE;
-  m.setStyle(m.__selected ? SELECTED_PING_STYLE : unselectedStyle);
+  m.setStyle(m.__selected ? SELECTED_PING_STYLE : DEFAULT_PING_STYLE);
   if (m.__selected && m.bringToFront) m.bringToFront();
   updateSelectionToolbar();
 }
