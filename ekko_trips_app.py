@@ -2294,6 +2294,21 @@ def _detect_stops(points,
     the very first/last cluster of the trip there's no neighbor on one
     side; that side passes by default.
 
+    Snap-back exception: a single ping that fails the join test is
+    treated as an outlier — skipped, not folded in, not used to break
+    the cluster — when the *next* ping would itself rejoin the current
+    cluster. This defends against a momentary noisy fix (a cell-tower
+    hit, a one-off jitter just past dwell_gap_radius_m) mid-dwell
+    splitting a real stop into fragments too small to qualify. The
+    "next ping rejoins" check is the regular join test against the
+    unchanged centroid, so the snap-back is strictly more discriminating
+    than widening dwell_gap_radius_m: when the device is genuinely in
+    transit between two stops, no later ping snaps back and the cluster
+    closes as before. Calibration case: trip 10, 4/9 19:21 (a 696 m
+    drift between two 1-min-apart anchor pings at the actual stop
+    location, just past the 600 m dwell radius — collapsed the dwell
+    into three single-ping clusters under the old logic).
+
     Consecutive-in-time only: the same physical location visited twice
     on the same trip produces two clusters, which is the right behavior
     for trip-stop suggestions (one suggestion per visit)."""
@@ -2400,16 +2415,27 @@ def _detect_stops(points,
             continue
         c_lat = cur["sum_lat"] / cur["count"]
         c_lng = cur["sum_lng"] / cur["count"]
-        d = _haversine_m(lat, lng, c_lat, c_lng)
-        gap_s = tst - cur["end_tst"]
-        if (d <= cluster_radius_m
-                or (gap_s >= min_stop_minutes * 60
-                    and d <= dwell_gap_radius_m)):
+
+        def _joins(plat, plng, ptst):
+            pd = _haversine_m(plat, plng, c_lat, c_lng)
+            pgap = ptst - cur["end_tst"]
+            return (pd <= cluster_radius_m
+                    or (pgap >= min_stop_minutes * 60
+                        and pd <= dwell_gap_radius_m))
+
+        if _joins(lat, lng, tst):
             cur["sum_lat"] += lat
             cur["sum_lng"] += lng
             cur["count"] += 1
             cur["end_tst"] = tst
             cur["end_idx"] = idx
+        elif (idx + 1 < len(pts)
+              and _joins(pts[idx + 1]["lat"],
+                         pts[idx + 1]["lon"],
+                         pts[idx + 1]["tst"])):
+            # Snap-back: skip this lone outlier and keep the cluster
+            # open; the next ping confirms the dwell didn't end here.
+            continue
         else:
             _close(cur)
             cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
