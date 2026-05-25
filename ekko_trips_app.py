@@ -2476,6 +2476,14 @@ def _detect_stops(points,
                 "duration_minutes": round(dur_min, 1),
                 "ping_count": c["count"],
                 "tz": c["tz"] or "UTC",
+                # Per-ping coords retained so downstream anchor-proximity
+                # tests (_drop_stops_at_known_locations) can ask "did any
+                # ping in this cluster sit near a known location?" — the
+                # centroid alone is a poor proxy for an asymmetric cluster
+                # (long dwell + slow approach/depart pulls the centroid
+                # off the actual dwell location, as on trip 9's
+                # Mountain Top campsite arrival).
+                "coords": list(c["coords"]),
             })
 
     for idx, p in enumerate(pts):
@@ -2483,7 +2491,8 @@ def _detect_stops(points,
         if cur is None:
             cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
                    "start_tst": tst, "end_tst": tst, "tz": p.get("tz"),
-                   "start_idx": idx, "end_idx": idx}
+                   "start_idx": idx, "end_idx": idx,
+                   "coords": [(lat, lng)]}
             continue
         c_lat = cur["sum_lat"] / cur["count"]
         c_lng = cur["sum_lng"] / cur["count"]
@@ -2501,6 +2510,7 @@ def _detect_stops(points,
             cur["count"] += 1
             cur["end_tst"] = tst
             cur["end_idx"] = idx
+            cur["coords"].append((lat, lng))
         elif (idx + 1 < len(pts)
               and _joins(pts[idx + 1]["lat"],
                          pts[idx + 1]["lon"],
@@ -2512,7 +2522,8 @@ def _detect_stops(points,
             _close(cur)
             cur = {"sum_lat": lat, "sum_lng": lng, "count": 1,
                    "start_tst": tst, "end_tst": tst, "tz": p.get("tz"),
-                   "start_idx": idx, "end_idx": idx}
+                   "start_idx": idx, "end_idx": idx,
+                   "coords": [(lat, lng)]}
     _close(cur)
     return stops
 
@@ -3005,11 +3016,19 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
 def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                                    near_radius_m=STOP_NEAR_ANCHOR_M,
                                    home_radius_m=STOP_AT_HOME_CENTROID_M):
-    """Filter out clusters that fall within `near_radius_m` of any
-    existing stay (campsite_location override or campground coords),
-    event (waypoints included), or family location (listed coords +
-    driveway coords). `trip` must be enriched via
+    """Filter out clusters where any ping in the cluster falls within
+    `near_radius_m` of an existing stay (campsite_location override or
+    campground coords), event (waypoints included), or family location
+    (listed coords + driveway coords). `trip` must be enriched via
     `enrich_trip_locations` so stays/events carry lat/lng.
+
+    "Any ping in the cluster" — not just the centroid — is the
+    discriminator. An asymmetric cluster (long dwell at anchor + slow
+    approach pings tailing off toward a highway) has its centroid
+    pulled away from the anchor by the off-anchor pings; a centroid-
+    only test misses the case (trip 9 Mountain Top: centroid 314 m
+    from anchor but pings inside the cluster sat 0 m and 49 m from
+    it).
 
     Stay and event anchors are *date-bounded*: a cluster is only
     suppressed by a stay/event whose own date range overlaps the
@@ -3113,6 +3132,30 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
             ed = sd
         return sd, ed
 
+    # Anchor proximity is tested against ANY ping in the cluster, not
+    # just the centroid. An asymmetric cluster (long dwell at anchor +
+    # several slow approach/departure pings drifting toward the highway)
+    # has its centroid pulled off the anchor — far enough to clear
+    # `near_radius_m` even when the dwell itself sat directly on top of
+    # it. Trip 9, Mountain Top campsite: the overnight dwell + 5
+    # arrival pings + 2 departure pings formed one cluster whose
+    # centroid was 314 m from the stay's campsite_location anchor (just
+    # past STOP_NEAR_ANCHOR_M = 300), but two pings inside the cluster
+    # were 0 m and 49 m from it. Cached cluster coords (`coords`) cost
+    # ~5–15 lat/lng pairs per cluster; trivial.
+    #
+    # HOME is still tested against the centroid — the semantic is
+    # different. The home drop is "this whole cluster is at home"
+    # (catches arrival/departure jitter when the manual home_*_time
+    # override is a minute off), not "this cluster passed through
+    # home". A real stop near home should NOT be dropped just because
+    # a single ping wandered close to the home centroid.
+    def _any_ping_within(c, a_lat, a_lng, radius_m):
+        for p_lat, p_lng in c.get("coords") or [(c["center_lat"], c["center_lng"])]:
+            if _haversine_m(p_lat, p_lng, a_lat, a_lng) < radius_m:
+                return True
+        return False
+
     out = []
     for c in stops:
         if home_lat is not None and home_lng is not None:
@@ -3121,7 +3164,7 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                 continue
         too_close = False
         for a_lat, a_lng in date_agnostic_anchors:
-            if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
+            if _any_ping_within(c, a_lat, a_lng, near_radius_m):
                 too_close = True
                 break
         if not too_close and dated_anchors:
@@ -3129,7 +3172,7 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
             for a_lat, a_lng, a_start, a_end in dated_anchors:
                 if a_end < c_start or a_start > c_end:
                     continue
-                if _haversine_m(c["center_lat"], c["center_lng"], a_lat, a_lng) < near_radius_m:
+                if _any_ping_within(c, a_lat, a_lng, near_radius_m):
                     too_close = True
                     break
         if not too_close:
