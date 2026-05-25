@@ -1763,7 +1763,7 @@
           <label>Name</label>
           <div class="nearby-autocomplete">
             <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off"
-                   onfocus="nearbyShow(this)">
+                   onclick="nearbyShow(this)">
             <div class="nearby-dropdown"></div>
           </div>
         </div>
@@ -3845,11 +3845,21 @@ function nearbyInvalidateFromLocation(locationInput) {
   if (nameInput) _nearbyCache.delete(nameInput);
 }
 
-// Close any open nearby dropdown when clicking outside its wrapper.
+// Close the dropdown on any click EXCEPT (a) the Name input itself
+// (its own onclick handler just opened it) or (b) an option inside the
+// dropdown (option's mousedown already selected and closed). Clicks
+// on empty space INSIDE the dropdown panel still count as "outside"
+// and close — the panel visually overlays the fields below, so a
+// click in that area is the user trying to dismiss it to reach the
+// covered field.
 document.addEventListener('click', e => {
-  if (!e.target.closest('.nearby-autocomplete')) {
-    document.querySelectorAll('.nearby-dropdown.open').forEach(d => d.classList.remove('open'));
+  if (e.target.closest('.nearby-option')) return;
+  if (e.target.tagName === 'INPUT'
+      && e.target.parentElement
+      && e.target.parentElement.classList.contains('nearby-autocomplete')) {
+    return;
   }
+  document.querySelectorAll('.nearby-dropdown.open').forEach(d => d.classList.remove('open'));
 });
 
 function cancelEvent(idx) {
@@ -4743,7 +4753,7 @@ function _modalFormHtml(kind, v) {
         <div class="full-width">
           <label>Name</label>
           <div class="nearby-autocomplete">
-            <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}" onfocus="nearbyShow(this)">
+            <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}" onclick="nearbyShow(this)">
             <div class="nearby-dropdown"></div>
           </div>
         </div>
