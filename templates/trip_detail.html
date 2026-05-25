@@ -3776,6 +3776,7 @@ function nearbyShow(input) {
   const cached = _nearbyCache.get(input);
   if (cached && cached.loc === locStr && !cached.loading) {
     _nearbyRender(dropdown, cached.items);
+    dropdown.classList.add('open');
     return;
   }
   // Fresh fetch
@@ -3852,6 +3853,13 @@ function nearbyInvalidateFromLocation(locationInput) {
 // and close — the panel visually overlays the fields below, so a
 // click in that area is the user trying to dismiss it to reach the
 // covered field.
+//
+// Registered in the CAPTURE phase (third arg true) because the add/edit
+// modal's panel does `event.stopPropagation()` on bubble to prevent the
+// backdrop close from firing for in-panel clicks. A bubble-phase
+// document listener would never see clicks inside the modal panel.
+// Capture fires on the way down from document to target, before the
+// panel's stopPropagation runs.
 document.addEventListener('click', e => {
   if (e.target.closest('.nearby-option')) return;
   if (e.target.tagName === 'INPUT'
@@ -3860,7 +3868,7 @@ document.addEventListener('click', e => {
     return;
   }
   document.querySelectorAll('.nearby-dropdown.open').forEach(d => d.classList.remove('open'));
-});
+}, true);
 
 function cancelEvent(idx) {
   document.getElementById('event-edit-' + idx).classList.remove('active');
