@@ -125,6 +125,37 @@
     margin-right: .3rem;
   }
 
+  /* Nearby-places dropdown on event/waypoint Name field — same positioning
+     as cg-dropdown, but always opens on focus (no typing required) and is
+     populated from /api/nearby-places (Overpass). Mirrors the cg- pattern
+     to feel native alongside it. */
+  .nearby-autocomplete { position: relative; }
+  .nearby-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+    background: #fff; border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 4px 4px; max-height: 240px; overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15); display: none;
+  }
+  .nearby-dropdown.open { display: block; }
+  .nearby-dropdown .nearby-header {
+    padding: .25rem .6rem; font-size: .65rem; color: var(--gray);
+    text-transform: uppercase; letter-spacing: .04em;
+    background: #f5f5f5; border-bottom: 1px solid var(--gray-light);
+  }
+  .nearby-dropdown .nearby-option {
+    padding: .35rem .6rem; cursor: pointer; font-size: .85rem;
+    display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+  }
+  .nearby-dropdown .nearby-option:hover {
+    background: var(--blue-bg);
+  }
+  .nearby-dropdown .nearby-kind {
+    color: var(--gray); font-size: .7rem; font-style: italic; flex-shrink: 0;
+  }
+  .nearby-dropdown .nearby-empty {
+    padding: .4rem .6rem; font-size: .8rem; color: var(--gray); font-style: italic;
+  }
+
   .stay-edit-form .form-actions {
     display: flex;
     gap: .5rem;
@@ -1730,9 +1761,11 @@
       <div class="form-grid">
         <div class="full-width">
           <label>Name</label>
-          <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off"
-                 list="nearby-places-event-{{ item.idx }}">
-          <datalist id="nearby-places-event-{{ item.idx }}"></datalist>
+          <div class="nearby-autocomplete">
+            <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off"
+                   onfocus="nearbyShow(this)">
+            <div class="nearby-dropdown"></div>
+          </div>
         </div>
         <div>
           <label>Date</label>
@@ -1758,7 +1791,7 @@
           <label>Location</label>
           <div class="event-location-field">
             <input type="text" data-field="location" value="{{ item.location }}" placeholder="lat,lng" autocomplete="off"
-                   onchange="loadNearbyPlacesForEvent({{ item.idx }})">
+                   onchange="nearbyInvalidateFromLocation(this)">
             {% if is_admin %}<button type="button" class="btn-pick-location" onclick="showEventLocationMap({{ item.idx }})">Pick on Map</button>{% endif %}
           </div>
         </div>
@@ -3693,68 +3726,131 @@ function addStay() { openAddModal('stay'); }
 function editEvent(idx) {
   document.getElementById('event-edit-' + idx).classList.add('active');
   document.getElementById('event-body-' + idx).style.display = 'none';
-  loadNearbyPlacesForEvent(idx);
 }
 
-// Fetch nearby OSM POIs and populate a <datalist> so the name input
-// surfaces them as native dropdown suggestions. Free-text typing is
-// preserved (datalist is suggestion-only). Race-safe via a per-datalist
-// request counter: if the user changes the location while a fetch is
-// pending, the stale response is discarded.
-const _nearbyPlacesSeq = {};
-function _populateNearbyDatalist(datalistEl, locationStr) {
-  if (!datalistEl) return;
-  const id = datalistEl.id;
-  const seq = (_nearbyPlacesSeq[id] = (_nearbyPlacesSeq[id] || 0) + 1);
-  // Clear immediately so a stale list doesn't linger while a fetch is
-  // in flight or after a clear of the location field.
-  datalistEl.innerHTML = '';
-  if (!locationStr) return;
-  const parts = locationStr.split(',').map(s => s.trim());
-  if (parts.length !== 2) return;
+// ── Nearby-places dropdown (event/waypoint Name field) ──────────────────
+// On focus of the Name input, fetch named OSM POIs within 300 m of the
+// event's location via /api/nearby-places (Overpass) and show them as a
+// click-to-fill dropdown. The user can still type a name freely.
+//
+// Cached per input element (WeakMap keyed by the input) so reopening the
+// dropdown for an unchanged location doesn't re-hit Overpass. Cache is
+// invalidated when the location field changes (either via the text input's
+// onchange or programmatically after pick-on-map — see the picker onPick
+// callback).
+const _nearbyCache = new WeakMap();   // input -> {loc, items} or {loc, loading: true}
+const _nearbySeq = new WeakMap();     // input -> monotonically increasing request token
+
+function _nearbyFindLocationInput(nameInput) {
+  // The location field lives in the same .form-grid as the name input.
+  const grid = nameInput.closest('.form-grid');
+  return grid ? grid.querySelector('[data-field="location"]') : null;
+}
+
+function _nearbyParseLatLng(locStr) {
+  if (!locStr) return null;
+  const parts = locStr.split(',').map(s => s.trim());
+  if (parts.length !== 2) return null;
   const lat = parseFloat(parts[0]);
   const lng = parseFloat(parts[1]);
-  if (!isFinite(lat) || !isFinite(lng)) return;
-  fetch(`/api/nearby-places?lat=${lat}&lng=${lng}`)
+  if (!isFinite(lat) || !isFinite(lng)) return null;
+  return [lat, lng];
+}
+
+function nearbyShow(input) {
+  const dropdown = input.parentElement.querySelector('.nearby-dropdown');
+  if (!dropdown) return;
+  const locInput = _nearbyFindLocationInput(input);
+  const locStr = locInput ? locInput.value.trim() : '';
+  if (!locStr) {
+    dropdown.innerHTML = '<div class="nearby-empty">Set a location to see nearby places.</div>';
+    dropdown.classList.add('open');
+    return;
+  }
+  const latlng = _nearbyParseLatLng(locStr);
+  if (!latlng) {
+    dropdown.innerHTML = '<div class="nearby-empty">Invalid location coordinates.</div>';
+    dropdown.classList.add('open');
+    return;
+  }
+  const cached = _nearbyCache.get(input);
+  if (cached && cached.loc === locStr && !cached.loading) {
+    _nearbyRender(dropdown, cached.items);
+    return;
+  }
+  // Fresh fetch
+  dropdown.innerHTML = '<div class="nearby-empty">Loading nearby places…</div>';
+  dropdown.classList.add('open');
+  _nearbyCache.set(input, { loc: locStr, loading: true });
+  const seq = (_nearbySeq.get(input) || 0) + 1;
+  _nearbySeq.set(input, seq);
+  fetch(`/api/nearby-places?lat=${latlng[0]}&lng=${latlng[1]}`)
     .then(r => r.ok ? r.json() : [])
     .then(list => {
-      if (_nearbyPlacesSeq[id] !== seq) return;  // superseded
-      // Dedupe by name (case-insensitive). Overpass can return both a
-      // node and the enclosing way for the same venue; the name is what
-      // matters for the dropdown.
-      const seen = new Set();
-      const frag = document.createDocumentFragment();
-      for (const p of list) {
-        const key = (p.name || '').toLowerCase();
-        if (!key || seen.has(key)) continue;
-        seen.add(key);
-        const opt = document.createElement('option');
-        opt.value = p.name;
-        if (p.kind) opt.label = p.kind;  // shown as hint in some browsers
-        frag.appendChild(opt);
-      }
-      datalistEl.appendChild(frag);
+      if (_nearbySeq.get(input) !== seq) return;  // superseded by a newer fetch
+      _nearbyCache.set(input, { loc: locStr, items: list });
+      // Only repaint if the dropdown is still open and on this same input.
+      if (dropdown.classList.contains('open')) _nearbyRender(dropdown, list);
     })
-    .catch(() => { /* network error → silent; datalist stays empty */ });
+    .catch(() => {
+      if (_nearbySeq.get(input) !== seq) return;
+      _nearbyCache.delete(input);
+      if (dropdown.classList.contains('open')) {
+        dropdown.innerHTML = '<div class="nearby-empty">Couldn’t load nearby places.</div>';
+      }
+    });
 }
 
-function loadNearbyPlacesForEvent(idx) {
-  const form = document.getElementById('event-edit-' + idx);
-  if (!form) return;
-  const locInput = form.querySelector('[data-field="location"]');
-  const datalist = document.getElementById('nearby-places-event-' + idx);
-  if (!locInput || !datalist) return;
-  _populateNearbyDatalist(datalist, locInput.value.trim());
+function _nearbyRender(dropdown, items) {
+  // Dedupe by lowercase name. Overpass often returns both a node and an
+  // enclosing way for the same venue; the user only cares about the name.
+  const seen = new Set();
+  const unique = [];
+  for (const p of (items || [])) {
+    const k = (p.name || '').toLowerCase();
+    if (!k || seen.has(k)) continue;
+    seen.add(k);
+    unique.push(p);
+  }
+  if (unique.length === 0) {
+    dropdown.innerHTML = '<div class="nearby-empty">No nearby named places found.</div>';
+    return;
+  }
+  const rows = unique.map(p => {
+    const kind = p.kind ? `<span class="nearby-kind">${escapeHtml(p.kind)}</span>` : '';
+    // mousedown (not click) so the option fires before the input's blur
+    // closes the dropdown.
+    return `<div class="nearby-option" onmousedown="nearbySelect(this)" data-name="${escapeHtml(p.name)}">`
+         + `<span>${escapeHtml(p.name)}</span>${kind}</div>`;
+  }).join('');
+  dropdown.innerHTML = '<div class="nearby-header">Nearby (from OpenStreetMap)</div>' + rows;
 }
 
-function loadNearbyPlacesForModal() {
-  const body = document.getElementById('add-modal-body');
-  if (!body) return;
-  const locInput = body.querySelector('[data-field="location"]');
-  const datalist = document.getElementById('nearby-places-modal');
-  if (!locInput || !datalist) return;
-  _populateNearbyDatalist(datalist, locInput.value.trim());
+function nearbySelect(optionEl) {
+  const wrapper = optionEl.closest('.nearby-autocomplete');
+  if (!wrapper) return;
+  const input = wrapper.querySelector('input[data-field="name"]');
+  if (input) input.value = optionEl.dataset.name;
+  const dropdown = wrapper.querySelector('.nearby-dropdown');
+  if (dropdown) dropdown.classList.remove('open');
 }
+
+// Called from the location input's onchange (typed edit) and from the
+// map-picker onPick callback (programmatic update) to discard the cached
+// nearby list so the next nearbyShow re-fetches for the new coordinates.
+function nearbyInvalidateFromLocation(locationInput) {
+  const grid = locationInput.closest('.form-grid');
+  if (!grid) return;
+  const nameInput = grid.querySelector('[data-field="name"]');
+  if (nameInput) _nearbyCache.delete(nameInput);
+}
+
+// Close any open nearby dropdown when clicking outside its wrapper.
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nearby-autocomplete')) {
+    document.querySelectorAll('.nearby-dropdown.open').forEach(d => d.classList.remove('open'));
+  }
+});
 
 function cancelEvent(idx) {
   document.getElementById('event-edit-' + idx).classList.remove('active');
@@ -4646,8 +4742,10 @@ function _modalFormHtml(kind, v) {
       <div class="form-grid">
         <div class="full-width">
           <label>Name</label>
-          <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}" list="nearby-places-modal">
-          <datalist id="nearby-places-modal"></datalist>
+          <div class="nearby-autocomplete">
+            <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}" onfocus="nearbyShow(this)">
+            <div class="nearby-dropdown"></div>
+          </div>
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
@@ -4664,7 +4762,7 @@ function _modalFormHtml(kind, v) {
           <label>Location</label>
           <div class="event-location-field">
             <input type="text" data-field="location" value="${escapeHtml(v.location || '')}" placeholder="lat,lng" autocomplete="off"
-                   onchange="loadNearbyPlacesForModal()">
+                   onchange="nearbyInvalidateFromLocation(this)">
             <button type="button" class="btn-pick-location" onclick="showAddModalLocationMap()">Pick on Map</button>
           </div>
         </div>
@@ -4737,7 +4835,6 @@ function _openModal(kind, mode, idx, prefillValues) {
   document.getElementById('add-modal-body').innerHTML = _modalFormHtml(kind, values);
   document.getElementById('modal-submit-btn').textContent = mode === 'edit' ? 'Save' : 'Add';
   document.getElementById('modal-delete-btn').style.display = mode === 'edit' ? '' : 'none';
-  if (kind === 'event' || kind === 'waypoint') loadNearbyPlacesForModal();
 
   modal.classList.add('visible');
   setTimeout(() => {
@@ -4926,12 +5023,14 @@ if (IS_ADMIN) {
     onPick: function(lat, lng) {
       const value = lat.toFixed(6) + ',' + lng.toFixed(6);
       const locInput = pickerTargetInput();
-      if (locInput) locInput.value = value;
-      // Refresh the name-field nearby-places dropdown for event/waypoint
-      // targets. Stay targets (campsite_location) don't have one.
-      if (pickerTarget) {
-        if (pickerTarget.kind === 'event') loadNearbyPlacesForEvent(pickerTarget.idx);
-        else if (pickerTarget.kind === 'event-modal') loadNearbyPlacesForModal();
+      if (locInput) {
+        locInput.value = value;
+        // Programmatic value assignment doesn't fire input events, so
+        // invalidate the nearby-places cache directly. No-op for
+        // stay-* targets (no Name field with a dropdown nearby).
+        if (pickerTarget && (pickerTarget.kind === 'event' || pickerTarget.kind === 'event-modal')) {
+          nearbyInvalidateFromLocation(locInput);
+        }
       }
     }
   });
