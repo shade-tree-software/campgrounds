@@ -1497,26 +1497,23 @@ def _nominatim_nearest_poi(lat, lng):
 POI_FALLBACK_MAX_M = 150
 
 
-def _overpass_nearest_named_poi(lat, lng, radius_m=POI_FALLBACK_MAX_M):
-    """Query Overpass for the nearest named non-road OSM feature within
-    `radius_m` of (lat,lng). Returns {name, lat, lng, distance_m} for
-    the closest hit or None on miss/error.
-
-    Final-tier fallback in `_reverse_geocode`. Fires only when both the
-    primary Nominatim reverse and the layer=poi retry resolve to a
-    road or an unnamed feature — e.g., the trip-17 8/24 stop whose
-    centroid lands on the highway right next to South Mountain Welcome
-    Center: Nominatim's reverse hits an unnamed roadside bench (no
-    name → falls through to the highway's display_name), and
-    layer=poi reverse hits the same bench, so neither surfaces the
-    rest area. Overpass queries OSM directly with arbitrary tag
-    filters and finds it (the welcome center is `tourism=information`
-    53 m away in OSM).
+def _overpass_named_pois(lat, lng, radius_m, limit=20):
+    """Query Overpass for named non-road OSM features within `radius_m`
+    of (lat,lng). Returns up to `limit` results sorted by distance, each
+    `{name, lat, lng, distance_m, kind}`, where `kind` is e.g.
+    "amenity=restaurant" / "tourism=museum" — useful as a hint when
+    multiple results share a name.
 
     Filters to named features with a real-POI tag (amenity/tourism/
-    shop/leisure) or the rest-area / services highway subtypes that
-    Nominatim's `layer=poi` omits. Excludes plain roads, waterways,
-    benches, and other anonymous infrastructure."""
+    shop/leisure) or the rest-area / services highway subtypes.
+    Excludes plain roads, waterways, benches, and other anonymous
+    infrastructure.
+
+    Shared by `_overpass_nearest_named_poi` (the reverse-geocode
+    final-tier fallback — takes the first result) and the
+    `/api/nearby-places` endpoint backing the name dropdown on
+    event/waypoint edit forms (takes the whole list). Returns [] on
+    miss or HTTP error."""
     try:
         import urllib.request
         import urllib.parse
@@ -1540,8 +1537,7 @@ def _overpass_nearest_named_poi(lat, lng, radius_m=POI_FALLBACK_MAX_M):
         )
         with urllib.request.urlopen(req, timeout=20) as resp:
             result = json.loads(resp.read())
-        best = None
-        best_d = float("inf")
+        hits = []
         for e in result.get("elements", []):
             if e.get("type") == "node":
                 e_lat = e.get("lat")
@@ -1553,17 +1549,38 @@ def _overpass_nearest_named_poi(lat, lng, radius_m=POI_FALLBACK_MAX_M):
                 continue
             if e_lat is None or e_lng is None:
                 continue
-            name = ((e.get("tags") or {}).get("name") or "").strip()
+            tags = e.get("tags") or {}
+            name = (tags.get("name") or "").strip()
             if not name:
                 continue
-            d = _haversine_m(lat, lng, e_lat, e_lng)
-            if d < best_d:
-                best_d = d
-                best = {"name": name, "lat": e_lat, "lng": e_lng,
-                        "distance_m": d}
-        return best
+            # Pick the most specific POI-class tag for the kind hint.
+            # Order matches the query above so the strongest signal wins.
+            kind = ""
+            for k in ("amenity", "tourism", "shop", "leisure", "highway"):
+                if tags.get(k):
+                    kind = f"{k}={tags[k]}"
+                    break
+            hits.append({
+                "name": name,
+                "lat": e_lat,
+                "lng": e_lng,
+                "distance_m": _haversine_m(lat, lng, e_lat, e_lng),
+                "kind": kind,
+            })
+        hits.sort(key=lambda h: h["distance_m"])
+        return hits[:limit]
     except Exception:
-        return None
+        return []
+
+
+def _overpass_nearest_named_poi(lat, lng, radius_m=POI_FALLBACK_MAX_M):
+    """Nearest named non-road OSM feature within `radius_m` of (lat,lng),
+    or None on miss. Final-tier fallback in `_reverse_geocode` — see the
+    `_reverse_geocode` docstring for when it fires and the trip-17 8/24
+    (South Mountain Welcome Center) calibration case for why it exists.
+    Thin wrapper over `_overpass_named_pois`."""
+    hits = _overpass_named_pois(lat, lng, radius_m, limit=1)
+    return hits[0] if hits else None
 
 
 def _reverse_geocode(lat, lng):
@@ -1680,6 +1697,38 @@ def api_reverse_geocode():
     except (TypeError, ValueError):
         return jsonify({"error": "lat and lng required"}), 400
     return jsonify(_reverse_geocode(lat, lng))
+
+
+# Default radius (metres) for /api/nearby-places. Wider than detect-stops'
+# 150 m fallback radius because an admin manually placing a pin may land
+# in a parking lot or on a nearby road, not on top of the building.
+# 300 m covers most strip-mall / campus / large-venue cases without
+# dragging in unrelated neighbors.
+NEARBY_PLACES_DEFAULT_RADIUS_M = 300
+NEARBY_PLACES_MAX_RADIUS_M = 1000
+
+
+@app.route('/api/nearby-places')
+def api_nearby_places():
+    """Return up to ~20 named OSM POIs within `radius` (default 300 m,
+    capped at 1000 m) of (lat,lng), sorted by distance. Backs the
+    name-field dropdown on event/waypoint edit forms.
+
+    Shares its underlying Overpass query with `_reverse_geocode`'s
+    final-tier fallback, so the same tag filter set (amenity/tourism/
+    shop/leisure + rest_area/services) decides what counts as a POI on
+    both surfaces."""
+    try:
+        lat = float(request.args.get('lat', ''))
+        lng = float(request.args.get('lng', ''))
+    except (TypeError, ValueError):
+        return jsonify({"error": "lat and lng required"}), 400
+    try:
+        radius = int(request.args.get('radius', NEARBY_PLACES_DEFAULT_RADIUS_M))
+    except (TypeError, ValueError):
+        radius = NEARBY_PLACES_DEFAULT_RADIUS_M
+    radius = max(50, min(radius, NEARBY_PLACES_MAX_RADIUS_M))
+    return jsonify(_overpass_named_pois(lat, lng, radius))
 
 
 TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")

@@ -1730,7 +1730,9 @@
       <div class="form-grid">
         <div class="full-width">
           <label>Name</label>
-          <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off">
+          <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off"
+                 list="nearby-places-event-{{ item.idx }}">
+          <datalist id="nearby-places-event-{{ item.idx }}"></datalist>
         </div>
         <div>
           <label>Date</label>
@@ -1755,7 +1757,8 @@
         <div class="full-width">
           <label>Location</label>
           <div class="event-location-field">
-            <input type="text" data-field="location" value="{{ item.location }}" placeholder="lat,lng" autocomplete="off">
+            <input type="text" data-field="location" value="{{ item.location }}" placeholder="lat,lng" autocomplete="off"
+                   onchange="loadNearbyPlacesForEvent({{ item.idx }})">
             {% if is_admin %}<button type="button" class="btn-pick-location" onclick="showEventLocationMap({{ item.idx }})">Pick on Map</button>{% endif %}
           </div>
         </div>
@@ -3690,6 +3693,67 @@ function addStay() { openAddModal('stay'); }
 function editEvent(idx) {
   document.getElementById('event-edit-' + idx).classList.add('active');
   document.getElementById('event-body-' + idx).style.display = 'none';
+  loadNearbyPlacesForEvent(idx);
+}
+
+// Fetch nearby OSM POIs and populate a <datalist> so the name input
+// surfaces them as native dropdown suggestions. Free-text typing is
+// preserved (datalist is suggestion-only). Race-safe via a per-datalist
+// request counter: if the user changes the location while a fetch is
+// pending, the stale response is discarded.
+const _nearbyPlacesSeq = {};
+function _populateNearbyDatalist(datalistEl, locationStr) {
+  if (!datalistEl) return;
+  const id = datalistEl.id;
+  const seq = (_nearbyPlacesSeq[id] = (_nearbyPlacesSeq[id] || 0) + 1);
+  // Clear immediately so a stale list doesn't linger while a fetch is
+  // in flight or after a clear of the location field.
+  datalistEl.innerHTML = '';
+  if (!locationStr) return;
+  const parts = locationStr.split(',').map(s => s.trim());
+  if (parts.length !== 2) return;
+  const lat = parseFloat(parts[0]);
+  const lng = parseFloat(parts[1]);
+  if (!isFinite(lat) || !isFinite(lng)) return;
+  fetch(`/api/nearby-places?lat=${lat}&lng=${lng}`)
+    .then(r => r.ok ? r.json() : [])
+    .then(list => {
+      if (_nearbyPlacesSeq[id] !== seq) return;  // superseded
+      // Dedupe by name (case-insensitive). Overpass can return both a
+      // node and the enclosing way for the same venue; the name is what
+      // matters for the dropdown.
+      const seen = new Set();
+      const frag = document.createDocumentFragment();
+      for (const p of list) {
+        const key = (p.name || '').toLowerCase();
+        if (!key || seen.has(key)) continue;
+        seen.add(key);
+        const opt = document.createElement('option');
+        opt.value = p.name;
+        if (p.kind) opt.label = p.kind;  // shown as hint in some browsers
+        frag.appendChild(opt);
+      }
+      datalistEl.appendChild(frag);
+    })
+    .catch(() => { /* network error → silent; datalist stays empty */ });
+}
+
+function loadNearbyPlacesForEvent(idx) {
+  const form = document.getElementById('event-edit-' + idx);
+  if (!form) return;
+  const locInput = form.querySelector('[data-field="location"]');
+  const datalist = document.getElementById('nearby-places-event-' + idx);
+  if (!locInput || !datalist) return;
+  _populateNearbyDatalist(datalist, locInput.value.trim());
+}
+
+function loadNearbyPlacesForModal() {
+  const body = document.getElementById('add-modal-body');
+  if (!body) return;
+  const locInput = body.querySelector('[data-field="location"]');
+  const datalist = document.getElementById('nearby-places-modal');
+  if (!locInput || !datalist) return;
+  _populateNearbyDatalist(datalist, locInput.value.trim());
 }
 
 function cancelEvent(idx) {
@@ -4582,7 +4646,8 @@ function _modalFormHtml(kind, v) {
       <div class="form-grid">
         <div class="full-width">
           <label>Name</label>
-          <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}">
+          <input type="text" data-field="name" autocomplete="off" value="${escapeHtml(nameVal)}" list="nearby-places-modal">
+          <datalist id="nearby-places-modal"></datalist>
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
@@ -4598,7 +4663,8 @@ function _modalFormHtml(kind, v) {
         <div class="full-width">
           <label>Location</label>
           <div class="event-location-field">
-            <input type="text" data-field="location" value="${escapeHtml(v.location || '')}" placeholder="lat,lng" autocomplete="off">
+            <input type="text" data-field="location" value="${escapeHtml(v.location || '')}" placeholder="lat,lng" autocomplete="off"
+                   onchange="loadNearbyPlacesForModal()">
             <button type="button" class="btn-pick-location" onclick="showAddModalLocationMap()">Pick on Map</button>
           </div>
         </div>
@@ -4671,6 +4737,7 @@ function _openModal(kind, mode, idx, prefillValues) {
   document.getElementById('add-modal-body').innerHTML = _modalFormHtml(kind, values);
   document.getElementById('modal-submit-btn').textContent = mode === 'edit' ? 'Save' : 'Add';
   document.getElementById('modal-delete-btn').style.display = mode === 'edit' ? '' : 'none';
+  if (kind === 'event' || kind === 'waypoint') loadNearbyPlacesForModal();
 
   modal.classList.add('visible');
   setTimeout(() => {
@@ -4860,6 +4927,12 @@ if (IS_ADMIN) {
       const value = lat.toFixed(6) + ',' + lng.toFixed(6);
       const locInput = pickerTargetInput();
       if (locInput) locInput.value = value;
+      // Refresh the name-field nearby-places dropdown for event/waypoint
+      // targets. Stay targets (campsite_location) don't have one.
+      if (pickerTarget) {
+        if (pickerTarget.kind === 'event') loadNearbyPlacesForEvent(pickerTarget.idx);
+        else if (pickerTarget.kind === 'event-modal') loadNearbyPlacesForModal();
+      }
     }
   });
 }
