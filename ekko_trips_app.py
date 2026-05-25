@@ -1513,6 +1513,11 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
       - landuse=cemetery (cemeteries are areas, not amenities, so they
         wouldn't surface under amenity= — added for the trip-8
         Riverside Cemetery case)
+      - building (catches undertagged venues — e.g., trip-9 Rocky
+        Point Creamery is `building=yes` + name only, no amenity/shop
+        tag at all. Surfaces any named building, including the
+        occasional named apartment complex / private home; that's
+        worth the tradeoff to recover data-quality-gap cases)
       - highway=rest_area / services (the named highway subtypes)
     Excludes plain roads, anonymous landuse polygons, benches, and
     other infrastructure without a destination character.
@@ -1535,6 +1540,7 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
             f"  nwr['name']['historic'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['natural'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['landuse'='cemetery'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['building'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['highway'='rest_area'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['highway'='services'](around:{radius_m},{lat},{lng});"
             ");"
@@ -1567,10 +1573,13 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
             # Pick the most specific POI-class tag for the kind hint.
             # Order matches the query above so the strongest signal wins
             # (e.g., a feature tagged both leisure=park and landuse=*
-            # surfaces as leisure=park).
+            # surfaces as leisure=park). `building` is last so a venue
+            # tagged amenity=ice_cream + building=yes shows as
+            # "amenity=ice_cream", not "building=yes".
             kind = ""
             for k in ("amenity", "tourism", "shop", "leisure",
-                      "historic", "natural", "landuse", "highway"):
+                      "historic", "natural", "landuse", "highway",
+                      "building"):
                 if tags.get(k):
                     kind = f"{k}={tags[k]}"
                     break
