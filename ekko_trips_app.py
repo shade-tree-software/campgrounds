@@ -1504,10 +1504,18 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
     "amenity=restaurant" / "tourism=museum" — useful as a hint when
     multiple results share a name.
 
-    Filters to named features with a real-POI tag (amenity/tourism/
-    shop/leisure) or the rest-area / services highway subtypes.
-    Excludes plain roads, waterways, benches, and other anonymous
-    infrastructure.
+    Filters to named features that are plausibly visit-worthy:
+      - amenity / tourism / shop / leisure (standard POI classes)
+      - historic (monuments, memorials, ruins, archaeological sites)
+      - natural (peaks, waterfalls, caves, beaches, springs — and any
+        other named natural feature; the `name` requirement keeps
+        anonymous woods/water polygons out)
+      - landuse=cemetery (cemeteries are areas, not amenities, so they
+        wouldn't surface under amenity= — added for the trip-8
+        Riverside Cemetery case)
+      - highway=rest_area / services (the named highway subtypes)
+    Excludes plain roads, anonymous landuse polygons, benches, and
+    other infrastructure without a destination character.
 
     Shared by `_overpass_nearest_named_poi` (the reverse-geocode
     final-tier fallback — takes the first result) and the
@@ -1524,6 +1532,9 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
             f"  nwr['name']['tourism'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['shop'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['leisure'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['historic'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['natural'](around:{radius_m},{lat},{lng});"
+            f"  nwr['name']['landuse'='cemetery'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['highway'='rest_area'](around:{radius_m},{lat},{lng});"
             f"  nwr['name']['highway'='services'](around:{radius_m},{lat},{lng});"
             ");"
@@ -1554,9 +1565,12 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
             if not name:
                 continue
             # Pick the most specific POI-class tag for the kind hint.
-            # Order matches the query above so the strongest signal wins.
+            # Order matches the query above so the strongest signal wins
+            # (e.g., a feature tagged both leisure=park and landuse=*
+            # surfaces as leisure=park).
             kind = ""
-            for k in ("amenity", "tourism", "shop", "leisure", "highway"):
+            for k in ("amenity", "tourism", "shop", "leisure",
+                      "historic", "natural", "landuse", "highway"):
                 if tags.get(k):
                     kind = f"{k}={tags[k]}"
                     break
