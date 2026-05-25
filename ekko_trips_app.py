@@ -2163,17 +2163,18 @@ def _haversine_m(lat1, lng1, lat2, lng2):
 
 def _load_trip_track_for_detection(trip_id):
     """Return the trip's GPS pings with admin overrides honored:
-    suppressed, relocated, and bad-track-window pings are all dropped
-    entirely. Returns [] if neither cache nor API is available.
+    suppressed and bad-track-window pings are dropped entirely;
+    relocated pings have their coords rewritten to the override target
+    (same as api_trip_track) so they contribute dwell signal at the
+    corrected location. Returns [] if neither cache nor API is available.
 
-    Unlike api_trip_track (which rewrites relocated pings' coords so the
-    polyline follows the override and tags-but-keeps suppressed /
-    bad-window pings for admin ghost layers), stop detection treats any
-    admin-touched ping as untrusted and ignores it — a relocated ping
-    was moved precisely because its original reading was wrong (and the
-    new coords are usually a hand-placed pin at an existing anchor),
-    while bad-window pings come from a phone that was off-trip for that
-    period. None of them should contribute to dwell clustering.
+    The relocation behavior supports the workflow where an admin first
+    relocates obviously-errant pings (cell-tower fixes, single jumps)
+    back onto the actual trip path and then runs detect-stops, expecting
+    it to credit the dwell at the corrected coords. Suppressed pings
+    stay dropped (they're outright noise), and bad-window pings come
+    from a phone that was off-trip for that period — neither should
+    contribute to dwell clustering.
 
     Prefers the on-disk cache (the trip detail page's loadTrack() will
     have populated it on load) and only falls back to a fresh fetch
@@ -2230,11 +2231,20 @@ def _load_trip_track_for_detection(trip_id):
 
     suppressed = set(get_suppressed_pings(trip_id))
     _relocate = _relocation_lookup(get_relocated_pings(trip_id))
-    # Drop suppressed pings outright; treat *precisely* relocated pings as
-    # admin-touched-untrusted and exclude them too. Siblings sharing a tst
-    # whose specific (tst, orig_lat, orig_lon) wasn't relocated stay in.
-    points = [p for p in points
-              if p.get("tst") not in suppressed and _relocate(p) is None]
+    # Drop suppressed pings outright. For relocated pings, rewrite lat/lon
+    # to the override coords (same as api_trip_track) so they contribute
+    # dwell signal at the corrected location. Siblings sharing a tst whose
+    # specific (tst, orig_lat, orig_lon) wasn't relocated are untouched.
+    cleaned = []
+    for p in points:
+        if p.get("tst") in suppressed:
+            continue
+        ov = _relocate(p)
+        if ov is not None:
+            p["lat"] = ov[0]
+            p["lon"] = ov[1]
+        cleaned.append(p)
+    points = cleaned
     bad_windows = _bad_track_window_tsts(trip)
     if bad_windows:
         points = [p for p in points
