@@ -1196,6 +1196,25 @@
   .stop-row .stop-kind.waypoint {
     background: #ececec; color: #555;
   }
+  /* On-road rows (Nominatim primary class=highway, real driveable type
+     — see _ON_ROAD_HIGHWAY_TYPES on the backend) are auto-unchecked
+     because they're almost always traffic jams / stop lights. Dim them
+     and show a small inline tag so the admin can opt-in if it's a
+     legit roadside stop. */
+  .stop-row.on-road { opacity: .7; }
+  .stop-row .stop-traffic-tag {
+    display: inline-block;
+    margin-left: .4rem;
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: #b04a14;
+    background: #fbe7dc;
+    padding: .05rem .35rem;
+    border-radius: 3px;
+    vertical-align: middle;
+  }
 
   /* ── Needs-vetting visual treatment ─────────────────────────────── */
   /* Dashed amber border + "NEEDS REVIEW" badge in the card header so
@@ -3264,6 +3283,10 @@ function _renderDetectStopRow(s, i) {
   // locale/state arrive, the row is no longer pending.
   const pending = (s.event.name === 'Detected stop'
                    && !s.event.locale && !s.event.state);
+  // On-road rows default to unchecked (centroid snapped to a real road
+  // — almost always traffic, not a stop). The badge + dim styling let
+  // the admin opt back in for a legit roadside stop.
+  const onRoad = d.on_road === true;
   const name = s.event.name || '(unnamed)';
   const place = [d.start_local, dur].filter(Boolean).join(' · ');
   const loc = [s.event.locale, s.event.state].filter(Boolean).join(', ');
@@ -3271,11 +3294,14 @@ function _renderDetectStopRow(s, i) {
   const tail = pending
     ? '<span style="opacity:.6;font-style:italic;">reverse-geocoding…</span>'
     : (loc ? escapeHtml(loc) : '<span style="opacity:.5;">(no locale found)</span>');
+  const trafficTag = onRoad
+    ? ' <span class="stop-traffic-tag" title="Cluster centroid snapped to a real road — usually a traffic jam or stop light, not a real stop. Check the box if this was actually a roadside stop.">on road · likely traffic</span>'
+    : '';
   return `
-    <label class="stop-row" data-stop-idx="${i}">
-      <input type="checkbox" data-idx="${i}" checked onchange="updateDetectStopsCount()">
+    <label class="stop-row${onRoad ? ' on-road' : ''}" data-stop-idx="${i}">
+      <input type="checkbox" data-idx="${i}" ${onRoad ? '' : 'checked'} onchange="updateDetectStopsCount()">
       <div>
-        <div class="stop-name">${escapeHtml(name)}</div>
+        <div class="stop-name">${escapeHtml(name)}${trafficTag}</div>
         <div class="stop-meta">${escapeHtml(place)} — ${tail}</div>
         <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
       </div>
@@ -3541,13 +3567,21 @@ async function _runDetectStopsGeocoding(signal) {
       if (info.locale) s.event.locale = info.locale;
       if (info.state) s.event.state = info.state;
       if (info.display_name) s.display.display_name = info.display_name;
-      // Re-render the row in place, preserving its checkbox state.
+      // on_road is a UI-only hint (lives on display, not event) — when
+      // true, _renderDetectStopRow emits an unchecked box + traffic tag.
+      s.display.on_road = !!info.on_road;
+      // Re-render the row in place. Preserve checkbox state EXCEPT for
+      // freshly-discovered on-road rows, which should land unchecked
+      // even though they were checked on first render.
       const row = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
       if (row) {
         const wasChecked = row.querySelector('input[type="checkbox"]').checked;
         row.outerHTML = _renderDetectStopRow(s, i);
         const newRow = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
-        if (newRow) newRow.querySelector('input[type="checkbox"]').checked = wasChecked;
+        if (newRow) {
+          newRow.querySelector('input[type="checkbox"]').checked =
+            s.display.on_road ? false : wasChecked;
+        }
       }
     } catch (e) {
       if (e.name === 'AbortError') return;

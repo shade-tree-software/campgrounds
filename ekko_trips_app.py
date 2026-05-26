@@ -1497,6 +1497,26 @@ def _nominatim_nearest_poi(lat, lng):
 POI_FALLBACK_MAX_M = 150
 
 
+# OSM `highway=*` values that count as "on a real road" for the
+# detect-stops on-road signal — i.e. a cluster centroid snapping here is
+# almost certainly a traffic jam / stop light, not a parked vehicle.
+# Excludes `service` (driveways, parking aisles), `track` (forest/farm
+# roads), `pedestrian`/`footway`/`path`/`cycleway`/`steps` (not driveable),
+# and `construction`/`proposed` (not real). Link variants are included —
+# on-ramps and off-ramps are also normal traffic-stop territory.
+_ON_ROAD_HIGHWAY_TYPES = {
+    "motorway", "motorway_link",
+    "trunk", "trunk_link",
+    "primary", "primary_link",
+    "secondary", "secondary_link",
+    "tertiary", "tertiary_link",
+    "residential",
+    "unclassified",
+    "living_street",
+    "road",
+}
+
+
 def _overpass_named_pois(lat, lng, radius_m, limit=20):
     """Query Overpass for named non-road OSM features within `radius_m`
     of (lat,lng). Returns up to `limit` results sorted by distance, each
@@ -1657,6 +1677,15 @@ def _reverse_geocode(lat, lng):
             disp = (data.get("display_name") or "").split(",", 1)[0].strip()
             name = disp
         primary_class = (data.get("class") or "").strip()
+        primary_type = (data.get("type") or "").strip()
+        # On-road signal for detect-stops: a cluster whose centroid snaps
+        # to a real road is almost always a traffic jam / stop light
+        # rather than a legitimate stop (those land in parking lots,
+        # which OSM tags as amenity=parking / amenity=fuel / etc.).
+        # `service` and `track` are excluded because they cover driveways
+        # and parking aisles — the legitimate-stop case.
+        on_road = (primary_class == "highway"
+                   and primary_type in _ON_ROAD_HIGHWAY_TYPES)
         # Trigger the fallback chain when the primary hit is a road, a
         # bare house number, or had no real POI name (display_name
         # fallthrough — typically yields the road of an unnamed
@@ -1702,9 +1731,10 @@ def _reverse_geocode(lat, lng):
             "locale": locale,
             "state": state,
             "display_name": data.get("display_name", ""),
+            "on_road": on_road,
         }
     except Exception:
-        return {"name": "", "locale": "", "state": "", "display_name": ""}
+        return {"name": "", "locale": "", "state": "", "display_name": "", "on_road": False}
 
 
 @app.route('/api/reverse-geocode')
