@@ -569,9 +569,9 @@ def trips_stats():
     bars, and the state list. Computed on every request — total
     work is O(trips + photos-on-disk), bounded enough for now."""
     trips = parse_trips()
-    is_admin = current_user.is_authenticated and current_user.is_admin
-    if not is_admin:
-        trips = [t for t in trips if not t.get("home_only")]
+    # Stats aggregate the camping/travel record; home-only trips aren't
+    # part of that for any viewer.
+    trips = [t for t in trips if not t.get("home_only")]
 
     total_trips = len(trips)
     total_overnight = sum(1 for t in trips if t.get("stays"))
@@ -592,14 +592,17 @@ def trips_stats():
             if os.path.isdir(d):
                 photo_count += sum(1 for f in os.listdir(d) if _allowed_file(f))
 
+    # Normalize through _US_STATE_ABBR so e.g. "Pennsylvania" and "PA"
+    # collapse to one entry. Anything not in the map (already an abbrev,
+    # foreign, blank/odd) passes through unchanged.
     states = set()
     for t in trips:
         for s in t.get("stays", []):
             if s.get("state"):
-                states.add(s["state"])
+                states.add(_US_STATE_ABBR.get(s["state"], s["state"]))
         for e in t.get("events", []):
             if e.get("state"):
-                states.add(e["state"])
+                states.add(_US_STATE_ABBR.get(e["state"], e["state"]))
 
     # Top campgrounds by visit count, by canonical place name. `place` is
     # materialized by _make_trip from campground_id, so renames don't
