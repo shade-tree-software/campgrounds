@@ -131,20 +131,14 @@
     .leaflet-popup-content a { word-break: break-word; }
   }
 
-  @media (max-width: 700px) {
-    header {
-      padding: .6rem .75rem;
-    }
-    header h1 { font-size: 1.2rem; }
-    .header-title { gap: .25rem; }
+  /* Collapse the nav to a hamburger at tablet widths too. The admin nav
+     (Trips + Campgrounds + Admin sections + Logout) is ~990px wide; an
+     iPad in portrait (768–834px) overflows it. iPad landscape (1080px+)
+     still gets the full nav. */
+  @media (max-width: 1024px) {
     .nav-toggle { display: block; margin-left: -.25rem; }
-    .stats {
-      gap: .75rem;
-      font-size: .75rem;
-    }
-    .stats div { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
 
-    /* Entire nav bar collapses on mobile; only renders when toggled open. */
+    /* Entire nav bar collapses; only renders when toggled open. */
     nav#site-nav {
       display: none;
       padding: 0 1rem;
@@ -176,12 +170,27 @@
       border-top: 1px solid rgba(255,255,255,.18);
     }
     /* Cancel desktop's left indent for subsequent nav-groups so Campgrounds
-       and Admin sections align flush-left on mobile. */
+       and Admin sections align flush-left when collapsed. */
     .nav-group + .nav-group { margin-left: 0; }
     .nav-collapse > .nav-group + a {
       padding: .65rem 0;
     }
     .nav-collapse > a { width: 100%; margin-left: 0 !important; }
+  }
+
+  /* Phone-only: shrink the header text + stats. iPad has room for the
+     full-size header even with the hamburger nav. */
+  @media (max-width: 700px) {
+    header {
+      padding: .6rem .75rem;
+    }
+    header h1 { font-size: 1.2rem; }
+    .header-title { gap: .25rem; }
+    .stats {
+      gap: .75rem;
+      font-size: .75rem;
+    }
+    .stats div { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
   }
 
   {% block style %}{% endblock %}
