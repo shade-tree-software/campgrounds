@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+
+{% block style %}
+  .stats-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+  }
+  .stats-page h1 {
+    color: var(--navy);
+    font-size: 1.6rem;
+    margin: 0 0 1.25rem;
+  }
+  .stats-page h2 {
+    color: var(--navy);
+    font-size: 1.1rem;
+    margin: 2rem 0 .75rem;
+    border-bottom: 1px solid var(--gray-light);
+    padding-bottom: .35rem;
+  }
+
+  /* Hero grid: 4 big numbers across, wraps to 2x2 on narrow viewports. */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .stat-card {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.25rem 1rem;
+    text-align: center;
+  }
+  .stat-card .stat-num {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--red);
+    line-height: 1.1;
+  }
+  .stat-card .stat-sub {
+    font-size: .75rem;
+    color: var(--gray);
+    margin-top: .25rem;
+  }
+  .stat-card .stat-label {
+    font-size: .85rem;
+    color: var(--gray);
+    margin-top: .35rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+  }
+
+  /* Top campgrounds: ranked list with visit-count chip. */
+  .top-cg-list {
+    list-style: none;
+    padding: 0; margin: 0;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .top-cg-list li {
+    display: flex; align-items: center; gap: 1rem;
+    padding: .6rem 1rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .top-cg-list li:last-child { border-bottom: none; }
+  .top-cg-list .cg-count {
+    background: var(--navy);
+    color: var(--white);
+    font-weight: 700;
+    border-radius: 4px;
+    padding: .15rem .55rem;
+    font-size: .85rem;
+    min-width: 1.5rem; text-align: center;
+  }
+  .top-cg-list .cg-name {
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* Year bars: one row per year, bar width proportional to count. */
+  .year-bars {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+  }
+  .year-bar {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr 2rem;
+    align-items: center;
+    gap: .65rem;
+    padding: .25rem 0;
+  }
+  .year-bar .year-label {
+    color: var(--gray);
+    font-size: .85rem;
+    font-weight: 600;
+  }
+  .year-bar .year-bar-bg {
+    background: var(--gray-light);
+    border-radius: 3px;
+    height: .8rem;
+    overflow: hidden;
+  }
+  .year-bar .year-bar-fill {
+    background: var(--red);
+    height: 100%;
+    border-radius: 3px;
+    transition: width .35s ease;
+  }
+  .year-bar .year-count {
+    color: var(--gray);
+    font-size: .85rem;
+    text-align: right;
+  }
+
+  .state-list {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1rem 1.25rem;
+    line-height: 1.8;
+    color: var(--navy);
+    font-weight: 600;
+    letter-spacing: .03em;
+  }
+  .state-list .state-chip {
+    display: inline-block;
+    background: var(--gray-light);
+    color: var(--navy);
+    padding: .1rem .5rem;
+    border-radius: 4px;
+    margin: .1rem .15rem;
+    font-size: .85rem;
+  }
+
+  @media (max-width: 700px) {
+    .stats-page { padding: 1rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-card .stat-num { font-size: 1.8rem; }
+    .year-bar { grid-template-columns: 3rem 1fr 1.75rem; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="stats-page">
+  <h1>EKKO All-Time Stats</h1>
+
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">{{ total_trips }}</div>
+      <div class="stat-sub">
+        {{ total_overnight }} overnight ·
+        {{ total_day_trips }} day trip{{ '' if total_day_trips == 1 else 's' }}
+      </div>
+      <div class="stat-label">Trips</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ total_nights }}</div>
+      <div class="stat-label">Nights Camping</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ states_count }}</div>
+      <div class="stat-label">States Visited</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ photo_count }}</div>
+      <div class="stat-label">Photos</div>
+    </div>
+  </div>
+
+  {% if top_campgrounds %}
+  <h2>Most Visited Campgrounds</h2>
+  <ul class="top-cg-list">
+    {% for cg in top_campgrounds %}
+    <li>
+      <span class="cg-count">{{ cg.count }}</span>
+      <span class="cg-name">{{ cg.name }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if trips_by_year %}
+  <h2>Trips by Year</h2>
+  {% set max_count = trips_by_year | map(attribute=1) | max %}
+  <div class="year-bars">
+    {% for year, count in trips_by_year %}
+    <div class="year-bar">
+      <div class="year-label">{{ year }}</div>
+      <div class="year-bar-bg">
+        <div class="year-bar-fill" style="width: {{ ((count / max_count) * 100) | round(1) }}%;"></div>
+      </div>
+      <div class="year-count">{{ count }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if states_list %}
+  <h2>States Visited</h2>
+  <div class="state-list">
+    {% for st in states_list %}<span class="state-chip">{{ st }}</span>{% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

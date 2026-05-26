@@ -48,14 +48,107 @@
     right: 2rem;
   }
 
+  /* Search input. Sits in .controls; when non-empty, hides year nav and
+     renders matching trips across all years as a flat list. The wrapping
+     <label> is purely a click-target widener. */
+  .controls .search-wrap {
+    position: relative;
+    flex: 0 1 18rem;
+  }
+  .controls .search-wrap input {
+    width: 100%;
+    padding: .45rem .75rem .45rem 2rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    font-size: .9rem;
+    background: var(--white);
+    color: var(--navy);
+  }
+  .controls .search-wrap input:focus {
+    outline: none; border-color: var(--red);
+  }
+  .controls .search-wrap::before {
+    content: '';
+    position: absolute;
+    left: .65rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: .9rem; height: .9rem;
+    border: 1.5px solid var(--gray);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .controls .search-wrap::after {
+    content: '';
+    position: absolute;
+    left: 1.3rem;
+    top: calc(50% + .25rem);
+    width: .35rem;
+    height: 1.5px;
+    background: var(--gray);
+    transform: rotate(45deg);
+    transform-origin: left center;
+    pointer-events: none;
+  }
+  /* When searching, dim year nav + dot indicator + count. */
+  .controls.searching #prev-year-btn,
+  .controls.searching #next-year-btn,
+  .controls.searching .year-label { opacity: .35; pointer-events: none; }
+
+  /* "On this day" widget — small card above the calendar/list. Only
+     shown when prior-year trips overlap today's month-day. */
+  .on-this-day {
+    max-width: 900px;
+    margin: 1rem auto 0;
+    padding: .65rem 1rem;
+    background: linear-gradient(90deg, #fff8e3, #fff);
+    border: 1px solid #f0d97a;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: .9rem;
+  }
+  .on-this-day .otd-label {
+    font-weight: 700;
+    color: #8a6d0a;
+    flex-shrink: 0;
+  }
+  .on-this-day .otd-trips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem 1rem;
+  }
+  .on-this-day .otd-trip {
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .on-this-day .otd-trip:hover { text-decoration: underline; }
+  .on-this-day .otd-trip .otd-years-ago {
+    color: var(--gray); font-size: .8rem;
+  }
+  @media (max-width: 700px) {
+    .on-this-day {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .35rem;
+      margin: .6rem .75rem 0;
+    }
+  }
+
   @media (max-width: 700px) {
     .controls {
       padding: .6rem .75rem;
       gap: .5rem;
       justify-content: space-between;
+      flex-wrap: wrap;
     }
     .controls button { padding: .4rem .9rem; font-size: 1.1rem; }
     .controls .year-label { font-size: 1.1rem; min-width: 3.5rem; }
+    .controls .search-wrap {
+      flex: 1 1 100%;
+      order: 10;  /* drop to its own row below the year/new-trip controls */
+    }
     .controls .btn-add-trip {
       position: static;
       right: auto;
@@ -268,10 +361,14 @@
 {% endblock %}
 
 {% block content %}
-<div class="controls">
+<div class="controls" id="controls">
   <button id="prev-year-btn" onclick="prevYear()">&larr;</button>
   <div class="year-label" id="year-label"></div>
   <button id="next-year-btn" onclick="nextYear()">&rarr;</button>
+  <label class="search-wrap">
+    <input id="trip-search" type="search" placeholder="Search trips…" autocomplete="off"
+           oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Escape'){this.value='';onSearchInput('');}">
+  </label>
   {% if current_user.is_authenticated and current_user.is_admin %}
   <button class="btn-add-trip" onclick="addTrip()" style="
     background: var(--red);
@@ -286,6 +383,7 @@
   {% endif %}
 </div>
 
+<div id="on-this-day" class="on-this-day" style="display:none;"></div>
 <div id="calendar-container" class="calendar-grid"></div>
 <div id="list-container" class="list-view hidden"></div>
 
@@ -331,8 +429,43 @@ function parseHash() {
 
 let currentYear = parseHash();
 let currentView = {{ initial_view | tojson }};
+let searchQuery = '';   // active query — when non-empty, list view shows global matches
 
 const todayStr = new Date().toISOString().slice(0, 10);
+
+// Build a single lowercased haystack per trip once, so each keystroke
+// is a fast .includes() check rather than a fresh field-by-field crawl.
+const TRIP_HAYSTACK = {};
+TRIPS.forEach(t => {
+  const parts = [
+    t.summary || '',
+    t.note || '',
+    t.start || '',
+    t.end || '',
+    (t.campers || []).join(' '),
+    (t.stays || []).map(s => `${s.place || ''} ${s.state || ''} ${s.locale || ''} ${s.notes || ''}`).join(' '),
+    (t.events || []).map(e => `${e.name || ''} ${e.locale || ''} ${e.state || ''} ${e.description || ''}`).join(' '),
+  ];
+  TRIP_HAYSTACK[t.id] = parts.join(' ').toLowerCase();
+});
+
+function searchMatches(query) {
+  const q = (query || '').trim().toLowerCase();
+  if (!q) return null;
+  const tokens = q.split(/\s+/);
+  return TRIPS.filter(t => {
+    const h = TRIP_HAYSTACK[t.id] || '';
+    return tokens.every(tok => h.includes(tok));
+  });
+}
+
+function onSearchInput(value) {
+  searchQuery = value || '';
+  document.getElementById('controls').classList.toggle('searching', !!searchQuery.trim());
+  // Searching always renders results as a list. Calendar grid is hidden
+  // for the duration; the prior view is restored when search clears.
+  render();
+}
 
 window.addEventListener('hashchange', () => {
   currentYear = parseHash();
@@ -356,8 +489,122 @@ function render() {
   document.getElementById('prev-year-btn').disabled = currentYear <= minYear;
   document.getElementById('next-year-btn').disabled = currentYear >= maxYear;
   updateHash();
-  if (currentView === 'calendar') renderCalendar();
-  else renderList();
+  // Search overrides view: results render as a list regardless of which
+  // view (calendar/list) was active. When search clears, restore.
+  const searchActive = !!searchQuery.trim();
+  document.getElementById('calendar-container').classList.toggle('hidden', searchActive || currentView !== 'calendar');
+  document.getElementById('list-container').classList.toggle('hidden', !searchActive && currentView !== 'list');
+  if (searchActive) {
+      renderSearchResults();
+  } else if (currentView === 'calendar') {
+    renderCalendar();
+  } else {
+    renderList();
+  }
+  renderOnThisDay();
+}
+
+function renderSearchResults() {
+  const results = searchMatches(searchQuery) || [];
+  const container = document.getElementById('list-container');
+  if (results.length === 0) {
+    container.innerHTML = `<p style="text-align:center;color:#999;padding:2rem;">No trips match "${escapeHtml(searchQuery.trim())}".</p>`;
+    return;
+  }
+  // Sort by start date descending; empty-dated trips at the end.
+  const sorted = results.slice().sort((a, b) => {
+    if (!a.start && !b.start) return 0;
+    if (!a.start) return 1;
+    if (!b.start) return -1;
+    return b.start.localeCompare(a.start);
+  });
+  container.innerHTML = `<p style="color:var(--gray);font-size:.85rem;margin:0 0 .75rem;">${sorted.length} match${sorted.length === 1 ? '' : 'es'}</p>`;
+  sorted.forEach(trip => container.appendChild(buildTripCard(trip, { includeYear: true })));
+}
+
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+// Extracted from the legacy renderList loop body so search results and
+// list view share one row template. `includeYear` controls whether date
+// stamps carry "YYYY" — list view is year-scoped so the year is
+// redundant; search spans years so it isn't.
+function buildTripCard(trip, opts) {
+  opts = opts || {};
+  const a = document.createElement('a');
+  a.href = '/trips/' + trip.id;
+  a.className = 'trip-card' + (trip.home_only ? ' home-only' : '');
+  let datesHtml = '';
+  if (trip.start) {
+    const startD = new Date(trip.start + 'T00:00:00');
+    const endD = new Date(trip.end + 'T00:00:00');
+    const fmtOpts = { month: 'short', day: 'numeric' };
+    if (opts.includeYear) fmtOpts.year = 'numeric';
+    const fmt = d => d.toLocaleDateString('en-US', fmtOpts);
+    datesHtml = `${fmt(startD)}<br>&ndash; ${fmt(endD)}`;
+  }
+  const counts = [];
+  if (trip.total_nights) counts.push(`${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''}`);
+  if (trip.stays.length) counts.push(`${trip.stays.length} campspot${trip.stays.length !== 1 ? 's' : ''}`);
+  if (trip.events.length) counts.push(`${trip.events.length} event${trip.events.length !== 1 ? 's' : ''}`);
+  const numLabel = trip.number ? '#' + trip.number : 'Home';
+  a.innerHTML = `
+    <div class="trip-number">${numLabel}</div>
+    <div class="dates">${datesHtml}</div>
+    <div class="info">
+      <h3>${escapeHtml(trip.summary || '')}</h3>
+      <div class="meta">${escapeHtml((trip.campers || []).join(', '))}</div>
+    </div>
+    ${counts.length ? `<div class="stays-count">${counts.join(', ')}</div>` : ''}
+  `;
+  return a;
+}
+
+// "On this day": surface prior-year trips whose date range includes
+// today's month-day. Skip the current year (you already see today's
+// week in the calendar) and trips without dates.
+function renderOnThisDay() {
+  const el = document.getElementById('on-this-day');
+  if (!el) return;
+  // Hide the widget while searching — the search results page is busy
+  // enough and the widget would compete for attention.
+  if (searchQuery.trim()) { el.style.display = 'none'; return; }
+  const today = new Date();
+  const currentY = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  const todayMD = `${mm}-${dd}`;
+  // A trip "covers today's MM-DD" iff there exists any year y in [start.year, end.year]
+  // such that y + "-" + todayMD lies in [start, end]. Simple iteration over the trip's
+  // year span — trips span at most a couple of years.
+  const matches = [];
+  TRIPS.forEach(t => {
+    if (!t.start || !t.end) return;
+    const sy = parseInt(t.start.slice(0, 4));
+    const ey = parseInt(t.end.slice(0, 4));
+    for (let y = sy; y <= ey; y++) {
+      if (y >= currentY) continue;  // only prior years
+      const probe = `${y}-${todayMD}`;
+      if (probe >= t.start && probe <= t.end) {
+        matches.push({ trip: t, year: y });
+        break;
+      }
+    }
+  });
+  if (matches.length === 0) { el.style.display = 'none'; return; }
+  // Sort by years-ago ascending (closest first).
+  matches.sort((a, b) => b.year - a.year);
+  const niceDate = today.toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  const links = matches.map(({ trip, year }) => {
+    const yearsAgo = currentY - year;
+    const ago = yearsAgo === 1 ? '1 year ago' : `${yearsAgo} years ago`;
+    return `<a class="otd-trip" href="/trips/${trip.id}">${escapeHtml(trip.summary || 'Trip')} <span class="otd-years-ago">(${ago})</span></a>`;
+  }).join('');
+  el.innerHTML = `<div class="otd-label">On ${niceDate}…</div><div class="otd-trips">${links}</div>`;
+  el.style.display = '';
 }
 
 function renderCalendar() {
@@ -465,34 +712,7 @@ function renderList() {
   }
 
   [...yearTrips, ...emptyTrips].forEach(trip => {
-    const a = document.createElement('a');
-    a.href = '/trips/' + trip.id;
-    a.className = 'trip-card' + (trip.home_only ? ' home-only' : '');
-
-    let datesHtml = '';
-    if (trip.start) {
-      const startD = new Date(trip.start + 'T00:00:00');
-      const endD = new Date(trip.end + 'T00:00:00');
-      const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      datesHtml = `${fmt(startD)}<br>&ndash; ${fmt(endD)}`;
-    }
-
-    const counts = [];
-    if (trip.total_nights) counts.push(`${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''}`);
-    if (trip.stays.length) counts.push(`${trip.stays.length} campspot${trip.stays.length !== 1 ? 's' : ''}`);
-    if (trip.events.length) counts.push(`${trip.events.length} event${trip.events.length !== 1 ? 's' : ''}`);
-
-    const numLabel = trip.number ? '#' + trip.number : 'Home';
-    a.innerHTML = `
-      <div class="trip-number">${numLabel}</div>
-      <div class="dates">${datesHtml}</div>
-      <div class="info">
-        <h3>${trip.summary}</h3>
-        <div class="meta">${trip.campers.join(', ')}</div>
-      </div>
-      ${counts.length ? `<div class="stays-count">${counts.join(', ')}</div>` : ''}
-    `;
-    container.appendChild(a);
+    container.appendChild(buildTripCard(trip));
   });
 }
 

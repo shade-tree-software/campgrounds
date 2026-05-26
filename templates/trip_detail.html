@@ -1281,7 +1281,30 @@
     cursor: pointer;
     background: none;
     border: none;
+    line-height: 1;
   }
+
+  /* Download button. Mobile users can't right-click; this gives them a
+     way to save a photo. Sits just to the left of the close button. */
+  .lightbox .lb-download {
+    position: absolute;
+    top: 1rem;
+    right: 3.5rem;
+    color: var(--white);
+    cursor: pointer;
+    background: rgba(0,0,0,.3);
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background .15s;
+  }
+  .lightbox .lb-download:hover { background: rgba(255,255,255,.2); }
+  .lightbox .lb-download svg { display: block; }
 
   .lightbox .nav-btn {
     position: absolute;
@@ -1470,11 +1493,25 @@
     </div>
     {% set real_events = trip.events | rejectattr('waypoint') | list %}
     {% set waypoints = trip.events | selectattr('waypoint') | list %}
+    {# Unique state set across stays + events. Used for the "N states"
+       summary chip. Empty / falsy state values are filtered out. #}
+    {% set states_set = ((trip.stays | map(attribute='state') | reject('equalto', '') | list)
+                       + (trip.events | map(attribute='state') | reject('equalto', '') | list))
+                       | unique | list %}
+    {# Total photo count across all stays + events. stay_photos / event_photos
+       are dicts of {idx: [photo, ...]}; map their values to length and sum. #}
+    {% set photos_count = (stay_photos.values() | map('length') | sum)
+                        + (event_photos.values() | map('length') | sum) %}
     <div class="meta">
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if real_events %}<div><span>{{ real_events|length }}</span> event{{ '' if real_events|length == 1 else 's' }}</div>{% endif %}
       {% if waypoints %}<div><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
+      {% if states_set|length > 1 %}<div><span>{{ states_set|length }}</span> states</div>{% endif %}
+      {% if photos_count > 0 %}<div><span>{{ photos_count }}</span> photo{{ '' if photos_count == 1 else 's' }}</div>{% endif %}
+      {# Populated client-side by computeAndShowGpsMiles() once the GPS
+         track polyline is built. Hidden if the track never loads. #}
+      <div id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
       {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
       {% if trip.campers %}
       <div>{{ trip.campers|join(', ') }}</div>
@@ -1744,11 +1781,11 @@
      Admins still get a hidden body in the DOM so the photo-dragging CSS
      can reveal it as a drop target — see the `.photo-dragging` rules above. #}
   {% set is_bare = (not event_photos[item.idx]) and (item.waypoint or item.family_visit or not item.description) %}
-  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
+  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
-        <h3>{{ item.name }}{% if item.needs_vetting %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
+        <h3>{{ item.name }}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
           {% if item.locale or item.state %}
             {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
@@ -2009,12 +2046,17 @@
 
 <!-- Lightbox -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
-  <button class="close-btn">&times;</button>
-  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)">&#8249;</button>
+  <button class="close-btn" title="Close (Esc)">&times;</button>
+  <button class="lb-download" id="lb-download" title="Download" onclick="downloadLightbox(event)" aria-label="Download photo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 16h14"/>
+    </svg>
+  </button>
+  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)">&#8249;</button>
   <img id="lightbox-img" src="" alt="">
   <div class="lb-caption" id="lb-caption"></div>
   <div class="lb-date" id="lb-date"></div>
-  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)">&#8250;</button>
+  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)" title="Next (→)">&#8250;</button>
 </div>
 {% endblock %}
 
@@ -2199,6 +2241,30 @@ window.addEventListener('beforeunload', _saveMapView);
 // don't need the saved-view dance above). Mutations that change stay/event
 // data still go through `_reloadKeepingMapView()` because the cards and
 // stay markers are server-rendered and would need fresh HTML.
+// Sum haversine segments along the polyline → miles → header chip.
+// Hidden when the polyline is empty / has only one point (no GPS track
+// rendered this load).
+function computeAndShowGpsMiles(latlngs) {
+  const el = document.getElementById('trip-gps-miles');
+  if (!el) return;
+  if (!latlngs || latlngs.length < 2) { el.style.display = 'none'; return; }
+  const R_KM = 6371;
+  const toRad = d => d * Math.PI / 180;
+  let km = 0;
+  for (let i = 1; i < latlngs.length; i++) {
+    const [la1, lo1] = latlngs[i - 1];
+    const [la2, lo2] = latlngs[i];
+    const dLa = toRad(la2 - la1);
+    const dLo = toRad(lo2 - lo1);
+    const a = Math.sin(dLa / 2) ** 2
+            + Math.cos(toRad(la1)) * Math.cos(toRad(la2)) * Math.sin(dLo / 2) ** 2;
+    km += 2 * R_KM * Math.asin(Math.sqrt(a));
+  }
+  const miles = km * 0.621371;
+  el.querySelector('span').textContent = miles >= 100 ? Math.round(miles) : miles.toFixed(1);
+  el.style.display = '';
+}
+
 function refetchAndRenderTrack() {
   if (!window.__renderGpsTrack) return Promise.resolve();
   // Clear any active ping selection so a freshly-suppressed batch doesn't
@@ -2747,6 +2813,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       map.removeLayer(straightRouteLayer);
     }
     gpsRouteLayer.addTo(map);
+    // Total polyline length in miles → trip header summary chip. Stays
+    // hidden when no GPS layer renders. Recomputed every time the
+    // polyline is rebuilt (the chip just gets the latest value).
+    computeAndShowGpsMiles(latlngs);
 
     // Current-location marker: when *now* sits inside the trip window, drop
     // a pulsing green dot at the most recent in-window ping so anyone
@@ -2975,8 +3045,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // Auto-detected (still-unvetted) items get an amber ring + a
     // double box-shadow halo instead of the default white border, so
     // admins can spot them on the map at a glance — matches the
-    // dashed-amber treatment on the timeline card.
-    const needsVetting = !!evt.needs_vetting;
+    // dashed-amber treatment on the timeline card. Non-admins can't
+    // act on the flag, so we render them like any other event.
+    const needsVetting = IS_ADMIN && !!evt.needs_vetting;
     const borderCss = needsVetting
       ? 'border:2px dashed #e0a020;box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.4);'
       : 'border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);';
@@ -5528,7 +5599,65 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('visible');
   if (e.key === 'ArrowLeft') lightboxNav(e, -1);
   if (e.key === 'ArrowRight') lightboxNav(e, 1);
+  if (e.key === 'f' || e.key === 'F') toggleLightboxFullscreen();
 });
+
+// Toggle browser fullscreen on the lightbox element. Browsers gate
+// requestFullscreen on a user gesture — a keydown counts, so this works
+// without prompting.
+function toggleLightboxFullscreen() {
+  const lb = document.getElementById('lightbox');
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  } else if (lb.requestFullscreen) {
+    lb.requestFullscreen().catch(() => { /* user denied or browser refused */ });
+  }
+}
+
+// Trigger a download of the current lightbox photo. The image is served
+// from /static/uploads (same origin) so the anchor's `download` attr
+// honors the filename hint. Stop propagation so the click doesn't also
+// hit closeLightbox.
+function downloadLightbox(e) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  const img = document.getElementById('lightbox-img');
+  const src = img && img.src;
+  if (!src) return;
+  const filename = src.split('/').pop().split('?')[0] || 'photo.jpg';
+  const a = document.createElement('a');
+  a.href = src;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+// Swipe-to-navigate on mobile. Listen on the lightbox container so
+// touches on the photo, caption, or empty backdrop all count. Threshold
+// of 50px / max-vertical 80px filters out scroll/jitter.
+(function() {
+  let startX = null, startY = null, startT = 0;
+  const lb = document.getElementById('lightbox');
+  if (!lb) return;
+  lb.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { startX = null; return; }
+    const t = e.touches[0];
+    startX = t.clientX; startY = t.clientY; startT = Date.now();
+  }, { passive: true });
+  lb.addEventListener('touchend', e => {
+    if (startX == null) return;
+    const t = (e.changedTouches && e.changedTouches[0]);
+    if (!t) { startX = null; return; }
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    const dt = Date.now() - startT;
+    startX = null;
+    // Horizontal swipe: ≥ 50 px and mostly horizontal and under 800 ms.
+    if (Math.abs(dx) >= 50 && Math.abs(dy) <= 80 && dt <= 800) {
+      lightboxNav({ stopPropagation() {} }, dx < 0 ? 1 : -1);
+    }
+  }, { passive: true });
+})();
 
 function escapeHtml(text) {
   const div = document.createElement('div');

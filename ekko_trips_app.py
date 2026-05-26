@@ -562,6 +562,83 @@ def trips_calendar():
     return render_template('trips_calendar.html', trips=trips, initial_view=initial_view, active_nav=initial_view)
 
 
+@app.route('/trips/stats')
+def trips_stats():
+    """All-time aggregates across every trip. Hero numbers (trips,
+    nights, states, photos), most-visited campgrounds, trips-by-year
+    bars, and the state list. Computed on every request — total
+    work is O(trips + photos-on-disk), bounded enough for now."""
+    trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
+
+    total_trips = len(trips)
+    total_overnight = sum(1 for t in trips if t.get("stays"))
+    total_day_trips = sum(1 for t in trips if not t.get("stays") and t.get("events"))
+    total_nights = sum(t.get("total_nights", 0) for t in trips)
+
+    # Photos: walk every photo directory under each trip. Cheap — just an
+    # os.listdir per stay/event index. Avoids loading photo_order.json.
+    photo_count = 0
+    for t in trips:
+        tid = t["id"]
+        for i in range(len(t.get("stays", []))):
+            d = os.path.join(UPLOAD_DIR, str(tid), str(i))
+            if os.path.isdir(d):
+                photo_count += sum(1 for f in os.listdir(d) if _allowed_file(f))
+        for i in range(len(t.get("events", []))):
+            d = os.path.join(UPLOAD_DIR, str(tid), "events", str(i))
+            if os.path.isdir(d):
+                photo_count += sum(1 for f in os.listdir(d) if _allowed_file(f))
+
+    states = set()
+    for t in trips:
+        for s in t.get("stays", []):
+            if s.get("state"):
+                states.add(s["state"])
+        for e in t.get("events", []):
+            if e.get("state"):
+                states.add(e["state"])
+
+    # Top campgrounds by visit count, by canonical place name. `place` is
+    # materialized by _make_trip from campground_id, so renames don't
+    # split a count across two entries.
+    cg_visits = {}
+    for t in trips:
+        for s in t.get("stays", []):
+            name = (s.get("place") or "").strip()
+            if name:
+                cg_visits[name] = cg_visits.get(name, 0) + 1
+    top_campgrounds = [
+        {"name": name, "count": count}
+        for name, count in sorted(cg_visits.items(), key=lambda x: (-x[1], x[0]))[:10]
+        if count >= 2  # one-time stays aren't "most visited"
+    ]
+
+    # Trips-per-year. Empty-dated trips are excluded (no year to assign).
+    trips_by_year = {}
+    for t in trips:
+        if t.get("start"):
+            y = int(t["start"][:4])
+            trips_by_year[y] = trips_by_year.get(y, 0) + 1
+    trips_by_year_sorted = sorted(trips_by_year.items())
+
+    return render_template(
+        'trips_stats.html',
+        total_trips=total_trips,
+        total_overnight=total_overnight,
+        total_day_trips=total_day_trips,
+        total_nights=total_nights,
+        photo_count=photo_count,
+        states_count=len(states),
+        states_list=sorted(states),
+        top_campgrounds=top_campgrounds,
+        trips_by_year=trips_by_year_sorted,
+        active_nav='stats',
+    )
+
+
 @app.route('/trips/<int:trip_id>')
 def trip_detail(trip_id):
     trips = parse_trips()
