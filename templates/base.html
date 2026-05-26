@@ -99,8 +99,10 @@
     color: var(--white);
     font-size: 1.5rem;
     cursor: pointer;
-    padding: .15rem .4rem;
+    padding: .5rem .75rem;
     line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   /* On desktop, .nav-collapse is invisible to layout — its children
@@ -117,10 +119,13 @@
     }
     /* Leaflet measures the content's natural width and writes it inline on
        .leaflet-popup-content. Override that so popups actually fill most of
-       the map width on mobile, not just hug the content. */
+       the map width on mobile, not just hug the content. Also cap height so
+       long trip-list popups don't scroll off the bottom of the screen. */
     .leaflet-popup-content {
       width: calc(100vw - 70px) !important;
       max-width: 100% !important;
+      max-height: 60vh;
+      overflow-y: auto;
       word-wrap: break-word;
     }
     .leaflet-popup-content a { word-break: break-word; }
@@ -132,7 +137,7 @@
     }
     header h1 { font-size: 1.2rem; }
     .header-title { gap: .25rem; }
-    .nav-toggle { display: block; padding: .15rem .15rem; margin-left: -.25rem; }
+    .nav-toggle { display: block; margin-left: -.25rem; }
     .stats {
       gap: .75rem;
       font-size: .75rem;

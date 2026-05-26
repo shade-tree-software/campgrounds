@@ -1274,28 +1274,37 @@
 
   .lightbox .close-btn {
     position: absolute;
-    top: 1rem;
-    right: 1.5rem;
+    top: .5rem;
+    right: .5rem;
     color: var(--white);
     font-size: 2rem;
     cursor: pointer;
-    background: none;
+    background: rgba(0,0,0,.3);
     border: none;
     line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background .15s;
   }
+  .lightbox .close-btn:hover { background: rgba(255,255,255,.2); }
 
   /* Download button. Mobile users can't right-click; this gives them a
      way to save a photo. Sits just to the left of the close button. */
   .lightbox .lb-download {
     position: absolute;
-    top: 1rem;
-    right: 3.5rem;
+    top: .5rem;
+    right: calc(.5rem + 44px + .25rem);
     color: var(--white);
     cursor: pointer;
     background: rgba(0,0,0,.3);
     border: none;
-    width: 2rem;
-    height: 2rem;
+    width: 44px;
+    height: 44px;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -1315,9 +1324,11 @@
     cursor: pointer;
     background: rgba(0,0,0,.4);
     border: none;
-    padding: .25rem .75rem;
+    padding: .25rem 1rem;
     border-radius: 6px;
     line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
     transition: background .2s;
   }
 
@@ -1336,8 +1347,10 @@
     padding: .4rem 1rem;
     border-radius: 6px;
     font-size: .9rem;
-    max-width: 80vw;
+    max-width: min(80vw, 600px);
     text-align: center;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .lightbox .lb-caption:empty { display: none; }
@@ -1355,6 +1368,23 @@
   }
 
   .lightbox .lb-date:empty { display: none; }
+
+  /* On phones the centered date badge can collide with the top-right
+     close/download buttons. Move it to top-left out of their way. */
+  @media (max-width: 700px) {
+    .lightbox .lb-date {
+      left: .5rem;
+      top: .5rem;
+      transform: none;
+    }
+    .lightbox .lb-caption {
+      max-width: calc(100vw - 1rem);
+      bottom: .75rem;
+    }
+    .lightbox .nav-prev { left: .25rem; }
+    .lightbox .nav-next { right: .25rem; }
+    .lightbox .nav-btn { padding: .25rem .5rem; }
+  }
 
   /* ── Map ─────────────────────────────────────────── */
   .map-container {
