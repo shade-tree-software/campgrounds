@@ -14,20 +14,19 @@
     padding: .5rem 2rem 0;
   }
 
-  /* Click-through banner above the map pointing at the most recently-started
-     trip. Hidden when no dated trips exist (Jinja gates the markup). Three
-     flex children: a fixed-size pill, the elastic truncatable text, and a
-     fixed-size arrow — narrow viewports shrink the middle and ellipsize. */
+  /* Click-through card above the map pointing at the most recently-started
+     trip. Hidden when no dated trips exist (Jinja gates the markup). Styled
+     as a white card with a red accent stripe and an explicit CTA pill on the
+     right, so it doesn't read as a header bar. */
   .latest-trip-banner {
     display: flex;
     align-items: center;
-    gap: .65rem;
+    gap: .75rem;
     margin: 0;
-    padding: .55rem 1rem;
-    /* Match the trip-detail header's flat red so the banner reads as a
-       direct visual handoff to that page. */
-    background: var(--red);
-    color: var(--white);
+    padding: .6rem .65rem .6rem 1rem;
+    background: var(--white);
+    color: var(--navy);
+    border-left: 6px solid var(--red);
     border-radius: 8px;
     text-decoration: none;
     font-size: .95rem;
@@ -43,10 +42,8 @@
     font-size: .7rem;
     text-transform: uppercase;
     letter-spacing: .08em;
-    opacity: .9;
-    padding: .15rem .5rem;
-    border: 1px solid rgba(255,255,255,.45);
-    border-radius: 999px;
+    color: var(--red);
+    font-weight: 700;
   }
   .latest-trip-banner .text {
     flex: 1;
@@ -55,9 +52,21 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  .latest-trip-banner .summary { font-weight: 600; }
-  .latest-trip-banner .meta { opacity: .85; margin-left: .5rem; font-weight: 400; }
-  .latest-trip-banner .arrow { flex-shrink: 0; font-size: 1.2em; opacity: .85; }
+  .latest-trip-banner .summary { font-weight: 600; color: var(--navy); }
+  .latest-trip-banner .meta { color: var(--gray); margin-left: .5rem; font-weight: 400; }
+  /* CTA pill — the explicit "tap me" affordance that a bare arrow lacked. */
+  .latest-trip-banner .arrow {
+    flex-shrink: 0;
+    background: var(--red);
+    color: var(--white);
+    font-size: .8rem;
+    font-weight: 600;
+    padding: .35rem .75rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: filter .15s ease;
+  }
+  .latest-trip-banner:hover .arrow { filter: brightness(.9); }
 
   .map-layout {
     display: flex;
@@ -232,7 +241,7 @@
           <span class="summary">{% if latest_trip.number %}Trip {{ latest_trip.number }}: {% endif %}{{ latest_trip.summary }}</span>
           {% if latest_trip_date %}<span class="meta">· {{ latest_trip_date }}</span>{% endif %}
         </span>
-        <span class="arrow">&rsaquo;</span>
+        <span class="arrow">Open trip &rsaquo;</span>
       </a>
       {% endif %}
       <div class="map-container">
