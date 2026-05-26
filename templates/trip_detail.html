@@ -1162,7 +1162,11 @@
   }
 
   /* ── Detect-stops review rows ───────────────────────────────────── */
-  .stop-row {
+  /* Scoped under .add-modal-body because that rule sets `label
+     { display: block }` with specificity (0,1,1), which beats a bare
+     `.stop-row` (0,1,0) and silently collapses the grid into a stack.
+     `.add-modal-body .stop-row` (0,2,0) wins cleanly. */
+  .add-modal-body .stop-row {
     display: grid;
     grid-template-columns: auto 1fr auto auto;
     gap: .65rem;
