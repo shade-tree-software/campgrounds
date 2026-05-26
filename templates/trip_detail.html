@@ -1164,12 +1164,27 @@
   /* ── Detect-stops review rows ───────────────────────────────────── */
   .stop-row {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto 1fr auto auto;
     gap: .65rem;
     align-items: center;
     padding: .55rem .6rem;
     border-bottom: 1px solid var(--gray-light);
   }
+  /* Per-row mini-map: satellite tile + ping polyline so the admin can
+     see at a glance whether the cluster sits in a parking lot, at a
+     pull-off, or in the middle of a road. Lazy-init via
+     IntersectionObserver — see _initStopMiniMap. */
+  .stop-row .stop-mini-map {
+    width: 110px;
+    height: 80px;
+    border-radius: 4px;
+    border: 1px solid var(--gray-light);
+    background: #1a1a1a;
+    flex-shrink: 0;
+    overflow: hidden;
+    cursor: default;
+  }
+  .stop-row .stop-mini-map .leaflet-control-container { display: none; }
   .stop-row:last-child { border-bottom: none; }
   .stop-row input[type="checkbox"] {
     width: 16px; height: 16px; cursor: pointer; margin: 0;
@@ -3270,6 +3285,116 @@ function deleteTrip() {
 let DETECT_STOPS_DATA = [];
 let DETECT_STOPS_ABORT = null;          // AbortController for the current run
 let DETECT_STOPS_GEOCODING = false;     // true while the reverse-geocoding loop is running
+// Per-row Leaflet mini-map instances keyed by stop idx. Tracked so we
+// can `.remove()` the old map before re-init on geocoding re-render
+// (re-rendering the row's outerHTML orphans the previous instance) and
+// to tear everything down when the modal closes.
+const DETECT_STOPS_MAPS = {};
+let DETECT_STOPS_MAP_OBSERVER = null;   // IntersectionObserver for lazy-init
+
+// Initialize a small satellite map inside a row's .stop-mini-map slot,
+// fit to the cluster's ping coords. Replaces any prior map at that
+// idx (geocoding re-render destroys + recreates the slot, so the old
+// instance must be cleaned up explicitly). Drawn:
+//  - Esri satellite tile layer
+//  - Navy polyline of the ping path (matches main map convention)
+//  - Tiny per-ping dots
+//  - Red centroid marker
+// All interactions disabled — the slot is a static preview, not a
+// usable map.
+function _initStopMiniMap(stopIdx) {
+  const s = DETECT_STOPS_DATA[stopIdx];
+  if (!s) return;
+  const slot = document.querySelector(`.stop-mini-map[data-stop-map="${stopIdx}"]`);
+  if (!slot) return;
+  const prior = DETECT_STOPS_MAPS[stopIdx];
+  if (prior) {
+    try { prior.remove(); } catch (e) { /* already torn down */ }
+    delete DETECT_STOPS_MAPS[stopIdx];
+  }
+  const d = s.display;
+  const coords = Array.isArray(d.coords)
+    ? d.coords.filter(c => Array.isArray(c) && c.length === 2 && Number.isFinite(c[0]) && Number.isFinite(c[1]))
+    : [];
+  const center = [d.center_lat, d.center_lng];
+  const map = L.map(slot, {
+    attributionControl: false,
+    zoomControl: false,
+    dragging: false,
+    scrollWheelZoom: false,
+    doubleClickZoom: false,
+    touchZoom: false,
+    boxZoom: false,
+    keyboard: false,
+    tap: false,
+    fadeAnimation: false,
+    zoomAnimation: false,
+  });
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19,
+  }).addTo(map);
+  if (coords.length >= 2) {
+    L.polyline(coords, { color: '#ffffff', weight: 3, opacity: 0.55 }).addTo(map);
+    L.polyline(coords, { color: '#002868', weight: 2, opacity: 0.95 }).addTo(map);
+    coords.forEach(c => {
+      L.circleMarker(c, {
+        radius: 2, color: '#ffffff', weight: 1,
+        fillColor: '#002868', fillOpacity: 1,
+      }).addTo(map);
+    });
+    map.fitBounds(L.latLngBounds(coords), { padding: [8, 8], maxZoom: 18, animate: false });
+  } else if (coords.length === 1) {
+    map.setView(coords[0], 18);
+    L.circleMarker(coords[0], {
+      radius: 2, color: '#ffffff', weight: 1,
+      fillColor: '#002868', fillOpacity: 1,
+    }).addTo(map);
+  } else {
+    map.setView(center, 18);
+  }
+  L.circleMarker(center, {
+    radius: 4, color: '#ffffff', weight: 1,
+    fillColor: '#bf0a30', fillOpacity: 1,
+  }).addTo(map);
+  DETECT_STOPS_MAPS[stopIdx] = map;
+}
+
+// Lazy-init via IntersectionObserver. Detect-stops modals can have
+// 20+ rows; only ~5–8 are visible at once. Wiring an observer means
+// off-screen rows don't pay the tile-fetch + Leaflet init cost until
+// the admin scrolls to them.
+function _observeStopMiniMaps() {
+  if (DETECT_STOPS_MAP_OBSERVER) {
+    DETECT_STOPS_MAP_OBSERVER.disconnect();
+    DETECT_STOPS_MAP_OBSERVER = null;
+  }
+  DETECT_STOPS_MAP_OBSERVER = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idx = +entry.target.dataset.stopMap;
+      _initStopMiniMap(idx);
+      // One-shot per slot — once initialized, stop watching.
+      DETECT_STOPS_MAP_OBSERVER.unobserve(entry.target);
+    });
+  }, {
+    root: document.getElementById('detect-stops-list'),
+    rootMargin: '120px 0px',
+  });
+  document.querySelectorAll('#detect-stops-list .stop-mini-map').forEach(el => {
+    DETECT_STOPS_MAP_OBSERVER.observe(el);
+  });
+}
+
+function _destroyAllStopMiniMaps() {
+  if (DETECT_STOPS_MAP_OBSERVER) {
+    DETECT_STOPS_MAP_OBSERVER.disconnect();
+    DETECT_STOPS_MAP_OBSERVER = null;
+  }
+  Object.keys(DETECT_STOPS_MAPS).forEach(k => {
+    try { DETECT_STOPS_MAPS[k].remove(); } catch (e) { /* ignore */ }
+    delete DETECT_STOPS_MAPS[k];
+  });
+}
 
 function _renderDetectStopRow(s, i) {
   const d = s.display;
@@ -3305,6 +3430,7 @@ function _renderDetectStopRow(s, i) {
         <div class="stop-meta">${escapeHtml(place)} — ${tail}</div>
         <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
       </div>
+      <div class="stop-mini-map" data-stop-map="${i}"></div>
       <span class="stop-kind ${d.classification}">${d.classification === 'event' ? 'Event' : 'Waypoint'}</span>
     </label>
   `;
@@ -3519,6 +3645,7 @@ function detectStops() {
       listEl.innerHTML = DETECT_STOPS_DATA.map((s, i) => _renderDetectStopRow(s, i)).join('');
       listEl.style.display = '';
       updateDetectStopsCount();
+      _observeStopMiniMaps();
       _runDetectStopsGeocoding(signal);
     })
     .catch(err => {
@@ -3576,11 +3703,33 @@ async function _runDetectStopsGeocoding(signal) {
       const row = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
       if (row) {
         const wasChecked = row.querySelector('input[type="checkbox"]').checked;
+        // The re-render replaces the .stop-mini-map slot. Track whether
+        // a map was already live in this row — if so we need to re-init
+        // after the replace (the observer would otherwise only fire on
+        // the next intersect, which doesn't happen for already-visible
+        // rows).
+        const hadMap = !!DETECT_STOPS_MAPS[i];
+        if (hadMap) {
+          try { DETECT_STOPS_MAPS[i].remove(); } catch (e) { /* ignore */ }
+          delete DETECT_STOPS_MAPS[i];
+        }
         row.outerHTML = _renderDetectStopRow(s, i);
         const newRow = document.querySelector(`.stop-row[data-stop-idx="${i}"]`);
         if (newRow) {
           newRow.querySelector('input[type="checkbox"]').checked =
             s.display.on_road ? false : wasChecked;
+          const slot = newRow.querySelector('.stop-mini-map');
+          if (slot) {
+            if (hadMap) {
+              // Already-initialized rows get re-initialized immediately
+              // so the visible map doesn't blink out and stay empty.
+              _initStopMiniMap(i);
+            } else if (DETECT_STOPS_MAP_OBSERVER) {
+              // Not yet initialized — re-observe the new slot so it'll
+              // init when it next scrolls into view.
+              DETECT_STOPS_MAP_OBSERVER.observe(slot);
+            }
+          }
         }
       }
     } catch (e) {
@@ -3667,6 +3816,7 @@ function closeDetectStops() {
     DETECT_STOPS_ABORT = null;
   }
   DETECT_STOPS_GEOCODING = false;
+  _destroyAllStopMiniMaps();
   document.getElementById('detect-stops-modal').classList.remove('visible');
 }
 function closeDetectStopsBackdrop(e) {

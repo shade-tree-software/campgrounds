@@ -3572,6 +3572,10 @@ def api_detect_stops(trip_id):
                 "classification": classification,
                 "center_lat": s["center_lat"],
                 "center_lng": s["center_lng"],
+                # Per-ping (lat, lng) pairs for the frontend's row-level
+                # mini-map. The cluster's `coords` is internal Python
+                # tuples; serialize as lists for clean JSON.
+                "coords": [[lat, lng] for (lat, lng) in s["coords"]],
                 "display_name": "",
             },
             "event": {
