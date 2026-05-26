@@ -190,7 +190,16 @@
       gap: .75rem;
       font-size: .75rem;
     }
-    .stats div { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+    /* text-align: center matters when the label wraps to 2 lines at ≤~400px
+       — otherwise the wrapped lines hug the left edge of their flex item
+       while the number is centered, making the number look right-shifted. */
+    .stats div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      line-height: 1.1;
+      text-align: center;
+    }
   }
 
   {% block style %}{% endblock %}
