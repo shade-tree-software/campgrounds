@@ -604,19 +604,21 @@ def trips_stats():
             if e.get("state"):
                 states.add(_US_STATE_ABBR.get(e["state"], e["state"]))
 
-    # Top campgrounds by visit count, by canonical place name. `place` is
-    # materialized by _make_trip from campground_id, so renames don't
-    # split a count across two entries.
-    cg_visits = {}
+    # Top campgrounds by unique-trip count, by canonical place name. `place`
+    # is materialized by _make_trip from campground_id, so renames don't
+    # split a count across two entries. Counting trips (not stay records)
+    # matches the trips map popup — a trip with multiple stay records at
+    # the same place (left and returned mid-trip) still counts once.
+    cg_trip_ids = {}
     for t in trips:
         for s in t.get("stays", []):
             name = (s.get("place") or "").strip()
             if name:
-                cg_visits[name] = cg_visits.get(name, 0) + 1
+                cg_trip_ids.setdefault(name, set()).add(t["id"])
     top_campgrounds = [
-        {"name": name, "count": count}
-        for name, count in sorted(cg_visits.items(), key=lambda x: (-x[1], x[0]))[:10]
-        if count >= 2  # one-time stays aren't "most visited"
+        {"name": name, "count": len(tids)}
+        for name, tids in sorted(cg_trip_ids.items(), key=lambda x: (-len(x[1]), x[0]))[:10]
+        if len(tids) >= 2  # one-time visits aren't "most visited"
     ]
 
     # Trips-per-year. Empty-dated trips are excluded (no year to assign).
