@@ -73,6 +73,41 @@
     /* 16px inputs prevent iOS Safari from zooming the viewport on focus */
     .cg-table input, .cg-table select, .cg-table textarea { font-size: 16px; }
     .search-box { font-size: 16px; }
+
+    /* Stack the table into one card per row */
+    .table-wrap { overflow-x: visible; }
+    .cg-table { table-layout: auto; border-collapse: separate; border-spacing: 0; }
+    .cg-table thead { display: none; }
+    .cg-table tr { display: block; margin-bottom: .75rem; border: 1px solid var(--gray-light); border-radius: 6px; padding: .5rem .75rem; background: #fff; }
+    .cg-table tr.editing { background: #fffde7; }
+    .cg-table td { display: block; width: auto !important; padding: .35rem 0; border-bottom: none; text-align: left !important; white-space: normal; }
+    .cg-table td:empty,
+    .cg-table td.cg-na { display: none; }
+
+    /* Field labels for view rows (edit rows already have inline labels) */
+    .cg-table tr:not(.editing) .col-name { font-size: 1.05rem; font-weight: 600; padding-bottom: .25rem; }
+    .cg-table tr:not(.editing) .col-state::before,
+    .cg-table tr:not(.editing) .col-waterfront::before,
+    .cg-table tr:not(.editing) .col-ownership::before,
+    .cg-table tr:not(.editing) .col-elev::before {
+      content: attr(data-label);
+      display: inline-block;
+      min-width: 5.5rem;
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--gray);
+    }
+    .cg-table tr:not(.editing) .col-elev { text-align: left !important; }
+    .cg-table tr:not(.editing) .col-note { color: var(--gray); font-size: .85rem; padding-top: .35rem; }
+
+    /* Bigger tap targets for action buttons */
+    .cg-table .col-actions { padding-top: .5rem; border-top: 1px solid #eee; margin-top: .35rem; }
+    .row-actions { gap: .5rem; }
+    .row-actions button { flex: 1; padding: .55rem .75rem; font-size: .9rem; min-height: 38px; }
+    .edit-actions { flex-direction: row !important; gap: .5rem; }
+    .edit-actions button { flex: 1; padding: .6rem .75rem; font-size: .95rem; min-height: 40px; }
   }
 
 {% endblock %}
@@ -277,10 +312,10 @@ function viewRowHtml(c) {
   const note = escapeHtml(c.note || '');
   return `<tr>
     <td class="col-name">${nameDisplay}</td>
-    <td class="col-state">${escapeHtml(c.state || '')}</td>
-    <td class="col-waterfront">${isFamily ? '' : escapeHtml(c.waterfront || '')}</td>
-    <td class="col-ownership">${isFamily ? '' : escapeHtml(c.ownership || '')}</td>
-    <td class="col-elev">${isFamily ? '' : elev}</td>
+    <td class="col-state" data-label="State ">${escapeHtml(c.state || '')}</td>
+    <td class="col-waterfront" data-label="Water ">${isFamily ? '' : escapeHtml(c.waterfront || '')}</td>
+    <td class="col-ownership" data-label="Owner ">${isFamily ? '' : escapeHtml(c.ownership || '')}</td>
+    <td class="col-elev" data-label="Elev (ft) ">${isFamily ? '' : elev}</td>
     <td class="col-note note-cell">${note}</td>
     <td class="col-actions"><div class="row-actions">
       <button class="btn btn-save" onclick="startEdit(${c.id})">Edit</button>
@@ -303,16 +338,17 @@ function editRowHtml(c) {
         <input id="ed-driveway" value="${escapeAttr(driveway)}" placeholder="lat,lng"
                onfocus="showLocationMap(this.value, 'ed-driveway')"
                onblur="onLocationBlur('ed-driveway')"></div>` : '';
+  const naCls = isFamily ? ' cg-na' : '';
   return `<tr class="editing">
-    <td>
+    <td class="col-name">
       <select id="ed-kind" onchange="onKindChange()" style="margin-bottom:.2rem">${kindOptions(c.kind || 'campground')}</select>
       <input id="ed-name" value="${escapeAttr(c.name)}">
     </td>
-    <td><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
-    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
-    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
-    <td>${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<input id="ed-elev" type="number" value="${elevFeet}">`}</td>
-    <td><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
+    <td class="col-state"><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
+    <td class="col-waterfront${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
+    <td class="col-ownership${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
+    <td class="col-elev${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<input id="ed-elev" type="number" value="${elevFeet}">`}</td>
+    <td class="col-note"><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
         <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"
                onfocus="showLocationMap(this.value, 'ed-location')"
