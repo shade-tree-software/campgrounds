@@ -96,6 +96,13 @@
     flex-shrink: 0;
   }
 
+  /* Visit-list "Show more" toggle inside campground popups */
+  .cg-visits .extra { display: none; }
+  .cg-visits.expanded .extra { display: block; }
+  .cg-visits.expanded .show-more { display: none; }
+  .cg-visits a { color: #002868; }
+  .cg-visits .show-more { cursor: pointer; font-style: italic; }
+
   @media (max-width: 700px) {
     .map-section { padding: .25rem .25rem 0; }
   }
@@ -248,7 +255,24 @@ CAMPGROUNDS.forEach(cg => {
   let popup = `<strong>${cg.name}</strong>`;
   if (cg.state) popup += `<br>${cg.state}`;
   if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
-  if (cg.visit_count) popup += `<br><span style="color:#2e7d32;">&#10003; visited ${cg.visit_count} time${cg.visit_count !== 1 ? 's' : ''}</span>`;
+  if (cg.visit_count) {
+    popup += `<br><span style="color:#2e7d32;">&#10003; visited ${cg.visit_count} time${cg.visit_count !== 1 ? 's' : ''}</span>`;
+    popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
+    const SHOW_BY_DEFAULT = 3;
+    (cg.trips || []).forEach((v, i) => {
+      const dateStr = v.stay_start || v.start;
+      const fmt = dateStr
+        ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+        : '';
+      const cls = i >= SHOW_BY_DEFAULT ? ' class="extra"' : '';
+      popup += `<a href="/trips/${v.id}"${cls} style="display:block;">Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
+    });
+    const extra = (cg.trips || []).length - SHOW_BY_DEFAULT;
+    if (extra > 0) {
+      popup += `<a class="show-more" style="display:block;" onclick="event.preventDefault(); this.parentElement.classList.add('expanded');">Show ${extra} more</a>`;
+    }
+    popup += '</div>';
+  }
   if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${cg.note}</span>`;
   if (cg.phone) {
     cg.phone.split(/[,;\n]+/).forEach(p => {

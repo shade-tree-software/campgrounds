@@ -374,6 +374,36 @@ def _classify_climate(delta_temp):
     return "hot"
 
 
+def _campground_visits_index():
+    """Map each campground_id → list of stays referencing it, oldest first.
+
+    Each entry is `{id, number, summary, start, stay_start}` — the shape the
+    campground-map popup uses to render `Trip N: Mon YYYY — summary` and link to
+    `/trips/<id>`. One entry per stay, so a trip with two stays at the same
+    campground appears twice (matching the main trips-map count semantics).
+    trips.json is authoritative; the legacy `stays` field on campgrounds.json
+    drifts as trips get edited.
+    """
+    visits = {}
+    for trip in parse_trips():
+        if trip.get("home_only"):
+            continue
+        for stay in trip.get("stays", []):
+            cg_id = stay.get("campground_id")
+            if cg_id is None:
+                continue
+            visits.setdefault(cg_id, []).append({
+                "id": trip["id"],
+                "number": trip["number"],
+                "summary": trip["summary"],
+                "start": trip["start"],
+                "stay_start": stay.get("start", ""),
+            })
+    for items in visits.values():
+        items.sort(key=lambda v: v.get("stay_start") or v.get("start") or "")
+    return visits
+
+
 def _load_campgrounds():
     """Load campground-kind entries from JSON with derived climate fields.
 
@@ -384,6 +414,7 @@ def _load_campgrounds():
     home_alt = config.get("home_altitude_meters")
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
+    visits_by_cg = _campground_visits_index()
 
     excluded = {"index", "stays", "elevation_meters"}
     rows = []
@@ -404,7 +435,9 @@ def _load_campgrounds():
         row["elevation_feet"] = int(elev * METERS_TO_FEET)
         row["delta_temp"] = delta_temp
         row["climate"] = _classify_climate(delta_temp)
-        row["visit_count"] = len(entry["stays"]) if "stays" in entry else 0
+        trips_for_cg = visits_by_cg.get(entry["id"], [])
+        row["trips"] = trips_for_cg
+        row["visit_count"] = len(trips_for_cg)
         rows.append(row)
     return rows
 
