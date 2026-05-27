@@ -65,6 +65,9 @@
   .count-info { color: var(--gray); font-size: .85rem; }
   .note-cell { font-size: .8rem; color: var(--gray); line-height: 1.3; }
 
+  /* Edit-row field labels — desktop relies on column headers, so hidden here */
+  .ed-label { display: none; }
+
   @media (max-width: 700px) {
     .manage-page { padding: 0 .75rem; margin: 1rem auto; }
     .manage-header { flex-wrap: wrap; gap: .5rem; }
@@ -108,6 +111,19 @@
     .row-actions button { flex: 1; padding: .55rem .75rem; font-size: .9rem; min-height: 38px; }
     .edit-actions { flex-direction: row !important; gap: .5rem; }
     .edit-actions button { flex: 1; padding: .6rem .75rem; font-size: .95rem; min-height: 40px; }
+
+    /* Show field labels in edit cards */
+    .ed-label {
+      display: block;
+      font-size: .7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      color: var(--gray);
+      margin-bottom: .2rem;
+    }
+    /* Tighten spacing between the existing inline labels in the note cell too */
+    .cg-table tr.editing .col-note label { display: block; margin-top: .5rem; }
   }
 
 {% endblock %}
@@ -341,14 +357,16 @@ function editRowHtml(c) {
   const naCls = isFamily ? ' cg-na' : '';
   return `<tr class="editing">
     <td class="col-name">
+      <label class="ed-label">Kind</label>
       <select id="ed-kind" onchange="onKindChange()" style="margin-bottom:.2rem">${kindOptions(c.kind || 'campground')}</select>
+      <label class="ed-label">Name</label>
       <input id="ed-name" value="${escapeAttr(c.name)}">
     </td>
-    <td class="col-state"><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
-    <td class="col-waterfront${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
-    <td class="col-ownership${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
-    <td class="col-elev${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<input id="ed-elev" type="number" value="${elevFeet}">`}</td>
-    <td class="col-note"><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
+    <td class="col-state"><label class="ed-label">State</label><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
+    <td class="col-waterfront${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Waterfront</label><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
+    <td class="col-ownership${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Ownership</label><select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
+    <td class="col-elev${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Elevation (ft)</label><input id="ed-elev" type="number" value="${elevFeet}">`}</td>
+    <td class="col-note"><label class="ed-label">Note</label><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
         <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
         <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"
                onfocus="showLocationMap(this.value, 'ed-location')"
