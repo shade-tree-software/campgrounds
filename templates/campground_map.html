@@ -171,6 +171,15 @@ const IS_ADMIN = {{ is_admin | tojson }};
 const MODES_BY_KEY = Object.fromEntries(COLOR_MODES.map(m => [m.key, m]));
 let currentMode = MODES_BY_KEY[DEFAULT_MODE] || COLOR_MODES[0];
 
+// Escape HTML, then turn newlines into <br> so multi-line notes render as
+// separate lines in the popup (a raw \n is just collapsed whitespace in HTML).
+function escapeHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
+function noteHtml(s) { return escapeHtml(s).replace(/\n/g, '<br>'); }
+
 // Category / ownership selected (shown) state. Markers render only when their
 // color category AND their ownership are both active.
 const activeCategories = new Set();   // reset whenever the color mode changes
@@ -262,7 +271,7 @@ CAMPGROUNDS.forEach(cg => {
     }
     popup += '</div>';
   }
-  if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${cg.note}</span>`;
+  if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(cg.note)}</span>`;
   if (cg.phone) {
     cg.phone.split(/[,;\n]+/).forEach(p => {
       p = p.trim();
