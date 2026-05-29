@@ -30,6 +30,26 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+
+  .map-header .color-by {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--gray);
+  }
+
+  .map-header .color-by select {
+    font-size: .85rem;
+    padding: .25rem .4rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    color: var(--navy);
+    background: #fff;
   }
 
   #campground-map {
@@ -96,6 +116,18 @@
     flex-shrink: 0;
   }
 
+  /* Ownership filter uses a square checkbox-style swatch instead of a color dot. */
+  .map-legend .legend-box {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    border: 1.5px solid var(--navy);
+    background: var(--navy);
+    flex-shrink: 0;
+    position: relative;
+  }
+  .map-legend .legend-row.dimmed .legend-box { background: #fff; }
+
   /* Visit-list "Show more" toggle inside campground popups */
   .cg-visits a { display: block; color: #002868; }
   .cg-visits .extra { display: none; }
@@ -113,6 +145,13 @@
   <div class="map-container">
     <div class="map-header">
       <span>{{ title }}</span>
+      <label class="color-by">Color by
+        <select id="color-mode">
+          {% for m in color_modes %}
+          <option value="{{ m.key }}"{% if m.key == default_mode %} selected{% endif %}>{{ m.label }}</option>
+          {% endfor %}
+        </select>
+      </label>
     </div>
     <div id="campground-map"></div>
   </div>
@@ -122,11 +161,28 @@
 {% block scripts %}
 <script>
 const CAMPGROUNDS = {{ campgrounds | tojson }};
-const COLOR_MAP = {{ color_map | tojson }};
-const COLOR_FIELD = {{ color_field | tojson }};
+const COLOR_MODES = {{ color_modes | tojson }};
+const DEFAULT_MODE = {{ default_mode | tojson }};
+const OWNERSHIP_LABELS = {{ ownership_labels | tojson }};
 const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const IS_ADMIN = {{ is_admin | tojson }};
+
+const MODES_BY_KEY = Object.fromEntries(COLOR_MODES.map(m => [m.key, m]));
+let currentMode = MODES_BY_KEY[DEFAULT_MODE] || COLOR_MODES[0];
+
+// Category / ownership selected (shown) state. Markers render only when their
+// color category AND their ownership are both active.
+const activeCategories = new Set();   // reset whenever the color mode changes
+const activeOwnerships = new Set();
+
+function colorCat(cg) { return cg[currentMode.field] || 'none'; }
+function ownerKey(cg) { return cg.ownership || ''; }
+function ownerLabel(v) {
+  if (OWNERSHIP_LABELS[v]) return OWNERSHIP_LABELS[v];
+  if (!v) return 'Unspecified';
+  return v.charAt(0).toUpperCase() + v.slice(1);
+}
 
 // ── Build map ─────────────────────────────────────────────────────────────
 const map = L.map('campground-map');
@@ -148,88 +204,19 @@ const satellite = L.layerGroup([
 ]);
 L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
 
-// ── Legend ────────────────────────────────────────────────────────────────
-const activeCategories = new Set(Object.keys(COLOR_MAP));
-const categoryMarkers = {};  // category -> [marker, ...]
+// ── Campground markers ──────────────────────────────────────────────────────
+const markers = [];  // { marker, cg }
 
-const legendControl = L.control({ position: 'bottomleft' });
-legendControl.onAdd = function() {
-  const div = L.DomUtil.create('div', 'map-legend');
-  L.DomEvent.disableClickPropagation(div);
-
-  const header = document.createElement('div');
-  header.className = 'legend-header';
-  header.textContent = 'Legend';
-  header.addEventListener('click', () => div.classList.toggle('collapsed'));
-  div.appendChild(header);
-
-  const rows = document.createElement('div');
-  rows.className = 'legend-rows';
-  div.appendChild(rows);
-
-  Object.entries(COLOR_MAP).forEach(([category, color]) => {
-    const count = CAMPGROUNDS.filter(c => (c[COLOR_FIELD] || 'none') === category).length;
-    const row = document.createElement('div');
-    row.className = 'legend-row';
-    row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
-    row.addEventListener('click', () => {
-      if (activeCategories.has(category)) {
-        activeCategories.delete(category);
-        row.classList.add('dimmed');
-        categoryMarkers[category].forEach(m => m.setStyle({ opacity: 0, fillOpacity: 0 }));
-      } else {
-        activeCategories.add(category);
-        row.classList.remove('dimmed');
-        categoryMarkers[category].forEach(m => m.setStyle({ opacity: 1, fillOpacity: 0.8 }));
-      }
-    });
-    rows.appendChild(row);
-    categoryMarkers[category] = [];
+function markerVisible(cg) {
+  return activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
+}
+function applyVisibility() {
+  markers.forEach(({ marker, cg }) => {
+    const vis = markerVisible(cg);
+    marker.setStyle({ opacity: vis ? 1 : 0, fillOpacity: vis ? 0.8 : 0 });
   });
-
-  // Default to collapsed on mobile to free up map space.
-  if (window.innerWidth <= 700) div.classList.add('collapsed');
-
-  return div;
-};
-legendControl.addTo(map);
-
-// Home marker
-if (HOME) {
-  const homeIcon = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:24px;height:24px;border-radius:50%;
-      background:#bf0a30;
-      display:flex;align-items:center;justify-content:center;
-      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
-  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
-    .bindPopup('<strong>Home</strong>');
 }
 
-// Family location markers
-FAMILY.forEach(fam => {
-  const ll = [fam.lat, fam.lng];
-  const famIcon = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:24px;height:24px;border-radius:50%;
-      background:#bf0a30;
-      display:flex;align-items:center;justify-content:center;
-      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12],
-  });
-  L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
-    .bindPopup(`<strong>${fam.label}</strong>`);
-});
-
-// Campground markers
 const familyCoords = FAMILY.map(f => [f.lat, f.lng]);
 const bounds = (HOME ? [HOME] : []).concat(familyCoords);
 
@@ -240,9 +227,7 @@ CAMPGROUNDS.forEach(cg => {
   const ll = [lat, lng];
   bounds.push(ll);
 
-  const category = cg[COLOR_FIELD] || 'none';
-  const color = COLOR_MAP[category] || '#888';
-
+  const color = currentMode.colors[colorCat(cg)] || '#888';
   const marker = L.circleMarker(ll, {
     radius: 6,
     fillColor: color,
@@ -296,11 +281,156 @@ CAMPGROUNDS.forEach(cg => {
   }
   marker.bindPopup(popup, { maxWidth: 420 });
 
-  if (categoryMarkers[category]) {
-    categoryMarkers[category].push(marker);
-  }
+  markers.push({ marker, cg });
 });
 
+// ── Legend (color categories for the current mode) ──────────────────────────
+let legendRowsEl = null;
+
+function rebuildLegend() {
+  if (!legendRowsEl) return;
+  legendRowsEl.innerHTML = '';
+  activeCategories.clear();
+  Object.entries(currentMode.colors).forEach(([category, color]) => {
+    const count = CAMPGROUNDS.filter(c => colorCat(c) === category).length;
+    if (count === 0) return;  // skip categories with no campgrounds in this mode
+    activeCategories.add(category);
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+    row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
+    row.addEventListener('click', () => {
+      if (activeCategories.has(category)) {
+        activeCategories.delete(category);
+        row.classList.add('dimmed');
+      } else {
+        activeCategories.add(category);
+        row.classList.remove('dimmed');
+      }
+      applyVisibility();
+    });
+    legendRowsEl.appendChild(row);
+  });
+}
+
+const legendControl = L.control({ position: 'bottomleft' });
+legendControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'map-legend');
+  L.DomEvent.disableClickPropagation(div);
+
+  const header = document.createElement('div');
+  header.className = 'legend-header';
+  header.textContent = 'Legend';
+  header.addEventListener('click', () => div.classList.toggle('collapsed'));
+  div.appendChild(header);
+
+  legendRowsEl = document.createElement('div');
+  legendRowsEl.className = 'legend-rows';
+  div.appendChild(legendRowsEl);
+
+  // Default to collapsed on mobile to free up map space.
+  if (window.innerWidth <= 700) div.classList.add('collapsed');
+  return div;
+};
+legendControl.addTo(map);
+rebuildLegend();
+
+// ── Ownership filter ────────────────────────────────────────────────────────
+// Present ownership values: known labels first (in their defined order), then
+// any others sorted alphabetically.
+const ownerOrder = Object.keys(OWNERSHIP_LABELS);
+const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
+const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
+  .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
+ownerValues.forEach(v => activeOwnerships.add(v));
+
+const ownershipControl = L.control({ position: 'topright' });
+ownershipControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'map-legend');
+  L.DomEvent.disableClickPropagation(div);
+
+  const header = document.createElement('div');
+  header.className = 'legend-header';
+  header.textContent = 'Ownership';
+  header.addEventListener('click', () => div.classList.toggle('collapsed'));
+  div.appendChild(header);
+
+  const rows = document.createElement('div');
+  rows.className = 'legend-rows';
+  div.appendChild(rows);
+
+  ownerValues.forEach(v => {
+    const count = CAMPGROUNDS.filter(c => ownerKey(c) === v).length;
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+    row.innerHTML = `<span class="legend-box"></span>${ownerLabel(v)} (${count})`;
+    row.addEventListener('click', () => {
+      if (activeOwnerships.has(v)) {
+        activeOwnerships.delete(v);
+        row.classList.add('dimmed');
+      } else {
+        activeOwnerships.add(v);
+        row.classList.remove('dimmed');
+      }
+      applyVisibility();
+    });
+    rows.appendChild(row);
+  });
+
+  if (window.innerWidth <= 700) div.classList.add('collapsed');
+  return div;
+};
+ownershipControl.addTo(map);
+
+// ── Color-mode picker ───────────────────────────────────────────────────────
+document.getElementById('color-mode').addEventListener('change', (e) => {
+  currentMode = MODES_BY_KEY[e.target.value] || currentMode;
+  markers.forEach(({ marker, cg }) => {
+    marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
+  });
+  rebuildLegend();   // resets all categories of the new mode to active
+  applyVisibility();
+  // Keep the URL in sync so the view is shareable / survives reload.
+  const url = new URL(window.location);
+  url.searchParams.set('color', currentMode.key);
+  history.replaceState(null, '', url);
+});
+
+// Home marker
+if (HOME) {
+  const homeIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:24px;height:24px;border-radius:50%;
+      background:#bf0a30;
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
+    .bindPopup('<strong>Home</strong>');
+}
+
+// Family location markers
+FAMILY.forEach(fam => {
+  const ll = [fam.lat, fam.lng];
+  const famIcon = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:24px;height:24px;border-radius:50%;
+      background:#bf0a30;
+      display:flex;align-items:center;justify-content:center;
+      border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    iconSize: [24, 24],
+    iconAnchor: [12, 12],
+  });
+  L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
+    .bindPopup(`<strong>${fam.label}</strong>`);
+});
+
+applyVisibility();
 if (bounds.length) {
   map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
 }

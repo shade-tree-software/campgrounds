@@ -1185,38 +1185,57 @@ def api_delete_event(trip_id, event_idx):
 
 # ── Campground map routes ───────────────────────────────────────────────────
 
-@app.route('/campgrounds/waterfront')
-def campgrounds_waterfront():
+# Color modes selectable on the combined campground map. `field` is the key on
+# each campground row produced by `_load_campgrounds`; `colors` maps category →
+# hex. Order here is the order the modes appear in the "Color by" picker.
+COLOR_MODES = [
+    {"key": "waterfront", "field": "waterfront",
+     "label": "Proximity to Water", "colors": WATERFRONT_COLORS},
+    {"key": "climate", "field": "climate",
+     "label": "Climate", "colors": CLIMATE_COLORS},
+]
+
+# Display labels + presentation order for the ownership filter. Values not
+# listed (or blank) fall back to a title-cased label and sort to the end.
+OWNERSHIP_LABELS = {
+    "state": "State",
+    "federal": "Federal",
+    "local": "Local",
+    "private": "Private",
+    "hipcamp": "HipCamp",
+}
+
+
+@app.route('/campgrounds/map')
+def campgrounds_map():
     home, _ = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
+    mode = request.args.get('color')
+    if mode not in {m["key"] for m in COLOR_MODES}:
+        mode = COLOR_MODES[0]["key"]
     return render_template(
         'campground_map.html',
-        title='Campgrounds by Proximity to Water',
+        title='Campgrounds',
         campgrounds=_load_campgrounds(),
-        color_field='waterfront',
-        color_map=WATERFRONT_COLORS,
+        color_modes=COLOR_MODES,
+        default_mode=mode,
+        ownership_labels=OWNERSHIP_LABELS,
         home=home,
         family_locations=[],
-        active_nav='waterfront',
+        active_nav='campmap',
         is_admin=is_admin,
     )
+
+
+# Legacy split-map URLs now redirect to the combined map with the matching mode.
+@app.route('/campgrounds/waterfront')
+def campgrounds_waterfront():
+    return redirect(url_for('campgrounds_map', color='waterfront'))
 
 
 @app.route('/campgrounds/climate')
 def campgrounds_climate():
-    home, _ = _map_config()
-    is_admin = current_user.is_authenticated and current_user.is_admin
-    return render_template(
-        'campground_map.html',
-        title='Campgrounds by Climate',
-        campgrounds=_load_campgrounds(),
-        color_field='climate',
-        color_map=CLIMATE_COLORS,
-        home=home,
-        family_locations=[],
-        active_nav='climate',
-        is_admin=is_admin,
-    )
+    return redirect(url_for('campgrounds_map', color='climate'))
 
 
 # ── Photo move between stays/events ───────────────────────────────────────
