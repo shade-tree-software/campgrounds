@@ -10,7 +10,14 @@
 
 {% block style %}
   .manage-page { max-width: 1100px; margin: 2rem auto; padding: 0 1.5rem; }
-  .table-wrap { overflow-x: auto; }
+  /* Scroll the table inside this box (not the page) so the sticky header row
+     has a scroll container to stick to. Height tracks the viewport minus the
+     sticky site nav and the manage-header above the table. */
+  .table-wrap {
+    overflow: auto;
+    max-height: calc(100vh - var(--site-top-height, 0px) - 120px);
+    min-height: 300px;
+  }
   .manage-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
   .manage-header h2 { font-size: 1.4rem; color: var(--navy); }
 
@@ -33,7 +40,9 @@
   .btn-delete:hover { background: #d32f2f; }
 
   .cg-table { width: 100%; border-collapse: collapse; font-size: .85rem; table-layout: fixed; }
-  .cg-table th { text-align: left; padding: .5rem .4rem; border-bottom: 2px solid var(--navy); color: var(--navy); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; white-space: nowrap; user-select: none; }
+  /* Sticky header row. box-shadow (not border-bottom) draws the divider so it
+     stays visible while scrolling — collapsed-border cells drop the border when stuck. */
+  .cg-table th { position: sticky; top: 0; z-index: 3; background: var(--white); box-shadow: inset 0 -2px 0 var(--navy); text-align: left; padding: .5rem .4rem; color: var(--navy); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; cursor: pointer; white-space: nowrap; user-select: none; }
   .cg-table th:hover { color: var(--red); }
   .cg-table th .sort-arrow { font-size: .65rem; margin-left: .2rem; }
   .cg-table td { padding: .4rem; border-bottom: 1px solid #eee; vertical-align: top; overflow-wrap: break-word; }
@@ -77,8 +86,9 @@
     .cg-table input, .cg-table select, .cg-table textarea { font-size: 16px; }
     .search-box { font-size: 16px; }
 
-    /* Stack the table into one card per row */
-    .table-wrap { overflow-x: visible; }
+    /* Stack the table into one card per row; cards scroll with the page (the
+       header row is hidden on mobile, so no in-box scrolling is needed). */
+    .table-wrap { overflow: visible; max-height: none; min-height: 0; }
     .cg-table { table-layout: auto; border-collapse: separate; border-spacing: 0; }
     .cg-table thead { display: none; }
     .cg-table tr { display: block; margin-bottom: .75rem; border: 1px solid var(--gray-light); border-radius: 6px; padding: .5rem .75rem; background: #fff; }
