@@ -210,10 +210,15 @@ const markers = [];  // { marker, cg }
 function markerVisible(cg) {
   return activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
 }
+// Add/remove the marker from the map rather than just fading it: an opacity-0
+// circleMarker stays in the SVG layer and still captures clicks (its popup
+// would open on a "hidden" marker), so filtered-out campgrounds must actually
+// leave the map to be truly non-interactive.
 function applyVisibility() {
   markers.forEach(({ marker, cg }) => {
     const vis = markerVisible(cg);
-    marker.setStyle({ opacity: vis ? 1 : 0, fillOpacity: vis ? 0.8 : 0 });
+    if (vis && !map.hasLayer(marker)) marker.addTo(map);
+    else if (!vis && map.hasLayer(marker)) map.removeLayer(marker);
   });
 }
 
