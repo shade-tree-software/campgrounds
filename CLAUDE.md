@@ -73,6 +73,16 @@ Accounts live in `users.json` (`{username: {password_hash, is_admin}}`, hashed v
 - Campspot edit forms use an autocomplete picker that fetches from `GET /api/campgrounds` (includes both kinds). Selecting an entry stores its `id` in a hidden field and auto-fills the state field. Family-kind entries are shown with a 🏠 prefix in the dropdown. When the user types free text that matches no entry, it's saved as `custom_place`.
 - `trips.py:_load_locations_by_id()` is the single source of truth for resolving IDs to coordinates — prefers `driveway_location` for family-kind entries so stay markers don't collide with the red family house marker.
 
+### Campground Inclusion Criteria
+
+Entries in `campgrounds.json` must be usable by the family's 23-ft RV ("EKKO"). Before adding one:
+- **Access:** must be drive-in and passable by a normal vehicle. A dirt/gravel road in decent condition is fine; hardcore offroad / 4WD-required access disqualifies. No pad needed (grass is fine); hookups are never required.
+- **Never add:** horse/equestrian campgrounds; hike-in-only, tent-only, boat-in-only, or cabin-only campgrounds.
+- **First-come-first-served:** always add a `note` saying so when a campground has no reservation system.
+- **Dispersed sites:** drive-in dispersed sites may be added when encountered, but don't go out of the way to hunt for them.
+- **Ownership:** `ownership: state` is correct for state-forest campgrounds (ODNR Division of Forestry), distinct from state parks.
+- **Waterfront:** only set an on-the-water value (`lake`/`river`/etc.) with genuine site-level confirmation that some sites sit directly on the water; sites merely near or overlooking water are not on-the-water (use `none`, or a `*view` value like `lakeview`).
+
 ### Sticky Layout
 
 - Header and nav are wrapped in a `.site-top` sticky container (`z-index: 900`).
