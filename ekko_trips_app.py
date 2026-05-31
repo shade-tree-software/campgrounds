@@ -1216,7 +1216,7 @@ def campgrounds_map():
         mode = COLOR_MODES[0]["key"]
     return render_template(
         'campground_map.html',
-        title='Campgrounds',
+        title='Map',
         campgrounds=_load_campgrounds(),
         color_modes=COLOR_MODES,
         default_mode=mode,

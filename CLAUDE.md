@@ -23,7 +23,7 @@ A Flask web app for documenting family camping trips in an RV called "EKKO" and 
 
 ### Templates
 
-- `templates/base.html` — Sticky header+nav in `.site-top`. Publishes `--site-top-height` for child pages' sticky sub-headers. Nav groups: Trips (Map, Calendar, List), Campgrounds (Proximity to Water, Climate, Manage — admin-only). Header shows overnight-trip / day-trip / nights counts.
+- `templates/base.html` — Sticky header+nav in `.site-top`. Publishes `--site-top-height` for child pages' sticky sub-headers. Nav groups: Trips (Map, Calendar, List), Campgrounds (Map, Manage — admin-only). Header shows overnight-trip / day-trip / nights counts.
 - `templates/trip_detail.html` — Trip detail (~1800 lines). Photo galleries + lightbox with EXIF date, inline + modal editing, drag-drop reorder (within and across stays/events), Leaflet map with route polyline + GPS track, prev/next nav. Sticky trip-header below site-top. Family proximity markers only render when within 80 km of a stay or event. Page-load globals (`TRIP_ID`, `IS_ADMIN`, `FIRST_STAY_DATE`, `STAYS_ALL`, `EVENTS_ALL`, `FAMILY_LOCATIONS`) are declared at the top of the inline script block so popup helpers can reference them without `const` TDZ errors.
 - `templates/trips_map.html` — Photo filmstrip slideshow + Leaflet map of all locations. Family-marker popups list the union of trips that stayed at that location (coord match) and trips that contain a family-visit event there (`family_id` match), deduped and sorted by trip start.
 - `templates/trips_calendar.html` — Calendar + list views, client-side toggle preserves selected year. Empty trips (no dates) are excluded from calendar dots / year-range but listed at the bottom of every year.
