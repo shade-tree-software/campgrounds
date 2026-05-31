@@ -81,7 +81,7 @@ Entries in `campgrounds.json` must be usable by the family's 23-ft RV ("EKKO"). 
 - **First-come-first-served:** always add a `note` saying so when a campground has no reservation system.
 - **Dispersed sites:** drive-in dispersed sites may be added when encountered, but don't go out of the way to hunt for them.
 - **Ownership:** `ownership: state` is correct for state-forest campgrounds (ODNR Division of Forestry), distinct from state parks.
-- **Waterfront:** only set an on-the-water value (`lake`/`river`/etc.) with genuine site-level confirmation that some sites sit directly on the water; sites merely near or overlooking water are not on-the-water (use `none`, or a `*view` value like `lakeview`).
+- **Waterfront:** only set an on-the-water value (`lake`/`river`/etc.) with genuine site-level confirmation that some sites sit directly on the water; sites merely near or overlooking water are not on-the-water (use `none`, or a `*view` value like `lakeview`). When evidence suggests sites might sit directly on the water, do the extra research to site-verify rather than defaulting to `none`.
 
 ### Sticky Layout
 
