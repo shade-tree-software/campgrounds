@@ -80,8 +80,21 @@ Entries in `campgrounds.json` must be usable by the family's 23-ft RV ("EKKO"). 
 - **Never add:** horse/equestrian campgrounds; hike-in-only, tent-only, boat-in-only, or cabin-only campgrounds.
 - **First-come-first-served:** always add a `note` saying so when a campground has no reservation system.
 - **Dispersed sites:** drive-in dispersed sites may be added when encountered, but don't go out of the way to hunt for them.
-- **Ownership:** `ownership: state` is correct for state-forest campgrounds (ODNR Division of Forestry), distinct from state parks.
+- **Ownership values:** `state` (state parks, state forests/SRAs, and interstate-compact parks like Breaks), `federal` (USACE / USFS / NPS / BLM / Reclamation), `local`, `private`, `hipcamp`. State-forest campgrounds are `state`, distinct from state parks.
 - **Waterfront:** only set an on-the-water value (`lake`/`river`/etc.) with genuine site-level confirmation that some sites sit directly on the water; sites merely near or overlooking water are not on-the-water (use `none`, or a `*view` value like `lakeview`). When evidence suggests sites might sit directly on the water, do the extra research to site-verify rather than defaulting to `none`.
+
+### Campground Data Curation (state-by-state audit)
+
+An ongoing effort adds campgrounds missing from `campgrounds.json`, worked systematically by state and operator (state parks → other state-run: state forests / SRAs / WMAs → USACE → USFS / NPS). **Git log is the progress record** — read recent commits to see which states/categories are already done before continuing. Mechanics:
+
+- **id:** `max(existing id) + 1`; ids are permanent and never reused.
+- **Append, don't re-dump:** append entries to the JSON array preserving the file's 2-space indentation; never rewrite the whole file (a full `json.dump` reorders keys / reformats floats and churns the diff). Validate with `json.load` after each batch.
+- **Fields:** `id`, `kind: "campground"`, `name`, `location` ("lat,lng"), `elevation_meters`, `state`, `ownership`, `waterfront`, `website`, `phone`, `note`.
+- **Coordinates:** pin `location` to the actual campground, not the park HQ/entrance — verify via allstays / recreation.gov / reserveamerica / campsitephotos / official campground-map PDFs.
+- **Elevation:** Open-Meteo DEM — `https://api.open-meteo.com/v1/elevation?latitude=<lat>&longitude=<lng>` (comma-separated lists for batch); store the meters value in `elevation_meters`.
+- **`waterfront` vocabulary:** on-water `lake`/`river`/`creek`/`pond`/`bay` (+ `coastal woods`/`coastal dunes`); view-only `lakeview`/`riverview`/`bayview`; else `none`.
+- **Confirm it's a real campground:** reservation directories also list day-use, cabin-only, group, and boat-in/hike-in facilities — verify a drive-in RV campground before adding. Note that many reservoirs have a USACE dam but state-run (or USFS-run) campgrounds — credit the actual operator, not the dam owner.
+- **Git:** commit campground edits directly to `master` (solo data repo; no feature branch unless asked); push only when asked — the user typically runs `! git push origin master` themselves.
 
 ### Sticky Layout
 
