@@ -195,7 +195,7 @@
 {% block scripts %}
 <script src="/static/map-picker.js"></script>
 <script>
-const WATERFRONT_OPTIONS = ['none','lakefront','lakeview','riverfront','riverview','creekside','pond','bayfront','bayview','coastal dunes','coastal woods'];
+const WATERFRONT_OPTIONS = ['not waterfront','lakefront','lakeview','riverfront','riverview','creekside','pond','bayfront','bayview','coastal dunes','coastal woods'];
 const OWNERSHIP_OPTIONS = ['state','federal','private','local','hipcamp'];
 const KIND_OPTIONS = ['campground','family'];
 const METERS_TO_FEET = 3.281;
@@ -404,7 +404,7 @@ function editRowHtml(c) {
 
 function newRowHtml() {
   return editRowHtml({
-    id: null, kind: 'campground', name: '', state: '', waterfront: 'none',
+    id: null, kind: 'campground', name: '', state: '', waterfront: 'not waterfront',
     ownership: '', elevation_meters: 0, note: '', location: '', website: '',
     phone: '', driveway_location: '',
   }).replace('onclick="saveEdit()"', 'onclick="saveNew()"')

@@ -185,7 +185,7 @@ function noteHtml(s) { return escapeHtml(s).replace(/\n/g, '<br>'); }
 const activeCategories = new Set();   // reset whenever the color mode changes
 const activeOwnerships = new Set();
 
-function colorCat(cg) { return cg[currentMode.field] || 'none'; }
+function colorCat(cg) { return cg[currentMode.field] || 'not waterfront'; }
 function ownerKey(cg) { return cg.ownership || ''; }
 function ownerLabel(v) {
   if (OWNERSHIP_LABELS[v]) return OWNERSHIP_LABELS[v];
@@ -254,8 +254,8 @@ CAMPGROUNDS.forEach(cg => {
   let popup = `<strong>${cg.name}</strong>`;
   if (cg.state) popup += `<br>${cg.state}`;
   if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
-  const wf = cg.waterfront || 'none';
-  if (wf === 'none') {
+  const wf = cg.waterfront || 'not waterfront';
+  if (wf === 'not waterfront') {
     popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
   } else {
     popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;

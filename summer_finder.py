@@ -155,10 +155,10 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
                     continue
                     
                 # Add waterfront information to the result
-                waterfront = campground.get("waterfront", "none")
+                waterfront = campground.get("waterfront", "not waterfront")
                 summer_day["waterfront"] = waterfront
-                
-                waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
+
+                waterfront_label = f" ({waterfront} waterfront)" if waterfront != "not waterfront" else ""
                 progress_callback(f"Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)")
                 all_summer_days.append(summer_day)
                 
@@ -169,10 +169,10 @@ def find_summer_days(max_miles=400, min_high_temp=70, max_high_temp=88, home_lat
     if all_summer_days:
         # Sort by waterfront preference first, then by distance
         if prefer_waterfront:
-            # Waterfront campgrounds first (non-"none"), then by distance
+            # Waterfront campgrounds first (non-"not waterfront"), then by distance
             sorted_summer_days = sorted(
-                all_summer_days, 
-                key=lambda d: (d.get('waterfront', 'none') == 'none', d['dist'])
+                all_summer_days,
+                key=lambda d: (d.get('waterfront', 'not waterfront') == 'not waterfront', d['dist'])
             )
         else:
             # Just sort by distance

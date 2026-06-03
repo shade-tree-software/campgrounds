@@ -90,7 +90,7 @@ WATERFRONT_COLORS = {
     "riverview":     "#26a69a",
     "creekside":     "#80cbc4",
     "pond":          "#9acd32",
-    "none":          "#795548",
+    "not waterfront": "#795548",
 }
 
 CLIMATE_COLORS = {
@@ -1480,7 +1480,7 @@ def api_create_campground():
             entry["driveway_location"] = data["driveway_location"]
     else:
         entry["elevation_meters"] = float(data.get("elevation_meters", 0))
-        entry["waterfront"] = data.get("waterfront", "none")
+        entry["waterfront"] = data.get("waterfront", "not waterfront")
         entry["ownership"] = data.get("ownership", "")
         entry["website"] = data.get("website", "")
         entry["note"] = data.get("note", "")

@@ -99,10 +99,10 @@ def search():
                     )
 
                     for summer_day in summer_days:
-                        waterfront = campground.get("waterfront", "none")
+                        waterfront = campground.get("waterfront", "not waterfront")
                         summer_day["waterfront"] = waterfront
 
-                        waterfront_label = f" ({waterfront} waterfront)" if waterfront != "none" else ""
+                        waterfront_label = f" ({waterfront} waterfront)" if waterfront != "not waterfront" else ""
                         yield f"data: Found summer day at {name}{waterfront_label} - {summer_day['day']} {summer_day['date']} ({summer_day['temp']}°F)\n\n"
                         all_summer_days.append(summer_day)
 
@@ -114,7 +114,7 @@ def search():
                 if prefer_waterfront:
                     sorted_summer_days = sorted(
                         all_summer_days,
-                        key=lambda d: (d.get('waterfront', 'none') == 'none', d['dist'])
+                        key=lambda d: (d.get('waterfront', 'not waterfront') == 'not waterfront', d['dist'])
                     )
                 else:
                     sorted_summer_days = sorted(all_summer_days, key=lambda d: d['dist'])
