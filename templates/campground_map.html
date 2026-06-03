@@ -254,6 +254,12 @@ CAMPGROUNDS.forEach(cg => {
   let popup = `<strong>${cg.name}</strong>`;
   if (cg.state) popup += `<br>${cg.state}`;
   if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
+  const wf = cg.waterfront || 'none';
+  if (wf === 'none') {
+    popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
+  } else {
+    popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;
+  }
   if (cg.visit_count) {
     popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
     const SHOW_BY_DEFAULT = 3;
