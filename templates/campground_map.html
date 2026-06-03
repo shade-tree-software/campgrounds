@@ -447,14 +447,13 @@ FAMILY.forEach(fam => {
 applyVisibility();
 
 // ?focus=<id> deep-link (reverse of the popup's "edit" link from the manage
-// page): center + zoom on one campground and open its popup instead of fitting
-// the whole set. Falls back to the normal fit if the id isn't found.
+// page): center + zoom on one campground instead of fitting the whole set.
+// Falls back to the normal fit if the id isn't found.
 const focusId = new URLSearchParams(window.location.search).get('focus');
 const focusEntry = focusId ? markers.find(m => String(m.cg.id) === focusId) : null;
 if (focusEntry) {
   const [flat, flng] = focusEntry.cg.location.split(',').map(parseFloat);
   map.setView([flat, flng], 14);
-  if (map.hasLayer(focusEntry.marker)) focusEntry.marker.openPopup();
   // Strip the param so a reload/share doesn't re-trigger the focus.
   const url = new URL(window.location);
   url.searchParams.delete('focus');

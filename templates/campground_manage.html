@@ -56,8 +56,8 @@
   .cg-table .col-waterfront { width: 11%; }
   .cg-table .col-ownership { width: 9%; }
   .cg-table .col-elev { width: 7%; text-align: right; }
-  .cg-table .col-note { width: 30%; }
-  .cg-table .col-actions { width: 13%; white-space: nowrap; }
+  .cg-table .col-note { width: 28%; }
+  .cg-table .col-actions { width: 15%; }
 
   .cg-table input, .cg-table select, .cg-table textarea {
     font-size: .85rem;
@@ -69,8 +69,10 @@
   }
   .cg-table textarea { resize: vertical; min-height: 2.5rem; }
 
-  .edit-actions { display: flex; gap: .3rem; margin-top: .3rem; }
-  .row-actions { display: flex; gap: .3rem; }
+  /* flex-wrap lets the 3 action buttons flow to a second line within the
+     fixed-width column instead of overflowing the table to the right. */
+  .edit-actions { display: flex; gap: .3rem; margin-top: .3rem; flex-wrap: wrap; }
+  .row-actions { display: flex; gap: .3rem; flex-wrap: wrap; }
   .row-actions button { padding: .2rem .5rem; font-size: .8rem; }
 
   .count-info { color: var(--gray); font-size: .85rem; }
@@ -395,6 +397,7 @@ function editRowHtml(c) {
     <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
       <button class="btn btn-save" onclick="saveEdit()">Save</button>
       <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+      ${(c.id != null && !isFamily) ? `<button class="btn btn-map" onclick="viewOnMap(${c.id})">Map</button>` : ''}
     </div></td>
   </tr>`;
 }
