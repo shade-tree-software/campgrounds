@@ -185,8 +185,28 @@ const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const IS_ADMIN = {{ is_admin | tojson }};
 
+// Remember legend / filter selections for the session: survives navigating away
+// from the map and back, and clears when the tab closes (sessionStorage).
+const STORE = {
+  get(key, fallback) {
+    try { const v = sessionStorage.getItem('cgmap.' + key); return v == null ? fallback : JSON.parse(v); }
+    catch (e) { return fallback; }
+  },
+  set(key, val) {
+    try { sessionStorage.setItem('cgmap.' + key, JSON.stringify(val)); } catch (e) {}
+  },
+};
+// Dimmed (hidden) legend categories / ownership filters, restored from the session.
+const hiddenCategories = new Set(STORE.get('hiddenCategories', []));
+const hiddenOwnerships = new Set(STORE.get('hiddenOwnerships', []));
+function persistCategories() { STORE.set('hiddenCategories', [...hiddenCategories]); }
+function persistOwnerships() { STORE.set('hiddenOwnerships', [...hiddenOwnerships]); }
+
 const MODES_BY_KEY = Object.fromEntries(COLOR_MODES.map(m => [m.key, m]));
-let currentMode = MODES_BY_KEY[DEFAULT_MODE] || COLOR_MODES[0];
+// Color mode: explicit ?color in the URL wins, then the session, then the default.
+const urlColor = new URLSearchParams(window.location.search).get('color');
+let currentMode = MODES_BY_KEY[urlColor] || MODES_BY_KEY[STORE.get('color')]
+  || MODES_BY_KEY[DEFAULT_MODE] || COLOR_MODES[0];
 
 // Escape HTML, then turn newlines into <br> so multi-line notes render as
 // separate lines in the popup (a raw \n is just collapsed whitespace in HTML).
@@ -351,24 +371,29 @@ function rebuildLegend() {
   Object.entries(currentMode.colors).forEach(([category, color]) => {
     const count = CAMPGROUNDS.filter(c => colorCat(c) === category).length;
     if (count === 0) return;  // skip categories with no campgrounds in this mode
-    activeCategories.add(category);
+    const hidden = hiddenCategories.has(category);  // restored from the session
+    if (!hidden) activeCategories.add(category);
     const row = document.createElement('div');
-    row.className = 'legend-row';
+    row.className = 'legend-row' + (hidden ? ' dimmed' : '');
     row.dataset.category = category;
     row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
     row.addEventListener('click', () => {
       if (activeCategories.has(category)) {
         activeCategories.delete(category);
         row.classList.add('dimmed');
+        hiddenCategories.add(category);
       } else {
         activeCategories.add(category);
         row.classList.remove('dimmed');
+        hiddenCategories.delete(category);
       }
       applyVisibility();
       syncOnWaterCheckbox();
+      persistCategories();
     });
     legendRowsEl.appendChild(row);
   });
+  syncOnWaterCheckbox();  // reflect any restored "on the water" state
 }
 
 // Turn the on-water categories on and everything else off (or, when unchecked,
@@ -378,10 +403,11 @@ function setOnWaterOnly(on) {
   legendRowsEl.querySelectorAll('.legend-row').forEach(row => {
     const cat = row.dataset.category;
     const show = on ? ON_WATER.has(cat) : true;
-    if (show) { activeCategories.add(cat); row.classList.remove('dimmed'); }
-    else { activeCategories.delete(cat); row.classList.add('dimmed'); }
+    if (show) { activeCategories.add(cat); row.classList.remove('dimmed'); hiddenCategories.delete(cat); }
+    else { activeCategories.delete(cat); row.classList.add('dimmed'); hiddenCategories.add(cat); }
   });
   applyVisibility();
+  persistCategories();
 }
 
 // Keep the checkbox honest when categories are toggled individually: checked
@@ -423,7 +449,7 @@ const ownerOrder = Object.keys(OWNERSHIP_LABELS);
 const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
 const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
   .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
-ownerValues.forEach(v => activeOwnerships.add(v));
+ownerValues.forEach(v => { if (!hiddenOwnerships.has(v)) activeOwnerships.add(v); });
 
 const ownershipControl = L.control({ position: 'topright' });
 ownershipControl.onAdd = function() {
@@ -443,17 +469,20 @@ ownershipControl.onAdd = function() {
   ownerValues.forEach(v => {
     const count = CAMPGROUNDS.filter(c => ownerKey(c) === v).length;
     const row = document.createElement('div');
-    row.className = 'legend-row';
+    row.className = 'legend-row' + (hiddenOwnerships.has(v) ? ' dimmed' : '');
     row.innerHTML = `<span class="legend-box"></span>${ownerLabel(v)} (${count})`;
     row.addEventListener('click', () => {
       if (activeOwnerships.has(v)) {
         activeOwnerships.delete(v);
         row.classList.add('dimmed');
+        hiddenOwnerships.add(v);
       } else {
         activeOwnerships.add(v);
         row.classList.remove('dimmed');
+        hiddenOwnerships.delete(v);
       }
       applyVisibility();
+      persistOwnerships();
     });
     rows.appendChild(row);
   });
@@ -464,13 +493,16 @@ ownershipControl.onAdd = function() {
 ownershipControl.addTo(map);
 
 // ── Color-mode picker ───────────────────────────────────────────────────────
+// Reflect the restored mode (URL/session may differ from the server default).
+document.getElementById('color-mode').value = currentMode.key;
 document.getElementById('color-mode').addEventListener('change', (e) => {
   currentMode = MODES_BY_KEY[e.target.value] || currentMode;
   markers.forEach(({ marker, cg }) => {
     marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
   });
-  rebuildLegend();   // resets all categories of the new mode to active
+  rebuildLegend();   // re-applies any session-hidden categories for the new mode
   applyVisibility();
+  STORE.set('color', currentMode.key);
   // Keep the URL in sync so the view is shareable / survives reload.
   const url = new URL(window.location);
   url.searchParams.set('color', currentMode.key);
