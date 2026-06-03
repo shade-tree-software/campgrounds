@@ -107,6 +107,23 @@
 
   .map-legend .legend-row.dimmed { opacity: .35; }
 
+  /* "On the water" quick filter — sits above the category rows. */
+  .map-legend .legend-toggle {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    cursor: pointer;
+    user-select: none;
+    padding: .15rem .25rem;
+    margin: 0 -.25rem .25rem;
+    border-radius: 4px;
+    font-weight: 600;
+    color: var(--navy);
+    border-bottom: 1px solid #eee;
+  }
+  .map-legend .legend-toggle:hover { background: rgba(0,0,0,.05); }
+  .map-legend .legend-toggle input { margin: 0; cursor: pointer; flex-shrink: 0; }
+
   .map-legend .legend-dot {
     width: 12px;
     height: 12px;
@@ -305,18 +322,39 @@ CAMPGROUNDS.forEach(cg => {
 });
 
 // ── Legend (color categories for the current mode) ──────────────────────────
+// On-water categories the "On the water" quick filter switches on: sites at the
+// water's edge. Excludes the in-view (*view) categories, coastal woods (set back
+// in trees), and not-waterfront.
+const ON_WATER = new Set(['bayfront', 'lakefront', 'riverfront', 'creekside', 'pond', 'coastal dunes']);
 let legendRowsEl = null;
+let onWaterCb = null;  // the "On the water" checkbox (waterfront mode only)
 
 function rebuildLegend() {
   if (!legendRowsEl) return;
   legendRowsEl.innerHTML = '';
+  onWaterCb = null;
   activeCategories.clear();
+
+  // Quick filter, waterfront mode only: one click to show just the on-water
+  // categories (sites at the water's edge) and hide everything else.
+  if (currentMode.key === 'waterfront') {
+    const toggle = document.createElement('label');
+    toggle.className = 'legend-toggle';
+    onWaterCb = document.createElement('input');
+    onWaterCb.type = 'checkbox';
+    onWaterCb.addEventListener('change', () => setOnWaterOnly(onWaterCb.checked));
+    toggle.appendChild(onWaterCb);
+    toggle.appendChild(document.createTextNode('On the water'));
+    legendRowsEl.appendChild(toggle);
+  }
+
   Object.entries(currentMode.colors).forEach(([category, color]) => {
     const count = CAMPGROUNDS.filter(c => colorCat(c) === category).length;
     if (count === 0) return;  // skip categories with no campgrounds in this mode
     activeCategories.add(category);
     const row = document.createElement('div');
     row.className = 'legend-row';
+    row.dataset.category = category;
     row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
     row.addEventListener('click', () => {
       if (activeCategories.has(category)) {
@@ -327,9 +365,33 @@ function rebuildLegend() {
         row.classList.remove('dimmed');
       }
       applyVisibility();
+      syncOnWaterCheckbox();
     });
     legendRowsEl.appendChild(row);
   });
+}
+
+// Turn the on-water categories on and everything else off (or, when unchecked,
+// re-show every category). Only the category filter is touched — the ownership
+// filter is left untouched.
+function setOnWaterOnly(on) {
+  legendRowsEl.querySelectorAll('.legend-row').forEach(row => {
+    const cat = row.dataset.category;
+    const show = on ? ON_WATER.has(cat) : true;
+    if (show) { activeCategories.add(cat); row.classList.remove('dimmed'); }
+    else { activeCategories.delete(cat); row.classList.add('dimmed'); }
+  });
+  applyVisibility();
+}
+
+// Keep the checkbox honest when categories are toggled individually: checked
+// only when the active set is exactly the present on-water categories.
+function syncOnWaterCheckbox() {
+  if (!onWaterCb) return;
+  const cats = [...legendRowsEl.querySelectorAll('.legend-row')].map(r => r.dataset.category);
+  onWaterCb.checked = cats.length > 0
+    && cats.every(c => ON_WATER.has(c) === activeCategories.has(c))
+    && cats.some(c => ON_WATER.has(c) && activeCategories.has(c));
 }
 
 const legendControl = L.control({ position: 'bottomleft' });
