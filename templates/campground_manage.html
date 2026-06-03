@@ -38,6 +38,8 @@
   .btn-cancel:hover { background: #616161; }
   .btn-delete { background: #c62828; color: #fff; }
   .btn-delete:hover { background: #d32f2f; }
+  .btn-map { background: #1565c0; color: #fff; }
+  .btn-map:hover { background: #1976d2; }
 
   .cg-table { width: 100%; border-collapse: collapse; font-size: .85rem; table-layout: fixed; }
   /* Sticky header row. box-shadow (not border-bottom) draws the divider so it
@@ -346,10 +348,17 @@ function viewRowHtml(c) {
     <td class="col-elev" data-label="Elev (ft) ">${isFamily ? '' : elev}</td>
     <td class="col-note note-cell">${note}</td>
     <td class="col-actions"><div class="row-actions">
+      ${isFamily ? '' : `<button class="btn btn-map" onclick="viewOnMap(${c.id})">Map</button>`}
       <button class="btn btn-save" onclick="startEdit(${c.id})">Edit</button>
       <button class="btn btn-delete" onclick="deleteCg(${c.id})">Delete</button>
     </div></td>
   </tr>`;
+}
+
+// Reverse of the map popup's "edit" link: jump to the campground map zoomed in
+// on this entry (handled by the ?focus=<id> param on the map page).
+function viewOnMap(id) {
+  window.location.href = '/campgrounds/map?focus=' + id;
 }
 
 function editRowHtml(c) {
