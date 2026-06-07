@@ -278,6 +278,12 @@ const satellite = L.layerGroup([
 ]);
 L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
 
+// Dedicated pane so stay (blue) circleMarkers render above event (gold) ones.
+// Event circleMarkers stay in the default overlayPane (z-index 400); this pane
+// sits above that but below markerPane (600) where home/family icons live.
+map.createPane('stayPane');
+map.getPane('stayPane').style.zIndex = 450;
+
 // Home marker
 if (HOME) {
   const homeIcon = L.divIcon({
@@ -339,6 +345,7 @@ Object.values(locMap).forEach(loc => {
   const radius = Math.min(6 + visits * 2, 14);
 
   const marker = L.circleMarker(ll, {
+    pane: 'stayPane',
     radius: radius,
     fillColor: '#002868',
     color: '#fff',
