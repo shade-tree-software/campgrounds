@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Apply waterfront-audit results to campgrounds.json with surgical text edits
 (never re-dumps the file). Usage: apply_waterfront_audit.py <results.json>"""
-import json, re, sys
+import json, os, re, sys
 
-CG = '/home/andrew/Dev/campgrounds/campgrounds.json'
+CG = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'campgrounds.json')
 results = json.load(open(sys.argv[1]))
 raw = open(CG).read()
 
