@@ -7,9 +7,11 @@ NOT named/described as dispersed (per AWH 2026-06-10: skip dispersed sites).
 Working eastward from IL. **Git log is the progress record** — look for
 "Audit all NN <ST> waterfront designations" commits to see which states are done.
 
-Remaining queue (counts as of 2026-06-10): the scattered remainder
-(NJ 7, VT 5, MD 4, VA 4, FL/RI/ME 2 each, AL/NH/MA/CA/MN/TN/DE 1 each).
-Done: MO, IL, IN, KY, OH, WV, PA, NY.
+**COMPLETE (2026-06-11).** Done: MO, IL, IN, KY, OH, WV, PA, NY, plus the
+scattered remainder (NJ, VT, MD, VA, FL, RI, ME, AL, NH, MA, CA, MN, TN, DE —
+33 entries, one combined commit "Audit the remaining 33 waterfront
+designations"). Every pre-gate designation has been re-verified; per-entry
+evidence lives in the audit commit messages.
 
 ## Per-state workflow
 
