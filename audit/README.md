@@ -6,9 +6,9 @@ whose `note` is NOT tagged `--AWH` (those are firsthand-confirmed). Working
 eastward from IL. **Git log is the progress record** — look for
 "Audit all NN <ST> waterfront designations" commits to see which states are done.
 
-Remaining queue (counts as of 2026-06-10): NY 73,
-then the scattered remainder (NJ 7, VT 5, MD 4, VA 4, FL/RI/ME 2 each,
-AL/NH/MA/CA/MN/TN/DE 1 each). Done: MO, IL, IN, KY, OH, WV, PA.
+Remaining queue (counts as of 2026-06-10): the scattered remainder
+(NJ 7, VT 5, MD 4, VA 4, FL/RI/ME 2 each, AL/NH/MA/CA/MN/TN/DE 1 each).
+Done: MO, IL, IN, KY, OH, WV, PA, NY.
 
 ## Per-state workflow
 
@@ -30,7 +30,7 @@ AL/NH/MA/CA/MN/TN/DE 1 each). Done: MO, IL, IN, KY, OH, WV, PA.
    confirms) plus a per-entry `waterfront_evidence` line for every audited entry
    — that makes any later audit a grep of the git log.
 
-## Findings pattern so far (MO, IL, IN, KY, OH, WV, PA)
+## Findings pattern so far (MO, IL, IN, KY, OH, WV, PA, NY)
 
 - ~40-50% of pre-gate designations change, almost all downward.
 - ~Half of audited entries had mis-pinned coords (park office, entrance road,
