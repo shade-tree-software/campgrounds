@@ -2,9 +2,14 @@
 
 Ongoing re-audit of every `waterfront` value that predates the evidence gate
 (commits 4f3160e / 9c28772). Scope: all entries with `waterfront != "not waterfront"`
-whose `note` is NOT tagged `--AWH` (those are firsthand-confirmed). Working
-eastward from IL. **Git log is the progress record** — look for
+whose `note` is NOT tagged `--AWH` (those are firsthand-confirmed), and that are
+NOT named/described as dispersed (per AWH 2026-06-10: skip dispersed sites).
+Working eastward from IL. **Git log is the progress record** — look for
 "Audit all NN <ST> waterfront designations" commits to see which states are done.
+
+Pending side-finding from the NY audit: ids 334 "Oneida Shores County Park" and
+1467 "Oneida Shores Park" resolved to the same RV loop (~20 m apart) — likely
+duplicates, awaiting AWH dedupe.
 
 Remaining queue (counts as of 2026-06-10): the scattered remainder
 (NJ 7, VT 5, MD 4, VA 4, FL/RI/ME 2 each, AL/NH/MA/CA/MN/TN/DE 1 each).
