@@ -490,6 +490,10 @@
 
   .trip-header .meta span { font-weight: 600; }
 
+  /* Condensed one-line meta (dates · nights · campspots) for phones,
+     where the full .meta is hidden. Desktop shows the full version. */
+  .trip-header .meta-mobile { display: none; }
+
   /* Admin-only "Actions ▾" dropdown in the trip header. Consolidates
      every trip-level admin action (add campspot/event/waypoint/family
      visit, track source, detect stops, delete trip) into one menu so
@@ -610,6 +614,13 @@
       line-height: 1.2;
     }
     .trip-header .meta { display: none; }
+    .trip-header .meta-mobile {
+      display: block;
+      font-size: .75rem;
+      opacity: .85;
+      line-height: 1.3;
+      margin-top: .15rem;
+    }
     .trip-header .trip-nav { gap: .25rem; }
     .trip-header .trip-nav a {
       font-size: 1.5rem;
@@ -1551,6 +1562,16 @@
       <div>{{ trip.campers|join(', ') }}</div>
       {% endif %}
     </div>
+    {# Condensed one-line meta for phones, where the full .meta above is
+       hidden — the essentials only: dates, nights, campspots (or events
+       for day trips). Built as a parts list so the · separators handle
+       missing segments cleanly. #}
+    {% set mm_parts = [] %}
+    {% if trip.start %}{% set _ = mm_parts.append(trip.start | daterange(trip.end)) %}{% endif %}
+    {% if trip.total_nights %}{% set _ = mm_parts.append(trip.total_nights ~ ' night' ~ ('' if trip.total_nights == 1 else 's')) %}{% endif %}
+    {% if trip.stays %}{% set _ = mm_parts.append(trip.stays|length ~ ' campspot' ~ ('' if trip.stays|length == 1 else 's')) %}
+    {% elif real_events %}{% set _ = mm_parts.append(real_events|length ~ ' event' ~ ('' if real_events|length == 1 else 's')) %}{% endif %}
+    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}</div>{% endif %}
   </div>
   {% if is_admin %}
   <div class="trip-actions" id="trip-actions">

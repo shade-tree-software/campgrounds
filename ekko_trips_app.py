@@ -46,6 +46,29 @@ def _to12h(value):
     h12 = h % 12 or 12
     return f"{h12}:{m:02d} {suffix}"
 
+
+@app.template_filter('daterange')
+def _daterange(start, end=None):
+    """Format ISO 'YYYY-MM-DD' start/end as a compact human date range.
+
+    'Jun 5, 2025' (single day), 'Jun 5–12, 2025' (same month),
+    'Jun 28 – Jul 2, 2025' (same year), 'Dec 30, 2024 – Jan 2, 2025'
+    (spans years). Returns the raw input(s) joined with a dash if either
+    date doesn't parse, so blank/legacy values pass through harmlessly.
+    """
+    try:
+        s = datetime.strptime(str(start), "%Y-%m-%d").date()
+        e = datetime.strptime(str(end), "%Y-%m-%d").date() if end else s
+    except (ValueError, TypeError):
+        return f"{start} – {end}" if end and end != start else start
+    if s == e:
+        return f"{s.strftime('%b')} {s.day}, {s.year}"
+    if (s.year, s.month) == (e.year, e.month):
+        return f"{s.strftime('%b')} {s.day}–{e.day}, {s.year}"
+    if s.year == e.year:
+        return f"{s.strftime('%b')} {s.day} – {e.strftime('%b')} {e.day}, {s.year}"
+    return f"{s.strftime('%b')} {s.day}, {s.year} – {e.strftime('%b')} {e.day}, {e.year}"
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
