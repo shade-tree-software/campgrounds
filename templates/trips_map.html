@@ -190,14 +190,18 @@
   }
 
   @media (max-width: 700px) {
-    /* Phone: trim outer padding so the map fills the screen width.
-       Slightly shorter photo strip and a tighter calc so the legend's
-       last row is still visible behind the browser chrome. The 244px
-       reserve includes ~44px for the compact latest-trip banner. */
+    /* Phone: trim outer padding so the map fills the screen width. The
+       100vh fallback reserves 244px — real content (~36px banner + 90px
+       photo strip + gaps ≈ 150px) plus ~95px of slack for the iOS URL
+       bar, which 100vh pretends isn't there. The 100dvh line (preferred
+       wherever supported) tracks the *visible* viewport, so it only
+       reserves the real content and the map absorbs the slack instead
+       of leaving dead space above the tab bar. */
     .map-section { padding: .25rem .25rem 0; }
     .map-container {
       border-radius: 6px;
       height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px));
+      height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px));
     }
     .photo-stack { height: 90px; gap: .35rem; }
     /* Compact banner: "show me the newest trip" is the #1 task for a

@@ -226,6 +226,14 @@
     }
     .tab-bar a svg { display: block; }
     .tab-bar a.active { color: var(--gold); }
+    .tab-bar a:active { background: rgba(255,255,255,.1); }
+    /* Tapped-and-waiting: the server render can take a beat, so the
+       script below moves .active to the tapped tab immediately and
+       pulses its icon until the new page paints. */
+    .tab-bar a.loading svg { animation: tab-loading-pulse .9s ease-in-out infinite; }
+    @keyframes tab-loading-pulse {
+      50% { opacity: .3; }
+    }
   }
 
   /* Phone-only: shrink the header text + stats. iPad has room for the
@@ -343,6 +351,36 @@
         link.addEventListener('click', () => {
           siteNav.classList.remove('open');
           setHeight();
+        });
+      });
+    }
+
+    // Instant feedback for bottom-tab taps: full-page navigation can take
+    // a couple of seconds on a phone, during which nothing visibly
+    // responds. Move the highlight to the tapped tab immediately and
+    // pulse its icon until the new page paints. Deferred a tick so pages
+    // that intercept a tab click for client-side switching (calendar/list
+    // call preventDefault and manage .active themselves) skip the pulse.
+    const tabBar = document.querySelector('.tab-bar');
+    if (tabBar) {
+      const initialActive = tabBar.querySelector('a.active');
+      tabBar.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', e => {
+          setTimeout(() => {
+            if (e.defaultPrevented) return;
+            tabBar.querySelectorAll('a').forEach(a => a.classList.toggle('active', a === link));
+            link.classList.add('loading');
+          }, 0);
+        });
+      });
+      // Back-swipe restores this page from the bfcache with the moved
+      // highlight and pulse still applied — reset to the server-rendered
+      // state.
+      window.addEventListener('pageshow', e => {
+        if (!e.persisted) return;
+        tabBar.querySelectorAll('a').forEach(a => {
+          a.classList.remove('loading');
+          a.classList.toggle('active', a === initialActive);
         });
       });
     }
