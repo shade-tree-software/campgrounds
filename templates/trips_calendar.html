@@ -294,6 +294,48 @@
     box-shadow: 0 0 0 2px var(--gold);
   }
 
+  /* Today on a non-trip day: filled gold circle. (The ring rule above
+     only matches trip days — plain days have no .day-num child, so
+     today was previously unmarked unless it fell inside a trip.) */
+  .month-card td.today .today-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: var(--gold);
+    color: var(--white);
+    font-weight: 700;
+    font-size: .75rem;
+  }
+
+  /* Click-chooser for days covered by more than one trip — without it
+     only the "primary" trip was reachable from the calendar. Styled
+     like the hover tooltip but white/clickable. */
+  .day-menu {
+    display: none;
+    position: fixed;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    padding: .35rem;
+    z-index: 120;
+    max-width: 320px;
+  }
+  .day-menu.visible { display: block; }
+  .day-menu a {
+    display: block;
+    padding: .45rem .6rem;
+    border-radius: 5px;
+    color: var(--navy);
+    text-decoration: none;
+    font-size: .85rem;
+  }
+  .day-menu a:hover { background: var(--blue-bg); }
+  .day-menu a .menu-dates { color: var(--gray); font-size: .75rem; }
+
   /* ── List View ──────────────────────────────────── */
   .list-view {
     max-width: 900px;
@@ -424,6 +466,7 @@
 <div id="list-container" class="list-view hidden"></div>
 
 <div class="tooltip" id="tooltip"></div>
+<div class="day-menu" id="day-menu"></div>
 {% endblock %}
 
 {% block scripts %}
@@ -788,14 +831,27 @@ function buildMonthCard(m, withPager) {
         }
         td.appendChild(span);
 
-        td.addEventListener('click', () => {
-          window.location.href = '/trips/' + primaryTrip.id;
+        // One trip navigates directly; overlapping trips get a chooser
+        // (otherwise only the primary trip is reachable from the grid).
+        td.addEventListener('click', (e) => {
+          if (trips.length === 1) {
+            window.location.href = '/trips/' + primaryTrip.id;
+          } else {
+            showDayMenu(e, trips);
+          }
         });
-        td.addEventListener('mouseenter', (e) => showTooltip(e, primaryTrip));
+        td.addEventListener('mouseenter', (e) => showTooltip(e, trips));
         td.addEventListener('mouseleave', hideTooltip);
       } else {
-        td.textContent = d;
-        if (dateStr === todayStr) td.classList.add('today');
+        if (dateStr === todayStr) {
+          td.classList.add('today');
+          const span = document.createElement('span');
+          span.className = 'today-num';
+          span.textContent = d;
+          td.appendChild(span);
+        } else {
+          td.textContent = d;
+        }
       }
 
       row.appendChild(td);
@@ -837,17 +893,19 @@ function renderList() {
   });
 }
 
-function showTooltip(e, trip) {
+const _fmtTipDate = d => new Date(d + 'T00:00:00')
+  .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+function showTooltip(e, trips) {
   const tt = document.getElementById('tooltip');
-  const startD = new Date(trip.start + 'T00:00:00');
-  const endD = new Date(trip.end + 'T00:00:00');
-  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-  let html = `<strong>${trip.summary}</strong><br>`;
-  html += `${fmt(startD)} &ndash; ${fmt(endD)} (${trip.total_nights} nights)<br>`;
-  if (trip.campers.length) html += `<em>${trip.campers.join(', ')}</em>`;
-
-  tt.innerHTML = html;
+  // Every trip covering the day, not just the primary — overlaps are
+  // rare but invisible otherwise.
+  tt.innerHTML = trips.map(trip => {
+    let html = `<strong>${trip.summary}</strong><br>`;
+    html += `${_fmtTipDate(trip.start)} &ndash; ${_fmtTipDate(trip.end)} (${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''})`;
+    if (trip.campers.length) html += `<br><em>${trip.campers.join(', ')}</em>`;
+    return html;
+  }).join('<div style="height:.5rem;"></div>');
   tt.classList.add('visible');
 
   const rect = tt.getBoundingClientRect();
@@ -862,6 +920,34 @@ function showTooltip(e, trip) {
 function hideTooltip() {
   document.getElementById('tooltip').classList.remove('visible');
 }
+
+// Chooser shown when a day belongs to 2+ trips: one link per trip at
+// the click point. Dismissed by clicking anywhere else.
+function showDayMenu(e, trips) {
+  hideTooltip();
+  const menu = document.getElementById('day-menu');
+  menu.innerHTML = trips.map(trip =>
+    `<a href="/trips/${trip.id}">${escapeHtml(trip.summary || 'Trip')}` +
+    `<br><span class="menu-dates">${_fmtTipDate(trip.start)} &ndash; ${_fmtTipDate(trip.end)}</span></a>`
+  ).join('');
+  menu.classList.add('visible');
+  const rect = menu.getBoundingClientRect();
+  let x = e.clientX + 6;
+  let y = e.clientY + 6;
+  if (x + rect.width > window.innerWidth) x = e.clientX - rect.width - 6;
+  if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 6;
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  e.stopPropagation();  // don't let the opening click immediately dismiss it
+}
+
+document.addEventListener('click', e => {
+  const menu = document.getElementById('day-menu');
+  if (!e.target.closest('#day-menu')) menu.classList.remove('visible');
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.getElementById('day-menu').classList.remove('visible');
+});
 
 function switchView(view) {
   currentView = view;
