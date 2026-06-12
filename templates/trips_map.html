@@ -192,16 +192,26 @@
   @media (max-width: 700px) {
     /* Phone: trim outer padding so the map fills the screen width.
        Slightly shorter photo strip and a tighter calc so the legend's
-       last row is still visible behind the browser chrome. */
+       last row is still visible behind the browser chrome. The 244px
+       reserve includes ~44px for the compact latest-trip banner. */
     .map-section { padding: .25rem .25rem 0; }
     .map-container {
       border-radius: 6px;
-      height: calc(100vh - var(--site-top-height, 60px) - 200px - var(--tab-bar-height, 0px));
+      height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px));
     }
     .photo-stack { height: 90px; gap: .35rem; }
-    /* Banner is desktop-only — phones already lose enough vertical room
-       to the map and photo strip. */
-    .latest-trip-banner { display: none; }
+    /* Compact banner: "show me the newest trip" is the #1 task for a
+       family member opening the app, so it stays on phones — one tight
+       line, date dropped, smaller CTA pill. */
+    .latest-trip-banner {
+      padding: .4rem .5rem .4rem .7rem;
+      gap: .5rem;
+      font-size: .85rem;
+      border-left-width: 4px;
+      border-radius: 6px;
+    }
+    .latest-trip-banner .meta { display: none; }
+    .latest-trip-banner .arrow { font-size: .7rem; padding: .25rem .55rem; }
   }
 
   .map-legend {
