@@ -50,7 +50,7 @@ function deleteAllEventPhotos(tripId, eventIdx) {
 }
 
 // Upload photos for a stay or event directly from its card's header button.
-// Triggers a hidden file input, uploads each file, then reloads on completion.
+// Triggers a hidden file input, then hands the files to _runUploads.
 function uploadPhotosForItem(kind, idx) {
   if (!IS_ADMIN && !IS_UPLOADER) return;
   const url = kind === 'stay'
@@ -63,33 +63,82 @@ function uploadPhotosForItem(kind, idx) {
   input.style.display = 'none';
   document.body.appendChild(input);
   input.onchange = () => {
-    if (!input.files || !input.files.length) {
-      input.remove();
-      return;
-    }
-    const total = input.files.length;
-    let done = 0;
-    const errors = [];
-    Array.from(input.files).forEach(file => {
-      const form = new FormData();
-      form.append('photo', file);
-      fetch(url, { method: 'POST', body: form })
-        .then(r => r.json())
-        .then(data => {
-          if (data.error) errors.push(file.name + ': ' + data.error);
-        })
-        .catch(() => errors.push(file.name + ': upload failed'))
-        .finally(() => {
-          done++;
-          if (done === total) {
-            input.remove();
-            if (errors.length) alert('Upload errors:\n' + errors.join('\n'));
-            _reloadKeepingMapView();
-          }
-        });
-    });
+    const files = Array.from(input.files || []);
+    input.remove();
+    if (files.length) _runUploads(url, files);
   };
   input.click();
+}
+
+// The fixed progress banner (styles in trip_detail.html). Created on
+// first use; the page reload at the end of every upload run clears it.
+function _uploadBanner() {
+  let el = document.getElementById('upload-progress-banner');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'upload-progress-banner';
+    el.innerHTML = '<div class="upb-text"></div><div class="upb-bar"><div class="upb-fill"></div></div>';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+// Upload files through a 3-worker pool with visible progress. The old
+// flow fired every file as a simultaneous POST (20 phone photos = 20
+// concurrent multi-MB uploads stalling each other on cellular) and gave
+// no feedback at all until a silent reload. Success still reloads
+// immediately; failures turn the banner red and list the files, and the
+// reload waits for an OK so partial successes are explained, not
+// mysteriously missing.
+function _runUploads(url, files) {
+  const banner = _uploadBanner();
+  const textEl = banner.querySelector('.upb-text');
+  const fillEl = banner.querySelector('.upb-fill');
+  const total = files.length;
+  let started = 0;
+  let done = 0;
+  const errors = [];
+
+  const update = () => {
+    textEl.textContent = `Uploading ${Math.min(done + 1, total)} of ${total} photo${total !== 1 ? 's' : ''}…`;
+    fillEl.style.width = (done / total * 100) + '%';
+  };
+  update();
+
+  const finish = () => {
+    if (!errors.length) { _reloadKeepingMapView(); return; }
+    banner.classList.add('upb-error');
+    textEl.textContent = `${total - errors.length} of ${total} uploaded — ${errors.length} failed`;
+    fillEl.parentElement.style.display = 'none';
+    const list = document.createElement('div');
+    list.className = 'upb-errors';
+    list.textContent = errors.join('\n');
+    banner.appendChild(list);
+    const btn = document.createElement('button');
+    btn.textContent = 'OK';
+    btn.onclick = () => _reloadKeepingMapView();
+    banner.appendChild(btn);
+  };
+
+  const next = () => {
+    if (started >= total) return;
+    const file = files[started++];
+    const form = new FormData();
+    form.append('photo', file);
+    fetch(url, { method: 'POST', body: form })
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) errors.push(file.name + ': ' + data.error);
+      })
+      .catch(() => errors.push(file.name + ': upload failed'))
+      .finally(() => {
+        done++;
+        update();
+        if (done === total) finish();
+        else next();
+      });
+  };
+  for (let i = 0; i < Math.min(3, total); i++) next();
 }
 
 function saveCaption(tripId, stayIdx, filename, caption) {

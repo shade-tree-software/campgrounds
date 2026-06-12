@@ -1088,6 +1088,57 @@
     }
   }
 
+  /* ── Upload progress banner (created by photos.js _uploadBanner) ── */
+  #upload-progress-banner {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: calc(1rem + var(--tab-bar-height, 0px));  /* clears the mobile tab bar */
+    z-index: 1300;  /* above lightbox/modals/map picker */
+    background: var(--navy);
+    color: #fff;
+    padding: .65rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.35);
+    min-width: 250px;
+    max-width: calc(100vw - 2rem);
+    font-size: .85rem;
+  }
+  #upload-progress-banner .upb-bar {
+    margin-top: .45rem;
+    height: 4px;
+    background: rgba(255,255,255,.25);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  #upload-progress-banner .upb-fill {
+    height: 100%;
+    width: 0;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width .2s ease;
+  }
+  #upload-progress-banner.upb-error { background: #8e2323; }
+  #upload-progress-banner .upb-errors {
+    margin-top: .4rem;
+    font-size: .78rem;
+    line-height: 1.4;
+    max-height: 30vh;
+    overflow-y: auto;
+    white-space: pre-line;
+  }
+  #upload-progress-banner button {
+    margin-top: .5rem;
+    background: rgba(255,255,255,.15);
+    border: 1px solid rgba(255,255,255,.4);
+    color: #fff;
+    border-radius: 5px;
+    padding: .3rem .9rem;
+    cursor: pointer;
+    font-size: .8rem;
+  }
+  #upload-progress-banner button:hover { background: rgba(255,255,255,.3); }
+
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
