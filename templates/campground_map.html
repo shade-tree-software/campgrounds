@@ -52,6 +52,48 @@
     background: #fff;
   }
 
+  /* Name search. The wrapper's z-index must beat Leaflet's panes
+     (which reach 1000 and share this stacking context — the map
+     container creates none) so the dropdown renders over the map. */
+  .map-header .cg-search {
+    position: relative;
+    z-index: 1100;
+    flex: 1 1 14rem;
+    max-width: 22rem;
+  }
+  .map-header .cg-search input {
+    width: 100%;
+    padding: .35rem .6rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    /* 16px keeps iOS Safari from auto-zooming on focus. */
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: inherit;
+    color: var(--navy);
+  }
+  .map-header .cg-search input:focus { outline: none; border-color: var(--red); }
+  .cg-search-results {
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: #fff; border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 6px 6px; max-height: 280px; overflow-y: auto;
+    box-shadow: 0 6px 16px rgba(0,0,0,.18); display: none;
+  }
+  .cg-search-results.open { display: block; }
+  .cg-search-option {
+    padding: .45rem .6rem; cursor: pointer;
+    font-size: .85rem; font-weight: 400;
+    display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+  }
+  .cg-search-option:hover,
+  .cg-search-option.active { background: var(--blue-bg); }
+  .cg-search-option .cg-search-state { color: var(--gray); font-size: .75rem; flex-shrink: 0; }
+
+  @media (max-width: 700px) {
+    /* Search drops to its own full-width row under the title/selector. */
+    .map-header .cg-search { flex: 1 1 100%; max-width: none; order: 10; }
+  }
+
   #campground-map {
     height: calc(100vh - 220px - var(--tab-bar-height, 0px));
     min-height: 400px;
@@ -162,6 +204,10 @@
   <div class="map-container">
     <div class="map-header">
       <span>{{ title }}</span>
+      <div class="cg-search">
+        <input id="cg-search-input" type="search" placeholder="Find a campground…" autocomplete="off">
+        <div class="cg-search-results" id="cg-search-results"></div>
+      </div>
       <label class="color-by">Color by
         <select id="color-mode">
           {% for m in color_modes %}
@@ -545,6 +591,89 @@ FAMILY.forEach(fam => {
 });
 
 applyVisibility();
+
+// ── Name search ─────────────────────────────────────────────────────────────
+// Filter-as-you-type over campground names (+ state); selecting a result
+// pans/zooms to the marker and opens its popup. ~1,100 markers were
+// otherwise findable only by panning or via the Manage page.
+(function() {
+  const input = document.getElementById('cg-search-input');
+  const resultsEl = document.getElementById('cg-search-results');
+  let items = [];   // [{row, entry}] for the open dropdown
+  let sel = -1;     // keyboard-highlighted index
+
+  function close() {
+    resultsEl.classList.remove('open');
+    resultsEl.innerHTML = '';
+    items = [];
+    sel = -1;
+  }
+
+  function select(entry) {
+    close();
+    input.blur();
+    const { marker, cg } = entry;
+    // Searching for a campground means the user wants to see it — show
+    // the marker even if the category/ownership filters currently hide
+    // it (the next filter change re-applies and hides it again).
+    if (!map.hasLayer(marker)) marker.addTo(map);
+    const [lat, lng] = cg.location.split(',').map(parseFloat);
+    map.setView([lat, lng], Math.max(map.getZoom(), 12));
+    marker.openPopup();
+  }
+
+  function update() {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { close(); return; }
+    const tokens = q.split(/\s+/);
+    const matches = markers.filter(({ cg }) => {
+      const hay = (cg.name + ' ' + (cg.state || '')).toLowerCase();
+      return tokens.every(t => hay.includes(t));
+    }).slice(0, 12);
+    resultsEl.innerHTML = '';
+    sel = -1;
+    items = matches.map(entry => {
+      const row = document.createElement('div');
+      row.className = 'cg-search-option';
+      row.innerHTML = `<span>${escapeHtml(entry.cg.name)}</span>` +
+        `<span class="cg-search-state">${escapeHtml(entry.cg.state || '')}</span>`;
+      // mousedown (not click) so the selection wins the race against the
+      // input's blur closing the dropdown.
+      row.addEventListener('mousedown', e => { e.preventDefault(); select(entry); });
+      resultsEl.appendChild(row);
+      return { row, entry };
+    });
+    resultsEl.classList.toggle('open', items.length > 0);
+  }
+
+  input.addEventListener('input', update);
+  input.addEventListener('focus', update);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { input.value = ''; close(); input.blur(); return; }
+    if (!items.length) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      items.forEach((it, i) => it.row.classList.toggle('active', i === sel));
+      items[sel].row.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      select(items[sel >= 0 ? sel : 0].entry);
+    }
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.cg-search')) close();
+  });
+  // "/" focuses the search (same shortcut as the calendar's trip search).
+  document.addEventListener('keydown', e => {
+    if (e.key !== '/') return;
+    const t = document.activeElement;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
+              t.tagName === 'SELECT' || t.isContentEditable)) return;
+    e.preventDefault();
+    input.focus();
+  });
+})();
 
 // ?focus=<id> deep-link (reverse of the popup's "edit" link from the manage
 // page): center + zoom on one campground instead of fitting the whole set.
