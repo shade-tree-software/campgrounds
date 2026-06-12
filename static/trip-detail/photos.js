@@ -344,6 +344,10 @@ function initPhotoDrag(grid) {
       const src = parseGridId(dragSourceGrid);
       const dst = parseGridId(grid);
       const filename = dragItem.dataset.filename;
+      // dragend nulls the module-level dragItem/dragSourceGrid before the
+      // fetch resolves — capture locals for the async continuation.
+      const movedItem = dragItem;
+      const movedSourceGrid = dragSourceGrid;
       fetch(`/trips/${TRIP_ID}/move-photo`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -358,9 +362,19 @@ function initPhotoDrag(grid) {
         if (data.error) { alert(data.error); _reloadKeepingMapView(); return; }
         // Update filename if server renamed it to avoid collision
         if (data.filename !== filename) {
-          dragItem.dataset.filename = data.filename;
+          movedItem.dataset.filename = data.filename;
         }
-        saveGridOrder(dragSourceGrid);
+        // Repoint the img at the photo's new server location — the old
+        // thumb/full URLs 404 once the file moves (matters if the admin
+        // opens the lightbox before the next reload).
+        const img = movedItem.querySelector('img');
+        if (img) {
+          const sub = (dst.type === 'event' ? `${TRIP_ID}/events/${dst.idx}` : `${TRIP_ID}/${dst.idx}`)
+            + '/' + encodeURIComponent(data.filename);
+          img.src = '/thumb/' + sub;
+          img.dataset.full = '/static/uploads/' + sub;
+        }
+        saveGridOrder(movedSourceGrid);
         saveGridOrder(grid);
       });
     } else {

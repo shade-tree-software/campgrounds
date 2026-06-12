@@ -67,7 +67,9 @@ function openLightbox(imgEl) {
 function showLightboxPhoto() {
   lbResetZoom(false);
   const img = lightboxPhotos[lightboxIndex];
-  document.getElementById('lightbox-img').src = img.src;
+  // Grids render thumbnails; the lightbox loads the full-res original
+  // from data-full (fall back to src for any image without one).
+  document.getElementById('lightbox-img').src = img.dataset.full || img.src;
   // Get caption from the caption-text span in the same photo-item
   const item = img.closest('.photo-item');
   const spanEl = item.querySelector('.caption-text');

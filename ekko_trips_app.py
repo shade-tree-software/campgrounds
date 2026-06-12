@@ -5,9 +5,9 @@ import shutil
 import sys
 from datetime import date, datetime, time as dt_time, timedelta
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash, safe_join
 from werkzeug.utils import secure_filename
 
 from trips import (parse_trips, enrich_trip_locations,
@@ -258,6 +258,77 @@ def _extract_zip_photos(file_storage, photo_dir):
                 dst.write(src.read())
             saved.append(filename)
     return saved
+
+
+# ── Photo thumbnails ─────────────────────────────────────────────────────────
+# Grid views render every photo as a small tile, but historically served the
+# full-resolution originals (a 30-photo trip pulled them all on page load).
+# /thumb/<subpath> serves a lazily-generated, cached JPEG thumbnail instead:
+# generated on first request into a .thumbs/ subdir beside the originals
+# (its name fails _allowed_file, so photo listings never see it, and
+# rmtree-based delete-all sweeps it away with the photo dir). Staleness is
+# mtime-keyed, so a photo replaced/moved under the same name regenerates.
+# The lightbox still loads originals via the grid imgs' data-full attr.
+
+THUMB_DIRNAME = ".thumbs"
+THUMB_MAX_PX = 480     # covers ~200px grid cells at 2-2.5x DPR
+THUMB_QUALITY = 80
+
+
+def _thumb_path(orig_path):
+    """Cache location for orig_path's thumbnail. Keeps the full original
+    filename (plus .jpg) so same-stem files with different extensions
+    can't collide on one cache entry."""
+    photo_dir, fname = os.path.split(orig_path)
+    return os.path.join(photo_dir, THUMB_DIRNAME, fname + ".jpg")
+
+
+def _ensure_thumb(orig_path):
+    """Return the path of a fresh cached thumbnail for orig_path,
+    generating it if missing or older than the original. Returns None when
+    generation fails (corrupt/unsupported image) — caller falls back to
+    serving the original."""
+    tpath = _thumb_path(orig_path)
+    try:
+        if os.path.exists(tpath) and os.path.getmtime(tpath) >= os.path.getmtime(orig_path):
+            return tpath
+        from PIL import Image, ImageOps
+        img = Image.open(orig_path)
+        # Bake EXIF rotation in: browsers honor orientation on originals,
+        # but re-encoding strips the tag, so the pixels must be upright.
+        img = ImageOps.exif_transpose(img)
+        img.thumbnail((THUMB_MAX_PX, THUMB_MAX_PX))
+        if img.mode not in ("RGB", "L"):
+            img = img.convert("RGB")
+        os.makedirs(os.path.dirname(tpath), exist_ok=True)
+        tmp = f"{tpath}.{os.getpid()}.tmp"
+        img.save(tmp, "JPEG", quality=THUMB_QUALITY, optimize=True)
+        os.replace(tmp, tpath)  # atomic — concurrent requests can't clobber
+        return tpath
+    except Exception:
+        return None
+
+
+def _remove_thumb(orig_path):
+    """Drop the cached thumbnail for a deleted/moved photo. Best-effort —
+    a missed orphan is harmless (mtime staleness covers regeneration) and
+    delete-all's rmtree sweeps the whole .thumbs dir anyway."""
+    try:
+        os.remove(_thumb_path(orig_path))
+    except OSError:
+        pass
+
+
+@app.route('/thumb/<path:subpath>')
+def photo_thumb(subpath):
+    """Thumbnail for /static/uploads/<subpath>, e.g. /thumb/42/0/img.jpg or
+    /thumb/42/events/1/img.jpg. Covered by the global login requirement
+    (only the literal `static` endpoint is exempt)."""
+    orig = safe_join(UPLOAD_DIR, subpath)
+    if not orig or not os.path.isfile(orig) or not _allowed_file(os.path.basename(orig)):
+        return jsonify({"error": "not found"}), 404
+    tpath = _ensure_thumb(orig)
+    return send_file(tpath or orig, max_age=30 * 86400, conditional=True)
 
 
 def _load_json(path):
@@ -553,6 +624,7 @@ def trips_map():
                     if _allowed_file(fname):
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
+                            "thumb": f"/thumb/{trip['id']}/{i}/{fname}",
                             "trip_id": trip["id"],
                             "card": f"stay-{i}",
                         })
@@ -563,6 +635,7 @@ def trips_map():
                     if _allowed_file(fname):
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
+                            "thumb": f"/thumb/{trip['id']}/events/{i}/{fname}",
                             "trip_id": trip["id"],
                             "card": f"event-{i}",
                         })
@@ -621,6 +694,7 @@ def trips_poster():
                     if _allowed_file(fname):
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
+                            "thumb": f"/thumb/{trip['id']}/{i}/{fname}",
                             "trip_id": trip["id"],
                         })
         for i, event in enumerate(trip.get("events", [])):
@@ -630,6 +704,7 @@ def trips_poster():
                     if _allowed_file(fname):
                         all_photos.append({
                             "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
+                            "thumb": f"/thumb/{trip['id']}/events/{i}/{fname}",
                             "trip_id": trip["id"],
                         })
     random.shuffle(all_photos)
@@ -770,6 +845,7 @@ def trip_detail(trip_id):
                 photos.append({
                     "filename": fname,
                     "url": f"/static/uploads/{trip_id}/{i}/{fname}",
+                    "thumb_url": f"/thumb/{trip_id}/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
@@ -795,6 +871,7 @@ def trip_detail(trip_id):
                 photos.append({
                     "filename": fname,
                     "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
+                    "thumb_url": f"/thumb/{trip_id}/events/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
@@ -949,6 +1026,7 @@ def delete_photo(trip_id, stay_idx, filename):
     photo_path = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx), filename)
     if os.path.exists(photo_path):
         os.remove(photo_path)
+    _remove_thumb(photo_path)
 
     photo_key = f"{trip_id}/{stay_idx}/{filename}"
     captions = _load_json(CAPTIONS_FILE)
@@ -1074,6 +1152,7 @@ def delete_event_photo(trip_id, event_idx, filename):
     photo_path = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx), filename)
     if os.path.exists(photo_path):
         os.remove(photo_path)
+    _remove_thumb(photo_path)
 
     photo_key = f"{trip_id}/events/{event_idx}/{filename}"
     captions = _load_json(CAPTIONS_FILE)
@@ -1347,6 +1426,7 @@ def move_photo(trip_id):
         dst_path = os.path.join(dst_dir, dst_filename)
 
     os.rename(src_path, dst_path)
+    _remove_thumb(src_path)  # dest thumb regenerates lazily on next view
 
     # Update captions
     captions = _load_json(CAPTIONS_FILE)
