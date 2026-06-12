@@ -1771,7 +1771,7 @@
           {% for photo in item.photos %}
           {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
@@ -1929,7 +1929,7 @@
           {% for photo in event_photos[item.idx] %}
           {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" onclick="openLightbox(this)">
+            <img src="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
