@@ -985,12 +985,17 @@ def trip_detail(trip_id):
                    and not is_admin)
     current_username = current_user.username if current_user.is_authenticated else ""
 
-    # Find prev/next trip IDs (non-admins skip home-only trips in navigation)
+    # Find prev/next trips (non-admins skip home-only trips in navigation).
+    # Summaries ride along so the chevrons' tooltips can say where they go.
     nav_trips = trips if is_admin else [t for t in trips if not t.get("home_only") or t["id"] == trip_id]
     nav_ids = [t["id"] for t in nav_trips]
     nav_idx = nav_ids.index(trip_id)
-    prev_trip_id = nav_ids[nav_idx - 1] if nav_idx > 0 else None
-    next_trip_id = nav_ids[nav_idx + 1] if nav_idx < len(nav_ids) - 1 else None
+    prev_trip = nav_trips[nav_idx - 1] if nav_idx > 0 else None
+    next_trip = nav_trips[nav_idx + 1] if nav_idx < len(nav_ids) - 1 else None
+    prev_trip_id = prev_trip["id"] if prev_trip else None
+    next_trip_id = next_trip["id"] if next_trip else None
+    prev_trip_summary = prev_trip["summary"] if prev_trip else ""
+    next_trip_summary = next_trip["summary"] if next_trip else ""
 
     return render_template(
         'trip_detail.html',
@@ -1004,6 +1009,8 @@ def trip_detail(trip_id):
         current_username=current_username,
         prev_trip_id=prev_trip_id,
         next_trip_id=next_trip_id,
+        prev_trip_summary=prev_trip_summary,
+        next_trip_summary=next_trip_summary,
     )
 
 

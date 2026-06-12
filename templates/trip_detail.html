@@ -1535,7 +1535,7 @@
 {% block content %}
 <div class="trip-header">
   <div class="trip-nav">
-    {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip">&#8249;</a>{% endif %}
+    {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip{% if prev_trip_summary %}: {{ prev_trip_summary }}{% endif %}">&#8249;</a>{% endif %}
   </div>
   <div class="trip-info">
     <h1 id="trip-title"{% if is_admin %} onclick="if (window.innerWidth <= 700) editTripNote();"{% endif %}>{% if trip.number %}Trip {{ trip.number }}{% else %}Home{% endif %}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="event.stopPropagation(); editTripNote();">Edit</button>{% endif %}</h1>
@@ -1602,7 +1602,7 @@
   </div>
   {% endif %}
   <div class="trip-nav">
-    {% if next_trip_id %}<a href="/trips/{{ next_trip_id }}" title="Next trip">&#8250;</a>{% endif %}
+    {% if next_trip_id %}<a href="/trips/{{ next_trip_id }}" title="Next trip{% if next_trip_summary %}: {{ next_trip_summary }}{% endif %}">&#8250;</a>{% endif %}
   </div>
 </div>
 
