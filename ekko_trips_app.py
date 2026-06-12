@@ -341,6 +341,74 @@ def _ensure_thumb(orig_path):
         return None
 
 
+# ── Photo trash (toast-Undo for single-photo deletes) ────────────────────────
+# Single-photo delete moves the file into a .trash subdir beside the
+# originals instead of unlinking, so the client's "Photo deleted — Undo"
+# toast can really restore it. Caption/order/uploader metadata is kept on
+# delete (listings only show files present, so stale keys are inert) and
+# scrubbed when the trash entry is purged after TRASH_TTL_S. The .trash
+# dirname fails _allowed_file so listings/counts never see it, and
+# "Remove All Photos"'s rmtree (still confirm-gated) sweeps it away.
+
+TRASH_DIRNAME = ".trash"
+TRASH_TTL_S = 7 * 86400
+
+
+def _trash_photo(photo_path):
+    trash_dir = os.path.join(os.path.dirname(photo_path), TRASH_DIRNAME)
+    os.makedirs(trash_dir, exist_ok=True)
+    dest = os.path.join(trash_dir, os.path.basename(photo_path))
+    os.replace(photo_path, dest)
+    # Stamp trash time — the file's own mtime is its upload time, which
+    # would make an old photo purge-eligible the moment it's trashed.
+    os.utime(dest)
+
+
+def _restore_from_trash(photo_dir, filename):
+    """Move a trashed photo back. Returns (response, status) on failure,
+    None on success."""
+    src = os.path.join(photo_dir, TRASH_DIRNAME, filename)
+    dst = os.path.join(photo_dir, filename)
+    if not os.path.exists(src):
+        return jsonify({"error": "Nothing to restore"}), 404
+    if os.path.exists(dst):
+        return jsonify({"error": "A newer photo with that name exists"}), 409
+    os.replace(src, dst)
+    _invalidate_photo_pool()
+    return None
+
+
+def _purge_old_trash(photo_dir, meta_prefix, order_key):
+    """Drop trash entries older than TRASH_TTL_S and scrub their caption/
+    order/uploader metadata. Called opportunistically on each delete."""
+    trash_dir = os.path.join(photo_dir, TRASH_DIRNAME)
+    if not os.path.isdir(trash_dir):
+        return
+    cutoff = time.time() - TRASH_TTL_S
+    purged = []
+    for fname in os.listdir(trash_dir):
+        p = os.path.join(trash_dir, fname)
+        try:
+            if os.path.getmtime(p) < cutoff:
+                os.remove(p)
+                purged.append(fname)
+        except OSError:
+            pass
+    if not purged:
+        return
+    captions = _load_json(CAPTIONS_FILE)
+    if any(captions.pop(meta_prefix + f, None) is not None for f in purged):
+        _save_json(CAPTIONS_FILE, captions)
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    if order_key in photo_order:
+        kept = [f for f in photo_order[order_key] if f not in set(purged)]
+        if kept != photo_order[order_key]:
+            photo_order[order_key] = kept
+            _save_json(PHOTO_ORDER_FILE, photo_order)
+    for fname in purged:
+        _remove_uploader(meta_prefix + fname)
+
+
 def _remove_thumb(orig_path):
     """Drop the cached thumbnail for a deleted/moved photo. Best-effort —
     a missed orphan is harmless (mtime staleness covers regeneration) and
@@ -1167,26 +1235,26 @@ def delete_photo(trip_id, stay_idx, filename):
     if denied:
         return denied
     filename = secure_filename(filename)
-    photo_path = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx), filename)
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
+    photo_path = os.path.join(photo_dir, filename)
     if os.path.exists(photo_path):
-        os.remove(photo_path)
+        _trash_photo(photo_path)
     _remove_thumb(photo_path)
     _invalidate_photo_pool()
-
-    photo_key = f"{trip_id}/{stay_idx}/{filename}"
-    captions = _load_json(CAPTIONS_FILE)
-    captions.pop(photo_key, None)
-    _save_json(CAPTIONS_FILE, captions)
-
-    order_key = f"{trip_id}/{stay_idx}"
-    photo_order = _load_json(PHOTO_ORDER_FILE)
-    if order_key in photo_order:
-        photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
-        _save_json(PHOTO_ORDER_FILE, photo_order)
-
-    _remove_uploader(photo_key)
-
+    # Caption/order/uploader metadata is kept so Undo restores the photo
+    # intact; _purge_old_trash scrubs it when the trash entry ages out.
+    _purge_old_trash(photo_dir, f"{trip_id}/{stay_idx}/", f"{trip_id}/{stay_idx}")
     return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/photos/<filename>/restore', methods=['POST'])
+def restore_photo(trip_id, stay_idx, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
+    err = _restore_from_trash(photo_dir, secure_filename(filename))
+    return err if err else jsonify({"ok": True})
 
 
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/photos', methods=['DELETE'])
@@ -1295,26 +1363,25 @@ def delete_event_photo(trip_id, event_idx, filename):
     if denied:
         return denied
     filename = secure_filename(filename)
-    photo_path = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx), filename)
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
+    photo_path = os.path.join(photo_dir, filename)
     if os.path.exists(photo_path):
-        os.remove(photo_path)
+        _trash_photo(photo_path)
     _remove_thumb(photo_path)
     _invalidate_photo_pool()
-
-    photo_key = f"{trip_id}/events/{event_idx}/{filename}"
-    captions = _load_json(CAPTIONS_FILE)
-    captions.pop(photo_key, None)
-    _save_json(CAPTIONS_FILE, captions)
-
-    order_key = f"{trip_id}/events/{event_idx}"
-    photo_order = _load_json(PHOTO_ORDER_FILE)
-    if order_key in photo_order:
-        photo_order[order_key] = [f for f in photo_order[order_key] if f != filename]
-        _save_json(PHOTO_ORDER_FILE, photo_order)
-
-    _remove_uploader(photo_key)
-
+    # Metadata kept for Undo; scrubbed at purge time (see delete_photo).
+    _purge_old_trash(photo_dir, f"{trip_id}/events/{event_idx}/", f"{trip_id}/events/{event_idx}")
     return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/events/<int:event_idx>/photos/<filename>/restore', methods=['POST'])
+def restore_event_photo(trip_id, event_idx, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
+    photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
+    err = _restore_from_trash(photo_dir, secure_filename(filename))
+    return err if err else jsonify({"ok": True})
 
 
 @app.route('/trips/<int:trip_id>/events/<int:event_idx>/photos', methods=['DELETE'])

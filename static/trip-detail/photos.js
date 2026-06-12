@@ -25,14 +25,52 @@ function _maybeBarifyEmptyGrid(grid) {
 }
 
 function deleteEventPhoto(tripId, eventIdx, filename, btn) {
-  if (!confirm('Delete this photo?')) return;
-  fetch(`/trips/${tripId}/events/${eventIdx}/photos/${filename}`, { method: 'DELETE' })
-    .then(() => {
-      const item = btn.closest('.photo-item');
-      const grid = item.closest('.photo-grid');
-      item.remove();
-      _maybeBarifyEmptyGrid(grid);
-    });
+  _deleteWithUndo(btn.closest('.photo-item'),
+    `/trips/${tripId}/events/${eventIdx}/photos/${encodeURIComponent(filename)}`);
+}
+
+// Optimistic single-photo delete with a toast-Undo instead of a blocking
+// confirm: the common case (you meant it) is frictionless, the rare case
+// is recoverable. The DOM node is kept and reinserted at its old spot on
+// undo; the server parks the file in a .trash dir for 7 days, so the
+// restore is real, not a client-side illusion. Remove-All and the other
+// destructive actions keep their confirms.
+function _deleteWithUndo(item, deleteUrl) {
+  const grid = item.closest('.photo-grid');
+  const nextSibling = item.nextElementSibling;
+  const card = grid.closest('.event-card');
+  item.remove();
+  _maybeBarifyEmptyGrid(grid);
+
+  function reinsert() {
+    if (nextSibling && nextSibling.parentNode === grid) grid.insertBefore(item, nextSibling);
+    else grid.appendChild(item);
+    // Reverse a barify if this was the card's last photo.
+    if (card) card.classList.remove('bare');
+    const section = grid.closest('.photos-section');
+    const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
+    if (removeAllBtn) removeAllBtn.style.display = '';
+  }
+
+  fetch(deleteUrl, { method: 'DELETE' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { toast(data.error); reinsert(); return; }
+      toast('Photo deleted', 'info', {
+        actionLabel: 'Undo',
+        duration: 6000,
+        onAction: () => {
+          fetch(deleteUrl + '/restore', { method: 'POST' })
+            .then(r => r.json())
+            .then(d => {
+              if (d.error) { toast(d.error); return; }
+              reinsert();
+            })
+            .catch(() => toast('Restore failed'));
+        },
+      });
+    })
+    .catch(() => { toast('Delete failed'); reinsert(); });
 }
 
 function deleteAllEventPhotos(tripId, eventIdx) {
@@ -183,14 +221,8 @@ function saveCaptionField(textarea, tripId, idx, filename, type) {
 }
 
 function deletePhoto(tripId, stayIdx, filename, btn) {
-  if (!confirm('Delete this photo?')) return;
-  fetch(`/trips/${tripId}/stays/${stayIdx}/photos/${filename}`, { method: 'DELETE' })
-    .then(() => {
-      const item = btn.closest('.photo-item');
-      const grid = item.closest('.photo-grid');
-      item.remove();
-      _maybeBarifyEmptyGrid(grid);
-    });
+  _deleteWithUndo(btn.closest('.photo-item'),
+    `/trips/${tripId}/stays/${stayIdx}/photos/${encodeURIComponent(filename)}`);
 }
 
 function deleteAllPhotos(tripId, stayIdx) {

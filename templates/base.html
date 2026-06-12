@@ -279,6 +279,20 @@
   .toast.show { opacity: 1; transform: translateY(0); }
   .toast-error { background: #8e2323; }
   .toast-success { background: #1b5e20; }
+  .toast .toast-action {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: .85rem;
+    font-family: inherit;
+    margin-left: .9rem;
+    padding: .2rem .3rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+  }
+  .toast .toast-action:hover { text-decoration: underline; }
 
   /* Phone-only: shrink the header text + stats. iPad has room for the
      full-size header even with the hamburger nav. */
@@ -383,8 +397,11 @@
   // errors), 'success', or 'info'. Errors linger 6s, the rest 3s;
   // click dismisses early. confirm() for destructive actions is NOT
   // replaced by this — a blocking prompt before a delete is correct.
-  window.toast = function(message, kind) {
+  // opts (all optional): {actionLabel, onAction, duration} — an action
+  // renders as an inline button (the undo-toast pattern).
+  window.toast = function(message, kind, opts) {
     kind = kind || 'error';
+    opts = opts || {};
     let container = document.getElementById('toast-container');
     if (!container) {
       container = document.createElement('div');
@@ -394,13 +411,26 @@
     const t = document.createElement('div');
     t.className = 'toast toast-' + kind;
     t.textContent = message;
-    container.appendChild(t);
-    requestAnimationFrame(() => t.classList.add('show'));
     const dismiss = () => {
       t.classList.remove('show');
       setTimeout(() => t.remove(), 250);
     };
-    const timer = setTimeout(dismiss, kind === 'error' ? 6000 : 3000);
+    const timer = setTimeout(dismiss,
+      opts.duration || (kind === 'error' ? 6000 : 3000));
+    if (opts.actionLabel && opts.onAction) {
+      const btn = document.createElement('button');
+      btn.className = 'toast-action';
+      btn.textContent = opts.actionLabel;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        clearTimeout(timer);
+        dismiss();
+        opts.onAction();
+      });
+      t.appendChild(btn);
+    }
+    container.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
     t.addEventListener('click', () => { clearTimeout(timer); dismiss(); });
   };
 
