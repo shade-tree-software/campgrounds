@@ -23,7 +23,7 @@ A Flask web app for documenting family camping trips in an RV called "EKKO" and 
 
 ### Templates
 
-- `templates/base.html` — Sticky header+nav in `.site-top`. Publishes `--site-top-height` for child pages' sticky sub-headers. Nav groups: Trips (Map, Calendar, List), Campgrounds (Map, Manage — admin-only). Header shows overnight-trip / day-trip / nights counts.
+- `templates/base.html` — Sticky header+nav in `.site-top`. Publishes `--site-top-height` for child pages' sticky sub-headers. Nav groups: Trips (Map, Calendar, List, Stats), Campgrounds (Map — all users; Manage — admin-only), Admin (Users — admin-only). Header shows overnight-trip / day-trip / nights counts (hidden ≤700px). On phones a fixed bottom tab bar (Map/Calendar/List/Stats/Camps) is primary nav, publishing `--tab-bar-height` which viewport-height map calcs subtract. Also defines `window.toast(message, kind, opts)` (non-blocking notifications; `opts.actionLabel`/`onAction` for undo-style toasts — used instead of `alert()` app-wide; `confirm()` stays for destructive actions), hover-prefetch for links, and service-worker registration.
 - `templates/trip_detail.html` — Trip detail (~1800 lines). Photo galleries + lightbox with EXIF date, inline + modal editing, drag-drop reorder (within and across stays/events), Leaflet map with route polyline + GPS track, prev/next nav. Sticky trip-header below site-top. Family proximity markers only render when within 80 km of a stay or event. Page-load globals (`TRIP_ID`, `IS_ADMIN`, `FIRST_STAY_DATE`, `STAYS_ALL`, `EVENTS_ALL`, `FAMILY_LOCATIONS`) are declared at the top of the inline script block so popup helpers can reference them without `const` TDZ errors.
 - `templates/trips_map.html` — Photo filmstrip slideshow + Leaflet map of all locations. Family-marker popups list the union of trips that stayed at that location (coord match) and trips that contain a family-visit event there (`family_id` match), deduped and sorted by trip start.
 - `templates/trips_calendar.html` — Calendar + list views, client-side toggle preserves selected year. Empty trips (no dates) are excluded from calendar dots / year-range but listed at the bottom of every year.
@@ -55,12 +55,18 @@ Trips have two distinct identifiers:
 
 Login is global via `_require_login_globally()` (registered as `before_request`); only `login` and `static` endpoints are exempt. `_require_admin()` guards all mutation endpoints. Templates condition edit controls on the `is_admin` Jinja var / `IS_ADMIN` JS constant; drag-drop is fully disabled for non-admins.
 
-Accounts live in `users.json` (`{username: {password_hash, is_admin}}`, hashed via `werkzeug.security.generate_password_hash`). Admins manage users at `/admin/users` (`templates/users_manage.html`) backed by the `/api/users` JSON API. Self-protection rules: cannot delete your own account, cannot remove admin from your own account. CLI bootstrap: `python ekko_trips_app.py create-admin`.
+Accounts live in `users.json` (`{username: {password_hash, is_admin}}`, hashed via `werkzeug.security.generate_password_hash`). Admins manage users at `/admin/users` (`templates/users_manage.html`) backed by the `/api/users` JSON API. Self-protection rules: cannot delete your own account, cannot remove admin from your own account. CLI bootstrap: `python ekko_trips_app.py create-admin`. Logins persist: `login_user(remember=True)` with a 365-day cookie, and when `FLASK_SECRET_KEY` is unset the generated key persists at `trip_data/secret_key` (gitignored) so restarts don't invalidate sessions.
+
+### Offline (Service Worker)
+
+`/sw.js` (Flask route serving `static/sw.js` from root scope; login-exempt along with the `/offline` fallback page — a login redirect during SW install would cache the login screen as the offline page). Photos/thumbs are cache-first; pages/static/API GETs are network-first (online behavior identical to no-SW; cache is fallback only, so admins always edit fresh data). Redirected responses are never cached. Cross-origin (map tiles, leaflet CDN) is not intercepted — offline maps render gray. Bump `VERSION` in `sw.js` to flush caches after incompatible deploys. iOS standalone via `apple-mobile-web-app-*` metas + `static/manifest.json` + `static/icons/`.
 
 ### Photo System
 
 - Photo metadata (captions, ordering) is stored separately from the files themselves.
-- EXIF date taken is extracted via Pillow (`_photo_date_taken()`) and displayed in the lightbox viewer.
+- **Thumbnails:** grids/slideshows render 480px JPEGs from `GET /thumb/<subpath>`, lazily generated and cached in `.thumbs/` subdirs beside the originals (mtime-keyed staleness, EXIF rotation baked in). The lightbox loads originals via the grid imgs' `data-full`. `.thumbs` fails `_allowed_file` so listings never see it.
+- **Undo-able deletes:** single-photo delete moves the file into a `.trash/` subdir (utime-stamped) and the client shows a "Photo deleted — Undo" toast wired to `POST .../photos/<file>/restore`. Caption/order/uploader metadata is kept on delete (inert while the file is absent) and scrubbed by `_purge_old_trash` when entries age past 7 days. "Remove All Photos" keeps its `confirm()` and its `rmtree` sweeps `.thumbs`/`.trash` too.
+- EXIF date taken is extracted via Pillow (`_photo_date_taken()`, cached per (path, mtime, size)) and displayed in the lightbox viewer.
 - Upload supports both individual image files and zip files containing multiple images. Zip extraction filters out directories, hidden files, and non-image files.
 - Drag-and-drop supports both within-grid reorder and cross-grid moves (campspot-to-campspot, campspot-to-event, etc.). Cross-grid moves call `POST /trips/<id>/move-photo` which relocates the file and updates captions/order.
 - Upload areas detect whether a drag is an internal photo move or an external file upload and handle accordingly. When the destination grid is empty, the upload area itself serves as the drop target for photo moves (styled with red border instead of showing a separate empty grid indicator).
@@ -243,8 +249,11 @@ Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-widt
 - `POST /trips/<id>/move-photo` — move photo between campspots/events (body: filename, src_type, src_idx, dst_type, dst_idx)
 - `POST /trips/<id>/stays/<idx>/caption` — save campspot photo caption
 - `POST /trips/<id>/events/<idx>/caption` — save event photo caption
-- `DELETE /trips/<id>/stays/<idx>/photos/<file>` — delete campspot photo
-- `DELETE /trips/<id>/events/<idx>/photos/<file>` — delete event photo
+- `DELETE /trips/<id>/stays/<idx>/photos/<file>` — trash campspot photo (undo-able)
+- `DELETE /trips/<id>/events/<idx>/photos/<file>` — trash event photo (undo-able)
+- `POST /trips/<id>/stays/<idx>/photos/<file>/restore` — restore from trash (404 if absent, 409 if name retaken)
+- `POST /trips/<id>/events/<idx>/photos/<file>/restore` — restore from trash
+- `GET /thumb/<subpath>` — cached 480px thumbnail of `/static/uploads/<subpath>`
 
 ### Campground CRUD
 - `GET /api/campgrounds` — lightweight `{id, name, state, kind}` list (for autocomplete picker; includes both kinds)
