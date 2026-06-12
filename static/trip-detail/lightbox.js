@@ -15,6 +15,13 @@ let lbReturnFocus = null;  // grid img to restore focus to on close
 // center origin; tx/ty are screen px. Reset on every photo change/close.
 let lbScale = 1, lbTx = 0, lbTy = 0;
 
+// Touch double-taps are handled in the touchend handler below, but the
+// browser ALSO synthesizes a dblclick from them, and the dblclick handler
+// would immediately toggle the zoom back (fast double-tap = zoom in +
+// instant zoom out). Timestamp every touchend so the dblclick handler can
+// tell a synthesized event from a real mouse double-click and ignore it.
+let lbLastTouchEndT = 0;
+
 function lbApplyTransform(animate) {
   const img = document.getElementById('lightbox-img');
   if (animate) {
@@ -250,6 +257,7 @@ function downloadLightbox(e) {
   }, { passive: false });
 
   lb.addEventListener('touchend', e => {
+    lbLastTouchEndT = Date.now();
     if (!mode) return;
     if (mode === 'pinch') {
       if (e.touches.length === 1) {
@@ -279,7 +287,10 @@ function downloadLightbox(e) {
     const isTap = !moved && Math.abs(dx) < 10 && Math.abs(dy) < 10 && dt < 300;
     if (isTap && !onButton) {
       const now = Date.now();
-      if (now - lastTapT < 300 &&
+      // 500ms window: with the synthesized dblclick suppressed, this is
+      // the only double-tap path — keep it as forgiving as the browser's
+      // own double-click timing.
+      if (now - lastTapT < 500 &&
           Math.abs(t.clientX - lastTapX) < 30 && Math.abs(t.clientY - lastTapY) < 30) {
         lastTapT = 0;
         lbToggleZoom(t.clientX, t.clientY);
@@ -330,6 +341,9 @@ function downloadLightbox(e) {
 
   lb.addEventListener('dblclick', e => {
     if (!lb.classList.contains('visible') || e.target.closest('button')) return;
+    // Synthesized from a touch double-tap the touchend handler already
+    // processed — toggling again would instantly undo that zoom.
+    if (Date.now() - lbLastTouchEndT < 700) return;
     e.preventDefault();  // suppress browser double-click text selection
     lbToggleZoom(e.clientX, e.clientY);
   });

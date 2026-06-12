@@ -137,8 +137,12 @@ function _runUploads(url, files) {
   let done = 0;
   const errors = [];
 
+  // A zip holds many photos, so "Uploading 1 of 1 photo" misleads —
+  // call the batch "files" whenever a zip is among them.
+  const noun = files.some(f => /\.zip$/i.test(f.name)) ? 'file' : 'photo';
+
   const update = () => {
-    textEl.textContent = `Uploading ${Math.min(done + 1, total)} of ${total} photo${total !== 1 ? 's' : ''}…`;
+    textEl.textContent = `Uploading ${Math.min(done + 1, total)} of ${total} ${noun}${total !== 1 ? 's' : ''}…`;
     fillEl.style.width = (done / total * 100) + '%';
   };
   update();

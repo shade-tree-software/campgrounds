@@ -1046,6 +1046,13 @@
 
   .photo-item:hover .delete-photo { display: flex; }
 
+  /* Touch screens have no real hover — :hover just sticks to whatever
+     photo was tapped last, so the X seemed to appear and disappear at
+     random. Show it on every photo instead. */
+  @media (hover: none) {
+    .photo-item .delete-photo { display: flex; }
+  }
+
   /* Remove All Photos sits at the bottom-right corner of the photos
      section, beneath the photo grid. Photos-section is a flex column
      so the button can be align-self: flex-end without affecting the
@@ -1360,6 +1367,13 @@
     border-radius: 6px;
     box-shadow: 0 0 40px rgba(0,0,0,.5);
   }
+
+  /* A zoomed photo (transform: scale) paints in DOM order, so it covered
+     the controls that precede it in the markup (close, download, left
+     chevron) while the ones after it stayed visible. Lift every control
+     above the image. */
+  .lightbox .close-btn, .lightbox .lb-download, .lightbox .nav-btn,
+  .lightbox .lb-caption, .lightbox .lb-date { z-index: 1; }
 
   .lightbox .close-btn {
     position: absolute;

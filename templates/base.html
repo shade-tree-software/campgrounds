@@ -201,7 +201,14 @@
 
   @media (max-width: 700px) {
     body.has-tab-bar {
-      --tab-bar-height: calc(48px + env(safe-area-inset-bottom, 0px));
+      /* In-browser the bar is a constant 48px: Safari's own toolbar sits
+         below it and already clears the home indicator, and iOS 26's
+         compact toolbar re-reports env(safe-area-inset-bottom) as it
+         minimizes/expands during scroll — folding env() in here made the
+         bar (and every --tab-bar-height map calc) bounce. The standalone
+         (home-screen app) case, where the inset is real and constant, is
+         handled in the display-mode media query below. */
+      --tab-bar-height: 48px;
       padding-bottom: var(--tab-bar-height);
     }
     body.has-tab-bar .tab-bar {
@@ -215,7 +222,6 @@
       z-index: 950;
       background: var(--navy);
       border-top: 1px solid rgba(255,255,255,.18);
-      padding-bottom: env(safe-area-inset-bottom, 0px);
       box-shadow: 0 -2px 8px rgba(0,0,0,.25);
     }
     .tab-bar a {
@@ -241,6 +247,18 @@
     .tab-bar a.loading svg { animation: tab-loading-pulse .9s ease-in-out infinite; }
     @keyframes tab-loading-pulse {
       50% { opacity: .3; }
+    }
+  }
+
+  /* Installed home-screen app: no browser toolbar below the bar, so it
+     must clear the home indicator itself. env() is constant in
+     standalone mode, so the height is stable. */
+  @media (max-width: 700px) and (display-mode: standalone) {
+    body.has-tab-bar {
+      --tab-bar-height: calc(48px + env(safe-area-inset-bottom, 0px));
+    }
+    body.has-tab-bar .tab-bar {
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
   }
 

@@ -46,8 +46,11 @@
   .stat-card .stat-sub a { color: var(--navy); text-decoration: none; }
   .stat-card .stat-sub a:hover { text-decoration: underline; }
   /* Records list reuses .top-cg-list; its value chips can be wider
-     ("1,234 mi") than the visit counts — keep them on one line. */
-  .top-cg-list .cg-count { white-space: nowrap; }
+     ("1,234 mi") than the visit counts — keep them on one line. The
+     explicit min-width below replaces the flex auto-minimum, so without
+     flex-shrink: 0 a long record name squeezes the chip narrower than
+     its own text. */
+  .top-cg-list .cg-count { white-space: nowrap; flex-shrink: 0; }
   .stat-card .stat-label {
     font-size: .85rem;
     color: var(--gray);
@@ -160,7 +163,8 @@
       <div class="stat-label">Trips</div>
       <div class="stat-sub">
         {{ total_overnight }} overnight ·
-        {{ total_day_trips }} day trip{{ '' if total_day_trips == 1 else 's' }}
+        {# &#8209; is a non-breaking hyphen — "day-trips" never splits across lines #}
+        {{ total_day_trips }} day&#8209;trip{{ '' if total_day_trips == 1 else 's' }}
       </div>
     </div>
     <div class="stat-card">
