@@ -753,15 +753,24 @@ function switchView(view) {
   currentView = view;
   document.getElementById('calendar-container').classList.toggle('hidden', view !== 'calendar');
   document.getElementById('list-container').classList.toggle('hidden', view !== 'list');
-  document.getElementById('nav-calendar').classList.toggle('active', view === 'calendar');
-  document.getElementById('nav-list').classList.toggle('active', view === 'list');
+  // Both the top-nav links and the mobile bottom-tab-bar links carry the
+  // active state; only one set is visible at a time.
+  [['nav-calendar', 'calendar'], ['nav-list', 'list'],
+   ['tab-calendar', 'calendar'], ['tab-list', 'list']].forEach(([id, v]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', view === v);
+  });
   history.replaceState(null, '', '/trips/' + view + '#' + currentYear);
   render();
 }
 
-// Intercept calendar/list nav links to switch client-side
-document.getElementById('nav-calendar').addEventListener('click', e => { e.preventDefault(); switchView('calendar'); });
-document.getElementById('nav-list').addEventListener('click', e => { e.preventDefault(); switchView('list'); });
+// Intercept calendar/list links (top nav + bottom tab bar) to switch
+// client-side, preserving the selected year instead of reloading.
+[['nav-calendar', 'calendar'], ['nav-list', 'list'],
+ ['tab-calendar', 'calendar'], ['tab-list', 'list']].forEach(([id, view]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('click', e => { e.preventDefault(); switchView(view); });
+});
 
 // Init
 switchView(currentView);
