@@ -179,6 +179,14 @@
   }
   @media (max-width: 600px) {
     .calendar-grid { grid-template-columns: 1fr; }
+    /* Single-month mode has the whole width to itself — grow the day
+       cells into real touch targets. */
+    .month-card td { height: 2.75rem; font-size: .9rem; }
+    .month-card td.trip-day .day-num {
+      width: 2.4rem;
+      height: 2.4rem;
+      font-size: .9rem;
+    }
   }
 
   .month-card {
@@ -195,6 +203,24 @@
     font-weight: 600;
     font-size: .95rem;
   }
+
+  /* Single-month mobile mode: the month header doubles as a pager. */
+  .month-card .month-header.month-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .25rem .25rem;
+  }
+  .month-pager button {
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.3rem;
+    line-height: 1;
+    padding: .45rem 1.1rem;  /* generous touch target */
+    cursor: pointer;
+  }
+  .month-pager button:disabled { opacity: .3; }
 
   .month-card table {
     width: 100%;
@@ -476,6 +502,7 @@ function onSearchInput(value) {
 
 window.addEventListener('hashchange', () => {
   currentYear = parseHash();
+  currentMonth = defaultMonthFor(currentYear);
   render();
 });
 
@@ -484,11 +511,11 @@ function updateHash() {
 }
 
 function prevYear() {
-  if (currentYear > minYear) { currentYear--; render(); }
+  if (currentYear > minYear) { currentYear--; currentMonth = defaultMonthFor(currentYear); render(); }
 }
 
 function nextYear() {
-  if (currentYear < maxYear) { currentYear++; render(); }
+  if (currentYear < maxYear) { currentYear++; currentMonth = defaultMonthFor(currentYear); render(); }
 }
 
 function render() {
@@ -614,17 +641,100 @@ function renderOnThisDay() {
   el.style.display = '';
 }
 
+// ── Single-month mobile mode ────────────────────────────────────────────
+// At ≤600px the 12-month grid stacks into one enormous scroll where most
+// months are empty. Render a single month with a ‹ month › pager (and
+// swipe) instead; month nav wraps across year boundaries within the trip
+// range. Desktop keeps the full year grid.
+const singleMonthMq = window.matchMedia('(max-width: 600px)');
+
+// Sensible landing month for a year: today's month when browsing the
+// current year, else the latest month that actually has trip days (past
+// years are browsed for their trips), else December.
+function defaultMonthFor(year) {
+  const today = new Date();
+  if (year === today.getFullYear()) return today.getMonth();
+  const months = Object.keys(dayToTrips)
+    .filter(k => k.startsWith(year + '-'))
+    .map(k => parseInt(k.slice(5, 7), 10) - 1);
+  return months.length ? Math.max(...months) : 11;
+}
+
+let currentMonth = defaultMonthFor(currentYear);
+
+function prevMonth() {
+  if (currentMonth > 0) currentMonth--;
+  else if (currentYear > minYear) { currentYear--; currentMonth = 11; }
+  else return;
+  render();
+}
+
+function nextMonth() {
+  if (currentMonth < 11) currentMonth++;
+  else if (currentYear < maxYear) { currentYear++; currentMonth = 0; }
+  else return;
+  render();
+}
+
+// Re-render when the viewport crosses the single-month breakpoint.
+singleMonthMq.addEventListener('change', () => render());
+
+// Swipe left/right on the calendar to page months in single-month mode.
+(function() {
+  const container = document.getElementById('calendar-container');
+  let sx = null, sy = null;
+  container.addEventListener('touchstart', e => {
+    if (e.touches.length !== 1) { sx = null; return; }
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  container.addEventListener('touchend', e => {
+    if (sx == null || !singleMonthMq.matches) return;
+    const t = e.changedTouches && e.changedTouches[0];
+    if (!t) { sx = null; return; }
+    const dx = t.clientX - sx, dy = t.clientY - sy;
+    sx = null;
+    if (Math.abs(dx) >= 50 && Math.abs(dy) < 60) {
+      if (dx < 0) nextMonth(); else prevMonth();
+    }
+  }, { passive: true });
+})();
+
 function renderCalendar() {
   const container = document.getElementById('calendar-container');
   container.innerHTML = '';
+  if (singleMonthMq.matches) {
+    container.appendChild(buildMonthCard(currentMonth, true));
+  } else {
+    for (let m = 0; m < 12; m++) container.appendChild(buildMonthCard(m, false));
+  }
+}
 
-  for (let m = 0; m < 12; m++) {
+// One month card (header + day table). `withPager` swaps the plain
+// month-name header for the ‹ Month › pager used in single-month mode.
+function buildMonthCard(m, withPager) {
     const card = document.createElement('div');
     card.className = 'month-card';
 
     const header = document.createElement('div');
     header.className = 'month-header';
-    header.textContent = MONTH_NAMES[m];
+    if (withPager) {
+      header.classList.add('month-pager');
+      const prev = document.createElement('button');
+      prev.innerHTML = '&larr;';
+      prev.setAttribute('aria-label', 'Previous month');
+      prev.disabled = (m === 0 && currentYear <= minYear);
+      prev.addEventListener('click', prevMonth);
+      const label = document.createElement('span');
+      label.textContent = MONTH_NAMES[m];
+      const next = document.createElement('button');
+      next.innerHTML = '&rarr;';
+      next.setAttribute('aria-label', 'Next month');
+      next.disabled = (m === 11 && currentYear >= maxYear);
+      next.addEventListener('click', nextMonth);
+      header.append(prev, label, next);
+    } else {
+      header.textContent = MONTH_NAMES[m];
+    }
     card.appendChild(header);
 
     const table = document.createElement('table');
@@ -697,8 +807,7 @@ function renderCalendar() {
 
     table.appendChild(tbody);
     card.appendChild(table);
-    container.appendChild(card);
-  }
+    return card;
 }
 
 function renderList() {
