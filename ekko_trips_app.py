@@ -470,7 +470,10 @@ def load_user(username):
 @app.before_request
 def _require_login_globally():
     # Public endpoints that must remain accessible without authentication.
-    if request.endpoint in ('login', 'static', None):
+    # service_worker/offline: the SW registers from the login page too, and
+    # its install step pre-caches /offline — a login redirect there would
+    # cache the login screen as the offline fallback.
+    if request.endpoint in ('login', 'static', 'service_worker', 'offline', None):
         return None
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.path))
@@ -543,6 +546,24 @@ def _can_edit_photo(photo_key):
     if not getattr(current_user, "can_upload", False):
         return False
     return _load_json(PHOTO_UPLOADERS_FILE).get(photo_key) == current_user.username
+
+
+@app.route('/sw.js')
+def service_worker():
+    """Serve the service worker from the site root: a worker's maximum
+    scope is its script's directory, so /static/sw.js could only control
+    /static/. no-cache so browsers re-check it on each load and updates
+    (VERSION bumps) propagate promptly."""
+    resp = send_file(os.path.join(os.path.dirname(__file__), 'static', 'sw.js'),
+                     mimetype='application/javascript')
+    resp.headers['Cache-Control'] = 'no-cache'
+    return resp
+
+
+@app.route('/offline')
+def offline():
+    """Offline fallback page, pre-cached by the service worker at install."""
+    return render_template('offline.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])

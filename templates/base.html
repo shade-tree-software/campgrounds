@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#002868">
+{# Without these, iOS "Add to Home Screen" still opens pages in Safari
+   chrome instead of standalone. Status bar stays "default" — the
+   black-translucent variant draws content under the clock and needs
+   viewport-fit/safe-area work. #}
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EKKO">
 <link rel="manifest" href="/static/manifest.json">
 <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/icon-192.png">
@@ -395,6 +403,15 @@
     const timer = setTimeout(dismiss, kind === 'error' ? 6000 : 3000);
     t.addEventListener('click', () => { clearTimeout(timer); dismiss(); });
   };
+
+  // Offline support: register the service worker (served from / so its
+  // scope covers the whole app). Quietly a no-op where unsupported or
+  // where the cert isn't trusted (dev's self-signed adhoc HTTPS).
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
 
   // Set CSS variable for sticky sub-headers to sit below the site-top bar
   (function() {
