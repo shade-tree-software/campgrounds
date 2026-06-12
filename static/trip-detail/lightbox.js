@@ -23,6 +23,8 @@ function lbApplyTransform(animate) {
   img.style.transform = (lbScale === 1 && !lbTx && !lbTy)
     ? ''
     : `translate(${lbTx}px, ${lbTy}px) scale(${lbScale})`;
+  // Desktop affordance: a zoomed image is draggable — telegraph it.
+  img.style.cursor = lbScale > 1 ? 'grab' : '';
 }
 
 // Keep the scaled image covering its original centered box so a pan can't
@@ -92,6 +94,13 @@ function showLightboxPhoto() {
   document.getElementById('lb-date').textContent = dateStr;
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
+  // Preload the neighbors' full-res originals so paging (arrows, keys,
+  // swipe) shows the next photo instantly instead of fetching a
+  // multi-MB file on demand.
+  [lightboxIndex - 1, lightboxIndex + 1].forEach(i => {
+    const n = lightboxPhotos[i];
+    if (n) { new Image().src = n.dataset.full || n.src; }
+  });
 }
 
 function lightboxNav(e, dir) {
@@ -265,4 +274,73 @@ function downloadLightbox(e) {
       lightboxNav({ stopPropagation() {} }, dx < 0 ? 1 : -1);
     }
   }, { passive: true });
+})();
+
+// Desktop mouse gestures — zoom parity with the touch handlers above:
+// scroll wheel zooms anchored at the cursor, double-click toggles 2.5x
+// (same as double-tap), and dragging pans while zoomed. Shares the
+// lbScale/lbTx/lbTy state, so a mouse zoom and a touch pinch compose
+// (touchscreen laptops).
+(function() {
+  const lb = document.getElementById('lightbox');
+  if (!lb) return;
+  const MAX_SCALE = 4;
+
+  lb.addEventListener('wheel', e => {
+    if (!lb.classList.contains('visible')) return;
+    e.preventDefault();  // never scroll the page behind the overlay
+    // Exponential step makes trackpads (many small deltas) and wheel
+    // clicks (~100 per notch) both feel proportionate.
+    const newScale = Math.min(MAX_SCALE, Math.max(1, lbScale * Math.exp(-e.deltaY * 0.0015)));
+    if (newScale === lbScale) return;
+    if (newScale < 1.02) { lbResetZoom(false); return; }  // snap clean at the bottom
+    // Anchor the cursor: same formula as the pinch midpoint — the image
+    // point under q keeps its screen position across the rescale.
+    const img = document.getElementById('lightbox-img');
+    const r = img.getBoundingClientRect();
+    const cx = r.left + r.width / 2 - lbTx;
+    const cy = r.top + r.height / 2 - lbTy;
+    lbTx = e.clientX - cx - (e.clientX - cx - lbTx) * (newScale / lbScale);
+    lbTy = e.clientY - cy - (e.clientY - cy - lbTy) * (newScale / lbScale);
+    lbScale = newScale;
+    lbClampPan();
+    lbApplyTransform(false);
+  }, { passive: false });
+
+  lb.addEventListener('dblclick', e => {
+    if (!lb.classList.contains('visible') || e.target.closest('button')) return;
+    e.preventDefault();  // suppress browser double-click text selection
+    lbToggleZoom(e.clientX, e.clientY);
+  });
+
+  // Drag-to-pan while zoomed.
+  let panning = false, didPan = false;
+  let px = 0, py = 0, ptx = 0, pty = 0;
+  lb.addEventListener('mousedown', e => {
+    if (lbScale === 1 || e.button !== 0 || e.target.closest('button')) return;
+    panning = true; didPan = false;
+    px = e.clientX; py = e.clientY; ptx = lbTx; pty = lbTy;
+    e.preventDefault();  // suppress native image drag / text selection
+    document.getElementById('lightbox-img').style.cursor = 'grabbing';
+  });
+  window.addEventListener('mousemove', e => {
+    if (!panning) return;
+    const dx = e.clientX - px, dy = e.clientY - py;
+    if (Math.abs(dx) + Math.abs(dy) > 3) didPan = true;
+    lbTx = ptx + dx; lbTy = pty + dy;
+    lbClampPan();
+    lbApplyTransform(false);
+  });
+  window.addEventListener('mouseup', () => {
+    if (!panning) return;
+    panning = false;
+    lbApplyTransform(false);  // restores the grab cursor
+  });
+  // A drag that releases over the backdrop fires a click on the
+  // lightbox (the common ancestor of mousedown/mouseup targets), which
+  // the inline onclick would treat as close. Swallow exactly that click
+  // in the capture phase; genuine backdrop clicks still close.
+  lb.addEventListener('click', e => {
+    if (didPan) { didPan = false; e.stopImmediatePropagation(); e.preventDefault(); }
+  }, true);
 })();
