@@ -878,10 +878,23 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
     }
 
 
+# mtime-keyed cache for _load_locations_by_id. The ~1,100-entry
+# campgrounds.json was being re-parsed for every trip on the map pages
+# (enrich_trip_locations calls this per trip — ~630ms of a render); the
+# cache cuts that to one parse per file change. Callers treat the
+# returned dict as read-only, so sharing one instance is safe.
+_LOCATIONS_CACHE = {"path": None, "mtime": None, "by_id": None}
+
+
 def _load_locations_by_id(json_path="campgrounds.json"):
     """Load id → {name, lat, lng, kind, driveway: (lat,lng)|None} from campgrounds.json."""
     base = os.path.dirname(__file__)
-    with open(os.path.join(base, json_path)) as f:
+    path = os.path.join(base, json_path)
+    mtime = os.path.getmtime(path)
+    if _LOCATIONS_CACHE["by_id"] is not None and \
+       _LOCATIONS_CACHE["path"] == path and _LOCATIONS_CACHE["mtime"] == mtime:
+        return _LOCATIONS_CACHE["by_id"]
+    with open(path) as f:
         cgs = json.load(f)
 
     by_id = {}
@@ -901,6 +914,7 @@ def _load_locations_by_id(json_path="campgrounds.json"):
             "kind": c.get("kind", "campground"),
             "driveway": driveway,
         }
+    _LOCATIONS_CACHE.update(path=path, mtime=mtime, by_id=by_id)
     return by_id
 
 

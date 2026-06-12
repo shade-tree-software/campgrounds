@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import sys
+import time
 from datetime import date, datetime, time as dt_time, timedelta
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
@@ -165,12 +166,28 @@ def _allowed_file(filename):
     return "." in filename and filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+# EXIF timestamps are immutable for a given file, but trip detail re-read
+# every photo's EXIF on every render (one file open per photo). Cache per
+# (path, mtime_ns, size) — a replaced file gets a fresh read; entries for
+# deleted files are a few stale dict slots, not worth evicting.
+_EXIF_DATE_CACHE = {}
+_EXIF_DT_CACHE = {}
+
+
 def _photo_date_taken(filepath):
     """Extract when a photo was taken from EXIF data.
 
     Returns 'YYYY-MM-DD HH:MM:SS' when a time is present, 'YYYY-MM-DD' when
     only a date is available, or '' if there's no EXIF timestamp.
     """
+    try:
+        st = os.stat(filepath)
+        key = (filepath, st.st_mtime_ns, st.st_size)
+    except OSError:
+        return ""
+    if key in _EXIF_DATE_CACHE:
+        return _EXIF_DATE_CACHE[key]
+    result = ""
     try:
         from PIL import Image
         from PIL.ExifTags import Base as ExifBase
@@ -184,10 +201,12 @@ def _photo_date_taken(filepath):
                 date_part, _, time_part = val.partition(" ")
                 date_str = date_part.replace(":", "-")
                 time_part = time_part.strip()
-                return f"{date_str} {time_part}" if time_part else date_str
+                result = f"{date_str} {time_part}" if time_part else date_str
+                break
     except Exception:
         pass
-    return ""
+    _EXIF_DATE_CACHE[key] = result
+    return result
 
 
 def _photo_datetime_taken(filepath):
@@ -195,6 +214,14 @@ def _photo_datetime_taken(filepath):
 
     Used for bucketing photos across multi-copy stay cards.
     """
+    try:
+        st = os.stat(filepath)
+        key = (filepath, st.st_mtime_ns, st.st_size)
+    except OSError:
+        return None
+    if key in _EXIF_DT_CACHE:
+        return _EXIF_DT_CACHE[key]
+    result = None
     try:
         from PIL import Image
         from PIL.ExifTags import Base as ExifBase
@@ -205,12 +232,14 @@ def _photo_datetime_taken(filepath):
             if not val:
                 continue
             try:
-                return datetime.strptime(val, "%Y:%m:%d %H:%M:%S")
+                result = datetime.strptime(val, "%Y:%m:%d %H:%M:%S")
             except ValueError:
-                return None
+                result = None
+            break
     except Exception:
         pass
-    return None
+    _EXIF_DT_CACHE[key] = result
+    return result
 
 
 def _save_photo(file_storage, photo_dir):
@@ -226,6 +255,7 @@ def _save_photo(file_storage, photo_dir):
         filename = f"{base}_{int(datetime.now().timestamp())}{ext}"
         dest = os.path.join(photo_dir, filename)
     file_storage.save(dest)
+    _invalidate_photo_pool()
     return filename
 
 
@@ -257,6 +287,8 @@ def _extract_zip_photos(file_storage, photo_dir):
             with zf.open(info) as src, open(dest, 'wb') as dst:
                 dst.write(src.read())
             saved.append(filename)
+    if saved:
+        _invalidate_photo_pool()
     return saved
 
 
@@ -329,6 +361,62 @@ def photo_thumb(subpath):
         return jsonify({"error": "not found"}), 404
     tpath = _ensure_thumb(orig)
     return send_file(tpath or orig, max_age=30 * 86400, conditional=True)
+
+
+# ── Slideshow photo pool ─────────────────────────────────────────────────────
+# The trips-map slideshow and the poster border want every uploaded photo.
+# Walking ~500 photo directories per request cost ~280ms of every map-page
+# render, so the pool is cached: a short TTL bounds staleness from anything
+# missed (stay re-sorts renaming dirs, trip deletion), and the photo
+# upload/delete/move paths invalidate explicitly so fresh uploads show up
+# on the very next render.
+
+_PHOTO_POOL_CACHE = {"ts": 0.0, "pool": None}
+_PHOTO_POOL_TTL_S = 60
+
+
+def _invalidate_photo_pool():
+    _PHOTO_POOL_CACHE["pool"] = None
+
+
+def _collect_photo_pool():
+    """Every uploaded photo across all trips: {url, thumb, trip_id, card,
+    home_only}. Built from the unfiltered trip list; callers filter
+    home_only per viewer and must copy before shuffling/mutating (the
+    list and its items are shared across requests)."""
+    now = time.time()
+    if _PHOTO_POOL_CACHE["pool"] is not None and now - _PHOTO_POOL_CACHE["ts"] < _PHOTO_POOL_TTL_S:
+        return _PHOTO_POOL_CACHE["pool"]
+    pool = []
+    for trip in parse_trips():
+        tid = trip["id"]
+        home_only = bool(trip.get("home_only"))
+        for i, _stay in enumerate(trip["stays"]):
+            photo_dir = os.path.join(UPLOAD_DIR, str(tid), str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        pool.append({
+                            "url": f"/static/uploads/{tid}/{i}/{fname}",
+                            "thumb": f"/thumb/{tid}/{i}/{fname}",
+                            "trip_id": tid,
+                            "card": f"stay-{i}",
+                            "home_only": home_only,
+                        })
+        for i, _event in enumerate(trip.get("events", [])):
+            photo_dir = os.path.join(UPLOAD_DIR, str(tid), "events", str(i))
+            if os.path.isdir(photo_dir):
+                for fname in os.listdir(photo_dir):
+                    if _allowed_file(fname):
+                        pool.append({
+                            "url": f"/static/uploads/{tid}/events/{i}/{fname}",
+                            "thumb": f"/thumb/{tid}/events/{i}/{fname}",
+                            "trip_id": tid,
+                            "card": f"event-{i}",
+                            "home_only": home_only,
+                        })
+    _PHOTO_POOL_CACHE.update(ts=now, pool=pool)
+    return pool
 
 
 def _load_json(path):
@@ -613,32 +701,12 @@ def trips_map():
         enrich_trip_locations(trip)
     home, family = _map_config()
 
-    # Collect all photos for the slideshow
+    # Slideshow photos from the cached pool; non-admins don't see
+    # home-only trips' photos. The comprehension copies, so shuffling
+    # doesn't disturb the shared cache.
     import random
-    all_photos = []
-    for trip in trips:
-        for i, stay in enumerate(trip["stays"]):
-            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        all_photos.append({
-                            "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
-                            "thumb": f"/thumb/{trip['id']}/{i}/{fname}",
-                            "trip_id": trip["id"],
-                            "card": f"stay-{i}",
-                        })
-        for i, event in enumerate(trip.get("events", [])):
-            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), "events", str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        all_photos.append({
-                            "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
-                            "thumb": f"/thumb/{trip['id']}/events/{i}/{fname}",
-                            "trip_id": trip["id"],
-                            "card": f"event-{i}",
-                        })
+    all_photos = [p for p in _collect_photo_pool()
+                  if is_admin or not p["home_only"]]
     random.shuffle(all_photos)
 
     # Banner above the map links to the most recently-started visible trip.
@@ -681,32 +749,12 @@ def trips_poster():
         enrich_trip_locations(trip)
     home, family = _map_config()
 
-    # Photo pool — gather every uploaded image across all trips, shuffled.
-    # Same shape as `trips_map`'s slideshow but typically rendered as many
-    # more thumbs (the poster wants a densely-tiled border).
+    # Photo pool — every uploaded image across all trips, shuffled, from
+    # the shared cache (the poster just renders many more of them as a
+    # densely-tiled border). Copy via the comprehension before shuffling.
     import random
-    all_photos = []
-    for trip in trips:
-        for i, stay in enumerate(trip["stays"]):
-            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        all_photos.append({
-                            "url": f"/static/uploads/{trip['id']}/{i}/{fname}",
-                            "thumb": f"/thumb/{trip['id']}/{i}/{fname}",
-                            "trip_id": trip["id"],
-                        })
-        for i, event in enumerate(trip.get("events", [])):
-            photo_dir = os.path.join(UPLOAD_DIR, str(trip["id"]), "events", str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        all_photos.append({
-                            "url": f"/static/uploads/{trip['id']}/events/{i}/{fname}",
-                            "thumb": f"/thumb/{trip['id']}/events/{i}/{fname}",
-                            "trip_id": trip["id"],
-                        })
+    all_photos = [p for p in _collect_photo_pool()
+                  if is_admin or not p["home_only"]]
     random.shuffle(all_photos)
 
     return render_template('trips_poster.html', trips=trips, home=home,
@@ -1027,6 +1075,7 @@ def delete_photo(trip_id, stay_idx, filename):
     if os.path.exists(photo_path):
         os.remove(photo_path)
     _remove_thumb(photo_path)
+    _invalidate_photo_pool()
 
     photo_key = f"{trip_id}/{stay_idx}/{filename}"
     captions = _load_json(CAPTIONS_FILE)
@@ -1052,6 +1101,7 @@ def delete_all_stay_photos(trip_id, stay_idx):
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
     if os.path.isdir(photo_dir):
         shutil.rmtree(photo_dir)
+    _invalidate_photo_pool()
 
     prefix = f"{trip_id}/{stay_idx}/"
     captions = _load_json(CAPTIONS_FILE)
@@ -1153,6 +1203,7 @@ def delete_event_photo(trip_id, event_idx, filename):
     if os.path.exists(photo_path):
         os.remove(photo_path)
     _remove_thumb(photo_path)
+    _invalidate_photo_pool()
 
     photo_key = f"{trip_id}/events/{event_idx}/{filename}"
     captions = _load_json(CAPTIONS_FILE)
@@ -1178,6 +1229,7 @@ def delete_all_event_photos(trip_id, event_idx):
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
     if os.path.isdir(photo_dir):
         shutil.rmtree(photo_dir)
+    _invalidate_photo_pool()
 
     prefix = f"{trip_id}/events/{event_idx}/"
     captions = _load_json(CAPTIONS_FILE)
@@ -1427,6 +1479,7 @@ def move_photo(trip_id):
 
     os.rename(src_path, dst_path)
     _remove_thumb(src_path)  # dest thumb regenerates lazily on next view
+    _invalidate_photo_pool()
 
     # Update captions
     captions = _load_json(CAPTIONS_FILE)
