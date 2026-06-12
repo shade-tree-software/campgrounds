@@ -23,7 +23,40 @@ from trips import (parse_trips, enrich_trip_locations,
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.jinja_env.policies['json.dumps_kwargs'] = {'sort_keys': False}
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", os.urandom(24).hex())
+
+
+def _load_or_create_secret_key():
+    """Secret key: the FLASK_SECRET_KEY env var wins; otherwise persist a
+    generated key under trip_data/ (gitignored) so session and remember-me
+    cookies survive app restarts. The previous os.urandom fallback minted a
+    fresh key every launch, silently logging everyone out on each restart.
+    """
+    env_key = os.environ.get("FLASK_SECRET_KEY")
+    if env_key:
+        return env_key
+    path = os.path.join(os.path.dirname(__file__), "trip_data", "secret_key")
+    try:
+        with open(path) as f:
+            key = f.read().strip()
+        if key:
+            return key
+    except OSError:
+        pass
+    key = os.urandom(24).hex()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w") as f:
+        f.write(key)
+    try:
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+    return key
+
+
+app.secret_key = _load_or_create_secret_key()
+# Family members shouldn't have to re-type passwords on their phones —
+# login_user(remember=True) below sets a long-lived remember-me cookie.
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(days=365)
 
 
 @app.template_filter('to12h')
@@ -361,7 +394,7 @@ def login():
         users = _load_users()
         user = users.get(username)
         if user and check_password_hash(user.password_hash, password):
-            login_user(user)
+            login_user(user, remember=True)
             return redirect('/')
         return render_template('login.html', error="Invalid username or password")
     return render_template('login.html')
