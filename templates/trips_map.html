@@ -557,6 +557,9 @@ if (PHOTOS.length && leftStack && rightStack) {
     const recentSlots = [];
     const COOLDOWN = Math.min(3, slots.length - 1);
     setInterval(() => {
+      // Don't churn photos (each swap is a network fetch) while the tab
+      // is hidden — saves battery/data on phones left on this page.
+      if (document.hidden) return;
       const eligible = [];
       for (let i = 0; i < slots.length; i++) {
         if (!recentSlots.includes(i)) eligible.push(i);
