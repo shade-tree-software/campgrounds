@@ -1,10 +1,21 @@
-# Waterfront re-audit (multi-state)
+# Waterfront audit (multi-state)
 
-Ongoing re-audit of every `waterfront` value that predates the evidence gate
-(commits 4f3160e / 9c28772). Scope: all entries with `waterfront != "not waterfront"`
+This folder's instructions + apply script serve **two** purposes:
+
+1. **Re-audit** of legacy `waterfront` values that predate the evidence gate
+   (commits 4f3160e / 9c28772) — COMPLETE, see below.
+2. **New-state sweep stage** (current standard): most states from here on are
+   added fresh with little/no prior data, so the audit is folded into the sweep
+   instead of run later. Add entries with `waterfront: "not waterfront"` as a
+   placeholder, then run these same subagents over the new ids and apply — so
+   entries land correctly marked the first time. The per-state sweep pipeline is
+   in `CLAUDE.md` ("Waterfront audit is a built-in sweep stage"); the mechanics
+   below (batching, subagent prompt, apply, commit) are identical for both uses.
+
+Re-audit scope (purpose 1): all entries with `waterfront != "not waterfront"`
 whose `note` is NOT tagged `--AWH` (those are firsthand-confirmed), and that are
 NOT named/described as dispersed (per AWH 2026-06-10: skip dispersed sites).
-Working eastward from IL. **Git log is the progress record** — look for
+Worked eastward from IL. **Git log is the progress record** — look for
 "Audit all NN <ST> waterfront designations" commits to see which states are done.
 
 **COMPLETE (2026-06-11).** Done: MO, IL, IN, KY, OH, WV, PA, NY, plus the
@@ -19,7 +30,8 @@ then run through this same satellite/per-site-map gate as a forward audit (not a
 re-audit). 128 water-adjacent candidates audited (30 pure in-town / fairground
 parks left `not waterfront` without a look); 28 changes, 13 coord fixes. Commit
 "Audit all 128 KS waterfront designations against the evidence gate" carries the
-per-entry evidence. Same approach should apply to any future newly-added state.
+per-entry evidence. This established the new-state sweep stage (purpose 2 above)
+as the standard going forward.
 
 ## Per-state workflow
 
