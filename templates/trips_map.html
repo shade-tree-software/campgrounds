@@ -68,6 +68,41 @@
   }
   .latest-trip-banner:hover .arrow { filter: brightness(.9); }
 
+  /* "On this day" — prior-year trips covering today's month-day, on the
+     landing page where everyone actually arrives (the calendar has its
+     own copy, but most family members never open the calendar). Hidden
+     unless there's a match; when shown, JS publishes --otd-height so
+     the map sizing calcs give up the room instead of overflowing. */
+  .on-this-day {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .35rem .6rem;
+    padding: .5rem .65rem .5rem 1rem;
+    background: linear-gradient(90deg, #fff8e3, #fff);
+    border-left: 6px solid var(--gold);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    font-size: .9rem;
+  }
+  .on-this-day .otd-label {
+    flex-shrink: 0;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: #8a6d0a;
+    font-weight: 700;
+  }
+  .on-this-day .otd-trips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    min-width: 0;
+  }
+  .on-this-day a { color: var(--navy); text-decoration: none; font-weight: 600; }
+  .on-this-day a:hover { text-decoration: underline; }
+  .on-this-day .otd-ago { color: var(--gray); font-weight: 400; font-size: .8rem; }
+
   .map-layout {
     display: flex;
     gap: 1rem;
@@ -83,7 +118,7 @@
     flex-direction: column;
     gap: .65rem;
     flex: 0 0 auto;
-    width: min(calc(100vh - 180px), 900px, 100%);
+    width: min(calc(100vh - 180px - var(--otd-height, 0px)), 900px, 100%);
   }
 
   .map-container {
@@ -175,7 +210,7 @@
     .map-container {
       width: 100%;
       aspect-ratio: auto;
-      height: calc(100vh - var(--site-top-height, 90px) - 290px - var(--tab-bar-height, 0px));
+      height: calc(100vh - var(--site-top-height, 90px) - 290px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
       min-height: 260px;
     }
     #stack-right { display: none; }
@@ -200,10 +235,16 @@
     .map-section { padding: .25rem .25rem 0; }
     .map-container {
       border-radius: 6px;
-      height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px));
-      height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px));
+      height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
+      height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
     }
     .photo-stack { height: 90px; gap: .35rem; }
+    .on-this-day {
+      font-size: .8rem;
+      padding: .4rem .5rem .4rem .7rem;
+      border-left-width: 4px;
+      border-radius: 6px;
+    }
     /* Compact banner: "show me the newest trip" is the #1 task for a
        family member opening the app, so it stays on phones — one tight
        line, date dropped, smaller CTA pill. */
@@ -258,6 +299,7 @@
         <span class="arrow">Open trip &rsaquo;</span>
       </a>
       {% endif %}
+      <div id="on-this-day" class="on-this-day" style="display:none;"></div>
       <div class="map-container">
         <div id="all-trips-map"></div>
       </div>
@@ -507,6 +549,47 @@ legend.onAdd = function() {
   return div;
 };
 legend.addTo(map);
+
+// ── "On this day" ──────────────────────────────────────────────────────────
+// Prior-year trips whose date range covers today's month-day (same rule
+// as the calendar widget). Compact one-liner above the map; publishes
+// --otd-height so the map sizing calcs make room only when it's shown.
+(function() {
+  const el = document.getElementById('on-this-day');
+  if (!el) return;
+  const today = new Date();
+  const currentY = today.getFullYear();
+  const todayMD = String(today.getMonth() + 1).padStart(2, '0') + '-' +
+                  String(today.getDate()).padStart(2, '0');
+  const matches = [];
+  TRIPS.forEach(t => {
+    if (!t.start || !t.end) return;
+    const sy = parseInt(t.start.slice(0, 4));
+    const ey = parseInt(t.end.slice(0, 4));
+    for (let y = sy; y <= ey; y++) {
+      if (y >= currentY) continue;  // only prior years
+      const probe = `${y}-${todayMD}`;
+      if (probe >= t.start && probe <= t.end) {
+        matches.push({ trip: t, year: y });
+        break;
+      }
+    }
+  });
+  if (!matches.length) return;
+  matches.sort((a, b) => b.year - a.year);
+  const esc = s => { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; };
+  el.innerHTML = '<span class="otd-label">On this day</span><span class="otd-trips">' +
+    matches.map(({ trip, year }) => {
+      const n = currentY - year;
+      const ago = n === 1 ? '1 year ago' : `${n} years ago`;
+      return `<a href="/trips/${trip.id}">${esc(trip.summary || 'Trip')} <span class="otd-ago">(${ago})</span></a>`;
+    }).join('') + '</span>';
+  el.style.display = '';
+  const sync = () => document.documentElement.style.setProperty(
+    '--otd-height', (el.offsetHeight + 10) + 'px');  // +10 ≈ the column gap
+  sync();
+  window.addEventListener('resize', sync);
+})();
 
 // ── Photo stacks ─────────────────────────────────────────────────────────
 const PHOTOS = {{ slideshow_photos | tojson }};
