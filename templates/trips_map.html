@@ -565,6 +565,14 @@ if (PHOTOS.length && leftStack && rightStack) {
   slots.forEach((_, i) => setSlot(i, pickPhoto(i)));
 
   if (PHOTOS.length > 1) {
+    // Pause rotation while the pointer is over either photo stack —
+    // otherwise the photo under the cursor can swap mid-aim and the
+    // click lands on a different trip than the one the user saw.
+    let hoverPaused = false;
+    [leftStack, rightStack].forEach(stack => {
+      stack.addEventListener('mouseenter', () => { hoverPaused = true; });
+      stack.addEventListener('mouseleave', () => { hoverPaused = false; });
+    });
     // Track the last few slot indices that were updated so we don't
     // immediately swap the same one again. Cooldown is capped to one
     // less than the total slot count so there's always a valid pick.
@@ -573,7 +581,7 @@ if (PHOTOS.length && leftStack && rightStack) {
     setInterval(() => {
       // Don't churn photos (each swap is a network fetch) while the tab
       // is hidden — saves battery/data on phones left on this page.
-      if (document.hidden) return;
+      if (document.hidden || hoverPaused) return;
       const eligible = [];
       for (let i = 0; i < slots.length; i++) {
         if (!recentSlots.includes(i)) eligible.push(i);
