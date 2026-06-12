@@ -878,6 +878,25 @@ function switchView(view) {
   render();
 }
 
+// Keyboard: ←/→ page the year; "/" jumps to the trip search. Both
+// stand down while focus is in a field (Escape inside the search box
+// already clears it via its own onkeydown).
+document.addEventListener('keydown', e => {
+  const t = document.activeElement;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
+            t.tagName === 'SELECT' || t.isContentEditable)) return;
+  if (e.key === '/') {
+    e.preventDefault();  // don't type the slash into the field
+    document.getElementById('trip-search').focus();
+    return;
+  }
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  // Year nav is dimmed/disabled while search results are showing.
+  if (searchQuery.trim()) return;
+  if (e.key === 'ArrowLeft') prevYear();
+  if (e.key === 'ArrowRight') nextYear();
+});
+
 // Intercept calendar/list links (top nav + bottom tab bar) to switch
 // client-side, preserving the selected year instead of reloading.
 [['nav-calendar', 'calendar'], ['nav-list', 'list'],

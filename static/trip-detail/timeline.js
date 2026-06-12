@@ -132,6 +132,27 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeTripActions();
 });
 
+// ←/→ flip to the previous/next trip (the header chevrons' keyboard
+// route). Stands down whenever the keys mean something else: typing in
+// a field, the lightbox open (its own handler pages photos), or any
+// modal open.
+document.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  const t = document.activeElement;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
+            t.tagName === 'SELECT' || t.isContentEditable)) return;
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox && lightbox.classList.contains('visible')) return;
+  if (document.querySelector('.add-modal.visible')) return;
+  // prev = chevron before the title, next = chevron after; either may
+  // be absent on the first/last trip.
+  const navs = document.querySelectorAll('.trip-header .trip-nav');
+  const link = (e.key === 'ArrowLeft' ? navs[0] : navs[navs.length - 1])
+    ?.querySelector('a');
+  if (link) window.location.href = link.href;
+});
+
 function editTripNote() {
   document.getElementById('trip-title').style.display = 'none';
   document.getElementById('trip-note-edit').classList.add('active');
