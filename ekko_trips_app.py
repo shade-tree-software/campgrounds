@@ -548,6 +548,22 @@ def _can_edit_photo(photo_key):
     return _load_json(PHOTO_UPLOADERS_FILE).get(photo_key) == current_user.username
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template(
+        'error.html', code=404, heading="This trail doesn't exist",
+        message="The page you're looking for isn't here — it may have "
+                "been moved or the link is off."), 404
+
+
+@app.errorhandler(500)
+def server_error(e):
+    return render_template(
+        'error.html', code=500, heading="Something broke down",
+        message="The app hit an unexpected error. Heading back to the "
+                "map usually fixes it; if it keeps happening, tell Andrew."), 500
+
+
 @app.route('/sw.js')
 def service_worker():
     """Serve the service worker from the site root: a worker's maximum
