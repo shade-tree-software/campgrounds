@@ -368,7 +368,10 @@
       padding: .85rem 1rem;
     }
     .trip-card .trip-number { width: auto; text-align: left; }
+    /* Inline on mobile there's room for "Jun 5 – Jun 7" on one line —
+       suppress the desktop column's forced two-line stack. */
     .trip-card .dates { min-width: 0; }
+    .trip-card .dates br { display: none; }
     .trip-card .info { flex: 1 1 100%; order: 3; }
     .trip-card .stays-count { flex: 1 1 100%; order: 4; white-space: normal; }
   }
@@ -578,7 +581,9 @@ function buildTripCard(trip, opts) {
     const fmtOpts = { month: 'short', day: 'numeric' };
     if (opts.includeYear) fmtOpts.year = 'numeric';
     const fmt = d => d.toLocaleDateString('en-US', fmtOpts);
-    datesHtml = `${fmt(startD)}<br>&ndash; ${fmt(endD)}`;
+    // The <br> stacks the range in desktop's narrow date column; mobile
+    // hides it via CSS (the space before it becomes the separator).
+    datesHtml = `${fmt(startD)} <br>&ndash; ${fmt(endD)}`;
   }
   const counts = [];
   if (trip.total_nights) counts.push(`${trip.total_nights} night${trip.total_nights !== 1 ? 's' : ''}`);
