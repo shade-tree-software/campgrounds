@@ -13,6 +13,14 @@ scattered remainder (NJ, VT, MD, VA, FL, RI, ME, AL, NH, MA, CA, MN, TN, DE —
 designations"). Every pre-gate designation has been re-verified; per-entry
 evidence lives in the audit commit messages.
 
+**KS (2026-06-11):** different case — the whole KS state/federal/local/private
+set was added fresh this session with `waterfront` deferred to `not waterfront`,
+then run through this same satellite/per-site-map gate as a forward audit (not a
+re-audit). 128 water-adjacent candidates audited (30 pure in-town / fairground
+parks left `not waterfront` without a look); 28 changes, 13 coord fixes. Commit
+"Audit all 128 KS waterfront designations against the evidence gate" carries the
+per-entry evidence. Same approach should apply to any future newly-added state.
+
 ## Per-state workflow
 
 1. Extract the state's entries to audit and split into batch files of ~8:
