@@ -173,7 +173,7 @@ function saveTripNote() {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     _reloadKeepingMapView();
   });
 }
@@ -191,7 +191,7 @@ function editHomeTime(which) {
   if (val === null) return;
   const trimmed = val.trim();
   if (trimmed && !/^\d{1,2}:\d{2}$/.test(trimmed)) {
-    alert('Use HH:MM 24-hour format (e.g. 08:30 or 17:45).');
+    toast('Use HH:MM 24-hour format (e.g. 08:30 or 17:45).');
     return;
   }
   const field = which === 'start' ? 'home_start_time' : 'home_end_time';
@@ -202,7 +202,7 @@ function editHomeTime(which) {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     _reloadKeepingMapView();
   });
 }
@@ -212,7 +212,7 @@ function deleteTrip() {
   fetch(`/api/trips/${TRIP_ID}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       window.location.href = '/trips/calendar';
     });
 }
@@ -347,7 +347,7 @@ function saveTrackSource() {
       if (window.__refetchAndRenderTrack) window.__refetchAndRenderTrack();
     })
     .catch(err => {
-      alert(err.message);
+      toast(err.message);
       saveBtn.disabled = false;
       saveBtn.textContent = 'Save';
       cancelBtn.disabled = false;
@@ -392,7 +392,7 @@ function saveStay(idx) {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     _reloadKeepingMapView();
   });
 }
@@ -439,7 +439,7 @@ function deleteStay(idx) {
   fetch(`/api/trips/${TRIP_ID}/stays/${idx}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       if (data.trip_deleted) {
         window.location.href = '/trips/calendar';
       } else {
@@ -629,7 +629,7 @@ function saveEvent(idx) {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     _reloadKeepingMapView();
   });
 }
@@ -646,7 +646,7 @@ function deleteEvent(idx) {
   fetch(`/api/trips/${TRIP_ID}/events/${idx}`, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       _reloadKeepingMapView();
     });
 }
@@ -841,7 +841,7 @@ function _openModal(kind, mode, idx, prefillValues) {
   const modal = document.getElementById('add-modal');
   if (!modal) return;
   if (kind === 'family_visit' && FAMILY_LOCATIONS.length === 0) {
-    alert('No family locations configured.');
+    toast('No family locations configured.');
     return;
   }
 
@@ -991,7 +991,7 @@ function submitAddModal() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       // If this modal was opened from "+ Event/Waypoint from selection",
       // turn off Select pings so the reloaded page comes up clean.
       if (window.__createFromSelection) {

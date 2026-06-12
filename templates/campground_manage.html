@@ -491,7 +491,7 @@ function readEditFields() {
 
 function saveEdit() {
   const fields = readEditFields();
-  if (!fields.name) { alert('Name is required'); return; }
+  if (!fields.name) { toast('Name is required'); return; }
   fetch('/api/campgrounds/' + editingId, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
@@ -499,12 +499,13 @@ function saveEdit() {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     const c = campgrounds.find(e => e.id === editingId);
     if (c) Object.assign(c, fields);
     editingId = null;
     render();
     hideLocationMap();
+    toast('Saved ' + fields.name, 'success');
   });
 }
 
@@ -524,7 +525,7 @@ function cancelAdd() {
 
 function saveNew() {
   const fields = readEditFields();
-  if (!fields.name) { alert('Name is required'); return; }
+  if (!fields.name) { toast('Name is required'); return; }
   fetch('/api/campgrounds', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -532,11 +533,12 @@ function saveNew() {
   })
   .then(r => r.json())
   .then(data => {
-    if (data.error) { alert(data.error); return; }
+    if (data.error) { toast(data.error); return; }
     campgrounds.push(Object.assign({ id: data.id }, fields));
     addingNew = false;
     render();
     hideLocationMap();
+    toast('Added ' + fields.name, 'success');
   });
 }
 
@@ -547,7 +549,7 @@ function deleteCg(id) {
   fetch('/api/campgrounds/' + id, { method: 'DELETE' })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       campgrounds = campgrounds.filter(e => e.id !== id);
       render();
     });

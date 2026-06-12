@@ -370,13 +370,13 @@ function submitDetectStops() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); btn.disabled = false; updateDetectStopsCount(); return; }
+      if (data.error) { toast(data.error); btn.disabled = false; updateDetectStopsCount(); return; }
       // Refresh the page so the new flagged events/waypoints render in
       // the timeline and on the map.
       window.location.reload();
     })
     .catch(err => {
-      alert('Failed to create events: ' + err.message);
+      toast('Failed to create events: ' + err.message);
       btn.disabled = false;
       updateDetectStopsCount();
     });

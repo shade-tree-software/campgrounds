@@ -199,7 +199,7 @@ function createUser() {
   const password = document.getElementById('new-password').value;
   const isAdmin = document.getElementById('new-is-admin').checked;
   const canUpload = document.getElementById('new-can-upload').checked;
-  if (!username || !password) { alert('Username and password are required'); return; }
+  if (!username || !password) { toast('Username and password are required'); return; }
   fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -207,7 +207,7 @@ function createUser() {
   })
     .then(r => r.json())
     .then(d => {
-      if (d.error) { alert(d.error); return; }
+      if (d.error) { toast(d.error); return; }
       document.getElementById('new-username').value = '';
       document.getElementById('new-password').value = '';
       document.getElementById('new-is-admin').checked = false;
@@ -231,7 +231,7 @@ function cancelReset() {
 
 function submitReset() {
   const password = document.getElementById('reset-password').value;
-  if (!password) { alert('Password cannot be empty'); return; }
+  if (!password) { toast('Password cannot be empty'); return; }
   if (!resetTarget) return;
   fetch('/api/users/' + encodeURIComponent(resetTarget), {
     method: 'PUT',
@@ -240,9 +240,9 @@ function submitReset() {
   })
     .then(r => r.json())
     .then(d => {
-      if (d.error) { alert(d.error); return; }
+      if (d.error) { toast(d.error); return; }
       cancelReset();
-      alert('Password updated.');
+      toast('Password updated.', 'success');
     });
 }
 
@@ -256,7 +256,7 @@ function toggleAdmin(username, makeAdmin) {
   })
     .then(r => r.json())
     .then(d => {
-      if (d.error) { alert(d.error); return; }
+      if (d.error) { toast(d.error); return; }
       loadUsers();
     });
 }
@@ -271,7 +271,7 @@ function toggleUploader(username, grant) {
   })
     .then(r => r.json())
     .then(d => {
-      if (d.error) { alert(d.error); return; }
+      if (d.error) { toast(d.error); return; }
       loadUsers();
     });
 }
@@ -281,7 +281,7 @@ function deleteUser(username) {
   fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' })
     .then(r => r.json())
     .then(d => {
-      if (d.error) { alert(d.error); return; }
+      if (d.error) { toast(d.error); return; }
       loadUsers();
     });
 }

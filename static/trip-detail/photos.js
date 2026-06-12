@@ -408,7 +408,8 @@ function initPhotoDrag(grid) {
       })
       .then(r => r.json())
       .then(data => {
-        if (data.error) { alert(data.error); _reloadKeepingMapView(); return; }
+        // Give the toast a beat before the resync reload wipes it.
+        if (data.error) { toast(data.error); setTimeout(_reloadKeepingMapView, 1500); return; }
         // Update filename if server renamed it to avoid collision
         if (data.filename !== filename) {
           movedItem.dataset.filename = data.filename;

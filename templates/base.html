@@ -236,6 +236,42 @@
     }
   }
 
+  /* ── Toasts (window.toast in the script below) ─────────────────────
+     Non-blocking replacement for alert(): bottom-center, above the
+     mobile tab bar, auto-dismissing, click to dismiss early. */
+  #toast-container {
+    position: fixed;
+    bottom: calc(1rem + var(--tab-bar-height, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1400;  /* above everything, including the upload banner */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    pointer-events: none;  /* gaps don't block the page; toasts re-enable */
+    max-width: calc(100vw - 2rem);
+  }
+  .toast {
+    pointer-events: auto;
+    background: var(--navy);
+    color: #fff;
+    padding: .6rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.3);
+    font-size: .85rem;
+    line-height: 1.4;
+    max-width: 100%;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .2s, transform .2s;
+    cursor: pointer;
+    white-space: pre-line;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast-error { background: #8e2323; }
+  .toast-success { background: #1b5e20; }
+
   /* Phone-only: shrink the header text + stats. iPad has room for the
      full-size header even with the hamburger nav. */
   @media (max-width: 700px) {
@@ -334,6 +370,32 @@
 {% endif %}
 
 <script>
+  // Global toast notifications — the non-blocking replacement for
+  // alert(). kind: 'error' (default — most call sites surface API
+  // errors), 'success', or 'info'. Errors linger 6s, the rest 3s;
+  // click dismisses early. confirm() for destructive actions is NOT
+  // replaced by this — a blocking prompt before a delete is correct.
+  window.toast = function(message, kind) {
+    kind = kind || 'error';
+    let container = document.getElementById('toast-container');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'toast-container';
+      document.body.appendChild(container);
+    }
+    const t = document.createElement('div');
+    t.className = 'toast toast-' + kind;
+    t.textContent = message;
+    container.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    const dismiss = () => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 250);
+    };
+    const timer = setTimeout(dismiss, kind === 'error' ? 6000 : 3000);
+    t.addEventListener('click', () => { clearTimeout(timer); dismiss(); });
+  };
+
   // Set CSS variable for sticky sub-headers to sit below the site-top bar
   (function() {
     const siteTop = document.querySelector('.site-top');

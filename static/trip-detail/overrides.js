@@ -329,12 +329,12 @@ function _initSelectionDrag(map) {
     })
       .then(r => r.json())
       .then(data => {
-        if (data.error) { alert(data.error); snapBack(ds); return; }
+        if (data.error) { toast(data.error); snapBack(ds); return; }
         // Drag-relocate is GPS-only; refetch the track and re-render in
         // place rather than reloading the whole page.
         refetchAndRenderTrack();
       })
-      .catch(err => { snapBack(ds); alert('Failed to move pings: ' + err); });
+      .catch(err => { snapBack(ds); toast('Failed to move pings: ' + err); });
   }
 
   function bindMarker(marker) {
@@ -505,7 +505,7 @@ function setCampsiteFromSelection() {
     .map((s, i) => ({ stay: s, idx: i }))
     .filter(({ stay }) => stay.campground_id != null && stay.lat != null && stay.lng != null);
   if (!candidates.length) {
-    alert('No campspots with a campground reference are available on this trip.');
+    toast('No campspots with a campground reference are available on this trip.');
     return;
   }
 
@@ -534,11 +534,11 @@ function setCampsiteFromSelection() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       _disableSelectionToggleBeforeReload();
       _reloadKeepingMapView();
     })
-    .catch(err => alert('Failed to update campsite location: ' + err));
+    .catch(err => toast('Failed to update campsite location: ' + err));
 }
 
 // ── GPS-ping suppression ──────────────────────────────────────────────────
@@ -563,11 +563,11 @@ function suppressFromSelection() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       // refetchAndRenderTrack() clears the selection toggle internally.
       refetchAndRenderTrack();
     })
-    .catch(err => alert('Failed to suppress pings: ' + err));
+    .catch(err => toast('Failed to suppress pings: ' + err));
 }
 
 function toggleShowSuppressed(checkbox) {
@@ -626,11 +626,11 @@ function centerSelectedPings() {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       // refetchAndRenderTrack() clears the selection toggle internally.
       refetchAndRenderTrack();
     })
-    .catch(err => alert('Failed to center pings: ' + err));
+    .catch(err => toast('Failed to center pings: ' + err));
 }
 
 function toggleShowRelocated(checkbox) {
@@ -690,10 +690,10 @@ function unrelocatePing(tst) {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       refetchAndRenderTrack();
     })
-    .catch(err => alert('Failed to restore ping: ' + err));
+    .catch(err => toast('Failed to restore ping: ' + err));
 }
 
 // Click handler bound to each suppressed-ping marker. Single ping at a
@@ -709,12 +709,12 @@ function unsuppressPing(tst) {
   })
     .then(r => r.json())
     .then(data => {
-      if (data.error) { alert(data.error); return; }
+      if (data.error) { toast(data.error); return; }
       // Re-render so the polyline + regular markers pick the restored ping
       // back up. Leave the "Show suppressed" toggle as-is — if the user
       // had it on, they're probably reviewing more — `_buildSuppressedRelocatedLayers`
       // re-applies the checked state to the freshly-built layer.
       refetchAndRenderTrack();
     })
-    .catch(err => alert('Failed to unsuppress ping: ' + err));
+    .catch(err => toast('Failed to unsuppress ping: ' + err));
 }
