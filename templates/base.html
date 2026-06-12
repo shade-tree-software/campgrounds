@@ -275,18 +275,21 @@
   {% set is_admin = current_user.is_authenticated and current_user.is_admin %}
   <div class="nav-collapse" id="nav-collapse">
   <span class="nav-group">
-    {% if is_admin %}<span class="nav-label">Trips:</span>{% endif %}
+    <span class="nav-label">Trips:</span>
     <a href="/trips/map"{% if active_nav == 'map' %} class="active"{% endif %}>Map</a>
     <a href="/trips/calendar" id="nav-calendar"{% if active_nav == 'calendar' %} class="active"{% endif %}>Calendar</a>
     <a href="/trips/list" id="nav-list"{% if active_nav == 'list' %} class="active"{% endif %}>List</a>
     <a href="/trips/stats"{% if active_nav == 'stats' %} class="active"{% endif %}>Stats</a>
   </span>
-  {% if is_admin %}
+  {# Campground map is read-only for non-admins (the route was never
+     admin-gated; edit affordances are IS_ADMIN-conditioned) — the
+     "places we could go" browser for the whole family. #}
   <span class="nav-group">
     <span class="nav-label">Campgrounds:</span>
     <a href="/campgrounds/map"{% if active_nav == 'campmap' %} class="active"{% endif %}>Map</a>
-    <a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}>Manage</a>
+    {% if is_admin %}<a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}>Manage</a>{% endif %}
   </span>
+  {% if is_admin %}
   <span class="nav-group">
     <span class="nav-label">Admin:</span>
     <a href="/admin/users"{% if active_nav == 'users' %} class="active"{% endif %}>Users</a>
@@ -322,6 +325,10 @@
   <a href="/trips/stats" id="tab-stats"{% if active_nav == 'stats' %} class="active"{% endif %}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V13M12 21V5M19 21V9"/></svg>
     <span>Stats</span>
+  </a>
+  <a href="/campgrounds/map" id="tab-campgrounds"{% if active_nav == 'campmap' %} class="active"{% endif %}>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 L12 5 L21 20"/><path d="M12 12 L8.5 20"/><path d="M12 12 L15.5 20"/><path d="M2 20 H22"/></svg>
+    <span>Camps</span>
   </a>
 </nav>
 {% endif %}
