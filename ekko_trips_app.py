@@ -879,6 +879,51 @@ def trips_stats():
             trips_by_year[y] = trips_by_year.get(y, 0) + 1
     trips_by_year_sorted = sorted(trips_by_year.items())
 
+    # ── Records ──────────────────────────────────────────────────────
+    # All derivable from data already in hand (trips + campgrounds.json
+    # coords/elevation) — no GPS-track crunching.
+    dated = [t for t in trips if t.get("start")]
+    first_trip = min(dated, key=lambda t: t["start"]) if dated else None
+    camping_since = ""
+    if first_trip:
+        d = datetime.strptime(first_trip["start"], "%Y-%m-%d")
+        camping_since = d.strftime("%B %Y")
+
+    overnighters = [t for t in trips if t.get("total_nights", 0) > 0]
+    longest_trip = max(overnighters, key=lambda t: t["total_nights"]) if overnighters else None
+    avg_nights = round(total_nights / total_overnight, 1) if total_overnight else 0
+
+    month_counts = {}
+    for t in dated:
+        month_counts[int(t["start"][5:7])] = month_counts.get(int(t["start"][5:7]), 0) + 1
+    busiest_month = None
+    if month_counts:
+        m, n = max(month_counts.items(), key=lambda kv: (kv[1], -kv[0]))
+        busiest_month = {"name": datetime(2000, m, 1).strftime("%B"), "count": n}
+
+    # Furthest / highest campground actually stayed at, by campground_id.
+    home_cfg = _load_json(HOME_FILE)
+    home_lat, home_lng = home_cfg.get("home_lat"), home_cfg.get("home_long")
+    visited_ids = {s["campground_id"] for t in trips for s in t.get("stays", [])
+                   if s.get("campground_id") is not None}
+    furthest = None
+    highest = None
+    if visited_ids:
+        with open(CAMPGROUNDS_JSON) as f:
+            cg_entries = {c["id"]: c for c in json.load(f) if "id" in c}
+        for cid in visited_ids:
+            c = cg_entries.get(cid)
+            if not c or "location" not in c:
+                continue
+            lat, lng = (float(x) for x in c["location"].split(","))
+            if home_lat is not None and home_lng is not None:
+                miles = _haversine_m(home_lat, home_lng, lat, lng) / 1609.344
+                if furthest is None or miles > furthest["miles"]:
+                    furthest = {"name": c["name"], "miles": round(miles)}
+            elev_ft = round(c.get("elevation_meters", 0) * METERS_TO_FEET)
+            if elev_ft and (highest is None or elev_ft > highest["feet"]):
+                highest = {"name": c["name"], "feet": elev_ft}
+
     return render_template(
         'trips_stats.html',
         total_trips=total_trips,
@@ -890,6 +935,13 @@ def trips_stats():
         states_list=sorted(states),
         top_campgrounds=top_campgrounds,
         trips_by_year=trips_by_year_sorted,
+        unique_campgrounds=len(cg_trip_ids),
+        camping_since=camping_since,
+        longest_trip=longest_trip,
+        avg_nights=avg_nights,
+        busiest_month=busiest_month,
+        furthest=furthest,
+        highest=highest,
         active_nav='stats',
     )
 

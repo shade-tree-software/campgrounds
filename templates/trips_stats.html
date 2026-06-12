@@ -43,6 +43,11 @@
     color: var(--gray);
     margin-top: .25rem;
   }
+  .stat-card .stat-sub a { color: var(--navy); text-decoration: none; }
+  .stat-card .stat-sub a:hover { text-decoration: underline; }
+  /* Records list reuses .top-cg-list; its value chips can be wider
+     ("1,234 mi") than the visit counts — keep them on one line. */
+  .top-cg-list .cg-count { white-space: nowrap; }
   .stat-card .stat-label {
     font-size: .85rem;
     color: var(--gray);
@@ -170,7 +175,53 @@
       <div class="stat-num">{{ photo_count }}</div>
       <div class="stat-label">Photos</div>
     </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ unique_campgrounds }}</div>
+      <div class="stat-label">Campgrounds</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">{{ avg_nights }}</div>
+      <div class="stat-label">Avg Nights / Trip</div>
+    </div>
+    {% if longest_trip %}
+    <div class="stat-card">
+      <div class="stat-num">{{ longest_trip.total_nights }}</div>
+      <div class="stat-label">Longest Trip (Nights)</div>
+      <div class="stat-sub"><a href="/trips/{{ longest_trip.id }}">{{ longest_trip.summary }}</a></div>
+    </div>
+    {% endif %}
+    {% if camping_since %}
+    <div class="stat-card">
+      <div class="stat-num">{{ camping_since.split(' ')[1] }}</div>
+      <div class="stat-label">Camping Since</div>
+      <div class="stat-sub">{{ camping_since }}</div>
+    </div>
+    {% endif %}
   </div>
+
+  {% if furthest or highest or busiest_month %}
+  <h2>Records</h2>
+  <ul class="top-cg-list">
+    {% if furthest %}
+    <li>
+      <span class="cg-count">{{ '{:,}'.format(furthest.miles) }} mi</span>
+      <span class="cg-name">Furthest from home — {{ furthest.name }}</span>
+    </li>
+    {% endif %}
+    {% if highest %}
+    <li>
+      <span class="cg-count">{{ '{:,}'.format(highest.feet) }} ft</span>
+      <span class="cg-name">Highest campspot — {{ highest.name }}</span>
+    </li>
+    {% endif %}
+    {% if busiest_month %}
+    <li>
+      <span class="cg-count">{{ busiest_month.count }}</span>
+      <span class="cg-name">Busiest month — {{ busiest_month.name }}</span>
+    </li>
+    {% endif %}
+  </ul>
+  {% endif %}
 
   {% if top_campgrounds %}
   <h2>Most Visited Campspots</h2>
