@@ -905,6 +905,11 @@
     box-shadow: 0 1px 4px rgba(0,0,0,.1);
   }
 
+  .photo-item img:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 2px;
+  }
+
   .photo-item .caption-area {
     font-size: .78rem;
     color: var(--gray);
@@ -917,7 +922,10 @@
   }
 
   .photo-item .caption-text.placeholder {
-    color: var(--gray-light);
+    /* Was --gray-light (#d5d8de) — nearly invisible on white. Italic
+       still marks it as a placeholder; the color just needs to be
+       findable. */
+    color: #717784;
     font-style: italic;
   }
 
@@ -1855,7 +1863,7 @@
           {% for photo in item.photos %}
           {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" onclick="openLightbox(this)">
+            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
@@ -2013,7 +2021,7 @@
           {% for photo in event_photos[item.idx] %}
           {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
           <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" onclick="openLightbox(this)">
+            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
             {% if is_admin %}
             <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
             {% endif %}
@@ -2089,7 +2097,7 @@
 {% if is_admin %}
 <!-- Add modal -->
 <div class="add-modal" id="add-modal" onclick="closeAddModalBackdrop(event)">
-  <div class="add-modal-panel" onclick="event.stopPropagation()">
+  <div class="add-modal-panel" role="dialog" aria-modal="true" aria-labelledby="add-modal-title" onclick="event.stopPropagation()">
     <div class="add-modal-header">
       <h3 id="add-modal-title">Add</h3>
       <button type="button" class="modal-close" onclick="closeAddModal()" aria-label="Close">&times;</button>
@@ -2159,7 +2167,7 @@
 {% endif %}
 
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="closeLightbox(event)">
   <button class="close-btn" title="Close (Esc)">&times;</button>
   <button class="lb-download" id="lb-download" title="Download" onclick="downloadLightbox(event)" aria-label="Download photo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

@@ -250,6 +250,13 @@
     cursor: pointer;
   }
 
+  .month-card td.trip-day:focus-visible {
+    outline: none;
+  }
+  .month-card td.trip-day:focus-visible .day-num {
+    box-shadow: 0 0 0 2px var(--red);
+  }
+
   .month-card td.trip-day .day-num {
     display: inline-flex;
     align-items: center;
@@ -840,6 +847,15 @@ function buildMonthCard(m, withPager) {
             showDayMenu(e, trips);
           }
         });
+        // Keyboard reachability: a bare <td onclick> is invisible to tab
+        // order and screen readers.
+        td.tabIndex = 0;
+        td.setAttribute('role', 'link');
+        td.setAttribute('aria-label',
+          `${MONTH_NAMES[m]} ${d}: ${trips.map(t => t.summary).join('; ')}`);
+        td.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); td.click(); }
+        });
         td.addEventListener('mouseenter', (e) => showTooltip(e, trips));
         td.addEventListener('mouseleave', hideTooltip);
       } else {
@@ -932,12 +948,22 @@ function showDayMenu(e, trips) {
   ).join('');
   menu.classList.add('visible');
   const rect = menu.getBoundingClientRect();
-  let x = e.clientX + 6;
-  let y = e.clientY + 6;
-  if (x + rect.width > window.innerWidth) x = e.clientX - rect.width - 6;
-  if (y + rect.height > window.innerHeight) y = e.clientY - rect.height - 6;
+  // Keyboard activation (td.click()) synthesizes a click with no
+  // coordinates — anchor to the day cell instead of (0,0).
+  let cx = e.clientX, cy = e.clientY;
+  if (!cx && !cy && e.target) {
+    const r = e.target.getBoundingClientRect();
+    cx = r.left + r.width / 2;
+    cy = r.bottom;
+  }
+  let x = cx + 6;
+  let y = cy + 6;
+  if (x + rect.width > window.innerWidth) x = cx - rect.width - 6;
+  if (y + rect.height > window.innerHeight) y = cy - rect.height - 6;
   menu.style.left = x + 'px';
   menu.style.top = y + 'px';
+  const first = menu.querySelector('a');
+  if (first) first.focus();
   e.stopPropagation();  // don't let the opening click immediately dismiss it
 }
 

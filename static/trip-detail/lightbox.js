@@ -8,6 +8,7 @@
 
 let lightboxPhotos = [];
 let lightboxIndex = 0;
+let lbReturnFocus = null;  // grid img to restore focus to on close
 
 // ── Zoom state ───────────────────────────────────────────────────────────
 // The image's transform is `translate(tx,ty) scale(s)` with the default
@@ -62,8 +63,12 @@ function openLightbox(imgEl) {
   const grid = imgEl.closest('.photo-grid');
   lightboxPhotos = Array.from(grid.querySelectorAll('.photo-item img'));
   lightboxIndex = lightboxPhotos.indexOf(imgEl);
+  lbReturnFocus = imgEl;
   showLightboxPhoto();
   document.getElementById('lightbox').classList.add('visible');
+  // Move focus into the dialog so Tab/Escape act on it, not the page.
+  const closeBtn = document.querySelector('#lightbox .close-btn');
+  if (closeBtn) closeBtn.focus();
 }
 
 function showLightboxPhoto() {
@@ -116,7 +121,23 @@ function closeLightbox(e) {
   if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption' || e.target.id === 'lb-date')) return;
   document.getElementById('lightbox').classList.remove('visible');
   lbResetZoom(false);
+  // Hand focus back to the grid photo the viewer was opened from.
+  if (lbReturnFocus) {
+    try { lbReturnFocus.focus(); } catch (err) { /* removed mid-view */ }
+    lbReturnFocus = null;
+  }
 }
+
+// Keyboard activation for the focusable grid photos (tabindex=0 imgs):
+// Enter/Space opens the lightbox like a click would.
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const t = document.activeElement;
+  if (t && t.matches && t.matches('.photo-item img')) {
+    e.preventDefault();
+    openLightbox(t);
+  }
+});
 
 document.addEventListener('keydown', e => {
   if (!document.getElementById('lightbox').classList.contains('visible')) return;
