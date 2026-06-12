@@ -451,3 +451,14 @@ function initPhotoDrag(grid) {
 }
 
 if (IS_ADMIN) document.querySelectorAll('.photo-grid').forEach(initPhotoDrag);
+
+// Fade grid photos in over their skeleton tile as each (lazy) thumb
+// arrives. Opt-in per image and only for not-yet-loaded ones, so a JS
+// failure or an already-cached image just renders normally.
+document.querySelectorAll('.photo-item img').forEach(img => {
+  if (img.complete) return;
+  img.classList.add('img-loading');
+  const reveal = () => img.classList.remove('img-loading');
+  img.addEventListener('load', reveal, { once: true });
+  img.addEventListener('error', reveal, { once: true });
+});

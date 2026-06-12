@@ -903,7 +903,14 @@
     cursor: pointer;
     border-radius: 8px;
     box-shadow: 0 1px 4px rgba(0,0,0,.1);
+    /* Skeleton while the (lazy) thumb loads: the aspect-ratio box shows
+       as a soft gray tile instead of empty space. JS fades the photo in
+       over it (img-loading) — without JS the photo just pops, as before. */
+    background: #e8eaef;
+    transition: opacity .25s ease;
   }
+
+  .photo-item img.img-loading { opacity: 0; }
 
   .photo-item img:focus-visible {
     outline: 3px solid var(--gold);
