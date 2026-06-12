@@ -1079,6 +1079,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    /* All touch gestures (swipe, pinch-zoom, pan, double-tap) are handled
+       in lightbox.js — suppress the browser's native scroll/zoom so the
+       two never fight. Nothing inside the lightbox needs native scroll. */
+    touch-action: none;
   }
 
   .lightbox.visible { display: flex; }
