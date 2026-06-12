@@ -384,6 +384,36 @@
         });
       });
     }
+
+    // Hover prefetch: server renders are fast (cached), so perceived nav
+    // speed is the network round trip — start it when the cursor settles
+    // on a link (~65ms hover-intent) so the page is often already cached
+    // by click time. Pointer devices only; tap navigation on touch gains
+    // nothing from a prefetch issued in the same instant. Skips /logout
+    // (a GET that mutates the session — prefetching it would log the
+    // user out) and /static. One prefetch per URL per page.
+    if (window.matchMedia('(hover: hover)').matches) {
+      const prefetched = new Set();
+      let hoverTimer = null;
+      document.addEventListener('mouseover', e => {
+        const a = e.target.closest('a');
+        if (!a) return;
+        const href = a.getAttribute('href') || '';
+        if (!href.startsWith('/') || href.startsWith('//') ||
+            href.startsWith('/logout') || href.startsWith('/static')) return;
+        const url = href.split('#')[0];
+        if (!url || prefetched.has(url)) return;
+        clearTimeout(hoverTimer);
+        hoverTimer = setTimeout(() => {
+          if (!a.matches(':hover') || prefetched.has(url)) return;
+          prefetched.add(url);
+          const link = document.createElement('link');
+          link.rel = 'prefetch';
+          link.href = url;
+          document.head.appendChild(link);
+        }, 65);
+      });
+    }
   })();
 </script>
 
