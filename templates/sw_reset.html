@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#002868">
+<title>Reset app — EKKO Trips</title>
+<style>
+  /* Self-contained on purpose: this is the kill-switch for a device whose
+     service worker is wedged, so it must render and run with zero other
+     requests (no base.html, no external CSS/JS). */
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #002868;
+    color: #fff;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  .card { max-width: 26rem; }
+  .icon { font-size: 3rem; margin-bottom: .5rem; }
+  h1 { font-size: 1.4rem; margin: 0 0 .75rem; color: #c9a84c; }
+  p { line-height: 1.5; opacity: .9; margin: 0 0 1.25rem; }
+  #status { font-weight: 600; opacity: 1; min-height: 1.2em; }
+  a {
+    display: inline-block;
+    background: #bf0a30;
+    color: #fff;
+    border: none;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    padding: .7rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  a[aria-disabled="true"] { opacity: .45; pointer-events: none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">&#128260;</div>
+    <h1>Reset app data</h1>
+    <p>This unregisters the offline service worker and clears its caches on
+       this device. Your trips and photos on the server are not touched.</p>
+    <p id="status">Working&hellip;</p>
+    <a id="go" href="/" aria-disabled="true">Reload the app</a>
+  </div>
+<script>
+  (async function () {
+    var status = document.getElementById('status');
+    var go = document.getElementById('go');
+    var sw = 0, cleared = 0;
+    try {
+      if ('serviceWorker' in navigator) {
+        var regs = await navigator.serviceWorker.getRegistrations();
+        for (var i = 0; i < regs.length; i++) {
+          if (await regs[i].unregister()) sw++;
+        }
+      }
+      if (window.caches && caches.keys) {
+        var keys = await caches.keys();
+        for (var j = 0; j < keys.length; j++) {
+          if (await caches.delete(keys[j])) cleared++;
+        }
+      }
+      status.textContent = 'Done — removed ' + sw + ' service worker' +
+        (sw !== 1 ? 's' : '') + ' and cleared ' + cleared + ' cache' +
+        (cleared !== 1 ? 's' : '') + '. Tap Reload for a fresh copy.';
+    } catch (e) {
+      status.textContent = 'Could not fully reset (' +
+        (e && e.message ? e.message : e) + '). Tap Reload and try again.';
+    }
+    go.setAttribute('aria-disabled', 'false');
+  })();
+</script>
+</body>
+</html>

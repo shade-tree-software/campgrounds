@@ -541,7 +541,9 @@ def _require_login_globally():
     # service_worker/offline: the SW registers from the login page too, and
     # its install step pre-caches /offline — a login redirect there would
     # cache the login screen as the offline fallback.
-    if request.endpoint in ('login', 'static', 'service_worker', 'offline', None):
+    # sw_reset: the SW kill-switch must work even when the user can't get past
+    # an upstream error (e.g. a stale SW), so it stays reachable logged-out.
+    if request.endpoint in ('login', 'static', 'service_worker', 'offline', 'sw_reset', None):
         return None
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.path))
@@ -648,6 +650,16 @@ def service_worker():
 def offline():
     """Offline fallback page, pre-cached by the service worker at install."""
     return render_template('offline.html')
+
+
+@app.route('/sw-reset')
+def sw_reset():
+    """Kill-switch for a device wedged by a stale/misbehaving service worker:
+    a self-contained page whose JS unregisters every SW and deletes its caches,
+    then offers a fresh reload. Login-exempt so it stays reachable even when
+    something upstream is breaking normal pages (it exposes no data, only
+    teardown JS). no-store so the page itself is never cached."""
+    return render_template('sw_reset.html'), 200, {'Cache-Control': 'no-store'}
 
 
 @app.route('/login', methods=['GET', 'POST'])

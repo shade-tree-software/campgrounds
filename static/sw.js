@@ -100,9 +100,11 @@ self.addEventListener('fetch', (e) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  // Session mutations and the SW itself stay un-cached and un-served.
+  // Session mutations, the SW itself, and the SW kill-switch stay un-cached
+  // and un-served — /sw-reset must always hit the network so a wedged cache
+  // can never intercept the very page meant to clear it.
   if (url.pathname === '/sw.js' || url.pathname.startsWith('/login') ||
-      url.pathname.startsWith('/logout')) return;
+      url.pathname.startsWith('/logout') || url.pathname === '/sw-reset') return;
 
   if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/static/uploads/')) {
     e.respondWith(cacheFirst(req));
