@@ -1,6 +1,6 @@
 # Waterfront designation audit — agent instructions
 
-You are auditing `waterfront` designations for campgrounds in a personal campground database. Your batch file (path given in your prompt) is a JSON array of entries: `{id, name, location: "lat,lng", waterfront, ownership, website}`. The `waterfront` value describes **RV-accessible sites only** and must survive a strict evidence gate. Audit every entry and return a structured verdict for each.
+You are auditing `waterfront` designations for campgrounds in a personal campground database. Your batch file (path given in your prompt) is a JSON array of entries: `{id, name, location: "lat,lng", waterfront, ownership, website}`. Each entry may also carry an optional **`lead`** object from the initial research pass — see "Lead packet" below. The `waterfront` value describes **RV-accessible sites only** and must survive a strict evidence gate. Audit every entry and return a structured verdict for each.
 
 ## Vocabulary
 - On-water values: `lakefront`, `riverfront`, `creekside`, `pond`, `bayfront`, `coastal woods`, `coastal dunes`
@@ -16,13 +16,20 @@ You are auditing `waterfront` designations for campgrounds in a personal campgro
 - **`*view` needs the same rigor, but note the FLOOR:** a pad on open ground (grass or beach) with the water *visible and unscreened* across that ground is at LEAST `*view` — it cannot be `not waterfront`, because nothing on open ground blocks the sightline. `not waterfront` for a water-adjacent site requires a real screen/buffer (treeline, building, berm), the site being genuinely far/inland, or the water not visible. Keep/assign `*view` when RV sites overlook water but the open span exceeds the ~50 m on-water bound (e.g. set back ~50–150 m with open line of sight).
 - Waterfront cabins, tent-only areas, boat ramps, day-use beaches do NOT count — only RV-drivable sites.
 
+## Lead packet (optional batch input)
+An entry's `lead` object is what the initial research pass already found while pinning the campground — a head start, NOT a verdict. Fields (any may be absent): `map_url` (the official per-site campground map / rec.gov page it located), `water_body` (the named lake/river), `candidate_sites` (specific site numbers it saw at or near the water), `note` (free-text shoreline observation). Use it to **save discovery, not to skip verification**:
+- If `map_url` is present, go straight to that authority instead of re-hunting for the map — but still read it yourself and confirm the `candidate_sites` are RV-drivable (not tent/walk-in) and actually on the shore.
+- `candidate_sites` / `note` are **leads to check**, never proof. A research note saying "lakeside sites" does not earn on-water — the satellite look + per-site map still decide, under the same default-down gate.
+- The lead never overrides the gate. The satellite look below is still **mandatory**; a `lead` claiming on-water that the satellite legibly contradicts (real buffer / beyond distance bound) resolves DOWN. A `lead` is most useful in the canopy case, where it points you at the per-site map authority fast.
+- A missing or empty `lead` changes nothing — run the full workflow from `location`.
+
 ## Workflow per entry
 1. Parse `lat,lng` from `location`. Fetch satellite imagery (GET only; curl works):
    `curl -s "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/export?bbox=<lng-d>,<lat-d>,<lng+d>,<lat+d>&bboxSR=4326&size=1000,1000&format=jpg&f=image" -o /tmp/sat_<id>_a.jpg`
    with d=0.0035 (~700 m frame). Then **Read** the jpg (it renders as an image). Zoom with d=0.0012 for pad-level detail; orient with d=0.01 if lost; pan by shifting the center. Use as many frames as you need.
 2. Locate the campground (loops, pads, parked RVs) and judge the pad-to-water relationship.
 3. **Mis-pin handling:** if the pin clearly isn't the campground (subdivision, empty field, park HQ), find the real campground: sweep nearby frames and/or consult the official website / campground map (load WebFetch via ToolSearch if needed). If found, report `coord_fix: "lat,lng"` (4 decimals, pinned on the campground loop itself) and fetch elevation for the fixed coord: `https://api.open-meteo.com/v1/elevation?latitude=<lat>&longitude=<lng>` → report `elevation_meters`. Judge waterfront at the corrected location. If you cannot find the campground at all, say so in `evidence` and set `final` to the current value with `confidence: "low"` (do NOT guess a downgrade from a wrong pin).
-4. **Canopy case:** if imagery is illegible at the campground, consult the entry's `website` URLs and official per-site campground maps (recreation.gov campground pages have per-site lists/maps; state-park sites have campground map PDFs). Decide from that authority. If nothing qualifying confirms shoreline RV sites, default down.
+4. **Canopy case:** if imagery is illegible at the campground, go to the official per-site campground map — start with the `lead.map_url` if the batch provided one, else the entry's `website` URLs (recreation.gov campground pages have per-site lists/maps; state-park sites have campground map PDFs). Decide from that authority, confirming any `lead.candidate_sites` are RV-drivable and on-shore. If nothing qualifying confirms shoreline RV sites, default down.
 5. Decide `final` and write a one-line `evidence` string **naming the artifact**, e.g. `satellite at 41.2345,-89.4567: pads at waterline on east loop` / `satellite: pads ~150m from lake behind treeline` / `rec.gov site map: sites 12-15 on shore; canopy-blind satellite` / `IL DNR campground map: all loops inland`.
 
 ## Output

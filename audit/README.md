@@ -37,7 +37,13 @@ as the standard going forward.
 
 1. Extract the state's entries to audit and split into batch files of ~8:
    `{id, name, location, waterfront, ownership, website}` per entry, written to
-   `/tmp/<st>_batch_<n>.json`.
+   `/tmp/<st>_batch_<n>.json`. **Optimize the seam:** when the entries were just
+   added in the same session, carry forward the research pass's per-entry
+   waterfront `lead` object (`{map_url, water_body, candidate_sites, note}`) into
+   each batch entry so the audit verifies the already-found per-site map instead
+   of re-discovering it (see the "Lead packet" section of
+   `waterfront_audit_instructions.md`). The lead is a head start, never a verdict
+   — the satellite look stays mandatory and the gate still decides.
 2. Fan out subagents (waves of ~5; one batch each). Each agent gets:
    "Read audit/waterfront_audit_instructions.md and follow it exactly. Your
    batch file is /tmp/<st>_batch_<n>.json. Return ONLY the JSON array."
