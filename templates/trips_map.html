@@ -41,12 +41,6 @@
     font-size: .95rem;
     box-shadow: var(--shadow);
     text-decoration: none;
-    container-type: inline-size;  /* so .trip-num can hide when the banner is narrow */
-  }
-  /* Drop the "Trip N:" prefix when the banner itself is tight (phones, short
-     viewports that squeeze the map column) — summary + pill matter more. */
-  @container (max-width: 460px) {
-    .trip-num { display: none; }
   }
   .latest-trip-banner { border-left-color: var(--red); background: linear-gradient(90deg, #fdecef, #fff); transition: transform .15s ease, box-shadow .15s ease; }
   .on-this-day { border-left-color: var(--gold); background: linear-gradient(90deg, #fff8e3, #fff); }
@@ -69,19 +63,28 @@
   .latest-trip-banner .label { color: var(--red); }
   .on-this-day .otd-label { color: #8a6d0a; }
 
-  /* Ellipsizing text slot — takes the row's slack so the pill lands at the
-     right edge. */
+  /* Text slot — takes the row's slack so the pill lands at the right edge.
+     It's a flex row: the trip name ellipsizes while the date/age is pinned
+     (flex-shrink:0) so it's never the first thing trimmed. The low-priority
+     "Trip N:" prefix is what drops out when tight (see fitTripNums in JS). */
   .latest-trip-banner .text,
   .on-this-day .otd-text {
     flex: 1;
     min-width: 0;
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+  }
+  .latest-trip-banner .summary,
+  .on-this-day .otd-name {
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .latest-trip-banner .summary { font-weight: 600; color: var(--navy); }
   .latest-trip-banner .meta,
   .on-this-day .otd-ago {
+    flex-shrink: 0;
     color: var(--gray);
     font-weight: 400;
     font-size: .8rem;
@@ -105,7 +108,7 @@
     text-decoration: none;
     font-weight: 600;
   }
-  .on-this-day a:hover .otd-text { text-decoration: underline; }
+  .on-this-day a:hover .otd-name { text-decoration: underline; }
 
   /* Right-justified CTA pill — the explicit "tap me" affordance. */
   .latest-trip-banner .arrow,
@@ -601,7 +604,7 @@ legend.addTo(map);
       const n = currentY - year;
       const ago = n === 1 ? '1 year ago' : `${n} years ago`;
       const num = trip.number ? `<span class="trip-num">Trip ${trip.number}: </span>` : '';
-      return `<a href="/trips/${trip.id}"><span class="otd-text">${num}${esc(trip.summary || 'Trip')} <span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
+      return `<a href="/trips/${trip.id}"><span class="otd-text"><span class="otd-name">${num}${esc(trip.summary || 'Trip')}</span><span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
     }).join('') + '</span>';
   el.style.display = '';
   const sync = () => document.documentElement.style.setProperty(
@@ -609,6 +612,23 @@ legend.addTo(map);
   sync();
   window.addEventListener('resize', sync);
 })();
+
+// ── Trip-number fit ─────────────────────────────────────────────────────────
+// The low-priority "Trip N:" prefix is the first thing sacrificed when a
+// banner is tight, so the trip name and date/age stay intact. Pure CSS can't
+// tell when the name is actually being truncated, so measure: show the prefix,
+// and if the name row still overflows, hide it. Re-runs on resize/load.
+function fitTripNums() {
+  document.querySelectorAll('.latest-trip-banner .summary, .on-this-day .otd-name').forEach(nameEl => {
+    const numEl = nameEl.querySelector('.trip-num');
+    if (!numEl) return;
+    numEl.style.display = '';
+    if (nameEl.scrollWidth > nameEl.clientWidth) numEl.style.display = 'none';
+  });
+}
+fitTripNums();
+window.addEventListener('resize', fitTripNums);
+window.addEventListener('load', fitTripNums);
 
 // ── Photo stacks ─────────────────────────────────────────────────────────
 const PHOTOS = {{ slideshow_photos | tojson }};
