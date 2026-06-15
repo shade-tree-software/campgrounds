@@ -616,15 +616,18 @@ legend.addTo(map);
 // ── Trip-number fit ─────────────────────────────────────────────────────────
 // The low-priority "Trip N:" prefix is the first thing sacrificed when a
 // banner is tight, so the trip name and date/age stay intact. Pure CSS can't
-// tell when the name is actually being truncated, so measure: show the prefix,
-// and if the name row still overflows, hide it. Re-runs on resize/load.
+// tell when the name is actually being truncated, so measure: show every
+// prefix, and if ANY name row overflows, hide them all — all-or-nothing so we
+// never leave some trips numbered and others not. Re-runs on resize/load.
 function fitTripNums() {
+  const nums = [];
   document.querySelectorAll('.latest-trip-banner .summary, .on-this-day .otd-name').forEach(nameEl => {
     const numEl = nameEl.querySelector('.trip-num');
-    if (!numEl) return;
-    numEl.style.display = '';
-    if (nameEl.scrollWidth > nameEl.clientWidth) numEl.style.display = 'none';
+    if (numEl) { numEl.style.display = ''; nums.push({ nameEl, numEl }); }
   });
+  if (!nums.length) return;
+  const anyOverflow = nums.some(({ nameEl }) => nameEl.scrollWidth > nameEl.clientWidth);
+  if (anyOverflow) nums.forEach(({ numEl }) => { numEl.style.display = 'none'; });
 }
 fitTripNums();
 window.addEventListener('resize', fitTripNums);
