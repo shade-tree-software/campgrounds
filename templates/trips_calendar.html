@@ -121,13 +121,29 @@
     gap: .5rem 1rem;
   }
   .on-this-day .otd-trip {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
     color: var(--navy);
     text-decoration: none;
   }
-  .on-this-day .otd-trip:hover { text-decoration: underline; }
+  .on-this-day .otd-trip:hover .otd-text { text-decoration: underline; }
   .on-this-day .otd-trip .otd-years-ago {
     color: var(--gray); font-size: .8rem;
   }
+  /* CTA pill mirroring the latest-trip banner's "Open trip" affordance. */
+  .on-this-day .otd-open {
+    flex-shrink: 0;
+    background: #8a6d0a;
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 600;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: filter .15s ease;
+  }
+  .on-this-day .otd-trip:hover .otd-open { filter: brightness(1.15); }
   /* On iPad-ish widths the viewport is narrower than the 900px cap, so the
      card would otherwise span the entire viewport — wider than the calendar
      grid below it (which has 2rem internal padding). Match that padding. */
@@ -690,7 +706,7 @@ function renderOnThisDay() {
   const links = matches.map(({ trip, year }) => {
     const yearsAgo = currentY - year;
     const ago = yearsAgo === 1 ? '1 year ago' : `${yearsAgo} years ago`;
-    return `<a class="otd-trip" href="/trips/${trip.id}">${escapeHtml(trip.summary || 'Trip')} <span class="otd-years-ago">(${ago})</span></a>`;
+    return `<a class="otd-trip" href="/trips/${trip.id}"><span class="otd-text">${escapeHtml(trip.summary || 'Trip')} <span class="otd-years-ago">(${ago})</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
   }).join('');
   el.innerHTML = `<div class="otd-label">On ${niceDate}…</div><div class="otd-trips">${links}</div>`;
   el.style.display = '';

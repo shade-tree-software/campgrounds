@@ -99,9 +99,29 @@
     gap: .25rem 1rem;
     min-width: 0;
   }
-  .on-this-day a { color: var(--navy); text-decoration: none; font-weight: 600; }
-  .on-this-day a:hover { text-decoration: underline; }
+  .on-this-day a {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .on-this-day a:hover .otd-text { text-decoration: underline; }
   .on-this-day .otd-ago { color: var(--gray); font-weight: 400; font-size: .8rem; }
+  /* CTA pill mirroring the latest-trip banner's "Open trip" affordance. */
+  .on-this-day .otd-open {
+    flex-shrink: 0;
+    background: #8a6d0a;
+    color: var(--white);
+    font-size: .75rem;
+    font-weight: 600;
+    padding: .25rem .6rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: filter .15s ease;
+  }
+  .on-this-day a:hover .otd-open { filter: brightness(1.15); }
 
   .map-layout {
     display: flex;
@@ -582,7 +602,7 @@ legend.addTo(map);
     matches.map(({ trip, year }) => {
       const n = currentY - year;
       const ago = n === 1 ? '1 year ago' : `${n} years ago`;
-      return `<a href="/trips/${trip.id}">${esc(trip.summary || 'Trip')} <span class="otd-ago">(${ago})</span></a>`;
+      return `<a href="/trips/${trip.id}"><span class="otd-text">${esc(trip.summary || 'Trip')} <span class="otd-ago">(${ago})</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
     }).join('') + '</span>';
   el.style.display = '';
   const sync = () => document.documentElement.style.setProperty(
