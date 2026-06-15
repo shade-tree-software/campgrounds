@@ -41,6 +41,12 @@
     font-size: .95rem;
     box-shadow: var(--shadow);
     text-decoration: none;
+    container-type: inline-size;  /* so .trip-num can hide when the banner is narrow */
+  }
+  /* Drop the "Trip N:" prefix when the banner itself is tight (phones, short
+     viewports that squeeze the map column) — summary + pill matter more. */
+  @container (max-width: 460px) {
+    .trip-num { display: none; }
   }
   .latest-trip-banner { border-left-color: var(--red); background: linear-gradient(90deg, #fdecef, #fff); transition: transform .15s ease, box-shadow .15s ease; }
   .on-this-day { border-left-color: var(--gold); background: linear-gradient(90deg, #fff8e3, #fff); }
@@ -305,7 +311,7 @@
       <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
         <span class="label">Latest trip</span>
         <span class="text">
-          <span class="summary">{% if latest_trip.number %}Trip {{ latest_trip.number }}: {% endif %}{{ latest_trip.summary }}</span>
+          <span class="summary">{% if latest_trip.number %}<span class="trip-num">Trip {{ latest_trip.number }}: </span>{% endif %}{{ latest_trip.summary }}</span>
           {% if latest_trip_date %}<span class="meta">{{ latest_trip_date }}</span>{% endif %}
         </span>
         <span class="arrow">Open trip &rsaquo;</span>
@@ -594,7 +600,8 @@ legend.addTo(map);
     matches.map(({ trip, year }) => {
       const n = currentY - year;
       const ago = n === 1 ? '1 year ago' : `${n} years ago`;
-      return `<a href="/trips/${trip.id}"><span class="otd-text">${esc(trip.summary || 'Trip')} <span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
+      const num = trip.number ? `<span class="trip-num">Trip ${trip.number}: </span>` : '';
+      return `<a href="/trips/${trip.id}"><span class="otd-text">${num}${esc(trip.summary || 'Trip')} <span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
     }).join('') + '</span>';
   el.style.display = '';
   const sync = () => document.documentElement.style.setProperty(
