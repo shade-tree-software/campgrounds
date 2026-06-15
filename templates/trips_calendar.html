@@ -115,19 +115,55 @@
     color: #8a6d0a;
     flex-shrink: 0;
   }
+  /* Stack one full-width row per matching trip so every pill right-justifies. */
   .on-this-day .otd-trips {
+    flex: 1;
+    min-width: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: .5rem 1rem;
+    flex-direction: column;
+    gap: .35rem;
   }
   .on-this-day .otd-trip {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
     color: var(--navy);
     text-decoration: none;
   }
-  .on-this-day .otd-trip:hover { text-decoration: underline; }
-  .on-this-day .otd-trip .otd-years-ago {
-    color: var(--gray); font-size: .8rem;
+  /* Flex row: the trip name ellipsizes while the age is pinned (never the
+     first thing trimmed); the "Trip N:" prefix drops out when tight. */
+  .on-this-day .otd-text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
   }
+  .on-this-day .otd-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .on-this-day .otd-trip:hover .otd-name { text-decoration: underline; }
+  .on-this-day .otd-trip .otd-years-ago {
+    flex-shrink: 0;
+    margin-left: .5rem;
+    color: var(--gray); font-size: .8rem; font-weight: 400;
+  }
+  /* Right-justified CTA pill mirroring the latest-trip banner's affordance. */
+  .on-this-day .otd-open {
+    flex-shrink: 0;
+    margin-left: auto;
+    background: #8a6d0a;
+    color: #fff;
+    font-size: .8rem;
+    font-weight: 600;
+    padding: .35rem .75rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: filter .15s ease;
+  }
+  .on-this-day .otd-trip:hover .otd-open { filter: brightness(.9); }
   /* On iPad-ish widths the viewport is narrower than the 900px cap, so the
      card would otherwise span the entire viewport — wider than the calendar
      grid below it (which has 2rem internal padding). Match that padding. */
@@ -690,11 +726,30 @@ function renderOnThisDay() {
   const links = matches.map(({ trip, year }) => {
     const yearsAgo = currentY - year;
     const ago = yearsAgo === 1 ? '1 year ago' : `${yearsAgo} years ago`;
-    return `<a class="otd-trip" href="/trips/${trip.id}">${escapeHtml(trip.summary || 'Trip')} <span class="otd-years-ago">(${ago})</span></a>`;
+    const num = trip.number ? `<span class="trip-num">Trip ${trip.number}: </span>` : '';
+    return `<a class="otd-trip" href="/trips/${trip.id}"><span class="otd-text"><span class="otd-name">${num}${escapeHtml(trip.summary || 'Trip')}</span><span class="otd-years-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
   }).join('');
   el.innerHTML = `<div class="otd-label">On ${niceDate}…</div><div class="otd-trips">${links}</div>`;
   el.style.display = '';
+  fitTripNums();
 }
+
+// The low-priority "Trip N:" prefix is the first thing sacrificed when a row
+// is tight, so the trip name and age stay intact. Pure CSS can't tell when the
+// name is actually being truncated, so measure: show every prefix, and if ANY
+// name row overflows, hide them all — all-or-nothing so we never leave some
+// trips numbered and others not. Re-runs on resize and after each render.
+function fitTripNums() {
+  const nums = [];
+  document.querySelectorAll('.on-this-day .otd-name').forEach(nameEl => {
+    const numEl = nameEl.querySelector('.trip-num');
+    if (numEl) { numEl.style.display = ''; nums.push({ nameEl, numEl }); }
+  });
+  if (!nums.length) return;
+  const anyOverflow = nums.some(({ nameEl }) => nameEl.scrollWidth > nameEl.clientWidth);
+  if (anyOverflow) nums.forEach(({ numEl }) => { numEl.style.display = 'none'; });
+}
+window.addEventListener('resize', fitTripNums);
 
 // ── Single-month mobile mode ────────────────────────────────────────────
 // At ≤600px the 12-month grid stacks into one enormous scroll where most

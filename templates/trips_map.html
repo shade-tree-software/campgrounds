@@ -18,46 +18,103 @@
      trip. Hidden when no dated trips exist (Jinja gates the markup). Styled
      as a white card with a red accent stripe and an explicit CTA pill on the
      right, so it doesn't read as a header bar. */
-  .latest-trip-banner {
+  /* The "Latest trip" and "On this day" banners share one visual system —
+     a white card with a colored accent stripe, an uppercase label, and a
+     right-justified CTA pill. Only the accent color differs (red vs. gold),
+     so the geometry/typography live in grouped selectors and each banner's
+     block below carries just its color + structural deltas.
+       "On this day" surfaces prior-year trips covering today's month-day on
+     the landing page (the calendar has its own copy). It's hidden unless
+     there's a match; when shown, JS publishes --otd-height so the map sizing
+     calcs give up the room instead of overflowing. */
+  .latest-trip-banner,
+  .on-this-day {
     display: flex;
     align-items: center;
     gap: .75rem;
     margin: 0;
-    padding: .6rem .65rem .6rem 1rem;
+    padding: .4rem .65rem .4rem 1rem;
     background: var(--white);
     color: var(--navy);
-    border-left: 6px solid var(--red);
+    border-left: 6px solid var(--navy);  /* overridden per-banner */
     border-radius: 8px;
-    text-decoration: none;
     font-size: .95rem;
     box-shadow: var(--shadow);
-    transition: transform .15s ease, box-shadow .15s ease;
+    text-decoration: none;
   }
+  .latest-trip-banner { border-left-color: var(--red); background: linear-gradient(90deg, #fdecef, #fff); transition: transform .15s ease, box-shadow .15s ease; }
+  .on-this-day { border-left-color: var(--gold); background: linear-gradient(90deg, #fff8e3, #fff); }
+  /* Whole-card lift applies to the latest-trip banner (it's a single link);
+     the on-this-day card holds multiple links, each with its own hover. */
   .latest-trip-banner:hover {
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(0,0,0,.18);
   }
-  .latest-trip-banner .label {
+
+  /* Uppercase label */
+  .latest-trip-banner .label,
+  .on-this-day .otd-label {
     flex-shrink: 0;
     font-size: .7rem;
     text-transform: uppercase;
     letter-spacing: .08em;
-    color: var(--red);
     font-weight: 700;
   }
-  .latest-trip-banner .text {
+  .latest-trip-banner .label { color: var(--red); }
+  .on-this-day .otd-label { color: #8a6d0a; }
+
+  /* Text slot — takes the row's slack so the pill lands at the right edge.
+     It's a flex row: the trip name ellipsizes while the date/age is pinned
+     (flex-shrink:0) so it's never the first thing trimmed. The low-priority
+     "Trip N:" prefix is what drops out when tight (see fitTripNums in JS). */
+  .latest-trip-banner .text,
+  .on-this-day .otd-text {
     flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    white-space: nowrap;
+  }
+  .latest-trip-banner .summary,
+  .on-this-day .otd-name {
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
   .latest-trip-banner .summary { font-weight: 600; color: var(--navy); }
-  .latest-trip-banner .meta { color: var(--gray); margin-left: .5rem; font-weight: 400; }
-  /* CTA pill — the explicit "tap me" affordance that a bare arrow lacked. */
-  .latest-trip-banner .arrow {
+  .latest-trip-banner .meta,
+  .on-this-day .otd-ago {
     flex-shrink: 0;
-    background: var(--red);
+    color: var(--gray);
+    font-weight: 400;
+    font-size: .8rem;
+    margin-left: .5rem;
+  }
+
+  /* On-this-day stacks one full-width row per matching trip so every pill
+     right-justifies under the others. */
+  .on-this-day .otd-trips {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+  .on-this-day a {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .on-this-day a:hover .otd-name { text-decoration: underline; }
+
+  /* Right-justified CTA pill — the explicit "tap me" affordance. */
+  .latest-trip-banner .arrow,
+  .on-this-day .otd-open {
+    flex-shrink: 0;
+    margin-left: auto;
     color: var(--white);
     font-size: .8rem;
     font-weight: 600;
@@ -66,42 +123,10 @@
     white-space: nowrap;
     transition: filter .15s ease;
   }
-  .latest-trip-banner:hover .arrow { filter: brightness(.9); }
-
-  /* "On this day" — prior-year trips covering today's month-day, on the
-     landing page where everyone actually arrives (the calendar has its
-     own copy, but most family members never open the calendar). Hidden
-     unless there's a match; when shown, JS publishes --otd-height so
-     the map sizing calcs give up the room instead of overflowing. */
-  .on-this-day {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: .35rem .6rem;
-    padding: .5rem .65rem .5rem 1rem;
-    background: linear-gradient(90deg, #fff8e3, #fff);
-    border-left: 6px solid var(--gold);
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    font-size: .9rem;
-  }
-  .on-this-day .otd-label {
-    flex-shrink: 0;
-    font-size: .7rem;
-    text-transform: uppercase;
-    letter-spacing: .08em;
-    color: #8a6d0a;
-    font-weight: 700;
-  }
-  .on-this-day .otd-trips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .25rem 1rem;
-    min-width: 0;
-  }
-  .on-this-day a { color: var(--navy); text-decoration: none; font-weight: 600; }
-  .on-this-day a:hover { text-decoration: underline; }
-  .on-this-day .otd-ago { color: var(--gray); font-weight: 400; font-size: .8rem; }
+  .latest-trip-banner .arrow { background: var(--red); }
+  .on-this-day .otd-open { background: #8a6d0a; }
+  .latest-trip-banner:hover .arrow,
+  .on-this-day a:hover .otd-open { filter: brightness(.9); }
 
   .map-layout {
     display: flex;
@@ -239,24 +264,20 @@
       height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
     }
     .photo-stack { height: 90px; gap: .35rem; }
+    /* Compact banners: "show me the newest trip" is the #1 task for a
+       family member opening the app, so both stay on phones — tight lines,
+       date dropped, smaller CTA pill. */
+    .latest-trip-banner,
     .on-this-day {
-      font-size: .8rem;
-      padding: .4rem .5rem .4rem .7rem;
-      border-left-width: 4px;
-      border-radius: 6px;
-    }
-    /* Compact banner: "show me the newest trip" is the #1 task for a
-       family member opening the app, so it stays on phones — one tight
-       line, date dropped, smaller CTA pill. */
-    .latest-trip-banner {
-      padding: .4rem .5rem .4rem .7rem;
+      padding: .3rem .5rem .3rem .7rem;
       gap: .5rem;
       font-size: .85rem;
       border-left-width: 4px;
       border-radius: 6px;
     }
     .latest-trip-banner .meta { display: none; }
-    .latest-trip-banner .arrow { font-size: .7rem; padding: .25rem .55rem; }
+    .latest-trip-banner .arrow,
+    .on-this-day .otd-open { font-size: .7rem; padding: .25rem .55rem; }
   }
 
   .map-legend {
@@ -293,8 +314,8 @@
       <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
         <span class="label">Latest trip</span>
         <span class="text">
-          <span class="summary">{% if latest_trip.number %}Trip {{ latest_trip.number }}: {% endif %}{{ latest_trip.summary }}</span>
-          {% if latest_trip_date %}<span class="meta">· {{ latest_trip_date }}</span>{% endif %}
+          <span class="summary">{% if latest_trip.number %}<span class="trip-num">Trip {{ latest_trip.number }}: </span>{% endif %}{{ latest_trip.summary }}</span>
+          {% if latest_trip_date %}<span class="meta">{{ latest_trip_date }}</span>{% endif %}
         </span>
         <span class="arrow">Open trip &rsaquo;</span>
       </a>
@@ -582,7 +603,8 @@ legend.addTo(map);
     matches.map(({ trip, year }) => {
       const n = currentY - year;
       const ago = n === 1 ? '1 year ago' : `${n} years ago`;
-      return `<a href="/trips/${trip.id}">${esc(trip.summary || 'Trip')} <span class="otd-ago">(${ago})</span></a>`;
+      const num = trip.number ? `<span class="trip-num">Trip ${trip.number}: </span>` : '';
+      return `<a href="/trips/${trip.id}"><span class="otd-text"><span class="otd-name">${num}${esc(trip.summary || 'Trip')}</span><span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
     }).join('') + '</span>';
   el.style.display = '';
   const sync = () => document.documentElement.style.setProperty(
@@ -590,6 +612,26 @@ legend.addTo(map);
   sync();
   window.addEventListener('resize', sync);
 })();
+
+// ── Trip-number fit ─────────────────────────────────────────────────────────
+// The low-priority "Trip N:" prefix is the first thing sacrificed when a
+// banner is tight, so the trip name and date/age stay intact. Pure CSS can't
+// tell when the name is actually being truncated, so measure: show every
+// prefix, and if ANY name row overflows, hide them all — all-or-nothing so we
+// never leave some trips numbered and others not. Re-runs on resize/load.
+function fitTripNums() {
+  const nums = [];
+  document.querySelectorAll('.latest-trip-banner .summary, .on-this-day .otd-name').forEach(nameEl => {
+    const numEl = nameEl.querySelector('.trip-num');
+    if (numEl) { numEl.style.display = ''; nums.push({ nameEl, numEl }); }
+  });
+  if (!nums.length) return;
+  const anyOverflow = nums.some(({ nameEl }) => nameEl.scrollWidth > nameEl.clientWidth);
+  if (anyOverflow) nums.forEach(({ numEl }) => { numEl.style.display = 'none'; });
+}
+fitTripNums();
+window.addEventListener('resize', fitTripNums);
+window.addEventListener('load', fitTripNums);
 
 // ── Photo stacks ─────────────────────────────────────────────────────────
 const PHOTOS = {{ slideshow_photos | tojson }};
