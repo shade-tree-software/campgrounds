@@ -52,12 +52,17 @@ as the standard going forward.
    export requests at size=1000,1000 or smaller (one agent died on a >32MB fetch).
 3. Consolidate agent outputs into one results JSON array, then apply with
    `python3 audit/apply_waterfront_audit.py <results.json>` — surgical text edits
-   (waterfront / location / elevation_meters by id), never a re-dump; validates
-   with `json.load` and verifies every change before writing.
-4. Commit with the MO/IL/IN-style message: summary buckets (downgrades to
-   not-waterfront, on-water→view, upgrades, lateral type fixes, coord fixes,
-   confirms) plus a per-entry `waterfront_evidence` line for every audited entry
-   — that makes any later audit a grep of the git log.
+   (waterfront / location / elevation_meters by id, **plus the `waterfront_evidence`
+   field from each result's `evidence` string**), never a re-dump; validates with
+   `json.load` and verifies every change before writing.
+4. The `waterfront_evidence` JSON field is the durable per-entry audit record:
+   non-empty == audited, empty/absent == not audited (the one exception is a
+   `--AWH` note, which counts as a firsthand manual audit). Echo the per-entry
+   evidence in the commit message too (MO/IL/IN-style: summary buckets + a line
+   per audited entry) for convenient `git log` grepping, but the field — not the
+   commit — is the source of truth. (Evidence was migrated out of commit messages
+   into the field on 2026-06-17 via `audit/migrate_evidence_to_json.py`, after a
+   GA stage shipped unaudited because the commit-only record was easy to skip.)
 
 ## Findings pattern so far (MO, IL, IN, KY, OH, WV, PA, NY)
 
