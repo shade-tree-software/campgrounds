@@ -55,9 +55,11 @@ as the standard going forward.
    (waterfront / location / elevation_meters by id, **plus the `waterfront_evidence`
    field from each result's `evidence` string**), never a re-dump; validates with
    `json.load` and verifies every change before writing.
-4. The `waterfront_evidence` JSON field is the durable per-entry audit record:
-   non-empty == audited, empty/absent == not audited (the one exception is a
-   `--AWH` note, which counts as a firsthand manual audit). Echo the per-entry
+4. The `waterfront_evidence` JSON field is the durable per-entry audit record
+   and the SINGLE thing to check: non-empty == audited, empty/absent == not
+   audited (no need to also scan the `note`). Firsthand owner audits (`--AWH`)
+   were backfilled with an evidence string on 2026-06-17; keep that invariant
+   for any new `--AWH` call. Echo the per-entry
    evidence in the commit message too (MO/IL/IN-style: summary buckets + a line
    per audited entry) for convenient `git log` grepping, but the field — not the
    commit — is the source of truth. (Evidence was migrated out of commit messages
