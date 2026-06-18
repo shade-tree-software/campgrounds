@@ -2,6 +2,16 @@
 
 A Flask web app for documenting family camping trips in an RV called "EKKO" and discovering new campgrounds.
 
+## Project Memory (versioned, travels with the repo)
+
+Claude Code's auto-memory normally lives outside the repo (under `~/.claude/projects/<encoded-path>/memory/`) and is per-machine — it does NOT follow a clone. This project keeps its memory **in-repo and git-tracked** so a fresh `git clone`/`pull` + starting Claude brings it down automatically, with no manual setup:
+
+- **`.claude/memory/`** — the committed memory files (`MEMORY.md` index + per-fact `*.md`). This is the source of truth; commit changes to it like any other code.
+- **`.claude/settings.json`** sets `autoMemoryDirectory` to a fixed `~/` path (`~/.claude/memory-links/ekko-campgrounds`). That setting only accepts an absolute/`~/` path (no repo-relative/`$VAR`), so it can't name the repo directly.
+- **`.claude/sync-memory.sh`**, run from a committed `SessionStart` hook (which gets `$CLAUDE_PROJECT_DIR`), symlinks that fixed path to `<repo>/.claude/memory` — bridging the fixed `autoMemoryDirectory` to wherever the repo is cloned. It's idempotent, migrates any stray memory written before first wiring, and prints `MEMORY.md` to stdout on the wiring event (recall insurance, since hook-vs-load order isn't guaranteed).
+
+Net effect: clone/pull + start Claude wires memory automatically; new memories Claude writes land in `.claude/memory/`, ready to commit. The only one-time, per-machine step is accepting Claude Code's folder-trust dialog (the security gate that lets committed hooks/settings run at all) — unavoidable for any repo. The legacy per-project store under `~/.claude/projects/.../memory/` is now orphaned and ignored; it can be deleted once in-repo recall is confirmed after a restart.
+
 ## Tech Stack
 
 - **Backend:** Flask (Python) on port 5001, Flask-Login for auth, Pillow for EXIF

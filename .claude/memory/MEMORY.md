@@ -1,0 +1,14 @@
+- [Summer Seeker is a separate app](project_summer_seeker.md) — `index.html` + `/search` + `/geocode` belong to Summer Seeker, not EKKO Trips
+- [Good Sam ratings data access](reference_good_sam_ratings.md) — pull triple ratings by state via Algolia index `gs-ml-cb-assets-prod` (key from AppSync auth-secret query)
+- [Local campground method](reference_local_campground_method.md) — detect county/town/city campgrounds via RV Life park_type + gov-name-scan; include all confirmed local-gov (no star/price gate); worked per-state
+- [RV Life price ratings](reference_rvlife_price.md) — pull 0-4 dollar-sign price via Algolia app `H0LPZK92QJ` `park` index (`price_level`); used to filter Good Sam parks to affordable ones
+- [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — skip mostly-seasonal/full-timer, residential/MH-park, and membership/sales-pitch parks even if they take overnighters
+- [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
+- [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
+- [Campground vetting discipline](feedback_campground_vetting_discipline.md) — no unconfirmed/boilerplate entries; "reservations required" needs a real booking channel; unrated needs firsthand confirmation
+- [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the campgrounds.json waterfront_evidence field (non-empty=audited, --AWH note also=audited), not just commits; apply script writes it
+- [URLs in website not notes](feedback_urls_in_website_not_notes.md) — reservation/official URLs go in the website field; keep website links out of note prose (negatives & source citations excepted)
+- [US eDirect deep reservation links](reference_usedirect_deep_reservation_links.md) — build #!park/<PlaceId> links for ReserveOhio/ReserveFlorida via the citypark API; camp.in.gov→ReserveAmerica, goingtocamp→Aspira
+- [MI local stage handoff](project_mi_local_stage_handoff.md) — MI state/federal/private DONE+committed; local is last: audit the 16 reclassified locals (ids 3911-3926) + run the full MI local RV Life sweep
+- [Run sweep agents sequentially](feedback_sequential_sweep_agents.md) — default to one agent at a time (parallel batches hit session limits and lose in-flight work); parallel only via explicit per-stage user exception
+- [FL sweep handoff](project_fl_sweep_handoff.md) — FL state(4700-4730)+federal(4731-4743) done+committed; private in progress (3 South candidates saved, N/Central unrun); local + existing-unaudited pending
