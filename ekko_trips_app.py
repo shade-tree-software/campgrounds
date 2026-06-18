@@ -134,6 +134,7 @@ def inject_trip_stats():
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
+ROADSIDE_JSON = os.path.join(os.path.dirname(__file__), "roadside.json")
 HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
 
 WATERFRONT_COLORS = {
@@ -802,6 +803,46 @@ def _map_config():
             fam["driveway_lng"] = dlng
         family.append(fam)
     return home, family
+
+
+def _load_roadside():
+    """Load roadside picnic / stretch-break stops for the campground map.
+
+    These are leg-stretch spots (small-town parks, roadside picnic areas, rest
+    areas) — distinct from overnight campgrounds, so they live in their own
+    `roadside.json` and render as a separate, toggleable map layer rather than
+    in the campground database. The seed file carries route-planning artifacts
+    (`highway`, `approx_miles_from_start`) from how the list was generated; those
+    aren't relevant to a general map and are dropped here. Returns [] if the
+    file is missing or malformed so the map still renders.
+    """
+    try:
+        with open(ROADSIDE_JSON) as f:
+            data = json.load(f)
+    except (FileNotFoundError, ValueError):
+        return []
+    stops = data.get("stops", []) if isinstance(data, dict) else data
+    rows = []
+    for s in stops:
+        lat, lng = s.get("latitude"), s.get("longitude")
+        if lat is None or lng is None:
+            continue
+        rows.append({
+            "name": s.get("name", "Roadside stop"),
+            "town": s.get("town"),
+            "state": s.get("state"),
+            "lat": lat,
+            "lng": lng,
+            "notes": s.get("notes"),
+            "stop_type": s.get("stop_type"),
+            "hours": s.get("hours"),
+            "rating": s.get("rating"),
+            "rating_count": s.get("rating_count"),
+            "website": s.get("website"),
+            "phone": s.get("phone"),
+            "maps_url": s.get("google_maps_url"),
+        })
+    return rows
 
 
 # ── Trip routes ─────────────────────────────────────────────────────────────
@@ -1580,6 +1621,7 @@ def campgrounds_map():
         'campground_map.html',
         title='Map',
         campgrounds=_load_campgrounds(),
+        roadside=_load_roadside(),
         color_modes=COLOR_MODES,
         default_mode=mode,
         ownership_labels=OWNERSHIP_LABELS,

@@ -224,6 +224,7 @@
 {% block scripts %}
 <script>
 const CAMPGROUNDS = {{ campgrounds | tojson }};
+const ROADSIDE = {{ roadside | tojson }};
 const COLOR_MODES = {{ color_modes | tojson }};
 const DEFAULT_MODE = {{ default_mode | tojson }};
 const OWNERSHIP_LABELS = {{ ownership_labels | tojson }};
@@ -294,7 +295,63 @@ const satellite = L.layerGroup([
     maxZoom: 19,
   }),
 ]);
-L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
+// ── Roadside picnic / stretch-break stops ───────────────────────────────────
+// A separate, toggleable layer of leg-stretch spots (small-town parks, roadside
+// picnic areas, rest areas) — distinct from overnight campgrounds, so they get
+// their own green picnic-table marker and live outside the campground category /
+// ownership / search machinery. Toggled via the layer control overlay below.
+const roadsideLayer = L.layerGroup();
+const roadsideIcon = L.divIcon({
+  className: '',
+  html: `<div style="
+    width:22px;height:22px;border-radius:50%;
+    background:#2e7d32;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+  "><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round">
+    <line x1="4" y1="9" x2="20" y2="9"/><line x1="5" y1="14" x2="19" y2="14"/>
+    <line x1="7" y1="9" x2="5" y2="18"/><line x1="17" y1="9" x2="19" y2="18"/>
+  </svg></div>`,
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+});
+
+ROADSIDE.forEach(s => {
+  const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
+  let popup = `<strong>${escapeHtml(s.name)}</strong>`;
+  const place = [s.town, s.state].filter(Boolean).join(', ');
+  if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
+  popup += `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
+  if (s.stop_type) popup += ` <span style="color:#777;font-size:.85em;font-style:italic;">&middot; ${escapeHtml(s.stop_type)}</span>`;
+  if (s.rating) {
+    popup += `<br><span style="color:#555;font-size:.85em;">&#9733; ${s.rating}`;
+    if (s.rating_count) popup += ` (${s.rating_count})`;
+    popup += `</span>`;
+  }
+  if (s.hours) popup += `<br><span style="color:#555;font-size:.85em;">${escapeHtml(s.hours)}</span>`;
+  if (s.notes) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(s.notes)}</span>`;
+  if (s.phone) {
+    const p = s.phone.trim();
+    popup += `<br><a href="tel:${p}">${escapeHtml(p)}</a>`;
+  }
+  if (s.website) {
+    const url = s.website.trim();
+    try {
+      const domain = new URL(url).hostname.replace(/^www\./, '');
+      popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
+    } catch (e) {
+      popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
+    }
+  }
+  if (s.maps_url) popup += `<br><a href="${s.maps_url}" target="_blank" rel="noopener">Directions &#8599;</a>`;
+  marker.bindPopup(popup, { maxWidth: 320 });
+  roadsideLayer.addLayer(marker);
+});
+roadsideLayer.addTo(map);  // shown by default; users can toggle it off
+
+const overlays = {};
+if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
+L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
 
 // ── Campground markers ──────────────────────────────────────────────────────
 const markers = [];  // { marker, cg }
