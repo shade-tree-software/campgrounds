@@ -203,9 +203,8 @@
 <div class="map-section">
   <div class="map-container">
     <div class="map-header">
-      <span>{{ title }}</span>
       <div class="cg-search">
-        <input id="cg-search-input" type="search" placeholder="Find a campground…" autocomplete="off">
+        <input id="cg-search-input" type="search" placeholder="Find a campground or stop…" autocomplete="off">
         <div class="cg-search-results" id="cg-search-results"></div>
       </div>
       <label class="color-by">Color by
@@ -248,6 +247,10 @@ const hiddenCategories = new Set(STORE.get('hiddenCategories', []));
 const hiddenOwnerships = new Set(STORE.get('hiddenOwnerships', []));
 function persistCategories() { STORE.set('hiddenCategories', [...hiddenCategories]); }
 function persistOwnerships() { STORE.set('hiddenOwnerships', [...hiddenOwnerships]); }
+// Master campground on/off — lets the map show only the roadside stops. When off,
+// every campground marker leaves the map and the campground-only widgets (color
+// legend, ownership filter, "Color by" picker) are hidden as irrelevant.
+let campgroundsOn = STORE.get('campgroundsOn', true);
 
 const MODES_BY_KEY = Object.fromEntries(COLOR_MODES.map(m => [m.key, m]));
 // Color mode: explicit ?color in the URL wins, then the session, then the default.
@@ -301,6 +304,7 @@ const satellite = L.layerGroup([
 // their own green picnic-table marker and live outside the campground category /
 // ownership / search machinery. Toggled via the layer control overlay below.
 const roadsideLayer = L.layerGroup();
+const roadsideMarkers = [];  // { marker, stop } — used by the name search
 const roadsideIcon = L.divIcon({
   className: '',
   html: `<div style="
@@ -346,18 +350,47 @@ ROADSIDE.forEach(s => {
   if (s.maps_url) popup += `<br><a href="${s.maps_url}" target="_blank" rel="noopener">Directions &#8599;</a>`;
   marker.bindPopup(popup, { maxWidth: 320 });
   roadsideLayer.addLayer(marker);
+  roadsideMarkers.push({ marker, stop: s });   // for the name search
 });
 roadsideLayer.addTo(map);  // shown by default; users can toggle it off
 
-const overlays = {};
+// "Campgrounds" master toggle, wired as a layer-control overlay. The dummy layer
+// carries no markers itself — campground circleMarkers are managed by
+// applyVisibility() — so we drive the real on/off via overlayadd/overlayremove
+// below; this just gives it a checkbox alongside "Picnic & rest stops".
+const campgroundsToggleLayer = L.layerGroup();
+if (campgroundsOn) campgroundsToggleLayer.addTo(map);  // checkbox reflects state
+
+const overlays = { '🏕️ Campgrounds': campgroundsToggleLayer };
 if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
 L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
+
+map.on('overlayadd overlayremove', (e) => {
+  if (e.layer !== campgroundsToggleLayer) return;   // ignore the roadside overlay
+  campgroundsOn = (e.type === 'overlayadd');
+  STORE.set('campgroundsOn', campgroundsOn);
+  applyCampgroundsToggle();
+});
 
 // ── Campground markers ──────────────────────────────────────────────────────
 const markers = [];  // { marker, cg }
 
 function markerVisible(cg) {
-  return activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
+  return campgroundsOn && activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
+}
+
+// Apply the master campground toggle: re-evaluate marker visibility and show or
+// hide the campground-only controls (color legend, ownership filter, "Color by"
+// picker). Called on load (for a restored off-state) and whenever the toggle flips.
+function applyCampgroundsToggle() {
+  applyVisibility();
+  const disp = campgroundsOn ? '' : 'none';
+  const legendEl = legendControl.getContainer();
+  const ownerEl = ownershipControl.getContainer();
+  const colorByEl = document.querySelector('.map-header .color-by');
+  if (legendEl) legendEl.style.display = disp;
+  if (ownerEl) ownerEl.style.display = disp;
+  if (colorByEl) colorByEl.style.display = disp;
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
 // circleMarker stays in the SVG layer and still captures clicks (its popup
@@ -595,6 +628,10 @@ ownershipControl.onAdd = function() {
 };
 ownershipControl.addTo(map);
 
+// Apply a restored "campgrounds off" state now that both controls exist (hides
+// their widgets + the "Color by" picker, and keeps every campground marker off).
+applyCampgroundsToggle();
+
 // ── Color-mode picker ───────────────────────────────────────────────────────
 // Reflect the restored mode (URL/session may differ from the server default).
 document.getElementById('color-mode').value = currentMode.key;
@@ -650,14 +687,30 @@ FAMILY.forEach(fam => {
 applyVisibility();
 
 // ── Name search ─────────────────────────────────────────────────────────────
-// Filter-as-you-type over campground names (+ state); selecting a result
-// pans/zooms to the marker and opens its popup. ~1,100 markers were
-// otherwise findable only by panning or via the Manage page.
+// Filter-as-you-type over campground names (+ state) AND roadside stop names
+// (+ town/state); selecting a result pans/zooms to the marker and opens its
+// popup. ~1,100 markers were otherwise findable only by panning or the Manage page.
 (function() {
   const input = document.getElementById('cg-search-input');
   const resultsEl = document.getElementById('cg-search-results');
   let items = [];   // [{row, entry}] for the open dropdown
   let sel = -1;     // keyboard-highlighted index
+
+  // Unified searchable pool: campgrounds + roadside stops. Each entry carries the
+  // marker, display name, secondary text, and a lat/lng to fly to.
+  const pool = markers.map(({ marker, cg }) => ({
+    marker,
+    name: cg.name,
+    sub: cg.state || '',
+    ll: cg.location.split(',').map(parseFloat),
+    isStop: false,
+  })).concat(roadsideMarkers.map(({ marker, stop }) => ({
+    marker,
+    name: stop.name,
+    sub: [stop.town, stop.state].filter(Boolean).join(', '),
+    ll: [stop.lat, stop.lng],
+    isStop: true,
+  })));
 
   function close() {
     resultsEl.classList.remove('open');
@@ -669,22 +722,20 @@ applyVisibility();
   function select(entry) {
     close();
     input.blur();
-    const { marker, cg } = entry;
-    // Searching for a campground means the user wants to see it — show
-    // the marker even if the category/ownership filters currently hide
-    // it (the next filter change re-applies and hides it again).
-    if (!map.hasLayer(marker)) marker.addTo(map);
-    const [lat, lng] = cg.location.split(',').map(parseFloat);
-    map.setView([lat, lng], Math.max(map.getZoom(), 12));
-    marker.openPopup();
+    // Searching for a place means the user wants to see it — show the marker even
+    // if its layer/category/ownership filters currently hide it (the next filter
+    // or toggle change re-applies and hides it again).
+    if (!map.hasLayer(entry.marker)) entry.marker.addTo(map);
+    map.setView(entry.ll, Math.max(map.getZoom(), 12));
+    entry.marker.openPopup();
   }
 
   function update() {
     const q = input.value.trim().toLowerCase();
     if (!q) { close(); return; }
     const tokens = q.split(/\s+/);
-    const matches = markers.filter(({ cg }) => {
-      const hay = (cg.name + ' ' + (cg.state || '')).toLowerCase();
+    const matches = pool.filter(p => {
+      const hay = (p.name + ' ' + p.sub).toLowerCase();
       return tokens.every(t => hay.includes(t));
     }).slice(0, 12);
     resultsEl.innerHTML = '';
@@ -692,8 +743,10 @@ applyVisibility();
     items = matches.map(entry => {
       const row = document.createElement('div');
       row.className = 'cg-search-option';
-      row.innerHTML = `<span>${escapeHtml(entry.cg.name)}</span>` +
-        `<span class="cg-search-state">${escapeHtml(entry.cg.state || '')}</span>`;
+      // Prefix roadside stops with a tree so they're distinguishable from campgrounds.
+      const label = (entry.isStop ? '🌳 ' : '') + entry.name;
+      row.innerHTML = `<span>${escapeHtml(label)}</span>` +
+        `<span class="cg-search-state">${escapeHtml(entry.sub)}</span>`;
       // mousedown (not click) so the selection wins the race against the
       // input's blur closing the dropdown.
       row.addEventListener('mousedown', e => { e.preventDefault(); select(entry); });
