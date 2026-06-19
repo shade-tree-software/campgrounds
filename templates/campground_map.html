@@ -8,71 +8,34 @@
 {% endblock %}
 
 {% block style %}
-  .map-section {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-  }
+  /* The map is the only content on this page, so it goes full-bleed: edge to
+     edge, filling everything below the sticky app header (and above the phone
+     tab bar). No card chrome, no page padding. */
+  .map-section { margin: 0; padding: 0; }
 
-  .map-container {
-    background: var(--white);
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-  }
+  .map-container { overflow: hidden; }
 
-  .map-header {
-    padding: .75rem 1.25rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid var(--gray-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: .75rem;
-    flex-wrap: wrap;
-  }
-
-  .map-header .color-by {
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-    font-size: .85rem;
-    font-weight: 600;
-    color: var(--gray);
-  }
-
-  .map-header .color-by select {
-    font-size: .85rem;
-    padding: .25rem .4rem;
-    border: 1px solid var(--gray-light);
-    border-radius: 6px;
-    color: var(--navy);
-    background: #fff;
-  }
-
-  /* Name search. The wrapper's z-index must beat Leaflet's panes
-     (which reach 1000 and share this stacking context — the map
-     container creates none) so the dropdown renders over the map. */
-  .map-header .cg-search {
+  /* Name search — a Leaflet control overlaid on the map (top-left, below the
+     zoom buttons). The results dropdown is absolutely positioned within it. */
+  .cg-search {
     position: relative;
-    z-index: 1100;
-    flex: 1 1 14rem;
-    max-width: 22rem;
+    width: 16rem;
+    max-width: 60vw;
   }
-  .map-header .cg-search input {
+  .cg-search input {
     width: 100%;
-    padding: .35rem .6rem;
+    padding: .4rem .6rem;
     border: 1px solid var(--gray-light);
     border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
     /* 16px keeps iOS Safari from auto-zooming on focus. */
     font-size: 1rem;
     font-weight: 400;
     font-family: inherit;
     color: var(--navy);
   }
-  .map-header .cg-search input:focus { outline: none; border-color: var(--red); }
+  .cg-search input:focus { outline: none; border-color: var(--red); }
   .cg-search-results {
     position: absolute; top: 100%; left: 0; right: 0;
     background: #fff; border: 1px solid var(--gray-light); border-top: none;
@@ -90,12 +53,48 @@
   .cg-search-option .cg-search-state { color: var(--gray); font-size: .75rem; flex-shrink: 0; }
 
   @media (max-width: 700px) {
-    /* Search drops to its own full-width row under the title/selector. */
-    .map-header .cg-search { flex: 1 1 100%; max-width: none; order: 10; }
+    /* Phone: with the layer control collapsed there's nothing in the top-right
+       but its small icon, so the search can stretch nearly full width and show
+       its whole placeholder. When the layer box is open (body.cg-layers-open,
+       toggled in JS) the search shrinks back so it doesn't slide under the
+       expanded panel. */
+    .cg-search { width: calc(100vw - 74px); }
+    body.cg-layers-open .cg-search { width: 11rem; }
+
+    /* Bottom controls + attribution layout (bottom → top: attribution, then the
+       legend & ownership boxes above it). Three coordinated rules:
+
+       1. Lift the whole bottom band a few px off the map's edge so nothing sits
+          flush against — or bleeds past — the bottom into the tab bar.
+       2. Pin the attribution at the band's bottom, out of the corner's flow and
+          on one line. Out-of-flow so it can't push the ownership box up by its
+          (width-variable) height; one line so its height is constant. The
+          selector is scoped to `.leaflet-bottom` (specificity 0,2,0) so its
+          `margin: 0` beats Leaflet's own bottom-control margin.
+       3. Raise the legend + ownership equally, clear above the attribution.
+          Their baseline no longer depends on the attribution's height, so the
+          two boxes always align at every phone width. */
+    .leaflet-bottom { bottom: 8px; }
+    .leaflet-bottom .leaflet-control-attribution {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      margin: 0;
+      white-space: nowrap;
+    }
+    .leaflet-bottom .leaflet-control:not(.leaflet-control-attribution) { margin-bottom: 28px; }
   }
 
   #campground-map {
-    height: calc(100vh - 220px - var(--tab-bar-height, 0px));
+    /* Fill the viewport below the sticky header and above the phone tab bar.
+       --site-top-height is published by base.html (updates on resize).
+       Prefer 100dvh: on mobile, 100vh counts the area behind the browser's
+       dynamic toolbar, so the map overshoots the visible viewport and shoves
+       the bottom-corner controls (legend / ownership) down off the map into
+       the tab bar. 100dvh measures the actually-visible height; the 100vh line
+       is the fallback for browsers without dvh. */
+    height: calc(100vh - var(--site-top-height, 0px) - var(--tab-bar-height, 0px));
+    height: calc(100dvh - var(--site-top-height, 0px) - var(--tab-bar-height, 0px));
     min-height: 400px;
     width: 100%;
   }
@@ -129,7 +128,28 @@
 
   .map-legend.collapsed .legend-header::after { content: '\25B8'; }
   .map-legend.collapsed .legend-rows { display: none; }
+  .map-legend.collapsed .legend-color-by { display: none; }
   .map-legend:not(.collapsed) .legend-header { margin-bottom: .25rem; }
+
+  /* "Color by" mode picker, hosted inside the legend (it drives the colors). */
+  .map-legend .legend-color-by {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: .4rem;
+  }
+  .map-legend .legend-color-by select {
+    flex: 1;
+    font-size: .8rem;
+    padding: .2rem .35rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    color: var(--navy);
+    background: #fff;
+  }
 
   .map-legend .legend-row {
     display: flex;
@@ -194,27 +214,11 @@
   .cg-visits.expanded .show-more { display: none; }
   .cg-visits .show-more { cursor: pointer; font-style: italic; }
 
-  @media (max-width: 700px) {
-    .map-section { padding: .25rem .25rem 0; }
-  }
 {% endblock %}
 
 {% block content %}
 <div class="map-section">
   <div class="map-container">
-    <div class="map-header">
-      <div class="cg-search">
-        <input id="cg-search-input" type="search" placeholder="Find a campground or stop…" autocomplete="off">
-        <div class="cg-search-results" id="cg-search-results"></div>
-      </div>
-      <label class="color-by">Color by
-        <select id="color-mode">
-          {% for m in color_modes %}
-          <option value="{{ m.key }}"{% if m.key == default_mode %} selected{% endif %}>{{ m.label }}</option>
-          {% endfor %}
-        </select>
-      </label>
-    </div>
     <div id="campground-map"></div>
   </div>
 </div>
@@ -281,7 +285,9 @@ function ownerLabel(v) {
 }
 
 // ── Build map ─────────────────────────────────────────────────────────────
-const map = L.map('campground-map');
+// zoomControl: false — the +/- buttons are dropped (pinch / scroll / double-click
+// still zoom), leaving the top-left corner clear for the search box.
+const map = L.map('campground-map', { zoomControl: false });
 const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
   maxZoom: 18,
@@ -363,7 +369,34 @@ if (campgroundsOn) campgroundsToggleLayer.addTo(map);  // checkbox reflects stat
 
 const overlays = { '🏕️ Campgrounds': campgroundsToggleLayer };
 if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
-L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
+const layersControl = L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
+
+// Mirror the layer control's expanded/collapsed state onto the body so the
+// phone search box can widen when it's closed (see the .cg-search media query).
+(function() {
+  const el = layersControl.getContainer();
+  const sync = () => document.body.classList.toggle(
+    'cg-layers-open', el.classList.contains('leaflet-control-layers-expanded'));
+  new MutationObserver(sync).observe(el, { attributes: true, attributeFilter: ['class'] });
+  sync();
+})();
+
+// ── Name search control ─────────────────────────────────────────────────────
+// The search box, formerly in a white header bar above the map, now overlays
+// the map as a Leaflet control (top-left, below the zoom buttons). Its wiring
+// lives in the name-search IIFE near the bottom, which finds these elements by id.
+const searchControl = L.control({ position: 'topleft' });
+searchControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'cg-search');
+  div.innerHTML =
+    '<input id="cg-search-input" type="search" placeholder="Find a campground or stop…" autocomplete="off">' +
+    '<div class="cg-search-results" id="cg-search-results"></div>';
+  // Keep clicks/scroll inside the box from panning/zooming the map.
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.disableScrollPropagation(div);
+  return div;
+};
+searchControl.addTo(map);
 
 map.on('overlayadd overlayremove', (e) => {
   if (e.layer !== campgroundsToggleLayer) return;   // ignore the roadside overlay
@@ -380,17 +413,16 @@ function markerVisible(cg) {
 }
 
 // Apply the master campground toggle: re-evaluate marker visibility and show or
-// hide the campground-only controls (color legend, ownership filter, "Color by"
-// picker). Called on load (for a restored off-state) and whenever the toggle flips.
+// hide the campground-only controls (color legend — which now also hosts the
+// "Color by" picker — and the ownership filter). Called on load (for a restored
+// off-state) and whenever the toggle flips.
 function applyCampgroundsToggle() {
   applyVisibility();
   const disp = campgroundsOn ? '' : 'none';
   const legendEl = legendControl.getContainer();
   const ownerEl = ownershipControl.getContainer();
-  const colorByEl = document.querySelector('.map-header .color-by');
   if (legendEl) legendEl.style.display = disp;
   if (ownerEl) ownerEl.style.display = disp;
-  if (colorByEl) colorByEl.style.display = disp;
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
 // circleMarker stays in the SVG layer and still captures clicks (its popup
@@ -567,6 +599,22 @@ legendControl.onAdd = function() {
   header.addEventListener('click', () => div.classList.toggle('collapsed'));
   div.appendChild(header);
 
+  // Color-mode picker — moved out of the old white header bar into the legend
+  // (it drives the very colors the legend explains). No label: the dropdown
+  // stands alone. Built from COLOR_MODES; wired up by the change handler below.
+  const colorBy = document.createElement('div');
+  colorBy.className = 'legend-color-by';
+  const colorSel = document.createElement('select');
+  colorSel.id = 'color-mode';
+  COLOR_MODES.forEach(m => {
+    const opt = document.createElement('option');
+    opt.value = m.key;
+    opt.textContent = m.label;
+    colorSel.appendChild(opt);
+  });
+  colorBy.appendChild(colorSel);
+  div.appendChild(colorBy);
+
   legendRowsEl = document.createElement('div');
   legendRowsEl.className = 'legend-rows';
   div.appendChild(legendRowsEl);
@@ -587,7 +635,8 @@ const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
   .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
 ownerValues.forEach(v => { if (!hiddenOwnerships.has(v)) activeOwnerships.add(v); });
 
-const ownershipControl = L.control({ position: 'topright' });
+// Bottom-right, across the map from the bottom-left legend.
+const ownershipControl = L.control({ position: 'bottomright' });
 ownershipControl.onAdd = function() {
   const div = L.DomUtil.create('div', 'map-legend');
   L.DomEvent.disableClickPropagation(div);
