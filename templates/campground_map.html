@@ -36,6 +36,41 @@
     color: var(--navy);
   }
   .cg-search input:focus { outline: none; border-color: var(--red); }
+
+  /* "My location" button — a standard Leaflet bar button stacked under the
+     search box (top-left). Centers the 📍 / ⏳ glyph in the control square. */
+  .cg-locate a {
+    font-size: 1.05rem;
+    line-height: 30px;
+    text-align: center;
+    text-decoration: none;
+  }
+  .cg-locate a.locating { cursor: progress; }
+
+  /* Current-location marker: a pulsing blue dot, deliberately unlike the static
+     colored campground dots so "you are here" reads at a glance. */
+  .cg-here {
+    position: relative;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: #1a73e8;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.3), 0 1px 5px rgba(0,0,0,.45);
+  }
+  .cg-here::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: rgba(26,115,232,.45);
+    transform: translate(-50%, -50%);
+    animation: cg-here-pulse 1.8s ease-out infinite;
+  }
+  @keyframes cg-here-pulse {
+    0%   { width: 18px; height: 18px; opacity: .6; }
+    100% { width: 56px; height: 56px; opacity: 0; }
+  }
   .cg-search-results {
     position: absolute; top: 100%; left: 0; right: 0;
     background: #fff; border: 1px solid var(--gray-light); border-top: none;
@@ -397,6 +432,54 @@ searchControl.onAdd = function() {
   return div;
 };
 searchControl.addTo(map);
+
+// ── "My location" control ────────────────────────────────────────────────────
+// Drops a marker (blue dot + accuracy ring) at the device's current position and
+// pans to it. Geolocation needs a secure origin — the dev server runs HTTPS for
+// exactly this (see "Local HTTPS" in the app notes); production is HTTPS too.
+let locationMarker = null, locationCircle = null;
+const locateControl = L.control({ position: 'topleft' });
+locateControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'leaflet-bar cg-locate');
+  const link = L.DomUtil.create('a', '', div);
+  link.href = '#';
+  link.title = 'Show my location';
+  link.setAttribute('aria-label', 'Show my location');
+  link.innerHTML = '\u{1F4CD}';
+  L.DomEvent.disableClickPropagation(div);
+  L.DomEvent.on(link, 'click', function(e) {
+    L.DomEvent.preventDefault(e);
+    if (!navigator.geolocation) { window.toast('Geolocation is not supported by this browser.'); return; }
+    link.classList.add('locating');
+    link.innerHTML = '⏳';  // ⏳ while waiting for a fix
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      link.classList.remove('locating');
+      link.innerHTML = '\u{1F4CD}';
+      const lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
+      const ll = [lat, lng];
+      // Refresh in place on a repeat click rather than stacking markers.
+      if (locationMarker) { map.removeLayer(locationMarker); map.removeLayer(locationCircle); }
+      locationCircle = L.circle(ll, {
+        radius: acc, color: '#1a73e8', weight: 1, fillColor: '#1a73e8', fillOpacity: 0.12,
+      }).addTo(map);
+      // A pulsing divIcon (not a circleMarker) so it's clearly distinct from the
+      // colored campground dots, and above the home/family markers (z 1000/900).
+      locationMarker = L.marker(ll, {
+        icon: L.divIcon({ className: '', html: '<div class="cg-here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
+        zIndexOffset: 1100,
+      }).addTo(map);
+      const accTxt = acc ? ` (±${Math.round(acc)} m)` : '';
+      locationMarker.bindPopup(`<strong>You are here</strong>${accTxt}`).openPopup();
+      map.setView(ll, Math.max(map.getZoom(), 13));
+    }, function(err) {
+      link.classList.remove('locating');
+      link.innerHTML = '\u{1F4CD}';
+      window.toast('Could not get your location: ' + (err.message || 'permission denied'));
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  });
+  return div;
+};
+locateControl.addTo(map);
 
 map.on('overlayadd overlayremove', (e) => {
   if (e.layer !== campgroundsToggleLayer) return;   // ignore the roadside overlay
