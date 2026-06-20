@@ -1,4 +1,5 @@
 import argparse
+import gzip
 import json
 import os
 import re
@@ -1876,13 +1877,32 @@ def campgrounds_manage():
 
 @app.route('/api/campgrounds/all')
 def api_campground_all():
-    """Return full campground data for the management page."""
+    """Return full campground data for the management page.
+
+    This is a ~3.3 MB payload (4,700+ entries), so two size reductions:
+    - Drop `waterfront_evidence` — the manage page never reads it (it's the
+      audit record, edited only by the audit script / by hand), and PUT
+      preserves it server-side, so the client never needs it. (~15% smaller.)
+    - gzip the body when the client accepts it (~5x smaller over the wire).
+      Browsers decompress transparently, so no client change is needed; a
+      proxy that already gzips will pass our Content-Encoding through.
+    """
     denied = _require_admin()
     if denied:
         return denied
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
-    return jsonify(entries)
+    for e in entries:
+        e.pop("waterfront_evidence", None)
+    payload = json.dumps(entries).encode("utf-8")
+    if "gzip" in request.headers.get("Accept-Encoding", ""):
+        payload = gzip.compress(payload, 6)
+        resp = app.response_class(payload, mimetype="application/json")
+        resp.headers["Content-Encoding"] = "gzip"
+        resp.headers["Vary"] = "Accept-Encoding"
+        resp.headers["Content-Length"] = len(payload)
+        return resp
+    return app.response_class(payload, mimetype="application/json")
 
 
 @app.route('/api/campgrounds', methods=['POST'])
