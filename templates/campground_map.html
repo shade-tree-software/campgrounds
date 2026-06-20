@@ -293,6 +293,14 @@
     font-size: 1rem; font-family: inherit; color: var(--navy);
   }
   .rs-field textarea { min-height: 3.2rem; resize: vertical; }
+  /* Roomier default for the note — the manage page's note box starts cramped. */
+  .rs-field textarea.tall { min-height: 6.5rem; }
+  /* "More fields →" link to the full manage form, left-justified in the actions row. */
+  .cq-more {
+    margin-right: auto; align-self: center;
+    font-size: .85rem; color: var(--navy); text-decoration: none;
+  }
+  .cq-more:hover { text-decoration: underline; }
   .rs-row { display: flex; gap: .6rem; }
   .rs-row .rs-field { flex: 1 1 0; min-width: 0; }
   .rs-loc { display: flex; gap: .4rem; align-items: center; }
@@ -380,6 +388,66 @@
     <div class="geo-results" id="rs-geo-results"></div>
   </div>
   <div class="map-clip"><div id="rs-pick-map"></div></div>
+  <div class="resize-handle rh-right" data-dir="right"></div>
+  <div class="resize-handle rh-bottom" data-dir="bottom"></div>
+  <div class="resize-handle rh-left" data-dir="left"></div>
+  <div class="resize-handle rh-br" data-dir="br"></div>
+  <div class="resize-handle rh-bl" data-dir="bl"></div>
+</div>
+
+<!-- Campground quick-edit modal (admin only). Opened from a campground popup's
+     "edit" link. Common fields only; "More fields →" deep-links to the full
+     manage form for the rest (ownership, elevation, kind, etc.). Reuses the
+     .rs-modal styles. -->
+<div class="rs-modal-backdrop" id="cq-modal-backdrop">
+  <div class="rs-modal" role="dialog" aria-modal="true" aria-labelledby="cq-modal-title">
+    <h2 id="cq-modal-title">Edit campground</h2>
+    <input type="hidden" id="cq-id">
+    <div class="rs-field">
+      <label for="cq-name">Name</label>
+      <input type="text" id="cq-name" autocomplete="off">
+    </div>
+    <div class="rs-field">
+      <label for="cq-location">Location (lat,lng)</label>
+      <div class="rs-loc">
+        <input type="text" id="cq-location" autocomplete="off" placeholder="lat,lng">
+        <button type="button" onclick="cgPickOnMap()">Pick on map</button>
+      </div>
+    </div>
+    <div class="rs-field">
+      <label for="cq-waterfront">Proximity to water</label>
+      <select id="cq-waterfront"></select>
+    </div>
+    <div class="rs-field">
+      <label for="cq-note">Note</label>
+      <textarea id="cq-note" class="tall"></textarea>
+    </div>
+    <div class="rs-field">
+      <label for="cq-phone">Phone</label>
+      <input type="text" id="cq-phone" autocomplete="off">
+    </div>
+    <div class="rs-field">
+      <label for="cq-website">Website</label>
+      <textarea id="cq-website" placeholder="one URL per line"></textarea>
+    </div>
+    <div class="rs-actions">
+      <a id="cq-more" class="cq-more" href="#">More fields &rarr;</a>
+      <button type="button" onclick="cgCloseModal()">Cancel</button>
+      <button type="button" class="rs-save" id="cq-save-btn" onclick="cgSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+<div class="map-picker-container" id="cq-map-container">
+  <div class="map-picker-header" id="cq-map-header">
+    <span>Click the map to set the campground location</span>
+    <button class="map-picker-close" onclick="cgLocationPicker.hide()">&times;</button>
+  </div>
+  <div class="geo-search">
+    <input type="text" id="cq-geo-input" placeholder="Search for a place..." autocomplete="off">
+    <div class="geo-results" id="cq-geo-results"></div>
+  </div>
+  <div class="map-clip"><div id="cq-pick-map"></div></div>
   <div class="resize-handle rh-right" data-dir="right"></div>
   <div class="resize-handle rh-bottom" data-dir="bottom"></div>
   <div class="resize-handle rh-left" data-dir="left"></div>
@@ -643,6 +711,63 @@ map.on('overlayadd overlayremove', (e) => {
 
 // ── Campground markers ──────────────────────────────────────────────────────
 const markers = [];  // { marker, cg }
+const cgById = new Map();  // id -> { marker, cg }, for the admin inline quick-edit
+
+// Popup HTML for one campground. Extracted so an inline edit can regenerate it
+// (marker.setPopupContent) without a reload.
+function cgPopupHtml(cg) {
+  let popup = `<strong>${escapeHtml(cg.name)}</strong>`;
+  if (cg.state) popup += `<br>${escapeHtml(cg.state)}`;
+  if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
+  const wf = cg.waterfront || 'not waterfront';
+  if (wf === 'not waterfront') {
+    popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
+  } else {
+    popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;
+  }
+  if (cg.visit_count) {
+    popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
+    const SHOW_BY_DEFAULT = 3;
+    (cg.trips || []).forEach((v, i) => {
+      const dateStr = v.stay_start || v.start;
+      const fmt = dateStr
+        ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+        : '';
+      const cls = i >= SHOW_BY_DEFAULT ? ' class="extra"' : '';
+      popup += `<a href="/trips/${v.id}"${cls}>Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
+    });
+    const extra = (cg.trips || []).length - SHOW_BY_DEFAULT;
+    if (extra > 0) {
+      popup += `<a class="show-more" onclick="event.preventDefault(); this.parentElement.classList.add('expanded');">Show ${extra} more</a>`;
+    }
+    popup += '</div>';
+  }
+  if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(cg.note)}</span>`;
+  if (cg.phone) {
+    cg.phone.split(/[,;\n]+/).forEach(p => {
+      p = p.trim();
+      if (p) popup += `<br><a href="tel:${p}">${escapeHtml(p)}</a>`;
+    });
+  }
+  if (cg.website) {
+    cg.website.split('\n').forEach(url => {
+      url = url.trim();
+      if (!url) return;
+      try {
+        const domain = new URL(url).hostname.replace(/^www\./, '');
+        popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
+      } catch (e) {
+        popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
+      }
+    });
+  }
+  if (IS_ADMIN) {
+    popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;">`
+      + `<a onclick="cgQuickEdit(${cg.id})" style="font-size:.85em;cursor:pointer;">edit</a>`
+      + `</span><div style="clear:both;"></div>`;
+  }
+  return popup;
+}
 
 function markerVisible(cg) {
   return campgroundsOn && activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
@@ -695,57 +820,11 @@ CAMPGROUNDS.forEach(cg => {
     fillOpacity: 0.8,
   }).addTo(map);
 
-  let popup = `<strong>${cg.name}</strong>`;
-  if (cg.state) popup += `<br>${cg.state}`;
-  if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
-  const wf = cg.waterfront || 'not waterfront';
-  if (wf === 'not waterfront') {
-    popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
-  } else {
-    popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;
-  }
-  if (cg.visit_count) {
-    popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
-    const SHOW_BY_DEFAULT = 3;
-    (cg.trips || []).forEach((v, i) => {
-      const dateStr = v.stay_start || v.start;
-      const fmt = dateStr
-        ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-        : '';
-      const cls = i >= SHOW_BY_DEFAULT ? ' class="extra"' : '';
-      popup += `<a href="/trips/${v.id}"${cls}>Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
-    });
-    const extra = (cg.trips || []).length - SHOW_BY_DEFAULT;
-    if (extra > 0) {
-      popup += `<a class="show-more" onclick="event.preventDefault(); this.parentElement.classList.add('expanded');">Show ${extra} more</a>`;
-    }
-    popup += '</div>';
-  }
-  if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(cg.note)}</span>`;
-  if (cg.phone) {
-    cg.phone.split(/[,;\n]+/).forEach(p => {
-      p = p.trim();
-      if (p) popup += `<br><a href="tel:${p}">${p}</a>`;
-    });
-  }
-  if (cg.website) {
-    cg.website.split('\n').forEach(url => {
-      url = url.trim();
-      if (!url) return;
-      try {
-        const domain = new URL(url).hostname.replace(/^www\./, '');
-        popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
-      } catch(e) {
-        popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
-      }
-    });
-  }
-  if (IS_ADMIN) {
-    popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;"><a href="/campgrounds/manage?edit=${cg.id}" style="font-size:.85em;">edit</a></span><div style="clear:both;"></div>`;
-  }
-  marker.bindPopup(popup, { maxWidth: 420 });
+  marker.bindPopup(cgPopupHtml(cg), { maxWidth: 420 });
 
-  markers.push({ marker, cg });
+  const rec = { marker, cg };
+  markers.push(rec);
+  if (cg.id != null) cgById.set(cg.id, rec);
 });
 
 // ── Legend (color categories for the current mode) ──────────────────────────
@@ -1272,6 +1351,134 @@ function trimmedBounds(coords, frac) {
     roadsideById.delete(id);
     const i = roadsideMarkers.indexOf(rec);
     if (i >= 0) roadsideMarkers.splice(i, 1);
+  }
+})();
+
+// ── Campground quick-edit (admin) ──────────────────────────────────────────
+// A compact in-place editor for the common fields, launched from a campground
+// popup's "edit" link. "More fields →" deep-links to the full manage form for
+// everything else (ownership, elevation, kind/family, etc.).
+(function() {
+  const WATERFRONT_OPTIONS = ['not waterfront', 'lakefront', 'lakeview', 'riverfront',
+    'riverview', 'creekside', 'pond', 'bayfront', 'bayview', 'coastal dunes', 'coastal woods'];
+  const METERS_TO_FEET = 3.281;
+
+  const defaultView = (HOME && HOME.length === 2) ? HOME : [39.5, -98.35];
+  const cgLocationPicker = createMapPicker({
+    containerId: 'cq-map-container',
+    mapId: 'cq-pick-map',
+    headerId: 'cq-map-header',
+    searchId: 'cq-geo-input',
+    resultsId: 'cq-geo-results',
+    defaultView: defaultView,
+    onPick: function(lat, lng) {
+      document.getElementById('cq-location').value = lat.toFixed(6) + ',' + lng.toFixed(6);
+    }
+  });
+  window.cgLocationPicker = cgLocationPicker;   // referenced by the picker's close button
+  window.cgPickOnMap = function() {
+    cgLocationPicker.show(document.getElementById('cq-location').value);
+  };
+
+  const backdrop = document.getElementById('cq-modal-backdrop');
+  const wfSel = document.getElementById('cq-waterfront');
+  WATERFRONT_OPTIONS.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o; opt.textContent = o;
+    wfSel.appendChild(opt);
+  });
+
+  let editOrigLocation = '';   // to detect a moved pin (→ refetch elevation)
+
+  window.cgQuickEdit = function(id) {
+    const rec = cgById.get(id);
+    if (!rec) { window.toast('Campground not found'); return; }
+    const cg = rec.cg;
+    document.getElementById('cq-id').value = id;
+    document.getElementById('cq-name').value = cg.name || '';
+    document.getElementById('cq-location').value = cg.location || '';
+    document.getElementById('cq-waterfront').value = cg.waterfront || 'not waterfront';
+    document.getElementById('cq-note').value = cg.note || '';
+    document.getElementById('cq-phone').value = cg.phone || '';
+    document.getElementById('cq-website').value = cg.website || '';
+    document.getElementById('cq-more').href = '/campgrounds/manage?edit=' + id;
+    editOrigLocation = cg.location || '';
+    backdrop.classList.add('open');
+    document.getElementById('cq-name').focus();
+  };
+
+  window.cgCloseModal = function() {
+    backdrop.classList.remove('open');
+    cgLocationPicker.hide();
+  };
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) window.cgCloseModal(); });
+
+  window.cgSave = function() {
+    const id = document.getElementById('cq-id').value;
+    const rec = cgById.get(parseInt(id, 10));
+    if (!rec) return;
+    const name = document.getElementById('cq-name').value.trim();
+    if (!name) { window.toast('Name is required'); return; }
+    const location = document.getElementById('cq-location').value.trim();
+    const fields = {
+      name, location,
+      waterfront: document.getElementById('cq-waterfront').value,
+      note: document.getElementById('cq-note').value,
+      website: document.getElementById('cq-website').value,
+      phone: document.getElementById('cq-phone').value.trim(),
+    };
+    const saveBtn = document.getElementById('cq-save-btn');
+    saveBtn.disabled = true;
+
+    const finish = (extra) => {
+      const payload = Object.assign({}, fields, extra || {});
+      fetch('/api/campgrounds/' + id, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      }).then(r => r.json().then(j => ({ ok: r.ok, j })))
+        .then(({ ok, j }) => {
+          if (!ok) { window.toast(j.error || 'Save failed'); return; }
+          cgApplyEdit(rec, payload);
+          window.cgCloseModal();
+          window.toast('Campground updated');
+        })
+        .catch(() => window.toast('Save failed'))
+        .finally(() => { saveBtn.disabled = false; });
+    };
+
+    // Keep elevation consistent when the pin moves: refetch for the new coords
+    // (the quick-edit form doesn't show elevation; "More fields" does).
+    if (location && location !== editOrigLocation) {
+      const [lat, lng] = location.split(',').map(s => s.trim());
+      fetch('/api/elevation?lat=' + lat + '&lng=' + lng)
+        .then(r => r.json())
+        .then(d => finish(d.elevation_meters != null ? { elevation_meters: d.elevation_meters } : {}))
+        .catch(() => finish({}));
+    } else {
+      finish({});
+    }
+  };
+
+  // Reflect the saved fields on the map without a reload: reposition, recolor
+  // for the current "Color by" mode, regenerate the popup, and re-run filters
+  // (a waterfront change can move it in/out of an active category filter).
+  function cgApplyEdit(rec, payload) {
+    const cg = rec.cg;
+    cg.name = payload.name;
+    cg.location = payload.location;
+    cg.waterfront = payload.waterfront;
+    cg.note = payload.note;
+    cg.website = payload.website;
+    cg.phone = payload.phone;
+    if (payload.elevation_meters != null) {
+      cg.elevation_feet = Math.round(payload.elevation_meters * METERS_TO_FEET);
+    }
+    const [lat, lng] = cg.location.split(',').map(parseFloat);
+    if (!isNaN(lat) && !isNaN(lng)) rec.marker.setLatLng([lat, lng]);
+    rec.marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
+    rec.marker.setPopupContent(cgPopupHtml(cg));
+    applyVisibility();
   }
 })();
 </script>
