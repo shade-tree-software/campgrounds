@@ -78,13 +78,40 @@
   .row-actions { display: flex; gap: .3rem; flex-wrap: wrap; }
   .row-actions button { padding: .2rem .5rem; font-size: .8rem; }
 
+  /* Edit row: one full-width cell holding a balanced 12-column form grid. This
+     replaces the old approach of scattering each field into its matching view
+     column, which left the narrow columns (state/elevation) with a lone field
+     above dead space while the wide note column stacked four fields. Fields now
+     flow in reading order with sane widths and always-visible labels. */
+  .cg-table td.edit-cell { padding: .6rem .6rem .7rem; }
+  .edit-form {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: .55rem .7rem;
+    align-items: end;
+  }
+  .edit-form .ef { display: flex; flex-direction: column; min-width: 0; }
+  .edit-form .ef > label {
+    font-size: .68rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .03em; color: var(--gray); margin-bottom: .15rem;
+  }
+  .ef-name { grid-column: span 6; }
+  .ef-kind { grid-column: span 3; }
+  .ef-state { grid-column: span 3; }
+  .ef-location { grid-column: span 6; }
+  .ef-waterfront { grid-column: span 3; }
+  .ef-ownership { grid-column: span 3; }
+  .ef-elev { grid-column: span 3; }
+  .ef-phone { grid-column: span 3; }
+  .ef-website { grid-column: span 6; }
+  .ef-driveway { grid-column: span 6; }
+  .ef-note { grid-column: 1 / -1; }
+  .cg-table td.edit-cell .edit-actions { margin-top: .7rem; }
+
   .count-info { color: var(--gray); font-size: .85rem; }
   /* td.note-cell specificity (0,2,1) beats the mobile `.cg-table td` rule so
      pre-line survives there too — preserves newlines, still wraps. */
   .cg-table td.note-cell { font-size: .8rem; color: var(--gray); line-height: 1.3; white-space: pre-line; }
-
-  /* Edit-row field labels — desktop relies on column headers, so hidden here */
-  .ed-label { display: none; }
 
   @media (max-width: 700px) {
     .manage-page { padding: 0 .75rem; margin: 1rem auto; }
@@ -131,18 +158,10 @@
     .edit-actions { flex-direction: row !important; gap: .5rem; }
     .edit-actions button { flex: 1; padding: .6rem .75rem; font-size: .95rem; min-height: 40px; }
 
-    /* Show field labels in edit cards */
-    .ed-label {
-      display: block;
-      font-size: .7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-      color: var(--gray);
-      margin-bottom: .2rem;
-    }
-    /* Tighten spacing between the existing inline labels in the note cell too */
-    .cg-table tr.editing .col-note label { display: block; margin-top: .5rem; }
+    /* Edit form collapses to a single column on phones (labels are always
+       visible, so each field stacks cleanly). */
+    .edit-form { grid-template-columns: 1fr; gap: .5rem; }
+    .edit-form .ef { grid-column: 1 / -1 !important; }
   }
 
 {% endblock %}
@@ -370,38 +389,40 @@ function editRowHtml(c) {
   const isFamily = c.kind === 'family';
   const elevFeet = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
   const driveway = c.driveway_location || '';
-  const campgroundFieldsHtml = isFamily ? '' : `
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Website</label>
-        <textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Phone</label>
-        <input id="ed-phone" value="${escapeAttr(c.phone || '')}"></div>`;
-  const familyFieldsHtml = isFamily ? `
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Driveway (lat,lng) — optional</label>
-        <input id="ed-driveway" value="${escapeAttr(driveway)}" placeholder="lat,lng"
-               onfocus="showLocationMap(this.value, 'ed-driveway')"
-               onblur="onLocationBlur('ed-driveway')"></div>` : '';
-  const naCls = isFamily ? ' cg-na' : '';
+
+  // Kind-specific fields. Campground: waterfront/ownership/elevation/phone/website.
+  // Family: a single optional driveway location instead.
+  const typeFields = isFamily ? `
+        <div class="ef ef-driveway">
+          <label>Driveway (lat,lng) — optional</label>
+          <input id="ed-driveway" value="${escapeAttr(driveway)}" placeholder="lat,lng"
+                 onfocus="showLocationMap(this.value, 'ed-driveway')" onblur="onLocationBlur('ed-driveway')">
+        </div>` : `
+        <div class="ef ef-waterfront"><label>Waterfront</label><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select></div>
+        <div class="ef ef-ownership"><label>Ownership</label><select id="ed-ownership">${ownershipOptions(c.ownership)}</select></div>
+        <div class="ef ef-elev"><label>Elevation (ft)</label><input id="ed-elev" type="number" value="${elevFeet}"></div>
+        <div class="ef ef-phone"><label>Phone</label><input id="ed-phone" value="${escapeAttr(c.phone || '')}"></div>
+        <div class="ef ef-website"><label>Website</label><textarea id="ed-website" rows="1">${escapeHtml(c.website || '')}</textarea></div>`;
+
   return `<tr class="editing">
-    <td class="col-name">
-      <label class="ed-label">Kind</label>
-      <select id="ed-kind" onchange="onKindChange()" style="margin-bottom:.2rem">${kindOptions(c.kind || 'campground')}</select>
-      <label class="ed-label">Name</label>
-      <input id="ed-name" value="${escapeAttr(c.name)}">
+    <td class="edit-cell" colspan="7">
+      <div class="edit-form">
+        <div class="ef ef-name"><label>Name</label><input id="ed-name" value="${escapeAttr(c.name)}"></div>
+        <div class="ef ef-kind"><label>Kind</label><select id="ed-kind" onchange="onKindChange()">${kindOptions(c.kind || 'campground')}</select></div>
+        <div class="ef ef-state"><label>State</label><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></div>
+        <div class="ef ef-location">
+          <label>Location (lat,lng)</label>
+          <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"
+                 onfocus="showLocationMap(this.value, 'ed-location')" onblur="onLocationBlur('ed-location')">
+        </div>${typeFields}
+        <div class="ef ef-note"><label>Note</label><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea></div>
+      </div>
+      <div class="edit-actions">
+        <button class="btn btn-save" onclick="saveEdit()">Save</button>
+        <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+        ${(c.id != null && !isFamily) ? `<button class="btn btn-map" onclick="viewOnMap(${c.id})">Map</button>` : ''}
+      </div>
     </td>
-    <td class="col-state"><label class="ed-label">State</label><input id="ed-state" value="${escapeAttr(c.state || '')}" maxlength="2"></td>
-    <td class="col-waterfront${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Waterfront</label><select id="ed-waterfront">${waterfrontOptions(c.waterfront)}</select>`}</td>
-    <td class="col-ownership${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Ownership</label><select id="ed-ownership">${ownershipOptions(c.ownership)}</select>`}</td>
-    <td class="col-elev${naCls}">${isFamily ? '<span style="color:var(--gray);font-size:.75rem">n/a</span>' : `<label class="ed-label">Elevation (ft)</label><input id="ed-elev" type="number" value="${elevFeet}">`}</td>
-    <td class="col-note"><label class="ed-label">Note</label><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea>
-        <div style="margin-top:.2rem"><label style="font-size:.75rem;color:var(--gray)">Location</label>
-        <input id="ed-location" value="${escapeAttr(c.location || '')}" placeholder="lat,lng"
-               onfocus="showLocationMap(this.value, 'ed-location')"
-               onblur="onLocationBlur('ed-location')"></div>${familyFieldsHtml}${campgroundFieldsHtml}</td>
-    <td class="col-actions"><div class="edit-actions" style="flex-direction:column">
-      <button class="btn btn-save" onclick="saveEdit()">Save</button>
-      <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
-      ${(c.id != null && !isFamily) ? `<button class="btn btn-map" onclick="viewOnMap(${c.id})">Map</button>` : ''}
-    </div></td>
   </tr>`;
 }
 
