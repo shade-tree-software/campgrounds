@@ -5,6 +5,7 @@
 {% block head_extra %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+{% if is_admin %}<link rel="stylesheet" href="/static/map-picker.css" />{% endif %}
 {% endblock %}
 
 {% block style %}
@@ -254,6 +255,65 @@
   .cg-visits.expanded .show-more { display: none; }
   .cg-visits .show-more { cursor: pointer; font-style: italic; }
 
+  /* Admin edit/delete links inside a roadside-stop popup. */
+  .rs-popup-admin { margin-top: .4rem; font-size: .85em; }
+  .rs-popup-admin a { color: #002868; cursor: pointer; }
+  .rs-popup-admin a.rs-del { color: #b00; margin-left: .6rem; }
+
+  /* Admin "add roadside stop" map control (tree-on-plus button). */
+  .rs-add a { font-size: 18px; font-weight: 700; text-align: center; }
+
+  /* ── Roadside edit modal (admin) ─────────────────────────────────────── */
+  .rs-modal-backdrop {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.45);
+    z-index: 1100;               /* above the sticky header (900) and map controls */
+    align-items: flex-start; justify-content: center;
+    padding: 4vh 1rem;
+    overflow-y: auto;
+  }
+  .rs-modal-backdrop.open { display: flex; }
+  .rs-modal {
+    background: #fff; border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.3);
+    width: 100%; max-width: 460px;
+    padding: 1.1rem 1.25rem 1.25rem;
+  }
+  .rs-modal h2 { font-size: 1.1rem; margin: 0 0 .85rem; color: var(--navy); }
+  .rs-field { margin-bottom: .7rem; }
+  .rs-field label {
+    display: block; font-size: .78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: .03em;
+    color: var(--gray); margin-bottom: .2rem;
+  }
+  .rs-field input, .rs-field textarea, .rs-field select {
+    width: 100%; padding: .45rem .55rem;
+    border: 1px solid var(--gray-light); border-radius: 6px;
+    font-size: 1rem; font-family: inherit; color: var(--navy);
+  }
+  .rs-field textarea { min-height: 3.2rem; resize: vertical; }
+  .rs-row { display: flex; gap: .6rem; }
+  .rs-row .rs-field { flex: 1 1 0; min-width: 0; }
+  .rs-loc { display: flex; gap: .4rem; align-items: center; }
+  .rs-loc input { flex: 1 1 0; min-width: 0; }
+  .rs-loc button, .rs-actions button {
+    padding: .45rem .7rem; border-radius: 6px; cursor: pointer;
+    border: 1px solid var(--gray-light); background: #f4f4f6;
+    font-size: .85rem; font-weight: 600; white-space: nowrap;
+  }
+  .rs-actions {
+    display: flex; gap: .5rem; align-items: center;
+    margin-top: 1rem;
+  }
+  .rs-actions .rs-save {
+    background: var(--navy); color: #fff; border-color: var(--navy);
+  }
+  .rs-actions .rs-delete {
+    color: #b00; border-color: #e3b3b3; background: #fdeaea; margin-right: auto;
+  }
+  .rs-actions .rs-save:disabled { opacity: .55; cursor: wait; }
+
 {% endblock %}
 
 {% block content %}
@@ -262,6 +322,71 @@
     <div id="campground-map"></div>
   </div>
 </div>
+
+{% if is_admin %}
+<!-- Roadside-stop edit modal (admin only). Opened from a stop's popup "edit"
+     link or the map's "add roadside stop" control. -->
+<div class="rs-modal-backdrop" id="rs-modal-backdrop">
+  <div class="rs-modal" role="dialog" aria-modal="true" aria-labelledby="rs-modal-title">
+    <h2 id="rs-modal-title">Roadside stop</h2>
+    <input type="hidden" id="rs-id">
+    <div class="rs-field">
+      <label for="rs-name">Name</label>
+      <input type="text" id="rs-name" autocomplete="off">
+    </div>
+    <div class="rs-row">
+      <div class="rs-field"><label for="rs-town">Town</label><input type="text" id="rs-town" autocomplete="off"></div>
+      <div class="rs-field"><label for="rs-state">State</label><input type="text" id="rs-state" autocomplete="off" maxlength="2"></div>
+    </div>
+    <div class="rs-field">
+      <label for="rs-location">Location (lat,lng)</label>
+      <div class="rs-loc">
+        <input type="text" id="rs-location" autocomplete="off" placeholder="e.g. 40.388427,-104.565111">
+        <button type="button" onclick="rsPickOnMap()">Pick on map</button>
+      </div>
+    </div>
+    <div class="rs-row">
+      <div class="rs-field"><label for="rs-stop_type">Stop type</label><input type="text" id="rs-stop_type" autocomplete="off" placeholder="e.g. city park, rest area"></div>
+      <div class="rs-field"><label for="rs-hours">Hours</label><input type="text" id="rs-hours" autocomplete="off"></div>
+    </div>
+    <div class="rs-field">
+      <label for="rs-notes">Notes</label>
+      <textarea id="rs-notes"></textarea>
+    </div>
+    <div class="rs-row">
+      <div class="rs-field"><label for="rs-phone">Phone</label><input type="text" id="rs-phone" autocomplete="off"></div>
+      <div class="rs-field"><label for="rs-website">Website</label><input type="text" id="rs-website" autocomplete="off" placeholder="https://"></div>
+    </div>
+    <div class="rs-field">
+      <label for="rs-google_maps_url">Directions URL</label>
+      <input type="text" id="rs-google_maps_url" autocomplete="off" placeholder="Google Maps link">
+    </div>
+    <div class="rs-actions">
+      <button type="button" class="rs-delete" id="rs-delete-btn" onclick="rsDelete()">Delete</button>
+      <button type="button" onclick="rsCloseModal()">Cancel</button>
+      <button type="button" class="rs-save" id="rs-save-btn" onclick="rsSave()">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Shared map-picker popup (same factory the campground manage page uses). -->
+<div class="map-picker-container" id="rs-map-container">
+  <div class="map-picker-header" id="rs-map-header">
+    <span>Click the map to set the stop location</span>
+    <button class="map-picker-close" onclick="rsLocationPicker.hide()">&times;</button>
+  </div>
+  <div class="geo-search">
+    <input type="text" id="rs-geo-input" placeholder="Search for a place..." autocomplete="off">
+    <div class="geo-results" id="rs-geo-results"></div>
+  </div>
+  <div class="map-clip"><div id="rs-pick-map"></div></div>
+  <div class="resize-handle rh-right" data-dir="right"></div>
+  <div class="resize-handle rh-bottom" data-dir="bottom"></div>
+  <div class="resize-handle rh-left" data-dir="left"></div>
+  <div class="resize-handle rh-br" data-dir="br"></div>
+  <div class="resize-handle rh-bl" data-dir="bl"></div>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block scripts %}
@@ -371,8 +496,11 @@ const roadsideIcon = L.divIcon({
   iconAnchor: [11, 11],
 });
 
-ROADSIDE.forEach(s => {
-  const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
+// id -> { marker, stop }, so an inline edit/delete can find and re-render the
+// exact marker without reloading. Kept in sync with roadsideMarkers (search).
+const roadsideById = new Map();
+
+function roadsidePopupHtml(s) {
   let popup = `<strong>${escapeHtml(s.name)}</strong>`;
   const place = [s.town, s.state].filter(Boolean).join(', ');
   if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
@@ -399,10 +527,25 @@ ROADSIDE.forEach(s => {
     }
   }
   if (s.maps_url) popup += `<br><a href="${s.maps_url}" target="_blank" rel="noopener">Directions &#8599;</a>`;
-  marker.bindPopup(popup, { maxWidth: 320 });
+  if (IS_ADMIN && s.id != null) {
+    popup += `<div class="rs-popup-admin">`
+      + `<a onclick="rsOpenModal('edit', ${s.id})">edit</a>`
+      + `<a class="rs-del" onclick="rsDelete(${s.id})">delete</a></div>`;
+  }
+  return popup;
+}
+
+function addRoadsideMarker(s) {
+  const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
+  marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320 });
   roadsideLayer.addLayer(marker);
-  roadsideMarkers.push({ marker, stop: s });   // for the name search
-});
+  const rec = { marker, stop: s };
+  roadsideMarkers.push(rec);
+  if (s.id != null) roadsideById.set(s.id, rec);
+  return rec;
+}
+
+ROADSIDE.forEach(addRoadsideMarker);
 roadsideLayer.addTo(map);  // shown by default; users can toggle it off
 
 // "Campgrounds" master toggle, wired as a layer-control overlay. The dummy layer
@@ -842,20 +985,25 @@ applyVisibility();
   let sel = -1;     // keyboard-highlighted index
 
   // Unified searchable pool: campgrounds + roadside stops. Each entry carries the
-  // marker, display name, secondary text, and a lat/lng to fly to.
-  const pool = markers.map(({ marker, cg }) => ({
+  // marker, display name, secondary text, and a lat/lng to fly to. Campgrounds
+  // are static here, but roadside stops can be added/edited/deleted inline, so
+  // their portion is recomputed per search (roadsidePool) to stay current.
+  const cgPool = markers.map(({ marker, cg }) => ({
     marker,
     name: cg.name,
     sub: cg.state || '',
     ll: cg.location.split(',').map(parseFloat),
     isStop: false,
-  })).concat(roadsideMarkers.map(({ marker, stop }) => ({
-    marker,
-    name: stop.name,
-    sub: [stop.town, stop.state].filter(Boolean).join(', '),
-    ll: [stop.lat, stop.lng],
-    isStop: true,
-  })));
+  }));
+  function roadsidePool() {
+    return roadsideMarkers.map(({ marker, stop }) => ({
+      marker,
+      name: stop.name,
+      sub: [stop.town, stop.state].filter(Boolean).join(', '),
+      ll: [stop.lat, stop.lng],
+      isStop: true,
+    }));
+  }
 
   function close() {
     resultsEl.classList.remove('open');
@@ -879,7 +1027,7 @@ applyVisibility();
     const q = input.value.trim().toLowerCase();
     if (!q) { close(); return; }
     const tokens = q.split(/\s+/);
-    const matches = pool.filter(p => {
+    const matches = cgPool.concat(roadsidePool()).filter(p => {
       const hay = (p.name + ' ' + p.sub).toLowerCase();
       return tokens.every(t => hay.includes(t));
     }).slice(0, 12);
@@ -976,4 +1124,156 @@ function trimmedBounds(coords, frac) {
   );
 }
 </script>
+
+{% if is_admin %}
+<!-- Admin: inline create/edit/delete of roadside stops. Loaded after the main
+     map script so it can reference its top-level bindings (map, roadsideMarkers,
+     roadsideById, addRoadsideMarker, roadsidePopupHtml, HOME). -->
+<script src="/static/map-picker.js"></script>
+<script>
+(function() {
+  // "Add roadside stop" map control (topleft, under the search + locate buttons).
+  const addControl = L.control({ position: 'topleft' });
+  addControl.onAdd = function() {
+    const div = L.DomUtil.create('div', 'leaflet-bar rs-add');
+    const link = L.DomUtil.create('a', '', div);
+    link.href = '#';
+    link.title = 'Add a roadside stop';
+    link.setAttribute('aria-label', 'Add a roadside stop');
+    link.innerHTML = '🌳';
+    L.DomEvent.disableClickPropagation(div);
+    L.DomEvent.on(link, 'click', function(e) {
+      L.DomEvent.preventDefault(e);
+      window.rsOpenModal('add');
+    });
+    return div;
+  };
+  addControl.addTo(map);
+
+  // Shared location picker (same factory the campground manage page uses).
+  const defaultView = (HOME && HOME.length === 2) ? HOME : [39.5, -98.35];
+  const rsLocationPicker = createMapPicker({
+    containerId: 'rs-map-container',
+    mapId: 'rs-pick-map',
+    headerId: 'rs-map-header',
+    searchId: 'rs-geo-input',
+    resultsId: 'rs-geo-results',
+    defaultView: defaultView,
+    onPick: function(lat, lng) {
+      document.getElementById('rs-location').value = lat.toFixed(6) + ',' + lng.toFixed(6);
+    }
+  });
+  window.rsLocationPicker = rsLocationPicker;   // referenced by the picker's close button
+  window.rsPickOnMap = function() {
+    rsLocationPicker.show(document.getElementById('rs-location').value);
+  };
+
+  const backdrop = document.getElementById('rs-modal-backdrop');
+  const FIELD_IDS = ['name', 'town', 'state', 'location', 'stop_type', 'hours',
+                     'notes', 'phone', 'website', 'google_maps_url'];
+  const setField = (id, val) => { document.getElementById('rs-' + id).value = val == null ? '' : val; };
+  const getField = (id) => document.getElementById('rs-' + id).value.trim();
+
+  window.rsOpenModal = function(mode, id) {
+    FIELD_IDS.forEach(f => setField(f, ''));
+    const delBtn = document.getElementById('rs-delete-btn');
+    if (mode === 'edit') {
+      const rec = roadsideById.get(id);
+      if (!rec) { window.toast('Stop not found'); return; }
+      const s = rec.stop;
+      document.getElementById('rs-id').value = id;
+      setField('name', s.name); setField('town', s.town); setField('state', s.state);
+      setField('location', (s.lat != null && s.lng != null) ? s.lat + ',' + s.lng : '');
+      setField('stop_type', s.stop_type); setField('hours', s.hours);
+      setField('notes', s.notes); setField('phone', s.phone); setField('website', s.website);
+      setField('google_maps_url', s.maps_url);
+      document.getElementById('rs-modal-title').textContent = 'Edit roadside stop';
+      delBtn.style.display = '';
+    } else {
+      document.getElementById('rs-id').value = '';
+      document.getElementById('rs-modal-title').textContent = 'Add roadside stop';
+      delBtn.style.display = 'none';
+    }
+    backdrop.classList.add('open');
+    document.getElementById('rs-name').focus();
+  };
+
+  window.rsCloseModal = function() {
+    backdrop.classList.remove('open');
+    rsLocationPicker.hide();
+  };
+  // Click on the dim area outside the modal card closes it.
+  backdrop.addEventListener('click', e => { if (e.target === backdrop) window.rsCloseModal(); });
+
+  window.rsSave = function() {
+    const name = getField('name');
+    if (!name) { window.toast('Name is required'); return; }
+    const location = getField('location');
+    if (!location) { window.toast('Location is required — use “Pick on map”'); return; }
+    const id = document.getElementById('rs-id').value;
+    const editing = !!id;
+    const payload = {
+      name, location,
+      town: getField('town'), state: getField('state'),
+      stop_type: getField('stop_type'), hours: getField('hours'),
+      notes: getField('notes'), phone: getField('phone'),
+      website: getField('website'), google_maps_url: getField('google_maps_url'),
+    };
+    const saveBtn = document.getElementById('rs-save-btn');
+    saveBtn.disabled = true;
+    fetch(editing ? '/api/roadside/' + id : '/api/roadside', {
+      method: editing ? 'PUT' : 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }).then(r => r.json().then(j => ({ ok: r.ok, j })))
+      .then(({ ok, j }) => {
+        if (!ok) { window.toast(j.error || 'Save failed'); return; }
+        rsApplyStop(j.stop, !editing);
+        window.rsCloseModal();
+        window.toast(editing ? 'Stop updated' : 'Stop added');
+      })
+      .catch(() => window.toast('Save failed'))
+      .finally(() => { saveBtn.disabled = false; });
+  };
+
+  window.rsDelete = function(id) {
+    if (id == null) id = parseInt(document.getElementById('rs-id').value, 10);
+    if (!id) return;
+    const rec = roadsideById.get(id);
+    const name = rec ? rec.stop.name : 'this stop';
+    if (!confirm('Delete “' + name + '”? This cannot be undone.')) return;
+    fetch('/api/roadside/' + id, { method: 'DELETE' })
+      .then(r => r.json().then(j => ({ ok: r.ok, j })))
+      .then(({ ok, j }) => {
+        if (!ok) { window.toast(j.error || 'Delete failed'); return; }
+        removeRoadsideMarker(id);
+        window.rsCloseModal();
+        window.toast('Stop deleted');
+      })
+      .catch(() => window.toast('Delete failed'));
+  };
+
+  // Reflect a saved stop on the map without a reload: add a new marker, or
+  // update the existing one's position + popup in place (keeps the search pool
+  // current since it reads the live rec.stop).
+  function rsApplyStop(stop, isNew) {
+    if (isNew) { addRoadsideMarker(stop); return; }
+    const rec = roadsideById.get(stop.id);
+    if (!rec) { addRoadsideMarker(stop); return; }
+    Object.assign(rec.stop, stop);
+    rec.marker.setLatLng([stop.lat, stop.lng]);
+    rec.marker.setPopupContent(roadsidePopupHtml(rec.stop));
+  }
+
+  function removeRoadsideMarker(id) {
+    const rec = roadsideById.get(id);
+    if (!rec) return;
+    roadsideLayer.removeLayer(rec.marker);
+    roadsideById.delete(id);
+    const i = roadsideMarkers.indexOf(rec);
+    if (i >= 0) roadsideMarkers.splice(i, 1);
+  }
+})();
+</script>
+{% endif %}
 {% endblock %}

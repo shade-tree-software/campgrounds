@@ -806,44 +806,72 @@ def _map_config():
     return home, family
 
 
-def _load_roadside():
-    """Load roadside picnic / stretch-break stops for the campground map.
+def _load_roadside_raw():
+    """Raw roadside stop list (full stored fields, incl. `id`) for CRUD.
 
     These are leg-stretch spots (small-town parks, roadside picnic areas, rest
     areas) — distinct from overnight campgrounds, so they live in their own
-    `roadside.json` and render as a separate, toggleable map layer rather than
-    in the campground database. The seed file carries route-planning artifacts
-    (`highway`, `approx_miles_from_start`) from how the list was generated; those
-    aren't relevant to a general map and are dropped here. Returns [] if the
-    file is missing or malformed so the map still renders.
+    `roadside.json`. Returns [] if the file is missing or malformed so the map
+    still renders.
     """
     try:
         with open(ROADSIDE_JSON) as f:
             data = json.load(f)
     except (FileNotFoundError, ValueError):
         return []
-    stops = data.get("stops", []) if isinstance(data, dict) else data
-    rows = []
-    for s in stops:
-        lat, lng = s.get("latitude"), s.get("longitude")
-        if lat is None or lng is None:
-            continue
-        rows.append({
-            "name": s.get("name", "Roadside stop"),
-            "town": s.get("town"),
-            "state": s.get("state"),
-            "lat": lat,
-            "lng": lng,
-            "notes": s.get("notes"),
-            "stop_type": s.get("stop_type"),
-            "hours": s.get("hours"),
-            "rating": s.get("rating"),
-            "rating_count": s.get("rating_count"),
-            "website": s.get("website"),
-            "phone": s.get("phone"),
-            "maps_url": s.get("google_maps_url"),
-        })
-    return rows
+    return data.get("stops", []) if isinstance(data, dict) else data
+
+
+def _save_roadside(stops):
+    """Persist the raw roadside stop list back to roadside.json.
+
+    Uses ensure_ascii=False so the em-dashes/accents in notes stay literal
+    (matching the seed file) instead of churning into \\uXXXX escapes.
+    """
+    with open(ROADSIDE_JSON, "w", encoding="utf-8") as f:
+        json.dump({"stops": stops}, f, indent=2, ensure_ascii=False)
+        f.write("\n")
+
+
+def _roadside_view(s):
+    """Map a raw roadside entry to the shape the campground map consumes.
+
+    The seed file carries route-planning artifacts (`highway`,
+    `approx_miles_from_start`) from how the list was generated; those aren't
+    relevant to a general map and are dropped here. `google_maps_url` is
+    surfaced as `maps_url`, and `latitude`/`longitude` as `lat`/`lng`.
+    """
+    return {
+        "id": s.get("id"),
+        "name": s.get("name", "Roadside stop"),
+        "town": s.get("town"),
+        "state": s.get("state"),
+        "lat": s.get("latitude"),
+        "lng": s.get("longitude"),
+        "notes": s.get("notes"),
+        "stop_type": s.get("stop_type"),
+        "hours": s.get("hours"),
+        "rating": s.get("rating"),
+        "rating_count": s.get("rating_count"),
+        "website": s.get("website"),
+        "phone": s.get("phone"),
+        "maps_url": s.get("google_maps_url"),
+    }
+
+
+def _load_roadside():
+    """Roadside stops shaped for the campground map (drops coordinate-less rows)."""
+    return [_roadside_view(s) for s in _load_roadside_raw()
+            if s.get("latitude") is not None and s.get("longitude") is not None]
+
+
+def _parse_latlng(loc):
+    """Parse a 'lat,lng' string into (lat, lng) floats, or None if invalid."""
+    try:
+        lat, lng = [float(x) for x in (loc or "").split(",")[:2]]
+    except (ValueError, IndexError):
+        return None
+    return lat, lng
 
 
 # ── Trip routes ─────────────────────────────────────────────────────────────
@@ -1927,6 +1955,94 @@ def api_update_campground(cg_id):
             target[key] = val
 
     _save_json(CAMPGROUNDS_JSON, entries)
+    return jsonify({"ok": True})
+
+
+# ── Roadside stop CRUD (admin) ──────────────────────────────────────────────
+# Roadside picnic / stretch-break stops are edited inline on the campground map
+# (no dedicated manage page). Each route operates on the raw roadside.json and
+# returns the map-shaped view (`_roadside_view`) so the client can re-render the
+# affected marker without a reload. Optional string fields cleared in the form
+# are removed from the entry so the file stays clean.
+_ROADSIDE_OPT_FIELDS = ("town", "state", "stop_type", "hours", "notes",
+                        "website", "phone", "google_maps_url")
+
+
+@app.route('/api/roadside', methods=['POST'])
+def api_create_roadside():
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    name = (data.get("name") or "").strip()
+    if not name:
+        return jsonify({"error": "Name is required"}), 400
+    ll = _parse_latlng(data.get("location"))
+    if not ll:
+        return jsonify({"error": "A valid location (lat,lng) is required"}), 400
+
+    stops = _load_roadside_raw()
+    next_id = max((s.get("id", 0) for s in stops if isinstance(s.get("id"), int)),
+                  default=0) + 1
+    entry = {"id": next_id, "name": name}
+    for k in ("town", "state"):
+        v = (data.get(k) or "").strip()
+        if v:
+            entry[k] = v
+    entry["latitude"], entry["longitude"] = ll
+    for k in ("stop_type", "hours", "notes", "website", "phone", "google_maps_url"):
+        v = (data.get(k) or "").strip()
+        if v:
+            entry[k] = v
+    stops.append(entry)
+    _save_roadside(stops)
+    return jsonify({"ok": True, "id": next_id, "stop": _roadside_view(entry)})
+
+
+@app.route('/api/roadside/<int:stop_id>', methods=['PUT'])
+def api_update_roadside(stop_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+
+    stops = _load_roadside_raw()
+    target = next((s for s in stops if s.get("id") == stop_id), None)
+    if not target:
+        return jsonify({"error": "Roadside stop not found"}), 404
+
+    if "name" in data:
+        nm = (data.get("name") or "").strip()
+        if not nm:
+            return jsonify({"error": "Name cannot be empty"}), 400
+        target["name"] = nm
+    if "location" in data:
+        ll = _parse_latlng(data.get("location"))
+        if not ll:
+            return jsonify({"error": "Invalid location"}), 400
+        target["latitude"], target["longitude"] = ll
+    for k in _ROADSIDE_OPT_FIELDS:
+        if k in data:
+            v = (data.get(k) or "").strip()
+            if v:
+                target[k] = v
+            else:
+                target.pop(k, None)
+
+    _save_roadside(stops)
+    return jsonify({"ok": True, "stop": _roadside_view(target)})
+
+
+@app.route('/api/roadside/<int:stop_id>', methods=['DELETE'])
+def api_delete_roadside(stop_id):
+    denied = _require_admin()
+    if denied:
+        return denied
+    stops = _load_roadside_raw()
+    remaining = [s for s in stops if s.get("id") != stop_id]
+    if len(remaining) == len(stops):
+        return jsonify({"error": "Roadside stop not found"}), 404
+    _save_roadside(remaining)
     return jsonify({"ok": True})
 
 
