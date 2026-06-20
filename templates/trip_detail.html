@@ -601,6 +601,17 @@
     background: rgba(255,255,255,.15);
   }
 
+  /* Short desktop screens (e.g. 1366×768): pair with base.html's short-screen
+     trim of the navy header so the two stacked bars don't dominate a 768px
+     viewport. Padding + title shrink, the meta line stays (no info lost).
+     --trip-header-height is measured from the rendered height (map.js), so the
+     sticky map offsets follow. >700px keeps the mobile block below untouched. */
+  @media (min-width: 701px) and (max-height: 820px) {
+    .trip-header { padding: .4rem 2rem; }
+    .trip-header h1 { font-size: 1.3rem; margin-bottom: .1rem; }
+    .trip-header .meta { font-size: .82rem; gap: 1rem; }
+  }
+
   @media (max-width: 700px) {
     .trip-header {
       padding: .5rem .75rem;

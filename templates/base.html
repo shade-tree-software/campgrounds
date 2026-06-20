@@ -122,6 +122,19 @@
      single-line layout (with margin-left:auto on Login/Logout). */
   .nav-collapse { display: contents; }
 
+  /* Short desktop screens (e.g. 1366×768 laptops). The full-padding navy
+     header + nav bar eat a large slice of a 768px-tall viewport. Trim the
+     vertical padding and title size — no content is dropped, only whitespace
+     and a couple of font points. --site-top-height is measured from the
+     rendered height (see the IIFE below), so sticky offsets follow along.
+     Gated to >700px so the mobile hamburger layout (≤700px) is untouched. */
+  @media (min-width: 701px) and (max-height: 820px) {
+    header { padding: .4rem 2rem; }
+    header h1 { font-size: 1.3rem; }
+    .stats { font-size: .82rem; gap: 1rem; }
+    nav { padding: .2rem 2rem; }
+  }
+
   /* Constrain Leaflet popups on narrow viewports so they don't spill off
      the right edge — Leaflet's auto-pan can't help when the popup itself
      is wider than the screen. */

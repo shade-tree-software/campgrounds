@@ -224,6 +224,28 @@
     transition: filter .2s, transform .15s;
   }
 
+  /* Short-but-wide desktop (e.g. 1366×768). A square map sized off the short
+     viewport height (100vh − 180px) leaves a wide band of unused horizontal
+     space that the photo stacks stretch into — giving small map + letterboxed
+     (wide, short) photo slots. Here we drop the 1:1 square: the map fills the
+     row height as a landscape rectangle and the photo stacks pin to a slim
+     fixed-ish width so the map claims the surplus width. The map-col min-width
+     floors the map at the square's size, so narrower desktop windows just fall
+     back to today's square instead of going portrait; .map-section's 1400px
+     max-width caps how wide the map can get on very wide screens. */
+  @media (min-width: 901px) and (max-height: 900px) {
+    .map-col {
+      flex: 1 1 auto;
+      width: auto;
+      min-width: min(calc(100vh - 180px - var(--otd-height, 0px)), 900px);
+    }
+    .map-container {
+      aspect-ratio: auto;
+      height: calc(100vh - 180px - var(--otd-height, 0px));
+    }
+    .photo-stack { flex: 0 1 240px; }
+  }
+
   @media (max-width: 900px) {
     /* Tablet portrait & mobile: stack vertically — map on top, one
        horizontal row of photos below. The right photo column is
