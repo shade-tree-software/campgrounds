@@ -327,7 +327,12 @@ function ownerLabel(v) {
 // ── Build map ─────────────────────────────────────────────────────────────
 // zoomControl: false — the +/- buttons are dropped (pinch / scroll / double-click
 // still zoom), leaving the top-left corner clear for the search box.
-const map = L.map('campground-map', { zoomControl: false });
+// preferCanvas: render the ~thousands of campground circleMarkers onto a single
+// <canvas> instead of one SVG DOM node each. SVG bogs down painting/repainting
+// when zoomed out with every marker in view; canvas handles thousands of dots
+// far faster. Clicks, popups, setStyle, and add/remove all work unchanged; the
+// home/family/geolocation divIcon markers are DOM-based and unaffected.
+const map = L.map('campground-map', { zoomControl: false, preferCanvas: true });
 const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
   maxZoom: 18,
@@ -513,9 +518,9 @@ function applyCampgroundsToggle() {
   if (ownerEl) ownerEl.style.display = disp;
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
-// circleMarker stays in the SVG layer and still captures clicks (its popup
-// would open on a "hidden" marker), so filtered-out campgrounds must actually
-// leave the map to be truly non-interactive.
+// circleMarker stays on the map (canvas-rendered) and still captures clicks
+// (its popup would open on a "hidden" marker), so filtered-out campgrounds must
+// actually leave the map to be truly non-interactive.
 function applyVisibility() {
   markers.forEach(({ marker, cg }) => {
     const vis = markerVisible(cg);
