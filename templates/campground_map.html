@@ -93,7 +93,12 @@
        its whole placeholder. When the layer box is open (body.cg-layers-open,
        toggled in JS) the search shrinks back so it doesn't slide under the
        expanded panel. */
-    .cg-search { width: calc(100vw - 74px); }
+    /* -66px (was -74px) widens the box ~8px so the placeholder's trailing
+       ellipsis isn't clipped on narrow phones; it still stops ~2px short of
+       the top-right layer icon. The reduced input right padding gives the "…"
+       a few more px without moving the left-aligned text. */
+    .cg-search { width: calc(100vw - 66px); }
+    .cg-search input { padding-right: .45rem; }
     body.cg-layers-open .cg-search { width: 11rem; }
 
     /* Bottom controls + attribution layout (bottom → top: attribution, then the
