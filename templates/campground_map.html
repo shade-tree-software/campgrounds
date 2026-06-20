@@ -573,12 +573,75 @@ const roadsideIcon = L.divIcon({
 // exact marker without reloading. Kept in sync with roadsideMarkers (search).
 const roadsideById = new Map();
 
+// ── Distance-to-roadside-stops (active once "my location" is set) ───────────
+// When the user activates the location dot we annotate each roadside stop with
+// its straight-line distance and list the nearest few in the location popup.
+let userLocation = null;  // { lat, lng } or null until located
+const NEARBY_MAX_MILES = 100;  // location popup lists only stops within this radius
+
+function haversineMiles(lat1, lng1, lat2, lng2) {
+  const R = 3958.8;  // earth radius, miles
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1), dLng = toRad(lng2 - lng1);
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+const fmtMiles = d => (d < 10 ? d.toFixed(1) : Math.round(d)) + ' mi';
+
+// Re-render every roadside popup so its distance line reflects userLocation.
+function refreshRoadsidePopups() {
+  roadsideMarkers.forEach(({ marker, stop }) => marker.setPopupContent(roadsidePopupHtml(stop)));
+}
+
+// Popup body for the "You are here" marker — the location label plus a list of
+// the nearest roadside stops (clickable to fly to them).
+function locationPopupHtml(accTxt) {
+  let html = `<strong>You are here</strong>${accTxt}`;
+  if (userLocation && roadsideMarkers.length) {
+    const near = roadsideMarkers
+      .map(({ stop }) => ({ stop, d: haversineMiles(userLocation.lat, userLocation.lng, stop.lat, stop.lng) }))
+      .filter(x => x.d <= NEARBY_MAX_MILES)
+      .sort((a, b) => a.d - b.d)
+      .slice(0, 5);
+    html += `<div style="margin-top:6px;font-size:.85em;line-height:1.55;">`;
+    if (near.length) {
+      html += `<div style="color:#2e7d32;font-weight:600;">Nearest roadside stops `
+        + `<span style="color:#999;font-weight:400;">(straight-line)</span></div>`;
+      near.forEach(({ stop, d }) => {
+        const place = [stop.town, stop.state].filter(Boolean).join(', ');
+        html += `<a onclick="cgFlyToStop(${stop.id})" style="display:block;color:#002868;cursor:pointer;">`
+          + `🌳 ${escapeHtml(stop.name)}`
+          + (place ? ` <span style="color:#888;">(${escapeHtml(place)})</span>` : '')
+          + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)}</span></a>`;
+      });
+    } else {
+      html += `<span style="color:#888;">No roadside stops within ${NEARBY_MAX_MILES} mi.</span>`;
+    }
+    html += `</div>`;
+  }
+  return html;
+}
+
+// Fly to a roadside stop chosen from the location popup's nearest list.
+window.cgFlyToStop = function(id) {
+  const rec = roadsideById.get(id);
+  if (!rec) return;
+  if (!map.hasLayer(rec.marker)) rec.marker.addTo(map);  // show it even if the layer is toggled off
+  map.setView([rec.stop.lat, rec.stop.lng], Math.max(map.getZoom(), 12));
+  rec.marker.openPopup();
+};
+
 function roadsidePopupHtml(s) {
   let popup = `<strong>${escapeHtml(s.name)}</strong>`;
   const place = [s.town, s.state].filter(Boolean).join(', ');
   if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
   popup += `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
   if (s.stop_type) popup += ` <span style="color:#777;font-size:.85em;font-style:italic;">&middot; ${escapeHtml(s.stop_type)}</span>`;
+  if (userLocation && s.lat != null && s.lng != null) {
+    const d = haversineMiles(userLocation.lat, userLocation.lng, s.lat, s.lng);
+    popup += `<br><span style="color:#1a73e8;font-size:.85em;font-weight:600;">&#128205; ${fmtMiles(d)} away</span>`;
+  }
   if (s.rating) {
     popup += `<br><span style="color:#555;font-size:.85em;">&#9733; ${s.rating}`;
     if (s.rating_count) popup += ` (${s.rating_count})`;
@@ -694,8 +757,10 @@ locateControl.onAdd = function() {
         icon: L.divIcon({ className: '', html: '<div class="cg-here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
         zIndexOffset: 1100,
       }).addTo(map);
+      userLocation = { lat, lng };
+      refreshRoadsidePopups();   // add/update the "X mi away" line on each stop
       const accTxt = acc ? ` (±${Math.round(acc)} m)` : '';
-      locationMarker.bindPopup(`<strong>You are here</strong>${accTxt}`).openPopup();
+      locationMarker.bindPopup(locationPopupHtml(accTxt), { maxWidth: 280 }).openPopup();
       map.setView(ll, Math.max(map.getZoom(), 13));
     }, function(err) {
       link.classList.remove('locating');
