@@ -1,3 +1,4 @@
+import argparse
 import json
 import os
 import re
@@ -4223,6 +4224,11 @@ if __name__ == '__main__':
         # Pass --http to skip TLS (HTTPS is on by default so mobile devices
         # on the LAN can use Geolocation, which requires a secure origin).
         # `ssl_context='adhoc'` requires `pyopenssl`.
-        use_https = '--http' not in sys.argv
-        ssl_context = 'adhoc' if use_https else None
-        app.run(debug=True, host='0.0.0.0', port=5001, ssl_context=ssl_context)
+        parser = argparse.ArgumentParser(description="Run the EKKO Trips dev server.")
+        parser.add_argument('--port', type=int, default=5001,
+                            help="Port to listen on (default: 5001).")
+        parser.add_argument('--http', action='store_true',
+                            help="Serve plain HTTP instead of the default self-signed HTTPS.")
+        args = parser.parse_args()
+        ssl_context = None if args.http else 'adhoc'
+        app.run(debug=True, host='0.0.0.0', port=args.port, ssl_context=ssl_context)
