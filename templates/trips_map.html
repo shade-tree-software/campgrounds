@@ -137,13 +137,22 @@
 
   /* Center column holds the (optional) latest-trip banner stacked on top of
      the map. Owns the width constraint so the banner spans only the map's
-     width — never the photo stacks. */
+     width — never the photo stacks.
+       The square map is sized so the column fits the viewport without scroll:
+     100vh minus the measured site header (--site-top-height, published by
+     base.html and re-measured on resize), minus ~80px of this page's own
+     chrome (.map-section top padding + latest-trip banner + column gap + a
+     little bottom breathing room), minus the on-this-day banner
+     (--otd-height). Keying off the *measured* header means when it shrinks on
+     short desktops (base.html's short-screen trim) the map grows to fill the
+     reclaimed space instead of leaving dead whitespace at the bottom. The
+     fallback 92px ≈ the full-size header so first paint isn't oversized. */
   .map-col {
     display: flex;
     flex-direction: column;
     gap: .65rem;
     flex: 0 0 auto;
-    width: min(calc(100vh - 180px - var(--otd-height, 0px)), 900px, 100%);
+    width: min(calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)), 900px, 100%);
   }
 
   .map-container {
@@ -225,9 +234,10 @@
   }
 
   /* Short-but-wide desktop (e.g. 1366×768). A square map sized off the short
-     viewport height (100vh − 180px) leaves a wide band of unused horizontal
-     space that the photo stacks stretch into — giving small map + letterboxed
-     (wide, short) photo slots. Here we drop the 1:1 square: the map fills the
+     viewport height (100vh minus the header + page chrome) leaves a wide band
+     of unused horizontal space that the photo stacks stretch into — giving a
+     small map + letterboxed (wide, short) photo slots. Here we drop the 1:1
+     square: the map fills the
      row height as a landscape rectangle and the photo stacks pin to a slim
      fixed-ish width so the map claims the surplus width. The map-col min-width
      floors the map at the square's size, so narrower desktop windows just fall
@@ -237,11 +247,11 @@
     .map-col {
       flex: 1 1 auto;
       width: auto;
-      min-width: min(calc(100vh - 180px - var(--otd-height, 0px)), 900px);
+      min-width: min(calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)), 900px);
     }
     .map-container {
       aspect-ratio: auto;
-      height: calc(100vh - 180px - var(--otd-height, 0px));
+      height: calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px));
     }
     .photo-stack { flex: 0 1 240px; }
   }
