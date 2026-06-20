@@ -229,6 +229,11 @@ let sortField = 'name';
 let sortAsc = true;
 let editingId = null;  // id of the row being edited
 let addingNew = false;
+// Cap on how many table rows are materialized at once. Rendering thousands of
+// rows (and rebuilding them on every keystroke) is what made this page slow, so
+// we only DOM-render the first RENDER_CAP of the filtered/sorted set and prompt
+// the user to narrow with search. The row being edited is always kept rendered.
+const RENDER_CAP = 150;
 
 // ── Location map picker ──────────────────────────────────────────────────
 // The picker writes to whichever input was most recently focused (ed-location
@@ -327,8 +332,13 @@ function render() {
     return 0;
   });
 
-  document.getElementById('count-info').textContent =
-    query ? `${rows.length} of ${campgrounds.length} campgrounds` : `${campgrounds.length} campgrounds`;
+  const total = rows.length;
+  let countText = query ? `${total} of ${campgrounds.length} campgrounds`
+                        : `${campgrounds.length} campgrounds`;
+  if (total > RENDER_CAP) {
+    countText += ` · showing first ${RENDER_CAP} — ${query ? 'refine search' : 'search'} to see more`;
+  }
+  document.getElementById('count-info').textContent = countText;
 
   // Update sort arrows
   document.querySelectorAll('.sort-arrow').forEach(el => el.textContent = '');
@@ -342,7 +352,15 @@ function render() {
     html += newRowHtml();
   }
 
-  for (const c of rows) {
+  // Only materialize the first RENDER_CAP rows. Keep the row being edited in the
+  // slice even if it sorts past the cap, so an in-progress edit never vanishes.
+  let shown = rows.slice(0, RENDER_CAP);
+  if (editingId != null && !shown.some(c => c.id === editingId)) {
+    const editc = rows.find(c => c.id === editingId);
+    if (editc) shown = shown.concat(editc);
+  }
+
+  for (const c of shown) {
     if (editingId === c.id) {
       html += editRowHtml(c);
     } else {
@@ -474,7 +492,14 @@ function sortBy(field) {
   render();
 }
 
-function filterTable() { render(); }
+// Debounce the search box so we re-render after typing settles, not on every
+// keystroke (each render rebuilds the table). render() reads the live input
+// value, so a trailing call reflects the final text.
+let searchTimer = null;
+function filterTable() {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(render, 150);
+}
 
 function startEdit(id) {
   addingNew = false;
