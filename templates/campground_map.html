@@ -301,6 +301,9 @@
     font-size: .85rem; color: var(--navy); text-decoration: none;
   }
   .cq-more:hover { text-decoration: underline; }
+  /* Read-only auto-elevation line under the location field in the quick-edit. */
+  .cq-elev-row { margin-top: .3rem; font-size: .8rem; color: var(--gray); }
+  .cq-elev-auto { opacity: .65; }
   .rs-row { display: flex; gap: .6rem; }
   .rs-row .rs-field { flex: 1 1 0; min-width: 0; }
   .rs-loc { display: flex; gap: .4rem; align-items: center; }
@@ -413,6 +416,8 @@
         <input type="text" id="cq-location" autocomplete="off" placeholder="lat,lng">
         <button type="button" onclick="cgPickOnMap()">Pick on map</button>
       </div>
+      <!-- Read-only; refreshes when the location changes (see cgRefetchElevation). -->
+      <div class="cq-elev-row">Elevation: <span id="cq-elev-display">—</span> <span class="cq-elev-auto">(auto)</span></div>
     </div>
     <div class="rs-field">
       <label for="cq-waterfront">Proximity to water</label>
@@ -1373,6 +1378,7 @@ function trimmedBounds(coords, frac) {
     defaultView: defaultView,
     onPick: function(lat, lng) {
       document.getElementById('cq-location').value = lat.toFixed(6) + ',' + lng.toFixed(6);
+      cgRefetchElevation();   // a programmatic value change doesn't fire 'change'
     }
   });
   window.cgLocationPicker = cgLocationPicker;   // referenced by the picker's close button
@@ -1381,6 +1387,7 @@ function trimmedBounds(coords, frac) {
   };
 
   const backdrop = document.getElementById('cq-modal-backdrop');
+  const elevDisplay = document.getElementById('cq-elev-display');
   const wfSel = document.getElementById('cq-waterfront');
   WATERFRONT_OPTIONS.forEach(o => {
     const opt = document.createElement('option');
@@ -1389,6 +1396,46 @@ function trimmedBounds(coords, frac) {
   });
 
   let editOrigLocation = '';   // to detect a moved pin (→ refetch elevation)
+  let editOrigElevFeet = '';   // the entry's elevation when the modal opened
+  let cqElevMeters = null;     // latest fetched elevation (m), or null
+  let cqElevForLoc = '';       // the location string cqElevMeters belongs to
+
+  const LATLNG_RE = /^-?\d+(\.\d+)?\s*,\s*-?\d+(\.\d+)?$/;
+  const setElev = (txt) => { elevDisplay.textContent = txt; };
+
+  // Fetch elevation (meters) for a "lat,lng" string; resolves null on failure.
+  function fetchElevMeters(loc) {
+    const [lat, lng] = loc.split(',').map(s => s.trim());
+    return fetch('/api/elevation?lat=' + lat + '&lng=' + lng)
+      .then(r => r.json())
+      .then(d => (d && d.elevation_meters != null) ? d.elevation_meters : null)
+      .catch(() => null);
+  }
+
+  // Refresh the read-only elevation line for the current location field value.
+  // Back to the original location → show the original elevation; a new, valid
+  // location → fetch and show; invalid/partial text → leave as-is.
+  function cgRefetchElevation() {
+    const loc = document.getElementById('cq-location').value.trim();
+    if (loc === editOrigLocation) {
+      cqElevMeters = null; cqElevForLoc = '';
+      setElev(editOrigElevFeet !== '' ? editOrigElevFeet + ' ft' : '—');
+      return;
+    }
+    if (!LATLNG_RE.test(loc)) return;
+    setElev('updating…');
+    fetchElevMeters(loc).then(m => {
+      if (document.getElementById('cq-location').value.trim() !== loc) return;  // moved on
+      if (m != null) {
+        cqElevMeters = m; cqElevForLoc = loc;
+        setElev(Math.round(m * METERS_TO_FEET) + ' ft');
+      } else {
+        cqElevMeters = null; cqElevForLoc = '';
+        setElev('lookup failed');
+      }
+    });
+  }
+  document.getElementById('cq-location').addEventListener('change', cgRefetchElevation);
 
   window.cgQuickEdit = function(id) {
     const rec = cgById.get(id);
@@ -1403,6 +1450,9 @@ function trimmedBounds(coords, frac) {
     document.getElementById('cq-website').value = cg.website || '';
     document.getElementById('cq-more').href = '/campgrounds/manage?edit=' + id;
     editOrigLocation = cg.location || '';
+    editOrigElevFeet = (cg.elevation_feet != null && cg.elevation_feet !== '') ? cg.elevation_feet : '';
+    cqElevMeters = null; cqElevForLoc = '';
+    setElev(editOrigElevFeet !== '' ? editOrigElevFeet + ' ft' : '—');
     backdrop.classList.add('open');
     document.getElementById('cq-name').focus();
   };
@@ -1430,7 +1480,10 @@ function trimmedBounds(coords, frac) {
     const saveBtn = document.getElementById('cq-save-btn');
     saveBtn.disabled = true;
 
-    const finish = (extra) => {
+    // extra: fields to merge into the PUT (e.g. a refreshed elevation_meters).
+    // elevWarn: the pin moved but elevation couldn't be looked up — saved with
+    // the old elevation, so warn instead of the normal success toast.
+    const finish = (extra, elevWarn) => {
       const payload = Object.assign({}, fields, extra || {});
       fetch('/api/campgrounds/' + id, {
         method: 'PUT',
@@ -1441,22 +1494,28 @@ function trimmedBounds(coords, frac) {
           if (!ok) { window.toast(j.error || 'Save failed'); return; }
           cgApplyEdit(rec, payload);
           window.cgCloseModal();
-          window.toast('Campground updated');
+          if (elevWarn) {
+            window.toast('Saved — but the elevation lookup failed, so elevation was left unchanged.', 'error', { duration: 6000 });
+          } else {
+            window.toast('Campground updated', 'success');
+          }
         })
         .catch(() => window.toast('Save failed'))
         .finally(() => { saveBtn.disabled = false; });
     };
 
-    // Keep elevation consistent when the pin moves: refetch for the new coords
-    // (the quick-edit form doesn't show elevation; "More fields" does).
+    // Keep elevation consistent when the pin moves. Prefer the value already
+    // fetched for the read-only display; otherwise fetch now (and warn if that
+    // fails so a stale elevation isn't saved silently).
     if (location && location !== editOrigLocation) {
-      const [lat, lng] = location.split(',').map(s => s.trim());
-      fetch('/api/elevation?lat=' + lat + '&lng=' + lng)
-        .then(r => r.json())
-        .then(d => finish(d.elevation_meters != null ? { elevation_meters: d.elevation_meters } : {}))
-        .catch(() => finish({}));
+      if (cqElevMeters != null && cqElevForLoc === location) {
+        finish({ elevation_meters: cqElevMeters }, false);
+      } else {
+        fetchElevMeters(location).then(m =>
+          finish(m != null ? { elevation_meters: m } : {}, m == null));
+      }
     } else {
-      finish({});
+      finish({}, false);
     }
   };
 
