@@ -14,7 +14,7 @@
      tab bar). No card chrome, no page padding. */
   .map-section { margin: 0; padding: 0; }
 
-  .map-container { overflow: hidden; }
+  .map-container { overflow: hidden; position: relative; }
 
   /* Name search — a Leaflet control overlaid on the map (top-left, below the
      zoom buttons). The results dropdown is absolutely positioned within it. */
@@ -262,6 +262,40 @@
 
   /* Admin "add roadside stop" map control (tree-on-plus button). */
   .rs-add a { font-size: 18px; font-weight: 700; text-align: center; }
+  .rs-add a.active { background: #2e7d32; }   /* highlighted while aiming */
+
+  /* ── "Aim mode" for adding a roadside stop ─────────────────────────────
+     A pin fixed at the map centre + a bar: drag the map under the pin, then
+     "Place here". The pin/dot are pointer-events:none so they never block the
+     drag, and the bar sits at the bottom edge clear of the pin. */
+  .rs-aim { position: absolute; left: 50%; top: 50%; z-index: 1100; pointer-events: none; }
+  .rs-aim-pin {
+    position: absolute; left: 0; bottom: 0; transform: translate(-50%, -100%);
+    width: 34px; height: 34px; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4));
+  }
+  .rs-aim-dot {
+    position: absolute; left: 0; top: 0; width: 8px; height: 8px;
+    transform: translate(-50%, -50%); border-radius: 50%;
+    background: #2e7d32; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.3);
+  }
+  .rs-aim-bar {
+    position: absolute; left: 50%; bottom: 1rem; transform: translateX(-50%);
+    z-index: 1100; display: flex; align-items: center; gap: .55rem;
+    max-width: calc(100% - 1rem);
+    background: #fff; border-radius: 999px; box-shadow: 0 3px 14px rgba(0,0,0,.3);
+    padding: .35rem .4rem .35rem .9rem; font-size: .9rem; color: var(--navy);
+  }
+  .rs-aim-bar .rs-aim-hint { font-weight: 600; white-space: nowrap; }
+  .rs-aim-bar button {
+    border: none; border-radius: 999px; cursor: pointer;
+    padding: .45rem .9rem; font-size: .85rem; font-weight: 600; white-space: nowrap;
+  }
+  .rs-aim-bar .rs-aim-cancel { background: #eee; color: var(--gray); }
+  .rs-aim-bar .rs-aim-place { background: #2e7d32; color: #fff; }
+  @media (max-width: 500px) {
+    .rs-aim-bar .rs-aim-hint { display: none; }   /* buttons-only on small phones */
+    .rs-aim-bar { padding: .35rem .4rem; }
+  }
 
   /* ── Roadside edit modal (admin) ─────────────────────────────────────── */
   .rs-modal-backdrop {
@@ -358,6 +392,22 @@
 <div class="map-section">
   <div class="map-container">
     <div id="campground-map"></div>
+    {% if is_admin %}
+    <!-- Aim mode for adding a roadside stop: fixed centre pin + action bar. -->
+    <div class="rs-aim" id="rs-aim" style="display:none;" aria-hidden="true">
+      <svg class="rs-aim-pin" viewBox="0 0 24 24">
+        <path fill="#2e7d32" stroke="#fff" stroke-width="1.5"
+              d="M12 1.5c-3.9 0-7 3.1-7 7 0 5.2 7 14 7 14s7-8.8 7-14c0-3.9-3.1-7-7-7z"/>
+        <circle cx="12" cy="8.5" r="2.6" fill="#fff"/>
+      </svg>
+      <div class="rs-aim-dot"></div>
+    </div>
+    <div class="rs-aim-bar" id="rs-aim-bar" style="display:none;">
+      <span class="rs-aim-hint">Drag the map to position the pin</span>
+      <button type="button" class="rs-aim-cancel" onclick="rsCancelAim()">Cancel</button>
+      <button type="button" class="rs-aim-place" onclick="rsPlaceHere()">Place here</button>
+    </div>
+    {% endif %}
   </div>
 </div>
 
@@ -1306,6 +1356,8 @@ function trimmedBounds(coords, frac) {
 <script>
 (function() {
   // "Add roadside stop" map control (topleft, under the search + locate buttons).
+  // Clicking it enters "aim mode" — see rsBeginAim below.
+  let _rsAddLink = null;
   const addControl = L.control({ position: 'topleft' });
   addControl.onAdd = function() {
     const div = L.DomUtil.create('div', 'leaflet-bar rs-add');
@@ -1314,14 +1366,46 @@ function trimmedBounds(coords, frac) {
     link.title = 'Add a roadside stop';
     link.setAttribute('aria-label', 'Add a roadside stop');
     link.innerHTML = '🌳';
+    _rsAddLink = link;
     L.DomEvent.disableClickPropagation(div);
     L.DomEvent.on(link, 'click', function(e) {
       L.DomEvent.preventDefault(e);
-      window.rsOpenModal('add');
+      window.rsBeginAim();
     });
     return div;
   };
   addControl.addTo(map);
+
+  // ── Aim mode: drop a new stop by dragging the main map under a fixed centre
+  // pin, then "Place here" — no second map. The stop's location is just the
+  // map centre at confirm time; the edit form opens with it filled in.
+  let _rsAiming = false;
+  const _rsAim = document.getElementById('rs-aim');
+  const _rsAimBar = document.getElementById('rs-aim-bar');
+  window.rsBeginAim = function() {
+    if (_rsAiming) { window.rsCancelAim(); return; }   // toggle off on re-click
+    _rsAiming = true;
+    _rsAim.style.display = '';
+    _rsAimBar.style.display = '';
+    if (_rsAddLink) _rsAddLink.classList.add('active');
+  };
+  window.rsCancelAim = function() {
+    _rsAiming = false;
+    _rsAim.style.display = 'none';
+    _rsAimBar.style.display = 'none';
+    if (_rsAddLink) _rsAddLink.classList.remove('active');
+  };
+  window.rsPlaceHere = function() {
+    const c = map.getCenter();
+    window.rsCancelAim();
+    window.rsOpenModal('add');
+    document.getElementById('rs-location').value = c.lat.toFixed(6) + ',' + c.lng.toFixed(6);
+    rsFillFromReverseGeocode(c.lat, c.lng);   // name/town/state (empty only)
+  };
+  // Esc cancels aim mode on desktop (mobile uses the Cancel button).
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && _rsAiming) window.rsCancelAim();
+  });
 
   // Shared location picker (same factory the campground manage page uses).
   const defaultView = (HOME && HOME.length === 2) ? HOME : [39.5, -98.35];
