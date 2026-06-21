@@ -1089,8 +1089,19 @@ function _showPicker(target, fallbackLoc) {
   pickerTarget = target;
   const input = pickerTargetInput();
   const existing = (input && input.value.trim()) || '';
-  // If the user has already chosen a location, zoom in close so they can fine-
-  // tune it. The fallback (campground center) gets the looser default zoom.
+  // Event pickers open framed on the trip map's current view (center + zoom),
+  // so you can pick right where you're already looking — consistent with the
+  // campground map's pick-on-map. The existing point, if any, is still marked.
+  // Stay pickers keep their campground-seeded fallback (passed in by the
+  // caller), which is more useful than the whole-trip view for a campsite.
+  const isEvent = target.kind === 'event' || target.kind === 'event-modal';
+  if (isEvent && window.tripMap) {
+    const c = window.tripMap.getCenter();
+    eventLocationPicker.show(existing, window.tripMap.getZoom(), [c.lat, c.lng]);
+    return;
+  }
+  // Otherwise: zoom in close on an existing point to fine-tune it; else open at
+  // the fallback (campground center) at the looser default zoom.
   if (existing) {
     eventLocationPicker.show(existing, 17);
   } else {
