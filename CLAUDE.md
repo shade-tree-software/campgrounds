@@ -235,7 +235,7 @@ Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-widt
 
 ### Local HTTPS
 
-`ekko_trips_app.py`'s dev runner defaults to `app.run(ssl_context='adhoc')`, which generates a fresh self-signed cert each launch. This is required for browser features that need a secure origin — most importantly the Geolocation API used by the map picker's 📍 button. Pass `--http` on the command line to fall back to plain HTTP. The `adhoc` context requires `pyopenssl` in the venv. Production hosts (PythonAnywhere) handle TLS at the platform level and ignore this code path.
+`ekko_trips_app.py`'s dev runner serves HTTPS by default — required for browser features that need a secure origin, most importantly the Geolocation API used by the map picker's 📍 button. `_dev_ssl_context()` reuses a **persistent self-signed cert** at `trip_data/dev_cert.{crt,key}` (gitignored), generated once via Werkzeug's `make_ssl_devcert`. Persistence matters because `debug=True`'s auto-reloader restarts the process on every code change, and the old `ssl_context='adhoc'` minted a *new* cert each boot — so the browser exception you accepted no longer matched and the cert warning returned on every edit. With the stable cert you accept it once and it survives reloads. Falls back to `'adhoc'` if the cert can't be generated (needs `cryptography`/`pyopenssl` in the venv). Pass `--http` to fall back to plain HTTP (fine on `localhost`, which browsers treat as a secure context even over HTTP; LAN devices need the HTTPS path). Production hosts (PythonAnywhere) handle TLS at the platform level and ignore this code path.
 
 ## API Routes
 

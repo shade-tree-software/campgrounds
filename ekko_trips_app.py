@@ -4360,6 +4360,33 @@ def api_delete_campground(cg_id):
     return jsonify({"ok": True})
 
 
+def _dev_ssl_context():
+    """ssl_context for the dev server's app.run().
+
+    Reuse a persistent self-signed cert under trip_data/ (gitignored) so the
+    browser exception you accept keeps working across the debug reloader's
+    restarts. `'adhoc'` mints a brand-new cert on every boot, so the accepted
+    exception no longer matches and the cert warning returns on every code
+    change. Generated once via Werkzeug's make_ssl_devcert; falls back to
+    `'adhoc'` if that can't run (e.g. cryptography missing).
+    """
+    base = os.path.join(TRIP_DATA_DIR, "dev_cert")
+    cert_file, key_file = base + ".crt", base + ".key"
+    if os.path.exists(cert_file) and os.path.exists(key_file):
+        return (cert_file, key_file)
+    try:
+        from werkzeug.serving import make_ssl_devcert
+        os.makedirs(TRIP_DATA_DIR, exist_ok=True)
+        make_ssl_devcert(base, host="localhost")
+        print(f"Generated a persistent dev cert at {cert_file} — accept it "
+              "once in the browser; it survives reloads.")
+        return (cert_file, key_file)
+    except Exception as e:
+        print(f"Could not generate a persistent dev cert ({e}); falling back "
+              "to a fresh adhoc cert each restart.")
+        return "adhoc"
+
+
 if __name__ == '__main__':
     if len(sys.argv) >= 2 and sys.argv[1] == "create-admin":
         import getpass
@@ -4376,12 +4403,13 @@ if __name__ == '__main__':
     else:
         # Pass --http to skip TLS (HTTPS is on by default so mobile devices
         # on the LAN can use Geolocation, which requires a secure origin).
-        # `ssl_context='adhoc'` requires `pyopenssl`.
+        # HTTPS uses a persistent self-signed cert (see _dev_ssl_context) so the
+        # browser exception survives reloads; it requires `cryptography`.
         parser = argparse.ArgumentParser(description="Run the EKKO Trips dev server.")
         parser.add_argument('--port', type=int, default=5001,
                             help="Port to listen on (default: 5001).")
         parser.add_argument('--http', action='store_true',
                             help="Serve plain HTTP instead of the default self-signed HTTPS.")
         args = parser.parse_args()
-        ssl_context = None if args.http else 'adhoc'
+        ssl_context = None if args.http else _dev_ssl_context()
         app.run(debug=True, host='0.0.0.0', port=args.port, ssl_context=ssl_context)
