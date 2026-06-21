@@ -850,8 +850,6 @@ def _roadside_view(s):
         "lat": s.get("latitude"),
         "lng": s.get("longitude"),
         "notes": s.get("notes"),
-        "stop_type": s.get("stop_type"),
-        "hours": s.get("hours"),
         "rating": s.get("rating"),
         "rating_count": s.get("rating_count"),
         "website": s.get("website"),
@@ -1984,7 +1982,7 @@ def api_update_campground(cg_id):
 # returns the map-shaped view (`_roadside_view`) so the client can re-render the
 # affected marker without a reload. Optional string fields cleared in the form
 # are removed from the entry so the file stays clean.
-_ROADSIDE_OPT_FIELDS = ("town", "state", "stop_type", "hours", "notes",
+_ROADSIDE_OPT_FIELDS = ("town", "state", "notes",
                         "website", "phone", "google_maps_url")
 
 
@@ -2010,7 +2008,7 @@ def api_create_roadside():
         if v:
             entry[k] = v
     entry["latitude"], entry["longitude"] = ll
-    for k in ("stop_type", "hours", "notes", "website", "phone", "google_maps_url"):
+    for k in ("notes", "website", "phone", "google_maps_url"):
         v = (data.get(k) or "").strip()
         if v:
             entry[k] = v
@@ -2195,6 +2193,12 @@ _ON_ROAD_HIGHWAY_TYPES = {
 }
 
 
+# Park-like `leisure=*` kinds guaranteed a place in the nearby-places list
+# (parks are the point of the picnic/roadside-stop feature).
+_PARK_KINDS = ("leisure=park", "leisure=nature_reserve", "leisure=garden",
+               "leisure=recreation_ground", "leisure=common")
+
+
 def _overpass_named_pois(lat, lng, radius_m, limit=20):
     """Query Overpass for named non-road OSM features within `radius_m`
     of (lat,lng). Returns up to `limit` results sorted by distance, each
@@ -2289,7 +2293,20 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
                 "kind": kind,
             })
         hits.sort(key=lambda h: h["distance_m"])
-        return hits[:limit]
+        result = hits[:limit]
+        # Parks matter for picnic / roadside stops, but a town's closer shops and
+        # restaurants can crowd them out of the distance-capped list. When
+        # returning a list (not the single-result reverse-geocode fallback), make
+        # sure the nearest few parks surface even if they sorted past the cap;
+        # keep the merged list distance-ordered.
+        if limit > 1:
+            have = {id(h) for h in result}
+            extra_parks = [h for h in hits
+                           if h["kind"] in _PARK_KINDS and id(h) not in have]
+            if extra_parks:
+                result = sorted(result + extra_parks[:3],
+                                key=lambda h: h["distance_m"])
+        return result
     except Exception:
         return []
 

@@ -304,6 +304,33 @@
   /* Read-only auto-elevation line under the location field in the quick-edit. */
   .cq-elev-row { margin-top: .3rem; font-size: .8rem; color: var(--gray); }
   .cq-elev-auto { opacity: .65; }
+
+  /* Nearby-places dropdown on the roadside Name field (mirrors the trip-detail
+     event dropdown; populated from /api/nearby-places). */
+  .nearby-autocomplete { position: relative; }
+  .nearby-dropdown {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+    background: #fff; border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 4px 4px; max-height: 240px; overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15); display: none;
+  }
+  .nearby-dropdown.open { display: block; }
+  .nearby-dropdown .nearby-header {
+    padding: .25rem .6rem; font-size: .65rem; color: var(--gray);
+    text-transform: uppercase; letter-spacing: .04em;
+    background: #f5f5f5; border-bottom: 1px solid var(--gray-light);
+  }
+  .nearby-dropdown .nearby-option {
+    padding: .35rem .6rem; cursor: pointer; font-size: .85rem;
+    display: flex; align-items: baseline; justify-content: space-between; gap: .5rem;
+  }
+  .nearby-dropdown .nearby-option:hover { background: var(--blue-bg); }
+  .nearby-dropdown .nearby-kind {
+    color: var(--gray); font-size: .7rem; font-style: italic; flex-shrink: 0;
+  }
+  .nearby-dropdown .nearby-empty {
+    padding: .4rem .6rem; font-size: .8rem; color: var(--gray); font-style: italic;
+  }
   .rs-row { display: flex; gap: .6rem; }
   .rs-row .rs-field { flex: 1 1 0; min-width: 0; }
   .rs-loc { display: flex; gap: .4rem; align-items: center; }
@@ -343,7 +370,10 @@
     <input type="hidden" id="rs-id">
     <div class="rs-field">
       <label for="rs-name">Name</label>
-      <input type="text" id="rs-name" autocomplete="off">
+      <div class="nearby-autocomplete">
+        <input type="text" id="rs-name" autocomplete="off" onclick="rsNearbyShow(this)">
+        <div class="nearby-dropdown"></div>
+      </div>
     </div>
     <div class="rs-row">
       <div class="rs-field"><label for="rs-town">Town</label><input type="text" id="rs-town" autocomplete="off"></div>
@@ -355,10 +385,6 @@
         <input type="text" id="rs-location" autocomplete="off" placeholder="e.g. 40.388427,-104.565111">
         <button type="button" onclick="rsPickOnMap()">Pick on map</button>
       </div>
-    </div>
-    <div class="rs-row">
-      <div class="rs-field"><label for="rs-stop_type">Stop type</label><input type="text" id="rs-stop_type" autocomplete="off" placeholder="e.g. city park, rest area"></div>
-      <div class="rs-field"><label for="rs-hours">Hours</label><input type="text" id="rs-hours" autocomplete="off"></div>
     </div>
     <div class="rs-field">
       <label for="rs-notes">Notes</label>
@@ -637,7 +663,6 @@ function roadsidePopupHtml(s) {
   const place = [s.town, s.state].filter(Boolean).join(', ');
   if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
   popup += `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
-  if (s.stop_type) popup += ` <span style="color:#777;font-size:.85em;font-style:italic;">&middot; ${escapeHtml(s.stop_type)}</span>`;
   if (userLocation && s.lat != null && s.lng != null) {
     const d = haversineMiles(userLocation.lat, userLocation.lng, s.lat, s.lng);
     popup += `<br><span style="color:#1a73e8;font-size:.85em;font-weight:600;">&#128205; ${fmtMiles(d)} away</span>`;
@@ -647,7 +672,6 @@ function roadsidePopupHtml(s) {
     if (s.rating_count) popup += ` (${s.rating_count})`;
     popup += `</span>`;
   }
-  if (s.hours) popup += `<br><span style="color:#555;font-size:.85em;">${escapeHtml(s.hours)}</span>`;
   if (s.notes) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(s.notes)}</span>`;
   if (s.phone) {
     const p = s.phone.trim();
@@ -1332,6 +1356,89 @@ function trimmedBounds(coords, frac) {
       })
       .catch(() => { /* keep what we have if the lookup fails */ });
   }
+
+  // ── Nearby-places dropdown on the Name field ───────────────────────────
+  // Click the Name field to see named OSM places near the picked location
+  // (parks prioritized server-side). Cache is keyed by the location string, so
+  // moving the pin naturally busts it. radius=800 catches a town's park even
+  // when the stop is pinned a few hundred metres away.
+  let _rsNearby = null;   // { loc, items }
+  let _rsNearbySeq = 0;
+
+  window.rsNearbyShow = function(input) {
+    const dropdown = input.parentElement.querySelector('.nearby-dropdown');
+    if (!dropdown) return;
+    const locStr = (document.getElementById('rs-location').value || '').trim();
+    if (!locStr) {
+      dropdown.innerHTML = '<div class="nearby-empty">Set a location to see nearby places.</div>';
+      dropdown.classList.add('open');
+      return;
+    }
+    const parts = locStr.split(',').map(s => s.trim());
+    const lat = parseFloat(parts[0]), lng = parseFloat(parts[1]);
+    if (parts.length !== 2 || !isFinite(lat) || !isFinite(lng)) {
+      dropdown.innerHTML = '<div class="nearby-empty">Invalid location coordinates.</div>';
+      dropdown.classList.add('open');
+      return;
+    }
+    if (_rsNearby && _rsNearby.loc === locStr) {
+      _rsNearbyRender(dropdown, _rsNearby.items);
+      dropdown.classList.add('open');
+      return;
+    }
+    dropdown.innerHTML = '<div class="nearby-empty">Loading nearby places…</div>';
+    dropdown.classList.add('open');
+    const seq = ++_rsNearbySeq;
+    fetch('/api/nearby-places?lat=' + lat + '&lng=' + lng + '&radius=800')
+      .then(r => r.ok ? r.json() : [])
+      .then(list => {
+        if (_rsNearbySeq !== seq) return;
+        _rsNearby = { loc: locStr, items: list };
+        if (dropdown.classList.contains('open')) _rsNearbyRender(dropdown, list);
+      })
+      .catch(() => {
+        if (_rsNearbySeq !== seq) return;
+        if (dropdown.classList.contains('open'))
+          dropdown.innerHTML = '<div class="nearby-empty">Couldn’t load nearby places.</div>';
+      });
+  };
+
+  function _rsNearbyRender(dropdown, items) {
+    const seen = new Set();
+    const unique = [];
+    for (const p of (items || [])) {
+      const k = (p.name || '').toLowerCase();
+      if (!k || seen.has(k)) continue;
+      seen.add(k);
+      unique.push(p);
+    }
+    if (!unique.length) {
+      dropdown.innerHTML = '<div class="nearby-empty">No nearby named places found.</div>';
+      return;
+    }
+    dropdown.innerHTML = '<div class="nearby-header">Nearby (from OpenStreetMap)</div>'
+      + unique.map(p => {
+        const kind = p.kind ? `<span class="nearby-kind">${escapeHtml(p.kind)}</span>` : '';
+        // mousedown so it fires before the input's blur closes the dropdown.
+        return `<div class="nearby-option" onmousedown="rsNearbySelect(this)" data-name="${escapeHtml(p.name)}">`
+          + `<span>${escapeHtml(p.name)}</span>${kind}</div>`;
+      }).join('');
+  }
+
+  window.rsNearbySelect = function(optionEl) {
+    const input = document.getElementById('rs-name');
+    if (input) input.value = optionEl.dataset.name;
+    const dropdown = optionEl.closest('.nearby-dropdown');
+    if (dropdown) dropdown.classList.remove('open');
+  };
+
+  // Close the dropdown on any click outside the Name autocomplete.
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('.nearby-autocomplete')) return;
+    document.querySelectorAll('#rs-modal-backdrop .nearby-dropdown')
+      .forEach(d => d.classList.remove('open'));
+  });
+
   window.rsPickOnMap = function() {
     // Open the picker matching the main map's current view, so you can click
     // right where you're already looking. `map` is the main campground map.
@@ -1340,7 +1447,7 @@ function trimmedBounds(coords, frac) {
   };
 
   const backdrop = document.getElementById('rs-modal-backdrop');
-  const FIELD_IDS = ['name', 'town', 'state', 'location', 'stop_type', 'hours',
+  const FIELD_IDS = ['name', 'town', 'state', 'location',
                      'notes', 'phone', 'website', 'google_maps_url'];
   const setField = (id, val) => { document.getElementById('rs-' + id).value = val == null ? '' : val; };
   const getField = (id) => document.getElementById('rs-' + id).value.trim();
@@ -1355,7 +1462,6 @@ function trimmedBounds(coords, frac) {
       document.getElementById('rs-id').value = id;
       setField('name', s.name); setField('town', s.town); setField('state', s.state);
       setField('location', (s.lat != null && s.lng != null) ? s.lat + ',' + s.lng : '');
-      setField('stop_type', s.stop_type); setField('hours', s.hours);
       setField('notes', s.notes); setField('phone', s.phone); setField('website', s.website);
       setField('google_maps_url', s.maps_url);
       document.getElementById('rs-modal-title').textContent = 'Edit roadside stop';
@@ -1386,7 +1492,6 @@ function trimmedBounds(coords, frac) {
     const payload = {
       name, location,
       town: getField('town'), state: getField('state'),
-      stop_type: getField('stop_type'), hours: getField('hours'),
       notes: getField('notes'), phone: getField('phone'),
       website: getField('website'), google_maps_url: getField('google_maps_url'),
     };
