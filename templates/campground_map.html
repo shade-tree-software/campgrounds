@@ -269,14 +269,12 @@
      "Place here". The pin/dot are pointer-events:none so they never block the
      drag, and the bar sits at the bottom edge clear of the pin. */
   .rs-aim { position: absolute; left: 50%; top: 50%; z-index: 1100; pointer-events: none; }
+  /* Anchor the pin so its tip sits on the map centre: top:0 puts the top edge
+     at centre, then translate(-50%,-100%) lifts it by its own height so the
+     bottom (tip) lands on centre. */
   .rs-aim-pin {
-    position: absolute; left: 0; bottom: 0; transform: translate(-50%, -100%);
+    position: absolute; left: 0; top: 0; transform: translate(-50%, -100%);
     width: 34px; height: 34px; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4));
-  }
-  .rs-aim-dot {
-    position: absolute; left: 0; top: 0; width: 8px; height: 8px;
-    transform: translate(-50%, -50%); border-radius: 50%;
-    background: #2e7d32; border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.3);
   }
   .rs-aim-bar {
     position: absolute; left: 50%; bottom: 1rem; transform: translateX(-50%);
@@ -400,7 +398,6 @@
               d="M12 1.5c-3.9 0-7 3.1-7 7 0 5.2 7 14 7 14s7-8.8 7-14c0-3.9-3.1-7-7-7z"/>
         <circle cx="12" cy="8.5" r="2.6" fill="#fff"/>
       </svg>
-      <div class="rs-aim-dot"></div>
     </div>
     <div class="rs-aim-bar" id="rs-aim-bar" style="display:none;">
       <span class="rs-aim-hint">Drag the map to position the pin</span>
