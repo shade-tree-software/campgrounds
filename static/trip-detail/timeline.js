@@ -694,18 +694,20 @@ function _isMobileViewport() {
   return window.matchMedia('(max-width: 700px)').matches;
 }
 
-// Reverse-geocode a lat/lng and fill the currently-open Add modal's name /
-// locale / state fields, only touching fields the user hasn't started
-// editing. Shared by `createFromSelection` (post-ping-lasso) and the mobile
-// "Add Event/Waypoint" geolocation path. The modal may have been closed
-// before the fetch resolves — checks for the body/field presence each time.
-function _fillModalFromReverseGeocode(lat, lng) {
+// Reverse-geocode a lat/lng and fill a form's name / locale / state fields,
+// only touching fields the user hasn't started editing. `scope` is the element
+// to look within (defaults to the Add modal body); the inline event-edit form
+// and pick-on-map pass their own form-grid. Shared by `createFromSelection`
+// (post-ping-lasso), the mobile "Add Event/Waypoint" geolocation path, and the
+// event pick-on-map onPick. The form may have closed before the fetch
+// resolves — checks for the body/field presence each time.
+function _fillModalFromReverseGeocode(lat, lng, scope) {
   return fetch('/api/reverse-geocode?lat=' + lat + '&lng=' + lng,
                { credentials: 'same-origin' })
     .then(r => r.ok ? r.json() : null)
     .then(data => {
       if (!data) return;
-      const body = document.getElementById('add-modal-body');
+      const body = scope || document.getElementById('add-modal-body');
       if (!body) return;
       const nameI = body.querySelector('[data-field="name"]');
       const locI = body.querySelector('[data-field="locale"]');
@@ -1055,6 +1057,9 @@ if (IS_ADMIN) {
         // stay-* targets (no Name field with a dropdown nearby).
         if (pickerTarget && (pickerTarget.kind === 'event' || pickerTarget.kind === 'event-modal')) {
           nearbyInvalidateFromLocation(locInput);
+          // Mirror the GPS path: reverse-geocode the picked point and fill
+          // name/locale/state (empty fields only) on this form.
+          _fillModalFromReverseGeocode(lat, lng, locInput.closest('.form-grid'));
         }
       }
     }

@@ -14,6 +14,7 @@
  *
  *   picker.show(existingLocation);            // "lat,lng" string or falsy
  *   picker.show(existingLocation, 17);        // override default zoom (12)
+ *   picker.show(existingLocation, z, [lat,lng]); // open centered on [lat,lng]
  *   picker.hide();
  */
 
@@ -65,7 +66,13 @@ function createMapPicker(opts) {
   }
 
   // ── Show / hide ──────��────────────────────────────────────────────────
-  function show(location, zoom) {
+  // show(location, zoom, viewCenter):
+  //   location   — "lat,lng" of an existing point to mark (or falsy)
+  //   zoom       — zoom to open at (default 12)
+  //   viewCenter — optional [lat, lng] to center on instead of `location`, so a
+  //                caller can open the picker matching another map's current
+  //                view while still marking the existing point.
+  function show(location, zoom, viewCenter) {
     container.style.display = 'flex';
     initMap();
     setTimeout(() => map.invalidateSize(), 100);
@@ -77,17 +84,24 @@ function createMapPicker(opts) {
     const searchInput = opts.searchId ? document.getElementById(opts.searchId) : null;
     if (searchInput) searchInput.value = '';
 
+    // Mark the existing point, if any.
+    let loc = null;
     if (location) {
       const parts = location.split(',');
       const lat = parseFloat(parts[0]);
       const lng = parseFloat(parts[1]);
-      if (!isNaN(lat) && !isNaN(lng)) {
-        map.setView([lat, lng], zoom || 12);
-        placeMarker(lat, lng);
-        return;
-      }
+      if (!isNaN(lat) && !isNaN(lng)) { loc = [lat, lng]; placeMarker(lat, lng); }
     }
-    map.setView(opts.defaultView || [38.93, -77.37], 7);
+
+    // Opening view: explicit viewCenter wins, then the existing point, else default.
+    if (viewCenter && viewCenter.length === 2 &&
+        !isNaN(viewCenter[0]) && !isNaN(viewCenter[1])) {
+      map.setView(viewCenter, zoom || 12);
+    } else if (loc) {
+      map.setView(loc, zoom || 12);
+    } else {
+      map.setView(opts.defaultView || [38.93, -77.37], 7);
+    }
   }
 
   function hide() {

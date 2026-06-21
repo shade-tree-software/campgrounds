@@ -1310,11 +1310,33 @@ function trimmedBounds(coords, frac) {
     defaultView: defaultView,
     onPick: function(lat, lng) {
       document.getElementById('rs-location').value = lat.toFixed(6) + ',' + lng.toFixed(6);
+      rsFillFromReverseGeocode(lat, lng);   // fill name/town/state (empty fields only)
     }
   });
   window.rsLocationPicker = rsLocationPicker;   // referenced by the picker's close button
+
+  // Reverse-geocode the picked point and fill the stop's name/town/state, only
+  // touching fields the user hasn't filled. /api/reverse-geocode returns the
+  // state as a 2-letter USPS abbreviation, so it fits the 2-char state input.
+  function rsFillFromReverseGeocode(lat, lng) {
+    fetch('/api/reverse-geocode?lat=' + lat + '&lng=' + lng, { credentials: 'same-origin' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const nameI = document.getElementById('rs-name');
+        const townI = document.getElementById('rs-town');
+        const stI = document.getElementById('rs-state');
+        if (nameI && data.name && !nameI.value.trim()) nameI.value = data.name;
+        if (townI && data.locale && !townI.value.trim()) townI.value = data.locale;
+        if (stI && data.state && !stI.value.trim()) stI.value = data.state;
+      })
+      .catch(() => { /* keep what we have if the lookup fails */ });
+  }
   window.rsPickOnMap = function() {
-    rsLocationPicker.show(document.getElementById('rs-location').value);
+    // Open the picker matching the main map's current view, so you can click
+    // right where you're already looking. `map` is the main campground map.
+    const c = map.getCenter();
+    rsLocationPicker.show(document.getElementById('rs-location').value, map.getZoom(), [c.lat, c.lng]);
   };
 
   const backdrop = document.getElementById('rs-modal-backdrop');
@@ -1448,7 +1470,9 @@ function trimmedBounds(coords, frac) {
   });
   window.cgLocationPicker = cgLocationPicker;   // referenced by the picker's close button
   window.cgPickOnMap = function() {
-    cgLocationPicker.show(document.getElementById('cq-location').value);
+    // Open the picker matching the main map's current view (same as roadside).
+    const c = map.getCenter();
+    cgLocationPicker.show(document.getElementById('cq-location').value, map.getZoom(), [c.lat, c.lng]);
   };
 
   const backdrop = document.getElementById('cq-modal-backdrop');
