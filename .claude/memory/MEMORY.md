@@ -13,3 +13,4 @@
 - [Run sweep agents sequentially](feedback_sequential_sweep_agents.md) — default to one agent at a time (parallel batches hit session limits and lose in-flight work); parallel only via explicit per-stage user exception
 - [FL sweep handoff](project_fl_sweep_handoff.md) — FL state(4700-4730)+federal(4731-4743) done+committed; private in progress (3 South candidates saved, N/Central unrun); local + existing-unaudited pending
 - [Roadside notes direction-neutral](feedback_roadside_direction_neutral.md) — don't word roadside-stop notes for one travel direction (route may be driven either way)
+- [AL sweep handoff](project_al_sweep_handoff.md) — AL state/federal/local/gov-misclassified DONE+committed+audited; only the private bucket (~80 vetted candidates) remains
