@@ -418,7 +418,13 @@
     <div class="rs-field">
       <label for="rs-name">Name</label>
       <div class="nearby-autocomplete">
-        <input type="text" id="rs-name" autocomplete="off" onclick="rsNearbyShow(this)">
+        <!-- readonly until focus defeats Chrome's "remembered name" autofill
+             (autocomplete="off" alone is ignored for name-like fields); the
+             onfocus removes it and opens the nearby-places dropdown, onblur
+             re-arms it so a reopen / refocus stays autofill-proof. -->
+        <input type="text" id="rs-name" autocomplete="off" readonly
+               onfocus="this.removeAttribute('readonly'); rsNearbyShow(this);"
+               onblur="this.setAttribute('readonly','readonly');">
         <div class="nearby-dropdown"></div>
       </div>
     </div>
@@ -1398,6 +1404,9 @@ function trimmedBounds(coords, frac) {
     window.rsOpenModal('add');
     document.getElementById('rs-location').value = c.lat.toFixed(6) + ',' + c.lng.toFixed(6);
     rsFillFromReverseGeocode(c.lat, c.lng);   // name/town/state (empty only)
+    // rs-location is set synchronously above, before rsOpenModal's deferred
+    // auto-focus fires — so the Name field's nearby lookup sees the coordinates
+    // on open and shows the loading state + results without an extra refresh.
   };
   // Esc cancels aim mode on desktop (mobile uses the Cancel button).
   document.addEventListener('keydown', function(e) {
@@ -1439,8 +1448,9 @@ function trimmedBounds(coords, frac) {
   }
 
   // ── Nearby-places dropdown on the Name field ───────────────────────────
-  // Click the Name field to see named OSM places near the picked location
-  // (parks prioritized server-side). Cache is keyed by the location string, so
+  // Focusing the Name field (incl. the auto-focus when the modal opens) shows
+  // named OSM places near the picked location (parks prioritized server-side).
+  // Cache is keyed by the location string, so
   // moving the pin naturally busts it. radius=800 catches a town's park even
   // when the stop is pinned a few hundred metres away.
   let _rsNearby = null;   // { loc, items }
@@ -1553,7 +1563,12 @@ function trimmedBounds(coords, frac) {
       delBtn.style.display = 'none';
     }
     backdrop.classList.add('open');
-    document.getElementById('rs-name').focus();
+    // Defer the auto-focus to the next tick. This modal is opened by a click
+    // ("Place here", or a popup "edit" link); that click is still bubbling and
+    // would reach the document-level click-outside handler, which closes the
+    // nearby-places dropdown that focusing the Name field opens. Waiting one
+    // task lets the opening click fully resolve first, so the dropdown stays.
+    setTimeout(() => { document.getElementById('rs-name').focus(); }, 0);
   };
 
   window.rsCloseModal = function() {
