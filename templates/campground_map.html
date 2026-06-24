@@ -908,6 +908,12 @@ function cgPopupHtml(cg) {
       }
     });
   }
+  // Federal campgrounds are on recreation.gov — link to the availability page
+  // with the name pre-filled (it searches RIDB and auto-selects the match).
+  if (cg.ownership === 'federal') {
+    popup += `<br><a href="/campgrounds/availability?cg=${encodeURIComponent(cg.name)}">`
+      + `Check availability &rarr;</a>`;
+  }
   if (IS_ADMIN) {
     popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;">`
       + `<a onclick="cgQuickEdit(${cg.id})" style="font-size:.85em;cursor:pointer;">edit</a>`

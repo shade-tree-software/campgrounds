@@ -25,6 +25,47 @@
   }
   .avail-form button:disabled { opacity: .5; cursor: default; }
 
+  /* Single date-range picker (custom two-month calendar) */
+  .date-field { position: relative; }
+  .date-trigger {
+    padding: .5rem .6rem; border: 1px solid var(--gray-light); border-radius: 6px;
+    font-size: .95rem; background: var(--white); cursor: pointer; text-align: left;
+    min-width: 240px; color: var(--navy); font-family: inherit;
+  }
+  .date-trigger.placeholder { color: var(--gray); }
+  .cal-pop {
+    position: absolute; z-index: 30; top: calc(100% + 4px); left: 0;
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 8px;
+    box-shadow: var(--shadow); padding: .75rem;
+  }
+  .cal-pop[hidden] { display: none; }
+  .cal-arrow {
+    position: absolute; top: .75rem; width: 1.8rem; height: 1.8rem; z-index: 1;
+    border: 1px solid var(--gray-light); background: var(--white); border-radius: 6px;
+    cursor: pointer; font-size: 1.1rem; line-height: 1; color: var(--navy);
+  }
+  #cal-prev { left: .75rem; }
+  #cal-next { right: .75rem; }
+  .cal-grids { display: flex; gap: 1.25rem; }
+  .cal-title { text-align: center; font-weight: 700; color: var(--navy); font-size: .9rem; margin-bottom: .4rem; }
+  .cal-grid { display: grid; grid-template-columns: repeat(7, 2rem); gap: 2px; }
+  .cal-dow { text-align: center; font-size: .65rem; color: var(--gray); font-weight: 700; height: 1.2rem; line-height: 1.2rem; }
+  .cal-day { height: 2rem; line-height: 2rem; text-align: center; font-size: .82rem; border-radius: 5px; cursor: pointer; user-select: none; }
+  .cal-day.empty { cursor: default; }
+  .cal-day.disabled { color: var(--gray-light); cursor: default; }
+  .cal-day:not(.disabled):not(.empty):hover { background: var(--blue-bg); }
+  .cal-day.in-range { background: var(--blue-bg); border-radius: 0; }
+  .cal-day.start, .cal-day.end { background: var(--navy); color: var(--white); }
+  .cal-day.start { border-radius: 5px 0 0 5px; }
+  .cal-day.end { border-radius: 0 5px 5px 0; }
+  .cal-day.start.end { border-radius: 5px; }
+  .cal-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: .65rem; }
+  .cal-summary { font-size: .8rem; color: var(--navy); }
+  .cal-done {
+    padding: .4rem .9rem; border: none; border-radius: 6px; background: var(--navy);
+    color: var(--white); font-weight: 700; cursor: pointer; font-size: .85rem;
+  }
+
   /* Search autocomplete */
   .search-wrap { position: relative; }
   .search-results {
@@ -76,6 +117,8 @@
     #cg-search { width: 100%; }
     .avail-form { flex-direction: column; align-items: stretch; }
     .field { width: 100%; }
+    .date-trigger { width: 100%; }
+    .cal-grids .cal-month:nth-child(2) { display: none; }  /* one month on phones */
   }
 {% endblock %}
 
@@ -98,13 +141,18 @@
       </div>
       <div class="selected-cg" id="selected-cg"></div>
     </div>
-    <div class="field">
-      <label for="start-date">Check-in</label>
-      <input type="date" id="start-date">
-    </div>
-    <div class="field">
-      <label for="end-date">Last night</label>
-      <input type="date" id="end-date">
+    <div class="field date-field">
+      <label>Dates</label>
+      <button type="button" id="date-trigger" class="date-trigger placeholder">Select dates</button>
+      <div class="cal-pop" id="cal-pop" hidden>
+        <button type="button" id="cal-prev" class="cal-arrow" aria-label="Previous month">&lsaquo;</button>
+        <button type="button" id="cal-next" class="cal-arrow" aria-label="Next month">&rsaquo;</button>
+        <div class="cal-grids" id="cal-grids"></div>
+        <div class="cal-foot">
+          <span class="cal-summary" id="cal-summary">Click a date to set check-in.</span>
+          <button type="button" id="cal-done" class="cal-done">Done</button>
+        </div>
+      </div>
     </div>
     <div class="field">
       <label for="fit-ft">Fit ≥ (ft)</label>
@@ -126,8 +174,6 @@
   const searchInput = document.getElementById('cg-search');
   const resultsBox = document.getElementById('search-results');
   const selectedLabel = document.getElementById('selected-cg');
-  const startEl = document.getElementById('start-date');
-  const endEl = document.getElementById('end-date');
   const fitEl = document.getElementById('fit-ft');
   const checkBtn = document.getElementById('check-btn');
   const statusEl = document.getElementById('avail-status');
@@ -137,15 +183,139 @@
   let searchTimer = null;
   let searchAbort = null;
 
-  // Default dates: check-in two weeks out, one night.
-  const d0 = new Date(Date.now() + 14 * 86400000);
-  const d1 = new Date(Date.now() + 15 * 86400000);
-  const iso = d => d.toISOString().slice(0, 10);
-  startEl.value = iso(d0);
-  endEl.value = iso(d1);
+  // ── Date helpers (local-midnight Dates; iso() is timezone-safe) ──────────
+  const iso = d => d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+  const startOfDay = d => new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+  const addMonths = (d, n) => new Date(d.getFullYear(), d.getMonth() + n, 1);
+  const sameDay = (a, b) => a && b && a.getFullYear() === b.getFullYear() &&
+    a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  const nightsBetween = (a, b) => Math.round((b - a) / 86400000);
+  const fmtFull = d => d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+  const fmtShort = d => d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+
+  // ── Single date-range picker ─────────────────────────────────────────────
+  // checkIn = first night, checkOut = the day you LEAVE (checkout, exclusive).
+  // Nights = checkOut − checkIn. The API wants inclusive nights, so the request
+  // sends end = checkOut − 1 day (the last night).
+  const today = startOfDay(new Date());
+  let checkIn = addDays(today, 14);    // default: two weeks out, one night
+  let checkOut = addDays(today, 15);
+  let viewMonth = addMonths(checkIn, 0);  // leftmost displayed month
+
+  const trigger = document.getElementById('date-trigger');
+  const calPop = document.getElementById('cal-pop');
+  const calGrids = document.getElementById('cal-grids');
+  const calSummary = document.getElementById('cal-summary');
+
+  function renderCal() {
+    calGrids.innerHTML = '';
+    for (let m = 0; m < 2; m++) calGrids.appendChild(renderMonth(addMonths(viewMonth, m)));
+    renderSummary();
+  }
+
+  function renderMonth(monthStart) {
+    const wrap = document.createElement('div');
+    wrap.className = 'cal-month';
+    const title = document.createElement('div');
+    title.className = 'cal-title';
+    title.textContent = monthStart.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+    wrap.appendChild(title);
+    const grid = document.createElement('div');
+    grid.className = 'cal-grid';
+    ['S', 'M', 'T', 'W', 'T', 'F', 'S'].forEach(d => {
+      const e = document.createElement('div');
+      e.className = 'cal-dow';
+      e.textContent = d;
+      grid.appendChild(e);
+    });
+    for (let i = 0; i < monthStart.getDay(); i++) {
+      const e = document.createElement('div');
+      e.className = 'cal-day empty';
+      grid.appendChild(e);
+    }
+    const daysInMonth = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 0).getDate();
+    for (let day = 1; day <= daysInMonth; day++) {
+      const d = new Date(monthStart.getFullYear(), monthStart.getMonth(), day);
+      const e = document.createElement('div');
+      e.className = 'cal-day';
+      e.textContent = day;
+      if (d < today) {
+        e.classList.add('disabled');
+      } else {
+        if (checkIn && checkOut) {
+          if (sameDay(d, checkIn)) e.classList.add('start');
+          if (sameDay(d, checkOut)) e.classList.add('end');
+          if (d > checkIn && d < checkOut) e.classList.add('in-range');
+        } else if (checkIn && sameDay(d, checkIn)) {
+          e.classList.add('start', 'end');
+        }
+        // stopPropagation: renderCal() detaches this cell, so if the click
+        // reached the document handler its target would no longer be inside
+        // .date-field and the popup would wrongly close before the 2nd click.
+        e.addEventListener('click', ev => { ev.stopPropagation(); pickDay(d); });
+      }
+      grid.appendChild(e);
+    }
+    wrap.appendChild(grid);
+    return wrap;
+  }
+
+  // First click sets check-in; second click (after it) sets checkout. A click on
+  // or before the current check-in restarts the range.
+  function pickDay(d) {
+    if (!checkIn || checkOut || d <= checkIn) {
+      checkIn = d;
+      checkOut = null;
+    } else {
+      checkOut = d;
+    }
+    renderCal();
+    updateDateTrigger();
+    updateCheckEnabled();
+  }
+
+  function renderSummary() {
+    if (checkIn && checkOut) {
+      const n = nightsBetween(checkIn, checkOut);
+      calSummary.textContent = fmtFull(checkIn) + ' → ' + fmtFull(checkOut) +
+        ' · ' + n + ' night' + (n !== 1 ? 's' : '');
+    } else if (checkIn) {
+      calSummary.textContent = 'Check-in ' + fmtFull(checkIn) + ' — now click your checkout date.';
+    } else {
+      calSummary.textContent = 'Click a date to set check-in.';
+    }
+  }
+
+  function updateDateTrigger() {
+    if (checkIn && checkOut) {
+      const n = nightsBetween(checkIn, checkOut);
+      trigger.textContent = fmtShort(checkIn) + ' → ' + fmtShort(checkOut) +
+        '  (' + n + ' night' + (n !== 1 ? 's' : '') + ')';
+      trigger.classList.remove('placeholder');
+    } else if (checkIn) {
+      trigger.textContent = 'Check-in ' + fmtShort(checkIn) + ' — pick checkout';
+      trigger.classList.remove('placeholder');
+    } else {
+      trigger.textContent = 'Select dates';
+      trigger.classList.add('placeholder');
+    }
+  }
+
+  trigger.addEventListener('click', () => {
+    calPop.hidden = !calPop.hidden;
+    if (!calPop.hidden) { viewMonth = addMonths(checkIn || today, 0); renderCal(); }
+  });
+  document.getElementById('cal-prev').addEventListener('click', () => { viewMonth = addMonths(viewMonth, -1); renderCal(); });
+  document.getElementById('cal-next').addEventListener('click', () => { viewMonth = addMonths(viewMonth, 1); renderCal(); });
+  document.getElementById('cal-done').addEventListener('click', () => { calPop.hidden = true; });
+  document.addEventListener('click', e => { if (!e.target.closest('.date-field')) calPop.hidden = true; });
+  updateDateTrigger();
 
   function updateCheckEnabled() {
-    checkBtn.disabled = !(selected && startEl.value && endEl.value);
+    checkBtn.disabled = !(selected && checkIn && checkOut);
   }
 
   // ── Campground search (debounced) ──────────────────────────────────────
@@ -192,8 +362,38 @@
   document.addEventListener('click', e => {
     if (!e.target.closest('.search-wrap')) resultsBox.classList.remove('open');
   });
-  startEl.addEventListener('change', updateCheckEnabled);
-  endEl.addEventListener('change', updateCheckEnabled);
+
+  // Pre-fill from ?cg=<name> (link from the campground map popup): search RIDB
+  // and auto-select the best name match, else leave the dropdown open to pick.
+  const presetCg = new URLSearchParams(location.search).get('cg');
+  if (presetCg) {
+    searchInput.value = presetCg;
+    prefillFromName(presetCg);
+  }
+
+  async function prefillFromName(q) {
+    try {
+      const r = await fetch('/api/ridb/search?q=' + encodeURIComponent(q));
+      const data = await r.json();
+      if (!Array.isArray(data) || !data.length) return;
+      const lc = q.toLowerCase();
+      const match = data.find(f => f.name.toLowerCase() === lc) ||
+        data.find(f => f.name.toLowerCase().startsWith(lc)) ||
+        data.find(f => f.name.toLowerCase().includes(lc));
+      if (match) {
+        choose(match);
+      } else {
+        resultsBox.innerHTML = '';
+        data.slice(0, 12).forEach(f => {
+          const div = document.createElement('div');
+          div.textContent = f.name;
+          div.addEventListener('mousedown', e => { e.preventDefault(); choose(f); });
+          resultsBox.appendChild(div);
+        });
+        resultsBox.classList.add('open');
+      }
+    } catch (e) { /* convenience prefill — ignore failures */ }
+  }
 
   // ── Availability query ─────────────────────────────────────────────────
   checkBtn.addEventListener('click', runAvailability);
@@ -204,8 +404,11 @@
     resultsEl.innerHTML = '';
     statusEl.innerHTML = 'Checking availability for <b>' + escapeHtml(selected.name) +
       '</b>… (querying recreation.gov, may take a few seconds)';
+    // checkOut is the day we leave; the API wants the last night (inclusive),
+    // so end = checkOut − 1 day.
     const params = new URLSearchParams({
-      facility: selected.id, start: startEl.value, end: endEl.value, fit_ft: fitEl.value || 25,
+      facility: selected.id, start: iso(checkIn), end: iso(addDays(checkOut, -1)),
+      fit_ft: fitEl.value || 25,
     });
     try {
       const r = await fetch('/api/ridb/availability?' + params.toString());
