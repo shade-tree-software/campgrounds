@@ -16,6 +16,6 @@ metadata:
 
 **KEY TECHNIQUE discovered (reusable for any USACE sweep):** rec.gov per-site API `https://www.recreation.gov/api/camps/campgrounds/<facility_id>/campsites` carries an authoritative `site_details_map.proximity_water` flag (Lakefront/Riverfront) that COUNTS as gate evidence — USACE PDF site maps are Akamai-403-blocked from the sandbox.
 
-**Loose end:** Lake Sylvia (USFS-built, now AR State Parks-run, RVs to 30 ft) was dropped from the federal bucket — a candidate STATE add if AR is ever revisited.
+Lake Sylvia (USFS-built, now AR State Parks-run) was added as a STATE entry (id 5358) after the main sweep — management transferred from USFS to AR State Parks.
 
 Per-bucket workflow used: research agent (vet+pin+elevation+waterfront lead) → append with `waterfront: "not waterfront"` placeholder → commit add → fan out `audit/waterfront_audit_instructions.md` subagents over new ids (batches of 8, SEQUENTIAL per [[feedback_sequential_sweep_agents]]) → `python3 audit/apply_waterfront_audit.py <results>` → commit audit. See [[feedback_waterfront_evidence_in_json]], [[feedback_campground_vetting_discipline]], [[reference_rvlife_price]], [[reference_local_campground_method]].
