@@ -168,11 +168,16 @@ def classify_fit(site, fit_ft):
 _AVAIL_CACHE = {}  # (cg_id, year, month) -> {campsite_id: {date_str: status}}
 
 
-def fetch_availability_month(cg_id, year, month):
-    """Return {campsite_id: {'YYYY-MM-DDT00:00:00Z': status}} for a whole month."""
+def fetch_availability_month(cg_id, year, month, cache=_AVAIL_CACHE):
+    """Return {campsite_id: {'YYYY-MM-DDT00:00:00Z': status}} for a whole month.
+
+    `cache` is the dict used to memoize months. The CLI shares the module-level
+    cache (fine for a short run). Long-running callers (the Flask app) should
+    pass a per-request dict so availability stays live, never going stale.
+    """
     key = (str(cg_id), year, month)
-    if key in _AVAIL_CACHE:
-        return _AVAIL_CACHE[key]
+    if cache is not None and key in cache:
+        return cache[key]
     start = f"{year:04d}-{month:02d}-01T00:00:00.000Z"
     url = AVAIL_URL.format(cg=cg_id) + "?" + urllib.parse.urlencode({"start_date": start})
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0", "accept": "application/json"})
@@ -186,13 +191,97 @@ def fetch_availability_month(cg_id, year, month):
                 raise
             time.sleep(1.5 * (attempt + 1))
     out = {cid: c.get("availabilities", {}) for cid, c in data.get("campsites", {}).items()}
-    _AVAIL_CACHE[key] = out
+    if cache is not None:
+        cache[key] = out
     return out
 
 
 def _nights(start, end):
     """List of night dates for check-in START, check-out END (END is not a night)."""
     return [start + datetime.timedelta(days=i) for i in range((end - start).days)]
+
+
+def availability_matrix(facility, start, end, fit_ft=DEFAULT_FIT_FT, cache=None):
+    """Per-night availability for EKKO-friendly sites over an INCLUSIVE range.
+
+    Unlike `report_availability` (booking-oriented, checkout-exclusive,
+    full-availability only), this is browse-oriented: every date from `start`
+    to `end` INCLUSIVE is treated as a night, and a site is included if it has
+    at least ONE available night in the window (partial OR full). Non-EKKO sites
+    (tent-only / management / confirmed-too-small) are never included.
+
+    Returns a JSON-serializable dict:
+      {
+        "nights":  ["YYYY-MM-DD", ...],
+        "sites":   [ {id, name, loop, driveway_ft, verdict, statuses,
+                      available_nights, total_nights, fully_available}, ... ],
+        "fit_ft":  <int>,
+        "site_count": <int>,        # EKKO sites with >=1 open night
+        "fully_available": <int>,   # subset open EVERY night
+      }
+    `statuses` parallels `nights`: each is the raw recreation.gov status string
+    (e.g. "Available", "Reserved", "NYR", "Not Reservable") or None if the API
+    returned nothing for that site/night. Pass a dict as `cache` to memoize the
+    month fetches within one request; None (default) fetches fresh each call.
+    """
+    cg_id = facility.get("FacilityID")
+    sites = facility.get("_campsites", [])
+
+    # EKKO-plausible catalog (skip confirmed non-EKKO before touching availability).
+    ekko = {}
+    for s in sites:
+        v = classify_fit(s, fit_ft)
+        if v in ("not_rv", "too_small"):
+            continue
+        ekko[s["CampsiteID"]] = {
+            "name": s.get("CampsiteName", "?"),
+            "loop": s.get("Loop", "") or "",
+            "driveway_ft": _num_attr(s, "Driveway Length"),
+            "verdict": v,
+        }
+
+    nights = [start + datetime.timedelta(days=i) for i in range((end - start).days + 1)]
+    night_keys = [f"{d.isoformat()}T00:00:00Z" for d in nights]
+
+    avail = {}  # campsite_id -> {date_str: status}
+    for (yr, mo) in sorted({(d.year, d.month) for d in nights}):
+        for cid, days in fetch_availability_month(cg_id, yr, mo, cache=cache).items():
+            if cid in ekko:
+                avail.setdefault(cid, {}).update(days)
+
+    out_sites = []
+    fully = 0
+    for cid, info in ekko.items():
+        statuses = [avail.get(cid, {}).get(k) for k in night_keys]
+        open_n = sum(1 for st in statuses if st == "Available")
+        if open_n == 0:
+            continue  # no availability at all in window — omit
+        full = open_n == len(nights)
+        if full:
+            fully += 1
+        out_sites.append({
+            "id": cid,
+            "name": info["name"],
+            "loop": info["loop"],
+            "driveway_ft": info["driveway_ft"],
+            "verdict": info["verdict"],
+            "statuses": statuses,
+            "available_nights": open_n,
+            "total_nights": len(nights),
+            "fully_available": full,
+        })
+
+    # Most-open first; then fit quality; then longer sites; then site name.
+    _vrank = {"fits": 0, "tight": 1, "unknown": 2}
+    out_sites.sort(key=lambda r: (-r["available_nights"], _vrank.get(r["verdict"], 9),
+                                  -(r["driveway_ft"] or 0), r["name"]))
+    return {
+        "nights": [d.isoformat() for d in nights],
+        "sites": out_sites,
+        "fit_ft": fit_ft,
+        "site_count": len(out_sites),
+        "fully_available": fully,
+    }
 
 
 def report_availability(facility, start, end, fit_ft):

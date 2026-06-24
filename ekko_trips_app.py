@@ -13,6 +13,8 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, curren
 from werkzeug.security import generate_password_hash, check_password_hash, safe_join
 from werkzeug.utils import secure_filename
 
+from ridb.fetch_facility import (search_facilities, fetch_facility,
+                                 availability_matrix, DEFAULT_FIT_FT)
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
@@ -1669,6 +1671,85 @@ def campgrounds_waterfront():
 @app.route('/campgrounds/climate')
 def campgrounds_climate():
     return redirect(url_for('campgrounds_map', color='climate'))
+
+
+# ── Federal campground availability (recreation.gov / RIDB) ───────────────
+# Browse real-time availability for any recreation.gov (federal) campground,
+# EKKO-friendly sites only. RIDB gives the campsite catalog (for fit); the
+# recreation.gov calendar gives live availability. See ridb/fetch_facility.py.
+
+@app.route('/campgrounds/availability')
+def campgrounds_availability():
+    """Page: search a federal campground + date range, see EKKO-fit openings."""
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    return render_template('campground_availability.html',
+                           title='Availability', active_nav='campavail',
+                           is_admin=is_admin, default_fit_ft=DEFAULT_FIT_FT)
+
+
+@app.route('/api/ridb/search')
+def api_ridb_search():
+    """Search recreation.gov campgrounds by name (for the availability picker)."""
+    q = request.args.get('q', '').strip()
+    if len(q) < 2:
+        return jsonify([])
+    if not os.environ.get("RIDB_API_KEY"):
+        return jsonify({"error": "RIDB_API_KEY not configured on the server."}), 503
+    try:
+        results = search_facilities(q)
+    except Exception:
+        return jsonify({"error": "Search failed (RIDB request error)."}), 502
+    out = [{"id": f.get("FacilityID"), "name": f.get("FacilityName"),
+            "type": f.get("FacilityTypeDescription", "")}
+           for f in results
+           if f.get("FacilityTypeDescription") == "Campground" and f.get("Reservable", True)]
+    return jsonify(out)
+
+
+@app.route('/api/ridb/availability')
+def api_ridb_availability():
+    """EKKO-friendly per-night availability for a facility over a date range.
+
+    Query params: facility=<RIDB FacilityID>, start=YYYY-MM-DD, end=YYYY-MM-DD
+    (both inclusive — every date is a night), optional fit_ft (default 25).
+    """
+    fid = (request.args.get('facility') or '').strip()
+    if not fid.isdigit():
+        return jsonify({"error": "Missing or invalid facility id."}), 400
+    try:
+        start = date.fromisoformat(request.args.get('start', ''))
+        end = date.fromisoformat(request.args.get('end', ''))
+    except ValueError:
+        return jsonify({"error": "start and end must be YYYY-MM-DD dates."}), 400
+    if end < start:
+        return jsonify({"error": "End date must be on or after the start date."}), 400
+    if (end - start).days > 92:
+        return jsonify({"error": "Range too large — pick 3 months or less."}), 400
+    if not os.environ.get("RIDB_API_KEY"):
+        return jsonify({"error": "RIDB_API_KEY not configured on the server."}), 503
+
+    try:
+        facility = fetch_facility(fid)
+    except Exception:
+        return jsonify({"error": "Could not load that facility from RIDB."}), 502
+    try:
+        # Per-request cache → availability is always live, never stale.
+        matrix = availability_matrix(facility, start, end,
+                                     fit_ft=request.args.get('fit_ft', type=int) or DEFAULT_FIT_FT,
+                                     cache={})
+    except Exception:
+        return jsonify({"error": "Could not load availability from recreation.gov."}), 502
+
+    # Useful facility context for the page header / booking link.
+    lat, lng = facility.get("FacilityLatitude"), facility.get("FacilityLongitude")
+    resv = facility.get("FacilityReservationURL") or \
+        f"https://www.recreation.gov/camping/campgrounds/{fid}"
+    matrix["facility"] = {
+        "id": fid, "name": facility.get("FacilityName", ""),
+        "lat": lat, "lng": lng, "reservation_url": resv,
+        "map_url": facility.get("FacilityMapURL", ""),
+    }
+    return jsonify(matrix)
 
 
 # ── Photo move between stays/events ───────────────────────────────────────
