@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+
+{% block title %}Campground Availability{% endblock %}
+
+{% block style %}
+  .avail-page { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem; }
+  .avail-page h2 { color: var(--navy); font-size: 1.4rem; margin-bottom: .25rem; }
+  .avail-intro { color: var(--gray); font-size: .9rem; margin-bottom: 1.25rem; max-width: 70ch; }
+
+  .avail-form {
+    display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: flex-end;
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 8px; padding: 1rem; box-shadow: var(--shadow);
+  }
+  .field { display: flex; flex-direction: column; gap: .25rem; }
+  .field label { font-size: .75rem; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: .03em; }
+  .field input {
+    padding: .5rem .6rem; border: 1px solid var(--gray-light); border-radius: 6px; font-size: .95rem;
+  }
+  #cg-search { width: 320px; }
+  #fit-ft { width: 70px; }
+  .avail-form button {
+    padding: .55rem 1.1rem; border: none; border-radius: 6px; background: var(--navy);
+    color: var(--white); font-weight: 700; cursor: pointer; font-size: .95rem;
+  }
+  .avail-form button:disabled { opacity: .5; cursor: default; }
+
+  /* Search autocomplete */
+  .search-wrap { position: relative; }
+  .search-results {
+    position: absolute; z-index: 20; top: 100%; left: 0; right: 0;
+    background: var(--white); border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 6px 6px; max-height: 280px; overflow-y: auto; box-shadow: var(--shadow);
+    display: none;
+  }
+  .search-results.open { display: block; }
+  .search-results div { padding: .5rem .6rem; cursor: pointer; font-size: .9rem; }
+  .search-results div:hover, .search-results div.active { background: var(--blue-bg); }
+  .search-results .muted { color: var(--gray); font-style: italic; cursor: default; }
+
+  .selected-cg { margin-top: .35rem; font-size: .9rem; color: var(--navy); font-weight: 700; min-height: 1.2em; }
+
+  /* Results */
+  #avail-status { margin: 1.25rem 0 .5rem; font-size: .95rem; color: var(--gray); }
+  .legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--gray); margin-bottom: .5rem; }
+  .legend span { display: inline-flex; align-items: center; gap: .35rem; }
+  .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,.15); }
+  .swatch.open { background: #2e9e5b; }
+  .swatch.closed { background: var(--gray-light); }
+
+  .summary-line { font-size: .95rem; color: var(--navy); margin-bottom: .75rem; }
+  .summary-line b { color: #2e9e5b; }
+
+  .grid-wrap { overflow-x: auto; border: 1px solid var(--gray-light); border-radius: 8px; }
+  table.avail-grid { border-collapse: collapse; font-size: .82rem; width: 100%; }
+  table.avail-grid th, table.avail-grid td { padding: .35rem .45rem; text-align: center; white-space: nowrap; }
+  table.avail-grid thead th { position: sticky; top: 0; background: var(--navy); color: var(--white); font-weight: 600; z-index: 2; }
+  table.avail-grid th.site-col, table.avail-grid td.site-col {
+    position: sticky; left: 0; background: var(--white); text-align: left; z-index: 1;
+    border-right: 1px solid var(--gray-light); font-weight: 700; color: var(--navy);
+  }
+  table.avail-grid thead th.site-col { z-index: 3; background: var(--navy); color: var(--white); }
+  table.avail-grid tbody tr:nth-child(even) td { background: #f7f8fa; }
+  table.avail-grid tbody tr:nth-child(even) td.site-col { background: #f7f8fa; }
+  td.night { font-size: 0; } /* hide text, show color only */
+  td.night.open { background: #2e9e5b !important; }
+  td.night.closed { background: var(--gray-light) !important; }
+  .verdict-tag { font-size: .68rem; padding: .05rem .35rem; border-radius: 4px; font-weight: 700; }
+  .verdict-fits { background: #d8f0e0; color: #1c6b3c; }
+  .verdict-tight { background: #fbecc8; color: #8a6500; }
+  .verdict-unknown { background: #eee; color: #666; }
+  .full-badge { font-size: .68rem; color: #2e9e5b; font-weight: 700; margin-left: .35rem; }
+  .err { color: var(--red); font-weight: 700; }
+
+  @media (max-width: 700px) {
+    #cg-search { width: 100%; }
+    .avail-form { flex-direction: column; align-items: stretch; }
+    .field { width: 100%; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="avail-page">
+  <h2>Federal Campground Availability</h2>
+  <p class="avail-intro">
+    Search any recreation.gov (federal) campground, pick a date range, and see which
+    sites have openings. Only EKKO-friendly sites are shown (drive-in RV sites that fit
+    a 23-ft rig). Each column is one night; green means available. Booking is still done
+    on recreation.gov.
+  </p>
+
+  <div class="avail-form">
+    <div class="field">
+      <label for="cg-search">Campground</label>
+      <div class="search-wrap">
+        <input type="text" id="cg-search" autocomplete="off" placeholder="e.g. Moraine Park, Watchman, Devils Tower…">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="selected-cg" id="selected-cg"></div>
+    </div>
+    <div class="field">
+      <label for="start-date">Check-in</label>
+      <input type="date" id="start-date">
+    </div>
+    <div class="field">
+      <label for="end-date">Last night</label>
+      <input type="date" id="end-date">
+    </div>
+    <div class="field">
+      <label for="fit-ft">Fit ≥ (ft)</label>
+      <input type="number" id="fit-ft" value="{{ default_fit_ft }}" min="15" max="60" step="1">
+    </div>
+    <div class="field">
+      <button id="check-btn" disabled>Check availability</button>
+    </div>
+  </div>
+
+  <div id="avail-status"></div>
+  <div id="avail-results"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function () {
+  const searchInput = document.getElementById('cg-search');
+  const resultsBox = document.getElementById('search-results');
+  const selectedLabel = document.getElementById('selected-cg');
+  const startEl = document.getElementById('start-date');
+  const endEl = document.getElementById('end-date');
+  const fitEl = document.getElementById('fit-ft');
+  const checkBtn = document.getElementById('check-btn');
+  const statusEl = document.getElementById('avail-status');
+  const resultsEl = document.getElementById('avail-results');
+
+  let selected = null;     // {id, name}
+  let searchTimer = null;
+  let searchAbort = null;
+
+  // Default dates: check-in two weeks out, one night.
+  const d0 = new Date(Date.now() + 14 * 86400000);
+  const d1 = new Date(Date.now() + 15 * 86400000);
+  const iso = d => d.toISOString().slice(0, 10);
+  startEl.value = iso(d0);
+  endEl.value = iso(d1);
+
+  function updateCheckEnabled() {
+    checkBtn.disabled = !(selected && startEl.value && endEl.value);
+  }
+
+  // ── Campground search (debounced) ──────────────────────────────────────
+  searchInput.addEventListener('input', () => {
+    selected = null;
+    selectedLabel.textContent = '';
+    updateCheckEnabled();
+    const q = searchInput.value.trim();
+    clearTimeout(searchTimer);
+    if (q.length < 2) { resultsBox.classList.remove('open'); return; }
+    searchTimer = setTimeout(() => runSearch(q), 280);
+  });
+
+  async function runSearch(q) {
+    if (searchAbort) searchAbort.abort();
+    searchAbort = new AbortController();
+    resultsBox.innerHTML = '<div class="muted">Searching…</div>';
+    resultsBox.classList.add('open');
+    try {
+      const r = await fetch('/api/ridb/search?q=' + encodeURIComponent(q), { signal: searchAbort.signal });
+      const data = await r.json();
+      if (data.error) { resultsBox.innerHTML = '<div class="muted">' + data.error + '</div>'; return; }
+      if (!data.length) { resultsBox.innerHTML = '<div class="muted">No campgrounds found.</div>'; return; }
+      resultsBox.innerHTML = '';
+      data.slice(0, 12).forEach(f => {
+        const div = document.createElement('div');
+        div.textContent = f.name;
+        div.addEventListener('mousedown', e => { e.preventDefault(); choose(f); });
+        resultsBox.appendChild(div);
+      });
+    } catch (e) {
+      if (e.name !== 'AbortError') resultsBox.innerHTML = '<div class="muted">Search failed.</div>';
+    }
+  }
+
+  function choose(f) {
+    selected = f;
+    searchInput.value = f.name;
+    selectedLabel.textContent = '✓ ' + f.name + '  (id ' + f.id + ')';
+    resultsBox.classList.remove('open');
+    updateCheckEnabled();
+  }
+
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.search-wrap')) resultsBox.classList.remove('open');
+  });
+  startEl.addEventListener('change', updateCheckEnabled);
+  endEl.addEventListener('change', updateCheckEnabled);
+
+  // ── Availability query ─────────────────────────────────────────────────
+  checkBtn.addEventListener('click', runAvailability);
+
+  async function runAvailability() {
+    if (!selected) return;
+    checkBtn.disabled = true;
+    resultsEl.innerHTML = '';
+    statusEl.innerHTML = 'Checking availability for <b>' + escapeHtml(selected.name) +
+      '</b>… (querying recreation.gov, may take a few seconds)';
+    const params = new URLSearchParams({
+      facility: selected.id, start: startEl.value, end: endEl.value, fit_ft: fitEl.value || 25,
+    });
+    try {
+      const r = await fetch('/api/ridb/availability?' + params.toString());
+      const data = await r.json();
+      if (data.error) { statusEl.innerHTML = '<span class="err">' + escapeHtml(data.error) + '</span>'; return; }
+      render(data);
+    } catch (e) {
+      statusEl.innerHTML = '<span class="err">Request failed. Try again.</span>';
+    } finally {
+      checkBtn.disabled = false;
+      updateCheckEnabled();
+    }
+  }
+
+  function render(data) {
+    const nights = data.nights;
+    const sites = data.sites;
+    const fac = data.facility || {};
+    statusEl.innerHTML = '';
+
+    if (!sites.length) {
+      resultsEl.innerHTML = '<p class="summary-line">No EKKO-friendly sites have any availability in that range at <b>' +
+        escapeHtml(fac.name || '') + '</b>. Try different dates or a lower fit threshold.</p>' +
+        bookingLink(fac);
+      return;
+    }
+
+    let html = '<p class="summary-line"><b>' + sites.length + '</b> EKKO-friendly site' +
+      (sites.length !== 1 ? 's' : '') + ' with availability' +
+      (data.fully_available ? ' — <b>' + data.fully_available + '</b> open every night' : '') +
+      ' at ' + escapeHtml(fac.name || '') + ' (fit ≥ ' + data.fit_ft + ' ft). ' + bookingLink(fac) + '</p>';
+
+    html += '<div class="legend">' +
+      '<span><span class="swatch open"></span> Available</span>' +
+      '<span><span class="swatch closed"></span> Reserved / not released / closed</span>' +
+      '<span><span class="verdict-tag verdict-fits">fits</span> driveway ≥ threshold</span>' +
+      '<span><span class="verdict-tag verdict-tight">tight</span> 23–24 ft</span>' +
+      '<span><span class="verdict-tag verdict-unknown">unknown</span> length not in data — verify</span>' +
+      '</div>';
+
+    html += '<div class="grid-wrap"><table class="avail-grid"><thead><tr>';
+    html += '<th class="site-col">Site</th>';
+    nights.forEach(n => { html += '<th>' + fmtNight(n) + '</th>'; });
+    html += '</tr></thead><tbody>';
+
+    sites.forEach(s => {
+      html += '<tr>';
+      const dl = s.driveway_ft ? Math.round(s.driveway_ft) + ' ft' : '—';
+      const loop = s.loop ? ' · ' + escapeHtml(s.loop) : '';
+      html += '<td class="site-col">' + escapeHtml(s.name) +
+        ' <span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span>' + loop +
+        (s.fully_available ? '<span class="full-badge">ALL</span>' : '') + '</td>';
+      s.statuses.forEach(st => {
+        const open = st === 'Available';
+        html += '<td class="night ' + (open ? 'open' : 'closed') + '" title="' +
+          (st || 'no data') + '">' + (open ? '✓' : '') + '</td>';
+      });
+      html += '</tr>';
+    });
+    html += '</tbody></table></div>';
+    resultsEl.innerHTML = html;
+  }
+
+  function bookingLink(fac) {
+    if (!fac.reservation_url) return '';
+    return '<a href="' + fac.reservation_url + '" target="_blank" rel="noopener">Book on recreation.gov →</a>';
+  }
+  function fmtNight(isoStr) {
+    const d = new Date(isoStr + 'T12:00:00');
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) +
+      '<br><span style="font-weight:400;opacity:.8">' +
+      d.toLocaleDateString(undefined, { weekday: 'short' }) + '</span>';
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+})();
+</script>
+{% endblock %}
