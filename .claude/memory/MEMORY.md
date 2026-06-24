@@ -15,3 +15,4 @@
 - [Roadside notes direction-neutral](feedback_roadside_direction_neutral.md) — don't word roadside-stop notes for one travel direction (route may be driven either way)
 - [AL sweep handoff](project_al_sweep_handoff.md) — AL state/federal/local/gov-misclassified DONE+committed+audited; only the private bucket (~80 vetted candidates) remains
 - [MS sweep COMPLETE](project_ms_sweep_handoff.md) — all 4 buckets added+committed+audited (ids 4996-5125, 130 entries)
+- [AR sweep COMPLETE](project_ar_sweep_handoff.md) — all 4 buckets added+audited+committed (232 entries, ids 5126-5357); rec.gov per-site proximity_water API is gate evidence for USACE
