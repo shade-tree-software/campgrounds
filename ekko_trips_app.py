@@ -504,6 +504,35 @@ def _save_json(path, data):
         json.dump(data, f, indent=2)
 
 
+# Keys the app reads out of home.json (gitignored per-machine config).
+_HOME_REQUIRED_KEYS = ("home_lat", "home_long", "home_altitude_meters")
+
+
+def _check_home_config():
+    """Startup diagnostic: warn (don't crash) if home.json is absent or missing
+    required keys.
+
+    home.json is gitignored per-machine config (home coordinates + altitude) and
+    is NOT created by a fresh clone. Without it the campground climate map and the
+    home markers can't compute and will 500. Report the problem loudly at startup
+    rather than letting it surface as an opaque request-time TypeError.
+    """
+    if not os.path.exists(HOME_FILE):
+        print(f"WARNING: home config not found at {HOME_FILE}. The campground "
+              f"climate map and home markers will not work until it exists. "
+              f"Create it as JSON with keys: {', '.join(_HOME_REQUIRED_KEYS)}.",
+              file=sys.stderr)
+        return False
+    cfg = _load_json(HOME_FILE)
+    missing = [k for k in _HOME_REQUIRED_KEYS if cfg.get(k) is None]
+    if missing:
+        print(f"WARNING: {HOME_FILE} is missing required key(s): "
+              f"{', '.join(missing)}. The campground climate map / home markers "
+              f"may error until these are set.", file=sys.stderr)
+        return False
+    return True
+
+
 # ── User authentication ────────────────────────────────────────────────────
 
 class User(UserMixin):
@@ -4492,5 +4521,10 @@ if __name__ == '__main__':
         parser.add_argument('--http', action='store_true',
                             help="Serve plain HTTP instead of the default self-signed HTTPS.")
         args = parser.parse_args()
+        # Werkzeug's reloader runs this block in both the watcher (env var unset)
+        # and the re-exec'd worker (env var 'true'); warn only in the watcher so
+        # the message prints exactly once (and still prints with no reloader).
+        if not os.environ.get('WERKZEUG_RUN_MAIN'):
+            _check_home_config()
         ssl_context = None if args.http else _dev_ssl_context()
         app.run(debug=True, host='0.0.0.0', port=args.port, ssl_context=ssl_context)
