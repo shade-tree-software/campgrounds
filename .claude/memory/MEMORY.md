@@ -16,3 +16,4 @@
 - [AL sweep handoff](project_al_sweep_handoff.md) — AL state/federal/local/gov-misclassified DONE+committed+audited; only the private bucket (~80 vetted candidates) remains
 - [MS sweep COMPLETE](project_ms_sweep_handoff.md) — all 4 buckets added+committed+audited (ids 4996-5125, 130 entries)
 - [AR sweep COMPLETE](project_ar_sweep_handoff.md) — all 4 buckets added+audited+committed (232 entries, ids 5126-5357); rec.gov per-site proximity_water API is gate evidence for USACE
+- [Inclusion (validity) audit](reference_inclusion_audit.md) — verifies an entry is a real drive-in RV campground (catches cabins/tent/day-use/hike-in/closed/under-23ft); inclusion_evidence field; PA 100% done, other states pending
