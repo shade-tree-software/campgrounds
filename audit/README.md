@@ -76,3 +76,14 @@ as the standard going forward.
   waterline, per-site map, rec.gov shoreline flags) and do happen (~2-4/state).
 - USACE campgrounds usually confirm via rec.gov per-site "Lakefront" flags;
   state parks usually downgrade (loops inland of the lake they're named for).
+
+---
+
+## Inclusion (validity) audit — sibling tool
+
+Separate from the waterfront audit: verifies an entry is a **real, currently-operating, drive-in RV campground fitting a 23-ft rig** (catches cabins-only / tent-only / hike-in / group-only / day-use / fairground-event-only / membership / residential-seasonal / closed / under-23ft / duplicate). The waterfront audit does NOT check this.
+
+- **`inclusion_audit_instructions.md`** — subagent gate. Authority = operator/agency page + reservation-system per-site site-type list; aggregators inflate cabin/day-use parks into fake "RV sites" — never keep on an aggregator alone.
+- **`apply_inclusion_audit.py <results.json>`** — stamps `inclusion_evidence` on `keep` verdicts; **reports** `remove`/`review` candidates without auto-deleting (human reviews the remove list before excising; check `trip_data/` for `campground_id` refs first).
+- Durable record: the **`inclusion_evidence`** JSON field (non-empty == validity-audited & confirmed keep).
+- **In a new-state sweep this is recorded at ADD time** (the research agent emits `inclusion_evidence` since it already vets keep/drop) — no separate pass needed. The standalone subagents here are for **retroactive** re-vetting of states added before that discipline. **PA was the pilot** (2026-06-25): 169 entries audited, 11 removed (5 cabins/day-use/tent-only state parks, 3 under-20ft state-forest sites, 1 hike-in, 1 defunct, 1 unconfirmable FCFS). See `../CLAUDE.md` "Inclusion (validity) audit is a built-in sweep stage".
