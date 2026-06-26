@@ -17,3 +17,6 @@
 - [MS sweep COMPLETE](project_ms_sweep_handoff.md) — all 4 buckets added+committed+audited (ids 4996-5125, 130 entries)
 - [AR sweep COMPLETE](project_ar_sweep_handoff.md) — all 4 buckets added+audited+committed (232 entries, ids 5126-5357); rec.gov per-site proximity_water API is gate evidence for USACE
 - [Inclusion (validity) audit](reference_inclusion_audit.md) — verifies an entry is a real drive-in RV campground (catches cabins/tent/day-use/hike-in/closed/under-23ft); inclusion_evidence field; PA 100% done, other states pending
+- [CO sweep handoff](project_co_sweep_handoff.md) — CO waterfront audit COMPLETE (430/430); 256-entry sweep done in 11 chunks (~54 upgrades, 3 removals). Inclusion done for swept 256; 177 older CO entries still need inclusion
+- [IA sweep handoff](project_ia_sweep_handoff.md) — IA waterfront 100% DONE (371/371); inclusion loose ends remain: id 4860 + 39 older IA entries need inclusion
+- [MO sweep handoff](project_mo_sweep_handoff.md) — MO COMPLETE: waterfront 100% done (7 upgrades); inclusion of 144 non-wf entries done & resolved (removed 1934+1993+1994, kept+clarified 2061)
