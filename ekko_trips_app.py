@@ -1671,7 +1671,7 @@ OWNERSHIP_LABELS = {
 
 @app.route('/campgrounds/map')
 def campgrounds_map():
-    home, _ = _map_config()
+    home, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
     mode = request.args.get('color')
     if mode not in {m["key"] for m in COLOR_MODES}:
@@ -1685,7 +1685,7 @@ def campgrounds_map():
         default_mode=mode,
         ownership_labels=OWNERSHIP_LABELS,
         home=home,
-        family_locations=[],
+        family_locations=family,
         active_nav='campmap',
         is_admin=is_admin,
     )
