@@ -321,7 +321,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   mappedEvents.forEach(e => allDates.add(e.date));
   const sortedDates = [...allDates].sort();
 
-  // For each day: morning location → events/waypoints sorted by time → evening location
+  // For each day: morning location → events/waypoints sorted by time → evening location.
+  // Skip days in the future so the dashed route never draws connecting lines to
+  // not-yet-happened events, stays, or the return-trip-home leg (an upcoming /
+  // in-progress trip shows the route only up through today).
+  const todayStr = (() => {
+    const n = new Date();
+    return n.getFullYear() + '-' + String(n.getMonth() + 1).padStart(2, '0') +
+      '-' + String(n.getDate()).padStart(2, '0');
+  })();
   const routePath = [];
   function pushIfNew(pt) {
     const last = routePath[routePath.length - 1];
@@ -330,6 +338,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
   }
   sortedDates.forEach(dateStr => {
+    if (dateStr > todayStr) return;  // future item — draw no connecting line to it
     const morning = morningLocation(dateStr);
     const evening = eveningLocation(dateStr);
     const dayEvents = mappedEvents
@@ -691,6 +700,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       routeStops.push({ tst, ll: pt });
     }
     sortedDates.forEach(dateStr => {
+      if (dateStr > todayStr) return;  // don't gap-fill toward future (unvisited) anchors
       pushStop(localEpoch(dateStr, '00:00'), morningLocation(dateStr));
       mappedEvents
         .filter(e => e.date === dateStr)

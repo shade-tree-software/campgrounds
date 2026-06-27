@@ -215,6 +215,14 @@ function createMapPicker(opts) {
         alert('Geolocation is not supported by this browser.');
         return;
       }
+      // Geolocation is a secure-context-only API. Over plain http:// (e.g. a
+      // LAN IP) browsers — notably Firefox Android — fail immediately with a
+      // "permission denied" error and never show the prompt. Catch that here
+      // so the message is actionable instead of a misleading "you denied it".
+      if (!window.isSecureContext) {
+        alert('Location needs a secure connection — open this site over https:// (not a plain http:// address).');
+        return;
+      }
       btn.disabled = true;
       const prev = btn.textContent;
       btn.textContent = '⏳';

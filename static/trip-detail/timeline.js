@@ -888,6 +888,14 @@ function openAddModal(kind) {
       waypoint: isWp,
     };
     _openModal(kind, 'add', null, values);
+    // Geolocation is a secure-context-only API. Over plain http:// (e.g. a LAN
+    // IP) browsers — notably Firefox Android — fail immediately and never show
+    // the prompt. The modal is already open for manual entry, so just surface
+    // an actionable hint instead of silently leaving location blank.
+    if (!window.isSecureContext) {
+      window.toast('Location needs a secure connection — open this site over https:// to autofill from GPS.', 'error');
+      return;
+    }
     // Geolocation may take a couple seconds (or fail entirely if the user
     // denies the prompt). Fire it after the modal is already on screen so
     // the user isn't staring at a blank tap. Fills only empty fields, so a
