@@ -22,3 +22,4 @@
 - [MO sweep handoff](project_mo_sweep_handoff.md) — MO COMPLETE: waterfront 100% done (7 upgrades); inclusion of 144 non-wf entries done & resolved (removed 1934+1993+1994, kept+clarified 2061)
 - [WI sweep handoff](project_wi_sweep_handoff.md) — WI waterfront 100% (348/348); inclusion done for the 183 non-wf entries only (all kept); 165 currently-waterfront WI entries still need inclusion
 - [KY sweep handoff](project_ky_sweep_handoff.md) — KY COMPLETE: waterfront 100% (114/114) + inclusion 100% (114/114, 0 removals); 1 riverfront + 1 lakeview upgrade
+- [IN sweep handoff](project_in_sweep_handoff.md) — IN waterfront 100% (114/114, 11 upgrades); inclusion done for the 81 non-waterfront entries only; ~33 currently-waterfront IN entries still need inclusion
