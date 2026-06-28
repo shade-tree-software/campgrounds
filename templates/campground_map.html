@@ -5,7 +5,7 @@
 {% block head_extra %}
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-{% if is_admin %}<link rel="stylesheet" href="/static/map-picker.css" />{% endif %}
+{% if is_admin %}<link rel="stylesheet" href="{{ static_v('map-picker.css') }}" />{% endif %}
 {% endblock %}
 
 {% block style %}
@@ -1554,7 +1554,7 @@ function trimmedBounds(coords, frac) {
 <!-- Admin: inline create/edit/delete of roadside stops. Loaded after the main
      map script so it can reference its top-level bindings (map, roadsideMarkers,
      roadsideById, addRoadsideMarker, roadsidePopupHtml, HOME). -->
-<script src="/static/map-picker.js"></script>
+<script src="{{ static_v('map-picker.js') }}"></script>
 <script>
 (function() {
   // "Add roadside stop" map control (topleft, under the search + locate buttons).

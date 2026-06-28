@@ -29,6 +29,31 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.jinja_env.policies['json.dumps_kwargs'] = {'sort_keys': False}
 
+_STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+_static_v_cache = {}
+
+
+def _static_v(path):
+    """Return ``/static/<path>?v=<mtime>`` so a redeploy changes the URL and
+    every cache layer (browser HTTP cache, service worker) is forced to
+    refetch. Without this the URL is identical across deploys and a phone
+    keeps serving the stale file — PythonAnywhere serves /static/ with a
+    far-future Cache-Control, and even the SW's network-first fetch() goes
+    through that HTTP cache. mtime is cheap and changes whenever the file is
+    edited/redeployed; cached per process so we stat each file at most once."""
+    rel = path.lstrip("/")
+    cached = _static_v_cache.get(rel)
+    if cached is None:
+        try:
+            cached = str(int(os.path.getmtime(os.path.join(_STATIC_DIR, rel))))
+        except OSError:
+            cached = ""
+        _static_v_cache[rel] = cached
+    return f"/static/{rel}?v={cached}" if cached else f"/static/{rel}"
+
+
+app.jinja_env.globals["static_v"] = _static_v
+
 
 def _load_or_create_secret_key():
     """Secret key: the FLASK_SECRET_KEY env var wins; otherwise persist a
