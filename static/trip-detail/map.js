@@ -718,6 +718,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
     const firstTst = sorted[0].tst;
     const lastTst = sorted[sorted.length - 1].tst;
+    const nowTst = Date.now() / 1000;
     routeStops.filter(s => s.tst < firstTst).forEach(s => pushLL(s.ll));
     for (let i = 0; i < sorted.length; i += 1) {
       pushLL([sorted[i].lat, sorted[i].lon]);
@@ -730,7 +731,18 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
         }
       }
     }
-    routeStops.filter(s => s.tst > lastTst).forEach(s => pushLL(s.ll));
+    // Trailing gap-fill: route through anchors after the last good ping (a
+    // phone that stopped logging mid-trip, or the return-home leg of a
+    // completed trip). But never draw toward an anchor whose clock time
+    // hasn't arrived yet: on the final day of an *in-progress* trip the
+    // evening anchor is HOME stamped at 23:59, and the traveler is still en
+    // route — projecting a straight line from the current position to HOME
+    // is premature. Gating by `nowTst` suppresses that future home/evening
+    // anchor while in progress; for a completed trip every anchor is already
+    // in the past, so this is a no-op and the arrive-home leg still draws.
+    routeStops
+      .filter(s => s.tst > lastTst && s.tst <= nowTst)
+      .forEach(s => pushLL(s.ll));
 
     const gpsRouteLayer = L.layerGroup([
       L.polyline(latlngs, { color: '#fff', weight: 5, opacity: 0.6 }),
@@ -759,7 +771,6 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // exists for trips already past `upperCut`, which would fail the
     // `nowInWindow` check below, so for active trips the last entry is
     // always a true in-trip ping.
-    const nowTst = Date.now() / 1000;
     const nowInWindow = TRIP_START && TRIP_END && sorted.length &&
       (lowerCut == null || nowTst >= lowerCut) &&
       (upperCut == null || nowTst <= upperCut);
