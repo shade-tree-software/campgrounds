@@ -1416,6 +1416,12 @@ let routePanelKind = null;
 // off-highway destinations you exit for, so never filtered). `items()` projects the
 // kind's markers to a common shape; `show(id)` flies to + opens that marker.
 const ROUTE_STOPS_MAX = 12;
+// Pool size per kind handed to the OSRM /table call: we take the nearest
+// ROUTE_POOL_MAX by straight-line distance, then rank that pool by real driving
+// detour to choose the ROUTE_STOPS_MAX we show. Bounded so the combined request
+// (2 endpoints + both kinds' pools) stays well under OSRM's ~100-coordinate table
+// limit, even on a long route with many nearby campgrounds.
+const ROUTE_POOL_MAX = 40;
 const ROUTE_KINDS = {
   stops: {
     icon: '🌳', title: 'Roadside stops near route', btnClass: 'cg-route-stops-btn',
@@ -1694,12 +1700,18 @@ function isWrongSide(c) {
   return false;                                       // no detour data — don't drop
 }
 
-// Recompute both near-route lists (stops + campgrounds). Step 1 (cheap, per kind):
-// keep items within the straight-line corridor, nearest-first, capped — recording
-// the overflow cut by the cap. Step 2: ONE OSRM /table call over all candidates of
-// both kinds annotates each with real driving distance/time from the start and the
-// insertion detour. Then per kind: drop wrong-side stops (rest stops only) and order
-// by driving distance from the start so the list reads in travel order.
+// Recompute both near-route lists (stops + campgrounds). Two-stage selection so the
+// shown set is decided by real driving detour, not just straight-line proximity:
+//   1. (cheap, per kind) keep items within the straight-line corridor, nearest-first,
+//      and take a bounded POOL of the nearest ROUTE_POOL_MAX — recording the overflow
+//      beyond the shown cap.
+//   2. ONE OSRM /table call over both kinds' pools annotates each with real driving
+//      distance/time from the start and the insertion detour.
+//   3. (per kind) drop wrong-side stops, then RANK the pool by driving detour and keep
+//      the best ROUTE_STOPS_MAX — finally ordering those by driving distance from the
+//      start so the list reads in travel order.
+// If the table call fails, every detour field is absent and each step's `??` chain
+// falls back to straight-line distance, so the lists still populate (just by proximity).
 async function updateRouteLists(coords) {
   const perKind = {};
   for (const kind of Object.keys(ROUTE_KINDS)) {
@@ -1709,9 +1721,9 @@ async function updateRouteLists(coords) {
       .filter(x => x.offMi <= cfg.maxMi)
       .sort((a, b) => a.offMi - b.offMi);
     routeNear[kind].overflow = Math.max(0, near.length - ROUTE_STOPS_MAX);
-    perKind[kind] = near.slice(0, ROUTE_STOPS_MAX);
+    perKind[kind] = near.slice(0, ROUTE_POOL_MAX);     // ranking pool (bounded for the table call)
   }
-  const flat = [].concat(...Object.values(perKind));   // all candidates, one table call
+  const flat = [].concat(...Object.values(perKind));   // both pools, one table call
   if (flat.length) {
     try {
       const det = await tableDetours(flat);
@@ -1719,13 +1731,16 @@ async function updateRouteLists(coords) {
         c.legMi = det[i].legMi; c.legSec = det[i].legSec;
         c.detourMi = det[i].detourMi; c.detourSec = det[i].detourSec;
       });
-    } catch (e) { /* table unavailable — keep straight-line lists, skip detour/filter */ }
+    } catch (e) { /* table unavailable — keep straight-line pools, skip detour/filter */ }
   }
   for (const kind of Object.keys(ROUTE_KINDS)) {
-    let list = perKind[kind];
-    if (ROUTE_KINDS[kind].dropWrongSide) list = list.filter(c => !isWrongSide(c));
-    // Travel order: by drive distance from start (fall back to drive time, then
-    // straight-line off-route). All survivors carry the same field — no unit mixing.
+    let pool = perKind[kind];
+    if (ROUTE_KINDS[kind].dropWrongSide) pool = pool.filter(c => !isWrongSide(c));
+    // Choose the shown set by smallest real driving detour (miles, else minutes, else
+    // straight-line off-route if the table was unavailable — one field for the whole pool).
+    pool.sort((a, b) => (a.detourMi ?? a.detourSec ?? a.offMi) - (b.detourMi ?? b.detourSec ?? b.offMi));
+    const list = pool.slice(0, ROUTE_STOPS_MAX);
+    // Then display in travel order: by drive distance from start (fall back the same way).
     list.sort((a, b) => (a.legMi ?? a.legSec ?? a.offMi) - (b.legMi ?? b.legSec ?? b.offMi));
     routeNear[kind].list = list;
   }
