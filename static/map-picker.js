@@ -36,6 +36,7 @@ function createMapPicker(opts) {
   function initMap() {
     if (map) return;
     map = L.map(opts.mapId).setView(opts.defaultView || [38.93, -77.37], 7);
+    if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
     const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors',
       maxZoom: 18,

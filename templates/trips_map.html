@@ -369,6 +369,7 @@ const FAMILY = {{ family_locations | tojson }};
 const HOME = {{ home | tojson }};
 
 const map = L.map('all-trips-map');
+map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
   maxZoom: 18,

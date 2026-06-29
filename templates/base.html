@@ -466,6 +466,24 @@
     t.addEventListener('click', () => { clearTimeout(timer); dismiss(); });
   };
 
+  // Add a miles-only scale bar to a Leaflet map at the bottom-right. The bottom-right
+  // corner is ordered top→bottom as [existing controls…, scale, attribution]: Leaflet
+  // stacks corner children in DOM order (last child sits at the map edge), so we move
+  // the scale below any existing controls and keep the attribution bottom-most. Shared
+  // by every map (campground map, trips map, trip detail, the coordinate picker).
+  window.addMilesScaleBar = function(map) {
+    if (!map || !window.L) return null;
+    const scale = L.control.scale({ position: 'bottomright', imperial: true, metric: false, maxWidth: 140 }).addTo(map);
+    const scaleEl = scale.getContainer();
+    const corner = scaleEl && scaleEl.parentNode;
+    if (corner) {
+      corner.appendChild(scaleEl);                 // scale below any existing corner controls
+      const attrEl = map.attributionControl && map.attributionControl.getContainer();
+      if (attrEl && attrEl.parentNode === corner) corner.appendChild(attrEl);  // attribution stays at the bottom
+    }
+    return scale;
+  };
+
   // Offline support: register the service worker (served from / so its
   // scope covers the whole app). Quietly a no-op where unsupported or
   // where the cert isn't trusted (dev's self-signed adhoc HTTPS).

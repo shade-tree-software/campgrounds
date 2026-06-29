@@ -105,6 +105,7 @@
   .cg-route-bar .cg-route-clear { background: var(--navy); color: #fff; }
   .cg-route-bar .cg-route-set { background: #1a73e8; color: #fff; }
   .cg-route-bar .cg-route-stops-btn { background: #2e7d32; color: #fff; }
+  .cg-route-bar .cg-route-camps-btn { background: #1565c0; color: #fff; }
 
   /* Panel listing roadside stops on/near the drawn route — opens above the pill
      via the 🌳 button. Scrollable; each row re-routes the trip through that stop. */
@@ -129,7 +130,12 @@
   .cg-route-stops-row.active { background: #eaf5ea; font-weight: 600; }
   .cg-route-stops-row.direct { color: #1a73e8; font-weight: 600; }
   .cg-route-stops-row .muted { color: #888; }
-  .cg-route-stops-row .off { color: #2e7d32; font-weight: 600; white-space: nowrap; }
+  .cg-route-stops-sub { margin-top: .15rem; font-size: .92em; color: #555; }
+  .cg-route-stops-sub .detour { color: #2e7d32; font-weight: 600; white-space: nowrap; }
+  .cg-route-stops-more {
+    padding: .5rem .8rem; border-top: 1px solid #f0f0f0;
+    font-size: .82em; font-style: italic; color: #888;
+  }
   @media (max-width: 500px) {
     /* The "Drag the map to the…" prompt won't fit beside the Set + Cancel
        buttons on a narrow phone; the Set button already says what to do, so
@@ -686,6 +692,7 @@ function ownerLabel(v) {
 // far faster. Clicks, popups, setStyle, and add/remove all work unchanged; the
 // home/family/geolocation divIcon markers are DOM-based and unaffected.
 const map = L.map('campground-map', { zoomControl: false, preferCanvas: true });
+map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors',
   maxZoom: 18,
@@ -1393,17 +1400,42 @@ let routeActive = false;     // 🚗 tool armed (collecting clicks)
 let routeStage = 'origin';   // 'origin' → 'dest' → 'done'
 let routeOrigin = null;      // { lat, lng } of the chosen start (A)
 let routeDest = null;        // { lat, lng } of the destination (B)
-let routeVia = null;         // { lat, lng, id } of an inserted roadside stop, or null
-let routeViaMarker = null;   // the gold pin marking the inserted stop
 let routeLine = null;        // the drawn polyline layer
 let routeLink = null;        // the 🚗 control's <a> (set in onAdd)
-let routeStopsNearby = [];   // [{ stop, offMi }] roadside stops near the current route
 const routeEndMarkers = [];  // the A / B pin markers
 
-// A roadside stop counts as "near the route" if its straight-line distance to the
-// drawn polyline is within this many miles (a short detour); list is capped.
-const ROUTE_DETOUR_MAX_MI = 5;
+// Two "near the route" lists share one panel: roadside stops and campgrounds. Each
+// holds { list: [{id,name,sub,lat,lng,offMi,legMi,legSec,detourMi,detourSec}],
+// overflow }. routePanelKind tracks which one the panel is currently showing.
+const routeNear = { stops: { list: [], overflow: 0 }, camps: { list: [], overflow: 0 } };
+let routePanelKind = null;
+
+// Per-kind config: a candidate is "near the route" if its straight-line distance to
+// the polyline is within maxMi (capped at STOPS_MAX, nearest-first). `dropWrongSide`
+// applies the opposite-carriageway filter (rest stops only — campgrounds are
+// off-highway destinations you exit for, so never filtered). `items()` projects the
+// kind's markers to a common shape; `show(id)` flies to + opens that marker.
 const ROUTE_STOPS_MAX = 12;
+const ROUTE_KINDS = {
+  stops: {
+    icon: '🌳', title: 'Roadside stops near route', btnClass: 'cg-route-stops-btn',
+    maxMi: 5, dropWrongSide: true,
+    items: () => roadsideMarkers.map(({ stop }) => ({
+      id: stop.id, name: stop.name, lat: stop.lat, lng: stop.lng,
+      sub: [stop.town, stop.state].filter(Boolean).join(', '),
+    })),
+    show: (id) => cgFlyToStop(id),
+  },
+  camps: {
+    icon: '🏕️', title: 'Campgrounds near route', btnClass: 'cg-route-camps-btn',
+    maxMi: 10, dropWrongSide: false,
+    items: () => markers.map(({ cg }) => {
+      const [lat, lng] = (cg.location || '').split(',').map(parseFloat);
+      return { id: cg.id, name: cg.name, lat, lng, sub: cg.state || '' };
+    }).filter(it => Number.isFinite(it.lat) && Number.isFinite(it.lng)),
+    show: (id) => cgFlyToCamp(id),
+  },
+};
 
 // Dropping inaccessible "wrong side of a divided highway" rest stops: a stop that
 // hugs the route corridor (straight-line within CORRIDOR_MI) but whose actual
@@ -1517,13 +1549,13 @@ function startRoute() {
 // without disarming; a plain Clear/Cancel disarms and hides the pill.
 window.cgClearRoute = function(keepArmed) {
   if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
-  if (routeViaMarker) { map.removeLayer(routeViaMarker); routeViaMarker = null; }
   routeEndMarkers.forEach(m => map.removeLayer(m));
   routeEndMarkers.length = 0;
   routeOrigin = null;
   routeDest = null;
-  routeVia = null;
-  routeStopsNearby = [];
+  routeNear.stops = { list: [], overflow: 0 };
+  routeNear.camps = { list: [], overflow: 0 };
+  routePanelKind = null;
   routeStopsPanel.classList.add('hidden');
   routeStage = 'origin';
   routeAim.style.display = 'none';
@@ -1552,7 +1584,6 @@ async function handleRoutePoint(latlng) {
   }
   if (routeStage !== 'dest') return;
   routeDest = { lat: latlng.lat, lng: latlng.lng };
-  routeVia = null;                   // a fresh destination clears any prior via stop
   placeRouteEnd(latlng, 'B', '#bf0a30');
   routeStage = 'done';
   routeAim.style.display = 'none';   // both points set — no more aiming
@@ -1563,16 +1594,14 @@ async function handleRoutePoint(latlng) {
   await drawRoute();
 }
 
-// Fetch + draw the route through routeOrigin → (routeVia?) → routeDest, refresh the
-// status pill, and recompute the roadside stops near the resulting line. Shared by
-// the initial draw and every re-route (inserting/removing a via stop). Leaves the
-// A/B pins alone; only the polyline + via marker + stop list are rebuilt.
+// Fetch + draw the route from routeOrigin → routeDest, refresh the status pill, and
+// recompute the roadside stops near the resulting line. Leaves the A/B pins alone;
+// only the polyline + stop list are rebuilt.
 async function drawRoute() {
   if (!routeOrigin || !routeDest) return;
   if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
   showRouteBar('Finding route…', false);
-  const pts = [routeOrigin, ...(routeVia ? [routeVia] : []), routeDest];
-  const coordStr = pts.map(p => `${p.lng},${p.lat}`).join(';');
+  const coordStr = [routeOrigin, routeDest].map(p => `${p.lng},${p.lat}`).join(';');
   try {
     const resp = await fetch(`${OSRM_BASE}${coordStr}?overview=full&geometries=geojson`);
     if (!resp.ok) throw new Error('http ' + resp.status);
@@ -1582,27 +1611,31 @@ async function drawRoute() {
     const coords = route.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
     routeLine = L.polyline(coords, { color: '#1a73e8', weight: 5, opacity: .85 }).addTo(map);
     map.fitBounds(routeLine.getBounds(), { padding: [40, 40] });
-    showRouteBar('Finding nearby stops…', false);   // line is up; now refine stops
-    await updateRouteStops(coords);                 // straight-line + driving-detour filter
+    showRouteBar('Finding nearby stops…', false);   // line is up; now refine the lists
+    await updateRouteLists(coords);                 // stops + campgrounds near the route
     showRouteResult(route);
-    if (!routeStopsPanel.classList.contains('hidden')) renderRouteStopsPanel();
+    if (routePanelKind && !routeStopsPanel.classList.contains('hidden')) renderRouteListPanel(routePanelKind);
   } catch (err) {
-    routeStopsNearby = [];
+    routeNear.stops = { list: [], overflow: 0 };
+    routeNear.camps = { list: [], overflow: 0 };
     routeStopsPanel.classList.add('hidden');
     showRouteBar('Could not find a route — clear and try again', true);
   }
 }
 
-// Status pill for a drawn route: distance · time, a 🌳 toggle when stops are near,
-// and Clear. (showRouteBar handles the aiming prompts; this is the result state.)
+// Status pill for a drawn route: distance · time, a toggle button per non-empty
+// near-route list (🌳 stops, 🏕️ campgrounds), and Clear. (showRouteBar handles the
+// aiming prompts; this is the result state.)
 function showRouteResult(route) {
-  const n = routeStopsNearby.length;
-  const stopsBtn = n
-    ? `<button class="cg-route-stops-btn" onclick="cgToggleRouteStops()">🌳 ${n}</button>` : '';
-  const viaTxt = routeVia ? ' · via stop' : '';
+  let btns = '';
+  for (const kind of Object.keys(ROUTE_KINDS)) {
+    const n = routeNear[kind].list.length;
+    if (n) btns += `<button class="${ROUTE_KINDS[kind].btnClass}" `
+      + `onclick="cgToggleRouteList('${kind}')">${ROUTE_KINDS[kind].icon} ${n}</button>`;
+  }
   routeBar.innerHTML =
-    `<span class="cg-route-msg">🚗 ${fmtRouteMiles(route.distance)} · ${fmtRouteTime(route.duration)}${viaTxt}</span>`
-    + stopsBtn
+    `<span class="cg-route-msg">🚗 ${fmtRouteMiles(route.distance)} · ${fmtRouteTime(route.duration)}</span>`
+    + btns
     + `<button class="cg-route-clear" onclick="cgClearRoute()">Clear</button>`;
   routeBar.classList.remove('hidden');
 }
@@ -1643,6 +1676,8 @@ async function tableDetours(stops) {
   return stops.map((s, i) => {
     const k = i + 2;
     return {
+      legSec: dur[0][k],                                           // A → stop drive time
+      legMi: dist ? dist[0][k] / 1609.344 : null,                 // A → stop drive distance
       detourSec: (dur[0][k] + dur[k][1]) - baseSec,
       detourMi: dist ? ((dist[0][k] + dist[k][1]) / 1609.344) - baseMi : null,
     };
@@ -1659,70 +1694,94 @@ function isWrongSide(c) {
   return false;                                       // no detour data — don't drop
 }
 
-// Recompute which roadside stops lie on/near the drawn route. Step 1 (cheap): keep
-// stops within the straight-line corridor, nearest-first, capped. Step 2 (one OSRM
-// /table call): annotate each with its real driving detour and drop wrong-side
-// (opposite-carriageway) stops. Stored for the pill count + the panel.
-async function updateRouteStops(coords) {
-  let cands = roadsideMarkers
-    .map(({ stop }) => ({ stop, offMi: distToPolylineMi(stop.lat, stop.lng, coords) }))
-    .filter(x => x.offMi <= ROUTE_DETOUR_MAX_MI)
-    .sort((a, b) => a.offMi - b.offMi)
-    .slice(0, ROUTE_STOPS_MAX);
-  if (cands.length) {
-    try {
-      const detours = await tableDetours(cands.map(c => c.stop));
-      cands.forEach((c, i) => { c.detourMi = detours[i].detourMi; c.detourSec = detours[i].detourSec; });
-      cands = cands.filter(c => !isWrongSide(c));
-    } catch (e) { /* table unavailable — keep the straight-line list, skip filtering */ }
+// Recompute both near-route lists (stops + campgrounds). Step 1 (cheap, per kind):
+// keep items within the straight-line corridor, nearest-first, capped — recording
+// the overflow cut by the cap. Step 2: ONE OSRM /table call over all candidates of
+// both kinds annotates each with real driving distance/time from the start and the
+// insertion detour. Then per kind: drop wrong-side stops (rest stops only) and order
+// by driving distance from the start so the list reads in travel order.
+async function updateRouteLists(coords) {
+  const perKind = {};
+  for (const kind of Object.keys(ROUTE_KINDS)) {
+    const cfg = ROUTE_KINDS[kind];
+    const near = cfg.items()
+      .map(it => ({ ...it, offMi: distToPolylineMi(it.lat, it.lng, coords) }))
+      .filter(x => x.offMi <= cfg.maxMi)
+      .sort((a, b) => a.offMi - b.offMi);
+    routeNear[kind].overflow = Math.max(0, near.length - ROUTE_STOPS_MAX);
+    perKind[kind] = near.slice(0, ROUTE_STOPS_MAX);
   }
-  routeStopsNearby = cands;
+  const flat = [].concat(...Object.values(perKind));   // all candidates, one table call
+  if (flat.length) {
+    try {
+      const det = await tableDetours(flat);
+      flat.forEach((c, i) => {
+        c.legMi = det[i].legMi; c.legSec = det[i].legSec;
+        c.detourMi = det[i].detourMi; c.detourSec = det[i].detourSec;
+      });
+    } catch (e) { /* table unavailable — keep straight-line lists, skip detour/filter */ }
+  }
+  for (const kind of Object.keys(ROUTE_KINDS)) {
+    let list = perKind[kind];
+    if (ROUTE_KINDS[kind].dropWrongSide) list = list.filter(c => !isWrongSide(c));
+    // Travel order: by drive distance from start (fall back to drive time, then
+    // straight-line off-route). All survivors carry the same field — no unit mixing.
+    list.sort((a, b) => (a.legMi ?? a.legSec ?? a.offMi) - (b.legMi ?? b.legSec ?? b.offMi));
+    routeNear[kind].list = list;
+  }
 }
 
-window.cgToggleRouteStops = function() {
-  if (routeStopsPanel.classList.contains('hidden')) renderRouteStopsPanel();
-  else routeStopsPanel.classList.add('hidden');
+// Toggle the panel for a kind: open it (switching kinds if another is showing), or
+// close it if it's already showing this kind.
+window.cgToggleRouteList = function(kind) {
+  const showing = !routeStopsPanel.classList.contains('hidden');
+  if (showing && routePanelKind === kind) { routeStopsPanel.classList.add('hidden'); routePanelKind = null; }
+  else { routePanelKind = kind; renderRouteListPanel(kind); }
 };
 
-function renderRouteStopsPanel() {
-  if (!routeStopsNearby.length) { routeStopsPanel.classList.add('hidden'); return; }
-  let html = `<div class="cg-route-stops-head"><span>Roadside stops near route</span>`
-    + `<span class="cg-route-stops-x" onclick="cgToggleRouteStops()">&times;</span></div>`;
-  if (routeVia) {
-    html += `<a class="cg-route-stops-row direct" onclick="cgRouteDirect()">&#8617; Remove stop &mdash; route direct</a>`;
-  }
-  routeStopsNearby.forEach(({ stop, offMi, detourMi }) => {
-    const active = routeVia && routeVia.id === stop.id;
-    const place = [stop.town, stop.state].filter(Boolean).join(', ');
-    // Prefer the real added-driving distance; fall back to straight-line "off route".
+function renderRouteListPanel(kind) {
+  const cfg = ROUTE_KINDS[kind], data = routeNear[kind];
+  if (!data.list.length) { routeStopsPanel.classList.add('hidden'); return; }
+  let html = `<div class="cg-route-stops-head"><span>${cfg.title}</span>`
+    + `<span class="cg-route-stops-x" onclick="cgToggleRouteList('${kind}')">&times;</span></div>`;
+  data.list.forEach(({ id, name, sub: place, offMi, detourMi, legMi, legSec }) => {
+    // Driving distance + time to reach the item from the route start (A) — straight
+    // out of the same /table matrix, no extra call.
+    let leg = '';
+    if (legMi != null) leg = `${fmtMiles(legMi)} · ${fmtRouteTime(legSec)} from start`;
+    else if (legSec != null) leg = `${fmtRouteTime(legSec)} from start`;
+    // Added cost of detouring there (real driving detour); straight-line fallback.
     const off = (detourMi != null)
       ? (detourMi < 0.3 ? 'on route' : `+${fmtMiles(detourMi)} detour`)
       : (offMi < 0.25 ? 'on route' : `~${fmtMiles(offMi)} off`);
-    html += `<a class="cg-route-stops-row${active ? ' active' : ''}" onclick="cgRouteViaStop(${stop.id})">`
-      + `🌳 ${escapeHtml(stop.name)}`
+    const subLine = [leg, `<span class="detour">${off}</span>`].filter(Boolean).join(' · ');
+    html += `<a class="cg-route-stops-row" onclick="cgShowRouteItem('${kind}', ${id})">`
+      + `${cfg.icon} ${escapeHtml(name)}`
       + (place ? ` <span class="muted">(${escapeHtml(place)})</span>` : '')
-      + ` &mdash; <span class="off">${off}</span>${active ? ' ✓' : ''}</a>`;
+      + `<div class="cg-route-stops-sub">${subLine}</div></a>`;
   });
+  if (data.overflow > 0) {
+    html += `<div class="cg-route-stops-more">plus ${data.overflow} more not shown</div>`;
+  }
   routeStopsPanel.innerHTML = html;
   routeStopsPanel.classList.remove('hidden');
 }
 
-// Re-route the current trip through a chosen roadside stop (A → stop → B).
-window.cgRouteViaStop = function(id) {
-  const rec = roadsideById.get(id);
-  if (!rec || !routeOrigin || !routeDest) return;
-  routeVia = { lat: rec.stop.lat, lng: rec.stop.lng, id };
-  if (routeViaMarker) map.removeLayer(routeViaMarker);
-  routeViaMarker = L.marker([rec.stop.lat, rec.stop.lng],
-    { icon: routeEndIcon('★', '#c9a84c'), zIndexOffset: 1200, interactive: false }).addTo(map);
-  drawRoute();
+// Clicking an item just shows it: close the panel, fly to it, open its popup (the
+// route is left unchanged).
+window.cgShowRouteItem = function(kind, id) {
+  routeStopsPanel.classList.add('hidden');
+  routePanelKind = null;
+  ROUTE_KINDS[kind].show(id);
 };
 
-// Drop the inserted via stop and route directly A → B again.
-window.cgRouteDirect = function() {
-  routeVia = null;
-  if (routeViaMarker) { map.removeLayer(routeViaMarker); routeViaMarker = null; }
-  drawRoute();
+// Fly to a campground marker and open its popup (revealing it if filtered off).
+window.cgFlyToCamp = function(id) {
+  const rec = cgById.get(id);
+  if (!rec) return;
+  if (!map.hasLayer(rec.marker)) rec.marker.addTo(map);   // show it even if filtered/toggled off
+  map.setView(rec.marker.getLatLng(), Math.max(map.getZoom(), 12));
+  rec.marker.openPopup();
 };
 
 // Draw a driving route straight from "you are here" to a destination, driving the

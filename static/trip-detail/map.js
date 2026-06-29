@@ -214,6 +214,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
   const map = L.map('trip-map');
   window.tripMap = map;
+  if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
   // Dedicated SVG pane for the suppressed/relocated ghost layers so they
   // render above every regular marker (markerPane is zIndex 600; this sits
   // above home/family/stay/event icons so admins can always click through to
