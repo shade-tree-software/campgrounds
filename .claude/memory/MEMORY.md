@@ -24,3 +24,4 @@
 - [KY sweep handoff](project_ky_sweep_handoff.md) — KY COMPLETE: waterfront 100% (114/114) + inclusion 100% (114/114, 0 removals); 1 riverfront + 1 lakeview upgrade
 - [IN sweep handoff](project_in_sweep_handoff.md) — IN waterfront 100% (114/114, 11 upgrades); inclusion done for the 81 non-waterfront entries only; ~33 currently-waterfront IN entries still need inclusion
 - [NE sweep handoff](project_ne_sweep_handoff.md) — NE waterfront 100% (219/219, 9 upgrades); inclusion done for the 139 non-waterfront entries only (all keep); ~80 currently-waterfront NE entries still need inclusion
+- [IL sweep handoff](project_il_sweep_handoff.md) — IL waterfront 100% (172/172, 2 upgrades); inclusion done for the 108 non-waterfront entries only; ~64 currently-waterfront IL entries still need inclusion
