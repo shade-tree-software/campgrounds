@@ -103,6 +103,25 @@
     background: #eee; color: var(--gray); white-space: nowrap; flex-shrink: 0;
   }
   .cg-route-bar .cg-route-clear { background: var(--navy); color: #fff; }
+  .cg-route-bar .cg-route-set { background: #1a73e8; color: #fff; }
+  @media (max-width: 500px) {
+    /* The "Drag the map to the…" prompt won't fit beside the Set + Cancel
+       buttons on a narrow phone; the Set button already says what to do, so
+       drop just the aiming prompt (the routed distance/time message stays). */
+    .cg-route-bar .cg-route-msg.aim { display: none; }
+  }
+
+  /* Centre aim pin for the route tool's mobile flow: drag the map under the pin,
+     then "Set start"/"Set destination" (mirrors the roadside-stop aim pin). On
+     desktop the tool uses map clicks instead and this stays hidden. The pin is
+     pointer-events:none so it never blocks the drag. The tip sits on the map
+     centre: top:0 puts the top edge at centre, translate(-50%,-100%) lifts it by
+     its own height so the bottom (tip) lands on centre. */
+  .cg-route-aim { position: absolute; left: 50%; top: 50%; z-index: 1100; pointer-events: none; }
+  .cg-route-aim svg {
+    position: absolute; left: 0; top: 0; transform: translate(-50%, -100%);
+    width: 34px; height: 34px; filter: drop-shadow(0 2px 3px rgba(0,0,0,.4));
+  }
   .cg-search-results {
     position: absolute; top: 100%; left: 0; right: 0;
     background: #fff; border: 1px solid var(--gray-light); border-top: none;
@@ -1279,17 +1298,63 @@ function routeEndIcon(letter, bg) {
   });
 }
 
+// Touch-primary "mobile" check — matches the app-wide 700px breakpoint. On
+// mobile the route tool drops points by dragging the map under a centre pin and
+// tapping "Set"; on desktop it picks points by clicking the map (more precise
+// with a mouse). Markers stay tappable as endpoints on both.
+const routeMobile = () => window.matchMedia('(max-width: 700px)').matches;
+
 // The status pill — created once, lives in the map container.
 const routeBar = document.createElement('div');
 routeBar.className = 'cg-route-bar hidden';
 document.querySelector('.map-container').appendChild(routeBar);
-function showRouteBar(msg, withClear) {
-  routeBar.innerHTML = `<span class="cg-route-msg">${msg}</span>`
+
+// The mobile aim pin — fixed at the map centre, pointer-events:none. Hidden
+// until the tool is armed on a mobile viewport.
+const routeAim = document.createElement('div');
+routeAim.className = 'cg-route-aim';
+routeAim.style.display = 'none';
+routeAim.setAttribute('aria-hidden', 'true');
+routeAim.innerHTML = `<svg viewBox="0 0 24 24"><path fill="#1a73e8" stroke="#fff" `
+  + `stroke-width="1.5" d="M12 1.5c-3.9 0-7 3.1-7 7 0 5.2 7 14 7 14s7-8.8 7-14c0-3.9-3.1-7-7-7z"/>`
+  + `<circle cx="12" cy="8.5" r="2.6" fill="#fff"/></svg>`;
+document.querySelector('.map-container').appendChild(routeAim);
+
+// `setLabel` (mobile only) adds a "Set start"/"Set destination" button before
+// Cancel that drops a point at the current map centre.
+function showRouteBar(msg, withClear, setLabel) {
+  // The aiming prompt (shown alongside a Set button) carries the `aim` class so
+  // it alone can be hidden on narrow phones; result/error messages keep showing.
+  routeBar.innerHTML = `<span class="cg-route-msg${setLabel ? ' aim' : ''}">${msg}</span>`
+    + (setLabel ? `<button class="cg-route-set" onclick="cgRouteSetHere()">${setLabel}</button>` : '')
     + (withClear
         ? `<button class="cg-route-clear" onclick="cgClearRoute()">Clear</button>`
         : `<button onclick="cgClearRoute()">Cancel</button>`);
   routeBar.classList.remove('hidden');
 }
+
+// Resolve the centre-pin position. If the tip sits on a visible marker
+// (home / family / campground), snap to that marker's exact coords — same as
+// tapping the marker directly — otherwise use the raw map centre. Measured in
+// screen pixels so it tracks the rendered marker size at any zoom.
+const ROUTE_SNAP_PX = 24;
+function routeCenterPoint() {
+  const center = map.getCenter();
+  const cp = map.latLngToContainerPoint(center);
+  let best = null, bestD = Infinity;
+  const consider = (m) => {
+    if (!map.hasLayer(m)) return;   // skip markers toggled/filtered off the map
+    const d = cp.distanceTo(map.latLngToContainerPoint(m.getLatLng()));
+    if (d < bestD) { bestD = d; best = m; }
+  };
+  markers.forEach(({ marker }) => consider(marker));
+  endpointMarkers.forEach(consider);
+  return (best && bestD <= ROUTE_SNAP_PX) ? best.getLatLng() : center;
+}
+
+// Mobile "Set" button: drop the next route point at the centre pin (snapped to
+// an underlying marker when there is one).
+window.cgRouteSetHere = function() { if (routeActive) handleRoutePoint(routeCenterPoint()); };
 
 const fmtRouteMiles = m => { const mi = m / 1609.344; return (mi < 10 ? mi.toFixed(1) : Math.round(mi)) + ' mi'; };
 function fmtRouteTime(s) {
@@ -1304,7 +1369,12 @@ function startRoute() {
   routeActive = true;
   routeStage = 'origin';
   if (routeLink) routeLink.classList.add('active');
-  showRouteBar('Click the map (or a marker) to set the start point', false);
+  if (routeMobile()) {
+    routeAim.style.display = '';
+    showRouteBar('Drag the map to the start point', false, 'Set start');
+  } else {
+    showRouteBar('Click the map (or a marker) to set the start point', false);
+  }
 }
 
 // Tear down the current route. `keepArmed` is used by startRoute to reset state
@@ -1315,6 +1385,7 @@ window.cgClearRoute = function(keepArmed) {
   routeEndMarkers.length = 0;
   routeOrigin = null;
   routeStage = 'origin';
+  routeAim.style.display = 'none';
   if (!keepArmed) {
     routeActive = false;
     if (routeLink) routeLink.classList.remove('active');
@@ -1334,12 +1405,14 @@ async function handleRoutePoint(latlng) {
     routeOrigin = { lat: latlng.lat, lng: latlng.lng };
     placeRouteEnd(latlng, 'A', '#2e7d32');
     routeStage = 'dest';
-    showRouteBar('Now click the destination', false);
+    if (routeMobile()) showRouteBar('Drag the map to the destination', false, 'Set destination');
+    else showRouteBar('Now click the destination', false);
     return;
   }
   if (routeStage !== 'dest') return;
   placeRouteEnd(latlng, 'B', '#bf0a30');
   routeStage = 'done';
+  routeAim.style.display = 'none';   // both points set — no more aiming
   showRouteBar('Finding route…', false);
   try {
     const url = `${OSRM_BASE}${routeOrigin.lng},${routeOrigin.lat};${latlng.lng},${latlng.lat}`
@@ -1363,8 +1436,10 @@ async function handleRoutePoint(latlng) {
   }
 }
 
-// Map clicks place route points only while the tool is armed; otherwise inert.
-map.on('click', (e) => { if (routeActive) handleRoutePoint(e.latlng); });
+// Map clicks place route points only while the tool is armed, and only on
+// desktop — on mobile the centre pin + "Set" button is the placement mechanism
+// (a stray tap mid-drag shouldn't drop a point). Markers stay tappable on both.
+map.on('click', (e) => { if (routeActive && !routeMobile()) handleRoutePoint(e.latlng); });
 
 // Markers (home, family, campgrounds) also serve as endpoints while armed. The
 // bindPopup click handler still opens the popup first; we close it synchronously
@@ -1578,38 +1653,61 @@ function trimmedBounds(coords, frac) {
   };
   addControl.addTo(map);
 
-  // ── Aim mode: drop a new stop by dragging the main map under a fixed centre
-  // pin, then "Place here" — no second map. The stop's location is just the
-  // map centre at confirm time; the edit form opens with it filled in.
-  let _rsAiming = false;
+  // ── Drop a new stop. The mechanism depends on the device (mirrors the route
+  // tool): on mobile, drag the main map under a fixed centre pin, then "Place
+  // here"; on desktop, click the map where the stop goes (precise with a mouse).
+  // Either way the chosen point fills the edit form, which opens for the rest.
+  let _rsAiming = false;     // mobile: centre-pin aim mode is active
+  let _rsClicking = false;   // desktop: click-to-place mode is armed
   const _rsAim = document.getElementById('rs-aim');
   const _rsAimBar = document.getElementById('rs-aim-bar');
+  const _rsHint = _rsAimBar.querySelector('.rs-aim-hint');
+  const _rsPlaceBtn = _rsAimBar.querySelector('.rs-aim-place');
+  const rsMobile = () => window.matchMedia('(max-width: 700px)').matches;
+
   window.rsBeginAim = function() {
-    if (_rsAiming) { window.rsCancelAim(); return; }   // toggle off on re-click
-    _rsAiming = true;
-    _rsAim.style.display = '';
+    if (_rsAiming || _rsClicking) { window.rsCancelAim(); return; }   // toggle off on re-click
+    if (rsMobile()) {
+      _rsAiming = true;
+      _rsAim.style.display = '';
+      _rsPlaceBtn.style.display = '';
+      if (_rsHint) _rsHint.textContent = 'Drag the map to position the pin';
+    } else {
+      _rsClicking = true;
+      _rsPlaceBtn.style.display = 'none';   // no centre pin to confirm; just click
+      if (_rsHint) _rsHint.textContent = 'Click the map to place a stop';
+    }
     _rsAimBar.style.display = '';
     if (_rsAddLink) _rsAddLink.classList.add('active');
   };
   window.rsCancelAim = function() {
     _rsAiming = false;
+    _rsClicking = false;
     _rsAim.style.display = 'none';
     _rsAimBar.style.display = 'none';
     if (_rsAddLink) _rsAddLink.classList.remove('active');
   };
-  window.rsPlaceHere = function() {
-    const c = map.getCenter();
+  // Open the edit form pre-filled with the chosen point.
+  function rsPlaceAt(lat, lng) {
     window.rsCancelAim();
     window.rsOpenModal('add');
-    document.getElementById('rs-location').value = c.lat.toFixed(6) + ',' + c.lng.toFixed(6);
-    rsFillFromReverseGeocode(c.lat, c.lng);   // name/town/state (empty only)
+    document.getElementById('rs-location').value = lat.toFixed(6) + ',' + lng.toFixed(6);
+    rsFillFromReverseGeocode(lat, lng);   // name/town/state (empty only)
     // rs-location is set synchronously above, before rsOpenModal's deferred
     // auto-focus fires — so the Name field's nearby lookup sees the coordinates
     // on open and shows the loading state + results without an extra refresh.
+  }
+  window.rsPlaceHere = function() {   // mobile: confirm the centre-pin position
+    const c = map.getCenter();
+    rsPlaceAt(c.lat, c.lng);
   };
-  // Esc cancels aim mode on desktop (mobile uses the Cancel button).
+  // Desktop: a click on the map (while armed) drops the stop there.
+  map.on('click', function(e) {
+    if (_rsClicking) rsPlaceAt(e.latlng.lat, e.latlng.lng);
+  });
+  // Esc cancels either mode on desktop (mobile uses the Cancel button).
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && _rsAiming) window.rsCancelAim();
+    if (e.key === 'Escape' && (_rsAiming || _rsClicking)) window.rsCancelAim();
   });
 
   // Shared location picker (same factory the campground manage page uses).
