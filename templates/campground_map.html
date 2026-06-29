@@ -104,6 +104,32 @@
   }
   .cg-route-bar .cg-route-clear { background: var(--navy); color: #fff; }
   .cg-route-bar .cg-route-set { background: #1a73e8; color: #fff; }
+  .cg-route-bar .cg-route-stops-btn { background: #2e7d32; color: #fff; }
+
+  /* Panel listing roadside stops on/near the drawn route — opens above the pill
+     via the 🌳 button. Scrollable; each row re-routes the trip through that stop. */
+  .cg-route-stops {
+    position: absolute; left: 50%; bottom: 4.4rem; transform: translateX(-50%);
+    z-index: 1001; width: min(360px, calc(100% - 1rem));
+    background: #fff; border-radius: 12px; box-shadow: 0 3px 14px rgba(0,0,0,.3);
+    max-height: 42vh; overflow-y: auto; font-size: .85rem; color: var(--navy);
+  }
+  .cg-route-stops.hidden { display: none; }
+  .cg-route-stops-head {
+    position: sticky; top: 0; background: #fff; display: flex; align-items: center;
+    justify-content: space-between; gap: .5rem; padding: .55rem .8rem;
+    font-weight: 700; border-bottom: 1px solid #eee; border-radius: 12px 12px 0 0;
+  }
+  .cg-route-stops-head .cg-route-stops-x { cursor: pointer; color: #888; font-size: 1.1rem; line-height: 1; }
+  .cg-route-stops-row {
+    display: block; padding: .5rem .8rem; cursor: pointer; border-top: 1px solid #f0f0f0;
+    line-height: 1.4; text-decoration: none; color: var(--navy);
+  }
+  .cg-route-stops-row:hover { background: #f5faf5; }
+  .cg-route-stops-row.active { background: #eaf5ea; font-weight: 600; }
+  .cg-route-stops-row.direct { color: #1a73e8; font-weight: 600; }
+  .cg-route-stops-row .muted { color: #888; }
+  .cg-route-stops-row .off { color: #2e7d32; font-weight: 600; white-space: nowrap; }
   @media (max-width: 500px) {
     /* The "Drag the map to the…" prompt won't fit beside the Set + Cancel
        buttons on a narrow phone; the Set button already says what to do, so
@@ -766,8 +792,21 @@ function locationPopupHtml(accTxt) {
     }
     html += `</div>`;
   }
+  html += `<div style="margin-top:6px;"><a onclick="cgClearLocation()" `
+    + `style="color:#bf0a30;cursor:pointer;font-size:.85em;">Remove this marker</a></div>`;
   return html;
 }
+
+// Remove the "you are here" dot + accuracy halo and forget the location. The
+// per-marker distance/direction lines key off userLocation, so clearing it drops
+// them too (roadside popups refreshed now; campground/family regenerate on open).
+window.cgClearLocation = function() {
+  if (locationMarker) { map.removeLayer(locationMarker); locationMarker = null; }
+  if (locationCircle) { map.removeLayer(locationCircle); locationCircle = null; }
+  userLocation = null;
+  map.closePopup();
+  refreshRoadsidePopups();
+};
 
 // Fly to a roadside stop chosen from the location popup's nearest list.
 window.cgFlyToStop = function(id) {
@@ -1349,12 +1388,32 @@ applyVisibility();
 // outbound network / host whitelist. Public-demo caveats: rate-limited and
 // occasionally slow or down — failures surface in the status pill.
 const OSRM_BASE = 'https://router.project-osrm.org/route/v1/driving/';
+const OSRM_TABLE = 'https://router.project-osrm.org/table/v1/driving/';
 let routeActive = false;     // 🚗 tool armed (collecting clicks)
 let routeStage = 'origin';   // 'origin' → 'dest' → 'done'
-let routeOrigin = null;      // { lat, lng } of the chosen start
+let routeOrigin = null;      // { lat, lng } of the chosen start (A)
+let routeDest = null;        // { lat, lng } of the destination (B)
+let routeVia = null;         // { lat, lng, id } of an inserted roadside stop, or null
+let routeViaMarker = null;   // the gold pin marking the inserted stop
 let routeLine = null;        // the drawn polyline layer
 let routeLink = null;        // the 🚗 control's <a> (set in onAdd)
+let routeStopsNearby = [];   // [{ stop, offMi }] roadside stops near the current route
 const routeEndMarkers = [];  // the A / B pin markers
+
+// A roadside stop counts as "near the route" if its straight-line distance to the
+// drawn polyline is within this many miles (a short detour); list is capped.
+const ROUTE_DETOUR_MAX_MI = 5;
+const ROUTE_STOPS_MAX = 12;
+
+// Dropping inaccessible "wrong side of a divided highway" rest stops: a stop that
+// hugs the route corridor (straight-line within CORRIDOR_MI) but whose actual
+// driving detour exceeds the WRONGSIDE threshold is almost certainly on the
+// opposite carriageway — you'd have to drive to an interchange and U-turn to reach
+// it — so we drop it. A real off-highway stop (a town park a few miles off) is NOT
+// corridor-hugging, so it's never subject to this; its honest detour is just shown.
+const ROUTE_CORRIDOR_MI = 0.3;
+const ROUTE_WRONGSIDE_DETOUR_MI = 2.0;
+const ROUTE_WRONGSIDE_DETOUR_SEC = 180;   // fallback when OSRM omits distances
 
 function routeEndIcon(letter, bg) {
   return L.divIcon({
@@ -1377,6 +1436,11 @@ const routeMobile = () => window.matchMedia('(max-width: 700px)').matches;
 const routeBar = document.createElement('div');
 routeBar.className = 'cg-route-bar hidden';
 document.querySelector('.map-container').appendChild(routeBar);
+
+// Panel listing roadside stops near the drawn route (toggled by the pill's 🌳).
+const routeStopsPanel = document.createElement('div');
+routeStopsPanel.className = 'cg-route-stops hidden';
+document.querySelector('.map-container').appendChild(routeStopsPanel);
 
 // The mobile aim pin — fixed at the map centre, pointer-events:none. Hidden
 // until the tool is armed on a mobile viewport.
@@ -1453,9 +1517,14 @@ function startRoute() {
 // without disarming; a plain Clear/Cancel disarms and hides the pill.
 window.cgClearRoute = function(keepArmed) {
   if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
+  if (routeViaMarker) { map.removeLayer(routeViaMarker); routeViaMarker = null; }
   routeEndMarkers.forEach(m => map.removeLayer(m));
   routeEndMarkers.length = 0;
   routeOrigin = null;
+  routeDest = null;
+  routeVia = null;
+  routeStopsNearby = [];
+  routeStopsPanel.classList.add('hidden');
   routeStage = 'origin';
   routeAim.style.display = 'none';
   if (!keepArmed) {
@@ -1482,14 +1551,30 @@ async function handleRoutePoint(latlng) {
     return;
   }
   if (routeStage !== 'dest') return;
+  routeDest = { lat: latlng.lat, lng: latlng.lng };
+  routeVia = null;                   // a fresh destination clears any prior via stop
   placeRouteEnd(latlng, 'B', '#bf0a30');
   routeStage = 'done';
   routeAim.style.display = 'none';   // both points set — no more aiming
+  // Disarm now so stray clicks during the fetch don't start a new leg; the pill
+  // (with Clear) stays up until the user dismisses it.
+  routeActive = false;
+  if (routeLink) routeLink.classList.remove('active');
+  await drawRoute();
+}
+
+// Fetch + draw the route through routeOrigin → (routeVia?) → routeDest, refresh the
+// status pill, and recompute the roadside stops near the resulting line. Shared by
+// the initial draw and every re-route (inserting/removing a via stop). Leaves the
+// A/B pins alone; only the polyline + via marker + stop list are rebuilt.
+async function drawRoute() {
+  if (!routeOrigin || !routeDest) return;
+  if (routeLine) { map.removeLayer(routeLine); routeLine = null; }
   showRouteBar('Finding route…', false);
+  const pts = [routeOrigin, ...(routeVia ? [routeVia] : []), routeDest];
+  const coordStr = pts.map(p => `${p.lng},${p.lat}`).join(';');
   try {
-    const url = `${OSRM_BASE}${routeOrigin.lng},${routeOrigin.lat};${latlng.lng},${latlng.lat}`
-      + `?overview=full&geometries=geojson`;
-    const resp = await fetch(url);
+    const resp = await fetch(`${OSRM_BASE}${coordStr}?overview=full&geometries=geojson`);
     if (!resp.ok) throw new Error('http ' + resp.status);
     const data = await resp.json();
     if (data.code !== 'Ok' || !data.routes || !data.routes.length) throw new Error(data.code || 'no route');
@@ -1497,16 +1582,148 @@ async function handleRoutePoint(latlng) {
     const coords = route.geometry.coordinates.map(([lng, lat]) => [lat, lng]);
     routeLine = L.polyline(coords, { color: '#1a73e8', weight: 5, opacity: .85 }).addTo(map);
     map.fitBounds(routeLine.getBounds(), { padding: [40, 40] });
-    showRouteBar(`🚗 ${fmtRouteMiles(route.distance)} · ${fmtRouteTime(route.duration)}`, true);
+    showRouteBar('Finding nearby stops…', false);   // line is up; now refine stops
+    await updateRouteStops(coords);                 // straight-line + driving-detour filter
+    showRouteResult(route);
+    if (!routeStopsPanel.classList.contains('hidden')) renderRouteStopsPanel();
   } catch (err) {
+    routeStopsNearby = [];
+    routeStopsPanel.classList.add('hidden');
     showRouteBar('Could not find a route — clear and try again', true);
-  } finally {
-    // Route attempt finished: disarm so stray clicks don't start a new leg, but
-    // leave the pill (with Clear) up until the user dismisses it.
-    routeActive = false;
-    if (routeLink) routeLink.classList.remove('active');
   }
 }
+
+// Status pill for a drawn route: distance · time, a 🌳 toggle when stops are near,
+// and Clear. (showRouteBar handles the aiming prompts; this is the result state.)
+function showRouteResult(route) {
+  const n = routeStopsNearby.length;
+  const stopsBtn = n
+    ? `<button class="cg-route-stops-btn" onclick="cgToggleRouteStops()">🌳 ${n}</button>` : '';
+  const viaTxt = routeVia ? ' · via stop' : '';
+  routeBar.innerHTML =
+    `<span class="cg-route-msg">🚗 ${fmtRouteMiles(route.distance)} · ${fmtRouteTime(route.duration)}${viaTxt}</span>`
+    + stopsBtn
+    + `<button class="cg-route-clear" onclick="cgClearRoute()">Clear</button>`;
+  routeBar.classList.remove('hidden');
+}
+
+// Min straight-line distance (miles) from a point to a polyline [[lat,lng],...].
+// Equirectangular per-segment approximation in a local miles frame centred on the
+// point — accurate at road-trip scales and cheap enough to run over every stop.
+function distToPolylineMi(lat, lng, coords) {
+  const cosLat = Math.cos(lat * Math.PI / 180);
+  const toXY = (la, lo) => [(lo - lng) * 69.0 * cosLat, (la - lat) * 69.0];
+  if (coords.length === 1) { const [x, y] = toXY(coords[0][0], coords[0][1]); return Math.hypot(x, y); }
+  let best = Infinity;
+  for (let i = 1; i < coords.length; i++) {
+    const [ax, ay] = toXY(coords[i - 1][0], coords[i - 1][1]);
+    const [bx, by] = toXY(coords[i][0], coords[i][1]);
+    const dx = bx - ax, dy = by - ay, len2 = dx * dx + dy * dy;
+    let t = len2 ? -(ax * dx + ay * dy) / len2 : 0;
+    t = Math.max(0, Math.min(1, t));
+    const d = Math.hypot(ax + t * dx, ay + t * dy);   // dist from origin (the point) to the segment
+    if (d < best) best = d;
+  }
+  return best;
+}
+
+// One OSRM /table call over [A, B, ...stops] → per-stop driving detour for
+// inserting it into the A→B trip: (A→stop) + (stop→B) − (A→B). Uses distance when
+// the demo server provides it, else duration (seconds). Returns [] on failure so
+// the caller falls back to the unfiltered straight-line list.
+async function tableDetours(stops) {
+  const pts = [routeOrigin, routeDest, ...stops.map(s => ({ lat: s.lat, lng: s.lng }))];
+  const coordStr = pts.map(p => `${p.lng},${p.lat}`).join(';');
+  const resp = await fetch(`${OSRM_TABLE}${coordStr}?annotations=duration,distance`);
+  if (!resp.ok) throw new Error('http ' + resp.status);
+  const data = await resp.json();
+  if (data.code !== 'Ok' || !data.durations) throw new Error(data.code || 'no table');
+  const dur = data.durations, dist = data.distances || null;
+  const baseSec = dur[0][1], baseMi = dist ? dist[0][1] / 1609.344 : null;
+  return stops.map((s, i) => {
+    const k = i + 2;
+    return {
+      detourSec: (dur[0][k] + dur[k][1]) - baseSec,
+      detourMi: dist ? ((dist[0][k] + dist[k][1]) / 1609.344) - baseMi : null,
+    };
+  });
+}
+
+// Is this candidate on the unreachable opposite carriageway? Only stops hugging the
+// route corridor are eligible; those whose real driving detour blows past the
+// threshold are dropped (the U-turn penalty of a wrong-side rest area).
+function isWrongSide(c) {
+  if (c.offMi >= ROUTE_CORRIDOR_MI) return false;     // a genuine off-highway stop — keep
+  if (c.detourMi != null) return c.detourMi > ROUTE_WRONGSIDE_DETOUR_MI;
+  if (c.detourSec != null) return c.detourSec > ROUTE_WRONGSIDE_DETOUR_SEC;
+  return false;                                       // no detour data — don't drop
+}
+
+// Recompute which roadside stops lie on/near the drawn route. Step 1 (cheap): keep
+// stops within the straight-line corridor, nearest-first, capped. Step 2 (one OSRM
+// /table call): annotate each with its real driving detour and drop wrong-side
+// (opposite-carriageway) stops. Stored for the pill count + the panel.
+async function updateRouteStops(coords) {
+  let cands = roadsideMarkers
+    .map(({ stop }) => ({ stop, offMi: distToPolylineMi(stop.lat, stop.lng, coords) }))
+    .filter(x => x.offMi <= ROUTE_DETOUR_MAX_MI)
+    .sort((a, b) => a.offMi - b.offMi)
+    .slice(0, ROUTE_STOPS_MAX);
+  if (cands.length) {
+    try {
+      const detours = await tableDetours(cands.map(c => c.stop));
+      cands.forEach((c, i) => { c.detourMi = detours[i].detourMi; c.detourSec = detours[i].detourSec; });
+      cands = cands.filter(c => !isWrongSide(c));
+    } catch (e) { /* table unavailable — keep the straight-line list, skip filtering */ }
+  }
+  routeStopsNearby = cands;
+}
+
+window.cgToggleRouteStops = function() {
+  if (routeStopsPanel.classList.contains('hidden')) renderRouteStopsPanel();
+  else routeStopsPanel.classList.add('hidden');
+};
+
+function renderRouteStopsPanel() {
+  if (!routeStopsNearby.length) { routeStopsPanel.classList.add('hidden'); return; }
+  let html = `<div class="cg-route-stops-head"><span>Roadside stops near route</span>`
+    + `<span class="cg-route-stops-x" onclick="cgToggleRouteStops()">&times;</span></div>`;
+  if (routeVia) {
+    html += `<a class="cg-route-stops-row direct" onclick="cgRouteDirect()">&#8617; Remove stop &mdash; route direct</a>`;
+  }
+  routeStopsNearby.forEach(({ stop, offMi, detourMi }) => {
+    const active = routeVia && routeVia.id === stop.id;
+    const place = [stop.town, stop.state].filter(Boolean).join(', ');
+    // Prefer the real added-driving distance; fall back to straight-line "off route".
+    const off = (detourMi != null)
+      ? (detourMi < 0.3 ? 'on route' : `+${fmtMiles(detourMi)} detour`)
+      : (offMi < 0.25 ? 'on route' : `~${fmtMiles(offMi)} off`);
+    html += `<a class="cg-route-stops-row${active ? ' active' : ''}" onclick="cgRouteViaStop(${stop.id})">`
+      + `🌳 ${escapeHtml(stop.name)}`
+      + (place ? ` <span class="muted">(${escapeHtml(place)})</span>` : '')
+      + ` &mdash; <span class="off">${off}</span>${active ? ' ✓' : ''}</a>`;
+  });
+  routeStopsPanel.innerHTML = html;
+  routeStopsPanel.classList.remove('hidden');
+}
+
+// Re-route the current trip through a chosen roadside stop (A → stop → B).
+window.cgRouteViaStop = function(id) {
+  const rec = roadsideById.get(id);
+  if (!rec || !routeOrigin || !routeDest) return;
+  routeVia = { lat: rec.stop.lat, lng: rec.stop.lng, id };
+  if (routeViaMarker) map.removeLayer(routeViaMarker);
+  routeViaMarker = L.marker([rec.stop.lat, rec.stop.lng],
+    { icon: routeEndIcon('★', '#c9a84c'), zIndexOffset: 1200, interactive: false }).addTo(map);
+  drawRoute();
+};
+
+// Drop the inserted via stop and route directly A → B again.
+window.cgRouteDirect = function() {
+  routeVia = null;
+  if (routeViaMarker) { map.removeLayer(routeViaMarker); routeViaMarker = null; }
+  drawRoute();
+};
 
 // Draw a driving route straight from "you are here" to a destination, driving the
 // same state machine as a manual two-click route: origin = your location,
