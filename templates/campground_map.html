@@ -739,10 +739,14 @@ function locationPopupHtml(accTxt) {
         + `<span style="color:#999;font-weight:400;">(straight-line)</span></div>`;
       near.forEach(({ stop, d }) => {
         const place = [stop.town, stop.state].filter(Boolean).join(', ');
-        html += `<a onclick="cgFlyToStop(${stop.id})" style="display:block;color:#002868;cursor:pointer;">`
+        html += `<div>`
+          + `<a onclick="cgFlyToStop(${stop.id})" style="color:#002868;cursor:pointer;">`
           + `🌳 ${escapeHtml(stop.name)}`
           + (place ? ` <span style="color:#888;">(${escapeHtml(place)})</span>` : '')
-          + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)}</span></a>`;
+          + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)}</span></a>`
+          + ` <a onclick="cgRouteToPoint(${stop.lat},${stop.lng})" title="Draw a driving route here" `
+          + `style="color:#1a73e8;cursor:pointer;font-weight:600;">🚗</a>`
+          + `</div>`;
       });
     } else {
       html += `<span style="color:#888;">No roadside stops within ${NEARBY_MAX_MILES} mi.</span>`;
@@ -761,15 +765,40 @@ window.cgFlyToStop = function(id) {
   rec.marker.openPopup();
 };
 
+// A bare 🚗 link (no leading break) that draws a driving route from the user's
+// current location to this point (auto-locating first if not yet located).
+function routeCarLink(lat, lng) {
+  return `<a onclick="cgRouteToPoint(${lat},${lng})" title="Driving route from my location" `
+    + `style="color:#1a73e8;cursor:pointer;font-weight:600;font-size:1.1em;">🚗</a>`;
+}
+
+// 🚗 on its own line — for popups that have no distance line (home). Hoisted, so
+// the builders can call it regardless of source order.
+function routeHereLink(lat, lng) {
+  return `<br>${routeCarLink(lat, lng)}`;
+}
+
+// "📍 X mi away (straight line) 🚗" — the straight-line (haversine, NOT driving)
+// distance from the user's current location, with the route 🚗 inline on the SAME
+// line. Before locating there's no distance, so just the 🚗 on its own line.
+// Shared by the roadside / campground / family popups; the campground & family
+// popups regenerate on open (function-content bindPopup) so this reflects the
+// current location, and roadside via refreshRoadsidePopups().
+function distanceAndRouteLine(lat, lng) {
+  const car = routeCarLink(lat, lng);
+  if (!userLocation || !Number.isFinite(lat) || !Number.isFinite(lng)) return `<br>${car}`;
+  const d = haversineMiles(userLocation.lat, userLocation.lng, lat, lng);
+  return `<br><span style="color:#1a73e8;font-size:.85em;font-weight:600;">`
+    + `${fmtMiles(d)} away `
+    + `<span style="color:#888;font-weight:400;">(straight line)</span></span> ${car}`;
+}
+
 function roadsidePopupHtml(s) {
   let popup = `<strong>${escapeHtml(s.name)}</strong>`;
   const place = [s.town, s.state].filter(Boolean).join(', ');
   if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
   popup += `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
-  if (userLocation && s.lat != null && s.lng != null) {
-    const d = haversineMiles(userLocation.lat, userLocation.lng, s.lat, s.lng);
-    popup += `<br><span style="color:#1a73e8;font-size:.85em;font-weight:600;">&#128205; ${fmtMiles(d)} away</span>`;
-  }
+  popup += distanceAndRouteLine(s.lat, s.lng);
   if (s.rating) {
     popup += `<br><span style="color:#555;font-size:.85em;">&#9733; ${s.rating}`;
     if (s.rating_count) popup += ` (${s.rating_count})`;
@@ -801,6 +830,11 @@ function roadsidePopupHtml(s) {
 function addRoadsideMarker(s) {
   const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
   marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320 });
+  // Roadside stops double as route endpoints while the route tool is armed, like
+  // the campground/home/family markers. Attach after bindPopup so routeMarkerClick's
+  // synchronous closePopup() wins the click dispatch. routeMarkerClick is hoisted,
+  // and its closure resolves routeActive/handleRoutePoint only when the tap fires.
+  marker.on('click', routeMarkerClick(marker));
   roadsideLayer.addLayer(marker);
   const rec = { marker, stop: s };
   roadsideMarkers.push(rec);
@@ -850,10 +884,58 @@ searchControl.onAdd = function() {
 searchControl.addTo(map);
 
 // ── "My location" control ────────────────────────────────────────────────────
-// Drops a marker (blue dot + accuracy ring) at the device's current position and
-// pans to it. Geolocation needs a secure origin — the dev server runs HTTPS for
-// exactly this (see "Local HTTPS" in the app notes); production is HTTPS too.
+// Drops a marker (blue dot + accuracy ring) at the device's current position.
+// Geolocation needs a secure origin — the dev server runs HTTPS for exactly this
+// (see "Local HTTPS" in the app notes); production is HTTPS too.
 let locationMarker = null, locationCircle = null;
+
+// Acquire the device location, (re)drop the blue dot + accuracy ring, set
+// userLocation, and refresh dependent popups. Shared by the 📍 control and the
+// popup 🚗 "route from my location" links (which auto-locate when not yet
+// located). `spinnerLink` (optional) is a control <a> shown as ⏳ while waiting;
+// `onDone(ll, accTxt)` runs after a fix — when omitted we open the location popup
+// and pan to it (the 📍 control's behavior). routeMarkerClick is hoisted.
+function acquireLocation(onDone, spinnerLink) {
+  if (!navigator.geolocation) { window.toast('Geolocation is not supported by this browser.'); return; }
+  // Geolocation is a secure-context-only API. Over plain http:// (e.g. a LAN IP)
+  // browsers — notably Firefox Android — fail immediately with a "permission
+  // denied" error and never show the prompt. Catch that here so the message is
+  // actionable instead of a misleading "you denied it".
+  if (!window.isSecureContext) {
+    window.toast('Location needs a secure connection — open this site over https:// (not a plain http:// address).', 'error');
+    return;
+  }
+  if (spinnerLink) { spinnerLink.classList.add('locating'); spinnerLink.innerHTML = '⏳'; }
+  navigator.geolocation.getCurrentPosition(function(pos) {
+    if (spinnerLink) { spinnerLink.classList.remove('locating'); spinnerLink.innerHTML = '\u{1F4CD}'; }
+    const lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
+    const ll = [lat, lng];
+    // Refresh in place on a repeat call rather than stacking markers.
+    if (locationMarker) { map.removeLayer(locationMarker); map.removeLayer(locationCircle); }
+    locationCircle = L.circle(ll, {
+      radius: acc, color: '#1a73e8', weight: 1, fillColor: '#1a73e8', fillOpacity: 0.12,
+    }).addTo(map);
+    // A pulsing divIcon (not a circleMarker) so it's clearly distinct from the
+    // colored campground dots, and above the home/family markers (z 1000/900).
+    locationMarker = L.marker(ll, {
+      icon: L.divIcon({ className: '', html: '<div class="cg-here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
+      zIndexOffset: 1100,
+    }).addTo(map);
+    userLocation = { lat, lng };
+    refreshRoadsidePopups();   // add/update the "X mi away" line on each stop
+    const accTxt = acc ? ` (±${Math.round(acc)} m)` : '';
+    locationMarker.bindPopup(locationPopupHtml(accTxt), { maxWidth: 280 });
+    // Like the campground/home/family markers, the blue "you are here" dot also
+    // serves as a route endpoint while the route tool is armed.
+    locationMarker.on('click', routeMarkerClick(locationMarker));
+    if (onDone) { onDone(ll, accTxt); }
+    else { locationMarker.openPopup(); map.setView(ll, Math.max(map.getZoom(), 13)); }
+  }, function(err) {
+    if (spinnerLink) { spinnerLink.classList.remove('locating'); spinnerLink.innerHTML = '\u{1F4CD}'; }
+    window.toast('Could not get your location: ' + (err.message || 'permission denied'));
+  }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+}
+
 const locateControl = L.control({ position: 'topleft' });
 locateControl.onAdd = function() {
   const div = L.DomUtil.create('div', 'leaflet-bar cg-locate');
@@ -865,43 +947,7 @@ locateControl.onAdd = function() {
   L.DomEvent.disableClickPropagation(div);
   L.DomEvent.on(link, 'click', function(e) {
     L.DomEvent.preventDefault(e);
-    if (!navigator.geolocation) { window.toast('Geolocation is not supported by this browser.'); return; }
-    // Geolocation is a secure-context-only API. Over plain http:// (e.g. a LAN
-    // IP) browsers — notably Firefox Android — fail immediately with a
-    // "permission denied" error and never show the prompt. Catch that here so
-    // the message is actionable instead of a misleading "you denied it".
-    if (!window.isSecureContext) {
-      window.toast('Location needs a secure connection — open this site over https:// (not a plain http:// address).', 'error');
-      return;
-    }
-    link.classList.add('locating');
-    link.innerHTML = '⏳';  // ⏳ while waiting for a fix
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      link.classList.remove('locating');
-      link.innerHTML = '\u{1F4CD}';
-      const lat = pos.coords.latitude, lng = pos.coords.longitude, acc = pos.coords.accuracy;
-      const ll = [lat, lng];
-      // Refresh in place on a repeat click rather than stacking markers.
-      if (locationMarker) { map.removeLayer(locationMarker); map.removeLayer(locationCircle); }
-      locationCircle = L.circle(ll, {
-        radius: acc, color: '#1a73e8', weight: 1, fillColor: '#1a73e8', fillOpacity: 0.12,
-      }).addTo(map);
-      // A pulsing divIcon (not a circleMarker) so it's clearly distinct from the
-      // colored campground dots, and above the home/family markers (z 1000/900).
-      locationMarker = L.marker(ll, {
-        icon: L.divIcon({ className: '', html: '<div class="cg-here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
-        zIndexOffset: 1100,
-      }).addTo(map);
-      userLocation = { lat, lng };
-      refreshRoadsidePopups();   // add/update the "X mi away" line on each stop
-      const accTxt = acc ? ` (±${Math.round(acc)} m)` : '';
-      locationMarker.bindPopup(locationPopupHtml(accTxt), { maxWidth: 280 }).openPopup();
-      map.setView(ll, Math.max(map.getZoom(), 13));
-    }, function(err) {
-      link.classList.remove('locating');
-      link.innerHTML = '\u{1F4CD}';
-      window.toast('Could not get your location: ' + (err.message || 'permission denied'));
-    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+    acquireLocation(null, link);
   });
   return div;
 };
@@ -972,6 +1018,8 @@ function cgPopupHtml(cg) {
     popup += `<br><a href="/campgrounds/availability?cg=${encodeURIComponent(cg.name)}">`
       + `Check availability &rarr;</a>`;
   }
+  const [cgLat, cgLng] = (cg.location || '').split(',').map(parseFloat);
+  if (Number.isFinite(cgLat) && Number.isFinite(cgLng)) popup += distanceAndRouteLine(cgLat, cgLng);
   if (IS_ADMIN) {
     popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;">`
       + `<a onclick="cgQuickEdit(${cg.id})" style="font-size:.85em;cursor:pointer;">edit</a>`
@@ -1031,7 +1079,9 @@ CAMPGROUNDS.forEach(cg => {
     fillOpacity: 0.8,
   }).addTo(map);
 
-  marker.bindPopup(cgPopupHtml(cg), { maxWidth: 420 });
+  // Function-content so the "X mi away" line recalculates against the current
+  // location each time the popup opens (popups are bound at load, before locating).
+  marker.bindPopup(() => cgPopupHtml(cg), { maxWidth: 420 });
 
   const rec = { marker, cg };
   markers.push(rec);
@@ -1246,7 +1296,7 @@ if (HOME) {
   });
   endpointMarkers.push(
     L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map)
-      .bindPopup('<strong>Home</strong>'));
+      .bindPopup('<strong>Home</strong>' + routeHereLink(HOME[0], HOME[1])));
 }
 
 // Family location markers
@@ -1265,7 +1315,8 @@ FAMILY.forEach(fam => {
   });
   endpointMarkers.push(
     L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
-      .bindPopup(`<strong>${fam.label}</strong>`));
+      .bindPopup(() => `<strong>${fam.label}</strong>`
+        + distanceAndRouteLine(fam.lat, fam.lng)));
 });
 
 applyVisibility();
@@ -1334,21 +1385,24 @@ function showRouteBar(msg, withClear, setLabel) {
 }
 
 // Resolve the centre-pin position. If the tip sits on a visible marker
-// (home / family / campground), snap to that marker's exact coords — same as
-// tapping the marker directly — otherwise use the raw map centre. Measured in
-// screen pixels so it tracks the rendered marker size at any zoom.
+// (home / family / campground / roadside stop / your-location dot), snap to that
+// marker's exact coords — same as tapping the marker directly — otherwise use the
+// raw map centre. Measured in screen pixels so it tracks the rendered marker size
+// at any zoom. The hasLayer guard skips markers toggled/filtered off the map.
 const ROUTE_SNAP_PX = 24;
 function routeCenterPoint() {
   const center = map.getCenter();
   const cp = map.latLngToContainerPoint(center);
   let best = null, bestD = Infinity;
   const consider = (m) => {
-    if (!map.hasLayer(m)) return;   // skip markers toggled/filtered off the map
+    if (!m || !map.hasLayer(m)) return;   // skip absent / toggled-off markers
     const d = cp.distanceTo(map.latLngToContainerPoint(m.getLatLng()));
     if (d < bestD) { bestD = d; best = m; }
   };
   markers.forEach(({ marker }) => consider(marker));
   endpointMarkers.forEach(consider);
+  roadsideMarkers.forEach(({ marker }) => consider(marker));
+  consider(locationMarker);
   return (best && bestD <= ROUTE_SNAP_PX) ? best.getLatLng() : center;
 }
 
@@ -1435,6 +1489,33 @@ async function handleRoutePoint(latlng) {
     if (routeLink) routeLink.classList.remove('active');
   }
 }
+
+// Draw a driving route straight from "you are here" to a destination, driving the
+// same state machine as a manual two-click route: origin = your location,
+// destination = the point. handleRoutePoint is mobile-agnostic, so this works on
+// phone and desktop without the aim-pin flow. Caller guarantees userLocation set.
+function drawRouteFromUser(destLatLng) {
+  if (!userLocation) return;
+  map.closePopup();                                // dismiss whatever popup opened it
+  cgClearRoute(true);                              // wipe any prior route, keep armed
+  routeActive = true;
+  routeStage = 'origin';
+  if (routeLink) routeLink.classList.add('active');
+  routeAim.style.display = 'none';                 // direct A→B; no manual aiming
+  handleRoutePoint(L.latLng(userLocation.lat, userLocation.lng));  // origin A (sync)
+  handleRoutePoint(destLatLng);                                    // dest B → draws
+}
+
+// Generic "route from my location to this point" — wired to the 🚗 links in every
+// marker popup (campground / roadside / home / family) and the location-dot's
+// nearest-stops list. If we don't have a location yet, acquire it first (the same
+// flow as the 📍 control), then draw — so the 🚗 works on first tap.
+window.cgRouteToPoint = function(lat, lng) {
+  const dest = L.latLng(lat, lng);
+  if (userLocation) { drawRouteFromUser(dest); return; }
+  window.toast('Getting your location…');
+  acquireLocation(() => drawRouteFromUser(dest));
+};
 
 // Map clicks place route points only while the tool is armed, and only on
 // desktop — on mobile the centre pin + "Set" button is the placement mechanism
@@ -2123,7 +2204,7 @@ function trimmedBounds(coords, frac) {
     const [lat, lng] = cg.location.split(',').map(parseFloat);
     if (!isNaN(lat) && !isNaN(lng)) rec.marker.setLatLng([lat, lng]);
     rec.marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
-    rec.marker.setPopupContent(cgPopupHtml(cg));
+    rec.marker.setPopupContent(() => cgPopupHtml(cg));
     applyVisibility();
   }
 })();
