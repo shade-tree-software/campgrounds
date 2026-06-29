@@ -718,6 +718,18 @@ function haversineMiles(lat1, lng1, lat2, lng2) {
 }
 const fmtMiles = d => (d < 10 ? d.toFixed(1) : Math.round(d)) + ' mi';
 
+// 8-point compass direction of (lat2,lng2) as seen from (lat1,lng1) — for the
+// "X mi NE" distance lines. Initial great-circle bearing, rounded to N/NE/E/.../NW.
+function compassDir(lat1, lng1, lat2, lng2) {
+  const toRad = d => d * Math.PI / 180;
+  const dLng = toRad(lng2 - lng1);
+  const y = Math.sin(dLng) * Math.cos(toRad(lat2));
+  const x = Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+            Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLng);
+  const brng = (Math.atan2(y, x) * 180 / Math.PI + 360) % 360;
+  return ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'][Math.round(brng / 45) % 8];
+}
+
 // Re-render every roadside popup so its distance line reflects userLocation.
 function refreshRoadsidePopups() {
   roadsideMarkers.forEach(({ marker, stop }) => marker.setPopupContent(roadsidePopupHtml(stop)));
@@ -743,7 +755,8 @@ function locationPopupHtml(accTxt) {
           + `<a onclick="cgFlyToStop(${stop.id})" style="color:#002868;cursor:pointer;">`
           + `🌳 ${escapeHtml(stop.name)}`
           + (place ? ` <span style="color:#888;">(${escapeHtml(place)})</span>` : '')
-          + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)}</span></a>`
+          + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)} `
+          + `${compassDir(userLocation.lat, userLocation.lng, stop.lat, stop.lng)}</span></a>`
           + ` <a onclick="cgRouteToPoint(${stop.lat},${stop.lng})" title="Draw a driving route here" `
           + `style="color:#1a73e8;cursor:pointer;font-weight:600;">🚗</a>`
           + `</div>`;
@@ -788,8 +801,9 @@ function distanceAndRouteLine(lat, lng) {
   const car = routeCarLink(lat, lng);
   if (!userLocation || !Number.isFinite(lat) || !Number.isFinite(lng)) return `<br>${car}`;
   const d = haversineMiles(userLocation.lat, userLocation.lng, lat, lng);
+  const dir = compassDir(userLocation.lat, userLocation.lng, lat, lng);
   return `<br><span style="color:#1a73e8;font-size:.85em;font-weight:600;">`
-    + `${fmtMiles(d)} away `
+    + `${fmtMiles(d)} ${dir} `
     + `<span style="color:#888;font-weight:400;">(straight line)</span></span> ${car}`;
 }
 
@@ -912,8 +926,12 @@ function acquireLocation(onDone, spinnerLink) {
     const ll = [lat, lng];
     // Refresh in place on a repeat call rather than stacking markers.
     if (locationMarker) { map.removeLayer(locationMarker); map.removeLayer(locationCircle); }
+    // interactive:false so the accuracy halo never swallows clicks — it shares the
+    // vector renderer with the campground circleMarkers and, being added last, would
+    // otherwise sit on top and block their clicks/popups within the radius.
     locationCircle = L.circle(ll, {
       radius: acc, color: '#1a73e8', weight: 1, fillColor: '#1a73e8', fillOpacity: 0.12,
+      interactive: false,
     }).addTo(map);
     // A pulsing divIcon (not a circleMarker) so it's clearly distinct from the
     // colored campground dots, and above the home/family markers (z 1000/900).
