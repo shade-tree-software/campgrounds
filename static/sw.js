@@ -13,15 +13,21 @@
 //   - Map tiles (OSM + Esri/ArcGIS): cache-first, like photos. Tiles are
 //     immutable per z/x/y, so revisited tiles come back instantly (Cache
 //     API, no re-validation flash) and the map renders offline instead of
-//     gray. These are cross-origin no-cors, so the responses are opaque —
-//     cached specially (see tileCacheFirst). Other cross-origin (unpkg
+//     gray. Leaflet loads them as no-cors <img>, but caching the resulting
+//     *opaque* responses was useless: browsers pad opaque cache entries to a
+//     huge fixed size for quota, so the tile cache blew its quota almost
+//     immediately and every cache.put silently failed — i.e. nothing stuck
+//     and every tile was re-fetched from the slow public servers. Fix: the
+//     SW re-requests each tile in CORS mode (both hosts send
+//     Access-Control-Allow-Origin: *), so the response is a normal 200 that
+//     caches without padding. See tileCacheFirst. Other cross-origin (unpkg
 //     leaflet) is still not intercepted.
 //   - Non-GET requests are never touched.
 //
 // Bump VERSION to invalidate all caches after a deploy that changes the
 // app shell in incompatible ways.
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 const TILE_CACHE = 'ekko-tiles-' + VERSION;
@@ -88,22 +94,30 @@ async function cacheFirst(req) {
   return res;
 }
 
-// Tiles are cross-origin and loaded by Leaflet's <img> tags without a
-// crossorigin attribute, so the requests are no-cors and the responses come
-// back opaque (status 0, type 'opaque'). The same-origin cacheable() check
-// rejects those, so tiles get their own path that also stores opaque hits.
-// An opaque error response can't be told apart from a good one; a rare broken
-// tile self-heals on the next load past the FIFO trim or a VERSION bump.
+// Tiles are cross-origin and Leaflet requests them as no-cors <img>, so the
+// page's own request yields an *opaque* response — which we must NOT cache:
+// opaque entries get padded to a huge fixed size for quota, overflowing the
+// cache so every put fails and nothing persists. Instead the SW issues its own
+// CORS fetch (both tile hosts send Access-Control-Allow-Origin: *), giving a
+// real 200 that caches at its true ~20 KB size; the CORS response is handed
+// back to the no-cors <img>, which renders it fine. The put is awaited so a
+// genuine quota error surfaces rather than silently dropping the tile. If the
+// CORS fetch ever fails (a host without ACAO, or offline), fall back to the
+// plain request so the tile still renders, just uncached.
 async function tileCacheFirst(req) {
   const cached = await caches.match(req);
   if (cached) return cached;
-  const res = await fetch(req);
-  if (res && (res.status === 200 || res.type === 'opaque')) {
-    const cache = await caches.open(TILE_CACHE);
-    cache.put(req, res.clone());
-    trimCache(TILE_CACHE, TILE_CACHE_MAX);
+  try {
+    const res = await fetch(req.url, { mode: 'cors' });
+    if (res && res.status === 200) {
+      const cache = await caches.open(TILE_CACHE);
+      await cache.put(req, res.clone());
+      trimCache(TILE_CACHE, TILE_CACHE_MAX);
+    }
+    return res;
+  } catch (err) {
+    return fetch(req);
   }
-  return res;
 }
 
 async function networkFirst(req) {
