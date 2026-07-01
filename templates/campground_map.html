@@ -1713,10 +1713,18 @@ function isWrongSide(c) {
 // If the table call fails, every detour field is absent and each step's `??` chain
 // falls back to straight-line distance, so the lists still populate (just by proximity).
 async function updateRouteLists(coords) {
+  // Drop any candidate that IS the route's start or end — when an endpoint is set by
+  // clicking a home/family/campground marker its own coords become A/B, so it would
+  // otherwise appear in the list as an "on route" stop. The endpoints are already the
+  // A/B pins; no need to repeat them here. (~11 m tolerance handles float wobble.)
+  const atEndpoint = (lat, lng) =>
+    (routeOrigin && Math.abs(lat - routeOrigin.lat) < 1e-4 && Math.abs(lng - routeOrigin.lng) < 1e-4) ||
+    (routeDest && Math.abs(lat - routeDest.lat) < 1e-4 && Math.abs(lng - routeDest.lng) < 1e-4);
   const perKind = {};
   for (const kind of Object.keys(ROUTE_KINDS)) {
     const cfg = ROUTE_KINDS[kind];
     const near = cfg.items()
+      .filter(it => !atEndpoint(it.lat, it.lng))
       .map(it => ({ ...it, offMi: distToPolylineMi(it.lat, it.lng, coords) }))
       .filter(x => x.offMi <= cfg.maxMi)
       .sort((a, b) => a.offMi - b.offMi);
