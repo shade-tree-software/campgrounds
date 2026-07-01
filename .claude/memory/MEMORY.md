@@ -29,4 +29,5 @@
 - [NY sweep handoff](project_ny_sweep_handoff.md) — NY waterfront 100% (was the last state); inclusion done for the 105 non-waterfront entries (7 wf upgrades, 1 removal: Dewolf Point); ~89 currently-waterfront NY entries still need inclusion
 - [SD sweep COMPLETE](project_sd_sweep_handoff.md) — clean fresh-state sweep, 171 entries (ids 5709-5879, incl 1 NE); waterfront 100% (53 upgrades) + inclusion 100%, both folded into the add; no legacy loose ends
 - [ND sweep COMPLETE](project_nd_sweep_handoff.md) — clean fresh-state sweep, 174 entries (ids 5880-6053); waterfront 100% (50 upgrades) + inclusion 100%; pushed; no legacy loose ends
+- [MT sweep — adds DONE, audit TODO](project_mt_sweep_handoff.md) — all 4 add-buckets committed+pushed (297 entries, ids 6054-6348; federal 213 across 34 batches); ONLY the waterfront audit remains (paused mid-batch-1 of ~32)
 - [MN sweep COMPLETE](project_mn_sweep_handoff.md) — all 4 buckets added+inclusion+waterfront-audited (350 entries, ids 5359-5708); reusable add_research_instructions.md + append_mn.py plumbing; ReserveMN US-eDirect deep links
