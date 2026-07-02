@@ -31,3 +31,4 @@
 - [ND sweep COMPLETE](project_nd_sweep_handoff.md) — clean fresh-state sweep, 174 entries (ids 5880-6053); waterfront 100% (50 upgrades) + inclusion 100%; pushed; no legacy loose ends
 - [MT sweep COMPLETE](project_mt_sweep_handoff.md) — all 4 add-buckets + waterfront audit done+pushed (295 entries, ids 6054-6348); waterfront 100% (105 upgrades: 60 on-water, 45 view; 10 coord fixes); no legacy loose ends
 - [MN sweep COMPLETE](project_mn_sweep_handoff.md) — all 4 buckets added+inclusion+waterfront-audited (350 entries, ids 5359-5708); reusable add_research_instructions.md + append_mn.py plumbing; ReserveMN US-eDirect deep links
+- [WY sweep COMPLETE](project_wy_sweep_handoff.md) — clean fresh-state sweep, 222 entries (ids 6349-6570); waterfront 100% (82 upgrades, 4 coord fixes) + inclusion 100%, both folded into the add; no legacy loose ends
