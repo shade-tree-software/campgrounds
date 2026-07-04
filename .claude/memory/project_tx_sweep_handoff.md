@@ -39,12 +39,23 @@ New ids started at 7009.
   DISTRICTS (CRMWD etc.) = local; true RIVER AUTHORITIES (LCRA, Brazos RA, GBRA,
   Sabine RA, Trinity RA) = state.**
 
-**REMAINING: private bucket** — 797 gated candidates (commercial with RV Life
-price_level<=2 & star_rating>=4), ~100 batches of 8. Split files already staged at
-`/tmp/tx_private_batch_*.json` (batches 1-100). Vet each per inclusion (skip
-membership/Thousand-Trails/Encore, casino lots, seasonal/residential-MH, workforce/
-oilfield long-term — COMMON in Permian Basin & Eagle Ford; dead-website+thin-reviews
-strike). Then waterfront-audit + append + commit. Private ownership stays `private`.
+**IN PROGRESS: private bucket** — 797 gated candidates (commercial with RV Life
+price_level<=2 & star_rating>=4), ~100 batches of 8. Split files staged at
+`/tmp/tx_private_batch_*.json`. Vet each per inclusion (skip membership/Thousand-
+Trails/Encore, Elks/Moose lodges, casino lots, 55+/seasonal Winter-Texan, residential-
+MH, workforce/oilfield monthly/long-term — COMMON in Permian Basin & Eagle Ford & RGV;
+dead-website+thin-reviews strike). Keep rate ~75%.
+- **DONE so far: batches 1-23 → 140 entries added+committed in 2 chunks (ids 7345-
+  7484).** Adds committed per chunk (~12 batches each); a few reclassed state (LCRA
+  Black Rock, LNRA Brackenridge) / federal (USACE Cranes Mill).
+- **Waterfront audit for the WHOLE private bucket is DEFERRED to the end** (adds
+  committed with `waterfront:"not waterfront"` placeholder + empty waterfront_evidence
+  = NOT yet audited). Cumulative leads kept in `/tmp/tx_leads_private_all.json` (merge
+  each chunk's `/tmp/tx_leads_private.json` into it after append). At the end: run
+  `build_wf_batches.py`-style batches over all private ids carrying leads, audit, apply.
+- **NEXT: resume at private batch 24** (`/tmp/tx_private_batch_24.json`). Continue
+  sequential research, chunk-append+commit every ~12 batches, then the final private
+  waterfront audit, then mark TX COMPLETE.
 
 **Reusable plumbing (all in /tmp, recreate if session lost):** `pull_tx.py`
 (Algolia app H0LPZK92QJ, key inline in any park page HTML), `bucketize_tx.py`,
