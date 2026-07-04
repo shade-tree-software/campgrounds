@@ -45,25 +45,13 @@ price_level<=2 & star_rating>=4), ~100 batches of 8. Split files staged at
 Trails/Encore, Elks/Moose lodges, casino lots, 55+/seasonal Winter-Texan, residential-
 MH, workforce/oilfield monthly/long-term — COMMON in Permian Basin & Eagle Ford & RGV;
 dead-website+thin-reviews strike). Keep rate ~75%.
-- **DONE so far: batches 1-23 → 140 entries added+committed+PUSHED in 2 chunks (ids
-  7345-7484).** Batch 24 also researched (`/tmp/tx_results/private_24.json`, 7 keeps,
-  NOT yet appended). Adds committed per chunk (~12 batches each); a few reclassed
-  state (LCRA Black Rock, LNRA Brackenridge) / federal (USACE Cranes Mill/Cranes Mill).
+- **DONE so far: batches 1-47 -> 361 entries added+committed in 4 chunks (ids 7345-7630).** Adds committed per chunk (~12 batches each). Reclassed along the way: state (LCRA Black Rock/Lake Bastrop N Shore/Oak Thicket, LNRA Brackenridge, GBRA Lake Wood) / federal (USACE Cranes Mill) / local (Harper Park, Harris St, I.B. Magee, Lake Hawkins). Dropped cross-bucket dup Overlook Park (=federal id 7153).
 - **Waterfront audit for the WHOLE private bucket is DEFERRED to the end** (adds
   committed with `waterfront:"not waterfront"` placeholder + empty waterfront_evidence
   = NOT yet audited). Cumulative leads kept in `/tmp/tx_leads_private_all.json` (merge
   each chunk's `/tmp/tx_leads_private.json` into it after append). At the end: run
   `build_wf_batches.py`-style batches over all private ids carrying leads, audit, apply.
-- **NEXT: resume at private batch 25** (`/tmp/tx_private_batch_25.json`) — batch 25
-  was LOST to a session limit (agent died mid-run, no results file). Batch 24 results
-  ARE saved but not appended; next chunk-append should include batch 24 onward.
-  Continue sequential research, chunk-append+commit every ~12 batches, then the final
-  private waterfront audit (over ALL private ids using `/tmp/tx_leads_private_all.json`),
-  then mark TX COMPLETE. NOTE: if `/tmp` was cleared between sessions, the split
-  batch files + results + leads are gone — re-run `pull_tx.py`/`bucketize_tx.py`/
-  `split_tx.py private 8` to regenerate batches, and rebuild leads from committed
-  entries won't be possible (leads aren't in campgrounds.json), so the private
-  waterfront audit would re-discover per-entry from `location` (still fine).
+- **NEXT: resume at private batch 48** (`/tmp/tx_private_batch_48.json`). Continue sequential research, chunk-append+commit every ~12 batches, then the final private waterfront audit (over ALL private ids using `/tmp/tx_leads_private_all.json`, currently 286 leads), then mark TX COMPLETE. If `/tmp` was cleared, regenerate batches via pull/bucketize/split; leads for the private wf audit would then re-discover per-entry from `location` (fine).
 
 **Reusable plumbing (all in /tmp, recreate if session lost):** `pull_tx.py`
 (Algolia app H0LPZK92QJ, key inline in any park page HTML), `bucketize_tx.py`,
