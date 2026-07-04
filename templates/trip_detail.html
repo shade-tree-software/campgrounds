@@ -79,6 +79,10 @@
     grid-column: 1 / -1;
   }
 
+  /* Keep two-column grid items from overflowing narrow screens (see the
+     matching note on .event-edit-form). */
+  .stay-edit-form .form-grid > div { min-width: 0; }
+
   .stay-edit-form label {
     display: block;
     font-size: .75rem;
@@ -90,6 +94,8 @@
   .stay-edit-form input,
   .stay-edit-form textarea {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
     padding: .4rem .6rem;
     border: 1px solid var(--gray-light);
     border-radius: 4px;
@@ -642,6 +648,13 @@
     .trip-note-edit { flex-wrap: wrap; gap: .35rem; }
     .trip-note-edit input { font-size: 1rem; flex: 1 1 100%; }
     .trip-note-edit button { font-size: .75rem; padding: .25rem .6rem; }
+    /* Stack the inline stay/event edit fields on phones so the two-column
+       grid can't overflow the screen. */
+    .stay-edit-form .form-grid,
+    .event-edit-form .form-grid {
+      grid-template-columns: 1fr;
+      gap: .6rem;
+    }
   }
 
   /* ── Content ────────────────────────────────────── */
@@ -1561,9 +1574,16 @@
     margin-bottom: .2rem;
   }
 
+  /* Grid items default to min-width:auto, which lets wide inputs (esp. the
+     two side-by-side time pickers) push the whole grid past a phone's
+     viewport. min-width:0 + max-width:100% lets them shrink to the column. */
+  .event-edit-form .form-grid > div { min-width: 0; }
   .event-edit-form .form-grid input,
+  .event-edit-form .form-grid select,
   .event-edit-form .form-grid textarea {
     margin-bottom: 0;
+    min-width: 0;
+    max-width: 100%;
   }
 
   .event-location-field {
