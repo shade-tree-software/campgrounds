@@ -1093,28 +1093,71 @@ function pickerTargetInput() {
   return null;
 }
 
+// Best opening center for a location-less event's picker, in priority order:
+// the event's own saved coords, the stay it shares a day with, else home.
+// Returns [lat, lng] or null. Deliberately independent of the trip map's live
+// center (which follows the last card you viewed) so a second event's picker
+// no longer opens on the first event's location.
+function _eventPickerCenter(idx) {
+  const ev = (typeof EVENTS_ALL !== 'undefined') ? EVENTS_ALL[idx] : null;
+  if (ev && ev.lat != null && ev.lng != null) return [ev.lat, ev.lng];
+  const date = ev && ev.date;
+  if (date && typeof STAYS_ALL !== 'undefined') {
+    // A mapped stay whose date range covers the event's day.
+    const covering = STAYS_ALL.find(s =>
+      s && s.lat != null && s.start && s.end && s.start <= date && date <= s.end);
+    if (covering) return [covering.lat, covering.lng];
+    // Else the mapped stay closest in time.
+    let best = null, bestDiff = Infinity;
+    for (const s of STAYS_ALL) {
+      if (!s || s.lat == null || !s.start) continue;
+      const diff = Math.abs(new Date(s.start + 'T00:00:00') - new Date(date + 'T00:00:00'));
+      if (diff < bestDiff) { bestDiff = diff; best = s; }
+    }
+    if (best) return [best.lat, best.lng];
+  }
+  if (typeof HOME_COORDS !== 'undefined' && HOME_COORDS &&
+      HOME_COORDS[0] != null && HOME_COORDS[1] != null) {
+    return [HOME_COORDS[0], HOME_COORDS[1]];
+  }
+  return null;
+}
+
 function _showPicker(target, fallbackLoc) {
   pickerTarget = target;
   const input = pickerTargetInput();
   const existing = (input && input.value.trim()) || '';
-  // Event pickers open framed on the trip map's current view (center + zoom),
-  // so you can pick right where you're already looking — consistent with the
-  // campground map's pick-on-map. The existing point, if any, is still marked.
-  // Stay pickers keep their campground-seeded fallback (passed in by the
-  // caller), which is more useful than the whole-trip view for a campsite.
-  const isEvent = target.kind === 'event' || target.kind === 'event-modal';
-  if (isEvent && window.tripMap) {
-    const c = window.tripMap.getCenter();
-    eventLocationPicker.show(existing, window.tripMap.getZoom(), [c.lat, c.lng]);
-    return;
-  }
-  // Otherwise: zoom in close on an existing point to fine-tune it; else open at
-  // the fallback (campground center) at the looser default zoom.
+
+  // If the target already has a location, always frame the picker zoomed in on
+  // THAT point to fine-tune it. This is the key fix: events used to open on the
+  // trip map's current center, which tracks the last card you viewed — so
+  // editing a second event opened on the first event's location.
   if (existing) {
     eventLocationPicker.show(existing, 17);
-  } else {
-    eventLocationPicker.show(fallbackLoc || '');
+    return;
   }
+
+  const isEvent = target.kind === 'event' || target.kind === 'event-modal';
+  if (isEvent) {
+    // No point on this event yet: anchor on the event's own day context (the
+    // stay it shares a day with, or home) so the picker opens near where the
+    // event belongs — again independent of the trip map's roaming center.
+    const anchor = (target.kind === 'event') ? _eventPickerCenter(target.idx) : null;
+    if (anchor) {
+      eventLocationPicker.show('', 15, anchor);
+    } else if (window.tripMap) {
+      // Truly no anchor (e.g. an empty trip): fall back to the map's current
+      // view so you can pick right where you're already looking.
+      const c = window.tripMap.getCenter();
+      eventLocationPicker.show('', window.tripMap.getZoom(), [c.lat, c.lng]);
+    } else {
+      eventLocationPicker.show('');
+    }
+    return;
+  }
+
+  // Stays: open at the caller's campground-seeded fallback.
+  eventLocationPicker.show(fallbackLoc || '');
 }
 
 function showEventLocationMap(eventIdx) {
