@@ -45,13 +45,17 @@ price_level<=2 & star_rating>=4), ~100 batches of 8. Split files staged at
 Trails/Encore, Elks/Moose lodges, casino lots, 55+/seasonal Winter-Texan, residential-
 MH, workforce/oilfield monthly/long-term — COMMON in Permian Basin & Eagle Ford & RGV;
 dead-website+thin-reviews strike). Keep rate ~75%.
-- **DONE so far: batches 1-66 -> 464 private entries added+committed in 6 chunks (ids 7345-7733).** Reclassed along the way: several LCRA/GBRA/LNRA river-authority -> state, USACE -> federal, county/city -> local (Harper Park, Harris St, I.B. Magee, Lake Hawkins, Magnolia Beach, Pleasure Island, Ray & Donna West). Mission Dolores -> THC/state. Dropped cross-bucket/cross-batch dups: Overlook Park (=federal 7153), Lighthouse RV Park (=North Point Landing), Magnolia Beach Camping, Bayside, Lone Star Resort.
-- **Waterfront audit for the WHOLE private bucket is DEFERRED to the end** (adds
-  committed with `waterfront:"not waterfront"` placeholder + empty waterfront_evidence
-  = NOT yet audited). Cumulative leads kept in `/tmp/tx_leads_private_all.json` (merge
-  each chunk's `/tmp/tx_leads_private.json` into it after append). At the end: run
-  `build_wf_batches.py`-style batches over all private ids carrying leads, audit, apply.
-- **NEXT: resume at private batch 67** (`/tmp/tx_private_batch_67.json`) — batch 67 was LOST to a session limit (agent died mid-run, no results file). Continue sequential research, chunk-append+commit every ~12 batches, then the final private waterfront audit (over ALL private ids using `/tmp/tx_leads_private_all.json`, currently 389 leads), then mark TX COMPLETE. If `/tmp` cleared, regenerate batches via pull/bucketize/split; the private wf audit can re-discover per-entry from `location` if leads are lost.
+- **RESEARCH COMPLETE: all 100 batches done -> 586 private entries added+committed+pushed in 12 chunks (ids 7345-7930).** Reclassed along the way: several LCRA/GBRA/LNRA river-authority -> state (incl Lake Bastrop South Shore), USACE -> federal, county/city -> local (Harper Park, Harris St, I.B. Magee, Lake Hawkins, Magnolia Beach, Pleasure Island, Ray & Donna West, Rising Star, San Saba River, W. Lee Colburn/Winters, Waylon Jennings/Littlefield, Wichita Bend/Wichita Falls). Mission Dolores -> THC/state. Dropped cross-bucket/cross-batch dups: Overlook Park (=federal 7153), Lighthouse RV Park (=North Point Landing), Magnolia Beach Camping, Bayside, Lone Star Resort. Keep rate ~65% (heavy 55+/RGV-Winter-Texan, Permian/Eagle-Ford workforce, Thousand Trails/Encore/Patriot chains, long-term/MH in the P-Y alphabet).
+- **NOW IN PROGRESS: the deferred WHOLE-private-bucket waterfront audit.** Built via
+  `build_wf_batches.py privatewf 7345 7930` (leads copied to `/tmp/tx_leads_privatewf.json`):
+  586 -> 153 auto-dry (stamped not-waterfront in `/tmp/tx_wf_auto_privatewf.json`) + 433
+  to audit. Re-chunked the 433 into **29 batches of 15** at `/tmp/tx_wf_privatewf_batch_<n>.json`.
+  Running `audit/waterfront_audit_instructions.md` agents SEQUENTIALLY, results ->
+  `/tmp/tx_results/wf_private_<n>.json`. **NEXT after all 29:** concatenate the 29 result
+  files + `/tmp/tx_wf_auto_privatewf.json` into one results array and apply with
+  `python3 audit/apply_waterfront_audit.py <results.json>` (sets waterfront, coord fixes,
+  writes waterfront_evidence), commit, push, then **mark TX COMPLETE**. If `/tmp` cleared,
+  rebuild leads are gone but the audit can re-discover per-entry from each entry's `location`.
 
 **Reusable plumbing (all in /tmp, recreate if session lost):** `pull_tx.py`
 (Algolia app H0LPZK92QJ, key inline in any park page HTML), `bucketize_tx.py`,
