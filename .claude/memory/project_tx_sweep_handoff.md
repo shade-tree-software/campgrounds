@@ -1,17 +1,26 @@
 ---
 name: project_tx_sweep_handoff
-description: "Texas sweep IN PROGRESS — state/federal/local DONE+audited+committed (336 entries, ids 7009-7344); private bucket (797 candidates, ~100 batches) is all that remains"
+description: "Texas sweep COMPLETE — all 4 buckets added + both audits (inclusion + waterfront) done + pushed. 922 entries, ids 7009-7930 (state 91, local 154, federal 105, private 572). 263 on-water/view. No loose ends."
 metadata: 
   node_type: memory
   type: project
   originSessionId: e740b1a4-ad78-4aa2-a391-d333d567814c
 ---
 
-**Texas sweep — IN PROGRESS (started 2026-07-03).** Fresh state (0 prior TX
+**Texas sweep — COMPLETE (2026-07-03 → 2026-07-07).** Fresh state (0 prior TX
 entries). By far the largest sweep: **2,896 RV Life hits → ~1,220 candidates** across
 4 ownership buckets. Method identical to [[project_la_sweep_handoff]] /
 [[project_ok_sweep_handoff]] (both audits folded into the add per current standard).
-New ids started at 7009.
+Ids 7009-7930.
+
+**FINAL: 922 entries, ids 7009-7930, all pushed to origin/master.** Ownership: state 91,
+local 154, federal 105, private 572. **Both audits 100%: inclusion_evidence 922/922 +
+waterfront_evidence 922/922.** Waterfront: 263 on-water/view (102 lakefront, 42 pond,
+20 bayfront, 10 riverfront, 10 coastal dunes, 1 creekside; 64 lakeview, 10 riverview,
+4 bayview) + 659 not-waterfront. No legacy loose ends — TX is a clean fresh-state sweep,
+both audits folded in from the start. Private bucket's whole-bucket waterfront audit was
+DEFERRED and run at the end (586 entries, 29 satellite-audit batches of 15, applied in
+3 parts; 105 private on-water/view upgrades). `/tmp` plumbing can be deleted.
 
 **DONE + committed + both-audited (3 of 4 buckets, 336 entries, ids 7009-7344):**
 - **State** (97 cand → 82 keeps, ids 7009-7090): TPWD parks + THC historic sites +
