@@ -28,7 +28,9 @@ metadata:
 - Waterfront audit at end: build batches carrying leads from /tmp/bc_leads.json, run `audit/waterfront_audit_instructions.md`, apply `audit/apply_waterfront_audit.py`.
 
 ## Progress
-- provincial batch 1: IN PROGRESS. Batches 2-25, all local/federal/private: PENDING. Waterfront audit: PENDING (after adds).
+- **provincial batches 1-8 DONE + committed** (61 entries, ids 8372-8432; commits fdfd6c5 part1 8372-8403, 6e951fd part2 8404-8425, + batch 8 uncommitted-then-part3). Vancouver Island/Gulf Islands/Sunshine Coast/Fraser Valley/Okanagan/Similkameen/Kootenays done. Reclassifications so far: Kearsley Creek→local, sẁiẁs/Haynes Point→private. Skips: Whitworth Horse Camp, Skyview($$$), Conkle Lake(RV-access).
+- provincial batches 9-25: PENDING. federal/local/private: PENDING. Waterfront audit: PENDING (after all adds).
+- Checkpoint-commit every ~3-4 batches ("Add BC provincial bucket (part N)").
 
 ## Resume
 Launch next pending batch → append_bc.py → repeat. Commit per bucket ("Add BC <bucket> bucket: N campgrounds"). After all buckets, waterfront-audit all BC ids and commit. Push when asked.
