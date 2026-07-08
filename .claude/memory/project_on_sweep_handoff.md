@@ -16,8 +16,14 @@ metadata:
 - **private 60** — commercial passing ≥4★ AND ≤$$ gate (330 commercial failed the gate, dropped). 8 batches `/tmp/on_private/`.
 
 ## Progress
-- provincial batch 1 DONE + appended: **ids 8164–8171** (8 entries; incl 2 reclassified local: C.M. Wilson 8168, Brant 8171). NOT yet committed. NOT yet waterfront-audited.
-- provincial batches 2–13, all local/federal/private: PENDING.
+- **provincial bucket COMPLETE + COMMITTED** (commit "Add ON provincial bucket: 100 campgrounds (ids 8164-8263)"): 100 entries, 96 provincial + 4 reclassified local (C.M. Wilson 8168, Brant 8171, Elora Gorge 8173, Crowe Bridge 8221). All 13 batches added. NOT yet waterfront-audited (placeholder + leads in /tmp/on_leads.json).
+- **federal bucket** (`/tmp/on_federal/batch_1.json`, 7 cands): IN PROGRESS. Mixed — Parks Canada (Cyprus Lake/Bruce Peninsula, Hattie Cove/Pukaskwa, Glen Rouge/Rouge NUP) = federal; Wawanosh/Waterford North/Warsaw Caves = mis-tagged CAs = local; Point Pelee oTENTik = skip.
+- **local bucket** (`/tmp/on_local/`, 8 batches, 61 cands) + **private bucket** (`/tmp/on_private/`, 8 batches, 60 cands): PENDING.
+- **Waterfront audit**: deferred to end — run ONCE over all ON ids (8164+) after all buckets added. Leads in /tmp/on_leads.json (ephemeral; audit can re-discover if lost).
+
+## Key pilot findings (fold into reference_canada_sweep_adaptation)
+- RV Life scatters Ontario **Conservation Authority** parks across `provincial`/`commercial`/`canadian` tags — all are **local**. goingtocamp-table match is the provincial discriminator; the add-agent corrects ownership per entry.
+- goingtocamp deep-link auto-match worked (93/102 provincial). append_on.py unescapes `&amp;`.
 
 ## Plumbing (all reusable)
 - Detection: `/tmp/on_detect.py` (tiled bbox — Ontario needs a lat/lng grid to beat Algolia's 1000-hit cap; **`insideBoundingBox=[[...]]` needs DOUBLE brackets**). Algolia key rotates; extract from any rvlife park page.
