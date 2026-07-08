@@ -27,10 +27,15 @@ metadata:
 - Add-research agent prompt: BC overrides on `audit/add_research_instructions.md` (see the batch-1 prompt).
 - Waterfront audit at end: build batches carrying leads from /tmp/bc_leads.json, run `audit/waterfront_audit_instructions.md`, apply `audit/apply_waterfront_audit.py`.
 
-## Progress
-- **provincial batches 1-8 DONE + committed** (61 entries, ids 8372-8432; commits fdfd6c5 part1 8372-8403, 6e951fd part2 8404-8425, + batch 8 uncommitted-then-part3). Vancouver Island/Gulf Islands/Sunshine Coast/Fraser Valley/Okanagan/Similkameen/Kootenays done. Reclassifications so far: Kearsley Creek→local, sẁiẁs/Haynes Point→private. Skips: Whitworth Horse Camp, Skyview($$$), Conkle Lake(RV-access).
-- provincial batches 9-25: PENDING. federal/local/private: PENDING. Waterfront audit: PENDING (after all adds).
-- Checkpoint-commit every ~3-4 batches ("Add BC provincial bucket (part N)").
+## Progress (as of 2026-07-08)
+- **provincial DONE + committed**: 191 entries (ids 8372-8562, all 25 batches; parts 1-10, commits fdfd6c5/6e951fd/c11e005/9ac3958/6a80ad6/4fe4e4d/1f7dd2f/a7e806c/f62bf5e/60b6802). 189 provincial + 2 reclassified local (Kearsley Creek, Cumberland Lake, Sudeten) — well, provincial-tagged became mostly provincial; reclassifications: Kearsley/Cumberland/Sudeten→local, sẁiẁs/Haynes Point→private.
+- **federal DONE + committed** (1ae6d49): 11 Parks Canada (ids 8563-8573). Skip: Kootenay Marble Canyon (<15ft).
+- **local DONE + committed** (290d781): 33 (ids 8574-8606). Forest Rose→provincial, Monkman RV→private reclassified.
+- **private IN PROGRESS** (`/tmp/bc_private/`, 25 batches, 198 cands): batches 1-2 done+appended (ids 8607-8620, NOT yet committed). Fairy Lake/Maple Grove RSTBC→provincial. **CLEANUP PENDING: Rondalyn Resort** (dropped by batch-1 agent) stashed in `/tmp/bc_private/cleanup.json` — research + append before finishing.
+- **Waterfront audit: PENDING** — run over ALL BC ids (8372+) after private done; leads in /tmp/bc_leads.json.
+- BC total so far: 249 entries. Checkpoint-commit private every ~4 batches.
+
+## (old provincial detail below)
 
 ## Resume
 Launch next pending batch → append_bc.py → repeat. Commit per bucket ("Add BC <bucket> bucket: N campgrounds"). After all buckets, waterfront-audit all BC ids and commit. Push when asked.
