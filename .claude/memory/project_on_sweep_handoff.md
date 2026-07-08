@@ -16,6 +16,11 @@ metadata:
 - **private 60** — commercial passing ≥4★ AND ≤$$ gate (330 commercial failed the gate, dropped). 8 batches `/tmp/on_private/`.
 
 ## Progress
+- **ALL 4 ADD-BUCKETS DONE + COMMITTED**: 208 ON entries, ids 8164-8371 (provincial 99, local 57, federal 2, private 50). Commits: provincial 4b02934, federal 43209fd, local 84197a6, private 4f86a94.
+- **Waterfront audit IN PROGRESS**: 21 batches of 10 in `/tmp/on_wfaudit/batch_N.json` (each carries the entry's `lead`). Run sequentially through `audit/waterfront_audit_instructions.md`; collect results to `/tmp/on_wfaudit/results_N.json`; apply ALL with `python3 audit/apply_waterfront_audit.py <results>`; commit. Leads still in /tmp/on_leads.json (208 entries).
+- Inclusion audit: folded into adds (every entry has inclusion_evidence) — no separate pass needed.
+
+## (old per-bucket detail below)
 - **provincial bucket COMPLETE + COMMITTED** (commit "Add ON provincial bucket: 100 campgrounds (ids 8164-8263)"): 100 entries, 96 provincial + 4 reclassified local (C.M. Wilson 8168, Brant 8171, Elora Gorge 8173, Crowe Bridge 8221). All 13 batches added. NOT yet waterfront-audited (placeholder + leads in /tmp/on_leads.json).
 - **federal bucket** (`/tmp/on_federal/batch_1.json`, 7 cands): IN PROGRESS. Mixed — Parks Canada (Cyprus Lake/Bruce Peninsula, Hattie Cove/Pukaskwa, Glen Rouge/Rouge NUP) = federal; Wawanosh/Waterford North/Warsaw Caves = mis-tagged CAs = local; Point Pelee oTENTik = skip.
 - **local bucket** (`/tmp/on_local/`, 8 batches, 61 cands) + **private bucket** (`/tmp/on_private/`, 8 batches, 60 cands): PENDING.
