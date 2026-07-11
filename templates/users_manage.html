@@ -375,6 +375,7 @@ function loadShareLinks() {
             <td><span class="share-dest">${dest}</span></td>
             <td class="col-actions">
               <button class="btn btn-save" onclick="copyShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.next || '/')}')">Copy Link</button>
+              <button class="btn btn-cancel" onclick="toggleShareTripsOnly('${escapeAttr(l.token)}', ${!l.trips_only})">${l.trips_only ? 'Allow Campgrounds' : 'Restrict to Trips'}</button>
               <button class="btn btn-danger" onclick="revokeShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.label || '')}')">Revoke</button>
             </td>
           </tr>`;
@@ -399,6 +400,19 @@ function createShareLink() {
       document.getElementById('new-share-next').value = '';
       document.getElementById('new-share-trips-only').checked = false;
       copyShareLink(d.token, d.next || '/');   // copy the fresh link right away
+      loadShareLinks();
+    });
+}
+
+function toggleShareTripsOnly(token, tripsOnly) {
+  fetch('/api/share-links/' + encodeURIComponent(token), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trips_only: tripsOnly }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { toast(d.error); return; }
       loadShareLinks();
     });
 }

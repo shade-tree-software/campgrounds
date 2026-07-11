@@ -2120,6 +2120,24 @@ def api_share_link_create():
                     "trips_only": trips_only})
 
 
+@app.route('/api/share-links/<token>', methods=['PUT'])
+def api_share_link_update(token):
+    """Update a share link in place. Currently only the `trips_only` flag is
+    editable; load_user re-reads this file each request, so the change takes
+    effect on the token's next request (no revoke/recreate needed)."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    links = _load_json(SHARE_TOKENS_FILE)
+    if token not in links:
+        return jsonify({"error": "Share link not found"}), 404
+    body = request.get_json() or {}
+    if 'trips_only' in body:
+        links[token]['trips_only'] = bool(body.get('trips_only'))
+    _save_json(SHARE_TOKENS_FILE, links)
+    return jsonify({"ok": True, "trips_only": links[token].get("trips_only", False)})
+
+
 @app.route('/api/share-links/<token>', methods=['DELETE'])
 def api_share_link_delete(token):
     """Revoke a share link by removing its token; load_user re-reads this file
