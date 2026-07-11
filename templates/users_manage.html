@@ -110,7 +110,7 @@
       <input type="text" id="new-username" placeholder="Username" autocomplete="off">
       <input type="password" id="new-password" placeholder="Password" autocomplete="new-password">
       <label class="cb-label"><input type="checkbox" id="new-is-admin"> Admin</label>
-      <label class="cb-label"><input type="checkbox" id="new-can-upload"> Uploader</label>
+      <label class="cb-label"><input type="checkbox" id="new-can-upload"> Contributor</label>
       <button class="btn btn-add" onclick="createUser()">Add User</button>
     </div>
   </div>
@@ -160,12 +160,12 @@ function loadUsers() {
         const deleteDisabled = isMe ? 'disabled title="Cannot delete your own account"' : '';
         // Uploader toggle is meaningless for admins (they implicitly can
         // upload), so hide it on admin rows to keep the controls honest.
-        const uploaderToggleLabel = u.can_upload ? 'Revoke Uploader' : 'Make Uploader';
+        const uploaderToggleLabel = u.can_upload ? 'Revoke Contributor' : 'Make Contributor';
         let roleHtml;
         if (u.is_admin) {
           roleHtml = '<span class="badge-admin">Admin</span>';
         } else if (u.can_upload) {
-          roleHtml = '<span class="badge-uploader">Uploader</span>';
+          roleHtml = '<span class="badge-uploader">Contributor</span>';
         } else {
           roleHtml = '<span style="color:var(--gray);font-size:.85rem;">User</span>';
         }
@@ -262,7 +262,7 @@ function toggleAdmin(username, makeAdmin) {
 }
 
 function toggleUploader(username, grant) {
-  const verb = grant ? 'grant uploader rights to' : 'revoke uploader rights from';
+  const verb = grant ? 'grant contributor rights to' : 'revoke contributor rights from';
   if (!confirm(`Are you sure you want to ${verb} ${username}?`)) return;
   fetch('/api/users/' + encodeURIComponent(username), {
     method: 'PUT',
