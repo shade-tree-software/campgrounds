@@ -1392,6 +1392,36 @@ def trip_detail(trip_id):
     )
 
 
+def _render_photo_tile(subpath, filename, p_type, p_idx, trip_id):
+    """Render the shared `_photo_item.html` partial for a just-uploaded file so
+    the client can splice the tile into the grid in place. Uploads used to end
+    with a full page reload to surface new photos, which tore down and redrew
+    the whole Leaflet map (tiles, markers, polyline) — a visible, pointless
+    flash. Returning the server-rendered tile lets the upload finish without a
+    reload. Mirrors the per-photo dict the trip-detail view builds, so the tile
+    is byte-identical to one a reload would produce (`p_alt` is left blank — the
+    only field the endpoint can't cheaply derive; it's just the img alt-text
+    fallback and self-corrects on the next natural reload)."""
+    photo_dir = os.path.join(UPLOAD_DIR, *subpath.split('/'))
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    is_uploader = (current_user.is_authenticated
+                   and getattr(current_user, "can_upload", False)
+                   and not is_admin)
+    username = current_user.username if current_user.is_authenticated else ""
+    photo = {
+        "filename": filename,
+        "url": f"/static/uploads/{subpath}/{filename}",
+        "thumb_url": f"/thumb/{subpath}/{filename}",
+        "caption": "",
+        "date_taken": _photo_date_taken(os.path.join(photo_dir, filename)),
+        "uploader": username,
+    }
+    return render_template("_photo_item.html", photo=photo, trip_id=trip_id,
+                           p_idx=p_idx, p_type=p_type, p_alt="",
+                           is_admin=is_admin, is_uploader=is_uploader,
+                           current_username=username)
+
+
 @app.route('/trips/<int:trip_id>/stays/<int:stay_idx>/upload', methods=['POST'])
 def upload_photo(trip_id, stay_idx):
     denied = _require_uploader_or_admin()
@@ -1406,6 +1436,7 @@ def upload_photo(trip_id, stay_idx):
 
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
     url_prefix = f"/static/uploads/{trip_id}/{stay_idx}"
+    subpath = f"{trip_id}/{stay_idx}"
 
     # Zip upload — extract all images
     if file.filename.lower().endswith('.zip'):
@@ -1415,7 +1446,9 @@ def upload_photo(trip_id, stay_idx):
         _record_uploaders([f"{trip_id}/{stay_idx}/{f}" for f in saved],
                           current_user.username)
         return jsonify({
-            "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
+            "files": [{"filename": f, "url": f"{url_prefix}/{f}",
+                       "html": _render_photo_tile(subpath, f, 'stay', stay_idx, trip_id)}
+                      for f in saved],
         })
 
     # Single image upload
@@ -1427,6 +1460,7 @@ def upload_photo(trip_id, stay_idx):
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",
+        "html": _render_photo_tile(subpath, filename, 'stay', stay_idx, trip_id),
     })
 
 
@@ -1533,6 +1567,7 @@ def upload_event_photo(trip_id, event_idx):
 
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
     url_prefix = f"/static/uploads/{trip_id}/events/{event_idx}"
+    subpath = f"{trip_id}/events/{event_idx}"
 
     # Zip upload — extract all images
     if file.filename.lower().endswith('.zip'):
@@ -1542,7 +1577,9 @@ def upload_event_photo(trip_id, event_idx):
         _record_uploaders([f"{trip_id}/events/{event_idx}/{f}" for f in saved],
                           current_user.username)
         return jsonify({
-            "files": [{"filename": f, "url": f"{url_prefix}/{f}"} for f in saved],
+            "files": [{"filename": f, "url": f"{url_prefix}/{f}",
+                       "html": _render_photo_tile(subpath, f, 'event', event_idx, trip_id)}
+                      for f in saved],
         })
 
     # Single image upload
@@ -1555,6 +1592,7 @@ def upload_event_photo(trip_id, event_idx):
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",
+        "html": _render_photo_tile(subpath, filename, 'event', event_idx, trip_id),
     })
 
 

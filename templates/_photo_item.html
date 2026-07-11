@@ -1,0 +1,27 @@
+{#- Single photo tile. Shared by the trip-detail stay/event grids (included via
+    {% with %}) and by the upload endpoints, which render it server-side and
+    return the HTML so a photo upload can add tiles in place without a full page
+    reload (which would tear down and redraw the whole Leaflet map).
+    Expects: photo (filename/url/thumb_url/caption/date_taken/uploader), trip_id,
+             p_idx, p_type ('stay'|'event'), p_alt, is_admin, is_uploader,
+             current_username. -#}
+{%- set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) -%}
+<div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
+  <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or p_alt }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
+  {% if is_admin %}
+  <button class="delete-photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', this)">&times;</button>
+  {% endif %}
+  {% if can_edit_caption %}
+  <div class="caption-area">
+    <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
+          onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
+    <textarea class="caption-input" rows="1"
+              onblur="saveCaptionField(this, {{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', '{{ p_type }}')"
+              onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
+  </div>
+  {% elif photo.caption %}
+  <div class="caption-area">
+    <span class="caption-text">{{ photo.caption }}</span>
+  </div>
+  {% endif %}
+</div>

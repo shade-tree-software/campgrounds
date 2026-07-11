@@ -1913,26 +1913,7 @@
       <div class="photos-section">
         <div class="photo-grid" id="photos-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}" data-stay-idx="{{ item.idx }}">
           {% for photo in item.photos %}
-          {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
-          <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.place }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
-            {% if is_admin %}
-            <button class="delete-photo" onclick="deletePhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
-            {% endif %}
-            {% if can_edit_caption %}
-            <div class="caption-area">
-              <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
-                    onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
-              <textarea class="caption-input" rows="1"
-                        onblur="saveCaptionField(this, {{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', 'stay')"
-                        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
-            </div>
-            {% elif photo.caption %}
-            <div class="caption-area">
-              <span>{{ photo.caption }}</span>
-            </div>
-            {% endif %}
-          </div>
+          {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='stay', p_alt=item.place %}{% include "_photo_item.html" %}{% endwith %}
           {% endfor %}
         </div>
         {% if is_admin and item.copy_num == 1 %}
@@ -2071,26 +2052,7 @@
       <div class="photos-section">
         <div class="photo-grid" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
-          {% set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) %}
-          <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-            <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or item.name }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
-            {% if is_admin %}
-            <button class="delete-photo" onclick="deleteEventPhoto({{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', this)">&times;</button>
-            {% endif %}
-            {% if can_edit_caption %}
-            <div class="caption-area">
-              <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
-                    onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
-              <textarea class="caption-input" rows="1"
-                        onblur="saveCaptionField(this, {{ trip.id }}, {{ item.idx }}, '{{ photo.filename }}', 'event')"
-                        onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
-            </div>
-            {% elif photo.caption %}
-            <div class="caption-area">
-              <span class="caption-text">{{ photo.caption }}</span>
-            </div>
-            {% endif %}
-          </div>
+          {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='event', p_alt=item.name %}{% include "_photo_item.html" %}{% endwith %}
           {% endfor %}
         </div>
         {% if is_admin %}

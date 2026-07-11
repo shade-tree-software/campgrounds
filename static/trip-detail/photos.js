@@ -24,6 +24,61 @@ function _maybeBarifyEmptyGrid(grid) {
   if (removeAllBtn) removeAllBtn.style.display = 'none';
 }
 
+// Inverse of _maybeBarifyEmptyGrid: a grid that just gained its first photo
+// un-bares its event card (revealing the body) and re-shows the "Remove All
+// Photos" button. Mirrors the un-barify the cross-card drop handler and the
+// delete-undo already perform, so a freshly uploaded photo leaves the card in
+// the same state a reload would.
+function _unbarifyGrid(grid) {
+  if (!grid) return;
+  const card = grid.closest('.event-card');
+  if (card) card.classList.remove('bare');
+  const section = grid.closest('.photos-section');
+  const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
+  if (removeAllBtn) removeAllBtn.style.display = '';
+}
+
+// The grid a given upload URL targets. Stays: split multi-night stays have one
+// grid per night, all sharing data-stay-idx — append to the last so the newest
+// photo lands at the end (it re-buckets to the right night on the next natural
+// reload). Returns null when no grid is in the DOM (e.g. an uploader-role user
+// adding the first photo to a card whose photos-section wasn't rendered), which
+// tells the caller to fall back to a full reload.
+function _uploadTargetGrid(url) {
+  let m = url.match(/\/stays\/(\d+)\/upload/);
+  if (m) {
+    const grids = document.querySelectorAll(`.photo-grid[data-stay-idx="${m[1]}"]`);
+    return grids.length ? grids[grids.length - 1]
+                        : document.getElementById('photos-' + m[1]);
+  }
+  m = url.match(/\/events\/(\d+)\/upload/);
+  if (m) return document.getElementById('event-photos-' + m[1]);
+  return null;
+}
+
+// Splice server-rendered photo tiles into a grid in place (no page reload — the
+// whole point: a reload tears down and redraws the Leaflet map). Each html
+// string is the _photo_item.html partial rendered by the upload endpoint, so
+// the tile is identical to a reloaded one; drag-and-drop already works via the
+// grid-delegated handlers wired at load.
+function _insertUploadedTiles(grid, htmls) {
+  const tmp = document.createElement('div');
+  htmls.forEach(html => {
+    tmp.innerHTML = (html || '').trim();
+    const tile = tmp.firstElementChild;
+    if (tile) grid.appendChild(tile);
+  });
+  _unbarifyGrid(grid);
+  // Match the initial-load fade-in for any not-yet-cached thumbnails.
+  grid.querySelectorAll('.photo-item img').forEach(img => {
+    if (img.complete) return;
+    img.classList.add('img-loading');
+    const reveal = () => img.classList.remove('img-loading');
+    img.addEventListener('load', reveal, { once: true });
+    img.addEventListener('error', reveal, { once: true });
+  });
+}
+
 function deleteEventPhoto(tripId, eventIdx, filename, btn) {
   _deleteWithUndo(btn.closest('.photo-item'),
     `/trips/${tripId}/events/${eventIdx}/photos/${encodeURIComponent(filename)}`);
@@ -136,6 +191,12 @@ function _runUploads(url, files) {
   let started = 0;
   let done = 0;
   const errors = [];
+  // Server-rendered tiles to splice in on success (see finish()). missingHtml
+  // trips the reload fallback if any successful upload came back without tile
+  // HTML (older response / unexpected shape), so we never silently drop a photo
+  // from the view.
+  const htmls = [];
+  let missingHtml = false;
 
   // A zip holds many photos, so "Uploading 1 of 1 photo" misleads —
   // call the batch "files" whenever a zip is among them.
@@ -148,7 +209,19 @@ function _runUploads(url, files) {
   update();
 
   const finish = () => {
-    if (!errors.length) { _reloadKeepingMapView(); return; }
+    if (!errors.length) {
+      // Splice the new tiles into their grid in place so the map is never torn
+      // down. Fall back to a reload when we can't (no target grid in the DOM,
+      // or a response without tile HTML) — correctness over the no-flash nicety.
+      const grid = _uploadTargetGrid(url);
+      if (grid && htmls.length && !missingHtml) {
+        _insertUploadedTiles(grid, htmls);
+        banner.remove();
+      } else {
+        _reloadKeepingMapView();
+      }
+      return;
+    }
     banner.classList.add('upb-error');
     textEl.textContent = `${total - errors.length} of ${total} uploaded — ${errors.length} failed`;
     fillEl.parentElement.style.display = 'none';
@@ -170,7 +243,13 @@ function _runUploads(url, files) {
     fetch(url, { method: 'POST', body: form })
       .then(r => r.json())
       .then(data => {
-        if (data.error) errors.push(file.name + ': ' + data.error);
+        if (data.error) { errors.push(file.name + ': ' + data.error); return; }
+        // Single upload → data.html; zip → data.files[].html. A successful
+        // response with no tile HTML forces the reload fallback in finish().
+        if (data.html) htmls.push(data.html);
+        else if (Array.isArray(data.files)) {
+          data.files.forEach(f => { if (f.html) htmls.push(f.html); else missingHtml = true; });
+        } else missingHtml = true;
       })
       .catch(() => errors.push(file.name + ': upload failed'))
       .finally(() => {
