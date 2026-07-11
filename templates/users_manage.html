@@ -38,6 +38,10 @@
   .badge-admin { background: var(--gold); color: var(--navy); }
   .badge-uploader { background: var(--blue-bg); color: var(--navy); margin-left: .25rem; }
 
+  .share-heading { margin-top: 2.5rem; font-size: 1.4rem; color: var(--navy); }
+  .share-hint { color: var(--gray); font-size: .9rem; margin: .35rem 0 1rem; line-height: 1.4; }
+  .share-dest { color: var(--gray); font-family: monospace; font-size: .8rem; }
+
   .self-tag {
     margin-left: .4rem;
     color: var(--gray);
@@ -92,7 +96,12 @@
   @media (max-width: 600px) {
     .users-page { padding: 0 .75rem; margin: 1rem auto; }
     .users-table th, .users-table td { padding: .5rem .6rem; }
+    /* Let the action buttons wrap onto multiple lines instead of forcing the
+       cell (and the whole table) wider than a phone screen. Applies to both the
+       Users and Share Links tables since they share .col-actions. */
+    .col-actions { white-space: normal; }
     .col-actions .btn { margin: .15rem 0 .15rem .25rem; padding: .3rem .65rem; font-size: .75rem; }
+    .share-dest { word-break: break-all; }
     .add-form .form-row, .reset-form .form-row { flex-direction: column; align-items: stretch; }
     .add-form input, .reset-form input { width: 100%; flex: none; }
   }
@@ -133,6 +142,33 @@
       </tr>
     </thead>
     <tbody id="users-tbody">
+      <tr><td colspan="3" style="text-align:center; padding: 1rem; color: var(--gray);">Loading…</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="share-heading">Share Links</h2>
+  <p class="share-hint">Password-free read-only links. Send the whole URL to a guest — it logs
+    them in as a viewer (they can look but not change anything) and drops them on the chosen page.
+    Revoke any link at any time.</p>
+
+  <div class="add-form">
+    <h3>Create Link</h3>
+    <div class="form-row">
+      <input type="text" id="new-share-label" placeholder="Label (e.g. Grandma)" autocomplete="off">
+      <input type="text" id="new-share-next" placeholder="Deep-link path (optional, e.g. /trips/42)" autocomplete="off">
+      <button class="btn btn-add" onclick="createShareLink()">Create Link</button>
+    </div>
+  </div>
+
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th>Label</th>
+        <th>Destination</th>
+        <th class="col-actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody id="share-tbody">
       <tr><td colspan="3" style="text-align:center; padding: 1rem; color: var(--gray);">Loading…</td></tr>
     </tbody>
   </table>
@@ -286,6 +322,81 @@ function deleteUser(username) {
     });
 }
 
+// ── Share links ────────────────────────────────────────────────────────────
+function shareUrl(token, next) {
+  const q = (next && next !== '/') ? ('?next=' + encodeURIComponent(next)) : '';
+  return location.origin + '/s/' + token + q;
+}
+
+function loadShareLinks() {
+  fetch('/api/share-links')
+    .then(r => r.json())
+    .then(rows => {
+      const tbody = document.getElementById('share-tbody');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; color: var(--gray);">No share links</td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(l => {
+        const dest = (l.next && l.next !== '/') ? escapeHtml(l.next) : 'Home';
+        const label = l.label ? escapeHtml(l.label) : '<span style="color:var(--gray);">(no label)</span>';
+        return `
+          <tr>
+            <td>${label}</td>
+            <td><span class="share-dest">${dest}</span></td>
+            <td class="col-actions">
+              <button class="btn btn-save" onclick="copyShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.next || '/')}')">Copy Link</button>
+              <button class="btn btn-danger" onclick="revokeShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.label || '')}')">Revoke</button>
+            </td>
+          </tr>`;
+      }).join('');
+    });
+}
+
+function createShareLink() {
+  const label = document.getElementById('new-share-label').value.trim();
+  let next = document.getElementById('new-share-next').value.trim();
+  if (next && !next.startsWith('/')) { toast('Deep-link path must start with "/" (e.g. /trips/42)'); return; }
+  fetch('/api/share-links', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ label, next: next || '/' }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { toast(d.error); return; }
+      document.getElementById('new-share-label').value = '';
+      document.getElementById('new-share-next').value = '';
+      copyShareLink(d.token, d.next || '/');   // copy the fresh link right away
+      loadShareLinks();
+    });
+}
+
+function copyShareLink(token, next) {
+  const url = shareUrl(token, next);
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(url).then(
+      () => toast('Link copied to clipboard.', 'success'),
+      () => prompt('Copy this link:', url)
+    );
+  } else {
+    prompt('Copy this link:', url);
+  }
+}
+
+function revokeShareLink(token, label) {
+  const who = label ? `"${label}"` : 'this link';
+  if (!confirm(`Revoke ${who}? Anyone currently using it will be signed out immediately.`)) return;
+  fetch('/api/share-links/' + encodeURIComponent(token), { method: 'DELETE' })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { toast(d.error); return; }
+      toast('Link revoked.', 'success');
+      loadShareLinks();
+    });
+}
+
 loadUsers();
+loadShareLinks();
 </script>
 {% endblock %}

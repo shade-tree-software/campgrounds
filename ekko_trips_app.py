@@ -3,6 +3,7 @@ import gzip
 import json
 import os
 import re
+import secrets
 import shutil
 import sys
 import time
@@ -145,6 +146,12 @@ USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
 #   "{trip_id}/{stay_idx}/{filename}" or "{trip_id}/events/{event_idx}/{filename}".
 # Used to gate non-admin (uploader-role) caption edits to their own contributions.
 PHOTO_UPLOADERS_FILE = os.path.join(TRIP_DATA_DIR, "photo_uploaders.json")
+# Read-only share links (magic links). Maps an unguessable token to
+#   {label, next, created}. A token authenticates a synthetic read-only viewer
+# (see SHARE_ID_PREFIX / load_user), so a leaked link exposes only viewing.
+# Deleting a token here is the revoke: load_user re-checks this file every
+# request, so the visitor's session dies immediately.
+SHARE_TOKENS_FILE = os.path.join(TRIP_DATA_DIR, "share_tokens.json")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -588,8 +595,27 @@ def _save_user(username, password, is_admin=False, can_upload=False):
     _save_json(USERS_FILE, data)
 
 
+# Share-link (read-only magic-link) sessions carry a synthetic user id
+# "share:<token>" that maps to a viewer with neither admin nor upload rights.
+SHARE_ID_PREFIX = "share:"
+
+
+def _make_share_user(token):
+    """Synthetic read-only user backing a share link (no admin, no upload).
+    Its username is 'share:<token>', which never matches a photo uploader
+    record and is rejected as a real username, so it stays purely a viewer."""
+    return User(SHARE_ID_PREFIX + token, "", is_admin=False, can_upload=False)
+
+
 @login_manager.user_loader
 def load_user(username):
+    # Resolve share-link sessions against share_tokens.json on every request so
+    # that revoking (deleting) a token instantly invalidates its sessions.
+    if username and username.startswith(SHARE_ID_PREFIX):
+        token = username[len(SHARE_ID_PREFIX):]
+        if token in _load_json(SHARE_TOKENS_FILE):
+            return _make_share_user(token)
+        return None
     users = _load_users()
     return users.get(username)
 
@@ -602,7 +628,8 @@ def _require_login_globally():
     # cache the login screen as the offline fallback.
     # sw_reset: the SW kill-switch must work even when the user can't get past
     # an upstream error (e.g. a stale SW), so it stays reachable logged-out.
-    if request.endpoint in ('login', 'static', 'service_worker', 'offline', 'sw_reset', None):
+    if request.endpoint in ('login', 'static', 'service_worker', 'offline',
+                            'sw_reset', 'share_login', None):
         return None
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.path))
@@ -738,7 +765,29 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(request.args.get('next', '/'))
+    return redirect(_safe_next(request.args.get('next')))
+
+
+def _safe_next(path, default="/"):
+    """Restrict a redirect target to a same-site absolute path so ?next= can't
+    be turned into an open redirect (rejects '//host', '/\\host', absolute URLs)."""
+    if path and path.startswith("/") and not path.startswith(("//", "/\\")):
+        return path
+    return default
+
+
+@app.route('/s/<token>')
+def share_login(token):
+    """Read-only magic link: an unguessable token logs a guest in as a viewer
+    (no admin, no upload) and deep-links to ?next=. Because every mutation route
+    is admin/contributor-gated, a leaked link exposes only viewing, so a long
+    random token needs no password. Unknown/revoked tokens fall through to the
+    login page rather than revealing anything."""
+    if token not in _load_json(SHARE_TOKENS_FILE):
+        return render_template('login.html',
+                               error="This share link is no longer valid."), 403
+    login_user(_make_share_user(token), remember=True)
+    return redirect(_safe_next(request.args.get('next')))
 
 
 # ── Campground data ─────────────────────────────────────────────────────────
@@ -1928,6 +1977,8 @@ def api_user_create():
     can_upload = bool(body.get('can_upload'))
     if not username:
         return jsonify({"error": "Username required"}), 400
+    if username.startswith(SHARE_ID_PREFIX):
+        return jsonify({"error": "Username cannot start with 'share:'"}), 400
     if not password:
         return jsonify({"error": "Password required"}), 400
     data = _load_json(USERS_FILE)
@@ -1979,6 +2030,51 @@ def api_user_delete(username):
         return jsonify({"error": "User not found"}), 404
     del data[username]
     _save_json(USERS_FILE, data)
+    return jsonify({"ok": True})
+
+
+# ── Read-only share links (admin-managed magic links) ─────────────────────────
+
+@app.route('/api/share-links')
+def api_share_link_list():
+    denied = _require_admin()
+    if denied:
+        return denied
+    links = _load_json(SHARE_TOKENS_FILE)
+    out = [{"token": t, "label": i.get("label", ""),
+            "next": i.get("next", "/"), "created": i.get("created", "")}
+           for t, i in links.items()]
+    out.sort(key=lambda x: x["created"], reverse=True)
+    return jsonify(out)
+
+
+@app.route('/api/share-links', methods=['POST'])
+def api_share_link_create():
+    denied = _require_admin()
+    if denied:
+        return denied
+    body = request.get_json() or {}
+    label = (body.get('label') or '').strip()
+    nxt = _safe_next(body.get('next'), default="/")
+    token = secrets.token_urlsafe(24)
+    links = _load_json(SHARE_TOKENS_FILE)
+    links[token] = {"label": label, "next": nxt,
+                    "created": datetime.now().isoformat(timespec='seconds')}
+    _save_json(SHARE_TOKENS_FILE, links)
+    return jsonify({"ok": True, "token": token, "label": label, "next": nxt})
+
+
+@app.route('/api/share-links/<token>', methods=['DELETE'])
+def api_share_link_delete(token):
+    """Revoke a share link by removing its token; load_user re-reads this file
+    each request, so any live session on the link dies immediately."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    links = _load_json(SHARE_TOKENS_FILE)
+    if token in links:
+        del links[token]
+        _save_json(SHARE_TOKENS_FILE, links)
     return jsonify({"ok": True})
 
 
