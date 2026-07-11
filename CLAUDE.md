@@ -244,6 +244,15 @@ Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-widt
 
 `ekko_trips_app.py`'s dev runner serves HTTPS by default — required for browser features that need a secure origin, most importantly the Geolocation API used by the map picker's 📍 button. `_dev_ssl_context()` reuses a **persistent self-signed cert** at `trip_data/dev_cert.{crt,key}` (gitignored), generated once via Werkzeug's `make_ssl_devcert`. Persistence matters because `debug=True`'s auto-reloader restarts the process on every code change, and the old `ssl_context='adhoc'` minted a *new* cert each boot — so the browser exception you accepted no longer matched and the cert warning returned on every edit. With the stable cert you accept it once and it survives reloads. Falls back to `'adhoc'` if the cert can't be generated (needs `cryptography`/`pyopenssl` in the venv). Pass `--http` to fall back to plain HTTP (fine on `localhost`, which browsers treat as a secure context even over HTTP; LAN devices need the HTTPS path). Production hosts (PythonAnywhere) handle TLS at the platform level and ignore this code path.
 
+### Backups (data bundle helper)
+
+The app's "database" is the gitignored JSON + photos, deliberately kept as separate small files (small isolated writes, secrets in their own `users.json`, `track_cache/` per-trip) — see the multi-file rationale rather than merging into one blob. Two repo-root scripts bundle/restore that set for copying between hosts (e.g. PythonAnywhere → local):
+
+- **`backup.sh`** → writes `backup/ekko-backup-<ts>.tar.gz` (the `backup/` dir is gitignored). Includes `users.json`, `home.json`, `trip_data/{trips,captions,photo_order,photo_uploaders,share_tokens}.json`, and `trip_data/track_cache/`. Excludes `campgrounds.json` (tracked in git — comes via `git pull`), `trip_data/secret_key` + `dev_cert.*` (machine-local), and `.thumbs`/`.trash` (regenerable). `--with-photos` also bundles `static/uploads/` (minus thumbs/trash); `-o <path>` overrides the output. Only existing members are archived, so a fresh install bundles cleanly.
+- **`restore.sh <tarball>`** → refuses anything not containing `trip_data/trips.json` (guards against restoring the wrong archive), snapshots current data to `backup/pre-restore-<ts>.tar.gz` first (reversible), extracts over the repo, then validates every restored `*.json` parses (and points at the rollback snapshot on failure). `-y` skips the confirm prompt. **Stop the running app before restoring** so nothing writes mid-restore.
+
+Full flow: on the source host run `./backup.sh [--with-photos]`, download the tarball, then locally `./restore.sh <tarball>` + `git pull` (for `campgrounds.json` + code).
+
 ## API Routes
 
 ### Trip/Campspot/Event CRUD
