@@ -1,13 +1,22 @@
 ---
 name: project_bc_sweep_handoff
-description: "British Columbia campground sweep — IN PROGRESS (2nd Canadian province). Bucket status, ids, plumbing, resume steps."
+description: "British Columbia campground sweep — COMPLETE (2nd Canadian province). 418 entries, all buckets + waterfront audit done."
 metadata: 
   node_type: memory
   type: project
   originSessionId: 20c70146-147e-4b0f-a61a-d96ad63bde97
 ---
 
-**British Columbia sweep STARTED 2026-07-08** — second Canadian province, after [[project_on_sweep_handoff]] (Ontario COMPLETE). Follows [[reference_canada_sweep_adaptation]]. Run **sequentially** ([[feedback_sequential_sweep_agents]]). Ontario's 6 commits are pushed; BC ids start at **8372**.
+**British Columbia sweep COMPLETE 2026-07-11** — second Canadian province, after [[project_on_sweep_handoff]] (Ontario). Follows [[reference_canada_sweep_adaptation]]. Ran **sequentially** ([[feedback_sequential_sweep_agents]]). **418 entries, ids 8372-8789** (provincial 200, private ~152, local 54, federal 11, hipcamp 1). All 4 add-buckets + full waterfront audit done & committed to master; **NOT pushed** (push when asked).
+
+## FINAL RESULT
+- **Adds COMPLETE** (commits: provincial parts 1-10, federal 1ae6d49, local 290d781, private parts 1-11, Rondalyn cleanup 0136d8e).
+- **Waterfront audit COMPLETE** — all 418 carry `waterfront_evidence` (51 batches + 19 dry-park stamps; audit commits 0e6f879/f66e685/a1a8539/4366671/c1d064d/a3d0077/4aa94a0/44f731c/6938132/a1f8659/28cc947/0e90f88/2df28ab). ~176 upgrades from the not-waterfront placeholder, ~13 coord fixes. Final wf distribution: 87 lakefront, 30 riverfront, 7 bayfront, 7 coastal woods, 2 creekside, 1 coastal dunes, 1 pond (=135 on-water) + 25 lakeview/20 riverview/2 bayview (47 view) + 236 not waterfront.
+- **Inclusion**: folded into adds (every entry has `inclusion_evidence`). No separate pass needed.
+- **Method notes proven on BC**: RSTBC + BC Hydro Crown-utility rec sites = `provincial`; regional-district/municipal/Lions-Kinsmen-community-society = `local`; First Nations & Mosaic-timberland = `private`; BC-heritage (Hat Creek/Barkerville) = `provincial`. Private gate ≥4★/≤$$ applied; ~30 private skips (membership/co-ownership-strata, residential/MH, closed, store/ski-lot parking, day-use). Coastal-woods/dunes special case used on Pacific shore (Green Point, Kitty Coleman, Naikoon/Agate Beach, Gray Bay, Broughton Strait, Willingdon, Sunset/Port Clements).
+- **Remaining**: push to origin when the user asks. Next province: any — method fully proven (see [[reference_canada_sweep_adaptation]]).
+
+## (historical in-progress notes below)
 
 ## Scope (446 candidates, RV Life detect, ~2× Ontario)
 - **provincial 196** — BC Parks + RSTBC Crown rec sites. ownership `provincial`. 25 batches `/tmp/bc_provincial/batch_N.json` (131 deep-link matched to camping.bcparks.ca).
