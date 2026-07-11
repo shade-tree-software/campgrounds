@@ -568,7 +568,8 @@ def _check_home_config():
 # ── User authentication ────────────────────────────────────────────────────
 
 class User(UserMixin):
-    def __init__(self, username, password_hash, is_admin=False, can_upload=False):
+    def __init__(self, username, password_hash, is_admin=False, can_upload=False,
+                 can_view_campgrounds=True):
         self.id = username
         self.username = username
         self.password_hash = password_hash
@@ -576,21 +577,28 @@ class User(UserMixin):
         # Admins implicitly carry upload rights — checking can_upload alone is
         # always sufficient for upload-gated endpoints.
         self.can_upload = bool(is_admin) or bool(can_upload)
+        # Campground-section access. Defaults on (existing users are unaffected);
+        # a "Trips-only" user has this cleared and cannot reach any Campgrounds
+        # page or data API. Admins always retain access.
+        self.can_view_campgrounds = bool(is_admin) or bool(can_view_campgrounds)
 
 
 def _load_users():
     return {name: User(name, info["password_hash"],
                        info.get("is_admin", False),
-                       info.get("can_upload", False))
+                       info.get("can_upload", False),
+                       info.get("can_view_campgrounds", True))
             for name, info in _load_json(USERS_FILE).items()}
 
 
-def _save_user(username, password, is_admin=False, can_upload=False):
+def _save_user(username, password, is_admin=False, can_upload=False,
+               can_view_campgrounds=True):
     data = _load_json(USERS_FILE)
     data[username] = {
         "password_hash": generate_password_hash(password),
         "is_admin": is_admin,
         "can_upload": can_upload,
+        "can_view_campgrounds": can_view_campgrounds,
     }
     _save_json(USERS_FILE, data)
 
@@ -600,21 +608,25 @@ def _save_user(username, password, is_admin=False, can_upload=False):
 SHARE_ID_PREFIX = "share:"
 
 
-def _make_share_user(token):
+def _make_share_user(token, trips_only=False):
     """Synthetic read-only user backing a share link (no admin, no upload).
     Its username is 'share:<token>', which never matches a photo uploader
-    record and is rejected as a real username, so it stays purely a viewer."""
-    return User(SHARE_ID_PREFIX + token, "", is_admin=False, can_upload=False)
+    record and is rejected as a real username, so it stays purely a viewer.
+    `trips_only` links additionally have Campgrounds-section access cleared."""
+    return User(SHARE_ID_PREFIX + token, "", is_admin=False, can_upload=False,
+                can_view_campgrounds=not trips_only)
 
 
 @login_manager.user_loader
 def load_user(username):
     # Resolve share-link sessions against share_tokens.json on every request so
-    # that revoking (deleting) a token instantly invalidates its sessions.
+    # that revoking (deleting) a token instantly invalidates its sessions — and
+    # so a token's trips_only flag takes effect the moment it's edited.
     if username and username.startswith(SHARE_ID_PREFIX):
         token = username[len(SHARE_ID_PREFIX):]
-        if token in _load_json(SHARE_TOKENS_FILE):
-            return _make_share_user(token)
+        rec = _load_json(SHARE_TOKENS_FILE).get(token)
+        if rec is not None:
+            return _make_share_user(token, rec.get("trips_only", False))
         return None
     users = _load_users()
     return users.get(username)
@@ -648,6 +660,28 @@ def _require_uploader_or_admin():
     caption edits). Admins always pass since User.can_upload is True for them."""
     if not current_user.is_authenticated or not getattr(current_user, "can_upload", False):
         return jsonify({"error": "Upload access required"}), 403
+    return None
+
+
+def _can_view_campgrounds():
+    """True unless the current user is a Trips-only user (campground access cleared)."""
+    return (current_user.is_authenticated
+            and getattr(current_user, "can_view_campgrounds", True))
+
+
+def _require_campground_view_page():
+    """For Campgrounds-section page routes: redirect Trips-only users away to the
+    trips map. Returns a response to short-circuit with, or None to proceed."""
+    if not _can_view_campgrounds():
+        return redirect(url_for('trips_map'))
+    return None
+
+
+def _require_campground_view_api():
+    """For Campgrounds-section data APIs: 403 Trips-only users. Returns a response
+    to short-circuit with, or None to proceed."""
+    if not _can_view_campgrounds():
+        return jsonify({"error": "Campground access required"}), 403
     return None
 
 
@@ -783,10 +817,11 @@ def share_login(token):
     is admin/contributor-gated, a leaked link exposes only viewing, so a long
     random token needs no password. Unknown/revoked tokens fall through to the
     login page rather than revealing anything."""
-    if token not in _load_json(SHARE_TOKENS_FILE):
+    rec = _load_json(SHARE_TOKENS_FILE).get(token)
+    if rec is None:
         return render_template('login.html',
                                error="This share link is no longer valid."), 403
-    login_user(_make_share_user(token), remember=True)
+    login_user(_make_share_user(token, rec.get("trips_only", False)), remember=True)
     return redirect(_safe_next(request.args.get('next')))
 
 
@@ -1745,6 +1780,9 @@ OWNERSHIP_LABELS = {
 
 @app.route('/campgrounds/map')
 def campgrounds_map():
+    denied = _require_campground_view_page()
+    if denied:
+        return denied
     home, family = _map_config()
     is_admin = current_user.is_authenticated and current_user.is_admin
     mode = request.args.get('color')
@@ -1784,6 +1822,9 @@ def campgrounds_climate():
 @app.route('/campgrounds/availability')
 def campgrounds_availability():
     """Page: search a federal campground + date range, see EKKO-fit openings."""
+    denied = _require_campground_view_page()
+    if denied:
+        return denied
     is_admin = current_user.is_authenticated and current_user.is_admin
     return render_template('campground_availability.html',
                            title='Availability', active_nav='campavail',
@@ -1793,6 +1834,9 @@ def campgrounds_availability():
 @app.route('/api/ridb/search')
 def api_ridb_search():
     """Search recreation.gov campgrounds by name (for the availability picker)."""
+    denied = _require_campground_view_api()
+    if denied:
+        return denied
     q = request.args.get('q', '').strip()
     if len(q) < 2:
         return jsonify([])
@@ -1816,6 +1860,9 @@ def api_ridb_availability():
     Query params: facility=<RIDB FacilityID>, start=YYYY-MM-DD, end=YYYY-MM-DD
     (both inclusive — every date is a night), optional fit_ft (default 25).
     """
+    denied = _require_campground_view_api()
+    if denied:
+        return denied
     fid = (request.args.get('facility') or '').strip()
     if not fid.isdigit():
         return jsonify({"error": "Missing or invalid facility id."}), 400
@@ -1960,7 +2007,8 @@ def api_user_list():
     return jsonify([
         {"username": name,
          "is_admin": info.get("is_admin", False),
-         "can_upload": info.get("can_upload", False)}
+         "can_upload": info.get("can_upload", False),
+         "can_view_campgrounds": info.get("can_view_campgrounds", True)}
         for name, info in sorted(data.items())
     ])
 
@@ -1975,6 +2023,8 @@ def api_user_create():
     password = body.get('password', '')
     is_admin = bool(body.get('is_admin'))
     can_upload = bool(body.get('can_upload'))
+    # Default new users to campground access unless the caller opts them out.
+    can_view_campgrounds = bool(body.get('can_view_campgrounds', True))
     if not username:
         return jsonify({"error": "Username required"}), 400
     if username.startswith(SHARE_ID_PREFIX):
@@ -1988,6 +2038,7 @@ def api_user_create():
         "password_hash": generate_password_hash(password),
         "is_admin": is_admin,
         "can_upload": can_upload,
+        "can_view_campgrounds": can_view_campgrounds,
     }
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
@@ -2014,6 +2065,8 @@ def api_user_update(username):
         data[username]['is_admin'] = new_admin
     if 'can_upload' in body:
         data[username]['can_upload'] = bool(body.get('can_upload'))
+    if 'can_view_campgrounds' in body:
+        data[username]['can_view_campgrounds'] = bool(body.get('can_view_campgrounds'))
     _save_json(USERS_FILE, data)
     return jsonify({"ok": True})
 
@@ -2042,7 +2095,8 @@ def api_share_link_list():
         return denied
     links = _load_json(SHARE_TOKENS_FILE)
     out = [{"token": t, "label": i.get("label", ""),
-            "next": i.get("next", "/"), "created": i.get("created", "")}
+            "next": i.get("next", "/"), "created": i.get("created", ""),
+            "trips_only": i.get("trips_only", False)}
            for t, i in links.items()]
     out.sort(key=lambda x: x["created"], reverse=True)
     return jsonify(out)
@@ -2056,12 +2110,14 @@ def api_share_link_create():
     body = request.get_json() or {}
     label = (body.get('label') or '').strip()
     nxt = _safe_next(body.get('next'), default="/")
+    trips_only = bool(body.get('trips_only'))
     token = secrets.token_urlsafe(24)
     links = _load_json(SHARE_TOKENS_FILE)
-    links[token] = {"label": label, "next": nxt,
+    links[token] = {"label": label, "next": nxt, "trips_only": trips_only,
                     "created": datetime.now().isoformat(timespec='seconds')}
     _save_json(SHARE_TOKENS_FILE, links)
-    return jsonify({"ok": True, "token": token, "label": label, "next": nxt})
+    return jsonify({"ok": True, "token": token, "label": label, "next": nxt,
+                    "trips_only": trips_only})
 
 
 @app.route('/api/share-links/<token>', methods=['DELETE'])
@@ -2081,6 +2137,9 @@ def api_share_link_delete(token):
 @app.route('/api/campgrounds')
 def api_campground_list():
     """Return a lightweight list of campground/family entries for pickers."""
+    denied = _require_campground_view_api()
+    if denied:
+        return denied
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
     result = [{"id": e["id"], "name": e["name"],

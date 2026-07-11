@@ -362,6 +362,7 @@
 {% if current_user.is_authenticated %}
 <nav id="site-nav">
   {% set is_admin = current_user.is_authenticated and current_user.is_admin %}
+  {% set can_view_campgrounds = current_user.is_authenticated and current_user.can_view_campgrounds %}
   <div class="nav-collapse" id="nav-collapse">
   <span class="nav-group">
     <span class="nav-label">Trips:</span>
@@ -372,13 +373,16 @@
   </span>
   {# Campground map is read-only for non-admins (the route was never
      admin-gated; edit affordances are IS_ADMIN-conditioned) — the
-     "places we could go" browser for the whole family. #}
+     "places we could go" browser for the whole family. Hidden entirely
+     for Trips-only users (can_view_campgrounds cleared). #}
+  {% if can_view_campgrounds %}
   <span class="nav-group">
     <span class="nav-label">Campgrounds:</span>
     <a href="/campgrounds/map"{% if active_nav == 'campmap' %} class="active"{% endif %}>Map</a>
     <a href="/campgrounds/availability"{% if active_nav == 'campavail' %} class="active"{% endif %}>Availability</a>
     {% if is_admin %}<a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}>Manage</a>{% endif %}
   </span>
+  {% endif %}
   {% if is_admin %}
   <span class="nav-group">
     <span class="nav-label">Admin:</span>
@@ -416,10 +420,12 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V13M12 21V5M19 21V9"/></svg>
     <span>Stats</span>
   </a>
+  {% if current_user.can_view_campgrounds %}
   <a href="/campgrounds/map" id="tab-campgrounds"{% if active_nav == 'campmap' %} class="active"{% endif %}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 L12 5 L21 20"/><path d="M12 12 L8.5 20"/><path d="M12 12 L15.5 20"/><path d="M2 20 H22"/></svg>
     <span>Camps</span>
   </a>
+  {% endif %}
 </nav>
 {% endif %}
 

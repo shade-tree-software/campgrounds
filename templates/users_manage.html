@@ -26,7 +26,7 @@
   .col-actions { text-align: right; white-space: nowrap; }
   .col-actions .btn { margin-left: .35rem; }
 
-  .badge-admin, .badge-uploader {
+  .badge-admin, .badge-uploader, .badge-trips-only {
     display: inline-block;
     padding: .15rem .5rem;
     border-radius: 999px;
@@ -37,6 +37,7 @@
   }
   .badge-admin { background: var(--gold); color: var(--navy); }
   .badge-uploader { background: var(--blue-bg); color: var(--navy); margin-left: .25rem; }
+  .badge-trips-only { background: #efe0e0; color: #8a3324; margin-left: .25rem; }
 
   .share-heading { margin-top: 2.5rem; font-size: 1.4rem; color: var(--navy); }
   .share-hint { color: var(--gray); font-size: .9rem; margin: .35rem 0 1rem; line-height: 1.4; }
@@ -120,6 +121,7 @@
       <input type="password" id="new-password" placeholder="Password" autocomplete="new-password">
       <label class="cb-label"><input type="checkbox" id="new-is-admin"> Admin</label>
       <label class="cb-label"><input type="checkbox" id="new-can-upload"> Contributor</label>
+      <label class="cb-label" title="User can only see Trips — the whole Campgrounds section is hidden"><input type="checkbox" id="new-trips-only"> Trips only</label>
       <button class="btn btn-add" onclick="createUser()">Add User</button>
     </div>
   </div>
@@ -156,6 +158,7 @@
     <div class="form-row">
       <input type="text" id="new-share-label" placeholder="Label (e.g. Grandma)" autocomplete="off">
       <input type="text" id="new-share-next" placeholder="Deep-link path (optional, e.g. /trips/42)" autocomplete="off">
+      <label class="cb-label" title="Hide the Campgrounds section from this link's guests"><input type="checkbox" id="new-share-trips-only"> Trips only</label>
       <button class="btn btn-add" onclick="createShareLink()">Create Link</button>
     </div>
   </div>
@@ -197,6 +200,9 @@ function loadUsers() {
         // Uploader toggle is meaningless for admins (they implicitly can
         // upload), so hide it on admin rows to keep the controls honest.
         const uploaderToggleLabel = u.can_upload ? 'Revoke Contributor' : 'Make Contributor';
+        // Campground access is meaningless for admins (they always have it), so
+        // the toggle/badge only appear on non-admin rows.
+        const campToggleLabel = u.can_view_campgrounds ? 'Restrict to Trips' : 'Allow Campgrounds';
         let roleHtml;
         if (u.is_admin) {
           roleHtml = '<span class="badge-admin">Admin</span>';
@@ -205,6 +211,9 @@ function loadUsers() {
         } else {
           roleHtml = '<span style="color:var(--gray);font-size:.85rem;">User</span>';
         }
+        if (!u.is_admin && !u.can_view_campgrounds) {
+          roleHtml += '<span class="badge-trips-only">Trips-only</span>';
+        }
         return `
           <tr>
             <td>${escapeHtml(u.username)}${isMe ? '<span class="self-tag">(you)</span>' : ''}</td>
@@ -212,6 +221,7 @@ function loadUsers() {
             <td class="col-actions">
               <button class="btn btn-cancel" onclick="openReset('${escapeAttr(u.username)}')">Reset Password</button>
               ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleUploader('${escapeAttr(u.username)}', ${!u.can_upload})">${uploaderToggleLabel}</button>`}
+              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleCampgrounds('${escapeAttr(u.username)}', ${!u.can_view_campgrounds})">${campToggleLabel}</button>`}
               <button class="btn btn-save" onclick="toggleAdmin('${escapeAttr(u.username)}', ${!u.is_admin})" ${adminToggleDisabled}>${adminToggleLabel}</button>
               <button class="btn btn-danger" onclick="deleteUser('${escapeAttr(u.username)}')" ${deleteDisabled}>Delete</button>
             </td>
@@ -235,11 +245,13 @@ function createUser() {
   const password = document.getElementById('new-password').value;
   const isAdmin = document.getElementById('new-is-admin').checked;
   const canUpload = document.getElementById('new-can-upload').checked;
+  const tripsOnly = document.getElementById('new-trips-only').checked;
   if (!username || !password) { toast('Username and password are required'); return; }
   fetch('/api/users', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password, is_admin: isAdmin, can_upload: canUpload }),
+    body: JSON.stringify({ username, password, is_admin: isAdmin, can_upload: canUpload,
+                           can_view_campgrounds: !tripsOnly }),
   })
     .then(r => r.json())
     .then(d => {
@@ -248,6 +260,7 @@ function createUser() {
       document.getElementById('new-password').value = '';
       document.getElementById('new-is-admin').checked = false;
       document.getElementById('new-can-upload').checked = false;
+      document.getElementById('new-trips-only').checked = false;
       loadUsers();
     });
 }
@@ -312,6 +325,21 @@ function toggleUploader(username, grant) {
     });
 }
 
+function toggleCampgrounds(username, grant) {
+  const verb = grant ? 'give campground access to' : 'restrict to Trips only (hide the Campgrounds section for)';
+  if (!confirm(`Are you sure you want to ${verb} ${username}?`)) return;
+  fetch('/api/users/' + encodeURIComponent(username), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ can_view_campgrounds: grant }),
+  })
+    .then(r => r.json())
+    .then(d => {
+      if (d.error) { toast(d.error); return; }
+      loadUsers();
+    });
+}
+
 function deleteUser(username) {
   if (!confirm(`Delete user "${username}"? This cannot be undone.`)) return;
   fetch('/api/users/' + encodeURIComponent(username), { method: 'DELETE' })
@@ -340,9 +368,10 @@ function loadShareLinks() {
       tbody.innerHTML = rows.map(l => {
         const dest = (l.next && l.next !== '/') ? escapeHtml(l.next) : 'Home';
         const label = l.label ? escapeHtml(l.label) : '<span style="color:var(--gray);">(no label)</span>';
+        const tripsOnlyBadge = l.trips_only ? '<span class="badge-trips-only">Trips-only</span>' : '';
         return `
           <tr>
-            <td>${label}</td>
+            <td>${label}${tripsOnlyBadge}</td>
             <td><span class="share-dest">${dest}</span></td>
             <td class="col-actions">
               <button class="btn btn-save" onclick="copyShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.next || '/')}')">Copy Link</button>
@@ -356,17 +385,19 @@ function loadShareLinks() {
 function createShareLink() {
   const label = document.getElementById('new-share-label').value.trim();
   let next = document.getElementById('new-share-next').value.trim();
+  const tripsOnly = document.getElementById('new-share-trips-only').checked;
   if (next && !next.startsWith('/')) { toast('Deep-link path must start with "/" (e.g. /trips/42)'); return; }
   fetch('/api/share-links', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ label, next: next || '/' }),
+    body: JSON.stringify({ label, next: next || '/', trips_only: tripsOnly }),
   })
     .then(r => r.json())
     .then(d => {
       if (d.error) { toast(d.error); return; }
       document.getElementById('new-share-label').value = '';
       document.getElementById('new-share-next').value = '';
+      document.getElementById('new-share-trips-only').checked = false;
       copyShareLink(d.token, d.next || '/');   // copy the fresh link right away
       loadShareLinks();
     });
