@@ -351,9 +351,12 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     pushIfNew(evening);
   });
 
-  // Draw straight-line route; show it immediately as the default while we
-  // wait on the GPS track. If the GPS track loads, swap it in (the user can
-  // still toggle either via the layer control).
+  // Build the straight-line route and register it as a toggleable overlay,
+  // but do NOT show it yet. It's the *fallback* — drawn only if the GPS track
+  // turns out not to render (renderGpsTrack calls showStraightFallback() on
+  // each short-circuit). Showing it eagerly here and swapping to GPS a few
+  // seconds later made the map visibly flash the dashed route then replace it;
+  // deferring means the correct layer is drawn once, with no swap.
   let straightRouteLayer = null;
   if (routePath.length >= 2) {
     straightRouteLayer = L.layerGroup([
@@ -366,8 +369,18 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       }),
     ]);
     layerControl.addOverlay(straightRouteLayer, 'Straight route');
-    straightRouteLayer.addTo(map);
   }
+
+  // Show the dashed straight-line route as the fallback. Called only when no
+  // GPS layer will render (renderGpsTrack's short-circuits, or a render/ fetch
+  // error) — never eagerly on load, so the map never flashes the straight
+  // route and then swaps to GPS. Defined at this scope (not inside
+  // renderGpsTrack) so the outer .catch can also fall back on a render throw.
+  const showStraightFallback = () => {
+    if (straightRouteLayer && !map.hasLayer(straightRouteLayer)) {
+      straightRouteLayer.addTo(map);
+    }
+  };
 
   // ── Trip window padding ─────────────────────────────────────────────────
   // The trip's home-departure / home-arrival tsts are computed server-side
@@ -506,17 +519,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       if (map.hasLayer(window.__currentLocationMarker)) map.removeLayer(window.__currentLocationMarker);
       window.__currentLocationMarker = null;
     }
-    // The straight-line route is the visible default whenever no GPS polyline
-    // is up. A previous GPS render may have removed it; restore it now and
-    // let a successful new GPS render re-hide it if appropriate.
-    if (straightRouteLayer && !map.hasLayer(straightRouteLayer)) {
-      straightRouteLayer.addTo(map);
-    }
-
+    // On an in-place re-render (suppress/relocate) a prior GPS pass left the
+    // straight route hidden; the short-circuits below restore it via
+    // showStraightFallback() (defined in the outer scope) when the new payload
+    // no longer yields a track.
     if (rawPoints && rawPoints.__error) {
       const e = rawPoints.__error;
       if (e.status != null) trackLog(`track fetch returned non-OK status ${e.status} ${e.statusText} — using straight track`);
       else trackLog('GPS track fetch threw an error — using straight track', e.thrown);
+      showStraightFallback();
       return;
     }
     // The track endpoint returns { points, home_auto_start_tst,
@@ -585,6 +596,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     if (inWindow.length < 2) {
       trackLog('not enough in-window GPS points to draw a track — using straight track',
         { rawCount: raw.length, inWindowCount: inWindow.length, lowerCut, upperCut });
+      showStraightFallback();
       return;
     }
 
@@ -627,6 +639,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
           `no GPS ping reached an anchor (and trip is not in progress) — using straight track`,
           { inWindowCount: inWindow.length, anchorCount: anchorCoords.length,
             tripInProgress });
+        showStraightFallback();
         return;
       }
     }
@@ -956,6 +969,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     .then(renderGpsTrack)
     .catch(err => {
       trackLog('GPS track render threw an error — using straight track', err);
+      showStraightFallback();
     });
 
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
