@@ -27,13 +27,12 @@ metadata:
 - Add-research agent prompt: BC overrides on `audit/add_research_instructions.md` (see the batch-1 prompt).
 - Waterfront audit at end: build batches carrying leads from /tmp/bc_leads.json, run `audit/waterfront_audit_instructions.md`, apply `audit/apply_waterfront_audit.py`.
 
-## Progress (as of 2026-07-08)
-- **provincial DONE + committed**: 191 entries (ids 8372-8562, all 25 batches; parts 1-10, commits fdfd6c5/6e951fd/c11e005/9ac3958/6a80ad6/4fe4e4d/1f7dd2f/a7e806c/f62bf5e/60b6802). 189 provincial + 2 reclassified local (Kearsley Creek, Cumberland Lake, Sudeten) — well, provincial-tagged became mostly provincial; reclassifications: Kearsley/Cumberland/Sudeten→local, sẁiẁs/Haynes Point→private.
-- **federal DONE + committed** (1ae6d49): 11 Parks Canada (ids 8563-8573). Skip: Kootenay Marble Canyon (<15ft).
-- **local DONE + committed** (290d781): 33 (ids 8574-8606). Forest Rose→provincial, Monkman RV→private reclassified.
-- **private IN PROGRESS** (`/tmp/bc_private/`, 25 batches, 198 cands): batches 1-2 done+appended (ids 8607-8620, NOT yet committed). Fairy Lake/Maple Grove RSTBC→provincial. **CLEANUP PENDING: Rondalyn Resort** (dropped by batch-1 agent) stashed in `/tmp/bc_private/cleanup.json` — research + append before finishing.
-- **Waterfront audit: PENDING** — run over ALL BC ids (8372+) after private done; leads in /tmp/bc_leads.json.
-- BC total so far: 249 entries. Checkpoint-commit private every ~4 batches.
+## Progress (as of 2026-07-10)
+- **ALL ADD BUCKETS DONE + committed**: BC total **417 entries, ids 8372-8788** (provincial 197, private 155, local 53, federal 11, hipcamp 1). Last add commit 71880f8.
+  - provincial 191 (parts 1-10), federal 11 (1ae6d49), local 33 (290d781), private 182 across 25 batches (parts 1-11: 1462fa2/f6498df/e374c3d/a8e4e50/6823910/a321145/e0fbb25/8401727/f97bad0/94787b1/71880f8).
+- **Rondalyn cleanup**: research agent running (was dropped by private batch 1). Bank result to private if add.
+- **WATERFRONT AUDIT: IN PROGRESS** — 398 water-adjacent BC entries → **50 batches at `/tmp/bc_wfaudit/batch_N.json`** (built from /tmp/bc_leads.json; 19 dry in-town entries stay not-waterfront by default, ids in /tmp/bc_wfaudit/dry_ids.json). Run `audit/waterfront_audit_instructions.md` agents sequentially, save results `/tmp/bc_wfaudit/results_N.json`, apply with `python3 audit/apply_waterfront_audit.py <results.json>`, commit in chunks. NOT yet started applying.
+- Push: NOT done yet (push only when asked).
 
 ## (old provincial detail below)
 
