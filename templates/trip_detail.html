@@ -2290,15 +2290,16 @@
 // landscape crosses the 900px two-column breakpoint and shows them side by
 // side. Show a persistent top-center pill suggesting it. It does NOT auto-
 // dismiss — it clears only when the user taps it or rotates to landscape (both
-// mark it acknowledged so it won't return). Guarded so it never appears on
-// phones (too small to two-column even in landscape) or desktop (fine pointer /
-// narrowed window), and only where there's a timeline to place beside the map.
+// mark it acknowledged so it won't return this session). Guarded so it never
+// appears on phones (too small to two-column even in landscape) or desktop
+// (fine pointer / narrowed window), and only where there's a timeline to place
+// beside the map. Shown once per session (sessionStorage).
 (function () {
   var el = document.getElementById('landscape-hint');
   if (!el) return;
   var KEY = 'ekkoLandscapeHintSeen';
-  function seen() { try { return !!localStorage.getItem(KEY); } catch (e) { return true; } }
-  function acknowledge() { try { localStorage.setItem(KEY, '1'); } catch (e) {} el.classList.remove('show'); }
+  function seen() { try { return !!sessionStorage.getItem(KEY); } catch (e) { return true; } }
+  function acknowledge() { try { sessionStorage.setItem(KEY, '1'); } catch (e) {} el.classList.remove('show'); }
   function qualifies() {
     return window.matchMedia('(orientation: portrait)').matches &&
            window.matchMedia('(pointer: coarse)').matches &&
@@ -2318,7 +2319,15 @@
   el.addEventListener('click', acknowledge);
   window.addEventListener('resize', evaluate);
   window.addEventListener('orientationchange', evaluate);
-  evaluate();
+  // Defer the first reveal until --trip-header-height is published (map.js runs
+  // after this inline script); otherwise the pill first paints against the 0px
+  // fallback — over the red header — then jumps down once the var is set.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', evaluate);
+  } else {
+    evaluate();
+  }
+  window.addEventListener('load', evaluate);
 })();
 </script>
 {% endif %}
