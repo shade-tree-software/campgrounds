@@ -24,6 +24,9 @@ Saskatchewan **Regional Parks** are run by local Regional Park Authorities (boar
 - Add-research instructions: `audit/add_research_instructions_sk.md` (SK-specific). Append with `append_sk.py` (state=SK, leads→/tmp/sk_leads.json).
 
 ## Progress
-- **Detection + classification + batch-build: DONE.**
-- **Add-research: federal batch (federal_01, 8 Parks Canada) launched, running.** Then provincial (8 batches), local (11), private (7) — sequentially.
-- Waterfront audit + inclusion (folded into adds) still to come. NOT pushed. Commit per bucket to master.
+- **ALL ADDS DONE + pushed: 166 SK entries, ids 9150-9315** (federal 7, provincial 52, local 94, private 13). Every entry has `inclusion_evidence` (inclusion folded in, 0 missing). Detection+classify+batches all done.
+- Add-stage skips: ~3 dupes (RV Life overlapping hits for multi-campground parks: Denare Beach=Sawmill Bay, GBH-Anglin=Anderson Point), several tent-only (Trappers/Cold River/Hirtz/Vivian/Big Shell), Sturgeon Weir (unverifiable), ~18 private-gate fails.
+- **Reclassifications (agent-corrected ownership):** many RV-Life-mislabeled entries — Regional Parks provincial→local (the big one); "leased provincial rec site" private→provincial (Besant, Borden Bridge, Michel Point/Dore Lake, Nesslin Lake); village/town campgrounds commercial→local (Bonnington Springs/Kenaston, Gull Lake, Hanley, Val Marie, Windthorst, David Laird/North Battleford, Joe Tutt/Radisson, Prairie View/Wheatland non-profit).
+- **Waterfront audit: IN PROGRESS.** 25 dry (no-water) entries auto-stamped not-waterfront + committed. 141 water-adjacent split into 18 batches (`/tmp/sk_wfaudit/batch_N.json`, each carries its `lead`); batch 1 running. Apply each with `python3 audit/apply_waterfront_audit.py /tmp/sk_wfaudit/results_N.json`. All entries start at `not waterfront` placeholder → auditor UPGRADES with counting evidence.
+- Plumbing: `/tmp/build_sk_wfaudit.py`, results saved to `/tmp/sk_wfaudit/results_N.json`. Commit per batch/group to master.
+- **Remaining:** finish 18 waterfront batches → apply → commit → push. Then SK is COMPLETE (inclusion already folded in; no legacy loose ends — fresh state).
