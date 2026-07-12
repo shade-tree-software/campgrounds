@@ -1196,6 +1196,51 @@
   }
   #upload-progress-banner button:hover { background: rgba(255,255,255,.3); }
 
+  /* ── Scroll hint ─────────────────────────────────────
+     A small pill pinned to the bottom while the user is still at the top of
+     a scrollable trip page, signalling that the timeline continues below.
+     Especially important on phones, where the map fills the first screenful
+     and the timeline underneath is easy to miss. JS toggles .visible from the
+     scroll position + whether there's meaningful content below the fold;
+     clicking it scrolls down. Sits above the map (z 500) but below the
+     lightbox/modals (z 1000+), and clears the mobile tab bar. */
+  .scroll-hint {
+    position: fixed;
+    left: 50%;
+    bottom: calc(1rem + var(--tab-bar-height, 0px));
+    transform: translateX(-50%) translateY(8px);
+    z-index: 880;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: .5rem 1.05rem;
+    font-size: .85rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,.28);
+    opacity: 0;
+    pointer-events: none;  /* inert until shown */
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .scroll-hint.visible {
+    opacity: .95;
+    transform: translateX(-50%) translateY(0);
+    pointer-events: auto;
+  }
+  .scroll-hint:hover { opacity: 1; background: var(--navy-light, #1a3a6b); }
+  .scroll-hint svg { animation: scroll-hint-bounce 1.6s ease-in-out infinite; }
+  @keyframes scroll-hint-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(3px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint svg { animation: none; }
+  }
+
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
@@ -2098,6 +2143,43 @@
 
 
 </div>
+
+{# Scroll hint: nudge the user toward the timeline below the fold. Only when
+   there are timeline cards to scroll to. Behaviour + visibility in the inline
+   script below. #}
+{% if has_cards %}
+<button type="button" class="scroll-hint" id="scroll-hint" aria-label="Scroll down to the trip timeline">
+  <span>Scroll for timeline</span>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+<script>
+(function () {
+  var hint = document.getElementById('scroll-hint');
+  if (!hint) return;
+  var SHOW_AT = 24;     // px: only surface the hint while essentially at the top
+  var MIN_BELOW = 140;  // px of below-the-fold content needed to bother showing it
+  function update() {
+    var doc = document.documentElement;
+    var overflow = doc.scrollHeight - window.innerHeight;
+    var atTop = window.scrollY <= SHOW_AT;
+    hint.classList.toggle('visible', overflow > MIN_BELOW && atTop);
+  }
+  hint.addEventListener('click', function () {
+    window.scrollBy({ top: Math.round(window.innerHeight * 0.82), behavior: 'smooth' });
+  });
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  // Page height shifts as the map, GPS track, and thumbnails render in — re-check
+  // for a few seconds so the hint reflects the settled layout, then stop.
+  update();
+  var ticks = 0, iv = setInterval(function () {
+    update();
+    if (++ticks > 10) clearInterval(iv);
+  }, 500);
+})();
+</script>
+{% endif %}
 
 <!-- Event location map picker -->
 {% if is_admin %}
