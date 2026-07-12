@@ -1,11 +1,13 @@
 ---
 name: project_sk_sweep_handoff
-description: Saskatchewan campground sweep — IN PROGRESS (4th Canadian province). Detection+classification done; add-research underway.
+description: Saskatchewan campground sweep — COMPLETE (4th Canadian province). 166 entries, adds + inclusion + waterfront audit all done + pushed.
 metadata: 
   node_type: memory
   type: project
   originSessionId: 16dee5e1-cf07-445f-b6d2-df6e4020c667
 ---
+
+**Saskatchewan sweep COMPLETE 2026-07-12** — 166 entries (ids 9150-9315), federal 7 / provincial 52 / local 94 / private 13; all pushed to origin/master. Every entry carries `inclusion_evidence` (folded into adds) AND `waterfront_evidence` (audit 100%, 0 missing). Waterfront: 123 not-waterfront, 17 lakefront, 1 riverfront, 1 pond, 19 lakeview, 5 riverview (**43 upgrades**; ~5 coord fixes). Clean fresh-state sweep — no legacy loose ends. Next province: any (method fully proven; ON/BC/AB/SK done).
 
 **Saskatchewan sweep STARTED 2026-07-12** — 4th Canadian province, after [[project_on_sweep_handoff]], [[project_bc_sweep_handoff]], [[project_ab_sweep_handoff]]. Follows [[reference_canada_sweep_adaptation]]. Runs **sequentially** ([[feedback_sequential_sweep_agents]]). Clean fresh-state sweep — SK had 0 entries before. Next id starts **9150** (prev max 9149).
 
