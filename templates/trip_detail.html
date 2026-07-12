@@ -1245,6 +1245,52 @@
     .scroll-hint svg { animation: none; }
   }
 
+  /* ── Landscape hint ──────────────────────────────────
+     Persistent pill shown to tablets in portrait, suggesting a rotate to get
+     the side-by-side map+timeline. Top-center (below the sticky headers) so it
+     never collides with the bottom-center scroll pill. JS toggles .show; it
+     clears only on tap or on rotating to landscape (see the script). */
+  .landscape-hint {
+    display: none;
+    position: fixed;
+    top: calc(var(--site-top-height, 0px) + var(--trip-header-height, 0px) + .5rem);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 890;
+    align-items: center;
+    gap: .5rem;
+    max-width: calc(100vw - 1.5rem);
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: .6rem 1.1rem;
+    font-size: .85rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,.32);
+  }
+  .landscape-hint.show { display: inline-flex; }
+  .landscape-hint:hover { background: var(--navy-light, #1a3a6b); }
+  .landscape-hint svg {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    animation: landscape-hint-rock 2.4s ease-in-out infinite;
+    transform-origin: 50% 50%;
+  }
+  /* Gentle quarter-rock to read as "rotate". */
+  @keyframes landscape-hint-rock {
+    0%, 55%, 100% { transform: rotate(0deg); }
+    72%           { transform: rotate(-25deg); }
+    89%           { transform: rotate(-18deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .landscape-hint svg { animation: none; }
+  }
+
   /* ── Lightbox ───────────────────────────────────── */
   .lightbox {
     display: none;
@@ -2156,6 +2202,12 @@
   <span>Scroll for timeline</span>
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
 </button>
+{# Landscape hint: shown to tablets held in portrait (see the script below).
+   Persistent — dismisses only on tap or on rotating to landscape. #}
+<button type="button" class="landscape-hint" id="landscape-hint" aria-label="Rotate to landscape, then tap to dismiss">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.48 2.52c3.27 1.55 5.61 4.72 5.97 8.48h1.5C23.44 4.84 18.29 0 12 0l-.66.03 3.81 3.81 1.33-1.32zm-6.25-.77c-.59-.59-1.54-.59-2.12 0L1.75 8.11c-.59.59-.59 1.54 0 2.12l12.02 12.02c.59.59 1.54.59 2.12 0l6.36-6.36c.59-.59.59-1.54 0-2.12L10.23 1.75zm2.6 18.72L2.53 10.17l6.36-6.36 10.3 10.3-6.36 6.36zM7.52 21.48C4.25 19.94 1.91 16.76 1.55 13H.05C.56 19.16 5.71 24 12 24l.66-.03-3.81-3.81-1.33 1.32z"/></svg>
+  <span>Rotate to landscape to see the map and timeline side by side</span>
+</button>
 <script>
 (function () {
   var hint = document.getElementById('scroll-hint');
@@ -2228,25 +2280,39 @@
   }, 500);
 })();
 
-// One-time nudge: on a tablet held in PORTRAIT the map and timeline stack, but
+// Landscape hint: on a tablet held in PORTRAIT the map and timeline stack, but
 // landscape crosses the 900px two-column breakpoint and shows them side by
-// side. Suggest it once. Guarded so it never fires on phones (too small to
-// two-column even in landscape) or desktop (fine pointer / narrowed window),
-// and only where there's a timeline to place beside the map.
+// side. Show a persistent top-center pill suggesting it. It does NOT auto-
+// dismiss — it clears only when the user taps it or rotates to landscape (both
+// mark it acknowledged so it won't return). Guarded so it never appears on
+// phones (too small to two-column even in landscape) or desktop (fine pointer /
+// narrowed window), and only where there's a timeline to place beside the map.
 (function () {
-  try {
-    var longSide = Math.max(screen.width || 0, screen.height || 0);
-    var tabletPortrait =
-      window.matchMedia('(orientation: portrait)').matches &&
-      window.matchMedia('(pointer: coarse)').matches &&
-      window.innerWidth < 900 &&   // currently single-column
-      longSide >= 900;             // rotating would unlock two-column
-    if (tabletPortrait && !localStorage.getItem('ekkoLandscapeHintSeen') && window.toast) {
-      window.toast('Tip: rotate to landscape to see the map and timeline side by side.',
-                   'info', { duration: 8000, actionLabel: 'Got it', onAction: function () {} });
-      localStorage.setItem('ekkoLandscapeHintSeen', '1');
+  var el = document.getElementById('landscape-hint');
+  if (!el) return;
+  var KEY = 'ekkoLandscapeHintSeen';
+  function seen() { try { return !!localStorage.getItem(KEY); } catch (e) { return true; } }
+  function acknowledge() { try { localStorage.setItem(KEY, '1'); } catch (e) {} el.classList.remove('show'); }
+  function qualifies() {
+    return window.matchMedia('(orientation: portrait)').matches &&
+           window.matchMedia('(pointer: coarse)').matches &&
+           window.innerWidth < 900 &&                        // currently single-column
+           Math.max(screen.width || 0, screen.height || 0) >= 900;  // landscape would two-column
+  }
+  function evaluate() {
+    if (seen()) { el.classList.remove('show'); return; }
+    // Rotating to landscape (or otherwise reaching the two-column width) is the
+    // user acting on the hint -> acknowledge so it won't nag again.
+    if (!window.matchMedia('(orientation: portrait)').matches || window.innerWidth >= 900) {
+      if (el.classList.contains('show')) acknowledge(); else el.classList.remove('show');
+      return;
     }
-  } catch (e) { /* matchMedia/localStorage unavailable — skip the hint */ }
+    el.classList.toggle('show', qualifies());
+  }
+  el.addEventListener('click', acknowledge);
+  window.addEventListener('resize', evaluate);
+  window.addEventListener('orientationchange', evaluate);
+  evaluate();
 })();
 </script>
 {% endif %}
