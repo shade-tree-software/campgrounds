@@ -2182,7 +2182,11 @@
   function refresh() {
     if (dismissed) return;
     var overflow = document.documentElement.scrollHeight - window.innerHeight;
-    hint.classList.toggle('visible', overflow > MIN_BELOW && window.scrollY <= TOP);
+    // Yield to toasts: they share this bottom-center spot (the landscape-rotate
+    // tip, photo-undo, upload errors…), so hide the pill while one is up rather
+    // than stack under it. The interval below re-checks so it returns after.
+    var toastUp = !!document.querySelector('#toast-container .toast');
+    hint.classList.toggle('visible', overflow > MIN_BELOW && window.scrollY <= TOP && !toastUp);
   }
   // Permanent teardown once the user has clearly started scrolling. The hint
   // is a one-time nudge — re-showing on scroll-to-top caused flicker, and on
@@ -2215,9 +2219,12 @@
 
   anchor(); refresh();
   var ticks = 0;
+  // Re-check for ~12s: covers the map/thumbnail height settle AND long enough to
+  // outlast the 8s landscape-tip toast, so the pill re-appears once the toast
+  // clears (refresh() suppresses it while a toast is up).
   iv = setInterval(function () {
     anchor(); refresh();
-    if (++ticks > 10) { clearInterval(iv); iv = null; }
+    if (++ticks > 24) { clearInterval(iv); iv = null; }
   }, 500);
 })();
 
