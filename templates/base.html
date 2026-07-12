@@ -104,6 +104,24 @@
 
   .header-title { display: flex; align-items: center; gap: .75rem; }
 
+  /* Subtitle sits to the right of the title, separated by a faint rule.
+     Hidden ≤900px (see media query below) so it never crowds the title
+     on tablets/phones — shown only where there's comfortable room. */
+  .site-subtitle {
+    font-size: .95rem;
+    font-weight: 400;
+    font-style: italic;
+    opacity: .8;
+    padding-left: .75rem;
+    border-left: 1px solid rgba(255,255,255,.3);
+    white-space: nowrap;
+  }
+
+  /* Drop the subtitle where it would crowd the title (tablets/phones). */
+  @media (max-width: 900px) {
+    .site-subtitle { display: none; }
+  }
+
   .nav-toggle {
     display: none;
     background: none;
@@ -131,6 +149,7 @@
   @media (min-width: 701px) and (max-height: 820px) {
     header { padding: .4rem 2rem; }
     header h1 { font-size: 1.3rem; }
+    .site-subtitle { font-size: .82rem; }
     .stats { font-size: .82rem; gap: 1rem; }
     nav { padding: .2rem 2rem; }
   }
@@ -349,6 +368,7 @@
   <div class="header-title">
     {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>{% endif %}
     <h1><a href="/">EKKOing Around</a></h1>
+    <span class="site-subtitle">Hamilton family road trips</span>
   </div>
   {% if current_user.is_authenticated %}
   <div class="stats">
