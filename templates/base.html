@@ -105,8 +105,8 @@
   .header-title { display: flex; align-items: center; gap: .75rem; }
 
   /* Subtitle sits to the right of the title, separated by a faint rule.
-     Hidden ≤900px (see media query below) so it never crowds the title
-     on tablets/phones — shown only where there's comfortable room. */
+     Kept down to 700px; the stats drop first (below), so a mid-width header
+     shows title + subtitle rather than title + stats. */
   .site-subtitle {
     font-size: .95rem;
     font-weight: 400;
@@ -117,9 +117,11 @@
     white-space: nowrap;
   }
 
-  /* Drop the subtitle where it would crowd the title (tablets/phones). */
+  /* When title + subtitle + stats no longer all fit, drop the stats first so
+     the header keeps the title + subtitle pairing. The subtitle itself only
+     drops ≤700px (see the phone block below). */
   @media (max-width: 900px) {
-    .site-subtitle { display: none; }
+    .stats { display: none; }
   }
 
   .nav-toggle {
@@ -352,10 +354,10 @@
     }
     header h1 { font-size: 1.2rem; }
     .header-title { gap: .25rem; }
-    /* The trip/night counters live on the Stats page (one tap away in
-       the bottom tab bar) — dropping them here keeps the always-sticky
-       header as short as possible on small screens. */
-    .stats { display: none; }
+    /* Below the two-item width, drop the subtitle too so only the title
+       remains. (Stats are already hidden ≤900px above; their counters live
+       on the Stats page, one tap away in the bottom tab bar.) */
+    .site-subtitle { display: none; }
   }
 
   {% block style %}{% endblock %}
