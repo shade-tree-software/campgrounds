@@ -45,6 +45,8 @@
   }
   .stat-card .stat-sub a { color: var(--navy); text-decoration: none; }
   .stat-card .stat-sub a:hover { text-decoration: underline; }
+  /* "X day-trips" wraps as a whole unit (never mid-phrase). */
+  .stat-card .stat-sub .daytrips { white-space: nowrap; }
   /* Records list reuses .top-cg-list; its value chips can be wider
      ("1,234 mi") than the visit counts — keep them on one line. The
      explicit min-width below replaces the flex auto-minimum, so without
@@ -150,6 +152,10 @@
     .stat-grid { grid-template-columns: repeat(2, 1fr); }
     .stat-card .stat-num { font-size: 1.8rem; }
     .year-bar { grid-template-columns: 3rem 1fr 1.75rem; }
+    /* Tight two-column grid: push "X day-trips" onto its own line as a
+       whole unit, and drop the now-dangling dot separator. */
+    .stat-card .stat-sub .daytrips { display: block; }
+    .stat-card .stat-sub .stat-sep { display: none; }
   }
 {% endblock %}
 
@@ -162,9 +168,11 @@
       <div class="stat-num">{{ total_trips }}</div>
       <div class="stat-label">Trips</div>
       <div class="stat-sub">
-        {{ total_overnight }} overnight ·
-        {# &#8209; is a non-breaking hyphen — "day-trips" never splits across lines #}
-        {{ total_day_trips }} day&#8209;trip{{ '' if total_day_trips == 1 else 's' }}
+        {{ total_overnight }} overnight<span class="stat-sep"> · </span>
+        {# &#8209; is a non-breaking hyphen and .daytrips is nowrap, so the whole
+           "X day-trips" phrase wraps to a new line as a unit, never splitting.
+           On small screens it's forced to its own line and .stat-sep is hidden. #}
+        <span class="daytrips">{{ total_day_trips }} day&#8209;trip{{ '' if total_day_trips == 1 else 's' }}</span>
       </div>
     </div>
     <div class="stat-card">
