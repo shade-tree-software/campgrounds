@@ -1259,6 +1259,11 @@
     z-index: 890;
     align-items: center;
     gap: .5rem;
+    /* Size to the one-line content (so it doesn't wrap just because a fixed
+       left:50% box shrink-to-fits to half the viewport), capped so it can't
+       exceed the screen — where it would then wrap evenly (text-wrap:balance
+       on the span). */
+    width: max-content;
     max-width: calc(100vw - 1.5rem);
     background: var(--navy);
     color: #fff;
@@ -1268,10 +1273,11 @@
     font-size: .85rem;
     font-weight: 600;
     line-height: 1.25;
-    text-align: left;
+    text-align: center;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(0,0,0,.32);
   }
+  .landscape-hint span { text-wrap: balance; }
   .landscape-hint.show { display: inline-flex; }
   .landscape-hint:hover { background: var(--navy-light, #1a3a6b); }
   .landscape-hint svg {
