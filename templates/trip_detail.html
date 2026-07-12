@@ -2220,6 +2220,27 @@
     if (++ticks > 10) { clearInterval(iv); iv = null; }
   }, 500);
 })();
+
+// One-time nudge: on a tablet held in PORTRAIT the map and timeline stack, but
+// landscape crosses the 900px two-column breakpoint and shows them side by
+// side. Suggest it once. Guarded so it never fires on phones (too small to
+// two-column even in landscape) or desktop (fine pointer / narrowed window),
+// and only where there's a timeline to place beside the map.
+(function () {
+  try {
+    var longSide = Math.max(screen.width || 0, screen.height || 0);
+    var tabletPortrait =
+      window.matchMedia('(orientation: portrait)').matches &&
+      window.matchMedia('(pointer: coarse)').matches &&
+      window.innerWidth < 900 &&   // currently single-column
+      longSide >= 900;             // rotating would unlock two-column
+    if (tabletPortrait && !localStorage.getItem('ekkoLandscapeHintSeen') && window.toast) {
+      window.toast('Tip: rotate to landscape to see the map and timeline side by side.',
+                   'info', { duration: 8000, actionLabel: 'Got it', onAction: function () {} });
+      localStorage.setItem('ekkoLandscapeHintSeen', '1');
+    }
+  } catch (e) { /* matchMedia/localStorage unavailable — skip the hint */ }
+})();
 </script>
 {% endif %}
 
