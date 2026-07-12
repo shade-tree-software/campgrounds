@@ -2161,8 +2161,11 @@
   var hint = document.getElementById('scroll-hint');
   if (!hint) return;
   var cards = document.querySelector('.cards-column');
-  var SHOW_AT = 24;     // px: only surface the hint while essentially at the top
+  var TOP = 24;         // px: "at the top" tolerance for showing the hint
   var MIN_BELOW = 140;  // px of below-the-fold content needed to bother showing it
+  var iv = null;
+  var dismissed = false;
+
   function anchor() {
     // Horizontally center the pill over the cards column (the scrolling
     // content), not the viewport. On desktop the map column owns the left
@@ -2173,25 +2176,48 @@
     var r = cards.getBoundingClientRect();
     hint.style.setProperty('--scroll-hint-left', Math.round(r.left + r.width / 2) + 'px');
   }
-  function update() {
-    var doc = document.documentElement;
-    var overflow = doc.scrollHeight - window.innerHeight;
-    var atTop = window.scrollY <= SHOW_AT;
-    hint.classList.toggle('visible', overflow > MIN_BELOW && atTop);
+  // Show only while still at the very top with real content below. Once the
+  // user scrolls we dismiss permanently (below), so this only ever promotes
+  // the initial appearance as the map/thumbnails settle the page height.
+  function refresh() {
+    if (dismissed) return;
+    var overflow = document.documentElement.scrollHeight - window.innerHeight;
+    hint.classList.toggle('visible', overflow > MIN_BELOW && window.scrollY <= TOP);
   }
+  // Permanent teardown once the user has clearly started scrolling. The hint
+  // is a one-time nudge — re-showing on scroll-to-top caused flicker, and on
+  // Firefox Android the first swipe collapses the URL bar without moving
+  // scrollY, so a scrollY-only check would leave the pill stuck up. Dismissing
+  // on the scroll *gesture* (touchmove/wheel) fires regardless.
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    hint.classList.remove('visible');
+    if (iv) { clearInterval(iv); iv = null; }
+    window.removeEventListener('scroll', onScroll);
+    window.removeEventListener('touchmove', dismiss);
+    window.removeEventListener('wheel', dismiss);
+  }
+  function onScroll() {
+    if (window.scrollY > TOP) dismiss();
+    else refresh();
+  }
+
   hint.addEventListener('click', function () {
     window.scrollBy({ top: Math.round(window.innerHeight * 0.82), behavior: 'smooth' });
+    dismiss();
   });
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', function () { anchor(); update(); });
-  window.addEventListener('load', function () { anchor(); update(); });
-  // Page height + column position shift as the map, GPS track, and thumbnails
-  // render in — re-check for a few seconds so the hint reflects the settled
-  // layout, then stop.
-  anchor(); update();
-  var ticks = 0, iv = setInterval(function () {
-    anchor(); update();
-    if (++ticks > 10) clearInterval(iv);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('touchmove', dismiss, { passive: true });
+  window.addEventListener('wheel', dismiss, { passive: true });
+  window.addEventListener('resize', function () { anchor(); refresh(); });
+  window.addEventListener('load', function () { anchor(); refresh(); });
+
+  anchor(); refresh();
+  var ticks = 0;
+  iv = setInterval(function () {
+    anchor(); refresh();
+    if (++ticks > 10) { clearInterval(iv); iv = null; }
   }, 500);
 })();
 </script>
