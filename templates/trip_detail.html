@@ -496,6 +496,17 @@
 
   .trip-header .meta span { font-weight: 600; }
 
+  /* Intermediate widths (~700–900px, e.g. small tablets / split-screen):
+     the full .meta has enough chips (waypoints, states, photos, GPS mi,
+     campers, dates…) to wrap onto a second line, which bloats the sticky
+     red header. Drop the lower-priority chips here so the essentials
+     (nights, campspots, events, dates) stay on one line — the same
+     essentials the ≤700px .meta-mobile keeps. !important is needed because
+     #trip-gps-miles carries an inline display style toggled by JS. */
+  @media (min-width: 701px) and (max-width: 900px) {
+    .trip-header .meta .meta-secondary { display: none !important; }
+  }
+
   /* Condensed one-line meta (dates · nights · campspots) for phones,
      where the full .meta is hidden. Desktop shows the full version. */
   .trip-header .meta-mobile { display: none; }
@@ -1670,15 +1681,15 @@
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if real_events %}<div><span>{{ real_events|length }}</span> event{{ '' if real_events|length == 1 else 's' }}</div>{% endif %}
-      {% if waypoints %}<div><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
-      {% if states_set|length > 1 %}<div><span>{{ states_set|length }}</span> states</div>{% endif %}
-      {% if photos_count > 0 %}<div><span>{{ photos_count }}</span> photo{{ '' if photos_count == 1 else 's' }}</div>{% endif %}
+      {% if waypoints %}<div class="meta-secondary"><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
+      {% if states_set|length > 1 %}<div class="meta-secondary"><span>{{ states_set|length }}</span> states</div>{% endif %}
+      {% if photos_count > 0 %}<div class="meta-secondary"><span>{{ photos_count }}</span> photo{{ '' if photos_count == 1 else 's' }}</div>{% endif %}
       {# Populated client-side by computeAndShowGpsMiles() once the GPS
          track polyline is built. Hidden if the track never loads. #}
-      <div id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
+      <div class="meta-secondary" id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
       {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
       {% if trip.campers %}
-      <div>{{ trip.campers|join(', ') }}</div>
+      <div class="meta-secondary">{{ trip.campers|join(', ') }}</div>
       {% endif %}
     </div>
     {# Condensed one-line meta for phones, where the full .meta above is
