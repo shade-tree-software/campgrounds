@@ -1,11 +1,13 @@
 ---
 name: project_mb_sweep_handoff
-description: Manitoba campground sweep — IN PROGRESS (5th Canadian province). Detection+classification+batches done; add-research underway.
+description: Manitoba campground sweep — COMPLETE (5th Canadian province). 109 entries, adds + inclusion + waterfront audit all done + pushed.
 metadata: 
   node_type: memory
   type: project
   originSessionId: 16dee5e1-cf07-445f-b6d2-df6e4020c667
 ---
+
+**Manitoba sweep COMPLETE 2026-07-12** — 109 entries (ids 9316-9424), federal 3 / provincial 53 / local 31 / private 22; all pushed to origin/master. Every entry carries `inclusion_evidence` (folded into adds) AND `waterfront_evidence` (audit 100%, 0 missing). Waterfront: 16 lakefront, 4 riverfront (=20 on-water), 16 lakeview, 1 riverview (17 view), 72 not-waterfront (**37 upgrades**; ~3 coord fixes: Nutimik, Steep Rock, +1). Clean fresh-state sweep — no legacy loose ends. **Key MB rule proven: Lake Winnipeg/Manitoba are big INLAND lakes, NOT Great Lakes → no coastal-dunes override (Grand Beach correctly ruled not-waterfront behind its dune ridge).** Reservations via goingtocamp (manitoba.goingtocamp.com); federal=Riding Mountain NP; Winnipeg River campgrounds=riverfront. 6 Canadian provinces now done: ON/BC/AB/SK/MB. Next province: any.
 
 **Manitoba sweep STARTED 2026-07-12** — 5th Canadian province, after ON/BC/AB/[[project_sk_sweep_handoff]]. Follows [[reference_canada_sweep_adaptation]]. Runs **sequentially** ([[feedback_sequential_sweep_agents]]). Clean fresh-state sweep — MB had 0 entries. Next id starts **9316** (prev max 9315).
 
