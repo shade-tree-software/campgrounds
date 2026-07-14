@@ -27,7 +27,7 @@
 // Bump VERSION to invalidate all caches after a deploy that changes the
 // app shell in incompatible ways.
 
-const VERSION = 'v4';
+const VERSION = 'v5';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 const TILE_CACHE = 'ekko-tiles-' + VERSION;
@@ -122,7 +122,11 @@ async function tileCacheFirst(req) {
 
 async function networkFirst(req) {
   try {
-    const res = await fetch(req);
+    // For page navigations, bypass the browser HTTP cache entirely: a heuristically
+    // cached HTML page (dynamic pages ship no validators) would otherwise let a
+    // stale, pre-deploy page — with old inline JS — come back through fetch() and
+    // get re-stored here. Static assets keep normal caching (they're ?v=-busted).
+    const res = await fetch(req, req.mode === 'navigate' ? { cache: 'no-store' } : undefined);
     if (cacheable(res)) {
       const cache = await caches.open(PAGE_CACHE);
       cache.put(req, res.clone());

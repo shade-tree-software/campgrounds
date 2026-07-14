@@ -30,6 +30,24 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.jinja_env.policies['json.dumps_kwargs'] = {'sort_keys': False}
 
+
+@app.after_request
+def _revalidate_html(resp):
+    """Force revalidation of HTML pages.
+
+    Rendered pages are dynamic and ship no Cache-Control (nor ETag/Last-Modified),
+    so some mobile browsers / standalone PWAs heuristically cache them and keep
+    serving a pre-deploy page — its inline JS never refreshes, so map/UI changes
+    don't appear on the phone even after a deploy. `no-cache` means "revalidate
+    with the server before reuse", which for validator-less pages is a fresh
+    fetch. HTML only: static JS/CSS/images/thumbs keep their own long cache + the
+    `?v=<mtime>` busting, and routes that set their own directive (e.g. /sw-reset's
+    no-store) are left untouched.
+    """
+    if resp.mimetype == 'text/html':
+        resp.headers.setdefault('Cache-Control', 'no-cache')
+    return resp
+
 _STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 _static_v_cache = {}
 
