@@ -3055,22 +3055,13 @@ def api_trip_track(trip_id):
             tid_overrides=trip.get("tid_overrides") or {},
         )
 
-        chosen = []
-        for p in all_points:
-            d = _local_date_of_ping(p)
-            if d is None:
-                continue
-            choice = tid_choices.get(d)
-            if choice is None:
-                # Outside trip date range (pad day) — primary only.
-                if p.get("tid") == "primary":
-                    chosen.append(p)
-                continue
-            wanted = choice.split(":")[-1]  # 'override:alt' → 'alt'
-            if p.get("tid") == wanted:
-                chosen.append(p)
-        chosen.sort(key=lambda x: x.get("tst", 0))
-        return chosen
+        # tid_windows force a specific tid for a sub-day time range (a
+        # gap on the chosen phone the other phone covered). Filter the RAW
+        # points by the per-day choice + window overrides so the response
+        # keeps original coords / admin tags for `_apply_overrides`.
+        tid_windows = _tid_window_tsts(trip, home)
+        return _apply_tid_choice(all_points, tid_choices, tid_windows,
+                                 drop_pad_days=False)
 
     def _build_response(all_points):
         """Build the track JSON: the chosen/override-applied pings plus
@@ -3402,10 +3393,17 @@ def _load_trip_track_for_detection(trip_id):
     anchors = _anchors_for_trip(trip)
     p_pts = [p for p in points if p.get("tid") == "primary"]
     a_pts = [p for p in points if p.get("tid") == "alt"]
-    chosen, _choices = _select_track_per_day(
+    chosen, choices = _select_track_per_day(
         p_pts, a_pts, anchors, home, trip["start"], trip["end"],
         tid_overrides=trip.get("tid_overrides") or {},
     )
+    # tid_windows (sub-day tid overrides) — re-derive from the cleaned
+    # points so detection sees the same window-corrected track the
+    # polyline does. No windows → keep the selector's chosen unchanged.
+    tid_windows = _tid_window_tsts(trip, home)
+    if tid_windows:
+        chosen = _apply_tid_choice(points, choices, tid_windows,
+                                   drop_pad_days=True)
     return chosen
 
 
@@ -3848,6 +3846,110 @@ def _in_bad_track_window(tst, windows):
         if s <= tst <= e:
             return True
     return False
+
+
+def _tid_window_tsts(trip, home=None):
+    """Convert a trip's `tid_windows` JSON into a list of
+    `(start_tst, end_tst, tid)` tuples. Each entry is
+    `{start: "YYYY-MM-DDTHH:MM", end: "...", tid: "primary"|"alt",
+    note: "..."}` with times interpreted in the home timezone — same
+    convention as `bad_track_windows` / `home_start_time`, via the shared
+    `_trip_local_to_tst` helper.
+
+    A `tid_window` forces the per-day tid selection to a specific device
+    for a sub-day time range. Use it when the normally-chosen tid is
+    missing pings for a short span that the other tid covers (a gap on the
+    primary phone that the alt phone recorded). Unlike `tid_overrides`
+    (whole-day), this is time-of-day granular.
+
+    Returns `[]` when the trip has no `tid_windows`, home is unconfigured,
+    or no entry parses cleanly with a valid tid. Malformed or unknown-tid
+    entries are silently skipped — hand-edited JSON, so one typo costs a
+    window, not the trip."""
+    windows_raw = trip.get("tid_windows") or []
+    if not windows_raw:
+        return []
+    if home is None:
+        home, _ = _map_config()
+    home_tz_name = (
+        _tz_for_coord(home[0], home[1])
+        if home and home[0] is not None and home[1] is not None
+        else None
+    )
+
+    def _split(dt_str):
+        for sep in ("T", " "):
+            if sep in dt_str:
+                parts = dt_str.split(sep, 1)
+                if len(parts) == 2 and parts[0] and parts[1]:
+                    return parts[0], parts[1]
+        return None, None
+
+    out = []
+    for w in windows_raw:
+        tid = (w.get("tid") or "").strip()
+        if tid not in ("primary", "alt"):
+            continue
+        sd, st = _split((w.get("start") or "").strip())
+        ed, et = _split((w.get("end") or "").strip())
+        if not sd or not ed:
+            continue
+        s_tst = _trip_local_to_tst(sd, st, home_tz_name)
+        e_tst = _trip_local_to_tst(ed, et, home_tz_name)
+        if s_tst is None or e_tst is None:
+            continue
+        if s_tst > e_tst:
+            s_tst, e_tst = e_tst, s_tst
+        out.append((s_tst, e_tst, tid))
+    return out
+
+
+def _tid_for_window(tst, windows):
+    """Return the forced tid ('primary'|'alt') if `tst` falls inside a
+    tid_window, else None. Last matching window wins so a later
+    hand-edited entry overrides an earlier one on overlap."""
+    if tst is None or not windows:
+        return None
+    found = None
+    for s, e, tid in windows:
+        if s <= tst <= e:
+            found = tid
+    return found
+
+
+def _apply_tid_choice(all_points, tid_choices, tid_windows, drop_pad_days):
+    """Filter tid-tagged `all_points` down to the chosen tid per ping.
+
+    For each ping the wanted tid is the `tid_windows` override when the
+    ping falls inside one, else the per-day `tid_choices` entry for its
+    local date. Pad-day pings (no per-day choice) are dropped when
+    `drop_pad_days` is True (detection considers only in-trip pings) or
+    passed through primary-only when False (the polyline draws the
+    leaving/arriving-home legs from them). Returns pings sorted by `tst`.
+
+    Shared by the polyline path (`api_trip_track`) and the detection path
+    (`_load_trip_track_for_detection`) so both honor tid_windows and see
+    the same chosen pings. With an empty `tid_windows` and matching
+    `drop_pad_days`, this reproduces the prior per-day-only selection."""
+    chosen = []
+    for p in all_points:
+        d = _local_date_of_ping(p)
+        if d is None:
+            continue
+        win_tid = _tid_for_window(p.get("tst"), tid_windows)
+        if win_tid is not None:
+            wanted = win_tid
+        else:
+            choice = tid_choices.get(d)
+            if choice is None:
+                if not drop_pad_days and p.get("tid") == "primary":
+                    chosen.append(p)
+                continue
+            wanted = choice.split(":")[-1]  # 'override:alt' → 'alt'
+        if p.get("tid") == wanted:
+            chosen.append(p)
+    chosen.sort(key=lambda x: x.get("tst", 0))
+    return chosen
 
 
 def _local_date_of_ping(p):
