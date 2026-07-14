@@ -27,7 +27,7 @@
 // Bump VERSION to invalidate all caches after a deploy that changes the
 // app shell in incompatible ways.
 
-const VERSION = 'v3';
+const VERSION = 'v4';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 const TILE_CACHE = 'ekko-tiles-' + VERSION;
