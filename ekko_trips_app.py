@@ -1713,9 +1713,7 @@ def api_delete_trip(trip_id):
         return denied
     if not delete_trip(trip_id):
         return jsonify({"error": "Trip not found"}), 404
-    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
-    if os.path.isfile(cache_file):
-        os.remove(cache_file)
+    _delete_track_cache(trip_id)
     return jsonify({"ok": True})
 
 
@@ -2828,6 +2826,68 @@ def api_nearby_places():
 TRACK_CACHE_DIR = os.path.join(TRIP_DATA_DIR, "track_cache")
 os.makedirs(TRACK_CACHE_DIR, exist_ok=True)
 
+
+# --- Track cache I/O (gzip-at-rest) ---------------------------------------
+# Track caches are stored gzipped as `<id>.json.gz`. These 4-field pings
+# (lat/lon/tst/tid) compress ~6x, and a busy dual-tid trip's raw cache can
+# top 2 MB. The `.json.gz` extension keeps restore.sh's `*.json` parse-check
+# from choking on gzip bytes (its `\.json$` filter excludes `.json.gz`), and
+# backup.sh bundles the whole dir content-agnostically. A legacy plain
+# `<id>.json` (pre-gzip) is still read transparently and rewritten as
+# `.json.gz` on the next persist, so the migration is automatic. Read is
+# gzip-magic sniffed so it doesn't matter which extension a file landed under.
+def _track_cache_paths(trip_id):
+    """Return (gz_path, legacy_plain_path) for a trip's track cache."""
+    return (os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json.gz"),
+            os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json"))
+
+
+def _track_cache_exists(trip_id):
+    gz, plain = _track_cache_paths(trip_id)
+    return os.path.isfile(gz) or os.path.isfile(plain)
+
+
+def _read_track_cache(trip_id):
+    """Return the cached track points list, or None if no cache exists or
+    it can't be parsed. Prefers the gzipped `.json.gz`, falls back to a
+    legacy plain `.json`; either way the bytes are gzip-magic sniffed so a
+    file's actual encoding — not its extension — decides how it's read."""
+    gz, plain = _track_cache_paths(trip_id)
+    path = gz if os.path.isfile(gz) else (plain if os.path.isfile(plain) else None)
+    if path is None:
+        return None
+    try:
+        with open(path, "rb") as f:
+            raw = f.read()
+        if raw[:2] == b"\x1f\x8b":
+            raw = gzip.decompress(raw)
+        return json.loads(raw)
+    except Exception:
+        return None
+
+
+def _write_track_cache(trip_id, points):
+    """Persist track points gzipped to `<id>.json.gz`, removing any legacy
+    plain `<id>.json` so each trip has exactly one cache file."""
+    gz, plain = _track_cache_paths(trip_id)
+    with open(gz, "wb") as f:
+        f.write(gzip.compress(json.dumps(points).encode("utf-8")))
+    if os.path.isfile(plain):
+        try:
+            os.remove(plain)
+        except OSError:
+            pass
+
+
+def _delete_track_cache(trip_id):
+    """Remove both the gzipped and any legacy plain cache file for a trip."""
+    for path in _track_cache_paths(trip_id):
+        if os.path.isfile(path):
+            try:
+                os.remove(path)
+            except OSError:
+                pass
+
 # Frontend's auto-fallback near-anchor radius (templates/trip_detail.html
 # uses the same 5 km). Promoted to a Python constant so the per-day tid
 # selector (_select_track_per_day) can use the same threshold for deciding
@@ -2953,7 +3013,6 @@ def api_trip_track(trip_id):
     if not trip.get("start") or not trip.get("end"):
         return jsonify([])
 
-    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
     try:
         end_date = date.fromisoformat(trip["end"])
         is_old = (date.today() - end_date) > timedelta(days=1)
@@ -3100,16 +3159,16 @@ def api_trip_track(trip_id):
         })
 
     def _serve_cache():
-        with open(cache_file) as f:
-            cached = json.load(f)
+        cached = _read_track_cache(trip_id)
+        if cached is None:
+            return jsonify([])
         migrated = _migrate_track_cache_tids(cached)
         tz_changed = _enrich_with_timezone(cached)
         if migrated or tz_changed:
-            with open(cache_file, "w") as f:
-                json.dump(cached, f)
+            _write_track_cache(trip_id, cached)
         return _build_response(cached)
 
-    if is_old and os.path.isfile(cache_file):
+    if is_old and _track_cache_exists(trip_id):
         return _serve_cache()
 
     token = os.environ.get("TIMELINE_API_TOKEN")
@@ -3117,7 +3176,7 @@ def api_trip_track(trip_id):
     alt_tid = os.environ.get("TIMELINE_TID_ALT")
     if not token or not tid:
         # Fall back to cache if we have one, else empty (frontend handles this).
-        if os.path.isfile(cache_file):
+        if _track_cache_exists(trip_id):
             return _serve_cache()
         return jsonify([])
 
@@ -3145,13 +3204,12 @@ def api_trip_track(trip_id):
         all_points = primary_pts + alt_pts
         all_points.sort(key=lambda p: p["tst"])
     except Exception as e:
-        if os.path.isfile(cache_file):
+        if _track_cache_exists(trip_id):
             return _serve_cache()
         return jsonify({"error": str(e)}), 502
 
     _enrich_with_timezone(all_points)
-    with open(cache_file, "w") as f:
-        json.dump(all_points, f)
+    _write_track_cache(trip_id, all_points)
     return _build_response(all_points)
 
 
@@ -3322,14 +3380,7 @@ def _load_trip_track_for_detection(trip_id):
     if not trip or not trip.get("start") or not trip.get("end"):
         return []
 
-    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
-    points = None
-    if os.path.isfile(cache_file):
-        try:
-            with open(cache_file) as f:
-                points = json.load(f)
-        except Exception:
-            points = None
+    points = _read_track_cache(trip_id)
     if points is None:
         token = os.environ.get("TIMELINE_API_TOKEN")
         tid = os.environ.get("TIMELINE_TID")
@@ -3352,16 +3403,14 @@ def _load_trip_track_for_detection(trip_id):
             points = primary_pts + alt_pts
             points.sort(key=lambda p: p["tst"])
             _enrich_with_timezone(points)
-            with open(cache_file, "w") as f:
-                json.dump(points, f)
+            _write_track_cache(trip_id, points)
         except Exception:
             return []
     else:
         # Cache hit: migrate legacy untagged entries before the selector
         # runs (it groups by tid).
         if _migrate_track_cache_tids(points):
-            with open(cache_file, "w") as f:
-                json.dump(points, f)
+            _write_track_cache(trip_id, points)
 
     suppressed = set(get_suppressed_pings(trip_id))
     _relocate = _relocation_lookup(get_relocated_pings(trip_id))
@@ -4517,15 +4566,11 @@ def api_tid_choices(trip_id):
         return jsonify({"tid_choices": {}, "tid_overrides": {},
                         "counts": {}, "alt_configured": False})
 
-    cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
-    cached = []
-    if os.path.isfile(cache_file):
-        try:
-            with open(cache_file) as f:
-                cached = json.load(f)
-            _migrate_track_cache_tids(cached)
-        except Exception:
-            cached = []
+    cached = _read_track_cache(trip_id)
+    if cached is None:
+        cached = []
+    else:
+        _migrate_track_cache_tids(cached)
 
     enrich_trip_locations(trip)
     home, _fam = _map_config()
