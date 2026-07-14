@@ -2888,6 +2888,44 @@ def _delete_track_cache(trip_id):
             except OSError:
                 pass
 
+
+def _sweep_legacy_track_caches():
+    """One-time, idempotent migration of any pre-gzip plain `<id>.json`
+    track caches to `<id>.json.gz`. Runs once at import so every host
+    self-heals — notably PythonAnywhere, whose gitignored cache dir doesn't
+    ride along with a `git pull`, and long-settled trips there that only
+    ever serve from cache would otherwise never trigger a rewrite. Reads
+    each legacy file through `_read_track_cache` and rewrites it via
+    `_write_track_cache` (which writes the `.gz` and removes the plain).
+
+    Best-effort: any failure is swallowed so a bad cache file can never
+    block app startup. After the first run no plain files remain, so the
+    steady-state cost is a single directory glob that matches nothing
+    (`*.json` excludes `*.json.gz`)."""
+    import glob
+    converted = 0
+    try:
+        legacy = glob.glob(os.path.join(TRACK_CACHE_DIR, "*.json"))
+    except Exception:
+        return
+    for path in legacy:
+        stem = os.path.splitext(os.path.basename(path))[0]
+        if not stem.isdigit():
+            continue
+        try:
+            pts = _read_track_cache(int(stem))
+            if pts is None:
+                continue
+            _write_track_cache(int(stem), pts)
+            converted += 1
+        except Exception:
+            continue
+    if converted:
+        print(f"[track_cache] migrated {converted} legacy plain cache(s) to gzip")
+
+
+_sweep_legacy_track_caches()
+
 # Frontend's auto-fallback near-anchor radius (templates/trip_detail.html
 # uses the same 5 km). Promoted to a Python constant so the per-day tid
 # selector (_select_track_per_day) can use the same threshold for deciding
