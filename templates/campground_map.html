@@ -1125,6 +1125,31 @@ const bounds = (HOME ? [HOME] : []).concat(familyCoords);
 // Campground-only coords, used for the mobile outlier-trimmed initial fit.
 const campCoords = [];
 
+// Zoom-aware marker sizing. When zoomed out to a continental view, all ~10k
+// campground dots are on-screen at once, so a smaller radius (with a thinner
+// border) declutters the map and trims per-dot canvas fill work — which is what
+// an old low-power Chromebook feels most during pan/zoom. Full size returns once
+// zoomed in, where dots are few and large. We restyle only when the tier actually
+// flips (not on every zoomend) so we don't loop all 10k markers needlessly.
+const MARKER_COMPACT_MAX_ZOOM = 6;   // zoom <= this = zoomed-out compact tier
+// Compact tier keeps a thin white border: without it, adjacent dots blend into a
+// muddy blob when zoomed out. (An earlier weight:0 skipped the canvas stroke pass
+// for a bit more speed, but the separation matters more than the small saving —
+// the radius shrink still declutters and trims fill work.)
+const MARKER_STYLE_COMPACT = { radius: 3.5, weight: 1 };
+const MARKER_STYLE_FULL    = { radius: 6,   weight: 1.5 };
+function markerSizeForZoom(z) {
+  // z is undefined until the initial fitBounds sets a view; default to FULL then
+  // (syncMarkerTier() runs right after the fit to apply the real tier).
+  return z <= MARKER_COMPACT_MAX_ZOOM ? MARKER_STYLE_COMPACT : MARKER_STYLE_FULL;
+}
+let markerTierCompact = null;   // set by the first syncMarkerTier() call
+// Markers are added to the map before the initial fitBounds sets a view, so they
+// aren't projected yet (their internal _point is undefined). Calling setStyle
+// with a radius change before then throws in CircleMarker._updateBounds. This
+// gate stays false until the initial view is set and the markers are projected.
+let markersProjected = false;
+
 CAMPGROUNDS.forEach(cg => {
   const parts = cg.location.split(',');
   const lat = parseFloat(parts[0]);
@@ -1134,11 +1159,12 @@ CAMPGROUNDS.forEach(cg => {
   campCoords.push(ll);
 
   const color = currentMode.colors[colorCat(cg)] || '#888';
+  const sz = markerSizeForZoom(map.getZoom());
   const marker = L.circleMarker(ll, {
-    radius: 6,
+    radius: sz.radius,
     fillColor: color,
     color: '#fff',
-    weight: 1.5,
+    weight: sz.weight,
     opacity: 1,
     fillOpacity: 0.8,
   }).addTo(map);
@@ -1151,6 +1177,27 @@ CAMPGROUNDS.forEach(cg => {
   markers.push(rec);
   if (cg.id != null) cgById.set(cg.id, rec);
 });
+
+// Flip all campground markers between the compact (zoomed-out) and full
+// (zoomed-in) tiers only when the zoom actually crosses the threshold. setStyle
+// merges, so radius/weight change while each dot keeps its waterfront/climate
+// fillColor. One canvas redraw per flip; no-op on zooms that stay in a tier
+// (and no-op before the initial fit, when getZoom() is undefined → full tier).
+function syncMarkerTier() {
+  if (!markersProjected) return;   // setStyle-with-radius throws on unprojected markers
+  const compact = map.getZoom() <= MARKER_COMPACT_MAX_ZOOM;
+  if (compact === markerTierCompact) return;
+  markerTierCompact = compact;
+  const sz = compact ? MARKER_STYLE_COMPACT : MARKER_STYLE_FULL;
+  markers.forEach(({ marker }) => {
+    // A marker filtered off the map (applyVisibility removed it) is also
+    // unprojected, so setStyle would throw — update its options directly instead;
+    // applyVisibility re-adds it later, projecting it at the current size.
+    if (map.hasLayer(marker)) marker.setStyle(sz);
+    else { marker.options.radius = sz.radius; marker.options.weight = sz.weight; }
+  });
+}
+map.on('zoomend', syncMarkerTier);
 
 // ── Legend (color categories for the current mode) ──────────────────────────
 // On-water categories the "On the water" quick filter switches on: sites at the
@@ -2006,6 +2053,15 @@ if (focusEntry) {
   } else {
     map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
   }
+}
+
+// A view is now set (via focus setView or fitBounds above), so the markers are
+// projected — enable zoom-tier syncing and apply the correct tier once, on first
+// paint. Doing this before a view exists throws in CircleMarker._updateBounds
+// (setStyle-with-radius needs a projected _point), so it must come after the fit.
+if (map.getZoom() !== undefined) {
+  markersProjected = true;
+  syncMarkerTier();
 }
 
 // Bounds covering all but the extreme `frac` fraction of points on each axis,
