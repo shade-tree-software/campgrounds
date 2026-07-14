@@ -71,7 +71,11 @@
     flex-wrap: wrap;
   }
 
-  .add-form input, .reset-form input {
+  /* Direct-child only: the text/password fields are direct children of
+     .form-row, while the checkboxes are nested inside .cb-label. A bare
+     `.add-form input` would also style the checkboxes — flex:1 1 180px stretches
+     them to fill the label and pushes the label text off-screen. */
+  .add-form .form-row > input, .reset-form .form-row > input {
     padding: .4rem .6rem;
     border: 1px solid var(--gray-light);
     border-radius: 4px;
@@ -138,7 +142,9 @@
     .col-actions .btn { margin: 0; flex: 1 1 auto; padding: .45rem .7rem; font-size: .8rem; }
     .share-dest { word-break: break-all; }
     .add-form .form-row, .reset-form .form-row { flex-direction: column; align-items: stretch; }
-    .add-form input, .reset-form input { width: 100%; flex: none; }
+    /* Direct-child only (see above) — must NOT hit the checkboxes, or width:100%
+       stretches each checkbox full-width and pushes its label off the screen. */
+    .add-form .form-row > input, .reset-form .form-row > input { width: 100%; flex: none; }
   }
 {% endblock %}
 
