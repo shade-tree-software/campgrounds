@@ -24,7 +24,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_suppressed_pings,
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
-                   get_tid_overrides, set_tid_override)
+                   get_tid_overrides, set_tid_override, TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -880,16 +880,57 @@ def _campground_visits_index():
     return visits
 
 
+def _file_mtime_ns(path):
+    """mtime in ns, or 0 if the file is missing — a cheap cache key component."""
+    try:
+        return os.stat(path).st_mtime_ns
+    except OSError:
+        return 0
+
+
+# campgrounds.json is ~9.5 MB / 10k entries and used to be re-read + full-parsed
+# on every map/picker/stats request. These two caches skip the re-parse while the
+# file is unchanged, keyed on its mtime so any edit (API save, git pull, manual)
+# invalidates automatically. The RAW cache holds the parsed list; callers must
+# treat it as READ-ONLY (build new dicts, never mutate in place) — the mutating
+# API endpoints deliberately keep their own fresh json.load.
+_campgrounds_raw_cache = {"mtime": None, "entries": None}
+_campgrounds_derived_cache = {"key": None, "rows": None}
+
+
+def _read_campgrounds_raw():
+    """Return the parsed campgrounds.json list, cached by file mtime.
+
+    READ-ONLY: the returned list/objects are shared across callers, so never
+    mutate them (or the cache goes stale). Endpoints that edit + save load their
+    own fresh copy instead.
+    """
+    mtime = _file_mtime_ns(CAMPGROUNDS_JSON)
+    if _campgrounds_raw_cache["mtime"] != mtime:
+        with open(CAMPGROUNDS_JSON) as f:
+            _campgrounds_raw_cache["entries"] = json.load(f)
+        _campgrounds_raw_cache["mtime"] = mtime
+    return _campgrounds_raw_cache["entries"]
+
+
 def _load_campgrounds():
     """Load campground-kind entries from JSON with derived climate fields.
 
     Family-kind entries are excluded so they don't appear on waterfront/climate maps.
+
+    The derived rows are cached and reused while campgrounds.json, home.json, and
+    trips.json (the three inputs — the last via the visit index) are all unchanged.
     """
+    key = (_file_mtime_ns(CAMPGROUNDS_JSON),
+           _file_mtime_ns(HOME_FILE),
+           _file_mtime_ns(TRIPS_JSON))
+    if _campgrounds_derived_cache["key"] == key:
+        return _campgrounds_derived_cache["rows"]
+
     config = _load_json(HOME_FILE)
     home_lat = config.get("home_lat")
     home_alt = config.get("home_altitude_meters")
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
+    entries = _read_campgrounds_raw()
     visits_by_cg = _campground_visits_index()
 
     excluded = {"index", "stays", "elevation_meters"}
@@ -915,6 +956,9 @@ def _load_campgrounds():
         row["trips"] = trips_for_cg
         row["visit_count"] = len(trips_for_cg)
         rows.append(row)
+
+    _campgrounds_derived_cache["key"] = key
+    _campgrounds_derived_cache["rows"] = rows
     return rows
 
 
@@ -931,8 +975,7 @@ def _map_config():
     home = [lat, lng] if lat is not None and lng is not None else None
 
     family = []
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
+    entries = _read_campgrounds_raw()
     for e in entries:
         if e.get("kind") != "family" or "location" not in e:
             continue
@@ -1198,8 +1241,7 @@ def trips_stats():
     furthest = None
     highest = None
     if visited_ids:
-        with open(CAMPGROUNDS_JSON) as f:
-            cg_entries = {c["id"]: c for c in json.load(f) if "id" in c}
+        cg_entries = {c["id"]: c for c in _read_campgrounds_raw() if "id" in c}
         for cid in visited_ids:
             c = cg_entries.get(cid)
             if not c or "location" not in c:
@@ -2194,8 +2236,7 @@ def api_campground_list():
     denied = _require_campground_view_api()
     if denied:
         return denied
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
+    entries = _read_campgrounds_raw()
     result = [{"id": e["id"], "name": e["name"],
                "state": e.get("state", ""),
                "kind": e.get("kind", "campground"),
