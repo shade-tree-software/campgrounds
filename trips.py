@@ -51,7 +51,8 @@ def _load_trips_json():
                         home_start_time=t.get("home_start_time", ""),
                         home_end_time=t.get("home_end_time", ""),
                         bad_track_windows=t.get("bad_track_windows"),
-                        tid_overrides=t.get("tid_overrides"))
+                        tid_overrides=t.get("tid_overrides"),
+                        tid_windows=t.get("tid_windows"))
              for t in raw]
     trips.sort(key=lambda t: t["start"])
     n = 0
@@ -725,7 +726,8 @@ def _group_into_trips(stays):
 
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                home_start_time="", home_end_time="",
-               bad_track_windows=None, tid_overrides=None):
+               bad_track_windows=None, tid_overrides=None,
+               tid_windows=None):
     """Build a trip dict from a list of stays and optional events.
 
     If `locations` (id → info map from `_load_locations_by_id`) is supplied,
@@ -875,6 +877,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         "home_end_time": home_end_time,
         "bad_track_windows": list(bad_track_windows) if bad_track_windows else [],
         "tid_overrides": dict(tid_overrides) if tid_overrides else {},
+        "tid_windows": list(tid_windows) if tid_windows else [],
     }
 
 
