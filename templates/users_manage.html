@@ -96,12 +96,43 @@
 
   @media (max-width: 600px) {
     .users-page { padding: 0 .75rem; margin: 1rem auto; }
-    .users-table th, .users-table td { padding: .5rem .6rem; }
-    /* Let the action buttons wrap onto multiple lines instead of forcing the
-       cell (and the whole table) wider than a phone screen. Applies to both the
-       Users and Share Links tables since they share .col-actions. */
-    .col-actions { white-space: normal; }
-    .col-actions .btn { margin: .15rem 0 .15rem .25rem; padding: .3rem .65rem; font-size: .75rem; }
+
+    /* A 3-column table with up to 5 action buttons per row can't fit a phone.
+       Collapse each row into a stacked card: hide the header, block-flow the
+       cells, and lay the actions out as a wrapping button row. Applies to both
+       the Users and Share Links tables (they share .users-table/.col-actions). */
+    .users-table { box-shadow: none; background: transparent; border-radius: 0; overflow: visible; }
+    .users-table thead { display: none; }
+    .users-table tr {
+      display: block;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+      margin-bottom: .85rem;
+      padding: .4rem .25rem;
+    }
+    .users-table tr:hover { background: #fff; }
+    .users-table td {
+      display: block;
+      border-bottom: none;
+      padding: .25rem .85rem;
+    }
+    .users-table td:first-child {
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 1rem;
+    }
+    .col-actions {
+      text-align: left;
+      white-space: normal;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin-top: .4rem;
+      padding-top: .55rem;
+      border-top: 1px solid #eee;
+    }
+    .col-actions .btn { margin: 0; flex: 1 1 auto; padding: .45rem .7rem; font-size: .8rem; }
     .share-dest { word-break: break-all; }
     .add-form .form-row, .reset-form .form-row { flex-direction: column; align-items: stretch; }
     .add-form input, .reset-form input { width: 100%; flex: none; }

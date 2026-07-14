@@ -5,6 +5,7 @@
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — skip mostly-seasonal/full-timer, residential/MH-park, and membership/sales-pitch parks even if they take overnighters
 - [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
+- [Responsive on all screens](feedback_responsive_all_screens.md) — every UI page must render well on desktop, iPad/tablet, AND phone; primary rule for all new UI and edits (collapse dense tables to cards on phones)
 - [Campground vetting discipline](feedback_campground_vetting_discipline.md) — no unconfirmed/boilerplate entries; "reservations required" needs a real booking channel; unrated needs firsthand confirmation
 - [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the campgrounds.json waterfront_evidence field (non-empty=audited, --AWH note also=audited), not just commits; apply script writes it
 - [URLs in website not notes](feedback_urls_in_website_not_notes.md) — reservation/official URLs go in the website field; keep website links out of note prose (negatives & source citations excepted)
