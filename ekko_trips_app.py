@@ -2943,7 +2943,7 @@ def _fetch_timeline_points(tid, token, from_ts, to_ts):
 def api_trip_track(trip_id):
     """Return the GPS track for a trip from the timeline API.
 
-    Caches results on disk. For trips that ended >7 days ago, the cache is
+    Caches results on disk. For trips that ended >1 day ago, the cache is
     served permanently; recent trips re-fetch every call so newly logged
     points show up.
     """
@@ -2956,7 +2956,7 @@ def api_trip_track(trip_id):
     cache_file = os.path.join(TRACK_CACHE_DIR, f"{trip_id}.json")
     try:
         end_date = date.fromisoformat(trip["end"])
-        is_old = (date.today() - end_date) > timedelta(days=7)
+        is_old = (date.today() - end_date) > timedelta(days=1)
     except ValueError:
         is_old = False
 
