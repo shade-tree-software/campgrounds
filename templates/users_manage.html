@@ -23,8 +23,13 @@
   .users-table tr:last-child td { border-bottom: none; }
   .users-table tr:hover { background: var(--blue-bg); }
 
-  .col-actions { text-align: right; white-space: nowrap; }
-  .col-actions .btn { margin-left: .35rem; }
+  /* Let the action buttons wrap within the cell so the Users table never grows
+     wider than the .users-page container (800px). With white-space:nowrap a row
+     of up to 5 buttons forced the table past 800px, so it overflowed wider than
+     the add-form and Share Links sections. Bottom margin separates wrapped rows
+     (flex gap isn't used here; see the mobile note on Safari flex-gap). */
+  .col-actions { text-align: right; white-space: normal; }
+  .col-actions .btn { margin-left: .35rem; margin-bottom: .35rem; }
 
   .badge-admin, .badge-uploader, .badge-trips-only {
     display: inline-block;
