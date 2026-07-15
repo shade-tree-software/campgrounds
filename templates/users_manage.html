@@ -134,12 +134,15 @@
       white-space: normal;
       display: flex;
       flex-wrap: wrap;
-      gap: .4rem;
       margin-top: .4rem;
       padding-top: .55rem;
       border-top: 1px solid #eee;
     }
-    .col-actions .btn { margin: 0; flex: 1 1 auto; padding: .45rem .7rem; font-size: .8rem; }
+    /* Per-button margins rather than flex `gap`: gap gives no separation between
+       wrapped rows on iOS Safari < 14.1 (it ignores flex gap), leaving the second
+       row touching the first. margin-right/-bottom work everywhere; the flex
+       algorithm accounts for them so buttons still grow to fill each row. */
+    .col-actions .btn { margin: 0 .4rem .4rem 0; flex: 1 1 auto; padding: .45rem .7rem; font-size: .8rem; }
     .share-dest { word-break: break-all; }
     .add-form .form-row, .reset-form .form-row { flex-direction: column; align-items: stretch; }
     /* Direct-child only (see above) — must NOT hit the checkboxes, or width:100%
