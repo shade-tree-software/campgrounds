@@ -43,11 +43,20 @@ def main():
             a,b=loc.split(','); return float(a),float(b)
         except Exception:
             return None
+    import re as _re
+    def norm(nm):
+        nm=(nm or '').lower()
+        nm=_re.sub(r'\b(campground|camp|park|recreation area|rec area|cg)\b','',nm)
+        nm=_re.sub(r'[^a-z0-9]+','',nm)
+        return nm
     wa_coords=[]
+    wa_names={}
     for e in data:
         if e.get('state')=='WA':
             p=parse(e.get('location','') or '')
             if p: wa_coords.append((p,e['id'],e.get('name','')))
+            n=norm(e.get('name',''))
+            if n: wa_names.setdefault(n,(e['id'],e.get('name','')))
 
     leads={}
     if os.path.exists(LEADS):
@@ -64,6 +73,9 @@ def main():
                     dup=(eid,enm); break
             if dup:
                 skipped_dups.append((r['name'],dup)); continue
+        nn=norm(r['name'])
+        if nn and nn in wa_names:
+            skipped_dups.append((r['name'],wa_names[nn])); continue
         e={'id':next_id,'kind':'campground','name':r['name'],
            'location':r['location'],'elevation_meters':r['elevation_meters'],
            'state':'WA','ownership':r['ownership'],
@@ -74,6 +86,7 @@ def main():
         e={k:e[k] for k in FIELD_ORDER}
         entries.append(e)
         if p: wa_coords.append((p,next_id,r['name']))  # catch within-batch dups too
+        if nn: wa_names[nn]=(next_id,r['name'])
         if r.get('lead'):
             leads[str(next_id)]=r['lead']
         next_id+=1
