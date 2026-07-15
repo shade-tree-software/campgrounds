@@ -44,7 +44,9 @@ as the standard going forward.
    of re-discovering it (see the "Lead packet" section of
    `waterfront_audit_instructions.md`). The lead is a head start, never a verdict
    — the satellite look stays mandatory and the gate still decides.
-2. Fan out subagents (waves of ~5; one batch each). Each agent gets:
+2. Run subagents SEQUENTIALLY, one batch each (~8 ids/batch), one agent at a
+   time — parallel batches hit the session limit and lose work; parallelize only
+   on an explicit per-stage user OK. Each agent gets:
    "Read audit/waterfront_audit_instructions.md and follow it exactly. Your
    batch file is /tmp/<st>_batch_<n>.json. Return ONLY the JSON array."
    The instructions make the satellite look mandatory/asymmetric, default down,
