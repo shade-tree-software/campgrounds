@@ -32,7 +32,7 @@ def upsert_evidence(raw, eid, evidence):
     if j == -1:
         j = len(raw)
     block = raw[i:j]
-    lit = json.dumps(evidence)
+    lit = json.dumps(evidence, ensure_ascii=False)  # keep em-dashes/unicode literal (no \uXXXX churn)
     if '"waterfront_evidence"' in block:
         nb = re.sub(r'("waterfront_evidence":\s*)("(?:[^"\\]|\\.)*")',
                     lambda m: m.group(1) + lit, block, count=1)

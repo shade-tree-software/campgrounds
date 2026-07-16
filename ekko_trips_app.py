@@ -550,8 +550,12 @@ def _load_json(path):
 
 
 def _save_json(path, data):
-    with open(path, "w") as f:
-        json.dump(data, f, indent=2)
+    # ensure_ascii=False keeps em-dashes/accents/unicode in notes literal (— not
+    # —) so a UI edit to one campground doesn't rewrite every other entry's
+    # note into escaped form — that churn made git diffs/merges noisy. Explicit
+    # utf-8 so the literal bytes are written regardless of host locale.
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
 
 # Keys the app reads out of home.json (gitignored per-machine config).
