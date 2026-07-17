@@ -24,18 +24,31 @@
 //     leaflet) is still not intercepted.
 //   - Non-GET requests are never touched.
 //
-// Bump VERSION to invalidate all caches after a deploy that changes the
-// app shell in incompatible ways.
+// Bump VERSION to invalidate the page/photo caches after a deploy that changes
+// the app shell in incompatible ways.
 
 const VERSION = 'v5';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
-const TILE_CACHE = 'ekko-tiles-' + VERSION;
+// Map tiles are immutable per z/x/y, so their cache is DELIBERATELY decoupled
+// from VERSION: a routine page/UI deploy (which bumps VERSION) must NOT throw
+// away tiles the user already downloaded from the slow public tile servers.
+// Only bump this suffix if the tile-handling logic itself changes incompatibly.
+// (Previously this was 'ekko-tiles-' + VERSION, so every VERSION bump silently
+// flushed the whole tile cache and every recently-seen tile was re-fetched.)
+const TILE_CACHE = 'ekko-tiles-v1';
 const OFFLINE_URL = '/offline';
+// Caches to preserve across a VERSION bump. Anything else under the ekko-*
+// prefix is stale and gets cleared on activate. TILE_CACHE is listed here (not
+// matched by VERSION) precisely so app deploys don't evict immutable tiles.
+const KEEP_CACHES = [PAGE_CACHE, PHOTO_CACHE, TILE_CACHE];
 
 const PAGE_CACHE_MAX = 80;     // pages + API responses + static assets
 const PHOTO_CACHE_MAX = 500;   // thumbs are ~50 KB; originals only as viewed
-const TILE_CACHE_MAX = 1000;   // map tiles are ~10-30 KB each
+// Map tiles are ~10-30 KB each. The satellite view stacks THREE Esri layers
+// (imagery + boundaries + transportation), so a single satellite pan can pull
+// 3 tiles per cell — the cap needs real headroom to keep a working set warm.
+const TILE_CACHE_MAX = 3000;   // ~30-90 MB
 
 // Map-tile origins served cache-first. OSM rotates a/b/c subdomains, so match
 // the base host and any subdomain of it.
@@ -57,7 +70,7 @@ self.addEventListener('activate', (e) => {
     caches.keys()
       .then((keys) => Promise.all(
         keys
-          .filter((k) => k.startsWith('ekko-') && !k.endsWith(VERSION))
+          .filter((k) => k.startsWith('ekko-') && !KEEP_CACHES.includes(k))
           .map((k) => caches.delete(k))
       ))
       .then(() => self.clients.claim())
@@ -105,12 +118,20 @@ async function cacheFirst(req) {
 // CORS fetch ever fails (a host without ACAO, or offline), fall back to the
 // plain request so the tile still renders, just uncached.
 async function tileCacheFirst(req) {
-  const cached = await caches.match(req);
-  if (cached) return cached;
+  const cache = await caches.open(TILE_CACHE);
+  const cached = await cache.match(req);
+  if (cached) {
+    // LRU refresh: re-put the hit so it moves to the newest position. Cache
+    // keys are in insertion order and trimCache evicts from the front, so
+    // without this a tile you keep viewing would still be evicted as soon as
+    // TILE_CACHE_MAX newer tiles loaded (pure FIFO). Fire-and-forget — the
+    // response is served from `cached` regardless of whether the re-put lands.
+    cache.put(req, cached.clone());
+    return cached;
+  }
   try {
     const res = await fetch(req.url, { mode: 'cors' });
     if (res && res.status === 200) {
-      const cache = await caches.open(TILE_CACHE);
       await cache.put(req, res.clone());
       trimCache(TILE_CACHE, TILE_CACHE_MAX);
     }
