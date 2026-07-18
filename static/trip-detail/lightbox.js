@@ -82,8 +82,25 @@ function showLightboxPhoto() {
   lbResetZoom(false);
   const img = lightboxPhotos[lightboxIndex];
   // Grids render thumbnails; the lightbox loads the full-res original
-  // from data-full (fall back to src for any image without one).
-  document.getElementById('lightbox-img').src = img.dataset.full || img.src;
+  // from data-full (fall back to src for any image without one). The
+  // full-res original is a multi-MB download, and the <img> keeps showing
+  // its previous photo until the new src finishes loading — so a naive
+  // `.src = full` flashes the last-viewed photo (e.g. from another event's
+  // grid) until the new original arrives. Instead: if the original is
+  // already cached (preloaded neighbor while paging), show it directly;
+  // otherwise show the clicked photo's already-loaded thumbnail instantly
+  // so the correct photo appears immediately, then swap to full-res when
+  // it lands. The index guard drops a late load if the viewer paged away.
+  const lbImg = document.getElementById('lightbox-img');
+  const full = img.dataset.full || img.src;
+  const pre = new Image();
+  pre.src = full;
+  if (pre.complete) {
+    lbImg.src = full;
+  } else {
+    lbImg.src = img.src;
+    pre.onload = () => { if (lightboxPhotos[lightboxIndex] === img) lbImg.src = full; };
+  }
   // Get caption from the caption-text span in the same photo-item
   const item = img.closest('.photo-item');
   const spanEl = item.querySelector('.caption-text');
