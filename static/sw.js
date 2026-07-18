@@ -27,7 +27,7 @@
 // Bump VERSION to invalidate the page/photo caches after a deploy that changes
 // the app shell in incompatible ways.
 
-const VERSION = 'v5';
+const VERSION = 'v6';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 // Map tiles are immutable per z/x/y, so their cache is DELIBERATELY decoupled
@@ -38,6 +38,20 @@ const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 // flushed the whole tile cache and every recently-seen tile was re-fetched.)
 const TILE_CACHE = 'ekko-tiles-v1';
 const OFFLINE_URL = '/offline';
+// Immutable vendored assets (Leaflet's JS/CSS/marker+layer images), self-hosted
+// under /static/vendor/ so the map no longer depends on the unpkg CDN. Precached
+// on install so the map initializes offline even before any map page is visited
+// online, and served cache-first with ignoreSearch (see cacheFirstStatic) so the
+// templates' ?v=<mtime> cache-buster still matches these bare precached URLs.
+const VENDOR_ASSETS = [
+  '/static/vendor/leaflet/leaflet.js',
+  '/static/vendor/leaflet/leaflet.css',
+  '/static/vendor/leaflet/images/marker-icon.png',
+  '/static/vendor/leaflet/images/marker-icon-2x.png',
+  '/static/vendor/leaflet/images/marker-shadow.png',
+  '/static/vendor/leaflet/images/layers.png',
+  '/static/vendor/leaflet/images/layers-2x.png',
+];
 // Caches to preserve across a VERSION bump. Anything else under the ekko-*
 // prefix is stale and gets cleared on activate. TILE_CACHE is listed here (not
 // matched by VERSION) precisely so app deploys don't evict immutable tiles.
@@ -60,7 +74,7 @@ function isTileHost(host) {
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(PAGE_CACHE)
-      .then((c) => c.add(OFFLINE_URL))
+      .then((c) => c.addAll([OFFLINE_URL, ...VENDOR_ASSETS]))
       .then(() => self.skipWaiting())
   );
 });
@@ -141,6 +155,20 @@ async function tileCacheFirst(req) {
   }
 }
 
+// Immutable vendored assets (Leaflet). Cache-first with ignoreSearch so the
+// ?v=<mtime> versioned request matches the bare precached URL; on a miss (e.g.
+// a ?v bump after a Leaflet upgrade), fetch and store the versioned entry too.
+async function cacheFirstStatic(req) {
+  const cached = await caches.match(req, { ignoreSearch: true });
+  if (cached) return cached;
+  const res = await fetch(req);
+  if (cacheable(res)) {
+    const cache = await caches.open(PAGE_CACHE);
+    cache.put(req, res.clone());
+  }
+  return res;
+}
+
 async function networkFirst(req) {
   try {
     // For page navigations, bypass the browser HTTP cache entirely: a heuristically
@@ -183,7 +211,10 @@ self.addEventListener('fetch', (e) => {
   if (url.pathname === '/sw.js' || url.pathname.startsWith('/login') ||
       url.pathname.startsWith('/logout') || url.pathname === '/sw-reset') return;
 
-  if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/static/uploads/')) {
+  if (url.pathname.startsWith('/static/vendor/')) {
+    // Immutable vendored libs (Leaflet) — cache-first, precached on install.
+    e.respondWith(cacheFirstStatic(req));
+  } else if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/static/uploads/')) {
     e.respondWith(cacheFirst(req));
   } else {
     e.respondWith(networkFirst(req));
