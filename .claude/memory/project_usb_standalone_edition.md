@@ -9,7 +9,28 @@ metadata:
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
 
-**>>> STATUS 2026-07-17: PAUSED. Resume plan at the bottom of this file (see "RESUME HERE"). The build tooling is saved durably in the repo at `usb/` (START-EKKO.sh, build-env.sh, update.sh, restore-backup.sh, requirements-ekko.txt, README.txt) — copy those to a fresh stick's root to rebuild.**
+**>>> STATUS 2026-07-18: v1 REBUILT on a good 64 GB drive + Leaflet now bundled locally.**
+The build tooling is saved durably in the repo at `usb/` (START-EKKO.sh, build-env.sh,
+update.sh, restore-backup.sh, requirements-ekko.txt, README.txt) — copy those to a fresh
+stick's root to rebuild.
+
+**2026-07-18 progress:**
+- New **64 GB USB drive** (`/dev/sdb1`, USB): speed-gated at **53.8 MB/s** + clean 500 MB
+  readback checksum (the retired 57 GB stick was counterfeit: <1.7 MB/s, wedged the kernel).
+  Reformatted ext4 label `EKKO`, chowned to uid 1000, mounted at `/media/andrew/EKKO`.
+- **v1 rebuilt & verified** on it: `python/` (533 MB, relocatable CPython 3.12.11 + deps via
+  `build-env.sh`) + `app/` (shallow master clone + seeded users/home/trips/92 track-cache;
+  uploads empty). Smoke test from the card's own python: /login 200, / 302, /sw.js 200,
+  serving exe = card python. Build discipline held: env build to card first, clone staged on
+  local disk then copied — never two USB writers at once (what wedged the bad drive).
+- **Leaflet bundled locally (committed f3a4d77, on master):** self-hosted Leaflet 1.9.4 at
+  `static/vendor/leaflet/` (js/css/marker+layer images), all 5 map templates point at it via
+  `static_v()`; each sets `L.Icon.Default.imagePath` explicitly because static_v's `?v=`
+  suffix defeats Leaflet's auto icon-path regex (the map-picker default marker is the only
+  non-divIcon marker). SW bumped v5->v6: precache the vendored assets + serve `/static/vendor/`
+  cache-first with `ignoreSearch`. Removes the unpkg CDN runtime dep (helps prod too). Synced
+  to the card app/. **This closes the "bundle Leaflet locally" TODO below.**
+- STILL TODO: the offline **tile pipeline** (next). Design fleshed out in `usb/TILE-PIPELINE-DESIGN.md`.
 
 **Stick layout (at stick root):**
 - `python/` — relocatable CPython 3.12 from astral-sh/python-build-standalone (release tag `20250612`, `install_only` gnu build) with all app deps pip-installed into its own site-packages (~533 MB). Fully relocatable — no absolute paths baked in.
