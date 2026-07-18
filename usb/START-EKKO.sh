@@ -29,6 +29,13 @@ fi
 
 cd "$APP"
 
+# Serve map tiles from the stick when a local tile store is present (offline
+# maps). The app also gates on tiles/ existing, so this is safe even before the
+# store is built — it just falls back to the online CDNs when online.
+if [ -d "$APP/tiles" ]; then
+  export EKKO_LOCAL_TILES=1
+fi
+
 # Load secrets/config (FLASK_SECRET_KEY, TIMELINE_*, RIDB_API_KEY, GITHUB_PAT).
 # The app reads these from the environment (it does not auto-load .env), so we
 # source it here. Absent .env just means the API-backed extras stay inert.
