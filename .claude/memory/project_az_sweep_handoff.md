@@ -1,36 +1,40 @@
 ---
 name: project_az_sweep_handoff
-description: "Arizona campground sweep — research + append DONE (288 entries, ids 11317-11604), committed & pushed. WATERFRONT AUDIT STILL PENDING (to be run on a different machine). Inclusion folded in at add-time."
-metadata:
+description: "Arizona campground sweep COMPLETE — research + append + waterfront audit + inclusion all done (287 entries after 1 dup removal, ids 11317-11604). Committed."
+metadata: 
   node_type: memory
   type: project
+  originSessionId: 73603cb3-7fc8-428f-ba7a-dc64175e112b
 ---
 
-**Arizona sweep — RESEARCH + APPEND COMPLETE, WATERFRONT AUDIT PENDING (2026-07-17).**
-Committed AND pushed to origin/master. AZ was a near-fresh state (only 1 prior entry:
-North Rim CG id 275, left as-is). **288 new entries appended, ids 11317-11604**:
-**287 AZ + 1 UT** (Lone Rock Beach id 11321 — lat 37.016 is north of the AZ/UT border,
-so re-stamped UT; it wasn't in the completed UT sweep). AZ by ownership: **federal 129,
-private 110, local 30, state 17, hipcamp 1**. Every entry carries `inclusion_evidence`
-(inclusion audit folded in at add-time). **All `waterfront` = the `not waterfront`
-placeholder — the waterfront audit has NOT run yet.**
+**Arizona sweep — COMPLETE (2026-07-17).** Research + append + inclusion + waterfront audit
+all done. AZ was a near-fresh state (only 1 prior entry: North Rim CG id 275, left as-is).
+288 entries were appended (ids 11317-11604); **id 11494 was later removed as a duplicate of
+11469 (both "Davis Camp" Mohave County local, same coords) — final count 287** (286 AZ + 1 UT
+Lone Rock Beach id 11321, lat 37.016 north of the border → UT). AZ by ownership: federal 129,
+private 110, local 30, state 17, hipcamp 1. Every entry carries `inclusion_evidence`.
 
-## ⚠️ NEXT STEP (on the other machine): the waterfront audit
-1. `git pull` brings down `campgrounds.json` (the 288 entries), this memory, and
-   **`audit/az_leads.json`** (288 leads keyed by new id — the seam optimization; carry each
-   entry's lead into its audit batch so the agent verifies the already-found per-site map
-   instead of re-discovering it).
-2. Build waterfront batches of ~8 over ids **11317-11604**, `{id, name, location, waterfront,
-   ownership, website, lead}` per entry (lead from `audit/az_leads.json[str(id)]`). ~36 batches.
-   Split water-adjacent (has a `lead.water_body` or near known AZ water) from pure dry-desert
-   (in-town/fairground → stay `not waterfront` without a look). ~150 of 287 carry a water lead.
-3. Run `audit/waterfront_audit_instructions.md` subagents **SEQUENTIALLY, one at a time**
-   ([[feedback_sequential_sweep_agents]]). Satellite look mandatory; default-down; record a
-   one-line `evidence` per entry.
-4. Apply with `python3 audit/apply_waterfront_audit.py <results.json>` (sets `waterfront`,
-   fixes mis-pinned `location`/`elevation_meters`, writes `waterfront_evidence` from evidence).
-5. Commit "Audit all NN AZ waterfront designations" + push. Update this memory to COMPLETE.
-6. `audit/az_leads.json` is a one-time carrier — delete it after the audit (optional cleanup).
+## Waterfront audit — DONE (this session, 2026-07-17)
+- Audit set = **109 water-adjacent entries** (107 with a `lead.water_body` + 2 borderline:
+  11462 Gila-River-edge, 11567 retention-pond). The other ~178 are pure dry-desert (no water
+  lead; researcher notes already say "satellite shows no water") → left `not waterfront` by
+  default-down, no look, no evidence (per policy: skip the look only when no water is near).
+- 14 batches of ~8 run **SEQUENTIALLY** via `audit/waterfront_audit_instructions.md` subagents
+  (batches/results in gitignored `.az_sweep_wip/wf/`). **52 upgrades from placeholder**: 18
+  lakefront, 11 riverfront, 4 creekside, 1 pond, 14 lakeview, 4 riverview. **3 coord fixes**
+  (11320 Willow Beach → real desert loops; 11508 Colorado River Oasis; 11600 Wheatfields Lake,
+  pin was in the water). All 108 audited entries (109 minus deleted 11494) carry
+  `waterfront_evidence`; 0 on-water entries lack evidence.
+- **Duplicate found during audit:** both 11469 & 11494 = Davis Camp; excised 11494's block by
+  id (no trip_data refs), kept 11469 (riverfront). Applied via
+  `python3 audit/apply_waterfront_audit.py .az_sweep_wip/wf/results_all.json`.
+- Normalized one invalid agent verdict: 11327 Burro Creek "creekview" (not a vocab value;
+  bench-top overlooking the creek canyon → the bluff/bench buffer) → `not waterfront`.
+- Reservoir drawdown (Mead/Mohave/Powell/Roosevelt) killed most big-lake on-water (measured to
+  beach/high-water edge per gate, but many pads sit atop drawdown benches / behind day-use
+  strips → lakeview or not-waterfront). Colorado-River Parker strip & private river parks were
+  the richest on-water vein (riverfront).
+- **DONE — committed to master.** `audit/az_leads.json` can be deleted (one-time carrier).
 
 ## Key AZ facts proven (mirror of NV, plus AZ specifics)
 - **park_type `dnr` = BLM (federal) in AZ** — AZ has NO state DNR campgrounds (State Trust land
