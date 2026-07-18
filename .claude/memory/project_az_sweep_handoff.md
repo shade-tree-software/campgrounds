@@ -34,7 +34,19 @@ private 110, local 30, state 17, hipcamp 1. Every entry carries `inclusion_evide
   beach/high-water edge per gate, but many pads sit atop drawdown benches / behind day-use
   strips → lakeview or not-waterfront). Colorado-River Parker strip & private river parks were
   the richest on-water vein (riverfront).
-- **DONE — committed to master.** `audit/az_leads.json` can be deleted (one-time carrier).
+- **DONE — committed & pushed to master.** `audit/az_leads.json` removed (spent carrier).
+
+## Waterfront parity pass — DONE (287/287 audited)
+After the initial audit AZ sat at 108/287 evidence-stamped (only the water-adjacent
+set), out of parity with every sibling sweep (NV/NM/etc. stamp evidence on ALL entries,
+dry ones included). Ran an 18-batch parity pass (`.az_sweep_wip/wf2/`) over the 179 dry
+entries — each got a mandatory satellite look + evidence string. **All 179 confirmed
+`not waterfront`** (0 value changes, 0 coord fixes — validates the original water-lead
+split caught every on-water site). AZ now **287/287 waterfront-audited**, matching the
+100% coverage every other completed state has. Committed & pushed (5a3c27a).
+LESSON for future landlocked sweeps: stamp `waterfront_evidence` on the dry entries too
+(a quick "satellite: dry loop, no water" look) so the state hits 100% parity in one pass,
+rather than splitting water-adjacent-only and leaving a gap.
 
 ## Key AZ facts proven (mirror of NV, plus AZ specifics)
 - **park_type `dnr` = BLM (federal) in AZ** — AZ has NO state DNR campgrounds (State Trust land
