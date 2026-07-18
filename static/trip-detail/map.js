@@ -221,22 +221,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // unsuppress/unrelocate even when an override sits at the same coords as a
   // stay or family location).
   map.createPane('overrides').style.zIndex = 700;
-  const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors',
-    maxZoom: 18,
-  }).addTo(map);
-  const satellite = L.layerGroup([
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: '&copy; Esri',
-      maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19,
-    }),
-  ]);
+  const streets = window.ekkoStreetLayer().addTo(map);
+  const satellite = window.ekkoSatelliteLayer();
   const baseLayers = { 'Map': streets, 'Satellite': satellite };
   const overlayLayers = {};
   const layerControl = L.control.layers(baseLayers, overlayLayers).addTo(map);

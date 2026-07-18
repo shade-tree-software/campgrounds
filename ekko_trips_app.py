@@ -5,11 +5,12 @@ import os
 import re
 import secrets
 import shutil
+import sqlite3
 import sys
 import time
 from datetime import date, datetime, time as dt_time, timedelta
 
-from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file, Response, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash, safe_join
 from werkzeug.utils import secure_filename
@@ -185,6 +186,68 @@ def inject_trip_stats():
         "daytrip_count": daytrips,
         "night_count": sum(t["total_nights"] for t in trips),
     }
+
+
+# ── Offline map tiles (USB standalone edition) ──────────────────────────────
+# When EKKO_LOCAL_TILES is set AND a local tile store exists (the stick), maps
+# are served from the stick via the /tiles routes below; otherwise the online
+# CDN URLs are emitted, identical to a normal PythonAnywhere deploy. The switch
+# is server-decided and exposed to every page as window.EKKO_TILES; the shared
+# static/vendor/tile-layers.js helper builds the Leaflet layers from it. The
+# /tiles routes are inert without a store (404), so a store-less host is
+# unaffected. See usb/TILE-PIPELINE-DESIGN.md.
+LOCAL_TILE_DIR = os.path.join(os.path.dirname(__file__), "tiles")
+_ESRI_SAT = [
+    "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
+    "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
+]
+
+
+def _local_tiles_active():
+    return bool(os.environ.get("EKKO_LOCAL_TILES")) and os.path.isdir(LOCAL_TILE_DIR)
+
+
+def _tile_config():
+    """Tile-source config emitted to the page as window.EKKO_TILES."""
+    if _local_tiles_active():
+        return {
+            "mode": "local",
+            "streetVector": "/tiles/street.pmtiles",   # Option A: vector basemap
+            "street": "/tiles/street/{z}/{x}/{y}.png",  # raster fallback if present
+            "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"],  # baked NAIP, single layer
+            "maxZoom": 19, "maxNativeZoom": 16,           # NAIP native ceiling z16
+        }
+    return {
+        "mode": "online",
+        "streetVector": None,
+        "street": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "satellite": _ESRI_SAT,
+        "maxZoom": 19, "maxNativeZoom": 19,
+    }
+
+
+@app.context_processor
+def inject_tile_config():
+    return {"tile_config": _tile_config()}
+
+
+_tile_store_cache = {}
+
+
+def _tile_store(layer):
+    """Read-only sqlite connection to a layer's MBTiles, or None if absent.
+    Cached per process. layer is 'street' or 'sat'."""
+    fname = {"street": "street.mbtiles", "sat": "satellite.mbtiles"}.get(layer)
+    if not fname:
+        return None
+    if layer not in _tile_store_cache:
+        path = os.path.join(LOCAL_TILE_DIR, fname)
+        _tile_store_cache[layer] = (
+            sqlite3.connect(f"file:{path}?mode=ro", uri=True, check_same_thread=False)
+            if os.path.isfile(path) else None
+        )
+    return _tile_store_cache[layer]
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
@@ -663,7 +726,8 @@ def _require_login_globally():
     # sw_reset: the SW kill-switch must work even when the user can't get past
     # an upstream error (e.g. a stale SW), so it stays reachable logged-out.
     if request.endpoint in ('login', 'static', 'service_worker', 'offline',
-                            'sw_reset', 'share_login', None):
+                            'sw_reset', 'share_login', 'serve_tile', 'serve_pmtiles',
+                            None):
         return None
     if not current_user.is_authenticated:
         return redirect(url_for('login', next=request.path))
@@ -792,6 +856,37 @@ def service_worker():
 def offline():
     """Offline fallback page, pre-cached by the service worker at install."""
     return render_template('offline.html')
+
+
+@app.route('/tiles/street.pmtiles')
+def serve_pmtiles():
+    """Serve the vector street basemap (Option A) as a single .pmtiles file.
+    protomaps-leaflet reads it via HTTP Range requests, so conditional=True
+    (Werkzeug honors Range) is required. Inert (404) without a local store."""
+    path = os.path.join(LOCAL_TILE_DIR, "street.pmtiles")
+    if not os.path.isfile(path):
+        abort(404)
+    return send_file(path, mimetype="application/octet-stream", conditional=True)
+
+
+@app.route('/tiles/<layer>/<int:z>/<int:x>/<int:y>.<ext>')
+def serve_tile(layer, z, x, y, ext):
+    """Serve a raster map tile from the stick's MBTiles store (satellite NAIP,
+    or a raster street fallback). Inert (404) when the store isn't present, so
+    a normal deploy is unaffected. MBTiles rows are TMS (y flipped) vs Leaflet
+    XYZ, so flip y on lookup."""
+    store = _tile_store(layer)
+    if store is None:
+        abort(404)
+    flipped = (1 << z) - 1 - y
+    row = store.execute(
+        "SELECT tile_data FROM tiles WHERE zoom_level=? AND tile_column=? AND tile_row=?",
+        (z, x, flipped)).fetchone()
+    if not row:
+        abort(404)
+    mime = "image/png" if ext == "png" else "image/jpeg"
+    return Response(row[0], mimetype=mime,
+                    headers={"Cache-Control": "public, max-age=31536000"})
 
 
 @app.route('/sw-reset')

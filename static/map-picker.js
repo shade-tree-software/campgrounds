@@ -37,21 +37,8 @@ function createMapPicker(opts) {
     if (map) return;
     map = L.map(opts.mapId).setView(opts.defaultView || [38.93, -77.37], 7);
     if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
-    const streets = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-      maxZoom: 18,
-    }).addTo(map);
-    const satellite = L.layerGroup([
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-        attribution: '&copy; Esri', maxZoom: 19,
-      }),
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19,
-      }),
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 19,
-      }),
-    ]);
+    const streets = window.ekkoStreetLayer().addTo(map);
+    const satellite = window.ekkoSatelliteLayer();
     L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
 
     map.on('click', function(e) {

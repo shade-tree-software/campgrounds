@@ -55,9 +55,7 @@ function _initStopMiniMap(stopIdx) {
     fadeAnimation: false,
     zoomAnimation: false,
   });
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19,
-  }).addTo(map);
+  window.ekkoSatelliteLayer({ baseOnly: true }).addTo(map);
   if (coords.length >= 2) {
     L.polyline(coords, { color: '#ffffff', weight: 3, opacity: 0.55 }).addTo(map);
     L.polyline(coords, { color: '#002868', weight: 2, opacity: 0.95 }).addTo(map);

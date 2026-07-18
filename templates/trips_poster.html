@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}">
 <script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
 <script>L.Icon.Default.imagePath = "/static/vendor/leaflet/images/";</script>
+<script>window.EKKO_TILES = {{ tile_config|tojson }};</script>
+<script src="{{ static_v('vendor/tile-layers.js') }}"></script>
 <style>
   :root {
     --navy: #002868;
@@ -281,7 +283,7 @@ const map = L.map('poster-map', {
   // artifacts.
   zoomSnap: 0.25,
 });
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(map);
+window.ekkoStreetLayer().addTo(map);
 
 const bounds = HOME ? [HOME] : [];
 

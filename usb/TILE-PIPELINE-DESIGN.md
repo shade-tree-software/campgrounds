@@ -170,12 +170,13 @@ base app 0.55 + photos ~8 (when restored) + satellite NAIP ~4 + street (~0.5–1
 - [ ] Option A only: bundle `protomaps-leaflet` + style under `static/vendor/`.
 - [ ] Verify PA untouched: with `EKKO_LOCAL_TILES` unset, every page still emits CDN URLs and `/tiles/*` → 404.
 
-## Open decisions for the owner
+## Decisions (LOCKED 2026-07-18)
 
-1. **Street layer: Option A (vector pmtiles, recommended) or B (raster)?** Drives whether
-   we add a small vector-render JS lib.
-2. **NAIP download etiquette / volume** — confirm we're comfortable pulling ~198k
-   public-domain USGS tiles for the corridor (rate-limited, only-missing). Tighten to the
-   no-buffer ~51k set (~1 GB) if we want it leaner.
-3. **Zoom ceiling** — z16 (NAIP native) offline vs z19 online. Fine for trip overviews;
-   detect-stops mini-maps lose a little close-in detail offline.
+1. **Street layer: Option A** — vector `.pmtiles` built with `tilemaker`, rendered by
+   `protomaps-leaflet` (bundled locally). Resolution-independent → crisp at any zoom, no
+   per-zoom storage cost.
+2. **NAIP corridor: full ±1 buffer, fetch z0–16** (~198k tiles ≈ ~4 GB). z16 is NAIP's
+   native ~1 m ceiling; deeper is upscaled blur for 4×/level storage — not worth it.
+3. **Zoom in the UI: `maxNativeZoom: 16, maxZoom: 19`** on both layers. Street stays sharp
+   to 19 (vector overzoom); satellite is native to 16 and gracefully upscales 17–19 (soft
+   but never blank). Detect-stops mini-maps are fine at z16 native.
