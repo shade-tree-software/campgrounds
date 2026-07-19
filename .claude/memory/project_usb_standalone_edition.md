@@ -36,6 +36,27 @@ all vendored assets (tile-layers, protomaps-leaflet, leaflet js/css/marker image
 `START-EKKO.sh` exports `EKKO_LOCAL_TILES=1` when `app/tiles/` exists. Build scratch
 (`.build`, 8.1 GB) deleted — card now 14 GB used, **42 GB free**.
 
+**NAIP-over-Canada ocean-tile artifact FIXED (2026-07-19):** NAIP (`USGSImageryOnly`) only
+has real imagery over the US; at LOW zoom over non-US land it serves a Blue-Marble-style
+global mosaic that renders as dark ocean-blue. The landing page (`trips_map` fitBounds ->
+~z3-4) showed "ocean instead of land" over western Canada — a low-zoom corridor tile that
+spills across the border from northern-US trips (there are NO trips in western Canada; 0
+track points there). Fix = `usb/patch-nonus-tiles.py`: scans stored tiles at z<=6 whose
+CENTER is outside the US landmass (CONUS box north edge pinned to 49.0 = the 49th-parallel
+border so southern-BC coastal tiles fall outside) and repaints them from **Esri World
+Imagery** (`server.arcgisonline.com/.../World_Imagery`, the same source the online app +
+SW use; globally correct for land AND water). US tiles stay pristine NAIP. Default is
+dry-run; `--apply` writes (`INSERT OR REPLACE`, idempotent, ~10/s). **Applied to the card
+2026-07-19: 53 non-US z0-6 tiles repainted, verified land now shows.** The repaint is also
+**wired into `build-tiles.py` as an automatic final stage** (calls the script's
+`repaint_nonus_tiles(con, ...)` on the just-written open connection), so any rebuild/refresh
+self-corrects — NAIP re-introduces the ocean tiles on every fetch otherwise. `--no-repaint-nonus`
+skips it (e.g. a NAIP-only offline run with no Esri reachability); the stage soft-fails
+without aborting the build. NOTE the store lives
+at `<card>/app/tiles/satellite.mbtiles` (under `app/`, NOT card root) — the script's
+`DEFAULT_MBTILES` points there. If a future trip actually enters Canada, re-run with a
+higher `--max-zoom`.
+
 **satellite.mbtiles converted OUT of WAL mode** (`journal_mode=delete`) so it is a single
 self-contained file — a removable card left with `-wal`/`-shm` side files after an unclean
 unmount plus a read-only open is fragile. Keep it that way.

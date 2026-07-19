@@ -7,6 +7,7 @@ import secrets
 import shutil
 import sqlite3
 import sys
+import threading
 import time
 from datetime import date, datetime, time as dt_time, timedelta
 
@@ -241,22 +242,28 @@ def inject_tile_config():
     return {"tile_config": _tile_config()}
 
 
-_tile_store_cache = {}
+_tile_store_local = threading.local()
 
 
 def _tile_store(layer):
     """Read-only sqlite connection to a layer's MBTiles, or None if absent.
-    Cached per process. layer is 'street' or 'sat'."""
+    Connections are thread-local: a single sqlite connection is NOT safe for
+    concurrent use, and the browser fires many tile requests at once on the
+    threaded dev server, so a shared connection raised SQLITE_MISUSE ("bad
+    parameter or other API misuse"). layer is 'street' or 'sat'."""
     fname = {"street": "street.mbtiles", "sat": "satellite.mbtiles"}.get(layer)
     if not fname:
         return None
-    if layer not in _tile_store_cache:
+    cache = getattr(_tile_store_local, "cache", None)
+    if cache is None:
+        cache = _tile_store_local.cache = {}
+    if layer not in cache:
         path = os.path.join(LOCAL_TILE_DIR, fname)
-        _tile_store_cache[layer] = (
-            sqlite3.connect(f"file:{path}?mode=ro", uri=True, check_same_thread=False)
+        cache[layer] = (
+            sqlite3.connect(f"file:{path}?mode=ro", uri=True)
             if os.path.isfile(path) else None
         )
-    return _tile_store_cache[layer]
+    return cache[layer]
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
