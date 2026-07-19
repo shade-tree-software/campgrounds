@@ -7,8 +7,22 @@
 #
 #   Usage:  ./START-EKKO.sh            (then Ctrl+C to stop the server)
 #           EKKO_PORT=5050 ./START-EKKO.sh
+#           ./START-EKKO.sh --online   (use online OSM/Esri tiles; needs internet)
+#
+# By default the app serves map tiles from the stick's local store (offline).
+# --online forces the online tile CDNs instead, which cover the whole world at
+# every zoom (the local store only covers your trip corridor). Useful when you
+# have internet and want to pan/zoom into areas the stick doesn't carry.
 #
 set -euo pipefail
+
+ONLINE_TILES=0
+for arg in "$@"; do
+  case "$arg" in
+    --online) ONLINE_TILES=1 ;;
+    *) echo "Unknown option: $arg" >&2; echo "Usage: ./START-EKKO.sh [--online]" >&2; exit 2 ;;
+  esac
+done
 
 HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 PY="$HERE/python/bin/python3"
@@ -32,7 +46,10 @@ cd "$APP"
 # Serve map tiles from the stick when a local tile store is present (offline
 # maps). The app also gates on tiles/ existing, so this is safe even before the
 # store is built — it just falls back to the online CDNs when online.
-if [ -d "$APP/tiles" ]; then
+# --online skips this so the app uses the online OSM/Esri CDNs instead.
+if [ "$ONLINE_TILES" -eq 1 ]; then
+  echo " (--online: using online map tiles — needs internet)"
+elif [ -d "$APP/tiles" ]; then
   export EKKO_LOCAL_TILES=1
 fi
 
