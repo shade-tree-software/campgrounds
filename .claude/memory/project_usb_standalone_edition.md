@@ -5,12 +5,49 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 8d60efa1-9fa1-4ef7-b075-4178d82597ae
-  modified: 2026-07-19T11:37:27.880Z
+  modified: 2026-07-19T14:22:27.881Z
 ---
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
 
-**>>> STATUS 2026-07-19: TILE PIPELINE — satellite DONE + verified; street mid-render.**
+**>>> STATUS 2026-07-19 (end of session): CARD IS DONE & WORKING except street.pmtiles,
+which is to be built on a BIGGER MACHINE and dropped in. See
+`usb/BUILD-STREET-ON-BIG-MACHINE.md` (committed + pushed, `f2542ad`).**
+
+**The ONLY remaining step:** on a >=16 GB RAM machine, clone the repo, restore `trip_data/`
++ `home.json` (via `./backup.sh` tarball — the corridor is computed from the real GPS
+tracks, which are gitignored), bump `JAVA_HEAP=8g` / `RENDER_THREADS=8` in
+`usb/build-street.sh`, run it with `--poly-zoom 11`, then copy the single output file to
+`<card>/app/tiles/street.pmtiles`. No code change, no restart flag — the app detects the
+file at request time.
+
+**Why it moved off this laptop:** the render needs ~10 h here (3 GB RAM). Measured
+`osm_pass2` at ~800 ways/s of ~29.8M ways with heap pinned at 1.5-1.6G/1.8G. Tuning
+attempts (z12 corridor, 2 threads, sparsearray nodemap) only got 15 h -> 10 h. NOTE the
+two hypotheses that were TESTED AND DISPROVED, so nobody retries them: (1) tightening the
+corridor z11->z12 cut only 16% of data, not the ~3x predicted (the trips run through dense
+metro areas, so buffer width barely matters); (2) dropping `--complete-ways --complex-ways`
+saves only 4% of nodes. The box is simply undersized; on 16 GB it is <1 h.
+
+**Card state (verified end-to-end from the card's OWN python 3.12.11):** app at `f2542ad`,
+clean tree; `/login` 200, `/` 302, `/sw.js` 200; satellite tile served byte-identical
+(md5 match, `200 image/jpeg`); `/tiles/street.pmtiles` 404 -> satellite fallback active;
+all vendored assets (tile-layers, protomaps-leaflet, leaflet js/css/marker images) 200.
+`START-EKKO.sh` exports `EKKO_LOCAL_TILES=1` when `app/tiles/` exists. Build scratch
+(`.build`, 8.1 GB) deleted — card now 14 GB used, **42 GB free**.
+
+**satellite.mbtiles converted OUT of WAL mode** (`journal_mode=delete`) so it is a single
+self-contained file — a removable card left with `-wal`/`-shm` side files after an unclean
+unmount plus a read-only open is fragile. Keep it that way.
+
+**Graceful degradation added (`f2542ad`)** so "local tiles on, street store absent" is a
+proper state, not a broken half-install: `_tile_config()` advertises a local street source
+only when the file exists, and `ekkoStreetLayer()` returns NAIP imagery when there is none
+(every caller does `.addTo(map)`, so returning nothing would leave a white map).
+
+---
+
+**>>> STATUS 2026-07-19 (mid-session): TILE PIPELINE — satellite DONE + verified.**
 
 **2026-07-19 tile-pipeline session (commits `5e9c4d7`, `c16b6b8`):**
 - **All app-side plumbing is DONE and verified.** The missing link was that
