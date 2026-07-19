@@ -1,13 +1,59 @@
 ---
 name: project_usb_standalone_edition
-description: "A standalone offline USB-stick edition of the EKKO Trips app was built 2026-07-17; layout, build recipe, PAUSED mid-upgrade pending a good drive + tile pipeline (see RESUME section)"
+description: "A standalone offline USB-stick edition of the EKKO Trips app; layout, build recipe, and the offline tile pipeline (satellite DONE 2026-07-19, street rendering) — see STATUS + RESUME sections"
 metadata: 
   node_type: memory
   type: project
   originSessionId: 8d60efa1-9fa1-4ef7-b075-4178d82597ae
+  modified: 2026-07-19T11:37:27.880Z
 ---
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
+
+**>>> STATUS 2026-07-19: TILE PIPELINE — satellite DONE + verified; street mid-render.**
+
+**2026-07-19 tile-pipeline session (commits `5e9c4d7`, `c16b6b8`):**
+- **All app-side plumbing is DONE and verified.** The missing link was that
+  `static/vendor/protomaps-leaflet.js` was vendored but no template loaded it — now loaded
+  from `base.html` + `trips_poster.html` gated on `tile_config.mode == 'local'`, so online
+  pages don't pay ~100 KB and PA is byte-for-byte unchanged. Verified: local mode emits the
+  tag, `/tiles/street.pmtiles` answers Range requests (206 + correct Content-Range, PMTiles
+  magic) as protomaps-leaflet requires; with the env var unset pages still emit CDN URLs.
+- **SATELLITE COMPLETE:** `app/tiles/satellite.mbtiles`, **200,538 tiles / 5.0 GB** (z0-16,
+  91,922 at z16; ~25 KB/tile, so a bit over the 4 GB estimate). Verified END-TO-END through
+  the Flask route: byte-identical md5, `200 image/jpeg`, out-of-corridor tiles 404 cleanly.
+- **STREET in progress:** corridor spans **21 states + DC** (point-in-polygon over the 103,184
+  corridor points; PA/VA densest). Pipeline = `usb/build-street.sh`: emit corridor .poly ->
+  download each Geofabrik extract -> osmconvert clip (raw deleted right after) -> hierarchical
+  merge -> planetiler. Clips: 23 files / 2.3 GB. Merged `corridor.osm.pbf` = **2.28 GB**.
+  Render running at `-Xmx1800m --threads=3`.
+- **Corridor width = z11** (`--poly-zoom 11`, ~29 km each side), NOT the z10 used in the
+  Delaware test — z10 was too much data for this box. `--poly-zoom 10` widens it if wanted.
+
+**THREE tooling bugs found + fixed (all "succeeds loudly while doing the wrong thing"):**
+1. **osmconvert defaults to uncompressed .osm XML regardless of the `-o=` extension** — must
+   pass `--out-pbf`. Silently turned a 326 MB PA extract into a **6.3 GB** clip (exit 0, data
+   correct, wrong container). 22 states of that would have exhausted the card. Only the
+   implausible 20x size ratio gave it away.
+2. **`--rate` was never the NAIP bottleneck** — serial fetching is bound by NAIP's ~0.3 s
+   round-trip, so a 20 req/s cap delivered **3/s** (17 h ETA). Now fetches on a thread pool
+   (`--workers`, default 8) => **19-20/s, 0 failures, ~2.6 h**. The rate cap is still a real
+   ceiling, now a lock-guarded shared slot clock across workers.
+3. **osmconvert refuses >1 `.pbf` input** ("more than one .pbf input file is not allowed") —
+   it only merges `.o5m`/`.osm`. So convert clips to `.o5m`, merge, emit `.pbf`. Then merging
+   all 23 at once got **OOM-killed** (NAIP running concurrently on a 3 GB box) => merge
+   hierarchically in groups of 6, resumable per group.
+- Planetiler also OOM'd at `-Xmx1400m` (300 MB in-heap sortedtable index + 4 threads of
+  feature buffers; it mmaps ~3.5 GB of node locations and needs page cache left over).
+  1800m + 3 threads cleared it.
+
+**Machine constraints that drove all of the above (this box, not the card):** 3 GB RAM,
+4 cores, only ~4 GB free on `/`. Hence: stage EVERYTHING (downloads, clips, planetiler
+tmpdir) on the card, and treat MEMORY as the binding constraint whenever two jobs overlap.
+NAIP (network-bound, ~0.4 MB/s of writes) is safe to overlap with a bulk card writer; two
+bulk writers are not (that is what wedged the old counterfeit stick).
+
+---
 
 **>>> STATUS 2026-07-18: v1 REBUILT on a good 64 GB drive + Leaflet now bundled locally.**
 The build tooling is saved durably in the repo at `usb/` (START-EKKO.sh, build-env.sh,

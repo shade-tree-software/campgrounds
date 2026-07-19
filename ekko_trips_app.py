@@ -211,10 +211,19 @@ def _local_tiles_active():
 def _tile_config():
     """Tile-source config emitted to the page as window.EKKO_TILES."""
     if _local_tiles_active():
+        # Advertise a local street source ONLY if its store is actually present.
+        # The satellite half of the stick can be finished long before the street
+        # basemap is (the pmtiles render needs a big machine), and pointing
+        # protomaps-leaflet at a missing .pmtiles yields a blank basemap plus a
+        # stream of failed range requests. With these null, tile-layers.js falls
+        # back to satellite imagery so the map is never blank; dropping
+        # street.pmtiles into tiles/ lights up real streets with no code change.
+        has_vector = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "street.pmtiles"))
+        has_raster = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "street.mbtiles"))
         return {
             "mode": "local",
-            "streetVector": "/tiles/street.pmtiles",   # Option A: vector basemap
-            "street": "/tiles/street/{z}/{x}/{y}.png",  # raster fallback if present
+            "streetVector": "/tiles/street.pmtiles" if has_vector else None,
+            "street": "/tiles/street/{z}/{x}/{y}.png" if has_raster else None,
             "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"],  # baked NAIP, single layer
             "maxZoom": 19, "maxNativeZoom": 16,           # NAIP native ceiling z16
         }

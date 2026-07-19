@@ -32,6 +32,12 @@
         { url: t.streetVector, theme: 'light', maxZoom: t.maxZoom,
           attribution: '&copy; OpenStreetMap contributors' }, opts));
     }
+    // Offline with no street store installed yet (the server nulls both street
+    // fields when neither file exists). Show satellite imagery rather than a
+    // blank grid — every caller does ekkoStreetLayer().addTo(map), so returning
+    // nothing would leave a white map. Install tiles/street.pmtiles and this
+    // path stops being taken automatically.
+    if (!t.street) return window.ekkoSatelliteLayer(Object.assign({ baseOnly: true }, opts));
     return L.tileLayer(t.street, Object.assign(
       { attribution: '&copy; OpenStreetMap contributors',
         maxZoom: t.maxZoom, maxNativeZoom: t.maxNativeZoom }, opts));
