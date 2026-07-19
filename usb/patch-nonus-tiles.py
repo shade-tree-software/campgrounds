@@ -84,30 +84,20 @@ def fetch_esri(z, x, y, timeout=30):
         return None
 
 
-def main():
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--mbtiles", default=DEFAULT_MBTILES,
-                    help=f"path to satellite.mbtiles (default {DEFAULT_MBTILES})")
-    ap.add_argument("--max-zoom", type=int, default=6,
-                    help="only patch tiles at zoom <= this (default 6; the "
-                         "landing view sits ~z3-4 and no trips reach Canada, "
-                         "so higher zooms have no non-US tiles anyway)")
-    ap.add_argument("--rate", type=float, default=10.0,
-                    help="max Esri requests/sec (default 10)")
-    ap.add_argument("--apply", action="store_true",
-                    help="actually write; without it, dry-run report only")
-    a = ap.parse_args()
+def repaint_nonus_tiles(con, max_zoom=6, rate=10.0, apply=True, verbose=True):
+    """Repaint the store's low-zoom (z<=max_zoom) non-US tiles from Esri World
+    Imagery. Operates on an OPEN sqlite connection (does not close it), so the
+    tile builder can call it straight after writing, and the CLI can wrap it.
 
-    if not os.path.isfile(a.mbtiles):
-        sys.exit(f"not found: {a.mbtiles}\n(mount the card, or pass --mbtiles)")
-
-    con = sqlite3.connect(a.mbtiles)
-    # Stored rows are TMS: tile_row = (1<<z)-1 - y_xyz  (see build-tiles.py).
+    Stored rows are TMS: tile_row = (1<<z)-1 - y_xyz  (see build-tiles.py). A
+    tile is repainted iff its center is outside the US landmass (NAIP has no
+    real imagery there and serves an ocean-blue global mosaic). Returns
+    (n_targets, n_repainted, n_failed); with apply=False it's a dry run
+    ((n_targets, 0, 0)) and nothing is written."""
     rows = con.execute(
         "SELECT zoom_level, tile_column, tile_row FROM tiles "
         "WHERE zoom_level <= ? ORDER BY zoom_level, tile_column, tile_row",
-        (a.max_zoom,)).fetchall()
+        (max_zoom,)).fetchall()
 
     targets = []   # (z, x, tms, y_xyz, clat, clon)
     for z, x, tms in rows:
@@ -117,25 +107,21 @@ def main():
         if not in_us(clat, clon):
             targets.append((z, x, tms, y_xyz, clat, clon))
 
-    per_z = {}
-    for z, *_ in targets:
-        per_z[z] = per_z.get(z, 0) + 1
-    print(f"store: {a.mbtiles}")
-    print(f"low-zoom tiles scanned (z<= {a.max_zoom}): {len(rows):,}")
-    print(f"non-US tiles to repaint from Esri: {len(targets):,}")
-    for z in sorted(per_z):
-        print(f"  z{z:<2} {per_z[z]:>6,}")
-    for t in targets[:10]:
-        print(f"    e.g. z{t[0]} col{t[1]} row{t[2]}  center {t[4]:.2f},{t[5]:.2f}")
-    if len(targets) > 10:
-        print(f"    ... and {len(targets) - 10:,} more")
+    if verbose:
+        per_z = {}
+        for z, *_ in targets:
+            per_z[z] = per_z.get(z, 0) + 1
+        print(f"non-US tiles to repaint from Esri (z<= {max_zoom}): "
+              f"{len(targets):,} of {len(rows):,} scanned")
+        for z in sorted(per_z):
+            print(f"  z{z:<2} {per_z[z]:>6,}")
 
-    if not a.apply:
-        print("\nDRY RUN — nothing written. Re-run with --apply to patch.")
-        con.close()
-        return
+    if not apply:
+        if verbose:
+            print("DRY RUN — nothing written.")
+        return len(targets), 0, 0
 
-    interval = 1.0 / a.rate if a.rate > 0 else 0
+    interval = 1.0 / rate if rate > 0 else 0
     got = fail = 0
     t0 = time.time()
     next_slot = time.time()
@@ -154,14 +140,42 @@ def main():
             fail += 1
         if got and got % 100 == 0:
             con.commit()
-        if i and i % 50 == 0:
-            rate = i / (time.time() - t0)
+        if verbose and i and i % 50 == 0:
+            r = i / (time.time() - t0)
             print(f"  {i:,}/{len(targets):,}  got {got:,} fail {fail:,}  "
-                  f"{rate:.0f}/s", flush=True)
+                  f"{r:.0f}/s", flush=True)
     con.commit()
+    return len(targets), got, fail
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--mbtiles", default=DEFAULT_MBTILES,
+                    help=f"path to satellite.mbtiles (default {DEFAULT_MBTILES})")
+    ap.add_argument("--max-zoom", type=int, default=6,
+                    help="only patch tiles at zoom <= this (default 6; the "
+                         "landing view sits ~z3-4 and no trips reach Canada, "
+                         "so higher zooms have no non-US tiles anyway)")
+    ap.add_argument("--rate", type=float, default=10.0,
+                    help="max Esri requests/sec (default 10)")
+    ap.add_argument("--apply", action="store_true",
+                    help="actually write; without it, dry-run report only")
+    a = ap.parse_args()
+
+    if not os.path.isfile(a.mbtiles):
+        sys.exit(f"not found: {a.mbtiles}\n(mount the card, or pass --mbtiles)")
+
+    print(f"store: {a.mbtiles}")
+    con = sqlite3.connect(a.mbtiles)
+    n, got, fail = repaint_nonus_tiles(con, max_zoom=a.max_zoom, rate=a.rate,
+                                       apply=a.apply, verbose=True)
     con.close()
-    print(f"done: repainted {got:,}, failed {fail:,}. "
-          f"Restart the app; the Canada ocean tiles should now show land.")
+    if not a.apply:
+        print("Re-run with --apply to patch.")
+    else:
+        print(f"done: repainted {got:,}, failed {fail:,}. "
+              f"Restart the app; the Canada ocean tiles should now show land.")
 
 
 if __name__ == "__main__":

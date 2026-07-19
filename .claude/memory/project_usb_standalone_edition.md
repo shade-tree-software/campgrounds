@@ -47,7 +47,12 @@ border so southern-BC coastal tiles fall outside) and repaints them from **Esri 
 Imagery** (`server.arcgisonline.com/.../World_Imagery`, the same source the online app +
 SW use; globally correct for land AND water). US tiles stay pristine NAIP. Default is
 dry-run; `--apply` writes (`INSERT OR REPLACE`, idempotent, ~10/s). **Applied to the card
-2026-07-19: 53 non-US z0-6 tiles repainted, verified land now shows.** NOTE the store lives
+2026-07-19: 53 non-US z0-6 tiles repainted, verified land now shows.** The repaint is also
+**wired into `build-tiles.py` as an automatic final stage** (calls the script's
+`repaint_nonus_tiles(con, ...)` on the just-written open connection), so any rebuild/refresh
+self-corrects — NAIP re-introduces the ocean tiles on every fetch otherwise. `--no-repaint-nonus`
+skips it (e.g. a NAIP-only offline run with no Esri reachability); the stage soft-fails
+without aborting the build. NOTE the store lives
 at `<card>/app/tiles/satellite.mbtiles` (under `app/`, NOT card root) — the script's
 `DEFAULT_MBTILES` points there. If a future trip actually enters Canada, re-run with a
 higher `--max-zoom`.

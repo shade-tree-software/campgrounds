@@ -200,6 +200,7 @@ def main():
     ap.add_argument("--poly-zoom", type=int, default=10, help="tile zoom for the .poly corridor (coarser = wider street context)")
     ap.add_argument("--rate", type=float, default=20.0, help="max NAIP requests/sec (a real ceiling, shared across workers)")
     ap.add_argument("--workers", type=int, default=8, help="parallel fetch threads (overlaps NAIP's ~0.3s latency so --rate is actually reached)")
+    ap.add_argument("--no-repaint-nonus", action="store_true", help="skip the post-build Esri repaint of low-zoom non-US tiles (NAIP serves an ocean-blue global mosaic outside the US; the repaint fixes the western-Canada 'ocean instead of land' artifact — see usb/patch-nonus-tiles.py)")
     a = ap.parse_args()
 
     repo = os.path.abspath(a.repo)
@@ -274,6 +275,31 @@ def main():
                 print(f"  {i:,}/{len(todo):,}  got {got:,} fail {fail:,}  "
                       f"{rate:.0f}/s  ETA {eta:.0f} min", flush=True)
     con.commit()
+
+    # Repaint the low-zoom non-US tiles from Esri. NAIP has no imagery outside
+    # the US and serves an ocean-blue global mosaic there, so corridor tiles
+    # that spill across the border (western Canada, from northern-US trips)
+    # render as "ocean instead of land" at the fitBounds landing zoom. This
+    # runs on every build so a rebuilt store stays corrected. Best-effort:
+    # needs Esri reachable, so it's skipped/soft-failed on a NAIP-only run.
+    if not a.no_repaint_nonus and got:
+        import importlib.util
+        _p = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                          "patch-nonus-tiles.py")  # hyphenated, load by path
+        _spec = importlib.util.spec_from_file_location("patch_nonus_tiles", _p)
+        _mod = importlib.util.module_from_spec(_spec)
+        _spec.loader.exec_module(_mod)
+        repaint_nonus_tiles = _mod.repaint_nonus_tiles
+        print("repainting low-zoom non-US tiles from Esri (fixes the "
+              "western-Canada ocean artifact)...")
+        try:
+            n, rgot, rfail = repaint_nonus_tiles(con, apply=True, verbose=True)
+            print(f"  repaint: {rgot:,}/{n:,} tiles from Esri "
+                  f"({rfail:,} failed)")
+        except Exception as e:
+            print(f"  repaint skipped ({e}); run usb/patch-nonus-tiles.py "
+                  f"later if the Canada tiles show ocean")
+
     con.close()
     print(f"done: fetched {got:,}, failed/empty {fail:,}. satellite.mbtiles in {out}")
 
