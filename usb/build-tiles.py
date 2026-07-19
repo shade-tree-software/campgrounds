@@ -17,6 +17,7 @@ Usage:
 See usb/TILE-PIPELINE-DESIGN.md.
 """
 import argparse
+import concurrent.futures
 import glob
 import gzip
 import json
@@ -24,6 +25,7 @@ import math
 import os
 import sqlite3
 import sys
+import threading
 import time
 import urllib.request
 import urllib.error
@@ -196,7 +198,8 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="report the corridor tile count, fetch nothing")
     ap.add_argument("--emit-poly", default=None, help="write an Osmosis .poly corridor to this path and exit (for osmconvert street clipping)")
     ap.add_argument("--poly-zoom", type=int, default=10, help="tile zoom for the .poly corridor (coarser = wider street context)")
-    ap.add_argument("--rate", type=float, default=20.0, help="max NAIP requests/sec")
+    ap.add_argument("--rate", type=float, default=20.0, help="max NAIP requests/sec (a real ceiling, shared across workers)")
+    ap.add_argument("--workers", type=int, default=8, help="parallel fetch threads (overlaps NAIP's ~0.3s latency so --rate is actually reached)")
     a = ap.parse_args()
 
     repo = os.path.abspath(a.repo)
@@ -226,32 +229,50 @@ def main():
     todo = [(z, x, y) for (z, x, y) in ordered if not have_tile(con, z, x, (1 << z) - 1 - y)]
     print(f"to fetch: {len(todo):,} (skipping {len(tiles) - len(todo):,} already present)")
 
+    # Fetch on a small thread pool. Serially, throughput is bound by NAIP's
+    # ~0.3 s round-trip, not by --rate: a 20/s cap actually delivered ~3/s
+    # (17 h for the corridor). Workers overlap that latency; the shared rate
+    # limiter below still enforces --rate as a real ceiling, so this is faster
+    # without being less polite. sqlite writes stay on the main thread (the
+    # connection isn't shared), workers only do HTTP.
     interval = 1.0 / a.rate if a.rate > 0 else 0
     got = fail = 0
     t0 = time.time()
-    for i, (z, x, y) in enumerate(todo):
+    rate_lock = threading.Lock()
+    next_slot = [time.time()]
+
+    def fetch(tile):
+        z, x, y = tile
+        if interval:                       # global rate ceiling, shared by all workers
+            with rate_lock:
+                now = time.time()
+                wait = max(0.0, next_slot[0] - now)
+                next_slot[0] = max(now, next_slot[0]) + interval
+            if wait:
+                time.sleep(wait)
         url = NAIP_URL.format(z=z, x=x, y=y)
         try:
             req = urllib.request.Request(url, headers=HEADERS)
             with urllib.request.urlopen(req, timeout=30) as r:
-                data = r.read()
-            if data and len(data) > 500:  # skip empty/placeholder responses
+                return tile, r.read()
+        except Exception:
+            return tile, None
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=a.workers) as pool:
+        for i, ((z, x, y), data) in enumerate(pool.map(fetch, todo)):
+            if data and len(data) > 500:   # skip empty/placeholder responses
                 con.execute("INSERT OR REPLACE INTO tiles VALUES (?,?,?,?)",
                             (z, x, (1 << z) - 1 - y, sqlite3.Binary(data)))
                 got += 1
             else:
                 fail += 1
-        except (urllib.error.URLError, Exception):
-            fail += 1
-        if got % 500 == 0 and got:
-            con.commit()
-        if i % 1000 == 0 and i:
-            rate = i / (time.time() - t0)
-            eta = (len(todo) - i) / rate / 60 if rate else 0
-            print(f"  {i:,}/{len(todo):,}  got {got:,} fail {fail:,}  "
-                  f"{rate:.0f}/s  ETA {eta:.0f} min", flush=True)
-        if interval:
-            time.sleep(interval)
+            if got % 500 == 0 and got:
+                con.commit()
+            if i % 1000 == 0 and i:
+                rate = i / (time.time() - t0)
+                eta = (len(todo) - i) / rate / 60 if rate else 0
+                print(f"  {i:,}/{len(todo):,}  got {got:,} fail {fail:,}  "
+                      f"{rate:.0f}/s  ETA {eta:.0f} min", flush=True)
     con.commit()
     con.close()
     print(f"done: fetched {got:,}, failed/empty {fail:,}. satellite.mbtiles in {out}")

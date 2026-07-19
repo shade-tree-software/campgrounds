@@ -79,7 +79,11 @@ if want download || want clip || want all; then
       curl -fL --retry 3 --retry-delay 5 -o "$raw.part" "$GEOFABRIK/$st-latest.osm.pbf"
       mv "$raw.part" "$raw"
     fi
-    "$OSMCONVERT" "$raw" -B="$POLY" --complete-ways --complex-ways -o="$out.part"
+    # --out-pbf is REQUIRED: osmconvert defaults to uncompressed .osm XML no
+    # matter what the -o= extension says, which is ~20x the size (a 326 MB PA
+    # extract clipped to 6.3 GB of XML before this flag was added).
+    "$OSMCONVERT" "$raw" -B="$POLY" --complete-ways --complex-ways \
+      --out-pbf -o="$out.part"
     mv "$out.part" "$out"
     rm -f "$raw"                       # reclaim space immediately
     echo "  clipped: $(du -h "$out" | cut -f1)  (from $st)"
@@ -91,7 +95,7 @@ fi
 if want merge || want all; then
   if [ ! -s "$MERGED" ]; then
     step "merge $(ls "$CLIP"/*.osm.pbf | wc -l) clipped extracts"
-    "$OSMCONVERT" "$CLIP"/*.osm.pbf -o="$MERGED.part"
+    "$OSMCONVERT" "$CLIP"/*.osm.pbf --out-pbf -o="$MERGED.part"
     mv "$MERGED.part" "$MERGED"
   fi
   echo "merged: $(du -h "$MERGED" | cut -f1)"
