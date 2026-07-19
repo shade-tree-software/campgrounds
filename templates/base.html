@@ -17,6 +17,9 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/icon-192.png">
 <title>{% block title %}EKKOing Around{% endblock %}</title>
 <script>window.EKKO_TILES = {{ tile_config|tojson }};</script>
+{# protomaps-leaflet renders the offline stick's vector street basemap. Only
+   the local-tile build needs it, so online pages don't pay the ~100 KB. #}
+{% if tile_config.mode == 'local' %}<script src="{{ static_v('vendor/protomaps-leaflet.js') }}"></script>{% endif %}
 <script src="{{ static_v('vendor/tile-layers.js') }}"></script>
 {% block head_extra %}{% endblock %}
 <style>

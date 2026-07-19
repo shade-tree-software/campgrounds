@@ -118,6 +118,51 @@ def corridor_tiles(pts, min_z, max_z, buffer_tiles):
     return tiles
 
 
+def tile2lon(x, z):
+    return x / (1 << z) * 360.0 - 180.0
+
+
+def tile2lat(y, z):
+    n = math.pi - 2.0 * math.pi * y / (1 << z)
+    return math.degrees(math.atan(math.sinh(n)))
+
+
+def emit_poly(pts, path, z, buffer_tiles):
+    """Write an Osmosis .poly corridor polygon for osmconvert clipping. The
+    corridor tiles at zoom z are dissolved into per-row run rectangles to keep
+    the polygon-section count low (osmconvert slows on thousands of sections)."""
+    rows = {}   # y -> set of x
+    n = 1 << z
+    for lat, lng in pts:
+        x, y = deg2tile(lat, lng, z)
+        for dx in range(-buffer_tiles, buffer_tiles + 1):
+            for dy in range(-buffer_tiles, buffer_tiles + 1):
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < n and 0 <= ny < n:
+                    rows.setdefault(ny, set()).add(nx)
+    rects = []
+    for y, xs in rows.items():
+        xs = sorted(xs)
+        start = prev = xs[0]
+        for x in xs[1:] + [None]:
+            if x is None or x != prev + 1:
+                rects.append((start, prev, y))   # inclusive x run at row y
+                start = x
+            prev = x
+    with open(path, "w") as f:
+        f.write("corridor\n")
+        for i, (xs, xe, y) in enumerate(rects):
+            west, east = tile2lon(xs, z), tile2lon(xe + 1, z)
+            north, south = tile2lat(y, z), tile2lat(y + 1, z)
+            f.write(f"section{i}\n")
+            for lon, lat in [(west, south), (east, south), (east, north),
+                             (west, north), (west, south)]:
+                f.write(f"   {lon:.6f}   {lat:.6f}\n")
+            f.write("END\n")
+        f.write("END\n")
+    return len(rects)
+
+
 def open_mbtiles(path, layer_name, fmt):
     new = not os.path.isfile(path)
     con = sqlite3.connect(path)
@@ -149,6 +194,8 @@ def main():
     ap.add_argument("--max-zoom", type=int, default=16)
     ap.add_argument("--buffer", type=int, default=1)
     ap.add_argument("--dry-run", action="store_true", help="report the corridor tile count, fetch nothing")
+    ap.add_argument("--emit-poly", default=None, help="write an Osmosis .poly corridor to this path and exit (for osmconvert street clipping)")
+    ap.add_argument("--poly-zoom", type=int, default=10, help="tile zoom for the .poly corridor (coarser = wider street context)")
     ap.add_argument("--rate", type=float, default=20.0, help="max NAIP requests/sec")
     a = ap.parse_args()
 
@@ -156,6 +203,10 @@ def main():
     out = a.out or os.path.join(repo, "tiles")
     pts = corridor_points(repo)
     print(f"corridor points: {len(pts):,}")
+    if a.emit_poly:
+        nrect = emit_poly(pts, a.emit_poly, a.poly_zoom, a.buffer)
+        print(f"wrote {a.emit_poly}: {nrect:,} polygon sections (z{a.poly_zoom} corridor)")
+        return
     tiles = corridor_tiles(pts, a.min_zoom, a.max_zoom, a.buffer)
     per_z = {}
     for (z, _, _) in tiles:
