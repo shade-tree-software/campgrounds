@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 8d60efa1-9fa1-4ef7-b075-4178d82597ae
-  modified: 2026-07-19T14:22:27.881Z
+  modified: 2026-07-19T14:42:10.388Z
 ---
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
@@ -117,7 +117,7 @@ stick's root to rebuild.
 
 **Stick layout (at stick root):**
 - `python/` — relocatable CPython 3.12 from astral-sh/python-build-standalone (release tag `20250612`, `install_only` gnu build) with all app deps pip-installed into its own site-packages (~533 MB). Fully relocatable — no absolute paths baked in.
-- `app/` — shallow git clone of the public repo (`master`) + seeded gitignored data (`users.json`, `home.json`, `trip_data/`). No `static/uploads` photos on the source dev machine, so uploads started empty.
+- `app/` — shallow git clone of the public repo (`master`) + seeded gitignored data (`users.json`, `home.json`, `trip_data/`). Uploads started empty (the source dev machine had no photos) but the card is now FULLY populated: **6.9 GB / 2,778 photos**, current with PA as of 2026-07-19. Refresh it incrementally with `./sync-from-pa.sh --dest /media/andrew/EKKO/app` (see below) — no need for a full backup/restore tarball.
 - `START-EKKO.sh` — computes its own dir via `readlink -f`, sources `app/.env` if present, waits on the port via bash `/dev/tcp`, `xdg-open`s the browser, then runs `python ekko_trips_app.py --http --port 5001` (localhost is a secure context so `--http` is fine and dodges cert warnings).
 - `restore-backup.sh` — puts portable python on PATH, delegates to the repo's own `app/restore.sh` (which validates JSON with `python3`).
 - `update.sh` — `git pull --ff-only origin master` + `pip install -r requirements-ekko.txt` (needs internet + git on host; repo is public so no auth).
