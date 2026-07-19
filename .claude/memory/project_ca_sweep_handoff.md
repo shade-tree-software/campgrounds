@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-19T20:23:23.840Z
+  modified: 2026-07-19T20:25:38.252Z
 ---
 
 California is **mid-sweep** as of 2026-07-19 (this file was missing until now, which
@@ -25,21 +25,16 @@ woods = 83 on-water; 13 lakeview, 11 bayview, 1 riverview = 25 view. 56 coord fi
 water; the state-beach entries were mostly fine). All 243 now carry
 `waterfront_evidence`. Batch files + results in the session scratchpad `ca_audit/`.
 
-**Three inclusion problems surfaced during the audit — logged, NOT applied, awaiting
-owner review** (all have ZERO trip_data references):
-- **11722 Bear River Campground** (Placer County) — no campground on imagery; county
-  page says the property is closed to overnight camping. Candidate removal.
-- **11784 Los Gatos Creek Park** (Fresno County) — county lists it CLOSED INDEFINITELY
-  since Dec 2025. Candidate removal (or "currently closed" note); coord also fixed.
-- **11792 "Lake San Antonio South Shore (Monterey County)"** — DUPLICATE of 11779
-  "Lake San Antonio - South Shore" (same operator page, ~40 m apart after 11779's
-  coord fix; both audited `not waterfront`). Candidate removal of 11792 (11779 has the
-  richer inclusion evidence). Same pattern as the AZ sweep's 11494/11469 dup.
-Details in `ca_audit/inclusion_flags.md` in the session scratchpad.
+**Three inclusion problems surfaced during the audit — all REMOVED (commit `8f49e87`,
+owner approved 2026-07-19; none had trip_data references):**
+- **11722 Bear River Campground** (Placer County) — no campground on imagery; closed
+  to overnight camping.
+- **11784 Los Gatos Creek Park** (Fresno County) — closed indefinitely since Dec 2025.
+- **11792 "Lake San Antonio South Shore (Monterey County)"** — duplicate of 11779.
+CA new entries now number **240** (was 243).
 
 **Outstanding:**
-1. **Resolve the three inclusion flags above** (remove-block-by-id per CLAUDE.md).
-2. **Federal bucket — NOT RUN.** Only 3 legacy CA federal entries exist (277 Kirk
+1. **Federal bucket — NOT RUN.** Only 3 legacy CA federal entries exist (277 Kirk
    Creek, 279 Tuolumne Meadows, 295 Jumbo Rocks). CA federal is likely the largest
    single bucket of any state: NPS (Yosemite, Sequoia/Kings, Death Valley, Joshua
    Tree, Point Reyes, Channel Islands), 18 national forests, BLM, USACE, Reclamation.
