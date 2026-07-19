@@ -77,9 +77,19 @@ only when the file exists, and `ekkoStreetLayer()` returns NAIP imagery when the
   pages don't pay ~100 KB and PA is byte-for-byte unchanged. Verified: local mode emits the
   tag, `/tiles/street.pmtiles` answers Range requests (206 + correct Content-Range, PMTiles
   magic) as protomaps-leaflet requires; with the env var unset pages still emit CDN URLs.
-- **SATELLITE COMPLETE:** `app/tiles/satellite.mbtiles`, **200,538 tiles / 5.0 GB** (z0-16,
-  91,922 at z16; ~25 KB/tile, so a bit over the 4 GB estimate). Verified END-TO-END through
-  the Flask route: byte-identical md5, `200 image/jpeg`, out-of-corridor tiles 404 cleanly.
+- **SATELLITE COMPLETE:** `app/tiles/satellite.mbtiles`. Originally **200,538 tiles / 5.0 GB**
+  at buffer 1 (z0-16, 91,922 at z16; ~25 KB/tile). Verified END-TO-END through the Flask route:
+  byte-identical md5, `200 image/jpeg`, out-of-corridor tiles 404 cleanly. **WIDENED to buffer 2
+  (corridor ±2 tiles ≈ 2.5 km at z16) 2026-07-19: 357,010 tiles / 9.39 GB** — owner found the
+  buffer-1 corridor too narrow. Re-ran `build-tiles.py --repo <card>/app --buffer 2` INCREMENTALLY
+  against the existing store (skips the 200k already present, fetched only the ~156k new edge
+  tiles, ~2 h at ~20/s, resumable). Two gotchas handled: (1) `build-tiles.py` re-opens WAL, so
+  after the run convert back with `PRAGMA wal_checkpoint(TRUNCATE)` + `PRAGMA journal_mode=delete`
+  (single self-contained file for the removable card — verified no `-wal`/`-shm` left); (2) header
+  prints are block-buffered to the log even the process works — monitor progress via a read-only
+  `SELECT count(*) FROM tiles` instead (WAL allows a concurrent reader), and NEVER run
+  `PRAGMA quick_check` on the 9 GB card store (reads the whole file, minutes on SD). To widen
+  again just bump `--buffer` and re-run (buffer 3 ≈ 511k tiles / ~13 GB; card has ~42 GB free).
 - **STREET in progress:** corridor spans **21 states + DC** (point-in-polygon over the 103,184
   corridor points; PA/VA densest). Pipeline = `usb/build-street.sh`: emit corridor .poly ->
   download each Geofabrik extract -> osmconvert clip (raw deleted right after) -> hierarchical
