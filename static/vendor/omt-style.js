@@ -73,10 +73,12 @@
         pathish = ['path', 'track', 'footway', 'cycleway', 'pedestrian', 'steps', 'bridleway'],
         railish = ['rail', 'transit', 'light_rail', 'subway', 'tram', 'monorail', 'funicular'];
 
-    var mwW = [[5, 0.5], [8, 1], [11, 2], [13, 4], [15, 7], [18, 20]];
-    var prW = [[7, 0.4], [10, 1], [13, 3], [15, 5], [18, 16]];
-    var seW = [[9, 0.3], [12, 1.2], [14, 3], [16, 5], [18, 12]];
-    var miW = [[12, 0.6], [14, 1.6], [16, 3], [18, 8]];
+    // Line widths (px) by zoom. Kept deliberately lean so highways don't swamp
+    // the trip-detail GPS track — roughly matching online OSM raster weights.
+    var mwW = [[5, 0.4], [8, 0.8], [11, 1.4], [13, 2.6], [15, 4.5], [18, 13]];
+    var prW = [[7, 0.3], [10, 0.7], [13, 1.9], [15, 3.2], [18, 11]];
+    var seW = [[9, 0.25], [12, 0.9], [14, 2], [16, 3.4], [18, 8]];
+    var miW = [[12, 0.5], [14, 1.2], [16, 2.2], [18, 6]];
 
     var paintRules = [
       // --- land cover / parks (bottom) ---
@@ -89,10 +91,10 @@
       { dataLayer: 'water', symbolizer: new Poly({ fill: '#9fc6e8' }) },
       { dataLayer: 'waterway', symbolizer: new Line({ color: '#9fc6e8', width: w([[7, 0.5], [12, 1.2], [15, 3]]) }) },
       // --- road casings (drawn before fills so fills sit on top) ---
-      { dataLayer: 'transportation', minzoom: 6, filter: cls('class', major), symbolizer: new Line({ color: '#d8a24a', width: function (z) { return lerp(z, mwW) + lerp(z, [[8, 1], [14, 2], [18, 4]]); } }) },
-      { dataLayer: 'transportation', minzoom: 8, filter: cls('class', primary), symbolizer: new Line({ color: '#d9b96a', width: function (z) { return lerp(z, prW) + lerp(z, [[10, 1], [14, 2], [18, 4]]); } }) },
-      { dataLayer: 'transportation', minzoom: 10, filter: cls('class', secondary), symbolizer: new Line({ color: '#cfcabf', width: function (z) { return lerp(z, seW) + 1.5; } }) },
-      { dataLayer: 'transportation', minzoom: 13, filter: cls('class', minor), symbolizer: new Line({ color: '#d5d0c6', width: function (z) { return lerp(z, miW) + 1.2; } }) },
+      { dataLayer: 'transportation', minzoom: 6, filter: cls('class', major), symbolizer: new Line({ color: '#d8a24a', width: function (z) { return lerp(z, mwW) + lerp(z, [[8, 0.6], [14, 1.2], [18, 2.5]]); } }) },
+      { dataLayer: 'transportation', minzoom: 8, filter: cls('class', primary), symbolizer: new Line({ color: '#d9b96a', width: function (z) { return lerp(z, prW) + lerp(z, [[10, 0.6], [14, 1.2], [18, 2.5]]); } }) },
+      { dataLayer: 'transportation', minzoom: 10, filter: cls('class', secondary), symbolizer: new Line({ color: '#cfcabf', width: function (z) { return lerp(z, seW) + 1; } }) },
+      { dataLayer: 'transportation', minzoom: 13, filter: cls('class', minor), symbolizer: new Line({ color: '#d5d0c6', width: function (z) { return lerp(z, miW) + 0.8; } }) },
       // --- road fills ---
       { dataLayer: 'transportation', minzoom: 6, filter: cls('class', major), symbolizer: new Line({ color: '#f2a860', width: w(mwW) }) },
       { dataLayer: 'transportation', minzoom: 8, filter: cls('class', primary), symbolizer: new Line({ color: '#f7cd80', width: w(prW) }) },
@@ -112,10 +114,10 @@
       // route-number SHIELDS: prefixed label (I 70 / US 36 / OH 16 / C 12),
       // colored by network — interstates blue, US routes near-black, state gray,
       // county brown. Keyed off route_1_network so exit numbers aren't mislabeled.
-      { dataLayer: 'transportation_name', minzoom: 6,  filter: ofKind('interstate'), symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#1f3b7a', padding: 2.5, font: '700 11px sans-serif' }) },
-      { dataLayer: 'transportation_name', minzoom: 8,  filter: ofKind('us'),         symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#20232a', padding: 2.5, font: '700 11px sans-serif' }) },
-      { dataLayer: 'transportation_name', minzoom: 11, filter: ofKind('state'),      symbolizer: new Shield({ labelProps: shieldText, fill: '#1a1a1a', background: '#ffffff', padding: 2.5, font: '700 10px sans-serif' }) },
-      { dataLayer: 'transportation_name', minzoom: 12, filter: ofKind('county'),     symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#7a5a3a', padding: 2, font: '700 10px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 9,  filter: ofKind('interstate'), symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#1f3b7a', padding: 2.5, font: '700 11px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 11, filter: ofKind('us'),         symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#20232a', padding: 2.5, font: '700 11px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 12, filter: ofKind('state'),      symbolizer: new Shield({ labelProps: shieldText, fill: '#1a1a1a', background: '#ffffff', padding: 2.5, font: '700 10px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 13, filter: ofKind('county'),     symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#7a5a3a', padding: 2, font: '700 10px sans-serif' }) },
       // road NAME labels (streets that have a name)
       { dataLayer: 'transportation_name', minzoom: 13, filter: function (z, f) { return !!f.props.name; }, symbolizer: new LineLabel({ labelProps: ['name'], fill: '#4a4a4a', stroke: '#ffffff', width: 2.2, font: '500 12px sans-serif' }) },
       { dataLayer: 'water_name', minzoom: 10, symbolizer: new Text({ labelProps: ['name:en', 'name'], fill: '#5a7ea6', stroke: '#ffffff', width: 2, font: 'italic 400 11px sans-serif' }) },
