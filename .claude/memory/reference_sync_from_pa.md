@@ -38,6 +38,18 @@ Auth: `pa-ask-pass.sh` reads `PA_PW` from the gitignored `.env`, wired via
   (regenerated on demand, large) and `.trash/`.
 - **No `--delete` by default**, so a local-only file is never silently removed.
 
+**Bug fixed 2026-07-20 (preflight must NOT decide "up to date"):** the space preflight
+prices only file TRANSFERS (bytes to send), not DELETIONS, and returns empty on a
+transient preflight-rsync hiccup. It used to `echo "already up to date"; return 0` in
+that case — silently skipping the real rsync, so pending `--delete` removals never
+applied (observed: a `--delete` run reported "up to date" while a dry-run clearly listed
+34 deletions). Now the preflight only gates on disk space and always falls through to the
+real rsync. **Also: never run sync-from-pa from a dir where `static/uploads` is a SYMLINK
+(e.g. the `~/ekko-sdcard-test/app` test rig) — rsync won't sync into a symlinked dest dir,
+so the pull no-ops. Run it from the real working repo (`~/Dev/campgrounds`).** Both bit a
+trip-92 photo-scramble repair: the local copy was stale (PA was correct), and neither the
+symlinked test-rig run nor the buggy-preflight run actually pulled the fix.
+
 **This dev laptop has only ~4 GB free on `/`**, which is less than the ~7 GB photo set —
 so sync photos to the SD card (`--dest`), not the repo. The preflight enforces this.
 

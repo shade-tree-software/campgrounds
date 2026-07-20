@@ -89,10 +89,13 @@ pull() {                        # pull <remote-subdir> <local-subdir> [extra exc
         echo "         (e.g. --dest /media/andrew/EKKO/app for the SD card)." >&2
         exit 1
       fi
-    else
-      echo "  already up to date."
-      return 0
     fi
+    # NOTE: do NOT early-return here when $need is empty/0. The preflight only
+    # prices FILE TRANSFERS (bytes to send), not DELETIONS — and it can also come
+    # back empty on a transient preflight-rsync hiccup. Treating either as "up to
+    # date" silently skipped the real rsync below, so pending --delete removals
+    # (and metadata-only updates) never applied. Always fall through to rsync; it
+    # is the source of truth for what actually changes.
   fi
 
   rsync "${RSYNC_OPTS[@]}" "$@" -e "$SSH_CMD" \
