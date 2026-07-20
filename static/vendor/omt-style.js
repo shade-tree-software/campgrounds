@@ -114,7 +114,7 @@
       // county brown. Keyed off route_1_network so exit numbers aren't mislabeled.
       { dataLayer: 'transportation_name', minzoom: 6,  filter: ofKind('interstate'), symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#1f3b7a', padding: 2.5, font: '700 11px sans-serif' }) },
       { dataLayer: 'transportation_name', minzoom: 8,  filter: ofKind('us'),         symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#20232a', padding: 2.5, font: '700 11px sans-serif' }) },
-      { dataLayer: 'transportation_name', minzoom: 11, filter: ofKind('state'),      symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#6b6f76', padding: 2, font: '700 10px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 11, filter: ofKind('state'),      symbolizer: new Shield({ labelProps: shieldText, fill: '#1a1a1a', background: '#ffffff', padding: 2.5, font: '700 10px sans-serif' }) },
       { dataLayer: 'transportation_name', minzoom: 12, filter: ofKind('county'),     symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#7a5a3a', padding: 2, font: '700 10px sans-serif' }) },
       // road NAME labels (streets that have a name)
       { dataLayer: 'transportation_name', minzoom: 13, filter: function (z, f) { return !!f.props.name; }, symbolizer: new LineLabel({ labelProps: ['name'], fill: '#4a4a4a', stroke: '#ffffff', width: 2.2, font: '500 12px sans-serif' }) },
