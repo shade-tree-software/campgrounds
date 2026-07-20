@@ -901,8 +901,12 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
     function syncGpsPoints() {
       const trackVisible = map.hasLayer(gpsRouteLayer);
+      // Regular users only see the blue track line — the individual per-ping
+      // circles are an admin-only affordance (they feed the select/suppress/
+      // relocate tooling). Selection mode is already admin-gated; the
+      // zoom-reveal is what we suppress for non-admins here.
       const wantVisible = window.__selectionModeActive ||
-        (trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
+        (IS_ADMIN && trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
       if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
       if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
     }
