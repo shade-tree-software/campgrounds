@@ -209,6 +209,23 @@ def _local_tiles_active():
     return bool(os.environ.get("EKKO_LOCAL_TILES")) and os.path.isdir(LOCAL_TILE_DIR)
 
 
+def _pmtiles_maxzoom(path, default=14):
+    """Read the max-zoom byte (offset 101) from a PMTiles v3 header. The client
+    passes this to protomaps-leaflet as maxDataZoom so overzoom works: the lib
+    defaults maxDataZoom to 15 and would request tiles past the data's real max
+    (blank map above that zoom). Reading it here keeps the app correct whether the
+    installed street.pmtiles was rendered to z14 (corridor) or z15 (merged/route)
+    with no hardcoded coupling to the build's --maxzoom."""
+    try:
+        with open(path, "rb") as f:
+            head = f.read(127)
+        if head[:7] == b"PMTiles":
+            return head[101]
+    except Exception:
+        pass
+    return default
+
+
 def _tile_config():
     """Tile-source config emitted to the page as window.EKKO_TILES."""
     if _local_tiles_active():
@@ -219,11 +236,15 @@ def _tile_config():
         # stream of failed range requests. With these null, tile-layers.js falls
         # back to satellite imagery so the map is never blank; dropping
         # street.pmtiles into tiles/ lights up real streets with no code change.
-        has_vector = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "street.pmtiles"))
+        vec_path = os.path.join(LOCAL_TILE_DIR, "street.pmtiles")
+        has_vector = os.path.isfile(vec_path)
         has_raster = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "street.mbtiles"))
         return {
             "mode": "local",
             "streetVector": "/tiles/street.pmtiles" if has_vector else None,
+            # data max zoom of the .pmtiles, so the client overzooms from the right
+            # level instead of requesting non-existent deeper tiles (blank map)
+            "streetVectorMaxDataZoom": _pmtiles_maxzoom(vec_path) if has_vector else None,
             "street": "/tiles/street/{z}/{x}/{y}.png" if has_raster else None,
             "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"],  # baked NAIP, single layer
             "maxZoom": 19, "maxNativeZoom": 16,           # NAIP native ceiling z16

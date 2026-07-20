@@ -19,7 +19,8 @@
 <script>window.EKKO_TILES = {{ tile_config|tojson }};</script>
 {# protomaps-leaflet renders the offline stick's vector street basemap. Only
    the local-tile build needs it, so online pages don't pay the ~100 KB. #}
-{% if tile_config.mode == 'local' %}<script src="{{ static_v('vendor/protomaps-leaflet.js') }}"></script>{% endif %}
+{% if tile_config.mode == 'local' %}<script src="{{ static_v('vendor/protomaps-leaflet.js') }}"></script>
+<script src="{{ static_v('vendor/omt-style.js') }}"></script>{% endif %}
 <script src="{{ static_v('vendor/tile-layers.js') }}"></script>
 {% block head_extra %}{% endblock %}
 <style>

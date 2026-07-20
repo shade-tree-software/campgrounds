@@ -28,9 +28,30 @@
   window.ekkoStreetLayer = function (opts) {
     var t = cfg(); opts = opts || {};
     if (t.mode === 'local' && t.streetVector && window.protomapsL) {
-      return window.protomapsL.leafletLayer(Object.assign(
-        { url: t.streetVector, theme: 'light', maxZoom: t.maxZoom,
-          attribution: '&copy; OpenStreetMap contributors' }, opts));
+      // The .pmtiles uses the OpenMapTiles schema (planetiler default), NOT the
+      // Protomaps basemap schema that protomapsL's built-in 'light' theme paints
+      // — so we supply explicit OMT paint/label rules (see omt-style.js). Without
+      // them the map draws water but no roads. Fall back to 'light' if the rule
+      // builder is somehow absent, so the layer still appears.
+      // maxDataZoom MUST match the .pmtiles data max zoom, else protomaps-leaflet
+      // (which defaults it to 15) requests deeper tiles that don't exist and the
+      // map goes BLANK above that zoom instead of overzooming. The server reads it
+      // from the pmtiles header (streetVectorMaxDataZoom) so it's correct for a
+      // z14 corridor or a z15 merged build alike; fall back to 14.
+      var base = { url: t.streetVector, maxZoom: t.maxZoom,
+                   maxDataZoom: t.streetVectorMaxDataZoom || 14,
+                   attribution: '&copy; OpenStreetMap contributors' };
+      try {
+        if (window.ekkoOmtStyle) {
+          var s = window.ekkoOmtStyle(window.protomapsL);
+          base.paintRules = s.paintRules;
+          base.labelRules = s.labelRules;
+          base.backgroundColor = s.backgroundColor;
+        } else {
+          base.theme = 'light';
+        }
+      } catch (e) { base.theme = 'light'; }
+      return window.protomapsL.leafletLayer(Object.assign(base, opts));
     }
     // Offline with no street store installed yet (the server nulls both street
     // fields when neither file exists). Show satellite imagery rather than a
