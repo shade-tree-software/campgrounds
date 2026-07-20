@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-20T10:38:38.463Z
+  modified: 2026-07-20T12:35:02.502Z
 ---
 
 California is **mid-sweep** as of 2026-07-19 (this file was missing until now, which
@@ -56,13 +56,13 @@ CA new entries now number **240** (was 243).
      12227, Catavee/Kinnikinnick/Hungry Gulch/Live Oak N/Big Pine Creek 12290-12294), all
      verified via rec.gov as separate facilities. Inclusion folded in (every entry has
      `inclusion_evidence`).
-   - **NEXT: WATERFRONT AUDIT of the 515 new ids (11848-12362)** — NOT yet run; all sit at
-     placeholder `not waterfront` with NO `waterfront_evidence`. 515 leads captured in
-     scratchpad `ca_fed_leads.json` (keyed by id) — carry each into its audit batch.
-     Pipeline: build ~8-id batches from `audit/waterfront_audit_instructions.md`, run
-     SEQUENTIALLY (~65 batches), apply with `python3 audit/apply_waterfront_audit.py
-     <results.json>`, commit in tranches. THEN CA federal is fully done → only the private
-     bucket remains for the whole CA sweep.
+   - **WATERFRONT AUDIT of the 515 new ids (11848-12362) — IN PROGRESS.** 65 batches of 8
+     built in scratchpad `ca_fed_wf/wb_NN.json` (each carries its `lead`); results to
+     `ca_fed_wf/results/wr_NN.json`. Run SEQUENTIALLY. Apply is PER-FILE (the script only
+     reads argv[1]): `for i in ..; do python3 audit/apply_waterfront_audit.py wr_$i.json; done`.
+     - **AUDIT CURSOR: batches 1-10/65 DONE + committed** (`9ed1679`, ids 11848-11927; 32
+       upgrades/40%, 1 coord fix). Next: audit batch 11. Then commit in ~10-batch tranches.
+     THEN CA federal is fully done → only the private bucket remains for the whole CA sweep.
 2. **Private bucket — NOT RUN.** The 4 present came from the local pass. Expect
    AZ-grade difficulty: CA private skews hard to 55+/snowbird/membership parks.
 3. Those 3 legacy federal entries (277/279/295) lack `inclusion_evidence`.
