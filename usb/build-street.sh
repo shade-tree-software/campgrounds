@@ -28,7 +28,9 @@ POLY_ZOOM=11          # z11 +/-1 tile => a ~19 km corridor each side of the rout
 STAGE=all
 JAVA_HEAP=1800m       # 3 GB box: 1400m OOM'd (300M sortedtable index + 4 threads of
                       # feature buffers). Leave ~1 GB for the OS page cache — planetiler
-                      # mmaps ~3.5 GB of node locations and thrashes without it.
+                      # mmaps ~3.5 GB of node locations and thrashes without it. On a
+                      # bigger machine give it room (6g/8 threads was comfortable on a
+                      # 14 GB / 20-core box) — see usb/BUILD-STREET-ON-BIG-MACHINE.md.
 RENDER_THREADS=2      # heap, not CPU, is the binding constraint on this 3 GB box:
                       # at 3 threads osm_pass2 sat at postGC 1.7G/1.8G and crawled at
                       # ~600 ways/s. Fewer in-flight feature buffers = less GC pressure.
@@ -163,10 +165,19 @@ fi
 # ---- 5. render ---------------------------------------------------------------
 if want render || want all; then
   step "planetiler render -> street.pmtiles"
-  "$JAVA" -Xmx$JAVA_HEAP -jar "$PLANETILER" \
+  # -Djava.io.tmpdir / -Dorg.sqlite.tmpdir: the OpenMapTiles profile's
+  # natural_earth stage loads a bundled sqlite-jdbc native .so, which it extracts
+  # to java.io.tmpdir (default /tmp) and mmaps. On hosts where /tmp is mounted
+  # noexec that map fails (NativeLibraryNotFoundException). Point both at the
+  # build dir (always exec-capable) so it works regardless of the /tmp mount.
+  # --download: the profile needs 3 source files (lake_centerlines, water_polygons,
+  # natural_earth, ~1.4 GB); without this flag planetiler aborts "does not exist".
+  "$JAVA" -Xmx$JAVA_HEAP \
+    -Djava.io.tmpdir="$BUILD_DIR/pltmp" -Dorg.sqlite.tmpdir="$BUILD_DIR/pltmp" \
+    -jar "$PLANETILER" \
     --osm_path="$MERGED" \
     --polygon="$POLY" \
-    --download_dir="$BUILD_DIR/data/sources" \
+    --download --download_dir="$BUILD_DIR/data/sources" \
     --tmpdir="$BUILD_DIR/pltmp" \
     --output="$OUT" --force \
     --minzoom=0 --maxzoom=14 \
