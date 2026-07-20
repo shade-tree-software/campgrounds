@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-20T12:35:02.502Z
+  modified: 2026-07-20T14:20:41.628Z
 ---
 
 California is **mid-sweep** as of 2026-07-19 (this file was missing until now, which
@@ -60,8 +60,9 @@ CA new entries now number **240** (was 243).
      built in scratchpad `ca_fed_wf/wb_NN.json` (each carries its `lead`); results to
      `ca_fed_wf/results/wr_NN.json`. Run SEQUENTIALLY. Apply is PER-FILE (the script only
      reads argv[1]): `for i in ..; do python3 audit/apply_waterfront_audit.py wr_$i.json; done`.
-     - **AUDIT CURSOR: batches 1-10/65 DONE + committed** (`9ed1679`, ids 11848-11927; 32
-       upgrades/40%, 1 coord fix). Next: audit batch 11. Then commit in ~10-batch tranches.
+     - **AUDIT CURSOR: batches 1-20/65 DONE + committed** (`9ed1679` 11848-11927;
+       `bdde20d` 11928-12007; 160 audited, ~56 upgrades/35%, 2 coord fixes). Next: audit
+       batch 21. Commit in ~10-batch tranches.
      THEN CA federal is fully done → only the private bucket remains for the whole CA sweep.
 2. **Private bucket — NOT RUN.** The 4 present came from the local pass. Expect
    AZ-grade difficulty: CA private skews hard to 55+/snowbird/membership parks.
