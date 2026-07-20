@@ -26,7 +26,46 @@
 
   window.ekkoOmtStyle = function (P) {
     var Poly = P.PolygonSymbolizer, Line = P.LineSymbolizer,
-        Text = P.CenteredTextSymbolizer, LineLabel = P.LineLabelSymbolizer;
+        Text = P.CenteredTextSymbolizer, LineLabel = P.LineLabelSymbolizer,
+        Shield = P.ShieldSymbolizer;
+    // Route SHIELDS. The route number is carried in the transportation_name layer
+    // as `route_1_network` (raw, e.g. "US:I" / "US:US" / "US:OH") + `route_1_ref`
+    // (the number). Plain `ref` alone is unreliable — on motorways it's often the
+    // EXIT number, so we key off route_1_network/normalized `network` and skip
+    // features that have neither (exit markers, trails like "rwn").
+    function shieldKind(f) {
+      var parts = (f.props.route_1_network || '').split(':');
+      var mid = parts[1] || '', sub = parts[2] || '';
+      if (mid === 'I') return 'interstate';
+      if (mid === 'US') return 'us';
+      if (/county|^c[rd]?$/i.test(sub)) return 'county';
+      if (/^[A-Z]{2}$/.test(mid)) return 'state';
+      var nn = f.props.network || '';          // fallback when route_1_* absent
+      if (nn === 'us-interstate') return 'interstate';
+      if (nn === 'us-highway') return 'us';
+      if (nn === 'us-state') return 'state';
+      return null;
+    }
+    // labelProps as a function: compute the prefixed label, stash it on the
+    // feature, and return its key (the text attr reads t.props[key]).
+    function shieldText(z, f) {
+      var kind = shieldKind(f), mid = (f.props.route_1_network || '').split(':')[1] || '';
+      var ref = f.props.route_1_ref || f.props.ref || '';
+      var prefix = kind === 'interstate' ? 'I'
+                 : kind === 'us' ? 'US'
+                 : kind === 'county' ? 'C'
+                 : (kind === 'state' && /^[A-Z]{2}$/.test(mid)) ? mid : '';
+      f.props.__shield = (prefix ? prefix + ' ' : '') + ref;
+      return ['__shield'];
+    }
+    // shield only when the ref actually contains a number — skips named special
+    // routes (parkways/byways/scenic: US:KY:Parkway, US:OH:Byway, US:CO:NW) whose
+    // ref is a name/code, which would otherwise render as a bare prefix ("KY ").
+    function ofKind(kind) {
+      return function (z, f) {
+        return shieldKind(f) === kind && /[0-9]/.test(f.props.route_1_ref || f.props.ref || '');
+      };
+    }
 
     var major = ['motorway', 'trunk'], primary = ['primary'],
         secondary = ['secondary', 'tertiary'],
@@ -68,9 +107,18 @@
     ];
 
     var labelRules = [
-      { dataLayer: 'transportation_name', minzoom: 12, symbolizer: new LineLabel({ labelProps: ['name'], fill: '#4a4a4a', stroke: '#ffffff', width: 2.2, font: '500 12px sans-serif' }) },
-      { dataLayer: 'water_name', minzoom: 10, symbolizer: new Text({ labelProps: ['name:en', 'name'], fill: '#5a7ea6', stroke: '#ffffff', width: 2, font: 'italic 400 11px sans-serif' }) },
+      // city/town labels (highest priority in collision order)
       { dataLayer: 'place', minzoom: 7, filter: cls('class', ['city', 'town']), symbolizer: new Text({ labelProps: ['name:en', 'name'], fill: '#333333', stroke: '#ffffff', width: 2.5, font: '600 13px sans-serif' }) },
+      // route-number SHIELDS: prefixed label (I 70 / US 36 / OH 16 / C 12),
+      // colored by network — interstates blue, US routes near-black, state gray,
+      // county brown. Keyed off route_1_network so exit numbers aren't mislabeled.
+      { dataLayer: 'transportation_name', minzoom: 6,  filter: ofKind('interstate'), symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#1f3b7a', padding: 2.5, font: '700 11px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 8,  filter: ofKind('us'),         symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#20232a', padding: 2.5, font: '700 11px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 11, filter: ofKind('state'),      symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#6b6f76', padding: 2, font: '700 10px sans-serif' }) },
+      { dataLayer: 'transportation_name', minzoom: 12, filter: ofKind('county'),     symbolizer: new Shield({ labelProps: shieldText, fill: '#ffffff', background: '#7a5a3a', padding: 2, font: '700 10px sans-serif' }) },
+      // road NAME labels (streets that have a name)
+      { dataLayer: 'transportation_name', minzoom: 13, filter: function (z, f) { return !!f.props.name; }, symbolizer: new LineLabel({ labelProps: ['name'], fill: '#4a4a4a', stroke: '#ffffff', width: 2.2, font: '500 12px sans-serif' }) },
+      { dataLayer: 'water_name', minzoom: 10, symbolizer: new Text({ labelProps: ['name:en', 'name'], fill: '#5a7ea6', stroke: '#ffffff', width: 2, font: 'italic 400 11px sans-serif' }) },
       { dataLayer: 'place', minzoom: 12, filter: cls('class', ['village', 'suburb', 'neighbourhood', 'hamlet']), symbolizer: new Text({ labelProps: ['name:en', 'name'], fill: '#555555', stroke: '#ffffff', width: 2, font: '400 11px sans-serif' }) }
     ];
 

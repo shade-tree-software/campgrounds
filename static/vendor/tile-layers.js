@@ -33,11 +33,13 @@
       // — so we supply explicit OMT paint/label rules (see omt-style.js). Without
       // them the map draws water but no roads. Fall back to 'light' if the rule
       // builder is somehow absent, so the layer still appears.
-      // maxDataZoom MUST match the .pmtiles max data zoom (build-street.sh
-      // --maxzoom=14). protomaps-leaflet defaults it to 15; leaving it there
-      // makes the renderer request z15 data tiles that don't exist past z14, so
-      // the map goes BLANK above ~z15 instead of overzooming the z14 tiles.
-      var base = { url: t.streetVector, maxZoom: t.maxZoom, maxDataZoom: 14,
+      // maxDataZoom MUST match the .pmtiles data max zoom, else protomaps-leaflet
+      // (which defaults it to 15) requests deeper tiles that don't exist and the
+      // map goes BLANK above that zoom instead of overzooming. The server reads it
+      // from the pmtiles header (streetVectorMaxDataZoom) so it's correct for a
+      // z14 corridor or a z15 merged build alike; fall back to 14.
+      var base = { url: t.streetVector, maxZoom: t.maxZoom,
+                   maxDataZoom: t.streetVectorMaxDataZoom || 14,
                    attribution: '&copy; OpenStreetMap contributors' };
       try {
         if (window.ekkoOmtStyle) {

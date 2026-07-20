@@ -27,7 +27,7 @@
 // Bump VERSION to invalidate the page/photo caches after a deploy that changes
 // the app shell in incompatible ways.
 
-const VERSION = 'v6';
+const VERSION = 'v7';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 // Map tiles are immutable per z/x/y, so their cache is DELIBERATELY decoupled
@@ -211,8 +211,16 @@ self.addEventListener('fetch', (e) => {
   if (url.pathname === '/sw.js' || url.pathname.startsWith('/login') ||
       url.pathname.startsWith('/logout') || url.pathname === '/sw-reset') return;
 
-  if (url.pathname.startsWith('/static/vendor/')) {
-    // Immutable vendored libs (Leaflet) — cache-first, precached on install.
+  if (url.pathname === '/static/vendor/tile-layers.js' ||
+      url.pathname === '/static/vendor/omt-style.js') {
+    // OUR app JS lives under vendor/ but is NOT immutable — it changes across
+    // deploys. cacheFirstStatic matches with ignoreSearch, which defeats the
+    // ?v= cache-buster and pins a stale copy (e.g. a pre-fix tile-layers.js →
+    // no roads until a hard reset). Serve these network-first so they stay fresh
+    // online, with the cache only as an offline fallback.
+    e.respondWith(networkFirst(req));
+  } else if (url.pathname.startsWith('/static/vendor/')) {
+    // Immutable vendored libs (Leaflet, protomaps-leaflet) — cache-first.
     e.respondWith(cacheFirstStatic(req));
   } else if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/static/uploads/')) {
     e.respondWith(cacheFirst(req));

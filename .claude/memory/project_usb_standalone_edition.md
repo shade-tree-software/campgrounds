@@ -10,6 +10,47 @@ metadata:
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
 
+**>>> STATUS 2026-07-20 (later): MERGED z15 street map BUILT + route/highway corridor +
+route-number shields.** Owner wanted, beyond the corridor map, coverage of a planned DC->Rocky
+Mountain NP trip. Built a SECOND, MERGED `street.pmtiles` and chose to REPLACE the corridor one:
+- **`/data/ekko-us-build/street-merged.pmtiles`, 7.4 GB, z0-15** (features 26 GB, ~17 min render).
+  Covers the existing trip corridor (FL->ME) + 3 routed ribbons through the roadside.json stops +
+  ~62 named highways, all buffered +/-40 km (poly-zoom 10). Owner copies it to
+  `<card>/app/tiles/street.pmtiles` (renamed) — supersedes the 1.7 GB z14 corridor file; either
+  file is a valid drop-in now (see maxDataZoom auto-detect below).
+- **Built on LOCAL disk `/data/ekko-us-build`** (xfs, exec-ok) NOT the NFS home — planetiler's
+  mmap node map is brutal over NFS. JRE+jar copied there. Downloaded `us-latest.osm.pbf` (12 GB)
+  via **Python urllib** (the sandbox blocks the curl BINARY inside scripts but urllib has network),
+  clipped to a combined poly with osmconvert (4.9 GB), rendered z15 with the same --download +
+  `-Djava.io.tmpdir`/`-Dorg.sqlite.tmpdir` fixes.
+- **`roadside.json`** (repo root, 256 stops FL->CO, fields id/name/town/state/lat/lon) is the
+  owner's planned roadside-stops file. Two cross-country lines: SOUTHERN (I-70/US-36 ~lat 39.7) and
+  NORTHERN with TWO variations across NE/IA (I-80 ~lat 40.9 and US-6/US-34 ~lat 40.4); plus an SE
+  coastal cluster (excluded). Routed each line home->Estes via OSRM (router.project-osrm.org, urllib),
+  buffered into the corridor. Scratch scripts in `/data/ekko-us-build/`: route_poly.py, extract_highways.py.
+- **Highway geometry** for the ~62 listed refs (+I-81/US-58) pulled from OSM route RELATIONS via
+  Overpass (chunked by longitude slab; public servers 504 on big unions). KEY OSM tagging: the number
+  is in `ref`, the system in `network` — interstate `network=US:I`, US `US:US`, state `US:OH`/`US:CO`
+  (2-letter code). Query `rel["route"="road"]["network"=..]["ref"=..]` then `way(r)(bbox)`.
+- **ROUTE-NUMBER SHIELDS added to omt-style.js** (owner request): label = prefix+number colored by
+  network (I=blue, US=near-black, state=gray w/ 2-letter code, county=brown). Built from the
+  transportation_name layer's `route_1_network`/`route_1_ref` (NOT plain `ref` — on motorways `ref`
+  is often the EXIT number). protomaps-leaflet's text `labelProps` accepts a FUNCTION returning
+  property-name array; the shield label is computed by mutating `f.props.__shield` and returning
+  `['__shield']`. Shields require a NUMERIC ref (skips named parkways/byways like US:KY:Parkway whose
+  ref is a name -> would render as a bare "KY "). ShieldSymbolizer opts: `{labelProps, fill, background,
+  padding, font}`. Verified label logic against decoded tiles (pmtiles + mapbox_vector_tile in the venv).
+- **maxDataZoom now auto-detected server-side** (`_pmtiles_maxzoom` reads header byte 101; emitted as
+  `streetVectorMaxDataZoom`; tile-layers.js uses it): removes the brittle hardcoded 14, so a z14
+  corridor OR z15 merged pmtiles is a correct drop-in with no code edit.
+- **Service-worker fix (VERSION v6->v7):** `tile-layers.js`+`omt-style.js` are OUR mutable code but
+  lived under the `/static/vendor/` cacheFirstStatic (ignoreSearch) bucket, which defeated the `?v=`
+  buster and pinned a stale pre-fix copy -> "roads missing on navigation until a hard reset". Now
+  served network-first; only truly-immutable libs (leaflet, protomaps-leaflet) stay cache-first.
+- Test rig `/nis_home/awhamil/ekko-sdcard-test/` now symlinks street.pmtiles -> the merged file.
+  `/data/ekko-us-build/` holds ~30 GB of build artifacts (us-latest, corridor.osm.pbf, the pmtiles,
+  scratch) — deletable once the card is loaded.
+
 **>>> STATUS 2026-07-20: street.pmtiles BUILT.** Rendered on the dev box
 (`/nis_home/awhamil`, 14 GB RAM / 20 cores) at `--poly-zoom 11`, `JAVA_HEAP=6g` /
 `RENDER_THREADS=8`. Output: **`/nis_home/awhamil/ekko-streetbuild/street.pmtiles`, 1.7 GB,
