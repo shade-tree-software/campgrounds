@@ -5,10 +5,43 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 8d60efa1-9fa1-4ef7-b075-4178d82597ae
-  modified: 2026-07-19T14:42:10.388Z
+  modified: 2026-07-21T14:07:24.263Z
 ---
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
+
+**>>> STATUS 2026-07-21: FULL NATIONWIDE street map BUILT — supersedes both corridor files.**
+Owner asked for nationwide coverage. Rendered the WHOLE `us-latest.osm.pbf` (no `--polygon`) to
+**`/data/ekko-us-build/street-us.pmtiles`, 9.9 GB, z0-14, 48,386,571 tiles / 540 M features**.
+- **It took 22 MINUTES total** on this box (20 cores / 14 GB / NVMe `/data`): pass1 1m30s (1.58 B
+  nodes, 159 M ways, 1.5 M rels), pass2 9m21s, sort 1m22s, archive 8m46s. Peak scratch 39 GB
+  features (planetiler cleans it up); needed ~80 GB free. Command saved as
+  `/data/ekko-us-build/render-nationwide.sh`: `-Xmx6g --threads=10 --nodemap_type=sparsearray
+  --storage=mmap --nodemap_storage=mmap --nodemap_madvise=true`, `-Djava.io.tmpdir`/
+  `-Dorg.sqlite.tmpdir` on `/data` (noexec-/tmp fix), `--download` w/ sources already cached.
+  The old "needs a big machine / ~10 h" fear was purely the 3 GB laptop — nationwide is trivial here.
+- **z14 chosen deliberately** (owner picked it over z15): nationwide z15 would be ~40-60 GB and
+  would not fit the 64 GB card beside the 9.39 GB satellite store + 6.9 GB photos. Vectors overzoom
+  crisply past z14; the cost is z15 density (house numbers / fine footpaths) that the old corridor
+  file had along the trip route only.
+- **VERIFIED** with `pmtiles` + `mapbox_vector_tile` (installed to `/data/ekko-us-build/verify/pylibs`
+  — NOT /tmp, which is noexec and fails to map shapely's .so; script `verify/verify_us_pmtiles.py`):
+  header z0-14 / MVT / gzip, all 16 OMT layers, and z14 tiles decode with real roads at Denver,
+  Estes Park, Seattle, Miami, Bangor, Bismarck, Austin, **Anchorage, Honolulu**, Barstow, rural NV.
+  `route_1_network`/`route_1_ref` present (so omt-style.js shields work). App's `_pmtiles_maxzoom`
+  reads 14 off it -> correct drop-in, NO code change.
+- **GAP: Puerto Rico / USVI have NO roads** — Geofabrik's `north-america/us` extract excludes them
+  (a PR tile exists but is empty). Would need a separate extract + re-render if ever wanted.
+- **SERVE-VERIFIED through the fake-SD-card rig** `/nis_home/awhamil/ekko-sdcard-test`
+  (`./START-TEST.sh 5055`, symlink repointed to the nationwide file): `_tile_config()` returns
+  `mode:local`, `streetVector:/tiles/street.pmtiles`, `streetVectorMaxDataZoom:14`; HTTP Range
+  requests on the 10.56 GB file return 206 with correct `Content-Range` both at byte 0 (PMTiles
+  magic, minzoom 0 / maxzoom 14) and at a 5 GB-deep offset — so protomaps-leaflet's random seeks
+  work at that size. (curl-exec is still sandbox-blocked in scripts; used urllib.)
+- **INSTALL (still pending — card was not mounted):** `cp /data/ekko-us-build/street-us.pmtiles
+  <card>/app/tiles/street.pmtiles`. `street-merged.pmtiles` (7.4 GB) kept for now but is
+  obsolete once the nationwide file is on the card; `us-latest.osm.pbf` (12 GB) worth keeping for
+  a re-render.
 
 **>>> STATUS 2026-07-20 (later): MERGED z15 street map BUILT + route/highway corridor +
 route-number shields.** Owner wanted, beyond the corridor map, coverage of a planned DC->Rocky
