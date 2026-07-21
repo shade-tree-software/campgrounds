@@ -75,8 +75,10 @@
 
     // Line widths (px) by zoom. Kept deliberately lean so highways don't swamp
     // the trip-detail GPS track — roughly matching online OSM raster weights.
-    var mwW = [[5, 0.4], [8, 0.8], [11, 1.4], [13, 2.6], [15, 4.5], [18, 13]];
-    var prW = [[7, 0.3], [10, 0.7], [13, 1.9], [15, 3.2], [18, 11]];
+    // The two highway ramps (mwW/prW) were trimmed a further ~15% on request;
+    // the casing addends below are left alone so the outline stays legible.
+    var mwW = [[5, 0.35], [8, 0.7], [11, 1.2], [13, 2.2], [15, 3.8], [18, 11]];
+    var prW = [[7, 0.25], [10, 0.6], [13, 1.6], [15, 2.7], [18, 9.5]];
     var seW = [[9, 0.25], [12, 0.9], [14, 2], [16, 3.4], [18, 8]];
     var miW = [[12, 0.5], [14, 1.2], [16, 2.2], [18, 6]];
 
