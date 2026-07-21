@@ -1,96 +1,53 @@
 ---
 name: project_ca_sweep_handoff
-description: California sweep IN PROGRESS — state + local + federal buckets DONE (added + inclusion + waterfront audited); only the private bucket remains
+description: California sweep COMPLETE — all 4 buckets (state/local/federal/private) added + inclusion + waterfront audited & pushed
 metadata: 
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-21T02:02:36.657Z
+  modified: 2026-07-21T16:03:47.092Z
 ---
 
-California is **mid-sweep** as of 2026-07-19 (this file was missing until now, which
-is why the sweep silently fell off the radar after the USB/tile work interrupted it —
-every other state has a handoff memory; CA did not).
+California is **COMPLETE** as of 2026-07-21 — the largest state sweep to date.
+All four buckets added + inclusion-audited (`inclusion_evidence` on every entry)
++ waterfront-audited (`waterfront_evidence` on every entry), all pushed.
 
-**Done — added and inclusion-audited (`inclusion_evidence` present on all 243):**
-- **State parks** — 111 entries, ids 11605–11715, commit `ad6abbd`
-- **Local** — 132 entries, ids 11716–11847, commit `3f04f89` (128 still `local`,
-  4 reclassified `private` during vetting)
+**By bucket (new entries this whole sweep):**
+- **State parks** — 111 entries, ids 11605–11715 (commit `ad6abbd`).
+- **Local** — 132 entries, ids 11716–11847 (`3f04f89`); 3 removed during inclusion
+  (11722 Bear River, 11784 Los Gatos Creek, 11792 Lake San Antonio S dup) → net 240
+  for state+local combined. Waterfront: 108 upgrades over the 240, 56 coord fixes
+  (`ac40d61`/`735b869`/`baad937`); removals in `8f49e87`.
+- **Federal** — 514 entries, ids 11848–12362 (507 federal / 6 private PG&E-SCE / 1
+  local TCPUD; removed tent-only Hobo 12226). Waterfront 180 upgrades/35%. 8 add
+  commits + 7 audit-tranche commits, all pushed. Kern River/Lake Isabella + Shasta/
+  Trinity/Bucks/Antelope the richest on-water veins.
+- **Private — DONE 2026-07-21 (this session).** 111 entries, ids **12363–12473**
+  (private 74 / federal 23 / local 12 / state 2 — the non-private ones are RV-Life-
+  mistagged "commercial" agency campgrounds the federal/state sweeps missed *because*
+  they carry a commercial `park_type`: concessionaire USFS/BLM/NPS + irrigation/water-
+  district [EID/NID/Merced ID/United Water] + SMUD + tribal casino RV parks). Add
+  commit `7f9cd58`, waterfront-audit commit `3b3f7ea`.
+  - Detection: RV Life Algolia (app H0LPZK92QJ, park_type=commercial, region_abbvr==CA),
+    gated to ≤$$ & ≥4★ → 1030 raw → 212 candidates in 18 batches. 112 add / 98 skip
+    (**53% skip — AZ-grade**: Coachella/Desert-Hot-Springs 55+ residential resorts,
+    Escapees/Thousand-Trails/Colorado-River-Adventures membership, Elks/Moose club lots,
+    bare casino overnight lots [0 sites], mobile-home/long-term parks). 1 dup dropped by
+    append dedup (Albee Creek ~ existing 11605) → 111 added.
+  - Waterfront: 43 upgrades/39% (25 on-water: 9 lakefront/9 creekside/5 riverfront/
+    1 bayfront/1 coastal dunes [Wright's Beach, Sonoma Coast]; 18 view: 10 lakeview/
+    7 riverview/1 bayview) + 4 coord fixes. Eastern Sierra (Convict/Coldwater/Sherwin
+    Creek/Lee Vining/Owens River) + Colorado River (Rio Del Sol/Big River riverfront,
+    Havasu Landing lakefront) the richest veins.
 
-**Waterfront audit — DONE (2026-07-19), all 243 in 31 sequential batches.**
-Commits `ac40d61` (1-10), `735b869` (11-20), `baad937` (21-31). 108 upgrades (44%):
-26 lakefront, 19 creekside, 14 riverfront, 12 coastal dunes, 8 bayfront, 4 coastal
-woods = 83 on-water; 13 lakeview, 11 bayview, 1 riverview = 25 view. 56 coord fixes
-(23% — county reservoir parks were badly mis-pinned to marinas/day-use lots/open
-water; the state-beach entries were mostly fine). All 243 now carry
-`waterfront_evidence`. Batch files + results in the session scratchpad `ca_audit/`.
+**Legacy loose ends (pre-existing CA entries, NOT from this sweep) — still open:**
+- 3 legacy federal entries (ids 277/279/295 — Kirk Creek, Tuolumne Meadows, Jumbo
+  Rocks) lack `inclusion_evidence`.
+- The state/local/federal buckets folded inclusion+waterfront in at add time, so the
+  240+514 new entries are fully covered; only those 3 legacy ids remain unaudited.
 
-**Three inclusion problems surfaced during the audit — all REMOVED (commit `8f49e87`,
-owner approved 2026-07-19; none had trip_data references):**
-- **11722 Bear River Campground** (Placer County) — no campground on imagery; closed
-  to overnight camping.
-- **11784 Los Gatos Creek Park** (Fresno County) — closed indefinitely since Dec 2025.
-- **11792 "Lake San Antonio South Shore (Monterey County)"** — duplicate of 11779.
-CA new entries now number **240** (was 243).
-
-**Outstanding:**
-1. **Federal bucket — ✅ COMPLETE (2026-07-20).** 514 new entries added (ids 11848-12362,
-   less removed tent-only Hobo 12226; 507 federal / 6 private PG&E-SCE / 1 local TCPUD),
-   ALL inclusion-audited (inclusion_evidence) + ALL waterfront-audited (waterfront_evidence).
-   Waterfront: 180 upgrades/35% (94 on-water: 36 lakefront/28 riverfront/30 creekside; 86
-   view: 60 lakeview/26 riverview), 334 not-waterfront, ~12 coord fixes. 8 add commits +
-   7 audit-tranche commits + Hobo removal, all pushed. Kern River/Lake Isabella + Shasta/
-   Trinity/Bucks/Antelope lakes were the richest on-water veins; huge NF under-23ft/tent-
-   only/canopy-blind skip+default-down rate. Detection method (for reference): RV Life
-   Algolia app H0LPZK92QJ (key inline on campgrounds.rvlife.com/), tiled CA bbox, park_type
-   in {national,usfs,dnr=BLM,coe}, region_abbvr==CA. **Only the PRIVATE bucket remains for
-   the whole CA sweep** (expect AZ-grade 55+/snowbird/membership vetting).
-
-<details><summary>(historical) federal-bucket in-progress notes</summary>
-
-**Federal bucket — WAS IN PROGRESS (started 2026-07-19).** Detection DONE: RV Life
-   Algolia (app H0LPZK92QJ, key inline on campgrounds.rvlife.com/) tiled over the CA
-   bounding box, park_type in {national,usfs,dnr,coe} (dnr=BLM=federal in CA), filtered
-   region_abbvr==CA, dropped closed/test, deduped vs DB (caught the 3 legacy CA-fed +
-   1 AZ border). **763 candidates → 64 batches of 12** (usfs 390 / national 301 /
-   dnr-BLM 56 / coe 16), clustered by park_type + geo. Batch files in session scratchpad
-   `ca_fed/batch_NN.json`; results to `ca_fed/results/`. Pipeline: sequential research
-   agent per batch (contract = `audit/add_research_instructions_ca.md`) → append via
-   `python3 append_state.py --state CA --leads <ca_fed_leads.json> <results...>` →
-   commit in tranches (~8 batches) → then sequential waterfront audit over the new ids
-   carrying the leads. Legacy CA federal is largest bucket of any state (NPS Yosemite/
-   Sequoia-Kings/Death Valley/Joshua Tree, 18 NFs, BLM incl LTVAs/Glamis/King Range,
-   USACE reservoirs). Track batch cursor here as it advances.
-   - **ADD STAGE COMPLETE (2026-07-20): all 64/64 research batches added + committed +
-     PUSHED.** 515 new entries, ids **11848-12362** (508 federal, 6 private PG&E/SCE
-     project reservoirs, 1 local TCPUD), ~60% keep rate. Commits `18504ba` `9558736`
-     `a9fd580` `d8ab819` `c11fd4f` `50912be` `5d5c61e` `f7296cd`. Dedup dropped re-listed
-     Tree of Heaven/Red Feather/Upper Stony Creek/Rancheria/Green Valley; hand-re-added
-     the distinct-but-<150m cluster neighbors (Davis Flat 12089, Hobo 12226, Stony Creek
-     12227, Catavee/Kinnikinnick/Hungry Gulch/Live Oak N/Big Pine Creek 12290-12294), all
-     verified via rec.gov as separate facilities. Inclusion folded in (every entry has
-     `inclusion_evidence`).
-   - **WATERFRONT AUDIT of the 515 new ids (11848-12362) — IN PROGRESS.** 65 batches of 8
-     built in scratchpad `ca_fed_wf/wb_NN.json` (each carries its `lead`); results to
-     `ca_fed_wf/results/wr_NN.json`. Run SEQUENTIALLY. Apply is PER-FILE (the script only
-     reads argv[1]): `for i in ..; do python3 audit/apply_waterfront_audit.py wr_$i.json; done`.
-     - **AUDIT CURSOR: batches 1-60/65 DONE + committed** (`9ed1679` `bdde20d` `0d6295c`
-       `1a31121` `41c282f` `7b2bc24`; 479 audited, ~171 upgrades/36%, 11 coord fixes).
-       Removed tent-only **Hobo 12226** (`d6069a4`, rec.gov all-tent — CA federal new now
-       514). Next: audit batch 61. (5 audit batches left, ids 12329-12362 = the BLM
-       desert LTVAs/Glamis + USACE reservoir tail.)
-     - **AUDIT COMPLETE: batches 1-65/65 DONE + committed** (final `d478d79`). All 514
-       carry waterfront_evidence. See the top of item 1 for totals.
-
-</details>
-     THEN CA federal is fully done → only the private bucket remains for the whole CA sweep.
-2. **Private bucket — NOT RUN.** The 4 present came from the local pass. Expect
-   AZ-grade difficulty: CA private skews hard to 55+/snowbird/membership parks.
-3. Those 3 legacy federal entries (277/279/295) lack `inclusion_evidence`.
-
-Chosen order (AWH 2026-07-19): audit the completed 243 first, then add federal and
-private with their audits folded in per the normal pipeline.
-
-Audit batches run **sequentially** — see [[feedback_sequential_sweep_agents]].
-Process reference: [[reference_inclusion_audit]],
-[[reference_usedirect_deep_reservation_links]] (CA = ReserveCalifornia US eDirect).
+Process refs: sequential agents [[feedback_sequential_sweep_agents]],
+[[reference_inclusion_audit]], [[reference_usedirect_deep_reservation_links]]
+(CA = ReserveCalifornia US eDirect). Scratchpad for private bucket: session
+`5c74c92e…986750` dirs `ca_priv/` (add batches+results) and `ca_priv_wf/`
+(waterfront batches+results).
