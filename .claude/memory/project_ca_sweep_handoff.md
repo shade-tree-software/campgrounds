@@ -1,11 +1,11 @@
 ---
 name: project_ca_sweep_handoff
-description: California sweep IN PROGRESS — state + local buckets added & inclusion-audited; waterfront audit and the federal + private buckets still outstanding
+description: California sweep IN PROGRESS — state + local + federal buckets DONE (added + inclusion + waterfront audited); only the private bucket remains
 metadata: 
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-21T01:33:57.016Z
+  modified: 2026-07-21T02:02:36.657Z
 ---
 
 California is **mid-sweep** as of 2026-07-19 (this file was missing until now, which
@@ -34,7 +34,21 @@ owner approved 2026-07-19; none had trip_data references):**
 CA new entries now number **240** (was 243).
 
 **Outstanding:**
-1. **Federal bucket — IN PROGRESS (started 2026-07-19).** Detection DONE: RV Life
+1. **Federal bucket — ✅ COMPLETE (2026-07-20).** 514 new entries added (ids 11848-12362,
+   less removed tent-only Hobo 12226; 507 federal / 6 private PG&E-SCE / 1 local TCPUD),
+   ALL inclusion-audited (inclusion_evidence) + ALL waterfront-audited (waterfront_evidence).
+   Waterfront: 180 upgrades/35% (94 on-water: 36 lakefront/28 riverfront/30 creekside; 86
+   view: 60 lakeview/26 riverview), 334 not-waterfront, ~12 coord fixes. 8 add commits +
+   7 audit-tranche commits + Hobo removal, all pushed. Kern River/Lake Isabella + Shasta/
+   Trinity/Bucks/Antelope lakes were the richest on-water veins; huge NF under-23ft/tent-
+   only/canopy-blind skip+default-down rate. Detection method (for reference): RV Life
+   Algolia app H0LPZK92QJ (key inline on campgrounds.rvlife.com/), tiled CA bbox, park_type
+   in {national,usfs,dnr=BLM,coe}, region_abbvr==CA. **Only the PRIVATE bucket remains for
+   the whole CA sweep** (expect AZ-grade 55+/snowbird/membership vetting).
+
+<details><summary>(historical) federal-bucket in-progress notes</summary>
+
+**Federal bucket — WAS IN PROGRESS (started 2026-07-19).** Detection DONE: RV Life
    Algolia (app H0LPZK92QJ, key inline on campgrounds.rvlife.com/) tiled over the CA
    bounding box, park_type in {national,usfs,dnr,coe} (dnr=BLM=federal in CA), filtered
    region_abbvr==CA, dropped closed/test, deduped vs DB (caught the 3 legacy CA-fed +
@@ -65,6 +79,10 @@ CA new entries now number **240** (was 243).
        Removed tent-only **Hobo 12226** (`d6069a4`, rec.gov all-tent — CA federal new now
        514). Next: audit batch 61. (5 audit batches left, ids 12329-12362 = the BLM
        desert LTVAs/Glamis + USACE reservoir tail.)
+     - **AUDIT COMPLETE: batches 1-65/65 DONE + committed** (final `d478d79`). All 514
+       carry waterfront_evidence. See the top of item 1 for totals.
+
+</details>
      THEN CA federal is fully done → only the private bucket remains for the whole CA sweep.
 2. **Private bucket — NOT RUN.** The 4 present came from the local pass. Expect
    AZ-grade difficulty: CA private skews hard to 55+/snowbird/membership parks.
