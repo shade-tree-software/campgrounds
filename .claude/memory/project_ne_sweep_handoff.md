@@ -1,10 +1,11 @@
 ---
 name: project_ne_sweep_handoff
-description: "NE audit status: waterfront 100% (219/219); inclusion done for the 139 non-waterfront entries only; 80 currently-waterfront NE entries still need inclusion"
+description: "NE COMPLETE — waterfront 100% (220/220) AND inclusion 100% (220/220, no loose ends). 2026-07-21 the residual 80 waterfront entries inclusion-audited: 80 keeps, 0 removals (clean: NGPC SRAs, USACE, city/NRD/utility, private all confirmed)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: c6cdddcb-a27f-4cae-b56c-67eb1f09f570
+  modified: 2026-07-21T23:32:55.347Z
 ---
 
 NE (Nebraska) audit progress as of 2026-06-29:
