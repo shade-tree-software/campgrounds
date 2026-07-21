@@ -708,6 +708,7 @@ function renderOnThisDay() {
   const matches = [];
   TRIPS.forEach(t => {
     if (!t.start || !t.end) return;
+    if (t.home_only) return;  // never surface home-only trips here (admins still see them in the calendar/list)
     const sy = parseInt(t.start.slice(0, 4));
     const ey = parseInt(t.end.slice(0, 4));
     for (let y = sy; y <= ey; y++) {
