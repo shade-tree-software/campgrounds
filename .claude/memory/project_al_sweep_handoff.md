@@ -5,6 +5,19 @@ metadata:
   node_type: memory
   type: project
   originSessionId: aac3f4a3-f43e-40eb-aa96-cc363a5944f5
+  modified: 2026-07-21T19:56:25.912Z
+---
+
+**UPDATE 2026-07-21 — AL INCLUSION BACKFILL DONE.** All buckets were added + waterfront-
+audited pre-2026-06-25, so AL had ~0 inclusion_evidence. Ran the retroactive inclusion
+audit 2026-07-21 (15 sequential batches, WebFetch-primary — WebSearch capped mid-run):
+**138/145 stamped, 2 removes HELD, 5 reviews HELD.** Removes (not excised; neither
+--AWH): 4897 Houston Recreation Area (USFS "campground remains closed to the public"),
+4902 Lake Chinnabee (USFS day-use only, no overnight). Reviews (unverifiable with search
+capped — dead-site/approx-coord): 4944 Sun Runners, 4949 Chief Ladiga, 4950 Mulberry
+Creek, 4952 Lakeview/Citronelle, 4985 Rosemont. The 18 optional deferred private re-pins
+below remain optional. History below.
+
 ---
 
 Alabama state-by-state campground sweep (started 2026-06-22) — **COMPLETE**. All buckets DONE + committed + waterfront-audited, INCLUDING private. All 92 private candidates were vetted one-by-one (57 added ids 4938-4994, 17 excluded, 18 deferred). Only optional re-pin/verify of the 18 deferred items remains. Buckets:

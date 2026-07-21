@@ -1,10 +1,25 @@
 ---
 name: project_mi_local_stage_handoff
-description: "Where the Michigan campground curation stands and what the local stage still needs (handoff across machines, 2026-06-15)"
+description: "Michigan campground sweep COMPLETE — all buckets added+waterfront+inclusion; the old 'local pending' note was stale (2026-07-21)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: 000f3a09-478e-409e-a145-36cc569bc967
+  modified: 2026-07-21T19:56:01.512Z
+---
+
+**UPDATE 2026-07-21 — MICHIGAN IS FULLY COMPLETE.** The 2026-06-15 notes below are
+STALE: the local bucket WAS completed in a later session (the DB now has 135 MI local
+entries, ids 3911–4050, all waterfront-audited). All four buckets are done + waterfront
+100%. The **inclusion backfill** was run 2026-07-21 (50 sequential batches, WebFetch-
+primary since WebSearch was capped; Michigan.gov 403s WebFetch so state parks/SFCGs
+leaned on midnrreservations + rec.gov + satellite + firsthand --AWH notes): **496/499
+stamped, 0 removes, 3 reviews HELD** (not excised, pending re-verify when search resets):
+3801 Langford Lake (Ottawa NF page omits it, rec.gov lists only a boat launch, note
+flags 2019 closure), 3834 Highway to Haven (dead site, satellite shows urban dev),
+3967 Isabella County Fairgrounds (can't rule out event-only). Nothing else outstanding.
+Everything below is historical.
+
 ---
 
 Michigan curation as of 2026-06-15: state, federal, and private sweeps are DONE and committed (all pushed). Remaining: the **local** stage, which is the last MI category.

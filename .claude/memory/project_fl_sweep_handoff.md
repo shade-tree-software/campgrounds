@@ -5,6 +5,22 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 9c3ecf0d-e001-42b3-a4d9-3445be29beb8
+  modified: 2026-07-21T19:56:14.397Z
+---
+
+**UPDATE 2026-07-21 — FL INCLUSION BACKFILL DONE.** All buckets were added + waterfront-
+audited pre-2026-06-25 (before inclusion_evidence discipline), so FL entries had 0
+inclusion_evidence. Ran the retroactive inclusion audit 2026-07-21 (24 sequential
+batches, WebFetch-primary — WebSearch capped; floridastateparks.org 403s WebFetch so
+state parks leaned on the reservation system + rec.gov + satellite): **235/239 stamped,
+1 remove HELD, 3 reviews HELD.** Remove (not excised): 4714 River Road CG / Lake George
+SF — ReserveAmerica says tent-only, max equip 21 ft, no site fits a 23-ft rig
+(under-23ft/tent-only; not --AWH). Reviews (unverifiable while search capped): 167 Tiger
+Bay SF, 368 Fresh Gardens (Hipcamp), 4757 Captain's Hideaway (4-site FB-only). Data-
+quality fixes noted for later (NOT inclusion issues): 587 Cypress Glen website points to
+Lake Louisa SP; 4735 Camel Lake rec.gov id 233117 is wrong (should be 251904). FL is now
+inclusion-complete except those 4 held items. History below.
+
 ---
 
 State-by-state Florida sweep status as of 2026-06-17 (machine move mid-sweep). Git log is the authoritative progress record; this captures non-git working state that would otherwise be lost.
