@@ -239,6 +239,14 @@ def _tile_config():
         vec_path = os.path.join(LOCAL_TILE_DIR, "street.pmtiles")
         has_vector = os.path.isfile(vec_path)
         has_raster = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "street.mbtiles"))
+        # Same existence gate for satellite, for the mirror-image half-install:
+        # the street basemap can equally be finished before the NAIP store is
+        # baked (or the store may live only on the real card, as on the dev test
+        # rig). Advertising /tiles/sat with no satellite.mbtiles behind it gives
+        # every satellite tile a 404 and a blank layer with no way back, so fall
+        # through to the same Esri URLs the online build uses — correct when the
+        # host has a network, and no worse than 404s when it doesn't.
+        has_sat = os.path.isfile(os.path.join(LOCAL_TILE_DIR, "satellite.mbtiles"))
         return {
             "mode": "local",
             "streetVector": "/tiles/street.pmtiles" if has_vector else None,
@@ -246,8 +254,11 @@ def _tile_config():
             # level instead of requesting non-existent deeper tiles (blank map)
             "streetVectorMaxDataZoom": _pmtiles_maxzoom(vec_path) if has_vector else None,
             "street": "/tiles/street/{z}/{x}/{y}.png" if has_raster else None,
-            "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"],  # baked NAIP, single layer
-            "maxZoom": 19, "maxNativeZoom": 16,           # NAIP native ceiling z16
+            "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"] if has_sat else _ESRI_SAT,
+            "maxZoom": 19,
+            # NAIP tops out at z16; the Esri fallback goes deeper, so only cap
+            # native zoom when we are actually serving the baked store.
+            "maxNativeZoom": 16 if has_sat else 19,
         }
     return {
         "mode": "online",
