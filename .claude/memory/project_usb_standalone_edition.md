@@ -10,6 +10,30 @@ metadata:
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
 
+**>>> STATUS 2026-07-21 (final): NATIONWIDE z15 IS THE CURRENT MAP. All corridor-era files are
+retired — owner burned them to DVD and deleted them; `~/ekko-streetbuild/` is DELETED.**
+- **`/data/ekko-us-build/street-us-z15.pmtiles`, 19 GB (19,964,936,219 B), z0-15,
+  191,723,573 tiles / 967 M features, rendered in 28m22s.** Built by
+  `render-nationwide-z15.sh` (identical to the z14 script but `--maxzoom=15` + a different
+  output name). Stages: pass1 1m24s, pass2 12m, sort 2m28s, archive 11m8s. Peak feature
+  scratch **65 GB** (vs 39 GB at z14) — needed ~110 GB free on `/data`.
+- **The earlier "z15 nationwide = 40-60 GB, won't fit" estimate was WRONG — it is 19 GB**, about
+  2x the z14 file, NOT 4-6x. Card math: 19 + 9.4 satellite + ~7 photos + 0.55 base = ~36 GB of
+  64 GB, ~28 GB headroom. So nationwide z15 wins outright: full-country coverage AND the z15
+  density (housenumber layer) the old corridor file only had along the route. No tradeoff.
+- **VERIFIED** same way as z14 (see below): header z0-15, all 16 OMT layers incl `housenumber`,
+  roads decode at all 11 sample points incl Anchorage + Honolulu. Rig serve-check: `_tile_config()`
+  reports `streetVectorMaxDataZoom: 15` (auto-detected, no code change), Range requests return 206
+  at byte 0 AND at an **18 GB-deep** offset — protomaps-leaflet's random seeks are fine at 20 GB.
+- **Rig wiring:** `~/ekko-sdcard-test/app/tiles/street.pmtiles` is a SYMLINK to the z15 file, so the
+  rig costs 4 KB. A symlink is right for the rig ONLY — the real card needs a genuine 19 GB copy.
+- **Kept on disk:** `street-us.pmtiles` (9.9 GB z14) as a fallback, `us-latest.osm.pbf` (12 GB) for
+  re-renders, and **`osmconvert` + `osmconvert.c` (rescued from `~/ekko-streetbuild` before it was
+  deleted — `/data` never had one, and `build-street.sh` can only bootstrap it via curl, which is
+  sandbox-blocked here; needed for any future CLIPPED/corridor build)**.
+- **INSTALL (still pending — card has not been mounted this whole time):**
+  `cp /data/ekko-us-build/street-us-z15.pmtiles <card>/app/tiles/street.pmtiles`.
+
 **>>> STATUS 2026-07-21: FULL NATIONWIDE street map BUILT — supersedes both corridor files.**
 Owner asked for nationwide coverage. Rendered the WHOLE `us-latest.osm.pbf` (no `--polygon`) to
 **`/data/ekko-us-build/street-us.pmtiles`, 9.9 GB, z0-14, 48,386,571 tiles / 540 M features**.
@@ -38,15 +62,16 @@ Owner asked for nationwide coverage. Rendered the WHOLE `us-latest.osm.pbf` (no 
   requests on the 10.56 GB file return 206 with correct `Content-Range` both at byte 0 (PMTiles
   magic, minzoom 0 / maxzoom 14) and at a 5 GB-deep offset — so protomaps-leaflet's random seeks
   work at that size. (curl-exec is still sandbox-blocked in scripts; used urllib.)
-- **INSTALL (still pending — card was not mounted):** `cp /data/ekko-us-build/street-us.pmtiles
-  <card>/app/tiles/street.pmtiles`. `street-merged.pmtiles` (7.4 GB) kept for now but is
-  obsolete once the nationwide file is on the card; `us-latest.osm.pbf` (12 GB) worth keeping for
-  a re-render.
+- **SUPERSEDED the same day by the z15 nationwide build above** — this z14 file is now only the
+  fallback. Its install line and its "keep street-merged for now" note are both obsolete
+  (street-merged was DVD-archived and deleted).
 
 **>>> STATUS 2026-07-20 (later): MERGED z15 street map BUILT + route/highway corridor +
 route-number shields.** Owner wanted, beyond the corridor map, coverage of a planned DC->Rocky
 Mountain NP trip. Built a SECOND, MERGED `street.pmtiles` and chose to REPLACE the corridor one:
-- **`/data/ekko-us-build/street-merged.pmtiles`, 7.4 GB, z0-15** (features 26 GB, ~17 min render).
+- **`street-merged.pmtiles`, 7.4 GB, z0-15** (features 26 GB, ~17 min render). **[DELETED
+  2026-07-21 — DVD-archived by owner; superseded by the nationwide z15 map. The route/highway
+  corridor technique below is kept only as reference for building a CLIPPED map again.]**
   Covers the existing trip corridor (FL->ME) + 3 routed ribbons through the roadside.json stops +
   ~62 named highways, all buffered +/-40 km (poly-zoom 10). Owner copies it to
   `<card>/app/tiles/street.pmtiles` (renamed) — supersedes the 1.7 GB z14 corridor file; either
