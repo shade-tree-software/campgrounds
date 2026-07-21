@@ -1,11 +1,11 @@
 ---
 name: project_ca_sweep_handoff
-description: California sweep COMPLETE — all 4 buckets (state/local/federal/private) added + inclusion + waterfront audited & pushed
+description: California sweep FULLY COMPLETE — all 4 buckets (state/local/federal/private) added + inclusion + waterfront audited & pushed; zero loose ends
 metadata: 
   node_type: memory
   type: project
   originSessionId: d8015b25-3a69-4c9c-b79b-cd3a86bc1083
-  modified: 2026-07-21T16:03:47.092Z
+  modified: 2026-07-21T16:12:04.471Z
 ---
 
 California is **COMPLETE** as of 2026-07-21 — the largest state sweep to date.
@@ -40,11 +40,13 @@ All four buckets added + inclusion-audited (`inclusion_evidence` on every entry)
     Creek/Lee Vining/Owens River) + Colorado River (Rio Del Sol/Big River riverfront,
     Havasu Landing lakefront) the richest veins.
 
-**Legacy loose ends (pre-existing CA entries, NOT from this sweep) — still open:**
-- 3 legacy federal entries (ids 277/279/295 — Kirk Creek, Tuolumne Meadows, Jumbo
-  Rocks) lack `inclusion_evidence`.
-- The state/local/federal buckets folded inclusion+waterfront in at add time, so the
-  240+514 new entries are fully covered; only those 3 legacy ids remain unaudited.
+**Legacy loose ends — ALL RESOLVED 2026-07-21 (commit `0f2829d`):**
+- The 3 legacy federal entries (ids 277 Kirk Creek / 279 Tuolumne Meadows / 295 Jumbo
+  Rocks) now carry `inclusion_evidence`. Rule applied: a `--AWH` note auto-passes
+  inclusion (277 Kirk Creek); 279 (rec.gov 232448, reopened Aug 2025, RVs to 35 ft)
+  and 295 (rec.gov 272300, per-site 25-40 ft, reservable) verified against rec.gov.
+- **No CA entry of any bucket lacks inclusion_evidence or waterfront_evidence.** CA is
+  entirely done, zero loose ends.
 
 Process refs: sequential agents [[feedback_sequential_sweep_agents]],
 [[reference_inclusion_audit]], [[reference_usedirect_deep_reservation_links]]
