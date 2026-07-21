@@ -19,7 +19,7 @@
 - [AR sweep COMPLETE](project_ar_sweep_handoff.md) — all 4 buckets added+audited+committed (232 entries, ids 5126-5357); rec.gov per-site proximity_water API is gate evidence for USACE
 - [Inclusion review queue — CLOSED](project_inclusion_review_queue.md) — DONE 2026-07-21: all 11 held "review" entries resolved (8 keeps stamped, 3 closed campgrounds removed: 4949/4757/3801). Lesson: a dead website ≠ closed, and check the pin before concluding a campground is gone (3834 was both)
 - [Inclusion (validity) audit](reference_inclusion_audit.md) — verifies an entry is a real drive-in RV campground (catches cabins/tent/day-use/hike-in/closed/under-23ft); inclusion_evidence field; PA 100% done, other states pending
-- [CO sweep handoff](project_co_sweep_handoff.md) — CO waterfront audit COMPLETE (430/430); 256-entry sweep done in 11 chunks (~54 upgrades, 3 removals). Inclusion done for swept 256; 177 older CO entries still need inclusion
+- [CO sweep COMPLETE](project_co_sweep_handoff.md) — CO DONE: waterfront 100% (430/430) AND inclusion 100% (429/429). 2026-07-21 the residual 177 legacy entries were inclusion-audited (23 batches of 8): 176 keeps, 1 removed (Prairie Point 2372 walk-in tent). No CO loose ends
 - [IA sweep handoff](project_ia_sweep_handoff.md) — IA waterfront 100% DONE (371/371); inclusion loose ends remain: id 4860 + 39 older IA entries need inclusion
 - [MO sweep handoff](project_mo_sweep_handoff.md) — MO COMPLETE: waterfront 100% done (7 upgrades); inclusion of 144 non-wf entries done & resolved (removed 1934+1993+1994, kept+clarified 2061)
 - [WI sweep handoff](project_wi_sweep_handoff.md) — WI waterfront 100% (348/348); inclusion done for the 183 non-wf entries only (all kept); 165 currently-waterfront WI entries still need inclusion

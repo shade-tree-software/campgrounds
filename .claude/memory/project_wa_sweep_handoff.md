@@ -1,13 +1,14 @@
 ---
 name: project_wa_sweep_handoff
-description: Washington campground sweep — COMPLETE. Near-fresh state (2 legacy entries), 402 new entries (ids 10193-10594), adds + inclusion + waterfront audit all done + committed (not pushed).
+description: Washington campground sweep — COMPLETE. Near-fresh state (2 legacy entries), 402 new entries (ids 10193-10594), adds + inclusion + waterfront audit all done + committed + PUSHED.
 metadata:
   node_type: memory
   type: project
   originSessionId: 2f190f1c-07bb-4e79-9669-7f1ed2fc3d0e
+  modified: 2026-07-21T20:55:31.453Z
 ---
 
-**Washington sweep COMPLETE 2026-07-15** — 402 new entries (ids 10193-10594), all committed to master (NOT pushed — push only when asked). Near-fresh state: WA had only **2 legacy entries** (280 Kalaloch/Olympic NP, 294 Deception Pass SP), both already waterfront-audited (`--AWH`/prior); stamped with `inclusion_evidence` during setup. By ownership (new): **federal 189, state 74, local 75, private 64** (total 404 WA entries). Every entry carries `inclusion_evidence` (404/404) AND `waterfront_evidence` (audit 100%, 404/404).
+**Washington sweep COMPLETE 2026-07-15** — 402 new entries (ids 10193-10594), all committed to master and PUSHED (confirmed on origin/master 2026-07-21). Near-fresh state: WA had only **2 legacy entries** (280 Kalaloch/Olympic NP, 294 Deception Pass SP), both already waterfront-audited (`--AWH`/prior); stamped with `inclusion_evidence` during setup. By ownership (new): **federal 189, state 74, local 75, private 64** (total 404 WA entries). Every entry carries `inclusion_evidence` (404/404) AND `waterfront_evidence` (audit 100%, 404/404).
 
 **Waterfront final distribution (404):** 248 not-waterfront, **98 on-water** (37 riverfront, 35 lakefront, 9 creekside, 8 bayfront, 4 coastal dunes, 4 coastal woods, 1 pond) + **58 view** (25 riverview, 24 lakeview, 9 bayview). ~156 upgrades from the not-waterfront placeholder. **~10 coord fixes** during audit (Fairholme, Klahowya, Kettle River, Marcus Island, Lake Wenatchee, Daroga, Bridgeport SP, Conconully, Wapato, Pateros, Joemma, Crow Butte, Screamin' Eagle — pins were on day-use lots / off-campground / mainland).
 

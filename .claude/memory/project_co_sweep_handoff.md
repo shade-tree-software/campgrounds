@@ -1,10 +1,11 @@
 ---
 name: project_co_sweep_handoff
-description: "CO waterfront audit COMPLETE (430/430) — 256-entry sweep done in 11 chunks; inclusion done for the swept 256 (other 177 CO entries predate inclusion discipline)"
+description: "CO COMPLETE — waterfront 430/430 AND inclusion 100% (2026-07-21 the residual 177 legacy entries were inclusion-audited: 176 keeps, 1 removed — Prairie Point 2372 walk-in tent)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: cb0288c6-b9b0-47e3-af4f-27a2c9c6f479
+  modified: 2026-07-21T21:35:44.002Z
 ---
 
 **STATUS: COMPLETE (2026-06-25).** All 11 chunks committed (f2669b7 → 2a20f59).
@@ -15,11 +16,19 @@ duplicate of 2662). CO went 433 → 430 campgrounds. Final waterfront distributi
 not waterfront 224, lakeview 69, lakefront 42, riverfront 46, riverview 22,
 creekside 26, pond 1.
 
-**Residual:** CO inclusion is 253/430 — the other **177 CO entries** were
-waterfront-audited in earlier sessions (before the inclusion discipline) and were
-NOT inclusion-audited (separate retroactive-inclusion backlog, like other
-pre-discipline states). Next-biggest WATERFRONT backlogs after CO: IA (221), MO
-(143), WI (113).
+**Residual: CLOSED 2026-07-21.** The 177 legacy CO entries (97 federal, 64 state,
+8 private, 8 local) were inclusion-audited in 23 sequential batches of 8 —
+**176 keeps stamped, 1 removed** (Prairie Point 2372: recreation.gov 10125059
+"primarily walk-in tent camping", no dedicated RV sites, only a few short trailer
+spaces, rec.gov's own read is a 23-ft rig "would likely not be suitable"; no
+trip_data refs). CO campgrounds 430 -> 429; **inclusion now 100% (429/429),
+waterfront 100%.** Only real friction was a couple of dispersed sites confirmed
+via Campendium/TheDyrt (legitimate for FCFS dispersed). Nearly everything was
+clean CPW / recreation.gov / USFS per-site confirmation.
+
+Next legacy-inclusion backfills (waterfront done, inclusion pending on the
+currently-waterfront entries): WI 165, NY ~89, NE ~80, IL ~64, TN ~63, IN ~33,
+IA ~40.
 
 --- (original handoff notes below, kept for method reference) ---
 
