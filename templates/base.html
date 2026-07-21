@@ -22,6 +22,9 @@
 {% if tile_config.mode == 'local' %}<script src="{{ static_v('vendor/protomaps-leaflet.js') }}"></script>
 <script src="{{ static_v('vendor/omt-style.js') }}"></script>{% endif %}
 <script src="{{ static_v('vendor/tile-layers.js') }}"></script>
+{# Confines Tab to the open modal dialog. Self-installing and DOM-driven — it
+   keys off any visible [role="dialog"], so no modal has to wire it up. #}
+<script src="{{ static_v('focus-trap.js') }}" defer></script>
 {% block head_extra %}{% endblock %}
 <style>
   :root {
