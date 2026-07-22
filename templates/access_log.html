@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}Access Log{% endblock %}
+
+{% block style %}
+  .log-page { max-width: 1000px; margin: 2rem auto; padding: 0 1.5rem; }
+  .log-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.25rem; }
+  .log-header h2 { font-size: 1.4rem; color: var(--navy); }
+  .log-meta { font-size: .8rem; color: #666; }
+
+  .log-section-title { font-size: .8rem; text-transform: uppercase; letter-spacing: .04em; color: #666; margin: 1.75rem 0 .6rem; }
+
+  .log-table { width: 100%; border-collapse: collapse; font-size: .9rem; background: #fff; border-radius: 10px; overflow: hidden; box-shadow: var(--shadow); }
+  .log-table th { text-align: left; padding: .7rem 1rem; background: var(--navy); color: #fff; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+  .log-table td { padding: .55rem 1rem; border-bottom: 1px solid #eee; vertical-align: top; }
+  .log-table tr:last-child td { border-bottom: none; }
+  .log-table tr:hover { background: var(--blue-bg); }
+
+  .who { font-weight: 600; color: var(--navy); }
+  .tag { display: inline-block; font-size: .68rem; text-transform: uppercase; letter-spacing: .03em;
+         padding: .1rem .45rem; border-radius: 999px; margin-left: .4rem; vertical-align: middle; }
+  .tag-share { background: #fdf0d5; color: #8a6100; }
+  .tag-user  { background: #e3ecf7; color: var(--navy); }
+  .tag-anon  { background: #eee; color: #666; }
+
+  .ev { font-size: .72rem; text-transform: uppercase; letter-spacing: .03em; color: #666; }
+  .ev-login        { color: #2e7d32; font-weight: 600; }
+  .ev-login_failed { color: #c62828; font-weight: 600; }
+  .ev-share_login  { color: #8a6100; font-weight: 600; }
+  .ev-share_revoked{ color: #c62828; font-weight: 600; }
+  .ev-logout       { color: #757575; }
+
+  .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .82rem; }
+  .dim { color: #888; }
+  .ua { color: #999; font-size: .74rem; word-break: break-word; }
+
+  .filters { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-bottom: .75rem; }
+  .filters input, .filters select {
+    padding: .4rem .6rem; border: 1px solid #ccc; border-radius: 6px; font-size: .85rem; font-family: inherit;
+  }
+  .filters input { flex: 1 1 200px; min-width: 0; }
+
+  .empty { padding: 2rem; text-align: center; color: #777; background: #fff; border-radius: 10px; box-shadow: var(--shadow); }
+
+  @media (max-width: 700px) {
+    .log-page { padding: 0 .75rem; margin: 1rem auto; }
+    /* Same treatment as the Users page: a multi-column table can't fit a phone,
+       so each row becomes a stacked card with the header hidden. */
+    .log-table { box-shadow: none; background: transparent; border-radius: 0; overflow: visible; }
+    .log-table thead { display: none; }
+    .log-table tr {
+      display: block; background: #fff; border-radius: 10px;
+      box-shadow: var(--shadow); margin-bottom: .7rem; padding: .5rem .3rem;
+    }
+    .log-table tr:hover { background: #fff; }
+    .log-table td { display: block; border-bottom: none; padding: .2rem .85rem; }
+    .log-table td:first-child { font-weight: 700; color: var(--navy); font-size: .95rem; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="log-page">
+  <div class="log-header">
+    <h2>Access Log</h2>
+    <span class="log-meta" id="logMeta">Loading…</span>
+  </div>
+
+  <div class="log-section-title">Visitors</div>
+  <div id="summaryWrap"></div>
+
+  <div class="log-section-title">Recent activity</div>
+  <div class="filters">
+    <input type="search" id="filterText" placeholder="Filter by person, path, or IP…">
+    <select id="filterEvent">
+      <option value="">All events</option>
+      <option value="page">Page views</option>
+      <option value="login">Logins</option>
+      <option value="login_failed">Failed logins</option>
+      <option value="share_login">Share-link opens</option>
+      <option value="logout">Logouts</option>
+    </select>
+  </div>
+  <div id="entriesWrap"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const RETENTION_DAYS = {{ retention_days }};
+let ENTRIES = [], SUMMARY = [];
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fmtTs(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  if (isNaN(d)) return esc(ts);
+  return d.toLocaleString(undefined, { month: 'short', day: 'numeric',
+                                       hour: 'numeric', minute: '2-digit' });
+}
+
+function kindTag(kind) {
+  const label = kind === 'share' ? 'share link' : kind === 'user' ? 'account' : 'anon';
+  return `<span class="tag tag-${esc(kind)}">${label}</span>`;
+}
+
+function renderSummary() {
+  const wrap = document.getElementById('summaryWrap');
+  if (!SUMMARY.length) { wrap.innerHTML = '<div class="empty">No visits recorded yet.</div>'; return; }
+  wrap.innerHTML = `
+    <table class="log-table">
+      <thead><tr><th>Who</th><th>Page views</th><th>Last seen</th><th>First seen</th><th>IPs</th></tr></thead>
+      <tbody>${SUMMARY.map(s => `
+        <tr>
+          <td><span class="who">${esc(s.who)}</span>${kindTag(s.kind)}</td>
+          <td>${s.views}</td>
+          <td>${fmtTs(s.last)}</td>
+          <td class="dim">${fmtTs(s.first)}</td>
+          <td class="mono dim">${s.ips.map(esc).join('<br>')}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+function renderEntries() {
+  const q = document.getElementById('filterText').value.trim().toLowerCase();
+  const ev = document.getElementById('filterEvent').value;
+  const rows = ENTRIES.filter(e => {
+    if (ev && e.event !== ev) return false;
+    if (!q) return true;
+    return [e.who, e.path, e.ip, e.attempted].some(
+      v => v && String(v).toLowerCase().includes(q));
+  });
+  const wrap = document.getElementById('entriesWrap');
+  if (!rows.length) { wrap.innerHTML = '<div class="empty">Nothing matches that filter.</div>'; return; }
+  wrap.innerHTML = `
+    <table class="log-table">
+      <thead><tr><th>When</th><th>Who</th><th>Event</th><th>Path</th><th>IP</th><th>Device</th></tr></thead>
+      <tbody>${rows.map(e => `
+        <tr>
+          <td>${fmtTs(e.ts)}</td>
+          <td><span class="who">${esc(e.who || '—')}</span>${kindTag(e.kind || 'anon')}</td>
+          <td class="ev ev-${esc(e.event)}">${esc(e.event.replace('_', ' '))}${
+              e.attempted ? ` <span class="dim">(${esc(e.attempted)})</span>` : ''}${
+              e.status && e.status !== 200 ? ` <span class="dim">${e.status}</span>` : ''}</td>
+          <td class="mono">${esc(e.path)}</td>
+          <td class="mono dim">${esc(e.ip)}</td>
+          <td class="ua">${esc(e.ua)}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function load() {
+  try {
+    const r = await fetch('/api/access-log?limit=1000');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    ENTRIES = data.entries || [];
+    SUMMARY = data.summary || [];
+    document.getElementById('logMeta').textContent =
+      `${data.total} entries · kept ${RETENTION_DAYS} days`;
+    renderSummary();
+    renderEntries();
+  } catch (err) {
+    document.getElementById('logMeta').textContent = 'Failed to load';
+    document.getElementById('entriesWrap').innerHTML =
+      `<div class="empty">Could not load the access log (${esc(err.message)}).</div>`;
+  }
+}
+
+document.getElementById('filterText').addEventListener('input', renderEntries);
+document.getElementById('filterEvent').addEventListener('change', renderEntries);
+load();
+</script>
+{% endblock %}

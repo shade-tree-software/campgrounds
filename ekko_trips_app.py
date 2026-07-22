@@ -172,6 +172,15 @@ PHOTO_UPLOADERS_FILE = os.path.join(TRIP_DATA_DIR, "photo_uploaders.json")
 # Deleting a token here is the revoke: load_user re-checks this file every
 # request, so the visitor's session dies immediately.
 SHARE_TOKENS_FILE = os.path.join(TRIP_DATA_DIR, "share_tokens.json")
+# Append-only access log: one JSON object per line (JSONL), written by
+# _log_access. Deliberately NOT a json dict like the files above — those are
+# read-modify-write, which on every request would be both slow and a
+# corruption risk when two requests land at once. A single O_APPEND write of a
+# sub-4KB line is atomic on POSIX, so concurrent requests interleave cleanly.
+ACCESS_LOG_FILE = os.path.join(TRIP_DATA_DIR, "access_log.jsonl")
+# Entries older than this are dropped by _prune_access_log (same spirit as the
+# 7-day photo trash purge: bounded growth without manual maintenance).
+ACCESS_LOG_RETENTION_DAYS = 90
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -782,6 +791,155 @@ def _require_login_globally():
     return None
 
 
+# ── Access log ──────────────────────────────────────────────────────────────
+# Who visited which page, including share-link guests. The server's own request
+# log (e.g. PythonAnywhere's) can't answer this: the identity lives only inside
+# Flask-Login, so it has to be recorded here.
+
+# Endpoints never worth a log line. Photos/thumbs/tiles/static are the reason
+# this list exists at all — one trip page with 40 photos fires 40+ thumb
+# requests, which would bury the page views the log is for.
+_ACCESS_LOG_SKIP_ENDPOINTS = frozenset({
+    'static', 'serve_tile', 'serve_pmtiles', 'service_worker', 'photo_thumb',
+    'sw_reset', 'offline', 'logout', None,
+})
+
+
+def _redact_path(path):
+    """Blunt the share token in '/s/<token>' before it reaches the log.
+
+    The token IS the credential — anyone holding it is logged in as that
+    viewer. Writing it to a file that gets read, screenshotted, or copied
+    around would hand out working access, so only a short prefix is kept:
+    enough to tell which link was used, useless as a key."""
+    if path.startswith('/s/'):
+        token = path[3:].split('/', 1)[0]
+        if len(token) > 8:
+            return '/s/' + token[:8] + '…'
+    return path
+
+
+def _share_label(token):
+    """Human label for a share token ('Papa & Bonnie'), falling back to a
+    truncated token when the record is gone (revoked after the visit)."""
+    rec = _load_json(SHARE_TOKENS_FILE).get(token)
+    if rec and rec.get("label"):
+        return rec["label"]
+    return "share:" + token[:8]
+
+
+def _access_identity():
+    """(kind, who) for the current session.
+
+    kind is 'user' | 'share' | 'anon'. For share links `who` is the token's
+    label, so the log reads 'Papa & Bonnie' rather than an opaque token."""
+    if not current_user.is_authenticated:
+        return "anon", None
+    name = getattr(current_user, "id", None) or ""
+    if name.startswith(SHARE_ID_PREFIX):
+        return "share", _share_label(name[len(SHARE_ID_PREFIX):])
+    return "user", name
+
+
+def _log_access(event, path=None, status=None, extra=None):
+    """Append one JSONL entry. Never raises — logging must not break a request.
+
+    `event` is 'page' for ordinary views, or 'login'/'login_failed'/
+    'share_login'/'logout' for auth transitions."""
+    try:
+        kind, who = _access_identity()
+        rec = {
+            "ts": datetime.now().isoformat(timespec="seconds"),
+            "event": event,
+            "kind": kind,
+            "who": who,
+            "path": _redact_path(path if path is not None else request.path),
+            "ip": request.headers.get("X-Forwarded-For", request.remote_addr or ""
+                                      ).split(",")[0].strip(),
+            # Trimmed: full UA strings are long and the tail is boilerplate.
+            "ua": (request.headers.get("User-Agent") or "")[:180],
+        }
+        if status is not None:
+            rec["status"] = status
+        if extra:
+            rec.update(extra)
+        line = json.dumps(rec, ensure_ascii=False) + "\n"
+        with open(ACCESS_LOG_FILE, "a", encoding="utf-8") as f:
+            f.write(line)
+    except Exception:
+        pass
+
+
+@app.after_request
+def _log_page_view(response):
+    """Log HTML page views only.
+
+    Gated to text/html GETs so the log stays a record of pages a person looked
+    at, not of every asset their browser fetched. Redirects are logged too (a
+    302 to /login is exactly the 'tried to reach X while logged out' signal)."""
+    try:
+        if request.method != "GET":
+            return response
+        if request.endpoint in _ACCESS_LOG_SKIP_ENDPOINTS:
+            return response
+        if request.path.startswith(('/api/', '/thumb/', '/static/')):
+            return response
+        ctype = (response.content_type or "")
+        if not ctype.startswith("text/html"):
+            return response
+        _log_access("page", status=response.status_code)
+    except Exception:
+        pass
+    return response
+
+
+def _read_access_log(limit=None):
+    """Parse the JSONL log newest-first. Bad lines are skipped rather than
+    failing the page — a torn final line (crash mid-write) must not blind the
+    whole log."""
+    if not os.path.exists(ACCESS_LOG_FILE):
+        return []
+    out = []
+    with open(ACCESS_LOG_FILE, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                out.append(json.loads(line))
+            except ValueError:
+                continue
+    out.reverse()
+    return out[:limit] if limit else out
+
+
+def _prune_access_log():
+    """Drop entries older than ACCESS_LOG_RETENTION_DAYS. Rewrites via a temp
+    file + atomic replace so a crash mid-prune can't truncate the log."""
+    if not os.path.exists(ACCESS_LOG_FILE):
+        return 0
+    cutoff = (datetime.now() - timedelta(days=ACCESS_LOG_RETENTION_DAYS)).isoformat()
+    kept, dropped = [], 0
+    with open(ACCESS_LOG_FILE, encoding="utf-8") as f:
+        for line in f:
+            s = line.strip()
+            if not s:
+                continue
+            try:
+                if json.loads(s).get("ts", "") >= cutoff:
+                    kept.append(line if line.endswith("\n") else line + "\n")
+                else:
+                    dropped += 1
+            except ValueError:
+                dropped += 1
+    if dropped:
+        tmp = ACCESS_LOG_FILE + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.writelines(kept)
+        os.replace(tmp, ACCESS_LOG_FILE)
+    return dropped
+
+
 def _require_admin():
     """Return an error response if current user is not an admin, else None."""
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -956,13 +1114,18 @@ def login():
         user = users.get(username)
         if user and check_password_hash(user.password_hash, password):
             login_user(user, remember=True)
+            _log_access("login")
             return redirect('/')
+        # Log the attempted username, not the password. A run of these from one
+        # IP is the only signal you'd get that someone is guessing.
+        _log_access("login_failed", extra={"attempted": username[:64]})
         return render_template('login.html', error="Invalid username or password")
     return render_template('login.html')
 
 
 @app.route('/logout')
 def logout():
+    _log_access("logout")          # before logout_user, while identity still resolves
     logout_user()
     return redirect(_safe_next(request.args.get('next')))
 
@@ -984,9 +1147,11 @@ def share_login(token):
     login page rather than revealing anything."""
     rec = _load_json(SHARE_TOKENS_FILE).get(token)
     if rec is None:
+        _log_access("share_revoked", extra={"token": token[:8]})
         return render_template('login.html',
                                error="This share link is no longer valid."), 403
     login_user(_make_share_user(token, rec.get("trips_only", False)), remember=True)
+    _log_access("share_login", extra={"label": rec.get("label") or ""})
     return redirect(_safe_next(request.args.get('next')))
 
 
@@ -2242,6 +2407,53 @@ def users_manage():
     if denied:
         return redirect(url_for('login', next=request.path))
     return render_template('users_manage.html', active_nav='users')
+
+
+# ── Access log (admin-only) ────────────────────────────────────────────────
+
+@app.route('/admin/access-log')
+def access_log_page():
+    denied = _require_admin()
+    if denied:
+        return redirect(url_for('login', next=request.path))
+    return render_template('access_log.html', active_nav='accesslog',
+                           retention_days=ACCESS_LOG_RETENTION_DAYS)
+
+
+@app.route('/api/access-log')
+def api_access_log():
+    """Recent entries plus a per-visitor summary. Pruning runs here rather than
+    on every request: it rewrites the file, so it belongs on a rare admin read,
+    not in the hot path."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    _prune_access_log()
+    try:
+        limit = min(int(request.args.get('limit', 500)), 5000)
+    except ValueError:
+        limit = 500
+    entries = _read_access_log()
+
+    summary = {}
+    for e in entries:                      # newest-first, so first seen == last visit
+        key = e.get("who") or "(not logged in)"
+        s = summary.setdefault(key, {
+            "who": key, "kind": e.get("kind", "anon"), "views": 0,
+            "last": e.get("ts"), "first": e.get("ts"), "ips": [],
+        })
+        if e.get("event") == "page":
+            s["views"] += 1
+        s["first"] = e.get("ts")           # overwritten until the oldest wins
+        ip = e.get("ip")
+        if ip and ip not in s["ips"]:
+            s["ips"].append(ip)
+    return jsonify({
+        "entries": entries[:limit],
+        "summary": sorted(summary.values(), key=lambda s: s["last"] or "", reverse=True),
+        "total": len(entries),
+        "retention_days": ACCESS_LOG_RETENTION_DAYS,
+    })
 
 
 @app.route('/api/users')
