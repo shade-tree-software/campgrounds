@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: 924e9250-c8f8-4fce-9046-abea78d94c66
-  modified: 2026-07-22T10:47:07.652Z
+  modified: 2026-07-22T11:40:42.747Z
 ---
 
 **This is the single source of truth for what inclusion work remains. Don't trust per-state "COMPLETE" memory lines for inclusion** — many say COMPLETE meaning their ADD + waterfront audit finished, but they were swept BEFORE the inclusion-at-ADD discipline (~2026-06-25), so they never got `inclusion_evidence`. **The live `campgrounds.json` field is ground truth — always re-scan before starting** (a designation is inclusion-audited iff its `inclusion_evidence` is non-empty).
@@ -20,16 +20,18 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 [print(f'{s}: {a} left / {b}') for s,a,b in L]"
 ```
 
-## STATUS 2026-07-22
-- **Waterfront: 100% complete** — all 12,275 campground entries across 52 states/provinces carry `waterfront_evidence`. Nothing left.
-- **Inclusion: 10,792 / 12,275 done.** Remaining: **19 states, ~1,483 entries.**
+## STATUS 2026-07-22 (updated)
+- **Waterfront: 100% complete** — all campground entries carry `waterfront_evidence`. Nothing left.
+- **Inclusion: remaining 17 states, ~1,027 entries.**
+- **AR DONE 2026-07-22:** all 234 AR entries inclusion-audited over 30 sequential batches — **234 keeps, 0 removals** (state parks via arkansasstateparks.com/reserve; USACE Beaver/Bull Shoals/Norfork/Table Rock/Greers Ferry/DeGray/Greeson/Millwood/Dierks/Gillham/De Queen/Nimrod/Blue Mtn + Arkansas River nav via recreation.gov per-site; Ozark/Ouachita NF + Hot Springs NP + Buffalo NR; ~90 private RV parks via operator sites/Campspot/RoverPass; municipal/county via city park pages). Pushed.
+- **GA DONE 2026-07-22:** all 224 GA entries inclusion-audited over 28 sequential batches — **223 keeps, 1 removal** (4557 Harris Branch RA = day-use only, camping closed per FIND Outdoors/Carters Lake concessionaire; add-time note "Confirmed operating" was wrong; no trip_data refs). Also fixed 4571 River Junction website (was rec.gov 232580 = Eastbank, wrong CG → USACE Lake Seminole page). GA state parks via gastateparks.org + ReserveAmerica; USACE Lanier/Allatoona/Hartwell/West Point/Clarks Hill/Seminole + Chattahoochee/Oconee NF via rec.gov; GA Power lakes (gplakes.com); Hall/Forsyth/Bartow/Carroll/Cobb + many county parks; DNR PFAs (Go Outdoors GA); ~100 private RV parks. GA total dropped 225→224.
 
 ## Remaining inclusion work (biggest first)
 | State | left / total | note |
 |---|---|---|
-| AR | 234 / 234 | zero — early sweep, added pre-discipline |
-| GA | 222 / 225 | ~zero |
-| NC | 172 / 174 | ~zero |
+| ~~AR~~ | ~~0 / 234~~ | ✅ DONE 2026-07-22 — 234 keeps, 0 removals |
+| ~~GA~~ | ~~0 / 224~~ | ✅ DONE 2026-07-22 — 223 keeps, 1 removed (Harris Branch) |
+| NC | 172 / 174 | ~zero — NEXT UP |
 | MS | 133 / 133 | zero |
 | KS | 128 / 158 | partial |
 | MO | 115 / 256 | partial (141 already done in a prior pass) |
