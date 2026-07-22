@@ -22,7 +22,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 
 ## STATUS 2026-07-22 (updated)
 - **Waterfront: 100% complete** — all campground entries carry `waterfront_evidence`. Nothing left.
-- **Inclusion: remaining 15 states, ~722 entries.**
+- **Inclusion: remaining 14 states, ~594 entries.**
+- **KS DONE 2026-07-22:** all 158 KS entries inclusion-audited (128 backfilled this session over 16 sequential batches, other 30 done in an earlier pass) — **128 keeps, 0 removals** (clean). KDWP state parks + state fishing lakes via ksoutdoors.gov/ReserveAmerica; USACE lakes (Clinton/Council Grove/Fall River/John Redmond/Kanopolis/Marion/Melvern/Milford/Perry/Pomona/Tuttle Creek/Wilson/Big Hill) via rec.gov per-site; Cimarron NG; many city/county lake campgrounds (city-park pages) + private RV parks. Pushed.
 - **MS DONE 2026-07-22:** all 133 MS entries inclusion-audited over 17 sequential batches — **133 keeps, 0 removals** (clean). MDWFP state parks + state fishing lakes via mdwfp.com/reserve.mdwfp.com/eRegulations; USACE lakes (Sardis/Enid/Grenada/Arkabutla/Bay Springs/Okatibbee/Aberdeen/Columbus/Tenn-Tom) via rec.gov per-site; Natchez Trace NPS + De Soto/Bienville/Homochitto/Tombigbee NF; PRBDD/PHWD "water parks" (regional-authority = local) + Ross Barnett Reservoir (therez.ms.gov); county/municipal RV parks; ~55 private RV parks. Pushed.
 - **NC DONE 2026-07-22:** all NC entries inclusion-audited over 22 sequential batches — **170 keeps, 2 removals** (both owner-approved: 267 Spruill Conservation Farm = all 3 Hipcamp sites cap under 22 ft < EKKO 23 ft, was an owner --AWH entry; 4280 Paul's RV Park & Boat Ramp New Bern = one directory 'permanently closed' + placeholder official site, owner chose remove over conflicting directory listings). No trip_data refs to either. NC total 174→172. Blue Ridge Pkwy/GSMNP/Cape Hatteras-Lookout NPS + Pisgah/Nantahala/Croatan/Uwharrie NF via rec.gov/USFS; NC state parks via ncparks.gov + ReserveAmerica; Kerr Scott/Kerr Lake/Jordan/Falls USACE+SRA; ~100 private RV parks + many county/city parks + Hipcamp (several owner --AWH). Pushed. LESSON: owner --AWH entries can still fail criteria (267) — surface, don't auto-delete; and mixed closed/open directory signals (4280) are an owner call.
 - **AR DONE 2026-07-22:** all 234 AR entries inclusion-audited over 30 sequential batches — **234 keeps, 0 removals** (state parks via arkansasstateparks.com/reserve; USACE Beaver/Bull Shoals/Norfork/Table Rock/Greers Ferry/DeGray/Greeson/Millwood/Dierks/Gillham/De Queen/Nimrod/Blue Mtn + Arkansas River nav via recreation.gov per-site; Ozark/Ouachita NF + Hot Springs NP + Buffalo NR; ~90 private RV parks via operator sites/Campspot/RoverPass; municipal/county via city park pages). Pushed.
@@ -35,8 +36,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 | ~~GA~~ | ~~0 / 224~~ | ✅ DONE 2026-07-22 — 223 keeps, 1 removed (Harris Branch) |
 | ~~NC~~ | ~~0 / 172~~ | ✅ DONE 2026-07-22 — 170 keeps, 2 removed (Spruill, Paul's RV) |
 | ~~MS~~ | ~~0 / 133~~ | ✅ DONE 2026-07-22 — 133 keeps, 0 removed |
-| KS | 128 / 158 | partial — NEXT UP |
-| MO | 115 / 256 | partial (141 already done in a prior pass) |
+| ~~KS~~ | ~~0 / 158~~ | ✅ DONE 2026-07-22 — 128 keeps, 0 removed |
+| MO | 115 / 256 | partial (141 already done in a prior pass) — NEXT UP |
 | VA | 113 / 163 | partial |
 | WV | 110 / 164 | partial |
 | SC | 93 / 93 | zero |
