@@ -22,7 +22,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 
 ## STATUS 2026-07-22 (updated)
 - **Waterfront: 100% complete** — all campground entries carry `waterfront_evidence`. Nothing left.
-- **Inclusion: remaining 13 states, ~479 entries.**
+- **Inclusion: remaining 12 states, ~366 entries.**
+- **VA DONE 2026-07-22:** all VA entries inclusion-audited — **~112 keeps, 1 removal** (481 Crabtree Falls boondocking, owner-approved: owner's own note said "Meadows lane is a 4WD-only fire road w/ stream crossings"). VA total 163→162. VA state parks via dcr.virginia.gov/reservevaparks; Shenandoah NP + Blue Ridge Pkwy NPS + GWJ NF (huge — many small FCFS/dispersed) via rec.gov/USFS; USACE (Philpott/Kerr/Flannagan); DWR WMA primitive drive-in (owner-firsthand) + Hipcamp + county/city + private. **Owner-dispersed-site lesson:** the 4WD-access dispersed sites (Long Run Road 56/57/58/519/520/521/522 + Flagpole Knob 403/404/405) were owner-added & owner-flagged "unverified/may require 4WD"; owner chose to KEEP+stamp them (evidence string flags UNVERIFIED/NEEDS FIELD VERIFICATION) rather than remove — do NOT auto-delete owner-added dispersed sites; surface for owner call. Also 269 Fire Trail Rd kept (real trip-53 stay = firsthand access, overrode satellite-unconfirmed). Pushed.
 - **MO DONE 2026-07-22:** all 256 MO entries inclusion-audited (115 backfilled this session over 15 sequential batches, other 141 done in a prior pass) — **115 keeps, 0 removals** (clean). MO state parks via mostateparks.com/ReserveMO (icampmo1.usedirect.com); USACE lakes (Table Rock/Truman/Bull Shoals/Stockton/Pomme de Terre/Clearwater/Wappapello/Long Branch/Smithville/Mark Twain Lake) via rec.gov per-site; Mark Twain NF + Ozark NSR NPS + MDC conservation areas; county/city park campgrounds (Smithville/Jackson Co/Jeff City/Mozingo) + private RV parks (Branson/Lake of the Ozarks). Pushed.
 - **KS DONE 2026-07-22:** all 158 KS entries inclusion-audited (128 backfilled this session over 16 sequential batches, other 30 done in an earlier pass) — **128 keeps, 0 removals** (clean). KDWP state parks + state fishing lakes via ksoutdoors.gov/ReserveAmerica; USACE lakes (Clinton/Council Grove/Fall River/John Redmond/Kanopolis/Marion/Melvern/Milford/Perry/Pomona/Tuttle Creek/Wilson/Big Hill) via rec.gov per-site; Cimarron NG; many city/county lake campgrounds (city-park pages) + private RV parks. Pushed.
 - **MS DONE 2026-07-22:** all 133 MS entries inclusion-audited over 17 sequential batches — **133 keeps, 0 removals** (clean). MDWFP state parks + state fishing lakes via mdwfp.com/reserve.mdwfp.com/eRegulations; USACE lakes (Sardis/Enid/Grenada/Arkabutla/Bay Springs/Okatibbee/Aberdeen/Columbus/Tenn-Tom) via rec.gov per-site; Natchez Trace NPS + De Soto/Bienville/Homochitto/Tombigbee NF; PRBDD/PHWD "water parks" (regional-authority = local) + Ross Barnett Reservoir (therez.ms.gov); county/municipal RV parks; ~55 private RV parks. Pushed.
@@ -39,8 +40,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 | ~~MS~~ | ~~0 / 133~~ | ✅ DONE 2026-07-22 — 133 keeps, 0 removed |
 | ~~KS~~ | ~~0 / 158~~ | ✅ DONE 2026-07-22 — 128 keeps, 0 removed |
 | ~~MO~~ | ~~0 / 256~~ | ✅ DONE 2026-07-22 — 115 keeps, 0 removed |
-| VA | 113 / 163 | partial — NEXT UP |
-| WV | 110 / 164 | partial |
+| ~~VA~~ | ~~0 / 162~~ | ✅ DONE 2026-07-22 — ~112 keeps, 1 removed (Crabtree Falls 4WD) |
+| WV | 110 / 164 | partial — NEXT UP |
 | SC | 93 / 93 | zero |
 | OH | 44 / 152 | partial |
 | MD | 29 / 47 | partial |
