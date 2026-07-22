@@ -1,10 +1,11 @@
 ---
 name: project_ia_sweep_handoff
-description: IA waterfront audit 100% COMPLETE (371/371, 2026-06-26); inclusion has a 39-entry retroactive backlog + id 4860 still
+description: "IA waterfront 100% (371/371); inclusion INCOMPLETE — 152 currently-waterfront IA entries still need inclusion audit (55 state/77 local/10 federal/10 private). THE LAST remaining legacy-inclusion backfill as of 2026-07-21 (CO/WI/NY/NE/IL/TN/IN all done)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: b2af1a68-1b19-44e5-866e-f5b81f755a78
+  modified: 2026-07-22T00:14:00.016Z
 ---
 
 **STATUS (2026-06-26):** Audited the **220 Iowa campgrounds that were `not waterfront` + unaudited** (ids 2943–3258), both audits, run as two sequential full stages (all waterfront first, then all inclusion), agents one-at-a-time per [[feedback_sequential_sweep_agents]].
@@ -17,8 +18,23 @@ metadata:
 
 **IA WATERFRONT: 100% DONE (371/371).** The lone loose end, **id 4860 Lake Fisher Park**, was waterfront-audited 2026-06-26 — `lakeview` confirmed (sites ~90m back across open grass, beyond on-water bound), `waterfront_evidence` written, committed. Zero IA entries lack `waterfront_evidence`.
 
-**IA INCLUSION loose ends still open (NOT done):**
-- **id 4860 Lake Fisher Park** — now has `waterfront_evidence` but still NO `inclusion_evidence` (waterfront done, inclusion pending).
-- **39 older IA entries** were already marked with a waterfront value + `waterfront_evidence` in earlier sessions but were NEVER inclusion-audited (pre-discipline backlog, like other states). Retroactive-inclusion backlog.
+**IA INCLUSION loose end still open (NOT done) — the actual count is 152, not 39:**
+The 2026-06-26 inclusion stage stamped 219 keeps (over the 220 not-waterfront
+entries, 1 removed). The remaining **152 IA campgrounds that carry a waterfront
+value** were never inclusion-audited — **55 state, 77 local, 10 federal, 10
+private** (incl id 4860 Lake Fisher Park). This is **THE LAST remaining
+legacy-inclusion backfill**: as of 2026-07-21 CO, WI, NY, NE, IL, TN, and IN are
+all 100% inclusion-complete. IA is the only state left with the loose end.
 
-**Next-biggest WATERFRONT backlogs after IA:** MO (143), WI (113), NE (105), IL (88), NY (84), TN (78), IN (72), KY (60). See [[project_co_sweep_handoff]] for the established chunked method.
+**Method to finish (standard, per this session's other 7 states):**
+`python3 /tmp/gen_incl_batches.py IA` builds ~19 batches of 8 from
+`state==IA and not inclusion_evidence`; run the inclusion subagents SEQUENTIALLY
+(one at a time), apply each with `audit/apply_inclusion_audit.py`, commit every
+~3 batches. IA is LOCAL-HEAVY (77 county/city/lake parks) so those need web
+*search* to find operator/county pages — **on 2026-07-21 the session WebSearch
+budget hit 200/200 before IA could start**, so IA was deferred to a fresh session
+(or raise CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION). WebFetch still worked but
+open-ended discovery of local-park pages needs search.
+
+See [[reference_inclusion_audit]], [[project_co_sweep_handoff]] for the method,
+and [[feedback_sequential_sweep_agents]].

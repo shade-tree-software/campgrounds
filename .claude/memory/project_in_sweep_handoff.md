@@ -1,10 +1,11 @@
 ---
 name: project_in_sweep_handoff
-description: Indiana audit status — waterfront 100% done; inclusion done for non-waterfront only
+description: "IN COMPLETE — waterfront 100% AND inclusion 100% (114/114, no loose ends). 2026-07-21 the residual 33 waterfront entries inclusion-audited: 33 keeps, 0 removals (IN DNR reservoirs/SRAs/state forests, NPS Dunewood, county/city, private all confirmed; 4 low-conf private kept on satellite RV-loop evidence)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: b95cfcd7-c453-40c6-ab56-d15b88386c38
+  modified: 2026-07-22T00:13:12.937Z
 ---
 
 Indiana (IN) audit status as of 2026-06-28 (114 IN campgrounds total):
