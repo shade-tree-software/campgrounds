@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Trip: {{ trip.summary }}{% endblock %}
+{# Tab titles stay short — browsers truncate around 15-25 chars, so lead with
+   the trip number and keep only enough summary to tell tabs apart. #}
+{% block title %}{% if trip.number %}Trip {{ trip.number }} · {% endif %}{{ trip.summary|truncate(20, False, '…', 0) }}{% endblock %}
 
 {% block head_extra %}
 <link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}" />
