@@ -289,8 +289,17 @@
      re-declared here caps how wide the map can get on very wide screens (the
      tall layout's roomier 2000px would stretch this branch's already-landscape
      map toward 2:1). The stacks' width is driven off the row height here, not
-     --map-size, so the 16:9 cap above doesn't apply. */
-  @media (min-width: 901px) and (max-height: 900px) {
+     --map-size, so the 16:9 cap above doesn't apply.
+       The min-aspect-ratio gate is this branch's portrait guard: the map-col
+     min-width holds firm while the stacks are the only shrinkable flex items,
+     so on a short-but-not-wide-enough window (iPad landscape 1024×768,
+     1180×820) the stacks used to absorb the whole shortage and the slots went
+     portrait — down to ~0.3 slivers near 920×850. Solving stack-width ≥ slot
+     height against the square-map min-width puts the break-even almost
+     exactly at viewport aspect 3/2 (at 3/2 the slots land at ~1.0). Below
+     that, this branch stands down and the stacked-vertical layout (extended
+     to the same zone below) takes over. */
+  @media (min-width: 901px) and (max-height: 900px) and (min-aspect-ratio: 3/2) {
     .map-section { max-width: 1600px; }
     .map-col {
       flex: 1 1 auto;
@@ -307,12 +316,17 @@
     }
   }
 
-  @media (max-width: 900px) {
-    /* Tablet portrait & mobile: stack vertically — map on top, one
-       horizontal row of photos below. The right photo column is
-       hidden; the left column reflows into a row. At iPad widths the
-       row is taller so 3 slots × ~256px wide don't squash photos into
-       a 2.3:1 horizontal slice. */
+  /* Tablet portrait & mobile — plus short desktop windows squarer than 3/2
+     (mostly iPads in landscape: 1024×768, 1180×820), where the side-stack
+     layout above would pinch the photo slots portrait (see that branch's
+     comment): stack vertically — one horizontal row of photos, then the map
+     (DOM order puts the photo row on top). The right photo column is hidden;
+     the left column reflows into a row. At iPad widths the row is taller so
+     3 slots × ~256px wide don't squash photos into a 2.3:1 horizontal slice.
+       At exactly aspect 3/2 both this and the side-stack branch match; this
+     block is later in source, so it wins — keep it below that branch. */
+  @media (max-width: 900px),
+         (min-width: 901px) and (max-height: 900px) and (max-aspect-ratio: 3/2) {
     .map-layout { flex-direction: column; gap: .5rem; }
     .map-col { width: 100%; }
     .map-container {
