@@ -34,7 +34,11 @@ while [ $# -gt 0 ]; do
     --photos)      DO_PHOTOS=1; shift ;;
     --dest)        DEST="$2"; shift 2 ;;
     -n|--dry-run)  DRY=(--dry-run); shift ;;
-    --delete)      DEL=(--delete); shift ;;
+    # --force lets --delete remove a dir that's gone from PA even when its only
+    # remaining local contents are excluded (.thumbs/, .trash/). Without it rsync
+    # warns "cannot delete non-empty directory" and leaves an orphaned thumb cache
+    # behind. Only fires on dirs being deleted, so live caches stay untouched.
+    --delete)      DEL=(--delete --force); shift ;;
     -h|--help)     sed -n '2,20p' "$0"; exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac

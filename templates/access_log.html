@@ -96,7 +96,12 @@ function esc(s) {
 
 function fmtTs(ts) {
   if (!ts) return '';
-  const d = new Date(ts);
+  // Timestamps are UTC. New entries carry a +00:00 marker; older ones are
+  // marker-less — append 'Z' so the browser reads them as UTC (not local) and
+  // toLocaleString below renders in the viewer's own timezone either way.
+  let s = String(ts);
+  if (!/(Z|[+-]\d\d:?\d\d)$/.test(s)) s += 'Z';
+  const d = new Date(s);
   if (isNaN(d)) return esc(ts);
   return d.toLocaleString(undefined, { month: 'short', day: 'numeric',
                                        hour: 'numeric', minute: '2-digit' });

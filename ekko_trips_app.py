@@ -9,7 +9,7 @@ import sqlite3
 import sys
 import threading
 import time
-from datetime import date, datetime, time as dt_time, timedelta
+from datetime import date, datetime, time as dt_time, timedelta, timezone
 
 from flask import Flask, render_template, request, jsonify, redirect, url_for, send_file, Response, abort
 from flask_login import LoginManager, UserMixin, login_user, logout_user, current_user, login_required
@@ -849,7 +849,10 @@ def _log_access(event, path=None, status=None, extra=None):
     try:
         kind, who = _access_identity()
         rec = {
-            "ts": datetime.now().isoformat(timespec="seconds"),
+            # UTC-aware (carries +00:00) so the browser can convert to the
+            # viewer's local tz. A naive datetime.now() has no marker and the
+            # browser would wrongly read it as local wall-clock.
+            "ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "event": event,
             "kind": kind,
             "who": who,
@@ -918,7 +921,7 @@ def _prune_access_log():
     file + atomic replace so a crash mid-prune can't truncate the log."""
     if not os.path.exists(ACCESS_LOG_FILE):
         return 0
-    cutoff = (datetime.now() - timedelta(days=ACCESS_LOG_RETENTION_DAYS)).isoformat()
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=ACCESS_LOG_RETENTION_DAYS)).isoformat()
     kept, dropped = [], 0
     with open(ACCESS_LOG_FILE, encoding="utf-8") as f:
         for line in f:
