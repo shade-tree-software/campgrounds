@@ -322,6 +322,35 @@
     line-height: 1.6;
   }
 
+  .map-legend .legend-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .6rem;
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-weight: 700;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .map-legend .legend-chevron {
+    transition: transform .15s ease;
+    font-size: .9em;
+  }
+
+  .map-legend.collapsed .legend-chevron { transform: rotate(-90deg); }
+
+  .map-legend .legend-body {
+    margin-top: .35rem;
+  }
+
+  .map-legend.collapsed .legend-body { display: none; }
+
   .map-legend .legend-row {
     display: flex;
     align-items: center;
@@ -583,10 +612,22 @@ const legend = L.control({ position: 'bottomleft' });
 legend.onAdd = function() {
   const div = L.DomUtil.create('div', 'map-legend');
   div.innerHTML = `
-    <div class="legend-row"><span class="legend-dot" style="background:#002868;"></span> Overnight camping spots</div>
-    <div class="legend-row"><span class="legend-dot" style="background:#c9a84c;"></span> Day trips, sites of interest, and events</div>
-    <div class="legend-row"><span class="legend-dot" style="background:#bf0a30;"></span> Family homes</div>
+    <button type="button" class="legend-toggle" aria-expanded="true" aria-controls="legend-body">
+      <span class="legend-title">Legend</span>
+      <span class="legend-chevron">▾</span>
+    </button>
+    <div class="legend-body" id="legend-body">
+      <div class="legend-row"><span class="legend-dot" style="background:#002868;"></span> Overnight camping spots</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#c9a84c;"></span> Day trips, sites of interest, and events</div>
+      <div class="legend-row"><span class="legend-dot" style="background:#bf0a30;"></span> Family homes</div>
+    </div>
   `;
+  L.DomEvent.disableClickPropagation(div);
+  const toggle = div.querySelector('.legend-toggle');
+  toggle.addEventListener('click', () => {
+    const collapsed = div.classList.toggle('collapsed');
+    toggle.setAttribute('aria-expanded', String(!collapsed));
+  });
   return div;
 };
 legend.addTo(map);
