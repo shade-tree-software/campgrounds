@@ -22,7 +22,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 
 ## STATUS 2026-07-22 (updated)
 - **Waterfront: 100% complete** — all campground entries carry `waterfront_evidence`. Nothing left.
-- **Inclusion: remaining 11 states, ~256 entries.**
+- **Inclusion: remaining 10 states, ~163 entries.**
+- **SC DONE 2026-07-22:** all SC entries inclusion-audited — **92 keeps, 1 removal** (owner-approved: 4384 Pleasant Ridge County Park = greenvillerec.com official page shows only a group Camp & Retreat Center, no individual public RV campsites; note's RV claim was aggregator-derived). SC total 93→92. SC state parks via southcarolinaparks.com (all real RV campgrounds); Sand Hills SF drive-in shelter sites (SCFC); USACE (Thurmond/Hartwell/Russell) + Sumter/Francis Marion NF via rec.gov; county parks (York/Oconee/Pickens/Florence/Sumter) + Hipcamp + many private RV parks. Pushed. Clean state (only 1 removal, an aggregator-inflated group retreat).
 - **WV DONE 2026-07-22:** all WV entries inclusion-audited — **~106 keeps, 4 removals** (all owner-approved, all owner-added no-trip-ref entries: 464 Spring Gap C&O Canal NPS = rec.gov largest RV site 20ft under-23ft; 507 Groundhog Trail = trailhead parking lot not a campground; 110 Sleepy Creek WMA + 230 Canaan Loop = unverified dispersed access). WV total 164→160. WV state parks/forests via wvstateparks.com; Monongahela NF HUGE (many owner-firsthand dispersed drive-in sites — Canaan Loop/Dolly Sods/Cranberry/Shavers Fork etc, all kept on firsthand --AWH notes) via rec.gov/USFS; New River Gorge/Gauley NPS; USACE (Sutton/Summersville/Burnsville/Jennings Randolph/East Lynn); county/city + private. Pushed. Note: WV Flagpole Rd sites 402/406 KEPT (owner notes say normal-vehicle passable — distinct from the VA Flagpole Knob 4WD sites).
 - **VA DONE 2026-07-22:** all VA entries inclusion-audited — **~112 keeps, 1 removal** (481 Crabtree Falls boondocking, owner-approved: owner's own note said "Meadows lane is a 4WD-only fire road w/ stream crossings"). VA total 163→162. VA state parks via dcr.virginia.gov/reservevaparks; Shenandoah NP + Blue Ridge Pkwy NPS + GWJ NF (huge — many small FCFS/dispersed) via rec.gov/USFS; USACE (Philpott/Kerr/Flannagan); DWR WMA primitive drive-in (owner-firsthand) + Hipcamp + county/city + private. **Owner-dispersed-site lesson:** the 4WD-access dispersed sites (Long Run Road 56/57/58/519/520/521/522 + Flagpole Knob 403/404/405) were owner-added & owner-flagged "unverified/may require 4WD"; owner chose to KEEP+stamp them (evidence string flags UNVERIFIED/NEEDS FIELD VERIFICATION) rather than remove — do NOT auto-delete owner-added dispersed sites; surface for owner call. Also 269 Fire Trail Rd kept (real trip-53 stay = firsthand access, overrode satellite-unconfirmed). Pushed.
 - **MO DONE 2026-07-22:** all 256 MO entries inclusion-audited (115 backfilled this session over 15 sequential batches, other 141 done in a prior pass) — **115 keeps, 0 removals** (clean). MO state parks via mostateparks.com/ReserveMO (icampmo1.usedirect.com); USACE lakes (Table Rock/Truman/Bull Shoals/Stockton/Pomme de Terre/Clearwater/Wappapello/Long Branch/Smithville/Mark Twain Lake) via rec.gov per-site; Mark Twain NF + Ozark NSR NPS + MDC conservation areas; county/city park campgrounds (Smithville/Jackson Co/Jeff City/Mozingo) + private RV parks (Branson/Lake of the Ozarks). Pushed.
@@ -43,8 +44,8 @@ L=sorted([(s,v[0],v[1]) for s,v in r.items() if v[0]],key=lambda x:-x[1]);print(
 | ~~MO~~ | ~~0 / 256~~ | ✅ DONE 2026-07-22 — 115 keeps, 0 removed |
 | ~~VA~~ | ~~0 / 162~~ | ✅ DONE 2026-07-22 — ~112 keeps, 1 removed (Crabtree Falls 4WD) |
 | ~~WV~~ | ~~0 / 160~~ | ✅ DONE 2026-07-22 — ~106 keeps, 4 removed (Spring Gap/Groundhog/Sleepy Creek/Canaan Loop) |
-| SC | 93 / 93 | zero — NEXT UP |
-| OH | 44 / 152 | partial |
+| ~~SC~~ | ~~0 / 92~~ | ✅ DONE 2026-07-22 — 92 keeps, 1 removed (Pleasant Ridge group-only) |
+| OH | 44 / 152 | partial — NEXT UP |
 | MD | 29 / 47 | partial |
 | ME | 23 / 45 | partial |
 | VT | 19 / 46 | partial |
