@@ -9,10 +9,26 @@
 {% endblock %}
 
 {% block style %}
+  /* The 2000px max-width is a backstop, not the real limiter: the row sizes
+     itself from --map-size below (map capped at 900px, each photo stack capped
+     at 16:9 slots), which tops out around 1970px. Keeping the section wider
+     than that lets a full-screen laptop spend its side margins on bigger
+     photos instead of dead whitespace. --row-w is the width the map + stacks
+     actually get (viewport minus this section's side padding, less ~16px held
+     back for a scrollbar). */
   .map-section {
-    max-width: 1400px;
+    max-width: 2000px;
     margin: 0 auto;
     padding: .5rem 2rem 0;
+    --row-w: calc(min(100vw, 2000px) - 4rem - 16px);
+    --map-size: min(
+      calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)),
+      900px,
+      max(
+        calc(var(--row-w) * 0.529 - 26.4px),
+        min(560px, calc(var(--row-w) * 0.6 - 27.2px))
+      )
+    );
   }
 
   /* Click-through card above the map pointing at the most recently-started
@@ -147,13 +163,32 @@
      (--otd-height). Keying off the *measured* header means when it shrinks on
      short desktops (base.html's short-screen trim) the map grows to fill the
      reclaimed space instead of leaving dead whitespace at the bottom. The
-     fallback 92px ≈ the full-size header so first paint isn't oversized. */
+     fallback 92px ≈ the full-size header so first paint isn't oversized.
+       That's the first two terms of --map-size (defined on .map-section). The
+     third is the photo-slot aspect guard. The flanking stacks split whatever
+     width the map leaves, so when the row is narrow relative to its height the
+     slots turn portrait and landscape photos get cover-cropped into them —
+     which reads as "stretched". With stack width (W - M - 32)/2 and slot
+     height (M + B - 24)/3 — W being --row-w, and B ≈ 44px the banner + gap the
+     stacks also stretch past (align-items: stretch sizes them off the whole
+     map column, not just the map) — a slot aspect of k needs
+     M = (3·W - 96 + 48·k - 2·k·B)/(3 + 2·k); k = 4/3 (matching the landscape
+     photos) gives M ≈ 0.529·W - 26.4. B stays roughly constant when the
+     on-this-day banner appears, since --otd-height takes the same room off M.
+       That target is wrapped in a max() so it can't pinch the map on narrower
+     desktops, where honoring 4:3 would eat the map faster than it widens the
+     photos: the map stops shrinking at 560px, and the slots relax from 4:3
+     toward square. The inner min() keeps even that floor from pushing slots
+     past square (k = 1 → M = 0.6·W - 27.2) — the hard floor, so slots never go
+     portrait. When the row is wide enough that neither guard binds, the map
+     runs to the full height (or its 900px cap) and the stacks take all the
+     leftover width, up to the 16:9 cap on .photo-stack. */
   .map-col {
     display: flex;
     flex-direction: column;
     gap: .65rem;
     flex: 0 0 auto;
-    width: min(calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)), 900px, 100%);
+    width: min(var(--map-size), 100%);
   }
 
   .map-container {
@@ -174,9 +209,15 @@
     width: 100%;
   }
 
+  /* Each stack takes half the width the map leaves — so no side whitespace —
+     but stops once its 3 slots hit 16:9 (slot height is (M + B - 24)/3 with
+     B ≈ 44px of banner, so 16:9 width is 0.593·M + 11.9). Past that the photos
+     would be letterboxed slivers on an ultra-wide monitor, and the row centers
+     instead. */
   .photo-stack {
     flex: 1 1 0;
     min-width: 0;
+    max-width: calc(var(--map-size) * 0.593 + 11.9px);
     display: flex;
     flex-direction: column;
     gap: .75rem;
@@ -240,11 +281,17 @@
      small map + letterboxed (wide, short) photo slots. Here we drop the 1:1
      square: the map fills the
      row height as a landscape rectangle and the photo stacks pin to a slim
-     fixed-ish width so the map claims the surplus width. The map-col min-width
+     fixed-ish width (the same 4:3 slot target as the tall layout above — a
+     third of the row height per slot, ×4/3 — floored at the historical 240px)
+     so the map claims the surplus width. The map-col min-width
      floors the map at the square's size, so narrower desktop windows just fall
-     back to today's square instead of going portrait; .map-section's 1400px
-     max-width caps how wide the map can get on very wide screens. */
+     back to today's square instead of going portrait; the 1600px max-width
+     re-declared here caps how wide the map can get on very wide screens (the
+     tall layout's roomier 2000px would stretch this branch's already-landscape
+     map toward 2:1). The stacks' width is driven off the row height here, not
+     --map-size, so the 16:9 cap above doesn't apply. */
   @media (min-width: 901px) and (max-height: 900px) {
+    .map-section { max-width: 1600px; }
     .map-col {
       flex: 1 1 auto;
       width: auto;
@@ -254,7 +301,10 @@
       aspect-ratio: auto;
       height: calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px));
     }
-    .photo-stack { flex: 0 1 240px; }
+    .photo-stack {
+      flex: 0 1 max(240px, calc((100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)) * 0.444 + 8.9px));
+      max-width: none;
+    }
   }
 
   @media (max-width: 900px) {
@@ -276,6 +326,7 @@
       flex-direction: row;
       flex: 0 0 auto;
       width: 100%;
+      max-width: none;  /* the desktop 16:9 cap would clamp this full-width row */
       height: 180px;
       gap: .5rem;
     }
