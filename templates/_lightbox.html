@@ -1,0 +1,32 @@
+{# Shared photo lightbox markup. Pairs with static/lightbox.css and
+   static/lightbox.js — include this once per page that opens the viewer,
+   and load that CSS/JS pair alongside it.
+
+   The .lb-trip link is populated only when the opener passes a trip via
+   openLightbox()'s options (the trips map does; the trip detail page is
+   already on the trip, so it stays hidden there). #}
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="closeLightbox(event)">
+  <button class="close-btn" title="Close (Esc)">&times;</button>
+  <button class="lb-download" id="lb-download" title="Download" onclick="downloadLightbox(event)" aria-label="Download photo">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 16h14"/>
+    </svg>
+  </button>
+  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)">&#8249;</button>
+  <img id="lightbox-img" src="" alt="">
+  <a class="lb-trip" id="lb-trip" href="#">
+    <span class="lb-trip-text">
+      <span class="lb-trip-line">
+        <span class="lb-trip-name" id="lb-trip-name"></span>
+        <span class="lb-trip-date" id="lb-trip-date"></span>
+      </span>
+      {# Second line: the name of the campspot/event/waypoint the photo
+         belongs to. The name alone — the kind isn't labeled. #}
+      <span class="lb-trip-place" id="lb-trip-place"></span>
+    </span>
+    <span class="lb-trip-open">Open trip &rsaquo;</span>
+  </a>
+  <div class="lb-caption" id="lb-caption"></div>
+  <div class="lb-date" id="lb-date"></div>
+  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)" title="Next (→)">&#8250;</button>
+</div>

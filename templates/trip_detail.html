@@ -9,6 +9,7 @@
 <script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
 <script>L.Icon.Default.imagePath = "/static/vendor/leaflet/images/";</script>
 <link rel="stylesheet" href="{{ static_v('map-picker.css') }}" />
+<link rel="stylesheet" href="{{ static_v('lightbox.css') }}" />
 <script>
   // Kick the GPS-track fetch off as early as possible so the request lands
   // before the browser starts pulling photo thumbnails. The map IIFE later
@@ -1300,23 +1301,8 @@
     .landscape-hint svg { animation: none; }
   }
 
-  /* ── Lightbox ───────────────────────────────────── */
-  .lightbox {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.85);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    /* All touch gestures (swipe, pinch-zoom, pan, double-tap) are handled
-       in lightbox.js — suppress the browser's native scroll/zoom so the
-       two never fight. Nothing inside the lightbox needs native scroll. */
-    touch-action: none;
-  }
-
-  .lightbox.visible { display: flex; }
+  /* ── Lightbox ───────────────────────────────────────
+     Styles live in static/lightbox.css (shared with the trips map). */
 
   /* ── Add modal ───────────────────────────────────── */
   .add-modal {
@@ -1498,134 +1484,6 @@
     border-radius: 3px;
     margin-left: .5rem;
     vertical-align: middle;
-  }
-
-  .lightbox img {
-    max-width: 90vw;
-    max-height: 90vh;
-    border-radius: 6px;
-    box-shadow: 0 0 40px rgba(0,0,0,.5);
-  }
-
-  /* A zoomed photo (transform: scale) paints in DOM order, so it covered
-     the controls that precede it in the markup (close, download, left
-     chevron) while the ones after it stayed visible. Lift every control
-     above the image. */
-  .lightbox .close-btn, .lightbox .lb-download, .lightbox .nav-btn,
-  .lightbox .lb-caption, .lightbox .lb-date { z-index: 1; }
-
-  .lightbox .close-btn {
-    position: absolute;
-    top: .5rem;
-    right: .5rem;
-    color: var(--white);
-    font-size: 2rem;
-    cursor: pointer;
-    background: rgba(0,0,0,.3);
-    border: none;
-    line-height: 1;
-    min-width: 44px;
-    min-height: 44px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background .15s;
-  }
-  .lightbox .close-btn:hover { background: rgba(255,255,255,.2); }
-
-  /* Download button. Mobile users can't right-click; this gives them a
-     way to save a photo. Sits just to the left of the close button. */
-  .lightbox .lb-download {
-    position: absolute;
-    top: .5rem;
-    right: calc(.5rem + 44px + .25rem);
-    color: var(--white);
-    cursor: pointer;
-    background: rgba(0,0,0,.3);
-    border: none;
-    width: 44px;
-    height: 44px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    transition: background .15s;
-  }
-  .lightbox .lb-download:hover { background: rgba(255,255,255,.2); }
-  .lightbox .lb-download svg { display: block; }
-
-  .lightbox .nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--white);
-    font-size: 3rem;
-    cursor: pointer;
-    background: rgba(0,0,0,.4);
-    border: none;
-    padding: .25rem 1rem;
-    border-radius: 6px;
-    line-height: 1;
-    min-width: 44px;
-    min-height: 44px;
-    transition: background .2s;
-  }
-
-  .lightbox .nav-btn:hover { background: rgba(255,255,255,.2); }
-  .lightbox .nav-prev { left: 1rem; }
-  .lightbox .nav-next { right: 1rem; }
-  .lightbox .nav-btn.hidden { display: none; }
-
-  .lightbox .lb-caption {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #fff;
-    background: rgba(0,0,0,.6);
-    padding: .4rem 1rem;
-    border-radius: 6px;
-    font-size: .9rem;
-    max-width: min(80vw, 600px);
-    text-align: center;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .lightbox .lb-caption:empty { display: none; }
-
-  .lightbox .lb-date {
-    position: absolute;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    color: #fff;
-    background: rgba(0,0,0,.6);
-    padding: .3rem .8rem;
-    border-radius: 6px;
-    font-size: .85rem;
-  }
-
-  .lightbox .lb-date:empty { display: none; }
-
-  /* On phones the centered date badge can collide with the top-right
-     close/download buttons. Move it to top-left out of their way. */
-  @media (max-width: 700px) {
-    .lightbox .lb-date {
-      left: .5rem;
-      top: .5rem;
-      transform: none;
-    }
-    .lightbox .lb-caption {
-      max-width: calc(100vw - 1rem);
-      bottom: .75rem;
-    }
-    .lightbox .nav-prev { left: .25rem; }
-    .lightbox .nav-next { right: .25rem; }
-    .lightbox .nav-btn { padding: .25rem .5rem; }
   }
 
   /* ── Map ─────────────────────────────────────────── */
@@ -2427,20 +2285,7 @@
 </div>
 {% endif %}
 
-<!-- Lightbox -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="closeLightbox(event)">
-  <button class="close-btn" title="Close (Esc)">&times;</button>
-  <button class="lb-download" id="lb-download" title="Download" onclick="downloadLightbox(event)" aria-label="Download photo">
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 16h14"/>
-    </svg>
-  </button>
-  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)">&#8249;</button>
-  <img id="lightbox-img" src="" alt="">
-  <div class="lb-caption" id="lb-caption"></div>
-  <div class="lb-date" id="lb-date"></div>
-  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)" title="Next (→)">&#8250;</button>
-</div>
+{% include "_lightbox.html" %}
 {% endblock %}
 
 {% block scripts %}
@@ -2466,7 +2311,7 @@ window.TRIP_BOOT = {
 </script>
 <script src="{{ static_v('map-picker.js') }}"></script>
 <script src="{{ static_v('trip-detail/boot.js') }}"></script>
-<script src="{{ static_v('trip-detail/lightbox.js') }}"></script>
+<script src="{{ static_v('lightbox.js') }}"></script>
 <script src="{{ static_v('trip-detail/detect-stops.js') }}"></script>
 <script src="{{ static_v('trip-detail/photos.js') }}"></script>
 <script src="{{ static_v('trip-detail/overrides.js') }}"></script>
