@@ -624,12 +624,18 @@ def _invalidate_photo_pool():
 
 def _collect_photo_pool():
     """Every uploaded photo across all trips: {url, thumb, trip_id, card,
-    home_only}. Built from the unfiltered trip list; callers filter
+    caption, home_only}. Built from the unfiltered trip list; callers filter
     home_only per viewer and must copy before shuffling/mutating (the
-    list and its items are shared across requests)."""
+    list and its items are shared across requests).
+
+    `caption` is the same text the trip page shows under the photo (the
+    trips-map lightbox displays it). It comes from one captions.json read
+    per pool build — cheap, unlike the EXIF date, which would need a Pillow
+    open per file and so is deliberately not carried here."""
     now = time.time()
     if _PHOTO_POOL_CACHE["pool"] is not None and now - _PHOTO_POOL_CACHE["ts"] < _PHOTO_POOL_TTL_S:
         return _PHOTO_POOL_CACHE["pool"]
+    captions = _load_json(CAPTIONS_FILE)
     pool = []
     for trip in parse_trips():
         tid = trip["id"]
@@ -644,6 +650,7 @@ def _collect_photo_pool():
                             "thumb": f"/thumb/{tid}/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"stay-{i}",
+                            "caption": captions.get(f"{tid}/{i}/{fname}", ""),
                             "home_only": home_only,
                         })
         for i, _event in enumerate(trip.get("events", [])):
@@ -656,6 +663,7 @@ def _collect_photo_pool():
                             "thumb": f"/thumb/{tid}/events/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"event-{i}",
+                            "caption": captions.get(f"{tid}/events/{i}/{fname}", ""),
                             "home_only": home_only,
                         })
     _PHOTO_POOL_CACHE.update(ts=now, pool=pool)
@@ -1858,6 +1866,8 @@ def save_caption(trip_id, stay_idx):
     captions = _load_json(CAPTIONS_FILE)
     captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
+    # The slideshow pool carries captions, so an edit must not wait out the TTL.
+    _invalidate_photo_pool()
 
     return jsonify({"ok": True})
 
@@ -1990,6 +2000,8 @@ def save_event_caption(trip_id, event_idx):
     captions = _load_json(CAPTIONS_FILE)
     captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
+    # The slideshow pool carries captions, so an edit must not wait out the TTL.
+    _invalidate_photo_pool()
 
     return jsonify({"ok": True})
 

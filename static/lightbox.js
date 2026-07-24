@@ -118,11 +118,12 @@ function showLightboxPhoto() {
     lbImg.src = img.src;
     pre.onload = () => { if (lightboxPhotos[lightboxIndex] === img) lbImg.src = full; };
   }
-  // Get caption from the caption-text span in the same photo-item (absent
-  // when the opener supplied its own photo list — e.g. the trips map).
+  // Caption comes from the caption-text span in the same photo-item, or —
+  // for openers whose photos aren't in a grid (the trips map) — off the img
+  // as data-caption.
   const item = img.closest('.photo-item');
   const spanEl = item && item.querySelector('.caption-text');
-  let caption = '';
+  let caption = img.dataset.caption || '';
   if (spanEl && !spanEl.classList.contains('placeholder')) {
     caption = spanEl.textContent;
   }
