@@ -154,9 +154,9 @@ function showLightboxPhoto() {
 
 // Show the "go to this photo's trip" card when the photo carries one.
 // Callers opt in per photo via data-trip-href (+ optional data-trip-name /
-// data-trip-date, and data-place-name / data-place-kind for the campspot or
-// event the photo sits under); pages already scoped to a single trip just
-// omit them and the card stays hidden.
+// data-trip-date, and data-place-name naming the campspot or event the
+// photo sits under); pages already scoped to a single trip just omit them
+// and the card stays hidden.
 function setLightboxTrip(img) {
   const link = document.getElementById('lb-trip');
   if (!link) return;
@@ -168,24 +168,14 @@ function setLightboxTrip(img) {
   document.getElementById('lb-trip-name').textContent = name;
   document.getElementById('lb-trip-date').textContent = img.dataset.tripDate || '';
 
-  // Second line — omitted entirely when the photo's card has no name
-  // (a stay with no campground and no custom place, say).
+  // Second line — the campspot/event name on its own, omitted entirely when
+  // the photo's card has no usable name (a stay with no campground and no
+  // custom place, say).
   const placeName = img.dataset.placeName || '';
-  const kind = img.dataset.placeKind || '';          // stay | event | waypoint | family
   const place = document.getElementById('lb-trip-place');
   place.classList.toggle('visible', !!placeName);
-  if (placeName) {
-    const KINDS = { stay: 'Campspot', event: 'Event', waypoint: 'Waypoint', family: 'Family visit' };
-    const kindLabel = KINDS[kind] || '';
-    document.getElementById('lb-trip-place-name').textContent = placeName;
-    document.getElementById('lb-trip-place-kind').textContent = kindLabel;
-    // Marker colors: navy campspot, gold event/waypoint, red family visit.
-    const dot = document.getElementById('lb-trip-dot');
-    dot.className = 'lb-trip-dot' +
-      (kind === 'family' ? ' family' : (kind === 'stay' ? '' : ' event'));
-    // The type is hidden at phone widths, so keep it in the accessible name.
-    place.title = kindLabel ? kindLabel + ': ' + placeName : placeName;
-  }
+  place.textContent = placeName;
+  place.title = placeName;   // the full text when it ellipsizes
   link.setAttribute('aria-label', 'Open ' + name +
     (placeName ? ' — ' + placeName : ''));
 }

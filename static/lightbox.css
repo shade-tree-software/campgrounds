@@ -212,45 +212,20 @@
   margin-left: .5rem;
 }
 
-/* Second line: the campspot / event / waypoint the photo sits under.
-   Hidden when the opener doesn't supply one (see setLightboxTrip). */
+/* Second line: the name of the campspot / event / waypoint the photo sits
+   under — the name only, with no kind label or marker dot (the name says
+   enough). Hidden when the opener doesn't supply one (see setLightboxTrip). */
 .lightbox .lb-trip .lb-trip-place {
   display: none;
   min-width: 0;
-  align-items: center;
-  gap: .35rem;
   font-size: .78rem;
   color: var(--gray);
   white-space: nowrap;
-}
-
-.lightbox .lb-trip .lb-trip-place.visible { display: flex; }
-
-.lightbox .lb-trip .lb-trip-place-name {
-  min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* Color-coded like the map markers this photo's pin uses. */
-.lightbox .lb-trip .lb-trip-dot {
-  flex-shrink: 0;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--navy);
-}
-.lightbox .lb-trip .lb-trip-dot.event { background: var(--gold); }
-.lightbox .lb-trip .lb-trip-dot.family { background: var(--red); }
-
-/* The type ("Campspot", "Waypoint", …) is a hint, not the payload — it's
-   the first thing to go when the name needs the room. */
-.lightbox .lb-trip .lb-trip-place-kind {
-  flex-shrink: 0;
-  font-weight: 600;
-  letter-spacing: .02em;
-}
-.lightbox .lb-trip .lb-trip-place-kind::after { content: '·'; margin-left: .35rem; }
+.lightbox .lb-trip .lb-trip-place.visible { display: block; }
 
 /* The explicit "tap me" affordance, mirroring the page's banner pills. */
 .lightbox .lb-trip .lb-trip-open {
@@ -286,9 +261,9 @@
   /* Phone: a centered card can't clear the close/download cluster at this
      width (it would leave ~190px of usable card). Drop below the button row
      and take the full width instead — the photo is centered with black to
-     spare up there, so nothing is covered. The date and the campspot type
-     drop out (the page's own banners make the same call at this width) so
-     the trip and place names get every pixel. */
+     spare up there, so nothing is covered. The date drops out (the page's
+     own banners make the same call at this width) so the trip and place
+     names get every pixel. */
   .lightbox .lb-trip {
     top: calc(.5rem + 44px + .5rem);
     left: .5rem;
@@ -302,7 +277,6 @@
     border-left-width: 5px;
   }
   .lightbox .lb-trip .lb-trip-date { display: none; }
-  .lightbox .lb-trip .lb-trip-place-kind { display: none; }
   .lightbox .lb-trip .lb-trip-place { font-size: .72rem; }
   .lightbox .lb-trip .lb-trip-open { font-size: .7rem; padding: .25rem .55rem; }
 }
