@@ -1,14 +1,23 @@
-// Trip-detail photo lightbox: opens a fullscreen overlay over the photo
-// grid, paged via prev/next buttons, arrow keys, or swipe. Touch users
-// also get pinch-to-zoom, drag-to-pan while zoomed, and double-tap to
-// toggle zoom. F toggles fullscreen; a download button gives mobile
-// users a save path (right-click is unavailable on touch). Functions
-// are kept global so inline onclick="…" attributes in the photo-grid
-// HTML still resolve.
+// Shared photo lightbox: opens a fullscreen overlay over a set of photos,
+// paged via prev/next buttons, arrow keys, or swipe. Touch users also get
+// pinch-to-zoom, drag-to-pan while zoomed, and double-tap to toggle zoom.
+// F toggles fullscreen; a download button gives mobile users a save path
+// (right-click is unavailable on touch). Functions are kept global so
+// inline onclick="…" attributes in the photo-grid HTML still resolve.
+//
+// Used by two pages, which differ only in where the photo set comes from:
+//   - trip detail — openLightbox(img) with no options, which collects the
+//     siblings of the clicked img from its enclosing .photo-grid;
+//   - trips map — openLightbox(img, { photos, onClose }) passing the photo
+//     stacks' currently-shown imgs, since those live in two separate
+//     containers and have no .photo-grid/.photo-item wrapper.
+// Per-photo extras (caption, date taken, source trip) are read off the
+// img's own dataset/DOM, so a caller only has to supply what it has.
 
 let lightboxPhotos = [];
 let lightboxIndex = 0;
 let lbReturnFocus = null;  // grid img to restore focus to on close
+let lbOnClose = null;      // opener's cleanup callback, if any
 
 // ── Zoom state ───────────────────────────────────────────────────────────
 // The image's transform is `translate(tx,ty) scale(s)` with the default
@@ -65,12 +74,20 @@ function lbToggleZoom(x, y) {
   lbApplyTransform(true);
 }
 
-function openLightbox(imgEl) {
-  // Collect all photos in the same grid
-  const grid = imgEl.closest('.photo-grid');
-  lightboxPhotos = Array.from(grid.querySelectorAll('.photo-item img'));
-  lightboxIndex = lightboxPhotos.indexOf(imgEl);
+// opts.photos — the set to page through (defaults to the clicked photo's
+//   .photo-grid siblings); opts.onClose — called when the viewer closes.
+function openLightbox(imgEl, opts) {
+  opts = opts || {};
+  if (opts.photos) {
+    lightboxPhotos = opts.photos;
+  } else {
+    // Collect all photos in the same grid
+    const grid = imgEl.closest('.photo-grid');
+    lightboxPhotos = Array.from(grid.querySelectorAll('.photo-item img'));
+  }
+  lightboxIndex = Math.max(0, lightboxPhotos.indexOf(imgEl));
   lbReturnFocus = imgEl;
+  lbOnClose = opts.onClose || null;
   showLightboxPhoto();
   document.getElementById('lightbox').classList.add('visible');
   // Move focus into the dialog so Tab/Escape act on it, not the page.
@@ -101,9 +118,10 @@ function showLightboxPhoto() {
     lbImg.src = img.src;
     pre.onload = () => { if (lightboxPhotos[lightboxIndex] === img) lbImg.src = full; };
   }
-  // Get caption from the caption-text span in the same photo-item
+  // Get caption from the caption-text span in the same photo-item (absent
+  // when the opener supplied its own photo list — e.g. the trips map).
   const item = img.closest('.photo-item');
-  const spanEl = item.querySelector('.caption-text');
+  const spanEl = item && item.querySelector('.caption-text');
   let caption = '';
   if (spanEl && !spanEl.classList.contains('placeholder')) {
     caption = spanEl.textContent;
@@ -121,6 +139,7 @@ function showLightboxPhoto() {
     }
   }
   document.getElementById('lb-date').textContent = dateStr;
+  setLightboxTrip(img);
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
   // Preload the neighbors' full-res originals so paging (arrows, keys,
@@ -130,6 +149,23 @@ function showLightboxPhoto() {
     const n = lightboxPhotos[i];
     if (n) { new Image().src = n.dataset.full || n.src; }
   });
+}
+
+// Show the "go to this photo's trip" link when the photo carries one.
+// Callers opt in per photo via data-trip-href (+ optional data-trip-name /
+// data-trip-date); pages already scoped to a single trip just omit them and
+// the link stays hidden.
+function setLightboxTrip(img) {
+  const link = document.getElementById('lb-trip');
+  if (!link) return;
+  const href = img.dataset.tripHref || '';
+  link.classList.toggle('visible', !!href);
+  if (!href) return;
+  link.href = href;
+  const name = img.dataset.tripName || 'this trip';
+  document.getElementById('lb-trip-name').textContent = name;
+  document.getElementById('lb-trip-date').textContent = img.dataset.tripDate || '';
+  link.setAttribute('aria-label', 'Open ' + name);
 }
 
 function lightboxNav(e, dir) {
@@ -143,12 +179,26 @@ function lightboxNav(e, dir) {
 
 function closeLightbox(e) {
   if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption' || e.target.id === 'lb-date')) return;
+  // The trip link is an anchor — let the click navigate rather than
+  // closing out from under it (its inner spans are click targets too).
+  if (e && e.target.closest && e.target.closest('#lb-trip')) return;
   document.getElementById('lightbox').classList.remove('visible');
   lbResetZoom(false);
-  // Hand focus back to the grid photo the viewer was opened from.
+  // Hand focus back to the grid photo the viewer was opened from. Grid
+  // photos are focusable imgs (tabindex=0); the trips-map stacks instead
+  // wrap a plain img in the slot's anchor, so fall back to that — focusing
+  // a non-focusable img would silently drop the keyboard user's place.
   if (lbReturnFocus) {
-    try { lbReturnFocus.focus(); } catch (err) { /* removed mid-view */ }
+    const target = lbReturnFocus.hasAttribute('tabindex')
+      ? lbReturnFocus
+      : (lbReturnFocus.closest('a[href]') || lbReturnFocus);
+    try { target.focus(); } catch (err) { /* removed mid-view */ }
     lbReturnFocus = null;
+  }
+  if (lbOnClose) {
+    const cb = lbOnClose;
+    lbOnClose = null;
+    cb();
   }
 }
 

@@ -1,0 +1,202 @@
+/* Shared photo lightbox — pairs with static/lightbox.js and the
+   templates/_lightbox.html markup partial. Used by the trip detail page
+   (photo grids) and the trips map (photo stacks). Colors come from the
+   :root vars in base.html. */
+
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  /* All touch gestures (swipe, pinch-zoom, pan, double-tap) are handled
+     in lightbox.js — suppress the browser's native scroll/zoom so the
+     two never fight. Nothing inside the lightbox needs native scroll. */
+  touch-action: none;
+}
+
+.lightbox.visible { display: flex; }
+
+.lightbox img {
+  max-width: 90vw;
+  max-height: 90vh;
+  border-radius: 6px;
+  box-shadow: 0 0 40px rgba(0,0,0,.5);
+}
+
+/* A zoomed photo (transform: scale) paints in DOM order, so it covered
+   the controls that precede it in the markup (close, download, left
+   chevron) while the ones after it stayed visible. Lift every control
+   above the image. */
+.lightbox .close-btn, .lightbox .lb-download, .lightbox .nav-btn,
+.lightbox .lb-caption, .lightbox .lb-date, .lightbox .lb-trip { z-index: 1; }
+
+.lightbox .close-btn {
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  background: rgba(0,0,0,.3);
+  border: none;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background .15s;
+}
+.lightbox .close-btn:hover { background: rgba(255,255,255,.2); }
+
+/* Download button. Mobile users can't right-click; this gives them a
+   way to save a photo. Sits just to the left of the close button. */
+.lightbox .lb-download {
+  position: absolute;
+  top: .5rem;
+  right: calc(.5rem + 44px + .25rem);
+  color: var(--white);
+  cursor: pointer;
+  background: rgba(0,0,0,.3);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background .15s;
+}
+.lightbox .lb-download:hover { background: rgba(255,255,255,.2); }
+.lightbox .lb-download svg { display: block; }
+
+.lightbox .nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--white);
+  font-size: 3rem;
+  cursor: pointer;
+  background: rgba(0,0,0,.4);
+  border: none;
+  padding: .25rem 1rem;
+  border-radius: 6px;
+  line-height: 1;
+  min-width: 44px;
+  min-height: 44px;
+  transition: background .2s;
+}
+
+.lightbox .nav-btn:hover { background: rgba(255,255,255,.2); }
+.lightbox .nav-prev { left: 1rem; }
+.lightbox .nav-next { right: 1rem; }
+.lightbox .nav-btn.hidden { display: none; }
+
+.lightbox .lb-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgba(0,0,0,.6);
+  padding: .4rem 1rem;
+  border-radius: 6px;
+  font-size: .9rem;
+  max-width: min(80vw, 600px);
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.lightbox .lb-caption:empty { display: none; }
+
+.lightbox .lb-date {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  background: rgba(0,0,0,.6);
+  padding: .3rem .8rem;
+  border-radius: 6px;
+  font-size: .85rem;
+}
+
+.lightbox .lb-date:empty { display: none; }
+
+/* "Go to the trip this photo came from" link. Only the trips-map photo
+   stacks populate it (the trip detail page is already on that trip), so
+   it's hidden unless the opener supplies a href — see setLightboxTrip().
+   It sits along the bottom where the caption would go; when both are
+   present the caption stacks above it. */
+.lightbox .lb-trip {
+  display: none;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  align-items: center;
+  gap: .5rem;
+  max-width: min(90vw, 640px);
+  color: #fff;
+  background: rgba(0,0,0,.65);
+  border: 1px solid rgba(255,255,255,.35);
+  padding: .5rem 1rem;
+  border-radius: 999px;
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+
+.lightbox .lb-trip.visible { display: inline-flex; }
+.lightbox .lb-trip:hover,
+.lightbox .lb-trip:focus-visible { background: rgba(0,40,104,.9); border-color: #fff; }
+
+.lightbox .lb-trip .lb-trip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lightbox .lb-trip .lb-trip-date {
+  font-weight: 400;
+  opacity: .8;
+  white-space: nowrap;
+}
+
+/* Caption and trip link share the bottom edge — lift the caption clear
+   when both are showing. */
+.lightbox .lb-trip.visible ~ .lb-caption:not(:empty) { bottom: 4.75rem; }
+
+/* On phones the centered date badge can collide with the top-right
+   close/download buttons. Move it to top-left out of their way. */
+@media (max-width: 700px) {
+  .lightbox .lb-date {
+    left: .5rem;
+    top: .5rem;
+    transform: none;
+  }
+  .lightbox .lb-caption {
+    max-width: calc(100vw - 1rem);
+    bottom: .75rem;
+  }
+  .lightbox .nav-prev { left: .25rem; }
+  .lightbox .nav-next { right: .25rem; }
+  .lightbox .nav-btn { padding: .25rem .5rem; }
+  .lightbox .lb-trip {
+    bottom: .75rem;
+    max-width: calc(100vw - 1rem);
+    font-size: .9rem;
+    padding: .5rem .85rem;
+  }
+  .lightbox .lb-trip.visible ~ .lb-caption:not(:empty) { bottom: 4rem; }
+}

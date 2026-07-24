@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}" />
 <script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
 <script>L.Icon.Default.imagePath = "/static/vendor/leaflet/images/";</script>
+{% if slideshow_photos %}<link rel="stylesheet" href="{{ static_v('lightbox.css') }}" />{% endif %}
 {% endblock %}
 
 {% block style %}
@@ -252,7 +253,9 @@
     height: 22px;
     background: rgba(0,0,0,.45);
     border-radius: 4px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17L17 7'/%3E%3Cpath d='M7 7h10v10'/%3E%3C/svg%3E");
+    /* Expand arrows, not an open-in-new-page arrow: a click enlarges the
+       photo in the lightbox rather than leaving for the trip page. */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M9 21H3v-6'/%3E%3Cpath d='M21 3l-7 7'/%3E%3Cpath d='M3 21l7-7'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: center;
     background-size: 14px;
@@ -455,9 +458,11 @@
     {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
   </div>
 </div>
+{% if slideshow_photos %}{% include "_lightbox.html" %}{% endif %}
 {% endblock %}
 
 {% block scripts %}
+{% if slideshow_photos %}<script src="{{ static_v('lightbox.js') }}"></script>{% endif %}
 <script>
 const TRIPS = {{ trips | tojson }};
 const FAMILY = {{ family_locations | tojson }};
@@ -781,6 +786,26 @@ if (PHOTOS.length && leftStack && rightStack) {
   }
 
   const slotPhotos = new Array(slots.length).fill(null);
+  let lightboxOpen = false;
+  // The <img> currently shown in each slot, in stack order (left top→bottom,
+  // then right). The lightbox pages through exactly these, so a viewer who
+  // opens one photo can arrow through the others they can see.
+  const slotImgs = new Array(slots.length).fill(null);
+
+  // Trip label/date for the lightbox's "go to trip" link, by trip id.
+  const tripById = {};
+  TRIPS.forEach(t => { tripById[t.id] = t; });
+
+  function tripLabel(tripId) {
+    const t = tripById[tripId];
+    if (!t) return { name: '', date: '' };
+    return {
+      name: (t.number ? 'Trip ' + t.number + ': ' : '') + (t.summary || 'Trip'),
+      date: t.start
+        ? new Date(t.start + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+        : '',
+    };
+  }
 
   function pickPhoto(excludeIdx) {
     const visible = new Set();
@@ -795,15 +820,37 @@ if (PHOTOS.length && leftStack && rightStack) {
     const slot = slots[idx];
     const prev = slot.querySelector('a');
     const a = document.createElement('a');
-    // Photo slot deep-links to the trip page only — the timeline does not
-    // scroll to the originating card on arrival (per user preference).
+    // A plain click enlarges the photo in the lightbox (which then offers a
+    // link through to the trip) — jumping straight to another page felt
+    // abrupt for what looks like a thumbnail. The href stays real so
+    // ctrl/cmd/middle-click, "open in new tab", and no-JS still reach the
+    // trip page directly; the timeline does not scroll to the originating
+    // card on arrival (per user preference).
     a.href = '/trips/' + photo.trip_id;
     const img = document.createElement('img');
     img.src = photo.thumb || photo.url;
     img.loading = 'lazy';
+    // Consumed by the lightbox: the full-res original to swap in, and the
+    // trip this photo belongs to for its "go to trip" link.
+    img.dataset.full = photo.url;
+    // Site-relative, like the anchor's own attribute — reading a.href back
+    // off the element would hand the lightbox an absolute URL.
+    img.dataset.tripHref = '/trips/' + photo.trip_id;
+    const label = tripLabel(photo.trip_id);
+    img.dataset.tripName = label.name;
+    img.dataset.tripDate = label.date;
+    a.addEventListener('click', e => {
+      // Let the browser handle the modified clicks that mean "open the
+      // link elsewhere"; only a plain left-click opens the viewer.
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey ||
+          e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      openStackLightbox(img);
+    });
     a.appendChild(img);
     slot.appendChild(a);
     slotPhotos[idx] = photo;
+    slotImgs[idx] = img;
 
     const reveal = () => requestAnimationFrame(() => a.classList.add('visible'));
     if (img.complete) reveal();
@@ -812,6 +859,21 @@ if (PHOTOS.length && leftStack && rightStack) {
     if (prev) {
       setTimeout(() => { if (prev.parentNode === slot) prev.remove(); }, 900);
     }
+  }
+
+  // Enlarge the clicked photo, paging through the other slots' photos.
+  // Rotation halts while the viewer is open: swapping a slot underneath
+  // would leave the arrows walking a set that no longer matches the page.
+  function openStackLightbox(img) {
+    lightboxOpen = true;
+    // Only slots actually on screen: #stack-right is display:none at tablet
+    // and phone widths, and arrowing into photos the viewer can't see behind
+    // the overlay is disorienting. The clicked one is always included.
+    const shown = slotImgs.filter(i => i && (i === img || i.offsetParent !== null));
+    openLightbox(img, {
+      photos: shown,
+      onClose: () => { lightboxOpen = false; },
+    });
   }
 
   slots.forEach((_, i) => setSlot(i, pickPhoto(i)));
@@ -833,7 +895,7 @@ if (PHOTOS.length && leftStack && rightStack) {
     setInterval(() => {
       // Don't churn photos (each swap is a network fetch) while the tab
       // is hidden — saves battery/data on phones left on this page.
-      if (document.hidden || hoverPaused) return;
+      if (document.hidden || hoverPaused || lightboxOpen) return;
       const eligible = [];
       for (let i = 0; i < slots.length; i++) {
         if (!recentSlots.includes(i)) eligible.push(i);
