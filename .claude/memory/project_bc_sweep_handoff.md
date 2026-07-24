@@ -7,7 +7,7 @@ metadata:
   originSessionId: 20c70146-147e-4b0f-a61a-d96ad63bde97
 ---
 
-**British Columbia sweep COMPLETE 2026-07-11** — second Canadian province, after [[project_on_sweep_handoff]] (Ontario). Follows [[reference_canada_sweep_adaptation]]. Ran **sequentially** ([[feedback_sequential_sweep_agents]]). **418 entries, ids 8372-8789** (provincial 200, private ~152, local 54, federal 11, hipcamp 1). All 4 add-buckets + full waterfront audit done & committed to master; **NOT pushed** (push when asked).
+**British Columbia sweep COMPLETE 2026-07-11** — second Canadian province, after [[project_on_sweep_handoff]] (Ontario). Follows [[reference_canada_sweep_adaptation]]. Ran **sequentially** ([[feedback_sequential_sweep_agents]]). **418 entries, ids 8372-8789** (provincial 200, private ~152, local 54, federal 11, hipcamp 1). All 4 add-buckets + full waterfront audit done & committed to master and **pushed** (2026-07-23).
 
 ## FINAL RESULT
 - **Adds COMPLETE** (commits: provincial parts 1-10, federal 1ae6d49, local 290d781, private parts 1-11, Rondalyn cleanup 0136d8e).

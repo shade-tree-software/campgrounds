@@ -74,7 +74,11 @@
     gap: 1.5rem;
     font-size: .9rem;
     opacity: .9;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
   }
+  .stats:hover { opacity: 1; }
 
   .stats span { font-weight: 700; color: var(--gold); }
 
@@ -386,11 +390,11 @@
     <span class="site-subtitle">Hamilton family road trips</span>
   </div>
   {% if current_user.is_authenticated %}
-  <div class="stats">
+  <a class="stats" href="/trips/stats" title="View stats">
     <div><span>{{ overnight_count }}</span> overnight trip{{ '' if overnight_count == 1 else 's' }}</div>
     <div><span>{{ night_count }}</span> night{{ '' if night_count == 1 else 's' }}</div>
     <div><span>{{ daytrip_count }}</span> day trip{{ '' if daytrip_count == 1 else 's' }}</div>
-  </div>
+  </a>
   {% endif %}
 </header>
 
