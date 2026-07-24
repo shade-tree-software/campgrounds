@@ -136,22 +136,29 @@
    it's hidden unless the opener supplies a href — see setLightboxTrip().
 
    Deliberately styled as a sibling of the landing page's own .latest-trip-
-   banner / .on-this-day cards — white card, colored left rule, uppercase
-   label, and a right-justified "Open trip" pill — so the tap target reads
-   the same way it does on the page behind it. Keep the two in sync.
+   banner / .on-this-day cards — white card, colored left rule, and a
+   right-justified "Open trip" pill — so the tap target reads the same way
+   it does on the page behind it. Keep the two in sync. (No "From trip"
+   label: it sat immediately before "Trip 35: …", saying trip twice.)
 
-   It sits top-left, with its right edge held clear of the close/download
-   buttons. The .lb-date badge also lives along the top, but the two never
-   co-occur today: only trip-grid photos carry an EXIF date, and only
-   trips-map photos carry a trip. Revisit this if that changes. */
+   It's centered along the top. The .lb-date badge centers there too, but
+   the two never co-occur today: only trip-grid photos carry an EXIF date,
+   and only trips-map photos carry a trip. Revisit this if that changes. */
 .lightbox .lb-trip {
   display: none;
   position: absolute;
   top: .5rem;
-  left: .5rem;
-  /* Never reach into the close (44px) + download (44px) button cluster. */
-  right: calc(.5rem + 44px + 44px + .5rem);
-  max-width: 560px;
+  /* Centered via auto margins rather than a translate, so the hover lift
+     below keeps `transform` to itself. */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: fit-content;
+  /* A centered box grows both ways, so the reserve is the close+download
+     cluster (~100px at the right edge) mirrored on both sides. Below the
+     700px breakpoint the card drops under those buttons instead and this
+     cap is lifted. */
+  max-width: min(720px, calc(100vw - 200px));
   align-items: center;
   gap: .75rem;
   padding: .4rem .65rem .4rem 1rem;
@@ -172,19 +179,18 @@
   box-shadow: 0 6px 18px rgba(0,0,0,.55);
 }
 
-.lightbox .lb-trip .lb-trip-label {
-  flex-shrink: 0;
-  font-size: .7rem;
-  text-transform: uppercase;
-  letter-spacing: .08em;
-  font-weight: 700;
-  color: var(--navy);
-}
-
-/* Text slot takes the slack so the pill lands at the right edge; the name
-   ellipsizes while the date stays pinned. */
+/* Text slot takes the slack so the pill lands at the right edge. Two rows:
+   the trip line, then the campspot/event this photo belongs to. */
 .lightbox .lb-trip .lb-trip-text {
   flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .1rem;
+}
+
+/* Trip line — the name ellipsizes while the date stays pinned. */
+.lightbox .lb-trip .lb-trip-line {
   min-width: 0;
   display: flex;
   align-items: baseline;
@@ -205,6 +211,46 @@
   font-size: .8rem;
   margin-left: .5rem;
 }
+
+/* Second line: the campspot / event / waypoint the photo sits under.
+   Hidden when the opener doesn't supply one (see setLightboxTrip). */
+.lightbox .lb-trip .lb-trip-place {
+  display: none;
+  min-width: 0;
+  align-items: center;
+  gap: .35rem;
+  font-size: .78rem;
+  color: var(--gray);
+  white-space: nowrap;
+}
+
+.lightbox .lb-trip .lb-trip-place.visible { display: flex; }
+
+.lightbox .lb-trip .lb-trip-place-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Color-coded like the map markers this photo's pin uses. */
+.lightbox .lb-trip .lb-trip-dot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--navy);
+}
+.lightbox .lb-trip .lb-trip-dot.event { background: var(--gold); }
+.lightbox .lb-trip .lb-trip-dot.family { background: var(--red); }
+
+/* The type ("Campspot", "Waypoint", …) is a hint, not the payload — it's
+   the first thing to go when the name needs the room. */
+.lightbox .lb-trip .lb-trip-place-kind {
+  flex-shrink: 0;
+  font-weight: 600;
+  letter-spacing: .02em;
+}
+.lightbox .lb-trip .lb-trip-place-kind::after { content: '·'; margin-left: .35rem; }
 
 /* The explicit "tap me" affordance, mirroring the page's banner pills. */
 .lightbox .lb-trip .lb-trip-open {
@@ -237,25 +283,26 @@
   .lightbox .nav-prev { left: .25rem; }
   .lightbox .nav-next { right: .25rem; }
   .lightbox .nav-btn { padding: .25rem .5rem; }
-  /* Phone: squeezing the card into the strip left of the close/download
-     buttons left barely 280px and ellipsized most trip names away. Drop it
-     below the button row instead and take the full width — the photo is
-     centered with black to spare up there, so nothing is covered. The date
-     still drops out (the page's own banners make the same call at this
-     width) so the name gets every pixel. */
+  /* Phone: a centered card can't clear the close/download cluster at this
+     width (it would leave ~190px of usable card). Drop below the button row
+     and take the full width instead — the photo is centered with black to
+     spare up there, so nothing is covered. The date and the campspot type
+     drop out (the page's own banners make the same call at this width) so
+     the trip and place names get every pixel. */
   .lightbox .lb-trip {
     top: calc(.5rem + 44px + .5rem);
     left: .5rem;
     right: .5rem;
+    margin: 0;
+    width: auto;
+    max-width: none;
     font-size: .85rem;
     gap: .5rem;
     padding: .35rem .5rem .35rem .65rem;
     border-left-width: 5px;
   }
   .lightbox .lb-trip .lb-trip-date { display: none; }
-  /* The label costs ~20% of a 390px card's width, and the "Open trip" pill
-     next to a trip name already says what the card is. Spend that room on
-     the name instead — it's the part that's actually informative. */
-  .lightbox .lb-trip .lb-trip-label { display: none; }
+  .lightbox .lb-trip .lb-trip-place-kind { display: none; }
+  .lightbox .lb-trip .lb-trip-place { font-size: .72rem; }
   .lightbox .lb-trip .lb-trip-open { font-size: .7rem; padding: .25rem .55rem; }
 }

@@ -807,6 +807,26 @@ if (PHOTOS.length && leftStack && rightStack) {
     };
   }
 
+  // Which campspot / event / waypoint a photo sits under, for the lightbox
+  // card's second line. The pool's `card` field is the same "stay-N" /
+  // "event-N" index used for the photo's directory, and TRIPS carries the
+  // materialized stay `place` and event `name` — so this needs no extra
+  // server data. Returns blanks when the entry has no usable name.
+  function photoPlace(photo) {
+    const t = tripById[photo.trip_id];
+    const m = /^(stay|event)-(\d+)$/.exec(photo.card || '');
+    if (!t || !m) return { name: '', kind: '' };
+    const idx = Number(m[2]);
+    if (m[1] === 'stay') {
+      const s = (t.stays || [])[idx];
+      return { name: (s && s.place) || '', kind: 'stay' };
+    }
+    const e = (t.events || [])[idx];
+    if (!e) return { name: '', kind: '' };
+    const kind = e.family_visit ? 'family' : (e.waypoint ? 'waypoint' : 'event');
+    return { name: e.name || e.family_visit || '', kind };
+  }
+
   function pickPhoto(excludeIdx) {
     const visible = new Set();
     slotPhotos.forEach((p, i) => { if (p && i !== excludeIdx) visible.add(p.url); });
@@ -839,6 +859,11 @@ if (PHOTOS.length && leftStack && rightStack) {
     const label = tripLabel(photo.trip_id);
     img.dataset.tripName = label.name;
     img.dataset.tripDate = label.date;
+    const place = photoPlace(photo);
+    if (place.name) {
+      img.dataset.placeName = place.name;
+      img.dataset.placeKind = place.kind;
+    }
     if (photo.caption) img.dataset.caption = photo.caption;
     a.addEventListener('click', e => {
       // Let the browser handle the modified clicks that mean "open the
