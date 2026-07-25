@@ -50,6 +50,59 @@ def _revalidate_html(resp):
         resp.headers.setdefault('Cache-Control', 'no-cache')
     return resp
 
+
+# Audit-trail fields on a campground entry: the proof strings behind its
+# waterfront and inclusion calls. Source of truth in campgrounds.json, but no
+# client reads them, so every browser-bound payload strips them.
+_AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence")
+
+# Compress text responses above this size. Below it the CPU cost and the ~20
+# bytes of gzip framing aren't worth it.
+_COMPRESS_MIN_BYTES = 4096
+_COMPRESSIBLE_MIMETYPES = frozenset({
+    'text/html', 'text/css', 'text/plain',
+    'application/json', 'application/javascript', 'text/javascript',
+})
+
+
+@app.after_request
+def _compress_response(resp):
+    """gzip large text responses.
+
+    The campground map embeds the whole database inline, so it renders as a
+    ~10 MB HTML document; the trips map, calendar and poster are each several
+    hundred KB. Over a campground's cell signal that's the difference between
+    usable and not — gzip takes the map page to roughly a fifth of its size.
+
+    Browsers decompress transparently, so no client change is needed, and a
+    proxy that would have gzipped anyway passes our Content-Encoding through
+    untouched (nginx will not re-encode an already-encoded response).
+
+    Deliberately skipped: non-200s, responses already encoded, and
+    direct_passthrough responses (send_file — photos and thumbs are JPEGs,
+    already compressed, and get_data() on a passthrough response would buffer
+    the whole file into memory just to make it bigger).
+    """
+    try:
+        if (resp.status_code != 200
+                or resp.direct_passthrough
+                or 'Content-Encoding' in resp.headers
+                or resp.mimetype not in _COMPRESSIBLE_MIMETYPES
+                or 'gzip' not in request.headers.get('Accept-Encoding', '')):
+            return resp
+        data = resp.get_data()
+        if len(data) < _COMPRESS_MIN_BYTES:
+            return resp
+        resp.set_data(gzip.compress(data, 6))
+        resp.headers['Content-Encoding'] = 'gzip'
+        resp.headers['Content-Length'] = resp.content_length
+        resp.headers.add('Vary', 'Accept-Encoding')
+    except Exception:
+        # Compression is an optimization; never let it turn a good response
+        # into a 500.
+        pass
+    return resp
+
 _STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
 _static_v_cache = {}
 
@@ -594,16 +647,59 @@ def _remove_thumb(orig_path):
         pass
 
 
+def _resolve_photo_request(subpath):
+    """Map a /thumb/ or /photo/ subpath to a real file under UPLOAD_DIR, or
+    None if it isn't a servable photo.
+
+    Three gates, all needed:
+    - `safe_join` contains directory traversal.
+    - No path component may start with '.', which is what keeps the private
+      `.thumbs/` and `.trash/` subdirs unreachable. `_allowed_file` alone does
+      NOT do this: it only inspects the basename's extension, so a request for
+      `42/0/.trash/img.jpg` would sail through and hand back a photo the user
+      had already deleted.
+    - `_allowed_file` restricts the extension to real image types.
+    """
+    if any(part.startswith('.') for part in subpath.replace('\\', '/').split('/')):
+        return None
+    path = safe_join(UPLOAD_DIR, subpath)
+    if not path or not os.path.isfile(path) or not _allowed_file(os.path.basename(path)):
+        return None
+    return path
+
+
 @app.route('/thumb/<path:subpath>')
 def photo_thumb(subpath):
-    """Thumbnail for /static/uploads/<subpath>, e.g. /thumb/42/0/img.jpg or
+    """Thumbnail for a photo under UPLOAD_DIR, e.g. /thumb/42/0/img.jpg or
     /thumb/42/events/1/img.jpg. Covered by the global login requirement
     (only the literal `static` endpoint is exempt)."""
-    orig = safe_join(UPLOAD_DIR, subpath)
-    if not orig or not os.path.isfile(orig) or not _allowed_file(os.path.basename(orig)):
+    orig = _resolve_photo_request(subpath)
+    if not orig:
         return jsonify({"error": "not found"}), 404
     tpath = _ensure_thumb(orig)
     return send_file(tpath or orig, max_age=30 * 86400, conditional=True)
+
+
+@app.route('/photo/<path:subpath>')
+def photo_original(subpath):
+    """Full-size original for a photo under UPLOAD_DIR — the login-gated
+    counterpart to /thumb/.
+
+    Photos live in static/uploads/, but the `static` endpoint is exempt from
+    `_require_login_globally`, so serving originals as /static/uploads/... made
+    every family photo world-readable to anyone with the URL — and those exact
+    URLs ship in the page HTML as the lightbox's `data-full`. Worse, `.trash/`
+    was reachable the same way, so a "deleted" photo stayed retrievable. This
+    route is now the only path to an original.
+
+    NOTE: closing this off fully also requires that the deployment NOT expose
+    static/uploads/ through a web-server static mapping that bypasses Flask
+    (PythonAnywhere's /static/ mapping does exactly that — point it at a
+    directory that excludes uploads, or drop the mapping)."""
+    orig = _resolve_photo_request(subpath)
+    if not orig:
+        return jsonify({"error": "not found"}), 404
+    return send_file(orig, max_age=30 * 86400, conditional=True)
 
 
 # ── Slideshow photo pool ─────────────────────────────────────────────────────
@@ -646,7 +742,7 @@ def _collect_photo_pool():
                 for fname in os.listdir(photo_dir):
                     if _allowed_file(fname):
                         pool.append({
-                            "url": f"/static/uploads/{tid}/{i}/{fname}",
+                            "url": f"/photo/{tid}/{i}/{fname}",
                             "thumb": f"/thumb/{tid}/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"stay-{i}",
@@ -659,7 +755,7 @@ def _collect_photo_pool():
                 for fname in os.listdir(photo_dir):
                     if _allowed_file(fname):
                         pool.append({
-                            "url": f"/static/uploads/{tid}/events/{i}/{fname}",
+                            "url": f"/photo/{tid}/events/{i}/{fname}",
                             "thumb": f"/thumb/{tid}/events/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"event-{i}",
@@ -790,12 +886,37 @@ def _require_login_globally():
     # cache the login screen as the offline fallback.
     # sw_reset: the SW kill-switch must work even when the user can't get past
     # an upstream error (e.g. a stale SW), so it stays reachable logged-out.
-    if request.endpoint in ('login', 'static', 'service_worker', 'offline',
-                            'sw_reset', 'share_login', 'serve_tile', 'serve_pmtiles',
-                            None):
+    #
+    # `static` is exempt because CSS/JS/icons must load on the login page — but
+    # the photo library also lives under static/uploads/, and blanket-exempting
+    # the endpoint made every family photo (and every not-yet-purged .trash/
+    # copy) world-readable to anyone holding the URL. Photos now serve from the
+    # gated /photo/ route, and the old path is refused here so a URL from an old
+    # page, a bookmark, or someone's browser history stops working.
+    #
+    # This closes it wherever Flask serves static files. It does NOT bind when a
+    # front-end web server maps /static/ to disk and never consults Flask —
+    # notably PythonAnywhere's static-files mapping. There, also add a mapping
+    # for /static/uploads/ pointing at an empty directory so the old URLs
+    # dead-end before they reach the photos.
+    if request.endpoint == 'static':
+        filename = (request.view_args or {}).get('filename', '')
+        if filename.replace('\\', '/').startswith('uploads/'):
+            # Refused outright rather than login-gated: /photo/ is the one way
+            # in, and it enforces the .thumbs/.trash exclusion that the raw
+            # static handler knows nothing about.
+            abort(404)
+        return None
+    elif request.endpoint in ('login', 'service_worker', 'offline',
+                              'sw_reset', 'share_login', 'serve_tile',
+                              'serve_pmtiles', None):
         return None
     if not current_user.is_authenticated:
-        return redirect(url_for('login', next=request.path))
+        # full_path (not path) so a query string survives the round trip — e.g.
+        # /campgrounds/map?color=climate comes back with its mode intact. Flask
+        # appends a bare '?' when there's no query, which would otherwise ride
+        # along into the post-login redirect.
+        return redirect(url_for('login', next=request.full_path.rstrip('?')))
     return None
 
 
@@ -1126,7 +1247,12 @@ def login():
         if user and check_password_hash(user.password_hash, password):
             login_user(user, remember=True)
             _log_access("login")
-            return redirect('/')
+            # Honor ?next= so a deep link survives the login detour.
+            # `_require_login_globally` sets it on every redirect here, and the
+            # form posts back to this same URL (no action attr), so the param is
+            # still present on both the first attempt and any retry after a bad
+            # password. `_safe_next` keeps it a same-site path.
+            return redirect(_safe_next(request.args.get('next')))
         # Log the attempted username, not the password. A run of these from one
         # IP is the only signal you'd get that someone is guessing.
         _log_access("login_failed", extra={"attempted": username[:64]})
@@ -1274,7 +1400,15 @@ def _load_campgrounds():
     entries = _read_campgrounds_raw()
     visits_by_cg = _campground_visits_index()
 
-    excluded = {"index", "stays", "elevation_meters"}
+    # `waterfront_evidence` / `inclusion_evidence` are the audit trail — the
+    # proof strings behind each entry's waterfront and validity calls. They are
+    # the source of truth in campgrounds.json, but no template or client script
+    # reads them, and at ~12.9k entries they were 4.6 MB of the map page's
+    # 14.4 MB. Dropping them here keeps them out of every browser payload while
+    # leaving the file untouched (PUT merges from a field whitelist, so a UI
+    # save can't clobber what the client never received).
+    excluded = {"index", "stays", "elevation_meters",
+                "waterfront_evidence", "inclusion_evidence"}
     rows = []
     for entry in entries:
         if "location" not in entry:
@@ -1656,7 +1790,7 @@ def trip_detail(trip_id):
                 photo_key = f"{trip_id}/{i}/{fname}"
                 photos.append({
                     "filename": fname,
-                    "url": f"/static/uploads/{trip_id}/{i}/{fname}",
+                    "url": f"/photo/{trip_id}/{i}/{fname}",
                     "thumb_url": f"/thumb/{trip_id}/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
@@ -1682,7 +1816,7 @@ def trip_detail(trip_id):
                 photo_key = f"{trip_id}/events/{i}/{fname}"
                 photos.append({
                     "filename": fname,
-                    "url": f"/static/uploads/{trip_id}/events/{i}/{fname}",
+                    "url": f"/photo/{trip_id}/events/{i}/{fname}",
                     "thumb_url": f"/thumb/{trip_id}/events/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
@@ -1796,7 +1930,7 @@ def _render_photo_tile(subpath, filename, p_type, p_idx, trip_id):
     username = current_user.username if current_user.is_authenticated else ""
     photo = {
         "filename": filename,
-        "url": f"/static/uploads/{subpath}/{filename}",
+        "url": f"/photo/{subpath}/{filename}",
         "thumb_url": f"/thumb/{subpath}/{filename}",
         "caption": "",
         "date_taken": _photo_date_taken(os.path.join(photo_dir, filename)),
@@ -1821,7 +1955,7 @@ def upload_photo(trip_id, stay_idx):
         return jsonify({"error": "No file selected"}), 400
 
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(stay_idx))
-    url_prefix = f"/static/uploads/{trip_id}/{stay_idx}"
+    url_prefix = f"/photo/{trip_id}/{stay_idx}"
     subpath = f"{trip_id}/{stay_idx}"
 
     # Zip upload — extract all images
@@ -1954,7 +2088,7 @@ def upload_event_photo(trip_id, event_idx):
         return jsonify({"error": "No file selected"}), 400
 
     photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), "events", str(event_idx))
-    url_prefix = f"/static/uploads/{trip_id}/events/{event_idx}"
+    url_prefix = f"/photo/{trip_id}/events/{event_idx}"
     subpath = f"{trip_id}/events/{event_idx}"
 
     # Zip upload — extract all images
@@ -2657,10 +2791,12 @@ def campgrounds_manage():
 def api_campground_all():
     """Return full campground data for the management page.
 
-    This is a ~3.3 MB payload (4,700+ entries), so two size reductions:
-    - Drop `waterfront_evidence` — the manage page never reads it (it's the
-      audit record, edited only by the audit script / by hand), and PUT
-      preserves it server-side, so the client never needs it. (~15% smaller.)
+    This is a ~10 MB payload (12,900+ entries), so two size reductions:
+    - Drop the audit-trail fields (`waterfront_evidence`, `inclusion_evidence`).
+      The manage page never reads them — they're the audit record, written by
+      the audit scripts / by hand — and PUT merges from a field whitelist, so
+      they survive a save server-side and the client never needs them. Together
+      they're ~40% of the payload.
     - gzip the body when the client accepts it (~5x smaller over the wire).
       Browsers decompress transparently, so no client change is needed; a
       proxy that already gzips will pass our Content-Encoding through.
@@ -2671,16 +2807,12 @@ def api_campground_all():
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
     for e in entries:
-        e.pop("waterfront_evidence", None)
-    payload = json.dumps(entries).encode("utf-8")
-    if "gzip" in request.headers.get("Accept-Encoding", ""):
-        payload = gzip.compress(payload, 6)
-        resp = app.response_class(payload, mimetype="application/json")
-        resp.headers["Content-Encoding"] = "gzip"
-        resp.headers["Vary"] = "Accept-Encoding"
-        resp.headers["Content-Length"] = len(payload)
-        return resp
-    return app.response_class(payload, mimetype="application/json")
+        for field in _AUDIT_EVIDENCE_FIELDS:
+            e.pop(field, None)
+    # The gzip itself is handled by the _compress_response after_request hook,
+    # which covers every large text response rather than just this one.
+    return app.response_class(json.dumps(entries).encode("utf-8"),
+                              mimetype="application/json")
 
 
 @app.route('/api/campgrounds', methods=['POST'])

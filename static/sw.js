@@ -1,7 +1,7 @@
 // EKKO Trips service worker — offline read-only viewing.
 //
 // Strategy (deliberately conservative so the admin never edits stale data):
-//   - Photos + thumbs (/thumb/, /static/uploads/): cache-first. They're
+//   - Photos + thumbs (/thumb/, /photo/): cache-first. They're
 //     effectively immutable (thumbs are mtime-keyed server-side), big, and
 //     the main thing worth having at a campsite with no signal.
 //   - Everything else (pages, /static JS/CSS, API GETs): network-first.
@@ -27,7 +27,11 @@
 // Bump VERSION to invalidate the page/photo caches after a deploy that changes
 // the app shell in incompatible ways.
 
-const VERSION = 'v7';
+// v8: photo originals moved from /static/uploads/ to the login-gated /photo/.
+// The bump drops the photo cache keyed on the old public URLs (now 404s) and
+// the pages whose data-full attrs still point at them. Tiles are unaffected —
+// TILE_CACHE is deliberately not keyed on VERSION.
+const VERSION = 'v8';
 const PAGE_CACHE = 'ekko-pages-' + VERSION;
 const PHOTO_CACHE = 'ekko-photos-' + VERSION;
 // Map tiles are immutable per z/x/y, so their cache is DELIBERATELY decoupled
@@ -222,7 +226,7 @@ self.addEventListener('fetch', (e) => {
   } else if (url.pathname.startsWith('/static/vendor/')) {
     // Immutable vendored libs (Leaflet, protomaps-leaflet) — cache-first.
     e.respondWith(cacheFirstStatic(req));
-  } else if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/static/uploads/')) {
+  } else if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/photo/')) {
     e.respondWith(cacheFirst(req));
   } else {
     e.respondWith(networkFirst(req));

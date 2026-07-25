@@ -537,7 +537,7 @@ function initPhotoDrag(grid) {
           const sub = (dst.type === 'event' ? `${TRIP_ID}/events/${dst.idx}` : `${TRIP_ID}/${dst.idx}`)
             + '/' + encodeURIComponent(data.filename);
           img.src = '/thumb/' + sub;
-          img.dataset.full = '/static/uploads/' + sub;
+          img.dataset.full = '/photo/' + sub;
         }
         saveGridOrder(movedSourceGrid);
         saveGridOrder(grid);

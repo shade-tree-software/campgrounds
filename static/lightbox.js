@@ -246,7 +246,7 @@ function toggleLightboxFullscreen() {
 }
 
 // Trigger a download of the current lightbox photo. The image is served
-// from /static/uploads (same origin) so the anchor's `download` attr
+// from /photo/ (same origin) so the anchor's `download` attr
 // honors the filename hint. Stop propagation so the click doesn't also
 // hit closeLightbox.
 function downloadLightbox(e) {

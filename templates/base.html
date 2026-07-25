@@ -604,7 +604,18 @@
     // nothing from a prefetch issued in the same instant. Skips /logout
     // (a GET that mutates the session — prefetching it would log the
     // user out) and /static. One prefetch per URL per page.
-    if (window.matchMedia('(hover: hover)').matches) {
+    //
+    // The campground map is exempt: it embeds the whole ~12.9k-entry
+    // database, so it's megabytes even gzipped. Speculatively pulling that
+    // because a cursor drifted across the nav link costs far more than the
+    // round trip it saves — and on a metered connection it's the single
+    // most expensive thing the app can do. Same reasoning for honoring
+    // Save-Data and 2g/3g: guessing wrong is cheap on wifi, not on cell.
+    const PREFETCH_SKIP = ['/campgrounds/map'];
+    const conn = navigator.connection || {};
+    const frugal = conn.saveData === true ||
+                   /(^|-)2g$|(^|-)3g$/.test(conn.effectiveType || '');
+    if (window.matchMedia('(hover: hover)').matches && !frugal) {
       const prefetched = new Set();
       let hoverTimer = null;
       document.addEventListener('mouseover', e => {
@@ -614,6 +625,7 @@
         if (!href.startsWith('/') || href.startsWith('//') ||
             href.startsWith('/logout') || href.startsWith('/static')) return;
         const url = href.split('#')[0];
+        if (PREFETCH_SKIP.some(p => url === p || url.startsWith(p + '?'))) return;
         if (!url || prefetched.has(url)) return;
         clearTimeout(hoverTimer);
         hoverTimer = setTimeout(() => {
