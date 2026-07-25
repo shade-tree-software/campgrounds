@@ -26,7 +26,7 @@ Net effect: clone/pull + start Claude wires memory automatically; new memories C
 - `ekko_trips_app.py` — Main Flask app: routes, auth, photo endpoints, campground CRUD API, geocode proxy
 - `trips.py` — Trip data CRUD, JSON persistence, trip parsing logic, location resolution via `_load_locations_by_id()`, photo index remapping on sort
 - `summer_finder.py` — Shared weather search logic (used by CLI and web)
-- `home.json` — App config (home coords + altitude only)
+- `home.json` — Gitignored per-machine config. Required: `home_lat`, `home_long`, `home_altitude_meters`. Optional: `home_place_names` (see "Home Stays").
 - `campgrounds.json` — Unified location database (~12,900 entries). Each entry has `id` (stable auto-incrementing int), `kind` ("campground" or "family"), `name`, `location` ("lat,lng"), `state`. Campground-kind also carries `elevation_meters`, `waterfront`, `waterfront_evidence`, `inclusion_evidence`, `ownership`, `website`, `note`, `phone`, `stays`. Family-kind may carry `driveway_location` ("lat,lng") used instead of `location` for stay-marker placement.
 - `roadside.json` — Leg-stretch stops (small-town parks, roadside picnic areas, rest areas) — deliberately separate from overnight campgrounds. Rendered as their own toggleable overlay on the campground map, with admin CRUD inline on that map (no dedicated manage page). `_roadside_view()` projects the stored record into the map shape.
 - `ridb/fetch_facility.py` — recreation.gov / RIDB client: `search_facilities`, `fetch_facility`, `availability_matrix`, `DEFAULT_FIT_FT`. RIDB supplies the campsite catalog (so sites can be filtered to ones EKKO fits); the recreation.gov calendar supplies live availability. Needs `RIDB_API_KEY`.
@@ -62,6 +62,19 @@ Trips have two distinct identifiers:
 - **Empty trips** have no campspots or events. New trips are created empty. Summary defaults to "New Trip". They have no date range and are excluded from calendar dots and header day trip count but appear in the list view.
 - **Overnight trips** have at least one campspot. Header stats show overnight trip count and total nights.
 - **Day trips** have only events (no campspots). A trip survives deletion of its last campspot if it still has events. Date range is derived from events when no campspots exist. Summary falls back to trip note or "Events Only".
+
+### Home Stays
+
+A **home stay** is a night at the family's own house rather than a campsite. Home is not a `campgrounds.json` entry — it's recorded like a hotel would be: `campground_id: null` plus a free-text `custom_place`. A trip whose campspots are *all* home stays gets `home_only: true` and is hidden from the trips map, calendar, list and landing-page photos (admins still see it), and dropped from the stats entirely.
+
+`trips.is_home_stay(stay)` is the single rule, and `trips.camping_nights(trip)` (`total_nights` minus home stays) is how any nights aggregate must be computed — the stats hero, the Nights-by-Year chart, and the site header all go through it so they can't disagree. A mixed trip (home for a few nights mid-trip, then back out) is the only case where the two differ; there are none in the data today, which is exactly why the distinction is easy to lose.
+
+**Because a false positive is expensive and silent** — it makes a real trip vanish from every public surface — matching is deliberately conservative:
+1. **A stay with a non-null `campground_id` is never home.** Home is always free text, so this rules out every campground-name collision. It matters: the marker below is a *substring* test, and `"basset"` is a substring of **"Bassett City Park"** (id 2771, a real municipal campground in NE). Without this guard, camping there would silently bury the trip.
+2. If `home.json` defines `home_place_names` (a list of strings), the free-text place must match one **exactly** (case- and whitespace-insensitive). This also closes free-text collisions (an Airbnb named "Bassett Inn").
+3. Otherwise it falls back to the legacy `"basset"` substring. The fallback exists so a host whose `home.json` hasn't been updated keeps working — **if matching silently stopped, the home trips would become publicly visible**, which is the failure mode worth guarding.
+
+The names live in gitignored config rather than in code because **this repo is public and the home place name is a street address** — hardcoding it would publish it. Adding `home_place_names` to a host's `home.json` is optional and per-machine; without it that host just runs the legacy path.
 
 ### Data Model
 

@@ -750,17 +750,68 @@ def _group_into_trips(stays):
 
 
 # A "home stay" is a night spent at the family's own house rather than at a
-# campsite — the house is an ordinary campgrounds.json entry ("12129 Basset
-# Ln"), so it's recognized by place name. Keep the marker here and go through
-# is_home_stay() everywhere: the rule now drives both `home_only` (which hides
-# a whole trip from public surfaces) and the stats page's night counts, and
-# those must not drift apart.
-HOME_PLACE_MARKER = "basset"
+# campsite. Home isn't a campgrounds.json entry — it's recorded as a free-text
+# `custom_place` with `campground_id: null`, the same way a hotel or Airbnb is.
+#
+# Go through is_home_stay() everywhere. This rule drives BOTH `home_only`
+# (which hides an entire trip from the map, calendar, list and landing page)
+# and the stats night counts, so a false positive is expensive and silent: a
+# real trip would simply disappear from every public surface.
+#
+# Fallback marker, used only when home.json doesn't configure
+# `home_place_names`. It is a SUBSTRING test, which is exactly why it isn't
+# trusted on its own — "basset" is a substring of "Bassett City Park" (a real
+# municipal campground in Nebraska, id 2771). The campground_id guard in
+# is_home_stay() is what actually makes that safe; see there.
+_LEGACY_HOME_MARKER = "basset"
+
+HOME_JSON = os.path.join(_DIR, "home.json")
+_home_names_cache = {"mtime": None, "names": None}
+
+
+def _home_place_names():
+    """Exact place names meaning "home", from home.json's `home_place_names`
+    (a list of strings), lowercased. None when unconfigured, which selects the
+    legacy substring fallback.
+
+    The names live in gitignored config rather than in code on purpose: this
+    repo is public, and the home place name is a street address.
+    """
+    try:
+        mtime = os.path.getmtime(HOME_JSON)
+    except OSError:
+        mtime = None
+    if _home_names_cache["mtime"] != mtime:
+        names = None
+        if mtime is not None:
+            try:
+                with open(HOME_JSON) as f:
+                    raw = json.load(f).get("home_place_names")
+                if isinstance(raw, list):
+                    names = {str(n).strip().lower() for n in raw if str(n).strip()} or None
+            except (ValueError, OSError):
+                names = None          # malformed config → fall back, never crash
+        _home_names_cache["mtime"] = mtime
+        _home_names_cache["names"] = names
+    return _home_names_cache["names"]
 
 
 def is_home_stay(stay):
     """True if a stay record is a night at home rather than camping."""
-    return HOME_PLACE_MARKER in (stay.get("place") or "").lower()
+    # THE load-bearing check: a stay that references a campgrounds.json entry
+    # is a real campground, so it can never be home — home is always free text.
+    # This alone rules out every campground-name collision, including the one
+    # already in the database ("Bassett City Park" contains "basset"), and it
+    # holds regardless of which matching mode runs below.
+    if stay.get("campground_id") is not None:
+        return False
+    place = (stay.get("place") or "").strip().lower()
+    if not place:
+        return False
+    names = _home_place_names()
+    if names is not None:
+        return place in names               # configured: exact match
+    return _LEGACY_HOME_MARKER in place     # unconfigured: legacy substring
 
 
 def camping_nights(trip):
