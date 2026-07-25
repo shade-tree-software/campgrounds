@@ -4,7 +4,8 @@
 #
 # Packages exactly the data that is NOT in git and NOT regenerable:
 #   users.json, home.json, and trip_data/*.json (trips, captions,
-#   photo_order, photo_uploaders, share_tokens) + trip_data/track_cache/.
+#   photo_order, photo_uploaders, share_tokens) + trip_data/access_log.jsonl
+#   + trip_data/track_cache/.
 #
 # Deliberately EXCLUDED:
 #   - campgrounds.json          (tracked in git — comes down with a pull)
@@ -57,6 +58,7 @@ CANDIDATES=(
   trip_data/photo_order.json
   trip_data/photo_uploaders.json
   trip_data/share_tokens.json
+  trip_data/access_log.jsonl
   trip_data/track_cache
 )
 [[ "$WITH_PHOTOS" -eq 1 ]] && CANDIDATES+=(static/uploads)

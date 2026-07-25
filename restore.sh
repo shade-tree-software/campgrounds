@@ -72,7 +72,8 @@ PRESERVE=()
 for m in users.json home.json \
          trip_data/trips.json trip_data/captions.json \
          trip_data/photo_order.json trip_data/photo_uploaders.json \
-         trip_data/share_tokens.json trip_data/track_cache; do
+         trip_data/share_tokens.json trip_data/access_log.jsonl \
+         trip_data/track_cache; do
   [[ -e "$m" ]] && PRESERVE+=("$m")
 done
 if [[ "${#PRESERVE[@]}" -gt 0 ]]; then
