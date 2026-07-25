@@ -27,7 +27,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override,
-                   campground_references, TRIPS_JSON)
+                   campground_references, camping_nights, TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -262,7 +262,9 @@ def inject_trip_stats():
     return {
         "overnight_count": overnight,
         "daytrip_count": daytrips,
-        "night_count": sum(t["total_nights"] for t in trips),
+        # camping_nights(), matching the stats page — the header's nights
+        # figure and the Nights hero/by-year chart must never disagree.
+        "night_count": sum(camping_nights(t) for t in trips),
     }
 
 
@@ -1650,7 +1652,10 @@ def trips_stats():
     total_trips = len(trips)
     total_overnight = sum(1 for t in trips if t.get("stays"))
     total_day_trips = sum(1 for t in trips if not t.get("stays") and t.get("events"))
-    total_nights = sum(t.get("total_nights", 0) for t in trips)
+    # camping_nights(), not total_nights: a mixed trip (home for a few nights
+    # mid-trip, then back out) would otherwise count those home nights as
+    # camping. All-time and per-year use the same rule so they can't disagree.
+    total_nights = sum(camping_nights(t) for t in trips)
 
     # Photos: walk every photo directory under each trip. Cheap — just an
     # os.listdir per stay/event index. Avoids loading photo_order.json.
@@ -1695,13 +1700,27 @@ def trips_stats():
         if len(tids) >= 2  # one-time visits aren't "most visited"
     ]
 
-    # Trips-per-year. Empty-dated trips are excluded (no year to assign).
+    # Trips- and nights-per-year. Empty-dated trips are excluded (no year to
+    # assign). Home-only trips are already gone (filtered above), and
+    # camping_nights() drops home stays inside any mixed trip, so neither
+    # series counts a night at the house.
+    #
+    # A multi-night trip spanning New Year lands entirely in its START year —
+    # same convention the trip list and calendar year-grouping use, so the bars
+    # line up with what those pages show.
     trips_by_year = {}
+    nights_by_year = {}
     for t in trips:
-        if t.get("start"):
-            y = int(t["start"][:4])
-            trips_by_year[y] = trips_by_year.get(y, 0) + 1
+        if not t.get("start"):
+            continue
+        y = int(t["start"][:4])
+        trips_by_year[y] = trips_by_year.get(y, 0) + 1
+        nights_by_year[y] = nights_by_year.get(y, 0) + camping_nights(t)
     trips_by_year_sorted = sorted(trips_by_year.items())
+    # Same year span as the trips chart (a year with trips but zero camping
+    # nights still gets a row, rather than silently vanishing from one chart).
+    nights_by_year_sorted = [(y, nights_by_year.get(y, 0))
+                             for y, _ in trips_by_year_sorted]
 
     # ── Records ──────────────────────────────────────────────────────
     # All derivable from data already in hand (trips + campgrounds.json
@@ -1758,6 +1777,7 @@ def trips_stats():
         states_list=sorted(states),
         top_campgrounds=top_campgrounds,
         trips_by_year=trips_by_year_sorted,
+        nights_by_year=nights_by_year_sorted,
         unique_campgrounds=len(cg_trip_ids),
         camping_since=camping_since,
         longest_trip=longest_trip,

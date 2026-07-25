@@ -749,6 +749,33 @@ def _group_into_trips(stays):
     return trips
 
 
+# A "home stay" is a night spent at the family's own house rather than at a
+# campsite — the house is an ordinary campgrounds.json entry ("12129 Basset
+# Ln"), so it's recognized by place name. Keep the marker here and go through
+# is_home_stay() everywhere: the rule now drives both `home_only` (which hides
+# a whole trip from public surfaces) and the stats page's night counts, and
+# those must not drift apart.
+HOME_PLACE_MARKER = "basset"
+
+
+def is_home_stay(stay):
+    """True if a stay record is a night at home rather than camping."""
+    return HOME_PLACE_MARKER in (stay.get("place") or "").lower()
+
+
+def camping_nights(trip):
+    """Nights actually spent camping — `total_nights` minus any home stays.
+
+    Trips made up entirely of home stays are flagged `home_only` and dropped
+    from the stats wholesale, but a MIXED trip (drove home mid-trip, then back
+    out) keeps its home nights in `total_nights`. Those aren't camping, so any
+    "nights" aggregate should come through here rather than summing
+    `total_nights` directly.
+    """
+    return sum(s.get("nights", 0) for s in trip.get("stays", [])
+               if not is_home_stay(s))
+
+
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                home_start_time="", home_end_time="",
                bad_track_windows=None, tid_overrides=None,
@@ -810,7 +837,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                 if name:
                     all_campers.add(name)
 
-    home_only = bool(stays) and all("basset" in s["place"].lower() for s in stays)
+    home_only = bool(stays) and all(is_home_stay(s) for s in stays)
 
     # Build chronological timeline interleaving stays and events.
     # Sorting rules:
