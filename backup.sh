@@ -9,7 +9,7 @@
 #
 # Deliberately EXCLUDED:
 #   - campgrounds.json          (tracked in git — comes down with a pull)
-#   - static/uploads/           (photos; huge — pass --with-photos to include)
+#   - photo_uploads/            (photos; huge — pass --with-photos to include)
 #   - trip_data/secret_key,
 #     trip_data/dev_cert.{crt,key} (machine-local session key / dev TLS cert)
 #   - .thumbs/ and .trash/      (regenerated thumbnails / pending-purge deletes)
@@ -17,7 +17,7 @@
 #
 # Usage:
 #   ./backup.sh                 # data-only bundle -> backup/ekko-backup-<ts>.tar.gz
-#   ./backup.sh --with-photos   # also include static/uploads/ (minus thumbs/trash)
+#   ./backup.sh --with-photos   # also include photo_uploads/ (minus thumbs/trash)
 #   ./backup.sh -o /path/out.tar.gz   # write to a specific path
 #
 # Restore with ./restore.sh <tarball>.
@@ -61,7 +61,7 @@ CANDIDATES=(
   trip_data/access_log.jsonl
   trip_data/track_cache
 )
-[[ "$WITH_PHOTOS" -eq 1 ]] && CANDIDATES+=(static/uploads)
+[[ "$WITH_PHOTOS" -eq 1 ]] && CANDIDATES+=(photo_uploads)
 
 MEMBERS=()
 for m in "${CANDIDATES[@]}"; do
@@ -78,7 +78,7 @@ if [[ "${#MEMBERS[@]}" -eq 0 ]]; then
 fi
 
 # Regenerable/local paths never belong in the bundle even when a parent dir
-# (track_cache, static/uploads) is included.
+# (track_cache, photo_uploads) is included.
 tar -czf "$OUT" \
   --exclude='*/.thumbs' --exclude='*/.thumbs/*' \
   --exclude='*/.trash'  --exclude='*/.trash/*' \
@@ -91,4 +91,4 @@ SIZE="$(du -h "$OUT" | cut -f1)"
 echo "Backup written: $OUT  ($SIZE)"
 echo "Included:"
 printf '  %s\n' "${MEMBERS[@]}"
-[[ "$WITH_PHOTOS" -eq 0 ]] && echo "Photos NOT included (pass --with-photos to add static/uploads/)."
+[[ "$WITH_PHOTOS" -eq 0 ]] && echo "Photos NOT included (pass --with-photos to add photo_uploads/)."

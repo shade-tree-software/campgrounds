@@ -212,7 +212,21 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 
 TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "static", "uploads")
+# Photo library. Deliberately a SIBLING of static/, not a child.
+#
+# It used to be static/uploads/, which put it inside whatever the deployment
+# maps as its static root — and a front-end web server serving /static/ straight
+# from disk never consults Flask, so no amount of app-side gating could protect
+# it. On PythonAnywhere, adding a narrower /static/uploads/ mapping pointed at an
+# empty directory did NOT take precedence over the broader /static/ one, so the
+# photos stayed public. Moving the directory out from under the static root is
+# the only fix that holds on every host, because there is simply nothing at
+# static/uploads/ left to serve.
+#
+# Also keep it OUT of trip_data/: sync-from-pa.sh mirrors that directory with an
+# optional --delete, and photos are synced separately (--photos), so nesting
+# them there would let a data-only sync wipe the library.
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "photo_uploads")
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
 PHOTO_ORDER_FILE = os.path.join(TRIP_DATA_DIR, "photo_order.json")
 USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
@@ -690,19 +704,16 @@ def photo_thumb(subpath):
 @app.route('/photo/<path:subpath>')
 def photo_original(subpath):
     """Full-size original for a photo under UPLOAD_DIR — the login-gated
-    counterpart to /thumb/.
+    counterpart to /thumb/, and the only way to fetch one.
 
-    Photos live in static/uploads/, but the `static` endpoint is exempt from
-    `_require_login_globally`, so serving originals as /static/uploads/... made
-    every family photo world-readable to anyone with the URL — and those exact
-    URLs ship in the page HTML as the lightbox's `data-full`. Worse, `.trash/`
-    was reachable the same way, so a "deleted" photo stayed retrievable. This
-    route is now the only path to an original.
-
-    NOTE: closing this off fully also requires that the deployment NOT expose
-    static/uploads/ through a web-server static mapping that bypasses Flask
-    (PythonAnywhere's /static/ mapping does exactly that — point it at a
-    directory that excludes uploads, or drop the mapping)."""
+    Photos used to live in static/uploads/ and serve as /static/uploads/...,
+    but the `static` endpoint is exempt from `_require_login_globally`, so every
+    family photo was world-readable to anyone with the URL — and those exact URLs
+    ship in the page HTML as the lightbox's `data-full`. Worse, `.trash/` was
+    reachable the same way, so a "deleted" photo stayed retrievable. UPLOAD_DIR
+    now sits outside static/ entirely (see its definition), which is what makes
+    this route the sole entry point even on hosts that serve /static/ from disk
+    without consulting Flask."""
     orig = _resolve_photo_request(subpath)
     if not orig:
         return jsonify({"error": "not found"}), 404
@@ -894,18 +905,14 @@ def _require_login_globally():
     # sw_reset: the SW kill-switch must work even when the user can't get past
     # an upstream error (e.g. a stale SW), so it stays reachable logged-out.
     #
-    # `static` is exempt because CSS/JS/icons must load on the login page — but
-    # the photo library also lives under static/uploads/, and blanket-exempting
-    # the endpoint made every family photo (and every not-yet-purged .trash/
-    # copy) world-readable to anyone holding the URL. Photos now serve from the
-    # gated /photo/ route, and the old path is refused here so a URL from an old
-    # page, a bookmark, or someone's browser history stops working.
-    #
-    # This closes it wherever Flask serves static files. It does NOT bind when a
-    # front-end web server maps /static/ to disk and never consults Flask —
-    # notably PythonAnywhere's static-files mapping. There, also add a mapping
-    # for /static/uploads/ pointing at an empty directory so the old URLs
-    # dead-end before they reach the photos.
+    # `static` is exempt because CSS/JS/icons must load on the login page. The
+    # photo library used to live under static/uploads/, where that exemption made
+    # every photo (and every not-yet-purged .trash/ copy) world-readable to
+    # anyone holding the URL. UPLOAD_DIR has since moved out of static/ entirely,
+    # so this is now a backstop rather than the primary defence: it refuses the
+    # old URL shape if a stale static/uploads/ ever reappears — an old backup
+    # restored over the tree, a half-finished migration on a new host — instead
+    # of quietly starting to serve photos again.
     if request.endpoint == 'static':
         filename = (request.view_args or {}).get('filename', '')
         if filename.replace('\\', '/').startswith('uploads/'):

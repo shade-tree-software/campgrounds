@@ -13,7 +13,7 @@
 # Usage:
 #   ./sync-from-pa.sh                 # data + photos into this repo
 #   ./sync-from-pa.sh --data          # trip_data/ only (small, fast)
-#   ./sync-from-pa.sh --photos        # static/uploads/ only
+#   ./sync-from-pa.sh --photos        # photo_uploads/ only
 #   ./sync-from-pa.sh -n              # dry run: show what would transfer
 #   ./sync-from-pa.sh --dest /media/andrew/EKKO/app     # refresh the SD card
 #   ./sync-from-pa.sh --delete        # also remove local files gone from PA
@@ -117,7 +117,7 @@ fi
 if [ $DO_PHOTOS -eq 1 ]; then
   # .thumbs/ is regenerated on demand from the originals (and is large), .trash/
   # holds already-deleted photos pending purge. Neither is worth the bandwidth.
-  pull static/uploads static/uploads \
+  pull photo_uploads photo_uploads \
     --exclude '.thumbs/' --exclude '.trash/'
 fi
 

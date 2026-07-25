@@ -27,7 +27,8 @@
 // Bump VERSION to invalidate the page/photo caches after a deploy that changes
 // the app shell in incompatible ways.
 
-// v8: photo originals moved from /static/uploads/ to the login-gated /photo/.
+// v8: photo originals moved from /static/uploads/ to the login-gated /photo/
+// (and the directory itself moved out from under static/).
 // The bump drops the photo cache keyed on the old public URLs (now 404s) and
 // the pages whose data-full attrs still point at them. Tiles are unaffected —
 // TILE_CACHE is deliberately not keyed on VERSION.
