@@ -18,6 +18,16 @@
  *   picker.hide();
  */
 
+// Surface a problem to the user. Prefers base.html's non-blocking toast — the
+// app-wide replacement for alert() — and falls back to alert() only if this
+// file is ever used outside a page that defines it. These three geolocation
+// failures were the last alert() calls in the app, and the likeliest to fire on
+// a phone, where a modal dialog over the picker is the worst possible surface.
+function notify(message) {
+  if (window.toast) window.toast(message);
+  else alert(message);
+}
+
 function createMapPicker(opts) {
   const container = document.getElementById(opts.containerId);
   let map = null;
@@ -200,7 +210,7 @@ function createMapPicker(opts) {
 
     btn.addEventListener('click', function() {
       if (!navigator.geolocation) {
-        alert('Geolocation is not supported by this browser.');
+        notify('Geolocation is not supported by this browser.');
         return;
       }
       // Geolocation is a secure-context-only API. Over plain http:// (e.g. a
@@ -208,7 +218,7 @@ function createMapPicker(opts) {
       // "permission denied" error and never show the prompt. Catch that here
       // so the message is actionable instead of a misleading "you denied it".
       if (!window.isSecureContext) {
-        alert('Location needs a secure connection — open this site over https:// (not a plain http:// address).');
+        notify('Location needs a secure connection — open this site over https:// (not a plain http:// address).');
         return;
       }
       btn.disabled = true;
@@ -227,7 +237,7 @@ function createMapPicker(opts) {
       }, function(err) {
         btn.disabled = false;
         btn.textContent = prev;
-        alert('Could not get your location: ' + (err.message || 'permission denied'));
+        notify('Could not get your location: ' + (err.message || 'permission denied'));
       }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
     });
   })();
@@ -250,8 +260,16 @@ function createMapPicker(opts) {
       const q = input.value.trim();
       if (q.length < 2) { results.classList.remove('open'); return; }
       debounceTimer = setTimeout(function() {
+        // A failed lookup (502) is reported, not silently swallowed — otherwise
+        // a Nominatim outage looks exactly like "no such place" and you retype
+        // the name forever. A genuinely empty result set stays quiet.
         fetch('/api/geocode?q=' + encodeURIComponent(q))
-          .then(function(r) { return r.json(); })
+          .then(function(r) {
+            return r.json().then(function(data) {
+              if (!r.ok) throw new Error((data && data.error) || 'Geocoding lookup failed');
+              return data;
+            });
+          })
           .then(function(data) {
             if (data.length === 0) { results.classList.remove('open'); return; }
             results.innerHTML = data.map(function(r) {
@@ -259,7 +277,10 @@ function createMapPicker(opts) {
             }).join('');
             results.classList.add('open');
           })
-          .catch(function() { results.classList.remove('open'); });
+          .catch(function(err) {
+            results.classList.remove('open');
+            notify(err.message || 'Geocoding lookup failed');
+          });
       }, 300);
     });
 

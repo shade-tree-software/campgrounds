@@ -146,6 +146,31 @@ def delete_trip(trip_id):
     return False
 
 
+def campground_references(location_id):
+    """Trips that reference a campgrounds.json entry, as a list of
+    ``{"trip_id", "trip_note", "via"}`` dicts (``via`` is "campspot" or
+    "family visit").
+
+    Deleting a referenced entry is silently destructive: the campspot's
+    ``place`` falls back to ``custom_place or ""`` and it loses its
+    coordinates entirely, so it turns into a blank, unmapped row with no
+    warning anywhere. Callers use this to refuse the delete instead.
+    """
+    hits = []
+    for trip in _load_raw_trips():
+        for stay in trip.get("stays", []):
+            if stay.get("campground_id") == location_id:
+                hits.append({"trip_id": trip.get("id"),
+                             "trip_note": trip.get("trip_note", ""),
+                             "via": "campspot"})
+        for event in trip.get("events", []):
+            if event.get("family_id") == location_id:
+                hits.append({"trip_id": trip.get("id"),
+                             "trip_note": trip.get("trip_note", ""),
+                             "via": "family visit"})
+    return hits
+
+
 def add_stay(trip_id, stay_data):
     """Add a stay to a trip. Stays are sorted by start date. Returns updated trip or None."""
     raw = _load_raw_trips()

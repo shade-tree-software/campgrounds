@@ -26,7 +26,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_suppressed_pings,
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
-                   get_tid_overrides, set_tid_override, TRIPS_JSON)
+                   get_tid_overrides, set_tid_override,
+                   campground_references, TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -360,6 +361,12 @@ def _tile_store(layer):
     return cache[layer]
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
+
+# Sent on every outbound API call. Nominatim's usage policy requires a UA that
+# identifies the application *and* offers a way to reach its operator, so the
+# repo URL rides along — a bare "EkkoTrips/1.0" is the shape of UA they block.
+_OUTBOUND_UA = ("EkkoTrips/1.0 "
+                "(+https://github.com/shade-tree-software/campgrounds)")
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
 ROADSIDE_JSON = os.path.join(os.path.dirname(__file__), "roadside.json")
 HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
@@ -2828,9 +2835,11 @@ def api_create_campground():
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
 
-    if any(e["name"] == name for e in entries):
-        return jsonify({"error": "A campground with that name already exists"}), 409
-
+    # No global name-uniqueness check. Campground names repeat constantly across
+    # states — "Lakeview Campground" appears 7 times, "South Fork Campground" 6 —
+    # and the file already holds 286 duplicated names across 668 entries, so the
+    # constraint was unenforceable on its own data and only blocked legitimate
+    # adds. References are by `id`, so duplicate names cost nothing.
     kind = data.get("kind", "campground")
     next_id = max((e["id"] for e in entries if "id" in e), default=0) + 1
     entry = {
@@ -2869,10 +2878,9 @@ def api_update_campground(cg_id):
     if not target:
         return jsonify({"error": "Campground not found"}), 404
 
+    # Renames aren't uniqueness-checked either — see api_create_campground.
     new_name = data.get("name", "").strip()
     if new_name and new_name != target["name"]:
-        if any(e["name"] == new_name and e is not target for e in entries):
-            return jsonify({"error": "A campground with that name already exists"}), 409
         target["name"] = new_name
 
     for key in ("location", "elevation_meters", "waterfront", "state",
@@ -2978,19 +2986,25 @@ def api_delete_roadside(stop_id):
 
 @app.route('/api/geocode')
 def api_geocode():
-    """Proxy geocoding lookup via Nominatim."""
+    """Proxy geocoding lookup via Nominatim.
+
+    A lookup failure returns 502, not an empty array. Swallowing the exception
+    into `[]` made a Nominatim outage (or a blocked User-Agent) indistinguishable
+    from "no such place" — the search box just closed its dropdown and the admin
+    was left retyping a name that was never going to work.
+    """
     q = request.args.get('q', '').strip()
     if not q:
         return jsonify([])
     try:
         import urllib.request
         url = f"https://nominatim.openstreetmap.org/search?format=json&limit=8&q={urllib.parse.quote(q)}"
-        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": _OUTBOUND_UA})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
         return jsonify([{"name": r["display_name"], "lat": r["lat"], "lon": r["lon"]} for r in data])
     except Exception as e:
-        return jsonify([])
+        return jsonify({"error": f"Geocoding lookup failed: {e}"}), 502
 
 
 # Full state/territory name → USPS two-letter abbreviation. Used by
@@ -3052,7 +3066,7 @@ def _nominatim_nearest_poi(lat, lng):
             f"?format=json&lat={lat}&lon={lng}"
             "&zoom=18&namedetails=1&layer=poi"
         )
-        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": _OUTBOUND_UA})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
         if "error" in data:
@@ -3164,7 +3178,7 @@ def _overpass_named_pois(lat, lng, radius_m, limit=20):
         req = urllib.request.Request(
             "https://overpass-api.de/api/interpreter",
             data=data,
-            headers={"User-Agent": "EkkoTrips/1.0"},
+            headers={"User-Agent": _OUTBOUND_UA},
         )
         with urllib.request.urlopen(req, timeout=20) as resp:
             result = json.loads(resp.read())
@@ -3270,7 +3284,7 @@ def _reverse_geocode(lat, lng):
             f"?format=json&lat={lat}&lon={lng}"
             "&zoom=18&addressdetails=1&namedetails=1"
         )
-        req = urllib.request.Request(url, headers={"User-Agent": "EkkoTrips/1.0"})
+        req = urllib.request.Request(url, headers={"User-Agent": _OUTBOUND_UA})
         with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
         addr = data.get("address", {}) or {}
@@ -4607,6 +4621,18 @@ def _apply_tid_choice(all_points, tid_choices, tid_windows, drop_pad_days):
     return chosen
 
 
+def _naive_utc(tst):
+    """UTC wall-clock for a unix timestamp, as a naive datetime.
+
+    Replaces datetime.utcfromtimestamp(), which is deprecated and scheduled for
+    removal. Callers here stamp the tzinfo themselves a line or two later
+    (`.replace(tzinfo=ZoneInfo("UTC")).astimezone(...)`), so the naive value is
+    what they want — hence the explicit tzinfo strip rather than returning the
+    aware datetime.
+    """
+    return datetime.fromtimestamp(tst, timezone.utc).replace(tzinfo=None)
+
+
 def _local_date_of_ping(p):
     """Return the local-date (YYYY-MM-DD) of a single ping, using its
     `tz` field stamped by `_enrich_with_timezone`. Falls back to UTC
@@ -4623,7 +4649,7 @@ def _local_date_of_ping(p):
         from zoneinfo import ZoneInfo
     except Exception:
         ZoneInfo = None
-    utc = datetime.utcfromtimestamp(tst)
+    utc = _naive_utc(tst)
     tz_name = p.get("tz") or "UTC"
     if ZoneInfo and tz_name != "UTC":
         try:
@@ -4946,7 +4972,7 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                 tz = None
 
         def _to_local_date(tst):
-            utc = datetime.utcfromtimestamp(tst)
+            utc = _naive_utc(tst)
             if tz is not None:
                 try:
                     return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(tz).date()
@@ -5332,7 +5358,7 @@ def api_detect_stops(trip_id):
         _HAS_ZONEINFO = False
 
     def _local(tst, tz_name):
-        utc = datetime.utcfromtimestamp(tst)
+        utc = _naive_utc(tst)
         if _HAS_ZONEINFO and tz_name and tz_name != "UTC":
             try:
                 return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
@@ -5425,27 +5451,58 @@ def api_accept_stops(trip_id):
 
 @app.route('/api/elevation')
 def api_elevation():
-    """Proxy elevation lookup via Open-Elevation API."""
+    """Proxy elevation lookup via the Open-Meteo DEM.
+
+    Open-Meteo, not Open-Elevation: every one of the ~12.9k entries in
+    campgrounds.json was pinned against Open-Meteo by the curation tooling, and
+    the two DEMs disagree by several metres at the same coordinate (152 m vs
+    145 m at 40.0,-77.0). Elevation feeds the campground map's climate colouring,
+    so an entry added through the UI needs to come off the same source as its
+    neighbours. Open-Meteo is also the more reliable of the two.
+    """
     lat = request.args.get('lat', type=float)
     lng = request.args.get('lng', type=float)
     if lat is None or lng is None:
         return jsonify({"error": "lat and lng required"}), 400
     try:
         import urllib.request
-        url = f"https://api.open-elevation.com/api/v1/lookup?locations={lat},{lng}"
-        with urllib.request.urlopen(url, timeout=10) as resp:
+        url = ("https://api.open-meteo.com/v1/elevation"
+               f"?latitude={lat}&longitude={lng}")
+        req = urllib.request.Request(url, headers={"User-Agent": _OUTBOUND_UA})
+        with urllib.request.urlopen(req, timeout=10) as resp:
             data = json.loads(resp.read())
-        elev = data["results"][0]["elevation"]
-        return jsonify({"elevation_meters": elev})
+        return jsonify({"elevation_meters": data["elevation"][0]})
     except Exception as e:
         return jsonify({"error": str(e)}), 502
 
 
 @app.route('/api/campgrounds/<int:cg_id>', methods=['DELETE'])
 def api_delete_campground(cg_id):
+    """Delete a campgrounds.json entry.
+
+    Refuses (409) while any trip still references it. References are by id, so
+    a delete doesn't fail loudly — the campspot's `place` quietly falls back to
+    `custom_place or ""` and it loses its coordinates, leaving a blank row that
+    plots nowhere. `?force=1` overrides for the case where that's genuinely
+    intended.
+    """
     denied = _require_admin()
     if denied:
         return denied
+
+    refs = campground_references(cg_id)
+    if refs and request.args.get("force") != "1":
+        trips = sorted({r["trip_id"] for r in refs})
+        return jsonify({
+            "error": ("In use by {} {} (trip{} {}). Repoint or remove {} first, "
+                      "or re-send with ?force=1.").format(
+                          len(refs),
+                          "reference" if len(refs) == 1 else "references",
+                          "" if len(trips) == 1 else "s",
+                          ", ".join(str(t) for t in trips),
+                          "it" if len(refs) == 1 else "them"),
+            "references": refs,
+        }), 409
 
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
