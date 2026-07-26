@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T11:43:03.143Z
+  modified: 2026-07-26T11:57:03.605Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
@@ -81,14 +81,16 @@ The same few gaps repeat: empty `alt` on the lightbox image (`_lightbox.html:16`
 
 ## Prioritized backlog
 
-### Batch 1 — quick wins, big effect
-- [ ] `abort(404)` in `trip_detail` instead of bare text 404 (`ekko_trips_app.py:1797`)
-- [ ] Hide/replace Logout for `share:` sessions (`base.html:433`); add "viewing as guest" chip via `_share_label()`
-- [ ] Fix the two UTC date bugs in the calendar (`trips_calendar.html:558`, `:530-531`)
-- [ ] Lightbox download from `dataset.full`, not live `img.src` (`static/lightbox.js:252-264`)
-- [ ] Gate the four admin JS files + hidden edit forms on `is_admin` (`trip_detail.html:2312-2318` etc.)
-- [ ] Toast/notice on the Trips-only redirect (`ekko_trips_app.py:1112-1118`); gate legacy campground routes
-- [ ] Unify the day-trip count helper (header vs stats)
+### Batch 1 — quick wins, big effect — **DONE (commit cbc6ccf, 2026-07-26)**
+- [x] `abort(404)` in `trip_detail` instead of bare text 404
+- [x] Hide/replace Logout for `share:` sessions; "read-only" chip with the share label (new `inject_share_identity` context processor + `.guest-chip`)
+- [x] Fix the two UTC date bugs in the calendar (new `localDateStr()`)
+- [x] Lightbox download from the source img's `dataset.full`, not live `img.src`
+- [x] Gate the four admin JS files + hidden edit forms on `is_admin` (photos.js on `is_admin or is_uploader`). Viewer trip-detail HTML **314 KB → 156 KB** plus ~120 KB of JS no longer fetched. Gotcha found: `DEFAULT_PING_STYLE` lived in `overrides.js` but `map.js` draws per-ping markers for *everyone* — moved to `boot.js`, and `map.js`'s calls into `overrides.js` are now `IS_ADMIN`-guarded. Keep that in sync if you add a cross-module call.
+- [x] Toast/notice on the Trips-only redirect (`?notice=campgrounds_restricted` → `QUERY_NOTICES` toast in `base.html`, stripped via `replaceState`); legacy campground routes gate before redirecting
+- [x] Unify the day-trip count helper — new `trips.is_day_trip()` (the header had been counting empty placeholder trips)
+
+**Not yet verified in a real browser** — no headless browser tooling on this machine. Verification was server-side render smoke tests (guest via a real share token vs admin, all pages 200/302 as expected) plus a static cross-module reference check. The admin-JS gating is the change most worth clicking through once: viewer trip page (GPS track + lightbox), then an admin trip page (edit forms, detect stops, ping selection).
 
 ### Batch 2 — one afternoon each
 - [ ] ETag/304 for `/campgrounds/map` keyed on `_campgrounds_derived_cache` mtimes
