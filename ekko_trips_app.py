@@ -1201,16 +1201,14 @@ def _require_uploader_or_admin():
 def inject_share_identity():
     """Expose share-link guest identity to every template.
 
-    The nav needs it because Logout is a one-way door for a guest: they have no
-    password to get back in, and their only route back is re-finding the magic
-    link in an old text message. Templates swap it for a read-only chip.
+    Two consumers: the nav suppresses Logout for guests (a one-way door — they
+    have no password to get back in), and the landing page puts their magic
+    link in the address bar so bookmarking works.
     """
     name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
     if not name.startswith(SHARE_ID_PREFIX):
-        return {"is_share_guest": False, "share_guest_label": "",
-                "share_guest_url": ""}
+        return {"is_share_guest": False, "share_guest_url": ""}
     token = name[len(SHARE_ID_PREFIX):]
-    rec = _load_json(SHARE_TOKENS_FILE).get(token) or {}
     # The guest's own magic link. The landing page swaps it into the address bar
     # (see trips_map.html) so that "bookmark this page" saves something that
     # still works on a new device — `/s/<token>` 302s away, so the address bar
@@ -1219,7 +1217,6 @@ def inject_share_identity():
     # Only ever rendered for the holder of that token — they arrived with it —
     # so this exposes nothing they don't already have.
     return {"is_share_guest": True,
-            "share_guest_label": rec.get("label") or "",
             "share_guest_url": url_for('share_login', token=token)}
 
 

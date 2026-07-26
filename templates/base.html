@@ -130,17 +130,6 @@
 
   .nav-group + .nav-group { margin-left: 2.5rem; }
 
-  /* Share-link guests get this instead of Logout (see the nav_auth block). */
-  .guest-chip {
-    margin-left: auto;
-    color: rgba(255,255,255,.8);
-    font-size: .82rem;
-    background: rgba(255,255,255,.12);
-    border-radius: 999px;
-    padding: .2rem .7rem;
-    white-space: nowrap;
-  }
-
   .nav-label {
     /* .6 alpha on the navy header measured ~4.4:1 — under the 4.5:1 minimum
        for text this size. .72 clears it while staying visibly secondary. */
@@ -281,16 +270,6 @@
     .nav-group + .nav-group { margin-left: 0; }
     .nav-collapse > .nav-group + a {
       padding: .65rem 0;
-    }
-    /* The guest chip takes the same last-row treatment Logout gets. */
-    .nav-collapse > .nav-group + .guest-chip {
-      border-top: 1px solid rgba(255,255,255,.18);
-      margin-left: 0;
-      padding: .8rem 0 .65rem;
-      background: none;
-      border-radius: 0;
-      align-self: flex-start;
-      white-space: normal;
     }
     .nav-collapse > a { width: 100%; margin-left: 0 !important; }
   }
@@ -571,15 +550,11 @@
   </span>
   {% endif %}
   {% block nav_auth %}
-  {% if is_share_guest %}
-  {# No Logout for share guests — they have no password, so logging out strands
-     them on a form they can't get past. A chip instead, so it's at least clear
-     which link they're viewing through and that it's read-only. #}
-  <span class="guest-chip"
-        title="You're viewing through a read-only share link. Nothing here can be changed, and there's nothing to log in to.">
-    {{ share_guest_label or 'Guest' }} · read-only
-  </span>
-  {% else %}
+  {# Share guests get nothing here. NOT a Logout link: they have no password,
+     so logging out strands them on a form they can't get past. They had a
+     "<label> · read-only" chip for a while, but which link they arrived on and
+     what it can't do is house-keeping they never needed (AWH 2026-07-26). #}
+  {% if not is_share_guest %}
   {# No ?next= — signing out is deliberate, so the next login starts clean
      rather than resuming wherever the previous person was. See logout(). #}
   <a href="/logout" style="margin-left:auto">Logout</a>
