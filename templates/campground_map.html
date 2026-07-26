@@ -934,7 +934,11 @@ function addRoadsideMarker(s) {
 }
 
 ROADSIDE.forEach(addRoadsideMarker);
-roadsideLayer.addTo(map);  // shown by default; users can toggle it off
+// Deliberately NOT added to the map here: picnic/rest stops start hidden and
+// the user opts in from the layer control. They're a trip-planning aside, not
+// part of the campground picture this page is for. Both fly-to paths
+// (cgFlyToStop, the route-stops panel) reveal an individual marker regardless,
+// so searching and route lists still work with the layer switched off.
 
 // "Campgrounds" master toggle, wired as a layer-control overlay. The dummy layer
 // carries no markers itself — campground circleMarkers are managed by
@@ -2573,6 +2577,11 @@ function trimmedBounds(coords, frac) {
   // update the existing one's position + popup in place (keeps the search pool
   // current since it reads the live rec.stop).
   function rsApplyStop(stop, isNew) {
+    // Now that the layer starts hidden, a stop an admin just saved would drop
+    // into an off-map layer and appear to vanish. Switch the layer on instead
+    // of adding the marker loose — the layer control's checkbox follows
+    // map.hasLayer, so it stays truthful.
+    if (!map.hasLayer(roadsideLayer)) roadsideLayer.addTo(map);
     if (isNew) { addRoadsideMarker(stop); return; }
     const rec = roadsideById.get(stop.id);
     if (!rec) { addRoadsideMarker(stop); return; }
@@ -2585,6 +2594,11 @@ function trimmedBounds(coords, frac) {
     const rec = roadsideById.get(id);
     if (!rec) return;
     roadsideLayer.removeLayer(rec.marker);
+    // A marker revealed by a fly-to sits on the map directly as well as in the
+    // layer, so dropping it from the layer alone would leave it behind. A
+    // no-op when it isn't there. Reachable far more often now the layer starts
+    // hidden, which is what makes fly-to the usual way a stop gets shown.
+    map.removeLayer(rec.marker);
     roadsideById.delete(id);
     const i = roadsideMarkers.indexOf(rec);
     if (i >= 0) roadsideMarkers.splice(i, 1);
