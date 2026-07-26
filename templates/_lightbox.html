@@ -6,14 +6,21 @@
    openLightbox()'s options (the trips map does; the trip detail page is
    already on the trip, so it stays hidden there). #}
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" onclick="closeLightbox(event)">
-  <button class="close-btn" title="Close (Esc)">&times;</button>
+  <button class="close-btn" title="Close (Esc)" aria-label="Close photo viewer">&times;</button>
   <button class="lb-download" id="lb-download" title="Download" onclick="downloadLightbox(event)" aria-label="Download photo">
     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 16h14"/>
     </svg>
   </button>
-  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)">&#8249;</button>
+  {# Position in the set ("3 / 12"). Emptied by lightbox.js for a lone photo. #}
+  <div class="lb-count" id="lb-count" aria-live="polite"></div>
+  <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)" aria-label="Previous photo">&#8249;</button>
+  {# alt is set per photo by lightbox.js (caption, else place name). #}
   <img id="lightbox-img" src="" alt="">
+  {# Shown while the full-size original is still downloading and the viewer is
+     looking at the stretched thumbnail. aria-hidden: the counter above already
+     announces changes, and a spinner has nothing useful to say. #}
+  <div class="lb-spinner" aria-hidden="true"></div>
   <a class="lb-trip" id="lb-trip" href="#">
     <span class="lb-trip-text">
       <span class="lb-trip-line">
@@ -28,5 +35,5 @@
   </a>
   <div class="lb-caption" id="lb-caption"></div>
   <div class="lb-date" id="lb-date"></div>
-  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)" title="Next (→)">&#8250;</button>
+  <button class="nav-btn nav-next" id="lb-next" onclick="lightboxNav(event, 1)" title="Next (→)" aria-label="Next photo">&#8250;</button>
 </div>

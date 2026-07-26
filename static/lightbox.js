@@ -114,9 +114,21 @@ function showLightboxPhoto() {
   pre.src = full;
   if (pre.complete) {
     lbImg.src = full;
+    lbSetLoading(false);
   } else {
     lbImg.src = img.src;
-    pre.onload = () => { if (lightboxPhotos[lightboxIndex] === img) lbImg.src = full; };
+    // Until the original lands the viewer is looking at a 480px thumbnail
+    // stretched to fill the screen — visibly soft, with nothing to say whether
+    // that's the photo or a work in progress. Say so.
+    lbSetLoading(true);
+    const done = () => { if (lightboxPhotos[lightboxIndex] === img) lbSetLoading(false); };
+    pre.onload = () => {
+      if (lightboxPhotos[lightboxIndex] === img) lbImg.src = full;
+      done();
+    };
+    // A failed original leaves the thumb up, which is a reasonable fallback —
+    // but the spinner has to stop, or it spins forever on a dead photo.
+    pre.onerror = done;
   }
   // Caption comes from the caption-text span in the same photo-item, or —
   // for openers whose photos aren't in a grid (the trips map) — off the img
@@ -128,6 +140,11 @@ function showLightboxPhoto() {
     caption = spanEl.textContent;
   }
   document.getElementById('lb-caption').textContent = caption;
+  // The lightbox <img> had a permanently empty alt, so a screen reader
+  // announced nothing at all for the one thing the dialog exists to show.
+  // The caption is the best description available; fall back to the place the
+  // photo was taken, then to a generic label.
+  lbImg.alt = caption || img.dataset.placeName || 'Photo';
   // Show date (and time, when EXIF carries one) taken
   const raw = img.dataset.dateTaken || '';
   let dateStr = '';
@@ -143,13 +160,43 @@ function showLightboxPhoto() {
   setLightboxTrip(img);
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
+  // "N / M" — without it there's no way to tell a set of 3 from a set of 40,
+  // or how far in you are. Hidden for a lone photo, where it says nothing.
+  const counter = document.getElementById('lb-count');
+  if (counter) {
+    counter.textContent = lightboxPhotos.length > 1
+      ? (lightboxIndex + 1) + ' / ' + lightboxPhotos.length : '';
+  }
   // Preload the neighbors' full-res originals so paging (arrows, keys,
   // swipe) shows the next photo instantly instead of fetching a
   // multi-MB file on demand.
-  [lightboxIndex - 1, lightboxIndex + 1].forEach(i => {
-    const n = lightboxPhotos[i];
-    if (n) { new Image().src = n.dataset.full || n.src; }
-  });
+  //
+  // Not on a metered connection, though: these are untouched camera
+  // originals, so every page-turn speculatively pulls two multi-MB files —
+  // tens of MB over a campsite's cell signal for photos the viewer may never
+  // reach. Same Save-Data / slow-effectiveType check the nav prefetch uses.
+  if (!lbFrugalConnection()) {
+    [lightboxIndex - 1, lightboxIndex + 1].forEach(i => {
+      const n = lightboxPhotos[i];
+      if (n) { new Image().src = n.dataset.full || n.src; }
+    });
+  }
+}
+
+// Toggle the "still fetching the original" spinner. Driven by a class on the
+// lightbox root so the CSS owns the presentation.
+function lbSetLoading(on) {
+  const lb = document.getElementById('lightbox');
+  if (lb) lb.classList.toggle('loading-full', !!on);
+}
+
+// True when the user has asked to save data, or the connection is slow enough
+// that speculative multi-MB downloads are a bad trade. Read per call rather
+// than cached — effectiveType changes as signal does.
+function lbFrugalConnection() {
+  const conn = navigator.connection || {};
+  return conn.saveData === true ||
+         /(^|-)2g$|(^|-)3g$/.test(conn.effectiveType || '');
 }
 
 // Show the "go to this photo's trip" card when the photo carries one.
@@ -190,11 +237,12 @@ function lightboxNav(e, dir) {
 }
 
 function closeLightbox(e) {
-  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption' || e.target.id === 'lb-date')) return;
+  if (e && (e.target.classList.contains('nav-btn') || e.target.id === 'lightbox-img' || e.target.id === 'lb-caption' || e.target.id === 'lb-date' || e.target.id === 'lb-count')) return;
   // The trip link is an anchor — let the click navigate rather than
   // closing out from under it (its inner spans are click targets too).
   if (e && e.target.closest && e.target.closest('#lb-trip')) return;
   document.getElementById('lightbox').classList.remove('visible');
+  lbSetLoading(false);   // else a close mid-download leaves it spinning on reopen
   lbResetZoom(false);
   // Hand focus back to the grid photo the viewer was opened from. Grid
   // photos are focusable imgs (tabindex=0); the trips-map stacks instead

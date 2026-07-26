@@ -32,7 +32,48 @@
    chevron) while the ones after it stayed visible. Lift every control
    above the image. */
 .lightbox .close-btn, .lightbox .lb-download, .lightbox .nav-btn,
-.lightbox .lb-caption, .lightbox .lb-date, .lightbox .lb-trip { z-index: 1; }
+.lightbox .lb-caption, .lightbox .lb-date, .lightbox .lb-trip,
+.lightbox .lb-count, .lightbox .lb-spinner { z-index: 1; }
+
+/* "N / M" position badge. Top-LEFT: top-center is the date badge and
+   top-right the close/download cluster, and the left corner is the one spot
+   free on every page and viewport. */
+.lightbox .lb-count {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: #fff;
+  background: rgba(0,0,0,.6);
+  padding: .3rem .7rem;
+  border-radius: 6px;
+  font-size: .8rem;
+  font-variant-numeric: tabular-nums;   /* width stays put as digits change */
+}
+.lightbox .lb-count:empty { display: none; }
+
+/* Spinner over the still-loading original. Centered on the viewport rather
+   than the image so it doesn't need the image's box, and pointer-events:none
+   so it never eats a tap meant for the photo underneath. */
+.lightbox .lb-spinner {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  border: 3px solid rgba(255,255,255,.25);
+  border-top-color: rgba(255,255,255,.9);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: lb-spin .8s linear infinite;
+}
+.lightbox.loading-full .lb-spinner { display: block; }
+@keyframes lb-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  /* Keep the indicator (it carries real information) but stop the rotation. */
+  .lightbox .lb-spinner { animation: none; opacity: .8; }
+}
 
 .lightbox .close-btn {
   position: absolute;
@@ -251,8 +292,15 @@
     top: .5rem;
     transform: none;
   }
+  /* The date badge takes the top-left corner here, so the counter moves to
+     the bottom-left and the caption gives up the width it needs. */
+  .lightbox .lb-count {
+    top: auto;
+    bottom: .75rem;
+    left: .5rem;
+  }
   .lightbox .lb-caption {
-    max-width: calc(100vw - 1rem);
+    max-width: calc(100vw - 6rem);
     bottom: .75rem;
   }
   .lightbox .nav-prev { left: .25rem; }
