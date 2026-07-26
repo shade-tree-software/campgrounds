@@ -1178,7 +1178,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
      EVENT_COLOR, 'Event', 'Event or site of interest'],
     [mappedEvents.some(e => e.waypoint),
      WAYPOINT_COLOR, 'Stop', 'Brief stop along the way'],
-    [true, HOME_COLOR, 'Home / family', 'Home and family homes'],
+    [true, HOME_COLOR, 'Home &amp; family', 'Home and family'],
   ].filter(r => r[0]);
   if (legendRows.length) {
     const legend = L.control({ position: 'bottomleft' });
