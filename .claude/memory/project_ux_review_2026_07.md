@@ -5,12 +5,14 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T11:57:03.605Z
+  modified: 2026-07-26T12:09:15.583Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
 
 Three-agent review of the viewer experience: regular logged-in viewers, share-link guests (`share:<token>`), and Trips-only users (`can_view_campgrounds=false`). Work off this backlog in future sessions; check items off (`[x]`) as they land and note the commit.
+
+**Status:** Batch 1 ✅ **done** (7/7, commit `cbc6ccf`, 2026-07-26) · Batch 2 ⬜ not started (10 items) · Batch 3 ⬜ not started (7 items). Findings above the backlog are the *diagnosis* and stay as written — don't re-review them; the checkboxes are the live state.
 
 **Scope decision (AWH):** this is a private family app — see [[app-is-private-family-only]]. Family home locations SHOULD be visible to all users; do not treat that as a privacy issue. Privacy-flavored findings from the original review were removed accordingly.
 
