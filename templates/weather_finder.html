@@ -52,6 +52,10 @@
   .search-results div { padding: .5rem .6rem; cursor: pointer; font-size: .9rem; }
   .search-results div:hover, .search-results div.active { background: var(--blue-bg); }
   .search-results .muted { color: var(--gray); font-style: italic; cursor: default; }
+  /* State abbreviation beside a campground name in the lookup dropdown —
+     names repeat heavily across states (7x "Lakeview Campground"), so the
+     state is what tells two hits apart. */
+  .search-results .muted-inline { color: var(--gray); font-size: .8em; }
   .origin-note { font-size: .8rem; color: var(--gray); }
   .origin-note b { color: var(--navy); }
 
@@ -66,6 +70,18 @@
   }
   @keyframes wx-spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .wx-spinner { animation: none; } }
+
+  /* By-name lookup: deliberately outside .wx-form, because it ignores every
+     control in it — distance, mode, filters — and sitting inside the form
+     would imply otherwise. */
+  .wx-lookup {
+    display: flex; flex-wrap: wrap; align-items: flex-end; gap: .5rem 1rem;
+    margin-top: .9rem; padding: .85rem 1rem;
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 8px; box-shadow: var(--shadow);
+  }
+  #wx-cg { width: 320px; }
+  @media (max-width: 700px) { #wx-cg { width: 100%; } .wx-lookup .field { width: 100%; } }
 
   .wx-results { display: flex; flex-direction: column; gap: .6rem; }
   .wx-card {
@@ -186,6 +202,15 @@
       <span class="origin-note" id="wx-origin-note">Searching from <b>home</b>.</span>
     </div>
   </form>
+
+  <div class="wx-lookup">
+    <div class="field search-wrap">
+      <label for="wx-cg">Or look up one campground by name</label>
+      <input type="text" id="wx-cg" placeholder="Campground name — any distance">
+      <div class="search-results" id="wx-cg-results" role="listbox"></div>
+    </div>
+    <span class="wx-hint">Shows its whole forecast, unfiltered.</span>
+  </div>
 
   <div id="wx-status" role="status" aria-live="polite"></div>
   <div class="wx-results" id="wx-results"></div>
@@ -327,17 +352,91 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
   }
 });
 
+// ── By-name lookup ─────────────────────────────────────────────────────────
+const cgInput = document.getElementById('wx-cg');
+const cgResults = document.getElementById('wx-cg-results');
+let cgTimer = null;
+
+cgInput.addEventListener('input', () => {
+  clearTimeout(cgTimer);
+  const q = cgInput.value.trim();
+  if (q.length < 2) { cgResults.classList.remove('open'); return; }
+  cgTimer = setTimeout(async () => {
+    try {
+      const r = await fetch('/api/weather-finder/lookup?q=' + encodeURIComponent(q));
+      const hits = await r.json();
+      if (!r.ok || !Array.isArray(hits)) throw new Error();
+      cgResults.innerHTML = hits.length
+        ? hits.map(h => `<div role="option" data-id="${h.id}">${esc(h.name)}`
+            + (h.state ? ` <span class="muted-inline">${esc(h.state)}</span>` : '') + `</div>`).join('')
+        : '<div class="muted">No campground by that name</div>';
+    } catch (_) {
+      cgResults.innerHTML = '<div class="muted">Lookup failed</div>';
+    }
+    cgResults.classList.add('open');
+  }, 250);
+});
+
+cgResults.addEventListener('click', async e => {
+  const row = e.target.closest('div[data-id]');
+  if (!row) return;
+  cgResults.classList.remove('open');
+  cgInput.value = row.textContent.trim();
+  resultsEl.innerHTML = '';
+  statusEl.className = '';
+  statusEl.innerHTML = '<span class="wx-spinner"></span>Fetching the forecast…';
+  try {
+    const r = await fetch('/api/weather-finder/forecast?id=' + encodeURIComponent(row.dataset.id));
+    const data = await r.json();
+    if (!r.ok) {
+      statusEl.className = 'error';
+      statusEl.textContent = data.error || 'Lookup failed.';
+      return;
+    }
+    renderOne(data);
+  } catch (_) {
+    statusEl.className = 'error';
+    statusEl.textContent = 'Lookup failed — could not reach the server.';
+  }
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.wx-lookup')) cgResults.classList.remove('open');
+});
+
+function renderOne(data) {
+  const c = data.campground;
+  const water = c.waterfront && c.waterfront !== 'not waterfront';
+  const meta = [];
+  if (c.state) meta.push(esc(c.state));
+  if (c.dist !== null && c.dist !== undefined) meta.push(c.dist + ' mi from home');
+  if (c.elevation_feet) meta.push(c.elevation_feet.toLocaleString() + ' ft');
+  if (c.ownership) meta.push(esc(c.ownership));
+  if (c.visit_count) meta.push(`visited ${c.visit_count}\u00d7`);
+
+  statusEl.className = '';
+  statusEl.textContent = `Full ${data.days.length}-day forecast.`;
+  resultsEl.innerHTML = `
+    <div class="wx-card${water ? ' waterfront' : ''}">
+      <div class="wx-card-head">
+        <span class="wx-name">${esc(c.name)}</span>
+        ${water ? `<span class="wx-badge water">${esc(c.waterfront)}</span>` : ''}
+      </div>
+      <div class="wx-meta">${meta.map(m => `<span>${m}</span>`).join('<span class="sep">\u00b7</span>')}</div>
+      <div class="wx-days">${data.days.map(dayChip).join('')}</div>
+    </div>`;
+}
+
 function esc(s) {
   const d = document.createElement('div');
   d.textContent = s == null ? '' : s;
   return d.innerHTML;
 }
 
-function dayChip(m, mode) {
+function dayChip(m) {
   const date = new Date(m.date + 'T00:00:00');
   const label = m.day + ' ' + (date.getMonth() + 1) + '/' + date.getDate();
   let delta = '';
-  if (m.delta !== null && mode !== 'range') {
+  if (m.delta !== null && m.delta !== undefined) {
     const cls = m.delta < 0 ? 'cool' : 'warm';
     delta = `<span class="delta ${cls}">${m.delta > 0 ? '+' : ''}${m.delta}°</span>`;
   }
@@ -387,7 +486,7 @@ function render(data, mode) {
           ${water ? `<span class="wx-badge water">${esc(r.waterfront)}</span>` : ''}
         </div>
         <div class="wx-meta">${meta.map(m => `<span>${m}</span>`).join('<span class="sep">·</span>')}</div>
-        <div class="wx-days">${r.days.map(m => dayChip(m, mode)).join('')}</div>
+        <div class="wx-days">${r.days.map(dayChip).join('')}</div>
       </div>`;
   }).join('');
 

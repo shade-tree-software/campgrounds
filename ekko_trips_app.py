@@ -3005,6 +3005,73 @@ def api_weather_finder_search():
     return jsonify(result)
 
 
+@app.route('/api/weather-finder/lookup')
+def api_weather_finder_lookup():
+    """Campground name search for the by-name forecast lookup.
+
+    Matched server-side rather than by shipping the name list to the browser:
+    /api/campgrounds is ~12.9k rows, which is a lot to download to type into.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    q = (request.args.get('q') or '').strip().lower()
+    if len(q) < 2:
+        return jsonify([])
+    hits = [r for r in _load_campgrounds() if q in (r.get("name") or "").lower()]
+    # Names that START with the query first — typing "lake" should offer
+    # "Lakeview Campground" before "Beaver Lake Campground".
+    hits.sort(key=lambda r: (not (r.get("name") or "").lower().startswith(q),
+                             r.get("name") or ""))
+    return jsonify([{"id": r.get("id"), "name": r.get("name"),
+                     "state": r.get("state")} for r in hits[:20]])
+
+
+@app.route('/api/weather-finder/forecast')
+def api_weather_finder_forecast():
+    """Full forecast for one campground by id — no distance limit, no filters."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    cg_id = request.args.get('id', type=int)
+    row = next((r for r in _load_campgrounds() if r.get("id") == cg_id), None)
+    if row is None:
+        return jsonify({"error": "No such campground."}), 404
+    try:
+        lat, lng = (float(x) for x in row["location"].split(","))
+    except (KeyError, ValueError, AttributeError):
+        return jsonify({"error": "That campground has no usable coordinates."}), 400
+
+    home_cfg = _load_json(HOME_FILE)
+    home_lat, home_lng = home_cfg.get("home_lat"), home_cfg.get("home_long")
+    home = (home_lat, home_lng) if home_lat is not None and home_lng is not None else None
+
+    try:
+        days = weather_finder.forecast_for_point(lat, lng, home, user_agent=_OUTBOUND_UA)
+    except weather_finder.RateLimited as e:
+        return jsonify({"error": str(e)}), 429
+    except Exception as e:
+        app.logger.exception("weather finder lookup failed")
+        return jsonify({"error": f"Forecast lookup failed: {e}"}), 502
+    if days is None:
+        return jsonify({"error": "The weather service returned nothing for that "
+                                 "location."}), 502
+
+    return jsonify({
+        "campground": {
+            "id": row.get("id"), "name": row.get("name"), "state": row.get("state"),
+            "waterfront": row.get("waterfront") or "not waterfront",
+            "ownership": row.get("ownership"),
+            "elevation_feet": row.get("elevation_feet"),
+            "visit_count": row.get("visit_count", 0),
+            "lat": lat, "lng": lng,
+            "dist": (None if home is None
+                     else round(weather_finder.haversine_miles(home[0], home[1], lat, lng), 1)),
+        },
+        "days": days,
+    })
+
+
 # ── Photo move between stays/events ───────────────────────────────────────
 
 @app.route('/trips/<int:trip_id>/move-photo', methods=['POST'])

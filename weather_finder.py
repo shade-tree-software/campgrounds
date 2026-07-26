@@ -78,12 +78,6 @@ SORTS = ("distance", "temp", "rain", "waterfront")
 _WATERFRONT_RANKS = {
     "bayfront": 0, "lakefront": 0, "riverfront": 0,
     "creekside": 0, "pond": 0, "coastal dunes": 0,
-    # Legacy one-off, not part of the vocabulary: campgrounds.json id 1366
-    # (Sycamore Springs Park, IN) says "riverside". Its --AWH evidence has sites
-    # on the Little Blue River, so it belongs in this tier — without the alias
-    # it would silently sort as "not waterfront". Drop this line once the entry
-    # is normalised to "riverfront".
-    "riverside": 0,
     "coastal woods": 1,
     "lakeview": 2, "riverview": 2, "bayview": 2,
     "not waterfront": 3,
@@ -506,6 +500,68 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
         "truncated": total > max_results,
         "results": results[:max_results],
     }
+
+
+def forecast_for_point(lat, lng, home=None, *, forecast_days=FORECAST_DAYS, **fetch_kw):
+    """Every forecast day for one location, with home's high alongside.
+
+    The by-name lookup path: no distance limit, no day/temperature/rain filters
+    — you named a campground, so you want its forecast, not a verdict on it.
+
+    Shares the same grid cells and cache as the search, so looking up a
+    campground inside an area you've already searched is free, and a lookup
+    warms that cell for a later search.
+    """
+    now = time.time()
+    key = ((round(lat / GRID_DEG), round(lng / GRID_DEG)), forecast_days)
+    daily = _cache_get(key, now)
+
+    home_key = home_daily = None
+    if home is not None:
+        home_key = ((round(home[0] / GRID_DEG), round(home[1] / GRID_DEG)), forecast_days)
+        home_daily = _cache_get(home_key, now)
+
+    points, wants = [], []
+    if daily is None:
+        points.append((lat, lng)); wants.append("point")
+    if home is not None and home_daily is None:
+        points.append((float(home[0]), float(home[1]))); wants.append("home")
+    if points:
+        got = fetch_daily_forecasts(points, forecast_days=forecast_days, **fetch_kw)
+        for want, value in zip(wants, got):
+            if want == "point":
+                daily = value
+                if value is not None:
+                    _cache_put(key, value, now)
+            else:
+                home_daily = value
+                if value is not None:
+                    _cache_put(home_key, value, now)
+
+    if daily is None:
+        return None
+
+    home_by_date = {}
+    if home_daily:
+        for row in _day_rows(home_daily):
+            if row["high"] is not None:
+                home_by_date[row["date"]] = row["high"]
+
+    days = []
+    for row in _day_rows(daily):
+        home_high = home_by_date.get(row["date"])
+        days.append({
+            "date": row["date"],
+            "day": _weekday(row["date"])[:3],
+            "high": None if row["high"] is None else round(row["high"], 1),
+            "low": None if row["low"] is None else round(row["low"], 1),
+            "precip": row["precip"],
+            "precip_chance": row["precip_chance"],
+            "home_high": None if home_high is None else round(home_high, 1),
+            "delta": (None if (home_high is None or row["high"] is None)
+                      else round(row["high"] - home_high, 1)),
+        })
+    return days
 
 
 def send_sms_notification(phone, message):
