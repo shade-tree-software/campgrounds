@@ -2466,6 +2466,33 @@ COLOR_MODES = [
      "label": "Climate", "colors": CLIMATE_COLORS},
 ]
 
+# Full names for the 2-letter codes stored in each entry's `state`, so the map's
+# search box matches "Colorado" as well as "CO" — typing the full name returned
+# nothing at all, which is the natural thing to type. US states plus the
+# Canadian provinces the database covers; anything unlisted just isn't expanded.
+STATE_NAMES = {
+    "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
+    "CA": "California", "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware",
+    "FL": "Florida", "GA": "Georgia", "HI": "Hawaii", "ID": "Idaho",
+    "IL": "Illinois", "IN": "Indiana", "IA": "Iowa", "KS": "Kansas",
+    "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland",
+    "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota",
+    "MS": "Mississippi", "MO": "Missouri", "MT": "Montana", "NE": "Nebraska",
+    "NV": "Nevada", "NH": "New Hampshire", "NJ": "New Jersey",
+    "NM": "New Mexico", "NY": "New York", "NC": "North Carolina",
+    "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon",
+    "PA": "Pennsylvania", "RI": "Rhode Island", "SC": "South Carolina",
+    "SD": "South Dakota", "TN": "Tennessee", "TX": "Texas", "UT": "Utah",
+    "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+    "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming",
+    "DC": "District of Columbia",
+    "AB": "Alberta", "BC": "British Columbia", "MB": "Manitoba",
+    "NB": "New Brunswick", "NL": "Newfoundland and Labrador",
+    "NS": "Nova Scotia", "NT": "Northwest Territories", "NU": "Nunavut",
+    "ON": "Ontario", "PE": "Prince Edward Island", "QC": "Quebec",
+    "SK": "Saskatchewan", "YT": "Yukon",
+}
+
 # Display labels + presentation order for the ownership filter. Values not
 # listed (or blank) fall back to a title-cased label and sort to the end.
 OWNERSHIP_LABELS = {
@@ -2527,6 +2554,7 @@ def campgrounds_map():
         color_modes=COLOR_MODES,
         default_mode=mode,
         ownership_labels=OWNERSHIP_LABELS,
+        state_names=STATE_NAMES,
         home=home,
         family_locations=family,
         active_nav='campmap',

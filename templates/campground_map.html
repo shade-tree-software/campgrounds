@@ -170,6 +170,16 @@
   .cg-search-option:hover,
   .cg-search-option.active { background: var(--blue-bg); }
   .cg-search-option .cg-search-state { color: var(--gray); font-size: .75rem; flex-shrink: 0; }
+  /* Footer rows: "showing N of M" and the no-matches answer. Not selectable —
+     they're status, not results, so they carry no click/keyboard handler. */
+  .cg-search-more, .cg-search-empty {
+    padding: .4rem .6rem;
+    font-size: .75rem;
+    color: var(--gray);
+    font-style: italic;
+    border-top: 1px solid var(--gray-light);
+  }
+  .cg-search-empty { border-top: none; }
 
   @media (max-width: 700px) {
     /* Phone: with the layer control collapsed there's nothing in the top-right
@@ -253,7 +263,19 @@
   .map-legend.collapsed .legend-header::after { content: '\25B8'; }
   .map-legend.collapsed .legend-rows { display: none; }
   .map-legend.collapsed .legend-color-by { display: none; }
+  .map-legend.collapsed .legend-count { display: none; }
   .map-legend:not(.collapsed) .legend-header { margin-bottom: .25rem; }
+
+  /* Running "Showing N of M" total under the legend rows. */
+  .map-legend .legend-count {
+    margin-top: .35rem;
+    padding-top: .35rem;
+    border-top: 1px solid var(--gray-light);
+    font-size: .75rem;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+  .map-legend .legend-count:empty { display: none; }
 
   /* "Color by" mode picker, hosted inside the legend (it drives the colors). */
   .map-legend .legend-color-by {
@@ -646,6 +668,7 @@ const ROADSIDE = {{ roadside | tojson }};
 const COLOR_MODES = {{ color_modes | tojson }};
 const DEFAULT_MODE = {{ default_mode | tojson }};
 const OWNERSHIP_LABELS = {{ ownership_labels | tojson }};
+const STATE_NAMES = {{ state_names | tojson }};
 const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const IS_ADMIN = {{ is_admin | tojson }};
@@ -1153,11 +1176,25 @@ function applyCampgroundsToggle() {
 // (its popup would open on a "hidden" marker), so filtered-out campgrounds must
 // actually leave the map to be truly non-interactive.
 function applyVisibility() {
+  let shown = 0;
   markers.forEach(({ marker, cg }) => {
     const vis = markerVisible(cg);
+    if (vis) shown++;
     if (vis && !map.hasLayer(marker)) marker.addTo(map);
     else if (!vis && map.hasLayer(marker)) map.removeLayer(marker);
   });
+  updateShownCount(shown);
+}
+
+// "Showing N of M" under the legend. Filters are sticky across a session, so
+// without a running total there was no way to tell a sparse region from a
+// filter quietly hiding two thirds of the database.
+function updateShownCount(shown) {
+  const el = document.getElementById('cg-shown-count');
+  if (!el) return;   // legend not built yet (first applyVisibility runs early)
+  el.textContent = shown === markers.length
+    ? `${markers.length.toLocaleString()} campgrounds`
+    : `Showing ${shown.toLocaleString()} of ${markers.length.toLocaleString()}`;
 }
 
 const familyCoords = FAMILY.map(f => [f.lat, f.lng]);
@@ -1357,6 +1394,12 @@ legendControl.onAdd = function() {
   legendRowsEl.className = 'legend-rows';
   div.appendChild(legendRowsEl);
 
+  // Running "Showing N of M" total, kept current by applyVisibility().
+  const count = document.createElement('div');
+  count.className = 'legend-count';
+  count.id = 'cg-shown-count';
+  div.appendChild(count);
+
   // Default to collapsed on mobile to free up map space.
   if (window.innerWidth <= 700) div.classList.add('collapsed');
   return div;
@@ -1418,6 +1461,23 @@ ownershipControl.addTo(map);
 // Apply a restored "campgrounds off" state now that both controls exist (hides
 // their widgets + the "Color by" picker, and keeps every campground marker off).
 applyCampgroundsToggle();
+
+// Turning campgrounds off also hides the legend and ownership filter, and the
+// checkbox that did it lives inside the layer control — collapsed by default on
+// a phone. So a session that ends with it off reopens on a map with no pins and
+// nothing on screen explaining why, which reads as a broken page rather than a
+// filter. Say so, with a one-tap way back.
+if (!campgroundsOn) {
+  window.toast('Campgrounds are hidden — showing roadside stops only.', 'info', {
+    duration: 9000,
+    actionLabel: 'Show them',
+    onAction: () => {
+      // Driving the layer control's own state fires overlayadd, which is what
+      // flips campgroundsOn, persists it and re-applies visibility.
+      campgroundsToggleLayer.addTo(map);
+    },
+  });
+}
 
 // ── Color-mode picker ───────────────────────────────────────────────────────
 // Reflect the restored mode (URL/session may differ from the server default).
@@ -1981,10 +2041,26 @@ routeControl.addTo(map);
   // marker, display name, secondary text, and a lat/lng to fly to. Campgrounds
   // are static here, but roadside stops can be added/edited/deleted inline, so
   // their portion is recomputed per search (roadsidePool) to stay current.
+  // `hay` is precomputed and lowercased once per entry — this runs over ~14k
+  // entries on every keystroke. It includes the state's FULL NAME as well as
+  // its code: the box only ever matched "CO", so typing "Colorado" — the
+  // natural thing to type — returned nothing at all.
+  const MAX_RESULTS = 12;
+  function stateHay(code) {
+    const full = STATE_NAMES[code] || '';
+    return (code ? code + ' ' : '') + full;
+  }
+  // The ways a query can name this entry's state — its code and its full name.
+  function stateKeys(code) {
+    return [(code || '').toLowerCase(), (STATE_NAMES[code] || '').toLowerCase()]
+      .filter(Boolean);
+  }
   const cgPool = markers.map(({ marker, cg }) => ({
     marker,
     name: cg.name,
     sub: cg.state || '',
+    hay: (cg.name + ' ' + stateHay(cg.state)).toLowerCase(),
+    states: stateKeys(cg.state),
     ll: cg.location.split(',').map(parseFloat),
     isStop: false,
   }));
@@ -1993,9 +2069,26 @@ routeControl.addTo(map);
       marker,
       name: stop.name,
       sub: [stop.town, stop.state].filter(Boolean).join(', '),
+      hay: (stop.name + ' ' + (stop.town || '') + ' ' + stateHay(stop.state)).toLowerCase(),
+      states: stateKeys(stop.state),
       ll: [stop.lat, stop.lng],
       isStop: true,
     }));
+  }
+
+  // Rank matches instead of taking the first 12 in database order, which for a
+  // common word ("lake") meant the 12 oldest entries rather than the 12 best.
+  // Lower is better.
+  function score(entry, q) {
+    const n = entry.name.toLowerCase();
+    if (n === q) return 0;
+    // A query that IS a state — "CO", "Colorado" — is asking for that state,
+    // not for the names those letters happen to fall inside ("Cobscook Bay").
+    if (entry.states.includes(q)) return 1;
+    if (n.startsWith(q)) return 2;
+    if (n.includes(' ' + q)) return 3;
+    if (n.includes(q)) return 4;
+    return 5;
   }
 
   function close() {
@@ -2020,10 +2113,12 @@ routeControl.addTo(map);
     const q = input.value.trim().toLowerCase();
     if (!q) { close(); return; }
     const tokens = q.split(/\s+/);
-    const matches = cgPool.concat(roadsidePool()).filter(p => {
-      const hay = (p.name + ' ' + p.sub).toLowerCase();
-      return tokens.every(t => hay.includes(t));
-    }).slice(0, 12);
+    const all = cgPool.concat(roadsidePool())
+      .filter(p => tokens.every(t => p.hay.includes(t)));
+    // Stable sort by rank: equal-ranked entries keep database order.
+    all.forEach((p, i) => { p._i = i; });
+    all.sort((a, b) => (score(a, q) - score(b, q)) || (a._i - b._i));
+    const matches = all.slice(0, MAX_RESULTS);
     resultsEl.innerHTML = '';
     sel = -1;
     items = matches.map(entry => {
@@ -2039,7 +2134,22 @@ routeControl.addTo(map);
       resultsEl.appendChild(row);
       return { row, entry };
     });
-    resultsEl.classList.toggle('open', items.length > 0);
+    // The list is hard-sliced, so say when there's more behind it — otherwise
+    // 12 results and 400 results look identical and there's no cue to narrow
+    // the query. Also give a "no matches" answer rather than silently closing.
+    if (!all.length) {
+      const none = document.createElement('div');
+      none.className = 'cg-search-empty';
+      none.textContent = 'No matches';
+      resultsEl.appendChild(none);
+    } else if (all.length > matches.length) {
+      const more = document.createElement('div');
+      more.className = 'cg-search-more';
+      more.textContent = `Showing ${matches.length} of ${all.length} — keep typing to narrow`;
+      resultsEl.appendChild(more);
+    }
+    // Always open once there's a query: an empty dropdown can't say "no matches".
+    resultsEl.classList.add('open');
   }
 
   input.addEventListener('input', update);
