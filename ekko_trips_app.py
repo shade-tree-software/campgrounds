@@ -3452,6 +3452,11 @@ def api_create_campground():
         "name": name,
         "location": data.get("location", ""),
         "state": data.get("state", ""),
+        # `note` is common to both kinds: the manage form offers it for family
+        # entries too, and PUT has always accepted it for them. Keeping it in
+        # the campground-only branch meant a note typed while CREATING a family
+        # entry was silently dropped, then reappeared as editable afterwards.
+        "note": data.get("note", ""),
     }
     if kind == "family":
         if data.get("driveway_location"):
@@ -3461,7 +3466,6 @@ def api_create_campground():
         entry["waterfront"] = data.get("waterfront", "not waterfront")
         entry["ownership"] = data.get("ownership", "")
         entry["website"] = data.get("website", "")
-        entry["note"] = data.get("note", "")
         entry["phone"] = data.get("phone", "")
     entries.append(entry)
     _save_json(CAMPGROUNDS_JSON, entries)

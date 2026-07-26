@@ -230,6 +230,11 @@ let sortField = 'name';
 let sortAsc = true;
 let editingId = null;  // id of the row being edited
 let addingNew = false;
+// In-progress values for the not-yet-saved row. render() rebuilds the whole
+// table from scratch, so without somewhere to keep them, anything typed into
+// the add row is lost on the next render — which is exactly what happens when
+// the Kind selector re-renders to swap the campground/family fields.
+let newDraft = null;
 // Cap on how many table rows are materialized at once. Rendering thousands of
 // rows (and rebuilding them on every keystroke) is what made this page slow, so
 // we only DOM-render the first RENDER_CAP of the filtered/sorted set and prompt
@@ -445,22 +450,33 @@ function editRowHtml(c) {
   </tr>`;
 }
 
-function newRowHtml() {
-  return editRowHtml({
+function blankDraft() {
+  return {
     id: null, kind: 'campground', name: '', state: '', waterfront: 'not waterfront',
     ownership: '', elevation_meters: 0, note: '', location: '', website: '',
     phone: '', driveway_location: '',
-  }).replace('onclick="saveEdit()"', 'onclick="saveNew()"')
+  };
+}
+
+function newRowHtml() {
+  return editRowHtml(newDraft || blankDraft())
+    .replace('onclick="saveEdit()"', 'onclick="saveNew()"')
     .replace('onclick="cancelEdit()"', 'onclick="cancelAdd()"');
 }
 
 function onKindChange() {
   // Re-render the edit row so kind-specific fields appear/hide without
-  // forcing the user to cancel and reopen.
-  const fields = readEditFields();
+  // forcing the user to cancel and reopen. Whatever has been typed has to be
+  // carried across that re-render by hand — for an existing row onto the
+  // record, for a new one onto the draft. Missing the draft case is what made
+  // picking "family" on a new campground snap straight back to "campground":
+  // the re-render rebuilt the row from a hardcoded blank, kind included.
+  const fields = readPresentFields();
   if (editingId !== null) {
     const c = campgrounds.find(e => e.id === editingId);
     if (c) Object.assign(c, fields);
+  } else if (addingNew) {
+    newDraft = Object.assign(newDraft || blankDraft(), fields);
   }
   render();
   // Focus back to name so the user can keep typing.
@@ -504,6 +520,7 @@ function filterTable() {
 
 function startEdit(id) {
   addingNew = false;
+  newDraft = null;
   editingId = id;
   render();
   const nameInput = document.getElementById('ed-name');
@@ -539,6 +556,36 @@ function readEditFields() {
   return fields;
 }
 
+// Every edit input that's actually on screen, whatever kind it belongs to.
+//
+// This exists because onKindChange runs at the one moment the two disagree: the
+// select already reports the NEW kind while the DOM still shows the OLD kind's
+// inputs. readEditFields() branches on the new kind, so at that moment it both
+// misses what the user can see and — going family -> campground — reaches for
+// ed-elev, which doesn't exist yet, throwing before render() and leaving the
+// row stuck showing family fields under a "campground" selection.
+function readPresentFields() {
+  const el = id => document.getElementById(id);
+  const fields = { kind: el('ed-kind').value };
+  const grab = (id, key, fn) => {
+    const e = el(id);
+    if (e) fields[key] = fn ? fn(e.value) : e.value;
+  };
+  const trim = v => v.trim();
+  grab('ed-name', 'name', trim);
+  grab('ed-state', 'state', trim);
+  grab('ed-location', 'location', trim);
+  grab('ed-note', 'note');
+  grab('ed-driveway', 'driveway_location', trim);
+  grab('ed-waterfront', 'waterfront');
+  grab('ed-ownership', 'ownership');
+  grab('ed-website', 'website');
+  grab('ed-phone', 'phone', trim);
+  const elev = el('ed-elev');
+  if (elev) fields.elevation_meters = (parseFloat(elev.value) || 0) / METERS_TO_FEET;
+  return fields;
+}
+
 function saveEdit() {
   const fields = readEditFields();
   if (!fields.name) { toast('Name is required'); return; }
@@ -562,6 +609,7 @@ function saveEdit() {
 function startAdd() {
   editingId = null;
   addingNew = true;
+  newDraft = blankDraft();
   render();
   const nameInput = document.getElementById('ed-name');
   if (nameInput) nameInput.focus();
@@ -569,6 +617,7 @@ function startAdd() {
 
 function cancelAdd() {
   addingNew = false;
+  newDraft = null;
   render();
   hideLocationMap();
 }
@@ -586,6 +635,7 @@ function saveNew() {
     if (data.error) { toast(data.error); return; }
     campgrounds.push(Object.assign({ id: data.id }, fields));
     addingNew = false;
+    newDraft = null;
     render();
     hideLocationMap();
     toast('Added ' + fields.name, 'success');
