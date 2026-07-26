@@ -71,6 +71,18 @@
   @keyframes wx-spin { to { transform: rotate(360deg); } }
   @media (prefers-reduced-motion: reduce) { .wx-spinner { animation: none; } }
 
+  .wx-filters { display: flex; flex-wrap: wrap; align-items: center; gap: .45rem 1.35rem; }
+  .wx-rain { display: inline-flex; align-items: center; gap: .4rem; }
+  /* The threshold holds its space whether or not the box is ticked, so ticking
+     it never reflows the row. Muted while inactive so it reads as belonging to
+     an off switch rather than as a live control. */
+  .wx-rain-limit {
+    display: inline-flex; align-items: center; gap: .35rem;
+    font-size: .9rem; color: var(--gray); transition: opacity .12s;
+  }
+  .wx-rain-limit.inactive { opacity: .45; }
+  #wx-precip { width: 4.6rem; }
+
   /* By-name lookup: deliberately outside .wx-form, because it ignores every
      control in it — distance, mode, filters — and sitting inside the form
      would imply otherwise. */
@@ -123,6 +135,8 @@
        number inputs to unusable slivers. */
     .wx-row { flex-direction: column; align-items: stretch; gap: .7rem; }
     .field input[type=number] { width: 100%; }
+    #wx-precip { width: 4.6rem; }   /* sits inline in a sentence, not on its own row */
+    .wx-filters { gap: .55rem 1.1rem; }
     #wx-place { width: 100%; }
     .wx-actions button { width: 100%; padding: .7rem 1.2rem; }
   }
@@ -187,23 +201,31 @@
           <option value="waterfront">Waterfront — on the water first</option>
         </select>
       </div>
+    </div>
+
+    {# One row for the three filters, each carrying its own wording — the old
+       per-checkbox "Days"/"Rain"/"Water" labels repeated what the checkbox
+       already said. The rain threshold is always present rather than revealed
+       on tick: revealing it changed the row's width mid-use and bumped the
+       following checkbox onto a second line. #}
+    <div class="wx-row">
       <div class="field">
-        <label>Days</label>
-        <label class="wx-check"><input type="checkbox" id="wx-weekends" checked> Weekends only</label>
-      </div>
-      <div class="field">
-        <label>Rain</label>
-        <label class="wx-check"><input type="checkbox" id="wx-dry"> Little or no rain</label>
-      </div>
-      <div class="field">
-        <label>Water</label>
-        <label class="wx-check"><input type="checkbox" id="wx-waterfront"> Waterfront only</label>
-      </div>
-      <div class="field" id="field-precip" hidden>
-        <label for="wx-precip">At most (in)</label>
-        {# Hundredths, so a typed 0.12 isn't rejected the way 250 miles was.
-           The API reports rainfall to this precision anyway (e.g. 0.071). #}
-        <input type="number" id="wx-precip" value="0.1" min="0" max="10" step="0.01">
+        <label>Only show</label>
+        <div class="wx-filters">
+          <label class="wx-check"><input type="checkbox" id="wx-weekends" checked> Weekends</label>
+          <span class="wx-rain">
+            <label class="wx-check"><input type="checkbox" id="wx-dry"> Little or no rain</label>
+            <span class="wx-rain-limit" id="wx-rain-limit">
+              — at most
+              {# Hundredths, so a typed 0.12 isn't rejected the way 250 miles was.
+                 The API reports rainfall to this precision anyway (e.g. 0.071). #}
+              <input type="number" id="wx-precip" value="0.1" min="0" max="10" step="0.01"
+                     aria-label="Maximum rainfall in inches">
+              in
+            </span>
+          </span>
+          <label class="wx-check"><input type="checkbox" id="wx-waterfront"> Waterfront</label>
+        </div>
       </div>
     </div>
 
@@ -253,9 +275,19 @@ function syncMode() {
 modeSel.addEventListener('change', syncMode);
 syncMode();
 
-document.getElementById('wx-dry').addEventListener('change', e => {
-  document.getElementById('field-precip').hidden = !e.target.checked;
+// The rain threshold is always visible (see the markup comment), so the tick
+// only styles it. Typing a number turns the filter on by itself — setting a
+// limit is unambiguously asking to apply one, and making you tick a box you'd
+// already reached past is a needless second step.
+const dryBox = document.getElementById('wx-dry');
+const precipInput = document.getElementById('wx-precip');
+const rainLimit = document.getElementById('wx-rain-limit');
+function syncRain() { rainLimit.classList.toggle('inactive', !dryBox.checked); }
+dryBox.addEventListener('change', syncRain);
+precipInput.addEventListener('input', () => {
+  if (!dryBox.checked) { dryBox.checked = true; syncRain(); }
 });
+syncRain();
 
 // ── Origin picker ──────────────────────────────────────────────────────────
 const placeInput = document.getElementById('wx-place');
