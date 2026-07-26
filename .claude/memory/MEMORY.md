@@ -1,5 +1,6 @@
 - [Summer Seeker is a separate app](project_summer_seeker.md) — `index.html` + `/search` + `/geocode` belong to Summer Seeker, not EKKO Trips
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a privacy leak
+- [Auth model decisions](project_auth_model_decisions.md) — AWH declined share-link self-registration and self-service password change (2026-07-26); don't re-propose, reasoning inside
 - [UX review 2026-07 (viewer experience)](project_ux_review_2026_07.md) — full non-admin UX audit with file:line refs + prioritized 3-batch backlog (share-guest dead ends, page weight, discoverability, a11y); work off & check off items there
 - [Good Sam ratings data access](reference_good_sam_ratings.md) — pull triple ratings by state via Algolia index `gs-ml-cb-assets-prod` (key from AppSync auth-secret query)
 - [Local campground method](reference_local_campground_method.md) — detect county/town/city campgrounds via RV Life park_type + gov-name-scan; include all confirmed local-gov (no star/price gate); worked per-state
