@@ -776,9 +776,15 @@ legend.onAdd = function() {
       <span class="legend-chevron">▾</span>
     </button>
     <div class="legend-body" id="legend-body">
-      <div class="legend-row"><span class="legend-dot" style="background:#002868;"></span> Overnight camping spots</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#c9a84c;"></span> Day trips, sites of interest, and events</div>
-      <div class="legend-row"><span class="legend-dot" style="background:#bf0a30;"></span> Family homes</div>
+      <!-- Two label lengths per row; .legend-short / .legend-long (base.html)
+           pick one by viewport width, so the phrases don't wrap the legend
+           across half a phone screen. -->
+      <div class="legend-row"><span class="legend-dot" style="background:#002868;"></span>
+        <span><span class="legend-short">Campspots</span><span class="legend-long">Overnight camping spots</span></span></div>
+      <div class="legend-row"><span class="legend-dot" style="background:#c9a84c;"></span>
+        <span><span class="legend-short">Events</span><span class="legend-long">Day trips, sites of interest, and events</span></span></div>
+      <div class="legend-row"><span class="legend-dot" style="background:#bf0a30;"></span>
+        <span><span class="legend-short">Family</span><span class="legend-long">Family homes</span></span></div>
     </div>
   `;
   L.DomEvent.disableClickPropagation(div);

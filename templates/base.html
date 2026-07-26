@@ -409,6 +409,17 @@
     white-space: nowrap;
   }
 
+  /* Map-legend labels at two lengths. Legends sit in a map corner, where a
+     phone has room for a word and a desktop has room for a phrase — so each
+     row ships both and CSS picks one. Done in CSS, not JS, so rotating a
+     tablet re-picks without the legend having to be rebuilt. */
+  .legend-long { display: inline; }
+  .legend-short { display: none; }
+  @media (max-width: 700px) {
+    .legend-long { display: none; }
+    .legend-short { display: inline; }
+  }
+
   /* Skip link — off-screen until focused, then a normal button at top-left.
      z-index beats the sticky .site-top (900) so it isn't hidden under it. */
   .skip-link {

@@ -1605,30 +1605,22 @@
     color: var(--ink, #1d1d1f);
     line-height: 1.5;
   }
-  /* Grid, not flex: the swatch column is a fixed 15px so every label starts at
-     the same x, while the dot itself keeps its own size and stays round.
-     (As a flex row with `width: 15px` on the first child, the 11px waypoint dot
-     was stretched to 15 wide by 11 tall — a visible oval.) */
+  /* Every swatch is now the same plain circle, so a flex row is enough — the
+     grid + per-size overrides this used to need went away with the glyphs.
+     Matches .map-legend .legend-dot on the trips map; keep the two in sync. */
   .trip-map-legend .tl-row {
-    display: grid;
-    grid-template-columns: 15px 1fr;
+    display: flex;
     align-items: center;
     gap: .4rem;
   }
   .trip-map-legend .tl-dot {
-    width: 15px; height: 15px; border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    color: #fff; font-size: 9px; line-height: 1;
-    border: 1.5px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,.35);
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 1.5px solid #fff;
+    /* Outer hairline, not a drop shadow: the waypoint grey is light enough to
+       otherwise wash out against the legend's white panel. */
+    box-shadow: 0 0 0 1px rgba(0,0,0,.15);
     box-sizing: border-box; flex-shrink: 0;
   }
-  /* Waypoints render smaller than events on the map (18px vs 24px); mirror
-     that. justify-self keeps the dot centred in the 15px column without the
-     column resizing it. */
-  .trip-map-legend .tl-dot.small { width: 11px; height: 11px; font-size: 7px; }
-  .trip-map-legend .tl-dot { justify-self: center; }
-  /* The house glyph is the marker's own SVG, sized down to fit the swatch. */
-  .trip-map-legend .tl-dot svg { width: 9px; height: 9px; display: block; }
 
   /* "Fit the whole trip" — a leaflet-bar button, so it inherits the zoom
      control's sizing; just center the glyph. */
@@ -2061,7 +2053,12 @@
   {% set is_bare = (not event_photos[item.idx]) and (item.waypoint or item.family_visit or not item.description) %}
   <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
     <div class="event-header">
-      <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}<span style="display:block;transform:translateY(-2px);">&#9670;</span>{% else %}&#9733;{% endif %}</div>
+      <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}{# Drawn, not the &#9670; text glyph: that glyph's ink
+      sits high in its line box by a font-dependent amount, so it never centred
+      in the circle and the translateY nudge that chased it only matched one
+      font. 12px rather than the house's 14 — a solid diamond carries more
+      visual weight, and a stop should read lighter than a full event (on the
+      map the same thing is said by its smaller circle). #}<svg width="12" height="12" viewBox="0 0 20 20" fill="#fff"><path d="M10 1 L19 10 L10 19 L1 10 Z"/></svg>{% else %}&#9733;{% endif %}</div>
       <div class="event-info">
         <h3>{{ item.name }}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">

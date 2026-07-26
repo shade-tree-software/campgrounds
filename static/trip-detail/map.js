@@ -273,6 +273,14 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // shows the same icon rather than an approximation of it.
   const HOUSE_SVG = '<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff">'
     + '<path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>';
+  // The waypoint diamond, drawn rather than typed. It was the &#9670; text
+  // glyph, whose ink sits high in its line box by an amount that depends on
+  // whichever font the stack resolves to — so the flex centering centred the
+  // line box while the diamond itself rode high, and the fixed translateY
+  // nudge that compensated only ever matched one font. An SVG path is centred
+  // by construction on every device (same reason the house is one).
+  const DIAMOND_SVG = '<svg width="8" height="8" viewBox="0 0 20 20" fill="#fff">'
+    + '<path d="M10 1 L19 10 L10 19 L1 10 Z"/></svg>';
 
   // Lookup: card id → [lat, lng] for click-to-focus on the map
   const cardTargets = {};
@@ -1047,7 +1055,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
         display:flex;align-items:center;justify-content:center;
         ${borderCss}box-sizing:border-box;
         color:#fff;font-size:${fontSize}px;line-height:1;
-      ">${isWaypoint ? '<span style="display:block;transform:translateY(-1.5px);">&#9670;</span>' : '&#9733;'}</div>`,
+      ">${isWaypoint ? DIAMOND_SVG : '&#9733;'}</div>`,
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
     });
@@ -1156,29 +1164,34 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   fitControl.addTo(map);
 
   // ── Legend ────────────────────────────────────────────────────────────────
-  // Four symbols with nothing naming them. Only the kinds actually on this
-  // trip's map are listed, so a plain overnight trip doesn't get a legend row
-  // for stops it doesn't have.
-  // Each swatch mirrors its marker: same colour constant, same glyph, and the
-  // smaller size waypoints actually render at.
-  const dot = (bg, inner, small) =>
-    `<span class="tl-dot${small ? ' small' : ''}" style="background:${bg};">${inner || ''}</span>`;
+  // Four marker colours with nothing naming them.
+  // Each swatch is a plain colour circle, matching the trips-map legend rather
+  // than redrawing each marker in miniature. The four marker kinds are already
+  // four distinct hues, so colour alone identifies a row — and the glyphs the
+  // swatches used to carry (a "1", a star, a diamond, a house) bought nothing
+  // for that while forcing per-row size/shape special-casing.
+  // Only the kinds actually on this trip's map are listed, so a plain overnight
+  // trip doesn't get a legend row for stops it doesn't have.
   const legendRows = [
-    [true, dot(STAY_COLOR, '<b>1</b>'), 'Campspot'],
-    [mappedEvents.some(e => !e.waypoint && !e.family_visit), dot(EVENT_COLOR, '&#9733;'), 'Event'],
-    [mappedEvents.some(e => e.waypoint), dot(WAYPOINT_COLOR, '&#9670;', true), 'Stop'],
-    [true, dot(HOME_COLOR, HOUSE_SVG), 'Home / family'],
+    [true, STAY_COLOR, 'Campspot', 'Overnight campspot'],
+    [mappedEvents.some(e => !e.waypoint && !e.family_visit),
+     EVENT_COLOR, 'Event', 'Event or site of interest'],
+    [mappedEvents.some(e => e.waypoint),
+     WAYPOINT_COLOR, 'Stop', 'Brief stop along the way'],
+    [true, HOME_COLOR, 'Home / family', 'Home and family homes'],
   ].filter(r => r[0]);
   if (legendRows.length) {
     const legend = L.control({ position: 'bottomleft' });
     legend.onAdd = function() {
       const div = L.DomUtil.create('div', 'trip-map-legend');
       L.DomEvent.disableClickPropagation(div);
-      // The label is wrapped rather than left as a bare text node: .tl-row is a
-      // 2-column grid, and relying on the anonymous grid item a loose text run
-      // would produce is needlessly subtle.
-      div.innerHTML = legendRows
-        .map(([, sym, text]) => `<div class="tl-row">${sym}<span>${text}</span></div>`).join('');
+      // Both label lengths ship; .legend-short / .legend-long (base.html) pick
+      // one by viewport width.
+      div.innerHTML = legendRows.map(([, bg, short, long]) => `
+        <div class="tl-row">
+          <span class="tl-dot" style="background:${bg};"></span>
+          <span><span class="legend-short">${short}</span><span class="legend-long">${long}</span></span>
+        </div>`).join('');
       return div;
     };
     legend.addTo(map);
