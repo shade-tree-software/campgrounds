@@ -1589,7 +1589,16 @@
     color: var(--ink, #1d1d1f);
     line-height: 1.5;
   }
-  .trip-map-legend .tl-row { display: flex; align-items: center; gap: .4rem; }
+  /* Grid, not flex: the swatch column is a fixed 15px so every label starts at
+     the same x, while the dot itself keeps its own size and stays round.
+     (As a flex row with `width: 15px` on the first child, the 11px waypoint dot
+     was stretched to 15 wide by 11 tall — a visible oval.) */
+  .trip-map-legend .tl-row {
+    display: grid;
+    grid-template-columns: 15px 1fr;
+    align-items: center;
+    gap: .4rem;
+  }
   .trip-map-legend .tl-dot {
     width: 15px; height: 15px; border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
@@ -1597,13 +1606,11 @@
     border: 1.5px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,.35);
     box-sizing: border-box; flex-shrink: 0;
   }
-  /* Waypoint markers are drawn smaller than events on the map (18px vs 24px);
-     mirror that here so the legend reads as the same thing. The fixed-width
-     wrapper keeps every label in one column despite the size difference. */
+  /* Waypoints render smaller than events on the map (18px vs 24px); mirror
+     that. justify-self keeps the dot centred in the 15px column without the
+     column resizing it. */
   .trip-map-legend .tl-dot.small { width: 11px; height: 11px; font-size: 7px; }
-  .trip-map-legend .tl-row > :first-child {
-    width: 15px; display: inline-flex; justify-content: center; flex-shrink: 0;
-  }
+  .trip-map-legend .tl-dot { justify-self: center; }
   /* The house glyph is the marker's own SVG, sized down to fit the swatch. */
   .trip-map-legend .tl-dot svg { width: 9px; height: 9px; display: block; }
 

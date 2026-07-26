@@ -1174,8 +1174,11 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     legend.onAdd = function() {
       const div = L.DomUtil.create('div', 'trip-map-legend');
       L.DomEvent.disableClickPropagation(div);
+      // The label is wrapped rather than left as a bare text node: .tl-row is a
+      // 2-column grid, and relying on the anonymous grid item a loose text run
+      // would produce is needlessly subtle.
       div.innerHTML = legendRows
-        .map(([, sym, text]) => `<div class="tl-row">${sym}${text}</div>`).join('');
+        .map(([, sym, text]) => `<div class="tl-row">${sym}<span>${text}</span></div>`).join('');
       return div;
     };
     legend.addTo(map);
