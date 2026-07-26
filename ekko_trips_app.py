@@ -1359,16 +1359,30 @@ def share_login(token):
     """Read-only magic link: an unguessable token logs a guest in as a viewer
     (no admin, no upload) and deep-links to ?next=. Because every mutation route
     is admin/contributor-gated, a leaked link exposes only viewing, so a long
-    random token needs no password. Unknown/revoked tokens fall through to the
-    login page rather than revealing anything."""
+    random token needs no password. Unknown/revoked tokens get an explanatory
+    page rather than revealing anything."""
     rec = _load_json(SHARE_TOKENS_FILE).get(token)
     if rec is None:
+        # Previously this rendered the LOGIN FORM with an error line, which is
+        # the worst possible answer for the audience: a relative who has no
+        # account, staring at a password box. Nothing on that page could help
+        # them, so it read as "the site is broken" rather than "this link was
+        # replaced." Say what happened and what to do about it instead; the
+        # sign-in link stays as a quiet hint for family who do have accounts.
         _log_access("share_revoked", extra={"token": token[:8]})
-        return render_template('login.html',
-                               error="This share link is no longer valid."), 403
+        return render_template(
+            'error.html', code="🔗", heading="This link is no longer active",
+            message="Share links get replaced from time to time. Ask Andrew "
+                    "for a fresh one and it'll work straight away — nothing "
+                    "is wrong on your end.",
+            cta_href=None,
+            hint='Have an account? <a href="/login">Sign in</a>'), 403
     login_user(_make_share_user(token, rec.get("trips_only", False)), remember=True)
     _log_access("share_login", extra={"label": rec.get("label") or ""})
-    return redirect(_safe_next(request.args.get('next')))
+    # ?next= wins when present, but messaging apps routinely strip query strings
+    # off a pasted link — so fall back to the destination stored on the link at
+    # creation time, which until now was written and then never read.
+    return redirect(_safe_next(request.args.get('next') or rec.get('next')))
 
 
 # ── Campground data ─────────────────────────────────────────────────────────

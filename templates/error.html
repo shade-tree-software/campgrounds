@@ -32,7 +32,7 @@
   }
   h1 { font-size: 1.3rem; margin: 0 0 .75rem; }
   p { line-height: 1.5; opacity: .9; margin: 0 0 1.5rem; }
-  a {
+  a.cta {
     display: inline-block;
     background: #bf0a30;
     color: #fff;
@@ -42,6 +42,10 @@
     padding: .7rem 1.5rem;
     border-radius: 8px;
   }
+  /* Optional second line under the button: a quieter alternative route out
+     (e.g. "have an account? sign in") that shouldn't compete with the CTA. */
+  .hint { font-size: .9rem; opacity: .75; margin: 1.1rem 0 0; }
+  .hint a { color: #c9a84c; }
 </style>
 </head>
 <body>
@@ -49,7 +53,12 @@
     <div class="code">{{ code }}</div>
     <h1>{{ heading }}</h1>
     <p>{{ message }}</p>
-    <a href="/">Back to the map</a>
+    {# cta_href defaults to the map — but a page reached while signed OUT has to
+       point somewhere reachable, so callers can override or suppress it. #}
+    {% if cta_href is not defined or cta_href %}
+      <a class="cta" href="{{ cta_href | default('/') }}">{{ cta_label | default('Back to the map') }}</a>
+    {% endif %}
+    {% if hint %}<p class="hint">{{ hint | safe }}</p>{% endif %}
   </div>
 </body>
 </html>

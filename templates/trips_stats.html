@@ -11,8 +11,33 @@
   .stats-page h1 {
     color: var(--navy);
     font-size: 1.6rem;
+    margin: 0;
+  }
+  /* Title row: heading left, poster link right; stacks on narrow screens. */
+  .stats-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
     margin: 0 0 1.25rem;
   }
+  .poster-link {
+    color: var(--navy);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 600;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    /* 44px min so it's a real touch target on a phone. */
+    padding: .55rem 1rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+  .poster-link:hover { text-decoration: underline; }
   .stats-page h2 {
     color: var(--navy);
     font-size: 1.1rem;
@@ -172,7 +197,13 @@
 
 {% block content %}
 <div class="stats-page">
-  <h1>All-Time Stats</h1>
+  <div class="stats-head">
+    <h1>All-Time Stats</h1>
+    {# /trips/poster is the most shareable thing the app makes and nothing
+       linked to it, so it was reachable only by typing the URL. Stats is where
+       someone is already looking at the trip record as a whole. #}
+    <a class="poster-link" href="/trips/poster">🖼️ Trip poster</a>
+  </div>
 
   <div class="stat-grid">
     <div class="stat-card">
