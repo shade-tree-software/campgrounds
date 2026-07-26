@@ -89,6 +89,17 @@ def waterfront_rank(value):
     return _WATERFRONT_RANKS.get((value or "not waterfront").strip().lower(), 3)
 
 
+def is_waterfront(value):
+    """True for any water designation at all, view-only tiers included.
+
+    Tested against "not waterfront" rather than against the rank table, so a
+    designation added to the vocabulary later still counts as water here
+    without having to be ranked first — the safe direction for a filter to
+    fail, since the alternative is silently hiding campgrounds.
+    """
+    return (value or "not waterfront").strip().lower() != "not waterfront"
+
+
 _DAILY_VARS = ("temperature_2m_max", "temperature_2m_min",
                "precipitation_sum", "precipitation_probability_max")
 
@@ -271,6 +282,7 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                        min_high=70.0, max_high=88.0, delta_f=5.0,
                        max_miles=400.0, weekends_only=True,
                        max_precip_in=None, max_precip_chance=None,
+                       waterfront_only=False,
                        sort="distance",
                        max_results=MAX_RESULTS, forecast_budget=FORECAST_BUDGET,
                        forecast_days=FORECAST_DAYS, progress=None, **fetch_kw):
@@ -291,11 +303,18 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     home_lat, home_lng = float(home[0]), float(home[1])
     needs_home = mode in (MODE_COOLER, MODE_WARMER)
 
-    # ── Narrow by distance before asking about weather ──────────────────────
+    # ── Narrow by distance (and water) before asking about weather ──────────
+    # The waterfront filter is applied HERE, not to the finished results, for
+    # two reasons: the forecast budget then buys only cells that can actually
+    # produce a hit (about 61% of the database is `not waterfront`, so a much
+    # wider radius fits), and the MAX_RESULTS cap then yields 200 waterfront
+    # campgrounds rather than the waterfront few out of the 200 nearest.
     eligible = []
     for cg in campgrounds:
         loc = cg.get("location")
         if not loc:
+            continue
+        if waterfront_only and not is_waterfront(cg.get("waterfront")):
             continue
         try:
             lat, lng = (float(x) for x in loc.split(","))

@@ -30,6 +30,8 @@ parser.add_argument('--delta_f', type=float, default=5,
                     help='[cooler/warmer mode] Minimum difference from home (F).')
 parser.add_argument('--max_precip', type=float, default=None,
                     help='Only days with at most this much rain (inches).')
+parser.add_argument('--waterfront_only', action='store_true',
+                    help='Only campgrounds with a water designation (views included).')
 parser.add_argument('--sort', choices=wf.SORTS, default='distance',
                     help='Order results by distance, temp, rain, or waterfront.')
 parser.add_argument('--all_days', action='store_true',
@@ -48,14 +50,20 @@ print(f"Considering campgrounds within {args.max_miles} miles of home.")
 if phone:
     print(f"The best option, if found, will be sent via SMS to {phone}.")
 
-result = wf.find_matching_days(
-    wf.load_campgrounds(args.input_file), (home_lat, home_long),
-    mode=args.mode,
-    min_high=args.min_high_temp, max_high=args.max_high_temp, delta_f=args.delta_f,
-    max_miles=args.max_miles, weekends_only=not args.all_days,
-    max_precip_in=args.max_precip, sort=args.sort,
-    progress=lambda done, total: print(f"  fetched {done}/{total} forecast points"),
-)
+try:
+    result = wf.find_matching_days(
+        wf.load_campgrounds(args.input_file), (home_lat, home_long),
+        mode=args.mode,
+        min_high=args.min_high_temp, max_high=args.max_high_temp, delta_f=args.delta_f,
+        max_miles=args.max_miles, weekends_only=not args.all_days,
+        max_precip_in=args.max_precip, waterfront_only=args.waterfront_only,
+        sort=args.sort,
+        progress=lambda done, total: print(f"  fetched {done}/{total} forecast points"),
+    )
+except wf.RateLimited as e:
+    # A traceback here is noise: this is an expected, temporary condition with
+    # an obvious remedy, and the message already says what to do.
+    raise SystemExit(str(e))
 
 print(f"Checked {result['considered']} of {result['eligible']} campgrounds in range "
       f"({result['fetched']} forecast points fetched, {result['from_cache']} cached).")

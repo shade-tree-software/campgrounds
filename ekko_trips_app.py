@@ -2992,6 +2992,7 @@ def api_weather_finder_search():
             mode=mode, min_high=min_high, max_high=max_high, delta_f=delta_f,
             max_miles=max_miles, weekends_only=bool(data.get("weekends_only", True)),
             max_precip_in=max_precip_in, max_precip_chance=max_precip_chance,
+            waterfront_only=bool(data.get("waterfront_only")),
             sort=sort,
             user_agent=_OUTBOUND_UA)
     except weather_finder.RateLimited as e:

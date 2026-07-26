@@ -195,6 +195,10 @@
         <label>Rain</label>
         <label class="wx-check"><input type="checkbox" id="wx-dry"> Little or no rain</label>
       </div>
+      <div class="field">
+        <label>Water</label>
+        <label class="wx-check"><input type="checkbox" id="wx-waterfront"> Waterfront only</label>
+      </div>
       <div class="field" id="field-precip" hidden>
         <label for="wx-precip">At most (in)</label>
         {# Hundredths, so a typed 0.12 isn't rejected the way 250 miles was.
@@ -333,6 +337,7 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
     weekends_only: document.getElementById('wx-weekends').checked,
     dry_only: dry,
     max_precip_in: numOf('wx-precip'),
+    waterfront_only: document.getElementById('wx-waterfront').checked,
     sort: sortSel.value,
   };
 
