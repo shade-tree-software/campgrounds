@@ -5,14 +5,14 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T12:30:01.808Z
+  modified: 2026-07-26T13:14:09.119Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
 
 Three-agent review of the viewer experience: regular logged-in viewers, share-link guests (`share:<token>`), and Trips-only users (`can_view_campgrounds=false`). Work off this backlog in future sessions; check items off (`[x]`) as they land and note the commit.
 
-**Status:** Batch 1 ✅ **done** (7/7, commit `cbc6ccf`, 2026-07-26) · Batch 2 ⬜ not started (10 items) · Batch 3 ⬜ not started (7 items). Findings above the backlog are the *diagnosis* and stay as written — don't re-review them; the checkboxes are the live state.
+**Status:** Batch 1 ✅ **done** (7/7, commit `cbc6ccf`, 2026-07-26) · Batch 2 ✅ **done** (10/10, commits `a6050d0`→`98eea64`, 2026-07-26) · Batch 3 ⬜ not started (7 items). Findings above the backlog are the *diagnosis* and stay as written — don't re-review them; the checkboxes are the live state.
 
 **Scope decision (AWH):** this is a private family app — see [[app-is-private-family-only]]. Family home locations SHOULD be visible to all users; do not treat that as a privacy issue. Privacy-flavored findings from the original review were removed accordingly.
 
@@ -102,17 +102,19 @@ The same few gaps repeat: empty `alt` on the lightbox image (`_lightbox.html:16`
 
 **Not yet verified in a real browser** — no headless browser tooling on this machine. Verification was server-side render smoke tests (guest via a real share token vs admin, all pages 200/302 as expected) plus a static cross-module reference check. The admin-JS gating is the change most worth clicking through once: viewer trip page (GPS track + lightbox), then an admin trip page (edit forms, detect stops, ping selection).
 
-### Batch 2 — one afternoon each
-- [ ] ETag/304 for `/campgrounds/map` keyed on `_campgrounds_derived_cache` mtimes
-- [ ] Slim campground-map marker payload + `/api/campgrounds/<id>/popup` lazy fetch (drop `note`/`website`/`delta_temp`/`kind` from the inline blob)
-- [ ] Revoked-share-link page that isn't a login form; fall back to stored `rec["next"]` in `share_login`
-- [ ] Loading indicators: campground map build, availability check (spinner + `aria-live`), landing map skeleton
-- [ ] Directions links in campground popups; popup `maxHeight` for phones
-- [ ] Lightbox: loading spinner for originals, `N / M` counter, alt from caption, Save-Data-aware preloading
-- [ ] Trip-detail map: tooltips/legend for markers, "Fit trip" reset button, itinerary-only initial bounds, mobile scroll-trap fix
-- [ ] Full-state-name search + state filter + "showing N of M" on the campground map; un-persist master-toggle-off trap
-- [ ] Link `/trips/poster` from Stats; add Print button + back link to the poster
-- [ ] a11y sweep: aria-labels on glyph buttons, aria-live on toasts, carousel pause + reduced-motion, keyboard-operable legend rows, touch-target padding on nav links/chevrons
+### Batch 2 — **DONE (2026-07-26, commits `a6050d0` `ea3e31e` `925eea4` `0e2763b` `e2085d9` `d818889` `98eea64`)**
+- [x] ETag/304 for `/campgrounds/map` — `_map_etag()` over input mtimes **plus templates + `ekko_trips_app.py`** (a deploy must invalidate it) plus `mode`/`is_admin`. Turns the existing `no-cache` revalidation into a 304.
+- [x] Slim campground-map payload + lazy popup fetch. Inline blob **9.27 MB → 2.56 MB (-72%)** via `_MAP_MARKER_FIELDS`; `_MAP_POPUP_FIELDS` served by new `GET /api/campgrounds/<id>/popup`, cached on the row as `cg._detail` (failures cached as `{failed:true}` so an offline popup doesn't refire). Popup content stays a *function* so the late fetch re-renders via `popup.update()`. **Admin quick-edit reads/writes `cg._detail`, not `cg`** — keep that in sync if you add an editable field.
+- [x] Revoked-share-link page (styled `error.html` with new optional `cta_href`/`hint`, not the login form); `share_login` falls back to the stored `rec["next"]`
+- [x] Loading indicators — shared `.map-skeleton` in `base.html` (**CSS-only, drawn BEHIND the map**: the marker build is one long sync task, so a JS overlay can be scheduled entirely inside the freeze and never paint). Landing map also got an empty state (`setView` fallback + note). Availability got a spinner + `role=status aria-live`.
+- [x] Directions link in campground popups (built from lat/lng, not a name search — 286 names are duplicated); `maxHeight: 320` on campground + roadside popups
+- [x] Lightbox: spinner while the original loads (cleared on load/error/close), `N / M` badge, alt from caption→place, Save-Data/2g-3g-aware neighbor preloading
+- [x] Trip-detail map: marker tooltips + legend ("Stop", not "waypoint"), "Fit the whole trip" control, **itinerary-only initial bounds** (`bounds.slice(1)` drops HOME), and gesture handling — ctrl/⌘+wheel to zoom, two-finger pan on touch. Gated on `pointer: coarse` (NOT `L.Browser.touch`, which is true on touchscreen laptops); `window.__tripMapDragDefault` published so the select-pings lasso restores the right baseline.
+- [x] Campground map search: `STATE_NAMES` (US + 10 CA provinces) so "Colorado" matches (was 0 hits → 433); ranked results (exact name > query-is-a-state > prefix > word > substring); "Showing 12 of N" + "No matches"; running "Showing N of 12,872" in the legend; toast + "Show them" when the master toggle restores off
+- [x] `/trips/poster` linked from Stats + fixed corner toolbar (Back/Print, `display:none` in `@media print`)
+- [x] a11y sweep: skip link → focusable `#main-content`; toast container as a live region; `aria-expanded` on nav-toggle; slideshow alt text + pause button + `prefers-reduced-motion`; keyboard-operable legend/ownership rows (`makeToggleRow`); availability ✓ made visible (was `font-size: 0` = colour-only); 44px touch targets on collapsed nav links + trip chevrons; `.nav-label` contrast; shared `.sr-only`
+
+**Not verified in a real browser** (no headless browser on this machine) — same caveat as Batch 1. Verification was server-side render smoke tests (admin + non-admin, all pages 200/302 as expected), an ETag 200→304 round trip, a payload-size measurement, and a Python port of the search ranking run against the real 12,872-row data. Worth clicking through once: campground-map popups (lazy detail + admin quick-edit), and the trip-detail map's new scroll behavior on a phone.
 
 ### Batch 3 — bigger features worth considering
 - [ ] Cross-trip photo gallery (`/trips/photos` over `_collect_photo_pool()`), linked from the Stats photo count
