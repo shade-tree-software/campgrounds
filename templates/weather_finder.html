@@ -164,7 +164,11 @@
 
       <div class="field">
         <label for="wx-miles">Within (miles)</label>
-        <input type="number" id="wx-miles" value="250" min="5" max="{{ max_miles_cap }}" step="10">
+        {# step is measured from `min`, NOT from zero — with min=5 step=10 the
+           valid values were 5, 15 ... 245, 255, so the field rejected its own
+           default of 250 and offered 245/255 instead. step=5 off a min of 5
+           makes every multiple of 5 valid, including 250 and the 500 cap. #}
+        <input type="number" id="wx-miles" value="250" min="5" max="{{ max_miles_cap }}" step="5">
       </div>
     </div>
 
@@ -193,7 +197,9 @@
       </div>
       <div class="field" id="field-precip" hidden>
         <label for="wx-precip">At most (in)</label>
-        <input type="number" id="wx-precip" value="0.1" min="0" max="10" step="0.05">
+        {# Hundredths, so a typed 0.12 isn't rejected the way 250 miles was.
+           The API reports rainfall to this precision anyway (e.g. 0.071). #}
+        <input type="number" id="wx-precip" value="0.1" min="0" max="10" step="0.01">
       </div>
     </div>
 
