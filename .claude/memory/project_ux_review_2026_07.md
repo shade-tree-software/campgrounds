@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T12:09:15.583Z
+  modified: 2026-07-26T12:22:10.874Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
@@ -31,6 +31,10 @@ Three-agent review of the viewer experience: regular logged-in viewers, share-li
 **5. The campground map re-downloads 1.7 MB on every visit, and 65% of it is popup filler.** Measured: 12,872 rows → 7.54 MB inline JSON. The `note` field alone is 3.88 MB and `website` another 1.09 MB — content that exists only to fill the one popup a user opens. Two dead fields (`delta_temp`, the constant `kind` — `ekko_trips_app.py:1439-1441`) add ~384 KB more. And because the app sets `Cache-Control: no-cache` with no ETag anywhere, even a back-and-forward within seconds re-fetches the full gzip. Two fixes stack: an ETag keyed on the existing `_campgrounds_derived_cache` mtimes (→ 304 on the common case), and a slim marker payload with a per-id `/api/campgrounds/<id>/popup` fetch. There's also no loading indicator at all during the multi-second parse and 12,872-marker build.
 
 **6. Photo originals: no loading feedback, and the download button can save the wrong file.** The lightbox has exactly two sizes — 480px thumb and untouched multi-MB camera original. While the original loads, the viewer sees a blurry stretched thumb with no spinner, and the download button reads the live `img.src` (`static/lightbox.js:252-264`), so tapping it before the original lands silently saves the 480px thumbnail under the original's filename (fix: download `dataset.full` instead). It also preloads two full originals per page-turn (`lightbox.js:149-152`) with no `Save-Data` check — tens of MB on a campsite cell connection. Consider a mid-size (~1600px) derivative for the lightbox with the original reserved for download.
+
+## Found in the field (2026-07-26), not in the original review
+
+**Admin page routes bounced authenticated non-admins to `/login`, creating an infinite loop** — fixed in `d0c1e17`. `/admin/users`, `/admin/access-log` and `/campgrounds/manage` each did `redirect(url_for('login', next=request.path))` on a failed `_require_admin()`. But `_require_login_globally` is a `before_request`, so anyone reaching those views is *already authenticated* — that branch could only ever fire for a logged-in non-admin, who then logs in successfully, gets sent back by `?next=`, and is bounced to `/login` again. **It presents as "my password stopped working."** Reported that way for the `hamfam` account right after a Trips-only downgrade; the access log settled it — four `login` successes, zero `login_failed`, each followed by `302 /admin/users` → `200 /login`. New `_require_admin_page()` sends them to the trips map with an `admin_only` notice instead. Lesson: **a permission bounce must never target the login page** — logging in again cannot change the outcome. Same defect class as the Trips-only silent redirect in Batch 1.
 
 ## Discoverability and dead ends
 

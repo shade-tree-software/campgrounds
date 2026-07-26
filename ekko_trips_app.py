@@ -1098,6 +1098,24 @@ def _require_admin():
     return None
 
 
+def _require_admin_page():
+    """For admin PAGE routes: send a non-admin to the trips map with a notice.
+
+    Emphatically NOT the login page. `_require_login_globally` is a
+    before_request, so anyone who reaches one of these views is already
+    authenticated — bouncing them to /login is an infinite loop: they log in
+    successfully, the ?next= we set sends them straight back here, and we
+    bounce them to /login again. From the user's side that is indistinguishable
+    from a rejected password, which is exactly how it got reported (a non-admin
+    family account landed on /admin/users and re-typed their password four
+    times, 2026-07-26 — the access log shows four successful logins and zero
+    failures).
+    """
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return redirect(url_for('trips_map', notice='admin_only'))
+    return None
+
+
 def _require_uploader_or_admin():
     """Gate endpoints that uploader-role users may also use (photo POST + own-photo
     caption edits). Admins always pass since User.can_upload is True for them."""
@@ -2617,9 +2635,9 @@ def move_photo(trip_id):
 
 @app.route('/admin/users')
 def users_manage():
-    denied = _require_admin()
+    denied = _require_admin_page()
     if denied:
-        return redirect(url_for('login', next=request.path))
+        return denied
     return render_template('users_manage.html', active_nav='users')
 
 
@@ -2627,9 +2645,9 @@ def users_manage():
 
 @app.route('/admin/access-log')
 def access_log_page():
-    denied = _require_admin()
+    denied = _require_admin_page()
     if denied:
-        return redirect(url_for('login', next=request.path))
+        return denied
     return render_template('access_log.html', active_nav='accesslog',
                            retention_days=ACCESS_LOG_RETENTION_DAYS)
 
@@ -2842,9 +2860,9 @@ def api_campground_list():
 
 @app.route('/campgrounds/manage')
 def campgrounds_manage():
-    denied = _require_admin()
+    denied = _require_admin_page()
     if denied:
-        return redirect(url_for('login', next=request.path))
+        return denied
     is_admin = current_user.is_authenticated and current_user.is_admin
     config = _load_json(HOME_FILE)
     home = [config.get("home_lat"), config.get("home_long")]
