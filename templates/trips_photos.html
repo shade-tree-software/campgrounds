@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Photos{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ static_v('lightbox.css') }}">
+{% endblock %}
+
+{% block style %}
+  .photos-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem 3rem;
+  }
+  .photos-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+  }
+  .photos-head h1 { color: var(--navy); font-size: 1.6rem; margin: 0; }
+  .photos-count { color: var(--gray); font-size: .9rem; }
+
+  /* auto-fill + minmax so the grid reflows on every width without a media
+     query per breakpoint — 4-6 across on a desktop, 2 on a phone. */
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: .75rem;
+  }
+  .photo-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+  .photo-item img {
+    display: block;
+    width: 100%;
+    /* Fixed ratio keeps the grid on a clean baseline; the lightbox shows the
+       whole uncropped frame. */
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  .photo-item img:focus-visible { outline: 3px solid var(--navy); outline-offset: -3px; }
+
+  /* Caption strip: the trip it came from, and the campspot/event under it. */
+  .pi-meta {
+    padding: .4rem .55rem .5rem;
+    font-size: .75rem;
+    line-height: 1.35;
+    border-top: 3px solid var(--gold);
+  }
+  .pi-meta a { color: var(--navy); font-weight: 600; text-decoration: none; }
+  .pi-meta a:hover { text-decoration: underline; }
+  .pi-place {
+    color: var(--gray);
+    display: block;
+    /* Long campground names would otherwise push every tile taller than its
+       neighbours and break the grid's baseline. */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .pager {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    font-size: .9rem;
+    color: var(--gray);
+  }
+  .pager a {
+    color: var(--navy);
+    font-weight: 600;
+    text-decoration: none;
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    /* 44px so the pager is a real touch target on a phone. */
+    padding: .55rem 1.1rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .pager a:hover { text-decoration: underline; }
+  .photos-empty { color: var(--gray); text-align: center; padding: 3rem 1rem; }
+
+  @media (max-width: 700px) {
+    .photos-page { padding: 1rem .75rem 2rem; }
+    .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="photos-page">
+  <div class="photos-head">
+    <h1>All Photos</h1>
+    <span class="photos-count">
+      {{ '{:,}'.format(total) }} photo{{ '' if total == 1 else 's' }}{% if pages > 1 %} · page {{ page }} of {{ pages }}{% endif %}
+    </span>
+  </div>
+
+  {% if photos %}
+  <div class="photo-grid">
+    {% for p in photos %}
+    <div class="photo-item">
+      {#- The lightbox reads its extras off the img: data-full swaps in the
+          original, and the trip/place attributes drive the "open trip" card.
+          Same contract the trips map uses. -#}
+      <img src="{{ p.thumb }}"
+           data-full="{{ p.url }}"
+           data-caption="{{ p.caption }}"
+           data-trip-href="/trips/{{ p.trip_id }}"
+           data-trip-name="{{ p.trip_name }}"
+           data-trip-date="{{ p.trip_date }}"
+           {% if p.place %}data-place-name="{{ p.place }}"{% endif %}
+           alt="{{ p.caption or p.place or p.trip_name }}"
+           loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
+      <div class="pi-meta">
+        <a href="/trips/{{ p.trip_id }}">{{ p.trip_name }}</a>
+        {% if p.place %}<span class="pi-place" title="{{ p.place }}">{{ p.place }}</span>{% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if pages > 1 %}
+  <div class="pager">
+    {% if page > 1 %}<a href="?page={{ page - 1 }}" rel="prev">&larr; Newer</a>{% endif %}
+    <span>Page {{ page }} of {{ pages }}</span>
+    {% if page < pages %}<a href="?page={{ page + 1 }}" rel="next">Older &rarr;</a>{% endif %}
+  </div>
+  {% endif %}
+  {% else %}
+  <p class="photos-empty">No photos yet.</p>
+  {% endif %}
+</div>
+{% include "_lightbox.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ static_v('lightbox.js') }}"></script>
+{% endblock %}

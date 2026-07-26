@@ -570,6 +570,13 @@ const todayStr = localDateStr(new Date());
 // Build a single lowercased haystack per trip once, so each keystroke
 // is a fast .includes() check rather than a fresh field-by-field crawl.
 const TRIP_HAYSTACK = {};
+// States are stored as 2-letter codes, so searching "Pennsylvania" found
+// nothing. Fold the full name in beside the code (same fix as the campground
+// map's search) — it's also what makes the Stats page's state chips linkable.
+const STATE_NAMES = {{ state_names | tojson }};
+function stateTerms(code) {
+  return code ? code + ' ' + (STATE_NAMES[code] || '') : '';
+}
 TRIPS.forEach(t => {
   const parts = [
     t.summary || '',
@@ -577,8 +584,8 @@ TRIPS.forEach(t => {
     t.start || '',
     t.end || '',
     (t.campers || []).join(' '),
-    (t.stays || []).map(s => `${s.place || ''} ${s.state || ''} ${s.locale || ''} ${s.notes || ''}`).join(' '),
-    (t.events || []).map(e => `${e.name || ''} ${e.locale || ''} ${e.state || ''} ${e.description || ''}`).join(' '),
+    (t.stays || []).map(s => `${s.place || ''} ${stateTerms(s.state)} ${s.locale || ''} ${s.notes || ''}`).join(' '),
+    (t.events || []).map(e => `${e.name || ''} ${e.locale || ''} ${stateTerms(e.state)} ${e.description || ''}`).join(' '),
   ];
   TRIP_HAYSTACK[t.id] = parts.join(' ').toLowerCase();
 });
@@ -607,8 +614,14 @@ window.addEventListener('hashchange', () => {
   render();
 });
 
+// Keep the URL a faithful description of what's on screen: the year in the
+// hash (as always) and the active search as ?q=, so a search can be linked to
+// and survives a reload. render() calls this, and it runs after switchView's
+// own replaceState, so it restores the query that line would otherwise drop.
 function updateHash() {
-  history.replaceState(null, '', '#' + currentYear);
+  const q = searchQuery.trim();
+  const qs = q ? '?q=' + encodeURIComponent(q) : '';
+  history.replaceState(null, '', location.pathname + qs + '#' + currentYear);
 }
 
 function prevYear() {
@@ -1085,7 +1098,18 @@ document.addEventListener('keydown', e => {
   if (el) el.addEventListener('click', e => { e.preventDefault(); switchView(view); });
 });
 
-// Init
+// Init. A ?q= in the URL primes the search, which makes a search shareable
+// and gives the rest of the app somewhere to link — the Stats page's
+// campspot and state lists were inert text precisely because there was no
+// URL that meant "show me the trips matching this".
+(function initFromQuery() {
+  const q = new URLSearchParams(location.search).get('q') || '';
+  if (!q) return;
+  const input = document.getElementById('trip-search');
+  input.value = q;
+  searchQuery = q;
+  document.getElementById('controls').classList.add('searching');
+})();
 switchView(currentView);
 
 function addTrip() {

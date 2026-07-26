@@ -19,6 +19,25 @@
 <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/icon-192.png">
 <title>{% block title %}EKKOing Around{% endblock %}</title>
+{# Link previews. A share link pasted into iMessage/WhatsApp used to render as
+   a bare URL — a relative's literal first impression of the app was an
+   unexplained string of characters, which reads like something you shouldn't
+   tap. These give it a title, a sentence and the app icon.
+
+   Deliberately GENERIC rather than per-trip. A messaging app's crawler fetches
+   the URL server-side, and for /s/<token> that fetch authenticates as the
+   guest — so trip-specific tags would put real trip names (and any og:image
+   we pointed at a photo) into whatever preview cache that crawler keeps. The
+   icon and a fixed description leak nothing and still fix the impression. #}
+<meta name="description" content="{% block meta_description %}A private family record of camping trips in the EKKO.{% endblock %}">
+<meta property="og:site_name" content="EKKOing Around">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EKKOing Around">
+<meta property="og:description" content="Hamilton family road trips — photos, maps and campsites from the road.">
+<meta property="og:image" content="{{ url_for('static', filename='icons/icon-512.png', _external=True) }}">
+<meta name="twitter:card" content="summary">
+{# og:url intentionally omitted: on /s/<token> it would echo the magic link
+   back into a preview card, which is exactly where a credential shouldn't be. #}
 <script>window.EKKO_TILES = {{ tile_config|tojson }};</script>
 {# protomaps-leaflet renders the offline stick's vector street basemap. Only
    the local-tile build needs it, so online pages don't pay the ~100 KB. #}

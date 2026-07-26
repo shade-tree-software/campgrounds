@@ -115,7 +115,13 @@
   .top-cg-list .cg-name {
     color: var(--navy);
     font-weight: 500;
+    text-decoration: none;
   }
+  a.cg-name:hover { text-decoration: underline; }
+
+  /* The hero Photos number is a link now; keep it looking like the others. */
+  a.stat-num { display: block; text-decoration: none; }
+  a.stat-num:hover { text-decoration: underline; }
 
   /* Year bars: one row per year, bar width proportional to count. */
   .year-bars {
@@ -124,13 +130,20 @@
     box-shadow: var(--shadow);
     padding: 1rem 1.25rem;
   }
+  /* An <a> now, so it needs the block/colour reset a div had for free. */
   .year-bar {
     display: grid;
     grid-template-columns: 3.5rem 1fr 2rem;
     align-items: center;
     gap: .65rem;
     padding: .25rem 0;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 4px;
   }
+  a.year-bar:hover { background: var(--blue-bg); }
+  a.year-bar:hover .year-label { color: var(--navy); }
+  a.year-bar:focus-visible { outline: 2px solid var(--navy); outline-offset: 1px; }
   .year-bar .year-label {
     color: var(--gray);
     font-size: .85rem;
@@ -178,7 +191,9 @@
     border-radius: 4px;
     margin: .1rem .15rem;
     font-size: .85rem;
+    text-decoration: none;
   }
+  a.state-chip:hover { background: var(--navy); color: var(--white); }
 
   @media (max-width: 700px) {
     .stats-page { padding: 1rem; }
@@ -226,8 +241,11 @@
       <div class="stat-label">States Visited</div>
     </div>
     <div class="stat-card">
-      <div class="stat-num">{{ photo_count }}</div>
+      {#- The count led nowhere until /trips/photos existed: the only way to
+          see a photo was to already know which trip it was on. -#}
+      <a class="stat-num" href="/trips/photos">{{ photo_count }}</a>
       <div class="stat-label">Photos</div>
+      <div class="stat-sub"><a href="/trips/photos">See them all &rsaquo;</a></div>
     </div>
     <div class="stat-card">
       <div class="stat-num">{{ unique_campgrounds }}</div>
@@ -280,10 +298,13 @@
   {% if top_campgrounds %}
   <h2>Most Visited Campspots</h2>
   <ul class="top-cg-list">
+    {#- Each name is a search for the trips that stayed there. These were
+        inert text: the page named the place you'd been most and gave you no
+        way to go read about it. -#}
     {% for cg in top_campgrounds %}
     <li>
       <span class="cg-count">{{ cg.count }}</span>
-      <span class="cg-name">{{ cg.name }}</span>
+      <a class="cg-name" href="/trips/list?q={{ cg.name | urlencode }}">{{ cg.name }}</a>
     </li>
     {% endfor %}
   </ul>
@@ -293,14 +314,16 @@
   <h2>Trips by Year</h2>
   {% set max_count = trips_by_year | map(attribute=1) | max %}
   <div class="year-bars">
+    {#- The calendar reads its year from the URL hash, so each bar is a link
+        straight to that year. -#}
     {% for year, count in trips_by_year %}
-    <div class="year-bar">
+    <a class="year-bar" href="/trips/calendar#{{ year }}" title="See {{ year }} on the calendar">
       <div class="year-label">{{ year }}</div>
       <div class="year-bar-bg">
         <div class="year-bar-fill" style="width: {{ ((count / max_count) * 100) | round(1) }}%;"></div>
       </div>
       <div class="year-count">{{ count }}</div>
-    </div>
+    </a>
     {% endfor %}
   </div>
   {% endif %}
@@ -314,13 +337,13 @@
   {% set max_nights = [nights_by_year | map(attribute=1) | max, 1] | max %}
   <div class="year-bars nights">
     {% for year, nights in nights_by_year %}
-    <div class="year-bar">
+    <a class="year-bar" href="/trips/calendar#{{ year }}" title="See {{ year }} on the calendar">
       <div class="year-label">{{ year }}</div>
       <div class="year-bar-bg">
         <div class="year-bar-fill" style="width: {{ ((nights / max_nights) * 100) | round(1) }}%;"></div>
       </div>
       <div class="year-count">{{ nights }}</div>
-    </div>
+    </a>
     {% endfor %}
   </div>
   {% endif %}
@@ -328,7 +351,12 @@
   {% if states_list %}
   <h2>States Visited</h2>
   <div class="state-list">
-    {% for st in states_list %}<span class="state-chip">{{ st }}</span>{% endfor %}
+    {#- Searches the FULL name, not the code: "PA" is a substring of too many
+        ordinary words for a substring search to be useful, and the calendar's
+        haystack now carries both. -#}
+    {% for st in states_list %}<a class="state-chip"
+      href="/trips/list?q={{ (state_names.get(st) or st) | urlencode }}"
+      title="Trips in {{ state_names.get(st) or st }}">{{ st }}</a>{% endfor %}
   </div>
   {% endif %}
 </div>

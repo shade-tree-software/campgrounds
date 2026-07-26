@@ -1733,6 +1733,90 @@ def trips_map():
                            latest_trip_date=latest_trip_date)
 
 
+# Photos per gallery page. Big enough that paging is rare on a normal visit,
+# small enough that one page is a bounded number of thumbnail requests.
+PHOTOS_PER_PAGE = 60
+
+
+@app.route('/trips/photos')
+def trips_photos():
+    """Every photo across every trip, newest trip first, paginated.
+
+    The Stats page counts photos in its hero row and that number led nowhere,
+    because there was no cross-trip view of them — the only way to see a photo
+    was to already know which trip it was on. Built on the same cached
+    `_collect_photo_pool()` the landing slideshow and poster use.
+    """
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    trips = parse_trips()
+    by_id = {t["id"]: t for t in trips}
+
+    photos = [p for p in _collect_photo_pool() if is_admin or not p["home_only"]]
+
+    def sort_key(p):
+        t = by_id.get(p["trip_id"]) or {}
+        # Newest trip first; within a trip keep the timeline's own order
+        # (stays before events, then by index) so a page reads coherently.
+        return (t.get("start") or "", p["trip_id"], p["card"], p["url"])
+    photos.sort(key=sort_key, reverse=True)
+
+    total = len(photos)
+    pages = max(1, (total + PHOTOS_PER_PAGE - 1) // PHOTOS_PER_PAGE)
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+    page = max(1, min(page, pages))
+    start = (page - 1) * PHOTOS_PER_PAGE
+
+    # The pool's items are shared across requests, so build new dicts rather
+    # than annotating them in place (see _collect_photo_pool's docstring).
+    items = []
+    for p in photos[start:start + PHOTOS_PER_PAGE]:
+        trip = by_id.get(p["trip_id"]) or {}
+        items.append({
+            **p,
+            "trip_name": (f"Trip {trip['number']}: {trip['summary']}"
+                          if trip.get("number") else trip.get("summary", "")),
+            "trip_date": _short_trip_date(trip.get("start")),
+            "place": _photo_place_name(trip, p["card"]),
+        })
+
+    return render_template('trips_photos.html', title='Photos',
+                           photos=items, page=page, pages=pages, total=total,
+                           active_nav='stats')
+
+
+def _short_trip_date(start):
+    """'Jun 2025' for a trip start date, or '' when the trip has no dates."""
+    try:
+        return date.fromisoformat(start).strftime("%b %Y")
+    except (ValueError, TypeError):
+        return ""
+
+
+def _photo_place_name(trip, card):
+    """Name of the campspot/event a pool photo sits under ('' if unnamable).
+
+    `card` is the pool's "stay-N" / "event-N" key, which is exactly the index
+    into the trip's own lists — the trips-map lightbox derives the same thing
+    client-side, this is the server-side twin.
+    """
+    m = re.match(r'^(stay|event)-(\d+)$', card or '')
+    if not m or not trip:
+        return ""
+    idx = int(m.group(2))
+    if m.group(1) == 'stay':
+        stays = trip.get("stays") or []
+        return (stays[idx].get("place") or "") if idx < len(stays) else ""
+    events = trip.get("events") or []
+    if idx >= len(events):
+        return ""
+    e = events[idx]
+    # Family visits carry their label separately from the event name.
+    return e.get("name") or e.get("family_visit") or ""
+
+
 @app.route('/trips/poster')
 def trips_poster():
     """Standalone 8.5×11 portrait "poster" view of all trips.
@@ -1776,15 +1860,41 @@ def trips_calendar():
     for trip in trips:
         enrich_trip_locations(trip)
     initial_view = 'list' if request.path == '/trips/list' else 'calendar'
-    return render_template('trips_calendar.html', trips=trips, initial_view=initial_view, active_nav=initial_view)
+    # STATE_NAMES lets the client fold each stay/event's stored 2-letter code
+    # into the search haystack alongside its full name, so "Pennsylvania"
+    # matches "PA" — the same fix the campground map's search got, and what
+    # makes the Stats page's state chips linkable.
+    return render_template('trips_calendar.html', trips=trips,
+                           initial_view=initial_view, active_nav=initial_view,
+                           state_names=STATE_NAMES)
+
+
+# Everything on the Stats page except the photo count derives from three files,
+# so it only has to be recomputed when one of them changes. Before this, every
+# visit re-walked all ~13k campgrounds and re-derived every aggregate.
+_stats_cache = {"key": None, "data": None}
 
 
 @app.route('/trips/stats')
 def trips_stats():
     """All-time aggregates across every trip. Hero numbers (trips,
     nights, states, photos), most-visited campgrounds, trips-by-year
-    bars, and the state list. Computed on every request — total
-    work is O(trips + photos-on-disk), bounded enough for now."""
+    bars, and the state list.
+
+    Cached on the mtimes of its three inputs. The photo count is deliberately
+    NOT part of that cache: photos are files on disk, and uploading one changes
+    no JSON, so a cached count would go stale. It comes from
+    `_collect_photo_pool()` instead, which walks the same directories, has its
+    own short TTL, and is invalidated explicitly by the upload/delete/move
+    paths — so a fresh upload shows up on the next render.
+    """
+    key = (_file_mtime_ns(TRIPS_JSON), _file_mtime_ns(CAMPGROUNDS_JSON),
+           _file_mtime_ns(HOME_FILE))
+    if _stats_cache["key"] == key:
+        return render_template('trips_stats.html',
+                               photo_count=_stats_photo_count(),
+                               **_stats_cache["data"])
+
     trips = parse_trips()
     # Stats aggregate the camping/travel record; home-only trips aren't
     # part of that for any viewer.
@@ -1797,20 +1907,6 @@ def trips_stats():
     # mid-trip, then back out) would otherwise count those home nights as
     # camping. All-time and per-year use the same rule so they can't disagree.
     total_nights = sum(camping_nights(t) for t in trips)
-
-    # Photos: walk every photo directory under each trip. Cheap — just an
-    # os.listdir per stay/event index. Avoids loading photo_order.json.
-    photo_count = 0
-    for t in trips:
-        tid = t["id"]
-        for i in range(len(t.get("stays", []))):
-            d = os.path.join(UPLOAD_DIR, str(tid), str(i))
-            if os.path.isdir(d):
-                photo_count += sum(1 for f in os.listdir(d) if _allowed_file(f))
-        for i in range(len(t.get("events", []))):
-            d = os.path.join(UPLOAD_DIR, str(tid), "events", str(i))
-            if os.path.isdir(d):
-                photo_count += sum(1 for f in os.listdir(d) if _allowed_file(f))
 
     # Normalize through _US_STATE_ABBR so e.g. "Pennsylvania" and "PA"
     # collapse to one entry. Anything not in the map (already an abbrev,
@@ -1907,15 +2003,14 @@ def trips_stats():
             if elev_ft and (highest is None or elev_ft > highest["feet"]):
                 highest = {"name": c["name"], "feet": elev_ft}
 
-    return render_template(
-        'trips_stats.html',
+    data = dict(
         total_trips=total_trips,
         total_overnight=total_overnight,
         total_day_trips=total_day_trips,
         total_nights=total_nights,
-        photo_count=photo_count,
         states_count=len(states),
         states_list=sorted(states),
+        state_names=STATE_NAMES,
         top_campgrounds=top_campgrounds,
         trips_by_year=trips_by_year_sorted,
         nights_by_year=nights_by_year_sorted,
@@ -1928,6 +2023,18 @@ def trips_stats():
         highest=highest,
         active_nav='stats',
     )
+    _stats_cache.update(key=key, data=data)
+    return render_template('trips_stats.html',
+                           photo_count=_stats_photo_count(), **data)
+
+
+def _stats_photo_count():
+    """Photos counted for the Stats hero, from the cached pool.
+
+    Home-only trips are excluded from every other stat on the page, so their
+    photos are excluded here too (there are none today, but the rule should
+    hold if a mixed trip ever appears)."""
+    return sum(1 for p in _collect_photo_pool() if not p["home_only"])
 
 
 @app.route('/trips/<int:trip_id>')
