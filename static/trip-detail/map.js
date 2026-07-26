@@ -281,6 +281,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // by construction on every device (same reason the house is one).
   const DIAMOND_SVG = '<svg width="8" height="8" viewBox="0 0 20 20" fill="#fff">'
     + '<path d="M10 1 L19 10 L10 19 L1 10 Z"/></svg>';
+  // The event star, drawn for the same reason as the diamond above.
+  // Five-pointed, outer radius 9 and inner 3.44 (the classic ~0.382 ratio),
+  // struck about the viewBox centre: a pentagram has 5-fold symmetry, so its
+  // area centroid IS that centre — which is why centring the circumcircle in
+  // the badge is the optically balanced choice and needs no fudge factor.
+  // Sized to match the house in the same 24px badge.
+  const STAR_SVG = '<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff">'
+    + '<path d="M10 1 L12.02 7.22 L18.56 7.22 L13.27 11.06 L15.29 17.28'
+    + ' L10 13.44 L4.71 17.28 L6.73 11.06 L1.44 7.22 L7.98 7.22 Z"/></svg>';
 
   // Lookup: card id → [lat, lng] for click-to-focus on the map
   const cardTargets = {};
@@ -1037,7 +1046,6 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const isWaypoint = !!evt.waypoint;
     const color = isWaypoint ? WAYPOINT_COLOR : EVENT_COLOR;
     const size = isWaypoint ? 18 : 24;
-    const fontSize = isWaypoint ? 10 : 13;
     // Auto-detected (still-unvetted) items get an amber ring + a
     // double box-shadow halo instead of the default white border, so
     // admins can spot them on the map at a glance — matches the
@@ -1054,8 +1062,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
         background:${color};
         display:flex;align-items:center;justify-content:center;
         ${borderCss}box-sizing:border-box;
-        color:#fff;font-size:${fontSize}px;line-height:1;
-      ">${isWaypoint ? DIAMOND_SVG : '&#9733;'}</div>`,
+      ">${isWaypoint ? DIAMOND_SVG : STAR_SVG}</div>`,
       iconSize: [size, size],
       iconAnchor: [size / 2, size / 2],
     });
