@@ -12,7 +12,7 @@
 #   - photo_uploads/            (photos; huge — pass --with-photos to include)
 #   - trip_data/secret_key,
 #     trip_data/dev_cert.{crt,key} (machine-local session key / dev TLS cert)
-#   - .thumbs/ and .trash/      (regenerated thumbnails / pending-purge deletes)
+#   - .thumbs/, .views/, .trash/ (regenerable derivatives / pending-purge deletes)
 #   - .env                      (secrets — each host has its own)
 #
 # Usage:
@@ -81,6 +81,7 @@ fi
 # (track_cache, photo_uploads) is included.
 tar -czf "$OUT" \
   --exclude='*/.thumbs' --exclude='*/.thumbs/*' \
+  --exclude='*/.views'  --exclude='*/.views/*' \
   --exclude='*/.trash'  --exclude='*/.trash/*' \
   --exclude='trip_data/secret_key' \
   --exclude='trip_data/dev_cert.crt' \

@@ -303,6 +303,18 @@ function setupGestureHandling(map) {
   const HOME = HOME_COORDS;
   const bounds = [HOME];
 
+  // Marker palette, named once. The legend below draws from the same
+  // constants as the markers themselves — when they were separate literals the
+  // legend immediately drifted (it showed waypoints in the event's gold).
+  const STAY_COLOR = '#002868';
+  const EVENT_COLOR = '#c9a84c';
+  const WAYPOINT_COLOR = '#aaa';
+  const HOME_COLOR = '#bf0a30';
+  // The white house glyph inside the home/family markers, shared so the legend
+  // shows the same icon rather than an approximation of it.
+  const HOUSE_SVG = '<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff">'
+    + '<path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>';
+
   // Lookup: card id → [lat, lng] for click-to-focus on the map
   const cardTargets = {};
   const cardMarkers = {};
@@ -316,10 +328,10 @@ function setupGestureHandling(map) {
     className: '',
     html: `<div style="
       width:24px;height:24px;border-radius:50%;
-      background:#bf0a30;
+      background:${HOME_COLOR};
       display:flex;align-items:center;justify-content:center;
       border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
-    "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    ">${HOUSE_SVG}</div>`,
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
@@ -346,7 +358,7 @@ function setupGestureHandling(map) {
       className: '',
       html: `<div style="
         width:24px;height:24px;border-radius:50%;
-        background:#002868;color:#fff;
+        background:${STAY_COLOR};color:#fff;
         display:flex;align-items:center;justify-content:center;
         font-size:12px;font-weight:700;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
@@ -1056,7 +1068,7 @@ function setupGestureHandling(map) {
     bounds.push(ll);
 
     const isWaypoint = !!evt.waypoint;
-    const color = isWaypoint ? '#aaa' : '#c9a84c';
+    const color = isWaypoint ? WAYPOINT_COLOR : EVENT_COLOR;
     const size = isWaypoint ? 18 : 24;
     const fontSize = isWaypoint ? 10 : 13;
     // Auto-detected (still-unvetted) items get an amber ring + a
@@ -1098,10 +1110,10 @@ function setupGestureHandling(map) {
       className: '',
       html: `<div style="
         width:24px;height:24px;border-radius:50%;
-        background:#bf0a30;
+        background:${HOME_COLOR};
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
-      "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+      ">${HOUSE_SVG}</div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
@@ -1146,10 +1158,10 @@ function setupGestureHandling(map) {
       className: '',
       html: `<div style="
         width:24px;height:24px;border-radius:50%;
-        background:#bf0a30;
+        background:${HOME_COLOR};
         display:flex;align-items:center;justify-content:center;
         border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);box-sizing:border-box;
-      "><svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+      ">${HOUSE_SVG}</div>`,
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
@@ -1188,12 +1200,15 @@ function setupGestureHandling(map) {
   // Four symbols with nothing naming them. Only the kinds actually on this
   // trip's map are listed, so a plain overnight trip doesn't get a legend row
   // for stops it doesn't have.
-  const dot = (bg, inner) => `<span class="tl-dot" style="background:${bg};">${inner || ''}</span>`;
+  // Each swatch mirrors its marker: same colour constant, same glyph, and the
+  // smaller size waypoints actually render at.
+  const dot = (bg, inner, small) =>
+    `<span class="tl-dot${small ? ' small' : ''}" style="background:${bg};">${inner || ''}</span>`;
   const legendRows = [
-    [true, dot('#002868', '<b>1</b>'), 'Campspot'],
-    [mappedEvents.some(e => !e.waypoint && !e.family_visit), dot('#c9a84c', '&#9733;'), 'Event'],
-    [mappedEvents.some(e => e.waypoint), dot('#c9a84c', '&#9670;'), 'Stop'],
-    [true, dot('#bf0a30', '&#8962;'), 'Home / family'],
+    [true, dot(STAY_COLOR, '<b>1</b>'), 'Campspot'],
+    [mappedEvents.some(e => !e.waypoint && !e.family_visit), dot(EVENT_COLOR, '&#9733;'), 'Event'],
+    [mappedEvents.some(e => e.waypoint), dot(WAYPOINT_COLOR, '&#9670;', true), 'Stop'],
+    [true, dot(HOME_COLOR, HOUSE_SVG), 'Home / family'],
   ].filter(r => r[0]);
   if (legendRows.length) {
     const legend = L.control({ position: 'bottomleft' });

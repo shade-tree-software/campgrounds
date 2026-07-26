@@ -13,6 +13,11 @@
 //     containers and have no .photo-grid/.photo-item wrapper.
 // Per-photo extras (caption, date taken, source trip) are read off the
 // img's own dataset/DOM, so a caller only has to supply what it has.
+//
+// Three sizes are in play: the grid img's own src is the 480px thumb,
+// data-view is the 1600px display copy, and data-full is the untouched
+// original — shown only if there's no data-view, and always what the
+// download button saves.
 
 let lightboxPhotos = [];
 let lightboxIndex = 0;
@@ -109,7 +114,11 @@ function showLightboxPhoto() {
   // so the correct photo appears immediately, then swap to full-res when
   // it lands. The index guard drops a late load if the viewer paged away.
   const lbImg = document.getElementById('lightbox-img');
-  const full = img.dataset.full || img.src;
+  // What we DISPLAY is the 1600px derivative (data-view) when the caller
+  // supplies one; data-full stays the untouched original and is what the
+  // download button saves. Before this the viewer pulled several MB of camera
+  // original to fill a screen that can't resolve a fraction of it.
+  const full = img.dataset.view || img.dataset.full || img.src;
   const pre = new Image();
   pre.src = full;
   if (pre.complete) {
@@ -178,7 +187,8 @@ function showLightboxPhoto() {
   if (!lbFrugalConnection()) {
     [lightboxIndex - 1, lightboxIndex + 1].forEach(i => {
       const n = lightboxPhotos[i];
-      if (n) { new Image().src = n.dataset.full || n.src; }
+      // Preload what will actually be shown, not the original.
+      if (n) { new Image().src = n.dataset.view || n.dataset.full || n.src; }
     });
   }
 }

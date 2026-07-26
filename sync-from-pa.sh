@@ -36,7 +36,7 @@ while [ $# -gt 0 ]; do
     -n|--dry-run)  DRY=(--dry-run); shift ;;
     # --force lets --delete replace a directory with a non-directory. It does NOT
     # help with a dir whose only remaining contents are excluded (.thumbs/,
-    # .trash/) — an exclude also protects those from deletion, so rsync warns
+    # .views/, .trash/) — an exclude also protects those from deletion, so rsync warns
     # "cannot delete non-empty directory" and moves on. reap_orphaned_dirs()
     # below cleans those up afterwards.
     --delete)      DEL=(--delete --force); shift ;;
@@ -71,7 +71,7 @@ trap 'rm -f "$RSYNC_LOG"' EXIT
 # Directories we exclude from the transfer because they regenerate on demand.
 # Their presence is what blocks rsync from deleting a directory that has gone
 # away upstream.
-CACHE_DIRS=(.thumbs .trash __pycache__)
+CACHE_DIRS=(.thumbs .views .trash __pycache__)
 
 # When a directory vanishes from PA but still holds one of those caches locally,
 # rsync can't remove it and warns "cannot delete non-empty directory: 56/events/50"
@@ -162,10 +162,11 @@ if [ $DO_DATA -eq 1 ]; then
 fi
 
 if [ $DO_PHOTOS -eq 1 ]; then
-  # .thumbs/ is regenerated on demand from the originals (and is large), .trash/
+  # .thumbs/ and .views/ are regenerated on demand from the originals (and are
+  # large), .trash/
   # holds already-deleted photos pending purge. Neither is worth the bandwidth.
   pull photo_uploads photo_uploads \
-    --exclude '.thumbs/' --exclude '.trash/'
+    --exclude '.thumbs/' --exclude '.views/' --exclude '.trash/'
 fi
 
 echo

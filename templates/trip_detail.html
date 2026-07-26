@@ -1544,6 +1544,15 @@
     border: 1.5px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,.35);
     box-sizing: border-box; flex-shrink: 0;
   }
+  /* Waypoint markers are drawn smaller than events on the map (18px vs 24px);
+     mirror that here so the legend reads as the same thing. The fixed-width
+     wrapper keeps every label in one column despite the size difference. */
+  .trip-map-legend .tl-dot.small { width: 11px; height: 11px; font-size: 7px; }
+  .trip-map-legend .tl-row > :first-child {
+    width: 15px; display: inline-flex; justify-content: center; flex-shrink: 0;
+  }
+  /* The house glyph is the marker's own SVG, sized down to fit the swatch. */
+  .trip-map-legend .tl-dot svg { width: 9px; height: 9px; display: block; }
 
   /* "Fit the whole trip" — a leaflet-bar button, so it inherits the zoom
      control's sizing; just center the glyph. */

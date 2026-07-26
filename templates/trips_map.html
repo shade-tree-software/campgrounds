@@ -1094,6 +1094,9 @@ if (PHOTOS.length && leftStack && rightStack) {
     img.loading = 'lazy';
     // Consumed by the lightbox: the full-res original to swap in, and the
     // trip this photo belongs to for its "go to trip" link.
+    // data-view is the 1600px display copy; data-full stays the original
+    // so the download button still saves the real thing.
+    if (photo.view) img.dataset.view = photo.view;
     img.dataset.full = photo.url;
     // Site-relative, like the anchor's own attribute — reading a.href back
     // off the element would hand the lightbox an absolute URL.

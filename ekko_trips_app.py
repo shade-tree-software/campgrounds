@@ -561,21 +561,39 @@ THUMB_DIRNAME = ".thumbs"
 THUMB_MAX_PX = 480     # covers ~200px grid cells at 2-2.5x DPR
 THUMB_QUALITY = 80
 
+# The lightbox's middle size. Photos had only two: a 480px thumb and the
+# untouched camera original, so opening one pulled several MB to fill a screen
+# that can't show a fraction of it — brutal on a campsite's cell signal, and
+# the reason the viewer sat on a stretched thumbnail for seconds. 1600px covers
+# a 1440-wide window and a phone at 3x DPR; the original stays exactly as
+# uploaded and is still what the download button saves.
+VIEW_DIRNAME = ".views"
+VIEW_MAX_PX = 1600
+VIEW_QUALITY = 82
 
-def _thumb_path(orig_path):
-    """Cache location for orig_path's thumbnail. Keeps the full original
+# Regenerable caches that live beside the originals. Both are dot-prefixed,
+# which is what keeps them out of `_resolve_photo_request` (it rejects any
+# dot-prefixed path component) and out of photo listings.
+DERIVATIVE_DIRNAMES = (THUMB_DIRNAME, VIEW_DIRNAME)
+
+
+def _derivative_path(orig_path, dirname):
+    """Cache location for a derivative of orig_path. Keeps the full original
     filename (plus .jpg) so same-stem files with different extensions
     can't collide on one cache entry."""
     photo_dir, fname = os.path.split(orig_path)
-    return os.path.join(photo_dir, THUMB_DIRNAME, fname + ".jpg")
+    return os.path.join(photo_dir, dirname, fname + ".jpg")
 
 
-def _ensure_thumb(orig_path):
-    """Return the path of a fresh cached thumbnail for orig_path,
-    generating it if missing or older than the original. Returns None when
-    generation fails (corrupt/unsupported image) — caller falls back to
-    serving the original."""
-    tpath = _thumb_path(orig_path)
+def _ensure_derivative(orig_path, dirname, max_px, quality):
+    """Return the path of a fresh cached resize of orig_path, generating it if
+    missing or older than the original. Returns None when generation fails
+    (corrupt/unsupported image) — caller falls back to serving the original.
+
+    Shared by the 480px thumbnail and the 1600px lightbox view; they differ
+    only in cache directory, bound and quality.
+    """
+    tpath = _derivative_path(orig_path, dirname)
     try:
         if os.path.exists(tpath) and os.path.getmtime(tpath) >= os.path.getmtime(orig_path):
             return tpath
@@ -584,16 +602,27 @@ def _ensure_thumb(orig_path):
         # Bake EXIF rotation in: browsers honor orientation on originals,
         # but re-encoding strips the tag, so the pixels must be upright.
         img = ImageOps.exif_transpose(img)
-        img.thumbnail((THUMB_MAX_PX, THUMB_MAX_PX))
+        img.thumbnail((max_px, max_px))
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
         os.makedirs(os.path.dirname(tpath), exist_ok=True)
         tmp = f"{tpath}.{os.getpid()}.tmp"
-        img.save(tmp, "JPEG", quality=THUMB_QUALITY, optimize=True)
+        img.save(tmp, "JPEG", quality=quality, optimize=True)
         os.replace(tmp, tpath)  # atomic — concurrent requests can't clobber
         return tpath
     except Exception:
         return None
+
+
+def _ensure_thumb(orig_path):
+    return _ensure_derivative(orig_path, THUMB_DIRNAME, THUMB_MAX_PX, THUMB_QUALITY)
+
+
+def _ensure_view(orig_path):
+    """1600px lightbox derivative. Never upscales — Pillow's thumbnail() is a
+    no-op on an image already within the bound, so a small original just gets
+    re-encoded at its own size rather than blown up."""
+    return _ensure_derivative(orig_path, VIEW_DIRNAME, VIEW_MAX_PX, VIEW_QUALITY)
 
 
 # ── Photo trash (toast-Undo for single-photo deletes) ────────────────────────
@@ -665,13 +694,14 @@ def _purge_old_trash(photo_dir, meta_prefix, order_key):
 
 
 def _remove_thumb(orig_path):
-    """Drop the cached thumbnail for a deleted/moved photo. Best-effort —
+    """Drop every cached derivative for a deleted/moved photo. Best-effort —
     a missed orphan is harmless (mtime staleness covers regeneration) and
-    delete-all's rmtree sweeps the whole .thumbs dir anyway."""
-    try:
-        os.remove(_thumb_path(orig_path))
-    except OSError:
-        pass
+    delete-all's rmtree sweeps the whole cache dir anyway."""
+    for dirname in DERIVATIVE_DIRNAMES:
+        try:
+            os.remove(_derivative_path(orig_path, dirname))
+        except OSError:
+            pass
 
 
 def _resolve_photo_request(subpath):
@@ -705,6 +735,22 @@ def photo_thumb(subpath):
         return jsonify({"error": "not found"}), 404
     tpath = _ensure_thumb(orig)
     return send_file(tpath or orig, max_age=30 * 86400, conditional=True)
+
+
+@app.route('/view/<path:subpath>')
+def photo_view(subpath):
+    """1600px derivative for the lightbox — the display size between /thumb/
+    and /photo/.
+
+    Same three gates as the other two (it goes through `_resolve_photo_request`),
+    and the same 30-day cache: the derivative is keyed on the original's mtime,
+    so replacing a photo regenerates it. Falls back to the original if Pillow
+    can't read the file, which is the pre-existing behavior for thumbnails."""
+    orig = _resolve_photo_request(subpath)
+    if not orig:
+        return jsonify({"error": "not found"}), 404
+    vpath = _ensure_view(orig)
+    return send_file(vpath or orig, max_age=30 * 86400, conditional=True)
 
 
 @app.route('/photo/<path:subpath>')
@@ -768,6 +814,7 @@ def _collect_photo_pool():
                         pool.append({
                             "url": f"/photo/{tid}/{i}/{fname}",
                             "thumb": f"/thumb/{tid}/{i}/{fname}",
+                            "view": f"/view/{tid}/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"stay-{i}",
                             "caption": captions.get(f"{tid}/{i}/{fname}", ""),
@@ -781,6 +828,7 @@ def _collect_photo_pool():
                         pool.append({
                             "url": f"/photo/{tid}/events/{i}/{fname}",
                             "thumb": f"/thumb/{tid}/events/{i}/{fname}",
+                            "view": f"/view/{tid}/events/{i}/{fname}",
                             "trip_id": tid,
                             "card": f"event-{i}",
                             "caption": captions.get(f"{tid}/events/{i}/{fname}", ""),
@@ -2079,6 +2127,7 @@ def trip_detail(trip_id):
                     "filename": fname,
                     "url": f"/photo/{trip_id}/{i}/{fname}",
                     "thumb_url": f"/thumb/{trip_id}/{i}/{fname}",
+                    "view_url": f"/view/{trip_id}/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
@@ -2105,6 +2154,7 @@ def trip_detail(trip_id):
                     "filename": fname,
                     "url": f"/photo/{trip_id}/events/{i}/{fname}",
                     "thumb_url": f"/thumb/{trip_id}/events/{i}/{fname}",
+                    "view_url": f"/view/{trip_id}/events/{i}/{fname}",
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
@@ -2219,6 +2269,7 @@ def _render_photo_tile(subpath, filename, p_type, p_idx, trip_id):
         "filename": filename,
         "url": f"/photo/{subpath}/{filename}",
         "thumb_url": f"/thumb/{subpath}/{filename}",
+        "view_url": f"/view/{subpath}/{filename}",
         "caption": "",
         "date_taken": _photo_date_taken(os.path.join(photo_dir, filename)),
         "uploader": username,
