@@ -19,6 +19,7 @@ from werkzeug.utils import secure_filename
 
 from ridb.fetch_facility import (search_facilities, fetch_facility,
                                  availability_matrix, DEFAULT_FIT_FT)
+import weather_finder
 from trips import (parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
@@ -2910,6 +2911,96 @@ def api_ridb_availability():
         "map_url": facility.get("FacilityMapURL", ""),
     }
     return jsonify(matrix)
+
+
+# ── Weather Finder ─────────────────────────────────────────────────────────
+# Search the 16-day forecast across the campground database for somewhere with
+# the weather you want — a comfort band, or cooler/warmer than home is that same
+# day, optionally dry. Absorbed from the standalone "Summer Seeker" Flask app
+# (summer_seeker_app.py), which shared this repo's campgrounds.json but ran on
+# its own port with its own templates. Admin-only: it's a planning tool, and a
+# single search spends a real slice of the weather provider's free-tier budget.
+# The engine lives in weather_finder.py (shared with the find_summer.py CLI).
+
+# Ceiling on how far out the UI will search. Past this a search can't be covered
+# in one pass anyway (see weather_finder.FORECAST_BUDGET) and the result list is
+# too long to read.
+WEATHER_MAX_MILES = 500
+
+
+@app.route('/campgrounds/weather')
+def campgrounds_weather():
+    """Page: find campgrounds whose forecast matches what you're after."""
+    denied = _require_admin_page()
+    if denied:
+        return denied
+    home_cfg = _load_json(HOME_FILE)
+    return render_template(
+        'weather_finder.html', title='Weather', active_nav='campweather',
+        is_admin=True,
+        home_lat=home_cfg.get("home_lat"), home_lng=home_cfg.get("home_long"),
+        max_miles_cap=WEATHER_MAX_MILES,
+        forecast_days=weather_finder.FORECAST_DAYS)
+
+
+@app.route('/api/weather-finder/search', methods=['POST'])
+def api_weather_finder_search():
+    """Run a forecast search. Body mirrors the form; see weather_finder."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json(silent=True) or {}
+
+    mode = data.get("mode", weather_finder.MODE_RANGE)
+    if mode not in weather_finder.MODES:
+        return jsonify({"error": "Unknown search mode."}), 400
+
+    def num(key, default, lo, hi):
+        try:
+            return min(hi, max(lo, float(data.get(key, default))))
+        except (TypeError, ValueError):
+            return default
+
+    max_miles = num("max_miles", 250, 5, WEATHER_MAX_MILES)
+    min_high = num("min_high", 70, -50, 130)
+    max_high = num("max_high", 88, -50, 130)
+    if min_high > max_high:
+        min_high, max_high = max_high, min_high
+    delta_f = num("delta_f", 5, 0, 60)
+
+    # Origin: home unless the form supplied somewhere else to search from.
+    home_cfg = _load_json(HOME_FILE)
+    origin_lat, origin_lng = data.get("lat"), data.get("lng")
+    if origin_lat is None or origin_lng is None:
+        origin_lat, origin_lng = home_cfg.get("home_lat"), home_cfg.get("home_long")
+    if origin_lat is None or origin_lng is None:
+        return jsonify({"error": "No search origin — home.json has no coordinates "
+                                 "and no place was picked."}), 400
+
+    # `max_precip_in` of 0 is meaningful ("bone dry"), so the filter is switched
+    # on by a separate flag rather than by the number being falsy.
+    max_precip_in = num("max_precip_in", 0.1, 0, 10) if data.get("dry_only") else None
+    max_precip_chance = (num("max_precip_chance", 30, 0, 100)
+                         if data.get("dry_only") and data.get("use_precip_chance") else None)
+
+    try:
+        result = weather_finder.find_matching_days(
+            _load_campgrounds(), (float(origin_lat), float(origin_lng)),
+            mode=mode, min_high=min_high, max_high=max_high, delta_f=delta_f,
+            max_miles=max_miles, weekends_only=bool(data.get("weekends_only", True)),
+            max_precip_in=max_precip_in, max_precip_chance=max_precip_chance,
+            prefer_waterfront=bool(data.get("prefer_waterfront")),
+            sort=data.get("sort", "distance"),
+            user_agent=_OUTBOUND_UA)
+    except weather_finder.RateLimited as e:
+        return jsonify({"error": str(e)}), 429
+    except Exception as e:
+        app.logger.exception("weather finder search failed")
+        return jsonify({"error": f"Search failed: {e}"}), 502
+
+    result["mode"] = mode
+    result["origin"] = {"lat": float(origin_lat), "lng": float(origin_lng)}
+    return jsonify(result)
 
 
 # ── Photo move between stays/events ───────────────────────────────────────

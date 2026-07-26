@@ -1,4 +1,5 @@
-- [Summer Seeker is a separate app](project_summer_seeker.md) — `index.html` + `/search` + `/geocode` belong to Summer Seeker, not EKKO Trips
+- [Weather Finder (was Summer Seeker)](project_weather_finder.md) — standalone app folded into EKKO as an admin page 2026-07-26; cooler/warmer-than-home + rain filter; per-cell forecast cache is load-bearing
+- [Open-Meteo rate limits](reference_open_meteo_limits.md) — free tier meters LOCATIONS not calls: 600/min (measured); batch via comma-separated lat/lng lists
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a privacy leak
 - [Auth model decisions](project_auth_model_decisions.md) — AWH declined share-link self-registration and self-service password change (2026-07-26); don't re-propose, reasoning inside
 - [UX review 2026-07 — ALL BATCHES DONE](project_ux_review_2026_07.md) — full non-admin UX audit; all 24 backlog items shipped 2026-07-26. Keep for the diagnosis + the gotchas recorded per item (data-view vs data-full, pool items are shared, generic-only OG tags); start a fresh review for new work

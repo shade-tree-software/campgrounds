@@ -1,0 +1,394 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Finder{% endblock %}
+
+{% block style %}
+  .wx-page { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem; }
+  .wx-page h2 { color: var(--navy); font-size: 1.4rem; margin-bottom: .25rem; }
+  .wx-intro { color: var(--gray); font-size: .9rem; margin-bottom: 1.25rem; max-width: 72ch; }
+
+  .wx-form {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 8px; padding: 1rem; box-shadow: var(--shadow);
+    display: flex; flex-direction: column; gap: .9rem;
+  }
+  .wx-row { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; align-items: flex-end; }
+  .field { display: flex; flex-direction: column; gap: .25rem; min-width: 0; }
+  .field label {
+    font-size: .75rem; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: .03em;
+  }
+  .field input[type=number], .field input[type=text], .field select {
+    padding: .5rem .6rem; border: 1px solid var(--gray-light);
+    border-radius: 6px; font-size: .95rem; font-family: inherit; background: var(--white);
+  }
+  .field input[type=number] { width: 5.5rem; }
+  .wx-check { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; color: var(--navy); }
+  .wx-check input { width: auto; }
+
+  /* The mode selector drives which controls are relevant; the irrelevant ones
+     are removed rather than disabled so the form doesn't read as half-broken. */
+  [hidden] { display: none !important; }
+
+  .wx-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .wx-actions button {
+    padding: .55rem 1.2rem; border: none; border-radius: 6px; background: var(--navy);
+    color: var(--white); font-weight: 700; cursor: pointer; font-size: .95rem;
+  }
+  .wx-actions button:disabled { opacity: .5; cursor: default; }
+  .wx-hint { font-size: .8rem; color: var(--gray); }
+
+  /* Origin picker (reuses /api/geocode, the same Nominatim proxy the map
+     picker uses — one geocoder in the app, not two). */
+  .search-wrap { position: relative; }
+  #wx-place { width: 260px; }
+  .search-results {
+    position: absolute; z-index: 20; top: 100%; left: 0; right: 0;
+    background: var(--white); border: 1px solid var(--gray-light); border-top: none;
+    border-radius: 0 0 6px 6px; max-height: 260px; overflow-y: auto;
+    box-shadow: var(--shadow); display: none;
+  }
+  .search-results.open { display: block; }
+  .search-results div { padding: .5rem .6rem; cursor: pointer; font-size: .9rem; }
+  .search-results div:hover, .search-results div.active { background: var(--blue-bg); }
+  .search-results .muted { color: var(--gray); font-style: italic; cursor: default; }
+  .origin-note { font-size: .8rem; color: var(--gray); }
+  .origin-note b { color: var(--navy); }
+
+  /* Status + results */
+  #wx-status { margin: 1.25rem 0 .5rem; font-size: .95rem; color: var(--gray); }
+  #wx-status.error { color: var(--red); font-weight: 600; }
+  .wx-spinner {
+    display: inline-block; vertical-align: -2px; width: 13px; height: 13px;
+    margin-right: .45rem; border: 2px solid var(--gray-light);
+    border-top-color: var(--navy); border-radius: 50%;
+    animation: wx-spin .8s linear infinite;
+  }
+  @keyframes wx-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .wx-spinner { animation: none; } }
+
+  .wx-results { display: flex; flex-direction: column; gap: .6rem; }
+  .wx-card {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 8px;
+    box-shadow: var(--shadow); padding: .75rem .9rem;
+    border-left: 4px solid var(--navy);
+  }
+  .wx-card.waterfront { border-left-color: #2a7fa8; }
+  .wx-card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; }
+  .wx-name { font-weight: 700; color: var(--navy); font-size: 1rem; }
+  .wx-meta { font-size: .8rem; color: var(--gray); display: flex; flex-wrap: wrap; gap: .5rem; }
+  .wx-meta .sep { color: var(--gray-light); }
+  .wx-badge {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+    padding: .12rem .4rem; border-radius: 4px; background: var(--blue-bg); color: var(--navy);
+  }
+  .wx-badge.water { background: #e2f1f7; color: #1c5f7d; }
+
+  /* One chip per matching day. Chips wrap; each carries the numbers that
+     decided the match, so a reader can see why it's listed. */
+  .wx-days { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+  .wx-day {
+    display: inline-flex; align-items: baseline; gap: .35rem;
+    border: 1px solid var(--gray-light); border-radius: 5px;
+    padding: .2rem .45rem; font-size: .78rem; background: #fbfbfc;
+  }
+  .wx-day .d { font-weight: 700; color: var(--navy); }
+  .wx-day .t { font-weight: 700; }
+  .wx-day .delta.cool { color: #1c6ea4; font-weight: 700; }
+  .wx-day .delta.warm { color: #b5471f; font-weight: 700; }
+  .wx-day .rain { color: var(--gray); }
+  .wx-day .rain.wet { color: #1c6ea4; }
+
+  .wx-more { font-size: .85rem; color: var(--gray); margin-top: .75rem; }
+
+  @media (max-width: 700px) {
+    .wx-page { padding: 0 .75rem; margin-top: 1rem; }
+    /* Stack the controls: side-by-side fields at phone width squeeze the
+       number inputs to unusable slivers. */
+    .wx-row { flex-direction: column; align-items: stretch; gap: .7rem; }
+    .field input[type=number] { width: 100%; }
+    #wx-place { width: 100%; }
+    .wx-actions button { width: 100%; padding: .7rem 1.2rem; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="wx-page">
+  <h2>Weather Finder</h2>
+  <p class="wx-intro">
+    Searches the next {{ forecast_days }} days of forecast across the campground
+    database for somewhere with the weather you're after — a comfortable range,
+    or simply cooler (or warmer) than it's going to be at home that same day.
+  </p>
+
+  <form class="wx-form" id="wx-form" autocomplete="off">
+    <div class="wx-row">
+      <div class="field">
+        <label for="wx-mode">Looking for</label>
+        <select id="wx-mode">
+          <option value="cooler">Cooler than home</option>
+          <option value="warmer">Warmer than home</option>
+          <option value="range">A comfortable temperature range</option>
+        </select>
+      </div>
+
+      <div class="field" id="field-delta">
+        <label for="wx-delta">By at least (°F)</label>
+        <input type="number" id="wx-delta" value="5" min="0" max="60" step="1">
+      </div>
+
+      <div class="field" id="field-min-high" hidden>
+        <label for="wx-min-high">High no lower than</label>
+        <input type="number" id="wx-min-high" value="70" min="-50" max="130" step="1">
+      </div>
+      <div class="field" id="field-max-high" hidden>
+        <label for="wx-max-high">High no higher than</label>
+        <input type="number" id="wx-max-high" value="88" min="-50" max="130" step="1">
+      </div>
+
+      <div class="field">
+        <label for="wx-miles">Within (miles)</label>
+        <input type="number" id="wx-miles" value="250" min="5" max="{{ max_miles_cap }}" step="10">
+      </div>
+    </div>
+
+    <div class="wx-row">
+      <div class="field search-wrap">
+        <label for="wx-place">Search from</label>
+        <input type="text" id="wx-place" placeholder="Home" aria-describedby="wx-origin-note">
+        <div class="search-results" id="wx-place-results" role="listbox"></div>
+      </div>
+      <div class="field">
+        <label for="wx-sort">Order by</label>
+        <select id="wx-sort">
+          <option value="distance">Nearest first</option>
+          <option value="delta">Biggest difference first</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Days</label>
+        <label class="wx-check"><input type="checkbox" id="wx-weekends" checked> Weekends only</label>
+      </div>
+      <div class="field">
+        <label>Rain</label>
+        <label class="wx-check"><input type="checkbox" id="wx-dry"> Little or no rain</label>
+      </div>
+      <div class="field" id="field-precip" hidden>
+        <label for="wx-precip">At most (in)</label>
+        <input type="number" id="wx-precip" value="0.1" min="0" max="10" step="0.05">
+      </div>
+      <div class="field">
+        <label>Water</label>
+        <label class="wx-check"><input type="checkbox" id="wx-waterfront"> Waterfront first</label>
+      </div>
+    </div>
+
+    <div class="wx-actions">
+      <button type="submit" id="wx-go">Search</button>
+      <span class="origin-note" id="wx-origin-note">Searching from <b>home</b>.</span>
+    </div>
+  </form>
+
+  <div id="wx-status" role="status" aria-live="polite"></div>
+  <div class="wx-results" id="wx-results"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const HOME = {{ [home_lat, home_lng] | tojson }};
+// Origin defaults to home; the place picker overrides it. null lat/lng means
+// "let the server fall back to home.json", which also covers a host that has
+// no home configured yet.
+let origin = { lat: null, lng: null, label: 'home' };
+
+// ── Mode-dependent controls ────────────────────────────────────────────────
+const modeSel = document.getElementById('wx-mode');
+const sortSel = document.getElementById('wx-sort');
+function syncMode() {
+  const relative = modeSel.value !== 'range';
+  document.getElementById('field-delta').hidden = !relative;
+  document.getElementById('field-min-high').hidden = relative;
+  document.getElementById('field-max-high').hidden = relative;
+  // "Biggest difference" is meaningless without a home temperature to differ
+  // from, so in range mode the control goes away rather than sorting by nothing.
+  sortSel.querySelector('option[value=delta]').disabled = !relative;
+  if (!relative && sortSel.value === 'delta') sortSel.value = 'distance';
+}
+modeSel.addEventListener('change', syncMode);
+syncMode();
+
+document.getElementById('wx-dry').addEventListener('change', e => {
+  document.getElementById('field-precip').hidden = !e.target.checked;
+});
+
+// ── Origin picker ──────────────────────────────────────────────────────────
+const placeInput = document.getElementById('wx-place');
+const placeResults = document.getElementById('wx-place-results');
+const originNote = document.getElementById('wx-origin-note');
+let placeTimer = null;
+
+function setOrigin(lat, lng, label) {
+  origin = { lat, lng, label };
+  originNote.innerHTML = 'Searching from <b>' + label.replace(/</g, '&lt;') + '</b>.';
+}
+
+placeInput.addEventListener('input', () => {
+  clearTimeout(placeTimer);
+  const q = placeInput.value.trim();
+  if (!q) {                       // cleared → back to home
+    placeResults.classList.remove('open');
+    setOrigin(null, null, 'home');
+    return;
+  }
+  if (q.length < 3) return;
+  placeTimer = setTimeout(async () => {
+    try {
+      const r = await fetch('/api/geocode?q=' + encodeURIComponent(q));
+      const hits = await r.json();
+      if (!r.ok || !Array.isArray(hits)) throw new Error();
+      placeResults.innerHTML = hits.length
+        ? hits.map(h => `<div role="option" data-lat="${h.lat}" data-lng="${h.lon}">${h.name.replace(/</g, '&lt;')}</div>`).join('')
+        : '<div class="muted">No matches</div>';
+    } catch (_) {
+      placeResults.innerHTML = '<div class="muted">Place lookup failed</div>';
+    }
+    placeResults.classList.add('open');
+  }, 300);
+});
+
+placeResults.addEventListener('click', e => {
+  const row = e.target.closest('div[data-lat]');
+  if (!row) return;
+  setOrigin(parseFloat(row.dataset.lat), parseFloat(row.dataset.lng), row.textContent);
+  placeInput.value = row.textContent;
+  placeResults.classList.remove('open');
+});
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) placeResults.classList.remove('open');
+});
+
+// ── Search ─────────────────────────────────────────────────────────────────
+const statusEl = document.getElementById('wx-status');
+const resultsEl = document.getElementById('wx-results');
+const goBtn = document.getElementById('wx-go');
+const numOf = id => parseFloat(document.getElementById(id).value);
+
+document.getElementById('wx-form').addEventListener('submit', async e => {
+  e.preventDefault();
+  goBtn.disabled = true;
+  resultsEl.innerHTML = '';
+  statusEl.className = '';
+  statusEl.innerHTML = '<span class="wx-spinner"></span>Checking the forecast…';
+
+  const mode = modeSel.value;
+  const dry = document.getElementById('wx-dry').checked;
+  const body = {
+    mode: mode,
+    lat: origin.lat, lng: origin.lng,
+    max_miles: numOf('wx-miles'),
+    delta_f: numOf('wx-delta'),
+    min_high: numOf('wx-min-high'),
+    max_high: numOf('wx-max-high'),
+    weekends_only: document.getElementById('wx-weekends').checked,
+    dry_only: dry,
+    max_precip_in: numOf('wx-precip'),
+    prefer_waterfront: document.getElementById('wx-waterfront').checked,
+    sort: sortSel.value,
+  };
+
+  try {
+    const r = await fetch('/api/weather-finder/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      statusEl.className = 'error';
+      statusEl.textContent = data.error || 'Search failed.';
+      return;
+    }
+    render(data, mode);
+  } catch (_) {
+    statusEl.className = 'error';
+    statusEl.textContent = 'Search failed — could not reach the server.';
+  } finally {
+    goBtn.disabled = false;
+  }
+});
+
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
+
+function dayChip(m, mode) {
+  const date = new Date(m.date + 'T00:00:00');
+  const label = m.day + ' ' + (date.getMonth() + 1) + '/' + date.getDate();
+  let delta = '';
+  if (m.delta !== null && mode !== 'range') {
+    const cls = m.delta < 0 ? 'cool' : 'warm';
+    delta = `<span class="delta ${cls}">${m.delta > 0 ? '+' : ''}${m.delta}°</span>`;
+  }
+  // Rain is shown on every chip, not just when the dry filter is on — "82°F and
+  // 1.1 inches of rain" is a different trip from "82°F and dry", and that's
+  // exactly the thing a temperature-only list hides.
+  let rain = '';
+  if (m.precip !== null && m.precip !== undefined) {
+    const wet = m.precip >= 0.1;
+    rain = `<span class="rain${wet ? ' wet' : ''}">${m.precip > 0 ? m.precip.toFixed(2) + '"' : 'dry'}</span>`;
+  }
+  return `<span class="wx-day"><span class="d">${label}</span>`
+       + `<span class="t">${Math.round(m.high)}°</span>${delta}${rain}</span>`;
+}
+
+function render(data, mode) {
+  const n = data.matched;
+  // Say what was actually checked. When the budget clipped the search, "no
+  // matches" and "no matches in the part we looked at" are different answers
+  // and the reader can't tell them apart otherwise.
+  let scope = `${data.considered} campground${data.considered === 1 ? '' : 's'}`;
+  if (data.considered < data.eligible) {
+    scope += ` of the ${data.eligible} in range (the nearest and the most promising;`
+           + ` search again to widen it — what's already loaded is cached)`;
+  }
+  statusEl.className = '';
+
+  if (!n) {
+    statusEl.textContent = `No matches. Checked ${scope}.`;
+    return;
+  }
+  statusEl.textContent =
+    `${n} campground${n === 1 ? '' : 's'} match${n === 1 ? 'es' : ''}. Checked ${scope}.`;
+
+  resultsEl.innerHTML = data.results.map(r => {
+    const water = r.waterfront && r.waterfront !== 'not waterfront';
+    const meta = [];
+    if (r.state) meta.push(esc(r.state));
+    meta.push(r.dist + ' mi');
+    if (r.elevation_feet) meta.push(r.elevation_feet.toLocaleString() + ' ft');
+    if (r.ownership) meta.push(esc(r.ownership));
+    if (r.visit_count) meta.push(`visited ${r.visit_count}×`);
+    return `
+      <div class="wx-card${water ? ' waterfront' : ''}">
+        <div class="wx-card-head">
+          <span class="wx-name">${esc(r.name)}</span>
+          ${water ? `<span class="wx-badge water">${esc(r.waterfront)}</span>` : ''}
+        </div>
+        <div class="wx-meta">${meta.map(m => `<span>${m}</span>`).join('<span class="sep">·</span>')}</div>
+        <div class="wx-days">${r.days.map(m => dayChip(m, mode)).join('')}</div>
+      </div>`;
+  }).join('');
+
+  if (data.truncated) {
+    const more = document.createElement('div');
+    more.className = 'wx-more';
+    more.textContent = `Showing the first ${data.results.length}. Narrow the `
+                     + `distance or tighten the temperature to see fewer.`;
+    resultsEl.appendChild(more);
+  }
+}
+</script>
+{% endblock %}

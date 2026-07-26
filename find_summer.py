@@ -1,66 +1,77 @@
+"""CLI front end for the forecast search (weather_finder.py).
+
+The web front end for this now lives inside EKKO Trips as the admin-only
+Weather Finder page (/campgrounds/weather); the standalone summer_seeker_app.py
+that used to serve it is gone. This script stays as the scriptable path — it's
+the one that can text you the answer.
+"""
+
 import argparse
 import json
-from summer_finder import find_summer_days, load_config, send_sms_notification
 
-# This code uses Open-Meteo's weather forecasting API to determine which campgrounds near
-# home are likely to have summer-like weekend temperatures within the next few weeks
+import weather_finder as wf
 
-# Set up argument parsing
-parser = argparse.ArgumentParser(description="Find upcoming summer-like weekends at campgrounds near home.")
-parser.add_argument('--input_file', type=str, default='campgrounds.json', help='Input file containing the list of campgrounds.')
-parser.add_argument('--config_file', type=str, default='home.json', help='Config file containing phone, home_lat, and home_long values.')
-parser.add_argument('--max_miles', type=float, default=400, help='Maximum distance from home in miles.')
-parser.add_argument('--min_high_temp', type=float, default=70, help='Minimum high temperature for a nice summer day (Fahrenheit).')
-parser.add_argument('--max_high_temp', type=float, default=88, help='Maximum high temperature for a nice summer day (Fahrenheit).')
-parser.add_argument('--prefer_waterfront', action='store_true', help='Prefer waterfront campgrounds in results.')
-parser.add_argument('--all_days', action='store_true', help='Include all days of the week, not just weekends.')
+parser = argparse.ArgumentParser(
+    description="Find upcoming days with the weather you want at campgrounds near home.")
+parser.add_argument('--input_file', default='campgrounds.json',
+                    help='Campground database to search.')
+parser.add_argument('--config_file', default='home.json',
+                    help='Config file containing phone, home_lat, and home_long.')
+parser.add_argument('--mode', choices=wf.MODES, default=wf.MODE_RANGE,
+                    help='range: an absolute comfort band. cooler/warmer: relative to '
+                         'home on the same day.')
+parser.add_argument('--max_miles', type=float, default=250,
+                    help='Maximum distance from home in miles.')
+parser.add_argument('--min_high_temp', type=float, default=70,
+                    help='[range mode] Minimum high temperature (F).')
+parser.add_argument('--max_high_temp', type=float, default=88,
+                    help='[range mode] Maximum high temperature (F).')
+parser.add_argument('--delta_f', type=float, default=5,
+                    help='[cooler/warmer mode] Minimum difference from home (F).')
+parser.add_argument('--max_precip', type=float, default=None,
+                    help='Only days with at most this much rain (inches).')
+parser.add_argument('--prefer_waterfront', action='store_true',
+                    help='List waterfront campgrounds first.')
+parser.add_argument('--all_days', action='store_true',
+                    help='Include every day, not just weekends.')
+parser.add_argument('--output', default='sorted_summer_days.json',
+                    help='Where to write the full result.')
 args = parser.parse_args()
 
-MAX_MILES = args.max_miles
-MIN_HIGH_TEMP = args.min_high_temp
-MAX_HIGH_TEMP = args.max_high_temp
+config = wf.load_config(args.config_file)
+home_lat, home_long = config.get("home_lat"), config.get("home_long")
+phone = config.get("phone")
+if home_lat is None or home_long is None:
+    raise SystemExit(f"{args.config_file} has no home_lat/home_long — nothing to search from.")
 
-config = load_config(args.config_file)
-home_lat = config.get("home_lat", None)
-home_long = config.get("home_long", None)
-phone = config.get("phone", None)
-
-if home_lat and home_long:
-    home = (home_lat, home_long)
-    print(f"Considering campgrounds within {MAX_MILES} miles of home {home}.")
-else:
-    home = None
-    print("Warning: No home location provided. All campgrounds will be considered.")
-
+print(f"Considering campgrounds within {args.max_miles} miles of home.")
 if phone:
     print(f"The best option, if found, will be sent via SMS to {phone}.")
-else:
-    print("No phone number provided.  SMS message will not be sent.")
 
-def progress_callback(message):
-    """Print progress messages to console."""
-    print(message)
-
-# Find summer days using shared core functionality
-summer_days = find_summer_days(
-    max_miles=MAX_MILES,
-    min_high_temp=MIN_HIGH_TEMP,
-    max_high_temp=MAX_HIGH_TEMP,
-    home_lat=home_lat,
-    home_long=home_long,
-    config_file=args.config_file,
-    input_file=args.input_file,
-    progress_callback=progress_callback,
-    prefer_waterfront=args.prefer_waterfront,
-    weekends_only=not args.all_days
+result = wf.find_matching_days(
+    wf.load_campgrounds(args.input_file), (home_lat, home_long),
+    mode=args.mode,
+    min_high=args.min_high_temp, max_high=args.max_high_temp, delta_f=args.delta_f,
+    max_miles=args.max_miles, weekends_only=not args.all_days,
+    max_precip_in=args.max_precip, prefer_waterfront=args.prefer_waterfront,
+    progress=lambda done, total: print(f"  fetched {done}/{total} forecast points"),
 )
 
-if summer_days:
-    with open("sorted_summer_days.json", "wt") as f:
-        f.write(json.dumps(summer_days, indent=2))
-    
-    if phone:
-        resp = send_sms_notification(phone, json.dumps(summer_days[0]))
-        print(resp.json())
-else:
-    print("No summer days found :(")
+print(f"Checked {result['considered']} of {result['eligible']} campgrounds in range "
+      f"({result['fetched']} forecast points fetched, {result['from_cache']} cached).")
+
+if not result["results"]:
+    print("No matching days found :(")
+    raise SystemExit(0)
+
+with open(args.output, "wt", encoding="utf-8") as f:
+    json.dump(result, f, indent=2)
+print(f"{result['matched']} campgrounds matched — full result written to {args.output}.")
+
+best = result["results"][0]
+day = best["days"][0]
+summary = (f"{best['name']} ({best['state']}, {best['dist']} mi): "
+           f"{day['day']} {day['date']} high {day['high']}F")
+print(f"Best: {summary}")
+if phone:
+    print(wf.send_sms_notification(phone, summary))
