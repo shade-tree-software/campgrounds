@@ -34,10 +34,11 @@ while [ $# -gt 0 ]; do
     --photos)      DO_PHOTOS=1; shift ;;
     --dest)        DEST="$2"; shift 2 ;;
     -n|--dry-run)  DRY=(--dry-run); shift ;;
-    # --force lets --delete remove a dir that's gone from PA even when its only
-    # remaining local contents are excluded (.thumbs/, .trash/). Without it rsync
-    # warns "cannot delete non-empty directory" and leaves an orphaned thumb cache
-    # behind. Only fires on dirs being deleted, so live caches stay untouched.
+    # --force lets --delete replace a directory with a non-directory. It does NOT
+    # help with a dir whose only remaining contents are excluded (.thumbs/,
+    # .trash/) — an exclude also protects those from deletion, so rsync warns
+    # "cannot delete non-empty directory" and moves on. reap_orphaned_dirs()
+    # below cleans those up afterwards.
     --delete)      DEL=(--delete --force); shift ;;
     -h|--help)     sed -n '2,20p' "$0"; exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
@@ -63,7 +64,50 @@ SSH_CMD="ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=pas
 # them. Deliberately NOT -a: -o/-g (owner/group) need root and only emit noise.
 RSYNC_OPTS=(-rltvz --partial --human-readable --info=progress2 "${DRY[@]}" "${DEL[@]}")
 
-pull() {                        # pull <remote-subdir> <local-subdir> [extra excludes...]
+# rsync's output is tee'd here so reap_orphaned_dirs() can read its warnings.
+RSYNC_LOG=$(mktemp)
+trap 'rm -f "$RSYNC_LOG"' EXIT
+
+# Directories we exclude from the transfer because they regenerate on demand.
+# Their presence is what blocks rsync from deleting a directory that has gone
+# away upstream.
+CACHE_DIRS=(.thumbs .trash __pycache__)
+
+# When a directory vanishes from PA but still holds one of those caches locally,
+# rsync can't remove it and warns "cannot delete non-empty directory: 56/events/50"
+# on every single sync. The warning is harmless — the directory is gone upstream
+# and what's left is regenerable — but it recurs forever and buries real output.
+# --delete-excluded would silence it by wiping every live thumbnail cache too,
+# which is far too broad, so instead finish rsync's job by hand: for each
+# directory it named, delete it only if everything still inside is one of those
+# caches. Anything else means the leftovers are real and the dir stays.
+reap_orphaned_dirs() {          # reap_orphaned_dirs <target> <label>
+  local target="$1" label="$2" rel dir leftover n
+  local keep=()
+  [ ${#DEL[@]} -gt 0 ] || return 0     # nothing was being deleted
+  [ ${#DRY[@]} -eq 0 ] || return 0     # a dry run must not touch disk
+
+  for n in "${CACHE_DIRS[@]}"; do keep+=(! -name "$n"); done
+
+  # tr: --info=progress2 redraws with \r, so a warning can share a line with the
+  # progress counter. sort -ru: deepest paths first, so a stale child is already
+  # gone by the time its parent is considered.
+  while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    dir="$target/$rel"
+    [ -d "$dir" ] || continue
+    leftover=$(find "$dir" -mindepth 1 -maxdepth 1 "${keep[@]}" -print -quit)
+    [ -z "$leftover" ] || continue     # real content: not ours to remove
+    rm -rf -- "$dir"
+    echo "  removed orphaned cache dir: $label/$rel"
+    # The parent may now be empty as well (56/events, once its last stale child
+    # goes). rmdir climbs only while each level is genuinely empty.
+    rmdir -p --ignore-fail-on-non-empty "$(dirname "$dir")" 2>/dev/null || true
+  done < <(tr '\r' '\n' < "$RSYNC_LOG" |
+           sed -n 's/.*cannot delete non-empty directory: //p' | sort -ru)
+}
+
+pull() {                      # pull <remote-subdir> <local-subdir> [extra excludes...]
   local remote="$1" local_sub="$2"; shift 2
   local target="$DEST/$local_sub"
   mkdir -p "$target"
@@ -102,8 +146,11 @@ pull() {                        # pull <remote-subdir> <local-subdir> [extra exc
     # is the source of truth for what actually changes.
   fi
 
+  # pipefail is set, so a failing rsync still aborts despite the tee.
   rsync "${RSYNC_OPTS[@]}" "$@" -e "$SSH_CMD" \
-    "$PA_HOST:$PA_ROOT/$remote/" "$target/"
+    "$PA_HOST:$PA_ROOT/$remote/" "$target/" 2>&1 | tee "$RSYNC_LOG"
+
+  reap_orphaned_dirs "$target" "$local_sub"
 }
 
 if [ $DO_DATA -eq 1 ]; then
