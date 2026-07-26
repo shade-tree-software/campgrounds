@@ -778,14 +778,27 @@
     min-height: 0;
     margin-bottom: 0;
   }
+  /* min-height: 0 (not the 380px the single-column map uses) because this
+     wrapper is a FIXED-height column — it can never grow past the viewport.
+     With a 380px floor the map stayed 380 tall even when the slot left over
+     after the admin ping-toggle rows was shorter, and .map-container's
+     overflow: hidden then clipped the map's bottom strip — taking the legend
+     (bottomleft) and the miles scale bar (bottomright) with it. Letting the
+     map shrink to its slot keeps those corner controls on-screen. */
   .content.two-col #trip-map {
     flex: 1 1 auto;
     height: auto;
-    min-height: 380px;
+    min-height: 0;
   }
+  /* Both admin rows below the map are fixed-content: they must keep their
+     natural height and let the map absorb the shrink, not the reverse. */
   .content.two-col .map-actions-row {
     flex-shrink: 0;
     margin-top: 1rem;
+  }
+  .content.two-col .ping-toggles {
+    flex-shrink: 0;
+    margin-bottom: 0;  /* the wrapper's own bottom: 1rem is the gutter */
   }
   .content.two-col .cards-column { min-width: 0; }
 
@@ -810,6 +823,9 @@
       height: 380px;
       min-height: 0;
     }
+    /* Back in normal flow the toggles row is followed by the cards column,
+       so it needs its own bottom gutter again. */
+    .content.two-col .ping-toggles { margin-bottom: 1.5rem; }
   }
 
   /* Mobile: tighter side gutters so the map and cards get more usable

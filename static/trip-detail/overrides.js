@@ -151,6 +151,10 @@ function toggleSelectionMode(checkbox) {
   if (tb) tb.classList.toggle('visible', window.__selectionModeActive);
   if (!window.__selectionModeActive) clearPingSelection();
   _syncLassoModes();
+  // Showing/hiding the toolbar changes the height of the fixed map column's
+  // non-map rows, and the map flexes to whatever is left — so its pixel size
+  // really does change here and Leaflet has to be told.
+  if (window.tripMap) window.tripMap.invalidateSize();
 }
 
 // Wire up the click-and-drag lasso circle on the trip map. Called once from
