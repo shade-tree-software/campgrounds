@@ -51,6 +51,14 @@ def _revalidate_html(resp):
     """
     if resp.mimetype == 'text/html':
         resp.headers.setdefault('Cache-Control', 'no-cache')
+        # A share guest's landing page carries `/s/<token>` in the address bar
+        # (so bookmarking it works), which makes the URL path a credential the
+        # browser could hand to a third party in a Referer header — the map's
+        # OpenStreetMap attribution link is right there. `strict-origin-...` is
+        # the modern browser default, but stating it explicitly covers older
+        # ones and stops a future default change from reopening the hole. Only
+        # the ORIGIN is sent cross-site; same-site navigation is unaffected.
+        resp.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
     return resp
 
 
@@ -1199,9 +1207,20 @@ def inject_share_identity():
     """
     name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
     if not name.startswith(SHARE_ID_PREFIX):
-        return {"is_share_guest": False, "share_guest_label": ""}
-    rec = _load_json(SHARE_TOKENS_FILE).get(name[len(SHARE_ID_PREFIX):]) or {}
-    return {"is_share_guest": True, "share_guest_label": rec.get("label") or ""}
+        return {"is_share_guest": False, "share_guest_label": "",
+                "share_guest_url": ""}
+    token = name[len(SHARE_ID_PREFIX):]
+    rec = _load_json(SHARE_TOKENS_FILE).get(token) or {}
+    # The guest's own magic link. The landing page swaps it into the address bar
+    # (see trips_map.html) so that "bookmark this page" saves something that
+    # still works on a new device — `/s/<token>` 302s away, so the address bar
+    # otherwise only ever held an ordinary path that dies with the cookie.
+    #
+    # Only ever rendered for the holder of that token — they arrived with it —
+    # so this exposes nothing they don't already have.
+    return {"is_share_guest": True,
+            "share_guest_label": rec.get("label") or "",
+            "share_guest_url": url_for('share_login', token=token)}
 
 
 def _can_view_campgrounds():

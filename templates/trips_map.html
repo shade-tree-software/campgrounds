@@ -506,6 +506,40 @@ const TRIPS = {{ trips | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const HOME = {{ home | tojson }};
 
+{% if is_share_guest and share_guest_url %}
+// ── Share guests: put the magic link in the address bar ─────────────────────
+// `/s/<token>` 302s to this page, so it was in the address bar for a fraction
+// of a second and never became something you could bookmark. Anything a guest
+// COULD bookmark was an ordinary path like /trips/12, which works only while
+// their cookie lives — on a new device, or after it lapses, that bookmark
+// lands on a password form they can't get past.
+//
+// Rewriting the address here means the ordinary browser gesture just works:
+// Ctrl/⌘-D, or the phone share sheet's "Add Bookmark", saves the real link.
+// Nothing to copy and nothing to explain — an earlier copy-the-URL panel was
+// removed because that distinction confused people (AWH 2026-07-26).
+//
+// Landing page ONLY. Doing it site-wide would leave the token in the address
+// bar everywhere, and would make a bookmark of a trip page silently save the
+// home page instead. Reload/back still work: /s/<token> re-authenticates and
+// redirects here, which lands right back on this line.
+//
+// Runs after base.html's ?notice= stripper (that script block precedes this
+// one), so it can't clobber a notice before it's been shown.
+history.replaceState(null, '', {{ share_guest_url | tojson }});
+
+// Say why once, as a toast rather than a banner — it costs no layout space on
+// a page whose whole point is the map.
+try {
+  if (!localStorage.getItem('guestBookmarkHint')) {
+    localStorage.setItem('guestBookmarkHint', '1');
+    setTimeout(() => window.toast(
+      'Tip: bookmark this page — the address is your personal link back in.',
+      'info', { duration: 9000 }), 1200);
+  }
+} catch (_) { /* storage disabled — the address bar still carries the link */ }
+{% endif %}
+
 const map = L.map('all-trips-map');
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
