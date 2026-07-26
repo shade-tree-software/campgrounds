@@ -1728,6 +1728,7 @@ def trips_map():
 
     return render_template('trips_map.html', trips=trips, home=home,
                            family_locations=family, active_nav='map',
+                           state_names=STATE_NAMES,
                            slideshow_photos=all_photos,
                            latest_trip=latest_trip,
                            latest_trip_date=latest_trip_date)

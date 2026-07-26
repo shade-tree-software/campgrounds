@@ -480,6 +480,31 @@
 
   .tooltip.visible { display: block; }
 
+  /* "All years" toggle, beside the year arrows. Quieter than the red arrows
+     until it's on — it's a mode switch, not the primary control. */
+  .controls .btn-all-years {
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--gray-light);
+    font-size: .85rem;
+    padding: .6rem 1rem;
+  }
+  .controls .btn-all-years.on {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+
+  /* Year heading between groups in the all-years list. */
+  .list-year-heading {
+    color: var(--navy);
+    font-size: 1.1rem;
+    margin: 1.5rem 0 .6rem;
+    padding-bottom: .3rem;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .list-year-heading:first-child { margin-top: 0; }
+
   .hidden { display: none; }
 {% endblock %}
 
@@ -488,6 +513,11 @@
   <button id="prev-year-btn" onclick="prevYear()">&larr;</button>
   <div class="year-label" id="year-label"></div>
   <button id="next-year-btn" onclick="nextYear()">&rarr;</button>
+  {# List view only: the list paged one year at a time with no way to see the
+     whole record at once. Meaningless for the calendar grid, so JS hides it
+     there. #}
+  <button id="all-years-btn" class="btn-all-years" onclick="toggleAllYears()"
+          aria-pressed="false">All years</button>
   <label class="search-wrap">
     <input id="trip-search" type="search" placeholder="Search trips…" autocomplete="off"
            oninput="onSearchInput(this.value)" onkeydown="if(event.key==='Escape'){this.value='';onSearchInput('');}">
@@ -564,6 +594,9 @@ function parseHash() {
 let currentYear = parseHash();
 let currentView = {{ initial_view | tojson }};
 let searchQuery = '';   // active query — when non-empty, list view shows global matches
+// List view only: show every year at once, grouped by year, instead of paging
+// one year at a time. Round-trips through the hash as #all.
+let allYears = location.hash === '#all';
 
 const todayStr = localDateStr(new Date());
 
@@ -609,6 +642,9 @@ function onSearchInput(value) {
 }
 
 window.addEventListener('hashchange', () => {
+  // A hand-typed or shared #all has to set the mode, not just the year
+  // (parseHash falls back to maxYear for a non-numeric fragment).
+  allYears = location.hash === '#all';
   currentYear = parseHash();
   currentMonth = defaultMonthFor(currentYear);
   render();
@@ -621,7 +657,15 @@ window.addEventListener('hashchange', () => {
 function updateHash() {
   const q = searchQuery.trim();
   const qs = q ? '?q=' + encodeURIComponent(q) : '';
-  history.replaceState(null, '', location.pathname + qs + '#' + currentYear);
+  const frag = (allYears && currentView === 'list') ? 'all' : currentYear;
+  history.replaceState(null, '', location.pathname + qs + '#' + frag);
+}
+
+// "All years" is a list-view idea only — the calendar grid draws one year by
+// definition — so switching to the calendar drops it.
+function toggleAllYears() {
+  allYears = !allYears;
+  render();
 }
 
 function prevYear() {
@@ -633,9 +677,16 @@ function nextYear() {
 }
 
 function render() {
-  document.getElementById('year-label').textContent = currentYear;
-  document.getElementById('prev-year-btn').disabled = currentYear <= minYear;
-  document.getElementById('next-year-btn').disabled = currentYear >= maxYear;
+  // In all-years mode the year label and its arrows describe nothing, so they
+  // stand down; the toggle itself is only meaningful in list view.
+  const showAll = allYears && currentView === 'list' && !searchQuery.trim();
+  document.getElementById('year-label').textContent = showAll ? 'All years' : currentYear;
+  document.getElementById('prev-year-btn').disabled = showAll || currentYear <= minYear;
+  document.getElementById('next-year-btn').disabled = showAll || currentYear >= maxYear;
+  const allBtn = document.getElementById('all-years-btn');
+  allBtn.classList.toggle('hidden', currentView !== 'list');
+  allBtn.classList.toggle('on', showAll);
+  allBtn.setAttribute('aria-pressed', showAll ? 'true' : 'false');
   updateHash();
   // Search overrides view: results render as a list regardless of which
   // view (calendar/list) was active. When search clears, restore.
@@ -973,6 +1024,31 @@ function renderList() {
   container.innerHTML = '';
 
   const emptyTrips = TRIPS.filter(t => !t.start);
+
+  if (allYears) {
+    // Every dated trip, newest first, with a heading per year — the whole
+    // record in one scroll instead of one year at a time.
+    const dated = TRIPS.filter(t => t.start).slice().reverse();
+    if (!dated.length && !emptyTrips.length) {
+      container.innerHTML = '<p style="text-align:center;color:var(--gray);padding:2rem;">No trips yet</p>';
+      return;
+    }
+    let lastYear = null;
+    dated.forEach(trip => {
+      const y = parseInt(trip.start.slice(0, 4));
+      if (y !== lastYear) {
+        const h = document.createElement('h2');
+        h.className = 'list-year-heading';
+        h.textContent = y;
+        container.appendChild(h);
+        lastYear = y;
+      }
+      container.appendChild(buildTripCard(trip));
+    });
+    emptyTrips.forEach(trip => container.appendChild(buildTripCard(trip)));
+    return;
+  }
+
   const yearTrips = TRIPS.filter(t => {
     if (!t.start) return false;
     const y = parseInt(t.start.slice(0, 4));
@@ -1084,8 +1160,9 @@ document.addEventListener('keydown', e => {
     return;
   }
   if (e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
-  // Year nav is dimmed/disabled while search results are showing.
-  if (searchQuery.trim()) return;
+  // Year nav is dimmed/disabled while search results or the all-years list
+  // are showing — neither is scoped to a year.
+  if (searchQuery.trim() || (allYears && currentView === 'list')) return;
   if (e.key === 'ArrowLeft') prevYear();
   if (e.key === 'ArrowRight') nextYear();
 });

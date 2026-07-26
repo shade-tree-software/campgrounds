@@ -23,7 +23,7 @@
     padding: .5rem 2rem 0;
     --row-w: calc(min(100vw, 2000px) - 4rem - 16px);
     --map-size: min(
-      calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)),
+      calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px) - var(--tripfind-height, 0px)),
       900px,
       max(
         calc(var(--row-w) * 0.529 - 26.4px),
@@ -192,6 +192,64 @@
     width: min(var(--map-size), 100%);
   }
 
+  /* ── Trip search ─────────────────────────────────────────────────────
+     Sits above the map. Publishes --tripfind-height (JS) so the map's
+     viewport-height calcs make room for it, the same contract the
+     "on this day" banner uses with --otd-height. */
+  .trip-find {
+    position: relative;
+    margin-bottom: .5rem;
+    z-index: 20;              /* dropdown must clear the map below */
+  }
+  .trip-find input {
+    width: 100%;
+    font: inherit;
+    font-size: .9rem;
+    padding: .6rem .85rem;
+    min-height: 44px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+  .trip-find-results {
+    display: none;
+    position: absolute;
+    top: calc(100% + .25rem);
+    left: 0; right: 0;
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    max-height: 320px;
+    overflow-y: auto;
+  }
+  .trip-find-results.open { display: block; }
+  .tf-option {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: .5rem .75rem;
+    cursor: pointer;
+    font-size: .85rem;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .tf-option:hover, .tf-option.active { background: var(--blue-bg); }
+  .tf-option .tf-date { color: var(--gray); font-size: .75rem; flex-shrink: 0; }
+  .tf-more, .tf-empty {
+    display: block;
+    padding: .45rem .75rem;
+    font-size: .75rem;
+    color: var(--gray);
+    font-style: italic;
+    border-top: 1px solid var(--gray-light);
+    text-decoration: none;
+  }
+  .tf-empty { border-top: none; }
+  a.tf-more:hover { background: var(--blue-bg); }
+
   /* Shown instead of an empty gray map when there's nothing to plot. */
   .map-empty-note {
     background: rgba(255,255,255,.92);
@@ -344,14 +402,14 @@
     .map-col {
       flex: 1 1 auto;
       width: auto;
-      min-width: min(calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)), 900px);
+      min-width: min(calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px) - var(--tripfind-height, 0px)), 900px);
     }
     .map-container {
       aspect-ratio: auto;
-      height: calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px));
+      height: calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px) - var(--tripfind-height, 0px));
     }
     .photo-stack {
-      flex: 0 1 max(240px, calc((100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)) * 0.444 + 8.9px));
+      flex: 0 1 max(240px, calc((100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px) - var(--tripfind-height, 0px)) * 0.444 + 8.9px));
       max-width: none;
     }
   }
@@ -372,7 +430,7 @@
     .map-container {
       width: 100%;
       aspect-ratio: auto;
-      height: calc(100vh - var(--site-top-height, 90px) - 290px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
+      height: calc(100vh - var(--site-top-height, 90px) - 290px - var(--tab-bar-height, 0px) - var(--otd-height, 0px) - var(--tripfind-height, 0px));
       min-height: 260px;
     }
     #stack-right { display: none; }
@@ -398,8 +456,8 @@
     .map-section { padding: .25rem .25rem 0; }
     .map-container {
       border-radius: 6px;
-      height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
-      height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px) - var(--otd-height, 0px));
+      height: calc(100vh - var(--site-top-height, 60px) - 244px - var(--tab-bar-height, 0px) - var(--otd-height, 0px) - var(--tripfind-height, 0px));
+      height: calc(100dvh - var(--site-top-height, 60px) - 156px - var(--tab-bar-height, 0px) - var(--otd-height, 0px) - var(--tripfind-height, 0px));
     }
     .photo-stack { height: 90px; gap: .35rem; }
     /* Compact banners: "show me the newest trip" is the #1 task for a
@@ -477,6 +535,17 @@
   <div class="map-layout">
     {% if slideshow_photos %}<div class="photo-stack" id="stack-left"></div>{% endif %}
     <div class="map-col">
+      {# Trip search lived only on the calendar page, unadvertised, so someone
+         after "the Acadia trip" had to guess it was there. This is the same
+         search on the app's default route; TRIPS is already on this page, so
+         the dropdown costs no extra data. #}
+      <div class="trip-find" id="trip-find">
+        <input id="trip-find-input" type="search" autocomplete="off"
+               placeholder="Find a trip — place, name, camper…"
+               aria-label="Find a trip" role="combobox"
+               aria-expanded="false" aria-controls="trip-find-results">
+        <div class="trip-find-results" id="trip-find-results" role="listbox"></div>
+      </div>
       {% if latest_trip %}
       <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
         <span class="label">Latest trip</span>
@@ -756,6 +825,125 @@ legend.onAdd = function() {
   return div;
 };
 legend.addTo(map);
+
+// ── Trip search ────────────────────────────────────────────────────────────
+// Same search the calendar page has, on the app's default route where people
+// actually start. TRIPS is already embedded here, so the haystack is free;
+// picking a result opens that trip, and "see all matches" hands off to the
+// calendar's list view via ?q= for the full result set.
+(function tripFind() {
+  const wrap = document.getElementById('trip-find');
+  const input = document.getElementById('trip-find-input');
+  const resultsEl = document.getElementById('trip-find-results');
+  if (!wrap || !input || !resultsEl) return;
+
+  const MAX = 8;
+  const STATE_NAMES = {{ state_names | tojson }};
+  // Full state name alongside the stored 2-letter code, so "Pennsylvania"
+  // matches — identical to the calendar's and the campground map's haystacks.
+  const stateTerms = c => (c ? c + ' ' + (STATE_NAMES[c] || '') : '');
+  const HAY = {};
+  TRIPS.forEach(t => {
+    HAY[t.id] = [
+      t.summary || '', t.note || '', t.start || '', t.end || '',
+      (t.campers || []).join(' '),
+      (t.stays || []).map(s => `${s.place || ''} ${stateTerms(s.state)} ${s.locale || ''}`).join(' '),
+      (t.events || []).map(e => `${e.name || ''} ${e.locale || ''} ${stateTerms(e.state)}`).join(' '),
+    ].join(' ').toLowerCase();
+  });
+
+  const esc = s => { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; };
+  const fmt = d => {
+    if (!d) return '';
+    // Parse as local, not UTC: 'YYYY-MM-DD' alone is treated as UTC midnight
+    // and renders as the previous day for anyone west of it.
+    const [y, m, day] = d.split('-').map(Number);
+    return new Date(y, m - 1, day).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  };
+
+  let items = [], sel = -1;
+
+  function close() {
+    resultsEl.classList.remove('open');
+    resultsEl.innerHTML = '';
+    input.setAttribute('aria-expanded', 'false');
+    items = []; sel = -1;
+  }
+
+  function update() {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { close(); return; }
+    const tokens = q.split(/\s+/);
+    // Home-only trips are already absent for non-admins (server-filtered), and
+    // an admin searching shouldn't have them surface here either — they're
+    // hidden from every other listing surface.
+    const all = TRIPS.filter(t => !t.home_only && tokens.every(tok => (HAY[t.id] || '').includes(tok)));
+    all.sort((a, b) => (b.start || '').localeCompare(a.start || ''));   // newest first
+    resultsEl.innerHTML = '';
+    sel = -1;
+    items = all.slice(0, MAX).map(t => {
+      const a = document.createElement('a');
+      a.className = 'tf-option';
+      a.href = '/trips/' + t.id;
+      a.setAttribute('role', 'option');
+      const num = t.number ? `Trip ${t.number}: ` : '';
+      a.innerHTML = `<span>${esc(num + (t.summary || 'Trip'))}</span>` +
+                    `<span class="tf-date">${esc(fmt(t.start))}</span>`;
+      resultsEl.appendChild(a);
+      return a;
+    });
+    if (!all.length) {
+      const none = document.createElement('div');
+      none.className = 'tf-empty';
+      none.textContent = 'No trips match';
+      resultsEl.appendChild(none);
+    } else if (all.length > items.length) {
+      const more = document.createElement('a');
+      more.className = 'tf-more';
+      more.href = '/trips/list?q=' + encodeURIComponent(input.value.trim());
+      more.textContent = `See all ${all.length} matches →`;
+      resultsEl.appendChild(more);
+    }
+    resultsEl.classList.add('open');
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  input.addEventListener('input', update);
+  input.addEventListener('focus', update);
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { input.value = ''; close(); input.blur(); return; }
+    if (!items.length) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      sel = (sel + (e.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+      items.forEach((el, i) => el.classList.toggle('active', i === sel));
+      items[sel].scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      // Enter with nothing highlighted goes to the full result list rather
+      // than guessing at the top hit.
+      if (sel >= 0) items[sel].click();
+      else window.location.href = '/trips/list?q=' + encodeURIComponent(input.value.trim());
+    }
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('#trip-find')) close(); });
+  // "/" focuses it — same shortcut as the calendar and campground map.
+  document.addEventListener('keydown', e => {
+    if (e.key !== '/') return;
+    const t = document.activeElement;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' ||
+              t.tagName === 'SELECT' || t.isContentEditable)) return;
+    e.preventDefault();
+    input.focus();
+  });
+
+  // Publish the bar's height so the map's viewport-height calcs subtract it,
+  // exactly as the on-this-day banner does with --otd-height.
+  const sync = () => document.documentElement.style.setProperty(
+    '--tripfind-height', (wrap.offsetHeight + 8) + 'px');   // +8 ≈ the margin
+  sync();
+  window.addEventListener('resize', sync);
+})();
 
 // ── "On this day" ──────────────────────────────────────────────────────────
 // Prior-year trips whose date range covers today's month-day (same rule
