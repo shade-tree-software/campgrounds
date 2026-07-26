@@ -83,6 +83,21 @@
 
   /* Results */
   #avail-status { margin: 1.25rem 0 .5rem; font-size: .95rem; color: var(--gray); }
+  /* The recreation.gov round trip runs 5–15s. Without a moving indicator a
+     line of static text is indistinguishable from a request that died. */
+  .avail-spinner {
+    display: inline-block;
+    vertical-align: -2px;
+    width: 13px;
+    height: 13px;
+    margin-right: .45rem;
+    border: 2px solid var(--gray-light);
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: avail-spin .8s linear infinite;
+  }
+  @keyframes avail-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .avail-spinner { animation: none; } }
   .legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--gray); margin-bottom: .5rem; }
   .legend span { display: inline-flex; align-items: center; gap: .35rem; }
   .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,.15); }
@@ -163,7 +178,9 @@
     </div>
   </div>
 
-  <div id="avail-status"></div>
+  {# aria-live so the 5–15s round trip announces itself and its result to a
+     screen reader — nothing else on the page moves focus when it lands. #}
+  <div id="avail-status" role="status" aria-live="polite"></div>
   <div id="avail-results"></div>
 </div>
 {% endblock %}
@@ -402,7 +419,8 @@
     if (!selected) return;
     checkBtn.disabled = true;
     resultsEl.innerHTML = '';
-    statusEl.innerHTML = 'Checking availability for <b>' + escapeHtml(selected.name) +
+    statusEl.innerHTML = '<span class="avail-spinner" aria-hidden="true"></span>' +
+      'Checking availability for <b>' + escapeHtml(selected.name) +
       '</b>… (querying recreation.gov, may take a few seconds)';
     // checkOut is the day we leave; the API wants the last night (inclusive),
     // so end = checkOut − 1 day.
@@ -427,7 +445,12 @@
     const nights = data.nights;
     const sites = data.sites;
     const fac = data.facility || {};
-    statusEl.innerHTML = '';
+    // Announce the outcome in the live region rather than just blanking it —
+    // the results themselves are a wide table that nothing moves focus to, so
+    // a screen-reader user would otherwise be left on "Checking…" forever.
+    // Visually hidden because the rendered summary line says the same thing.
+    statusEl.innerHTML = '<span class="sr-only">' + sites.length +
+      ' matching site' + (sites.length !== 1 ? 's' : '') + ' found.</span>';
 
     if (!sites.length) {
       resultsEl.innerHTML = '<p class="summary-line">No EKKO-friendly sites have any availability in that range at <b>' +

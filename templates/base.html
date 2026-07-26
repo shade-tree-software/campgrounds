@@ -385,6 +385,65 @@
   }
   .toast .toast-action:hover { text-decoration: underline; }
 
+  /* Available to every page: content for screen readers only. Clipped rather
+     than display:none, which would remove it from the accessibility tree too. */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0; border: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  /* ── Map loading skeleton ─────────────────────────────────────────────
+     Every map page opened as a blank gray rectangle: tiles are fetched
+     asynchronously and the campground map additionally spends real time
+     building ~12.9k markers, so for the first seconds there was nothing to
+     say whether the map was loading or broken.
+
+     Deliberately CSS-only, drawn BEHIND the map rather than as a JS overlay:
+     the marker build is one long synchronous task, so a script that shows an
+     overlay and hides it afterwards can be scheduled entirely inside the
+     freeze and never paint at all. This paints with the surrounding HTML and
+     is simply covered as tiles arrive. Put `.map-skeleton` on the element
+     wrapping the Leaflet div (it must be `position: relative`). */
+  .map-skeleton::before {
+    content: attr(data-loading-label);
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2.5rem;      /* room for the spinner above the text */
+    background: #eef0f4;
+    color: var(--gray);
+    font-size: .9rem;
+  }
+  .map-skeleton::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: 28px;
+    height: 28px;
+    margin: -2.1rem 0 0 -14px;
+    border: 3px solid #d3d8e2;
+    border-top-color: var(--navy);
+    border-radius: 50%;
+    animation: map-skeleton-spin .9s linear infinite;
+  }
+  /* Once the map has painted, drop the skeleton entirely — otherwise it keeps
+     animating forever behind a basemap that may be partly transparent. */
+  .map-skeleton.map-ready::before, .map-skeleton.map-ready::after { display: none; }
+  @keyframes map-skeleton-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .map-skeleton::after { animation: none; }
+  }
+
   /* Phone-only: shrink the header text + stats. iPad has room for the
      full-size header even with the hamburger nav. */
   @media (max-width: 700px) {

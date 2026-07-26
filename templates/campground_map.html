@@ -483,7 +483,10 @@
 
 {% block content %}
 <div class="map-section">
-  <div class="map-container">
+  {# .map-skeleton draws a "loading" placeholder behind the map until it paints
+     — see base.html. The count is the honest reason this page is slow. #}
+  <div class="map-container map-skeleton"
+       data-loading-label="Loading {{ '{:,}'.format(campgrounds | length) }} campgrounds…">
     <div id="campground-map"></div>
     {% if is_admin %}
     <!-- Aim mode for adding a roadside stop: fixed centre pin + action bar. -->
@@ -2108,6 +2111,13 @@ if (map.getZoom() !== undefined) {
   markersProjected = true;
   syncMarkerTier();
 }
+
+// Retire the loading skeleton (base.html) once the map has a view and its
+// markers are on it. Deferred a frame so the class change lands in the paint
+// that draws the map, not the one before it.
+requestAnimationFrame(() => {
+  document.querySelector('.map-skeleton')?.classList.add('map-ready');
+});
 
 // Bounds covering all but the extreme `frac` fraction of points on each axis,
 // computed per-axis by percentile — so a few geographic outliers don't force

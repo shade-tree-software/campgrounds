@@ -192,6 +192,16 @@
     width: min(var(--map-size), 100%);
   }
 
+  /* Shown instead of an empty gray map when there's nothing to plot. */
+  .map-empty-note {
+    background: rgba(255,255,255,.92);
+    border-radius: 6px;
+    box-shadow: var(--shadow);
+    padding: .5rem .75rem;
+    font-size: .85rem;
+    color: var(--gray);
+  }
+
   .map-container {
     background: var(--white);
     border-radius: 10px;
@@ -451,7 +461,8 @@
       </a>
       {% endif %}
       <div id="on-this-day" class="on-this-day" style="display:none;"></div>
-      <div class="map-container">
+      {# .map-skeleton (base.html) shows a placeholder until the map paints. #}
+      <div class="map-container map-skeleton" data-loading-label="Loading map…">
         <div id="all-trips-map"></div>
       </div>
     </div>
@@ -675,7 +686,24 @@ FAMILY.forEach(fam => {
 
 if (bounds.length) {
   map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+} else {
+  // Nothing to fit — no trips yet, or (for a non-admin) every trip is
+  // home-only and hidden. Leaflet with no view set renders as a gray box that
+  // reads as broken, so pick a continental view and say what's going on.
+  map.setView([39.5, -98.35], 3);
+  const note = L.control({ position: 'topright' });
+  note.onAdd = function() {
+    const d = L.DomUtil.create('div', 'map-empty-note');
+    d.textContent = 'No trips on the map yet.';
+    return d;
+  };
+  note.addTo(map);
 }
+
+// Retire the loading skeleton (base.html) now that the map has a view.
+requestAnimationFrame(() => {
+  document.querySelector('.map-skeleton')?.classList.add('map-ready');
+});
 
 // Legend
 const legend = L.control({ position: 'bottomleft' });
