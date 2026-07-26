@@ -61,6 +61,7 @@
   .cal-day.start.end { border-radius: 5px; }
   .cal-foot { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-top: .65rem; }
   .cal-summary { font-size: .8rem; color: var(--navy); }
+  .cal-summary-warn { color: var(--red); font-weight: 700; }
   .cal-done {
     padding: .4rem .9rem; border: none; border-radius: 6px; background: var(--navy);
     color: var(--white); font-weight: 700; cursor: pointer; font-size: .85rem;
@@ -144,17 +145,34 @@
     .field { width: 100%; }
     .date-trigger { width: 100%; }
     .cal-grids .cal-month:nth-child(2) { display: none; }  /* one month on phones */
+    /* Swap the 93-column grid for the per-site summary list. */
+    .grid-wrap { display: none; }
+    .avail-cards { display: block; }
+    .legend { display: none; }        /* explains grid cells that aren't shown */
   }
+
+  /* Per-site summary — phones only (see the ≤700px block above). */
+  .avail-cards { display: none; list-style: none; padding: 0; margin: 0; }
+  .ac-item {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 8px; padding: .6rem .75rem; margin-bottom: .5rem;
+  }
+  .ac-head { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+  .ac-name { font-weight: 700; color: var(--navy); font-size: .9rem; }
+  .ac-nights { font-size: .85rem; color: #1c6b3c; margin-top: .2rem; }
+  .ac-nights.none { color: var(--gray); }
+  .ac-nights b { font-size: 1rem; }
+  .ac-dates { font-size: .75rem; color: var(--gray); margin-top: .25rem; line-height: 1.4; }
 {% endblock %}
 
 {% block content %}
 <div class="avail-page">
   <h2>Federal Campground Availability</h2>
   <p class="avail-intro">
-    Search any recreation.gov (federal) campground, pick a date range, and see which
-    sites have openings. Only EKKO-friendly sites are shown (drive-in RV sites that fit
-    a 23-ft rig). Each column is one night; green means available. Booking is still done
-    on recreation.gov.
+    Search any recreation.gov (federal) campground, pick your dates, and see which
+    sites have openings. Only sites EKKO fits are shown — drive-in RV sites long
+    enough for a 23-ft rig. Each column is one night; a green ✓ means available.
+    Booking still happens on recreation.gov.
   </p>
 
   <div class="avail-form">
@@ -180,7 +198,7 @@
       </div>
     </div>
     <div class="field">
-      <label for="fit-ft">Fit ≥ (ft)</label>
+      <label for="fit-ft" title="Only show sites at least this long">Min site length (ft)</label>
       <input type="number" id="fit-ft" value="{{ default_fit_ft }}" min="15" max="60" step="1">
     </div>
     <div class="field">
@@ -209,6 +227,8 @@
   let selected = null;     // {id, name}
   let searchTimer = null;
   let searchAbort = null;
+  let searchOptions = [];  // [{el, f}] for the open dropdown
+  let searchSel = -1;      // keyboard-highlighted index
 
   // ── Date helpers (local-midnight Dates; iso() is timezone-safe) ──────────
   const iso = d => d.getFullYear() + '-' +
@@ -308,7 +328,9 @@
     if (checkIn && checkOut) {
       const n = nightsBetween(checkIn, checkOut);
       calSummary.textContent = fmtFull(checkIn) + ' → ' + fmtFull(checkOut) +
-        ' · ' + n + ' night' + (n !== 1 ? 's' : '');
+        ' · ' + n + ' night' + (n !== 1 ? 's' : '') +
+        (n > MAX_NIGHTS ? ' — too long, pick ' + MAX_NIGHTS + ' nights or fewer' : '');
+      calSummary.classList.toggle('cal-summary-warn', n > MAX_NIGHTS);
     } else if (checkIn) {
       calSummary.textContent = 'Check-in ' + fmtFull(checkIn) + ' — now click your checkout date.';
     } else {
@@ -341,8 +363,16 @@
   document.addEventListener('click', e => { if (!e.target.closest('.date-field')) calPop.hidden = true; });
   updateDateTrigger();
 
+  // The server rejects anything over 92 nights, but it did so only AFTER the
+  // request — the user picked a 4-month range, waited out the round trip, and
+  // got an error. Say it in the picker instead.
+  const MAX_NIGHTS = 92;
+  function rangeTooLong() {
+    return checkIn && checkOut && nightsBetween(checkIn, checkOut) > MAX_NIGHTS;
+  }
+
   function updateCheckEnabled() {
-    checkBtn.disabled = !(selected && checkIn && checkOut);
+    checkBtn.disabled = !(selected && checkIn && checkOut) || rangeTooLong();
   }
 
   // ── Campground search (debounced) ──────────────────────────────────────
@@ -367,22 +397,46 @@
       if (data.error) { resultsBox.innerHTML = '<div class="muted">' + data.error + '</div>'; return; }
       if (!data.length) { resultsBox.innerHTML = '<div class="muted">No campgrounds found.</div>'; return; }
       resultsBox.innerHTML = '';
-      data.slice(0, 12).forEach(f => {
+      searchOptions = data.slice(0, 12).map(f => {
         const div = document.createElement('div');
         div.textContent = f.name;
+        div.setAttribute('role', 'option');
         div.addEventListener('mousedown', e => { e.preventDefault(); choose(f); });
         resultsBox.appendChild(div);
+        return { el: div, f };
       });
+      searchSel = -1;
     } catch (e) {
       if (e.name !== 'AbortError') resultsBox.innerHTML = '<div class="muted">Search failed.</div>';
     }
   }
 
+  // Arrow/Enter/Escape through the results. The campground map's search has had
+  // this all along; this one was mouse-only, so a keyboard user could type a
+  // query and then not be able to pick anything from it.
+  searchInput.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { resultsBox.classList.remove('open'); return; }
+    if (!searchOptions.length || !resultsBox.classList.contains('open')) return;
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      searchSel = (searchSel + (e.key === 'ArrowDown' ? 1 : -1) + searchOptions.length) % searchOptions.length;
+      searchOptions.forEach((o, i) => o.el.classList.toggle('active', i === searchSel));
+      searchOptions[searchSel].el.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      choose(searchOptions[searchSel >= 0 ? searchSel : 0].f);
+    }
+  });
+
   function choose(f) {
     selected = f;
     searchInput.value = f.name;
-    selectedLabel.textContent = '✓ ' + f.name + '  (id ' + f.id + ')';
+    // The RIDB facility id is an internal identifier the reader can't use for
+    // anything — the confirmation only needs to say which campground stuck.
+    selectedLabel.textContent = '✓ ' + f.name;
     resultsBox.classList.remove('open');
+    searchOptions = [];
+    searchSel = -1;
     updateCheckEnabled();
   }
 
@@ -392,6 +446,21 @@
 
   // Pre-fill from ?cg=<name> (link from the campground map popup): search RIDB
   // and auto-select the best name match, else leave the dropdown open to pick.
+  // Dates and fit come back from the URL first, so an auto-run prefill uses the
+  // linked range rather than the two-weeks-out default.
+  (function restoreFromUrl() {
+    const p = new URLSearchParams(location.search);
+    const s0 = p.get('start'), e0 = p.get('end'), fit = p.get('fit');
+    const parse = v => {
+      const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || '');
+      return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null;   // local, not UTC
+    };
+    const a = parse(s0), b = parse(e0);
+    if (a && b && b > a) { checkIn = a; checkOut = b; viewMonth = addMonths(a, 0); }
+    if (fit && !isNaN(+fit)) fitEl.value = fit;
+    updateDateTrigger();
+  })();
+
   const presetCg = new URLSearchParams(location.search).get('cg');
   if (presetCg) {
     searchInput.value = presetCg;
@@ -409,6 +478,11 @@
         data.find(f => f.name.toLowerCase().includes(lc));
       if (match) {
         choose(match);
+        // ?cg= comes from a campground-map popup, i.e. someone who has already
+        // said which campground they mean. Making them press the button again
+        // to learn the answer was a pointless extra step. Dates default to two
+        // weeks out, and ?start=/?end= override them (see restoreFromUrl).
+        runAvailability();
       } else {
         resultsBox.innerHTML = '';
         data.slice(0, 12).forEach(f => {
@@ -429,6 +503,15 @@
     if (!selected) return;
     checkBtn.disabled = true;
     resultsEl.innerHTML = '';
+    // Put the query in the URL so a result can be linked, bookmarked and
+    // reloaded — it used to live only in JS state, so "here's the availability
+    // I found" was impossible to send to anyone.
+    const url = new URL(location);
+    url.searchParams.set('cg', selected.name);
+    url.searchParams.set('start', iso(checkIn));
+    url.searchParams.set('end', iso(checkOut));
+    url.searchParams.set('fit', fitEl.value || '25');
+    history.replaceState(null, '', url);
     statusEl.innerHTML = '<span class="avail-spinner" aria-hidden="true"></span>' +
       'Checking availability for <b>' + escapeHtml(selected.name) +
       '</b>… (querying recreation.gov, may take a few seconds)';
@@ -463,24 +546,48 @@
       ' matching site' + (sites.length !== 1 ? 's' : '') + ' found.</span>';
 
     if (!sites.length) {
-      resultsEl.innerHTML = '<p class="summary-line">No EKKO-friendly sites have any availability in that range at <b>' +
-        escapeHtml(fac.name || '') + '</b>. Try different dates or a lower fit threshold.</p>' +
+      resultsEl.innerHTML = '<p class="summary-line">No sites EKKO fits are open in that range at <b>' +
+        escapeHtml(fac.name || '') + '</b>. Try different dates, or lower the minimum site length.</p>' +
         bookingLink(fac);
       return;
     }
 
-    let html = '<p class="summary-line"><b>' + sites.length + '</b> EKKO-friendly site' +
-      (sites.length !== 1 ? 's' : '') + ' with availability' +
-      (data.fully_available ? ' — <b>' + data.fully_available + '</b> open every night' : '') +
-      ' at ' + escapeHtml(fac.name || '') + ' (fit ≥ ' + data.fit_ft + ' ft). ' + bookingLink(fac) + '</p>';
+    let html = '<p class="summary-line"><b>' + sites.length + '</b> site' +
+      (sites.length !== 1 ? 's' : '') + ' EKKO fits have openings' +
+      (data.fully_available ? ' — <b>' + data.fully_available + '</b> free every night' : '') +
+      ' at ' + escapeHtml(fac.name || '') + ' (at least ' + data.fit_ft + ' ft long). ' +
+      bookingLink(fac) + '</p>';
 
     html += '<div class="legend">' +
       '<span><span class="swatch open">✓</span> Available</span>' +
       '<span><span class="swatch closed">·</span> Reserved / not released / closed</span>' +
-      '<span><span class="verdict-tag verdict-fits">fits</span> driveway ≥ threshold</span>' +
+      '<span><span class="verdict-tag verdict-fits">fits</span> long enough for EKKO</span>' +
       '<span><span class="verdict-tag verdict-tight">tight</span> 23–24 ft</span>' +
-      '<span><span class="verdict-tag verdict-unknown">unknown</span> length not in data — verify</span>' +
+      '<span><span class="verdict-tag verdict-unknown">unknown</span> length not listed — check before booking</span>' +
       '</div>';
+
+    // Phones get a per-site summary list instead of the grid: 93 columns of
+    // one-night cells is unreadable on a 375px screen, and horizontally
+    // scrolling a table to find a green cell is not a real answer. Both are
+    // rendered; CSS shows exactly one (see the ≤700px block).
+    html += '<ul class="avail-cards">';
+    sites.forEach(s => {
+      const open = s.statuses.filter(st => st === 'Available').length;
+      const dl = s.driveway_ft ? Math.round(s.driveway_ft) + ' ft' : 'length unknown';
+      html += '<li class="ac-item">' +
+        '<div class="ac-head"><span class="ac-name">' + escapeHtml(s.name) + '</span>' +
+        '<span class="verdict-tag verdict-' + s.verdict + '">' + dl + '</span></div>' +
+        '<div class="ac-nights' + (open ? '' : ' none') + '">' +
+        (open ? '<b>' + open + '</b> of ' + nights.length + ' night' +
+                (nights.length !== 1 ? 's' : '') + ' open' +
+                (s.fully_available ? ' — every night' : '')
+              : 'No openings') + '</div>' +
+        (open ? '<div class="ac-dates">' + s.statuses
+            .map((st, i) => st === 'Available' ? fmtNight(nights[i]) : null)
+            .filter(Boolean).join(', ') + '</div>' : '') +
+        '</li>';
+    });
+    html += '</ul>';
 
     html += '<div class="grid-wrap"><table class="avail-grid"><thead><tr>';
     html += '<th class="site-col">Site</th>';

@@ -2836,7 +2836,13 @@ def api_ridb_search():
     if len(q) < 2:
         return jsonify([])
     if not os.environ.get("RIDB_API_KEY"):
-        return jsonify({"error": "RIDB_API_KEY not configured on the server."}), 503
+        # Viewer-facing copy: "RIDB_API_KEY not configured" named an
+        # environment variable the reader has no access to and can't act on. Say
+        # what it means for them and who can fix it. The server log still has
+        # the specifics.
+        return jsonify({"error": "Live availability isn't set up on this server "
+                                 "yet — ask Andrew. You can still book directly "
+                                 "on recreation.gov."}), 503
     try:
         results = search_facilities(q)
     except Exception:
@@ -2871,7 +2877,13 @@ def api_ridb_availability():
     if (end - start).days > 92:
         return jsonify({"error": "Range too large — pick 3 months or less."}), 400
     if not os.environ.get("RIDB_API_KEY"):
-        return jsonify({"error": "RIDB_API_KEY not configured on the server."}), 503
+        # Viewer-facing copy: "RIDB_API_KEY not configured" named an
+        # environment variable the reader has no access to and can't act on. Say
+        # what it means for them and who can fix it. The server log still has
+        # the specifics.
+        return jsonify({"error": "Live availability isn't set up on this server "
+                                 "yet — ask Andrew. You can still book directly "
+                                 "on recreation.gov."}), 503
 
     try:
         facility = fetch_facility(fid)
