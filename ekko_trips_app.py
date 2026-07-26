@@ -1199,21 +1199,9 @@ def inject_share_identity():
     """
     name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
     if not name.startswith(SHARE_ID_PREFIX):
-        return {"is_share_guest": False, "share_guest_label": "",
-                "share_guest_url": ""}
-    token = name[len(SHARE_ID_PREFIX):]
-    rec = _load_json(SHARE_TOKENS_FILE).get(token) or {}
-    # The guest's own magic link, so the app can offer it as something to
-    # bookmark. `/s/<token>` 302s to the destination, so it is in the address
-    # bar for a fraction of a second and never becomes a history entry — the
-    # only URL a guest could bookmark was an ordinary path that works solely
-    # while their cookie lives. Handing them the real link here is the fix.
-    #
-    # Only ever rendered for the holder of that token (they arrived with it),
-    # so this exposes nothing they don't already have.
-    return {"is_share_guest": True,
-            "share_guest_label": rec.get("label") or "",
-            "share_guest_url": url_for('share_login', token=token, _external=True)}
+        return {"is_share_guest": False, "share_guest_label": ""}
+    rec = _load_json(SHARE_TOKENS_FILE).get(name[len(SHARE_ID_PREFIX):]) or {}
+    return {"is_share_guest": True, "share_guest_label": rec.get("label") or ""}
 
 
 def _can_view_campgrounds():
@@ -1787,7 +1775,6 @@ def trips_map():
 
     return render_template('trips_map.html', trips=trips, home=home,
                            family_locations=family, active_nav='map',
-                           state_names=STATE_NAMES,
                            slideshow_photos=all_photos,
                            latest_trip=latest_trip,
                            latest_trip_date=latest_trip_date)
