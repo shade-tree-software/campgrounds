@@ -5,14 +5,14 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T13:14:09.119Z
+  modified: 2026-07-26T14:03:44.113Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
 
 Three-agent review of the viewer experience: regular logged-in viewers, share-link guests (`share:<token>`), and Trips-only users (`can_view_campgrounds=false`). Work off this backlog in future sessions; check items off (`[x]`) as they land and note the commit.
 
-**Status:** Batch 1 ✅ **done** (7/7, commit `cbc6ccf`, 2026-07-26) · Batch 2 ✅ **done** (10/10, commits `a6050d0`→`98eea64`, 2026-07-26) · Batch 3 ⬜ not started (7 items). Findings above the backlog are the *diagnosis* and stay as written — don't re-review them; the checkboxes are the live state.
+**Status: ALL THREE BATCHES ✅ DONE** (2026-07-26). Batch 1 (7/7, `cbc6ccf`) · Batch 2 (10/10, `a6050d0`→`98eea64`) · Batch 3 (7/7, `38632b7`→`d90a37f`). Findings above the backlog are the *diagnosis* and stay as written — don't re-review them; the checkboxes are the live state. Nothing here is outstanding; a future UX pass should start from a fresh review rather than this file.
 
 **Scope decision (AWH):** this is a private family app — see [[app-is-private-family-only]]. Family home locations SHOULD be visible to all users; do not treat that as a privacy issue. Privacy-flavored findings from the original review were removed accordingly.
 
@@ -116,11 +116,17 @@ The same few gaps repeat: empty `alt` on the lightbox image (`_lightbox.html:16`
 
 **Not verified in a real browser** (no headless browser on this machine) — same caveat as Batch 1. Verification was server-side render smoke tests (admin + non-admin, all pages 200/302 as expected), an ETag 200→304 round trip, a payload-size measurement, and a Python port of the search ranking run against the real 12,872-row data. Worth clicking through once: campground-map popups (lazy detail + admin quick-edit), and the trip-detail map's new scroll behavior on a phone.
 
-### Batch 3 — bigger features worth considering
-- [ ] Cross-trip photo gallery (`/trips/photos` over `_collect_photo_pool()`), linked from the Stats photo count
-- [ ] Trip search surfaced on the landing page (haystack machinery already exists); "All years" list view
-- [ ] Day dividers in the trip timeline; photo "+N more" expander; mobile header stat restoration
-- [ ] Guest welcome card on first share-session page load; Open Graph tags for link previews
-- [ ] Mid-size (~1600px) photo derivative for the lightbox
-- [ ] Availability page overhaul: client-side range cap, deep-linkable results, auto-run on `?cg=`, mobile summary view, keyboard dropdown, de-jargoned copy
-- [ ] Stats-page links (year bars → calendar, campspots/states → search) + stats caching
+### Batch 3 — **DONE (2026-07-26, commits `38632b7` `ee83a79` `2e4c5b3` `14a1e26` `19264cb` `7475757` `d90a37f`)**
+- [x] Cross-trip photo gallery `/trips/photos` — 60/page, newest trip first, opens the shared lightbox with its trip card. Server-side `_photo_place_name()` is the twin of the trips-map client-side version. **Copy pool items, never annotate them** (shared across requests).
+- [x] Trip search on the landing page (live dropdown over the already-embedded `TRIPS`; "see all N" hands off to `/trips/list?q=`). Publishes `--tripfind-height`, subtracted by every map viewport calc — same contract as `--otd-height`. **"All years" list view** via `#all` in the hash.
+- [x] Day dividers (from each timeline item's `sort_date`, only when the trip spans >1 day; new `daylabel` filter); phone photo grids collapse to 6 with "Show all N" (`expandPhotoGrid` lives in **boot.js**, since photos.js is admin/uploader-only); mobile header regained photos + campers + GPS miles.
+- [x] Open Graph tags — **deliberately generic, not per-trip**: a crawler fetching `/s/<token>` authenticates as the guest, so trip-specific tags would leak real trip names into its preview cache. `og:url` omitted so the card can't echo the magic link.
+- [x] **1600px `/view/` derivative** for the lightbox (~10% of original bytes, measured). `_ensure_derivative()` is now shared by thumb + view. **`data-view` displays, `data-full` stays the original so the download button is unaffected.** New derivative dirs must be added to `DERIVATIVE_DIRNAMES`, `backup.sh`, `sync-from-pa.sh` (incl. its `CACHE_DIRS` reaper list) and `sw.js`'s cache-first list. sw.js VERSION → v9.
+- [x] Availability overhaul: deep-linkable (`cg/start/end/fit` in the URL, restored on load), `?cg=` auto-runs, client-side 92-night cap, phone per-site summary list replacing the 93-column grid, keyboard dropdown, de-jargoned copy, and the `RIDB_API_KEY not configured` message replaced with something a viewer can act on.
+- [x] Stats links (year bars → `/trips/calendar#YYYY`, campspots/states → `/trips/list?q=`, photo count → the gallery) + **stats caching keyed on the 3 input mtimes: 1142ms → 50ms**. Photo count is deliberately OUTSIDE that cache (uploads change no JSON) — it comes from `_collect_photo_pool()`.
+
+### Found in the field during Batch 3 (all fixed)
+- **Share links couldn't be bookmarked** — `/s/<token>` 302s away, so the only bookmarkable URL was an ordinary path that dies with the cookie. Worse: `manifest.json` had `start_url: "/"`, and an installed iOS web app doesn't share Safari's cookie jar, so "Add to Home Screen" gave a guest an icon opening on a login wall. Fixed by a copyable "Your link" panel on the guest chip **and a Flask-served manifest whose `start_url` is the guest's own `/s/<token>`** (`38632b7`).
+- **Trip-map legend drifted from the markers** (AWH): "Stop" drew in the event's gold when waypoints are `#aaa` and smaller; the home swatch used a ⌂ glyph, not the marker's house SVG. Both now read from shared constants — the SVG had been pasted in 3 places.
+- **ctrl+scroll to zoom was rejected** (AWH): the map is a deliberate half of the page, so the cursor already disambiguates. Reverted to Leaflet's default. The touch override (one finger scrolls, two fingers pan) stays.
+- **The "use two fingers" hint was removed** (AWH): on a phone it landed under the legend/scale/attribution, and pinch-to-move is universal. That emptied `setupGestureHandling` entirely.
