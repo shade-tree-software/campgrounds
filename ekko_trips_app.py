@@ -1,5 +1,6 @@
 import argparse
 import gzip
+import hashlib
 import json
 import os
 import re
@@ -1600,6 +1601,30 @@ def _load_roadside():
             if s.get("latitude") is not None and s.get("longitude") is not None]
 
 
+# Fields the campground map needs on EVERY marker, up front: enough to place the
+# dot, color it, filter it, search it, and open a popup header. Everything else
+# (note, website, phone, elevation, the visited-trips list) is popup filler —
+# real content, but only ever for the one or two entries a user actually clicks.
+# At ~12.9k rows the filler dominated the page: `note` alone was 3.88 MB and
+# `website` another 1.09 MB of a 7.54 MB inline blob. It now loads on demand from
+# `/api/campgrounds/<id>/popup`.
+_MAP_MARKER_FIELDS = ("id", "name", "state", "location",
+                      "waterfront", "climate", "ownership", "visit_count")
+# Popup-only fields, served per-id by the detail endpoint.
+_MAP_POPUP_FIELDS = ("elevation_feet", "note", "phone", "website", "trips")
+
+
+def _map_marker_rows(rows):
+    """Project campground rows down to the per-marker essentials.
+
+    Also drops two fields nothing has ever read: `delta_temp` (superseded by the
+    `climate` label derived from it) and `kind`, which is the constant
+    "campground" here because `_load_campgrounds` already filtered family
+    entries out — together ~384 KB of pure padding.
+    """
+    return [{k: r[k] for k in _MAP_MARKER_FIELDS if k in r} for r in rows]
+
+
 def _parse_latlng(loc):
     """Parse a 'lat,lng' string into (lat, lng) floats, or None if invalid."""
     try:
@@ -2438,6 +2463,32 @@ OWNERSHIP_LABELS = {
 }
 
 
+# Everything that can change the rendered map page. The data files are the
+# obvious inputs; the templates and this module are in there so a DEPLOY
+# invalidates every client's copy — serving a stale page after a code change is
+# exactly the bug `_revalidate_html` exists to prevent, and an ETag that ignored
+# code would reintroduce it.
+_MAP_ETAG_INPUTS = (
+    CAMPGROUNDS_JSON, HOME_FILE, TRIPS_JSON, ROADSIDE_JSON,
+    os.path.join(os.path.dirname(__file__), "templates", "campground_map.html"),
+    os.path.join(os.path.dirname(__file__), "templates", "base.html"),
+    os.path.abspath(__file__),
+)
+
+
+def _map_etag(*extra):
+    """ETag for the campground map: input mtimes + whatever varies the render.
+
+    The page is ~1.9 MB even gzipped and changes only when the campground data
+    or the code does, but it carries no validator — so a back/forward within
+    seconds re-downloads the whole thing. With this, the same `no-cache`
+    revalidation `_revalidate_html` forces turns into a 304.
+    """
+    parts = [str(_file_mtime_ns(p)) for p in _MAP_ETAG_INPUTS]
+    parts.extend(str(x) for x in extra)
+    return '"' + hashlib.sha256("|".join(parts).encode()).hexdigest()[:32] + '"'
+
+
 @app.route('/campgrounds/map')
 def campgrounds_map():
     denied = _require_campground_view_page()
@@ -2448,10 +2499,16 @@ def campgrounds_map():
     mode = request.args.get('color')
     if mode not in {m["key"] for m in COLOR_MODES}:
         mode = COLOR_MODES[0]["key"]
-    return render_template(
+
+    # `mode` and `is_admin` both change the rendered output, so both vary the tag.
+    etag = _map_etag(mode, is_admin)
+    if request.if_none_match.contains(etag.strip('"')):
+        return Response(status=304, headers={"ETag": etag})
+
+    resp = app.make_response(render_template(
         'campground_map.html',
         title='Map',
-        campgrounds=_load_campgrounds(),
+        campgrounds=_map_marker_rows(_load_campgrounds()),
         roadside=_load_roadside(),
         color_modes=COLOR_MODES,
         default_mode=mode,
@@ -2460,7 +2517,29 @@ def campgrounds_map():
         family_locations=family,
         active_nav='campmap',
         is_admin=is_admin,
-    )
+    ))
+    resp.headers["ETag"] = etag
+    return resp
+
+
+@app.route('/api/campgrounds/<int:cg_id>/popup')
+def api_campground_popup(cg_id):
+    """Popup-only detail for one campground (see `_MAP_POPUP_FIELDS`).
+
+    The map ships ~12.9k slim markers and fetches this when a popup opens, so the
+    long-tail text is paid for per-click instead of per-page-load. Served off the
+    same `_load_campgrounds` cache the page renders from, so it costs a dict
+    lookup, and it carries the map's ETag so a revisit revalidates to a 304.
+    """
+    denied = _require_campground_view_api()
+    if denied:
+        return denied
+    row = next((r for r in _load_campgrounds() if r.get("id") == cg_id), None)
+    if row is None:
+        return jsonify({"error": "Campground not found"}), 404
+    resp = jsonify({k: row[k] for k in _MAP_POPUP_FIELDS if k in row})
+    resp.headers["ETag"] = _map_etag("popup", cg_id)
+    return resp
 
 
 # Legacy split-map URLs now redirect to the combined map with the matching mode.

@@ -338,6 +338,18 @@
   .cg-visits.expanded .show-more { display: none; }
   .cg-visits .show-more { cursor: pointer; font-style: italic; }
 
+  /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
+  .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
+  .cg-popup-loading::after {
+    content: ''; display: inline-block; vertical-align: -2px; margin-left: .4em;
+    width: 10px; height: 10px; border: 2px solid #ccc; border-top-color: #888;
+    border-radius: 50%; animation: cg-spin .7s linear infinite;
+  }
+  @keyframes cg-spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) {
+    .cg-popup-loading::after { animation: none; }
+  }
+
   /* Admin edit/delete links inside a roadside-stop popup. */
   .rs-popup-admin { margin-top: .4rem; font-size: .85em; }
   .rs-popup-admin a { color: #002868; cursor: pointer; }
@@ -876,7 +888,7 @@ function roadsidePopupHtml(s) {
 
 function addRoadsideMarker(s) {
   const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
-  marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320 });
+  marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320, maxHeight: 320 });
   // Roadside stops double as route endpoints while the route tool is armed, like
   // the campground/home/family markers. Attach after bindPopup so routeMarkerClick's
   // synchronous closePopup() wins the click dispatch. routeMarkerClick is hoisted,
@@ -1015,54 +1027,83 @@ map.on('overlayadd overlayremove', (e) => {
 const markers = [];  // { marker, cg }
 const cgById = new Map();  // id -> { marker, cg }, for the admin inline quick-edit
 
+// ── Lazy popup detail ───────────────────────────────────────────────────────
+// The page payload carries only what every marker needs to be placed, colored,
+// filtered and searched (see _MAP_MARKER_FIELDS in ekko_trips_app.py). The
+// popup-only text — note, website, phone, elevation, the visited-trips list —
+// was 65% of a 7.5 MB inline blob for content a user sees on the handful of
+// campgrounds they actually click, so it's fetched per id on first open and
+// then cached on the row as `cg._detail`.
+const cgDetailPending = new Set();
+function loadCgDetail(cg, onDone) {
+  if (cg._detail || cg.id == null || cgDetailPending.has(cg.id)) return;
+  cgDetailPending.add(cg.id);
+  fetch(`/api/campgrounds/${cg.id}/popup`)
+    .then(r => r.ok ? r.json() : Promise.reject(r.status))
+    // A failure is cached too, as a marked-failed object: without it every
+    // re-open of an offline popup would refire the same doomed request.
+    .catch(() => ({ failed: true }))
+    .then(d => { cg._detail = d; cgDetailPending.delete(cg.id); onDone(); });
+}
+
 // Popup HTML for one campground. Extracted so an inline edit can regenerate it
-// (marker.setPopupContent) without a reload.
+// (marker.setPopupContent) without a reload. Renders whatever is known now: the
+// header is always available, the detail block fills in once the fetch lands.
 function cgPopupHtml(cg) {
+  const d = cg._detail;
   let popup = `<strong>${escapeHtml(cg.name)}</strong>`;
   if (cg.state) popup += `<br>${escapeHtml(cg.state)}`;
-  if (cg.elevation_feet) popup += ` &middot; ${cg.elevation_feet} ft`;
+  if (d && d.elevation_feet) popup += ` &middot; ${d.elevation_feet} ft`;
   const wf = cg.waterfront || 'not waterfront';
   if (wf === 'not waterfront') {
     popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
   } else {
     popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;
   }
-  if (cg.visit_count) {
-    popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
-    const SHOW_BY_DEFAULT = 3;
-    (cg.trips || []).forEach((v, i) => {
-      const dateStr = v.stay_start || v.start;
-      const fmt = dateStr
-        ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-        : '';
-      const cls = i >= SHOW_BY_DEFAULT ? ' class="extra"' : '';
-      popup += `<a href="/trips/${v.id}"${cls}>Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
-    });
-    const extra = (cg.trips || []).length - SHOW_BY_DEFAULT;
-    if (extra > 0) {
-      popup += `<a class="show-more" onclick="event.preventDefault(); this.parentElement.classList.add('expanded');">Show ${extra} more</a>`;
-    }
-    popup += '</div>';
-  }
-  if (cg.note) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(cg.note)}</span>`;
-  if (cg.phone) {
-    cg.phone.split(/[,;\n]+/).forEach(p => {
-      p = p.trim();
-      if (p) popup += `<br><a href="tel:${p}">${escapeHtml(p)}</a>`;
-    });
-  }
-  if (cg.website) {
-    cg.website.split('\n').forEach(url => {
-      url = url.trim();
-      if (!url) return;
-      try {
-        const domain = new URL(url).hostname.replace(/^www\./, '');
-        popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
-      } catch (e) {
-        popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
+
+  if (!d) {
+    popup += `<br><span class="cg-popup-loading">Loading details…</span>`;
+  } else if (d.failed) {
+    popup += `<br><span style="color:#888;font-size:.9em;">Details unavailable — you may be offline.</span>`;
+  } else {
+    if (cg.visit_count) {
+      popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
+      const SHOW_BY_DEFAULT = 3;
+      (d.trips || []).forEach((v, i) => {
+        const dateStr = v.stay_start || v.start;
+        const fmt = dateStr
+          ? new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+          : '';
+        const cls = i >= SHOW_BY_DEFAULT ? ' class="extra"' : '';
+        popup += `<a href="/trips/${v.id}"${cls}>Trip ${v.number}: ${fmt} — ${v.summary}</a>`;
+      });
+      const extra = (d.trips || []).length - SHOW_BY_DEFAULT;
+      if (extra > 0) {
+        popup += `<a class="show-more" onclick="event.preventDefault(); this.parentElement.classList.add('expanded');">Show ${extra} more</a>`;
       }
-    });
+      popup += '</div>';
+    }
+    if (d.note) popup += `<br><span style="color:#555;font-size:.9em;">${noteHtml(d.note)}</span>`;
+    if (d.phone) {
+      d.phone.split(/[,;\n]+/).forEach(p => {
+        p = p.trim();
+        if (p) popup += `<br><a href="tel:${p}">${escapeHtml(p)}</a>`;
+      });
+    }
+    if (d.website) {
+      d.website.split('\n').forEach(url => {
+        url = url.trim();
+        if (!url) return;
+        try {
+          const domain = new URL(url).hostname.replace(/^www\./, '');
+          popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
+        } catch (e) {
+          popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
+        }
+      });
+    }
   }
+
   // Federal campgrounds are on recreation.gov — link to the availability page
   // with the name pre-filled (it searches RIDB and auto-selects the match).
   if (cg.ownership === 'federal') {
@@ -1070,7 +1111,16 @@ function cgPopupHtml(cg) {
       + `Check availability &rarr;</a>`;
   }
   const [cgLat, cgLng] = (cg.location || '').split(',').map(parseFloat);
-  if (Number.isFinite(cgLat) && Number.isFinite(cgLng)) popup += distanceAndRouteLine(cgLat, cgLng);
+  if (Number.isFinite(cgLat) && Number.isFinite(cgLng)) {
+    // "How do I get there" is the whole point of finding a campground on a map,
+    // and roadside stops have had this link all along (they ship a stored
+    // maps_url). Campgrounds have lat/lng in hand, so build the same link from
+    // the coordinates — pinning the exact spot rather than searching the name,
+    // which for the 286 duplicated names in the database would land elsewhere.
+    popup += `<br><a href="https://www.google.com/maps/dir/?api=1&destination=${cgLat},${cgLng}"`
+      + ` target="_blank" rel="noopener">Directions &#8599;</a>`;
+    popup += distanceAndRouteLine(cgLat, cgLng);
+  }
   if (IS_ADMIN) {
     popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;">`
       + `<a onclick="cgQuickEdit(${cg.id})" style="font-size:.85em;cursor:pointer;">edit</a>`
@@ -1157,8 +1207,16 @@ CAMPGROUNDS.forEach(cg => {
   }).addTo(map);
 
   // Function-content so the "X mi away" line recalculates against the current
-  // location each time the popup opens (popups are bound at load, before locating).
-  marker.bindPopup(() => cgPopupHtml(cg), { maxWidth: 420 });
+  // location each time the popup opens (popups are bound at load, before
+  // locating) — and so a late-arriving detail fetch can re-render by calling
+  // popup.update(), which re-invokes this function.
+  // maxHeight keeps a long note from growing the popup past a phone screen:
+  // Leaflet scrolls the content instead, so the close button stays reachable.
+  marker.bindPopup(() => cgPopupHtml(cg), { maxWidth: 420, maxHeight: 320 });
+  marker.on('popupopen', () => loadCgDetail(cg, () => {
+    const p = marker.getPopup();
+    if (p && p.isOpen()) p.update();
+  }));
 
   const rec = { marker, cg };
   markers.push(rec);
@@ -2469,16 +2527,22 @@ function trimmedBounds(coords, frac) {
     const rec = cgById.get(id);
     if (!rec) { window.toast('Campground not found'); return; }
     const cg = rec.cg;
+    // note/phone/website/elevation live in the lazily-fetched detail, not the
+    // page payload. The only way here is the popup's "edit" link, so the fetch
+    // has already landed — but fall back to empty rather than "undefined" if it
+    // somehow hasn't (a failed request), since a blank field would otherwise
+    // save over real data.
+    const d = (cg._detail && !cg._detail.failed) ? cg._detail : {};
     document.getElementById('cq-id').value = id;
     document.getElementById('cq-name').value = cg.name || '';
     document.getElementById('cq-location').value = cg.location || '';
     document.getElementById('cq-waterfront').value = cg.waterfront || 'not waterfront';
-    document.getElementById('cq-note').value = cg.note || '';
-    document.getElementById('cq-phone').value = cg.phone || '';
-    document.getElementById('cq-website').value = cg.website || '';
+    document.getElementById('cq-note').value = d.note || '';
+    document.getElementById('cq-phone').value = d.phone || '';
+    document.getElementById('cq-website').value = d.website || '';
     document.getElementById('cq-more').href = '/campgrounds/manage?edit=' + id;
     editOrigLocation = cg.location || '';
-    editOrigElevFeet = (cg.elevation_feet != null && cg.elevation_feet !== '') ? cg.elevation_feet : '';
+    editOrigElevFeet = (d.elevation_feet != null && d.elevation_feet !== '') ? d.elevation_feet : '';
     cqElevMeters = null; cqElevForLoc = '';
     setElev(editOrigElevFeet !== '' ? editOrigElevFeet + ' ft' : '—');
     backdrop.classList.add('open');
@@ -2555,11 +2619,14 @@ function trimmedBounds(coords, frac) {
     cg.name = payload.name;
     cg.location = payload.location;
     cg.waterfront = payload.waterfront;
-    cg.note = payload.note;
-    cg.website = payload.website;
-    cg.phone = payload.phone;
+    // Mirror the edit into the cached detail so the popup re-renders with the
+    // new text instead of the pre-save copy (the fetch won't run again).
+    const d = cg._detail = (cg._detail && !cg._detail.failed) ? cg._detail : {};
+    d.note = payload.note;
+    d.website = payload.website;
+    d.phone = payload.phone;
     if (payload.elevation_meters != null) {
-      cg.elevation_feet = Math.round(payload.elevation_meters * METERS_TO_FEET);
+      d.elevation_feet = Math.round(payload.elevation_meters * METERS_TO_FEET);
     }
     const [lat, lng] = cg.location.split(',').map(parseFloat);
     if (!isNaN(lat) && !isNaN(lng)) rec.marker.setLatLng([lat, lng]);
