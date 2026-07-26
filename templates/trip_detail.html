@@ -1798,7 +1798,10 @@
       <span class="card-actions">{% if is_admin %}<button class="edit-btn-dark" onclick="editStay({{ item.idx }})">Edit</button>{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('stay', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
-    {% if item.copy_num == 1 %}
+    {# Admin-only: the form is hidden until Edit is clicked, and only admins get
+       an Edit button — rendering it for viewers shipped the whole campspot form
+       (autocomplete, map-picker hooks) into a DOM that could never open it. #}
+    {% if is_admin and item.copy_num == 1 %}
     <div class="stay-edit-form" id="stay-edit-{{ item.idx }}">
       <div class="form-grid">
         <div>
@@ -1931,6 +1934,8 @@
       <span class="card-actions">{% if is_admin %}{% if is_bare %}<button class="edit-btn-dark" onclick="openEditModal('{% if item.family_visit %}family_visit{% elif item.waypoint %}waypoint{% else %}event{% endif %}', {{ item.idx }})">Edit</button>{% else %}<button class="edit-btn-dark" onclick="editEvent({{ item.idx }})">Edit</button>{% endif %}{% endif %}<button class="edit-btn-dark" onclick="uploadPhotosForItem('event', {{ item.idx }})">Upload Photos</button></span>
       {% endif %}
     </div>
+    {# Admin-only, same reasoning as the campspot form above. #}
+    {% if is_admin %}
     <div class="event-edit-form" id="event-edit-{{ item.idx }}">
       {% if item.family_visit %}
       <div class="form-grid">
@@ -2014,6 +2019,7 @@
         <button class="btn-save" onclick="saveEvent({{ item.idx }})">Save</button>
       </div>
     </div>
+    {% endif %}
     {% if is_admin or item.description or event_photos[item.idx] %}
     <div class="event-body" id="event-body-{{ item.idx }}">
       {% if item.description %}
@@ -2309,12 +2315,22 @@ window.TRIP_BOOT = {
   home_coords: {{ home | tojson }},
 };
 </script>
-<script src="{{ static_v('map-picker.js') }}"></script>
+{# Only boot/lightbox/map are viewer-facing. The editing modules are ~120 KB of
+   JS whose every entry point is behind an admin-gated control, and photos.js
+   self-checks IS_ADMIN/IS_UPLOADER on entry — so a plain viewer was paying for
+   all of it on every trip page and could use none of it. Load per capability.
+   NOTE: map.js guards its calls into overrides.js with IS_ADMIN for exactly
+   this reason — keep those guards in sync if you add another cross-module call. #}
 <script src="{{ static_v('trip-detail/boot.js') }}"></script>
 <script src="{{ static_v('lightbox.js') }}"></script>
-<script src="{{ static_v('trip-detail/detect-stops.js') }}"></script>
+{% if is_admin or is_uploader %}
 <script src="{{ static_v('trip-detail/photos.js') }}"></script>
+{% endif %}
+{% if is_admin %}
+<script src="{{ static_v('map-picker.js') }}"></script>
+<script src="{{ static_v('trip-detail/detect-stops.js') }}"></script>
 <script src="{{ static_v('trip-detail/overrides.js') }}"></script>
 <script src="{{ static_v('trip-detail/timeline.js') }}"></script>
+{% endif %}
 <script src="{{ static_v('trip-detail/map.js') }}"></script>
 {% endblock %}

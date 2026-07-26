@@ -27,7 +27,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override,
-                   campground_references, camping_nights, TRIPS_JSON)
+                   campground_references, camping_nights, is_day_trip,
+                   TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -258,7 +259,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 def inject_trip_stats():
     trips = [t for t in parse_trips() if not t.get("home_only")]
     overnight = sum(1 for t in trips if t["stays"])
-    daytrips = sum(1 for t in trips if not t["stays"])
+    # is_day_trip(), matching the stats page — an empty placeholder trip has
+    # no campspots AND no events and counts as neither.
+    daytrips = sum(1 for t in trips if is_day_trip(t))
     return {
         "overnight_count": overnight,
         "daytrip_count": daytrips,
@@ -1103,6 +1106,21 @@ def _require_uploader_or_admin():
     return None
 
 
+@app.context_processor
+def inject_share_identity():
+    """Expose share-link guest identity to every template.
+
+    The nav needs it because Logout is a one-way door for a guest: they have no
+    password to get back in, and their only route back is re-finding the magic
+    link in an old text message. Templates swap it for a read-only chip.
+    """
+    name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
+    if not name.startswith(SHARE_ID_PREFIX):
+        return {"is_share_guest": False, "share_guest_label": ""}
+    rec = _load_json(SHARE_TOKENS_FILE).get(name[len(SHARE_ID_PREFIX):]) or {}
+    return {"is_share_guest": True, "share_guest_label": rec.get("label") or ""}
+
+
 def _can_view_campgrounds():
     """True unless the current user is a Trips-only user (campground access cleared)."""
     return (current_user.is_authenticated
@@ -1111,9 +1129,14 @@ def _can_view_campgrounds():
 
 def _require_campground_view_page():
     """For Campgrounds-section page routes: redirect Trips-only users away to the
-    trips map. Returns a response to short-circuit with, or None to proceed."""
+    trips map. Returns a response to short-circuit with, or None to proceed.
+
+    Carries ?notice= so the landing page can say *why* — a silent bounce makes a
+    campground link texted by a family member read as a broken link rather than
+    a permission boundary. base.html turns the param into a toast and strips it.
+    """
     if not _can_view_campgrounds():
-        return redirect(url_for('trips_map'))
+        return redirect(url_for('trips_map', notice='campgrounds_restricted'))
     return None
 
 
@@ -1651,7 +1674,7 @@ def trips_stats():
 
     total_trips = len(trips)
     total_overnight = sum(1 for t in trips if t.get("stays"))
-    total_day_trips = sum(1 for t in trips if not t.get("stays") and t.get("events"))
+    total_day_trips = sum(1 for t in trips if is_day_trip(t))
     # camping_nights(), not total_nights: a mixed trip (home for a few nights
     # mid-trip, then back out) would otherwise count those home nights as
     # camping. All-time and per-year use the same rule so they can't disagree.
@@ -1794,7 +1817,11 @@ def trip_detail(trip_id):
     trips = parse_trips()
     trip = next((t for t in trips if t["id"] == trip_id), None)
     if not trip:
-        return "Trip not found", 404
+        # abort(), not a bare text response: a stale link (a deleted trip, a
+        # share guest following an old text message) is the most likely 404 in
+        # the app, and it should land on the styled error page with a way back
+        # rather than unstyled text with no header.
+        abort(404)
 
     enrich_trip_locations(trip)
 
@@ -2398,14 +2425,18 @@ def campgrounds_map():
 
 
 # Legacy split-map URLs now redirect to the combined map with the matching mode.
+# Both gate first: redirecting a Trips-only user to /campgrounds/map only to have
+# that page bounce them again is a pointless double hop.
 @app.route('/campgrounds/waterfront')
 def campgrounds_waterfront():
-    return redirect(url_for('campgrounds_map', color='waterfront'))
+    return _require_campground_view_page() or redirect(
+        url_for('campgrounds_map', color='waterfront'))
 
 
 @app.route('/campgrounds/climate')
 def campgrounds_climate():
-    return redirect(url_for('campgrounds_map', color='climate'))
+    return _require_campground_view_page() or redirect(
+        url_for('campgrounds_map', color='climate'))
 
 
 # ── Federal campground availability (recreation.gov / RIDB) ───────────────

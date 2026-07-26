@@ -521,6 +521,16 @@ const MONTH_NAMES = ['January','February','March','April','May','June',
                      'July','August','September','October','November','December'];
 const DOW = ['Su','Mo','Tu','We','Th','Fr','Sa'];
 
+// Format a Date as "YYYY-MM-DD" in the VIEWER'S timezone. toISOString() would
+// convert to UTC first, which breaks in both directions: a Date built from
+// local midnight reads as the previous day for anyone east of UTC (relatives
+// abroad on a share link saw every trip highlighted a day early), and "now"
+// past ~7pm US-Eastern reads as tomorrow. The calendar grid's own cell keys
+// are local-component dates, so these must be too.
+function localDateStr(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
 // Build a lookup: "YYYY-MM-DD" -> [trip, ...]
 const dayToTrips = {};
 TRIPS.forEach(trip => {
@@ -528,7 +538,7 @@ TRIPS.forEach(trip => {
   const start = new Date(trip.start + 'T00:00:00');
   const end = new Date(trip.end + 'T00:00:00');
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-    const key = d.toISOString().slice(0, 10);
+    const key = localDateStr(d);
     if (!dayToTrips[key]) dayToTrips[key] = [];
     dayToTrips[key].push(trip);
   }
@@ -555,7 +565,7 @@ let currentYear = parseHash();
 let currentView = {{ initial_view | tojson }};
 let searchQuery = '';   // active query — when non-empty, list view shows global matches
 
-const todayStr = new Date().toISOString().slice(0, 10);
+const todayStr = localDateStr(new Date());
 
 // Build a single lowercased haystack per trip once, so each keystroke
 // is a fast .includes() check rather than a fresh field-by-field crawl.

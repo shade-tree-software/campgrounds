@@ -827,6 +827,17 @@ def camping_nights(trip):
                if not is_home_stay(s))
 
 
+def is_day_trip(trip):
+    """True for a trip with events but no campspots.
+
+    An EMPTY trip (no campspots AND no events) is not a day trip — it's a
+    placeholder with no date range, excluded from the calendar and every
+    count. The header and the stats page must agree on that, so both go
+    through here rather than each spelling out the predicate.
+    """
+    return not trip.get("stays") and bool(trip.get("events"))
+
+
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                home_start_time="", home_end_time="",
                bad_track_windows=None, tid_overrides=None,

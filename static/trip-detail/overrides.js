@@ -10,7 +10,8 @@
 // and on release every ping inside the circle is added to the selection.
 // Multiple circles add cumulatively; clicking an already-selected ping
 // deselects just that one; unchecking the toggle clears the whole selection.
-const DEFAULT_PING_STYLE = { radius: 5, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
+// DEFAULT_PING_STYLE lives in boot.js — map.js needs it and this module is
+// admin-only. The variants below stay here; nothing else uses them.
 const SELECTED_PING_STYLE = { radius: 6, color: '#1b5e20', weight: 2, fillColor: '#66bb6a', fillOpacity: 1 };
 const SUPPRESSED_PING_STYLE = { radius: 6, color: '#444', weight: 2, fillColor: '#888', fillOpacity: 0.85, dashArray: '3,2' };
 const RELOCATED_PING_STYLE = { radius: 5, color: '#e65100', weight: 2, fillColor: '#ffb74d', fillOpacity: 0.9 };

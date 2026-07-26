@@ -566,7 +566,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     trackLog('ping counts',
       { rawAll: rawAll.length, raw: raw.length,
         suppressed: rawSuppressed.length, relocated: rawRelocated.length });
-    _buildSuppressedRelocatedLayers(rawSuppressed, rawRelocated);
+    // overrides.js is admin-only (see the script tags in trip_detail.html), and
+    // suppressed/relocated ghost layers are an admin affordance anyway.
+    if (IS_ADMIN) _buildSuppressedRelocatedLayers(rawSuppressed, rawRelocated);
 
     if (inWindow.length < 2) {
       trackLog('not enough in-window GPS points to draw a track — using straight track',
@@ -926,8 +928,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // helpers are internally idempotent (`__selectionLassoReady` /
     // `__selectionDragReady` guards), so re-render calls are no-ops after
     // the first.
-    _initSelectionLasso(map);
-    _initSelectionDrag(map);
+    if (IS_ADMIN) {
+      _initSelectionLasso(map);
+      _initSelectionDrag(map);
+    }
     // If selection mode was on when this re-render started (only possible on
     // the very first load — `refetchAndRenderTrack` clears it before
     // refetching), sync the JS-side state so the toolbar/layer/dragging

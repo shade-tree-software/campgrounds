@@ -25,6 +25,13 @@ const HOME_END_TIME = _BOOT.home_end_time || '';
 // and as the route fallback when GPS coverage is missing.
 const HOME_COORDS = _BOOT.home_coords || null;
 
+// Base style for the per-ping GPS circle markers. Lives in boot, not in
+// overrides.js, because map.js draws those markers for EVERY viewer while
+// overrides.js only loads for admins — defining it there left viewers with a
+// ReferenceError that killed the whole GPS track. overrides.js layers its
+// selected/suppressed/relocated variants on top.
+const DEFAULT_PING_STYLE = { radius: 5, color: '#002868', weight: 1, fillColor: '#ffffff', fillOpacity: 1 };
+
 // HTML-escape via a detached <div> — the browser does the work and we
 // read it back. Lives in boot so every later module (lightbox, detect-
 // stops, photos, …) sees it at parse time without an ordering dance.

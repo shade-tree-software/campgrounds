@@ -251,8 +251,14 @@ function toggleLightboxFullscreen() {
 // hit closeLightbox.
 function downloadLightbox(e) {
   if (e) { e.stopPropagation(); e.preventDefault(); }
-  const img = document.getElementById('lightbox-img');
-  const src = img && img.src;
+  // Take the URL from the SOURCE img's data-full, not from the lightbox
+  // <img>'s live .src. While a multi-MB original is still loading the
+  // lightbox is deliberately showing the 480px thumbnail (see openLightbox),
+  // and reading .src there saves that thumbnail under the original's
+  // filename — silently, so the viewer never learns they got a small copy.
+  const source = lightboxPhotos[lightboxIndex];
+  const lbImg = document.getElementById('lightbox-img');
+  const src = (source && (source.dataset.full || source.src)) || (lbImg && lbImg.src);
   if (!src) return;
   const filename = src.split('/').pop().split('?')[0] || 'photo.jpg';
   const a = document.createElement('a');
