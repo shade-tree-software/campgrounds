@@ -63,6 +63,38 @@ MODE_COOLER = "cooler"
 MODE_WARMER = "warmer"
 MODES = (MODE_RANGE, MODE_COOLER, MODE_WARMER)
 
+SORTS = ("distance", "temp", "rain", "waterfront")
+
+# Ranking for the waterfront sort — best first. The tiers follow the curation
+# vocabulary's own hierarchy rather than sorting the strings alphabetically,
+# which would put "bayview" above "lakefront".
+#
+# `coastal woods` sits between the at-the-water types and the view-only ones on
+# purpose. It's an earned on-water designation (you walk through the
+# campground's own undeveloped shore forest to the beach) but it has no
+# sightline, which is exactly why the campground map's "On the water" quick
+# filter excludes it. Ranking it below the water's-edge types honours that
+# exclusion; ranking it above view-only reflects that access beats a view.
+_WATERFRONT_RANKS = {
+    "bayfront": 0, "lakefront": 0, "riverfront": 0,
+    "creekside": 0, "pond": 0, "coastal dunes": 0,
+    # Legacy one-off, not part of the vocabulary: campgrounds.json id 1366
+    # (Sycamore Springs Park, IN) says "riverside". Its --AWH evidence has sites
+    # on the Little Blue River, so it belongs in this tier — without the alias
+    # it would silently sort as "not waterfront". Drop this line once the entry
+    # is normalised to "riverfront".
+    "riverside": 0,
+    "coastal woods": 1,
+    "lakeview": 2, "riverview": 2, "bayview": 2,
+    "not waterfront": 3,
+}
+
+
+def waterfront_rank(value):
+    """Sort rank for a `waterfront` value; anything unrecognised sorts last."""
+    return _WATERFRONT_RANKS.get((value or "not waterfront").strip().lower(), 3)
+
+
 _DAILY_VARS = ("temperature_2m_max", "temperature_2m_min",
                "precipitation_sum", "precipitation_probability_max")
 
@@ -245,7 +277,7 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                        min_high=70.0, max_high=88.0, delta_f=5.0,
                        max_miles=400.0, weekends_only=True,
                        max_precip_in=None, max_precip_chance=None,
-                       prefer_waterfront=False, sort="distance",
+                       sort="distance",
                        max_results=MAX_RESULTS, forecast_budget=FORECAST_BUDGET,
                        forecast_days=FORECAST_DAYS, progress=None, **fetch_kw):
     """Find campgrounds whose forecast matches, grouped one entry per campground.
@@ -260,6 +292,8 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     """
     if mode not in MODES:
         raise ValueError(f"unknown mode {mode!r}")
+    if sort not in SORTS:
+        raise ValueError(f"unknown sort {sort!r}")
     home_lat, home_lng = float(home[0]), float(home[1])
     needs_home = mode in (MODE_COOLER, MODE_WARMER)
 
@@ -398,10 +432,16 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
 
         if not matches:
             continue
-        # The day this cell is "best" on — the sort key, and the headline figure
-        # in the UI.
+        # Per-cell "best day" figures, which are what the sorts rank on. A
+        # campground with six matching days is judged on its best one — sorting
+        # a list of campgrounds by an average of days nobody asked about would
+        # bury the standout weekend among the mediocre midweek ones.
         deltas = [m["delta"] for m in matches if m["delta"] is not None]
         best_delta = (min(deltas) if mode == MODE_COOLER else max(deltas)) if deltas else None
+        highs = [m["high"] for m in matches if m["high"] is not None]
+        best_high = (max(highs) if mode == MODE_WARMER else min(highs)) if highs else None
+        rains = [m["precip"] for m in matches if m["precip"] is not None]
+        min_precip = min(rains) if rains else None
 
         for cg, lat, lng, dist in cell["members"]:
             results.append({
@@ -419,18 +459,35 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 "dist": round(dist, 1),
                 "days": matches,
                 "best_delta": best_delta,
+                "best_high": best_high,
+                "min_precip": min_precip,
+                "waterfront_rank": waterfront_rank(cg.get("waterfront")),
             })
 
     # ── Order ───────────────────────────────────────────────────────────────
+    # Distance is always the tiebreaker: whatever you sorted on, among equals
+    # the nearer one is the better trip.
     def key(r):
-        # Waterfront first is a preference over the whole list, so it leads the
-        # sort key when asked for.
-        wf = (r["waterfront"] == "not waterfront") if prefer_waterfront else False
-        if sort == "delta" and r["best_delta"] is not None:
-            # Cooler wants the most negative delta first, warmer the most
-            # positive — negate so both read as "best first".
-            return (wf, -abs(r["best_delta"]), r["dist"])
-        return (wf, r["dist"], r["name"] or "")
+        if sort == "temp":
+            if mode == MODE_RANGE:
+                # No home temperature to differ from, so rank the actual high:
+                # coolest first, which is what "too hot" searching wants.
+                primary = r["best_high"] if r["best_high"] is not None else 999
+            else:
+                # Cooler wants the most negative delta first, warmer the most
+                # positive — negate the latter so both read as "best first".
+                d = r["best_delta"]
+                primary = (999 if d is None
+                           else (d if mode == MODE_COOLER else -d))
+        elif sort == "rain":
+            # Driest first. Unknown sorts last rather than first — an absent
+            # number is not evidence of a dry day.
+            primary = r["min_precip"] if r["min_precip"] is not None else 999
+        elif sort == "waterfront":
+            primary = r["waterfront_rank"]
+        else:
+            primary = r["dist"]
+        return (primary, r["dist"], r["name"] or "")
 
     results.sort(key=key)
     total = len(results)

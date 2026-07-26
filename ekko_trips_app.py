@@ -2954,6 +2954,9 @@ def api_weather_finder_search():
     mode = data.get("mode", weather_finder.MODE_RANGE)
     if mode not in weather_finder.MODES:
         return jsonify({"error": "Unknown search mode."}), 400
+    sort = data.get("sort", "distance")
+    if sort not in weather_finder.SORTS:
+        return jsonify({"error": "Unknown sort order."}), 400
 
     def num(key, default, lo, hi):
         try:
@@ -2989,8 +2992,7 @@ def api_weather_finder_search():
             mode=mode, min_high=min_high, max_high=max_high, delta_f=delta_f,
             max_miles=max_miles, weekends_only=bool(data.get("weekends_only", True)),
             max_precip_in=max_precip_in, max_precip_chance=max_precip_chance,
-            prefer_waterfront=bool(data.get("prefer_waterfront")),
-            sort=data.get("sort", "distance"),
+            sort=sort,
             user_agent=_OUTBOUND_UA)
     except weather_finder.RateLimited as e:
         return jsonify({"error": str(e)}), 429

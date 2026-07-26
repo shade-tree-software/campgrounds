@@ -30,8 +30,8 @@ parser.add_argument('--delta_f', type=float, default=5,
                     help='[cooler/warmer mode] Minimum difference from home (F).')
 parser.add_argument('--max_precip', type=float, default=None,
                     help='Only days with at most this much rain (inches).')
-parser.add_argument('--prefer_waterfront', action='store_true',
-                    help='List waterfront campgrounds first.')
+parser.add_argument('--sort', choices=wf.SORTS, default='distance',
+                    help='Order results by distance, temp, rain, or waterfront.')
 parser.add_argument('--all_days', action='store_true',
                     help='Include every day, not just weekends.')
 parser.add_argument('--output', default='sorted_summer_days.json',
@@ -53,7 +53,7 @@ result = wf.find_matching_days(
     mode=args.mode,
     min_high=args.min_high_temp, max_high=args.max_high_temp, delta_f=args.delta_f,
     max_miles=args.max_miles, weekends_only=not args.all_days,
-    max_precip_in=args.max_precip, prefer_waterfront=args.prefer_waterfront,
+    max_precip_in=args.max_precip, sort=args.sort,
     progress=lambda done, total: print(f"  fetched {done}/{total} forecast points"),
 )
 
