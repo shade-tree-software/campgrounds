@@ -202,19 +202,23 @@ function refetchAndRenderTrack() {
 }
 window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
-// ── Gesture handling ────────────────────────────────────────────────────────
-// This map is a big fixed panel — the left half of a desktop page, the top band
-// of a phone one — sitting beside a long scrolling timeline. With Leaflet's
-// defaults it ate the scroll the reader meant for the cards: a wheel over it
-// zoomed, and a one-finger swipe up panned. Both are the standard embedded-map
-// fix (what Google Maps embeds do):
-//   - desktop: the wheel scrolls the page; ctrl/⌘ + wheel zooms
-//   - touch:   one finger scrolls the page; two fingers pan the map
+// ── Gesture handling (touch only) ───────────────────────────────────────────
+// On a POINTER device nothing is overridden: the wheel zooms the map when the
+// cursor is over it and scrolls the timeline when it isn't, which is Leaflet's
+// default and what the two-column layout already disambiguates for free.
+// (An earlier version required ctrl/⌘ to zoom — the standard embedded-map
+// treatment — but here the map is a deliberate half of the page rather than a
+// widget inside an article, so the modifier was just friction. AWH 2026-07-26.)
+//
+// TOUCH is the case that does need help: the map is a band across the top of a
+// phone page, so Leaflet's one-finger drag swallowed the swipe meant to scroll
+// the timeline. There, one finger scrolls the page and two fingers pan the map.
 // Leaflet drops its `leaflet-touch-drag` class when dragging is disabled, which
 // restores `touch-action: pan-x pan-y` on the container — that's what lets the
-// browser scroll the page normally while one-finger dragging is off.
-// A transient hint says which gesture to use, so nothing feels broken.
+// browser scroll normally while one-finger dragging is off.
 function setupGestureHandling(map) {
+  if (map.dragging.enabled()) return;   // pointer device: nothing to override
+
   const container = map.getContainer();
   let hintEl = null, hintTimer = null;
 
@@ -230,32 +234,12 @@ function setupGestureHandling(map) {
     hintTimer = setTimeout(() => hintEl.classList.remove('show'), 1600);
   }
 
-  // Desktop: zoom only while ctrl/⌘ is held. Leaflet's own handler stays
-  // disabled; we toggle it for the duration of the modified gesture so its
-  // debounce/anchor behavior is preserved rather than reimplemented.
-  container.addEventListener('wheel', (e) => {
-    if (e.ctrlKey || e.metaKey) {
-      if (!map.scrollWheelZoom.enabled()) map.scrollWheelZoom.enable();
-      return;   // Leaflet's handler takes it from here (and preventDefaults)
-    }
-    if (map.scrollWheelZoom.enabled()) map.scrollWheelZoom.disable();
-    // Only nag when the pointer is genuinely over the map and the page can
-    // actually scroll — otherwise the hint fires on a trip that fits on screen.
-    if (document.documentElement.scrollHeight > window.innerHeight) {
-      hint(navigator.platform.indexOf('Mac') === 0
-        ? 'Use ⌘ + scroll to zoom the map'
-        : 'Use ctrl + scroll to zoom the map');
-    }
-  }, { passive: true, capture: true });
-
-  if (map.dragging.enabled()) return;   // pointer device: nothing more to do
-
-  // Touch: one-finger dragging stays off for the life of the page (set in the
-  // L.map options). Two-finger pan still works — Leaflet's touchZoom handler
-  // moves the center by the pinch midpoint, so it pans as well as zooms, and
-  // it preventDefaults the gesture itself. That's why nothing here toggles
+  // One-finger dragging stays off for the life of the page (set in the L.map
+  // options). Two-finger pan still works — Leaflet's touchZoom handler moves
+  // the center by the pinch midpoint, so it pans as well as zooms, and it
+  // preventDefaults the gesture itself. That's why nothing here toggles
   // map.dragging: changing touch-action once a gesture has already started is
-  // too late to affect it anyway.
+  // too late to affect it anyway. The hint explains the swipe that did nothing.
   container.addEventListener('touchmove', (e) => {
     if (e.touches.length === 1) hint('Use two fingers to move the map');
   }, { passive: true });
@@ -271,16 +255,18 @@ function setupGestureHandling(map) {
   const mappedEvents = events.filter(e => e.lat && e.lng);
   if (mapped.length === 0 && mappedEvents.length === 0) return;
 
-  // Both gesture options are off by default and re-enabled per gesture below.
-  // The map is a large fixed panel (left half on desktop, the top band on
-  // phones), so with Leaflet's defaults it swallowed the scroll a reader was
-  // aiming at the timeline: a wheel over it zoomed the map, and a one-finger
-  // swipe up panned it. See setupGestureHandling().
+  // Wheel zoom stays ON (Leaflet's default): the map is its own half of the
+  // page, so the cursor's position already says whether you meant to zoom the
+  // map or scroll the timeline.
+  //
+  // One-finger DRAGGING is off on touch-primary devices only, where the map is
+  // a band across the top and a swipe up must scroll the page rather than pan.
   // `pointer: coarse` (not L.Browser.touch) so a touchscreen LAPTOP, where the
   // real pointer is a mouse, keeps ordinary click-drag panning — L.Browser.touch
-  // is true for anything that merely supports touch events.
+  // is true for anything that merely supports touch events. See
+  // setupGestureHandling().
   const touchPrimary = window.matchMedia('(pointer: coarse)').matches;
-  const map = L.map('trip-map', { scrollWheelZoom: false, dragging: !touchPrimary });
+  const map = L.map('trip-map', { dragging: !touchPrimary });
   // Published so anything that temporarily suppresses dragging (the admin
   // select-pings lasso) restores it to this page's baseline rather than
   // unconditionally enabling it — which on a phone would reinstate the
