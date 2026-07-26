@@ -725,6 +725,35 @@
     background: var(--gray-light, #d0d0d0);
     z-index: 0;
   }
+  /* Day divider between timeline cards. The vertical axis line runs behind
+     everything in this column, so the label needs an opaque background to sit
+     ON the line rather than beside it — same trick the cards use. It's indented
+     to the circle centre (2.25rem, see the axis comment above) so the label
+     starts where the card titles do. */
+  .day-divider {
+    position: relative;
+    z-index: 1;
+    margin: 1.25rem 0 .5rem 2.25rem;
+    display: flex;
+    align-items: center;
+  }
+  .day-divider span {
+    background: var(--offwhite);
+    color: var(--gray);
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    padding: 0 .6rem 0 .35rem;
+  }
+  .day-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--gray-light);
+  }
+  .day-divider:first-child { margin-top: 0; }
+
   .cards-column .stay-card,
   .cards-column .event-card { position: relative; z-index: 1; }
   .cards-column .stay-number,
@@ -935,6 +964,30 @@
     grid-auto-rows: min-content;
     gap: .75rem;
     margin-bottom: 1rem;
+  }
+
+  /* "Show all N photos" — phones only. Desktop has the width to show every
+     tile, so the button is hidden there and .collapsible does nothing.
+     The hidden tiles stay in the DOM, so lightbox paging still walks the
+     whole set and drag-reorder still sees every filename. */
+  .photo-more { display: none; }
+  @media (max-width: 700px) {
+    .photo-grid.collapsible:not(.expanded) .photo-item:nth-child(n+7) { display: none; }
+    .photo-grid.collapsible:not(.expanded) + .photo-more {
+      display: block;
+      width: 100%;
+      margin: -.25rem 0 1rem;
+      padding: .7rem;
+      min-height: 44px;
+      font: inherit;
+      font-size: .85rem;
+      font-weight: 600;
+      color: var(--navy);
+      background: var(--white);
+      border: 1px solid var(--gray-light);
+      border-radius: 8px;
+      cursor: pointer;
+    }
   }
 
   .photo-item {
@@ -1562,23 +1615,6 @@
     text-align: center;
   }
 
-  /* Transient "use ctrl+scroll / two fingers" hint (see setupGestureHandling). */
-  .map-gesture-hint {
-    position: absolute;
-    inset: auto 0 0 0;
-    z-index: 500;               /* over tiles/markers, under Leaflet controls */
-    background: rgba(0,0,0,.68);
-    color: #fff;
-    font-size: .8rem;
-    text-align: center;
-    padding: .5rem .75rem;
-    pointer-events: none;       /* never intercepts a gesture */
-    opacity: 0;
-    transition: opacity .18s ease;
-  }
-  .map-gesture-hint.show { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) { .map-gesture-hint { transition: none; } }
-
   /* In "Select pings" mode the click-and-drag gesture draws a lasso circle,
      so swap the grab cursor for a crosshair to telegraph the new behavior. */
   body.map-selection-mode #trip-map,
@@ -1726,7 +1762,13 @@
     {% if trip.total_nights %}{% set _ = mm_parts.append(trip.total_nights ~ ' night' ~ ('' if trip.total_nights == 1 else 's')) %}{% endif %}
     {% if trip.stays %}{% set _ = mm_parts.append(trip.stays|length ~ ' campspot' ~ ('' if trip.stays|length == 1 else 's')) %}
     {% elif real_events %}{% set _ = mm_parts.append(real_events|length ~ ' event' ~ ('' if real_events|length == 1 else 's')) %}{% endif %}
-    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}</div>{% endif %}
+    {# Photos and campers were desktop-only, which dropped exactly the facts a
+       phone reader cares about most ("who was on this trip"). The line wraps,
+       so a second row is fine. GPS miles is appended client-side once the
+       track resolves — see #trip-gps-miles-mobile. #}
+    {% if photos_count > 0 %}{% set _ = mm_parts.append(photos_count ~ ' photo' ~ ('' if photos_count == 1 else 's')) %}{% endif %}
+    {% if trip.campers %}{% set _ = mm_parts.append(trip.campers | join(', ')) %}{% endif %}
+    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}<span id="trip-gps-miles-mobile"></span></div>{% endif %}
   </div>
   {% if is_admin %}
   <div class="trip-actions" id="trip-actions">
@@ -1845,7 +1887,20 @@
     </div>
   </div>
   {% endif %}
+  {#- Day dividers. Every timeline item carries `sort_date` (stay copies get
+      their night's date), so a divider is just "the date changed since the
+      last card". On a 10-day trip the cards otherwise ran together with no
+      sense of where one day ended. Only emitted when the trip actually spans
+      more than one day — a single-day trip would just get one redundant
+      heading. `ns` is a namespace so the loop body can mutate it (a plain
+      `{% set %}` inside a for-loop doesn't persist between iterations). -#}
+  {% set multi_day = trip.timeline | map(attribute='sort_date') | unique | list | length > 1 %}
+  {% set ns = namespace(last_date='') %}
   {% for item in trip.timeline %}
+  {% if multi_day and item.sort_date and item.sort_date != ns.last_date %}
+    {% set ns.last_date = item.sort_date %}
+    <div class="day-divider"><span>{{ item.sort_date | daylabel }}</span></div>
+  {% endif %}
 
   {% if item.type == "stay" %}
   <div class="stay-card" id="stay-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}">
@@ -1950,11 +2005,17 @@
       <!-- Photos (bucketed per copy for split multi-night stays) -->
       {% if is_admin or item.photos %}
       <div class="photos-section">
-        <div class="photo-grid" id="photos-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}" data-stay-idx="{{ item.idx }}">
+        {#- .collapsible caps the grid at PHOTO_PEEK tiles on phones (CSS only);
+            the button below reveals the rest. A 40-photo campspot was otherwise
+            an endless scroll between one card and the next. -#}
+        <div class="photo-grid{% if item.photos | length > 6 %} collapsible{% endif %}" id="photos-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}" data-stay-idx="{{ item.idx }}">
           {% for photo in item.photos %}
           {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='stay', p_alt=item.place %}{% include "_photo_item.html" %}{% endwith %}
           {% endfor %}
         </div>
+        {% if item.photos | length > 6 %}
+        <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ item.photos | length }} photos</button>
+        {% endif %}
         {% if is_admin and item.copy_num == 1 %}
         <button class="btn-delete-all-photos" onclick="deleteAllPhotos({{ trip.id }}, {{ item.idx }})"{% if not stay_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
         {% endif %}
@@ -2092,11 +2153,14 @@
       {% if is_admin or event_photos[item.idx] %}
       <!-- Event Photos (grid is always rendered for admins so it can serve as a drop target for cross-card photo moves, even when empty) -->
       <div class="photos-section">
-        <div class="photo-grid" id="event-photos-{{ item.idx }}">
+        <div class="photo-grid{% if event_photos[item.idx] | length > 6 %} collapsible{% endif %}" id="event-photos-{{ item.idx }}">
           {% for photo in event_photos[item.idx] %}
           {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='event', p_alt=item.name %}{% include "_photo_item.html" %}{% endwith %}
           {% endfor %}
         </div>
+        {% if event_photos[item.idx] | length > 6 %}
+        <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ event_photos[item.idx] | length }} photos</button>
+        {% endif %}
         {% if is_admin %}
         <button class="btn-delete-all-photos" onclick="deleteAllEventPhotos({{ trip.id }}, {{ item.idx }})"{% if not event_photos[item.idx] %} style="display:none"{% endif %}>Remove All Photos</button>
         {% endif %}

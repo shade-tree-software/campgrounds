@@ -40,3 +40,12 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 }
+
+// Reveal the rest of a phone-collapsed photo grid (see .photo-grid.collapsible).
+// Lives in boot rather than photos.js because that module only loads for admins
+// and uploaders, and this button is for every viewer.
+function expandPhotoGrid(btn) {
+  const grid = btn.previousElementSibling;
+  if (grid) grid.classList.add('expanded');
+  btn.remove();   // one-way: nothing left for it to do
+}

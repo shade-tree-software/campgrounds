@@ -209,6 +209,17 @@ def _daterange(start, end=None):
         return f"{s.strftime('%b')} {s.day} – {e.strftime('%b')} {e.day}, {s.year}"
     return f"{s.strftime('%b')} {s.day}, {s.year} – {e.strftime('%b')} {e.day}, {e.year}"
 
+@app.template_filter('daylabel')
+def _daylabel(value):
+    """'Thu, Jun 5' for a timeline day divider. Falls through unchanged if the
+    value doesn't parse, so a blank/legacy date can't break the page."""
+    try:
+        d = datetime.strptime(str(value), "%Y-%m-%d").date()
+    except (ValueError, TypeError):
+        return value
+    return f"{d.strftime('%a')}, {d.strftime('%b')} {d.day}"
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
