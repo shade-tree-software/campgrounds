@@ -136,7 +136,9 @@ function _buildSuppressedRelocatedLayers(suppressedInWindow, relocatedInWindow) 
 function _syncLassoModes() {
   const sel = window.__selectionModeActive;
   if (window.tripMap) {
-    if (sel) window.tripMap.dragging.disable();
+    // Restore to the map's baseline, not unconditionally on: on a touch-primary
+    // device one-finger dragging is deliberately off (see map.js).
+    if (sel || window.__tripMapDragDefault === false) window.tripMap.dragging.disable();
     else window.tripMap.dragging.enable();
   }
   document.body.classList.toggle('map-selection-mode', sel);

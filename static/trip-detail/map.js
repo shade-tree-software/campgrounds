@@ -202,6 +202,65 @@ function refetchAndRenderTrack() {
 }
 window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
+// ── Gesture handling ────────────────────────────────────────────────────────
+// This map is a big fixed panel — the left half of a desktop page, the top band
+// of a phone one — sitting beside a long scrolling timeline. With Leaflet's
+// defaults it ate the scroll the reader meant for the cards: a wheel over it
+// zoomed, and a one-finger swipe up panned. Both are the standard embedded-map
+// fix (what Google Maps embeds do):
+//   - desktop: the wheel scrolls the page; ctrl/⌘ + wheel zooms
+//   - touch:   one finger scrolls the page; two fingers pan the map
+// Leaflet drops its `leaflet-touch-drag` class when dragging is disabled, which
+// restores `touch-action: pan-x pan-y` on the container — that's what lets the
+// browser scroll the page normally while one-finger dragging is off.
+// A transient hint says which gesture to use, so nothing feels broken.
+function setupGestureHandling(map) {
+  const container = map.getContainer();
+  let hintEl = null, hintTimer = null;
+
+  function hint(text) {
+    if (!hintEl) {
+      hintEl = document.createElement('div');
+      hintEl.className = 'map-gesture-hint';
+      container.appendChild(hintEl);
+    }
+    hintEl.textContent = text;
+    hintEl.classList.add('show');
+    clearTimeout(hintTimer);
+    hintTimer = setTimeout(() => hintEl.classList.remove('show'), 1600);
+  }
+
+  // Desktop: zoom only while ctrl/⌘ is held. Leaflet's own handler stays
+  // disabled; we toggle it for the duration of the modified gesture so its
+  // debounce/anchor behavior is preserved rather than reimplemented.
+  container.addEventListener('wheel', (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      if (!map.scrollWheelZoom.enabled()) map.scrollWheelZoom.enable();
+      return;   // Leaflet's handler takes it from here (and preventDefaults)
+    }
+    if (map.scrollWheelZoom.enabled()) map.scrollWheelZoom.disable();
+    // Only nag when the pointer is genuinely over the map and the page can
+    // actually scroll — otherwise the hint fires on a trip that fits on screen.
+    if (document.documentElement.scrollHeight > window.innerHeight) {
+      hint(navigator.platform.indexOf('Mac') === 0
+        ? 'Use ⌘ + scroll to zoom the map'
+        : 'Use ctrl + scroll to zoom the map');
+    }
+  }, { passive: true, capture: true });
+
+  if (map.dragging.enabled()) return;   // pointer device: nothing more to do
+
+  // Touch: one-finger dragging stays off for the life of the page (set in the
+  // L.map options). Two-finger pan still works — Leaflet's touchZoom handler
+  // moves the center by the pinch midpoint, so it pans as well as zooms, and
+  // it preventDefaults the gesture itself. That's why nothing here toggles
+  // map.dragging: changing touch-action once a gesture has already started is
+  // too late to affect it anyway.
+  container.addEventListener('touchmove', (e) => {
+    if (e.touches.length === 1) hint('Use two fingers to move the map');
+  }, { passive: true });
+}
+
 // ── Map initialization ─────────────────────────────────────────────────────��
 (function() {
   // Attach the original array index so popup actions can address each item
@@ -212,7 +271,21 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   const mappedEvents = events.filter(e => e.lat && e.lng);
   if (mapped.length === 0 && mappedEvents.length === 0) return;
 
-  const map = L.map('trip-map');
+  // Both gesture options are off by default and re-enabled per gesture below.
+  // The map is a large fixed panel (left half on desktop, the top band on
+  // phones), so with Leaflet's defaults it swallowed the scroll a reader was
+  // aiming at the timeline: a wheel over it zoomed the map, and a one-finger
+  // swipe up panned it. See setupGestureHandling().
+  // `pointer: coarse` (not L.Browser.touch) so a touchscreen LAPTOP, where the
+  // real pointer is a mouse, keeps ordinary click-drag panning — L.Browser.touch
+  // is true for anything that merely supports touch events.
+  const touchPrimary = window.matchMedia('(pointer: coarse)').matches;
+  const map = L.map('trip-map', { scrollWheelZoom: false, dragging: !touchPrimary });
+  // Published so anything that temporarily suppresses dragging (the admin
+  // select-pings lasso) restores it to this page's baseline rather than
+  // unconditionally enabling it — which on a phone would reinstate the
+  // one-finger pan that swallows the timeline scroll.
+  window.__tripMapDragDefault = !touchPrimary;
   window.tripMap = map;
   if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
   // Dedicated SVG pane for the suppressed/relocated ghost layers so they
@@ -250,8 +323,17 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  const homeMarker = L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
-    .addTo(map)
+  // Markers carry no popups here (a click scrolls to the matching card), which
+  // left four different symbols on the map with nothing naming any of them.
+  // A hover tooltip is the cheapest fix that doesn't touch the click behavior.
+  const TOOLTIP_OPTS = { direction: 'top', offset: [0, -14], opacity: 0.95 };
+  function label(marker, text) {
+    if (text) marker.bindTooltip(String(text), TOOLTIP_OPTS);
+    return marker;
+  }
+
+  const homeMarker = label(L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
+    .addTo(map), 'Home')
     .on('click', () => scrollToCard('home-card-start'));
   cardMarkers['home-card-start'] = homeMarker;
   cardMarkers['home-card-end'] = homeMarker;
@@ -272,8 +354,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    const stayMarker = L.marker(ll, { icon, zIndexOffset: 800 })
-      .addTo(map)
+    const stayMarker = label(L.marker(ll, { icon, zIndexOffset: 800 })
+      .addTo(map), `${i + 1}. ${stay.place || 'Campspot'}`)
       .on('click', () => scrollToCard('stay-' + stay.idx));
     cardTargets['stay-' + stay.idx] = ll;
     cardMarkers['stay-' + stay.idx] = stayMarker;
@@ -999,10 +1081,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconAnchor: [size / 2, size / 2],
     });
     const zOffset = isWaypoint ? 100 : 700;
-    const labelPrefix = isWaypoint ? '&#9670; ' : '&#9733; ';
 
-    const evtMarker = L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
-      .addTo(map)
+    // "Waypoint" is internal vocabulary; family readers get "Stop".
+    const evtMarker = label(L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
+      .addTo(map), evt.name || (isWaypoint ? 'Stop' : 'Event'))
       .on('click', () => scrollToCard('event-' + evt.idx));
     cardTargets['event-' + evt.idx] = ll;
     cardMarkers['event-' + evt.idx] = evtMarker;
@@ -1031,8 +1113,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // has a card (bare or with-photos), so the lookup is effectively always
     // the earliest visit in the group.
     const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
-    const famMarker = L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
-      .addTo(map)
+    const famMarker = label(L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
+      .addTo(map), sorted[0].family_visit || sorted[0].name || 'Family visit')
       .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
     group.forEach(evt => {
       cardTargets['event-' + evt.idx] = ll;
@@ -1071,8 +1153,61 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map);
+    label(L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map), fam.label);
   });
+
+  // ── Initial view + "Fit trip" ─────────────────────────────────────────────
+  // `bounds` opens with HOME, which is right for the route polyline (it draws
+  // the drive out and back) but wrong for the opening view: a Utah trip fitted
+  // to Utah-plus-Virginia is a continental view with the itinerary a few pixels
+  // wide. Fit the itinerary instead — home is still on the map, just off-screen
+  // until you zoom out. `bounds` itself is left alone; other code reads it.
+  const itineraryBounds = bounds.slice(1);
+  const fitTarget = itineraryBounds.length ? itineraryBounds : bounds;
+  function fitTrip() {
+    map.fitBounds(fitTarget, { padding: [40, 40], maxZoom: 12 });
+  }
+
+  // Getting back to the whole trip after a card click (which does setView at
+  // zoom 14) or a stray zoom previously meant reloading the page.
+  const fitControl = L.control({ position: 'topleft' });
+  fitControl.onAdd = function() {
+    const div = L.DomUtil.create('div', 'leaflet-bar trip-fit-control');
+    const a = L.DomUtil.create('a', '', div);
+    a.href = '#';
+    a.innerHTML = '&#10064;';
+    a.title = 'Fit the whole trip';
+    a.setAttribute('aria-label', 'Fit the whole trip');
+    L.DomEvent.disableClickPropagation(div);
+    L.DomEvent.on(a, 'click', (e) => { L.DomEvent.preventDefault(e); fitTrip(); });
+    return div;
+  };
+  fitControl.addTo(map);
+
+  // ── Legend ────────────────────────────────────────────────────────────────
+  // Four symbols with nothing naming them. Only the kinds actually on this
+  // trip's map are listed, so a plain overnight trip doesn't get a legend row
+  // for stops it doesn't have.
+  const dot = (bg, inner) => `<span class="tl-dot" style="background:${bg};">${inner || ''}</span>`;
+  const legendRows = [
+    [true, dot('#002868', '<b>1</b>'), 'Campspot'],
+    [mappedEvents.some(e => !e.waypoint && !e.family_visit), dot('#c9a84c', '&#9733;'), 'Event'],
+    [mappedEvents.some(e => e.waypoint), dot('#c9a84c', '&#9670;'), 'Stop'],
+    [true, dot('#bf0a30', '&#8962;'), 'Home / family'],
+  ].filter(r => r[0]);
+  if (legendRows.length) {
+    const legend = L.control({ position: 'bottomleft' });
+    legend.onAdd = function() {
+      const div = L.DomUtil.create('div', 'trip-map-legend');
+      L.DomEvent.disableClickPropagation(div);
+      div.innerHTML = legendRows
+        .map(([, sym, text]) => `<div class="tl-row">${sym}${text}</div>`).join('');
+      return div;
+    };
+    legend.addTo(map);
+  }
+
+  setupGestureHandling(map);
 
   // Use the saved view (center + zoom from the previous unload) when present
   // so reloads after suppress/relocate/etc. keep the user where they were.
@@ -1081,7 +1216,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   if (_saved) {
     map.setView([_saved.lat, _saved.lng], _saved.zoom);
   } else {
-    map.fitBounds(bounds, { padding: [40, 40], maxZoom: 12 });
+    fitTrip();
   }
 })();
 

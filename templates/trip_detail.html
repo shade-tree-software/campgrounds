@@ -1518,6 +1518,51 @@
     z-index: 0;
   }
 
+  /* Map legend: names the four marker symbols, which otherwise have nothing
+     identifying them (trip-detail markers carry no popups by design). */
+  .trip-map-legend {
+    background: rgba(255,255,255,.92);
+    border-radius: 6px;
+    box-shadow: 0 1px 5px rgba(0,0,0,.3);
+    padding: .4rem .55rem;
+    font-size: .75rem;
+    color: var(--ink, #1d1d1f);
+    line-height: 1.5;
+  }
+  .trip-map-legend .tl-row { display: flex; align-items: center; gap: .4rem; }
+  .trip-map-legend .tl-dot {
+    width: 15px; height: 15px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 9px; line-height: 1;
+    border: 1.5px solid #fff; box-shadow: 0 1px 2px rgba(0,0,0,.35);
+    box-sizing: border-box; flex-shrink: 0;
+  }
+
+  /* "Fit the whole trip" — a leaflet-bar button, so it inherits the zoom
+     control's sizing; just center the glyph. */
+  .trip-fit-control a {
+    font-size: 1rem;
+    line-height: 30px;
+    text-align: center;
+  }
+
+  /* Transient "use ctrl+scroll / two fingers" hint (see setupGestureHandling). */
+  .map-gesture-hint {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 500;               /* over tiles/markers, under Leaflet controls */
+    background: rgba(0,0,0,.68);
+    color: #fff;
+    font-size: .8rem;
+    text-align: center;
+    padding: .5rem .75rem;
+    pointer-events: none;       /* never intercepts a gesture */
+    opacity: 0;
+    transition: opacity .18s ease;
+  }
+  .map-gesture-hint.show { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) { .map-gesture-hint { transition: none; } }
+
   /* In "Select pings" mode the click-and-drag gesture draws a lasso circle,
      so swap the grab cursor for a crosshair to telegraph the new behavior. */
   body.map-selection-mode #trip-map,
