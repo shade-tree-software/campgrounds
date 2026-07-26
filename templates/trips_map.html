@@ -232,7 +232,34 @@
     display: flex;
     flex-direction: column;
     gap: .75rem;
+    /* Anchors the pause button below; absolute children are out of flow, so
+       the slot layout is unaffected. */
+    position: relative;
   }
+
+  /* Pause/resume the auto-rotating photos (WCAG 2.2.2). Overlays the left
+     stack's top-right corner — it belongs to the photos, and every layout
+     keeps that stack visible (the right one is hidden ≤900px). */
+  .slideshow-toggle {
+    position: absolute;
+    top: .3rem;
+    right: .3rem;
+    z-index: 2;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    font-size: .7rem;
+    line-height: 1;
+    color: var(--white);
+    background: rgba(0,0,0,.45);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: .55;
+    transition: opacity .15s;
+  }
+  .slideshow-toggle:hover,
+  .slideshow-toggle:focus-visible { opacity: 1; }
 
   .photo-slot {
     flex: 1 1 0;
@@ -889,6 +916,10 @@ if (PHOTOS.length && leftStack && rightStack) {
     const placeName = photoPlaceName(photo);
     if (placeName) img.dataset.placeName = placeName;
     if (photo.caption) img.dataset.caption = photo.caption;
+    // These imgs had an empty alt, so the whole slideshow — the landing page's
+    // main content — announced as nothing. Describe it with whatever names the
+    // photo, falling back to the trip it belongs to.
+    img.alt = photo.caption || placeName || ('Photo from ' + label.name);
     a.addEventListener('click', e => {
       // Let the browser handle the modified clicks that mean "open the
       // link elsewhere"; only a plain left-click opens the viewer.
@@ -936,7 +967,29 @@ if (PHOTOS.length && leftStack && rightStack) {
     [leftStack, rightStack].forEach(stack => {
       stack.addEventListener('mouseenter', () => { hoverPaused = true; });
       stack.addEventListener('mouseleave', () => { hoverPaused = false; });
+      // Same reasoning for the keyboard: a slot that swaps while it holds
+      // focus moves the target out from under the person about to press Enter.
+      stack.addEventListener('focusin', () => { hoverPaused = true; });
+      stack.addEventListener('focusout', () => { hoverPaused = false; });
     });
+
+    // Content that moves for more than 5 seconds needs a way to stop it
+    // (WCAG 2.2.2) — this rotated every 2.5s with no control at all. Someone
+    // who has asked the OS for reduced motion gets it stopped from the start.
+    let userPaused = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const pauseBtn = document.createElement('button');
+    pauseBtn.type = 'button';
+    pauseBtn.className = 'slideshow-toggle';
+    const syncPauseBtn = () => {
+      pauseBtn.textContent = userPaused ? '▶' : '❚❚';
+      const what = userPaused ? 'Resume' : 'Pause';
+      pauseBtn.title = what + ' the photo slideshow';
+      pauseBtn.setAttribute('aria-label', pauseBtn.title);
+      pauseBtn.setAttribute('aria-pressed', userPaused ? 'true' : 'false');
+    };
+    syncPauseBtn();
+    pauseBtn.addEventListener('click', () => { userPaused = !userPaused; syncPauseBtn(); });
+    leftStack.appendChild(pauseBtn);
     // Track the last few slot indices that were updated so we don't
     // immediately swap the same one again. Cooldown is capped to one
     // less than the total slot count so there's always a valid pick.
@@ -945,7 +998,7 @@ if (PHOTOS.length && leftStack && rightStack) {
     setInterval(() => {
       // Don't churn photos (each swap is a network fetch) while the tab
       // is hidden — saves battery/data on phones left on this page.
-      if (document.hidden || hoverPaused || lightboxOpen) return;
+      if (document.hidden || hoverPaused || lightboxOpen || userPaused) return;
       const eligible = [];
       for (let i = 0; i < slots.length; i++) {
         if (!recentSlots.includes(i)) eligible.push(i);

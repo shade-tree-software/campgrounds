@@ -9,7 +9,7 @@
 <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
   <img src="{{ photo.thumb_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or p_alt }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
   {% if is_admin %}
-  <button class="delete-photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', this)">&times;</button>
+  <button class="delete-photo" aria-label="Delete this photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', this)">&times;</button>
   {% endif %}
   {% if can_edit_caption %}
   <div class="caption-area">

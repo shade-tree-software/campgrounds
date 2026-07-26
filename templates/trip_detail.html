@@ -615,6 +615,13 @@
     line-height: 1;
     padding: .1rem .4rem;
     border-radius: 4px;
+    /* These were ~24px tap targets — the primary way to move between trips,
+       and on a phone the only one. 44px minimum, centered on the glyph. */
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .trip-nav a:hover {
@@ -1664,7 +1671,9 @@
 {% block content %}
 <div class="trip-header">
   <div class="trip-nav">
-    {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip{% if prev_trip_summary %}: {{ prev_trip_summary }}{% endif %}">&#8249;</a>{% endif %}
+    {# aria-label carries the destination: `title` alone is invisible to a screen
+       reader's link list and never appears on touch. #}
+    {% if prev_trip_id %}<a href="/trips/{{ prev_trip_id }}" title="Previous trip{% if prev_trip_summary %}: {{ prev_trip_summary }}{% endif %}" aria-label="Previous trip{% if prev_trip_summary %}: {{ prev_trip_summary }}{% endif %}">&#8249;</a>{% endif %}
   </div>
   <div class="trip-info">
     <h1 id="trip-title"{% if is_admin %} onclick="if (window.innerWidth <= 700) editTripNote();"{% endif %}>{% if trip.number %}Trip {{ trip.number }}{% else %}Home{% endif %}: {{ trip.summary }}{% if is_admin %}<button class="edit-btn" onclick="event.stopPropagation(); editTripNote();">Edit</button>{% endif %}</h1>
@@ -1731,7 +1740,7 @@
   </div>
   {% endif %}
   <div class="trip-nav">
-    {% if next_trip_id %}<a href="/trips/{{ next_trip_id }}" title="Next trip{% if next_trip_summary %}: {{ next_trip_summary }}{% endif %}">&#8250;</a>{% endif %}
+    {% if next_trip_id %}<a href="/trips/{{ next_trip_id }}" title="Next trip{% if next_trip_summary %}: {{ next_trip_summary }}{% endif %}" aria-label="Next trip{% if next_trip_summary %}: {{ next_trip_summary }}{% endif %}">&#8250;</a>{% endif %}
   </div>
 </div>
 
@@ -2249,7 +2258,7 @@
 <div class="map-picker-container" id="event-location-map-container">
   <div class="map-picker-header" id="event-location-map-header">
     <span>Click the map to set the event location</span>
-    <button class="map-picker-close" onclick="eventLocationPicker.hide()">&times;</button>
+    <button class="map-picker-close" aria-label="Close the map picker" onclick="eventLocationPicker.hide()">&times;</button>
   </div>
   <div class="geo-search">
     <input type="text" id="event-geo-search-input" placeholder="Search for a place..." autocomplete="off">

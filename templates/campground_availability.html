@@ -100,9 +100,15 @@
   @media (prefers-reduced-motion: reduce) { .avail-spinner { animation: none; } }
   .legend { display: flex; gap: 1rem; flex-wrap: wrap; font-size: .8rem; color: var(--gray); margin-bottom: .5rem; }
   .legend span { display: inline-flex; align-items: center; gap: .35rem; }
-  .swatch { width: 14px; height: 14px; border-radius: 3px; display: inline-block; border: 1px solid rgba(0,0,0,.15); }
-  .swatch.open { background: #2e9e5b; }
-  .swatch.closed { background: var(--gray-light); }
+  /* Swatches carry the same mark the grid cells do, so the legend explains
+     the symbol and not just the colour. */
+  .swatch {
+    width: 14px; height: 14px; border-radius: 3px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(0,0,0,.15); font-size: .6rem; line-height: 1;
+  }
+  .swatch.open { background: #2e9e5b; color: #fff; font-weight: 700; }
+  .swatch.closed { background: var(--gray-light); color: var(--gray); }
 
   .summary-line { font-size: .95rem; color: var(--navy); margin-bottom: .75rem; }
   .summary-line b { color: #2e9e5b; }
@@ -118,9 +124,13 @@
   table.avail-grid thead th.site-col { z-index: 3; background: var(--navy); color: var(--white); }
   table.avail-grid tbody tr:nth-child(even) td { background: #f7f8fa; }
   table.avail-grid tbody tr:nth-child(even) td.site-col { background: #f7f8fa; }
-  td.night { font-size: 0; } /* hide text, show color only */
-  td.night.open { background: #2e9e5b !important; }
-  td.night.closed { background: var(--gray-light) !important; }
+  /* The ✓ used to be rendered and then hidden with font-size: 0, leaving
+     availability conveyed by GREEN vs GREY alone — unreadable for the ~8% of
+     men with red-green colour blindness, which is squarely the audience here.
+     Show the mark; the color stays as the fast scan. */
+  td.night { font-size: .7rem; line-height: 1; }
+  td.night.open { background: #2e9e5b !important; color: #fff; font-weight: 700; }
+  td.night.closed { background: var(--gray-light) !important; color: var(--gray); }
   .verdict-tag { font-size: .68rem; padding: .05rem .35rem; border-radius: 4px; font-weight: 700; }
   .verdict-fits { background: #d8f0e0; color: #1c6b3c; }
   .verdict-tight { background: #fbecc8; color: #8a6500; }
@@ -465,8 +475,8 @@
       ' at ' + escapeHtml(fac.name || '') + ' (fit ≥ ' + data.fit_ft + ' ft). ' + bookingLink(fac) + '</p>';
 
     html += '<div class="legend">' +
-      '<span><span class="swatch open"></span> Available</span>' +
-      '<span><span class="swatch closed"></span> Reserved / not released / closed</span>' +
+      '<span><span class="swatch open">✓</span> Available</span>' +
+      '<span><span class="swatch closed">·</span> Reserved / not released / closed</span>' +
       '<span><span class="verdict-tag verdict-fits">fits</span> driveway ≥ threshold</span>' +
       '<span><span class="verdict-tag verdict-tight">tight</span> 23–24 ft</span>' +
       '<span><span class="verdict-tag verdict-unknown">unknown</span> length not in data — verify</span>' +
@@ -486,8 +496,9 @@
         (s.fully_available ? '<span class="full-badge">ALL</span>' : '') + '</td>';
       s.statuses.forEach(st => {
         const open = st === 'Available';
+        // The mark carries the meaning; the background color is the fast scan.
         html += '<td class="night ' + (open ? 'open' : 'closed') + '" title="' +
-          (st || 'no data') + '">' + (open ? '✓' : '') + '</td>';
+          (st || 'no data') + '">' + (open ? '✓' : '·') + '</td>';
       });
       html += '</tr>';
     });

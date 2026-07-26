@@ -120,7 +120,9 @@
   }
 
   .nav-label {
-    color: rgba(255,255,255,.6);
+    /* .6 alpha on the navy header measured ~4.4:1 — under the 4.5:1 minimum
+       for text this size. .72 clears it while staying visibly secondary. */
+    color: rgba(255,255,255,.72);
     font-size: .8rem;
     text-transform: uppercase;
     letter-spacing: .04em;
@@ -238,6 +240,15 @@
       padding: .6rem 0;
     }
     .nav-label { padding-bottom: .15rem; }
+    /* Collapsed nav links were ~24px tall (nav a's .25rem padding), well under
+       the 44px touch minimum — and this is the ONLY nav on a tablet, and the
+       only route to the admin pages and Logout on a phone. */
+    .nav-group a, .nav-collapse > a {
+      display: flex;
+      align-items: center;
+      min-height: 44px;
+      width: 100%;
+    }
     /* Separator between sections (Trips → Campgrounds → Login/Logout). */
     .nav-group + .nav-group,
     .nav-collapse > .nav-group + a {
@@ -397,6 +408,28 @@
     white-space: nowrap;
   }
 
+  /* Skip link — off-screen until focused, then a normal button at top-left.
+     z-index beats the sticky .site-top (900) so it isn't hidden under it. */
+  .skip-link {
+    position: absolute;
+    left: .5rem;
+    top: -3rem;
+    z-index: 1001;
+    background: var(--white);
+    color: var(--navy);
+    font-weight: 600;
+    padding: .6rem 1rem;
+    border-radius: 0 0 6px 6px;
+    text-decoration: none;
+    box-shadow: var(--shadow);
+    transition: top .12s ease;
+  }
+  .skip-link:focus { top: 0; }
+  /* The content wrapper only gets focus from the skip link; don't paint a
+     focus ring around the entire page when it does. */
+  #main-content:focus { outline: none; }
+  @media (prefers-reduced-motion: reduce) { .skip-link { transition: none; } }
+
   /* ── Map loading skeleton ─────────────────────────────────────────────
      Every map page opened as a blank gray rectangle: tiles are fetched
      asynchronously and the campground map additionally spends real time
@@ -463,10 +496,15 @@
 </head>
 <body{% if current_user.is_authenticated %} class="has-tab-bar"{% endif %}>
 
+{# Skip link: the nav is 8–12 links plus a stats block on every page, so a
+   keyboard or screen-reader user had to tab through all of it to reach the
+   content. Visible only when focused. #}
+<a class="skip-link" href="#main-content">Skip to content</a>
+
 <div class="site-top">
 <header>
   <div class="header-title">
-    {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">&#9776;</button>{% endif %}
+    {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">&#9776;</button>{% endif %}
     <h1><a href="/">EKKOing Around</a></h1>
     <span class="site-subtitle">Hamilton family road trips</span>
   </div>
@@ -530,7 +568,12 @@
 {% endif %}
 </div>
 
+{# tabindex="-1" so the skip link can actually move focus here (a plain div is
+   not focusable, and the browser would jump the scroll but leave focus in the
+   nav — the exact failure a skip link exists to avoid). #}
+<div id="main-content" tabindex="-1">
 {% block content %}{% endblock %}
+</div>
 
 {% if current_user.is_authenticated %}
 {# Bottom tab bar — phone-only via CSS. The calendar page intercepts the
@@ -577,8 +620,15 @@
     if (!container) {
       container = document.createElement('div');
       container.id = 'toast-container';
+      // Toasts replaced alert() app-wide, so for a screen-reader user they are
+      // the ONLY report of whether a save worked — announce them. assertive for
+      // errors (they need interrupting), polite otherwise. Set on the container
+      // before any child exists, which is what makes the insertion announce.
+      container.setAttribute('role', 'status');
+      container.setAttribute('aria-live', 'polite');
       document.body.appendChild(container);
     }
+    container.setAttribute('aria-live', kind === 'error' ? 'assertive' : 'polite');
     const t = document.createElement('div');
     t.className = 'toast toast-' + kind;
     t.textContent = message;
@@ -663,7 +713,8 @@
     const siteNav = document.getElementById('site-nav');
     if (toggle && siteNav) {
       toggle.addEventListener('click', () => {
-        siteNav.classList.toggle('open');
+        const open = siteNav.classList.toggle('open');
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
         setHeight();
       });
       // Close the menu when any nav link is clicked. This matters for
@@ -673,6 +724,7 @@
       siteNav.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
           siteNav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
           setHeight();
         });
       });

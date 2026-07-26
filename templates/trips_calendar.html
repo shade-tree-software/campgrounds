@@ -643,7 +643,7 @@ function renderSearchResults() {
   const results = searchMatches(searchQuery) || [];
   const container = document.getElementById('list-container');
   if (results.length === 0) {
-    container.innerHTML = `<p style="text-align:center;color:#999;padding:2rem;">No trips match "${escapeHtml(searchQuery.trim())}".</p>`;
+    container.innerHTML = `<p style="text-align:center;color:var(--gray);padding:2rem;">No trips match "${escapeHtml(searchQuery.trim())}".</p>`;
     return;
   }
   // Sort by start date descending; empty-dated trips at the end.
@@ -968,7 +968,7 @@ function renderList() {
   }).slice().reverse();
 
   if (yearTrips.length === 0 && emptyTrips.length === 0) {
-    container.innerHTML = '<p style="text-align:center;color:#999;padding:2rem;">No trips in ' + currentYear + '</p>';
+    container.innerHTML = '<p style="text-align:center;color:var(--gray);padding:2rem;">No trips in ' + currentYear + '</p>';
     return;
   }
 

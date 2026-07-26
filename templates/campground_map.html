@@ -310,6 +310,12 @@
   }
 
   .map-legend .legend-row:hover { background: rgba(0,0,0,.05); }
+  /* Keyboard focus ring for the now-focusable filter rows. */
+  .map-legend .legend-row:focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 1px;
+    background: rgba(0,0,0,.05);
+  }
   /* Touch users have no hover — show a momentary press state instead. */
   .map-legend .legend-row:active { background: rgba(0,0,0,.12); }
 
@@ -583,7 +589,7 @@
 <div class="map-picker-container" id="rs-map-container">
   <div class="map-picker-header" id="rs-map-header">
     <span>Click the map to set the stop location</span>
-    <button class="map-picker-close" onclick="rsLocationPicker.hide()">&times;</button>
+    <button class="map-picker-close" aria-label="Close the map picker" onclick="rsLocationPicker.hide()">&times;</button>
   </div>
   <div class="geo-search">
     <input type="text" id="rs-geo-input" placeholder="Search for a place..." autocomplete="off">
@@ -645,7 +651,7 @@
 <div class="map-picker-container" id="cq-map-container">
   <div class="map-picker-header" id="cq-map-header">
     <span>Click the map to set the campground location</span>
-    <button class="map-picker-close" onclick="cgLocationPicker.hide()">&times;</button>
+    <button class="map-picker-close" aria-label="Close the map picker" onclick="cgLocationPicker.hide()">&times;</button>
   </div>
   <div class="geo-search">
     <input type="text" id="cq-geo-input" placeholder="Search for a place..." autocomplete="off">
@@ -1292,6 +1298,21 @@ const ON_WATER = new Set(['bayfront', 'lakefront', 'riverfront', 'creekside', 'p
 let legendRowsEl = null;
 let onWaterCb = null;  // the "On the water" checkbox (waterfront mode only)
 
+// Turn a legend/ownership <div> into a keyboard-operable toggle. They stay
+// divs rather than becoming <button>s because Leaflet controls and the
+// existing CSS both key off .legend-row; role + tabindex + Enter/Space is the
+// same contract for assistive tech.
+function makeToggleRow(row, pressed) {
+  row.setAttribute('role', 'button');
+  row.setAttribute('tabindex', '0');
+  row.setAttribute('aria-pressed', pressed ? 'true' : 'false');
+  row.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    e.preventDefault();          // Space would scroll the page
+    row.click();
+  });
+}
+
 function rebuildLegend() {
   if (!legendRowsEl) return;
   legendRowsEl.innerHTML = '';
@@ -1320,6 +1341,10 @@ function rebuildLegend() {
     row.className = 'legend-row' + (hidden ? ' dimmed' : '');
     row.dataset.category = category;
     row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
+    // These rows are real filter controls, but they were bare <div>s — no way
+    // to reach or operate them without a mouse. Give them button semantics and
+    // an aria-pressed that says whether the category is currently showing.
+    makeToggleRow(row, !hidden);
     row.addEventListener('click', () => {
       if (activeCategories.has(category)) {
         activeCategories.delete(category);
@@ -1330,6 +1355,7 @@ function rebuildLegend() {
         row.classList.remove('dimmed');
         hiddenCategories.delete(category);
       }
+      row.setAttribute('aria-pressed', activeCategories.has(category) ? 'true' : 'false');
       applyVisibility();
       syncOnWaterCheckbox();
       persistCategories();
@@ -1437,6 +1463,7 @@ ownershipControl.onAdd = function() {
     const row = document.createElement('div');
     row.className = 'legend-row' + (hiddenOwnerships.has(v) ? ' dimmed' : '');
     row.innerHTML = `<span class="legend-box"></span>${ownerLabel(v)} (${count})`;
+    makeToggleRow(row, !hiddenOwnerships.has(v));
     row.addEventListener('click', () => {
       if (activeOwnerships.has(v)) {
         activeOwnerships.delete(v);
@@ -1447,6 +1474,7 @@ ownershipControl.onAdd = function() {
         row.classList.remove('dimmed');
         hiddenOwnerships.delete(v);
       }
+      row.setAttribute('aria-pressed', activeOwnerships.has(v) ? 'true' : 'false');
       applyVisibility();
       persistOwnerships();
     });
