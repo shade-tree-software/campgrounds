@@ -1140,9 +1140,21 @@ def inject_share_identity():
     """
     name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
     if not name.startswith(SHARE_ID_PREFIX):
-        return {"is_share_guest": False, "share_guest_label": ""}
-    rec = _load_json(SHARE_TOKENS_FILE).get(name[len(SHARE_ID_PREFIX):]) or {}
-    return {"is_share_guest": True, "share_guest_label": rec.get("label") or ""}
+        return {"is_share_guest": False, "share_guest_label": "",
+                "share_guest_url": ""}
+    token = name[len(SHARE_ID_PREFIX):]
+    rec = _load_json(SHARE_TOKENS_FILE).get(token) or {}
+    # The guest's own magic link, so the app can offer it as something to
+    # bookmark. `/s/<token>` 302s to the destination, so it is in the address
+    # bar for a fraction of a second and never becomes a history entry — the
+    # only URL a guest could bookmark was an ordinary path that works solely
+    # while their cookie lives. Handing them the real link here is the fix.
+    #
+    # Only ever rendered for the holder of that token (they arrived with it),
+    # so this exposes nothing they don't already have.
+    return {"is_share_guest": True,
+            "share_guest_label": rec.get("label") or "",
+            "share_guest_url": url_for('share_login', token=token, _external=True)}
 
 
 def _can_view_campgrounds():
@@ -1250,6 +1262,34 @@ def service_worker():
     resp = send_file(os.path.join(os.path.dirname(__file__), 'static', 'sw.js'),
                      mimetype='application/javascript')
     resp.headers['Cache-Control'] = 'no-cache'
+    return resp
+
+
+@app.route('/manifest.json')
+def web_manifest():
+    """The PWA manifest, served dynamically so a share guest's `start_url` is
+    their own magic link.
+
+    The static manifest hard-codes `start_url: "/"`, which is right for anyone
+    with a password and actively broken for a guest: "Add to Home Screen" gives
+    them an icon that launches at `/`, and an installed iOS web app does not
+    share Safari's cookie jar — so the app they just installed opens on a login
+    form they can never get past. Pointing `start_url` at `/s/<token>` makes the
+    installed icon self-authenticating, which is the only thing that fixes the
+    home-screen case (a bookmark they can copy doesn't).
+
+    Everyone else gets exactly the static file's contents.
+    """
+    with open(os.path.join(_STATIC_DIR, 'manifest.json')) as f:
+        manifest = json.load(f)
+    name = (getattr(current_user, "id", "") or "") if current_user.is_authenticated else ""
+    if name.startswith(SHARE_ID_PREFIX):
+        manifest['start_url'] = url_for('share_login',
+                                        token=name[len(SHARE_ID_PREFIX):])
+    resp = jsonify(manifest)
+    # Per-user content: never let a shared cache hand one guest's start_url to
+    # somebody else.
+    resp.headers['Cache-Control'] = 'private, no-cache'
     return resp
 
 

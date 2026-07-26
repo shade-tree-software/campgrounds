@@ -12,7 +12,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="EKKO">
-<link rel="manifest" href="/static/manifest.json">
+{# Served by Flask, not from /static, so a share guest's start_url is their own
+   magic link — an installed icon pointing at "/" opens on a login form they
+   can't pass. See web_manifest(). #}
+<link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/static/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/static/icons/icon-192.png">
 <title>{% block title %}EKKOing Around{% endblock %}</title>
@@ -108,15 +111,62 @@
 
   .nav-group + .nav-group { margin-left: 2.5rem; }
 
-  /* Share-link guests get this instead of Logout (see the nav_auth block). */
+  /* Share-link guests get this instead of Logout (see the nav_auth block).
+     It's a button, not a label: tapping it reveals the magic link to save. */
   .guest-chip {
     margin-left: auto;
     color: rgba(255,255,255,.8);
     font-size: .82rem;
+    font-family: inherit;
     background: rgba(255,255,255,.12);
+    border: none;
     border-radius: 999px;
     padding: .2rem .7rem;
     white-space: nowrap;
+    cursor: pointer;
+  }
+  .guest-chip:hover { background: rgba(255,255,255,.22); color: var(--white); }
+  .guest-chip::after { content: ' 🔖'; }
+
+  /* The "save your link" panel the chip opens. Anchored under the site header
+     rather than inside the nav so it survives the nav collapsing on mobile. */
+  .guest-link-panel {
+    position: fixed;
+    top: var(--site-top-height, 4rem);
+    right: .75rem;
+    z-index: 950;               /* above .site-top (900) */
+    width: min(28rem, calc(100vw - 1.5rem));
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,.28);
+    padding: .9rem 1rem;
+  }
+  .guest-link-panel[hidden] { display: none; }
+  .glp-lead { font-weight: 700; color: var(--navy); margin-bottom: .3rem; }
+  .glp-hint { font-size: .82rem; color: var(--gray); line-height: 1.45; margin-bottom: .6rem; }
+  .glp-row { display: flex; gap: .5rem; }
+  .glp-row input {
+    flex: 1 1 auto;
+    min-width: 0;               /* else the long URL blows out the flex row */
+    font-family: inherit;
+    font-size: .8rem;
+    padding: .5rem .6rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    color: var(--gray);
+  }
+  .glp-row button {
+    flex: 0 0 auto;
+    font: inherit;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--navy);
+    border: none;
+    border-radius: 6px;
+    padding: .5rem .9rem;
+    min-height: 44px;
+    cursor: pointer;
   }
 
   .nav-label {
@@ -552,11 +602,13 @@
   {% if is_share_guest %}
   {# No Logout for share guests — they have no password, so logging out strands
      them on a form they can't get past. A chip instead, so it's at least clear
-     which link they're viewing through and that it's read-only. #}
-  <span class="guest-chip"
-        title="You're viewing through a read-only share link. Nothing here can be changed, and there's nothing to log in to.">
+     which link they're viewing through and that it's read-only. It doubles as
+     the way to reach the magic link (see #guest-link-panel). #}
+  <button type="button" class="guest-chip" id="guest-chip"
+          aria-expanded="false" aria-controls="guest-link-panel"
+          title="You're viewing through a read-only share link. Tap to save it.">
     {{ share_guest_label or 'Guest' }} · read-only
-  </span>
+  </button>
   {% else %}
   {# No ?next= — signing out is deliberate, so the next login starts clean
      rather than resuming wherever the previous person was. See logout(). #}
@@ -567,6 +619,27 @@
 </nav>
 {% endif %}
 </div>
+
+{% if is_share_guest and share_guest_url %}
+{# The guest's own magic link, offered as something to save.
+
+   /s/<token> 302s to its destination, so it's in the address bar for an
+   instant and never becomes a history entry — which meant the only URL a
+   guest could bookmark was an ordinary path like /trips/12 that works solely
+   while their cookie lives. On a second device, or after the cookie lapses,
+   that bookmark lands on a password form, and the working link exists only in
+   the original text message. This is the copy of it they can keep. #}
+<div class="guest-link-panel" id="guest-link-panel" hidden>
+  <p class="glp-lead">Save this link — it's how you get back in.</p>
+  <p class="glp-hint">Bookmark <em>this</em> link rather than the page you're
+    on: a page bookmark stops working when you switch devices.</p>
+  <div class="glp-row">
+    <input type="text" id="guest-link-url" readonly value="{{ share_guest_url }}"
+           aria-label="Your personal link">
+    <button type="button" id="guest-link-copy">Copy</button>
+  </div>
+</div>
+{% endif %}
 
 {# tabindex="-1" so the skip link can actually move focus here (a plain div is
    not focusable, and the browser would jump the scroll but leave focus in the
@@ -671,6 +744,54 @@
     params.delete('notice');
     const qs = params.toString();
     history.replaceState(null, '', location.pathname + (qs ? '?' + qs : '') + location.hash);
+  })();
+
+  // Share guests: the chip opens a panel holding their magic link, because
+  // /s/<token> redirects away and so was never bookmarkable. Shown
+  // automatically on the FIRST page of a session — the moment they most need
+  // to save it, and the one time they haven't yet been told it exists — then
+  // only on demand. localStorage (not session) so it doesn't nag on every
+  // visit; a guest who clears storage just gets the reminder again.
+  (function guestLinkPanel() {
+    const chip = document.getElementById('guest-chip');
+    const panel = document.getElementById('guest-link-panel');
+    if (!chip || !panel) return;
+    const input = document.getElementById('guest-link-url');
+    const copyBtn = document.getElementById('guest-link-copy');
+
+    const setOpen = (open) => {
+      panel.hidden = !open;
+      chip.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    chip.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setOpen(panel.hidden);
+    });
+    // Click-away and Escape close it; clicks inside must not.
+    panel.addEventListener('click', (e) => e.stopPropagation());
+    document.addEventListener('click', () => setOpen(false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) setOpen(false);
+    });
+
+    copyBtn.addEventListener('click', () => {
+      const done = () => window.toast('Link copied — save it as a bookmark.', 'success');
+      // navigator.clipboard needs a secure context; select() is the fallback
+      // that at least leaves the URL ready for a manual copy.
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(input.value).then(done, () => input.select());
+      } else {
+        input.select();
+        try { document.execCommand('copy'); done(); } catch (_) { /* selected; copy by hand */ }
+      }
+    });
+
+    try {
+      if (!localStorage.getItem('guestLinkSeen')) {
+        setOpen(true);
+        localStorage.setItem('guestLinkSeen', '1');
+      }
+    } catch (_) { /* storage disabled — the chip still opens it on demand */ }
   })();
 
   // Add a miles-only scale bar to a Leaflet map at the bottom-right. The bottom-right
