@@ -926,7 +926,12 @@ def _require_login_globally():
             # static handler knows nothing about.
             abort(404)
         return None
-    elif request.endpoint in ('login', 'service_worker', 'offline',
+    # 'logout' is exempt so that hitting it while already signed out (a stale
+    # tab, a double-click, a service-worker-cached page) just lands on the clean
+    # login page. Gating it instead stashed ?next=/logout, which meant the next
+    # successful login redirected straight back into logout — a self-inflicted
+    # loop you could never log in through.
+    elif request.endpoint in ('login', 'logout', 'service_worker', 'offline',
                               'sw_reset', 'share_login', 'serve_tile',
                               'serve_pmtiles', None):
         return None
@@ -1319,9 +1324,25 @@ def login():
 
 @app.route('/logout')
 def logout():
-    _log_access("logout")          # before logout_user, while identity still resolves
-    logout_user()
-    return redirect(_safe_next(request.args.get('next')))
+    """Explicit sign-out: drop any ?next= and land on a clean login page.
+
+    Login is global here, so after logout *every* path redirects to /login
+    anyway — carrying ?next= through accomplishes exactly one thing: it
+    pre-loads the DEPARTING user's last page as the ARRIVING user's
+    destination. That's the wrong intent (logging out is a deliberate "I'm
+    done"), it quietly tells the next person on a shared family device where
+    you'd been, and it produced a genuinely bad failure mode: logging out from
+    /admin/users handed the next person a login form that bounced them
+    straight back to an admin page they couldn't see (see _require_admin_page).
+
+    `next` is ignored here rather than merely dropped from the nav link, so a
+    service-worker-cached page still carrying the old ?next= link can't
+    resurrect the behavior.
+    """
+    if current_user.is_authenticated:
+        _log_access("logout")      # before logout_user, while identity still resolves
+        logout_user()
+    return redirect(url_for('login', signed_out=1))
 
 
 def _safe_next(path, default="/"):

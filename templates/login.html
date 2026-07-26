@@ -78,6 +78,18 @@
     margin-bottom: 1rem;
     text-align: center;
   }
+
+  /* Neutral confirmation (e.g. "signed out") — deliberately not the red
+     .error styling, so a successful sign-out doesn't read as a failure. */
+  .notice {
+    background: #eef1f6;
+    color: #33415c;
+    padding: .5rem .75rem;
+    border-radius: 6px;
+    font-size: .85rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
 {% endblock %}
 
 {% block content %}
@@ -86,6 +98,11 @@
     <h1>Login</h1>
     {% if error %}
     <div class="error">{{ error }}</div>
+    {# Suppressed once there's an error: the form POSTs back to this same URL,
+       so ?signed_out= survives a failed attempt and would otherwise sit
+       alongside "Invalid username or password". #}
+    {% elif request.args.get('signed_out') %}
+    <div class="notice">You've been signed out.</div>
     {% endif %}
     <form method="POST">
       <label for="username">Username</label>

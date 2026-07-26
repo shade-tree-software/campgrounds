@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T12:22:10.874Z
+  modified: 2026-07-26T12:30:01.808Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
@@ -35,6 +35,10 @@ Three-agent review of the viewer experience: regular logged-in viewers, share-li
 ## Found in the field (2026-07-26), not in the original review
 
 **Admin page routes bounced authenticated non-admins to `/login`, creating an infinite loop** — fixed in `a8c3ad7`. `/admin/users`, `/admin/access-log` and `/campgrounds/manage` each did `redirect(url_for('login', next=request.path))` on a failed `_require_admin()`. But `_require_login_globally` is a `before_request`, so anyone reaching those views is *already authenticated* — that branch could only ever fire for a logged-in non-admin, who then logs in successfully, gets sent back by `?next=`, and is bounced to `/login` again. **It presents as "my password stopped working."** Reported that way for the `hamfam` account right after a Trips-only downgrade; the access log settled it — four `login` successes, zero `login_failed`, each followed by `302 /admin/users` → `200 /login`. New `_require_admin_page()` sends them to the trips map with an `admin_only` notice instead. Lesson: **a permission bounce must never target the login page** — logging in again cannot change the outcome. Same defect class as the Trips-only silent redirect in Batch 1.
+
+**`/logout` carried `?next=<current page>`, and two loops came out of it** (AWH's call, fixed alongside). Login is global here, so after logout every path redirects to `/login` anyway — the only thing `?next=` did was pre-load the *departing* user's last page as the *arriving* user's destination. Wrong intent (signing out is deliberate), a small leak of where you'd been on a shared family device, and the direct trigger for the admin loop above. Now `logout()` ignores `next` entirely — ignored server-side, not just dropped from the nav link, so a service-worker-cached page can't resurrect it — and redirects to `/login?signed_out=1`, which shows a neutral "You've been signed out." confirmation (`.notice`, suppressed when there's an `error` so a failed retry doesn't show both).
+  - **Second loop, found while testing:** `logout` wasn't in the login-exempt endpoint list, so hitting `/logout` while *already* signed out (stale tab, double-click, cached page) got gated and stashed `?next=/logout` — then a successful login redirected straight back into logout, forever. `logout` is now exempt, and it only logs/clears when actually authenticated.
+  - General rule this whole episode points at: **`?next=` is only ever safe when the redirect is an involuntary interruption** (the global login gate). On a *deliberate* action — logout — or on a permission denial, it turns into a trap.
 
 ## Discoverability and dead ends
 

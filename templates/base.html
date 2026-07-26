@@ -461,7 +461,9 @@
     {{ share_guest_label or 'Guest' }} · read-only
   </span>
   {% else %}
-  <a href="/logout?next={{ request.path }}" style="margin-left:auto">Logout</a>
+  {# No ?next= — signing out is deliberate, so the next login starts clean
+     rather than resuming wherever the previous person was. See logout(). #}
+  <a href="/logout" style="margin-left:auto">Logout</a>
   {% endif %}
   {% endblock %}
   </div>
