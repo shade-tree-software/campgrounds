@@ -47,14 +47,30 @@
     padding: .75rem;
   }
   .poster-sheet {
-    aspect-ratio: 8.5 / 11;
     background: var(--paper);
     box-shadow: 0 12px 40px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
-    /* Constrain by whichever viewport axis is the binding limit. The
-       aspect-ratio property handles the other axis. Letter sheet is
-       portrait so on most screens it's height-bound. */
-    width: min(calc((100vh - 1.5rem) * 8.5 / 11), calc(100vw - 1.5rem));
-    height: min(calc(100vh - 1.5rem), calc((100vw - 1.5rem) * 11 / 8.5));
+    /* THE SHEET IS ALWAYS EXACTLY LETTER-SIZED IN LAYOUT — 8.5in × 11in,
+       i.e. 816 × 1056 CSS px — on screen and on paper alike. The screen
+       preview is fitted by SCALING it (--poster-scale, set in JS), never by
+       resizing it.
+       This is load-bearing, not a style choice. Everything on this poster is
+       positioned in layout pixels by JS at load time: Leaflet lays its tiles
+       and markers out against the map div's pixel box, and placeCallouts()
+       hard-codes the SVG viewBox, every pill position and every leader line
+       from `mapEl.clientWidth/clientHeight` and latLngToContainerPoint().
+       None of that re-runs when the page enters print. So when the sheet
+       used to be viewport-sized on screen (~620px wide on a laptop) and
+       `width: 100%` in print (816px), printing silently widened the sheet by
+       ~30% underneath geometry computed for the old box — leaving the map's
+       tiles short of the right/bottom edges and the callouts pointing at the
+       wrong places. A transform doesn't reflow, so with a fixed sheet the
+       print layout IS the screen layout and there is nothing to recompute.
+       If you ever need the sheet to be a different size, change it here and
+       let the scale follow — don't reintroduce a print-only size. */
+    width: 8.5in;
+    height: 11in;
+    flex: none;
+    transform: scale(var(--poster-scale, 1));
     /* Four explicit rows — title auto-sized to content, the two photo
        strips at fixed percentages of the sheet height, and the map filling
        whatever's left. Without these explicit rows the four children
@@ -220,19 +236,47 @@
   }
   .poster-bar a:hover, .poster-bar button:hover { background: rgba(0,0,0,.72); }
 
-  /* Print: hide the dark background, set page to letter portrait, and
-     remove drop shadow so it prints cleanly edge-to-edge. */
+  /* Print: hide the dark background and the toolbar, and drop the preview
+     scale so the sheet prints at its true 8.5×11. Note what is NOT here —
+     any change to the sheet's width/height. See the .poster-sheet comment:
+     the printed layout has to be pixel-identical to the screen layout,
+     because the map and the callouts were positioned against it at load
+     time and nothing recomputes them for print. */
   @media print {
     @page { size: letter portrait; margin: 0; }
-    html, body { background: white; overflow: visible; }
+    html, body {
+      background: white;
+      overflow: visible;
+      width: 8.5in;
+      height: 11in;
+      margin: 0;
+    }
     .poster-bar { display: none; }
-    .poster-wrap { height: auto; padding: 0; }
+    .poster-wrap {
+      display: block;
+      width: 8.5in;
+      height: 11in;
+      padding: 0;
+    }
     .poster-sheet {
       box-shadow: none;
-      width: 100%;
-      height: auto;
-      aspect-ratio: 8.5 / 11;
+      /* Scale 1 — the sheet is already exactly letter-sized. */
+      transform: none;
     }
+  }
+
+  /* Browsers strip background colors and images when printing unless asked
+     not to. Almost everything that makes this look like a poster rather than
+     a page of floating photos is a background: the cream sheet, the rules
+     between the photo thumbnails (those "grid lines" are the strip's
+     background showing through a 2px gap), the map's water-colored backdrop,
+     and each thumb's dark backer. Without this the print came out as black
+     text and photos on plain white. Applied at all times rather than inside
+     @media print — Chrome honors it either way, and keeping one declaration
+     means the screen and print rendering can't drift apart. */
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 </style>
 </head>
@@ -653,12 +697,32 @@ map.whenReady(() => {
   // Belt-and-braces in case fitBounds was effectively a no-op (single point):
   setTimeout(placeCallouts, 400);
 });
-window.addEventListener('resize', () => {
-  map.invalidateSize();
-  if (bounds.length) map.fitBounds(bounds, { padding: [2, 2] });
-  // moveend handler above (or the setTimeout) will redraw.
-  setTimeout(placeCallouts, 350);
-});
+// Fit the letter-sized sheet into the viewport by SCALING it. The sheet's
+// layout size never changes (see the .poster-sheet CSS comment) — a resize
+// only changes how big the preview looks, so unlike the old responsive
+// version there is deliberately no invalidateSize/fitBounds/placeCallouts
+// here: the map's pixel box is identical before and after, and redoing that
+// work would only risk the screen and print views diverging again.
+//
+// Reads offsetWidth/offsetHeight rather than hard-coding 816×1056 so this
+// keeps working if the sheet size is ever changed in CSS (offset* is the
+// untransformed layout size, so the scale can't feed back on itself).
+// Uncapped: on a tall display the preview grows past 1:1, which is what the
+// old viewport-sized sheet did too.
+function fitPosterScale() {
+  const sheet = document.querySelector('.poster-sheet');
+  if (!sheet) return;
+  const wrap = document.querySelector('.poster-wrap');
+  const padding = wrap ? parseFloat(getComputedStyle(wrap).paddingTop) * 2 : 0;
+  const scale = Math.min(
+    (window.innerHeight - padding) / sheet.offsetHeight,
+    (window.innerWidth - padding) / sheet.offsetWidth);
+  if (scale > 0 && Number.isFinite(scale)) {
+    document.documentElement.style.setProperty('--poster-scale', scale);
+  }
+}
+fitPosterScale();
+window.addEventListener('resize', fitPosterScale);
 </script>
 </body>
 </html>
