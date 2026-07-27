@@ -35,6 +35,32 @@ case "${SSH_ORIGINAL_COMMAND:-deploy}" in
     echo "TOUCHED=$(git diff --name-only HEAD..@{u} -- $DATA_FILES | tr '\n' ' ')"
     git log --oneline HEAD..@{u} | sed 's/^/INCOMING=/'
     ;;
+  reconcile)
+    # Called by capture-pa-edits.sh AFTER it has committed and pushed the live
+    # UI edits. PA's working copy is then byte-for-byte what the new upstream
+    # commit contains, but git still sees the file as locally modified, so the
+    # next `git pull` would refuse. Drop the working copy so the pull can land.
+    #
+    # This is the ONE place that discards live edits, so it is guarded by
+    # content: the working file's blob hash must equal the blob in the upstream
+    # commit. If they differ by so much as a byte — someone saved another edit
+    # in the meantime — it refuses and leaves the file alone, and the next
+    # capture picks the edit up. So it can only ever discard data that is
+    # already committed and pushed.
+    cd "$REPO"
+    git fetch --quiet
+    for f in $DATA_FILES; do
+      git diff --quiet -- "$f" && continue
+      live="$(git hash-object "$f")"
+      want="$(git rev-parse "@{u}:$f" 2>/dev/null || echo none)"
+      if [ "$live" = "$want" ]; then
+        git checkout -- "$f"
+        echo "reconciled: $f (byte-identical to the pushed commit)"
+      else
+        echo "SKIPPED: $f differs from the pushed commit — left untouched" >&2
+      fi
+    done
+    ;;
   deploy|deploy-no-reload)
     cd "$REPO"
     # --ff-only so a diverged or conflicting live tree fails loudly rather than
@@ -46,7 +72,7 @@ case "${SSH_ORIGINAL_COMMAND:-deploy}" in
     git log --oneline -1
     ;;
   *)
-    echo "refused: this key may only run 'status', 'deploy' or 'deploy-no-reload'" >&2
+    echo "refused: this key may only run 'status', 'reconcile', 'deploy' or 'deploy-no-reload'" >&2
     exit 2
     ;;
 esac
