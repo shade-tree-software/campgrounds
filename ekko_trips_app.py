@@ -2,6 +2,7 @@ import argparse
 import gzip
 import hashlib
 import json
+import math
 import os
 import re
 import secrets
@@ -28,7 +29,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_suppressed_pings,
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
-                   get_tid_overrides, set_tid_override,
+                   get_tid_overrides, set_tid_override, raw_trip_records,
                    campground_references, camping_nights, is_day_trip,
                    TRIPS_JSON)
 
@@ -2591,6 +2592,7 @@ def api_delete_trip(trip_id):
     if not delete_trip(trip_id):
         return jsonify({"error": "Trip not found"}), 404
     _delete_track_cache(trip_id)
+    _delete_trip_route(trip_id)
     return jsonify({"ok": True})
 
 
@@ -4226,6 +4228,92 @@ def _fetch_timeline_points(tid, token, from_ts, to_ts):
     return points
 
 
+def _track_override_context(trip):
+    """Return `(suppressed, bad_windows, relocate)` — the three admin-override
+    lookups every consumer of a trip's track needs.
+
+    Shared so the track endpoint and the overview-map route builder resolve
+    overrides identically; a consumer that assembled its own set would drift
+    the moment a new override kind is added."""
+    trip_id = trip["id"]
+    return (set(get_suppressed_pings(trip_id)),
+            _bad_track_window_tsts(trip),
+            _relocation_lookup(get_relocated_pings(trip_id)))
+
+
+def _select_chosen_track(trip, all_points, suppressed, bad_windows, relocate):
+    """Run per-day tid selection on the cached/fetched raw points
+    (tid-tagged) and return only the chosen tid's pings.
+
+    The selector's *decision* runs on a cleaned view (suppressed +
+    bad-window pings dropped, relocations applied) so admin-marked-
+    untrusted pings can't tip the choice. Then we filter the RAW
+    points by the per-day choice so the result still carries original
+    coords / admin-mode tags — the track endpoint's `_apply_overrides`
+    re-applies relocations and emits the admin annotations.
+
+    Pings on pad days (the ±1 day fetch overage outside the trip's
+    own date range) keep today's behavior: primary-only pass-through,
+    no per-day selection. They're only used by the frontend to draw
+    the "leaving home" / "arriving home" boundary leg of the polyline."""
+    enrich_trip_locations(trip)
+    home, _fam = _map_config()
+    anchors = _anchors_for_trip(trip)
+
+    def _split_clean(want_tid):
+        out = []
+        for p in all_points:
+            if p.get("tid") != want_tid:
+                continue
+            tst = p.get("tst")
+            if tst is None or tst in suppressed:
+                continue
+            if _in_bad_track_window(tst, bad_windows):
+                continue
+            ov = relocate(p)
+            if ov is not None:
+                p = dict(p)
+                p["lat"], p["lon"] = ov[0], ov[1]
+            out.append(p)
+        return out
+
+    _, tid_choices = _select_track_per_day(
+        _split_clean("primary"), _split_clean("alt"),
+        anchors, home, trip["start"], trip["end"],
+        tid_overrides=trip.get("tid_overrides") or {},
+    )
+
+    # tid_windows force a specific tid for a sub-day time range (a
+    # gap on the chosen phone the other phone covered). Filter the RAW
+    # points by the per-day choice + window overrides so the result
+    # keeps original coords / admin tags for `_apply_overrides`.
+    tid_windows = _tid_window_tsts(trip, home)
+    return _apply_tid_choice(all_points, tid_choices, tid_windows,
+                             drop_pad_days=False)
+
+
+def _clean_track_points(trip, chosen, suppressed, bad_windows, relocate):
+    """The canonical "what the line actually shows" view of a trip's track:
+    chosen-tid pings with relocations applied, suppressed + bad-window pings
+    dropped, trimmed to the trip's local-date range.
+
+    This is what the home-boundary detector runs on, and what the overview
+    map's simplified route is built from — so both maps draw the same track.
+    Never mutates the input pings (relocations copy)."""
+    cleaned = []
+    for p in chosen:
+        tst = p.get("tst")
+        if tst is None or tst in suppressed:
+            continue
+        if _in_bad_track_window(tst, bad_windows):
+            continue
+        ov = relocate(p)
+        if ov is not None:
+            p = {**p, "lat": ov[0], "lon": ov[1]}
+        cleaned.append(p)
+    return _filter_points_to_trip_window(cleaned, trip["start"], trip["end"])
+
+
 @app.route('/api/trips/<int:trip_id>/track')
 @login_required
 def api_trip_track(trip_id):
@@ -4255,10 +4343,8 @@ def api_trip_track(trip_id):
     # plus draw a from-here-to-there dashed line. Without the flag,
     # suppressed pings are dropped and relocations are applied silently.
     include_admin = request.args.get("admin") == "1"
-    suppressed = set(get_suppressed_pings(trip_id))
     relocation_items = get_relocated_pings(trip_id)
-    _relocate = _relocation_lookup(relocation_items)
-    bad_windows = _bad_track_window_tsts(trip)
+    suppressed, bad_windows, _relocate = _track_override_context(trip)
 
     def _apply_overrides(points):
         # Relocations rewrite lat/lon in place. Always applied (the polyline
@@ -4300,56 +4386,6 @@ def api_trip_track(trip_id):
             return points
         return [p for p in points if p.get("tst") not in suppressed]
 
-    def _select_chosen(all_points):
-        """Run per-day tid selection on the cached/fetched raw points
-        (tid-tagged) and return only the chosen tid's pings.
-
-        The selector's *decision* runs on a cleaned view (suppressed +
-        bad-window pings dropped, relocations applied) so admin-marked-
-        untrusted pings can't tip the choice. Then we filter the RAW
-        points by the per-day choice so the response still carries
-        original coords / admin-mode tags — `_apply_overrides` below
-        will re-apply relocations and emit the admin annotations.
-
-        Pings on pad days (the ±1 day fetch overage outside the trip's
-        own date range) keep today's behavior: primary-only pass-through,
-        no per-day selection. They're only used by the frontend to draw
-        the "leaving home" / "arriving home" boundary leg of the polyline."""
-        enrich_trip_locations(trip)
-        home, _fam = _map_config()
-        anchors = _anchors_for_trip(trip)
-
-        def _split_clean(want_tid):
-            out = []
-            for p in all_points:
-                if p.get("tid") != want_tid:
-                    continue
-                tst = p.get("tst")
-                if tst is None or tst in suppressed:
-                    continue
-                if _in_bad_track_window(tst, bad_windows):
-                    continue
-                ov = _relocate(p)
-                if ov is not None:
-                    p = dict(p)
-                    p["lat"], p["lon"] = ov[0], ov[1]
-                out.append(p)
-            return out
-
-        _, tid_choices = _select_track_per_day(
-            _split_clean("primary"), _split_clean("alt"),
-            anchors, home, trip["start"], trip["end"],
-            tid_overrides=trip.get("tid_overrides") or {},
-        )
-
-        # tid_windows force a specific tid for a sub-day time range (a
-        # gap on the chosen phone the other phone covered). Filter the RAW
-        # points by the per-day choice + window overrides so the response
-        # keeps original coords / admin tags for `_apply_overrides`.
-        tid_windows = _tid_window_tsts(trip, home)
-        return _apply_tid_choice(all_points, tid_choices, tid_windows,
-                                 drop_pad_days=False)
-
     def _build_response(all_points):
         """Build the track JSON: the chosen/override-applied pings plus
         the auto-detected home-boundary tsts.
@@ -4363,20 +4399,10 @@ def api_trip_track(trip_id):
         local-date range, then the shared `_find_home_boundary_tsts`
         with the trip's anchors. Independent of `?admin=1` so every
         viewer sees the same window."""
-        chosen = _select_chosen(all_points)
-        cleaned = []
-        for p in chosen:
-            tst = p.get("tst")
-            if tst is None or tst in suppressed:
-                continue
-            if _in_bad_track_window(tst, bad_windows):
-                continue
-            ov = _relocate(p)
-            if ov is not None:
-                p = {**p, "lat": ov[0], "lon": ov[1]}
-            cleaned.append(p)
-        cleaned = _filter_points_to_trip_window(
-            cleaned, trip["start"], trip["end"])
+        chosen = _select_chosen_track(trip, all_points, suppressed,
+                                      bad_windows, _relocate)
+        cleaned = _clean_track_points(trip, chosen, suppressed,
+                                      bad_windows, _relocate)
         home, _fam = _map_config()
         hs, he = _find_home_boundary_tsts(
             cleaned, home, anchors=_anchors_for_trip(trip))
@@ -4439,6 +4465,354 @@ def api_trip_track(trip_id):
     _enrich_with_timezone(all_points)
     _write_track_cache(trip_id, all_points)
     return _build_response(all_points)
+
+
+# ── Overview-map trip routes (precomputed, simplified GPS lines) ────────────
+# The trips map draws every trip's GPS line at once. It can't reuse the trip
+# detail page's approach for two reasons:
+#
+#   1. Volume. The detail page ships every ping and builds a circleMarker per
+#      one (`static/trip-detail/map.js`) — fine for one trip, but the whole
+#      library is ~100k pings across 92 trips, and the overview map wants none
+#      of the per-ping interaction anyway.
+#   2. Cost per page load. Turning raw pings into the line that's actually
+#      drawn runs per-day tid selection and home-boundary detection; doing
+#      that for every trip on every landing-page hit is pure repeated work,
+#      since the answer only changes when the trip or its track does.
+#
+# So the line is precomputed once per trip and cached on disk in
+# `trip_data/trip_routes.json`, keyed by a signature over everything that can
+# change it (below). Entries rebuild lazily when their signature drifts, so
+# there's nothing to remember to run after editing a trip.
+#
+# Routes are built from `_clean_track_points()` — the same view the detail
+# map's polyline and the home-boundary detector use — so the two maps can't
+# disagree about where a trip went.
+TRIP_ROUTES_FILE = os.path.join(TRIP_DATA_DIR, "trip_routes.json")
+
+# Douglas-Peucker tolerance. The overview map is a zoomed-out national view;
+# 100 m of cross-track error is sub-pixel until ~z12 and still slight beyond
+# that, and it cuts the stored geometry roughly 2.5x (measured: 102k pings ->
+# 42k vertices, ~276 KB gzipped for the whole library).
+TRIP_ROUTE_SIMPLIFY_M = 100
+
+# A polyline joins consecutive pings with a straight line, which draws a road
+# that was never driven when the phone stopped reporting for a stretch (dead
+# battery, no signal through a canyon). Past this much time AND distance the
+# jump isn't a drive, so the line breaks instead of inventing the leg. Both
+# gates matter: a long stationary gap overnight at camp is common and its
+# "jump" is a few meters, which should stay connected.
+TRIP_ROUTE_GAP_S = 60 * 60
+TRIP_ROUTE_GAP_M = 20000
+
+# Shortest run that counts as a line. Splitting on a gap regularly leaves a
+# stub of two near-identical pings on the far side — a phone that woke up,
+# reported twice from the same spot, and slept again. That's a dwell, not a
+# drive: it has no shape to draw, and at the casing's stroke width it renders
+# as a stray dot that reads like an unexplained marker.
+TRIP_ROUTE_MIN_SEGMENT_M = 100
+
+# Bump to invalidate every cached route after a change to how they're built
+# (a different simplifier, a new window rule). Cheaper than remembering to
+# delete the file on deploy.
+TRIP_ROUTE_CACHE_VERSION = 1
+
+
+def _rdp_keep_mask(xs, ys, eps):
+    """Douglas-Peucker over a projected (meters) polyline. Returns a
+    per-vertex keep mask. Iterative rather than recursive — a long track is
+    thousands of points deep and would blow the stack."""
+    n = len(xs)
+    keep = [False] * n
+    keep[0] = keep[n - 1] = True
+    stack = [(0, n - 1)]
+    while stack:
+        i, j = stack.pop()
+        if j <= i + 1:
+            continue
+        ax, ay, bx, by = xs[i], ys[i], xs[j], ys[j]
+        dx, dy = bx - ax, by - ay
+        den = math.hypot(dx, dy)
+        dmax, idx = 0.0, -1
+        for k in range(i + 1, j):
+            px, py = xs[k], ys[k]
+            if den == 0:
+                d = math.hypot(px - ax, py - ay)
+            else:
+                d = abs(dy * (px - ax) - dx * (py - ay)) / den
+            if d > dmax:
+                dmax, idx = d, k
+        if dmax > eps and idx > 0:
+            keep[idx] = True
+            stack.append((i, idx))
+            stack.append((idx, j))
+    return keep
+
+
+def _simplify_latlon(coords, eps_m):
+    """Simplify a [(lat, lon), ...] run to within `eps_m`, returning
+    `[[lat, lon], ...]` rounded to 5 decimals (~1 m — well under the
+    tolerance, and it roughly halves the JSON).
+
+    Projects to meters with an equirectangular approximation around the
+    run's mean latitude first, so the tolerance means the same thing
+    east-west as north-south (a degree of longitude is ~0.7x a degree of
+    latitude at 45 deg, and RDP on raw degrees would over-simplify one axis)."""
+    if len(coords) < 3:
+        return [[round(la, 5), round(lo, 5)] for la, lo in coords]
+    lat0 = sum(c[0] for c in coords) / len(coords)
+    kx = math.cos(math.radians(lat0)) * 111320.0
+    xs = [c[1] * kx for c in coords]
+    ys = [c[0] * 110540.0 for c in coords]
+    keep = _rdp_keep_mask(xs, ys, eps_m)
+    return [[round(c[0], 5), round(c[1], 5)]
+            for c, k in zip(coords, keep) if k]
+
+
+def _trip_window_cuts(trip, cleaned, home):
+    """Resolve the trip's polyline window as `(lower_tst, upper_tst)`,
+    either bound possibly None.
+
+    Mirrors the frontend's `computeTripWindow()` precedence exactly: a
+    manual `home_start_time`/`home_end_time` wins, the auto-detected home
+    boundary fills in when there's no manual override, and None falls back
+    to the full local days `_clean_track_points()` already trimmed to."""
+    hs, he = _find_home_boundary_tsts(
+        cleaned, home, anchors=_anchors_for_trip(trip))
+    tz_name = (_tz_for_coord(home[0], home[1])
+               if home and home[0] is not None and home[1] is not None
+               else None)
+    lower = _trip_local_to_tst(
+        trip.get("start"), trip.get("home_start_time"), tz_name)
+    if lower is None:
+        lower = hs
+    upper = _trip_local_to_tst(
+        trip.get("end"), trip.get("home_end_time"), tz_name)
+    if upper is None:
+        upper = he
+    return lower, upper
+
+
+def _track_covers_trip(trip, in_window, home):
+    """True when the GPS data actually belongs to this trip.
+
+    Port of the trip-detail map's auto-fallback gate (see the
+    `Auto-fallback: skip the GPS layer` comment in
+    `static/trip-detail/map.js`) — kept deliberately identical, because a
+    trip the detail map refuses to draw a GPS line for must not get one on
+    the overview map either. There the failing gate leaves the dashed
+    straight-line route as the only polyline; here it means no line at all,
+    since the overview map deliberately carries no straight-line stand-in.
+
+    Strict gate: at least one in-window ping within `TRACK_NEAR_STAY_KM` of
+    a stay/event anchor. A phone that roamed on the trip's dates but never
+    reached anywhere on the itinerary was on a different errand (the trip-61
+    case). Relaxed only while a trip is still in progress: a ping more than
+    that far from home counts, so a drive toward a distant sole anchor
+    (trip 90) shows up before it arrives."""
+    anchors = _anchors_for_trip(trip)
+    home_valid = (home and home[0] is not None and home[1] is not None)
+    if not anchors and not home_valid:
+        return True
+    radius_m = TRACK_NEAR_STAY_KM * 1000
+    if any(_haversine_m(p["lat"], p["lon"], a_lat, a_lng) <= radius_m
+           for p in in_window for a_lat, a_lng in anchors):
+        return True
+    try:
+        in_progress = date.today() <= date.fromisoformat(trip["end"])
+    except (ValueError, TypeError, KeyError):
+        in_progress = False
+    if in_progress and home_valid:
+        return any(_haversine_m(p["lat"], p["lon"], home[0], home[1]) > radius_m
+                   for p in in_window)
+    return False
+
+
+def _build_trip_route(trip):
+    """Build one trip's overview line as a list of simplified segments
+    (`[[[lat, lon], ...], ...]`). Empty list when the trip has no dates, no
+    cached track, or nothing survives cleaning.
+
+    Reads only the on-disk track cache — never the timeline API. A trip
+    whose track has never been fetched simply has no line until someone
+    opens its detail page, which is the right trade for a page that draws
+    every trip at once: one cold trip must not turn the landing page into
+    92 upstream requests."""
+    if not trip.get("start") or not trip.get("end"):
+        return []
+    points = _read_track_cache(trip["id"])
+    if not points:
+        return []
+    # In-memory only; persisting the migration is the track endpoint's job.
+    _migrate_track_cache_tids(points)
+
+    suppressed, bad_windows, relocate = _track_override_context(trip)
+    chosen = _select_chosen_track(trip, points, suppressed, bad_windows,
+                                  relocate)
+    cleaned = _clean_track_points(trip, chosen, suppressed, bad_windows,
+                                  relocate)
+    if not cleaned:
+        return []
+    cleaned.sort(key=lambda p: p.get("tst") or 0)
+
+    home, _fam = _map_config()
+    lower, upper = _trip_window_cuts(trip, cleaned, home)
+    kept = [p for p in cleaned
+            if (lower is None or p["tst"] >= lower)
+            and (upper is None or p["tst"] <= upper)]
+    if not _track_covers_trip(trip, kept, home):
+        return []
+
+    segments, current, prev = [], [], None
+    for p in kept:
+        if prev is not None:
+            gap_s = p["tst"] - prev["tst"]
+            if gap_s > TRIP_ROUTE_GAP_S and _haversine_m(
+                    prev["lat"], prev["lon"], p["lat"], p["lon"]) > TRIP_ROUTE_GAP_M:
+                if len(current) > 1:
+                    segments.append(current)
+                current = []
+        current.append((p["lat"], p["lon"]))
+        prev = p
+    if len(current) > 1:
+        segments.append(current)
+
+    out = []
+    for seg in segments:
+        length = sum(_haversine_m(seg[i - 1][0], seg[i - 1][1],
+                                  seg[i][0], seg[i][1])
+                     for i in range(1, len(seg)))
+        if length < TRIP_ROUTE_MIN_SEGMENT_M:
+            continue
+        out.append(_simplify_latlon(seg, TRIP_ROUTE_SIMPLIFY_M))
+    return out
+
+
+def _trip_route_signature(trip, raw_record):
+    """Fingerprint everything that can change a trip's line.
+
+    Covers the track cache file itself (mtime + size, so a re-fetch of a
+    recent trip's pings is picked up) and the whole raw trip record — which
+    is what carries the dates, the anchors the boundary detector and tid
+    selector run against, and every admin override (`suppressed_pings`,
+    `relocated_pings`, `bad_track_windows`, `tid_overrides`, `tid_windows`).
+    Hashing the record wholesale rather than naming fields is deliberate: a
+    new override kind can't be forgotten here and silently serve a stale line.
+
+    `in_progress` is in here because `_track_covers_trip`'s gate relaxes for
+    a trip that's still happening. Without it, a line admitted under the
+    relaxed gate would outlive the trip: once it ends, the track cache stops
+    being re-fetched, so nothing else in this fingerprint would ever change
+    and the strict gate would never get to re-judge it."""
+    try:
+        in_progress = date.today() <= date.fromisoformat(trip.get("end"))
+    except (ValueError, TypeError):
+        in_progress = False
+    track_stat = None
+    for path in _track_cache_paths(trip["id"]):
+        if os.path.isfile(path):
+            st = os.stat(path)
+            track_stat = [int(st.st_mtime), st.st_size]
+            break
+    payload = {
+        "v": TRIP_ROUTE_CACHE_VERSION,
+        "eps": TRIP_ROUTE_SIMPLIFY_M,
+        "gap": [TRIP_ROUTE_GAP_S, TRIP_ROUTE_GAP_M, TRIP_ROUTE_MIN_SEGMENT_M],
+        "track": track_stat,
+        "in_progress": in_progress,
+        "trip": raw_record,
+    }
+    blob = json.dumps(payload, sort_keys=True, default=str)
+    return hashlib.sha1(blob.encode("utf-8")).hexdigest()
+
+
+def _load_trip_routes_cache():
+    """Read the route cache, or `{}` if absent/corrupt. Keys are trip ids
+    as strings (JSON object keys)."""
+    try:
+        with open(TRIP_ROUTES_FILE) as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except Exception:
+        return {}
+
+
+def _save_trip_routes_cache(cache):
+    """Persist the route cache via temp-file + atomic replace, so a crash
+    mid-write can't leave a half-written file that reads as empty and
+    silently drops every line from the map. Best-effort: a failure here
+    costs a rebuild next request, never a broken response."""
+    tmp = TRIP_ROUTES_FILE + ".tmp"
+    try:
+        with open(tmp, "w") as f:
+            json.dump(cache, f, separators=(",", ":"))
+        os.replace(tmp, TRIP_ROUTES_FILE)
+    except Exception:
+        try:
+            os.remove(tmp)
+        except OSError:
+            pass
+
+
+def _trip_routes(trips, force=False, prune=False):
+    """Return `{trip_id: [[[lat, lon], ...], ...]}` for `trips`, rebuilding
+    any entry whose signature drifted and persisting the cache if anything
+    changed. Trips with no line are omitted entirely rather than carried as
+    empty lists — the client just draws what it's given.
+
+    `prune` drops cached entries for trips not in `trips`, and is only safe
+    for a caller passing the *whole* library: the request path passes a
+    filtered list (a non-admin doesn't see home-only trips), and pruning
+    there would evict routes the caller merely can't see, churning them back
+    and forth on every alternating admin/non-admin request."""
+    cache = _load_trip_routes_cache()
+    raw_by_id = {t["id"]: t for t in raw_trip_records()}
+    out, dirty = {}, False
+
+    for trip in trips:
+        key = str(trip["id"])
+        sig = _trip_route_signature(trip, raw_by_id.get(trip["id"]))
+        entry = cache.get(key)
+        if force or not entry or entry.get("sig") != sig:
+            entry = {"sig": sig, "segments": _build_trip_route(trip)}
+            cache[key] = entry
+            dirty = True
+        if entry.get("segments"):
+            out[trip["id"]] = entry["segments"]
+
+    if prune:
+        live = {str(t["id"]) for t in trips}
+        for stale in [k for k in cache if k not in live]:
+            del cache[stale]
+            dirty = True
+
+    if dirty:
+        _save_trip_routes_cache(cache)
+    return out
+
+
+def _delete_trip_route(trip_id):
+    """Drop a trip's cached route (called when the trip is deleted)."""
+    cache = _load_trip_routes_cache()
+    if cache.pop(str(trip_id), None) is not None:
+        _save_trip_routes_cache(cache)
+
+
+@app.route('/api/trips/routes')
+@login_required
+def api_trip_routes():
+    """Every visible trip's simplified GPS line, for the overview map.
+
+    Fetched after the map has painted rather than embedded in the page: it's
+    a few hundred KB gzipped and the map is useful without it, so it must
+    not sit in front of first render. Home-only trips are filtered for
+    non-admins exactly as `trips_map()` filters them, so a hidden trip can't
+    reappear as a line on the map."""
+    trips = parse_trips()
+    is_admin = current_user.is_authenticated and current_user.is_admin
+    if not is_admin:
+        trips = [t for t in trips if not t.get("home_only")]
+    return jsonify(_trip_routes(trips))
 
 
 # ── GPS-track stop detection ────────────────────────────────────────────────
@@ -6164,6 +6538,18 @@ if __name__ == '__main__':
             sys.exit(1)
         _save_user(username, password, is_admin=True)
         print(f"Admin user '{username}' created.")
+    elif len(sys.argv) >= 2 and sys.argv[1] == "rebuild-routes":
+        # The overview map's trip lines rebuild themselves lazily, so this is
+        # only ever a warm-up: run it after a deploy (or after restoring track
+        # caches) so the first visitor doesn't pay for the whole library.
+        force = "--force" in sys.argv[2:]
+        t0 = time.time()
+        all_trips = parse_trips()
+        routes = _trip_routes(all_trips, force=force, prune=True)
+        vertices = sum(len(seg) for segs in routes.values() for seg in segs)
+        print(f"Built routes for {len(routes)} of {len(all_trips)} trip(s), "
+              f"{vertices} vertices, in {time.time() - t0:.1f}s "
+              f"-> {TRIP_ROUTES_FILE}")
     else:
         # Pass --http to skip TLS (HTTPS is on by default so mobile devices
         # on the LAN can use Geolocation, which requires a secure origin).

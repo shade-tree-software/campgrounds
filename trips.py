@@ -35,6 +35,16 @@ def _load_raw_trips():
     return []
 
 
+def raw_trip_records():
+    """The raw trip list straight off disk (no computed/display fields).
+
+    Exposed for callers that need fields `parse_trips()` doesn't
+    materialize — notably the admin-override lists (`suppressed_pings`,
+    `relocated_pings`) — and that want them for every trip without
+    re-reading trips.json once per trip."""
+    return _load_raw_trips()
+
+
 def _save_trips(data):
     """Write the raw trip list to trips.json."""
     os.makedirs(os.path.dirname(TRIPS_JSON), exist_ok=True)

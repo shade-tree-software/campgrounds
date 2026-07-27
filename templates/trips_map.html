@@ -544,13 +544,19 @@ const map = L.map('all-trips-map');
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
 const satellite = window.ekkoSatelliteLayer();
-L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
+const layerControl = L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
 
 // Dedicated pane so stay (blue) circleMarkers render above event (gold) ones.
 // Event circleMarkers stay in the default overlayPane (z-index 400); this pane
 // sits above that but below markerPane (600) where home/family icons live.
 map.createPane('stayPane');
 map.getPane('stayPane').style.zIndex = 450;
+
+// GPS trip lines sit below every marker pane (events 400, stays 450, home and
+// family 600) — the lines are context, the markers are the content, and a line
+// crossing a campspot dot must never eat its click.
+map.createPane('routePane');
+map.getPane('routePane').style.zIndex = 350;
 
 // Home marker
 if (HOME) {
@@ -796,6 +802,84 @@ legend.onAdd = function() {
   return div;
 };
 legend.addTo(map);
+
+// ── GPS trip lines ─────────────────────────────────────────────────────────
+// Every trip's driven route, one color for all of them. Colored per-trip was
+// considered and rejected: at this zoom the lines overlap constantly, and 90+
+// hues read as noise rather than as information — the popup answers "which
+// trip is this?" on demand, which is the only time the question comes up.
+//
+// Fetched after the map has painted rather than embedded in the page. The
+// payload is a couple hundred KB gzipped and the map is fully usable without
+// it, so it must not sit in front of first render. Trips whose GPS track never
+// covered them simply have no line — there's deliberately no straight-line
+// stand-in, which would draw roads that were never driven.
+//
+// Server-side these come precomputed and simplified from
+// /api/trips/routes (see _build_trip_route) — the raw pings are ~100k points
+// across the library and would bring the page to its knees.
+(function loadTripRoutes() {
+  // Canvas, not SVG: this is thousands of vertices across ~180 polylines, and
+  // SVG would put that many DOM nodes on the page. `tolerance` widens the hit
+  // area beyond the 2px stroke so the lines stay tappable on a phone.
+  const renderer = L.canvas({ pane: 'routePane', tolerance: 8 });
+  const routeLayer = L.layerGroup();
+  const tripById = new Map(TRIPS.map(t => [t.id, t]));
+
+  const CASING = { color: '#fff', weight: 4, opacity: 0.5, interactive: false };
+  const LINE = { color: '#002868', weight: 2, opacity: 0.75 };
+
+  fetch('/api/trips/routes', { credentials: 'same-origin' })
+    .then(r => (r.ok ? r.json() : null))
+    .then(routes => {
+      if (!routes) return;
+      let drew = 0;
+      Object.entries(routes).forEach(([id, segments]) => {
+        const trip = tripById.get(Number(id));
+        if (!trip) return;
+        segments.forEach(seg => {
+          if (!seg || seg.length < 2) return;
+          L.polyline(seg, { ...CASING, renderer }).addTo(routeLayer);
+          const line = L.polyline(seg, { ...LINE, renderer }).addTo(routeLayer);
+          // Bind rather than open-on-click: unlike the trip detail map there's
+          // no card column to scroll to here, so the popup IS the answer.
+          const d = trip.start ? new Date(trip.start + 'T00:00:00') : null;
+          const when = d
+            ? d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            : '';
+          line.bindPopup(
+            `<strong>Trip ${trip.number}</strong>${when ? ` — ${when}` : ''}` +
+            `<br>${trip.summary || ''}` +
+            `<div style="margin-top:4px;font-size:12px;">` +
+            `<a href="/trips/${trip.id}" style="color:#002868;">Open trip ›</a></div>`,
+            { maxWidth: 420 });
+          line.on('mouseover', () => line.setStyle({ weight: 4, opacity: 1 }));
+          line.on('mouseout', () => line.setStyle(LINE));
+          drew++;
+        });
+      });
+      if (!drew) return;
+      routeLayer.addTo(map);
+      layerControl.addOverlay(routeLayer, 'Trip routes');
+
+      // Legend row is appended here, not baked into the legend markup, so a
+      // library with no GPS tracks doesn't advertise a line that isn't there.
+      // (This block runs after the legend is built — hence its position in
+      // the file — so the row can't land before there's a body to hold it.)
+      const body = document.getElementById('legend-body');
+      if (body) {
+        const row = document.createElement('div');
+        row.className = 'legend-row';
+        row.innerHTML =
+          '<span class="legend-dot" style="background:#002868;border-radius:0;' +
+          'height:3px;box-shadow:0 0 0 1px rgba(255,255,255,.7);"></span>' +
+          '<span><span class="legend-short">Routes</span>' +
+          '<span class="legend-long">Driven routes (GPS)</span></span>';
+        body.appendChild(row);
+      }
+    })
+    .catch(() => { /* the map is complete without the lines; stay quiet */ });
+})();
 
 // ── "On this day" ──────────────────────────────────────────────────────────
 // Prior-year trips whose date range covers today's month-day (same rule
