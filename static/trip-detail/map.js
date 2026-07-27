@@ -34,6 +34,18 @@ window.addEventListener('resize', syncMapColumnPosition);
 window.addEventListener('load', syncMapColumnPosition);
 syncMapColumnPosition();
 
+// Below this width the two-column grid collapses and the map sits stacked
+// above the cards (see the .content.two-col media query). That stacking is
+// what makes map↔card focus-following jarring: the scroll yanks the page out
+// from under the map you just tapped, and a card tap pans a map that's
+// scrolled off-screen. On these viewports the map answers in place with a
+// popup instead (see `openMarkerPopup`), and card clicks don't move it.
+// Checked per interaction, not once at load, so a rotation takes effect
+// immediately.
+function isSingleColumnLayout() {
+  return window.matchMedia('(max-width: 900px)').matches;
+}
+
 // Smooth-scroll a card into view, accounting for the sticky site-top
 // and trip-header so the card title doesn't end up hidden behind them.
 // Also briefly glow the destination card so it's obvious where the
@@ -71,8 +83,12 @@ function highlightMarker(cardId) {
 
 // Click a card → center & zoom the map on its marker, then pulse the marker.
 // Copy ids (stay-3-2) resolve to their base stay (stay-3).
+// Skipped on the stacked single-column layout, where the map is off-screen
+// while you're reading cards — moving it there is invisible work that only
+// shows up later as a mysteriously re-zoomed map.
 document.querySelectorAll('.stay-card, .event-card').forEach(card => {
   card.addEventListener('click', (e) => {
+    if (isSingleColumnLayout()) return;
     if (e.target.closest('a, button, img, input, textarea, select, label')) return;
     const id = card.id || '';
     const m = id.match(/^stay-(\d+)-\d+$/);
@@ -311,18 +327,149 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  // Markers carry no popups here (a click scrolls to the matching card), which
-  // left four different symbols on the map with nothing naming any of them.
-  // A hover tooltip is the cheapest fix that doesn't touch the click behavior.
+  // On the two-column layout markers carry no popups (a click scrolls to the
+  // matching card), which left four different symbols on the map with nothing
+  // naming any of them. A hover tooltip is the cheapest fix that doesn't touch
+  // the click behavior.
   const TOOLTIP_OPTS = { direction: 'top', offset: [0, -14], opacity: 0.95 };
   function label(marker, text) {
     if (text) marker.bindTooltip(String(text), TOOLTIP_OPTS);
     return marker;
   }
 
+  // ── Marker clicks ────────────────────────────────────────────────────────
+  // Two-column: scroll the cards column to the matching card (the map stays
+  // put beside it). Single-column: open a popup describing the stop, the way
+  // the trips map does — the map is what's on screen, so it answers in place.
+  // maxHeight because the stacked map is only ~380px tall (less in phone
+  // landscape) — a family location with a long visit list would otherwise
+  // make a popup taller than the map it's anchored in.
+  const POPUP_OPTS = { maxWidth: 420, maxHeight: 240, autoPanPadding: L.point(20, 20) };
+
+  // Deliberately a standalone popup rather than bindPopup: binding installs
+  // its own click handler, which would pop the popup on the two-column layout
+  // too, where a click means "scroll to the card".
+  function openMarkerPopup(marker, html) {
+    if (!html) return;
+    // Touch fires the tooltip on this same click (Leaflet binds tooltips to
+    // click on touch devices), and it would sit stacked over the popup.
+    marker.closeTooltip();
+    L.popup(POPUP_OPTS).setLatLng(marker.getLatLng()).setContent(html).openOn(map);
+  }
+
+  // `html` is a string built at marker-creation time; `cardId` may be null for
+  // markers with no card (proximity family houses).
+  function onMarkerClick(marker, html, cardId) {
+    marker.on('click', () => {
+      if (isSingleColumnLayout()) openMarkerPopup(marker, html);
+      else if (cardId) scrollToCard(cardId);
+    });
+    return marker;
+  }
+
+  // Popup "View details" links scroll to the card — the one map→card jump
+  // that's fine on mobile, because the reader asked for it. Wired on open
+  // rather than inline so the popup HTML stays free of event attributes.
+  map.on('popupopen', (e) => {
+    const node = e.popup.getElement();
+    if (!node) return;
+    node.querySelectorAll('a[data-card]').forEach(a => {
+      a.addEventListener('click', (ev) => {
+        ev.preventDefault();
+        map.closePopup();
+        scrollToCard(a.dataset.card);
+      });
+    });
+  });
+
+  function fmtDate(iso, opts) {
+    if (!iso) return '';
+    const d = new Date(iso + 'T00:00:00');
+    if (isNaN(d.getTime())) return iso;
+    return d.toLocaleDateString('en-US',
+      opts || { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  // "Jun 5 – Jun 7, 2026" — the year is carried by the right-hand date alone
+  // when both ends share it.
+  function stayDateRange(stay) {
+    if (!stay.start) return '';
+    if (!stay.end || stay.end === stay.start) return fmtDate(stay.start);
+    const sameYear = stay.start.slice(0, 4) === stay.end.slice(0, 4);
+    const left = fmtDate(stay.start, sameYear ? { month: 'short', day: 'numeric' } : null);
+    return left + ' – ' + fmtDate(stay.end);
+  }
+
+  // Empty string when the card didn't render (e.g. a family visit whose card
+  // is filtered out) — a link to nothing is worse than no link.
+  function cardLink(cardId, text) {
+    if (!cardId || !document.getElementById(cardId)) return '';
+    return '<div style="margin-top:6px;font-size:12px;">'
+      + `<a href="#" data-card="${cardId}" style="color:#002868;">`
+      + `${text || 'View details'} ›</a></div>`;
+  }
+
+  function stayPopupHtml(stay, num) {
+    let h = `<strong>${num}. ${escapeHtml(stay.place || 'Campspot')}</strong>`;
+    const where = [stay.locale, stay.state].filter(Boolean).join(', ');
+    if (where) h += `<br>${escapeHtml(where)}`;
+    const nights = Number(stay.nights) || 0;
+    const when = [
+      stayDateRange(stay),
+      nights ? `${nights} night${nights !== 1 ? 's' : ''}` : '',
+    ].filter(Boolean).join(' · ');
+    if (when) h += `<br>${when}`;
+    if (stay.site) h += `<br>Site ${escapeHtml(String(stay.site))}`;
+    return h + cardLink('stay-' + stay.idx);
+  }
+
+  function eventWhen(evt) {
+    let s = fmtDate(evt.date);
+    if (evt.time) {
+      s += (s ? ' · ' : '') + evt.time + (evt.end_time ? '–' + evt.end_time : '');
+    }
+    return s;
+  }
+
+  function eventPopupHtml(evt) {
+    const fallback = evt.waypoint ? 'Stop' : 'Event';   // "waypoint" is internal vocabulary
+    let h = `<strong>${escapeHtml(evt.name || fallback)}</strong>`;
+    const when = eventWhen(evt);
+    if (when) h += `<br>${when}`;
+    const where = [evt.locale, evt.state].filter(Boolean).join(', ');
+    if (where) h += `<br>${escapeHtml(where)}`;
+    // A long description would push the popup past the 60vh cap and turn it
+    // into a scroller; the card is one tap away for the rest.
+    const desc = (evt.description || '').trim();
+    if (desc) {
+      const short = desc.length > 160 ? desc.slice(0, 160).trimEnd() + '…' : desc;
+      h += `<div style="margin-top:4px;">${escapeHtml(short)}</div>`;
+    }
+    return h + cardLink('event-' + evt.idx);
+  }
+
+  // One marker covers every visit to the same family location on this trip,
+  // so the popup lists them the way the trips map lists trips — one line each,
+  // linking to its own card.
+  function familyPopupHtml(sorted) {
+    const title = sorted[0].family_visit || sorted[0].name || 'Family visit';
+    let h = `<strong>${escapeHtml(title)}</strong>`;
+    h += '<div style="margin-top:4px;font-size:12px;">';
+    sorted.forEach(evt => {
+      const when = eventWhen(evt) || 'Visit';
+      const extra = evt.name && evt.name !== title ? ' — ' + evt.name : '';
+      const cardId = 'event-' + evt.idx;
+      h += document.getElementById(cardId)
+        ? `<a href="#" data-card="${cardId}" style="display:block;color:#002868;">`
+          + `${when}${escapeHtml(extra)}</a>`
+        : `<div>${when}${escapeHtml(extra)}</div>`;
+    });
+    return h + '</div>';
+  }
+
   const homeMarker = label(L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
-    .addTo(map), 'Home')
-    .on('click', () => scrollToCard('home-card-start'));
+    .addTo(map), 'Home');
+  onMarkerClick(homeMarker, '<strong>Home</strong>', 'home-card-start');
   cardMarkers['home-card-start'] = homeMarker;
   cardMarkers['home-card-end'] = homeMarker;
 
@@ -343,8 +490,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconAnchor: [12, 12],
     });
     const stayMarker = label(L.marker(ll, { icon, zIndexOffset: 800 })
-      .addTo(map), `${i + 1}. ${stay.place || 'Campspot'}`)
-      .on('click', () => scrollToCard('stay-' + stay.idx));
+      .addTo(map), `${i + 1}. ${stay.place || 'Campspot'}`);
+    onMarkerClick(stayMarker, stayPopupHtml(stay, i + 1), 'stay-' + stay.idx);
     cardTargets['stay-' + stay.idx] = ll;
     cardMarkers['stay-' + stay.idx] = stayMarker;
   });
@@ -1070,8 +1217,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
     // "Waypoint" is internal vocabulary; family readers get "Stop".
     const evtMarker = label(L.marker(ll, { icon: evtIcon, zIndexOffset: zOffset })
-      .addTo(map), evt.name || (isWaypoint ? 'Stop' : 'Event'))
-      .on('click', () => scrollToCard('event-' + evt.idx));
+      .addTo(map), evt.name || (isWaypoint ? 'Stop' : 'Event'));
+    onMarkerClick(evtMarker, eventPopupHtml(evt), 'event-' + evt.idx);
     cardTargets['event-' + evt.idx] = ll;
     cardMarkers['event-' + evt.idx] = evtMarker;
   });
@@ -1100,8 +1247,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // the earliest visit in the group.
     const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
     const famMarker = label(L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
-      .addTo(map), sorted[0].family_visit || sorted[0].name || 'Family visit')
-      .on('click', () => { if (scrollTarget) scrollToCard('event-' + scrollTarget.idx); });
+      .addTo(map), sorted[0].family_visit || sorted[0].name || 'Family visit');
+    onMarkerClick(famMarker, familyPopupHtml(sorted),
+      scrollTarget ? 'event-' + scrollTarget.idx : null);
     group.forEach(evt => {
       cardTargets['event-' + evt.idx] = ll;
       cardMarkers['event-' + evt.idx] = famMarker;
@@ -1139,7 +1287,12 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    label(L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map), fam.label);
+    // No card to scroll to — these are family homes near the trip that weren't
+    // visited on it. On the two-column layout the tooltip names them and the
+    // click does nothing; single-column has no hover, so it gets the popup.
+    const proxMarker = label(
+      L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map), fam.label);
+    onMarkerClick(proxMarker, `<strong>${escapeHtml(fam.label || 'Family')}</strong>`, null);
   });
 
   // ── Initial view + "Fit trip" ─────────────────────────────────────────────
