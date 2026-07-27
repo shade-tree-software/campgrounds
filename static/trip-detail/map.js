@@ -1296,47 +1296,22 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   });
 
   // ── Initial view + "Fit trip" ─────────────────────────────────────────────
-  // `bounds` opens with HOME, which is right for the route polyline (it draws
-  // the drive out and back) but wrong for the opening view: a Utah trip fitted
-  // to Utah-plus-Virginia is a continental view with the itinerary a few pixels
-  // wide. Fit the itinerary instead — a far-off home is still on the map, just
-  // off-screen until you zoom out (fitTrip folds it back in when it lands close
-  // enough to touch the frame). `bounds` itself is left alone; other code reads it.
-  const itineraryBounds = bounds.slice(1);
-  const fitTarget = itineraryBounds.length ? itineraryBounds : bounds;
+  // Fit everything, home included. `bounds` opens with HOME, which is also what
+  // the route polyline draws (the drive out and back), so the opening view and
+  // the route agree: the trip is the whole loop from the driveway, not just the
+  // far end of it. This holds at any distance — a Utah trip opens on a
+  // continental view with Virginia in frame, deliberately (AWH 2026-07-27).
+  //
+  // It used to fit the itinerary alone (`bounds.slice(1)`) and fold home back in
+  // only when home happened to land near the frame, to avoid exactly that wide
+  // view. Don't reinstate that: "sometimes home, depending how far away it is"
+  // made the button's result unpredictable, and the zoom-out to see the drive
+  // home was the common next action anyway.
   const FIT_PAD = 40;      // per side
   const FIT_MAX_ZOOM = 12;
-  // Half the home marker's footprint: a 24px icon anchored at its centre, plus
-  // a little for its shadow.
-  const HOME_ICON_HALF = 14;
 
   function fitTrip() {
-    let target = fitTarget;
-    // Because home is excluded above, it can land anywhere — including exactly
-    // on the edge, where it reads as a house glued to (or sliced by) the frame.
-    // So: work out where home WOULD fall in the itinerary-only view, and if any
-    // part of it would touch the viewport, fit `bounds` instead so it gets the
-    // same 40px margin everything else has. Home that lands fully off-screen is
-    // left alone — it's invisible either way, and zooming out to reveal it
-    // would give up the tight fit for nothing.
-    if (target !== bounds) {
-      // Mirrors Leaflet's own _getBoundsCenterZoom: padding is summed across
-      // both sides for the zoom calc, and the centre is the midpoint of the
-      // *projected* corners (not latLngBounds.getCenter(), which is the
-      // geographic centre — in Mercator the two differ on the y axis).
-      const b = L.latLngBounds(target);
-      const zoom = Math.min(
-        map.getBoundsZoom(b, false, L.point(FIT_PAD * 2, FIT_PAD * 2)), FIT_MAX_ZOOM);
-      const c = map.project(b.getSouthWest(), zoom)
-        .add(map.project(b.getNorthEast(), zoom)).divideBy(2);
-      const h = map.project(HOME, zoom);
-      const size = map.getSize();
-      if (Math.abs(h.x - c.x) < size.x / 2 + HOME_ICON_HALF &&
-          Math.abs(h.y - c.y) < size.y / 2 + HOME_ICON_HALF) {
-        target = bounds;
-      }
-    }
-    map.fitBounds(target, { padding: [FIT_PAD, FIT_PAD], maxZoom: FIT_MAX_ZOOM });
+    map.fitBounds(bounds, { padding: [FIT_PAD, FIT_PAD], maxZoom: FIT_MAX_ZOOM });
   }
 
   // Getting back to the whole trip after a card click (which does setView at
