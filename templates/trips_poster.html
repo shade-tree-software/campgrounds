@@ -408,6 +408,7 @@
     <option value="18x24">18 &times; 24 in</option>
     <option value="24x36">24 &times; 36 in</option>
   </select>
+  <button type="button" id="poster-shuffle" title="Deal a new set of photos">Shuffle</button>
   <button type="button" onclick="window.print()">Print</button>
 </div>
 <div class="poster-wrap">
@@ -549,11 +550,29 @@ function fillPhotoGrid(elId, count, heroes) {
   });
   for (let i = 0; i < count; i++) grid.appendChild(makeThumb());
 }
-fillPhotoGrid('photos-top', 24);
 // Two 2×2 hero prints break the bottom strip's uniform grid — one upper-left,
 // one lower-right, diagonal so the strip stays balanced. 48 cells − 2 heroes
 // × 4 cells + 2 hero elements = 42 photos.
-fillPhotoGrid('photos-bottom', 40, ['1 / 1 / span 2 / span 2', '3 / 11 / span 2 / span 2']);
+function dealPhotos() {
+  photoCursor = 0;
+  document.getElementById('photos-top').replaceChildren();
+  document.getElementById('photos-bottom').replaceChildren();
+  fillPhotoGrid('photos-top', 24);
+  fillPhotoGrid('photos-bottom', 40, ['1 / 1 / span 2 / span 2', '3 / 11 / span 2 / span 2']);
+}
+dealPhotos();  // first deal renders the server's per-request shuffle order
+
+// Shuffle button — a fresh deal without a reload. The server already
+// shuffles the pool per request, but re-dealing client-side is instant and
+// leaves the (expensive) map untouched. Only img sources change; the grid
+// tracks are fixed, so nothing the print layout depends on is recomputed.
+document.getElementById('poster-shuffle').addEventListener('click', () => {
+  for (let i = PHOTOS.length - 1; i > 0; i--) {  // Fisher–Yates
+    const j = Math.floor(Math.random() * (i + 1));
+    [PHOTOS[i], PHOTOS[j]] = [PHOTOS[j], PHOTOS[i]];
+  }
+  dealPhotos();
+});
 
 // ── Map ─────────────────────────────────────────────────────────────────────
 // Same data plumbing as trips_map.html but stripped to the essentials: small
