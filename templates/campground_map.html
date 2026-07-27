@@ -1551,6 +1551,29 @@ if (HOME) {
 }
 
 // Family location markers
+const familyMarkers = [];  // { marker, fam } — used by the name search
+
+// Family entries are campgrounds.json rows (kind: "family"), so they get the
+// same popup furniture as a campground: the state they're in, and an admin edit
+// link. The link goes to the manage page rather than opening cgQuickEdit — that
+// modal is campground-shaped (waterfront, elevation, phone, website), none of
+// which a family entry has, and half of it would sit there empty and unsavable.
+// ?edit=<id> is exactly what the manage page's deep link is for, and its kind
+// selector already swaps in the family field set.
+function familyPopupHtml(fam) {
+  let popup = `<strong>${escapeHtml(fam.label)}</strong>`;
+  if (fam.state) {
+    popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(fam.state)}</span>`;
+  }
+  popup += distanceAndRouteLine(fam.lat, fam.lng);
+  if (IS_ADMIN) {
+    popup += `<span style="float:right;display:inline-block;padding-bottom:.3em;">`
+      + `<a href="/campgrounds/manage?edit=${fam.id}" style="font-size:.85em;">edit &rarr;</a>`
+      + `</span><div style="clear:both;"></div>`;
+  }
+  return popup;
+}
+
 FAMILY.forEach(fam => {
   const ll = [fam.lat, fam.lng];
   const famIcon = L.divIcon({
@@ -1564,10 +1587,13 @@ FAMILY.forEach(fam => {
     iconSize: [24, 24],
     iconAnchor: [12, 12],
   });
-  endpointMarkers.push(
-    L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
-      .bindPopup(() => `<strong>${fam.label}</strong>`
-        + distanceAndRouteLine(fam.lat, fam.lng)));
+  const marker = L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map)
+    .bindPopup(() => familyPopupHtml(fam));
+  endpointMarkers.push(marker);
+  // Kept so the name search can reach family locations too — they're entries in
+  // campgrounds.json like any other, and being unfindable by name made them the
+  // one kind of place on this map you had to already know where to look for.
+  familyMarkers.push({ marker, fam });
 });
 
 applyVisibility();
@@ -2094,7 +2120,18 @@ routeControl.addTo(map);
     hay: (cg.name + ' ' + stateHay(cg.state)).toLowerCase(),
     states: stateKeys(cg.state),
     ll: cg.location.split(',').map(parseFloat),
-    isStop: false,
+    prefix: '',
+  }));
+  // Static like campgrounds (family entries can't be edited from this map),
+  // but built the same way so ranking and state matching apply to them too.
+  const familyPool = familyMarkers.map(({ marker, fam }) => ({
+    marker,
+    name: fam.label,
+    sub: fam.state || 'Family',
+    hay: (fam.label + ' family ' + stateHay(fam.state)).toLowerCase(),
+    states: stateKeys(fam.state),
+    ll: [fam.lat, fam.lng],
+    prefix: '🏠 ',
   }));
   function roadsidePool() {
     return roadsideMarkers.map(({ marker, stop }) => ({
@@ -2104,7 +2141,7 @@ routeControl.addTo(map);
       hay: (stop.name + ' ' + (stop.town || '') + ' ' + stateHay(stop.state)).toLowerCase(),
       states: stateKeys(stop.state),
       ll: [stop.lat, stop.lng],
-      isStop: true,
+      prefix: '🌳 ',
     }));
   }
 
@@ -2145,7 +2182,7 @@ routeControl.addTo(map);
     const q = input.value.trim().toLowerCase();
     if (!q) { close(); return; }
     const tokens = q.split(/\s+/);
-    const all = cgPool.concat(roadsidePool())
+    const all = cgPool.concat(familyPool, roadsidePool())
       .filter(p => tokens.every(t => p.hay.includes(t)));
     // Stable sort by rank: equal-ranked entries keep database order.
     all.forEach((p, i) => { p._i = i; });
@@ -2156,8 +2193,10 @@ routeControl.addTo(map);
     items = matches.map(entry => {
       const row = document.createElement('div');
       row.className = 'cg-search-option';
-      // Prefix roadside stops with a tree so they're distinguishable from campgrounds.
-      const label = (entry.isStop ? '🌳 ' : '') + entry.name;
+      // Emoji prefix so the three kinds are distinguishable in one list: a tree
+      // for roadside stops, a house for family (matching the manage page's
+      // dropdown), nothing for campgrounds — the default and the bulk.
+      const label = entry.prefix + entry.name;
       row.innerHTML = `<span>${escapeHtml(label)}</span>` +
         `<span class="cg-search-state">${escapeHtml(entry.sub)}</span>`;
       // mousedown (not click) so the selection wins the race against the

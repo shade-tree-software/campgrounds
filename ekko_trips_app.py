@@ -1653,7 +1653,8 @@ def _map_config():
         if e.get("kind") != "family" or "location" not in e:
             continue
         flat, flng = (float(x) for x in e["location"].split(","))
-        fam = {"id": e["id"], "label": e["name"], "lat": flat, "lng": flng}
+        fam = {"id": e["id"], "label": e["name"], "lat": flat, "lng": flng,
+               "state": e.get("state") or ""}
         dl = e.get("driveway_location")
         if dl:
             dlat, dlng = (float(x) for x in dl.split(","))
