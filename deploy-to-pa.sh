@@ -9,14 +9,17 @@
 # shell per invocation and returns a real exit status, so a failed pull fails
 # the script instead of vanishing into a terminal nobody is watching.
 #
-# Auth: your PythonAnywhere password in PA_PW (gitignored .env), fed to ssh via
-# pa-ask-pass.sh — the same mechanism sync-from-pa.sh uses. No sshpass, no sudo,
-# and the password never appears in the process list or in this script's output.
+# Auth: a dedicated SSH key, ~/.ssh/pa_deploy_ed25519. On PA that key is pinned
+# to `command="…/pa-deploy-remote.sh",restrict`, so it CANNOT get a shell — every
+# connection runs that wrapper, which accepts three fixed words and refuses
+# everything else. A stolen copy of this key can redeploy the site and do
+# nothing else: it can't read photos, can't write files, can't delete anything.
+# No account password is stored on this machine.
 #
 # The reload is NOT optional: PythonAnywhere keeps your Python modules and
 # Jinja templates loaded in the worker, so a pull alone changes the files on
 # disk without changing what the site serves. Touching the WSGI file is how you
-# ask PA to restart that worker.
+# ask PA to restart that worker (done remotely, inside the wrapper).
 #
 # Guardrails, in the order they fire:
 #   - warns when this machine has commits GitHub hasn't got (they can't ship)
@@ -32,16 +35,13 @@
 set -euo pipefail
 
 PA_HOST=shadetreesoftware@ssh.pythonanywhere.com
+PA_KEY="$HOME/.ssh/pa_deploy_ed25519"
+# For the human-readable hints below only. The paths the deploy actually uses
+# live in pa-deploy-remote.sh on PA, where the restricted key can reach them.
 PA_ROOT=/home/shadetreesoftware/campgrounds
-# NB: this host runs two web apps (ekko + timeline). Reload the ekko one only —
-# touching the wrong WSGI file restarts an app this deploy didn't change.
-PA_WSGI=/var/www/ekko-shadetreesoftware_pythonanywhere_com_wsgi.py
 # Login-exempt, so a 200 proves Flask booted and rendered a template without
 # needing a session. Anything behind auth would 302 and prove less.
 HEALTH_URL=https://ekko-shadetreesoftware.pythonanywhere.com/login
-# Tracked in git AND written by the live app — the one place a pull and the
-# running site can fight over the same file. See the data-file guard below.
-DATA_FILES="campgrounds.json roadside.json"
 
 HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 DRY=0
@@ -51,24 +51,23 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -n|--dry-run)  DRY=1; shift ;;
     --no-reload)   RELOAD=0; shift ;;
-    -h|--help)     sed -n '2,30p' "$0"; exit 0 ;;
+    -h|--help)     sed -n '2,34p' "$0"; exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac
 done
 
-# Feed the password to ssh without a TTY prompt. SSH_ASKPASS_REQUIRE=force needs
-# OpenSSH 8.4+; setsid detaches from the terminal so ssh actually consults it.
-export SSH_ASKPASS="$HERE/pa-ask-pass.sh"
-export SSH_ASKPASS_REQUIRE=force
-[ -x "$SSH_ASKPASS" ] || { echo "error: $SSH_ASKPASS missing or not executable" >&2; exit 1; }
+[ -f "$PA_KEY" ] || { echo "error: deploy key $PA_KEY not found (see README-flask-app.md)" >&2; exit 1; }
 
 # accept-new: pin PA's host key on first use, but still fail on a CHANGED key
 # (a silent StrictHostKeyChecking=no would accept an impostor).
+# BatchMode + PasswordAuthentication=no: if the key is ever rejected this must
+# fail immediately, not fall back to prompting for the account password.
 pa_ssh() {
-  setsid ssh -o StrictHostKeyChecking=accept-new \
-             -o PreferredAuthentications=password \
-             -o PubkeyAuthentication=no \
-             "$PA_HOST" "$@"
+  ssh -o StrictHostKeyChecking=accept-new \
+      -o IdentitiesOnly=yes \
+      -o PasswordAuthentication=no \
+      -o BatchMode=yes \
+      -i "$PA_KEY" "$PA_HOST" "$@"
 }
 
 # Warn (don't block) when this machine is ahead of the remote: the deploy pulls
@@ -81,18 +80,9 @@ if git -C "$HERE" rev-parse --abbrev-ref HEAD >/dev/null 2>&1; then
   fi
 fi
 
-# One round trip that reports everything the guard below needs to decide.
-# Emits KEY=value lines: HEAD, DIRTY, TOUCHED, COUNT, INCOMING.
-remote_state() {
-  pa_ssh "cd '$PA_ROOT' && git fetch --quiet && \
-          echo \"HEAD=\$(git log --oneline -1)\" && \
-          echo \"COUNT=\$(git rev-list --count HEAD..@{u})\" && \
-          echo \"DIRTY=\$(git status --porcelain -- $DATA_FILES | awk '{print \$2}' | tr '\n' ' ')\" && \
-          echo \"TOUCHED=\$(git diff --name-only HEAD..@{u} -- $DATA_FILES | tr '\n' ' ')\" && \
-          git log --oneline HEAD..@{u} | sed 's/^/INCOMING=/'"
-}
-
-state="$(remote_state)"
+# `status` is the wrapper's read-only branch: it fetches and reports HEAD,
+# incoming commits and the state of the data files, changing nothing.
+state="$(pa_ssh status)"
 pa_head="$(sed -n 's/^HEAD=//p' <<<"$state")"
 pa_count="$(sed -n 's/^COUNT=//p' <<<"$state")"
 pa_dirty="$(sed -n 's/^DIRTY=//p' <<<"$state" | xargs || true)"
@@ -123,7 +113,9 @@ if [ -n "$pa_dirty" ]; then
     echo "ABORT: uncommitted live edits to [$pa_dirty] and the incoming commits" >&2
     echo "       also change [$pa_touched]. The pull would be refused." >&2
     echo "" >&2
-    echo "       Those edits exist only on PA. Bring them down first:" >&2
+    echo "       Those edits exist only on PA. Bring them down first — the deploy" >&2
+    echo "       key can't read them, so use an interactive login (it will ask for" >&2
+    echo "       your PA password):" >&2
     echo "         ssh $PA_HOST \"cd $PA_ROOT && git diff -- $pa_dirty\" > /tmp/pa-edits.patch" >&2
     echo "       then apply/commit them here and push. Do NOT 'git checkout --' on PA." >&2
     exit 1
@@ -140,15 +132,16 @@ if [ "${pa_count:-0}" -eq 0 ] && [ "$RELOAD" -eq 1 ]; then
   echo "note:     nothing to pull; reloading anyway to pick up any manual changes"
 fi
 
-# --ff-only so a dirty or diverged tree on PA fails loudly instead of silently
-# creating a merge commit on the live host that nobody will ever see again.
-echo "== pulling on PA =="
-pa_ssh "cd '$PA_ROOT' && git pull --ff-only"
+# The wrapper pulls --ff-only and (for plain `deploy`) touches the WSGI file,
+# then echoes the resulting commit.
+echo "== deploying =="
+if [ "$RELOAD" -eq 1 ]; then
+  pa_ssh deploy
+else
+  pa_ssh deploy-no-reload
+fi
 
 if [ "$RELOAD" -eq 1 ]; then
-  echo "== reloading the web app =="
-  pa_ssh "touch '$PA_WSGI'"
-
   # ── Health check ────────────────────────────────────────────────────────────
   # A reload that boots a broken commit leaves the site 500ing, and without this
   # the deploy would report success and nobody would know until a relative
@@ -171,12 +164,11 @@ if [ "$RELOAD" -eq 1 ]; then
     echo "FAILED: $HEALTH_URL did not return 200 after the reload." >&2
     echo "        The site may be down. Previous live commit was:" >&2
     echo "          $pa_head" >&2
-    echo "        Check the error log on the PA Web tab, or roll back with:" >&2
-    echo "          ssh $PA_HOST \"cd $PA_ROOT && git reset --hard ${pa_head%% *} && touch $PA_WSGI\"" >&2
+    echo "        Check the error log on the PA Web tab, or roll back over an" >&2
+    echo "        interactive login (the deploy key cannot run this):" >&2
+    echo "          ssh $PA_HOST \"cd $PA_ROOT && git reset --hard ${pa_head%% *} && touch \\" >&2
+    echo "            /var/www/ekko-shadetreesoftware_pythonanywhere_com_wsgi.py\"" >&2
     echo "        (that discards uncommitted live edits — check 'git status' there first)" >&2
     exit 1
   fi
 fi
-
-echo "== live commit =="
-pa_ssh "cd '$PA_ROOT' && git log --oneline -1"

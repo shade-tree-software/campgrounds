@@ -11,7 +11,9 @@
 - [US eDirect deep reservation links](reference_usedirect_deep_reservation_links.md) — build #!park/<PlaceId> links for ReserveOhio/ReserveFlorida via the citypark API; camp.in.gov→ReserveAmerica, goingtocamp→Aspira
 - [Inclusion (validity) audit](reference_inclusion_audit.md) — verifies an entry is a real drive-in RV campground (catches cabins/tent/day-use/hike-in/closed/under-23ft); inclusion_evidence field
 - [Consolidated append_state.py](project_az_sweep_handoff.md) — one machine-independent `append_state.py --state XX --leads <path>` (replaced 8 byte-identical per-state copies); 150m dedup guard can drop genuine neighbor-parks — check addresses before dropping
-- [Sync data from PythonAnywhere](reference_sync_from_pa.md) — ./sync-from-pa.sh pulls trip data + photos incrementally over rsync (use instead of backup/restore tarballs); askpass reads PA_PW from .env
+- [Sync data from PythonAnywhere](reference_sync_from_pa.md) — ./sync-from-pa.sh pulls trip data + photos incrementally over rsync (use instead of backup/restore tarballs); read-only SSH key, paths relative to the rrsync root
+- [PA SSH is key-only](reference_pa_ssh_keys.md) — two restricted keys (deploy forced-command / read-only rrsync); no PA password stored anywhere; password auth still open server-side
+- [Deploy to PythonAnywhere](project_deploy_to_pa.md) — ./deploy-to-pa.sh pulls + reloads the live app, with a data-file guard and a post-reload health check
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — skip mostly-seasonal/full-timer, residential/MH-park, and membership/sales-pitch parks even if they take overnighters
 - [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs

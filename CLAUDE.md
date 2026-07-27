@@ -310,6 +310,18 @@ The app's "database" is the gitignored JSON + photos, deliberately kept as separ
 
 Full flow: on the source host run `./backup.sh [--with-photos]`, download the tarball, then locally `./restore.sh <tarball>` + `git pull` (for `campgrounds.json` + code).
 
+### Deploying to PythonAnywhere
+
+`./deploy-to-pa.sh` ships whatever is on GitHub to the live app: `git pull` on PA, then `touch` the ekko WSGI file. **The reload is not optional** — PA keeps Python modules and Jinja templates loaded in the worker, so a pull alone changes disk without changing what the site serves. `-n` dry-runs; `--no-reload` pulls only. The host runs two web apps (ekko + timeline); only ekko's WSGI file is ever touched.
+
+**SSH is key-only and least-privilege** (since 2026-07-27; no PA account password is stored on this machine). Two passphrase-less keys, each pinned in PA's `~/.ssh/authorized_keys`:
+- `~/.ssh/pa_deploy_ed25519` → `command="…/pa-deploy-remote.sh",restrict`. The wrapper (in this repo, running **on PA**) accepts exactly `status` / `deploy` / `deploy-no-reload` from `$SSH_ORIGINAL_COMMAND` and refuses everything else, so the key can't get a shell. Never interpolate `$SSH_ORIGINAL_COMMAND` into a command there — that would hand back the arbitrary execution the forced command removes. Because the wrapper is deployed *by* the deploy it implements, editing it takes one extra deploy to take effect.
+- `~/.ssh/pa_sync_ed25519` → `command="/usr/bin/rrsync -ro <repo>",restrict`, used by `sync-from-pa.sh`. Read-only, so **rsync paths are relative to that root** (`$PA_HOST:/trip_data/`, no `/home/...` prefix).
+
+Verified at install: an arbitrary command on either key is refused, and an rsync upload gets "sending to read-only server is not allowed". PA doesn't document `command=` support (their sshd is stock OpenSSH 8.9) — re-test if they change hosts. **Password auth remains enabled server-side** and `sshd_config` isn't ours, so this bounds what a stolen key can do; it doesn't stop someone who has the account password. Interactive work (rollbacks, reading live edits) deliberately still needs a password login.
+
+**The one real hazard:** `campgrounds.json` and `roadside.json` are tracked in git **and** written by the live admin UI, so PA's tree is legitimately dirty whenever a campground was edited there, and those edits exist nowhere else. The script aborts before pulling when live edits collide with incoming commits; resolve by bringing the live edits **down** (diff over an interactive login, apply here, push) — never `git checkout --` on PA. After the reload it polls `/login` (login-exempt, so 200 proves Flask booted and rendered) and fails loudly; it deliberately does **not** auto-roll-back, because `git reset --hard` would destroy those same uncommitted live edits.
+
 ## API Routes
 
 ### Trip/Campspot/Event CRUD

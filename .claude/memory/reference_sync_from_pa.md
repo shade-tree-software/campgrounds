@@ -20,10 +20,12 @@ machine, and move the whole ~7 GB dataset every time.
 ./sync-from-pa.sh --delete                     # opt-in exact mirror
 ```
 
-Auth: `pa-ask-pass.sh` reads `PA_PW` from the gitignored `.env`, wired via
-`SSH_ASKPASS` + `SSH_ASKPASS_REQUIRE=force` (OpenSSH 8.4+). Deliberately NOT `sshpass`
-(needs a sudo install) — same askpass convention as [[the git PAT helper]]
-`git-ask-pass-pat.sh`.
+Auth (changed 2026-07-27): a dedicated key `~/.ssh/pa_sync_ed25519`, pinned on PA to
+`command="/usr/bin/rrsync -ro /home/shadetreesoftware/campgrounds",restrict` — read-only,
+no shell. **rsync paths are therefore relative to that root** (`$PA_HOST:/trip_data/`,
+no `/home/...` prefix). The old `PA_PW`-in-`.env` + `pa-ask-pass.sh` askpass path is GONE
+(script deleted, var removed); no account password is stored on this machine. See
+[[reference_pa_ssh_keys]].
 
 **Gotchas baked into the script — don't undo these:**
 - **`--no-human-readable` in the space preflight is load-bearing.** With rsync's `-h`

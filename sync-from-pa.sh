@@ -6,9 +6,11 @@
 # photos, an edited trip). This transfers only what changed, and is the normal
 # way to refresh a laptop or the USB/SD standalone edition.
 #
-# Auth: your PythonAnywhere password in PA_PW (gitignored .env), fed to ssh via
-# pa-ask-pass.sh — no sshpass, no sudo, and the password never appears in the
-# process list or in this script's output.
+# Auth: a dedicated SSH key, ~/.ssh/pa_sync_ed25519. On PA that key is pinned to
+# `command="/usr/bin/rrsync -ro /home/shadetreesoftware/campgrounds",restrict`, so
+# it can ONLY read files under the repo — it cannot get a shell and cannot write
+# (verified: an upload is refused with "sending to read-only server"). No account
+# password is stored anywhere on this machine.
 #
 # Usage:
 #   ./sync-from-pa.sh                 # data + photos into this repo
@@ -20,7 +22,9 @@
 set -euo pipefail
 
 PA_HOST=shadetreesoftware@ssh.pythonanywhere.com
-PA_ROOT=/home/shadetreesoftware/campgrounds
+# Paths are relative to the directory rrsync confines the key to, so they carry
+# no /home/... prefix — that root lives in authorized_keys on PA, not here.
+PA_KEY="$HOME/.ssh/pa_sync_ed25519"
 HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 DEST="$HERE"
 DO_DATA=0
@@ -49,15 +53,13 @@ if [ $DO_DATA -eq 0 ] && [ $DO_PHOTOS -eq 0 ]; then DO_DATA=1; DO_PHOTOS=1; fi
 
 [ -d "$DEST" ] || { echo "error: --dest '$DEST' does not exist" >&2; exit 1; }
 
-# Feed the password to ssh without a TTY prompt. SSH_ASKPASS_REQUIRE=force needs
-# OpenSSH 8.4+; setsid detaches from the terminal so ssh actually consults it.
-export SSH_ASKPASS="$HERE/pa-ask-pass.sh"
-export SSH_ASKPASS_REQUIRE=force
-[ -x "$SSH_ASKPASS" ] || { echo "error: $SSH_ASKPASS missing or not executable" >&2; exit 1; }
+[ -f "$PA_KEY" ] || { echo "error: sync key $PA_KEY not found (see README-flask-app.md)" >&2; exit 1; }
 
 # accept-new: pin PA's host key on first use, but still fail on a CHANGED key
 # (a silent StrictHostKeyChecking=no would accept an impostor).
-SSH_CMD="ssh -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=password -o PubkeyAuthentication=no"
+# BatchMode + PasswordAuthentication=no: if the key is ever rejected this must
+# fail immediately, not fall back to prompting for the account password.
+SSH_CMD="ssh -o StrictHostKeyChecking=accept-new -i $PA_KEY -o IdentitiesOnly=yes -o PasswordAuthentication=no -o BatchMode=yes"
 
 # -rlt keeps mtimes, which matters beyond tidiness: the app's thumbnail cache and
 # track cache are mtime-keyed, so clobbering timestamps would silently invalidate
@@ -125,7 +127,7 @@ pull() {                      # pull <remote-subdir> <local-subdir> [extra exclu
     # yields 445 — a 10-million-fold underestimate that silently defeats the
     # space check (observed: it happily started a 7 GB pull onto a 4 GB disk).
     need=$(rsync -rltz --dry-run --stats --no-human-readable "${DEL[@]}" "$@" \
-             -e "$SSH_CMD" "$PA_HOST:$PA_ROOT/$remote/" "$target/" 2>/dev/null \
+             -e "$SSH_CMD" "$PA_HOST:/$remote/" "$target/" 2>/dev/null \
            | awk -F': *' '/Total transferred file size/{gsub(/[^0-9]/,"",$2); print $2; exit}')
     avail=$(df -B1 --output=avail "$target" | tail -1)
     if [ -n "$need" ] && [ "$need" -gt 0 ]; then
@@ -148,7 +150,7 @@ pull() {                      # pull <remote-subdir> <local-subdir> [extra exclu
 
   # pipefail is set, so a failing rsync still aborts despite the tee.
   rsync "${RSYNC_OPTS[@]}" "$@" -e "$SSH_CMD" \
-    "$PA_HOST:$PA_ROOT/$remote/" "$target/" 2>&1 | tee "$RSYNC_LOG"
+    "$PA_HOST:/$remote/" "$target/" 2>&1 | tee "$RSYNC_LOG"
 
   reap_orphaned_dirs "$target" "$local_sub"
 }
