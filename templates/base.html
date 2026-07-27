@@ -255,20 +255,23 @@
       gap: 0;
       width: 100%;
     }
-    /* One link per line inside each section. Rows sit flush (no gap) and the
-       section padding is trimmed: each row is already a full-width 44px touch
-       target, so the gap added ~8px per link — ~100px across the admin menu —
-       without making anything easier to hit. Hairlines below carry the
-       separation the gap used to. */
+    /* Two links per row inside each section. Every item is a single word, so
+       one-per-line spent the full ~340px width to render ~60px of text and
+       made the menu twice as tall as it needed to be — which is what pushed
+       Logout off the bottom. Two columns halve the height with no change to
+       the 44px targets (a half-width cell is still ~170px wide, far past the
+       ~44px minimum). Tablets get three; their extra width would otherwise
+       stretch two columns to absurd widths. */
     .nav-group {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: .5rem;
+      row-gap: 4px;
       width: 100%;
       padding: .25rem 0;
     }
-    .nav-label { padding-bottom: .15rem; }
+    /* The section heading owns its own line above the grid. */
+    .nav-label { grid-column: 1 / -1; padding-bottom: .15rem; }
     /* Collapsed nav links were ~24px tall (nav a's .25rem padding), well under
        the 44px touch minimum — and this is the ONLY nav on a tablet, and the
        only route to the admin pages and Logout on a phone. */
@@ -278,9 +281,11 @@
       min-height: 44px;
       width: 100%;
     }
-    /* Fainter than the section rules below, so sections still read as the
-       stronger grouping now that the rows touch. */
-    .nav-group a + a { border-top: 1px solid rgba(255,255,255,.08); }
+    /* Three columns on the tablet slice of this collapsed range (701–1024px).
+       Phones stay at two. */
+    @media (min-width: 701px) {
+      .nav-group { grid-template-columns: repeat(3, 1fr); }
+    }
     /* Separator between sections (Trips → Campgrounds → Login/Logout). */
     .nav-group + .nav-group,
     .nav-collapse > .nav-group + a {
