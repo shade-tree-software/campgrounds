@@ -1,3 +1,4 @@
+- [Trip poster redesign](project_poster_redesign.md) — selectable size (?size= letter/11×17/18×24/24×36) SHIPPED 2026-07-27 but not visually verified (no venv on this machine); design backlog (map style, routes overlay, photo borders, typography) open, ranked in file
 - [Weather Finder (was Summer Seeker)](project_weather_finder.md) — standalone app folded into EKKO as an admin page 2026-07-26; cooler/warmer-than-home + rain filter; per-cell forecast cache is load-bearing
 - [Open-Meteo rate limits](reference_open_meteo_limits.md) — free tier meters LOCATIONS not calls: 600/min (measured); batch via comma-separated lat/lng lists
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a privacy leak

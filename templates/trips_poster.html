@@ -33,11 +33,11 @@
     overflow: hidden;
   }
 
-  /* The poster sheet — fixed 8.5×11 portrait aspect ratio. Sized to fit
-     within the viewport while preserving its proportions. On a typical
-     desktop screen, the height limit kicks in first; on narrow viewports
-     the width limit takes over. Margin auto centers it both axes via the
-     wrapping flex container below. */
+  /* The poster sheet — fixed portrait aspect ratio (the ?size= choice;
+     letter by default). Sized to fit within the viewport while preserving
+     its proportions. On a typical desktop screen, the height limit kicks
+     in first; on narrow viewports the width limit takes over. Margin auto
+     centers it both axes via the wrapping flex container below. */
   .poster-wrap {
     display: flex;
     align-items: center;
@@ -49,10 +49,12 @@
   .poster-sheet {
     background: var(--paper);
     box-shadow: 0 12px 40px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
-    /* THE SHEET IS ALWAYS EXACTLY LETTER-SIZED IN LAYOUT — 8.5in × 11in,
-       i.e. 816 × 1056 CSS px — on screen and on paper alike. The screen
-       preview is fitted by SCALING it (--poster-scale, set in JS), never by
-       resizing it.
+    /* THE SHEET IS FIXED-SIZE IN LAYOUT FOR THE LIFE OF THE PAGE — the
+       physical size chosen by ?size= (8.5×11 letter by default), set once
+       as --sheet-w/--sheet-h at the top of the script, on screen and on
+       paper alike. The screen preview is fitted by SCALING it
+       (--poster-scale, set in JS), never by resizing it, and changing the
+       size selector RELOADS the page rather than restyling it.
        This is load-bearing, not a style choice. Everything on this poster is
        positioned in layout pixels by JS at load time: Leaflet lays its tiles
        and markers out against the map div's pixel box, and placeCallouts()
@@ -65,10 +67,10 @@
        tiles short of the right/bottom edges and the callouts pointing at the
        wrong places. A transform doesn't reflow, so with a fixed sheet the
        print layout IS the screen layout and there is nothing to recompute.
-       If you ever need the sheet to be a different size, change it here and
-       let the scale follow — don't reintroduce a print-only size. */
-    width: 8.5in;
-    height: 11in;
+       Don't reintroduce a print-only size, and don't make the size selector
+       restyle in place — reload so every load-time computation re-runs. */
+    width: var(--sheet-w, 8.5in);
+    height: var(--sheet-h, 11in);
     flex: none;
     transform: scale(var(--poster-scale, 1));
     /* Four explicit rows — title auto-sized to content, the two photo
@@ -81,7 +83,11 @@
        a square split would need ~13%/26% but lands on a value where
        sub-pixel rounding can drift portrait; biasing landscape is
        explicitly preferred over portrait. The two strip percentages
-       stay in a 1:2 ratio so per-cell height matches across both. */
+       stay in a 1:2 ratio so per-cell height matches across both.
+       These values are the LETTER defaults only: the script recomputes the
+       strip percentages for the selected sheet's aspect ratio (holding the
+       ~1.07 cell aspect) and sets an inline grid-template-rows before the
+       map initializes. */
     display: grid;
     grid-template-rows: auto 12% 1fr 24%;
     overflow: hidden;
@@ -185,23 +191,27 @@
     pointer-events: none;
     z-index: 1000;
   }
+  /* The callout metrics below (font size, stroke widths, corner radii)
+     were tuned against the 816px-wide letter sheet; the script publishes
+     them ×SCALE as CSS vars so bigger sheets keep identical proportions.
+     The fallbacks here are the letter values. */
   .callout-leader {
     fill: none;
     stroke: var(--navy);
-    stroke-width: 1.1;
+    stroke-width: var(--callout-stroke, 1.1);
     stroke-linecap: round;
   }
   .callout-leader-dot {
     fill: var(--navy);
     stroke: #fff;
-    stroke-width: 1;
+    stroke-width: var(--callout-dot-stroke, 1);
   }
   .callout-box {
     fill: #fff;
     stroke: var(--navy);
-    stroke-width: 1.1;
-    rx: 4;
-    ry: 4;
+    stroke-width: var(--callout-stroke, 1.1);
+    rx: var(--callout-radius, 4px);
+    ry: var(--callout-radius, 4px);
   }
   .callout-label {
     fill: var(--ink);
@@ -211,8 +221,9 @@
        around 13–14pt, well above the legibility floor. On-screen they
        look small but the poster's screen view is just a preview.
        Must stay in sync with TEXT_FONT in the script below so the
-       canvas measurement matches the rendered glyph width. */
-    font-size: 7px;
+       canvas measurement matches the rendered glyph width — both are
+       derived from the same 7px × SCALE. */
+    font-size: var(--callout-font, 7px);
     dominant-baseline: central;
   }
 
@@ -226,7 +237,7 @@
     display: flex; gap: .5rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  .poster-bar a, .poster-bar button {
+  .poster-bar a, .poster-bar button, .poster-bar select {
     font: inherit; font-size: .85rem; font-weight: 600;
     color: #fff; background: rgba(0,0,0,.5);
     border: 1px solid rgba(255,255,255,.35); border-radius: 6px;
@@ -234,33 +245,40 @@
     padding: .5rem .85rem; min-height: 44px; display: flex; align-items: center;
     text-decoration: none; cursor: pointer;
   }
-  .poster-bar a:hover, .poster-bar button:hover { background: rgba(0,0,0,.72); }
+  .poster-bar a:hover, .poster-bar button:hover, .poster-bar select:hover { background: rgba(0,0,0,.72); }
+  /* The translucent select needs its dropdown options readable — option
+     text inherits white, so give the list a dark backer explicitly. */
+  .poster-bar select option { background: #2a2a2e; color: #fff; }
 
   /* Print: hide the dark background and the toolbar, and drop the preview
-     scale so the sheet prints at its true 8.5×11. Note what is NOT here —
-     any change to the sheet's width/height. See the .poster-sheet comment:
-     the printed layout has to be pixel-identical to the screen layout,
-     because the map and the callouts were positioned against it at load
-     time and nothing recomputes them for print. */
+     scale so the sheet prints at its true physical size. Note what is NOT
+     here — any change to the sheet's width/height. See the .poster-sheet
+     comment: the printed layout has to be pixel-identical to the screen
+     layout, because the map and the callouts were positioned against it at
+     load time and nothing recomputes them for print.
+     The @page size here is the letter fallback only — @page can't read CSS
+     vars, so the script injects an overriding @page rule matching the
+     selected sheet size (a poster-sized sheet printed onto a letter page
+     would be shrunk ~3× by the print dialog's fit-to-page). */
   @media print {
     @page { size: letter portrait; margin: 0; }
     html, body {
       background: white;
       overflow: visible;
-      width: 8.5in;
-      height: 11in;
+      width: var(--sheet-w, 8.5in);
+      height: var(--sheet-h, 11in);
       margin: 0;
     }
     .poster-bar { display: none; }
     .poster-wrap {
       display: block;
-      width: 8.5in;
-      height: 11in;
+      width: var(--sheet-w, 8.5in);
+      height: var(--sheet-h, 11in);
       padding: 0;
     }
     .poster-sheet {
       box-shadow: none;
-      /* Scale 1 — the sheet is already exactly letter-sized. */
+      /* Scale 1 — the sheet is already exactly its physical size. */
       transform: none;
     }
   }
@@ -283,6 +301,12 @@
 <body>
 <div class="poster-bar">
   <a href="/trips/stats">&larr; Back</a>
+  <select id="poster-size" title="Poster size">
+    <option value="letter">8.5 &times; 11 in</option>
+    <option value="tabloid">11 &times; 17 in</option>
+    <option value="18x24">18 &times; 24 in</option>
+    <option value="24x36">24 &times; 36 in</option>
+  </select>
   <button type="button" onclick="window.print()">Print</button>
 </div>
 <div class="poster-wrap">
@@ -309,11 +333,77 @@ const FAMILY = {{ family_locations | tojson }};
 const HOME = {{ home | tojson }};
 const PHOTOS = {{ poster_photos | tojson }};
 
+// ── Poster size ─────────────────────────────────────────────────────────────
+// Selected via ?size= (toolbar dropdown); letter is the default. This block
+// MUST run before anything below measures the sheet — the strips, Leaflet
+// and the callouts all lay out against the sheet's pixel box, so the size
+// is fixed here once and a size change RELOADS the page (see the
+// .poster-sheet CSS comment for why nothing may resize after load).
+const SIZES = {
+  'letter': { w: 8.5, h: 11 },
+  'tabloid': { w: 11, h: 17 },
+  '18x24': { w: 18, h: 24 },
+  '24x36': { w: 24, h: 36 },
+};
+const sizeParam = new URLSearchParams(location.search).get('size');
+const SIZE_KEY = SIZES[sizeParam] ? sizeParam : 'letter';
+const SIZE = SIZES[SIZE_KEY];
+const SHEET_W = SIZE.w * 96;  // CSS px (96/in) — the sheet's layout box
+const SHEET_H = SIZE.h * 96;
+// Every pixel constant below (callout pills, fonts, marker sizes) was tuned
+// against the 816px-wide letter sheet; SCALE carries them to the selected
+// size so the poster keeps identical proportions on bigger paper — which is
+// also what makes bigger paper sharper: Leaflet fetches higher-zoom tiles
+// for the larger container, and text/strokes stay vector.
+const SCALE = SHEET_W / 816;
+
+const rootStyle = document.documentElement.style;
+rootStyle.setProperty('--sheet-w', SIZE.w + 'in');
+rootStyle.setProperty('--sheet-h', SIZE.h + 'in');
+rootStyle.setProperty('--callout-font', (7 * SCALE) + 'px');
+rootStyle.setProperty('--callout-stroke', 1.1 * SCALE);
+rootStyle.setProperty('--callout-dot-stroke', 1 * SCALE);
+// px suffix required: CSS rx/ry reject unitless numbers (stroke-width
+// is the exception that allows them).
+rootStyle.setProperty('--callout-radius', (4 * SCALE) + 'px');
+
+// @page can't read CSS vars, so the print page size is injected to match
+// the sheet. Without this the print dialog would fit a poster-sized sheet
+// onto letter paper (or vice versa) with a silent ~3× scale.
+const pageStyle = document.createElement('style');
+pageStyle.textContent =
+  `@media print { @page { size: ${SIZE.w}in ${SIZE.h}in; margin: 0; } }`;
+document.head.appendChild(pageStyle);
+
+// Recompute the photo-strip row percentages for this sheet's aspect ratio,
+// holding the letter design's ~1.07 slightly-landscape cell aspect (see the
+// grid-template-rows comment in the CSS — 18×24 and 24×36 are taller than
+// letter, so the letter percentages would drift the cells portrait).
+const PHOTO_COLS = 12;
+const CELL_ASPECT = 1.07;
+const perRowPct = (SHEET_W / PHOTO_COLS / CELL_ASPECT) / SHEET_H * 100;
+document.querySelector('.poster-sheet').style.gridTemplateRows =
+  `auto ${(2 * perRowPct).toFixed(2)}% 1fr ${(4 * perRowPct).toFixed(2)}%`;
+
+const sizeSel = document.getElementById('poster-size');
+sizeSel.value = SIZE_KEY;
+sizeSel.addEventListener('change', () => {
+  const params = new URLSearchParams(location.search);
+  params.set('size', sizeSel.value);
+  location.search = params.toString();
+});
+
 // ── Photo strips ────────────────────────────────────────────────────────────
-// Top strip = 12 × 2 = 24 thumbs. Bottom strip = 12 × 5 = 60 thumbs. Picks
+// Top strip = 12 × 2 = 24 thumbs. Bottom strip = 12 × 4 = 48 thumbs. Picks
 // from the shuffled `PHOTOS` pool sequentially via a shared cursor so the
 // bottom strip continues past whatever the top consumed instead of repeating
 // the same first images. Wraps with modulo only if the pool is exhausted.
+//
+// Derivative choice: the 480px /thumb/ covers a letter-sheet cell (~68px)
+// with plenty of headroom even at 300dpi print, but on poster sheets the
+// cells reach ~2in wide and thumbs go soft — so any sheet larger than
+// letter uses the 1600px /view/ derivative instead (~10% of original
+// bytes; heavier page, but this page exists to be printed).
 let photoCursor = 0;
 function fillPhotoGrid(elId, count) {
   const grid = document.getElementById(elId);
@@ -324,7 +414,7 @@ function fillPhotoGrid(elId, count) {
     const photo = PHOTOS[photoCursor % PHOTOS.length];
     photoCursor++;
     const img = document.createElement('img');
-    img.src = photo.thumb || photo.url;
+    img.src = (SCALE > 1 && photo.view) || photo.thumb || photo.url;
     img.loading = 'lazy';
     img.alt = '';
     div.appendChild(img);
@@ -358,20 +448,29 @@ window.ekkoStreetLayer().addTo(map);
 
 const bounds = HOME ? [HOME] : [];
 
-// Home marker (red house)
-if (HOME) {
-  const homeIcon = L.divIcon({
+// Red house divIcon (home + family). `basePx` is the letter-sheet diameter;
+// like every other pixel constant it scales with the sheet so markers keep
+// the same proportion to the map on poster sizes.
+function houseIcon(basePx) {
+  const d = Math.round(basePx * SCALE);
+  const svgPx = Math.round(d * 0.55);
+  const border = Math.max(1, Math.round(2 * SCALE));
+  return L.divIcon({
     className: '',
     html: `<div style="
-      width:20px;height:20px;border-radius:50%;
+      width:${d}px;height:${d}px;border-radius:50%;
       background:#bf0a30;
       display:flex;align-items:center;justify-content:center;
-      border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);
-    "><svg width="11" height="11" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
-    iconSize: [20, 20],
-    iconAnchor: [10, 10],
+      border:${border}px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);
+    "><svg width="${svgPx}" height="${svgPx}" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
+    iconSize: [d, d],
+    iconAnchor: [d / 2, d / 2],
   });
-  L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 }).addTo(map);
+}
+
+// Home marker (red house)
+if (HOME) {
+  L.marker(HOME, { icon: houseIcon(20), zIndexOffset: 1000 }).addTo(map);
 }
 
 // Campspot markers — collapse stays at the same campground onto one dot,
@@ -399,10 +498,10 @@ Object.values(locMap).forEach(loc => {
   const ll = [loc.lat, loc.lng];
   bounds.push(ll);
   L.circleMarker(ll, {
-    radius: Math.min(4 + loc.visits, 9),
+    radius: Math.min(4 + loc.visits, 9) * SCALE,
     fillColor: '#002868',
     color: '#fff',
-    weight: 1.2,
+    weight: 1.2 * SCALE,
     opacity: 1,
     fillOpacity: 0.9,
   }).addTo(map);
@@ -414,10 +513,10 @@ TRIPS.forEach(trip => {
     if (!evt.lat || !evt.lng || evt.waypoint) return;
     bounds.push([evt.lat, evt.lng]);
     L.circleMarker([evt.lat, evt.lng], {
-      radius: 5,
+      radius: 5 * SCALE,
       fillColor: '#c9a84c',
       color: '#fff',
-      weight: 1,
+      weight: 1 * SCALE,
       opacity: 1,
       fillOpacity: 0.9,
     }).addTo(map);
@@ -427,18 +526,7 @@ TRIPS.forEach(trip => {
 // Family markers (red houses)
 FAMILY.forEach(fam => {
   bounds.push([fam.lat, fam.lng]);
-  const famIcon = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:18px;height:18px;border-radius:50%;
-      background:#bf0a30;
-      display:flex;align-items:center;justify-content:center;
-      border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4);
-    "><svg width="10" height="10" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg></div>`,
-    iconSize: [18, 18],
-    iconAnchor: [9, 9],
-  });
-  L.marker([fam.lat, fam.lng], { icon: famIcon, zIndexOffset: 900 }).addTo(map);
+  L.marker([fam.lat, fam.lng], { icon: houseIcon(18), zIndexOffset: 900 }).addTo(map);
 });
 
 // Initial fitBounds — Leaflet won't mark the map as "loaded" (and so
@@ -449,7 +537,7 @@ FAMILY.forEach(fam => {
 // box; this first call exists purely to kick the load lifecycle off.
 if (bounds.length) {
   // No maxZoom: let Leaflet zoom in as tight as the marker bounds allow.
-  map.fitBounds(bounds, { padding: [2, 2] });
+  map.fitBounds(bounds, { padding: [2 * SCALE, 2 * SCALE] });
 } else {
   map.setView([39.5, -98.35], 4);  // CONUS-ish fallback if no anchors
 }
@@ -538,13 +626,15 @@ function placeCallouts() {
 
   // Layout constants. Callouts are small pill-shaped boxes containing
   // just the trip summary text — no trip number, no number circle.
-  // Sized tight: the poster is intended for print at letter size, so
-  // on-screen pills look small but render legibly at print scale.
-  const BOX_H = 14;
-  const PAD_X = 3;
-  const GAP = 2;  // inter-pill spacing on every side
-  const TEXT_FONT = '500 7px -apple-system, Segoe UI, sans-serif';
-  const MARGIN = 8;  // pixels from the map edge to the callout's outer side
+  // Sized tight: on-screen pills look small but render legibly at print
+  // scale. All letter-tuned values × SCALE (the CSS side reads the same
+  // scaled values via the --callout-* vars set at the top of the script,
+  // so the canvas measureText below matches the rendered glyphs).
+  const BOX_H = 14 * SCALE;
+  const PAD_X = 3 * SCALE;
+  const GAP = 2 * SCALE;  // inter-pill spacing on every side
+  const TEXT_FONT = `500 ${7 * SCALE}px -apple-system, Segoe UI, sans-serif`;
+  const MARGIN = 8 * SCALE;  // pixels from the map edge to the callout's outer side
 
   // Measure each callout's natural width — left-padding + summary text
   // + right-padding. The summary is rendered untruncated so the full
@@ -658,7 +748,7 @@ function placeCallouts() {
     const dot = document.createElementNS(NS, 'circle');
     dot.setAttribute('cx', a.px);
     dot.setAttribute('cy', a.py);
-    dot.setAttribute('r', 2.5);
+    dot.setAttribute('r', 2.5 * SCALE);
     dot.setAttribute('class', 'callout-leader-dot');
     svg.appendChild(dot);
 
@@ -690,7 +780,7 @@ map.whenReady(() => {
   // container box so tiles/markers don't end up cropped from a
   // moment-in-time stale measurement.
   map.invalidateSize();
-  if (bounds.length) map.fitBounds(bounds, { padding: [2, 2] });
+  if (bounds.length) map.fitBounds(bounds, { padding: [2 * SCALE, 2 * SCALE] });
   // `whenReady` fires before the fitBounds tween completes; wait for
   // moveend to be sure latLngToContainerPoint reflects the final view.
   map.once('moveend', placeCallouts);

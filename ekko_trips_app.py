@@ -1885,7 +1885,11 @@ def _photo_place_name(trip, card):
 
 @app.route('/trips/poster')
 def trips_poster():
-    """Standalone 8.5×11 portrait "poster" view of all trips.
+    """Standalone portrait "poster" view of all trips.
+
+    The sheet size is client-side: a `?size=` query param (letter default,
+    plus 11×17 / 18×24 / 24×36 poster sizes) that the template resolves —
+    this route serves the same data regardless.
 
     Intentionally not linked from the site nav — it's a direct-URL artifact for
     printing / sharing. Shares the trips-map data shape (so each trip gets the
