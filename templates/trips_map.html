@@ -828,6 +828,7 @@ legend.addTo(map);
 
   const CASING = { color: '#fff', weight: 4, opacity: 0.5, interactive: false };
   const LINE = { color: '#002868', weight: 2, opacity: 0.75 };
+  const LINE_HOVER = { color: '#002868', weight: 4, opacity: 1 };
 
   fetch('/api/trips/routes', { credentials: 'same-origin' })
     .then(r => (r.ok ? r.json() : null))
@@ -837,9 +838,15 @@ legend.addTo(map);
       Object.entries(routes).forEach(([id, segments]) => {
         const trip = tripById.get(Number(id));
         if (!trip) return;
+
+        // A trip can arrive as several segments (the line breaks across a
+        // reporting gap). They're one trip to the reader, so hover highlights
+        // and raises all of them together — bolding a third of a trip while
+        // the popup names the whole thing would just look broken.
+        const parts = [];
         segments.forEach(seg => {
           if (!seg || seg.length < 2) return;
-          L.polyline(seg, { ...CASING, renderer }).addTo(routeLayer);
+          const casing = L.polyline(seg, { ...CASING, renderer }).addTo(routeLayer);
           const line = L.polyline(seg, { ...LINE, renderer }).addTo(routeLayer);
           // Bind rather than open-on-click: unlike the trip detail map there's
           // no card column to scroll to here, so the popup IS the answer.
@@ -853,9 +860,31 @@ legend.addTo(map);
             `<div style="margin-top:4px;font-size:12px;">` +
             `<a href="/trips/${trip.id}" style="color:#002868;">Open trip ›</a></div>`,
             { maxWidth: 420 });
-          line.on('mouseover', () => line.setStyle({ weight: 4, opacity: 1 }));
-          line.on('mouseout', () => line.setStyle(LINE));
+          parts.push({ casing, line });
           drew++;
+        });
+
+        // Raise the whole trip to the top of the canvas on hover. Bolding
+        // alone wasn't enough: every trip shares one color, so a thickened
+        // line still disappeared under whichever trips happened to be drawn
+        // after it — and the busiest areas, where you most need to trace one
+        // route, are exactly where the most lines stack up. Casing first so
+        // the navy still lands on top of its own white outline.
+        const raise = () => parts.forEach(({ casing, line }) => {
+          casing.bringToFront();
+          line.bringToFront();
+        });
+        parts.forEach(({ line }) => {
+          line.on('mouseover', () => {
+            raise();
+            parts.forEach(p => p.line.setStyle(LINE_HOVER));
+          });
+          line.on('mouseout', () => {
+            // Deliberately not sent back down: with one color for every trip
+            // the resting order carries no meaning, so restoring it would be
+            // work the reader can't see. Only the style returns.
+            parts.forEach(p => p.line.setStyle(LINE));
+          });
         });
       });
       if (!drew) return;
