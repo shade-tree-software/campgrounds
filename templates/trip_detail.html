@@ -490,29 +490,49 @@
     margin-bottom: .25rem;
   }
 
+  /* The meta line is ONE row, always — the chips are written in priority
+     order (dates, campers, then counts), so whatever doesn't fit wraps to a
+     second row and is clipped away. That makes the drop continuous with the
+     available width instead of stepping at breakpoints, which is what left
+     one or two chips spilling onto a second line at most sizes: a breakpoint
+     can only guess how wide the campers list or the date range is.
+
+     Mechanically: max-height is exactly one line-height, so a wrapped chip
+     starts below the clip and is fully invisible — never sliced. That relies
+     on `white-space: nowrap` per chip (below), which keeps a chip from
+     breaking mid-way and leaving half of itself on the visible row. */
   .trip-header .meta {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     font-size: .9rem;
+    line-height: 1.3;
+    max-height: 1.3em;
+    overflow: hidden;
     opacity: .9;
+  }
+
+  .trip-header .meta > div,
+  .trip-header .meta-mobile > span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  /* Campers is the one chip with no bounded length. Let it shrink and
+     ellipsize rather than be pushed off the row wholesale — a long camper
+     list should read "Andrew, Bonnie, Ell…", not vanish. Only bites when the
+     chip alone can't fit; flex wraps before it shrinks. */
+  .trip-header .meta > .meta-campers,
+  .trip-header .meta-mobile > .meta-campers {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .trip-header .meta span { font-weight: 600; }
 
-  /* Intermediate widths (~700–900px, e.g. small tablets / split-screen):
-     the full .meta has enough chips to wrap onto a second line, which bloats
-     the sticky red header. Drop the lowest-priority ones — waypoints, states,
-     photos, GPS mi: pure statistics, interesting but not what anyone opened
-     the trip for. Dates and campers are NOT in this set and never drop; they
-     identify the trip. !important is needed because #trip-gps-miles carries
-     an inline display style toggled by JS. */
-  @media (min-width: 701px) and (max-width: 900px) {
-    .trip-header .meta .meta-secondary { display: none !important; }
-  }
-
-  /* Condensed one-line meta (dates · nights · campspots) for phones,
-     where the full .meta is hidden. Desktop shows the full version. */
+  /* Condensed variant for phones (smaller, · separators), where the full
+     .meta is hidden. Same one-row clip — see .meta above. */
   .trip-header .meta-mobile { display: none; }
 
   /* Admin-only "Actions ▾" dropdown in the trip header. Consolidates
@@ -654,11 +674,22 @@
     }
     .trip-header .meta { display: none; }
     .trip-header .meta-mobile {
-      display: block;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 .4rem;
       font-size: .75rem;
       opacity: .85;
-      line-height: 1.3;
+      line-height: 1.35;
+      max-height: 1.35em;   /* one row; the rest wraps out of sight */
+      overflow: hidden;
       margin-top: .15rem;
+    }
+    /* Separator rides on the chip rather than sitting between chips, so a
+       chip clipped to the second row takes its dot with it — no line ending
+       in a dangling "·". */
+    .trip-header .meta-mobile > span + span::before {
+      content: '· ';
+      opacity: .65;
     }
     .trip-header .trip-nav { gap: .25rem; }
     .trip-header .trip-nav a {
@@ -1767,39 +1798,40 @@
        are dicts of {idx: [photo, ...]}; map their values to length and sum. #}
     {% set photos_count = (stay_photos.values() | map('length') | sum)
                         + (event_photos.values() | map('length') | sum) %}
-    {# Ordered by importance, most important first, because the line wraps:
-       when it runs out of width the LAST chips fall to a second row, so the
-       order is also the drop order. Dates and campers lead — they're the two
-       facts that identify the trip ("when was this, who was there"); the rest
-       are statistical counts, interesting but not critical (AWH 2026-07-27).
-       .meta-secondary marks the counts that vanish entirely below 900px. #}
+    {# Ordered by importance, most important first — the row is clipped to one
+       line (see .meta in the CSS), so the LAST chips are the ones that fall
+       off, and source order IS drop order. Dates and campers lead: they're the
+       two facts that identify the trip ("when was this, who was there"). The
+       rest are statistical counts, interesting but not critical, and they come
+       and go with the available width (AWH 2026-07-27). #}
     <div class="meta">
       {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
-      {% if trip.campers %}<div>{{ trip.campers|join(', ') }}</div>{% endif %}
+      {% if trip.campers %}<div class="meta-campers">{{ trip.campers|join(', ') }}</div>{% endif %}
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if real_events %}<div><span>{{ real_events|length }}</span> event{{ '' if real_events|length == 1 else 's' }}</div>{% endif %}
-      {% if waypoints %}<div class="meta-secondary"><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
-      {% if states_set|length > 1 %}<div class="meta-secondary"><span>{{ states_set|length }}</span> states</div>{% endif %}
-      {% if photos_count > 0 %}<div class="meta-secondary"><span>{{ photos_count }}</span> photo{{ '' if photos_count == 1 else 's' }}</div>{% endif %}
+      {% if waypoints %}<div><span>{{ waypoints|length }}</span> waypoint{{ '' if waypoints|length == 1 else 's' }}</div>{% endif %}
+      {% if states_set|length > 1 %}<div><span>{{ states_set|length }}</span> states</div>{% endif %}
+      {% if photos_count > 0 %}<div><span>{{ photos_count }}</span> photo{{ '' if photos_count == 1 else 's' }}</div>{% endif %}
       {# Populated client-side by computeAndShowGpsMiles() once the GPS
          track polyline is built. Hidden if the track never loads. #}
-      <div class="meta-secondary" id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
+      <div id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
     </div>
-    {# Condensed line for phones, where the full .meta above is hidden. Same
-       priority order, one tier further along: dates and campers (always), then
-       nights and campspots — the trip's basic shape, and short enough to be
-       nearly free. Photos and GPS miles drop off here; on the narrowest
-       viewport a count nobody came for shouldn't push the campers to a second
-       row. Built as a parts list so the · separators handle missing segments
-       cleanly. #}
-    {% set mm_parts = [] %}
-    {% if trip.start %}{% set _ = mm_parts.append(trip.start | daterange(trip.end)) %}{% endif %}
-    {% if trip.campers %}{% set _ = mm_parts.append(trip.campers | join(', ')) %}{% endif %}
-    {% if trip.total_nights %}{% set _ = mm_parts.append(trip.total_nights ~ ' night' ~ ('' if trip.total_nights == 1 else 's')) %}{% endif %}
-    {% if trip.stays %}{% set _ = mm_parts.append(trip.stays|length ~ ' campspot' ~ ('' if trip.stays|length == 1 else 's')) %}
-    {% elif real_events %}{% set _ = mm_parts.append(real_events|length ~ ' event' ~ ('' if real_events|length == 1 else 's')) %}{% endif %}
-    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}</div>{% endif %}
+    {# Condensed variant for phones, where the full .meta above is hidden: same
+       priority order, shorter date format, · separators. One chip per element
+       (not one joined string) so the same one-row clip applies — a string
+       would wrap mid-text and leave a sliced line instead of dropping whole
+       chips. Photos and GPS miles aren't offered here at all: on the narrowest
+       viewport there's no width to spend on a count nobody came for. #}
+    {% if trip.start or trip.campers or trip.total_nights or trip.stays or real_events %}
+    <div class="meta-mobile">
+      {% if trip.start %}<span>{{ trip.start | daterange(trip.end) }}</span>{% endif %}
+      {% if trip.campers %}<span class="meta-campers">{{ trip.campers | join(', ') }}</span>{% endif %}
+      {% if trip.total_nights %}<span>{{ trip.total_nights }} night{{ '' if trip.total_nights == 1 else 's' }}</span>{% endif %}
+      {% if trip.stays %}<span>{{ trip.stays|length }} campspot{{ '' if trip.stays|length == 1 else 's' }}</span>
+      {% elif real_events %}<span>{{ real_events|length }} event{{ '' if real_events|length == 1 else 's' }}</span>{% endif %}
+    </div>
+    {% endif %}
   </div>
   {% if is_admin %}
   <div class="trip-actions" id="trip-actions">
