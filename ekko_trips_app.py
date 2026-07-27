@@ -4496,26 +4496,26 @@ TRIP_ROUTES_FILE = os.path.join(TRIP_DATA_DIR, "trip_routes.json")
 # 42k vertices, ~276 KB gzipped for the whole library).
 TRIP_ROUTE_SIMPLIFY_M = 100
 
-# A polyline joins consecutive pings with a straight line, which draws a road
-# that was never driven when the phone stopped reporting for a stretch (dead
-# battery, no signal through a canyon). Past this much time AND distance the
-# jump isn't a drive, so the line breaks instead of inventing the leg. Both
-# gates matter: a long stationary gap overnight at camp is common and its
-# "jump" is a few meters, which should stay connected.
-TRIP_ROUTE_GAP_S = 60 * 60
-TRIP_ROUTE_GAP_M = 20000
-
-# Shortest run that counts as a line. Splitting on a gap regularly leaves a
-# stub of two near-identical pings on the far side — a phone that woke up,
-# reported twice from the same spot, and slept again. That's a dwell, not a
-# drive: it has no shape to draw, and at the casing's stroke width it renders
-# as a stray dot that reads like an unexplained marker.
-TRIP_ROUTE_MIN_SEGMENT_M = 100
+# Each trip is ONE continuous polyline — a gap in the pings never breaks it.
+# An earlier version split the line across long unreported stretches to avoid
+# drawing a road that was never driven, but a trip with a hole punched in it
+# reads as broken rather than as honest (AWH 2026-07-27), and the trip detail
+# map has always connected straight through. Gaps are filled the same way it
+# fills them: route through the trip's own anchors that fall inside the gap
+# (see `_trip_route_stops`), and straight-line whatever is left over.
+#
+# Interior gaps only pull in anchors once they're at least this long, so
+# routine sparse OwnTracks logging — idle hours at a campground, where the
+# only anchor is that same campground — doesn't add detours. Mirrors
+# `GAP_FILL_MIN_S` in `static/trip-detail/map.js`; keep the two in step.
+TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 
 # Bump to invalidate every cached route after a change to how they're built
-# (a different simplifier, a new window rule). Cheaper than remembering to
-# delete the file on deploy.
-TRIP_ROUTE_CACHE_VERSION = 1
+# (a different simplifier, a new window rule, a different payload shape).
+# Cheaper than remembering to delete the file on deploy — and required, since
+# a host that already has a cache would otherwise keep serving the old shape.
+#   2: one continuous line per trip (was: a list of gap-split segments)
+TRIP_ROUTE_CACHE_VERSION = 2
 
 
 def _rdp_keep_mask(xs, ys, eps):
@@ -4593,6 +4593,79 @@ def _trip_window_cuts(trip, cleaned, home):
     return lower, upper
 
 
+def _trip_route_stops(trip, home, tz_name):
+    """The trip's planned anchors as `[(tst, (lat, lng)), ...]` in time order
+    — the timestamped day-by-day walk used to fill gaps in the GPS line.
+
+    Port of the `routeStops` builder in `static/trip-detail/map.js` (see the
+    `Gap-fill the polyline` comment there), and of the same day-by-day rule
+    that draws the detail map's dashed "Straight route": for each date,
+    morning location (the stay you woke at, else HOME) → that date's events
+    sorted by time (untimed counts as noon) → evening location (the stay you
+    sleep at tonight, else HOME).
+
+    Future dates are skipped, so an in-progress trip never draws toward an
+    event or a homecoming that hasn't happened yet. Consecutive anchors at
+    the same coords collapse (a stay's evening and the next morning are the
+    same place), keeping the earlier timestamp for ordering.
+
+    Times are resolved in the home timezone. The detail map uses the
+    browser's local time, which is the same thing on the family's own
+    machines; anywhere else the skew is far smaller than the gaps this
+    slices anchors into."""
+    stays = [s for s in trip.get("stays", [])
+             if s.get("lat") is not None and s.get("lng") is not None]
+    events = [e for e in trip.get("events", [])
+              if e.get("lat") is not None and e.get("lng") is not None]
+
+    dates = set()
+    for s in stays:
+        try:
+            d, end = date.fromisoformat(s["start"]), date.fromisoformat(s["end"])
+        except (ValueError, TypeError, KeyError):
+            continue
+        while d <= end:
+            dates.add(d.isoformat())
+            d += timedelta(days=1)
+    for e in events:
+        if e.get("date"):
+            dates.add(e["date"])
+
+    def morning(date_str):
+        for s in stays:
+            if s["start"] < date_str <= s["end"]:
+                return (s["lat"], s["lng"])
+        return home
+
+    def evening(date_str):
+        for s in stays:
+            if s["start"] <= date_str < s["end"]:
+                return (s["lat"], s["lng"])
+        return home
+
+    stops = []
+
+    def push(tst, pt):
+        if tst is None or not pt or pt[0] is None or pt[1] is None:
+            return
+        if stops and (pt[0], pt[1]) == stops[-1][1]:
+            return
+        stops.append((tst, (pt[0], pt[1])))
+
+    today_str = date.today().isoformat()
+    for date_str in sorted(dates):
+        if date_str > today_str:
+            continue
+        push(_trip_local_to_tst(date_str, "00:00", tz_name), morning(date_str))
+        same_day = [e for e in events if e.get("date") == date_str]
+        same_day.sort(key=lambda e: e.get("time") or "12:00")
+        for e in same_day:
+            push(_trip_local_to_tst(date_str, e.get("time") or "12:00", tz_name),
+                 (e["lat"], e["lng"]))
+        push(_trip_local_to_tst(date_str, "23:59", tz_name), evening(date_str))
+    return stops
+
+
 def _track_covers_trip(trip, in_window, home):
     """True when the GPS data actually belongs to this trip.
 
@@ -4629,9 +4702,13 @@ def _track_covers_trip(trip, in_window, home):
 
 
 def _build_trip_route(trip):
-    """Build one trip's overview line as a list of simplified segments
-    (`[[[lat, lon], ...], ...]`). Empty list when the trip has no dates, no
-    cached track, or nothing survives cleaning.
+    """Build one trip's overview line as a single simplified polyline
+    (`[[lat, lon], ...]`). Empty list when the trip has no dates, no cached
+    track, or nothing survives cleaning.
+
+    The line is continuous end to end: a stretch the phone never reported is
+    filled by routing through the trip's own anchors and straight-lining the
+    remainder, exactly as the detail map does.
 
     Reads only the on-disk track cache — never the timeline API. A trip
     whose track has never been fetched simply has no line until someone
@@ -4663,29 +4740,48 @@ def _build_trip_route(trip):
     if not _track_covers_trip(trip, kept, home):
         return []
 
-    segments, current, prev = [], [], None
-    for p in kept:
-        if prev is not None:
-            gap_s = p["tst"] - prev["tst"]
-            if gap_s > TRIP_ROUTE_GAP_S and _haversine_m(
-                    prev["lat"], prev["lon"], p["lat"], p["lon"]) > TRIP_ROUTE_GAP_M:
-                if len(current) > 1:
-                    segments.append(current)
-                current = []
-        current.append((p["lat"], p["lon"]))
-        prev = p
-    if len(current) > 1:
-        segments.append(current)
+    # Gap-fill, mirroring the detail map (`Gap-fill the polyline` in
+    # static/trip-detail/map.js): walk the pings in time order, and wherever
+    # two consecutive ones are far enough apart in time, splice in the
+    # planned anchors that fall between them so the connector follows where
+    # the trip actually went rather than cutting a chord across it. Leading
+    # and trailing anchors are spliced unconditionally — that's the
+    # leaving-home and coming-home leg — but never one whose clock time
+    # hasn't arrived yet, so an in-progress trip doesn't draw itself home
+    # before it gets there. Anchors are a refinement, not a requirement: a
+    # gap with none in it still connects, straight and possibly long.
+    tz_name = (_tz_for_coord(home[0], home[1])
+               if home and home[0] is not None and home[1] is not None
+               else None)
+    stops = _trip_route_stops(trip, home, tz_name)
+    now_tst = time.time()
 
-    out = []
-    for seg in segments:
-        length = sum(_haversine_m(seg[i - 1][0], seg[i - 1][1],
-                                  seg[i][0], seg[i][1])
-                     for i in range(1, len(seg)))
-        if length < TRIP_ROUTE_MIN_SEGMENT_M:
-            continue
-        out.append(_simplify_latlon(seg, TRIP_ROUTE_SIMPLIFY_M))
-    return out
+    coords = []
+
+    def push(pt):
+        if coords and (pt[0], pt[1]) == coords[-1]:
+            return
+        coords.append((pt[0], pt[1]))
+
+    first_tst, last_tst = kept[0]["tst"], kept[-1]["tst"]
+    for tst, ll in stops:
+        if tst < first_tst:
+            push(ll)
+    for i, p in enumerate(kept):
+        push((p["lat"], p["lon"]))
+        if i + 1 < len(kept):
+            a, b = p["tst"], kept[i + 1]["tst"]
+            if b - a >= TRIP_ROUTE_GAP_FILL_MIN_S:
+                for tst, ll in stops:
+                    if a < tst < b:
+                        push(ll)
+    for tst, ll in stops:
+        if last_tst < tst <= now_tst:
+            push(ll)
+
+    if len(coords) < 2:
+        return []
+    return _simplify_latlon(coords, TRIP_ROUTE_SIMPLIFY_M)
 
 
 def _trip_route_signature(trip, raw_record):
@@ -4717,7 +4813,7 @@ def _trip_route_signature(trip, raw_record):
     payload = {
         "v": TRIP_ROUTE_CACHE_VERSION,
         "eps": TRIP_ROUTE_SIMPLIFY_M,
-        "gap": [TRIP_ROUTE_GAP_S, TRIP_ROUTE_GAP_M, TRIP_ROUTE_MIN_SEGMENT_M],
+        "gap": TRIP_ROUTE_GAP_FILL_MIN_S,
         "track": track_stat,
         "in_progress": in_progress,
         "trip": raw_record,
@@ -4755,10 +4851,10 @@ def _save_trip_routes_cache(cache):
 
 
 def _trip_routes(trips, force=False, prune=False):
-    """Return `{trip_id: [[[lat, lon], ...], ...]}` for `trips`, rebuilding
-    any entry whose signature drifted and persisting the cache if anything
-    changed. Trips with no line are omitted entirely rather than carried as
-    empty lists — the client just draws what it's given.
+    """Return `{trip_id: [[lat, lon], ...]}` — one continuous polyline per
+    trip — rebuilding any entry whose signature drifted and persisting the
+    cache if anything changed. Trips with no line are omitted entirely
+    rather than carried as empty lists; the client just draws what it's given.
 
     `prune` drops cached entries for trips not in `trips`, and is only safe
     for a caller passing the *whole* library: the request path passes a
@@ -4774,11 +4870,11 @@ def _trip_routes(trips, force=False, prune=False):
         sig = _trip_route_signature(trip, raw_by_id.get(trip["id"]))
         entry = cache.get(key)
         if force or not entry or entry.get("sig") != sig:
-            entry = {"sig": sig, "segments": _build_trip_route(trip)}
+            entry = {"sig": sig, "line": _build_trip_route(trip)}
             cache[key] = entry
             dirty = True
-        if entry.get("segments"):
-            out[trip["id"]] = entry["segments"]
+        if entry.get("line"):
+            out[trip["id"]] = entry["line"]
 
     if prune:
         live = {str(t["id"]) for t in trips}
@@ -6546,7 +6642,7 @@ if __name__ == '__main__':
         t0 = time.time()
         all_trips = parse_trips()
         routes = _trip_routes(all_trips, force=force, prune=True)
-        vertices = sum(len(seg) for segs in routes.values() for seg in segs)
+        vertices = sum(len(line) for line in routes.values())
         print(f"Built routes for {len(routes)} of {len(all_trips)} trip(s), "
               f"{vertices} vertices, in {time.time() - t0:.1f}s "
               f"-> {TRIP_ROUTES_FILE}")

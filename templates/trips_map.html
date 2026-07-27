@@ -811,9 +811,10 @@ legend.addTo(map);
 //
 // Fetched after the map has painted rather than embedded in the page. The
 // payload is a couple hundred KB gzipped and the map is fully usable without
-// it, so it must not sit in front of first render. Trips whose GPS track never
-// covered them simply have no line — there's deliberately no straight-line
-// stand-in, which would draw roads that were never driven.
+// it, so it must not sit in front of first render. A trip whose GPS never
+// covered it at all gets no line — an anchors-only line would be an itinerary
+// drawn as if it were a record. (A trip that DOES have a track keeps one
+// unbroken line: the server connects straight through any reporting gap.)
 //
 // Server-side these come precomputed and simplified from
 // /api/trips/routes (see _build_trip_route) — the raw pings are ~100k points
@@ -835,57 +836,47 @@ legend.addTo(map);
     .then(routes => {
       if (!routes) return;
       let drew = 0;
-      Object.entries(routes).forEach(([id, segments]) => {
+      Object.entries(routes).forEach(([id, coords]) => {
         const trip = tripById.get(Number(id));
-        if (!trip) return;
+        if (!trip || !coords || coords.length < 2) return;
 
-        // A trip can arrive as several segments (the line breaks across a
-        // reporting gap). They're one trip to the reader, so hover highlights
-        // and raises all of them together — bolding a third of a trip while
-        // the popup names the whole thing would just look broken.
-        const parts = [];
-        segments.forEach(seg => {
-          if (!seg || seg.length < 2) return;
-          const casing = L.polyline(seg, { ...CASING, renderer }).addTo(routeLayer);
-          const line = L.polyline(seg, { ...LINE, renderer }).addTo(routeLayer);
-          // Bind rather than open-on-click: unlike the trip detail map there's
-          // no card column to scroll to here, so the popup IS the answer.
-          const d = trip.start ? new Date(trip.start + 'T00:00:00') : null;
-          const when = d
-            ? d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
-            : '';
-          line.bindPopup(
-            `<strong>Trip ${trip.number}</strong>${when ? ` — ${when}` : ''}` +
-            `<br>${trip.summary || ''}` +
-            `<div style="margin-top:4px;font-size:12px;">` +
-            `<a href="/trips/${trip.id}" style="color:#002868;">Open trip ›</a></div>`,
-            { maxWidth: 420 });
-          parts.push({ casing, line });
-          drew++;
-        });
+        // One continuous polyline per trip — the server fills reporting gaps
+        // by routing through the trip's anchors, so there's nothing to stitch
+        // together here.
+        const casing = L.polyline(coords, { ...CASING, renderer }).addTo(routeLayer);
+        const line = L.polyline(coords, { ...LINE, renderer }).addTo(routeLayer);
 
-        // Raise the whole trip to the top of the canvas on hover. Bolding
-        // alone wasn't enough: every trip shares one color, so a thickened
-        // line still disappeared under whichever trips happened to be drawn
-        // after it — and the busiest areas, where you most need to trace one
-        // route, are exactly where the most lines stack up. Casing first so
-        // the navy still lands on top of its own white outline.
-        const raise = () => parts.forEach(({ casing, line }) => {
+        // Bind rather than open-on-click: unlike the trip detail map there's
+        // no card column to scroll to here, so the popup IS the answer.
+        const d = trip.start ? new Date(trip.start + 'T00:00:00') : null;
+        const when = d
+          ? d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+          : '';
+        line.bindPopup(
+          `<strong>Trip ${trip.number}</strong>${when ? ` — ${when}` : ''}` +
+          `<br>${trip.summary || ''}` +
+          `<div style="margin-top:4px;font-size:12px;">` +
+          `<a href="/trips/${trip.id}" style="color:#002868;">Open trip ›</a></div>`,
+          { maxWidth: 420 });
+
+        // Raise to the top of the canvas on hover. Bolding alone wasn't
+        // enough: every trip shares one color, so a thickened line still
+        // disappeared under whichever trips happened to be drawn after it —
+        // and the busiest areas, where you most need to trace one route, are
+        // exactly where the most lines stack up. Casing first so the navy
+        // still lands on top of its own white outline.
+        line.on('mouseover', () => {
           casing.bringToFront();
           line.bringToFront();
+          line.setStyle(LINE_HOVER);
         });
-        parts.forEach(({ line }) => {
-          line.on('mouseover', () => {
-            raise();
-            parts.forEach(p => p.line.setStyle(LINE_HOVER));
-          });
-          line.on('mouseout', () => {
-            // Deliberately not sent back down: with one color for every trip
-            // the resting order carries no meaning, so restoring it would be
-            // work the reader can't see. Only the style returns.
-            parts.forEach(p => p.line.setStyle(LINE));
-          });
+        line.on('mouseout', () => {
+          // Deliberately not sent back down: with one color for every trip
+          // the resting order carries no meaning, so restoring it would be
+          // work the reader can't see. Only the style returns.
+          line.setStyle(LINE);
         });
+        drew++;
       });
       if (!drew) return;
       routeLayer.addTo(map);
