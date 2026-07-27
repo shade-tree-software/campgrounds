@@ -1077,25 +1077,42 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const GPS_POINT_MIN_ZOOM = 14;
     const gpsPointLayer = L.layerGroup();
     const gpsPointMarkers = [];
-    sorted.forEach((p, i) => {
+    // Admins only — and the gate is on BUILDING them, not just showing them.
+    // syncGpsPoints() below has always hidden these from regular users, but
+    // the markers were still constructed for everyone, so a non-admin paid
+    // the full cost of a layer they could never see. On a long trip that's
+    // most of the wait before the dashed route flips to the real line: trip
+    // 92 has ~14k in-window pings, and the per-ping date formatting alone
+    // measured ~1.4s on a desktop (far worse on a phone) on top of 14k
+    // circleMarker allocations. Non-admins now skip all of it.
+    //
+    // Everything downstream reads the globals published below defensively
+    // (`window.__gpsPointMarkers || []` throughout overrides.js), and the
+    // select/suppress/relocate tooling those feed is admin-gated anyway, so
+    // an empty layer + empty array is a complete answer for a regular user.
+    if (IS_ADMIN) sorted.forEach((p, i) => {
       const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
       m.__ping = p;
       m.__pingIdx = i;
       m.__selected = false;
-      const dt = new Date(p.tst * 1000);
-      const fmtOpts = {
-        year: 'numeric', month: 'short', day: 'numeric',
-        hour: '2-digit', minute: '2-digit', second: '2-digit',
-        timeZoneName: 'short',
-      };
-      if (p.tz) fmtOpts.timeZone = p.tz;
-      const local = dt.toLocaleString(undefined, fmtOpts);
-      const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-      m.bindPopup(
-        `<div style="font-size:.85rem;line-height:1.4">` +
-        `<div><strong>${local}</strong></div>` +
-        `<div style="font-family:monospace">${coords}</div>` +
-        `</div>`);
+      // Popup content is built on open, not up front. Formatting a date in a
+      // named timezone is ~100us a call, which is nothing once and seconds
+      // across every ping on a long trip — and the reader opens at most a
+      // handful of these.
+      m.bindPopup(() => {
+        const fmtOpts = {
+          year: 'numeric', month: 'short', day: 'numeric',
+          hour: '2-digit', minute: '2-digit', second: '2-digit',
+          timeZoneName: 'short',
+        };
+        if (p.tz) fmtOpts.timeZone = p.tz;
+        const local = new Date(p.tst * 1000).toLocaleString(undefined, fmtOpts);
+        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+        return `<div style="font-size:.85rem;line-height:1.4">` +
+          `<div><strong>${local}</strong></div>` +
+          `<div style="font-family:monospace">${coords}</div>` +
+          `</div>`;
+      });
       // Intercept clicks before Leaflet opens the popup when we're in
       // selection mode. The popup-open event itself isn't suppressible
       // cleanly from a popup binding, so we close it after-the-fact.
@@ -1119,8 +1136,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       const trackVisible = map.hasLayer(gpsRouteLayer);
       // Regular users only see the blue track line — the individual per-ping
       // circles are an admin-only affordance (they feed the select/suppress/
-      // relocate tooling). Selection mode is already admin-gated; the
-      // zoom-reveal is what we suppress for non-admins here.
+      // relocate tooling). For a non-admin the layer above is empty, so this
+      // is belt-and-braces; the IS_ADMIN test is what keeps a future caller
+      // from revealing an empty layer and reading it as "the pings vanished".
       const wantVisible = window.__selectionModeActive ||
         (IS_ADMIN && trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
       if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
