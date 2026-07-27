@@ -266,37 +266,63 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       column-gap: .5rem;
-      row-gap: 4px;
+      row-gap: .5rem;
       width: 100%;
-      padding: .25rem 0;
+      padding: .5rem 0 .65rem;
     }
     /* The section heading owns its own line above the grid. */
     .nav-label { grid-column: 1 / -1; padding-bottom: .15rem; }
     /* Collapsed nav links were ~24px tall (nav a's .25rem padding), well under
        the 44px touch minimum — and this is the ONLY nav on a tablet, and the
        only route to the admin pages and Logout on a phone. */
-    .nav-group a, .nav-collapse > a {
+    /* Filled tiles, not bare words. On the one-per-line list a full-width row
+       implied its own tap area; in a grid the same text-only links read as
+       loose words floating on the navy, with nothing marking where one target
+       ends and the next begins. The chip IS the touch target, so draw it.
+       (Collapsed links were also ~24px tall from nav a's .25rem padding, well
+       under the 44px minimum — and this is the ONLY nav on a tablet, and the
+       only route to the admin pages and Logout on a phone.) */
+    nav#site-nav .nav-group a,
+    nav#site-nav .nav-collapse > a {
       display: flex;
       align-items: center;
       min-height: 44px;
       width: 100%;
+      padding: 0 .75rem;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 8px;
+      color: rgba(255,255,255,.92);
+    }
+    nav#site-nav a:hover { background: rgba(255,255,255,.14); color: var(--white); }
+    /* Tap feedback — a phone has no hover, so without this a tile gives no
+       sign it was hit during the moment before the next page paints. */
+    nav#site-nav a:active { background: rgba(255,255,255,.22); }
+    /* Desktop marks the current page with a gold underline. Under a chip that
+       reads as a stray rule sitting inside the tile rather than as state, so
+       fill the chip instead — and cancel the underline (nav a.active would
+       otherwise out-specify the tile rule above). */
+    nav#site-nav a.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      border-bottom-width: 1px;
+      color: var(--navy);
+      font-weight: 600;
     }
     /* Three columns on the tablet slice of this collapsed range (701–1024px).
        Phones stay at two. */
     @media (min-width: 701px) {
       .nav-group { grid-template-columns: repeat(3, 1fr); }
     }
-    /* Separator between sections (Trips → Campgrounds → Login/Logout). */
-    .nav-group + .nav-group,
-    .nav-collapse > .nav-group + a {
+    /* Separator between sections (Trips → Campgrounds → Admin). */
+    .nav-group + .nav-group {
       border-top: 1px solid rgba(255,255,255,.18);
+      /* Cancel desktop's left indent so every section aligns flush-left. */
+      margin-left: 0;
     }
-    /* Cancel desktop's left indent for subsequent nav-groups so Campgrounds
-       and Admin sections align flush-left when collapsed. */
-    .nav-group + .nav-group { margin-left: 0; }
-    .nav-collapse > .nav-group + a {
-      padding: .65rem 0;
-    }
+    /* Logout is a different kind of item from the destinations above it — a
+       gap sets it apart without another rule competing with the tile borders. */
+    nav#site-nav .nav-collapse > .nav-group + a { margin-top: .35rem; }
     .nav-collapse > a { width: 100%; margin-left: 0 !important; }
   }
 
