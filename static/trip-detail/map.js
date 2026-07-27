@@ -180,14 +180,12 @@ window.addEventListener('beforeunload', _saveMapView);
 // Hidden when the polyline is empty / has only one point (no GPS track
 // rendered this load).
 function computeAndShowGpsMiles(latlngs) {
+  // Desktop-only chip: the phone's condensed line drops GPS miles along with
+  // the other statistical counts (see the .meta-mobile comment in the template).
   const el = document.getElementById('trip-gps-miles');
-  // The phone header is a separate condensed line, so it gets its own slot
-  // rather than sharing the desktop chip (which is display:none there).
-  const mobileEl = document.getElementById('trip-gps-miles-mobile');
   if (!el) return;
   if (!latlngs || latlngs.length < 2) {
     el.style.display = 'none';
-    if (mobileEl) mobileEl.textContent = '';
     return;
   }
   const R_KM = 6371;
@@ -206,7 +204,6 @@ function computeAndShowGpsMiles(latlngs) {
   const shown = miles >= 100 ? Math.round(miles) : miles.toFixed(1);
   el.querySelector('span').textContent = shown;
   el.style.display = '';
-  if (mobileEl) mobileEl.textContent = ' · ' + shown + ' GPS mi';
 }
 
 function refetchAndRenderTrack() {

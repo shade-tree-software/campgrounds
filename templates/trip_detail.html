@@ -501,12 +501,12 @@
   .trip-header .meta span { font-weight: 600; }
 
   /* Intermediate widths (~700–900px, e.g. small tablets / split-screen):
-     the full .meta has enough chips (waypoints, states, photos, GPS mi,
-     campers, dates…) to wrap onto a second line, which bloats the sticky
-     red header. Drop the lower-priority chips here so the essentials
-     (nights, campspots, events, dates) stay on one line — the same
-     essentials the ≤700px .meta-mobile keeps. !important is needed because
-     #trip-gps-miles carries an inline display style toggled by JS. */
+     the full .meta has enough chips to wrap onto a second line, which bloats
+     the sticky red header. Drop the lowest-priority ones — waypoints, states,
+     photos, GPS mi: pure statistics, interesting but not what anyone opened
+     the trip for. Dates and campers are NOT in this set and never drop; they
+     identify the trip. !important is needed because #trip-gps-miles carries
+     an inline display style toggled by JS. */
   @media (min-width: 701px) and (max-width: 900px) {
     .trip-header .meta .meta-secondary { display: none !important; }
   }
@@ -1767,7 +1767,15 @@
        are dicts of {idx: [photo, ...]}; map their values to length and sum. #}
     {% set photos_count = (stay_photos.values() | map('length') | sum)
                         + (event_photos.values() | map('length') | sum) %}
+    {# Ordered by importance, most important first, because the line wraps:
+       when it runs out of width the LAST chips fall to a second row, so the
+       order is also the drop order. Dates and campers lead — they're the two
+       facts that identify the trip ("when was this, who was there"); the rest
+       are statistical counts, interesting but not critical (AWH 2026-07-27).
+       .meta-secondary marks the counts that vanish entirely below 900px. #}
     <div class="meta">
+      {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
+      {% if trip.campers %}<div>{{ trip.campers|join(', ') }}</div>{% endif %}
       <div><span>{{ trip.total_nights }}</span> night{{ '' if trip.total_nights == 1 else 's' }}</div>
       <div><span>{{ trip.stays|length }}</span> campspot{{ '' if trip.stays|length == 1 else 's' }}</div>
       {% if real_events %}<div><span>{{ real_events|length }}</span> event{{ '' if real_events|length == 1 else 's' }}</div>{% endif %}
@@ -1777,27 +1785,21 @@
       {# Populated client-side by computeAndShowGpsMiles() once the GPS
          track polyline is built. Hidden if the track never loads. #}
       <div class="meta-secondary" id="trip-gps-miles" style="display:none;"><span></span> GPS mi</div>
-      {% if trip.start %}<div>{{ trip.start }} to {{ trip.end }}</div>{% endif %}
-      {% if trip.campers %}
-      <div class="meta-secondary">{{ trip.campers|join(', ') }}</div>
-      {% endif %}
     </div>
-    {# Condensed one-line meta for phones, where the full .meta above is
-       hidden — the essentials only: dates, nights, campspots (or events
-       for day trips). Built as a parts list so the · separators handle
-       missing segments cleanly. #}
+    {# Condensed line for phones, where the full .meta above is hidden. Same
+       priority order, one tier further along: dates and campers (always), then
+       nights and campspots — the trip's basic shape, and short enough to be
+       nearly free. Photos and GPS miles drop off here; on the narrowest
+       viewport a count nobody came for shouldn't push the campers to a second
+       row. Built as a parts list so the · separators handle missing segments
+       cleanly. #}
     {% set mm_parts = [] %}
     {% if trip.start %}{% set _ = mm_parts.append(trip.start | daterange(trip.end)) %}{% endif %}
+    {% if trip.campers %}{% set _ = mm_parts.append(trip.campers | join(', ')) %}{% endif %}
     {% if trip.total_nights %}{% set _ = mm_parts.append(trip.total_nights ~ ' night' ~ ('' if trip.total_nights == 1 else 's')) %}{% endif %}
     {% if trip.stays %}{% set _ = mm_parts.append(trip.stays|length ~ ' campspot' ~ ('' if trip.stays|length == 1 else 's')) %}
     {% elif real_events %}{% set _ = mm_parts.append(real_events|length ~ ' event' ~ ('' if real_events|length == 1 else 's')) %}{% endif %}
-    {# Photos and campers were desktop-only, which dropped exactly the facts a
-       phone reader cares about most ("who was on this trip"). The line wraps,
-       so a second row is fine. GPS miles is appended client-side once the
-       track resolves — see #trip-gps-miles-mobile. #}
-    {% if photos_count > 0 %}{% set _ = mm_parts.append(photos_count ~ ' photo' ~ ('' if photos_count == 1 else 's')) %}{% endif %}
-    {% if trip.campers %}{% set _ = mm_parts.append(trip.campers | join(', ')) %}{% endif %}
-    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}<span id="trip-gps-miles-mobile"></span></div>{% endif %}
+    {% if mm_parts %}<div class="meta-mobile">{{ mm_parts | join(' · ') }}</div>{% endif %}
   </div>
   {% if is_admin %}
   <div class="trip-actions" id="trip-actions">

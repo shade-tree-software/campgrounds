@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: e29cc85c-749a-4093-92ca-f238308f5729
-  modified: 2026-07-26T14:03:44.113Z
+  modified: 2026-07-27T13:05:23.284Z
 ---
 
 # UX review — EKKO Trips for non-admin users (2026-07-26)
@@ -119,7 +119,7 @@ The same few gaps repeat: empty `alt` on the lightbox image (`_lightbox.html:16`
 ### Batch 3 — **DONE (2026-07-26, commits `38632b7` `ee83a79` `2e4c5b3` `14a1e26` `19264cb` `7475757` `d90a37f`)**
 - [x] Cross-trip photo gallery `/trips/photos` — 60/page, newest trip first, opens the shared lightbox with its trip card. Server-side `_photo_place_name()` is the twin of the trips-map client-side version. **Copy pool items, never annotate them** (shared across requests).
 - [x] Trip search on the landing page (live dropdown over the already-embedded `TRIPS`; "see all N" hands off to `/trips/list?q=`). Publishes `--tripfind-height`, subtracted by every map viewport calc — same contract as `--otd-height`. **"All years" list view** via `#all` in the hash.
-- [x] Day dividers (from each timeline item's `sort_date`, only when the trip spans >1 day; new `daylabel` filter); phone photo grids collapse to 6 with "Show all N" (`expandPhotoGrid` lives in **boot.js**, since photos.js is admin/uploader-only); mobile header regained photos + campers + GPS miles.
+- [x] Day dividers (from each timeline item's `sort_date`, only when the trip spans >1 day; new `daylabel` filter); phone photo grids collapse to 6 with "Show all N" (`expandPhotoGrid` lives in **boot.js**, since photos.js is admin/uploader-only); mobile header regained photos + campers + GPS miles — **superseded 2026-07-27**: the header meta is now ordered by importance (dates + campers first, never dropped; counts after, in drop order), so photos + GPS miles fall off the phone line again while campers stays. Campers also left `.meta-secondary`, so it no longer vanishes on iPad.
 - [x] Open Graph tags — **deliberately generic, not per-trip**: a crawler fetching `/s/<token>` authenticates as the guest, so trip-specific tags would leak real trip names into its preview cache. `og:url` omitted so the card can't echo the magic link.
 - [x] **1600px `/view/` derivative** for the lightbox (~10% of original bytes, measured). `_ensure_derivative()` is now shared by thumb + view. **`data-view` displays, `data-full` stays the original so the download button is unaffected.** New derivative dirs must be added to `DERIVATIVE_DIRNAMES`, `backup.sh`, `sync-from-pa.sh` (incl. its `CACHE_DIRS` reaper list) and `sw.js`'s cache-first list. sw.js VERSION → v9.
 - [x] Availability overhaul: deep-linkable (`cg/start/end/fit` in the URL, restored on load), `?cg=` auto-runs, client-side 92-night cap, phone per-site summary list replacing the 93-column grid, keyboard dropdown, de-jargoned copy, and the `RIDB_API_KEY not configured` message replaced with something a viewer can act on.
