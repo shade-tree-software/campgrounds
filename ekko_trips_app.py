@@ -1915,9 +1915,33 @@ def trips_poster():
                   if is_admin or not p["home_only"]]
     random.shuffle(all_photos)
 
+    # Stats footer line. Always excludes home_only trips (even for admins) so
+    # the printed numbers match the public site header, and uses
+    # camping_nights() like every other nights aggregate. States = anywhere a
+    # campspot or a real (non-waypoint) event happened.
+    stat_trips = [t for t in trips if not t.get("home_only")]
+    states = set()
+    for t in stat_trips:
+        for s in t["stays"]:
+            if s.get("state"):
+                states.add(s["state"])
+        for e in t.get("events", []):
+            if e.get("state") and not e.get("waypoint"):
+                states.add(e["state"])
+    years = sorted(t["start"][:4] for t in stat_trips if t.get("start"))
+    poster_stats = {
+        "trips": sum(1 for t in stat_trips
+                     if t["stays"] or is_day_trip(t)),
+        "nights": sum(camping_nights(t) for t in stat_trips),
+        "states": len(states),
+        "year_start": years[0] if years else "",
+        "year_end": years[-1] if years else "",
+    }
+
     return render_template('trips_poster.html', trips=trips, home=home,
                            family_locations=family,
-                           poster_photos=all_photos)
+                           poster_photos=all_photos,
+                           poster_stats=poster_stats)
 
 
 @app.route('/trips/calendar')

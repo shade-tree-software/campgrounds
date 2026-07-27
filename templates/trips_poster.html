@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EKKOing Around — Poster</title>
 <link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}">
+<!-- MUST precede leaflet.js. Without it Leaflet positions tiles with
+     translate3d inside a transformed pane, promoting the whole tile pane to
+     one composited layer — and Chromium's print rasterizer drops composited
+     layers past a size cap, so on 24×36 sheets the base map printed BLANK
+     (markers/routes survived; with the tile filter on, every tile vanished,
+     without it a patchwork). Plain left/top positioning prints reliably at
+     every size, and costs nothing here: the poster map never pans or zooms
+     after load. -->
+<script>window.L_DISABLE_3D = true;</script>
 <script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
 <script>L.Icon.Default.imagePath = "/static/vendor/leaflet/images/";</script>
 <script>window.EKKO_TILES = {{ tile_config|tojson }};</script>
@@ -12,6 +21,24 @@
 <script src="{{ static_v('vendor/omt-style.js') }}"></script>{% endif %}
 <script src="{{ static_v('vendor/tile-layers.js') }}"></script>
 <style>
+  /* Self-hosted display face (variable weight + italic, latin subset only,
+     ~60 KB total) — no build step, no external font host at render time.
+     Playfair is the masthead/footer voice; body text stays Georgia. */
+  @font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url("{{ static_v('vendor/fonts/playfair-display.woff2') }}") format('woff2');
+  }
+  @font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 400 900;
+    font-display: swap;
+    src: url("{{ static_v('vendor/fonts/playfair-display-italic.woff2') }}") format('woff2');
+  }
+
   :root {
     --navy: #002868;
     --red: #bf0a30;
@@ -19,6 +46,11 @@
     --paper: #fafaf6;
     --ink: #1d1d1f;
     --rule: #c8c0a8;
+    --display: 'Playfair Display', Georgia, serif;
+    /* --sx is "one letter-design pixel" — set by JS to SCALE px so every
+       CSS length tuned on the 816px letter sheet carries to bigger sheets
+       (same convention as the --callout-* vars). Fallback = letter. */
+    --sx: 1px;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -73,66 +105,107 @@
     height: var(--sheet-h, 11in);
     flex: none;
     transform: scale(var(--poster-scale, 1));
-    /* Four explicit rows — title auto-sized to content, the two photo
-       strips at fixed percentages of the sheet height, and the map filling
-       whatever's left. Without these explicit rows the four children
-       would land in implicit auto-rows and the map would collapse to 0px
-       while the photo cells inherited each image's natural aspect ratio
-       (tall portrait shots = tall cells). The 12%/24% split gives a
-       cell aspect of ~1.07 (slightly landscape) on the 8.5×11 sheet —
-       a square split would need ~13%/26% but lands on a value where
-       sub-pixel rounding can drift portrait; biasing landscape is
-       explicitly preferred over portrait. The two strip percentages
-       stay in a 1:2 ratio so per-cell height matches across both.
-       These values are the LETTER defaults only: the script recomputes the
-       strip percentages for the selected sheet's aspect ratio (holding the
-       ~1.07 cell aspect) and sets an inline grid-template-rows before the
-       map initializes. */
+    /* Five explicit rows — title auto-sized to content, the two photo
+       strips at fixed heights, the map filling whatever's left, and the
+       stats footer auto-sized at the bottom. Without these explicit rows
+       the children would land in implicit auto-rows and the map would
+       collapse to 0px while the photo cells inherited each image's natural
+       aspect ratio (tall portrait shots = tall cells). The strip heights
+       hold a ~1.07 (slightly landscape) cell aspect; biasing landscape is
+       explicitly preferred over portrait, and the two strips stay in a 1:2
+       height ratio so per-cell height matches across both.
+       These row values are the LETTER defaults only: the script recomputes
+       the strip heights in px for the selected sheet (holding the ~1.07
+       cell aspect against the padded content width) and sets an inline
+       grid-template-rows before the map initializes. */
     display: grid;
-    grid-template-rows: auto 12% 1fr 24%;
+    grid-template-rows: auto 11.5% 1fr 23% auto;
+    row-gap: calc(var(--sx) * 6);
+    /* Paper margin — real posters don't run ink to the paper edge. MUST
+       stay in step with SHEET_PAD in the script (the strip-height math
+       reads the padded content width). */
+    padding: calc(var(--sx) * 26);
     overflow: hidden;
     position: relative;
+  }
+  /* Double-rule frame drawn in the paper margin: a heavier outer rule and
+     a hairline inner rule, classic print-shop framing. Pseudo-elements so
+     they never enter the grid layout. */
+  .poster-sheet::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--sx) * 10);
+    border: calc(var(--sx) * 1.6) solid var(--navy);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .poster-sheet::after {
+    content: '';
+    position: absolute;
+    inset: calc(var(--sx) * 14.5);
+    border: calc(var(--sx) * 0.6) solid var(--navy);
+    pointer-events: none;
+    z-index: 5;
   }
 
   /* ── Title bar ────────────────────────────────────────────────── */
   .poster-title {
     text-align: center;
-    padding: 2.2% 4% 1%;
-    border-bottom: 2px solid var(--rule);
+    padding: 1% 4% .9%;
   }
   .poster-title h1 {
-    font-size: 2.2cqw;
-    font-weight: 700;
-    letter-spacing: .12em;
+    font-family: var(--display);
+    font-size: 3.1cqw;
+    font-weight: 800;
+    letter-spacing: .16em;
+    /* Compensate the trailing tracking space so the title optically
+       centers — letter-spacing pads after the last glyph too. */
+    margin-right: -.16em;
     text-transform: uppercase;
     color: var(--navy);
     line-height: 1;
   }
   .poster-title h1 .amp {
     color: var(--red);
-    margin: 0 .15em;
+    margin: 0 .12em;
   }
   .poster-title .sub {
-    font-size: .95cqw;
+    font-family: var(--display);
+    font-size: 1.1cqw;
+    font-weight: 500;
     font-style: italic;
-    color: var(--gray, #555);
-    margin-top: .25em;
-    letter-spacing: .04em;
+    color: #6b6656;
+    margin-top: .45em;
+    letter-spacing: .1em;
   }
-  /* cqw doesn't always work — fall back to viewport units sized to the
-     poster's width, which is height-driven on most screens. */
   .poster-sheet { container-type: inline-size; }
 
+  /* ── Stats footer ─────────────────────────────────────────────── */
+  .poster-footer {
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.02cqw;
+    letter-spacing: .26em;
+    margin-right: -.26em;  /* same optical-centering trick as the title */
+    text-transform: uppercase;
+    color: var(--navy);
+    padding-top: .2%;
+  }
+  .poster-footer .dot { color: var(--red); }
+
   /* ── Photo strips ─────────────────────────────────────────────── */
+  /* Each cell is matted like a mounted print: a white border (the matte
+     is a background+padding, so print-color-adjust keeps it on paper)
+     and a whisper of drop shadow to lift it off the cream sheet. The
+     strip's own background is the sheet, showing through the gaps. */
   .poster-photos {
     display: grid;
-    gap: 2px;
-    background: var(--rule);
-    padding: 2px;
+    gap: calc(var(--sx) * 3);
     overflow: hidden;
     /* min-height: 0 lets the grid item shrink to exactly its assigned
-       row height (the 14% / 28% above) rather than expanding to fit the
-       intrinsic size of the photos inside. */
+       row height rather than expanding to fit the intrinsic size of the
+       photos inside. */
     min-height: 0;
   }
   .poster-photos--top {
@@ -141,13 +214,16 @@
   }
   .poster-photos--bottom {
     grid-template-columns: repeat(12, 1fr);
-    /* 4 rows over the 24% bottom band gives the same 6%/row as the top
-       strip (2 rows over 12%). Same column count + same per-cell height
-       = identical thumbnail aspect ratio across both strips. */
+    /* 4 rows over the bottom band gives the same per-row height as the
+       top strip (2 rows over half the band). Same column count + same
+       per-cell height = identical thumbnail aspect ratio across both
+       strips. Hero cells span 2×2 of these tracks. */
     grid-template-rows: repeat(4, 1fr);
   }
   .poster-thumb {
-    background: #222;
+    background: #fff;
+    padding: calc(var(--sx) * 2.5);
+    box-shadow: 0 calc(var(--sx) * .7) calc(var(--sx) * 2) rgba(60, 50, 20, .28);
     overflow: hidden;
     position: relative;
     /* Same min-height: 0 reason — the cell's height is the 1fr row
@@ -166,8 +242,8 @@
   .poster-map-wrap {
     position: relative;
     overflow: hidden;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
+    border-top: calc(var(--sx) * 1) solid var(--rule);
+    border-bottom: calc(var(--sx) * 1) solid var(--rule);
     /* min-height: 0 again — without it, Leaflet's tile pane could push
        the grid row past its 1fr allocation. */
     min-height: 0;
@@ -175,7 +251,26 @@
   #poster-map {
     width: 100%;
     height: 100%;
-    background: #d4dee5;
+    /* Approximates OSM's water color after the tile filter below, so the
+       not-yet-tiled fringe doesn't flash a different blue. */
+    background: #ccd6d6;
+  }
+  /* Muted poster cartography. Default street tiles are the loudest
+     "web page, not poster" signal — motorway oranges, POI pins, saturated
+     park greens. Rather than a different tile host (which the offline
+     vector mode couldn't follow), desaturate + warm the tiles toward the
+     paper tone. Filtering tiles only: markers, routes and callouts keep
+     their full ink. Works identically for raster OSM <img> tiles and the
+     protomaps-leaflet <canvas> tiles (GridLayer stamps `leaflet-tile` on
+     both). PER-TILE on purpose, not on .leaflet-tile-pane: a filter forces
+     its subtree into one composited layer, and at 24×36 that pane is
+     ~3500px square — past Chromium's print-rasterization cap, so the whole
+     base map silently vanished from the printed PDF while markers and
+     routes survived. 256px tiles rasterize individually and never hit the
+     cap, and every function here is pointwise so per-tile output is
+     pixel-identical to per-pane. */
+  #poster-map .leaflet-tile {
+    filter: grayscale(.65) sepia(.14) saturate(1.15) brightness(1.04) contrast(.94);
   }
   /* Leaflet's controls (zoom +/-, attribution) look out of place on a
      poster. Hide them entirely — readers won't be panning. */
@@ -195,10 +290,15 @@
      were tuned against the 816px-wide letter sheet; the script publishes
      them ×SCALE as CSS vars so bigger sheets keep identical proportions.
      The fallbacks here are the letter values. */
+  /* Leaders are deliberately faint: most pins cluster near home, so dozens
+     of lines converge there — at full ink they read as spaghetti and bury
+     the route lines. Hairline + low opacity keeps them traceable without
+     letting them carry visual weight. */
   .callout-leader {
     fill: none;
     stroke: var(--navy);
-    stroke-width: var(--callout-stroke, 1.1);
+    stroke-width: var(--callout-stroke, .55);
+    stroke-opacity: .26;
     stroke-linecap: round;
   }
   .callout-leader-dot {
@@ -206,25 +306,26 @@
     stroke: #fff;
     stroke-width: var(--callout-dot-stroke, 1);
   }
-  .callout-box {
-    fill: #fff;
-    stroke: var(--navy);
-    stroke-width: var(--callout-stroke, 1.1);
-    rx: var(--callout-radius, 4px);
-    ry: var(--callout-radius, 4px);
-  }
+  /* Boxless labels — italic serif with a paper-colored halo, like place
+     names on an engraved map, instead of the old white pills. The halo
+     (paint-order stroke) is what keeps them legible over the map, and it
+     conveniently erases the leader line's last pixels where it lands. */
   .callout-label {
     fill: var(--ink);
-    font-family: -apple-system, 'Segoe UI', sans-serif;
-    font-weight: 500;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-style: italic;
     /* Sized for the printed poster: at letter scale these glyphs land
        around 13–14pt, well above the legibility floor. On-screen they
        look small but the poster's screen view is just a preview.
        Must stay in sync with TEXT_FONT in the script below so the
        canvas measurement matches the rendered glyph width — both are
-       derived from the same 7px × SCALE. */
-    font-size: var(--callout-font, 7px);
+       derived from the same 7.5px × SCALE. */
+    font-size: var(--callout-font, 7.5px);
     dominant-baseline: central;
+    paint-order: stroke;
+    stroke: var(--paper);
+    stroke-width: var(--callout-halo, 3px);
+    stroke-linejoin: round;
   }
 
   /* Floating toolbar. The poster doesn't extend base.html (it's a full-bleed
@@ -324,6 +425,18 @@
     </div>
 
     <div class="poster-photos poster-photos--bottom" id="photos-bottom"></div>
+
+    <div class="poster-footer">
+      {{ poster_stats.trips }} {{ 'trip' if poster_stats.trips == 1 else 'trips' }}
+      <span class="dot">&middot;</span>
+      {{ poster_stats.nights }} {{ 'night' if poster_stats.nights == 1 else 'nights' }}
+      <span class="dot">&middot;</span>
+      {{ poster_stats.states }} {{ 'state' if poster_stats.states == 1 else 'states' }}
+      {%- if poster_stats.year_start %}
+      <span class="dot">&middot;</span>
+      {{ poster_stats.year_start }}{% if poster_stats.year_end != poster_stats.year_start %}&ndash;{{ poster_stats.year_end }}{% endif %}
+      {%- endif %}
+    </div>
   </div>
 </div>
 
@@ -360,12 +473,14 @@ const SCALE = SHEET_W / 816;
 const rootStyle = document.documentElement.style;
 rootStyle.setProperty('--sheet-w', SIZE.w + 'in');
 rootStyle.setProperty('--sheet-h', SIZE.h + 'in');
-rootStyle.setProperty('--callout-font', (7 * SCALE) + 'px');
-rootStyle.setProperty('--callout-stroke', 1.1 * SCALE);
+// One letter-design pixel — every scaled CSS length (frame rules, photo
+// mattes, paper margin) is written as calc(var(--sx) * N) with N tuned on
+// the letter sheet.
+rootStyle.setProperty('--sx', SCALE + 'px');
+rootStyle.setProperty('--callout-font', (7.5 * SCALE) + 'px');
+rootStyle.setProperty('--callout-stroke', 0.55 * SCALE);
 rootStyle.setProperty('--callout-dot-stroke', 1 * SCALE);
-// px suffix required: CSS rx/ry reject unitless numbers (stroke-width
-// is the exception that allows them).
-rootStyle.setProperty('--callout-radius', (4 * SCALE) + 'px');
+rootStyle.setProperty('--callout-halo', (3 * SCALE) + 'px');
 
 // @page can't read CSS vars, so the print page size is injected to match
 // the sheet. Without this the print dialog would fit a poster-sized sheet
@@ -375,15 +490,18 @@ pageStyle.textContent =
   `@media print { @page { size: ${SIZE.w}in ${SIZE.h}in; margin: 0; } }`;
 document.head.appendChild(pageStyle);
 
-// Recompute the photo-strip row percentages for this sheet's aspect ratio,
+// Recompute the photo-strip row heights for this sheet's aspect ratio,
 // holding the letter design's ~1.07 slightly-landscape cell aspect (see the
 // grid-template-rows comment in the CSS — 18×24 and 24×36 are taller than
-// letter, so the letter percentages would drift the cells portrait).
+// letter, so fixed percentages would drift the cells portrait). In px, not
+// %, so the math can account for the sheet's paper margin: SHEET_PAD must
+// match the .poster-sheet padding (calc(var(--sx) * 26)).
 const PHOTO_COLS = 12;
 const CELL_ASPECT = 1.07;
-const perRowPct = (SHEET_W / PHOTO_COLS / CELL_ASPECT) / SHEET_H * 100;
+const SHEET_PAD = 26 * SCALE;
+const rowPx = (SHEET_W - 2 * SHEET_PAD) / PHOTO_COLS / CELL_ASPECT;
 document.querySelector('.poster-sheet').style.gridTemplateRows =
-  `auto ${(2 * perRowPct).toFixed(2)}% 1fr ${(4 * perRowPct).toFixed(2)}%`;
+  `auto ${(2 * rowPx).toFixed(1)}px 1fr ${(4 * rowPx).toFixed(1)}px auto`;
 
 const sizeSel = document.getElementById('poster-size');
 sizeSel.value = SIZE_KEY;
@@ -405,30 +523,102 @@ sizeSel.addEventListener('change', () => {
 // letter uses the 1600px /view/ derivative instead (~10% of original
 // bytes; heavier page, but this page exists to be printed).
 let photoCursor = 0;
-function fillPhotoGrid(elId, count) {
+function makeThumb() {
+  const div = document.createElement('div');
+  div.className = 'poster-thumb';
+  const photo = PHOTOS[photoCursor % PHOTOS.length];
+  photoCursor++;
+  const img = document.createElement('img');
+  img.src = (SCALE > 1 && photo.view) || photo.thumb || photo.url;
+  img.loading = 'lazy';
+  img.alt = '';
+  div.appendChild(img);
+  return div;
+}
+// `heroes` is a list of grid-area strings, each a 2×2 span. Explicitly
+// placed items occupy their tracks first; the auto-flowing singles fill the
+// remaining cells in row-major order, so a hero displaces 4 singles and the
+// caller passes count = cells − 4×heroes.
+function fillPhotoGrid(elId, count, heroes) {
   const grid = document.getElementById(elId);
   if (!grid || !PHOTOS.length) return;
-  for (let i = 0; i < count; i++) {
-    const div = document.createElement('div');
-    div.className = 'poster-thumb';
-    const photo = PHOTOS[photoCursor % PHOTOS.length];
-    photoCursor++;
-    const img = document.createElement('img');
-    img.src = (SCALE > 1 && photo.view) || photo.thumb || photo.url;
-    img.loading = 'lazy';
-    img.alt = '';
-    div.appendChild(img);
+  (heroes || []).forEach(area => {
+    const div = makeThumb();
+    div.style.gridArea = area;
     grid.appendChild(div);
-  }
+  });
+  for (let i = 0; i < count; i++) grid.appendChild(makeThumb());
 }
 fillPhotoGrid('photos-top', 24);
-fillPhotoGrid('photos-bottom', 48);
+// Two 2×2 hero prints break the bottom strip's uniform grid — one upper-left,
+// one lower-right, diagonal so the strip stays balanced. 48 cells − 2 heroes
+// × 4 cells + 2 hero elements = 42 photos.
+fillPhotoGrid('photos-bottom', 40, ['1 / 1 / span 2 / span 2', '3 / 11 / span 2 / span 2']);
 
 // ── Map ─────────────────────────────────────────────────────────────────────
 // Same data plumbing as trips_map.html but stripped to the essentials: small
 // markers (no popups — viewers don't click a poster), no layer toggle, no
 // banner. Zoom controls disabled because the poster is meant to be a static
 // snapshot.
+
+// Fractional framing without 3d transforms. L_DISABLE_3D (see the head
+// comment) forces Leaflet to integer zoom — fractional zoom renders through
+// exactly the composited tile transforms that vanish from large printed
+// sheets — and integer fitBounds can land a whole level too loose (letter
+// framed Mexico-to-Hispaniola instead of the eastern seaboard). So the
+// quarter-step framing is rebuilt statically: compute the fractional zoom
+// the marker bounds want, size the map div LARGER by m = 2^(ceil(zf) − zf)
+// so integer fitBounds lands on ceil(zf), and scale the div back down by
+// 1/m with a plain 2d transform (verified print-safe — it's translate3d
+// compositing that breaks print, not transforms per se). Same math Leaflet
+// itself uses for fractional zoom (next-tighter integer tiles, downscaled
+// ≤2×), applied once at load. The 1.004 fudge keeps float rounding from
+// flooring fitBounds to ceil(zf)−1; the ≲0.4% overshoot is cropped by the
+// wrap's overflow:hidden. In-map ink (markers, routes) is sized with MK
+// = SCALE × m so the wrapper's downscale returns it to designed size;
+// the callout SVG lives on the UNscaled wrap, so placeCallouts divides
+// container points by MAP_M instead.
+const mapWrap = document.querySelector('.poster-map-wrap');
+const mapEl = document.getElementById('poster-map');
+const allLatLngs = [];
+if (HOME) allLatLngs.push(HOME);
+TRIPS.forEach(trip => {
+  trip.stays.forEach(s => {
+    if (s.campground_id != null && s.cg_lat != null && s.cg_lng != null) {
+      allLatLngs.push([s.cg_lat, s.cg_lng]);
+    } else if (s.lat != null && s.lng != null) {
+      allLatLngs.push([s.lat, s.lng]);
+    }
+  });
+  (trip.events || []).forEach(e => {
+    if (e.lat && e.lng && !e.waypoint) allLatLngs.push([e.lat, e.lng]);
+  });
+});
+FAMILY.forEach(f => allLatLngs.push([f.lat, f.lng]));
+
+let MAP_M = 1;
+if (allLatLngs.length > 1 && mapWrap.clientWidth && mapWrap.clientHeight) {
+  const crs = L.CRS.EPSG3857;
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  allLatLngs.forEach(ll => {
+    const p = crs.latLngToPoint(L.latLng(ll[0], ll[1]), 10);
+    minX = Math.min(minX, p.x); maxX = Math.max(maxX, p.x);
+    minY = Math.min(minY, p.y); maxY = Math.max(maxY, p.y);
+  });
+  const pad = 2 * SCALE;  // matches the fitBounds padding below
+  const zf = 10 + Math.log2(Math.min(
+    (mapWrap.clientWidth - 2 * pad) / Math.max(1, maxX - minX),
+    (mapWrap.clientHeight - 2 * pad) / Math.max(1, maxY - minY)));
+  const zi = Math.ceil(zf - 1e-9);
+  MAP_M = Math.min(2, 2 ** (zi - zf) * 1.004);
+  mapEl.style.width = (mapWrap.clientWidth * MAP_M) + 'px';
+  mapEl.style.height = (mapWrap.clientHeight * MAP_M) + 'px';
+  mapEl.style.transform = `scale(${1 / MAP_M})`;
+  mapEl.style.transformOrigin = 'top left';
+}
+// Pixel sizes for anything drawn INSIDE the scaled map div.
+const MK = SCALE * MAP_M;
+
 const map = L.map('poster-map', {
   zoomControl: false,
   attributionControl: false,
@@ -438,13 +628,42 @@ const map = L.map('poster-map', {
   keyboard: false,
   dragging: false,
   touchZoom: false,
-  // Quarter-step zoom so fitBounds can land between integer levels
-  // for tighter framing. Tiles for the next-coarser integer level
-  // are CSS-scaled up; no extra tile fetches and no pixel-doubling
-  // artifacts.
+  // NOTE: inert while L_DISABLE_3D is set (see the head comment) —
+  // Leaflet forces zoomSnap to 1 without 3d transforms, because
+  // fractional zoom renders by CSS-scaling tile layers, i.e. by exactly
+  // the composited transforms that made the base map vanish from large
+  // printed sheets. Tight framing is instead rebuilt by the MAP_M
+  // enlarged-div + static-downscale block above. Kept so quarter-step
+  // framing returns automatically if the print pipeline ever allows
+  // re-enabling 3d.
   zoomSnap: 0.25,
 });
 window.ekkoStreetLayer().addTo(map);
+
+// Driven trip routes — the precomputed, simplified library from
+// /api/trips/routes (~200 KB gzipped, home-only trips already filtered
+// server-side per viewer). Thin navy lines radiating from home, in their own
+// pane below the marker/overlay panes so a route can never sit on top of a
+// campspot dot. Canvas renderer — same choice as the trips map — because the
+// library is ~30k vertices. Async and additive: the poster is complete
+// without it, and routes never join fitBounds (the markers frame the map).
+map.createPane('tripRoutes').style.zIndex = 350;
+const routeRenderer = L.canvas({ pane: 'tripRoutes' });
+fetch('/api/trips/routes')
+  .then(r => (r.ok ? r.json() : {}))
+  .then(routes => {
+    Object.values(routes).forEach(line => {
+      L.polyline(line, {
+        renderer: routeRenderer,
+        pane: 'tripRoutes',
+        color: '#002868',
+        weight: Math.max(1, 1.1 * MK),
+        opacity: 0.38,
+        interactive: false,
+      }).addTo(map);
+    });
+  })
+  .catch(() => {});  // no routes cache yet → poster just has no route lines
 
 const bounds = HOME ? [HOME] : [];
 
@@ -452,9 +671,9 @@ const bounds = HOME ? [HOME] : [];
 // like every other pixel constant it scales with the sheet so markers keep
 // the same proportion to the map on poster sizes.
 function houseIcon(basePx) {
-  const d = Math.round(basePx * SCALE);
+  const d = Math.round(basePx * MK);
   const svgPx = Math.round(d * 0.55);
-  const border = Math.max(1, Math.round(2 * SCALE));
+  const border = Math.max(1, Math.round(2 * MK));
   return L.divIcon({
     className: '',
     html: `<div style="
@@ -498,10 +717,10 @@ Object.values(locMap).forEach(loc => {
   const ll = [loc.lat, loc.lng];
   bounds.push(ll);
   L.circleMarker(ll, {
-    radius: Math.min(4 + loc.visits, 9) * SCALE,
+    radius: Math.min(4 + loc.visits, 9) * MK,
     fillColor: '#002868',
     color: '#fff',
-    weight: 1.2 * SCALE,
+    weight: 1.2 * MK,
     opacity: 1,
     fillOpacity: 0.9,
   }).addTo(map);
@@ -513,10 +732,10 @@ TRIPS.forEach(trip => {
     if (!evt.lat || !evt.lng || evt.waypoint) return;
     bounds.push([evt.lat, evt.lng]);
     L.circleMarker([evt.lat, evt.lng], {
-      radius: 5 * SCALE,
+      radius: 5 * MK,
       fillColor: '#c9a84c',
       color: '#fff',
-      weight: 1 * SCALE,
+      weight: 1 * MK,
       opacity: 1,
       fillOpacity: 0.9,
     }).addTo(map);
@@ -537,7 +756,7 @@ FAMILY.forEach(fam => {
 // box; this first call exists purely to kick the load lifecycle off.
 if (bounds.length) {
   // No maxZoom: let Leaflet zoom in as tight as the marker bounds allow.
-  map.fitBounds(bounds, { padding: [2 * SCALE, 2 * SCALE] });
+  map.fitBounds(bounds, { padding: [2 * MK, 2 * MK] });
 } else {
   map.setView([39.5, -98.35], 4);  // CONUS-ish fallback if no anchors
 }
@@ -555,9 +774,11 @@ if (bounds.length) {
 // the pre-fit center.
 function placeCallouts() {
   const svg = document.getElementById('callout-svg');
-  const mapEl = document.getElementById('poster-map');
-  const mw = mapEl.clientWidth;
-  const mh = mapEl.clientHeight;
+  // The callout SVG sits on the UNscaled wrap, so all geometry here is in
+  // wrap coordinates — container points from the (enlarged, scaled-down)
+  // map div are divided by MAP_M on the way in.
+  const mw = mapWrap.clientWidth;
+  const mh = mapWrap.clientHeight;
   if (!mw || !mh) return;
   svg.setAttribute('viewBox', `0 0 ${mw} ${mh}`);
   svg.setAttribute('width', mw);
@@ -619,21 +840,22 @@ function placeCallouts() {
   const cy = mh / 2;
   anchors.forEach(a => {
     const pt = map.latLngToContainerPoint([a.pin.lat, a.pin.lng]);
-    a.px = pt.x;
-    a.py = pt.y;
-    a.angle = Math.atan2(pt.y - cy, pt.x - cx);  // -π .. π (0 = east)
+    a.px = pt.x / MAP_M;
+    a.py = pt.y / MAP_M;
+    a.angle = Math.atan2(a.py - cy, a.px - cx);  // -π .. π (0 = east)
   });
 
-  // Layout constants. Callouts are small pill-shaped boxes containing
-  // just the trip summary text — no trip number, no number circle.
-  // Sized tight: on-screen pills look small but render legibly at print
-  // scale. All letter-tuned values × SCALE (the CSS side reads the same
-  // scaled values via the --callout-* vars set at the top of the script,
-  // so the canvas measureText below matches the rendered glyphs).
-  const BOX_H = 14 * SCALE;
-  const PAD_X = 3 * SCALE;
-  const GAP = 2 * SCALE;  // inter-pill spacing on every side
-  const TEXT_FONT = `500 ${7 * SCALE}px -apple-system, Segoe UI, sans-serif`;
+  // Layout constants. Callouts are boxless labels — just the trip summary
+  // text with a paper halo, engraved-map style; the "box" below survives
+  // only as the label's measured bounding rect for stacking/attachment.
+  // All letter-tuned values × SCALE (the CSS side reads the same scaled
+  // values via the --callout-* vars set at the top of the script, so the
+  // canvas measureText below matches the rendered glyphs — same italic
+  // Georgia at the same scaled size).
+  const BOX_H = 13 * SCALE;
+  const PAD_X = 2 * SCALE;
+  const GAP = 2 * SCALE;  // inter-label spacing on every side
+  const TEXT_FONT = `italic ${7.5 * SCALE}px Georgia, 'Times New Roman', serif`;
   const MARGIN = 8 * SCALE;  // pixels from the map edge to the callout's outer side
 
   // Measure each callout's natural width — left-padding + summary text
@@ -721,7 +943,7 @@ function placeCallouts() {
 
   // Draw each callout: leader line first (so it sits behind), then the
   // pinpoint dot (small navy circle marking the actual location), then the
-  // box and text.
+  // haloed label text.
   const NS = 'http://www.w3.org/2000/svg';
   anchors.forEach(a => {
     if (!a.boxCenter) return;
@@ -752,16 +974,7 @@ function placeCallouts() {
     dot.setAttribute('class', 'callout-leader-dot');
     svg.appendChild(dot);
 
-    // Rounded box.
-    const rect = document.createElementNS(NS, 'rect');
-    rect.setAttribute('x', bx - a.boxW / 2);
-    rect.setAttribute('y', by - BOX_H / 2);
-    rect.setAttribute('width', a.boxW);
-    rect.setAttribute('height', BOX_H);
-    rect.setAttribute('class', 'callout-box');
-    svg.appendChild(rect);
-
-    // Trip summary only — no number.
+    // Trip summary only — no number, no box; the CSS halo carries legibility.
     const label = document.createElementNS(NS, 'text');
     label.setAttribute('x', bx - a.boxW / 2 + PAD_X);
     label.setAttribute('y', by);
@@ -780,7 +993,7 @@ map.whenReady(() => {
   // container box so tiles/markers don't end up cropped from a
   // moment-in-time stale measurement.
   map.invalidateSize();
-  if (bounds.length) map.fitBounds(bounds, { padding: [2 * SCALE, 2 * SCALE] });
+  if (bounds.length) map.fitBounds(bounds, { padding: [2 * MK, 2 * MK] });
   // `whenReady` fires before the fitBounds tween completes; wait for
   // moveend to be sure latLngToContainerPoint reflects the final view.
   map.once('moveend', placeCallouts);
