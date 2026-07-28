@@ -50,9 +50,10 @@
     --ink: #1d1d1f;
     --rule: #c8c0a8;
     --display: 'Playfair Display', Georgia, serif;
-    /* --sx is "one letter-design pixel" — set by JS to SCALE px so every
-       CSS length tuned on the 816px letter sheet carries to bigger sheets
-       (same convention as the --callout-* vars). Fallback = letter. */
+    /* --sx is "one design pixel" — set by JS to SCALE px so every CSS length
+       tuned on the 816px baseline sheet carries to bigger sheets (same
+       convention as the --callout-* vars; see SCALE for why the baseline is
+       816 when no offered size is). Fallback = the baseline itself. */
     --sx: 1px;
   }
 
@@ -69,7 +70,7 @@
   }
 
   /* The poster sheet — fixed portrait aspect ratio (the ?size= choice;
-     letter by default). Sized to fit within the viewport while preserving
+     8×10 by default). Sized to fit within the viewport while preserving
      its proportions. On a typical desktop screen, the height limit kicks
      in first; on narrow viewports the width limit takes over. Margin auto
      centers it both axes via the wrapping flex container below. */
@@ -85,7 +86,7 @@
     background: var(--paper);
     box-shadow: 0 12px 40px rgba(0,0,0,.55), 0 2px 6px rgba(0,0,0,.4);
     /* THE SHEET IS FIXED-SIZE IN LAYOUT FOR THE LIFE OF THE PAGE — the
-       physical size chosen by ?size= (8.5×11 letter by default), set once
+       physical size chosen by ?size= (8×10 by default), set once
        as --sheet-w/--sheet-h at the top of the script, on screen and on
        paper alike. The screen preview is fitted by SCALING it
        (--poster-scale, set in JS), never by resizing it, and changing the
@@ -104,8 +105,8 @@
        print layout IS the screen layout and there is nothing to recompute.
        Don't reintroduce a print-only size, and don't make the size selector
        restyle in place — reload so every load-time computation re-runs. */
-    width: var(--sheet-w, 8.5in);
-    height: var(--sheet-h, 11in);
+    width: var(--sheet-w, 8in);
+    height: var(--sheet-h, 10in);
     flex: none;
     transform: scale(var(--poster-scale, 1));
     /* Five explicit rows — title auto-sized to content, the two photo
@@ -370,24 +371,24 @@
      comment: the printed layout has to be pixel-identical to the screen
      layout, because the map and the callouts were positioned against it at
      load time and nothing recomputes them for print.
-     The @page size here is the letter fallback only — @page can't read CSS
-     vars, so the script injects an overriding @page rule matching the
-     selected sheet size (a poster-sized sheet printed onto a letter page
-     would be shrunk ~3× by the print dialog's fit-to-page). */
+     The @page size here is the default-size fallback only — @page can't read
+     CSS vars, so the script injects an overriding @page rule matching the
+     selected sheet size (a 24×36 sheet printed onto an 8×10 page would be
+     shrunk ~3× by the print dialog's fit-to-page). */
   @media print {
-    @page { size: letter portrait; margin: 0; }
+    @page { size: 8in 10in portrait; margin: 0; }
     html, body {
       background: white;
       overflow: visible;
-      width: var(--sheet-w, 8.5in);
-      height: var(--sheet-h, 11in);
+      width: var(--sheet-w, 8in);
+      height: var(--sheet-h, 10in);
       margin: 0;
     }
     .poster-bar { display: none; }
     .poster-wrap {
       display: block;
-      width: var(--sheet-w, 8.5in);
-      height: var(--sheet-h, 11in);
+      width: var(--sheet-w, 8in);
+      height: var(--sheet-h, 10in);
       padding: 0;
     }
     .poster-sheet {
@@ -416,8 +417,9 @@
 <div class="poster-bar">
   <a href="/trips/stats">&larr; Back</a>
   <select id="poster-size" title="Poster size">
-    <option value="letter">8.5 &times; 11 in</option>
-    <option value="tabloid">11 &times; 17 in</option>
+    <option value="8x10">8 &times; 10 in</option>
+    <option value="11x14">11 &times; 14 in</option>
+    <option value="16x20">16 &times; 20 in</option>
     <option value="18x24">18 &times; 24 in</option>
     <option value="24x36">24 &times; 36 in</option>
   </select>
@@ -466,27 +468,37 @@ const HOME = {{ home | tojson }};
 const PHOTOS = {{ poster_photos | tojson }};
 
 // ── Poster size ─────────────────────────────────────────────────────────────
-// Selected via ?size= (toolbar dropdown); letter is the default. This block
-// MUST run before anything below measures the sheet — the strips, Leaflet
-// and the callouts all lay out against the sheet's pixel box, so the size
-// is fixed here once and a size change RELOADS the page (see the
+// Selected via ?size= (toolbar dropdown); 8×10 is the default. These are
+// standard OFF-THE-SHELF FRAME sizes, which is the point — a poster you can
+// hang without a custom mat. Paper sizes (letter/tabloid) were the earlier
+// list and are deliberately gone; an unknown ?size= (an old letter/tabloid
+// bookmark) falls back to the default rather than breaking the page.
+// This block MUST run before anything below measures the sheet — the strips,
+// Leaflet and the callouts all lay out against the sheet's pixel box, so the
+// size is fixed here once and a size change RELOADS the page (see the
 // .poster-sheet CSS comment for why nothing may resize after load).
 const SIZES = {
-  'letter': { w: 8.5, h: 11 },
-  'tabloid': { w: 11, h: 17 },
+  '8x10': { w: 8, h: 10 },
+  '11x14': { w: 11, h: 14 },
+  '16x20': { w: 16, h: 20 },
   '18x24': { w: 18, h: 24 },
   '24x36': { w: 24, h: 36 },
 };
+const DEFAULT_SIZE = '8x10';
 const sizeParam = new URLSearchParams(location.search).get('size');
-const SIZE_KEY = SIZES[sizeParam] ? sizeParam : 'letter';
+const SIZE_KEY = SIZES[sizeParam] ? sizeParam : DEFAULT_SIZE;
 const SIZE = SIZES[SIZE_KEY];
 const SHEET_W = SIZE.w * 96;  // CSS px (96/in) — the sheet's layout box
 const SHEET_H = SIZE.h * 96;
 // Every pixel constant below (callout pills, fonts, marker sizes) was tuned
-// against the 816px-wide letter sheet; SCALE carries them to the selected
-// size so the poster keeps identical proportions on bigger paper — which is
-// also what makes bigger paper sharper: Leaflet fetches higher-zoom tiles
-// for the larger container, and text/strokes stay vector.
+// against a 816px-wide sheet; SCALE carries them to the selected size so the
+// poster keeps identical proportions on bigger paper — which is also what
+// makes bigger paper sharper: Leaflet fetches higher-zoom tiles for the
+// larger container, and text/strokes stay vector. 816 is letter width and
+// letter is no longer an offered size, but it stays the DESIGN BASELINE the
+// constants are expressed in — re-baselining it to 768 would resize every
+// tuned constant by 6% for nothing. Read "letter" in these comments as "the
+// sheet the numbers were tuned on", not as a size you can pick.
 const SCALE = SHEET_W / 816;
 
 const rootStyle = document.documentElement.style;
@@ -510,9 +522,10 @@ pageStyle.textContent =
 document.head.appendChild(pageStyle);
 
 // Recompute the photo-strip row heights for this sheet's aspect ratio,
-// holding the letter design's ~1.07 slightly-landscape cell aspect (see the
-// grid-template-rows comment in the CSS — 18×24 and 24×36 are taller than
-// letter, so fixed percentages would drift the cells portrait). In px, not
+// holding the design's ~1.07 slightly-landscape cell aspect (see the
+// grid-template-rows comment in the CSS — the frame sizes run from 0.80 to
+// 0.67 w/h, so fixed percentages would drift the cells portrait on the
+// taller ones, 18×24 and 24×36 especially). In px, not
 // %, so the math can account for the sheet's paper margin: SHEET_PAD must
 // match the .poster-sheet padding (calc(var(--sx) * 26)).
 const PHOTO_COLS = 12;
@@ -555,7 +568,7 @@ const EXPORT_DPI = 200;
 // does this) — so the export is slow, network-dependent, and fails as a unit.
 // This is SLOW at the big sizes and there is no honest way around it: every
 // tile and photo is fetched and base64'd, then one enormous SVG is decoded and
-// PNG-encoded. Measured end to end: ~10 s for letter, ~3.5 min for 24×36
+// PNG-encoded. Measured end to end: ~10 s at the small end, ~3.5 min for 24×36
 // (4800×7200, 380 tiles, ~40 MB). A button that just says "Rendering…" for
 // three and a half minutes reads as a hang, so it counts seconds — a moving
 // number is the difference between "working" and "broken".
@@ -675,11 +688,12 @@ pngBtn.addEventListener('click', async () => {
 // heroRank). A shared `dealt` set keeps the two from colliding — a photo can
 // only repeat on the sheet when the library has fewer photos than cells.
 //
-// Derivative choice: the 480px /thumb/ covers a letter-sheet cell (~68px)
-// with plenty of headroom even at 300dpi print, but on poster sheets the
-// cells reach ~2in wide and thumbs go soft — so any sheet larger than
-// letter uses the 1600px /view/ derivative instead (~10% of original
-// bytes; heavier page, but this page exists to be printed).
+// Derivative choice: the 480px /thumb/ covers a baseline-sheet cell (~68px,
+// ~64px at 8×10) with plenty of headroom even at 300dpi print, but on the
+// big frame sizes the cells reach ~2in wide and thumbs go soft — so any
+// sheet above the baseline (11×14 and up, i.e. SCALE > 1) uses the 1600px
+// /view/ derivative instead (~10% of original bytes; heavier page, but this
+// page exists to be printed).
 
 // ── People-only filter ──────────────────────────────────────────────────────
 // `?people=1` (toolbar checkbox) restricts the whole sheet — strips and heroes
@@ -1458,7 +1472,7 @@ map.whenReady(() => {
   // Belt-and-braces in case fitBounds was effectively a no-op (single point):
   setTimeout(placeCallouts, 400);
 });
-// Fit the letter-sized sheet into the viewport by SCALING it. The sheet's
+// Fit the sheet into the viewport by SCALING it. The sheet's
 // layout size never changes (see the .poster-sheet CSS comment) — a resize
 // only changes how big the preview looks, so unlike the old responsive
 // version there is deliberately no invalidateSize/fitBounds/placeCallouts
