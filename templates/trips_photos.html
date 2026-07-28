@@ -18,10 +18,136 @@
     align-items: baseline;
     justify-content: space-between;
     gap: .75rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: .9rem;
   }
   .photos-head h1 { color: var(--navy); font-size: 1.6rem; margin: 0; }
   .photos-count { color: var(--gray); font-size: .9rem; }
+
+  /* ── Controls ───────────────────────────────────────────────────────────
+     One row on a desktop, wrapping to as many as it needs on a phone. Every
+     control is a real form field or a link, so the page works with JS off —
+     the selects just also auto-submit so a filter change isn't a two-step. */
+  .photos-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    align-items: center;
+    margin-bottom: .9rem;
+  }
+  .pc-search {
+    position: relative;
+    flex: 1 1 260px;
+    min-width: 0;   /* or the input's intrinsic width blocks the flex shrink */
+    display: flex;
+    align-items: center;
+  }
+  .pc-search svg {
+    position: absolute;
+    left: .7rem;
+    color: var(--gray);
+    pointer-events: none;
+  }
+  .pc-search input {
+    width: 100%;
+    font: inherit;
+    font-size: .9rem;
+    padding: .6rem .6rem .6rem 2.2rem;
+    min-height: 44px;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    background: var(--white);
+    /* Safari draws its own clear affordance on type=search; ours is a real
+       link that also resets the query server-side. */
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .pc-search input:focus { outline: 2px solid var(--navy); outline-offset: -1px; }
+  .pc-clear {
+    position: absolute;
+    right: .5rem;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+  .pc-clear:hover { background: var(--gray-light); }
+  .photos-controls select,
+  .photos-controls .pc-go {
+    font: inherit;
+    font-size: .85rem;
+    min-height: 44px;
+    padding: 0 .8rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--gray);
+    cursor: pointer;
+  }
+  .photos-controls .pc-go {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  /* Filter chips: all photos / just the marked ones. */
+  .photos-filter { display: flex; gap: .4rem; }
+  .photos-filter a {
+    font-size: .8rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--gray);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    padding: 0 .9rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    white-space: nowrap;
+  }
+  .photos-filter a.active { color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); }
+
+  /* What's actually being shown, and the one click back to everything. */
+  .photos-active {
+    font-size: .85rem;
+    color: var(--gray);
+    margin-bottom: 1.1rem;
+  }
+  .photos-active a { color: var(--navy); font-weight: 600; }
+  .photos-active .term { color: #333; font-weight: 600; }
+
+  /* ── Trip groups ────────────────────────────────────────────────────────
+     A page spans several trips, so name each run instead of repeating the
+     trip under all 60 tiles. Sticky below the site header, which publishes
+     its own height as --site-top-height. */
+  .photo-group { margin-bottom: 1.5rem; }
+  .pg-head {
+    position: sticky;
+    top: var(--site-top-height, 0px);
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: .5rem;
+    margin: 0 0 .6rem;
+    padding: .5rem 0;
+    font-size: .95rem;
+    /* The sheet colour, so tiles scrolling under it are covered. */
+    background: var(--offwhite);
+    border-bottom: 2px solid var(--gold);
+  }
+  .pg-head a { color: var(--navy); text-decoration: none; }
+  .pg-head a:hover { text-decoration: underline; }
+  .pg-date, .pg-count { color: var(--gray); font-weight: 400; font-size: .8rem; }
+  .pg-count { margin-left: auto; }
 
   /* auto-fill + minmax so the grid reflows on every width without a media
      query per breakpoint — 4-6 across on a desktop, 2 on a phone. */
@@ -83,37 +209,14 @@
     .fav-btn { opacity: 1; }
   }
 
-  /* Filter chips: all photos / just the marked ones. margin-right: auto keeps
-     the count pinned right while the chips sit next to the heading. */
-  .photos-filter { display: flex; gap: .4rem; margin-right: auto; }
-  .photos-filter a {
-    font-size: .8rem;
-    font-weight: 600;
-    text-decoration: none;
-    color: var(--gray);
-    background: var(--white);
-    box-shadow: var(--shadow);
-    border-radius: 999px;
-    padding: .45rem .9rem;
-    min-height: 36px;
-    display: inline-flex;
-    align-items: center;
-    gap: .3rem;
-  }
-  .photos-filter a.active { color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); }
-
-  /* Caption strip: the trip it came from, and the campspot/event under it. */
+  /* Caption strip: the campspot/event the photo sits under. The trip itself
+     is the group header's job. */
   .pi-meta {
     padding: .4rem .55rem .5rem;
     font-size: .75rem;
     line-height: 1.35;
     border-top: 3px solid var(--gold);
-  }
-  .pi-meta a { color: var(--navy); font-weight: 600; text-decoration: none; }
-  .pi-meta a:hover { text-decoration: underline; }
-  .pi-place {
     color: var(--gray);
-    display: block;
     /* Long campground names would otherwise push every tile taller than its
        neighbours and break the grid's baseline. */
     white-space: nowrap;
@@ -121,110 +224,180 @@
     text-overflow: ellipsis;
   }
 
+  /* ── Pager ──────────────────────────────────────────────────────────────
+     Numbered, with first/last always reachable: with only Newer/Older,
+     reaching 2019 in a 20-page library was a dozen clicks. */
   .pager {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: .35rem;
     margin-top: 1.75rem;
     font-size: .9rem;
     color: var(--gray);
   }
-  .pager a {
+  .pager a, .pager .current {
     color: var(--navy);
     font-weight: 600;
     text-decoration: none;
     background: var(--white);
     box-shadow: var(--shadow);
     border-radius: 999px;
-    /* 44px so the pager is a real touch target on a phone. */
-    padding: .55rem 1.1rem;
+    /* 44px so every pager target is a real touch target on a phone. */
+    padding: 0 .85rem;
+    min-width: 44px;
     min-height: 44px;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
   }
   .pager a:hover { text-decoration: underline; }
+  .pager .current { background: var(--navy); color: var(--white); box-shadow: none; }
+  .pager .gap { padding: 0 .2rem; }
+  .pager .pager-edge { font-weight: 400; }
+
   .photos-empty { color: var(--gray); text-align: center; padding: 3rem 1rem; }
+  .photos-empty a { color: var(--navy); font-weight: 600; }
 
   @media (max-width: 700px) {
     .photos-page { padding: 1rem .75rem 2rem; }
     .photo-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+    /* The search box owns its own row; the rest share the next one. */
+    .pc-search { flex: 1 1 100%; }
+    .photos-controls select { flex: 1 1 0; }
+    .photos-controls .pc-go { display: none; }   /* Enter and the auto-submits cover it */
+    .photos-filter { flex: 1 1 100%; }
+    .photos-filter a { flex: 1 1 0; justify-content: center; }
   }
 {% endblock %}
 
 {% block content %}
 <div class="photos-page">
   <div class="photos-head">
-    <h1>{{ 'Favorite Photos' if favorites_only else 'All Photos' }}</h1>
-    {#- The Favorites chip is the poster's hero pool made visible: mark from
-        the grid, then filter down to review what you marked. Hidden entirely
-        when nothing is marked and you couldn't mark anything — an empty filter
-        that leads nowhere is just a dead control. -#}
-    {% if fav_total or is_admin %}
-    <div class="photos-filter">
-      <a href="/trips/photos" class="{{ '' if favorites_only else 'active' }}">All</a>
-      <a href="/trips/photos?favorites=1" class="{{ 'active' if favorites_only else '' }}"
-         title="Photos marked as poster favorites">&#9733; Favorites{% if fav_total %} ({{ fav_total }}){% endif %}</a>
-    </div>
-    {% endif %}
+    <h1>Photos</h1>
     <span class="photos-count">
       {{ '{:,}'.format(total) }} photo{{ '' if total == 1 else 's' }}{% if pages > 1 %} · page {{ page }} of {{ pages }}{% endif %}
     </span>
   </div>
 
-  {% if photos %}
-  <div class="photo-grid">
-    {% for p in photos %}
-    <div class="photo-item">
-      {#- The lightbox reads its extras off the img: data-full swaps in the
-          original, and the trip/place attributes drive the "open trip" card.
-          Same contract the trips map uses. data-photo-key/data-favorite are
-          the favorites contract (static/photo-favorite.js) — the key is just
-          the photo's storage subpath, which the URLs already carry. -#}
-      <img src="{{ p.thumb }}"
-           data-view="{{ p.view }}"
-           data-full="{{ p.url }}"
-           data-photo-key="{{ p.key }}"
-           data-favorite="{{ '1' if p.favorite else '0' }}"
-           data-caption="{{ p.caption }}"
-           data-trip-href="/trips/{{ p.trip_id }}"
-           data-trip-name="{{ p.trip_name }}"
-           data-trip-date="{{ p.trip_date }}"
-           {% if p.place %}data-place-name="{{ p.place }}"{% endif %}
-           alt="{{ p.caption or p.place or p.trip_name }}"
-           loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
-      {% if is_admin %}
-      <button type="button" class="fav-btn" data-photo-key="{{ p.key }}"
-              aria-pressed="{{ 'true' if p.favorite else 'false' }}"
-              aria-label="Mark as a poster favorite"
-              title="{{ 'Remove from poster favorites' if p.favorite else 'Mark as a poster favorite' }}">
-        <svg width="18" height="18" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
-          <path d="M10 2.6l2.3 4.9 5.2.7-3.8 3.7.9 5.3-4.6-2.5-4.6 2.5.9-5.3L2.5 8.2l5.2-.7z"/>
-        </svg>
-      </button>
-      {% endif %}
-      <div class="pi-meta">
-        <a href="/trips/{{ p.trip_id }}">{{ p.trip_name }}</a>
-        {% if p.place %}<span class="pi-place" title="{{ p.place }}">{{ p.place }}</span>{% endif %}
-      </div>
+  {#- Everything is a GET form, so the resulting view lives in the URL: it can
+      be bookmarked and shared, Back undoes a filter, and paging can't drop
+      one. The favorites toggle stays a pair of links (it reads as a filter,
+      not a control) and rides along as a hidden field so searching keeps it. -#}
+  <form class="photos-controls" method="get" action="{{ url_for('trips_photos') }}" role="search">
+    <div class="pc-search">
+      <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.5 12.5L17 17"/>
+      </svg>
+      <input type="search" name="q" id="photo-search" value="{{ q }}"
+             placeholder="Search trips, places, captions…"
+             aria-label="Search photos" autocomplete="off">
+      {% if q %}<a class="pc-clear" href="{{ photos_href(q='') }}" title="Clear search" aria-label="Clear search">&times;</a>{% endif %}
     </div>
-    {% endfor %}
-  </div>
+    <select name="year" aria-label="Filter by year" onchange="this.form.submit()">
+      <option value="">All years</option>
+      {% for y in years %}
+      <option value="{{ y }}" {{ 'selected' if y == year }}>{{ y }}</option>
+      {% endfor %}
+    </select>
+    <select name="sort" aria-label="Sort order" onchange="this.form.submit()">
+      <option value="newest" {{ 'selected' if sort != 'oldest' }}>Newest first</option>
+      <option value="oldest" {{ 'selected' if sort == 'oldest' }}>Oldest first</option>
+    </select>
+    {% if favorites_only %}<input type="hidden" name="favorites" value="1">{% endif %}
+    <button type="submit" class="pc-go">Search</button>
 
-  {% if pages > 1 %}
-  {#- The filter has to survive paging, or page 2 of Favorites is page 2 of
-      everything. -#}
-  {% set filter_q = '&favorites=1' if favorites_only else '' %}
-  <div class="pager">
-    {% if page > 1 %}<a href="?page={{ page - 1 }}{{ filter_q }}" rel="prev">&larr; Newer</a>{% endif %}
-    <span>Page {{ page }} of {{ pages }}</span>
-    {% if page < pages %}<a href="?page={{ page + 1 }}{{ filter_q }}" rel="next">Older &rarr;</a>{% endif %}
+    {#- Hidden entirely when nothing is marked and you couldn't mark anything —
+        an empty filter that leads nowhere is just a dead control. -#}
+    {% if fav_total or is_admin %}
+    <div class="photos-filter">
+      <a href="{{ photos_href(favorites='') }}" class="{{ '' if favorites_only else 'active' }}">All</a>
+      <a href="{{ photos_href(favorites='1') }}" class="{{ 'active' if favorites_only else '' }}"
+         title="Photos marked as poster favorites">&#9733; Favorites{% if fav_total %} ({{ fav_total }}){% endif %}</a>
+    </div>
+    {% endif %}
+  </form>
+
+  {% if filtered %}
+  <div class="photos-active">
+    Showing {{ '{:,}'.format(total) }} of {{ '{:,}'.format(library_total) }} photos
+    {%- if q %} matching <span class="term">“{{ q }}”</span>{% endif %}
+    {%- if year %} from <span class="term">{{ year }}</span>{% endif %}
+    {%- if favorites_only %} marked as favorites{% endif %}
+    · <a href="{{ photos_href(q='', year='', favorites='', sort='') }}">Clear filters</a>
   </div>
   {% endif %}
+
+  {% if groups %}
+  {% for g in groups %}
+  <section class="photo-group">
+    <h2 class="pg-head">
+      <a href="/trips/{{ g.trip_id }}">{{ g.trip_name }}</a>
+      {% if g.trip_date %}<span class="pg-date">{{ g.trip_date }}</span>{% endif %}
+      <span class="pg-count">{{ g.photos | length }} photo{{ '' if g.photos | length == 1 else 's' }}</span>
+    </h2>
+    <div class="photo-grid">
+      {% for p in g.photos %}
+      <div class="photo-item">
+        {#- The lightbox reads its extras off the img: data-full swaps in the
+            original, and the trip/place attributes drive the "open trip" card.
+            Same contract the trips map uses. data-photo-key/data-favorite are
+            the favorites contract (static/photo-favorite.js) — the key is just
+            the photo's storage subpath, which the URLs already carry.
+            openPagePhoto passes the whole page as the set, so arrows page
+            across group boundaries rather than stopping at the trip. -#}
+        <img src="{{ p.thumb }}"
+             data-view="{{ p.view }}"
+             data-full="{{ p.url }}"
+             data-photo-key="{{ p.key }}"
+             data-favorite="{{ '1' if p.favorite else '0' }}"
+             data-caption="{{ p.caption }}"
+             data-trip-href="/trips/{{ p.trip_id }}"
+             data-trip-name="{{ p.trip_name }}"
+             data-trip-date="{{ p.trip_date }}"
+             {% if p.place %}data-place-name="{{ p.place }}"{% endif %}
+             alt="{{ p.caption or p.place or p.trip_name }}"
+             loading="lazy" tabindex="0" role="button" onclick="openPagePhoto(this)">
+        {% if is_admin %}
+        <button type="button" class="fav-btn" data-photo-key="{{ p.key }}"
+                aria-pressed="{{ 'true' if p.favorite else 'false' }}"
+                aria-label="Mark as a poster favorite"
+                title="{{ 'Remove from poster favorites' if p.favorite else 'Mark as a poster favorite' }}">
+          <svg width="18" height="18" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+            <path d="M10 2.6l2.3 4.9 5.2.7-3.8 3.7.9 5.3-4.6-2.5-4.6 2.5.9-5.3L2.5 8.2l5.2-.7z"/>
+          </svg>
+        </button>
+        {% endif %}
+        {% if p.place %}<div class="pi-meta" title="{{ p.place }}">{{ p.place }}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+
+  {% if pages > 1 %}
+  <nav class="pager" aria-label="Photo pages">
+    {% if page > 1 %}<a class="pager-edge" href="{{ photos_href(page=page - 1) }}" rel="prev">&larr; Newer</a>{% endif %}
+    {% for n in page_links %}
+      {% if n is none %}<span class="gap">…</span>
+      {% elif n == page %}<span class="current" aria-current="page">{{ n }}</span>
+      {% else %}<a href="{{ photos_href(page=n) }}">{{ n }}</a>{% endif %}
+    {% endfor %}
+    {% if page < pages %}<a class="pager-edge" href="{{ photos_href(page=page + 1) }}" rel="next">Older &rarr;</a>{% endif %}
+  </nav>
+  {% endif %}
+
   {% else %}
   <p class="photos-empty">
-    {% if favorites_only %}
+    {#- The favorites-only case gets its own line before the generic one:
+        "nothing matches" is unhelpful when the real answer is "you haven't
+        starred anything yet". -#}
+    {% if favorites_only and not q and not year %}
       No favorites yet{% if is_admin %} — star a photo to put it in the poster's hero pool{% endif %}.
+    {% elif filtered %}
+      Nothing matches those filters.
+      <a href="{{ photos_href(q='', year='', favorites='', sort='') }}">Show all photos</a>
     {% else %}
       No photos yet.
     {% endif %}
@@ -241,4 +414,28 @@
 <script>window.PHOTO_FAVORITES = {{ 'true' if is_admin else 'false' }};</script>
 <script src="{{ static_v('photo-favorite.js') }}"></script>
 <script src="{{ static_v('lightbox.js') }}"></script>
+<script>
+// The page is one photo set split across per-trip grids. openLightbox's
+// default is the clicked img's own .photo-grid siblings, which would stop the
+// arrows at each group boundary — pass every tile on the page instead.
+function openPagePhoto(img) {
+  openLightbox(img, { photos: Array.from(document.querySelectorAll('.photo-grid img')) });
+}
+
+// "/" focuses the search box, the one shortcut worth having on a page whose
+// primary verb is "find that photo". Skipped while typing somewhere else or
+// while the lightbox owns the keyboard.
+document.addEventListener('keydown', e => {
+  if (e.key !== '/' || e.metaKey || e.ctrlKey || e.altKey) return;
+  const lb = document.getElementById('lightbox');
+  if (lb && lb.classList.contains('visible')) return;
+  const t = e.target;
+  if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT')) return;
+  const box = document.getElementById('photo-search');
+  if (!box) return;
+  e.preventDefault();
+  box.focus();
+  box.select();
+});
+</script>
 {% endblock %}

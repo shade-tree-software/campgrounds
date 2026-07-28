@@ -1888,38 +1888,116 @@ def trips_map():
 PHOTOS_PER_PAGE = 60
 
 
+_PHOTO_INDEX_CACHE = {"pool": None, "items": None}
+
+
+def _photo_gallery_index():
+    """The photo pool enriched with everything the gallery searches, sorts and
+    groups by: trip name/date, the campspot/event place, the year, a sort
+    position for the trip and the card, and a normalized search haystack.
+
+    Built over the WHOLE library rather than a page slice — search, the year
+    filter and the facet counts all have to see every photo, and which 60 the
+    page shows is decided only after filtering.
+
+    Cached against the pool OBJECT it was built from, so it rebuilds exactly
+    when `_collect_photo_pool()` does — on that pool's 60 s TTL or on any
+    explicit invalidation — and inherits the same freshness contract as the
+    landing slideshow and the poster. That also covers a trip or campground
+    rename, since those reach this page only through `parse_trips()`. Worth
+    caching: it costs ~50 us per photo (238 ms for 5,000, measured), which is
+    per-request work whose answer only changes when a photo or a trip does,
+    and the request that pays for it is already paying for the pool rebuild.
+
+    Includes `home_only` photos; callers filter those per viewer, which is a
+    reference filter rather than the dict building done here.
+    """
+    pool = _collect_photo_pool()
+    if _PHOTO_INDEX_CACHE["pool"] is pool:
+        return _PHOTO_INDEX_CACHE["items"]
+
+    trips = parse_trips()          # sorted ascending by start
+    by_id = {t["id"]: t for t in trips}
+    seq = {t["id"]: i for i, t in enumerate(trips)}
+    items = []
+    for p in pool:
+        trip = by_id.get(p["trip_id"]) or {}
+        place, state = _photo_card_meta(trip, p["card"])
+        name = (f"Trip {trip['number']}: {trip['summary']}"
+                if trip.get("number") else trip.get("summary", ""))
+        year = (trip.get("start") or "")[:4]
+        # The pool's items are shared across requests, so build new dicts
+        # rather than annotating them (see _collect_photo_pool's docstring).
+        items.append({
+            **p,
+            "trip_name": name,
+            "trip_date": _short_trip_date(trip.get("start")),
+            "place": place,
+            "year": year,
+            "trip_seq": seq.get(p["trip_id"], -1),
+            "card_order": _photo_card_order(p["card"]),
+            # One normalized haystack per photo, so a multi-term query is a
+            # handful of substring tests instead of a field-by-field walk.
+            "search": _search_haystack(name, place, state, p["caption"], year),
+        })
+    _PHOTO_INDEX_CACHE.update(pool=pool, items=items)
+    return items
+
+
 @app.route('/trips/photos')
 def trips_photos():
-    """Every photo across every trip, newest trip first, paginated.
+    """Every photo across every trip: searchable, filterable, grouped, paged.
 
     The Stats page counts photos in its hero row and that number led nowhere,
     because there was no cross-trip view of them — the only way to see a photo
     was to already know which trip it was on. Built on the same cached
     `_collect_photo_pool()` the landing slideshow and poster use.
+
+    Every control is a query param — `q`, `year`, `favorites`, `sort`, `page` —
+    so a filtered view is bookmarkable and shareable, Back works, and paging
+    can't silently drop a filter. Filtering is server-side because the library
+    is thousands of photos and only 60 are ever in the DOM; a client-side
+    filter would have to ship all of them.
     """
     is_admin = current_user.is_authenticated and current_user.is_admin
-    trips = parse_trips()
-    by_id = {t["id"]: t for t in trips}
+    items = [it for it in _photo_gallery_index()
+             if is_admin or not it["home_only"]]
 
-    photos = [p for p in _collect_photo_pool() if is_admin or not p["home_only"]]
+    # Facets are counted against the whole library, before any filter, so the
+    # year list never loses options and the Favorites chip can show its total
+    # while the favorites filter is on.
+    library_total = len(items)
+    fav_total = sum(1 for it in items if it["favorite"])
+    years = sorted({it["year"] for it in items if it["year"]}, reverse=True)
+
+    q = (request.args.get('q') or '').strip()
+    year = (request.args.get('year') or '').strip()
     # Favorites are the poster's hero pool, so this page doubles as the place
     # you curate it: mark from the grid, then filter down to review what you
-    # marked. Counted before filtering so the chip can show the total even
-    # while the filter is on. Non-admins can't mark, but the filter is a
-    # perfectly good "best of" view, so it isn't gated.
-    fav_total = sum(1 for p in photos if p.get("favorite"))
+    # marked. Non-admins can't mark, but the filter is a perfectly good
+    # "best of" view, so it isn't gated.
     favorites_only = request.args.get('favorites') == '1'
+    sort = 'oldest' if request.args.get('sort') == 'oldest' else 'newest'
+
     if favorites_only:
-        photos = [p for p in photos if p.get("favorite")]
+        items = [it for it in items if it["favorite"]]
+    if year:
+        items = [it for it in items if it["year"] == year]
+    if q:
+        # Every term has to match somewhere: "utah lake" narrows rather than
+        # widening, which is what a reader typing two words expects.
+        terms = [' ' + t for t in _search_terms(q)]
+        items = [it for it in items if all(t in it["search"] for t in terms)]
 
-    def sort_key(p):
-        t = by_id.get(p["trip_id"]) or {}
-        # Newest trip first; within a trip keep the timeline's own order
-        # (stays before events, then by index) so a page reads coherently.
-        return (t.get("start") or "", p["trip_id"], p["card"], p["url"])
-    photos.sort(key=sort_key, reverse=True)
+    # Two stable passes rather than one composite key, so photos read in
+    # timeline order (campspots then events, each by index) whichever way the
+    # trips themselves are ordered. The previous single reverse=True sort
+    # reversed the WITHIN-trip order too, so a trip's last campspot came first
+    # — contradicting the comment that claimed it kept timeline order.
+    items.sort(key=lambda it: (it["card_order"], it["url"]))
+    items.sort(key=lambda it: it["trip_seq"], reverse=(sort == 'newest'))
 
-    total = len(photos)
+    total = len(items)
     pages = max(1, (total + PHOTOS_PER_PAGE - 1) // PHOTOS_PER_PAGE)
     try:
         page = int(request.args.get('page', 1))
@@ -1928,23 +2006,48 @@ def trips_photos():
     page = max(1, min(page, pages))
     start = (page - 1) * PHOTOS_PER_PAGE
 
-    # The pool's items are shared across requests, so build new dicts rather
-    # than annotating them in place (see _collect_photo_pool's docstring).
-    items = []
-    for p in photos[start:start + PHOTOS_PER_PAGE]:
-        trip = by_id.get(p["trip_id"]) or {}
-        items.append({
-            **p,
-            "trip_name": (f"Trip {trip['number']}: {trip['summary']}"
-                          if trip.get("number") else trip.get("summary", "")),
-            "trip_date": _short_trip_date(trip.get("start")),
-            "place": _photo_place_name(trip, p["card"]),
-        })
+    # Group the page by trip. 60 photos routinely span several trips, and a
+    # sticky header naming the trip answers "what am I looking at?" while
+    # scrolling much better than repeating the trip under every tile.
+    groups = []
+    for it in items[start:start + PHOTOS_PER_PAGE]:
+        if not groups or groups[-1]["trip_id"] != it["trip_id"]:
+            groups.append({"trip_id": it["trip_id"], "trip_name": it["trip_name"],
+                           "trip_date": it["trip_date"], "photos": []})
+        groups[-1]["photos"].append(it)
+
+    def photos_href(**over):
+        """This page's URL with some controls changed. Anything not overridden
+        carries through, so changing one filter never silently clears another;
+        pass '' to drop one. `page` is absent from the defaults on purpose —
+        changing a filter has to land you back on page 1, since the old page
+        number usually doesn't exist in the new result set."""
+        args = {"q": q, "year": year,
+                "favorites": "1" if favorites_only else "",
+                "sort": sort if sort != "newest" else ""}
+        args.update(over)
+        return url_for('trips_photos', **{k: v for k, v in args.items() if v})
+
+    # Numbered links around the current page, first and last always reachable,
+    # None where the run of numbers skips (rendered as an ellipsis). With only
+    # Newer/Older, reaching 2019 in a 20-page library was a dozen clicks.
+    wanted = {1, pages, page} | {page + d for d in (-2, -1, 1, 2)
+                                 if 1 <= page + d <= pages}
+    page_links, prev_n = [], 0
+    for n in sorted(wanted):
+        if prev_n and n - prev_n > 1:
+            page_links.append(None)
+        page_links.append(n)
+        prev_n = n
 
     return render_template('trips_photos.html', title='Photos',
-                           photos=items, page=page, pages=pages, total=total,
-                           is_admin=is_admin, favorites_only=favorites_only,
-                           fav_total=fav_total, active_nav='stats')
+                           groups=groups, page=page, pages=pages, total=total,
+                           library_total=library_total, page_links=page_links,
+                           photos_href=photos_href, q=q, year=year, years=years,
+                           sort=sort, is_admin=is_admin,
+                           favorites_only=favorites_only, fav_total=fav_total,
+                           filtered=bool(q or year or favorites_only),
+                           active_nav='stats')
 
 
 def _short_trip_date(start):
@@ -1955,26 +2058,68 @@ def _short_trip_date(start):
         return ""
 
 
-def _photo_place_name(trip, card):
-    """Name of the campspot/event a pool photo sits under ('' if unnamable).
+def _photo_card_meta(trip, card):
+    """(place, state) of the campspot/event a pool photo sits under; ('', '')
+    if unnamable.
 
     `card` is the pool's "stay-N" / "event-N" key, which is exactly the index
     into the trip's own lists — the trips-map lightbox derives the same thing
-    client-side, this is the server-side twin.
+    client-side, this is the server-side twin. The gallery shows `place` on
+    the tile and searches both.
     """
     m = re.match(r'^(stay|event)-(\d+)$', card or '')
     if not m or not trip:
-        return ""
+        return "", ""
     idx = int(m.group(2))
     if m.group(1) == 'stay':
         stays = trip.get("stays") or []
-        return (stays[idx].get("place") or "") if idx < len(stays) else ""
+        if idx >= len(stays):
+            return "", ""
+        stay = stays[idx]
+        return (stay.get("place") or ""), (stay.get("state") or "")
     events = trip.get("events") or []
     if idx >= len(events):
-        return ""
+        return "", ""
     e = events[idx]
     # Family visits carry their label separately from the event name.
-    return e.get("name") or e.get("family_visit") or ""
+    return (e.get("name") or e.get("family_visit") or ""), (e.get("state") or "")
+
+
+_WORD_SPLIT_RE = re.compile(r'[^a-z0-9]+')
+
+
+def _search_haystack(*parts):
+    """Lowercased, punctuation-stripped words joined by single spaces and
+    padded with one at each end, so a term matches a WORD PREFIX with a plain
+    `' ' + term in hay` — no regex per photo per term.
+
+    Word-prefix rather than raw substring, because short queries are exactly
+    where substring search falls apart: typing "acad" should find Acadia, but
+    the two-letter state code "ME" matching the middle of "Home" is noise. The
+    cost is that "sylvania" no longer finds Pennsylvania, which is how search
+    boxes generally behave anyway.
+    """
+    words = _WORD_SPLIT_RE.split(' '.join(parts).lower())
+    return ' ' + ' '.join(w for w in words if w) + ' '
+
+
+def _search_terms(q):
+    """Query split the same way `_search_haystack` splits its input, so a term
+    typed with punctuation ("lake," / "PA.") still matches."""
+    return [t for t in _WORD_SPLIT_RE.split((q or '').lower()) if t]
+
+
+def _photo_card_order(card):
+    """(kind, index) sort key for a pool card id — campspots before events,
+    each in timeline index order.
+
+    Parsed rather than compared as a string: "stay-10" sorts before "stay-2"
+    lexicographically, which scrambled any trip with ten or more campspots.
+    """
+    m = re.match(r'^(stay|event)-(\d+)$', card or '')
+    if not m:
+        return (2, 0)
+    return (0 if m.group(1) == 'stay' else 1, int(m.group(2)))
 
 
 @app.route('/trips/poster')
