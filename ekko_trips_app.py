@@ -821,22 +821,29 @@ def _invalidate_photo_pool():
     _PHOTO_POOL_CACHE["pool"] = None
 
 
-def _curated_first(photo_order, order_key, filenames):
-    """The filename the admin deliberately put first in a grid, or None when
-    that grid was never reordered.
+def _display_order(photo_order, order_key, filenames):
+    """(filenames in display order, the deliberately-first one or None).
 
-    An explicit photo_order entry is the only signal of human curation
-    available here: without one the grid renders alphabetically, and for
-    camera filenames alphabetical is just chronological — the first shot of a
-    stay, not the best one. So absence resolves to None rather than to
-    filenames[0]. The poster uses this as its second-choice hero pool, behind
-    the explicit star: putting a photo first in its grid is already an act of
-    picking a favorite, it just was never labeled as one."""
-    ordered = photo_order.get(order_key)
-    if not ordered:
-        return None
+    The display order is the one the trip page uses — the admin's explicit
+    drag order first, then anything not in it alphabetically — mirrored here
+    so the photo gallery can't disagree with the page a photo actually lives
+    on. Keep the two in step: the trip-detail view builds the same list
+    inline.
+
+    The second value is the poster's second-choice hero signal, and it's None
+    unless a human actually reordered the grid. Without a photo_order entry
+    the grid renders alphabetically, and for camera filenames alphabetical is
+    just chronological — the FIRST shot of a stay, not the best one — so
+    absence resolves to None rather than to filenames[0]. Putting a photo at
+    the front of its grid, on the other hand, is already an act of picking a
+    favorite; it just was never labeled as one.
+    """
+    ordered = photo_order.get(order_key) or []
     existing = set(filenames)
-    return next((f for f in ordered if f in existing), None)
+    in_order = [f for f in ordered if f in existing]
+    listed = set(ordered)
+    display = in_order + sorted(f for f in filenames if f not in listed)
+    return display, (in_order[0] if in_order else None)
 
 
 def _collect_photo_pool():
@@ -879,8 +886,8 @@ def _collect_photo_pool():
             if not os.path.isdir(photo_dir):
                 continue
             fnames = [f for f in os.listdir(photo_dir) if _allowed_file(f)]
-            first = _curated_first(photo_order, key_base, fnames)
-            for fname in fnames:
+            display, first = _display_order(photo_order, key_base, fnames)
+            for pos, fname in enumerate(display):
                 key = f"{key_base}/{fname}"
                 pool.append({
                     # The storage subpath, which is both the metadata key and
@@ -895,6 +902,10 @@ def _collect_photo_pool():
                     "caption": captions.get(key, ""),
                     "favorite": bool(favorites.get(key)),
                     "curated": fname == first,
+                    # Position within its own grid, in the order the trip page
+                    # shows them — what the gallery sorts photos by inside a
+                    # campspot or event.
+                    "photo_seq": pos,
                     "home_only": home_only,
                 })
     _PHOTO_POOL_CACHE.update(ts=now, pool=pool)
@@ -1919,6 +1930,8 @@ def _photo_gallery_index():
     trips = parse_trips()          # sorted ascending by start
     by_id = {t["id"]: t for t in trips}
     seq = {t["id"]: i for i, t in enumerate(trips)}
+    # One timeline lookup per trip rather than per photo.
+    timelines = {t["id"]: _timeline_positions(t) for t in trips}
     items = []
     for p in pool:
         trip = by_id.get(p["trip_id"]) or {}
@@ -1935,7 +1948,12 @@ def _photo_gallery_index():
             "place": place,
             "year": year,
             "trip_seq": seq.get(p["trip_id"], -1),
-            "card_order": _photo_card_order(p["card"]),
+            # Where this photo's campspot/event sits in the trip's timeline.
+            # A card the timeline doesn't mention (photos orphaned by a
+            # deleted campspot) sorts after everything it does, in a stable
+            # order rather than an arbitrary one.
+            "card_order": (timelines.get(p["trip_id"], {}).get(p["card"], len(pool)),
+                           _photo_card_order(p["card"])),
             # One normalized haystack per photo, so a multi-term query is a
             # handful of substring tests instead of a field-by-field walk.
             "search": _search_haystack(name, place, state, p["caption"], year),
@@ -1989,12 +2007,13 @@ def trips_photos():
         terms = [' ' + t for t in _search_terms(q)]
         items = [it for it in items if all(t in it["search"] for t in terms)]
 
-    # Two stable passes rather than one composite key, so photos read in
-    # timeline order (campspots then events, each by index) whichever way the
-    # trips themselves are ordered. The previous single reverse=True sort
-    # reversed the WITHIN-trip order too, so a trip's last campspot came first
-    # — contradicting the comment that claimed it kept timeline order.
-    items.sort(key=lambda it: (it["card_order"], it["url"]))
+    # Two stable passes rather than one composite key, so a trip's photos read
+    # in the trip's own timeline order — campspots and events interleaved by
+    # date, then each grid in the order the trip page shows it — whichever way
+    # the trips themselves are ordered. Sorting is never reversed WITHIN a
+    # trip: "newest trip first" is about which trip you see first, not about
+    # reading a trip backwards.
+    items.sort(key=lambda it: (it["card_order"], it["photo_seq"], it["url"]))
     items.sort(key=lambda it: it["trip_seq"], reverse=(sort == 'newest'))
 
     total = len(items)
@@ -2109,9 +2128,30 @@ def _search_terms(q):
     return [t for t in _WORD_SPLIT_RE.split((q or '').lower()) if t]
 
 
+def _timeline_positions(trip):
+    """{card id: position} from a trip's own `timeline`, which is the app's
+    single definition of what order things happened in.
+
+    The gallery orders a trip's photos by this rather than by campspots-then-
+    events: a real trip interleaves them heavily (trip 92 is 6 campspots and
+    33 events over 8 days), so grouping all the campspots first put day-8
+    photos above day-1 ones.
+
+    A campspot split across nights appears in the timeline more than once;
+    `setdefault` keeps its FIRST slot, so all of its photos stay together in
+    one run instead of being scattered down the page.
+    """
+    pos = {}
+    for n, entry in enumerate(trip.get("timeline") or []):
+        pos.setdefault(f'{entry.get("type")}-{entry.get("idx")}', n)
+    return pos
+
+
 def _photo_card_order(card):
-    """(kind, index) sort key for a pool card id — campspots before events,
-    each in timeline index order.
+    """(kind, index) fallback sort key for a pool card id, used only for a
+    card the trip's timeline doesn't mention — photos left behind in a
+    directory whose campspot was deleted, say. Campspots before events, each
+    by index.
 
     Parsed rather than compared as a string: "stay-10" sorts before "stay-2"
     lexicographically, which scrambled any trip with ten or more campspots.
