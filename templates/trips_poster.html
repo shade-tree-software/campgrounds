@@ -559,6 +559,49 @@ const EXPORT_DPI = 200;
 // (4800×7200, 380 tiles, ~40 MB). A button that just says "Rendering…" for
 // three and a half minutes reads as a hang, so it counts seconds — a moving
 // number is the difference between "working" and "broken".
+// Embed the webfont OURSELVES rather than letting html-to-image find it.
+//
+// Left alone, the library scans every sheet in document.styleSheets for
+// @font-face rules and reads `rule.style.fontFamily` on each. That is a
+// document-wide walk over stylesheets WE DO NOT CONTROL — a browser extension,
+// an injected widget — and it has no guard: one rule whose fontFamily reads
+// back undefined throws "can't access property trim" out of the library and
+// kills the whole export. Reported from the field on Firefox, reproduced here
+// by injecting exactly one such rule (the poster's own sheets are fine, which
+// is why it never showed up in testing).
+//
+// We know precisely what this page needs — two self-hosted Playfair faces — so
+// building the @font-face CSS directly is both immune to whatever else is on
+// the page and faster (no stylesheet enumeration, no per-rule refetch).
+// Everything else on the sheet is Georgia, a system font that needs no
+// embedding. Built once and reused; a failure resolves to '' rather than
+// rejecting, which still bypasses the scan and costs only the masthead face —
+// a poster in Georgia beats no poster at all.
+const POSTER_FONTS = [
+  { style: 'normal', url: "{{ static_v('vendor/fonts/playfair-display.woff2') }}" },
+  { style: 'italic', url: "{{ static_v('vendor/fonts/playfair-display-italic.woff2') }}" },
+];
+let _fontEmbedCSS = null;
+function posterFontEmbedCSS() {
+  if (!_fontEmbedCSS) {
+    _fontEmbedCSS = Promise.all(POSTER_FONTS.map(f =>
+      fetch(f.url)
+        .then(r => { if (!r.ok) throw new Error(r.status); return r.blob(); })
+        .then(blob => new Promise((resolve, reject) => {
+          const fr = new FileReader();
+          fr.onerror = reject;
+          fr.onload = () => resolve(
+            `@font-face{font-family:'Playfair Display';font-style:${f.style};` +
+            `font-weight:400 900;font-display:swap;` +
+            `src:url(${fr.result}) format('woff2');}`);
+          fr.readAsDataURL(blob);
+        }))
+    )).then(faces => faces.join('\n'))
+      .catch(err => { console.warn('poster font embed failed', err); return ''; });
+  }
+  return _fontEmbedCSS;
+}
+
 const pngBtn = document.getElementById('poster-png');
 pngBtn.addEventListener('click', async () => {
   const sheet = document.querySelector('.poster-sheet');
@@ -588,6 +631,10 @@ pngBtn.addEventListener('click', async () => {
       // URL — re-downloading the whole map, and missing the CORS-clean copies
       // already in cache from the crossOrigin tile layer.
       cacheBust: false,
+      // Supplying this at all is what keeps the library from scanning
+      // document.styleSheets — see posterFontEmbedCSS() above. An empty
+      // string still bypasses the scan (it is only `== null` that triggers it).
+      fontEmbedCSS: await posterFontEmbedCSS(),
     });
     const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
     if (!blob) throw new Error('canvas.toBlob returned nothing');
