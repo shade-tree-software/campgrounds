@@ -1427,6 +1427,156 @@ def _rename_people_key(old_key, new_key):
         _invalidate_photo_pool()
 
 
+# ── Automatic people scan on upload ───────────────────────────────────────
+# A photo only gets its `people` flag once detect_people.py has looked at it,
+# and until then it's invisible to the poster's hero deck and the People-only
+# toggle. Remembering to run the scanner by hand after every upload is exactly
+# the kind of step that gets skipped, so an upload now queues its own photos.
+#
+# It runs the scanner as a SUBPROCESS rather than importing cv2 here, keeping
+# the "the web app never imports cv2" invariant intact — and that is a memory
+# decision, not a style one: OpenCV costs ~70-100 MB resident, which on a
+# shared host would be paid by every worker that ever handled one upload, for
+# the life of that worker. A one-shot process pays it for a couple of seconds
+# and hands it back. It also degrades well: on a host without opencv installed
+# the subprocess fails, we log it, and the app is otherwise unaffected.
+#
+# Off the request path (daemon thread) because detection is ~0.2 s per photo
+# and the uploader is waiting on the response to splice a tile into the grid.
+# Keys are queued and coalesced over PEOPLE_SCAN_DEBOUNCE_S so a 40-photo
+# drag-drop — which arrives as 40 separate POSTs — becomes one scan, not 40
+# process starts. Uploads landing while a scan runs go into the next batch.
+#
+# The scanner stays the backstop, not the only path: if the app restarts
+# inside the debounce window those photos are missed, and a plain
+# `python detect_people.py` (incremental) picks up anything that fell through.
+
+PEOPLE_SCAN_SCRIPT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  "detect_people.py")
+# Long enough to swallow a multi-photo upload burst, short enough that a single
+# upload's flag shows up on the next poster load rather than minutes later.
+PEOPLE_SCAN_DEBOUNCE_S = 5
+# Cap per subprocess so a huge batch still writes results promptly (the scanner
+# writes once at the end); the worker loops for the remainder.
+PEOPLE_SCAN_MAX_BATCH = 100
+# Generous: PEOPLE_SCAN_MAX_BATCH photos at ~0.2 s each, plus process + model
+# start. A hung scan is killed rather than pinning a worker thread forever.
+PEOPLE_SCAN_TIMEOUT_S = 300
+# Escape hatch for a host that shouldn't scan (no opencv, or a partial photo
+# mirror where scanning is done elsewhere).
+PEOPLE_SCAN_ENABLED = os.environ.get("EKKO_AUTO_PEOPLE_SCAN", "1") != "0"
+
+_people_scan_pending = set()
+_people_scan_lock = threading.Lock()
+_people_scan_wake = threading.Event()
+_people_scan_thread = None
+
+
+_people_scan_python_cache = ...  # sentinel: not probed yet
+
+
+def _people_scan_python():
+    """Interpreter to run the scanner with, or None if no candidate can.
+
+    Probed rather than assumed, because "which python has opencv" varies by
+    host: it may be the app's virtualenv (PythonAnywhere) or the system python
+    (a `pip install --user` on a dev box, where the venv can't see ~/.local at
+    all). Guessing wrong fails silently in a background thread, so each
+    candidate is asked to import the scanner's deps and the first that can
+    wins. Cached — including the None answer, since installing opencv means a
+    restart anyway.
+
+    sys.prefix is tried before sys.executable because under a WSGI server the
+    latter can be the server binary rather than a Python, while the former is
+    still the virtualenv the app was loaded from.
+    """
+    global _people_scan_python_cache
+    if _people_scan_python_cache is not ...:
+        return _people_scan_python_cache
+    import subprocess
+    _people_scan_python_cache = None
+    for cand in (os.path.join(sys.prefix, "bin", "python3"),
+                 os.path.join(sys.prefix, "bin", "python"),
+                 sys.executable if os.path.basename(
+                     sys.executable or "").startswith("python") else None,
+                 shutil.which("python3")):
+        if not (cand and os.path.isfile(cand) and os.access(cand, os.X_OK)):
+            continue
+        try:
+            probe = subprocess.run([cand, "-c", "import cv2, numpy, PIL"],
+                                   capture_output=True, timeout=60)
+        except Exception:
+            continue
+        if probe.returncode == 0:
+            _people_scan_python_cache = cand
+            break
+    if _people_scan_python_cache is None:
+        app.logger.warning(
+            "auto people scan disabled: no interpreter with opencv "
+            "(pip install opencv-python-headless), tried sys.prefix/bin, "
+            "sys.executable and python3 on PATH")
+    return _people_scan_python_cache
+
+
+def _run_people_scan(keys):
+    """One scanner run over `keys`. Never raises — this is a background nicety
+    and must not take the thread (or the next batch) down with it."""
+    python = _people_scan_python()
+    if not python:
+        return  # already logged by the probe
+    import subprocess
+    try:
+        proc = subprocess.run(
+            [python, PEOPLE_SCAN_SCRIPT, "--only", *keys],
+            cwd=os.path.dirname(PEOPLE_SCAN_SCRIPT),
+            capture_output=True, text=True, timeout=PEOPLE_SCAN_TIMEOUT_S)
+    except Exception as e:
+        app.logger.warning("people scan failed to start: %s", e)
+        return
+    if proc.returncode != 0:
+        app.logger.warning("people scan exited %s: %s", proc.returncode,
+                           (proc.stderr or proc.stdout or "").strip()[-500:])
+        return
+    # The pool carries the `people` flag, so surface the new records now
+    # instead of waiting out its TTL.
+    _invalidate_photo_pool()
+
+
+def _people_scan_worker():
+    while True:
+        _people_scan_wake.wait()
+        # Coalesce the rest of an upload burst before spending a process.
+        time.sleep(PEOPLE_SCAN_DEBOUNCE_S)
+        # Cleared BEFORE the batch is taken: a key queued from here on re-sets
+        # the event, so it can't be stranded waiting for an upload that never
+        # comes. A spurious wake just finds an empty batch.
+        _people_scan_wake.clear()
+        with _people_scan_lock:
+            batch = sorted(_people_scan_pending)[:PEOPLE_SCAN_MAX_BATCH]
+            _people_scan_pending.difference_update(batch)
+            more = bool(_people_scan_pending)
+        if batch:
+            _run_people_scan(batch)
+        if more:
+            _people_scan_wake.set()
+
+
+def _queue_people_scan(photo_keys):
+    """Ask the background worker to scan these just-uploaded photos."""
+    if not PEOPLE_SCAN_ENABLED or not photo_keys:
+        return
+    global _people_scan_thread
+    with _people_scan_lock:
+        _people_scan_pending.update(photo_keys)
+        if _people_scan_thread is None or not _people_scan_thread.is_alive():
+            # Started on first upload rather than at import, so a worker
+            # process that only ever serves reads never spawns the thread.
+            _people_scan_thread = threading.Thread(
+                target=_people_scan_worker, name="people-scan", daemon=True)
+            _people_scan_thread.start()
+    _people_scan_wake.set()
+
+
 def _can_edit_photo(photo_key):
     """True if current user may edit the caption / metadata of a given photo:
     admins always; uploader-role users only if they recorded the upload."""
@@ -2676,8 +2826,9 @@ def upload_photo(trip_id, stay_idx):
         saved = _extract_zip_photos(file, photo_dir)
         if not saved:
             return jsonify({"error": "No image files found in zip"}), 400
-        _record_uploaders([f"{trip_id}/{stay_idx}/{f}" for f in saved],
-                          current_user.username)
+        keys = [f"{trip_id}/{stay_idx}/{f}" for f in saved]
+        _record_uploaders(keys, current_user.username)
+        _queue_people_scan(keys)
         return jsonify({
             "files": [{"filename": f, "url": f"{url_prefix}/{f}",
                        "html": _render_photo_tile(subpath, f, 'stay', stay_idx, trip_id)}
@@ -2690,6 +2841,7 @@ def upload_photo(trip_id, stay_idx):
         return jsonify({"error": "File type not allowed"}), 400
 
     _record_uploader(f"{trip_id}/{stay_idx}/{filename}", current_user.username)
+    _queue_people_scan([f"{trip_id}/{stay_idx}/{filename}"])
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",
@@ -2811,8 +2963,9 @@ def upload_event_photo(trip_id, event_idx):
         saved = _extract_zip_photos(file, photo_dir)
         if not saved:
             return jsonify({"error": "No image files found in zip"}), 400
-        _record_uploaders([f"{trip_id}/events/{event_idx}/{f}" for f in saved],
-                          current_user.username)
+        keys = [f"{trip_id}/events/{event_idx}/{f}" for f in saved]
+        _record_uploaders(keys, current_user.username)
+        _queue_people_scan(keys)
         return jsonify({
             "files": [{"filename": f, "url": f"{url_prefix}/{f}",
                        "html": _render_photo_tile(subpath, f, 'event', event_idx, trip_id)}
@@ -2826,6 +2979,7 @@ def upload_event_photo(trip_id, event_idx):
 
     _record_uploader(f"{trip_id}/events/{event_idx}/{filename}",
                      current_user.username)
+    _queue_people_scan([f"{trip_id}/events/{event_idx}/{filename}"])
     return jsonify({
         "filename": filename,
         "url": f"{url_prefix}/{filename}",

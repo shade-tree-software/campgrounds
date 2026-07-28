@@ -14,12 +14,21 @@ host, or locally after ./sync-from-pa.sh --photos):
     python detect_people.py              # scan photos not yet in the JSON
     python detect_people.py --force      # rescan everything
     python detect_people.py --prune      # ALSO drop entries whose file is gone
+    python detect_people.py --only K [K] # scan just these photo keys
 
 Incremental by design: a photo already recorded (even as 0) is skipped, so
 re-running after new uploads only scans the new files. --prune is OFF by
 default because a machine holding a partial photo mirror (this repo synced
 without --photos) would otherwise delete the records for every photo it
 doesn't have.
+
+--only is how the web app triggers a scan of just-uploaded photos (see
+_queue_people_scan in ekko_trips_app.py): it skips the directory walk and
+scans exactly the keys given, so the run costs one process start plus ~0.2 s
+per new photo instead of a stat of the whole library. Results are merged into
+the file at write time (re-read, then apply just this run's deltas), so a scan
+racing the app's own edits to photo_people.json — a delete scrubbing a record,
+a move renaming a key — can't clobber them.
 
 Detector: OpenCV's YuNet face detector (tiny ONNX model, auto-downloaded once
 to trip_data/models/ with a pinned sha256). Faces are the signal — a person
@@ -103,6 +112,47 @@ def _iter_photo_keys():
             yield key, path
 
 
+def _path_for_key(key):
+    """Absolute path for one photo key, or None if it isn't a scannable file.
+
+    Same three gates the app's photo routes apply (no dot-prefixed component,
+    so .thumbs/.views/.trash stay out; allowed extension; stays under
+    UPLOAD_DIR), because these keys arrive from the app rather than from a
+    walk of the directory we control.
+    """
+    parts = key.split("/")
+    if any(p in ("", ".", "..") or p.startswith(".") for p in parts):
+        return None
+    if not _allowed_file(parts[-1]):
+        return None
+    path = os.path.abspath(os.path.join(UPLOAD_DIR, *parts))
+    if not path.startswith(os.path.abspath(UPLOAD_DIR) + os.sep):
+        return None
+    return path if os.path.isfile(path) else None
+
+
+def _merge_and_write(updates, removed=()):
+    """Apply this run's deltas to the file on disk and return the result.
+
+    Re-reads at write time rather than dumping the dict loaded at startup:
+    the web app edits the same file (scrubbing a deleted photo's record,
+    renaming a moved photo's key), and since it now also *triggers* this
+    script on upload, the two really can overlap.
+    """
+    current = {}
+    if os.path.exists(OUT_FILE):
+        with open(OUT_FILE) as f:
+            current = json.load(f)
+    for key in removed:
+        current.pop(key, None)
+    current.update(updates)
+    tmp = OUT_FILE + f".{os.getpid()}.tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(current, f, indent=2, ensure_ascii=False)
+    os.replace(tmp, OUT_FILE)
+    return current
+
+
 def _count_faces(detector, path):
     """Face count in one photo, or None if the image can't be read."""
     try:
@@ -132,7 +182,12 @@ def main():
                          "machine (don't use on a partial photo mirror)")
     ap.add_argument("--limit", type=int, default=0,
                     help="stop after scanning N new photos (smoke tests)")
+    ap.add_argument("--only", nargs="+", metavar="KEY", default=None,
+                    help="scan only these photo keys (e.g. 92/0/IMG_1.jpg); "
+                         "skips the directory walk. Used by the app on upload")
     args = ap.parse_args()
+    if args.only and args.prune:
+        ap.error("--prune scans the whole library; it can't be combined with --only")
 
     import cv2  # after argparse so --help works without opencv installed
     _ensure_model()
@@ -144,36 +199,45 @@ def main():
         with open(OUT_FILE) as f:
             data = json.load(f)
 
-    on_disk = dict(_iter_photo_keys())
-    if args.prune:
-        gone = [k for k in data if k not in on_disk]
-        for k in gone:
-            del data[k]
-        if gone:
-            print(f"Pruned {len(gone)} records with no file on disk.")
+    gone = []
+    if args.only:
+        on_disk = {}
+        for key in args.only:
+            path = _path_for_key(key)
+            if path is None:
+                print(f"  no such photo, skipping: {key}", file=sys.stderr)
+                continue
+            on_disk[key] = path
+    else:
+        on_disk = dict(_iter_photo_keys())
+        if args.prune:
+            gone = [k for k in data if k not in on_disk]
+            for k in gone:
+                del data[k]
+            if gone:
+                print(f"Pruned {len(gone)} records with no file on disk.")
 
     todo = [(k, p) for k, p in on_disk.items()
             if args.force or k not in data]
     if args.limit:
         todo = todo[:args.limit]
-    print(f"{len(on_disk)} photos on disk, {len(todo)} to scan.")
+    print(f"{len(on_disk)} photos {'named' if args.only else 'on disk'}, "
+          f"{len(todo)} to scan.")
 
+    results = {}
     scanned = with_people = 0
     for key, path in todo:
         n = _count_faces(detector, path)
         if n is None:
             continue
-        data[key] = n
+        results[key] = n
         scanned += 1
         with_people += bool(n)
         if scanned % 25 == 0:
             print(f"  {scanned}/{len(todo)} scanned ({with_people} with people)")
 
-    # Atomic write, same formatting conventions as the app's _save_json.
-    tmp = OUT_FILE + ".tmp"
-    with open(tmp, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-    os.replace(tmp, OUT_FILE)
+    if results or gone:
+        data = _merge_and_write(results, gone)
 
     total_people = sum(1 for v in data.values() if v)
     print(f"Done: scanned {scanned} new photo(s), {with_people} with people. "
