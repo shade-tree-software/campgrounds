@@ -11,20 +11,25 @@
 
 {% block style %}
   /* The 2000px max-width is a backstop, not the real limiter: the row sizes
-     itself from --map-size below (map capped at 900px, each photo stack capped
-     at 16:9 slots), which tops out around 1970px. Keeping the section wider
-     than that lets a full-screen laptop spend its side margins on bigger
-     photos instead of dead whitespace. --row-w is the width the map + stacks
-     actually get (viewport minus this section's side padding, less ~16px held
-     back for a scrollbar). */
+     itself from --map-size below (map capped at 1000px, each photo stack
+     capped at 4:3 slots), which tops out around 1900px. Keeping the section
+     wider than that lets a full-screen laptop spend its side margins on a
+     bigger map instead of dead whitespace. --row-w is the width the map +
+     stacks actually get (viewport minus this section's side padding, less
+     ~16px held back for a scrollbar). */
   .map-section {
     max-width: 2000px;
     margin: 0 auto;
     padding: .5rem 2rem 0;
     --row-w: calc(min(100vw, 2000px) - 4rem - 16px);
+    /* The 1000px ceiling is above what the width target below can ever ask
+       for (~990px at the widest row this section allows), so on a big monitor
+       the MAP absorbs the surplus width and the slots stay 4:3 — it used to be
+       900px, which stopped the map early and left the stacks to widen into the
+       leftover instead. It stays as a guard in case --row-w ever grows. */
     --map-size: min(
       calc(100vh - var(--site-top-height, 92px) - 80px - var(--otd-height, 0px)),
-      900px,
+      1000px,
       max(
         calc(var(--row-w) * 0.529 - 26.4px),
         min(560px, calc(var(--row-w) * 0.6 - 27.2px))
@@ -182,8 +187,9 @@
      toward square. The inner min() keeps even that floor from pushing slots
      past square (k = 1 → M = 0.6·W - 27.2) — the hard floor, so slots never go
      portrait. When the row is wide enough that neither guard binds, the map
-     runs to the full height (or its 900px cap) and the stacks take all the
-     leftover width, up to the 16:9 cap on .photo-stack. */
+     runs to the full height (or its 1000px ceiling) and the stacks take the
+     leftover width — but only up to 4:3 slots (.photo-stack's max-width), past
+     which the row just centers and the surplus becomes side margin. */
   .map-col {
     display: flex;
     flex-direction: column;
@@ -220,15 +226,23 @@
     width: 100%;
   }
 
-  /* Each stack takes half the width the map leaves — so no side whitespace —
-     but stops once its 3 slots hit 16:9 (slot height is (M + B - 24)/3 with
-     B ≈ 44px of banner, so 16:9 width is 0.593·M + 11.9). Past that the photos
-     would be letterboxed slivers on an ultra-wide monitor, and the row centers
-     instead. */
+  /* Each stack takes half the width the map leaves, but never past 4:3 slots
+     (slot height is (M + B - 24)/3 with B ≈ 44px of banner, so the 4:3 width
+     is 0.444·M + 8.9 — the same expression the short-wide branch below uses).
+     4:3 is a HARD CEILING, not a target: the slots crop with object-fit:cover,
+     and there is nothing to gain from a slot wider than the landscape photos
+     going into it. A portrait photo is the case that really suffers — at 16:9,
+     which is what this used to allow, a 3:4 frame loses more than half its
+     height to the crop and reads as a random slice.
+       Surplus width goes to the map first (see the --map-size ceiling above);
+     whatever is left over after the map hits its own limit — on a wide but not
+     tall window the map is height-bound and can't take it — becomes margin
+     outside the row, which justify-content: center splits evenly. Dead space
+     at the edges of the page is cheaper than badly cropped photos. */
   .photo-stack {
     flex: 1 1 0;
     min-width: 0;
-    max-width: calc(var(--map-size) * 0.593 + 11.9px);
+    max-width: calc(var(--map-size) * 0.444 + 8.9px);
     display: flex;
     flex-direction: column;
     gap: .75rem;
