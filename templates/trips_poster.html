@@ -20,6 +20,9 @@
 {% if tile_config.mode == 'local' %}<script src="{{ static_v('vendor/protomaps-leaflet.js') }}"></script>
 <script src="{{ static_v('vendor/omt-style.js') }}"></script>{% endif %}
 <script src="{{ static_v('vendor/tile-layers.js') }}"></script>
+<!-- Poster-only: the "Save PNG" export. See the PNG export block in the script
+     below for why this library rather than html2canvas. -->
+<script src="{{ static_v('vendor/html-to-image.js') }}"></script>
 <style>
   /* Self-hosted display face (variable weight + italic, latin subset only,
      ~60 KB total) — no build step, no external font host at render time.
@@ -422,6 +425,8 @@
     <input type="checkbox" id="poster-people"> People only
   </label>
   <button type="button" id="poster-shuffle" title="Deal a new set of photos">Shuffle</button>
+  <button type="button" id="poster-png"
+          title="Download a print-resolution PNG of this sheet">Save PNG</button>
   <button type="button" onclick="window.print()">Print</button>
 </div>
 <div class="poster-wrap">
@@ -523,6 +528,92 @@ sizeSel.addEventListener('change', () => {
   const params = new URLSearchParams(location.search);
   params.set('size', sizeSel.value);
   location.search = params.toString();
+});
+
+// ── PNG export ──────────────────────────────────────────────────────────────
+// The Print button produces a PDF; a print shop asks for image files, so this
+// writes the same sheet out as a PNG at print resolution.
+//
+// PNG, not JPEG: at poster size JPEG ringing shows up along the hairline frame
+// rules and the small italic callout type. The file is bigger, which does not
+// matter for a one-off upload to a printer.
+//
+// EXPORT_DPI is a deliberate compromise, not a maximum. The sheet lays out at
+// 96 CSS px/in, so the capture is scaled by EXPORT_DPI/96. Going to 300 would
+// mean a 7200x10800 canvas for the 24x36 sheet — 78 megapixels, ~310 MB of
+// bitmap before PNG encoding — which browsers on modest hardware simply fail
+// to allocate. 200 dpi is what large-format shops actually want for something
+// viewed at arm's length, it keeps 24x36 to a ~35 MP canvas, and it is already
+// past what the base map can supply (see the tile-density note at the street
+// layer: ~192 dpi after the 2x bump).
+const EXPORT_DPI = 200;
+
+// html-to-image renders through an SVG <foreignObject>, i.e. the browser paints
+// the DOM itself, which is why the muted-map CSS filter survives. The price is
+// that the SVG is a sandboxed document that may not fetch ANYTHING: every
+// photo, map tile and font has to be inlined as a data URI first (the library
+// does this) — so the export is slow, network-dependent, and fails as a unit.
+// This is SLOW at the big sizes and there is no honest way around it: every
+// tile and photo is fetched and base64'd, then one enormous SVG is decoded and
+// PNG-encoded. Measured end to end: ~10 s for letter, ~3.5 min for 24×36
+// (4800×7200, 380 tiles, ~40 MB). A button that just says "Rendering…" for
+// three and a half minutes reads as a hang, so it counts seconds — a moving
+// number is the difference between "working" and "broken".
+const pngBtn = document.getElementById('poster-png');
+pngBtn.addEventListener('click', async () => {
+  const sheet = document.querySelector('.poster-sheet');
+  const label = pngBtn.textContent;
+  pngBtn.disabled = true;
+  const t0 = Date.now();
+  const tick = setInterval(() => {
+    pngBtn.textContent = `Rendering… ${Math.round((Date.now() - t0) / 1000)}s`;
+  }, 1000);
+  pngBtn.textContent = 'Rendering… 0s';
+  try {
+    const canvas = await htmlToImage.toCanvas(sheet, {
+      pixelRatio: EXPORT_DPI / 96,
+      // The sheet is FIXED at its true physical size and only the on-screen
+      // preview is scaled (see the .poster-sheet comment). Capture the real
+      // sheet, not the preview: undo the fit-to-viewport transform on the
+      // clone and state the layout box explicitly, so the export is identical
+      // at every browser zoom and window size.
+      width: SHEET_W,
+      height: SHEET_H,
+      style: { transform: 'none', margin: '0', boxShadow: 'none' },
+      // The paper tone is a background on .poster-sheet, but state it here too:
+      // PNG supports alpha, and any pixel the clone leaves untouched would
+      // otherwise export transparent and print as white paper showing through.
+      backgroundColor: getComputedStyle(sheet).backgroundColor,
+      // Default true, and it would append a cache-busting query to every tile
+      // URL — re-downloading the whole map, and missing the CORS-clean copies
+      // already in cache from the crossOrigin tile layer.
+      cacheBust: false,
+    });
+    const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('canvas.toBlob returned nothing');
+    // Object URL rather than a data URL: at these dimensions the base64 string
+    // would be tens of MB and some browsers refuse to navigate to one.
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `ekko-poster-${SIZE_KEY}-${EXPORT_DPI}dpi.png`;
+    a.click();
+    // Revoke on a turn boundary — revoking synchronously can beat the download.
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+    clearInterval(tick);
+    pngBtn.textContent = `${canvas.width}×${canvas.height}`;
+    setTimeout(() => { pngBtn.textContent = label; }, 5000);
+  } catch (err) {
+    clearInterval(tick);
+    console.error('poster PNG export failed', err);
+    // No toast here — the poster deliberately doesn't extend base.html, so
+    // window.toast() doesn't exist on this page.
+    alert('Could not build the PNG.\n\n' + (err && err.message ? err.message : err));
+    pngBtn.textContent = label;
+  } finally {
+    clearInterval(tick);
+    pngBtn.disabled = false;
+  }
 });
 
 // ── Photo strips ────────────────────────────────────────────────────────────
@@ -872,7 +963,28 @@ const map = L.map('poster-map', {
   // re-enabling 3d.
   zoomSnap: 0.25,
 });
-window.ekkoStreetLayer().addTo(map);
+// Double the base map's tile resolution. The sheet lays out at 96 CSS px per
+// inch, so raster tiles carry ~96 dpi of real detail — fine on screen, but the
+// PNG export below is sent to a print shop, and everything AROUND the map
+// (callouts, routes, frame, type) is vector and stays razor sharp at any
+// scale. Scaling the capture up doesn't invent tile pixels, so a 96 dpi map
+// next to 200 dpi type reads as a blurry map rather than a soft poster.
+// tileSize 128 + zoomOffset 1 makes Leaflet fetch tiles one zoom level deeper
+// and paint them at half size: same map, same geometry, 2x the actual pixels
+// (~192 dpi). Nothing else has to change — the positioning math works in CSS
+// px and never sees the tile grid, and `.leaflet-tile` (hence the muted
+// filter) is stamped on 128px tiles exactly as on 256px ones.
+// Costs 4x the tile requests for this one page; acceptable for an occasional
+// poster render, which is why it is NOT set in the shared tile-layers.js
+// factory — every other map in the app keeps the normal 1x tile budget.
+// Skipped in local/USB mode: that path is protomaps VECTOR tiles, which
+// overzoom crisply on their own and would be confused by a raster tile size.
+// crossOrigin is required by the export: html-to-image inlines every image as
+// a data URI, and it can only read a cross-origin tile that arrived CORS-clean.
+const rasterTiles = !(window.EKKO_TILES && window.EKKO_TILES.mode === 'local');
+window.ekkoStreetLayer(rasterTiles
+  ? { tileSize: 128, zoomOffset: 1, crossOrigin: 'anonymous' }
+  : {}).addTo(map);
 
 // Driven trip routes — the precomputed, simplified library from
 // /api/trips/routes (~200 KB gzipped, home-only trips already filtered
@@ -1020,6 +1132,54 @@ if (bounds.length) {
 // Wait until Leaflet has settled the view (`moveend` fires after the
 // programmatic fitBounds above) — otherwise latLngToContainerPoint reads
 // the pre-fit center.
+// Presentation attributes mirroring the .callout-* CSS rules, applied to every
+// callout element as it's built.
+//
+// This exists for the PNG export. html-to-image deep-clones any <svg> subtree
+// RAW and inlines computed styles only on the <svg> root — its cloneChildren
+// returns immediately for SVG — so the class-based rules above are simply
+// absent inside the exported foreignObject, which carries no stylesheet. The
+// labels fell back to SVG defaults (16px, upright, black) and the leaders to
+// stroke:none, i.e. invisible. Presentation attributes travel with the node,
+// so the clone gets them.
+//
+// They lose to the stylesheet in the cascade, so on the live page and in print
+// the CSS above still decides — this changes nothing you can see there. That
+// also means the two must not drift: both sides derive from the same 7.5 /
+// 0.55 / 3 × SCALE constants and the same palette vars, which are read here
+// rather than re-typed as hex so a palette edit can only be made in one place.
+const _cssVar = n =>
+  getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const CALLOUT_ATTRS = {
+  leader: {
+    'fill': 'none',
+    'stroke': _cssVar('--navy'),
+    'stroke-width': 0.55 * SCALE,
+    'stroke-opacity': 0.26,
+    'stroke-linecap': 'round',
+  },
+  dot: {
+    'fill': _cssVar('--navy'),
+    'stroke': '#fff',
+    'stroke-width': 1 * SCALE,
+  },
+  label: {
+    'fill': _cssVar('--ink'),
+    // Matches TEXT_FONT below, which measures these glyphs for layout.
+    'font-family': "Georgia, 'Times New Roman', serif",
+    'font-style': 'italic',
+    'font-size': (7.5 * SCALE) + 'px',
+    'dominant-baseline': 'central',
+    'paint-order': 'stroke',
+    'stroke': _cssVar('--paper'),
+    'stroke-width': (3 * SCALE) + 'px',
+    'stroke-linejoin': 'round',
+  },
+};
+function applyCalloutAttrs(el, attrs) {
+  for (const k in attrs) el.setAttribute(k, attrs[k]);
+}
+
 function placeCallouts() {
   const svg = document.getElementById('callout-svg');
   // The callout SVG sits on the UNscaled wrap, so all geometry here is in
@@ -1211,6 +1371,7 @@ function placeCallouts() {
     line.setAttribute('x2', lx2);
     line.setAttribute('y2', ly2);
     line.setAttribute('class', 'callout-leader');
+    applyCalloutAttrs(line, CALLOUT_ATTRS.leader);
     svg.appendChild(line);
 
     // Small dot at the pinpoint itself — distinguishes the actual location
@@ -1220,6 +1381,7 @@ function placeCallouts() {
     dot.setAttribute('cy', a.py);
     dot.setAttribute('r', 2.5 * SCALE);
     dot.setAttribute('class', 'callout-leader-dot');
+    applyCalloutAttrs(dot, CALLOUT_ATTRS.dot);
     svg.appendChild(dot);
 
     // Trip summary only — no number, no box; the CSS halo carries legibility.
@@ -1227,6 +1389,7 @@ function placeCallouts() {
     label.setAttribute('x', bx - a.boxW / 2 + PAD_X);
     label.setAttribute('y', by);
     label.setAttribute('class', 'callout-label');
+    applyCalloutAttrs(label, CALLOUT_ATTRS.label);
     label.textContent = a.summary;
     svg.appendChild(label);
   });
