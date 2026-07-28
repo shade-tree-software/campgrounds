@@ -446,6 +446,85 @@
     .on-this-day .otd-open { font-size: .7rem; padding: .25rem .55rem; }
   }
 
+  /* ── Phone in landscape ────────────────────────────────────────────────
+     One vertical stack of TWO photos on the left, map taking the rest.
+
+     Rotating a phone flips which dimension is scarce, and the stacked-row
+     layout above gets that exactly backwards: it spends 180px of a ~310px
+     usable height on a photo strip, then hands the map a 260px min-height
+     that doesn't fit — the page overflowed by 100-170px on every phone
+     measured, so the first screenful was header + photos and you had to
+     scroll to reach the map. A side stack spends the abundant dimension
+     instead: ~185px of ~830px width, and the map keeps the full height.
+
+     TWO photos, not three. Three would put the slots at ~120x90 — no bigger
+     than the strip thumbs this replaces, so the layout would improve and the
+     photos wouldn't. Two makes them ~185x138 (about 2.4x the area) and costs
+     the map only ~65px of width, which it can spare at this aspect.
+
+     Gated on height + aspect, NOT width, because phone landscape straddles
+     every width breakpoint on this page: a 14 is 844 wide (stacked-row
+     branch) while a Pro Max is 932 (short-wide DESKTOP branch, which gave it
+     2.4:1 slots and a 340px map — smaller than on a narrower phone). One
+     rule catches them all. 500px tall clears phone portrait (≥667) by a wide
+     margin and no tablet comes near it. Must stay LAST of the layout
+     branches: these viewports also match the blocks above, and the media
+     queries have equal specificity, so source order is what decides. */
+  @media (max-height: 500px) and (min-aspect-ratio: 3/2) {
+    /* Height is budgeted once, here, and everything below divides it up.
+       No tab bar at this size (base.html drops it in phone landscape), so
+       --tab-bar-height is unset and resolves to 0. */
+    .map-section {
+      padding: .25rem .25rem 0;
+      /* Declared twice: a browser without dvh drops the second line and keeps
+         the vh one. Without the fallback the calc would be invalid there, and
+         an invalid --row-h takes the stack width and the row height down with
+         it — the stack would inherit width:100% from the block above and the
+         layout would collapse. Same two-line pattern as the phone branch. */
+      --row-h: calc(100vh - var(--site-top-height, 50px) - .25rem);
+      --row-h: calc(100dvh - var(--site-top-height, 50px) - .25rem);
+    }
+    .map-layout {
+      flex-direction: row;
+      gap: .5rem;
+      height: var(--row-h);
+    }
+    #stack-right { display: none; }
+    .photo-stack {
+      flex-direction: column;
+      flex: 0 0 auto;
+      /* 4:3 for a slot that is half the row height, less the gap between
+         the two. Written as a calc off --row-h rather than an aspect-ratio
+         on the slot, because deriving the stack's width from its children's
+         height while the children stretch to the stack's width is circular
+         and browsers resolve it inconsistently. */
+      width: calc((var(--row-h) - .5rem) / 2 * 4 / 3);
+      max-width: 45vw;   /* backstop on a freakishly short viewport */
+      height: auto;
+      gap: .5rem;
+    }
+    /* Slot 3 is hidden, not removed — the stacks are built by JS with a
+       fixed STACK_SIZE, and a CSS rule re-evaluates on rotation for free
+       where a JS rebuild would need a resize handler. The rotator skips
+       slots that aren't on screen (see the offsetParent test), so a hidden
+       slot costs no photo fetches, and the lightbox already pages through
+       on-screen slots only. */
+    .photo-stack .photo-slot:nth-of-type(n+3) { display: none; }
+    .photo-slot { flex: 1 1 0; height: auto; aspect-ratio: auto; }
+    /* The map column takes the leftover width, and the map takes whatever
+       height is left after the banners — flex, not a calc, so one banner or
+       two (latest-trip + on-this-day) both work without arithmetic here. */
+    .map-col { flex: 1 1 auto; width: auto; min-width: 0; }
+    .map-container {
+      width: 100%;
+      height: auto;
+      aspect-ratio: auto;
+      flex: 1 1 auto;
+      min-height: 0;
+      border-radius: 6px;
+    }
+  }
+
   .map-legend {
     background: #fff;
     padding: .5rem .75rem;
@@ -1174,9 +1253,28 @@ if (PHOTOS.length && leftStack && rightStack) {
       // Don't churn photos (each swap is a network fetch) while the tab
       // is hidden — saves battery/data on phones left on this page.
       if (document.hidden || hoverPaused || lightboxOpen || userPaused) return;
-      const eligible = [];
+      // Only swap slots the layout is actually showing — #stack-right below
+      // 901px, and the third slot in phone landscape. Same offsetParent test
+      // the lightbox uses to decide what's on screen. Without it two thirds
+      // of the swaps on a landscape phone would fetch a photo nobody can see,
+      // on the device least able to spare the data. Re-read every tick, so a
+      // rotation needs no resize handler.
+      const onScreen = [];
       for (let i = 0; i < slots.length; i++) {
-        if (!recentSlots.includes(i)) eligible.push(i);
+        if (slots[i].offsetParent !== null) onScreen.push(i);
+      }
+      if (!onScreen.length) return;
+      // COOLDOWN is sized off the TOTAL slot count, so once the visible set is
+      // smaller than it (2 slots in phone landscape, cooldown 3) every visible
+      // slot ends up in recentSlots and a plain filter yields nothing. That
+      // would stall the slideshow permanently — recentSlots only advances when
+      // a swap happens. So relax the rule instead of skipping the tick: full
+      // cooldown, else just avoid an immediate repeat, else accept one.
+      let eligible = onScreen.filter(i => !recentSlots.includes(i));
+      if (!eligible.length) {
+        const last = recentSlots[recentSlots.length - 1];
+        eligible = onScreen.filter(i => i !== last);
+        if (!eligible.length) eligible = onScreen;   // a single visible slot
       }
       const idx = eligible[Math.floor(Math.random() * eligible.length)];
       setSlot(idx, pickPhoto(idx));

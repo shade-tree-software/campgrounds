@@ -336,10 +336,22 @@
      The hamburger nav stays — it still holds the admin sections and
      Logout; the tab bar is the fast path. body.has-tab-bar reserves
      scroll room via padding-bottom and publishes --tab-bar-height so
-     pages that size maps with 100vh math can subtract it. */
+     pages that size maps with 100vh math can subtract it.
+
+     The min-height gate drops the bar in phone LANDSCAPE, where 48px is 13%
+     of a ~375px viewport — permanently, on every page — and height is the one
+     dimension that's scarce. Nothing becomes unreachable: the hamburger holds
+     every tab destination and appears at ≤1024px, so it's present on any phone
+     this rule can hide the bar on. Gating the whole BLOCK rather than adding a
+     display:none override is deliberate — this block is also what sets
+     --tab-bar-height and the body padding, so when it doesn't apply, the
+     var stays unset and every `var(--tab-bar-height, 0px)` in the pages'
+     viewport math falls back to 0 on its own, with no dead strip at the
+     bottom. 500px clears phone portrait (≥667px tall) by a wide margin and
+     sits far below any tablet. */
   .tab-bar { display: none; }
 
-  @media (max-width: 700px) {
+  @media (max-width: 700px) and (min-height: 500px) {
     body.has-tab-bar {
       /* In-browser the bar is a constant 48px: Safari's own toolbar sits
          below it and already clears the home indicator, and iOS 26's
@@ -392,8 +404,11 @@
 
   /* Installed home-screen app: no browser toolbar below the bar, so it
      must clear the home indicator itself. env() is constant in
-     standalone mode, so the height is stable. */
-  @media (max-width: 700px) and (display-mode: standalone) {
+     standalone mode, so the height is stable. Carries the same min-height
+     gate as the block above — without it this one would re-publish
+     --tab-bar-height in phone landscape and reserve space for a bar that
+     isn't displayed. */
+  @media (max-width: 700px) and (min-height: 500px) and (display-mode: standalone) {
     body.has-tab-bar {
       --tab-bar-height: calc(48px + env(safe-area-inset-bottom, 0px));
     }
