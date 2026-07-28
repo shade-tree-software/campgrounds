@@ -341,7 +341,7 @@
     display: flex; gap: .5rem;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-  .poster-bar a, .poster-bar button, .poster-bar select {
+  .poster-bar a, .poster-bar button, .poster-bar select, .poster-bar .poster-check {
     font: inherit; font-size: .85rem; font-weight: 600;
     color: #fff; background: rgba(0,0,0,.5);
     border: 1px solid rgba(255,255,255,.35); border-radius: 6px;
@@ -349,7 +349,14 @@
     padding: .5rem .85rem; min-height: 44px; display: flex; align-items: center;
     text-decoration: none; cursor: pointer;
   }
-  .poster-bar a:hover, .poster-bar button:hover, .poster-bar select:hover { background: rgba(0,0,0,.72); }
+  .poster-bar a:hover, .poster-bar button:hover, .poster-bar select:hover,
+  .poster-bar .poster-check:hover { background: rgba(0,0,0,.72); }
+  .poster-bar .poster-check { gap: .4rem; user-select: none; }
+  .poster-bar .poster-check input { margin: 0; cursor: pointer; accent-color: var(--gold); }
+  /* Nothing scanned (or nothing found): the toggle would empty the sheet, so
+     it's disabled rather than offered and failing. */
+  .poster-bar .poster-check.disabled { opacity: .45; cursor: not-allowed; }
+  .poster-bar .poster-check.disabled input { cursor: not-allowed; }
   /* The translucent select needs its dropdown options readable — option
      text inherits white, so give the list a dark backer explicitly. */
   .poster-bar select option { background: #2a2a2e; color: #fff; }
@@ -411,6 +418,9 @@
     <option value="18x24">18 &times; 24 in</option>
     <option value="24x36">24 &times; 36 in</option>
   </select>
+  <label class="poster-check" id="poster-people-label">
+    <input type="checkbox" id="poster-people"> People only
+  </label>
   <button type="button" id="poster-shuffle" title="Deal a new set of photos">Shuffle</button>
   <button type="button" onclick="window.print()">Print</button>
 </div>
@@ -519,7 +529,9 @@ sizeSel.addEventListener('change', () => {
 // Top strip = 12 × 2 = 24 cells. Bottom strip = 12 × 4 = 48 cells, two of them
 // 2×2 heroes, so 40 singles + 2 hero elements = 42 there.
 //
-// Singles walk the shuffled `PHOTOS` pool sequentially via a shared cursor so
+// Singles walk the shuffled `POOL` (the pool as currently filtered — see the
+// People-only block below; everything that deals reads POOL, never PHOTOS)
+// sequentially via a shared cursor so
 // the bottom strip continues past whatever the top consumed instead of
 // repeating the same first images. Heroes draw from their own ranked deck (see
 // heroRank). A shared `dealt` set keeps the two from colliding — a photo can
@@ -530,6 +542,55 @@ sizeSel.addEventListener('change', () => {
 // cells reach ~2in wide and thumbs go soft — so any sheet larger than
 // letter uses the 1600px /view/ derivative instead (~10% of original
 // bytes; heavier page, but this page exists to be printed).
+
+// ── People-only filter ──────────────────────────────────────────────────────
+// `?people=1` (toolbar checkbox) restricts the whole sheet — strips and heroes
+// alike — to photos detect_people.py found a face in. A poster for the wall is
+// usually a poster OF the family, and the scan already answers "is somebody in
+// it". Without the filter, people photos merely outrank landscapes in the hero
+// deck — the two hero cells prefer them, but the other 64 cells walk the pool
+// at random, so a family-heavy sheet was not otherwise reachable.
+//
+// Filtered client-side off the flag the pool already carries: the deal is
+// instant and the (expensive) map is left untouched, exactly like Shuffle. The
+// URL param is kept in sync with replaceState so a poster you've set up is
+// bookmarkable and survives a size change (which does reload).
+//
+// `people` is false both for "scanned, nobody there" and "never scanned" (the
+// pool collapses photo_people.json to a bool), so an unscanned library yields
+// an empty set — which disables the toggle below rather than letting it print
+// a blank sheet.
+const PEOPLE_COUNT = PHOTOS.reduce((n, p) => n + (p.people ? 1 : 0), 0);
+let peopleOnly = new URLSearchParams(location.search).get('people') === '1'
+                 && PEOPLE_COUNT > 0;
+// The live pool every deal walks. Rebuilt rather than re-sorted whenever the
+// toggle flips or Shuffle reorders PHOTOS, so it always inherits the current
+// shuffle order (the filtered array is a copy — shuffling PHOTOS in place
+// doesn't reach it).
+const buildPool = () => peopleOnly ? PHOTOS.filter(p => p.people) : PHOTOS;
+let POOL = buildPool();
+
+const peopleBox = document.getElementById('poster-people');
+const peopleLabel = document.getElementById('poster-people-label');
+peopleBox.checked = peopleOnly;
+if (!PEOPLE_COUNT) {
+  peopleBox.disabled = true;
+  peopleLabel.classList.add('disabled');
+  peopleLabel.title = 'No photos are marked as containing people yet '
+                    + '(run detect_people.py over the photo library)';
+} else {
+  peopleLabel.title = PEOPLE_COUNT + ' of ' + PHOTOS.length
+                    + ' photos have people in them';
+}
+peopleBox.addEventListener('change', () => {
+  peopleOnly = peopleBox.checked;
+  POOL = buildPool();
+  const params = new URLSearchParams(location.search);
+  if (peopleOnly) params.set('people', '1'); else params.delete('people');
+  const qs = params.toString();
+  history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
+  dealPhotos();
+});
 
 // A hero cell prints at 4× a single's area, so which photo lands there should
 // not be a coin flip over the whole library. Rank the pool:
@@ -556,11 +617,11 @@ let photoCursor = 0, heroCursor = 0, dealId = 0;
 const dealt = new Set();
 
 function takeSingle() {
-  for (let i = 0; i < PHOTOS.length; i++) {
-    const p = PHOTOS[photoCursor++ % PHOTOS.length];
+  for (let i = 0; i < POOL.length; i++) {
+    const p = POOL[photoCursor++ % POOL.length];
     if (!dealt.has(p.url)) { dealt.add(p.url); return p; }
   }
-  return PHOTOS[photoCursor++ % PHOTOS.length];   // fewer photos than cells
+  return POOL[photoCursor++ % POOL.length];   // fewer photos than cells
 }
 
 function takeHero() {
@@ -597,7 +658,7 @@ function makeThumb(photo) {
 // hero displaces 4 singles and the caller passes count = cells − 4×heroes.
 function fillPhotoGrid(elId, count, heroAreas, heroPhotos) {
   const grid = document.getElementById(elId);
-  if (!grid || !PHOTOS.length) return;
+  if (!grid || !POOL.length) return;
   (heroAreas || []).forEach((area, i) => {
     const div = makeThumb(heroPhotos[i]);
     div.style.gridArea = area;
@@ -620,7 +681,7 @@ function dealPhotos() {
   heroCursor = 0;
   dealt.clear();
   dealId++;
-  HERO_DECK = PHOTOS.slice().sort((a, b) => heroRank(a) - heroRank(b));
+  HERO_DECK = POOL.slice().sort((a, b) => heroRank(a) - heroRank(b));
   // Draw the heroes BEFORE any single is dealt. Both walk the same pool and
   // the top strip walks it from the front, so filling the strips first hands
   // the starred photos to 68px cells and leaves the hero deck opening at
@@ -698,6 +759,7 @@ document.getElementById('poster-shuffle').addEventListener('click', () => {
     const j = Math.floor(Math.random() * (i + 1));
     [PHOTOS[i], PHOTOS[j]] = [PHOTOS[j], PHOTOS[i]];
   }
+  POOL = buildPool();   // so a people-only sheet reshuffles too
   dealPhotos();
 });
 
