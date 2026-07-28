@@ -4,7 +4,7 @@
 #
 # Packages exactly the data that is NOT in git and NOT regenerable:
 #   users.json, home.json, and trip_data/*.json (trips, captions,
-#   photo_order, photo_uploaders, photo_favorites, share_tokens)
+#   photo_order, photo_uploaders, photo_favorites, photo_people, share_tokens)
 #   + trip_data/access_log.jsonl
 #   + trip_data/track_cache/.
 #
@@ -59,6 +59,7 @@ CANDIDATES=(
   trip_data/photo_order.json
   trip_data/photo_uploaders.json
   trip_data/photo_favorites.json
+  trip_data/photo_people.json
   trip_data/share_tokens.json
   trip_data/access_log.jsonl
   trip_data/track_cache

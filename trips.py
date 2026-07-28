@@ -336,19 +336,21 @@ def _remap_indices_after_sort(trip_id, old_items, new_items, kind):
         new_dir = os.path.join(upload_base, str(mapping[old_idx]))
         os.rename(tmp_dir, new_dir)
 
-    # Phase 3: remap caption, photo_order, per-photo uploader and favorite
-    # keys (all four share the "{trip_id}/{idx}/..." key shape). Any new
-    # per-photo metadata file belongs in this list too — miss it and the
+    # Phase 3: remap caption, photo_order, per-photo uploader, favorite and
+    # people keys (all five share the "{trip_id}/{idx}/..." key shape). Any
+    # new per-photo metadata file belongs in this list too — miss it and the
     # metadata silently detaches from its photo the next time a date edit
     # reorders the stays.
     captions_file = os.path.join(_DIR, "trip_data", "captions.json")
     order_file = os.path.join(_DIR, "trip_data", "photo_order.json")
     uploaders_file = os.path.join(_DIR, "trip_data", "photo_uploaders.json")
     favorites_file = os.path.join(_DIR, "trip_data", "photo_favorites.json")
+    people_file = os.path.join(_DIR, "trip_data", "photo_people.json")
     _remap_json_keys(captions_file, key_prefix, mapping)
     _remap_json_keys(order_file, key_prefix, mapping)
     _remap_json_keys(uploaders_file, key_prefix, mapping)
     _remap_json_keys(favorites_file, key_prefix, mapping)
+    _remap_json_keys(people_file, key_prefix, mapping)
 
 
 def _remap_json_keys(filepath, key_prefix, mapping):

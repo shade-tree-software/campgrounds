@@ -538,14 +538,18 @@ sizeSel.addEventListener('change', () => {
 //       proxies for "taken with the nice camera" — so the marked set is the
 //       real answer, and it's cheap to curate because a sheet needs a couple
 //       of dozen good photos, not a rating on every one.
-//   1 — leads its own trip grid (server-side `curated`). Dragging a photo to
-//       the front of a grid is already an act of picking a favorite; it just
-//       was never labeled one. Free, and better than random before anything
-//       is starred.
-//   2 — everything else, so the poster still works on an uncurated library.
+//   1–4 — everything else, ordered by two weaker signals that DO automate:
+//       `people` (detect_people.py found a face — "somebody is IN it" is a
+//       fact a detector can answer, unlike "is it good", and a family poster
+//       should feature the family) outranks `curated` (leads its own trip
+//       grid — dragging a photo to the front of a grid is already an act of
+//       picking a favorite; it just was never labeled one). people+curated,
+//       then people, then curated, then the rest, so the poster still works
+//       on an uncurated, unscanned library.
 // PHOTOS arrives shuffled and Array.prototype.sort is stable, so ranking keeps
 // the randomness within each tier — Shuffle still deals different heroes.
-const heroRank = p => (p.favorite ? 0 : (p.curated ? 1 : 2));
+const heroRank = p =>
+  (p.favorite ? 0 : (p.people ? 0 : 2) + (p.curated ? 1 : 2));
 
 let HERO_DECK = [];
 let photoCursor = 0, heroCursor = 0, dealId = 0;

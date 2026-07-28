@@ -267,6 +267,14 @@ PHOTO_UPLOADERS_FILE = os.path.join(TRIP_DATA_DIR, "photo_uploaders.json")
 # stay/event sort shifts indices. Unstarring deletes the key rather than
 # storing False, so the file stays the size of the marked set.
 PHOTO_FAVORITES_FILE = os.path.join(TRIP_DATA_DIR, "photo_favorites.json")
+# Per-photo face count from the OFFLINE detect_people.py scan (the app never
+# runs detection itself), keyed identically to captions: {key: int}, one entry
+# per scanned photo — 0 means "scanned, nobody in it", absent means "not yet
+# scanned", which is what lets the scanner be incremental. The pool collapses
+# it to a boolean `people` flag that the poster's hero deck ranks just below
+# hand-starred favorites: unlike "is this photo GOOD" (favorites' comment
+# above), "is somebody IN it" is a fact a detector can answer.
+PHOTO_PEOPLE_FILE = os.path.join(TRIP_DATA_DIR, "photo_people.json")
 # Read-only share links (magic links). Maps an unguessable token to
 #   {label, next, created}. A token authenticates a synthetic read-only viewer
 # (see SHARE_ID_PREFIX / load_user), so a leaked link exposes only viewing.
@@ -695,8 +703,8 @@ def _restore_from_trash(photo_dir, filename):
 
 def _purge_old_trash(photo_dir, meta_prefix, order_key):
     """Drop trash entries older than TRASH_TTL_S and scrub their caption/
-    order/uploader/favorite metadata. Called opportunistically on each
-    delete."""
+    order/uploader/favorite/people metadata. Called opportunistically on
+    each delete."""
     trash_dir = os.path.join(photo_dir, TRASH_DIRNAME)
     if not os.path.isdir(trash_dir):
         return
@@ -724,6 +732,7 @@ def _purge_old_trash(photo_dir, meta_prefix, order_key):
     for fname in purged:
         _remove_uploader(meta_prefix + fname)
         _remove_favorite(meta_prefix + fname)
+        _remove_people_record(meta_prefix + fname)
 
 
 def _remove_thumb(orig_path):
@@ -858,9 +867,11 @@ def _collect_photo_pool():
     open per file and so is deliberately not carried here.
 
     `favorite` is the hand-set poster mark; `curated` means the photo leads
-    its grid (see _curated_first). Together they rank the poster's hero
-    candidates. Both are whole-file reads like captions, and every writer
-    invalidates this cache, so an edit shows up without waiting out the TTL.
+    its grid (see _curated_first); `people` means detect_people.py found at
+    least one face in it. Together they rank the poster's hero candidates.
+    All are whole-file reads like captions, and every in-app writer
+    invalidates this cache, so an edit shows up without waiting out the TTL
+    (photo_people.json is written offline, so it waits out the TTL at worst).
 
     Deliberately NOT carried: image dimensions. Those need a Pillow open per
     file, same as the EXIF date — the poster probes the aspect of the handful
@@ -870,6 +881,7 @@ def _collect_photo_pool():
         return _PHOTO_POOL_CACHE["pool"]
     captions = _load_json(CAPTIONS_FILE)
     favorites = _load_json(PHOTO_FAVORITES_FILE)
+    people = _load_json(PHOTO_PEOPLE_FILE)
     photo_order = _load_json(PHOTO_ORDER_FILE)
     pool = []
     for trip in parse_trips():
@@ -901,6 +913,7 @@ def _collect_photo_pool():
                     "card": card,
                     "caption": captions.get(key, ""),
                     "favorite": bool(favorites.get(key)),
+                    "people": bool(people.get(key)),
                     "curated": fname == first,
                     # Position within its own grid, in the order the trip page
                     # shows them — what the gallery sorts photos by inside a
@@ -1382,6 +1395,35 @@ def _rename_favorite_key(old_key, new_key):
     if old_key in data:
         data[new_key] = data.pop(old_key)
         _save_json(PHOTO_FAVORITES_FILE, data)
+        _invalidate_photo_pool()
+
+
+# ── Photo people records (detect_people.py output) ────────────────────────
+# Written only by the offline scanner; the app just keeps the keys following
+# their photos through delete/move/reorder, mirroring favorites above. A
+# deleted photo's record is scrubbed (not kept inert like captions) because
+# rescanning a restored photo is cheap and automatic on the next run.
+
+def _remove_people_record(photo_key):
+    data = _load_json(PHOTO_PEOPLE_FILE)
+    if data.pop(photo_key, None) is not None:
+        _save_json(PHOTO_PEOPLE_FILE, data)
+        _invalidate_photo_pool()
+
+
+def _remove_people_by_prefix(prefix):
+    data = _load_json(PHOTO_PEOPLE_FILE)
+    pruned = {k: v for k, v in data.items() if not k.startswith(prefix)}
+    if len(pruned) != len(data):
+        _save_json(PHOTO_PEOPLE_FILE, pruned)
+        _invalidate_photo_pool()
+
+
+def _rename_people_key(old_key, new_key):
+    data = _load_json(PHOTO_PEOPLE_FILE)
+    if old_key in data:
+        data[new_key] = data.pop(old_key)
+        _save_json(PHOTO_PEOPLE_FILE, data)
         _invalidate_photo_pool()
 
 
@@ -2727,6 +2769,7 @@ def delete_all_stay_photos(trip_id, stay_idx):
 
     _remove_uploaders_by_prefix(prefix)
     _remove_favorites_by_prefix(prefix)
+    _remove_people_by_prefix(prefix)
 
     return jsonify({"ok": True})
 
@@ -2861,6 +2904,7 @@ def delete_all_event_photos(trip_id, event_idx):
 
     _remove_uploaders_by_prefix(prefix)
     _remove_favorites_by_prefix(prefix)
+    _remove_people_by_prefix(prefix)
 
     return jsonify({"ok": True})
 
@@ -3458,9 +3502,10 @@ def move_photo(trip_id):
         captions[new_cap_key] = cap
     _save_json(CAPTIONS_FILE, captions)
 
-    # Update uploader + favorite records (same key shape as captions).
+    # Update uploader + favorite + people records (same key shape as captions).
     _rename_uploader_key(old_cap_key, new_cap_key)
     _rename_favorite_key(old_cap_key, new_cap_key)
+    _rename_people_key(old_cap_key, new_cap_key)
 
     # Update photo order — remove from source
     photo_order = _load_json(PHOTO_ORDER_FILE)
