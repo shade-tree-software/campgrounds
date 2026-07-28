@@ -48,6 +48,60 @@
   }
   .photo-item img:focus-visible { outline: 3px solid var(--navy); outline-offset: -3px; }
 
+  /* Poster-hero star. This page is the bulk marking surface — the whole
+     library in one scrollable grid — so the button sits on the tile itself
+     rather than behind a click into the lightbox. Unmarked it only appears on
+     hover/focus (2,000 permanent stars would be noise); marked it stays put,
+     because a mark you can't see without hovering isn't a mark. */
+  .fav-btn {
+    position: absolute;
+    top: .4rem;
+    left: .4rem;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(0,0,0,.45);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    opacity: 0;
+    transition: opacity .12s, background .12s;
+  }
+  .fav-btn svg { display: block; fill: none; }
+  .photo-item:hover .fav-btn,
+  .fav-btn:focus-visible,
+  .fav-btn[aria-pressed="true"] { opacity: 1; }
+  .fav-btn:hover { background: rgba(0,0,0,.7); }
+  .fav-btn[aria-pressed="true"] { color: var(--gold); }
+  .fav-btn[aria-pressed="true"] svg { fill: currentColor; }
+  /* Touch has no hover, so the affordance would never appear. */
+  @media (hover: none) {
+    .fav-btn { opacity: 1; }
+  }
+
+  /* Filter chips: all photos / just the marked ones. margin-right: auto keeps
+     the count pinned right while the chips sit next to the heading. */
+  .photos-filter { display: flex; gap: .4rem; margin-right: auto; }
+  .photos-filter a {
+    font-size: .8rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--gray);
+    background: var(--white);
+    box-shadow: var(--shadow);
+    border-radius: 999px;
+    padding: .45rem .9rem;
+    min-height: 36px;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+  }
+  .photos-filter a.active { color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); }
+
   /* Caption strip: the trip it came from, and the campspot/event under it. */
   .pi-meta {
     padding: .4rem .55rem .5rem;
@@ -101,7 +155,18 @@
 {% block content %}
 <div class="photos-page">
   <div class="photos-head">
-    <h1>All Photos</h1>
+    <h1>{{ 'Favorite Photos' if favorites_only else 'All Photos' }}</h1>
+    {#- The Favorites chip is the poster's hero pool made visible: mark from
+        the grid, then filter down to review what you marked. Hidden entirely
+        when nothing is marked and you couldn't mark anything — an empty filter
+        that leads nowhere is just a dead control. -#}
+    {% if fav_total or is_admin %}
+    <div class="photos-filter">
+      <a href="/trips/photos" class="{{ '' if favorites_only else 'active' }}">All</a>
+      <a href="/trips/photos?favorites=1" class="{{ 'active' if favorites_only else '' }}"
+         title="Photos marked as poster favorites">&#9733; Favorites{% if fav_total %} ({{ fav_total }}){% endif %}</a>
+    </div>
+    {% endif %}
     <span class="photos-count">
       {{ '{:,}'.format(total) }} photo{{ '' if total == 1 else 's' }}{% if pages > 1 %} · page {{ page }} of {{ pages }}{% endif %}
     </span>
@@ -113,10 +178,14 @@
     <div class="photo-item">
       {#- The lightbox reads its extras off the img: data-full swaps in the
           original, and the trip/place attributes drive the "open trip" card.
-          Same contract the trips map uses. -#}
+          Same contract the trips map uses. data-photo-key/data-favorite are
+          the favorites contract (static/photo-favorite.js) — the key is just
+          the photo's storage subpath, which the URLs already carry. -#}
       <img src="{{ p.thumb }}"
            data-view="{{ p.view }}"
            data-full="{{ p.url }}"
+           data-photo-key="{{ p.key }}"
+           data-favorite="{{ '1' if p.favorite else '0' }}"
            data-caption="{{ p.caption }}"
            data-trip-href="/trips/{{ p.trip_id }}"
            data-trip-name="{{ p.trip_name }}"
@@ -124,6 +193,16 @@
            {% if p.place %}data-place-name="{{ p.place }}"{% endif %}
            alt="{{ p.caption or p.place or p.trip_name }}"
            loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
+      {% if is_admin %}
+      <button type="button" class="fav-btn" data-photo-key="{{ p.key }}"
+              aria-pressed="{{ 'true' if p.favorite else 'false' }}"
+              aria-label="Mark as a poster favorite"
+              title="{{ 'Remove from poster favorites' if p.favorite else 'Mark as a poster favorite' }}">
+        <svg width="18" height="18" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+          <path d="M10 2.6l2.3 4.9 5.2.7-3.8 3.7.9 5.3-4.6-2.5-4.6 2.5.9-5.3L2.5 8.2l5.2-.7z"/>
+        </svg>
+      </button>
+      {% endif %}
       <div class="pi-meta">
         <a href="/trips/{{ p.trip_id }}">{{ p.trip_name }}</a>
         {% if p.place %}<span class="pi-place" title="{{ p.place }}">{{ p.place }}</span>{% endif %}
@@ -133,19 +212,33 @@
   </div>
 
   {% if pages > 1 %}
+  {#- The filter has to survive paging, or page 2 of Favorites is page 2 of
+      everything. -#}
+  {% set filter_q = '&favorites=1' if favorites_only else '' %}
   <div class="pager">
-    {% if page > 1 %}<a href="?page={{ page - 1 }}" rel="prev">&larr; Newer</a>{% endif %}
+    {% if page > 1 %}<a href="?page={{ page - 1 }}{{ filter_q }}" rel="prev">&larr; Newer</a>{% endif %}
     <span>Page {{ page }} of {{ pages }}</span>
-    {% if page < pages %}<a href="?page={{ page + 1 }}" rel="next">Older &rarr;</a>{% endif %}
+    {% if page < pages %}<a href="?page={{ page + 1 }}{{ filter_q }}" rel="next">Older &rarr;</a>{% endif %}
   </div>
   {% endif %}
   {% else %}
-  <p class="photos-empty">No photos yet.</p>
+  <p class="photos-empty">
+    {% if favorites_only %}
+      No favorites yet{% if is_admin %} — star a photo to put it in the poster's hero pool{% endif %}.
+    {% else %}
+      No photos yet.
+    {% endif %}
+  </p>
   {% endif %}
 </div>
 {% include "_lightbox.html" %}
 {% endblock %}
 
 {% block scripts %}
+{#- PHOTO_FAVORITES tells the lightbox this page's imgs carry the favorites
+    attributes AND that this viewer may mark, so its star has both state to
+    show and somewhere to write. -#}
+<script>window.PHOTO_FAVORITES = {{ 'true' if is_admin else 'false' }};</script>
+<script src="{{ static_v('photo-favorite.js') }}"></script>
 <script src="{{ static_v('lightbox.js') }}"></script>
 {% endblock %}

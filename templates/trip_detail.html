@@ -2513,6 +2513,9 @@ window.TRIP_BOOT = {
   home_end_time: {{ trip.home_end_time | tojson }},
   home_coords: {{ home | tojson }},
 };
+{# Poster-hero star in the lightbox: on when the viewer may mark. The tiles
+   carry data-photo-key/data-favorite either way (see _photo_item.html). #}
+window.PHOTO_FAVORITES = {{ 'true' if is_admin else 'false' }};
 </script>
 {# Only boot/lightbox/map are viewer-facing. The editing modules are ~120 KB of
    JS whose every entry point is behind an admin-gated control, and photos.js
@@ -2521,6 +2524,7 @@ window.TRIP_BOOT = {
    NOTE: map.js guards its calls into overrides.js with IS_ADMIN for exactly
    this reason — keep those guards in sync if you add another cross-module call. #}
 <script src="{{ static_v('trip-detail/boot.js') }}"></script>
+{% if is_admin %}<script src="{{ static_v('photo-favorite.js') }}"></script>{% endif %}
 <script src="{{ static_v('lightbox.js') }}"></script>
 {% if is_admin or is_uploader %}
 <script src="{{ static_v('trip-detail/photos.js') }}"></script>

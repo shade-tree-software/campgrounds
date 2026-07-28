@@ -12,6 +12,14 @@
       <path d="M10 3v10m0 0l-4-4m4 4l4-4M3 16h14"/>
     </svg>
   </button>
+  {# Poster-hero star. Hidden unless the page opted into favorites (see
+     static/photo-favorite.js) and the viewer is an admin — lightbox.js
+     shows/hides and re-labels it per photo. #}
+  <button class="lb-fav" id="lb-fav" onclick="toggleLightboxFavorite(event)" aria-pressed="false" hidden>
+    <svg width="20" height="20" viewBox="0 0 20 20" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round">
+      <path d="M10 2.6l2.3 4.9 5.2.7-3.8 3.7.9 5.3-4.6-2.5-4.6 2.5.9-5.3L2.5 8.2l5.2-.7z"/>
+    </svg>
+  </button>
   {# Position in the set ("3 / 12"). Emptied by lightbox.js for a lone photo. #}
   <div class="lb-count" id="lb-count" aria-live="polite"></div>
   <button class="nav-btn nav-prev" id="lb-prev" onclick="lightboxNav(event, -1)" title="Previous (←)" aria-label="Previous photo">&#8249;</button>

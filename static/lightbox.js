@@ -167,6 +167,7 @@ function showLightboxPhoto() {
   }
   document.getElementById('lb-date').textContent = dateStr;
   setLightboxTrip(img);
+  lbSyncFavorite();
   document.getElementById('lb-prev').classList.toggle('hidden', lightboxIndex === 0);
   document.getElementById('lb-next').classList.toggle('hidden', lightboxIndex === lightboxPhotos.length - 1);
   // "N / M" — without it there's no way to tell a set of 3 from a set of 40,
@@ -235,6 +236,41 @@ function setLightboxTrip(img) {
   place.title = placeName;   // the full text when it ellipsizes
   link.setAttribute('aria-label', 'Open ' + name +
     (placeName ? ' — ' + placeName : ''));
+}
+
+// ── Poster-hero star ─────────────────────────────────────────────────────
+// The mark itself lives in static/photo-favorite.js; the lightbox is one of
+// two places you can set it (the Photos grid is the other, and the bulk one).
+// Starring while reading a trip matters because that's when you actually
+// notice a photo is good.
+//
+// Shown only when the page sets window.PHOTO_FAVORITES, which means both "my
+// imgs carry data-photo-key and data-favorite" (without which the button would
+// have no state to show) and "this viewer may mark" — pages set it from
+// is_admin, matching what the API will actually accept. Everything else is read
+// off the source img, so paging keeps the button correct.
+function lbSyncFavorite() {
+  const btn = document.getElementById('lb-fav');
+  if (!btn) return;
+  const img = lightboxPhotos[lightboxIndex];
+  const key = (window.PHOTO_FAVORITES && typeof photoKeyOf === 'function')
+    ? photoKeyOf(img) : '';
+  btn.hidden = !key;
+  if (!key) return;
+  btn.dataset.photoKey = key;
+  // syncPhotoFavorite() sets aria-pressed/title on any element carrying the
+  // key, so seeding data-favorite here is enough to label the button.
+  const on = img.dataset.favorite === '1';
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  btn.title = on ? 'Remove from poster favorites' : 'Mark as a poster favorite';
+}
+
+function toggleLightboxFavorite(e) {
+  if (e) { e.stopPropagation(); e.preventDefault(); }
+  const btn = document.getElementById('lb-fav');
+  const img = lightboxPhotos[lightboxIndex];
+  if (!btn || !img || btn.hidden) return;
+  setPhotoFavorite(btn.dataset.photoKey, btn.getAttribute('aria-pressed') !== 'true');
 }
 
 function lightboxNav(e, dir) {

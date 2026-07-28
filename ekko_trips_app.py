@@ -257,6 +257,16 @@ USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
 #   "{trip_id}/{stay_idx}/{filename}" or "{trip_id}/events/{event_idx}/{filename}".
 # Used to gate non-admin (uploader-role) caption edits to their own contributions.
 PHOTO_UPLOADERS_FILE = os.path.join(TRIP_DATA_DIR, "photo_uploaders.json")
+# Per-photo "hero" mark, keyed identically to captions. There is no heuristic
+# for "is this a good photo" — resolution, aspect and EXIF camera model are all
+# proxies for "taken with the nice camera" — so the poster's two 2x2 hero cells
+# deal from a hand-marked set instead, and the marking IS the feature. Cheap to
+# curate because the sheet only needs a couple of dozen good photos, not a
+# rating on every one. A dict {key: True} rather than a list, because
+# _remap_json_keys (trips.py) rewrites these keys by iterating .items() when a
+# stay/event sort shifts indices. Unstarring deletes the key rather than
+# storing False, so the file stays the size of the marked set.
+PHOTO_FAVORITES_FILE = os.path.join(TRIP_DATA_DIR, "photo_favorites.json")
 # Read-only share links (magic links). Maps an unguessable token to
 #   {label, next, created}. A token authenticates a synthetic read-only viewer
 # (see SHARE_ID_PREFIX / load_user), so a leaked link exposes only viewing.
@@ -685,7 +695,8 @@ def _restore_from_trash(photo_dir, filename):
 
 def _purge_old_trash(photo_dir, meta_prefix, order_key):
     """Drop trash entries older than TRASH_TTL_S and scrub their caption/
-    order/uploader metadata. Called opportunistically on each delete."""
+    order/uploader/favorite metadata. Called opportunistically on each
+    delete."""
     trash_dir = os.path.join(photo_dir, TRASH_DIRNAME)
     if not os.path.isdir(trash_dir):
         return
@@ -712,6 +723,7 @@ def _purge_old_trash(photo_dir, meta_prefix, order_key):
             _save_json(PHOTO_ORDER_FILE, photo_order)
     for fname in purged:
         _remove_uploader(meta_prefix + fname)
+        _remove_favorite(meta_prefix + fname)
 
 
 def _remove_thumb(orig_path):
@@ -809,52 +821,82 @@ def _invalidate_photo_pool():
     _PHOTO_POOL_CACHE["pool"] = None
 
 
+def _curated_first(photo_order, order_key, filenames):
+    """The filename the admin deliberately put first in a grid, or None when
+    that grid was never reordered.
+
+    An explicit photo_order entry is the only signal of human curation
+    available here: without one the grid renders alphabetically, and for
+    camera filenames alphabetical is just chronological — the first shot of a
+    stay, not the best one. So absence resolves to None rather than to
+    filenames[0]. The poster uses this as its second-choice hero pool, behind
+    the explicit star: putting a photo first in its grid is already an act of
+    picking a favorite, it just was never labeled as one."""
+    ordered = photo_order.get(order_key)
+    if not ordered:
+        return None
+    existing = set(filenames)
+    return next((f for f in ordered if f in existing), None)
+
+
 def _collect_photo_pool():
-    """Every uploaded photo across all trips: {url, thumb, trip_id, card,
-    caption, home_only}. Built from the unfiltered trip list; callers filter
-    home_only per viewer and must copy before shuffling/mutating (the
-    list and its items are shared across requests).
+    """Every uploaded photo across all trips: {key, url, thumb, view, trip_id,
+    card, caption, favorite, curated, home_only}. Built from the unfiltered
+    trip list; callers filter home_only per viewer and must copy before
+    shuffling/mutating (the list and its items are shared across requests).
 
     `caption` is the same text the trip page shows under the photo (the
     trips-map lightbox displays it). It comes from one captions.json read
     per pool build — cheap, unlike the EXIF date, which would need a Pillow
-    open per file and so is deliberately not carried here."""
+    open per file and so is deliberately not carried here.
+
+    `favorite` is the hand-set poster mark; `curated` means the photo leads
+    its grid (see _curated_first). Together they rank the poster's hero
+    candidates. Both are whole-file reads like captions, and every writer
+    invalidates this cache, so an edit shows up without waiting out the TTL.
+
+    Deliberately NOT carried: image dimensions. Those need a Pillow open per
+    file, same as the EXIF date — the poster probes the aspect of the handful
+    of photos it actually considers for a hero cell, client-side, instead."""
     now = time.time()
     if _PHOTO_POOL_CACHE["pool"] is not None and now - _PHOTO_POOL_CACHE["ts"] < _PHOTO_POOL_TTL_S:
         return _PHOTO_POOL_CACHE["pool"]
     captions = _load_json(CAPTIONS_FILE)
+    favorites = _load_json(PHOTO_FAVORITES_FILE)
+    photo_order = _load_json(PHOTO_ORDER_FILE)
     pool = []
     for trip in parse_trips():
         tid = trip["id"]
         home_only = bool(trip.get("home_only"))
-        for i, _stay in enumerate(trip["stays"]):
-            photo_dir = os.path.join(UPLOAD_DIR, str(tid), str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        pool.append({
-                            "url": f"/photo/{tid}/{i}/{fname}",
-                            "thumb": f"/thumb/{tid}/{i}/{fname}",
-                            "view": f"/view/{tid}/{i}/{fname}",
-                            "trip_id": tid,
-                            "card": f"stay-{i}",
-                            "caption": captions.get(f"{tid}/{i}/{fname}", ""),
-                            "home_only": home_only,
-                        })
-        for i, _event in enumerate(trip.get("events", [])):
-            photo_dir = os.path.join(UPLOAD_DIR, str(tid), "events", str(i))
-            if os.path.isdir(photo_dir):
-                for fname in os.listdir(photo_dir):
-                    if _allowed_file(fname):
-                        pool.append({
-                            "url": f"/photo/{tid}/events/{i}/{fname}",
-                            "thumb": f"/thumb/{tid}/events/{i}/{fname}",
-                            "view": f"/view/{tid}/events/{i}/{fname}",
-                            "trip_id": tid,
-                            "card": f"event-{i}",
-                            "caption": captions.get(f"{tid}/events/{i}/{fname}", ""),
-                            "home_only": home_only,
-                        })
+        # Stays and events differ only in the path/key segment between the
+        # trip id and the index, so walk them with one body.
+        cards = [(f"{tid}/{i}", f"stay-{i}", os.path.join(UPLOAD_DIR, str(tid), str(i)))
+                 for i, _stay in enumerate(trip["stays"])]
+        cards += [(f"{tid}/events/{i}", f"event-{i}",
+                   os.path.join(UPLOAD_DIR, str(tid), "events", str(i)))
+                  for i, _event in enumerate(trip.get("events", []))]
+        for key_base, card, photo_dir in cards:
+            if not os.path.isdir(photo_dir):
+                continue
+            fnames = [f for f in os.listdir(photo_dir) if _allowed_file(f)]
+            first = _curated_first(photo_order, key_base, fnames)
+            for fname in fnames:
+                key = f"{key_base}/{fname}"
+                pool.append({
+                    # The storage subpath, which is both the metadata key and
+                    # the tail of every URL below — templates hand it to the
+                    # favorites API rather than re-deriving it from a src.
+                    "key": key,
+                    "url": f"/photo/{key}",
+                    "thumb": f"/thumb/{key}",
+                    "view": f"/view/{key}",
+                    "trip_id": tid,
+                    "card": card,
+                    "caption": captions.get(key, ""),
+                    "favorite": bool(favorites.get(key)),
+                    "curated": fname == first,
+                    "home_only": home_only,
+                })
     _PHOTO_POOL_CACHE.update(ts=now, pool=pool)
     return pool
 
@@ -1288,6 +1330,48 @@ def _rename_uploader_key(old_key, new_key):
     if old_key in data:
         data[new_key] = data.pop(old_key)
         _save_json(PHOTO_UPLOADERS_FILE, data)
+
+
+# ── Photo favorites (poster heroes) ───────────────────────────────────────
+# Admin-only curation, keyed like captions. Read by the poster (its hero cells
+# deal from the marked set first) and by the Photos page's Favorites filter.
+# Every writer invalidates the photo pool, which carries the flag — otherwise a
+# star wouldn't show up until the pool's TTL expired.
+
+def _set_favorite(photo_key, on):
+    """Star/unstar one photo. Returns the resulting state."""
+    data = _load_json(PHOTO_FAVORITES_FILE)
+    if bool(data.get(photo_key)) != bool(on):
+        if on:
+            data[photo_key] = True
+        else:
+            data.pop(photo_key, None)
+        _save_json(PHOTO_FAVORITES_FILE, data)
+        _invalidate_photo_pool()
+    return bool(on)
+
+
+def _remove_favorite(photo_key):
+    data = _load_json(PHOTO_FAVORITES_FILE)
+    if data.pop(photo_key, None) is not None:
+        _save_json(PHOTO_FAVORITES_FILE, data)
+        _invalidate_photo_pool()
+
+
+def _remove_favorites_by_prefix(prefix):
+    data = _load_json(PHOTO_FAVORITES_FILE)
+    pruned = {k: v for k, v in data.items() if not k.startswith(prefix)}
+    if len(pruned) != len(data):
+        _save_json(PHOTO_FAVORITES_FILE, pruned)
+        _invalidate_photo_pool()
+
+
+def _rename_favorite_key(old_key, new_key):
+    data = _load_json(PHOTO_FAVORITES_FILE)
+    if old_key in data:
+        data[new_key] = data.pop(old_key)
+        _save_json(PHOTO_FAVORITES_FILE, data)
+        _invalidate_photo_pool()
 
 
 def _can_edit_photo(photo_key):
@@ -1818,6 +1902,15 @@ def trips_photos():
     by_id = {t["id"]: t for t in trips}
 
     photos = [p for p in _collect_photo_pool() if is_admin or not p["home_only"]]
+    # Favorites are the poster's hero pool, so this page doubles as the place
+    # you curate it: mark from the grid, then filter down to review what you
+    # marked. Counted before filtering so the chip can show the total even
+    # while the filter is on. Non-admins can't mark, but the filter is a
+    # perfectly good "best of" view, so it isn't gated.
+    fav_total = sum(1 for p in photos if p.get("favorite"))
+    favorites_only = request.args.get('favorites') == '1'
+    if favorites_only:
+        photos = [p for p in photos if p.get("favorite")]
 
     def sort_key(p):
         t = by_id.get(p["trip_id"]) or {}
@@ -1850,7 +1943,8 @@ def trips_photos():
 
     return render_template('trips_photos.html', title='Photos',
                            photos=items, page=page, pages=pages, total=total,
-                           active_nav='stats')
+                           is_admin=is_admin, favorites_only=favorites_only,
+                           fav_total=fav_total, active_nav='stats')
 
 
 def _short_trip_date(start):
@@ -2152,6 +2246,9 @@ def trip_detail(trip_id):
     # an uploader-role user's own contributions while leaving others read-only.
     photo_uploaders = _load_json(PHOTO_UPLOADERS_FILE)
 
+    # Poster-hero marks, so the lightbox's star opens in the right state.
+    favorites = _load_json(PHOTO_FAVORITES_FILE)
+
     stay_photos = {}
     for i, stay in enumerate(trip["stays"]):
         photo_dir = os.path.join(UPLOAD_DIR, str(trip_id), str(i))
@@ -2176,6 +2273,8 @@ def trip_detail(trip_id):
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
+                    "key": photo_key,
+                    "favorite": bool(favorites.get(photo_key)),
                 })
         stay_photos[i] = photos
 
@@ -2203,6 +2302,8 @@ def trip_detail(trip_id):
                     "caption": captions.get(photo_key, ""),
                     "date_taken": _photo_date_taken(os.path.join(photo_dir, fname)),
                     "uploader": photo_uploaders.get(photo_key, ""),
+                    "key": photo_key,
+                    "favorite": bool(favorites.get(photo_key)),
                 })
         event_photos[i] = photos
 
@@ -2318,6 +2419,8 @@ def _render_photo_tile(subpath, filename, p_type, p_idx, trip_id):
         "caption": "",
         "date_taken": _photo_date_taken(os.path.join(photo_dir, filename)),
         "uploader": username,
+        "key": f"{subpath}/{filename}",
+        "favorite": False,   # nothing is a favorite the instant it lands
     }
     return render_template("_photo_item.html", photo=photo, trip_id=trip_id,
                            p_idx=p_idx, p_type=p_type, p_alt="",
@@ -2438,6 +2541,7 @@ def delete_all_stay_photos(trip_id, stay_idx):
     _save_json(PHOTO_ORDER_FILE, photo_order)
 
     _remove_uploaders_by_prefix(prefix)
+    _remove_favorites_by_prefix(prefix)
 
     return jsonify({"ok": True})
 
@@ -2571,6 +2675,7 @@ def delete_all_event_photos(trip_id, event_idx):
     _save_json(PHOTO_ORDER_FILE, photo_order)
 
     _remove_uploaders_by_prefix(prefix)
+    _remove_favorites_by_prefix(prefix)
 
     return jsonify({"ok": True})
 
@@ -3168,8 +3273,9 @@ def move_photo(trip_id):
         captions[new_cap_key] = cap
     _save_json(CAPTIONS_FILE, captions)
 
-    # Update uploader record (same key shape as captions).
+    # Update uploader + favorite records (same key shape as captions).
     _rename_uploader_key(old_cap_key, new_cap_key)
+    _rename_favorite_key(old_cap_key, new_cap_key)
 
     # Update photo order — remove from source
     photo_order = _load_json(PHOTO_ORDER_FILE)
@@ -3186,6 +3292,34 @@ def move_photo(trip_id):
     _save_json(PHOTO_ORDER_FILE, photo_order)
 
     return jsonify({"ok": True, "filename": dst_filename})
+
+
+# ── Photo favorites API ────────────────────────────────────────────────────
+
+@app.route('/api/photos/favorite', methods=['POST'])
+def api_photo_favorite():
+    """Star/unstar one photo as a poster hero. Body: {photo, favorite}.
+
+    `photo` is the "{trip_id}/{idx}/{filename}" (or "…/events/…") subpath the
+    photo URLs already carry, so a client derives it by stripping the
+    /photo/ | /thumb/ | /view/ prefix off any src it has — no page needs to
+    know whether it's looking at a stay or an event, and one endpoint serves
+    every surface that shows photos.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    key = (data.get("photo") or "").strip().lstrip('/')
+    # Resolve through the same three gates the /photo/ route uses: traversal,
+    # no dot-prefixed component (keeps .trash/ unreachable), real extension.
+    # Requiring the file to exist matters because the key indexes a metadata
+    # file — a bad one would otherwise sit there forever and the poster would
+    # try to deal a missing photo into a hero cell.
+    if not key or not _resolve_photo_request(key):
+        return jsonify({"error": "Photo not found"}), 404
+    on = _set_favorite(key, bool(data.get("favorite")))
+    return jsonify({"ok": True, "favorite": on})
 
 
 # ── Campground CRUD API ────────────────────────────────────────────────────

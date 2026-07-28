@@ -2,13 +2,19 @@
     {% with %}) and by the upload endpoints, which render it server-side and
     return the HTML so a photo upload can add tiles in place without a full page
     reload (which would tear down and redraw the whole Leaflet map).
-    Expects: photo (filename/url/thumb_url/view_url/caption/date_taken/uploader),
+    Expects: photo (filename/url/thumb_url/view_url/caption/date_taken/uploader/
+                    key/favorite),
              trip_id,
              p_idx, p_type ('stay'|'event'), p_alt, is_admin, is_uploader,
              current_username. -#}
 {%- set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) -%}
 <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
-  <img src="{{ photo.thumb_url }}" data-view="{{ photo.view_url }}" data-full="{{ photo.url }}" alt="{{ photo.caption or p_alt }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
+  {#- data-photo-key/data-favorite are the favorites contract
+      (static/photo-favorite.js): they're what lets the lightbox's star open in
+      the right state. Marking happens in the lightbox here rather than on the
+      tile — the tile corner is already the delete button's, and the Photos
+      page is the surface for bulk marking. -#}
+  <img src="{{ photo.thumb_url }}" data-view="{{ photo.view_url }}" data-full="{{ photo.url }}" data-photo-key="{{ photo.key }}" data-favorite="{{ '1' if photo.favorite else '0' }}" alt="{{ photo.caption or p_alt }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
   {% if is_admin %}
   <button class="delete-photo" aria-label="Delete this photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', this)">&times;</button>
   {% endif %}

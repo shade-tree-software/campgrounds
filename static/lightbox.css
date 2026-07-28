@@ -31,7 +31,7 @@
    the controls that precede it in the markup (close, download, left
    chevron) while the ones after it stayed visible. Lift every control
    above the image. */
-.lightbox .close-btn, .lightbox .lb-download, .lightbox .nav-btn,
+.lightbox .close-btn, .lightbox .lb-download, .lightbox .lb-fav, .lightbox .nav-btn,
 .lightbox .lb-caption, .lightbox .lb-date, .lightbox .lb-trip,
 .lightbox .lb-count, .lightbox .lb-spinner { z-index: 1; }
 
@@ -117,6 +117,33 @@
 }
 .lightbox .lb-download:hover { background: rgba(255,255,255,.2); }
 .lightbox .lb-download svg { display: block; }
+
+/* Poster-hero star, third in the top-right cluster (close, download, star).
+   Outline when unmarked, filled gold when marked — the fill is the whole
+   signal, so it has to read at a glance against any photo behind it. */
+.lightbox .lb-fav {
+  position: absolute;
+  top: .5rem;
+  right: calc(.5rem + 2 * (44px + .25rem));
+  color: var(--white);
+  cursor: pointer;
+  background: rgba(0,0,0,.3);
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background .15s;
+}
+/* The display:flex above would otherwise beat the UA's [hidden] rule. */
+.lightbox .lb-fav[hidden] { display: none; }
+.lightbox .lb-fav:hover { background: rgba(255,255,255,.2); }
+.lightbox .lb-fav svg { display: block; fill: none; }
+.lightbox .lb-fav[aria-pressed="true"] { color: var(--gold, #c9a84c); }
+.lightbox .lb-fav[aria-pressed="true"] svg { fill: currentColor; }
 
 .lightbox .nav-btn {
   position: absolute;
