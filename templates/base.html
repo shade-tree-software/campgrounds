@@ -483,10 +483,18 @@
   /* Map-legend labels at two lengths. Legends sit in a map corner, where a
      phone has room for a word and a desktop has room for a phrase — so each
      row ships both and CSS picks one. Done in CSS, not JS, so rotating a
-     tablet re-picks without the legend having to be rebuilt. */
+     tablet re-picks without the legend having to be rebuilt.
+
+     The max-height arm matters as much as the width one: a phone in landscape
+     is 844-932px WIDE, so on width alone it read as roomy and got the long
+     phrases — while its map is the smallest on any device (as little as
+     446×279). The legend is an overlay, so what counts is its share of the
+     map, not of the viewport: long labels run ~280px, which is 60%+ of the
+     width of that map, against ~115px for the short ones. Matches the
+     500px landscape threshold the trips map uses, so the two agree. */
   .legend-long { display: inline; }
   .legend-short { display: none; }
-  @media (max-width: 700px) {
+  @media (max-width: 700px), (max-height: 500px) {
     .legend-long { display: none; }
     .legend-short { display: inline; }
   }
