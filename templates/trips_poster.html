@@ -245,6 +245,47 @@
      cells are promotable, so only they carry the affordance. */
   .poster-thumb:not([data-hero]) { cursor: pointer; }
 
+  /* Remove-photo button — one per cell, heroes included (see removePhoto()).
+     Sized in --sx like everything else on the sheet, which keeps its APPARENT
+     size roughly constant across sheet sizes: --sx grows with the sheet while
+     the preview shrinks by almost exactly the inverse.
+
+     Hidden until the cell is hovered, which is most of why it never reaches
+     paper: there is no hover in print, and the PNG export copies computed
+     styles from live nodes the pointer isn't over. That's a happy accident
+     rather than a guarantee though — the pointer COULD be resting on a cell —
+     so print and export also switch it off explicitly below. */
+  .poster-remove {
+    position: absolute;
+    top: calc(var(--sx) * 3);
+    right: calc(var(--sx) * 3);
+    width: calc(var(--sx) * 15);
+    height: calc(var(--sx) * 15);
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(20, 18, 14, .72);
+    color: #fff;
+    font: 600 calc(var(--sx) * 10)/1 system-ui, sans-serif;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .12s ease;
+    /* Not a click target while invisible, so a stray click on a cell corner
+       features the photo (the older gesture) instead of deleting it. */
+    pointer-events: none;
+  }
+  .poster-thumb:hover .poster-remove,
+  .poster-remove:focus-visible { opacity: 1; pointer-events: auto; }
+  /* No hover on a touch screen, so there'd be no way to reach the button at
+     all. Showing them outright is busy, but the sheet is still readable and
+     print/export strip them either way (rules above). */
+  @media (hover: none) {
+    .poster-remove { opacity: .85; pointer-events: auto; }
+  }
+  .poster-remove:hover { background: #a3251b; }
+  @media print { .poster-remove { display: none !important; } }
+  .poster-sheet.exporting .poster-remove { display: none !important; }
+
   /* ── Map + callouts ───────────────────────────────────────────── */
   .poster-map-wrap {
     position: relative;
@@ -625,6 +666,11 @@ pngBtn.addEventListener('click', async () => {
     pngBtn.textContent = `Rendering… ${Math.round((Date.now() - t0) / 1000)}s`;
   }, 1000);
   pngBtn.textContent = 'Rendering… 0s';
+  // The per-cell ✕ buttons live INSIDE the sheet, and the export clones the
+  // sheet's DOM with computed styles. They're hover-hidden, so the pointer
+  // would have to be resting on a cell to catch one — but "the mouse happens
+  // to be elsewhere" is not a guarantee, so switch them off for the capture.
+  sheet.classList.add('exporting');
   try {
     const canvas = await htmlToImage.toCanvas(sheet, {
       pixelRatio: EXPORT_DPI / 96,
@@ -673,6 +719,7 @@ pngBtn.addEventListener('click', async () => {
   } finally {
     clearInterval(tick);
     pngBtn.disabled = false;
+    sheet.classList.remove('exporting');
   }
 });
 
@@ -715,11 +762,23 @@ pngBtn.addEventListener('click', async () => {
 const PEOPLE_COUNT = PHOTOS.reduce((n, p) => n + (p.people ? 1 : 0), 0);
 let peopleOnly = new URLSearchParams(location.search).get('people') === '1'
                  && PEOPLE_COUNT > 0;
+// Photos the user has removed from the sheet (the ✕ on a cell). Filtered out
+// of POOL rather than just replaced in place, so a Shuffle or a People-only
+// flip can't hand a rejected photo straight back — "not this one" is a
+// curation decision and it should stick. Page-local and deliberately not
+// persisted: same reasoning as click-to-feature, it's a choice about THIS
+// sheet, not a judgment about the photo, so nothing is written server-side
+// and a reload starts clean (which is also the undo).
+const banished = new Set();
+
 // The live pool every deal walks. Rebuilt rather than re-sorted whenever the
-// toggle flips or Shuffle reorders PHOTOS, so it always inherits the current
-// shuffle order (the filtered array is a copy — shuffling PHOTOS in place
-// doesn't reach it).
-const buildPool = () => peopleOnly ? PHOTOS.filter(p => p.people) : PHOTOS;
+// toggle flips, Shuffle reorders PHOTOS, or a photo is removed, so it always
+// inherits the current shuffle order (the filtered array is a copy —
+// shuffling PHOTOS in place doesn't reach it).
+const buildPool = () => {
+  const base = peopleOnly ? PHOTOS.filter(p => p.people) : PHOTOS;
+  return banished.size ? base.filter(p => !banished.has(p.url)) : base;
+};
 let POOL = buildPool();
 
 const peopleBox = document.getElementById('poster-people');
@@ -799,8 +858,66 @@ function makeThumb(photo) {
   img.loading = 'lazy';
   img.alt = '';
   div.appendChild(img);
+  // A real <button> so it's keyboard-reachable and announces itself; the
+  // delegated strip handler below reads it via closest().
+  const rm = document.createElement('button');
+  rm.type = 'button';
+  rm.className = 'poster-remove';
+  rm.textContent = '×';
+  rm.title = 'Remove this photo from the poster (stays off until you reload)';
+  rm.setAttribute('aria-label', 'Remove this photo from the poster');
+  div.appendChild(rm);
   setThumbPhoto(div, photo);
   return div;
+}
+
+// Drop one photo and pull the next one into its cell. The sheet is a fixed
+// grid — leaving a hole would break the layout the whole page is built around
+// — so removal is really a replacement: the cell keeps its place and takes the
+// next undealt photo (a hero takes the next best from the ranked deck, so
+// removing a hero doesn't quietly demote that cell to a random photo).
+//
+// The removed photo is banished so it doesn't reappear on the next Shuffle.
+// POOL is deliberately NOT rebuilt here — `dealt` already keeps takeSingle and
+// takeHero from handing the photo back within this deal, and the existing
+// rebuild points (Shuffle, the People toggle) pick the banishment up for the
+// next one. Splicing the array mid-deal would only shift it under photoCursor.
+function removePhoto(cell) {
+  const gone = cell._photo;
+  if (!gone) return;
+  const isHero = !!cell.dataset.hero;
+  banished.add(gone.url);
+  const next = isHero ? takeHero() : takeSingle();
+  // takeSingle's last-resort branch ignores `dealt` (it exists so a library
+  // smaller than the sheet still fills every cell), so on a tiny library it can
+  // hand back the very photo just removed. Keep the cell as it is rather than
+  // pretending something happened.
+  if (!next || next.url === gone.url) return;
+  // Refilling a HERO from the deck alone isn't enough: the deck only holds
+  // photos not yet dealt, and the singles have by then eaten every favorite
+  // the two hero draws didn't take. Discarding a hero would hand the biggest
+  // cell on the sheet a rank-4 photo while a starred one sat in a 68px cell —
+  // the exact coin flip the ranked deck exists to prevent. So compare the
+  // deck's next against the best photo already on the sheet and promote the
+  // better one, giving its small cell the deck photo. Same swap primitive as
+  // the portrait fix and click-to-feature: nothing drops off the sheet.
+  const bench = isHero ? bestSmallCell() : null;
+  if (bench && heroRank(bench._photo) < heroRank(next)) {
+    setThumbPhoto(cell, bench._photo);
+    setThumbPhoto(bench, next);
+  } else {
+    setThumbPhoto(cell, next);
+  }
+  // A replacement hero may be portrait; the aspect pass swaps it with a small
+  // cell exactly as it does on a fresh deal.
+  if (isHero) fitHeroes(dealId);
+}
+
+// Best-ranked photo currently sitting in a small cell (see removePhoto).
+function bestSmallCell() {
+  return Array.from(document.querySelectorAll('.poster-thumb:not([data-hero])'))
+    .reduce((best, c) => (c._photo && (!best || heroRank(c._photo) < heroRank(best._photo)))
+                         ? c : best, null);
 }
 
 // `heroAreas` is a list of grid-area strings, each a 2×2 span, and
@@ -925,7 +1042,11 @@ document.getElementById('poster-shuffle').addEventListener('click', () => {
 document.querySelectorAll('.poster-photos').forEach(strip => {
   strip.addEventListener('click', e => {
     const cell = e.target.closest('.poster-thumb');
-    if (!cell || cell.dataset.hero) return;
+    if (!cell) return;
+    // Remove is checked first and returns: it applies to hero cells too, which
+    // the promote path below bails on.
+    if (e.target.closest('.poster-remove')) { removePhoto(cell); return; }
+    if (cell.dataset.hero) return;
     const heroes = Array.from(document.querySelectorAll('.poster-thumb[data-hero]'));
     if (!heroes.length) return;
     const c = cell.getBoundingClientRect();
