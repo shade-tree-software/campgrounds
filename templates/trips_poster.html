@@ -237,6 +237,9 @@
     object-fit: cover;
     display: block;
   }
+  /* Click-to-feature (see the promote handler in the script): only the small
+     cells are promotable, so only they carry the affordance. */
+  .poster-thumb:not([data-hero]) { cursor: pointer; }
 
   /* ── Map + callouts ───────────────────────────────────────────── */
   .poster-map-wrap {
@@ -513,53 +516,173 @@ sizeSel.addEventListener('change', () => {
 });
 
 // ── Photo strips ────────────────────────────────────────────────────────────
-// Top strip = 12 × 2 = 24 thumbs. Bottom strip = 12 × 4 = 48 thumbs. Picks
-// from the shuffled `PHOTOS` pool sequentially via a shared cursor so the
-// bottom strip continues past whatever the top consumed instead of repeating
-// the same first images. Wraps with modulo only if the pool is exhausted.
+// Top strip = 12 × 2 = 24 cells. Bottom strip = 12 × 4 = 48 cells, two of them
+// 2×2 heroes, so 40 singles + 2 hero elements = 42 there.
+//
+// Singles walk the shuffled `PHOTOS` pool sequentially via a shared cursor so
+// the bottom strip continues past whatever the top consumed instead of
+// repeating the same first images. Heroes draw from their own ranked deck (see
+// heroRank). A shared `dealt` set keeps the two from colliding — a photo can
+// only repeat on the sheet when the library has fewer photos than cells.
 //
 // Derivative choice: the 480px /thumb/ covers a letter-sheet cell (~68px)
 // with plenty of headroom even at 300dpi print, but on poster sheets the
 // cells reach ~2in wide and thumbs go soft — so any sheet larger than
 // letter uses the 1600px /view/ derivative instead (~10% of original
 // bytes; heavier page, but this page exists to be printed).
-let photoCursor = 0;
-function makeThumb() {
+
+// A hero cell prints at 4× a single's area, so which photo lands there should
+// not be a coin flip over the whole library. Rank the pool:
+//   0 — starred by hand (Photos page / lightbox star). No heuristic knows
+//       which photo is GOOD — resolution, aspect and EXIF camera model are all
+//       proxies for "taken with the nice camera" — so the marked set is the
+//       real answer, and it's cheap to curate because a sheet needs a couple
+//       of dozen good photos, not a rating on every one.
+//   1 — leads its own trip grid (server-side `curated`). Dragging a photo to
+//       the front of a grid is already an act of picking a favorite; it just
+//       was never labeled one. Free, and better than random before anything
+//       is starred.
+//   2 — everything else, so the poster still works on an uncurated library.
+// PHOTOS arrives shuffled and Array.prototype.sort is stable, so ranking keeps
+// the randomness within each tier — Shuffle still deals different heroes.
+const heroRank = p => (p.favorite ? 0 : (p.curated ? 1 : 2));
+
+let HERO_DECK = [];
+let photoCursor = 0, heroCursor = 0, dealId = 0;
+const dealt = new Set();
+
+function takeSingle() {
+  for (let i = 0; i < PHOTOS.length; i++) {
+    const p = PHOTOS[photoCursor++ % PHOTOS.length];
+    if (!dealt.has(p.url)) { dealt.add(p.url); return p; }
+  }
+  return PHOTOS[photoCursor++ % PHOTOS.length];   // fewer photos than cells
+}
+
+function takeHero() {
+  while (heroCursor < HERO_DECK.length) {
+    const p = HERO_DECK[heroCursor++];
+    if (!dealt.has(p.url)) { dealt.add(p.url); return p; }
+  }
+  return takeSingle();   // deck exhausted (tiny library)
+}
+
+// Single place that binds a cell to a photo, so the hero aspect pass and
+// click-to-feature below can re-point a cell without restating the
+// derivative choice.
+function setThumbPhoto(div, photo) {
+  div._photo = photo;
+  div.querySelector('img').src = (SCALE > 1 && photo.view) || photo.thumb || photo.url;
+}
+
+function makeThumb(photo) {
   const div = document.createElement('div');
   div.className = 'poster-thumb';
-  const photo = PHOTOS[photoCursor % PHOTOS.length];
-  photoCursor++;
   const img = document.createElement('img');
-  img.src = (SCALE > 1 && photo.view) || photo.thumb || photo.url;
   img.loading = 'lazy';
   img.alt = '';
   div.appendChild(img);
+  setThumbPhoto(div, photo);
   return div;
 }
-// `heroes` is a list of grid-area strings, each a 2×2 span. Explicitly
-// placed items occupy their tracks first; the auto-flowing singles fill the
-// remaining cells in row-major order, so a hero displaces 4 singles and the
-// caller passes count = cells − 4×heroes.
-function fillPhotoGrid(elId, count, heroes) {
+
+// `heroAreas` is a list of grid-area strings, each a 2×2 span, and
+// `heroPhotos` the already-drawn photo for each (see dealPhotos for why they
+// are drawn ahead of time). Explicitly placed items occupy their tracks first;
+// the auto-flowing singles fill the remaining cells in row-major order, so a
+// hero displaces 4 singles and the caller passes count = cells − 4×heroes.
+function fillPhotoGrid(elId, count, heroAreas, heroPhotos) {
   const grid = document.getElementById(elId);
   if (!grid || !PHOTOS.length) return;
-  (heroes || []).forEach(area => {
-    const div = makeThumb();
+  (heroAreas || []).forEach((area, i) => {
+    const div = makeThumb(heroPhotos[i]);
     div.style.gridArea = area;
+    div.dataset.hero = '1';
     grid.appendChild(div);
   });
-  for (let i = 0; i < count; i++) grid.appendChild(makeThumb());
+  for (let i = 0; i < count; i++) {
+    const div = makeThumb(takeSingle());
+    div.title = 'Click to feature this photo';
+    grid.appendChild(div);
+  }
 }
+
 // Two 2×2 hero prints break the bottom strip's uniform grid — one upper-left,
-// one lower-right, diagonal so the strip stays balanced. 48 cells − 2 heroes
-// × 4 cells + 2 hero elements = 42 photos.
+// one lower-right, diagonal so the strip stays balanced.
+const HERO_AREAS = ['1 / 1 / span 2 / span 2', '3 / 11 / span 2 / span 2'];
+
 function dealPhotos() {
   photoCursor = 0;
+  heroCursor = 0;
+  dealt.clear();
+  dealId++;
+  HERO_DECK = PHOTOS.slice().sort((a, b) => heroRank(a) - heroRank(b));
+  // Draw the heroes BEFORE any single is dealt. Both walk the same pool and
+  // the top strip walks it from the front, so filling the strips first hands
+  // the starred photos to 68px cells and leaves the hero deck opening at
+  // rank 2 — which is exactly the bug this ordering exists to prevent.
+  const heroPhotos = HERO_AREAS.map(() => takeHero());
   document.getElementById('photos-top').replaceChildren();
   document.getElementById('photos-bottom').replaceChildren();
   fillPhotoGrid('photos-top', 24);
-  fillPhotoGrid('photos-bottom', 40, ['1 / 1 / span 2 / span 2', '3 / 11 / span 2 / span 2']);
+  fillPhotoGrid('photos-bottom', 40, HERO_AREAS, heroPhotos);
+  fitHeroes(dealId);
 }
+
+// A hero cell is 2×2 at CELL_ASPECT 1.07 — near square — so a portrait frame
+// loses its top and bottom to object-fit: cover, which is the wrong thing to
+// do to the best photo on the sheet.
+//
+// A portrait hero is SWAPPED with a small cell rather than replaced from the
+// deck: nothing then drops off the sheet (the starred-but-portrait photo still
+// prints, just at single size) and the swap is the same primitive
+// click-to-feature uses. Candidates are tried best-ranked first, so a swap
+// trades up rather than grabbing whichever landscape frame came first.
+//
+// The photo pool deliberately carries no image dimensions (that would cost a
+// Pillow open per file server-side, same reason it carries no EXIF date), so
+// probe them here — against the 480px thumb, which has the same aspect for
+// ~1% of the bytes. Async and src-only: the grid tracks never move, so nothing
+// the print layout depends on is recomputed.
+const HERO_MAX_RATIO = 1.2;     // height/width — a 4:3 portrait is 1.33
+const HERO_PROBE_TRIES = 16;    // cap for an all-portrait library
+
+function probeAspect(photo) {
+  return new Promise(resolve => {
+    const probe = new Image();
+    probe.onload = () => resolve(probe.naturalHeight / (probe.naturalWidth || 1));
+    // A thumb that won't load says nothing about its aspect — don't reject the
+    // photo for it; it fails visibly in whatever cell it lands in either way.
+    probe.onerror = () => resolve(1);
+    probe.src = photo.thumb || photo.url;
+  });
+}
+
+async function fitHeroes(myDeal) {
+  const cells = Array.from(document.querySelectorAll('.poster-thumb'));
+  const heroCells = cells.filter(c => c.dataset.hero);
+  const bench = cells.filter(c => !c.dataset.hero)
+                     .sort((a, b) => heroRank(a._photo) - heroRank(b._photo));
+  for (const cell of heroCells) {
+    const ratio = await probeAspect(cell._photo);
+    // A Shuffle landed mid-probe — these cells are gone; bail.
+    if (myDeal !== dealId) return;
+    if (ratio <= HERO_MAX_RATIO) continue;
+    for (let i = 0; i < Math.min(bench.length, HERO_PROBE_TRIES); i++) {
+      const other = bench[i];
+      if (await probeAspect(other._photo) > HERO_MAX_RATIO) continue;
+      if (myDeal !== dealId) return;
+      const portrait = cell._photo;
+      setThumbPhoto(cell, other._photo);
+      setThumbPhoto(other, portrait);
+      bench.splice(i, 1);   // that cell now holds the portrait frame
+      break;
+    }
+    // Falling out of that loop means the library is all portrait. Keep the
+    // photo where it is — cropped beats empty.
+  }
+}
+
 dealPhotos();  // first deal renders the server's per-request shuffle order
 
 // Shuffle button — a fresh deal without a reload. The server already
@@ -572,6 +695,32 @@ document.getElementById('poster-shuffle').addEventListener('click', () => {
     [PHOTOS[i], PHOTOS[j]] = [PHOTOS[j], PHOTOS[i]];
   }
   dealPhotos();
+});
+
+// Click a small cell to swap its photo into the nearer hero cell. The poster
+// is a thing you print once: you shuffle, spot something good at 68px, and
+// want it big right now. Deliberately local to this page — it's a layout
+// choice for this sheet, not a judgment about the photo, so it doesn't write
+// to the stored favorites (the Photos page and the lightbox star do that).
+// A straight swap, so the displaced hero lands in the clicked cell and
+// nothing vanishes off the sheet.
+document.querySelectorAll('.poster-photos').forEach(strip => {
+  strip.addEventListener('click', e => {
+    const cell = e.target.closest('.poster-thumb');
+    if (!cell || cell.dataset.hero) return;
+    const heroes = Array.from(document.querySelectorAll('.poster-thumb[data-hero]'));
+    if (!heroes.length) return;
+    const c = cell.getBoundingClientRect();
+    const cx = c.left + c.width / 2, cy = c.top + c.height / 2;
+    const near = heroes.reduce((best, h) => {
+      const r = h.getBoundingClientRect();
+      const d = Math.hypot(r.left + r.width / 2 - cx, r.top + r.height / 2 - cy);
+      return (!best || d < best.d) ? { el: h, d } : best;
+    }, null).el;
+    const promoted = cell._photo;
+    setThumbPhoto(cell, near._photo);
+    setThumbPhoto(near, promoted);
+  });
 });
 
 // ── Map ─────────────────────────────────────────────────────────────────────
