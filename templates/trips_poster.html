@@ -819,21 +819,35 @@ window.ekkoStreetLayer().addTo(map);
 // campspot dot. Canvas renderer — same choice as the trips map — because the
 // library is ~30k vertices. Async and additive: the poster is complete
 // without it, and routes never join fitBounds (the markers frame the map).
+//
+// EVERY trip goes into ONE multi-polyline, and that is load-bearing for the
+// ink. These lines are semi-transparent and they overlap constantly — every
+// trip radiates from the same driveway, so the corridors near home carry a
+// dozen passes of the same interstate. One layer per trip meant one canvas
+// stroke() per trip, so those passes composited: 0.38 alpha laid down twelve
+// times reads as solid navy while a one-off leg stays faint, i.e. the poster
+// drew an accidental heat map of the most-driven roads. Leaflet's canvas
+// renderer strokes all of a layer's parts in a single stroke() call, so
+// collapsing the library into one layer paints each pixel exactly once and
+// every trip carries identical weight (AWH 2026-07-28 — uniform was the ask;
+// don't split this back out per trip). Nothing is lost by merging: the poster
+// routes are `interactive: false`, so unlike the trips map there is no
+// per-trip popup that would need its own layer to hang off.
 map.createPane('tripRoutes').style.zIndex = 350;
 const routeRenderer = L.canvas({ pane: 'tripRoutes' });
 fetch('/api/trips/routes')
   .then(r => (r.ok ? r.json() : {}))
   .then(routes => {
-    Object.values(routes).forEach(line => {
-      L.polyline(line, {
-        renderer: routeRenderer,
-        pane: 'tripRoutes',
-        color: '#002868',
-        weight: Math.max(1, 1.1 * MK),
-        opacity: 0.38,
-        interactive: false,
-      }).addTo(map);
-    });
+    const lines = Object.values(routes).filter(l => l && l.length > 1);
+    if (!lines.length) return;
+    L.polyline(lines, {
+      renderer: routeRenderer,
+      pane: 'tripRoutes',
+      color: '#002868',
+      weight: Math.max(1, 1.1 * MK),
+      opacity: 0.38,
+      interactive: false,
+    }).addTo(map);
   })
   .catch(() => {});  // no routes cache yet → poster just has no route lines
 
