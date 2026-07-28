@@ -385,7 +385,14 @@ def _tile_config():
     return {
         "mode": "online",
         "streetVector": None,
-        "street": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        # No {s} subdomain sharding: the OSM tile usage policy now says to use
+        # ONLY https://tile.openstreetmap.org/{z}/{x}/{y}.png. The a/b/c.tile
+        # hosts are a leftover from HTTP/1.1's per-host connection limit, which
+        # HTTP/2 multiplexing made pointless, and OSM is retiring them. They
+        # still resolve today, so this is policy compliance rather than a fix
+        # for anything visibly broken. Keep the fallback in
+        # static/vendor/tile-layers.js in step with this.
+        "street": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "satellite": _ESRI_SAT,
         "maxZoom": 19, "maxNativeZoom": 19,
     }

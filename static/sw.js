@@ -74,8 +74,11 @@ const PHOTO_CACHE_MAX = 500;   // thumbs are ~50 KB; originals only as viewed
 // 3 tiles per cell — the cap needs real headroom to keep a working set warm.
 const TILE_CACHE_MAX = 3000;   // ~30-90 MB
 
-// Map-tile origins served cache-first. OSM rotates a/b/c subdomains, so match
-// the base host and any subdomain of it.
+// Map-tile origins served cache-first. Match the base host AND any subdomain
+// of it: we now request OSM's bare tile.openstreetmap.org (its usage policy
+// names that exact URL, and the a/b/c sharding it replaced is being retired),
+// but the subdomain arm still matters — it keeps serving the a/b/c tiles
+// already sitting in existing clients' caches from before the switch.
 const TILE_HOSTS = ['tile.openstreetmap.org', 'server.arcgisonline.com'];
 function isTileHost(host) {
   return TILE_HOSTS.some((h) => host === h || host.endsWith('.' + h));

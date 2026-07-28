@@ -56,7 +56,7 @@ def _tile_config():
         }
     return {
       "mode": "online",
-      "street": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+      "street": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
       "satellite": [ESRI_IMAGERY, ESRI_BOUNDARIES, ESRI_TRANSPORT],
       "maxZoom": 19,
     }

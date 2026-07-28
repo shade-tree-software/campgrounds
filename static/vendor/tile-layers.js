@@ -10,7 +10,9 @@
     // a page somehow renders without the injected window.EKKO_TILES.
     return window.EKKO_TILES || {
       mode: 'online',
-      street: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      // No {s} sharding — see the matching comment on the server's online
+      // config in ekko_trips_app.py; OSM's policy names this exact URL.
+      street: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       streetVector: null,
       satellite: [
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
