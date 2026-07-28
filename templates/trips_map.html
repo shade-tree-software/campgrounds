@@ -114,6 +114,54 @@
     margin-left: .5rem;
   }
 
+  /* ── Banner drum ──────────────────────────────────────────────────────
+     Where height is scarce, show ONE banner at a time and rotate them: the
+     next slides up from below and pushes the current one out. It earns its
+     keep — over the real trip data, 53% of days carry an on-this-day card
+     and 21% carry two or more (worst case 4 banners ≈ 135px, 43% of the
+     banner+map column on a phone in landscape). One slot is 26px on every
+     one of those days.
+
+     display: contents until JS switches it on, so the wrappers are invisible
+     to layout and .map-col lays the banners out exactly as it did before —
+     same gaps, and an empty drum (no latest trip, no matches) contributes no
+     stray gap either. JS owns the on/off decision rather than a media query,
+     because it also depends on prefers-reduced-motion and on whether a pause
+     control exists (see the drum script). */
+  .banner-drum,
+  .banner-drum-track { display: contents; }
+
+  .banner-drum.drum-on {
+    display: block;
+    overflow: hidden;
+    height: var(--drum-slot, 2rem);
+  }
+  .banner-drum.drum-on .banner-drum-track {
+    display: flex;
+    flex-direction: column;
+    /* Keep in step with SLIDE_MS in the script. */
+    transition: transform .45s cubic-bezier(.4, 0, .2, 1);
+  }
+  /* The on-this-day CARD dissolves so its rows become drum slides directly —
+     no DOM surgery, and selectors still match because display: contents
+     changes layout only, not the tree. Its inline display:none (no matches
+     today) outranks this, so an empty card stays out of the drum. */
+  .banner-drum.drum-on .on-this-day { display: contents; }
+  .banner-drum.drum-on .on-this-day .otd-label { display: none; }
+  .banner-drum.drum-on .on-this-day .otd-trips { display: contents; }
+  /* Each row now has to carry the card chrome the dissolved card used to
+     provide. The label is dropped rather than repeated per row: "3 years ago"
+     already says what the row is, and the label would cost ~80px of width on
+     the narrowest screen this runs on. */
+  .banner-drum.drum-on .on-this-day .otd-trips > a {
+    padding: .3rem .5rem .3rem .7rem;
+    border-left: 4px solid var(--gold);
+    border-radius: 6px;
+    background: linear-gradient(90deg, #fff8e3, #fff);
+    box-shadow: var(--shadow);
+    font-size: .85rem;
+  }
+
   /* On-this-day stacks one full-width row per matching trip so every pill
      right-justifies under the others. */
   .on-this-day .otd-trips {
@@ -584,6 +632,11 @@
   <div class="map-layout">
     {% if slideshow_photos %}<div class="photo-stack" id="stack-left"></div>{% endif %}
     <div class="map-col">
+      {# Both banners live in the drum wrapper. It is display:contents until JS
+         turns it on, so on a roomy screen the banners are laid out by .map-col
+         exactly as if the wrapper weren't here. See the banner-drum CSS. #}
+      <div class="banner-drum" id="banner-drum">
+       <div class="banner-drum-track" id="banner-drum-track">
       {% if latest_trip %}
       <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
         <span class="label">Latest trip</span>
@@ -595,6 +648,8 @@
       </a>
       {% endif %}
       <div id="on-this-day" class="on-this-day" style="display:none;"></div>
+       </div>
+      </div>
       {# .map-skeleton (base.html) shows a placeholder until the map paints. #}
       <div class="map-container map-skeleton" data-loading-label="Loading map…">
         <div id="all-trips-map"></div>
@@ -1045,10 +1100,127 @@ legend.addTo(map);
       return `<a href="/trips/${trip.id}"><span class="otd-text"><span class="otd-name">${num}${esc(trip.summary || 'Trip')}</span><span class="otd-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
     }).join('') + '</span>';
   el.style.display = '';
+  // In drum mode the card is display:contents — it has no box of its own, so
+  // offsetHeight is 0 and the map calcs must not be told to reserve a gap for
+  // it either. The drum re-runs this after it switches on (window.__otdSync).
   const sync = () => document.documentElement.style.setProperty(
-    '--otd-height', (el.offsetHeight + 10) + 'px');  // +10 ≈ the column gap
+    '--otd-height', (el.offsetHeight ? el.offsetHeight + 10 : 0) + 'px');  // +10 ≈ the column gap
   sync();
+  window.__otdSync = sync;
   window.addEventListener('resize', sync);
+})();
+
+// ── Banner drum ─────────────────────────────────────────────────────────────
+// One banner visible at a time on small screens, the next sliding up from
+// below. Rationale and the day-count data are in the .banner-drum CSS block.
+(function () {
+  const drum = document.getElementById('banner-drum');
+  const track = document.getElementById('banner-drum-track');
+  if (!drum || !track) return;
+
+  // The rendered banner rows, in order. Queried rather than read off
+  // track.children because display:contents leaves the on-this-day rows as
+  // grandchildren in the DOM even while they lay out as drum slides.
+  // :not(.drum-clone) is load-bearing — the trailing clone is itself a
+  // .latest-trip-banner sitting in the track, so without it the clone counts
+  // as a slide, every step is 100/(n+2)% instead of 100/(n+1)%, and the drum
+  // stops half way between banners.
+  const SLIDE_SEL = '.latest-trip-banner:not(.drum-clone), .on-this-day .otd-trips > a';
+  const HOLD_MS = 4000;    // a banner is a sentence; the 2.5s photo cadence is too fast to read
+  const SLIDE_MS = 450;    // keep in step with the CSS transition
+  const SMALL = window.matchMedia('(max-width: 700px), (max-height: 500px)');
+  const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // WCAG 2.2.2: content that moves on its own needs a way to stop it. This
+  // page has exactly one such control — the photo slideshow's pause button —
+  // and it only exists when there are photos. With none, don't start motion
+  // that can't be stopped; the banners just stay stacked.
+  const HAS_PAUSE_CONTROL = {{ 'true' if slideshow_photos else 'false' }};
+
+  let on = false, clone = null, idx = 0, timer = null, hovered = false;
+  const slides = () => Array.from(track.querySelectorAll(SLIDE_SEL));
+
+  const paused = () => hovered || document.hidden ||
+    // Set by the photo slideshow; one control stops every moving thing here.
+    !!(window.__ekkoMotionPaused && window.__ekkoMotionPaused());
+
+  function step() {
+    const total = slides().length + 1;   // + the trailing clone
+    idx += 1;
+    track.style.transform = `translateY(${(-idx * 100 / total).toFixed(4)}%)`;
+    if (idx < total - 1) return;
+    // Landed on the clone. It is pixel-identical to slide 0, so snap back
+    // with the transition off and the loop reads as one continuous drum
+    // rather than rewinding.
+    setTimeout(() => {
+      track.style.transition = 'none';
+      idx = 0;
+      track.style.transform = 'translateY(0)';
+      void track.offsetHeight;           // flush, or both writes coalesce and it animates anyway
+      track.style.transition = '';
+    }, SLIDE_MS + 30);
+  }
+
+  function measure() {
+    const first = slides()[0];
+    if (first) drum.style.setProperty('--drum-slot', first.offsetHeight + 'px');
+  }
+
+  function enable() {
+    const list = slides();
+    // Rotation needs a clone of slide 0 for the seamless loop, and the clone
+    // sits outside .on-this-day — so only a .latest-trip-banner first slide is
+    // safe to copy (its styling is all class-based; an on-this-day row's is
+    // partly structural). There is no real case where slide 0 is anything
+    // else: on-this-day only matches PRIOR-year trips, so any day with a
+    // match also has a latest trip.
+    if (!list.length || (list.length > 1 && !list[0].classList.contains('latest-trip-banner'))) return;
+    on = true;
+    drum.classList.add('drum-on');
+    measure();
+    if (window.__otdSync) window.__otdSync();   // the card has no box now
+    if (list.length < 2) return;                // 47% of days: one banner, nothing moves
+    clone = list[0].cloneNode(true);
+    clone.classList.add('drum-clone');
+    clone.setAttribute('aria-hidden', 'true');
+    clone.setAttribute('tabindex', '-1');
+    clone.removeAttribute('id');
+    track.appendChild(clone);
+    timer = setInterval(() => { if (!paused()) step(); }, HOLD_MS);
+  }
+
+  function disable() {
+    on = false;
+    clearInterval(timer);
+    timer = null;
+    if (clone) { clone.remove(); clone = null; }
+    idx = 0;
+    drum.classList.remove('drum-on');
+    drum.style.removeProperty('--drum-slot');
+    track.style.transition = '';
+    track.style.transform = '';
+    if (window.__otdSync) window.__otdSync();
+  }
+
+  function sync() {
+    const want = SMALL.matches && !REDUCED.matches && HAS_PAUSE_CONTROL;
+    if (want && !on) enable();
+    else if (!want && on) disable();
+    else if (want && on) measure();   // rotation changed the banner's height
+  }
+
+  drum.addEventListener('mouseenter', () => { hovered = true; });
+  drum.addEventListener('mouseleave', () => { hovered = false; });
+  // Same reason the photo stacks pause on focus: a slot that slides away while
+  // it holds focus moves the link out from under the person about to press Enter.
+  drum.addEventListener('focusin', () => { hovered = true; });
+  drum.addEventListener('focusout', () => { hovered = false; });
+
+  SMALL.addEventListener('change', sync);
+  REDUCED.addEventListener('change', sync);
+  window.addEventListener('resize', sync);
+  // Webfonts can land after first paint and change the banner's height.
+  window.addEventListener('load', sync);
+  sync();
 })();
 
 // ── Trip-number fit ─────────────────────────────────────────────────────────
@@ -1244,6 +1416,11 @@ if (PHOTOS.length && leftStack && rightStack) {
     syncPauseBtn();
     pauseBtn.addEventListener('click', () => { userPaused = !userPaused; syncPauseBtn(); });
     leftStack.appendChild(pauseBtn);
+    // This button is the page's single "stop the motion" control (WCAG 2.2.2),
+    // so the banner drum reads it too rather than growing a second one into a
+    // 26px banner. Published as a getter, not a value — the drum checks it on
+    // every tick, so it sees the current state without any wiring back.
+    window.__ekkoMotionPaused = () => userPaused;
     // Track the last few slot indices that were updated so we don't
     // immediately swap the same one again. Cooldown is capped to one
     // less than the total slot count so there's always a valid pick.
