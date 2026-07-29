@@ -274,10 +274,12 @@
      the banner cards' text below: theirs starts 22px in from the column's left
      edge (their 6px accent border + 1rem padding), so the pill is inset by
      exactly that less its own horizontal padding, and the two labels line up in
-     a single vertical. Typography comes from the shared label rule above.
-       pointer-events is off — it's a caption, not a control, and a drag or a
-     marker click that lands on it has to reach Leaflet. It also sits UNDER
-     Leaflet's control container (z-index ~1000), so no control can be covered. */
+     a single vertical. Typography comes from the shared label rule above —
+     `font-family: inherit` because a <button> doesn't inherit it.
+       It IS a button: clicking re-frames the map on every trip, the only route
+     back to the opening view now that the zoom control is gone. It sits UNDER
+     Leaflet's control container (z-index ~1000), so it can never cover one, and
+     it's small so the map area it takes out of dragging is negligible. */
   .map-title-pill {
     --pill-pad-x: .7rem;
     position: absolute;
@@ -285,11 +287,33 @@
     left: calc(6px + 1rem - var(--pill-pad-x));
     z-index: 500;
     padding: .3rem var(--pill-pad-x);
+    border: 0;
     border-radius: 999px;
     background: var(--navy);
     color: var(--white);
+    font-family: inherit;
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+  }
+  .map-title-pill:hover {
+    filter: brightness(1.25);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,.28);
+  }
+  .map-title-pill:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 2px;
+  }
+  /* No trips to frame (see the bounds check in the map script): back to being a
+     plain caption — no hover promise, and clicks pass through to the map. */
+  .map-title-pill:disabled {
+    cursor: default;
     pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .map-title-pill { transition: none; }
+    .map-title-pill:hover { transform: none; }
   }
 
   #all-trips-map {
@@ -678,8 +702,12 @@
         <div id="all-trips-map"></div>
         {# Floats ON the map (see .map-title-pill), so it comes after the Leaflet
            div. trip_count comes from inject_trip_stats — base.html's header uses
-           the same var, so the pill and the title bar can never disagree. #}
-        <span class="map-title-pill">All {{ trip_count }} Trips</span>
+           the same var, so the pill and the title bar can never disagree.
+           A button, not a label: clicking it re-frames the map on all trips,
+           which is the only way back to the opening view now that the zoom
+           control is gone. #}
+        <button type="button" class="map-title-pill"
+                title="Zoom out to show all trips">All {{ trip_count }} Trips</button>
       </div>
     </div>
     {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
@@ -942,9 +970,24 @@ FAMILY.forEach(fam => {
   bounds.push(ll);
 });
 
+// The opening framing, kept as a function because the title pill re-runs it —
+// clicking "All N Trips" means "show me all N trips", and that has to be the
+// same view the page opened at rather than a second set of numbers that could
+// drift from it.
+function fitAllTrips(animate) {
+  map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8, animate: !!animate });
+}
+
+const titlePill = document.querySelector('.map-title-pill');
+
 if (bounds.length) {
-  map.fitBounds(bounds, { padding: [30, 30], maxZoom: 8 });
+  fitAllTrips(false);
+  if (titlePill) titlePill.addEventListener('click', () => fitAllTrips(true));
 } else {
+  // Nothing to reset TO, so the pill goes back to being a plain label —
+  // disabled drops it out of the tab order and stops it advertising an action
+  // it can't perform (see :disabled in the .map-title-pill CSS).
+  if (titlePill) titlePill.disabled = true;
   // Nothing to fit — no trips yet, or (for a non-admin) every trip is
   // home-only and hidden. Leaflet with no view set renders as a gray box that
   // reads as broken, so pick a continental view and say what's going on.
