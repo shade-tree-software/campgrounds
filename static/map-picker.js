@@ -45,7 +45,10 @@ function createMapPicker(opts) {
   // ── Map init ──────────────────────────────────────────────────────────
   function initMap() {
     if (map) return;
-    map = L.map(opts.mapId).setView(opts.defaultView || [38.93, -77.37], 7);
+    // zoomControl: false app-wide — wheel/pinch/double-click/keyboard all zoom,
+    // and in a popup this small the buttons cost real picking area.
+    map = L.map(opts.mapId, { zoomControl: false })
+            .setView(opts.defaultView || [38.93, -77.37], 7);
     if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
     const streets = window.ekkoStreetLayer().addTo(map);
     const satellite = window.ekkoSatelliteLayer();

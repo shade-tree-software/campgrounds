@@ -252,7 +252,8 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // real pointer is a mouse, keeps ordinary click-drag panning — L.Browser.touch
   // is true for anything that merely supports touch events.
   const touchPrimary = window.matchMedia('(pointer: coarse)').matches;
-  const map = L.map('trip-map', { dragging: !touchPrimary });
+  // zoomControl: false app-wide — wheel/pinch/double-click/keyboard all zoom.
+  const map = L.map('trip-map', { dragging: !touchPrimary, zoomControl: false });
   // Published so anything that temporarily suppresses dragging (the admin
   // select-pings lasso) restores it to this page's baseline rather than
   // unconditionally enabling it — which on a phone would reinstate the

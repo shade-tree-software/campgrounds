@@ -306,6 +306,8 @@ Shared across campground manage and event location picker via `static/map-picker
 
 All Leaflet maps offer a satellite layer that includes three Esri tile layers: World_Imagery (base), World_Boundaries_and_Places (labels), and World_Transportation (roads). This applies to trip detail, trips map, campground map, and campground manage templates.
 
+**No map anywhere carries Leaflet's +/− zoom control** — every `L.map()` call passes `zoomControl: false`. Wheel, pinch, double-click and the keyboard +/− all zoom, so the buttons only spent map area (worst on the small map-picker popup and on phones). Keep new maps consistent.
+
 ### Responsive / Mobile Design
 
 Single mobile breakpoint at `max-width: 700px`; trips map has an extra `max-width: 900px` breakpoint for filmstrip reflow. Each template owns its own mobile rules — see those CSS blocks for specifics. Notable behaviors:

@@ -76,7 +76,8 @@
 
   /* Uppercase label */
   .latest-trip-banner .label,
-  .on-this-day .otd-label {
+  .on-this-day .otd-label,
+  .map-title-pill {
     flex-shrink: 0;
     font-size: .7rem;
     text-transform: uppercase;
@@ -267,6 +268,28 @@
        ~1000) so they don't render above the sticky site header (z-index 900). */
     position: relative;
     z-index: 0;
+  }
+
+  /* Floating title pill over the map's top-left corner. Its TEXT is aligned to
+     the banner cards' text below: theirs starts 22px in from the column's left
+     edge (their 6px accent border + 1rem padding), so the pill is inset by
+     exactly that less its own horizontal padding, and the two labels line up in
+     a single vertical. Typography comes from the shared label rule above.
+       pointer-events is off — it's a caption, not a control, and a drag or a
+     marker click that lands on it has to reach Leaflet. It also sits UNDER
+     Leaflet's control container (z-index ~1000), so no control can be covered. */
+  .map-title-pill {
+    --pill-pad-x: .7rem;
+    position: absolute;
+    top: .6rem;
+    left: calc(6px + 1rem - var(--pill-pad-x));
+    z-index: 500;
+    padding: .3rem var(--pill-pad-x);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--navy);
+    box-shadow: var(--shadow);
+    pointer-events: none;
   }
 
   #all-trips-map {
@@ -653,6 +676,10 @@
       {# .map-skeleton (base.html) shows a placeholder until the map paints. #}
       <div class="map-container map-skeleton" data-loading-label="Loading map…">
         <div id="all-trips-map"></div>
+        {# Floats ON the map (see .map-title-pill), so it comes after the Leaflet
+           div. trip_count comes from inject_trip_stats — base.html's header uses
+           the same var, so the pill and the title bar can never disagree. #}
+        <span class="map-title-pill">All {{ trip_count }} Trips</span>
       </div>
     </div>
     {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
@@ -702,7 +729,9 @@ try {
 } catch (_) { /* storage disabled — the address bar still carries the link */ }
 {% endif %}
 
-const map = L.map('all-trips-map');
+// No zoom control anywhere in the app: the wheel, pinch, double-click and the
+// keyboard +/- all zoom, and the buttons only cost map.
+const map = L.map('all-trips-map', { zoomControl: false });
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
 const satellite = window.ekkoSatelliteLayer();
