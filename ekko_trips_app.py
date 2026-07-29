@@ -303,6 +303,9 @@ def inject_trip_stats():
     # no campspots AND no events and counts as neither.
     daytrips = sum(1 for t in trips if is_day_trip(t))
     return {
+        # The header shows the combined figure; the two parts stay available
+        # for anything that still wants the breakdown.
+        "trip_count": overnight + daytrips,
         "overnight_count": overnight,
         "daytrip_count": daytrips,
         # camping_nights(), matching the stats page — the header's nights
