@@ -37,7 +37,7 @@
     );
   }
 
-  /* Click-through card above the map pointing at the most recently-started
+  /* Click-through card below the map pointing at the most recently-started
      trip. Hidden when no dated trips exist (Jinja gates the markup). Styled
      as a white card with a red accent stripe and an explicit CTA pill on the
      right, so it doesn't read as a header bar. */
@@ -206,8 +206,8 @@
     justify-content: center;
   }
 
-  /* Center column holds the (optional) latest-trip banner stacked on top of
-     the map. Owns the width constraint so the banner spans only the map's
+  /* Center column holds the map with the (optional) latest-trip banner stacked
+     underneath it. Owns the width constraint so the banner spans only the map's
      width — never the photo stacks.
        The square map is sized so the column fits the viewport without scroll:
      100vh minus the measured site header (--site-top-height, published by
@@ -632,9 +632,14 @@
   <div class="map-layout">
     {% if slideshow_photos %}<div class="photo-stack" id="stack-left"></div>{% endif %}
     <div class="map-col">
-      {# Both banners live in the drum wrapper. It is display:contents until JS
-         turns it on, so on a roomy screen the banners are laid out by .map-col
-         exactly as if the wrapper weren't here. See the banner-drum CSS. #}
+      {# .map-skeleton (base.html) shows a placeholder until the map paints. #}
+      <div class="map-container map-skeleton" data-loading-label="Loading map…">
+        <div id="all-trips-map"></div>
+      </div>
+      {# Both banners sit BELOW the map and live in the drum wrapper. It is
+         display:contents until JS turns it on, so on a roomy screen the banners
+         are laid out by .map-col exactly as if the wrapper weren't here. See
+         the banner-drum CSS. #}
       <div class="banner-drum" id="banner-drum">
        <div class="banner-drum-track" id="banner-drum-track">
       {% if latest_trip %}
@@ -649,10 +654,6 @@
       {% endif %}
       <div id="on-this-day" class="on-this-day" style="display:none;"></div>
        </div>
-      </div>
-      {# .map-skeleton (base.html) shows a placeholder until the map paints. #}
-      <div class="map-container map-skeleton" data-loading-label="Loading map…">
-        <div id="all-trips-map"></div>
       </div>
     </div>
     {% if slideshow_photos %}<div class="photo-stack" id="stack-right"></div>{% endif %}
