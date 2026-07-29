@@ -84,12 +84,74 @@ function isTileHost(host) {
   return TILE_HOSTS.some((h) => host === h || host.endsWith('.' + h));
 }
 
+// Base-map tiles for the landing map's opening view, precached so it draws
+// even when the tile cache is cold — after an eviction, offline, or on a device
+// where the SW installed from some other page. Without this the map is the one
+// part of the app that can't render from cache until you've already seen it.
+//
+// The box is the trips' bounding box padded out to roughly what the square
+// fitBounds view actually shows; z3 and z4 are what the landing map opens at on
+// a phone and on a desktop respectively (16 tiles, ~350 KB). Deeper zooms are
+// left to tileCacheFirst on demand — z5 alone would be another 36 tiles, and
+// past the opening view it's the user's panning, not ours, that decides.
+//
+// Approximate by design: it only decides what gets a head start, so trips
+// outside the box cost nothing but a miss. Widen it if the map's home view
+// moves. Tiles already in TILE_CACHE are skipped, so a redeploy re-fetches
+// nothing (TILE_CACHE isn't keyed to VERSION).
+const TILE_PRECACHE = {
+  south: 17.2, west: -106.4, north: 55.8, east: -51.2,
+  zooms: [3, 4],
+  url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+};
+
+function lonToTileX(lon, z) {
+  return Math.floor((lon + 180) / 360 * Math.pow(2, z));
+}
+function latToTileY(lat, z) {
+  const r = lat * Math.PI / 180;
+  return Math.floor((1 - Math.log(Math.tan(r) + 1 / Math.cos(r)) / Math.PI) / 2 * Math.pow(2, z));
+}
+
+function precacheTileUrls() {
+  const b = TILE_PRECACHE, urls = [];
+  b.zooms.forEach((z) => {
+    const x0 = lonToTileX(b.west, z), x1 = lonToTileX(b.east, z);
+    const y0 = latToTileY(b.north, z), y1 = latToTileY(b.south, z);
+    for (let x = x0; x <= x1; x++) {
+      for (let y = y0; y <= y1; y++) {
+        urls.push(b.url.replace('{z}', z).replace('{x}', x).replace('{y}', y));
+      }
+    }
+  });
+  return urls;
+}
+
+// Sequential on purpose: this is a background nicety competing with the page's
+// own loading, and OSM's usage policy is explicit about not issuing bulk
+// parallel tile requests. Every failure is swallowed — a tile we didn't get is
+// simply fetched on demand later.
+async function precacheTiles() {
+  const cache = await caches.open(TILE_CACHE);
+  for (const url of precacheTileUrls()) {
+    try {
+      if (await cache.match(url)) continue;
+      const res = await fetch(url, { mode: 'cors' });
+      if (res && res.status === 200) await cache.put(url, res);
+    } catch (err) { /* offline or blocked — on-demand fetch will cover it */ }
+  }
+}
+
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open(PAGE_CACHE)
       .then((c) => c.addAll([OFFLINE_URL, ...VENDOR_ASSETS]))
       .then(() => self.skipWaiting())
   );
+  // Deliberately NOT part of waitUntil: install must not wait on 16 tile
+  // fetches from a rate-limited public server, and nothing depends on them
+  // having landed.
+  precacheTiles();
 });
 
 self.addEventListener('activate', (e) => {

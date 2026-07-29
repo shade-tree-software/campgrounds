@@ -64,6 +64,36 @@ def _revalidate_html(resp):
     return resp
 
 
+@app.after_request
+def _cache_static(resp):
+    """Long-cache static assets, since `static_v()` already fingerprints them.
+
+    Flask's default for the `static` endpoint is `no-cache`, i.e. revalidate
+    every time — so leaflet.js (144 KB) and friends cost a round trip on every
+    page load even though their URLs carry `?v=<mtime>` and a changed file gets
+    a changed URL. `immutable` says the opposite and is exactly true here: that
+    URL's bytes never change.
+
+    Assets requested WITHOUT `?v=` (favicons, the manifest, anything hardcoded
+    in a template) aren't fingerprinted, so they get a day instead of a year —
+    long enough to stop the per-load revalidation, short enough that replacing
+    an icon isn't a one-year commitment.
+
+    NOTE (PythonAnywhere): the live host maps `/static/` straight to disk, so it
+    never consults Flask and this header does NOT apply there — see the deploy
+    notes in CLAUDE.md. It applies on the dev server and any host where Flask
+    serves its own static files.
+    """
+    if request.endpoint == 'static' and resp.status_code == 200:
+        # Assigned, not setdefault: Flask has already put its own `no-cache`
+        # on the response by this point, so a default would never win.
+        if request.args.get('v'):
+            resp.headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+        else:
+            resp.headers['Cache-Control'] = 'public, max-age=86400'
+    return resp
+
+
 # Audit-trail fields on a campground entry: the proof strings behind its
 # waterfront and inclusion calls. Source of truth in campgrounds.json, but no
 # client reads them, so every browser-bound payload strips them.
@@ -2053,6 +2083,19 @@ def _parse_latlng(loc):
 
 # ── Trip routes ─────────────────────────────────────────────────────────────
 
+# How many photos the landing slideshow ships inline. The pool is the WHOLE
+# library (1,472 photos today) and it was all being embedded in the page — 492
+# KB of the 1.41 MB HTML, for six visible slots. That payload has to arrive and
+# parse before the inline script runs, which is before Leaflet can request its
+# first map tile, so it delayed the thing the page is actually about.
+#
+# 200 is ~8 minutes of unique photos at the rotator's one-slot-per-2.5s cadence
+# — longer than anyone watches — and because the shuffle happens BEFORE the
+# slice, each page load draws a different 200, so the library still feels whole
+# across visits. Raise it only with that transfer+parse cost in mind.
+SLIDESHOW_POOL_MAX = 200
+
+
 @app.route('/')
 @app.route('/trips')
 @app.route('/trips/map')
@@ -2072,6 +2115,7 @@ def trips_map():
     all_photos = [p for p in _collect_photo_pool()
                   if is_admin or not p["home_only"]]
     random.shuffle(all_photos)
+    all_photos = all_photos[:SLIDESHOW_POOL_MAX]
 
     # Banner above the map links to the most recently-started visible trip.
     # `parse_trips()` already sorts ascending by start; empty new trips have
