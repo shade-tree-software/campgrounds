@@ -332,6 +332,17 @@ def inject_trip_stats():
     # is_day_trip(), matching the stats page — an empty placeholder trip has
     # no campspots AND no events and counts as neither.
     daytrips = sum(1 for t in trips if is_day_trip(t))
+    # Span of years the trips cover, for the header's title line. Dateless
+    # placeholder trips carry start == "" and are skipped the same way the
+    # calendar's year range skips them; a single-year library renders as just
+    # that year rather than "2022–2022".
+    years = sorted({t["start"][:4] for t in trips if t.get("start")})
+    if not years:
+        year_range = ""
+    elif years[0] == years[-1]:
+        year_range = years[0]
+    else:
+        year_range = f"{years[0]}–{years[-1]}"
     return {
         # The header shows the combined figure; the two parts stay available
         # for anything that still wants the breakdown.
@@ -341,6 +352,7 @@ def inject_trip_stats():
         # camping_nights(), matching the stats page — the header's nights
         # figure and the Nights hero/by-year chart must never disagree.
         "night_count": sum(camping_nights(t) for t in trips),
+        "year_range": year_range,
     }
 
 

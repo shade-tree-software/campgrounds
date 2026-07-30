@@ -158,11 +158,32 @@
     top: 2px;
   }
 
-  /* When title + subtitle + stats no longer all fit, drop the stats first so
-     the header keeps the title + subtitle pairing. The subtitle itself only
-     drops ≤700px (see the phone block below). */
+  /* Span of years the library covers, a third segment on the title line.
+     Same faint rule + size as the subtitle so the three read as one line;
+     upright and letter-spaced rather than italic so the digits don't read as
+     part of the subtitle's phrase. */
+  .site-years {
+    font-size: .95rem;
+    font-weight: 400;
+    opacity: .7;
+    padding-left: .75rem;
+    border-left: 1px solid rgba(255,255,255,.3);
+    letter-spacing: .04em;
+    white-space: nowrap;
+    position: relative;
+    top: 2px;  /* match the subtitle's baseline nudge */
+  }
+
+  /* Drop order as the header narrows: stats (≤900), then the year range
+     (≤780), then the subtitle (≤700, in the phone block below). The years are
+     the most expendable of the three — the subtitle says what the site is,
+     the years only say how long it's been going — so they go before it. 780
+     keeps them through iPad portrait (820) and clears the phone breakpoint. */
   @media (max-width: 900px) {
     .stats { display: none; }
+  }
+  @media (max-width: 780px) {
+    .site-years { display: none; }
   }
 
   .nav-toggle {
@@ -193,6 +214,7 @@
     header { padding: .4rem 2rem; }
     header h1 { font-size: 1.3rem; }
     .site-subtitle { font-size: .82rem; }
+    .site-years { font-size: .82rem; }
     .stats { font-size: .82rem; gap: 1rem; }
     nav { padding: .2rem 2rem; }
   }
@@ -577,8 +599,9 @@
     header h1 { font-size: 1.2rem; }
     .header-title { gap: .25rem; }
     /* Below the two-item width, drop the subtitle too so only the title
-       remains. (Stats are already hidden ≤900px above; their counters live
-       on the Stats page, one tap away in the bottom tab bar.) */
+       remains. (Stats are already hidden ≤900px above and the year range
+       ≤780px; the stats counters live on the Stats page, one tap away in the
+       bottom tab bar.) */
     .site-subtitle { display: none; }
   }
 
@@ -598,6 +621,7 @@
     {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">&#9776;</button>{% endif %}
     <h1><a href="/">EKKOing Around</a></h1>
     <span class="site-subtitle">Hamilton family road trips</span>
+    {% if year_range %}<span class="site-years">{{ year_range }}</span>{% endif %}
   </div>
   {% if current_user.is_authenticated %}
   <a class="stats" href="/trips/stats" title="View stats">
