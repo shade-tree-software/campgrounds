@@ -523,9 +523,13 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // Keyed on campground identity, not on the coordinate: those `campsite_location`
   // offsets give two stays at one campground different coordinates while leaving
   // them visually a single marker.
+  // Also how the family-house markers below find the stays parked in their
+  // driveway, so the two can't disagree about what counts as the same place.
+  function campgroundStayKey(id) { return 'cg:' + id; }
+
   function stayGroupKey(stay) {
     if (stay.campground_id !== null && stay.campground_id !== undefined) {
-      return 'cg:' + stay.campground_id;
+      return campgroundStayKey(stay.campground_id);
     }
     // Free-text stays (hotels, Airbnbs) have no id, so name + coordinate is the
     // only identity available. Same name at a different coordinate is a
@@ -542,6 +546,21 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // in the trip, carried along so a grouped popup can name each occurrence.
     stayOccurrences.get(key).push({ stay, num: i + 1 });
   });
+
+  // Give a marker the click behavior of a set of campspot occurrences: one stay
+  // behaves like that stay's own pin (two-column scrolls to its card, stacked
+  // pops up its details), several always open the occurrence list. Used by the
+  // campspot markers and by the family house marker standing over the driveway
+  // those stays are parked in. `emptyHtml` covers a marker with no stays at all.
+  function wireStayGroupClick(marker, group, emptyHtml) {
+    if (!group.length) return onMarkerClick(marker, emptyHtml, null);
+    const multi = group.length > 1;
+    const { stay, num } = group[0];
+    return onMarkerClick(marker,
+      multi ? stayGroupPopupHtml(group) : stayPopupHtml(stay, num),
+      multi ? null : 'stay-' + stay.idx,
+      { alwaysPopup: multi });
+  }
 
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
@@ -560,14 +579,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconAnchor: [12, 12],
     });
     const group = stayOccurrences.get(stayGroupKey(stay)) || [{ stay, num: i + 1 }];
-    const multi = group.length > 1;
     const stayMarker = label(L.marker(ll, { icon, zIndexOffset: 800 }).addTo(map),
       `${i + 1}. ${stay.place || 'Campspot'}`
-      + (multi ? ` · ${group.length} stays here` : ''));
-    onMarkerClick(stayMarker,
-      multi ? stayGroupPopupHtml(group) : stayPopupHtml(stay, i + 1),
-      multi ? null : 'stay-' + stay.idx,
-      { alwaysPopup: multi });
+      + (group.length > 1 ? ` · ${group.length} stays here` : ''));
+    wireStayGroupClick(stayMarker, group);
     cardTargets['stay-' + stay.idx] = ll;
     cardMarkers['stay-' + stay.idx] = stayMarker;
   });
@@ -1386,12 +1401,23 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    // No card to scroll to — these are family homes near the trip that weren't
-    // visited on it. On the two-column layout the tooltip names them and the
-    // click does nothing; single-column has no hover, so it gets the popup.
+    // When the trip PARKED IN THIS DRIVEWAY, the house marker answers for those
+    // campspots exactly as the driveway marker does. A family entry's stays are
+    // pinned to its `driveway_location` so they don't hide under the house icon,
+    // which leaves the two ~19–25 m apart (Svendsens 18.8 m, and 24 trips do
+    // this) — one place as far as the reader is concerned, yet only one half of
+    // it responded to a click. So: one stay → scroll to its card, several → the
+    // same occurrence list the driveway marker shows.
+    //
+    // With no stays there's no card to scroll to — a family home merely NEAR the
+    // trip. There the tooltip names it on two-column and the click does nothing;
+    // single-column has no hover, so it gets the name as a popup.
+    const drivewayStays = stayOccurrences.get(campgroundStayKey(fam.id)) || [];
     const proxMarker = label(
-      L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map), fam.label);
-    onMarkerClick(proxMarker, `<strong>${escapeHtml(fam.label || 'Family')}</strong>`, null);
+      L.marker(ll, { icon: famIcon, zIndexOffset: 900 }).addTo(map),
+      fam.label + (drivewayStays.length > 1 ? ` · ${drivewayStays.length} stays here` : ''));
+    wireStayGroupClick(proxMarker, drivewayStays,
+      `<strong>${escapeHtml(fam.label || 'Family')}</strong>`);
   });
 
   // ── Initial view + "Fit trip" ─────────────────────────────────────────────
