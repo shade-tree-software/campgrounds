@@ -87,6 +87,20 @@
   .latest-trip-banner .label { color: var(--red); }
   .on-this-day .otd-label { color: #8a6d0a; }
 
+  /* Points the eye from each label to the trip(s) it names — inherits the
+     label's color, so red on the latest-trip banner and gold-dark here.
+     Sized above the .7rem label so the glyph reads as an arrow rather than a
+     dash, and letter-spacing zeroed — the label's .08em tracking would leave a
+     gap after the arrow, pushing it away from the text it points at. */
+  .latest-trip-banner .label-arrow,
+  .on-this-day .label-arrow {
+    margin-left: .3rem;
+    font-size: .9rem;
+    line-height: 1;
+    letter-spacing: 0;
+    vertical-align: -1px;
+  }
+
   /* Text slot — takes the row's slack so the pill lands at the right edge.
      It's a flex row: the trip name ellipsizes while the date/age is pinned
      (flex-shrink:0) so it's never the first thing trimmed. The low-priority
@@ -686,7 +700,10 @@
        <div class="banner-drum-track" id="banner-drum-track">
       {% if latest_trip %}
       <a class="latest-trip-banner" href="/trips/{{ latest_trip.id }}">
-        <span class="label">Latest trip</span>
+        {# The arrow points the eye from the label to the trip it names. Inside
+           .label (not a sibling) so it doesn't add a second flex gap to a row
+           that ellipsizes on phones; aria-hidden because it's punctuation. #}
+        <span class="label">Latest trip<span class="label-arrow" aria-hidden="true">&rarr;</span></span>
         <span class="text">
           <span class="summary">{% if latest_trip.number %}<span class="trip-num">Trip {{ latest_trip.number }}: </span>{% endif %}{{ latest_trip.summary }}</span>
           {% if latest_trip_date %}<span class="meta">{{ latest_trip_date }}</span>{% endif %}
@@ -1164,7 +1181,11 @@ legend.addTo(map);
   if (!matches.length) return;
   matches.sort((a, b) => b.year - a.year);
   const esc = s => { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; };
-  el.innerHTML = '<span class="otd-label">On this day</span><span class="otd-trips">' +
+  // Arrow inside .otd-label, mirroring the latest-trip banner: it points at
+  // the rows and disappears with the label when the drum dissolves the card.
+  el.innerHTML = '<span class="otd-label">On this day' +
+    '<span class="label-arrow" aria-hidden="true">&rarr;</span></span>' +
+    '<span class="otd-trips">' +
     matches.map(({ trip, year }) => {
       const n = currentY - year;
       const ago = n === 1 ? '1 year ago' : `${n} years ago`;

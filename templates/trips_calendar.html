@@ -117,6 +117,15 @@
     color: #8a6d0a;
     flex-shrink: 0;
   }
+  /* Points the eye from the label to the trip rows, matching the landing
+     page's banners. It replaces the trailing "…" this label used to carry —
+     both were the same lead-in, and the two together read as noise. */
+  .on-this-day .label-arrow {
+    margin-left: .3rem;
+    font-size: 1rem;
+    line-height: 1;
+    vertical-align: -1px;
+  }
   /* Stack one full-width row per matching trip so every pill right-justifies. */
   .on-this-day .otd-trips {
     flex: 1;
@@ -806,7 +815,9 @@ function renderOnThisDay() {
     const num = trip.number ? `<span class="trip-num">Trip ${trip.number}: </span>` : '';
     return `<a class="otd-trip" href="/trips/${trip.id}"><span class="otd-text"><span class="otd-name">${num}${escapeHtml(trip.summary || 'Trip')}</span><span class="otd-years-ago">${ago}</span></span><span class="otd-open">Open trip &rsaquo;</span></a>`;
   }).join('');
-  el.innerHTML = `<div class="otd-label">On ${niceDate}…</div><div class="otd-trips">${links}</div>`;
+  el.innerHTML = `<div class="otd-label">On ${niceDate}` +
+    `<span class="label-arrow" aria-hidden="true">&rarr;</span></div>` +
+    `<div class="otd-trips">${links}</div>`;
   el.style.display = '';
   fitTripNums();
 }
