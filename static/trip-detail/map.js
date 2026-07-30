@@ -357,9 +357,17 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
 
   // `html` is a string built at marker-creation time; `cardId` may be null for
   // markers with no card (proximity family houses).
-  function onMarkerClick(marker, html, cardId) {
+  //
+  // `opts.alwaysPopup` overrides the layout rule for a marker that stands for
+  // MORE THAN ONE timeline entry (the same campground stayed at twice, a family
+  // location visited several times). There the two-column "scroll to the card"
+  // shortcut has no right answer — it silently picked one occurrence and left
+  // the others unreachable from the map — so the popup opens on every layout
+  // and its rows are the picker.
+  function onMarkerClick(marker, html, cardId, opts) {
+    const alwaysPopup = !!(opts && opts.alwaysPopup);
     marker.on('click', () => {
-      if (isSingleColumnLayout()) openMarkerPopup(marker, html);
+      if (alwaysPopup || isSingleColumnLayout()) openMarkerPopup(marker, html);
       else if (cardId) scrollToCard(cardId);
     });
     return marker;
@@ -407,15 +415,16 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       + `${text || 'View details'} ›</a></div>`;
   }
 
+  function nightsLabel(stay) {
+    const nights = Number(stay.nights) || 0;
+    return nights ? `${nights} night${nights !== 1 ? 's' : ''}` : '';
+  }
+
   function stayPopupHtml(stay, num) {
     let h = `<strong>${num}. ${escapeHtml(stay.place || 'Campspot')}</strong>`;
     const where = [stay.locale, stay.state].filter(Boolean).join(', ');
     if (where) h += `<br>${escapeHtml(where)}`;
-    const nights = Number(stay.nights) || 0;
-    const when = [
-      stayDateRange(stay),
-      nights ? `${nights} night${nights !== 1 ? 's' : ''}` : '',
-    ].filter(Boolean).join(' · ');
+    const when = [stayDateRange(stay), nightsLabel(stay)].filter(Boolean).join(' · ');
     if (when) h += `<br>${when}`;
     if (stay.site) h += `<br>Site ${escapeHtml(String(stay.site))}`;
     return h + cardLink('stay-' + stay.idx);
@@ -446,23 +455,49 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     return h + cardLink('event-' + evt.idx);
   }
 
-  // One marker covers every visit to the same family location on this trip,
-  // so the popup lists them the way the trips map lists trips — one line each,
-  // linking to its own card.
-  function familyPopupHtml(sorted) {
-    const title = sorted[0].family_visit || sorted[0].name || 'Family visit';
+  // One marker stands for several timeline entries at the same spot — every
+  // visit to a family location, or every separate stay at one campground. The
+  // popup lists them the way the trips map lists trips (one line each, linking
+  // to its own card) so the reader picks which occurrence to jump to.
+  // A row whose card didn't render degrades to plain text: a link to nothing is
+  // worse than no link.
+  function occurrenceListHtml(title, rows) {
     let h = `<strong>${escapeHtml(title)}</strong>`;
     h += '<div style="margin-top:4px;font-size:12px;">';
-    sorted.forEach(evt => {
-      const when = eventWhen(evt) || 'Visit';
-      const extra = evt.name && evt.name !== title ? ' — ' + evt.name : '';
-      const cardId = 'event-' + evt.idx;
-      h += document.getElementById(cardId)
+    rows.forEach(({ cardId, text }) => {
+      h += (cardId && document.getElementById(cardId))
         ? `<a href="#" data-card="${cardId}" style="display:block;color:#002868;">`
-          + `${when}${escapeHtml(extra)}</a>`
-        : `<div>${when}${escapeHtml(extra)}</div>`;
+          + `${escapeHtml(text)} ›</a>`
+        : `<div>${escapeHtml(text)}</div>`;
     });
     return h + '</div>';
+  }
+
+  function familyPopupHtml(sorted) {
+    const title = sorted[0].family_visit || sorted[0].name || 'Family visit';
+    // The event name is appended only when it tells the rows apart. Visits to
+    // one family location are usually all named the same thing ("Papa and
+    // Bonnie's House" nine times), and repeating it on every row buries the
+    // date+time that's actually doing the distinguishing.
+    const extras = new Set(sorted.map(evt => (evt.name && evt.name !== title ? evt.name : '')));
+    const showExtra = extras.size > 1;
+    return occurrenceListHtml(title, sorted.map(evt => ({
+      cardId: 'event-' + evt.idx,
+      text: (eventWhen(evt) || 'Visit')
+        + (showExtra && evt.name && evt.name !== title ? ' — ' + evt.name : ''),
+    })));
+  }
+
+  // The rows lead with the campspot's number so they match both the numbered map
+  // badge and the circle on the card each one scrolls to. Every occurrence is the
+  // same campground (that's the grouping key), so the first one's name titles it.
+  function stayGroupPopupHtml(group) {
+    const title = group[0].stay.place || 'Campspot';
+    return occurrenceListHtml(title, group.map(({ stay, num }) => ({
+      cardId: 'stay-' + stay.idx,
+      text: `${num}. ` + ([stayDateRange(stay), nightsLabel(stay)]
+        .filter(Boolean).join(' · ') || 'Campspot'),
+    })));
   }
 
   const homeMarker = label(L.marker(HOME, { icon: homeIcon, zIndexOffset: 1000 })
@@ -470,6 +505,43 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   onMarkerClick(homeMarker, '<strong>Home</strong>', 'home-card-start');
   cardMarkers['home-card-start'] = homeMarker;
   cardMarkers['home-card-end'] = homeMarker;
+
+  // A trip can stay at the same campground on separate legs — trip 60 does it
+  // three times, trips 16 and 17 twice — and every one of those repeats sits
+  // within 50 m of its twin (0 m unless a per-stay `campsite_location` nudges
+  // it), which is sub-pixel at the zoom a whole trip fits in. Stacked like
+  // that, only the last marker drawn was really clickable, so the earlier
+  // occurrences couldn't be reached from the map at all and the click scrolled
+  // to whichever stay happened to be on top.
+  //
+  // Fix: every marker of a repeated campspot opens a popup listing ALL of its
+  // occurrences (see onMarkerClick's alwaysPopup), so whichever pin of the
+  // stack the click lands on, the reader gets the full list and picks. The
+  // markers themselves are left alone — merging them would move a pin off its
+  // own campsite and cost the per-stay badge number.
+  //
+  // Keyed on campground identity, not on the coordinate: those `campsite_location`
+  // offsets give two stays at one campground different coordinates while leaving
+  // them visually a single marker.
+  function stayGroupKey(stay) {
+    if (stay.campground_id !== null && stay.campground_id !== undefined) {
+      return 'cg:' + stay.campground_id;
+    }
+    // Free-text stays (hotels, Airbnbs) have no id, so name + coordinate is the
+    // only identity available. Same name at a different coordinate is a
+    // different place and stays ungrouped.
+    const name = (stay.custom_place || stay.place || '').trim().toLowerCase();
+    return `place:${name}@${stay.lat},${stay.lng}`;
+  }
+
+  const stayOccurrences = new Map();
+  mapped.forEach((stay, i) => {
+    const key = stayGroupKey(stay);
+    if (!stayOccurrences.has(key)) stayOccurrences.set(key, []);
+    // `num` is the marker badge / card circle number — the stay's own position
+    // in the trip, carried along so a grouped popup can name each occurrence.
+    stayOccurrences.get(key).push({ stay, num: i + 1 });
+  });
 
   mapped.forEach((stay, i) => {
     const ll = [stay.lat, stay.lng];
@@ -487,9 +559,15 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       iconSize: [24, 24],
       iconAnchor: [12, 12],
     });
-    const stayMarker = label(L.marker(ll, { icon, zIndexOffset: 800 })
-      .addTo(map), `${i + 1}. ${stay.place || 'Campspot'}`);
-    onMarkerClick(stayMarker, stayPopupHtml(stay, i + 1), 'stay-' + stay.idx);
+    const group = stayOccurrences.get(stayGroupKey(stay)) || [{ stay, num: i + 1 }];
+    const multi = group.length > 1;
+    const stayMarker = label(L.marker(ll, { icon, zIndexOffset: 800 }).addTo(map),
+      `${i + 1}. ${stay.place || 'Campspot'}`
+      + (multi ? ` · ${group.length} stays here` : ''));
+    onMarkerClick(stayMarker,
+      multi ? stayGroupPopupHtml(group) : stayPopupHtml(stay, i + 1),
+      multi ? null : 'stay-' + stay.idx,
+      { alwaysPopup: multi });
     cardTargets['stay-' + stay.idx] = ll;
     cardMarkers['stay-' + stay.idx] = stayMarker;
   });
@@ -1258,14 +1336,19 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const sorted = [...group].sort((a, b) =>
       (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''))
     );
-    // Click scrolls to the first visit's card; every family-visit event now
-    // has a card (bare or with-photos), so the lookup is effectively always
-    // the earliest visit in the group.
+    // A single visit keeps the layout rule (two-column: scroll to its card;
+    // stacked: popup). Several visits always open the popup so the reader can
+    // pick one — scrolling to the earliest, as this used to, made the later
+    // visits unreachable from the map. Every family-visit event now has a card
+    // (bare or with-photos), so the lookup is effectively always the earliest.
+    const multi = sorted.length > 1;
     const scrollTarget = sorted.find(e => document.getElementById('event-' + e.idx));
+    const famLabel = sorted[0].family_visit || sorted[0].name || 'Family visit';
     const famMarker = label(L.marker(ll, { icon: famIcon, zIndexOffset: 850 })
-      .addTo(map), sorted[0].family_visit || sorted[0].name || 'Family visit');
+      .addTo(map), multi ? `${famLabel} · ${sorted.length} visits` : famLabel);
     onMarkerClick(famMarker, familyPopupHtml(sorted),
-      scrollTarget ? 'event-' + scrollTarget.idx : null);
+      multi || !scrollTarget ? null : 'event-' + scrollTarget.idx,
+      { alwaysPopup: multi });
     group.forEach(evt => {
       cardTargets['event-' + evt.idx] = ll;
       cardMarkers['event-' + evt.idx] = famMarker;
