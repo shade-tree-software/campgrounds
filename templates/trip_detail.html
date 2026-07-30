@@ -856,16 +856,16 @@
        under the fixed tab bar and took the bottom-left legend with it. Phone
        landscape is the real case: ~850px wide is still under this
        breakpoint, but only ~330px of height is visible.
-       The subtracted 5rem covers .content's top padding, the "Trip Route"
-       heading, and a gap so the legend doesn't sit flush on the tab bar.
+       The subtracted 2.5rem covers .content's top padding and a gap so the
+       legend doesn't sit flush on the tab bar.
        100dvh (with the 100vh line as the fallback beneath it) because on
        mobile 100vh counts the area behind the browser's own toolbars. */
     .content.two-col #trip-map {
       flex: none;
       height: min(380px, calc(100vh - var(--site-top-height, 0px)
-                  - var(--trip-header-height, 0px) - var(--tab-bar-height, 0px) - 5rem));
+                  - var(--trip-header-height, 0px) - var(--tab-bar-height, 0px) - 2.5rem));
       height: min(380px, calc(100dvh - var(--site-top-height, 0px)
-                  - var(--trip-header-height, 0px) - var(--tab-bar-height, 0px) - 5rem));
+                  - var(--trip-header-height, 0px) - var(--tab-bar-height, 0px) - 2.5rem));
       min-height: 200px;  /* below this the map is useless; let the page scroll instead */
     }
     /* Back in normal flow the toggles row is followed by the cards column,
@@ -1616,24 +1616,12 @@
     margin-bottom: 1.5rem;
   }
 
-  .map-container h3 {
-    padding: .75rem 1.25rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid var(--gray-light);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
   #trip-map {
     /* Default (single-column / no cards): fill the viewport between the
        sticky headers and the page bottom, matching the two-col map size.
        The two-col override below switches to a flex-fill within the
        fixed wrapper instead. */
-    height: calc(100vh - var(--site-top-height, 0px) - var(--trip-header-height, 0px) - 8rem);
+    height: calc(100vh - var(--site-top-height, 0px) - var(--trip-header-height, 0px) - 5.5rem);
     min-height: 380px;
     width: 100%;
     z-index: 0;
@@ -1875,7 +1863,6 @@
     <div class="map-column-fixed">
       {% if mapped_stays or mapped_events %}
       <div class="map-container" id="map-container">
-        <h3><span>Trip Route</span></h3>
         <div id="trip-map"></div>
       </div>
       {% endif %}
