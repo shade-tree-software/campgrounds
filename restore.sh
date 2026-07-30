@@ -70,6 +70,7 @@ mkdir -p "$REPO/backup"
 SAFETY="$REPO/backup/pre-restore-${TS}.tar.gz"
 PRESERVE=()
 for m in users.json home.json \
+         trip_data/family.json \
          trip_data/trips.json trip_data/captions.json \
          trip_data/photo_order.json trip_data/photo_uploaders.json \
          trip_data/photo_favorites.json trip_data/photo_people.json \

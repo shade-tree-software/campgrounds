@@ -12,8 +12,12 @@ Dry run by default — nothing is written without --apply, and --apply takes a
 timestamped backup of trips.json first (that file is gitignored, so there is no
 other undo).
 
-  ./convert_events_to_family_visits.py --family "Papa & Bonnie's Place on Tidy Island"
+  ./convert_events_to_family_visits.py --family "<name from trip_data/family.json>"
   ./convert_events_to_family_visits.py --family "..." --apply
+
+A real family name is deliberately not used as the example: this repo is public
+and those names identify relatives' homes. The available names are the `name`
+fields in trip_data/family.json (gitignored, for the same reason).
 
 Run it where the data lives. `sync-from-pa.sh` only PULLS, so a local edit never
 reaches the live site and is overwritten by the next sync — on a PythonAnywhere
@@ -94,7 +98,9 @@ def main():
     ap.add_argument("--radius-ft", type=float, default=DEFAULT_RADIUS_FT,
                     help=f"How near counts as 'at' the family location (default {DEFAULT_RADIUS_FT:.0f}).")
     ap.add_argument("--trips", default="trip_data/trips.json")
-    ap.add_argument("--campgrounds", default="campgrounds.json")
+    ap.add_argument("--family-file", default="trip_data/family.json",
+                    help="Where kind:'family' entries live (gitignored — this "
+                         "repo is public and they are relatives' addresses).")
     ap.add_argument("--rename", action="store_true",
                     help="Also set each event's name to the family label. Off by "
                          "default because Add Family Visit keeps a custom name — "
@@ -108,7 +114,7 @@ def main():
     ap.add_argument("--apply", action="store_true", help="Write the change (default: dry run).")
     args = ap.parse_args()
 
-    with open(args.campgrounds, encoding="utf-8") as f:
+    with open(args.family_file, encoding="utf-8") as f:
         entries = json.load(f)
     fam = find_family(entries, args.family, args.family_id)
     fam_coords = parse_latlng(fam.get("location"))

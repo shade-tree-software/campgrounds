@@ -159,6 +159,12 @@ if [ $DO_DATA -eq 1 ]; then
   # secret_key and dev_cert.* are deliberately machine-local: pulling PA's
   # session secret would invalidate local logins and spread a production secret,
   # and the dev cert is this machine's self-signed HTTPS cert.
+  #
+  # This is also the ONLY path by which family.json (relatives' addresses, kept
+  # out of the public repo) comes down from PA. capture-pa-edits.sh handles live
+  # manage-page edits to the *tracked* location file, campgrounds.json, via git;
+  # a family entry added or edited in that same UI is gitignored, so it rides
+  # here instead — which is why family.json lives under trip_data/.
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/'
 fi

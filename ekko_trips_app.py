@@ -479,6 +479,13 @@ ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp", "heic"}
 _OUTBOUND_UA = ("EkkoTrips/1.0 "
                 "(+https://github.com/shade-tree-software/campgrounds)")
 CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
+# `kind: "family"` entries live here rather than in campgrounds.json, which is
+# tracked in a PUBLIC repo: a family entry is a relative's name next to a
+# driveway pin, i.e. their street address. Same reason home.json is gitignored.
+# It sits in trip_data/ (gitignored wholesale) because it's app-written data
+# like everything else there — which also means sync-from-pa.sh already carries
+# live edits made in the manage UI on PA back down. See `_read_campgrounds_raw`.
+FAMILY_JSON = os.path.join(TRIP_DATA_DIR, "family.json")
 ROADSIDE_JSON = os.path.join(os.path.dirname(__file__), "roadside.json")
 HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
 
@@ -1898,23 +1905,91 @@ def _file_mtime_ns(path):
 # invalidates automatically. The RAW cache holds the parsed list; callers must
 # treat it as READ-ONLY (build new dicts, never mutate in place) — the mutating
 # API endpoints deliberately keep their own fresh json.load.
-_campgrounds_raw_cache = {"mtime": None, "entries": None}
+_campgrounds_raw_cache = {"key": None, "entries": None}
 _campgrounds_derived_cache = {"key": None, "rows": None}
 
 
+def _read_family_raw():
+    """Return the parsed family.json list (missing file → []).
+
+    Not separately cached: it's five entries, and `_read_campgrounds_raw()` —
+    the only hot caller — caches the merged result.
+    """
+    try:
+        with open(FAMILY_JSON) as f:
+            entries = json.load(f)
+    except FileNotFoundError:
+        return []
+    return entries if isinstance(entries, list) else []
+
+
 def _read_campgrounds_raw():
-    """Return the parsed campgrounds.json list, cached by file mtime.
+    """Return campground + family entries as one list, cached by file mtime.
+
+    The two kinds are stored in separate files — `kind: "family"` entries are
+    relatives' houses (names + driveway pins ≈ street addresses) and this repo
+    is PUBLIC, so they live in the gitignored family.json while campgrounds.json
+    stays tracked. Everything downstream still wants one list: ids are unique
+    across both files and references (`campground_id` / `family_id`) don't say
+    which file they point into, so merging here means no reader had to change.
 
     READ-ONLY: the returned list/objects are shared across callers, so never
     mutate them (or the cache goes stale). Endpoints that edit + save load their
     own fresh copy instead.
     """
-    mtime = _file_mtime_ns(CAMPGROUNDS_JSON)
-    if _campgrounds_raw_cache["mtime"] != mtime:
+    key = (_file_mtime_ns(CAMPGROUNDS_JSON), _file_mtime_ns(FAMILY_JSON))
+    if _campgrounds_raw_cache["key"] != key:
         with open(CAMPGROUNDS_JSON) as f:
-            _campgrounds_raw_cache["entries"] = json.load(f)
-        _campgrounds_raw_cache["mtime"] = mtime
+            entries = json.load(f)
+        _campgrounds_raw_cache["entries"] = entries + _read_family_raw()
+        _campgrounds_raw_cache["key"] = key
     return _campgrounds_raw_cache["entries"]
+
+
+# ── Location-file routing (campgrounds.json vs family.json) ─────────────────
+# The mutating endpoints below deliberately don't use the mtime cache above —
+# they load fresh, edit, and save. With two backing files they also have to
+# decide WHICH one to write, so these three helpers keep that decision in one
+# place. Everything keys off `kind`; ids stay unique across both files.
+
+def _location_file_for_kind(kind):
+    return FAMILY_JSON if kind == "family" else CAMPGROUNDS_JSON
+
+
+def _load_location_file(path):
+    """Fresh (mutable) entry list from one location file; missing → []."""
+    try:
+        with open(path) as f:
+            return json.load(f)
+    except FileNotFoundError:
+        # family.json legitimately doesn't exist on a host with no family
+        # entries yet — a fresh clone has campgrounds.json from git and nothing
+        # else, and the first family entry created in the UI writes the file.
+        return []
+
+
+def _find_location_entry(entry_id):
+    """Locate an entry by id across both files.
+
+    Returns (path, entries, entry) with `entries` a fresh mutable list the
+    caller can edit and save back, or (None, None, None) if no such id.
+    """
+    for path in (CAMPGROUNDS_JSON, FAMILY_JSON):
+        entries = _load_location_file(path)
+        entry = next((e for e in entries if e.get("id") == entry_id), None)
+        if entry is not None:
+            return path, entries, entry
+    return None, None, None
+
+
+def _next_location_id():
+    """Next id, unique across BOTH files (ids are permanent, never reused)."""
+    highest = 0
+    for path in (CAMPGROUNDS_JSON, FAMILY_JSON):
+        for e in _load_location_file(path):
+            if isinstance(e.get("id"), int):
+                highest = max(highest, e["id"])
+    return highest + 1
 
 
 def _load_campgrounds():
@@ -3309,7 +3384,7 @@ OWNERSHIP_LABELS = {
 # exactly the bug `_revalidate_html` exists to prevent, and an ETag that ignored
 # code would reintroduce it.
 _MAP_ETAG_INPUTS = (
-    CAMPGROUNDS_JSON, HOME_FILE, TRIPS_JSON, ROADSIDE_JSON,
+    CAMPGROUNDS_JSON, FAMILY_JSON, HOME_FILE, TRIPS_JSON, ROADSIDE_JSON,
     os.path.join(os.path.dirname(__file__), "templates", "campground_map.html"),
     os.path.join(os.path.dirname(__file__), "templates", "base.html"),
     os.path.abspath(__file__),
@@ -4032,6 +4107,7 @@ def api_campground_all():
         return denied
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
+    entries += _read_family_raw()
     for e in entries:
         for field in _AUDIT_EVIDENCE_FIELDS:
             e.pop(field, None)
@@ -4051,16 +4127,18 @@ def api_create_campground():
     if not name:
         return jsonify({"error": "Name is required"}), 400
 
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
-
     # No global name-uniqueness check. Campground names repeat constantly across
     # states — "Lakeview Campground" appears 7 times, "South Fork Campground" 6 —
     # and the file already holds 286 duplicated names across 668 entries, so the
     # constraint was unenforceable on its own data and only blocked legitimate
     # adds. References are by `id`, so duplicate names cost nothing.
     kind = data.get("kind", "campground")
-    next_id = max((e["id"] for e in entries if "id" in e), default=0) + 1
+    # Family entries are written to the gitignored family.json, campgrounds to
+    # the tracked campgrounds.json — but the id is drawn from both, so the two
+    # files never hand out the same one.
+    target_path = _location_file_for_kind(kind)
+    entries = _load_location_file(target_path)
+    next_id = _next_location_id()
     entry = {
         "id": next_id,
         "kind": kind,
@@ -4083,7 +4161,7 @@ def api_create_campground():
         entry["website"] = data.get("website", "")
         entry["phone"] = data.get("phone", "")
     entries.append(entry)
-    _save_json(CAMPGROUNDS_JSON, entries)
+    _save_json(target_path, entries)
     return jsonify({"ok": True, "id": next_id})
 
 
@@ -4094,10 +4172,7 @@ def api_update_campground(cg_id):
         return denied
     data = request.get_json() or {}
 
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
-
-    target = next((e for e in entries if e.get("id") == cg_id), None)
+    path, entries, target = _find_location_entry(cg_id)
     if not target:
         return jsonify({"error": "Campground not found"}), 404
 
@@ -4115,7 +4190,18 @@ def api_update_campground(cg_id):
                 val = float(val) if val not in ("", None) else 0.0
             target[key] = val
 
-    _save_json(CAMPGROUNDS_JSON, entries)
+    # The manage page's kind selector can flip an entry between campground and
+    # family, and the two kinds live in different files — so a flip has to MOVE
+    # it. Getting this wrong is the leak this split exists to prevent: an entry
+    # switched to family but left in campgrounds.json would publish a home
+    # address to the public repo on the next commit.
+    dest = _location_file_for_kind(target.get("kind", "campground"))
+    if dest != path:
+        entries = [e for e in entries if e.get("id") != cg_id]
+        moved = _load_location_file(dest)
+        moved.append(target)
+        _save_json(dest, moved)
+    _save_json(path, entries)
     return jsonify({"ok": True})
 
 
@@ -7169,7 +7255,7 @@ def api_elevation():
 
 @app.route('/api/campgrounds/<int:cg_id>', methods=['DELETE'])
 def api_delete_campground(cg_id):
-    """Delete a campgrounds.json entry.
+    """Delete a location entry (from campgrounds.json or family.json).
 
     Refuses (409) while any trip still references it. References are by id, so
     a delete doesn't fail loudly — the campspot's `place` quietly falls back to
@@ -7195,15 +7281,11 @@ def api_delete_campground(cg_id):
             "references": refs,
         }), 409
 
-    with open(CAMPGROUNDS_JSON) as f:
-        entries = json.load(f)
-
-    before = len(entries)
-    entries = [e for e in entries if e.get("id") != cg_id]
-    if len(entries) == before:
+    path, entries, target = _find_location_entry(cg_id)
+    if not target:
         return jsonify({"error": "Campground not found"}), 404
 
-    _save_json(CAMPGROUNDS_JSON, entries)
+    _save_json(path, [e for e in entries if e.get("id") != cg_id])
     return jsonify({"ok": True})
 
 

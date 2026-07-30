@@ -1012,24 +1012,57 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
     }
 
 
+FAMILY_JSON = os.path.join(_DIR, "trip_data", "family.json")
+
+
+def _mtime_or_zero(path):
+    """mtime, or 0 if the file is missing — a cheap cache-key component."""
+    try:
+        return os.path.getmtime(path)
+    except OSError:
+        return 0
+
+
+def _load_family_entries():
+    """Family-kind location entries; missing file → [].
+
+    Absent is normal, not an error: a fresh clone gets campgrounds.json from
+    git and nothing else, and family.json arrives via backup/sync (or is
+    created by the first family entry added in the manage UI).
+    """
+    try:
+        with open(FAMILY_JSON) as f:
+            entries = json.load(f)
+    except (FileNotFoundError, ValueError):
+        return []
+    return entries if isinstance(entries, list) else []
+
+
 # mtime-keyed cache for _load_locations_by_id. The ~1,100-entry
 # campgrounds.json was being re-parsed for every trip on the map pages
 # (enrich_trip_locations calls this per trip — ~630ms of a render); the
 # cache cuts that to one parse per file change. Callers treat the
 # returned dict as read-only, so sharing one instance is safe.
-_LOCATIONS_CACHE = {"path": None, "mtime": None, "by_id": None}
+_LOCATIONS_CACHE = {"key": None, "by_id": None}
 
 
 def _load_locations_by_id(json_path="campgrounds.json"):
-    """Load id → {name, lat, lng, kind, driveway: (lat,lng)|None} from campgrounds.json."""
+    """Load id → {name, lat, lng, kind, driveway: (lat,lng)|None}.
+
+    Reads BOTH location files: campgrounds.json (tracked) and trip_data/
+    family.json (gitignored — family entries are relatives' addresses and this
+    repo is public). Ids are unique across the two, and a stay's
+    `campground_id` / an event's `family_id` doesn't record which file it points
+    into, so both must be resolvable from one map.
+    """
     base = os.path.dirname(__file__)
     path = os.path.join(base, json_path)
-    mtime = os.path.getmtime(path)
-    if _LOCATIONS_CACHE["by_id"] is not None and \
-       _LOCATIONS_CACHE["path"] == path and _LOCATIONS_CACHE["mtime"] == mtime:
+    key = (path, _mtime_or_zero(path), _mtime_or_zero(FAMILY_JSON))
+    if _LOCATIONS_CACHE["by_id"] is not None and _LOCATIONS_CACHE["key"] == key:
         return _LOCATIONS_CACHE["by_id"]
     with open(path) as f:
         cgs = json.load(f)
+    cgs = cgs + _load_family_entries()
 
     by_id = {}
     for c in cgs:
@@ -1048,7 +1081,7 @@ def _load_locations_by_id(json_path="campgrounds.json"):
             "kind": c.get("kind", "campground"),
             "driveway": driveway,
         }
-    _LOCATIONS_CACHE.update(path=path, mtime=mtime, by_id=by_id)
+    _LOCATIONS_CACHE.update(key=key, by_id=by_id)
     return by_id
 
 

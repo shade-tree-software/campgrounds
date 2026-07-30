@@ -13,7 +13,11 @@ keyed by new id for the audit stage."""
 import json, sys, os, re, argparse
 
 # repo root = this script's directory; resolves correctly on any machine/clone
-CG = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'campgrounds.json')
+_REPO = os.path.dirname(os.path.abspath(__file__))
+CG = os.path.join(_REPO, 'campgrounds.json')
+# Read-only here (sweeps only ever append campgrounds), but its ids are part of
+# the same id space — see next_id below.
+FAMILY = os.path.join(_REPO, 'trip_data', 'family.json')
 
 FIELD_ORDER = ['id', 'kind', 'name', 'location', 'elevation_meters', 'state',
                'ownership', 'waterfront', 'inclusion_evidence', 'website',
@@ -58,7 +62,16 @@ def main():
         print('no add rows'); return
 
     data = json.load(open(CG))
-    next_id = max(e['id'] for e in data) + 1
+    # Ids are unique across BOTH location files and never reused, so the high
+    # water mark has to account for family.json (gitignored — see CLAUDE.md
+    # "Family Locations"). It currently holds the highest id in the database, so
+    # taking the max of campgrounds.json alone would re-issue a live id.
+    ids = [e['id'] for e in data]
+    try:
+        ids += [e['id'] for e in json.load(open(FAMILY)) if 'id' in e]
+    except FileNotFoundError:
+        pass
+    next_id = max(ids) + 1
 
     # dedup guard: skip a new entry within ~150 m of an existing same-state entry
     # (RV Life lists some campgrounds twice under different city tags, and agents

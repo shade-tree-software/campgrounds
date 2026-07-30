@@ -3,10 +3,15 @@
 # backup.sh — bundle EKKO Trips' gitignored "database" into one tarball.
 #
 # Packages exactly the data that is NOT in git and NOT regenerable:
-#   users.json, home.json, and trip_data/*.json (trips, captions,
+#   users.json, home.json, and trip_data/*.json (family, trips, captions,
 #   photo_order, photo_uploaders, photo_favorites, photo_people, share_tokens)
 #   + trip_data/access_log.jsonl
 #   + trip_data/track_cache/.
+#
+# trip_data/family.json is in that list for a privacy reason, not just a
+# regenerability one: family locations are relatives' names + driveway pins, so
+# they are deliberately kept OUT of the public repo. This bundle (and
+# sync-from-pa.sh) is the only way they travel between hosts.
 #
 # Deliberately EXCLUDED:
 #   - campgrounds.json          (tracked in git — comes down with a pull)
@@ -54,6 +59,7 @@ fi
 CANDIDATES=(
   users.json
   home.json
+  trip_data/family.json
   trip_data/trips.json
   trip_data/captions.json
   trip_data/photo_order.json

@@ -69,14 +69,18 @@ def corridor_points(repo):
             pass
 
     # 2. trip-visited stays/events (covers trips lacking a GPS track)
+    # Both location files: family entries live in the gitignored
+    # trip_data/family.json, and an event's `family_id` resolves through this
+    # same map — skipping it would leave relatives' towns off the offline map.
     cg = {}
-    try:
-        for e in json.load(open(os.path.join(repo, "campgrounds.json"))):
-            loc = e.get("driveway_location") or e.get("location")
-            if loc and "," in loc:
-                a, b = loc.split(","); cg[e["id"]] = (a, b)
-    except Exception:
-        pass
+    for loc_file in ("campgrounds.json", "trip_data/family.json"):
+        try:
+            for e in json.load(open(os.path.join(repo, loc_file))):
+                loc = e.get("driveway_location") or e.get("location")
+                if loc and "," in loc:
+                    a, b = loc.split(","); cg[e["id"]] = (a, b)
+        except Exception:
+            pass
     try:
         trips = json.load(open(os.path.join(repo, "trip_data/trips.json")))
     except Exception:
