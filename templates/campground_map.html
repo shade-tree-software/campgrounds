@@ -17,13 +17,23 @@
 
   .map-container { overflow: hidden; position: relative; }
 
-  /* Name search — a Leaflet control overlaid on the map (top-left, below the
-     zoom buttons). The results dropdown is absolutely positioned within it. */
+  /* Name search — a Leaflet control overlaid on the map's top-left corner, with
+     the locate / route (/ admin add) buttons stacked beneath it. The results
+     dropdown is absolutely positioned within this box and overflows it.
+       The z-index is what keeps that dropdown VISIBLE. Leaflet gives every
+     control `position: relative; z-index: 800`, so each one is its own stacking
+     context and same-corner controls paint in DOM order — the search is added
+     first, so the buttons added after it drew ON TOP of the results list, and a
+     tall list also slid under the bottom-corner legend/ownership boxes (both
+     corner containers sit at z-index 1000, and the bottom ones come later in the
+     DOM). Lifting this control and its whole corner clears both. */
   .cg-search {
     position: relative;
+    z-index: 1000;
     width: 16rem;
     max-width: 60vw;
   }
+  .leaflet-top.leaflet-left { z-index: 1001; }
   .cg-search input {
     width: 100%;
     padding: .4rem .6rem;
