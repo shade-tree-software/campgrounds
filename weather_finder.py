@@ -252,7 +252,24 @@ def _select_cells(cells, mode, budget):
 
 
 def _day_rows(daily):
-    """Flatten one location's parallel daily arrays into per-date dicts."""
+    """Flatten one location's parallel daily arrays into per-date dicts.
+
+    One deliberate departure from the API's own alignment: `overnight_low` is
+    the NEXT calendar day's `temperature_2m_min`, not this day's.
+
+    Open-Meteo's daily values are a plain min/max over the local calendar day
+    (00:00-23:00; `timezone=auto` is what makes that local rather than UTC).
+    Temperature bottoms out around sunrise, so a date's own minimum is almost
+    always its PRE-DAWN reading — the morning you woke up on that date, hours
+    before the high it's printed next to. Pairing the two as-is answers a
+    question nobody asks. What a camper wants from "Sat 78°/54°" is the night
+    they will actually sleep through after that 78° day, which is Sunday's
+    pre-dawn minimum. So each day borrows the following day's.
+
+    This also matches how NWS and TV forecasts present a day ("Saturday" and
+    "Saturday Night" as one outlook), so the page reads the way a camping
+    forecast is expected to.
+    """
     times = daily.get("time") or []
     highs = daily.get("temperature_2m_max") or []
     lows = daily.get("temperature_2m_min") or []
@@ -267,7 +284,10 @@ def _day_rows(daily):
         rows.append({
             "date": date,
             "high": at(highs, i),
-            "low": at(lows, i),
+            # The NEXT day's minimum, deliberately — see the note above. The
+            # last day of the window has no next day and so carries None, which
+            # every consumer already renders as "no low" rather than a zero.
+            "overnight_low": at(lows, i + 1),
             "precip": at(precip, i),
             "precip_chance": at(chance, i),
         })
@@ -465,7 +485,8 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 "date": row["date"],
                 "day": _weekday(row["date"])[:3],
                 "high": round(high, 1),
-                "low": None if row["low"] is None else round(row["low"], 1),
+                "overnight_low": (None if row["overnight_low"] is None
+                                  else round(row["overnight_low"], 1)),
                 "precip": row["precip"],
                 "precip_chance": row["precip_chance"],
                 "home_high": None if home_high is None else round(home_high, 1),
@@ -615,7 +636,8 @@ def forecast_for_point(lat, lng, home=None, *, forecast_days=FORECAST_DAYS, **fe
             "date": row["date"],
             "day": _weekday(row["date"])[:3],
             "high": None if row["high"] is None else round(row["high"], 1),
-            "low": None if row["low"] is None else round(row["low"], 1),
+            "overnight_low": (None if row["overnight_low"] is None
+                              else round(row["overnight_low"], 1)),
             "precip": row["precip"],
             "precip_chance": row["precip_chance"],
             "home_high": None if home_high is None else round(home_high, 1),

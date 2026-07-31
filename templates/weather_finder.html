@@ -108,6 +108,7 @@
   #wx-cg { width: 320px; }
   @media (max-width: 700px) { #wx-cg { width: 100%; } .wx-lookup .field { width: 100%; } }
 
+  .wx-legend { font-size: .82rem; color: var(--gray); margin: 0 0 .6rem; }
   .wx-results { display: flex; flex-direction: column; gap: .6rem; }
   .wx-card {
     background: var(--white); border: 1px solid var(--gray-light); border-radius: 8px;
@@ -296,6 +297,13 @@
   </div>
 
   <div id="wx-status" role="status" aria-live="polite"></div>
+  {# Says what a chip's three numbers mean. The overnight low in particular is
+     NOT the minimum the forecast files under that date (see _day_rows) — it's
+     the night after it, and a hover title alone would leave every phone and
+     iPad reader guessing. Shown only alongside results. #}
+  <div class="wx-legend" id="wx-legend" hidden>
+    Each day shows the high, then the low for the night after it, then rainfall.
+  </div>
   <div class="wx-results" id="wx-results"></div>
 </div>
 {% endblock %}
@@ -422,6 +430,7 @@ document.addEventListener('click', e => {
 // ── Search ─────────────────────────────────────────────────────────────────
 const statusEl = document.getElementById('wx-status');
 const resultsEl = document.getElementById('wx-results');
+const legendEl = document.getElementById('wx-legend');
 const goBtn = document.getElementById('wx-go');
 const numOf = id => parseFloat(document.getElementById(id).value);
 
@@ -438,6 +447,7 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
   e.preventDefault();
   goBtn.disabled = true;
   resultsEl.innerHTML = '';
+  legendEl.hidden = true;
   statusEl.className = '';
   statusEl.innerHTML = '<span class="wx-spinner"></span>Checking the forecast…';
 
@@ -512,6 +522,7 @@ cgResults.addEventListener('click', async e => {
   cgResults.classList.remove('open');
   cgInput.value = row.textContent.trim();
   resultsEl.innerHTML = '';
+  legendEl.hidden = true;
   statusEl.className = '';
   statusEl.innerHTML = '<span class="wx-spinner"></span>Fetching the forecast…';
   try {
@@ -544,6 +555,7 @@ function renderOne(data) {
 
   statusEl.className = '';
   statusEl.textContent = `Full ${data.days.length}-day forecast.`;
+  legendEl.hidden = false;
   resultsEl.innerHTML = `
     <div class="wx-card${water ? ' waterfront' : ''}">
       <div class="wx-card-head">
@@ -600,9 +612,14 @@ function dayChip(m) {
   // them apart. The high stays the prominent number because it's what every
   // mode's criteria are tested against; the low rides behind it, muted, so the
   // chip still scans as one temperature reading rather than two competing ones.
+  //
+  // `overnight_low` is the night AFTER this day, not the pre-dawn minimum the
+  // API files under this date — the night you'd actually sleep through here.
+  // The server does that shift; see _day_rows() for why.
   let low = '';
-  if (m.low !== null && m.low !== undefined) {
-    low = `<span class="t-low">/${Math.round(m.low)}°</span>`;
+  if (m.overnight_low !== null && m.overnight_low !== undefined) {
+    low = `<span class="t-low" title="Overnight low, the night after this day"`
+        + `>/${Math.round(m.overnight_low)}°</span>`;
   }
   return `<span class="wx-day${state}"${why}><span class="d">${label}</span>`
        + `<span class="t">${Math.round(m.high)}°${low}</span>${delta}${rain}</span>`;
@@ -647,6 +664,7 @@ function render(data, mode) {
   statusEl.textContent =
     `${n} campground${n === 1 ? '' : 's'} match${n === 1 ? 'es' : ''}. Checked ${scope}.`;
 
+  legendEl.hidden = false;
   resultsEl.innerHTML = data.results.map(r => {
     const water = r.waterfront && r.waterfront !== 'not waterfront';
     const meta = [];
