@@ -133,6 +133,16 @@
     border: 1px solid var(--gray-light); border-radius: 5px;
     padding: .2rem .45rem; font-size: .78rem; background: #fbfbfc;
   }
+  /* A card now carries every day of the window, so the chips have to say which
+     ones actually matched — otherwise the card reads as if all of them did.
+     The hit is the filled-in one and the misses recede; doing it the other way
+     round (marking the misses) would put the emphasis on what you didn't ask
+     for. Opacity alone would be the only signal, so the hit also carries a
+     tinted background and a solid border — a difference that survives a
+     grayscale print and a colour-blind reader. */
+  .wx-day.hit { background: var(--blue-bg); border-color: var(--navy); }
+  .wx-day.miss { opacity: .5; border-style: dashed; background: transparent; }
+  .wx-day.miss .d, .wx-day.miss .t { font-weight: 400; color: var(--gray); }
   .wx-day .d { font-weight: 700; color: var(--navy); }
   .wx-day .t { font-weight: 700; }
   .wx-day .delta.cool { color: #1c6ea4; font-weight: 700; }
@@ -543,9 +553,16 @@ function esc(s) {
   return d.innerHTML;
 }
 
+// One chip per day of the searched window. `match` is absent on the by-name
+// lookup, which has no criteria to pass — those chips render plain rather than
+// as a page full of misses.
 function dayChip(m) {
   const date = new Date(m.date + 'T00:00:00');
   const label = m.day + ' ' + (date.getMonth() + 1) + '/' + date.getDate();
+  const state = m.match === undefined ? ''
+              : (m.match ? ' hit' : ' miss');
+  const why = m.match === undefined ? ''
+            : ` title="${m.match ? 'Matches your search' : "Doesn't match — shown for context"}"`;
   let delta = '';
   if (m.delta !== null && m.delta !== undefined) {
     const cls = m.delta < 0 ? 'cool' : 'warm';
@@ -559,7 +576,7 @@ function dayChip(m) {
     const wet = m.precip >= 0.1;
     rain = `<span class="rain${wet ? ' wet' : ''}">${m.precip > 0 ? m.precip.toFixed(2) + '"' : 'dry'}</span>`;
   }
-  return `<span class="wx-day"><span class="d">${label}</span>`
+  return `<span class="wx-day${state}"${why}><span class="d">${label}</span>`
        + `<span class="t">${Math.round(m.high)}°</span>${delta}${rain}</span>`;
 }
 

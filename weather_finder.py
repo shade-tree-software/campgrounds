@@ -297,6 +297,10 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     days is one result with six days attached, not six results. Flat rows put
     the same campground on screen over and over and made the payload enormous.
 
+    A result's `days` is the whole window asked about, each day flagged `match`
+    — not just the days that passed. The criteria decide which campgrounds are
+    listed; they don't decide what you may see about one that made the list.
+
     `start_date`/`end_date` are inclusive "YYYY-MM-DD" strings restricting which
     forecast days may match — the trip you're actually planning is usually a
     specific window, and without them a match three days from now reads the same
@@ -409,7 +413,17 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
         daily = cell["daily"]
         if daily is None:
             continue
-        matches = []
+        # A campground is listed for its matching days, but it carries EVERY day
+        # in the window you asked about, each flagged `match`. A campground that
+        # matches on Saturday alone used to show one chip, which answers "is
+        # there a good day" but not the question you're actually asking — what
+        # the weekend looks like. The criteria decide whether it's LISTED; they
+        # no longer decide what you get to see about it.
+        #
+        # The window is the date range and the weekends tick: those select which
+        # days are candidates at all, so a day outside them was never in
+        # question. Temperature and rain are the test applied to what's left.
+        days, matches = [], []
         for row in _day_rows(daily):
             high = row["high"]
             if high is None:
@@ -422,30 +436,32 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 continue
 
             home_high = home_by_date.get(row["date"])
+            hit = True
             if mode == MODE_RANGE:
-                if not (min_high <= high <= max_high):
-                    continue
+                hit = min_high <= high <= max_high
                 delta = None if home_high is None else round(high - home_high, 1)
             else:
                 if home_high is None:
-                    continue  # home's forecast doesn't reach this date
-                delta = high - home_high
+                    # No home temperature to compare against, so this day has no
+                    # answer either way — drop it rather than show a chip whose
+                    # whole point (the difference) is blank.
+                    continue
+                delta = round(high - home_high, 1)
                 if mode == MODE_COOLER and delta > -delta_f:
-                    continue
+                    hit = False
                 if mode == MODE_WARMER and delta < delta_f:
-                    continue
-                delta = round(delta, 1)
+                    hit = False
 
             # Rain filters. A missing value is treated as "unknown, don't
             # exclude" — dropping a campground because the API omitted a number
             # would quietly shrink the results for a reason nobody could see.
             if max_precip_in is not None and (row["precip"] or 0) > max_precip_in:
-                continue
+                hit = False
             if (max_precip_chance is not None and row["precip_chance"] is not None
                     and row["precip_chance"] > max_precip_chance):
-                continue
+                hit = False
 
-            matches.append({
+            entry = {
                 "date": row["date"],
                 "day": _weekday(row["date"])[:3],
                 "high": round(high, 1),
@@ -454,14 +470,22 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 "precip_chance": row["precip_chance"],
                 "home_high": None if home_high is None else round(home_high, 1),
                 "delta": delta,
-            })
+                "match": hit,
+            }
+            days.append(entry)
+            if hit:
+                matches.append(entry)
 
         if not matches:
             continue
         # Per-cell "best day" figures, which are what the sorts rank on. A
         # campground with six matching days is judged on its best one — sorting
         # a list of campgrounds by an average of days nobody asked about would
-        # bury the standout weekend among the mediocre midweek ones.
+        # bury the standout weekend among the mediocre midweek ones. Computed
+        # over `matches`, never over `days`: the non-matching days are shown for
+        # context, and letting a rained-out Friday drag down the ranking of a
+        # campground listed for its dry Saturday would rank on the opposite of
+        # what was asked for.
         deltas = [m["delta"] for m in matches if m["delta"] is not None]
         best_delta = (min(deltas) if mode == MODE_COOLER else max(deltas)) if deltas else None
         highs = [m["high"] for m in matches if m["high"] is not None]
@@ -483,7 +507,8 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 "lat": lat,
                 "lng": lng,
                 "dist": round(dist, 1),
-                "days": matches,
+                "days": days,
+                "match_count": len(matches),
                 "best_delta": best_delta,
                 "best_high": best_high,
                 "min_precip": min_precip,

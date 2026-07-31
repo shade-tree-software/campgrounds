@@ -77,7 +77,10 @@ with open(args.output, "wt", encoding="utf-8") as f:
 print(f"{result['matched']} campgrounds matched — full result written to {args.output}.")
 
 best = result["results"][0]
-day = best["days"][0]
+# `days` carries the whole searched window now, matching or not, so the headline
+# day has to be the first one that actually MATCHED — the first day in the list
+# is quite often a miss shown for context, and this line goes out as an SMS.
+day = next(d for d in best["days"] if d.get("match", True))
 summary = (f"{best['name']} ({best['state']}, {best['dist']} mi): "
            f"{day['day']} {day['date']} high {day['high']}F")
 print(f"Best: {summary}")
