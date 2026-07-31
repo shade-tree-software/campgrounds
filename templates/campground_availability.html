@@ -80,7 +80,13 @@
   .search-results div:hover, .search-results div.active { background: var(--blue-bg); }
   .search-results .muted { color: var(--gray); font-style: italic; cursor: default; }
 
-  .selected-cg { margin-top: .35rem; font-size: .9rem; color: var(--navy); font-weight: 700; min-height: 1.2em; }
+  /* Own line under the controls (see the markup note). `flex: 0 0 100%` is what
+     wraps it there; `:empty` keeps it from reserving a blank line before a
+     campground is picked, so the form doesn't carry dead space by default. */
+  .selected-cg {
+    flex: 0 0 100%; font-size: .9rem; color: var(--navy); font-weight: 700;
+  }
+  .selected-cg:empty { display: none; }
 
   /* Results */
   #avail-status { margin: 1.25rem 0 .5rem; font-size: .95rem; color: var(--gray); }
@@ -139,6 +145,25 @@
   .full-badge { font-size: .68rem; color: #2e9e5b; font-weight: 700; margin-left: .35rem; }
   .err { color: var(--red); font-weight: 700; }
 
+  /* Per-site summary — phones only (shown by the ≤700px block at the end of
+     this stylesheet, which MUST stay after this rule: a media query carries no
+     extra specificity, so whichever `display` is declared last wins. With this
+     rule below the query, `display: none` won at every width and a phone got
+     neither the cards nor the grid — an empty results area. */
+  .avail-cards { display: none; list-style: none; padding: 0; margin: 0; }
+  .ac-item {
+    background: var(--white); border: 1px solid var(--gray-light);
+    border-radius: 8px; padding: .6rem .75rem; margin-bottom: .5rem;
+  }
+  .ac-head { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
+  .ac-name { font-weight: 700; color: var(--navy); font-size: .9rem; }
+  .ac-nights { font-size: .85rem; color: #1c6b3c; margin-top: .2rem; }
+  .ac-nights.none { color: var(--gray); }
+  .ac-nights b { font-size: 1rem; }
+  .ac-dates { font-size: .75rem; color: var(--gray); margin-top: .25rem; line-height: 1.4; }
+
+  /* Phones. Kept at the END of the stylesheet on purpose — see the note on
+     .avail-cards above; every `display` swap here has to be the last word. */
   @media (max-width: 700px) {
     #cg-search { width: 100%; }
     .avail-form { flex-direction: column; align-items: stretch; }
@@ -151,18 +176,45 @@
     .legend { display: none; }        /* explains grid cells that aren't shown */
   }
 
-  /* Per-site summary — phones only (see the ≤700px block above). */
-  .avail-cards { display: none; list-style: none; padding: 0; margin: 0; }
-  .ac-item {
-    background: var(--white); border: 1px solid var(--gray-light);
-    border-radius: 8px; padding: .6rem .75rem; margin-bottom: .5rem;
+  /* The calendar as a bottom sheet rather than a dropdown. Absolutely
+     positioned, it hung off the bottom of a phone screen with its Done button
+     below the fold — and the page would NOT scroll to it, because an
+     absolutely positioned popup doesn't grow the document's scroll height.
+     Measured on a 390x664 viewport: popup bottom 716px, total page scroll room
+     52px. Even at full scroll the button landed under the fixed tab bar.
+     Fixed to the viewport, it can't outgrow the screen: it's bounded above by
+     the header and below by the tab bar, and scrolls internally if the month
+     still doesn't fit. z-index clears the tab bar's 950.
+
+     The height condition is not redundant with the width one: a phone in
+     LANDSCAPE is ~844x390, so the width query misses it entirely while the
+     viewport is at its shortest. Measured there before this rule: Done at
+     600px against a 412px viewport, reachable only by scrolling the page to
+     its very last pixel. Short desktop windows get the sheet for the same
+     reason — the popup doesn't fit under the trigger there either. */
+  @media (max-width: 700px), (max-height: 620px) {
+    .cal-pop {
+      position: fixed;
+      top: auto;
+      left: .5rem;
+      right: .5rem;
+      bottom: calc(var(--tab-bar-height, 0px) + .5rem);
+      max-height: calc(100vh - var(--site-top-height, 0px)
+                       - var(--tab-bar-height, 0px) - 1rem);
+      overflow-y: auto;
+      z-index: 960;
+    }
+    /* Done stays put while the calendar scrolls under it — it's the way out of
+       the sheet, so it must never be the thing you have to hunt for. */
+    .cal-foot {
+      position: sticky;
+      bottom: 0;
+      background: var(--white);
+      margin: 0;
+      padding-top: .65rem;
+      box-shadow: 0 -8px 8px -8px rgba(0,0,0,.18);
+    }
   }
-  .ac-head { display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; }
-  .ac-name { font-weight: 700; color: var(--navy); font-size: .9rem; }
-  .ac-nights { font-size: .85rem; color: #1c6b3c; margin-top: .2rem; }
-  .ac-nights.none { color: var(--gray); }
-  .ac-nights b { font-size: 1rem; }
-  .ac-dates { font-size: .75rem; color: var(--gray); margin-top: .25rem; line-height: 1.4; }
 {% endblock %}
 
 {% block content %}
@@ -182,7 +234,6 @@
         <input type="text" id="cg-search" autocomplete="off" placeholder="e.g. Moraine Park, Watchman, Devils Tower…">
         <div class="search-results" id="search-results"></div>
       </div>
-      <div class="selected-cg" id="selected-cg"></div>
     </div>
     <div class="field date-field">
       <label>Dates</label>
@@ -204,6 +255,11 @@
     <div class="field">
       <button id="check-btn" disabled>Check availability</button>
     </div>
+    {# The chosen campground goes on its own full-width line BELOW the controls,
+       not inside the campground field. The form bottom-aligns its fields, so a
+       confirmation line hanging under that one input made the field taller and
+       pushed its label and box 27px above every other control on the row. #}
+    <div class="selected-cg" id="selected-cg"></div>
   </div>
 
   {# aria-live so the 5–15s round trip announces itself and its result to a
@@ -583,8 +639,8 @@
                 (s.fully_available ? ' — every night' : '')
               : 'No openings') + '</div>' +
         (open ? '<div class="ac-dates">' + s.statuses
-            .map((st, i) => st === 'Available' ? fmtNight(nights[i]) : null)
-            .filter(Boolean).join(', ') + '</div>' : '') +
+            .map((st, i) => st === 'Available' ? fmtNightInline(nights[i]) : null)
+            .filter(Boolean).join(' · ') + '</div>' : '') +
         '</li>';
     });
     html += '</ul>';
@@ -616,6 +672,13 @@
   function bookingLink(fac) {
     if (!fac.reservation_url) return '';
     return '<a href="' + fac.reservation_url + '" target="_blank" rel="noopener">Book on recreation.gov →</a>';
+  }
+  // The card list runs dates together in a sentence, so it can't use the column
+  // header's two-line form: joined with commas, "Aug 27<br>Thu, Aug 30<br>Sun"
+  // reads as though Thursday belonged to Aug 30.
+  function fmtNightInline(isoStr) {
+    const d = new Date(isoStr + 'T12:00:00');
+    return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
   }
   function fmtNight(isoStr) {
     const d = new Date(isoStr + 'T12:00:00');
