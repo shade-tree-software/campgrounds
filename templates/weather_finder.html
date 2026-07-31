@@ -147,6 +147,10 @@
   .wx-day.miss .d, .wx-day.miss .t { font-weight: 400; color: var(--gray); }
   .wx-day .d { font-weight: 700; color: var(--navy); }
   .wx-day .t { font-weight: 700; }
+  /* The overnight low sits in the same span as the high so the pair never wraps
+     apart, but reads as secondary — the criteria are tested on the high. */
+  .wx-day .t-low { font-weight: 600; color: var(--gray); }
+  .wx-day.miss .t-low { font-weight: 400; }
   .wx-day .delta.cool { color: #1c6ea4; font-weight: 700; }
   .wx-day .delta.warm { color: #b5471f; font-weight: 700; }
   .wx-day .rain { color: var(--gray); }
@@ -591,8 +595,17 @@ function dayChip(m) {
     const wet = m.precip >= 0.1;
     rain = `<span class="rain${wet ? ' wet' : ''}">${m.precip > 0 ? m.precip.toFixed(2) + '"' : 'dry'}</span>`;
   }
+  // High and low together — a 78° day that drops to 40° overnight is a
+  // different trip from one that holds at 65°, and the high alone can't tell
+  // them apart. The high stays the prominent number because it's what every
+  // mode's criteria are tested against; the low rides behind it, muted, so the
+  // chip still scans as one temperature reading rather than two competing ones.
+  let low = '';
+  if (m.low !== null && m.low !== undefined) {
+    low = `<span class="t-low">/${Math.round(m.low)}°</span>`;
+  }
   return `<span class="wx-day${state}"${why}><span class="d">${label}</span>`
-       + `<span class="t">${Math.round(m.high)}°</span>${delta}${rain}</span>`;
+       + `<span class="t">${Math.round(m.high)}°${low}</span>${delta}${rain}</span>`;
 }
 
 // The window the server actually applied — read off the response rather than
