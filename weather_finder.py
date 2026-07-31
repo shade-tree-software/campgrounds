@@ -281,6 +281,7 @@ def _weekday(date_str):
 def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                        min_high=70.0, max_high=88.0, delta_f=5.0,
                        max_miles=400.0, weekends_only=True,
+                       start_date=None, end_date=None,
                        max_precip_in=None, max_precip_chance=None,
                        waterfront_only=False,
                        sort="distance",
@@ -295,6 +296,14 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     Results are grouped rather than flattened: a campground that matches on six
     days is one result with six days attached, not six results. Flat rows put
     the same campground on screen over and over and made the payload enormous.
+
+    `start_date`/`end_date` are inclusive "YYYY-MM-DD" strings restricting which
+    forecast days may match — the trip you're actually planning is usually a
+    specific window, and without them a match three days from now reads the same
+    as one two weeks out. They filter LOCALLY rather than shortening the fetch:
+    the provider bills per location, not per day, so a narrower window buys
+    nothing upstream, while varying `forecast_days` would key the cache
+    differently per window and throw away the sharing the cache exists for.
     """
     if mode not in MODES:
         raise ValueError(f"unknown mode {mode!r}")
@@ -404,6 +413,10 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
         for row in _day_rows(daily):
             high = row["high"]
             if high is None:
+                continue
+            if start_date and row["date"] < start_date:
+                continue
+            if end_date and row["date"] > end_date:
                 continue
             if weekends_only and _weekday(row["date"]) not in ("Saturday", "Sunday"):
                 continue
@@ -516,6 +529,10 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
         "fetched": len(need) + (1 if fetch_home else 0),
         "from_cache": len(cached),
         "matched": total,
+        # Echoed back so the page can say which window it actually searched
+        # rather than trusting the form still holds what was submitted.
+        "start_date": start_date,
+        "end_date": end_date,
         "truncated": total > max_results,
         "results": results[:max_results],
     }

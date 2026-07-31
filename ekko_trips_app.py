@@ -3595,11 +3595,17 @@ def campgrounds_weather():
     if denied:
         return denied
     home_cfg = _load_json(HOME_FILE)
+    # Bounds for the date-range pickers. The forecast horizon is the only window
+    # there is, so the inputs are clamped to it rather than letting someone pick
+    # a week the provider has nothing to say about.
+    today = date.today()
     return render_template(
         'weather_finder.html', title='Weather', active_nav='campweather',
         is_admin=True,
         home_lat=home_cfg.get("home_lat"), home_lng=home_cfg.get("home_long"),
         max_miles_cap=WEATHER_MAX_MILES,
+        date_min=today.isoformat(),
+        date_max=(today + timedelta(days=weather_finder.FORECAST_DAYS - 1)).isoformat(),
         forecast_days=weather_finder.FORECAST_DAYS)
 
 
@@ -3631,6 +3637,21 @@ def api_weather_finder_search():
         min_high, max_high = max_high, min_high
     delta_f = num("delta_f", 5, 0, 60)
 
+    # Date window. Both bounds are optional and inclusive; a malformed or empty
+    # value means "no bound" rather than an error, so a half-filled pair still
+    # searches (a start with no end is "from Friday onwards", which is a real
+    # question). Reversed bounds are swapped for the same reason min/max high is.
+    def date_arg(key):
+        value = (data.get(key) or "").strip()
+        try:
+            return datetime.strptime(value, "%Y-%m-%d").date().isoformat()
+        except (TypeError, ValueError):
+            return None
+
+    start_date, end_date = date_arg("start_date"), date_arg("end_date")
+    if start_date and end_date and start_date > end_date:
+        start_date, end_date = end_date, start_date
+
     # Origin: home unless the form supplied somewhere else to search from.
     home_cfg = _load_json(HOME_FILE)
     origin_lat, origin_lng = data.get("lat"), data.get("lng")
@@ -3651,6 +3672,7 @@ def api_weather_finder_search():
             _load_campgrounds(), (float(origin_lat), float(origin_lng)),
             mode=mode, min_high=min_high, max_high=max_high, delta_f=delta_f,
             max_miles=max_miles, weekends_only=bool(data.get("weekends_only", True)),
+            start_date=start_date, end_date=end_date,
             max_precip_in=max_precip_in, max_precip_chance=max_precip_chance,
             waterfront_only=bool(data.get("waterfront_only")),
             sort=sort,

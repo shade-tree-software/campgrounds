@@ -23,6 +23,19 @@
     border-radius: 6px; font-size: .95rem; font-family: inherit; background: var(--white);
   }
   .field input[type=number] { width: 5.5rem; }
+  .field input[type=date] {
+    padding: .45rem .5rem; border: 1px solid var(--gray-light);
+    border-radius: 6px; font-size: .9rem; font-family: inherit; background: var(--white);
+  }
+  .wx-dates { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+  .wx-dash { color: var(--gray); }
+  /* Only offered once a date is set — an always-present Clear next to two empty
+     fields is a control for undoing nothing. */
+  .wx-clear {
+    border: none; background: none; padding: 0 .2rem; cursor: pointer;
+    font: inherit; font-size: .8rem; color: var(--gray); text-decoration: underline;
+  }
+  .wx-clear:hover { color: var(--navy); }
   .wx-check { display: inline-flex; align-items: center; gap: .4rem; font-size: .9rem; color: var(--navy); }
   .wx-check input { width: auto; }
 
@@ -135,6 +148,9 @@
        number inputs to unusable slivers. */
     .wx-row { flex-direction: column; align-items: stretch; gap: .7rem; }
     .field input[type=number] { width: 100%; }
+    /* The two date inputs share the row rather than stacking — a range reads as
+       a range, and iOS renders them wide enough that stacking wastes a screen. */
+    .wx-dates input[type=date] { flex: 1 1 8.5rem; min-width: 0; }
     #wx-precip { width: 4.6rem; }   /* sits inline in a sentence, not on its own row */
     .wx-filters { gap: .55rem 1.1rem; }
     #wx-place { width: 100%; }
@@ -149,6 +165,8 @@
     Searches the next {{ forecast_days }} days of forecast across the campground
     database for somewhere with the weather you're after — a comfortable range,
     or simply cooler (or warmer) than it's going to be at home that same day.
+    Narrow it to the dates you're actually free, or leave them blank for the
+    whole {{ forecast_days }} days.
   </p>
 
   <form class="wx-form" id="wx-form" autocomplete="off">
@@ -187,6 +205,21 @@
     </div>
 
     <div class="wx-row">
+      {# One field holding both ends of the range, because it's one question.
+         Bounds are the forecast horizon (server-supplied) — there's nothing to
+         search outside it. Leaving them empty searches the whole horizon. #}
+      <div class="field">
+        <label for="wx-start">Dates</label>
+        <div class="wx-dates">
+          <input type="date" id="wx-start" min="{{ date_min }}" max="{{ date_max }}"
+                 aria-label="Earliest date">
+          <span class="wx-dash">–</span>
+          <input type="date" id="wx-end" min="{{ date_min }}" max="{{ date_max }}"
+                 aria-label="Latest date">
+          <button type="button" class="wx-clear" id="wx-dates-clear" hidden>Clear</button>
+        </div>
+      </div>
+
       <div class="field search-wrap">
         <label for="wx-place">Search from</label>
         <input type="text" id="wx-place" placeholder="Home" aria-describedby="wx-origin-note">
@@ -289,6 +322,39 @@ precipInput.addEventListener('input', () => {
 });
 syncRain();
 
+// ── Date range ─────────────────────────────────────────────────────────────
+// Empty means "the whole forecast horizon", which is what the page did before
+// the range existed, so the default behaviour is unchanged.
+const startInput = document.getElementById('wx-start');
+const endInput = document.getElementById('wx-end');
+const datesClear = document.getElementById('wx-dates-clear');
+const weekendsBox = document.getElementById('wx-weekends');
+// Naming a window is the more specific statement, so the first time one is set
+// the weekends-only default is dropped — otherwise a Tue–Thu range silently
+// matches nothing and the reason is a checkbox further down the form. Done
+// once, and visibly (the box unticks in front of you), so re-ticking sticks.
+let weekendsAutoCleared = false;
+
+function syncDates() {
+  const has = !!(startInput.value || endInput.value);
+  datesClear.hidden = !has;
+  // Keep each end from crossing the other in the picker itself. The server
+  // swaps reversed bounds anyway; this just stops you picking them.
+  startInput.max = endInput.value || '{{ date_max }}';
+  endInput.min = startInput.value || '{{ date_min }}';
+  if (has && weekendsBox.checked && !weekendsAutoCleared) {
+    weekendsBox.checked = false;
+    weekendsAutoCleared = true;
+  }
+}
+startInput.addEventListener('change', syncDates);
+endInput.addEventListener('change', syncDates);
+datesClear.addEventListener('click', () => {
+  startInput.value = endInput.value = '';
+  syncDates();
+});
+syncDates();
+
 // ── Origin picker ──────────────────────────────────────────────────────────
 const placeInput = document.getElementById('wx-place');
 const placeResults = document.getElementById('wx-place-results');
@@ -366,7 +432,9 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
     delta_f: numOf('wx-delta'),
     min_high: numOf('wx-min-high'),
     max_high: numOf('wx-max-high'),
-    weekends_only: document.getElementById('wx-weekends').checked,
+    weekends_only: weekendsBox.checked,
+    start_date: startInput.value || null,
+    end_date: endInput.value || null,
     dry_only: dry,
     max_precip_in: numOf('wx-precip'),
     waterfront_only: document.getElementById('wx-waterfront').checked,
@@ -495,6 +563,25 @@ function dayChip(m) {
        + `<span class="t">${Math.round(m.high)}°</span>${delta}${rain}</span>`;
 }
 
+// The window the server actually applied — read off the response rather than
+// the form, so the sentence can't describe a range that was edited but not
+// searched. Empty bounds say nothing at all: "no matches over the whole
+// forecast" is already the default reading.
+function dateScope(data) {
+  const fmt = s => {
+    const d = new Date(s + 'T00:00:00');
+    return (d.getMonth() + 1) + '/' + d.getDate();
+  };
+  if (data.start_date && data.end_date) {
+    return data.start_date === data.end_date
+      ? ` on ${fmt(data.start_date)}`
+      : ` between ${fmt(data.start_date)} and ${fmt(data.end_date)}`;
+  }
+  if (data.start_date) return ` from ${fmt(data.start_date)} on`;
+  if (data.end_date) return ` up to ${fmt(data.end_date)}`;
+  return '';
+}
+
 function render(data, mode) {
   const n = data.matched;
   // Say what was actually checked. When the budget clipped the search, "no
@@ -505,6 +592,7 @@ function render(data, mode) {
     scope += ` of the ${data.eligible} in range (the nearest and the most promising;`
            + ` search again to widen it — what's already loaded is cached)`;
   }
+  scope += dateScope(data);
   statusEl.className = '';
 
   if (!n) {
