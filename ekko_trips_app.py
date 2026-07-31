@@ -3630,9 +3630,12 @@ def api_weather_finder_search():
         except (TypeError, ValueError):
             return default
 
-    max_miles = num("max_miles", 250, 5, WEATHER_MAX_MILES)
-    min_high = num("min_high", 70, -50, 130)
-    max_high = num("max_high", 88, -50, 130)
+    # Fallbacks for a field the caller omitted. The page always sends all three,
+    # so these only bind for a hand-made request — but keep them equal to the
+    # form's defaults so the two can't describe different searches.
+    max_miles = num("max_miles", 150, 5, WEATHER_MAX_MILES)
+    min_high = num("min_high", 50, -50, 130)
+    max_high = num("max_high", 85, -50, 130)
     if min_high > max_high:
         min_high, max_high = max_high, min_high
     delta_f = num("delta_f", 5, 0, 60)

@@ -188,22 +188,24 @@
         <select id="wx-mode">
           <option value="cooler">Cooler than home</option>
           <option value="warmer">Warmer than home</option>
-          <option value="range">A comfortable temperature range</option>
+          <option value="range" selected>A comfortable temperature range</option>
         </select>
       </div>
 
-      <div class="field" id="field-delta">
+      {# `hidden` here mirrors the default mode (range), so the fields that mode
+         doesn't use aren't painted before syncMode() runs and hides them. #}
+      <div class="field" id="field-delta" hidden>
         <label for="wx-delta">By at least (°F)</label>
         <input type="number" id="wx-delta" value="5" min="0" max="60" step="1">
       </div>
 
-      <div class="field" id="field-min-high" hidden>
+      <div class="field" id="field-min-high">
         <label for="wx-min-high">High no lower than</label>
-        <input type="number" id="wx-min-high" value="70" min="-50" max="130" step="1">
+        <input type="number" id="wx-min-high" value="50" min="-50" max="130" step="1">
       </div>
-      <div class="field" id="field-max-high" hidden>
+      <div class="field" id="field-max-high">
         <label for="wx-max-high">High no higher than</label>
-        <input type="number" id="wx-max-high" value="88" min="-50" max="130" step="1">
+        <input type="number" id="wx-max-high" value="85" min="-50" max="130" step="1">
       </div>
 
       <div class="field">
@@ -212,7 +214,7 @@
            valid values were 5, 15 ... 245, 255, so the field rejected its own
            default of 250 and offered 245/255 instead. step=5 off a min of 5
            makes every multiple of 5 valid, including 250 and the 500 cap. #}
-        <input type="number" id="wx-miles" value="250" min="5" max="{{ max_miles_cap }}" step="5">
+        <input type="number" id="wx-miles" value="150" min="5" max="{{ max_miles_cap }}" step="5">
       </div>
     </div>
 
@@ -259,7 +261,7 @@
         <div class="wx-filters">
           <label class="wx-check"><input type="checkbox" id="wx-weekends" checked> Weekends</label>
           <span class="wx-rain">
-            <label class="wx-check"><input type="checkbox" id="wx-dry"> Little or no rain</label>
+            <label class="wx-check"><input type="checkbox" id="wx-dry" checked> Little or no rain</label>
             <span class="wx-rain-limit" id="wx-rain-limit">
               — at most
               {# Hundredths, so a typed 0.12 isn't rejected the way 250 miles was.
