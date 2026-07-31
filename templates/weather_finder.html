@@ -117,6 +117,8 @@
   .wx-card.waterfront { border-left-color: #2a7fa8; }
   .wx-card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem; }
   .wx-name { font-weight: 700; color: var(--navy); font-size: 1rem; }
+  a.wx-name { text-decoration: none; }
+  a.wx-name:hover, a.wx-name:focus-visible { text-decoration: underline; }
   .wx-meta { font-size: .8rem; color: var(--gray); display: flex; flex-wrap: wrap; gap: .5rem; }
   .wx-meta .sep { color: var(--gray-light); }
   .wx-badge {
@@ -539,12 +541,23 @@ function renderOne(data) {
   resultsEl.innerHTML = `
     <div class="wx-card${water ? ' waterfront' : ''}">
       <div class="wx-card-head">
-        <span class="wx-name">${esc(c.name)}</span>
+        ${nameHtml(c)}
         ${water ? `<span class="wx-badge water">${esc(c.waterfront)}</span>` : ''}
       </div>
       <div class="wx-meta">${meta.map(m => `<span>${m}</span>`).join('<span class="sep">\u00b7</span>')}</div>
       <div class="wx-days">${data.days.map(dayChip).join('')}</div>
     </div>`;
+}
+
+// The name links through to the campground map, centered on that campground —
+// ?focus=<id> is the map's own deep link (setView + zoom 14). Opened in a new
+// tab on purpose: a search spends most of a minute's Open-Meteo budget, so
+// navigating away and coming back would re-run it.
+function nameHtml(c) {
+  const name = esc(c.name);
+  if (c.id === null || c.id === undefined) return `<span class="wx-name">${name}</span>`;
+  return `<a class="wx-name" href="/campgrounds/map?focus=${encodeURIComponent(c.id)}"`
+       + ` target="_blank" rel="noopener" title="Show on the campground map">${name}</a>`;
 }
 
 function esc(s) {
@@ -630,7 +643,7 @@ function render(data, mode) {
     return `
       <div class="wx-card${water ? ' waterfront' : ''}">
         <div class="wx-card-head">
-          <span class="wx-name">${esc(r.name)}</span>
+          ${nameHtml(r)}
           ${water ? `<span class="wx-badge water">${esc(r.waterfront)}</span>` : ''}
         </div>
         <div class="wx-meta">${meta.map(m => `<span>${m}</span>`).join('<span class="sep">·</span>')}</div>

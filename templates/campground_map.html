@@ -2263,13 +2263,23 @@ routeControl.addTo(map);
 })();
 
 // ?focus=<id> deep-link (reverse of the popup's "edit" link from the manage
-// page): center + zoom on one campground instead of fitting the whole set.
+// page, and where the Weather Finder's result names point): center + zoom on
+// one campground instead of fitting the whole set, and open its popup — same
+// answer the map's own search box gives, since arriving by name means you want
+// to see that campground, not just its patch of map.
 // Falls back to the normal fit if the id isn't found.
 const focusId = new URLSearchParams(window.location.search).get('focus');
 const focusEntry = focusId ? markers.find(m => String(m.cg.id) === focusId) : null;
 if (focusEntry) {
   const [flat, flng] = focusEntry.cg.location.split(',').map(parseFloat);
   map.setView([flat, flng], 14);
+  // Reveal it even if the session's category/ownership filters (or the master
+  // campgrounds toggle) currently hide it — sessionStorage keeps those across a
+  // tab, so a deep link can otherwise land on an empty patch of map. The next
+  // filter change re-applies and hides it again, exactly as with search.
+  // After setView, so the marker projects at the view it's being added into.
+  if (!map.hasLayer(focusEntry.marker)) focusEntry.marker.addTo(map);
+  focusEntry.marker.openPopup();
   // Strip the param so a reload/share doesn't re-trigger the focus.
   const url = new URL(window.location);
   url.searchParams.delete('focus');
