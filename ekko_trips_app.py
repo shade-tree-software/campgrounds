@@ -2183,6 +2183,23 @@ def _parse_latlng(loc):
 SLIDESHOW_POOL_MAX = 200
 
 
+def _finished_trip(trip):
+    """True when the trip is over — i.e. not still underway and not upcoming.
+
+    A trip whose `end` is today counts as UNfinished: we're still out on it
+    until we're home that evening. Matches the `in_progress` test in
+    `_track_covers_trip`, so "in progress" means the same thing on the
+    landing banner as it does to the track gate.
+
+    An unparsable/absent `end` returns True, so a data quirk degrades to the
+    old behavior (trip shows) rather than silently emptying the banner.
+    """
+    try:
+        return date.fromisoformat(trip["end"]) < date.today()
+    except (ValueError, TypeError, KeyError):
+        return True
+
+
 @app.route('/')
 @app.route('/trips')
 @app.route('/trips/map')
@@ -2211,8 +2228,17 @@ def trips_map():
     # there's an actual dated trip to point at. Home-only trips are skipped
     # even for admins (who still see them on the map) — they aren't trips
     # worth surfacing in the banner.
+    #
+    # A trip that hasn't ended yet is skipped too: the banner is a finished
+    # story ("here's where we just were"), and a trip still underway has
+    # half its campspots unwritten and none of its photos uploaded, so it
+    # points at a page that isn't ready to be read. `_finished_trip()` uses
+    # the same today <= end test as the track gate's `in_progress`, so a
+    # trip ending today still counts as in progress (we're not home yet),
+    # and it also skips trips that haven't started.
     latest_trip = next((t for t in reversed(trips)
-                        if t.get("start") and not t.get("home_only")), None)
+                        if t.get("start") and not t.get("home_only")
+                        and _finished_trip(t)), None)
     latest_trip_date = ""
     if latest_trip:
         try:
