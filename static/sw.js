@@ -21,7 +21,8 @@
 //     SW re-requests each tile in CORS mode (both hosts send
 //     Access-Control-Allow-Origin: *), so the response is a normal 200 that
 //     caches without padding. See tileCacheFirst. Other cross-origin (unpkg
-//     leaflet) is still not intercepted.
+//     leaflet) is still not intercepted. Storing a tile must never block
+//     serving it — see the cost model above PAGE_CACHE_MAX.
 //   - Non-GET requests are never touched.
 //
 // Bump VERSION to invalidate the page/photo caches after a deploy that changes
@@ -73,6 +74,26 @@ const PHOTO_CACHE_MAX = 500;   // thumbs are ~50 KB; originals only as viewed
 // (imagery + boundaries + transportation), so a single satellite pan can pull
 // 3 tiles per cell — the cap needs real headroom to keep a working set warm.
 const TILE_CACHE_MAX = 3000;   // ~30-90 MB
+
+// THE COST MODEL THIS FILE IS WRITTEN AGAINST (learned the hard way — tiles
+// took minutes to appear until a Ctrl-Shift-R, which bypasses the SW, made them
+// instant; i.e. the SW itself was the bottleneck, not OSM):
+//
+//   - The SW has ONE thread, and it serves every fetch on the page. Work done
+//     per tile is multiplied by ~100 (a viewport) and lands on the same thread
+//     that has to hand those tiles back.
+//   - Cache Storage takes an exclusive per-cache lock for writes. Puts and
+//     deletes on one cache SERIALIZE, so anything awaiting a put waits behind
+//     every other write already queued on that cache.
+//
+// Two rules follow, and new code here must keep them:
+//   1. NEVER await a cache write before returning a response. Store in the
+//      background (with event.waitUntil to keep the SW alive for it). Caching
+//      is for the next visit; rendering is what the user is waiting on.
+//   2. NEVER do per-response cache bookkeeping that walks the whole cache.
+//      Trims are coalesced (scheduleTrim) and the tile LRU refresh is sampled.
+const LRU_REFRESH_RATE = 0.05; // see tileCacheFirst
+const TRIM_DELAY_MS = 5000;    // see scheduleTrim
 
 // Map-tile origins served cache-first. Match the base host AND any subdomain
 // of it: we now request OSM's bare tile.openstreetmap.org (its usage policy
@@ -162,6 +183,14 @@ self.addEventListener('activate', (e) => {
           .filter((k) => k.startsWith('ekko-') && !KEEP_CACHES.includes(k))
           .map((k) => caches.delete(k))
       ))
+      // Catch-up trim. Trims are coalesced and best-effort now (scheduleTrim),
+      // so a burst whose pass was lost to SW termination can leave a cache over
+      // its cap; activate is a natural, off-the-critical-path place to settle up.
+      .then(() => Promise.all([
+        trimCache(TILE_CACHE, TILE_CACHE_MAX).catch(() => {}),
+        trimCache(PHOTO_CACHE, PHOTO_CACHE_MAX).catch(() => {}),
+        trimCache(PAGE_CACHE, PAGE_CACHE_MAX).catch(() => {}),
+      ]))
       .then(() => self.clients.claim())
   );
 });
@@ -176,6 +205,46 @@ async function trimCache(name, max) {
   }
 }
 
+// Coalesced trim: at most one queued pass per cache, after a short delay.
+//
+// Trimming walks the ENTIRE key list — cache.keys() materializes up to
+// TILE_CACHE_MAX Request objects — so calling it once per stored response, as
+// this file used to, means ~100 full-cache enumerations for one map pan, on the
+// single thread that is meanwhile trying to deliver those tiles. It degrades
+// nonlinearly as the cache fills, which is why a fresh profile always felt fine.
+//
+// A pending trim absorbs every request that arrives while it waits, and the
+// delay lets a burst of tiles finish landing so one pass covers all of them.
+// Best-effort by design: the cap is a quota bound, not a correctness property,
+// so a trim lost to SW termination just happens on the next burst instead.
+const trimPending = new Set();
+
+function scheduleTrim(name, max) {
+  if (trimPending.has(name)) return;
+  trimPending.add(name);
+  setTimeout(() => {
+    trimPending.delete(name);
+    trimCache(name, max).catch(() => {});
+  }, TRIM_DELAY_MS);
+}
+
+// Store a response without making the caller wait for it (rule 1 above).
+// `evt.waitUntil` keeps the SW alive long enough for the write to land without
+// putting it in front of the response. A failed put is almost always quota, so
+// trim to make room for what comes next rather than swallowing it silently —
+// the awaited put this replaced existed to surface exactly that error.
+function storeInBackground(cacheName, req, res, max, evt) {
+  const done = caches.open(cacheName)
+    .then((cache) => cache.put(req, res))
+    .then(() => { if (max) scheduleTrim(cacheName, max); })
+    .catch((err) => {
+      console.warn('[sw] cache put failed', cacheName, err);
+      if (max) scheduleTrim(cacheName, max);
+    });
+  if (evt) evt.waitUntil(done);
+  return done;
+}
+
 // Cacheable: a plain same-origin 200 that isn't the tail of a redirect
 // chain. The redirect guard matters: logged-out page fetches 302 to
 // /login and caching that would make every offline page "be" the login
@@ -184,14 +253,16 @@ function cacheable(res) {
   return res && res.status === 200 && res.type === 'basic' && !res.redirected;
 }
 
-async function cacheFirst(req) {
-  const cached = await caches.match(req);
+// Photos/derivatives. The lookup names PHOTO_CACHE rather than using the
+// cacheName-less caches.match(), which queries every cache in turn — including
+// the 3000-entry tile cache, for a photo that could only ever be in this one.
+async function cacheFirst(req, evt) {
+  const cache = await caches.open(PHOTO_CACHE);
+  const cached = await cache.match(req);
   if (cached) return cached;
   const res = await fetch(req);
   if (cacheable(res)) {
-    const cache = await caches.open(PHOTO_CACHE);
-    cache.put(req, res.clone());
-    trimCache(PHOTO_CACHE, PHOTO_CACHE_MAX);
+    storeInBackground(PHOTO_CACHE, req, res.clone(), PHOTO_CACHE_MAX, evt);
   }
   return res;
 }
@@ -206,23 +277,35 @@ async function cacheFirst(req) {
 // genuine quota error surfaces rather than silently dropping the tile. If the
 // CORS fetch ever fails (a host without ACAO, or offline), fall back to the
 // plain request so the tile still renders, just uncached.
-async function tileCacheFirst(req) {
+async function tileCacheFirst(req, evt) {
   const cache = await caches.open(TILE_CACHE);
   const cached = await cache.match(req);
   if (cached) {
-    // LRU refresh: re-put the hit so it moves to the newest position. Cache
-    // keys are in insertion order and trimCache evicts from the front, so
-    // without this a tile you keep viewing would still be evicted as soon as
-    // TILE_CACHE_MAX newer tiles loaded (pure FIFO). Fire-and-forget — the
-    // response is served from `cached` regardless of whether the re-put lands.
-    cache.put(req, cached.clone());
+    // LRU refresh, SAMPLED: re-putting a hit moves it to the newest position,
+    // because cache keys are in insertion order and trimCache evicts from the
+    // front — without it, a tile you look at constantly is still evicted as
+    // soon as TILE_CACHE_MAX newer tiles load (pure FIFO).
+    //
+    // But a re-put is a full ~20 KB write holding this cache's write lock, and
+    // doing one per tile SERVED turned the supposedly-instant cached path into
+    // the queue that the uncached path had to wait behind. Sampling keeps the
+    // eviction protection — a tile seen repeatedly gets refreshed soon enough,
+    // and one that isn't seen repeatedly is exactly what should age out — for
+    // a twentieth of the write traffic.
+    if (Math.random() < LRU_REFRESH_RATE) {
+      storeInBackground(TILE_CACHE, req, cached.clone(), 0, evt);
+    }
     return cached;
   }
   try {
     const res = await fetch(req.url, { mode: 'cors' });
+    // Cache in the background and hand the tile straight to the map. This put
+    // used to be awaited (so a quota error would surface), which meant the
+    // network fetch completing was NOT enough for a tile to render — it also
+    // had to wait out a Cache Storage write queued behind every other in-flight
+    // write on this cache. storeInBackground still reports quota failures.
     if (res && res.status === 200) {
-      await cache.put(req, res.clone());
-      trimCache(TILE_CACHE, TILE_CACHE_MAX);
+      storeInBackground(TILE_CACHE, req, res.clone(), TILE_CACHE_MAX, evt);
     }
     return res;
   } catch (err) {
@@ -233,18 +316,20 @@ async function tileCacheFirst(req) {
 // Immutable vendored assets (Leaflet). Cache-first with ignoreSearch so the
 // ?v=<mtime> versioned request matches the bare precached URL; on a miss (e.g.
 // a ?v bump after a Leaflet upgrade), fetch and store the versioned entry too.
-async function cacheFirstStatic(req) {
-  const cached = await caches.match(req, { ignoreSearch: true });
+async function cacheFirstStatic(req, evt) {
+  const cache = await caches.open(PAGE_CACHE);
+  const cached = await cache.match(req, { ignoreSearch: true });
   if (cached) return cached;
   const res = await fetch(req);
   if (cacheable(res)) {
-    const cache = await caches.open(PAGE_CACHE);
-    cache.put(req, res.clone());
+    // No trim: these are the handful of precached vendor assets, and evicting
+    // one would cost the offline map its Leaflet.
+    storeInBackground(PAGE_CACHE, req, res.clone(), 0, evt);
   }
   return res;
 }
 
-async function networkFirst(req) {
+async function networkFirst(req, evt) {
   try {
     // For page navigations, bypass the browser HTTP cache entirely: a heuristically
     // cached HTML page (dynamic pages ship no validators) would otherwise let a
@@ -252,16 +337,17 @@ async function networkFirst(req) {
     // get re-stored here. Static assets keep normal caching (they're ?v=-busted).
     const res = await fetch(req, req.mode === 'navigate' ? { cache: 'no-store' } : undefined);
     if (cacheable(res)) {
-      const cache = await caches.open(PAGE_CACHE);
-      cache.put(req, res.clone());
-      trimCache(PAGE_CACHE, PAGE_CACHE_MAX);
+      // Background, like everything else — the campground map alone is ~9 MB of
+      // HTML, so awaiting its store would hold the whole page behind one write.
+      storeInBackground(PAGE_CACHE, req, res.clone(), PAGE_CACHE_MAX, evt);
     }
     return res;
   } catch (err) {
-    const cached = await caches.match(req);
+    const cache = await caches.open(PAGE_CACHE);
+    const cached = await cache.match(req);
     if (cached) return cached;
     if (req.mode === 'navigate') {
-      const offline = await caches.match(OFFLINE_URL);
+      const offline = await cache.match(OFFLINE_URL);
       if (offline) return offline;
     }
     throw err;
@@ -276,7 +362,7 @@ self.addEventListener('fetch', (e) => {
   // are instant and the map renders offline. Handled before the same-origin
   // gate below (which would otherwise let them fall through to the network).
   if (isTileHost(url.hostname)) {
-    e.respondWith(tileCacheFirst(req));
+    e.respondWith(tileCacheFirst(req, e));
     return;
   }
   if (url.origin !== location.origin) return;
@@ -293,14 +379,14 @@ self.addEventListener('fetch', (e) => {
     // ?v= cache-buster and pins a stale copy (e.g. a pre-fix tile-layers.js →
     // no roads until a hard reset). Serve these network-first so they stay fresh
     // online, with the cache only as an offline fallback.
-    e.respondWith(networkFirst(req));
+    e.respondWith(networkFirst(req, e));
   } else if (url.pathname.startsWith('/static/vendor/')) {
     // Immutable vendored libs (Leaflet, protomaps-leaflet) — cache-first.
-    e.respondWith(cacheFirstStatic(req));
+    e.respondWith(cacheFirstStatic(req, e));
   } else if (url.pathname.startsWith('/thumb/') || url.pathname.startsWith('/view/') ||
              url.pathname.startsWith('/photo/')) {
-    e.respondWith(cacheFirst(req));
+    e.respondWith(cacheFirst(req, e));
   } else {
-    e.respondWith(networkFirst(req));
+    e.respondWith(networkFirst(req, e));
   }
 });
