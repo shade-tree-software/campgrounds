@@ -167,10 +167,10 @@
     <div class="form-row">
       <input type="text" id="new-username" placeholder="Username" autocomplete="off">
       <input type="password" id="new-password" placeholder="Password" autocomplete="new-password">
-      <label class="cb-label"><input type="checkbox" id="new-is-admin"> Admin</label>
-      <label class="cb-label"><input type="checkbox" id="new-can-upload"> Contributor</label>
-      <label class="cb-label" title="User can only see Trips — the whole Campgrounds section is hidden"><input type="checkbox" id="new-trips-only"> Trips only</label>
-      <button class="btn btn-add" onclick="createUser()">Add User</button>
+      <label class="cb-label" title="Full access: add, edit and delete trips, photos and campgrounds, and manage users. Admins can always upload and always see Campgrounds, so the other two boxes don't apply."><input type="checkbox" id="new-is-admin"> Admin</label>
+      <label class="cb-label" title="May upload photos and edit the captions on photos they uploaded. Deleting and reordering photos stay admin-only."><input type="checkbox" id="new-can-upload"> Contributor</label>
+      <label class="cb-label" title="User can only see Trips — the whole Campgrounds section (Map, Availability) is hidden"><input type="checkbox" id="new-trips-only"> Trips only</label>
+      <button class="btn btn-add" onclick="createUser()" title="Create the account with the username, password and roles above. Tell them the password yourself — nobody is notified.">Add User</button>
     </div>
   </div>
 
@@ -206,8 +206,8 @@
     <div class="form-row">
       <input type="text" id="new-share-label" placeholder="Label (e.g. Grandma)" autocomplete="off">
       <input type="text" id="new-share-next" placeholder="Deep-link path (optional, e.g. /trips/42)" autocomplete="off">
-      <label class="cb-label" title="Hide the Campgrounds section from this link's guests"><input type="checkbox" id="new-share-trips-only"> Trips only</label>
-      <button class="btn btn-add" onclick="createShareLink()">Create Link</button>
+      <label class="cb-label" title="Hide the whole Campgrounds section (Map, Availability) from this link's guests — they see only Trips"><input type="checkbox" id="new-share-trips-only"> Trips only</label>
+      <button class="btn btn-add" onclick="createShareLink()" title="Create a read-only link. Send the URL to a guest and it logs them straight in — no account, no password. Revoke it here any time.">Create Link</button>
     </div>
   </div>
 
@@ -242,15 +242,38 @@ function loadUsers() {
       }
       tbody.innerHTML = rows.map(u => {
         const isMe = u.username === ME;
+        // Every action button carries a title explaining what the role actually
+        // grants — "Promote" and "Make Contributor" name the verb, not the
+        // consequence, and the three capabilities (admin / can_upload /
+        // can_view_campgrounds) aren't guessable from the labels. Each toggle's
+        // tooltip describes the state it moves TO, matching its current label.
+        //
+        // A disabled button's title is the REASON it's disabled, which beats the
+        // explanation (you can't do it, so what it would do is moot) — hence one
+        // title per button rather than a title plus a separate disabled attr,
+        // which would emit two title attributes and silently keep the first.
         const adminToggleLabel = u.is_admin ? 'Demote' : 'Promote';
-        const adminToggleDisabled = (isMe && u.is_admin) ? 'disabled title="Cannot remove admin from your own account"' : '';
-        const deleteDisabled = isMe ? 'disabled title="Cannot delete your own account"' : '';
+        const adminToggleTitle = u.is_admin
+          ? 'Remove admin rights. Keeps the account — set Contributor and campground access separately below.'
+          : 'Make this user an admin: full access to add, edit and delete trips, photos and campgrounds, and to manage users. Admins can always upload and always see Campgrounds.';
+        const adminToggleAttrs = (isMe && u.is_admin)
+          ? 'disabled title="Cannot remove admin from your own account"'
+          : `title="${escapeAttrHtml(adminToggleTitle)}"`;
+        const deleteAttrs = isMe
+          ? 'disabled title="Cannot delete your own account"'
+          : 'title="Delete this account. They can no longer log in; photos they uploaded stay where they are."';
         // Uploader toggle is meaningless for admins (they implicitly can
         // upload), so hide it on admin rows to keep the controls honest.
         const uploaderToggleLabel = u.can_upload ? 'Revoke Contributor' : 'Make Contributor';
+        const uploaderToggleTitle = u.can_upload
+          ? 'Stop this user uploading photos. Photos they already uploaded stay.'
+          : 'Let this user upload photos and edit the captions on photos they uploaded. Deleting and reordering photos stay admin-only.';
         // Campground access is meaningless for admins (they always have it), so
         // the toggle/badge only appear on non-admin rows.
         const campToggleLabel = u.can_view_campgrounds ? 'Restrict to Trips' : 'Allow Campgrounds';
+        const campToggleTitle = u.can_view_campgrounds
+          ? 'Hide the whole Campgrounds section (Map, Availability) — this user sees only Trips.'
+          : 'Give this user the Campgrounds section (Map, Availability) back, alongside Trips.';
         let roleHtml;
         if (u.is_admin) {
           roleHtml = '<span class="badge-admin">Admin</span>';
@@ -267,11 +290,11 @@ function loadUsers() {
             <td>${escapeHtml(u.username)}${isMe ? '<span class="self-tag">(you)</span>' : ''}</td>
             <td>${roleHtml}</td>
             <td class="col-actions">
-              <button class="btn btn-cancel" onclick="openReset('${escapeAttr(u.username)}')">Reset Password</button>
-              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleUploader('${escapeAttr(u.username)}', ${!u.can_upload})">${uploaderToggleLabel}</button>`}
-              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleCampgrounds('${escapeAttr(u.username)}', ${!u.can_view_campgrounds})">${campToggleLabel}</button>`}
-              <button class="btn btn-save" onclick="toggleAdmin('${escapeAttr(u.username)}', ${!u.is_admin})" ${adminToggleDisabled}>${adminToggleLabel}</button>
-              <button class="btn btn-danger" onclick="deleteUser('${escapeAttr(u.username)}')" ${deleteDisabled}>Delete</button>
+              <button class="btn btn-cancel" onclick="openReset('${escapeAttr(u.username)}')" title="Set a new password for this account. Nobody is notified, so pass it on yourself.">Reset Password</button>
+              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleUploader('${escapeAttr(u.username)}', ${!u.can_upload})" title="${escapeAttrHtml(uploaderToggleTitle)}">${uploaderToggleLabel}</button>`}
+              ${u.is_admin ? '' : `<button class="btn btn-save" onclick="toggleCampgrounds('${escapeAttr(u.username)}', ${!u.can_view_campgrounds})" title="${escapeAttrHtml(campToggleTitle)}">${campToggleLabel}</button>`}
+              <button class="btn btn-save" onclick="toggleAdmin('${escapeAttr(u.username)}', ${!u.is_admin})" ${adminToggleAttrs}>${adminToggleLabel}</button>
+              <button class="btn btn-danger" onclick="deleteUser('${escapeAttr(u.username)}')" ${deleteAttrs}>Delete</button>
             </td>
           </tr>`;
       }).join('');
@@ -284,8 +307,26 @@ function escapeHtml(s) {
   return d.innerHTML;
 }
 
+// Escape a value for a JS string literal that ITSELF sits inside an HTML
+// attribute — i.e. every `onclick="fn('${escapeAttr(x)}')"` in this file.
+//
+// Both layers are required, in this order, because the browser undoes them in
+// the opposite one: it parses the attribute value first, then the JS inside it.
+// The HTML layer used to be missing, so a username containing a double quote
+// closed the onclick attribute early and the rest of the name spilled into the
+// tag as bare attributes, breaking that row's remaining buttons. Only admins
+// can create accounts, so it was never reachable by an untrusted party — but a
+// name with an apostrophe-adjacent quote is an ordinary thing to type.
 function escapeAttr(s) {
-  return s.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  const js = String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+  return escapeAttrHtml(js);
+}
+
+// Escape a value used directly as an HTML attribute value (tooltip text).
+// escapeHtml handles & < > but leaves quotes alone, and an unescaped " would
+// close the attribute early.
+function escapeAttrHtml(s) {
+  return escapeHtml(s).replace(/"/g, '&quot;');
 }
 
 function createUser() {
@@ -422,9 +463,9 @@ function loadShareLinks() {
             <td>${label}${tripsOnlyBadge}</td>
             <td><span class="share-dest">${dest}</span></td>
             <td class="col-actions">
-              <button class="btn btn-save" onclick="copyShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.next || '/')}')">Copy Link</button>
-              <button class="btn btn-cancel" onclick="toggleShareTripsOnly('${escapeAttr(l.token)}', ${!l.trips_only})">${l.trips_only ? 'Allow Campgrounds' : 'Restrict to Trips'}</button>
-              <button class="btn btn-danger" onclick="revokeShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.label || '')}')">Revoke</button>
+              <button class="btn btn-save" onclick="copyShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.next || '/')}')" title="Copy this link's full URL to the clipboard, ready to send. Anyone holding it gets in without a password, read-only.">Copy Link</button>
+              <button class="btn btn-cancel" onclick="toggleShareTripsOnly('${escapeAttr(l.token)}', ${!l.trips_only})" title="${l.trips_only ? 'Give this link&#39;s guests the Campgrounds section (Map, Availability) as well as Trips.' : 'Hide the whole Campgrounds section from this link&#39;s guests — they see only Trips.'}">${l.trips_only ? 'Allow Campgrounds' : 'Restrict to Trips'}</button>
+              <button class="btn btn-danger" onclick="revokeShareLink('${escapeAttr(l.token)}', '${escapeAttr(l.label || '')}')" title="Delete this link. It stops working immediately, including for anyone using it right now.">Revoke</button>
             </td>
           </tr>`;
       }).join('');
