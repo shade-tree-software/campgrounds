@@ -887,8 +887,9 @@
     .btn-save, .btn-cancel, .btn-danger { padding: .6rem 1.1rem; }
     .photo-item .caption-text { display: inline-block; padding: .3rem 0; }
 
-    /* Pre-emptively break the stay-meta line: locale/state on row 1,
-       night count + dates on row 2 (the em-dash separator hidden). */
+    /* Pre-emptively break the stay-meta line: nights + dates on row 1, the
+       campsite on row 2 (the middle-dot separator hidden). The town isn't
+       here — it wraps with the campground name in the h3 above. */
     .stay-meta .stay-sep { display: none; }
     .stay-meta .stay-dates { display: block; }
 
@@ -968,6 +969,18 @@
     font-size: 1rem;
     font-weight: 600;
     color: var(--navy);
+  }
+
+  /* Town + state ride along with the campground name. inline-block + nowrap
+     so a narrow card moves the whole "Grayson County, VA" down to the next
+     line instead of breaking it after the comma. */
+  .stay-header .stay-info h3 .stay-where {
+    display: inline-block;
+    margin-left: .45rem;
+    font-size: .85rem;
+    font-weight: 400;
+    color: var(--gray);
+    white-space: nowrap;
   }
 
   .stay-header .stay-info .stay-meta {
@@ -1962,7 +1975,12 @@
     <div class="stay-header">
       <div class="stay-number">{{ item.idx + 1 }}</div>
       <div class="stay-info">
-        <h3>{{ item.place }}</h3>
+        {#- The town sits with the campground name, not down on the meta line:
+            together they're the answer to "where is this". `.stay-where` is
+            nowrap, so when the pair doesn't fit the town moves to the next
+            line whole rather than breaking after the comma. -#}
+        {% set where = [item.locale, item.state] | select | join(', ') %}
+        <h3>{{ item.place }}{% if where %}<span class="stay-where">{{ where }}</span>{% endif %}</h3>
         <div class="stay-meta">
           {#- Nights are numbered across the whole VISIT (consecutive stays at
               one campground are one visit — see trips.visit_runs), so a card
@@ -1971,7 +1989,7 @@
               covers the entire visit just states the length. Either way the
               dates are the range those nights run between, so the format
               doesn't change from card to card. -#}
-          <span class="stay-locale">{% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}</span><span class="stay-sep"> &mdash; </span><span class="stay-dates">{% if item.night_from == 1 and item.night_to == item.night_total %}{{ item.night_total }} night{{ 's' if item.night_total != 1 else '' }}{% elif item.night_from == item.night_to %}Night {{ item.night_from }} of {{ item.night_total }}{% else %}Nights {{ item.night_from }}&ndash;{{ item.night_to }} of {{ item.night_total }}{% endif %} ({{ item.card_start }} to {{ item.card_end }})</span>{% if item.site_label %}<span class="stay-sep"> &middot; </span><span class="stay-site">{{ item.site_label }}</span>{% endif %}
+          <span class="stay-dates">{% if item.night_from == 1 and item.night_to == item.night_total %}{{ item.night_total }} night{{ 's' if item.night_total != 1 else '' }}{% elif item.night_from == item.night_to %}Night {{ item.night_from }} of {{ item.night_total }}{% else %}Nights {{ item.night_from }}&ndash;{{ item.night_to }} of {{ item.night_total }}{% endif %} ({{ item.card_start }} to {{ item.card_end }})</span>{% if item.site_label %}<span class="stay-sep"> &middot; </span><span class="stay-site">{{ item.site_label }}</span>{% endif %}
         </div>
       </div>
       {% if item.copy_num == 1 and (is_admin or is_uploader) %}
