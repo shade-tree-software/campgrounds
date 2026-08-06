@@ -971,16 +971,31 @@
     color: var(--navy);
   }
 
-  /* Town + state ride along with the campground name. inline-block + nowrap
-     so a narrow card moves the whole "Grayson County, VA" down to the next
-     line instead of breaking it after the comma. */
-  .stay-header .stay-info h3 .stay-where {
-    display: inline-block;
-    margin-left: .45rem;
+  /* Title line on every timeline card: the name, plus the town/state that
+     says where it is. Flex rather than plain inline for two reasons — wrap
+     moves the whole town to the next line when the pair doesn't fit, and
+     flex baselines survive the `overflow: hidden` the ellipsis needs (an
+     inline-block with hidden overflow takes its baseline from its bottom
+     margin edge, which would float the town up out of line). */
+  .stay-header .stay-info h3,
+  .event-header .event-info h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: .45rem;
+  }
+  /* The gap supplies the spacing now, and it doesn't survive a wrap the way
+     a margin would (which would indent the wrapped town). */
+  .event-header .event-info h3 .needs-vetting-badge { margin-left: 0; }
+
+  .card-where {
+    min-width: 0;              /* lets it shrink far enough to ellipsize */
     font-size: .85rem;
     font-weight: 400;
     color: var(--gray);
-    white-space: nowrap;
+    white-space: nowrap;       /* wraps as one unit, never after the comma */
+    overflow: hidden;
+    text-overflow: ellipsis;   /* last resort: a town too long for its own line */
   }
 
   .stay-header .stay-info .stay-meta {
@@ -1946,8 +1961,8 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
       </div>
       <div class="event-info">
-        <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.start %} &mdash; {{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% endif %}</span></div>
+        <h3>Home<span class="card-where">Reston, VA</span></h3>
+        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
@@ -1976,11 +1991,10 @@
       <div class="stay-number">{{ item.idx + 1 }}</div>
       <div class="stay-info">
         {#- The town sits with the campground name, not down on the meta line:
-            together they're the answer to "where is this". `.stay-where` is
-            nowrap, so when the pair doesn't fit the town moves to the next
-            line whole rather than breaking after the comma. -#}
+            together they're the answer to "where is this". Same treatment on
+            event and home cards — see the `.card-where` CSS for how it wraps. -#}
         {% set where = [item.locale, item.state] | select | join(', ') %}
-        <h3>{{ item.place }}{% if where %}<span class="stay-where">{{ where }}</span>{% endif %}</h3>
+        <h3>{{ item.place }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}</h3>
         <div class="stay-meta">
           {#- Nights are numbered across the whole VISIT (consecutive stays at
               one campground are one visit — see trips.visit_runs), so a card
@@ -2138,12 +2152,9 @@
       the house's 14: a star's concavities make it read smaller at equal box
       size. #}<svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M10 1 L12.02 7.22 L18.56 7.22 L13.27 11.06 L15.29 17.28 L10 13.44 L4.71 17.28 L6.73 11.06 L1.44 7.22 L7.98 7.22 Z"/></svg>{% endif %}</div>
       <div class="event-info">
-        <h3>{{ item.name }}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
+        {%- set where = [item.locale, item.state] | select | join(', ') %}
+        <h3>{{ item.name }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
-          {% if item.locale or item.state %}
-            {% if item.locale %}{{ item.locale }}{% if item.state %}, {% endif %}{% endif %}{{ item.state }}
-            &mdash;
-          {% endif %}
           {{ item.date }}{% if item.time %} {{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% endif %}
         </div>
         {# Bare waypoint cards hide .event-body, so render description inline here.
@@ -2278,8 +2289,8 @@
         <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
       </div>
       <div class="event-info">
-        <h3>Home</h3>
-        <div class="event-meta">Reston, VA{% if trip.end %} &mdash; {{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% endif %}</span></div>
+        <h3>Home<span class="card-where">Reston, VA</span></h3>
+        <div class="event-meta">{% if trip.end %}{{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
