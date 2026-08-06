@@ -2629,7 +2629,7 @@ def trips_stats():
     if _stats_cache["key"] == key:
         return render_template('trips_stats.html',
                                photo_count=_stats_photo_count(),
-                               longest_drives=_longest_drives(),
+                               longest_drives=_stats_drives(),
                                **_stats_cache["data"])
 
     trips = parse_trips()
@@ -2765,10 +2765,22 @@ def trips_stats():
     _stats_cache.update(key=key, data=data)
     # photo_count and longest_drives are deliberately outside `data` — see
     # the docstring above and `_longest_drives`: both answer to things this
-    # cache's key can't see (files on disk, re-fetched GPS tracks).
+    # cache's key can't see (files on disk, re-fetched GPS tracks). The
+    # drives are also per-viewer, which `data` (shared across viewers)
+    # could not carry.
     return render_template('trips_stats.html',
                            photo_count=_stats_photo_count(),
-                           longest_drives=_longest_drives(), **data)
+                           longest_drives=_stats_drives(), **data)
+
+
+def _stats_drives():
+    """The stats page's Longest Driving Days, or `[]` for a plain viewer.
+
+    Gated to contributors: it's a working record of what the driving actually
+    took, useful for planning the next one, rather than part of the story the
+    trips tell. Gating the DATA rather than the markup keeps it out of the
+    HTML entirely, and skips the work for viewers who'd never see it."""
+    return _longest_drives() if _is_contributor() else []
 
 
 def _stats_photo_count():
@@ -5792,6 +5804,17 @@ def _drive_day_endpoints(trip, day):
                     if s.get("start") and s.get("end")
                     and s["start"] <= day < s["end"]), None)
     return place_at(morning), place_at(evening)
+
+
+def _is_contributor():
+    """True for admins and uploader-role users — the people who record the
+    trips, as opposed to everyone who reads about them.
+
+    `can_upload` alone is the whole test: the User model turns it on for
+    admins implicitly (see `User.__init__`). Share-link guests are
+    constructed without it, so a magic link never qualifies."""
+    return (current_user.is_authenticated
+            and getattr(current_user, "can_upload", False))
 
 
 def _hm(seconds):
