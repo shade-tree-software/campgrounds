@@ -5278,7 +5278,8 @@ TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 #   2: one continuous line per trip (was: a list of gap-split segments)
 #   3: entries also carry per-day driving distance/duration
 #   4: a day's drive is bounded by leaving/reaching a place, not by mileage
-TRIP_ROUTE_CACHE_VERSION = 4
+#   5: days also carry moving time (total time minus the stops)
+TRIP_ROUTE_CACHE_VERSION = 5
 
 # Per-day driving, derived from the same cleaned + windowed track the overview
 # line is (see `_build_trip_derived`), so a day can't be measured off pings the
@@ -5299,6 +5300,15 @@ TRIP_ROUTE_CACHE_VERSION = 4
 # 1 km is campground-sized: comfortably bigger than one, far smaller than the
 # first leg of any real drive.
 DRIVE_ANCHOR_RADIUS_M = 1000
+
+# Splitting that span into driving and stopped: a leg between two pings counts
+# as driving when it averages at least this fast. 5 mph is well above walking
+# (so lunch and a stretch at a rest area don't read as progress) and well
+# below any moving vehicle, including one crawling through a construction
+# zone. Resolution is the ping interval — ~5 min — so a stop shorter than that
+# can hide inside a leg; the check against the whole library is that moving
+# averages land at 44-60 mph, which is what an RV on a highway looks like.
+DRIVE_MOVING_MIN_MPS = 2.24
 # Below this a day isn't a drive, it's a trip to the camp store. Also what
 # keeps the cached day list to the handful of rows per trip worth having.
 DRIVE_DAY_MIN_M = 1609
@@ -5489,17 +5499,22 @@ def _track_covers_trip(trip, in_window, home):
 
 def _drive_days(kept, default_tz):
     """Per-day driving from a trip's in-window pings, as
-    `[[date, meters, seconds], ...]` for every local day that covered at
-    least `DRIVE_DAY_MIN_M`.
+    `[[date, meters, seconds, moving_seconds], ...]` for every local day that
+    covered at least `DRIVE_DAY_MIN_M`.
 
-    Both numbers describe the span between leaving where the day started and
-    reaching where it ended (see `DRIVE_ANCHOR_RADIUS_M`), so an evening spent
-    driving around the campground you arrived at is not part of the drive.
-    Distance is the length of the GPS path across that span — what was
-    actually driven, not the straight line between its ends. Duration is
-    elapsed time across it, counting the stops along the way: a 400-mile day
-    really does take ten hours, and reporting only the moving hours would
-    describe a drive nobody took.
+    All three numbers describe the span between leaving where the day started
+    and reaching where it ended (see `DRIVE_ANCHOR_RADIUS_M`), so an evening
+    spent driving around the campground you arrived at is not part of the
+    drive. Distance is the length of the GPS path across that span — what was
+    actually driven, not the straight line between its ends.
+
+    The two durations answer different questions and the page shows both.
+    `seconds` is elapsed across the span, counting the stops along the way —
+    what the day cost you. `moving_seconds` drops the legs slower than
+    `DRIVE_MOVING_MIN_MPS` — time actually at the wheel. Neither alone is the
+    honest number: a 400-mile day really does take ten hours, but eight of
+    them behind the wheel and two at rest areas is a different day from ten
+    straight through.
 
     A day that never leaves its own starting circle isn't a drive at all —
     a day at camp, however much local running-around it logs — and is
@@ -5535,13 +5550,17 @@ def _drive_days(kept, default_tz):
         if arrive <= depart:
             continue                      # never went anywhere: not a drive
 
-        meters = 0.0
+        meters, moving = 0.0, 0
         for a, b in zip(pts[depart:arrive], pts[depart + 1:arrive + 1]):
-            meters += _haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+            leg = _haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+            dt = b["tst"] - a["tst"]
+            meters += leg
+            if dt > 0 and leg / dt >= DRIVE_MOVING_MIN_MPS:
+                moving += dt
         if meters < DRIVE_DAY_MIN_M:
             continue
         days.append([day, round(meters),
-                     max(0, pts[arrive]["tst"] - pts[depart]["tst"])])
+                     max(0, pts[arrive]["tst"] - pts[depart]["tst"]), moving])
     return days
 
 
@@ -5775,6 +5794,15 @@ def _drive_day_endpoints(trip, day):
     return place_at(morning), place_at(evening)
 
 
+def _hm(seconds):
+    """Seconds as `8h 07m` (or `45m` under the hour). "" for None, so a
+    duration the cache doesn't carry renders as nothing rather than 0m."""
+    if seconds is None:
+        return ""
+    hours, rem = divmod(int(seconds), 3600)
+    return f"{hours}h {rem // 60:02d}m" if hours else f"{rem // 60}m"
+
+
 def _longest_drives(limit=10):
     """The library's longest single-day drives, longest first.
 
@@ -5796,10 +5824,16 @@ def _longest_drives(limit=10):
         trip = by_id.get(tid)
         if not trip:
             continue
-        for day, meters, seconds in entry.get("days", []):
+        for row in entry.get("days", []):
+            # Tolerate a row shorter than today's shape rather than 500ing on
+            # a cache written by an older build (the version bump normally
+            # rebuilds it first, but a half-written file shouldn't take the
+            # whole page down).
+            day, meters, seconds = row[0], row[1], row[2]
             rows.append({"trip_id": tid, "number": trip.get("number"),
                          "summary": trip.get("summary", ""),
-                         "day": day, "meters": meters, "seconds": seconds})
+                         "day": day, "meters": meters, "seconds": seconds,
+                         "moving_seconds": row[3] if len(row) > 3 else None})
     rows.sort(key=lambda r: -r["meters"])
     out = []
     for r in rows[:limit]:
@@ -5809,13 +5843,12 @@ def _longest_drives(limit=10):
             day_label = date.fromisoformat(r["day"]).strftime("%b %-d, %Y")
         except ValueError:
             day_label = r["day"]
-        hours, rem = divmod(r["seconds"], 3600)
         out.append({**r,
                     "miles": round(r["meters"] / 1609.344),
                     "from": start, "to": end,
                     "day_label": day_label,
-                    "duration": f"{hours}h {rem // 60:02d}m" if hours
-                                else f"{rem // 60}m"})
+                    "duration": _hm(r["seconds"]),
+                    "moving": _hm(r["moving_seconds"])})
     return out
 
 
