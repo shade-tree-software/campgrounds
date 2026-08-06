@@ -47,6 +47,23 @@ function cgSelect(optionEl) {
     if (stateInput && optionEl.dataset.state) {
       stateInput.value = optionEl.dataset.state;
     }
+    // ...and the town, which the campground database can't supply: its
+    // entries carry a state and nothing finer, so picking a campground used
+    // to fill State and leave Locale blank forever unless someone typed it.
+    // Reverse-geocode the entry's own coordinates instead.
+    //
+    // Only when Locale is empty. Skipping the fetch outright when it's
+    // already filled keeps the ordinary edit free of a Nominatim request,
+    // and _fillModalFromReverseGeocode re-checks on resolve, so typing a
+    // locale during the round trip beats the answer that comes back.
+    const localeInput = form.querySelector('[data-field="locale"]');
+    if (localeInput && !localeInput.value.trim()) {
+      const entry = CG_LIST.find(c => String(c.id) === String(optionEl.dataset.id));
+      const coords = ((entry && entry.location) || '').split(',');
+      if (coords.length === 2 && coords[0].trim() && coords[1].trim()) {
+        _fillModalFromReverseGeocode(coords[0].trim(), coords[1].trim(), form);
+      }
+    }
   }
 }
 
