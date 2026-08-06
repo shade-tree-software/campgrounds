@@ -1238,6 +1238,7 @@ if (HOME) {
 // sized by visit count (same logic as trips_map.html).
 const locMap = {};
 TRIPS.forEach(trip => {
+  let prevKey = null;
   trip.stays.forEach((stay) => {
     let key, lat, lng;
     if (stay.campground_id != null && stay.cg_lat != null && stay.cg_lng != null) {
@@ -1249,10 +1250,16 @@ TRIPS.forEach(trip => {
       lat = stay.lat;
       lng = stay.lng;
     } else {
+      prevKey = null;
       return;
     }
     if (!locMap[key]) locMap[key] = { lat, lng, visits: 0 };
-    locMap[key].visits += 1;
+    // One visit, not one stay record — consecutive stays at one campground
+    // (a mid-stay campsite change) are a single visit. Same rule and same
+    // guard as trips_map.html; see trips.visit_runs.
+    const continuesVisit = (stay.visit_num || 1) > 1 && key === prevKey;
+    prevKey = key;
+    if (!continuesVisit) locMap[key].visits += 1;
   });
 });
 Object.values(locMap).forEach(loc => {

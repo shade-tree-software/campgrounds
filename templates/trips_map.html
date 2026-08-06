@@ -815,12 +815,22 @@ if (HOME) {
 // (by `campground_id`) collapse onto a single marker placed at the
 // campground's listed coords (`cg_lat`/`cg_lng`) regardless of any per-stay
 // `campsite_location` overrides. Each entry under a location records the
-// (trip, stay) so popup links deep-link to the right card and the visit
-// count reflects every stay there — even multiple stays within one trip.
+// (trip, stay) so popup links deep-link to the right card.
 // Custom places (no campground_id) fall back to coord-based grouping so
 // hotels/Airbnbs with the same name but different coords stay distinct.
+//
+// One VISIT, not one stay record, is what counts here — for the popup tally
+// and for the marker size. Consecutive stays at one campground are a single
+// visit however many records they span (a mid-stay campsite change writes
+// one record per site), and the server has already grouped them: any stay
+// with `visit_num > 1` continues the visit its predecessor started. Leaving
+// somewhere and coming back later in the same trip is still two visits, so
+// the grouping is contiguity-based rather than "once per trip" — see
+// trips.visit_runs. The marker key is checked too, so grouping can never
+// swallow a stay that landed on a different marker than its predecessor.
 const locMap = {};
 TRIPS.forEach(trip => {
+  let prevKey = null;
   trip.stays.forEach((stay, stayIdx) => {
     let key, lat, lng;
     if (stay.campground_id != null && stay.cg_lat != null && stay.cg_lng != null) {
@@ -832,11 +842,15 @@ TRIPS.forEach(trip => {
       lat = stay.lat;
       lng = stay.lng;
     } else {
+      prevKey = null;
       return;
     }
     if (!locMap[key]) {
       locMap[key] = { lat, lng, place: stay.place, locale: stay.locale, state: stay.state, visits: [] };
     }
+    const continuesVisit = (stay.visit_num || 1) > 1 && key === prevKey;
+    prevKey = key;
+    if (continuesVisit) return;
     locMap[key].visits.push({
       id: trip.id, number: trip.number, summary: trip.summary,
       start: trip.start, stay_idx: stayIdx, stay_start: stay.start,
@@ -849,8 +863,6 @@ Object.values(locMap).forEach(loc => {
   const ll = [loc.lat, loc.lng];
   bounds.push(ll);
 
-  // One stay = one visit, so multiple campsites at the same campground all
-  // count toward the popup's tally and the marker size.
   const visits = loc.visits.length;
   const radius = Math.min(6 + visits * 2, 14);
 

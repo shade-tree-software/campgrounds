@@ -976,6 +976,11 @@
     margin-top: .15rem;
   }
 
+  /* The campsite sits next to the nights it applies to, not down in the
+     details grid — on a stay split across campsites, which site a given
+     night was on is the whole question the header has to answer. */
+  .stay-header .stay-info .stay-site { font-weight: 600; }
+
   .stay-body {
     padding: 1rem 1.25rem;
   }
@@ -1959,7 +1964,14 @@
       <div class="stay-info">
         <h3>{{ item.place }}</h3>
         <div class="stay-meta">
-          <span class="stay-locale">{% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}</span><span class="stay-sep"> &mdash; </span><span class="stay-dates">{% if item.copy_count and item.copy_count > 1 %}Night {{ item.copy_num }} of {{ item.copy_count }} ({{ item.sort_date }}){% else %}{{ item.nights }} night{{ 's' if item.nights > 1 else '' }} ({{ item.start }} to {{ item.end }}){% endif %}</span>
+          {#- Nights are numbered across the whole VISIT (consecutive stays at
+              one campground are one visit — see trips.visit_runs), so a card
+              covering part of it says which nights of the stay it is rather
+              than restarting the count at each campsite record. A card that
+              covers the entire visit just states the length. Either way the
+              dates are the range those nights run between, so the format
+              doesn't change from card to card. -#}
+          <span class="stay-locale">{% if item.locale %}{{ item.locale }}, {% endif %}{{ item.state }}</span><span class="stay-sep"> &mdash; </span><span class="stay-dates">{% if item.night_from == 1 and item.night_to == item.night_total %}{{ item.night_total }} night{{ 's' if item.night_total != 1 else '' }}{% elif item.night_from == item.night_to %}Night {{ item.night_from }} of {{ item.night_total }}{% else %}Nights {{ item.night_from }}&ndash;{{ item.night_to }} of {{ item.night_total }}{% endif %} ({{ item.card_start }} to {{ item.card_end }})</span>{% if item.site_label %}<span class="stay-sep"> &middot; </span><span class="stay-site">{{ item.site_label }}</span>{% endif %}
         </div>
       </div>
       {% if item.copy_num == 1 and (is_admin or is_uploader) %}
@@ -2032,8 +2044,16 @@
     {% if item.copy_num == 1 or item.photos %}
     <div class="stay-body"{% if item.copy_num == 1 %} id="stay-body-{{ item.idx }}"{% endif %}>
       {% if item.copy_num == 1 %}
+      {#- The campsite reads in the header line now, so the details grid is
+          often just the campers — and rendering it empty would leave a 1rem
+          gap above the photos. The one campsite that still belongs here is a
+          legacy stay that stashed GPS coordinates in `site` (site_label is
+          blank for those): not a site name, so it stays down here rather than
+          disappearing from the page entirely. -#}
+      {% set legacy_site = item.site and not item.site_label %}
+      {% if item.campers or legacy_site %}
       <div class="stay-details">
-        {% if item.site %}
+        {% if legacy_site %}
         <div class="detail-item">
           <label>Campsite</label>
           <div class="value">{{ item.site }}</div>
@@ -2046,6 +2066,7 @@
         </div>
         {% endif %}
       </div>
+      {% endif %}
 
       {% if item.notes %}
       <div class="notes-text">{{ item.notes }}</div>

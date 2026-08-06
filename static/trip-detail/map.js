@@ -426,7 +426,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     if (where) h += `<br>${escapeHtml(where)}`;
     const when = [stayDateRange(stay), nightsLabel(stay)].filter(Boolean).join(' · ');
     if (when) h += `<br>${when}`;
-    if (stay.site) h += `<br>Site ${escapeHtml(String(stay.site))}`;
+    // site_label is the server's display form ("Site 67"), blank for the
+    // legacy stays that stashed coordinates in `site`.
+    if (stay.site_label) h += `<br>${escapeHtml(stay.site_label)}`;
     return h + cardLink('stay-' + stay.idx);
   }
 
@@ -491,11 +493,14 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // The rows lead with the campspot's number so they match both the numbered map
   // badge and the circle on the card each one scrolls to. Every occurrence is the
   // same campground (that's the grouping key), so the first one's name titles it.
+  // The campsite is on each row because the commonest reason one campground has
+  // several records in a trip is that the site changed mid-stay — dates alone
+  // leave the reader guessing which row is which.
   function stayGroupPopupHtml(group) {
     const title = group[0].stay.place || 'Campspot';
     return occurrenceListHtml(title, group.map(({ stay, num }) => ({
       cardId: 'stay-' + stay.idx,
-      text: `${num}. ` + ([stayDateRange(stay), nightsLabel(stay)]
+      text: `${num}. ` + ([stayDateRange(stay), nightsLabel(stay), stay.site_label]
         .filter(Boolean).join(' · ') || 'Campspot'),
     })));
   }

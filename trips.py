@@ -844,6 +844,66 @@ def camping_nights(trip):
                if not is_home_stay(s))
 
 
+def _visit_place_key(stay):
+    """Identity of the PLACE a stay is at, or None when there isn't one.
+
+    Campground-backed stays key off the id (renames can't split a run);
+    free-text stays off the normalized place text, so two different hotels
+    on consecutive nights stay distinct. A stay with neither is unkeyable
+    and never groups with its neighbour.
+    """
+    cid = stay.get("campground_id")
+    if cid is not None:
+        return ("cg", cid)
+    place = " ".join((stay.get("place") or stay.get("custom_place") or "").lower().split())
+    return ("place", place) if place else None
+
+
+def visit_runs(stays):
+    """Group a trip's stays into VISITS — lists of indices into `stays`.
+
+    A visit is a run of consecutive stays at the same place with no gap in
+    the dates. One record per campsite is how a mid-stay site change gets
+    recorded (trip 93: night 1 on site 67, nights 2-3 on site 36), and every
+    per-campground count downstream — the trips-map dot size and its popup
+    list, the campground-map popup, the stats page's most-visited list —
+    would otherwise read those two records as visiting twice.
+
+    Contiguity is required, not just a matching place: a trip that camps
+    somewhere, moves on, and comes back later really did visit twice (trip
+    16 does exactly that at two campgrounds), so those stay separate.
+    """
+    runs = []
+    prev_key, prev_end = None, None
+    for i, stay in enumerate(stays):
+        key = _visit_place_key(stay)
+        continues = (runs and key is not None and key == prev_key
+                     and prev_end and stay.get("start") == prev_end)
+        if continues:
+            runs[-1].append(i)
+        else:
+            runs.append([i])
+        prev_key, prev_end = key, stay.get("end")
+    return runs
+
+
+def _site_label(site):
+    """The campsite as it should read on a card, or "" when it isn't a label.
+
+    Some legacy stays stash GPS coordinates in `site` (enrich_trip_locations
+    still parses them as a last-resort position); those aren't a site name
+    and don't belong in the header line. The "Site" prefix is skipped when
+    the value already says it ("Canoe w/River View (Site 3)"), and pluralized
+    when the stay lists several ("H253, H255").
+    """
+    site = (site or "").strip()
+    if not site or _parse_site_coords(site):
+        return ""
+    if "site" in site.lower():
+        return site
+    return f"Site{'s' if ',' in site else ''} {site}"
+
+
 def is_day_trip(trip):
     """True for a trip with events but no campspots.
 
@@ -879,6 +939,21 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
             s["place"] = locations[cid]["name"]
         else:
             s["place"] = s.get("custom_place", "") or ""
+        s["site_label"] = _site_label(s.get("site"))
+
+    # Consecutive stays at one place are ONE visit (see `visit_runs`). Each
+    # stay carries where it sits in its own visit so a card can say "night 2
+    # of 3" across the whole visit rather than "night 1 of 2" of one campsite,
+    # and so the maps can count a visit once.
+    for run in visit_runs(stays):
+        visit_nights = sum(stays[i].get("nights", 0) for i in run)
+        nights_before = 0
+        for pos, i in enumerate(run, start=1):
+            stays[i]["visit_num"] = pos              # 1 == this stay starts the visit
+            stays[i]["visit_stays"] = len(run)
+            stays[i]["visit_nights"] = visit_nights
+            stays[i]["visit_night_offset"] = nights_before
+            nights_before += stays[i].get("nights", 0)
 
     total_nights = sum(s["nights"] for s in stays)
     places = []
@@ -950,19 +1025,36 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                 return True
         return False
 
+    # Every stay card also carries the nights it covers as a span within its
+    # VISIT (`night_from`..`night_to` of `night_total`) plus the dates those
+    # nights run between (`card_start` to `card_end`). Numbering across the
+    # visit is what makes a split card unambiguous: "night 2 of 3" is the
+    # trip's second night at the campground, whichever campsite record it
+    # belongs to. Every card gets a date RANGE so the format doesn't change
+    # between a whole stay and one night of one.
     timeline = []
     for i, s in enumerate(stays):
+        offset = s.get("visit_night_offset", 0)
+        night_total = s.get("visit_nights", s.get("nights", 0))
         if _stay_needs_split(s):
             start_d = date.fromisoformat(s["start"])
             nights = int(s["nights"])
             for n in range(1, nights + 1):
-                night_date = (start_d + timedelta(days=n - 1)).isoformat()
+                night_date = start_d + timedelta(days=n - 1)
                 timeline.append(dict(s, type="stay", idx=i,
-                                     sort_date=night_date,
+                                     sort_date=night_date.isoformat(),
+                                     card_start=night_date.isoformat(),
+                                     card_end=(night_date + timedelta(days=1)).isoformat(),
+                                     night_from=offset + n, night_to=offset + n,
+                                     night_total=night_total,
                                      _order=1, _time="23:59",
                                      copy_num=n, copy_count=nights))
         else:
             timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
+                                 card_start=s["start"], card_end=s["end"],
+                                 night_from=offset + 1,
+                                 night_to=offset + s.get("nights", 0),
+                                 night_total=night_total,
                                  _order=1, _time="00:00",
                                  copy_num=1, copy_count=1))
     for i, e in enumerate(events):

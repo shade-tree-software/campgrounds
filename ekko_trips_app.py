@@ -31,7 +31,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
                    campground_references, camping_nights, is_day_trip,
-                   TRIPS_JSON)
+                   visit_runs, TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -1862,20 +1862,24 @@ def _classify_climate(delta_temp):
 
 
 def _campground_visits_index():
-    """Map each campground_id → list of stays referencing it, oldest first.
+    """Map each campground_id → list of visits to it, oldest first.
 
     Each entry is `{id, number, summary, start, stay_start}` — the shape the
     campground-map popup uses to render `Trip N: Mon YYYY — summary` and link to
-    `/trips/<id>`. One entry per stay, so a trip with two stays at the same
-    campground appears twice (matching the main trips-map count semantics).
-    trips.json is authoritative; the legacy `stays` field on campgrounds.json
-    drifts as trips get edited.
+    `/trips/<id>`. One entry per VISIT, not per stay record: consecutive stays
+    at one campground (a mid-stay campsite change writes one record per site)
+    are one visit and appear once, while leaving and coming back later in the
+    same trip stays two — same rule the trips map and the stats page count by,
+    see `trips.visit_runs`. trips.json is authoritative; the legacy `stays`
+    field on campgrounds.json drifts as trips get edited.
     """
     visits = {}
     for trip in parse_trips():
         if trip.get("home_only"):
             continue
-        for stay in trip.get("stays", []):
+        stays = trip.get("stays", [])
+        for run in visit_runs(stays):
+            stay = stays[run[0]]
             cg_id = stay.get("campground_id")
             if cg_id is None:
                 continue
@@ -2652,21 +2656,23 @@ def trips_stats():
             if e.get("state"):
                 states.add(_US_STATE_ABBR.get(e["state"], e["state"]))
 
-    # Top campgrounds by unique-trip count, by canonical place name. `place`
-    # is materialized by _make_trip from campground_id, so renames don't
-    # split a count across two entries. Counting trips (not stay records)
-    # matches the trips map popup — a trip with multiple stay records at
-    # the same place (left and returned mid-trip) still counts once.
-    cg_trip_ids = {}
+    # Top campgrounds by visit count, by canonical place name. `place` is
+    # materialized by _make_trip from campground_id, so renames don't split a
+    # count across two entries. A visit is a run of consecutive stays at one
+    # place (`trips.visit_runs`), which is what both maps count too: several
+    # stay records for one continuous stay (a mid-stay campsite change) count
+    # once, while leaving and returning later in the trip counts twice.
+    cg_visits = {}
     for t in trips:
-        for s in t.get("stays", []):
-            name = (s.get("place") or "").strip()
+        stays = t.get("stays", [])
+        for run in visit_runs(stays):
+            name = (stays[run[0]].get("place") or "").strip()
             if name:
-                cg_trip_ids.setdefault(name, set()).add(t["id"])
+                cg_visits[name] = cg_visits.get(name, 0) + 1
     top_campgrounds = [
-        {"name": name, "count": len(tids)}
-        for name, tids in sorted(cg_trip_ids.items(), key=lambda x: (-len(x[1]), x[0]))[:10]
-        if len(tids) >= 2  # one-time visits aren't "most visited"
+        {"name": name, "count": n}
+        for name, n in sorted(cg_visits.items(), key=lambda x: (-x[1], x[0]))[:10]
+        if n >= 2  # one-time visits aren't "most visited"
     ]
 
     # Trips- and nights-per-year. Empty-dated trips are excluded (no year to
@@ -2746,7 +2752,7 @@ def trips_stats():
         top_campgrounds=top_campgrounds,
         trips_by_year=trips_by_year_sorted,
         nights_by_year=nights_by_year_sorted,
-        unique_campgrounds=len(cg_trip_ids),
+        unique_campgrounds=len(cg_visits),
         camping_since=camping_since,
         longest_trip=longest_trip,
         avg_nights=avg_nights,
