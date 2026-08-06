@@ -881,7 +881,12 @@ Object.values(locMap).forEach(loc => {
   const sortedVisits = loc.visits.slice().sort((a, b) =>
     (a.stay_start || a.start || '').localeCompare(b.stay_start || b.start || ''));
 
-  let popup = `<strong>${loc.place}</strong><br>${loc.locale}, ${loc.state}<br>${visits} visit${visits !== 1 ? 's' : ''}`;
+  // Locale is optional on a stay (plenty are blank), so the comma has to be
+  // part of the join rather than typed into the template string.
+  const where = [loc.locale, loc.state].filter(Boolean).join(', ');
+  let popup = `<strong>${loc.place}</strong>`;
+  if (where) popup += `<br>${where}`;
+  popup += `<br>${visits} visit${visits !== 1 ? 's' : ''}`;
   popup += '<div style="margin-top:4px;font-size:12px;">';
   sortedVisits.forEach(v => {
     const dateStr = v.stay_start || v.start;
