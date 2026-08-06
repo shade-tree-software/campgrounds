@@ -119,6 +119,20 @@
   }
   a.cg-name:hover { text-decoration: underline; }
 
+  /* Longest drives: the same ranked list, with the leg on top and the
+     when/how-long underneath. min-width: 0 so a long pair of campground
+     names wraps inside the row instead of pushing the mileage chip out. */
+  .drive-list .drive-info {
+    display: flex; flex-direction: column;
+    min-width: 0; gap: .1rem;
+  }
+  .drive-list .drive-sub { font-size: .8rem; color: var(--gray); }
+  .section-note {
+    color: var(--gray);
+    font-size: .85rem;
+    margin: -.4rem 0 .6rem;
+  }
+
   /* The hero Photos number is a link now; keep it looking like the others. */
   a.stat-num { display: block; text-decoration: none; }
   a.stat-num:hover { text-decoration: underline; }
@@ -305,6 +319,26 @@
     <li>
       <span class="cg-count">{{ cg.count }}</span>
       <a class="cg-name" href="/trips/list?q={{ cg.name | urlencode }}">{{ cg.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if longest_drives %}
+  <h2>Longest Driving Days</h2>
+  {#- One row per (trip, day), ranked across the whole library rather than
+      one per trip — a road trip that strung several long days together
+      earned each of them. Only trips with a GPS track can appear. -#}
+  <p class="section-note">Measured from the GPS track. Times run door to
+    door, so they include the stops along the way.</p>
+  <ul class="top-cg-list drive-list">
+    {% for d in longest_drives %}
+    <li>
+      <span class="cg-count">{{ '{:,}'.format(d.miles) }} mi</span>
+      <span class="drive-info">
+        <a class="cg-name" href="/trips/{{ d.trip_id }}">{{ d.from }} &rarr; {{ d.to }}</a>
+        <span class="drive-sub">{{ d.duration }} &middot; {{ d.day_label }} &middot; Trip {{ d.number }}: {{ d.summary }}</span>
+      </span>
     </li>
     {% endfor %}
   </ul>

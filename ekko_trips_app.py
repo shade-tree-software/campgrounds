@@ -31,7 +31,7 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
                    campground_references, camping_nights, is_day_trip,
-                   visit_runs, TRIPS_JSON)
+                   is_home_stay, visit_runs, TRIPS_JSON)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -2629,6 +2629,7 @@ def trips_stats():
     if _stats_cache["key"] == key:
         return render_template('trips_stats.html',
                                photo_count=_stats_photo_count(),
+                               longest_drives=_longest_drives(),
                                **_stats_cache["data"])
 
     trips = parse_trips()
@@ -2762,8 +2763,12 @@ def trips_stats():
         active_nav='stats',
     )
     _stats_cache.update(key=key, data=data)
+    # photo_count and longest_drives are deliberately outside `data` — see
+    # the docstring above and `_longest_drives`: both answer to things this
+    # cache's key can't see (files on disk, re-fetched GPS tracks).
     return render_template('trips_stats.html',
-                           photo_count=_stats_photo_count(), **data)
+                           photo_count=_stats_photo_count(),
+                           longest_drives=_longest_drives(), **data)
 
 
 def _stats_photo_count():
@@ -5271,7 +5276,23 @@ TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 # Cheaper than remembering to delete the file on deploy — and required, since
 # a host that already has a cache would otherwise keep serving the old shape.
 #   2: one continuous line per trip (was: a list of gap-split segments)
-TRIP_ROUTE_CACHE_VERSION = 2
+#   3: entries also carry per-day driving distance/duration
+TRIP_ROUTE_CACHE_VERSION = 3
+
+# Per-day driving, derived from the same cleaned + windowed track the overview
+# line is (see `_build_trip_derived`), so a day can't be measured off pings the
+# maps have already rejected.
+#
+# A day's elapsed time runs from the first ping that's part of the day's
+# movement to the last — a morning spent at the campground isn't part of the
+# drive, but the lunch stop in the middle of one is. `DRIVE_IDLE_TRIM_M` is how
+# much cumulative wander at either end still reads as parked: big enough to
+# absorb GPS jitter and a walk to the bathhouse, small enough not to swallow
+# the first block of a real departure.
+DRIVE_IDLE_TRIM_M = 300
+# Below this a day isn't a drive, it's a trip to the camp store. Also what
+# keeps the cached day list to the handful of rows per trip worth having.
+DRIVE_DAY_MIN_M = 1609
 
 
 def _rdp_keep_mask(xs, ys, eps):
@@ -5457,10 +5478,61 @@ def _track_covers_trip(trip, in_window, home):
     return False
 
 
-def _build_trip_route(trip):
-    """Build one trip's overview line as a single simplified polyline
-    (`[[lat, lon], ...]`). Empty list when the trip has no dates, no cached
-    track, or nothing survives cleaning.
+def _drive_days(kept, default_tz):
+    """Per-day driving from a trip's in-window pings, as
+    `[[date, meters, seconds], ...]` for every local day that covered at
+    least `DRIVE_DAY_MIN_M`.
+
+    Distance is the length of the day's GPS path — what was actually driven,
+    not the straight line between where it started and ended. Duration is
+    elapsed time across the day's movement (see `DRIVE_IDLE_TRIM_M`), so it
+    counts the stops along the way: a 400-mile day really does take eleven
+    hours, and reporting only the moving hours would describe a drive nobody
+    took.
+
+    Days are bucketed by each ping's OWN timezone via `_local_date_of_ping` —
+    the same rule `_select_track_per_day` buckets by, so a trip that crosses
+    zones splits its days where the driver's clock did. That helper falls
+    back to UTC for a ping with no `tz` stamp, which would put an evening's
+    driving on the next day, so the trip's home zone is substituted instead."""
+    by_day = {}
+    for p in kept:
+        d = _local_date_of_ping(p if p.get("tz") else dict(p, tz=default_tz))
+        if d:
+            by_day.setdefault(d, []).append(p)
+
+    days = []
+    for day, pts in sorted(by_day.items()):
+        if len(pts) < 2:
+            continue
+        pts.sort(key=lambda p: p["tst"])
+        # Cumulative distance along the day, so both the total and the
+        # start/end of movement come out of one pass.
+        cum = [0.0]
+        for a, b in zip(pts, pts[1:]):
+            cum.append(cum[-1] + _haversine_m(a["lat"], a["lon"],
+                                              b["lat"], b["lon"]))
+        total = cum[-1]
+        if total < DRIVE_DAY_MIN_M:
+            continue
+        first = max(i for i, c in enumerate(cum) if c <= DRIVE_IDLE_TRIM_M)
+        last = min(i for i, c in enumerate(cum) if total - c <= DRIVE_IDLE_TRIM_M)
+        days.append([day, round(total), max(0, pts[last]["tst"] - pts[first]["tst"])])
+    return days
+
+
+def _build_trip_derived(trip):
+    """Everything derived from one trip's GPS track: `{"line": [...],
+    "days": [...]}` — the overview map's simplified polyline and the per-day
+    driving `_drive_days` measures.
+
+    Both come out of one pass because they share all the expensive parts
+    (reading the cache, tid selection, cleaning, windowing) and the same
+    gates: a track the maps refuse to draw must not be quietly credited with
+    a day's mileage either.
+
+    The line is a single simplified polyline (`[[lat, lon], ...]`), empty when
+    the trip has no dates, no cached track, or nothing survives cleaning.
 
     The line is continuous end to end: a stretch the phone never reported is
     filled by routing through the trip's own anchors and straight-lining the
@@ -5471,11 +5543,12 @@ def _build_trip_route(trip):
     opens its detail page, which is the right trade for a page that draws
     every trip at once: one cold trip must not turn the landing page into
     92 upstream requests."""
+    empty = {"line": [], "days": []}
     if not trip.get("start") or not trip.get("end"):
-        return []
+        return empty
     points = _read_track_cache(trip["id"])
     if not points:
-        return []
+        return empty
     # In-memory only; persisting the migration is the track endpoint's job.
     _migrate_track_cache_tids(points)
 
@@ -5485,7 +5558,7 @@ def _build_trip_route(trip):
     cleaned = _clean_track_points(trip, chosen, suppressed, bad_windows,
                                   relocate)
     if not cleaned:
-        return []
+        return empty
     cleaned.sort(key=lambda p: p.get("tst") or 0)
 
     home, _fam = _map_config()
@@ -5494,7 +5567,7 @@ def _build_trip_route(trip):
             if (lower is None or p["tst"] >= lower)
             and (upper is None or p["tst"] <= upper)]
     if not _track_covers_trip(trip, kept, home):
-        return []
+        return empty
 
     # Gap-fill, mirroring the detail map (`Gap-fill the polyline` in
     # static/trip-detail/map.js): walk the pings in time order, and wherever
@@ -5535,9 +5608,12 @@ def _build_trip_route(trip):
         if last_tst < tst <= now_tst:
             push(ll)
 
-    if len(coords) < 2:
-        return []
-    return _simplify_latlon(coords, TRIP_ROUTE_SIMPLIFY_M)
+    line = ([] if len(coords) < 2
+            else _simplify_latlon(coords, TRIP_ROUTE_SIMPLIFY_M))
+    # Days come off `kept` — the real pings — never off the gap-filled,
+    # simplified line: an anchor spliced across a hole is where the trip went,
+    # not a measurement of how far it drove.
+    return {"line": line, "days": _drive_days(kept, tz_name)}
 
 
 def _trip_route_signature(trip, raw_record):
@@ -5606,11 +5682,11 @@ def _save_trip_routes_cache(cache):
             pass
 
 
-def _trip_routes(trips, force=False, prune=False):
-    """Return `{trip_id: [[lat, lon], ...]}` — one continuous polyline per
-    trip — rebuilding any entry whose signature drifted and persisting the
-    cache if anything changed. Trips with no line are omitted entirely
-    rather than carried as empty lists; the client just draws what it's given.
+def _trip_route_entries(trips, force=False, prune=False):
+    """Return `{trip_id: {"line": [...], "days": [...]}}`, rebuilding any
+    entry whose signature drifted and persisting the cache if anything
+    changed. One cache because both halves come from one pass over the
+    track (`_build_trip_derived`) and go stale on exactly the same events.
 
     `prune` drops cached entries for trips not in `trips`, and is only safe
     for a caller passing the *whole* library: the request path passes a
@@ -5626,11 +5702,10 @@ def _trip_routes(trips, force=False, prune=False):
         sig = _trip_route_signature(trip, raw_by_id.get(trip["id"]))
         entry = cache.get(key)
         if force or not entry or entry.get("sig") != sig:
-            entry = {"sig": sig, "line": _build_trip_route(trip)}
+            entry = dict(_build_trip_derived(trip), sig=sig)
             cache[key] = entry
             dirty = True
-        if entry.get("line"):
-            out[trip["id"]] = entry["line"]
+        out[trip["id"]] = entry
 
     if prune:
         live = {str(t["id"]) for t in trips}
@@ -5640,6 +5715,83 @@ def _trip_routes(trips, force=False, prune=False):
 
     if dirty:
         _save_trip_routes_cache(cache)
+    return out
+
+
+def _trip_routes(trips, force=False, prune=False):
+    """`{trip_id: [[lat, lon], ...]}` — one continuous polyline per trip.
+    Trips with no line are omitted entirely rather than carried as empty
+    lists; the client just draws what it's given."""
+    return {tid: e["line"]
+            for tid, e in _trip_route_entries(trips, force, prune).items()
+            if e.get("line")}
+
+
+def _drive_day_endpoints(trip, day):
+    """`(from, to)` for one day of a trip — the campspot you woke at and the
+    one you slept at, "Home" for either end that isn't a campspot.
+
+    Same morning/evening rule `_trip_route_stops` walks the day by, so the
+    label describes the same leg the map draws. A home stay reads as "Home"
+    rather than its free-text place, which is a street address."""
+    def place_at(stay):
+        if stay is None:
+            return "Home"
+        if is_home_stay(stay):
+            return "Home"
+        return (stay.get("place") or "").strip() or "Campspot"
+
+    stays = trip.get("stays", [])
+    morning = next((s for s in stays
+                    if s.get("start") and s.get("end")
+                    and s["start"] < day <= s["end"]), None)
+    evening = next((s for s in stays
+                    if s.get("start") and s.get("end")
+                    and s["start"] <= day < s["end"]), None)
+    return place_at(morning), place_at(evening)
+
+
+def _longest_drives(limit=10):
+    """The library's longest single-day drives, longest first.
+
+    Each row is one (trip, day): how far the GPS says the day covered, how
+    long that took door to door, and which leg it was. Ranked across every
+    trip rather than one per trip — a road trip that strings several
+    900-kilometre days together earned each of those rows.
+
+    Reads the same per-trip cache the overview map's lines come from, so a
+    warm page costs a JSON read and a signature check per trip rather than a
+    walk over ~100k pings. It is deliberately NOT folded into `_stats_cache`:
+    that cache keys on trips.json/campgrounds.json/home.json mtimes, and a
+    re-fetched GPS track changes none of them — the same reason the photo
+    count is computed outside it."""
+    trips = [t for t in parse_trips() if not t.get("home_only")]
+    by_id = {t["id"]: t for t in trips}
+    rows = []
+    for tid, entry in _trip_route_entries(trips).items():
+        trip = by_id.get(tid)
+        if not trip:
+            continue
+        for day, meters, seconds in entry.get("days", []):
+            rows.append({"trip_id": tid, "number": trip.get("number"),
+                         "summary": trip.get("summary", ""),
+                         "day": day, "meters": meters, "seconds": seconds})
+    rows.sort(key=lambda r: -r["meters"])
+    out = []
+    for r in rows[:limit]:
+        trip = by_id[r["trip_id"]]
+        start, end = _drive_day_endpoints(trip, r["day"])
+        try:
+            day_label = date.fromisoformat(r["day"]).strftime("%b %-d, %Y")
+        except ValueError:
+            day_label = r["day"]
+        hours, rem = divmod(r["seconds"], 3600)
+        out.append({**r,
+                    "miles": round(r["meters"] / 1609.344),
+                    "from": start, "to": end,
+                    "day_label": day_label,
+                    "duration": f"{hours}h {rem // 60:02d}m" if hours
+                                else f"{rem // 60}m"})
     return out
 
 
@@ -7387,9 +7539,10 @@ if __name__ == '__main__':
         _save_user(username, password, is_admin=True)
         print(f"Admin user '{username}' created.")
     elif len(sys.argv) >= 2 and sys.argv[1] == "rebuild-routes":
-        # The overview map's trip lines rebuild themselves lazily, so this is
-        # only ever a warm-up: run it after a deploy (or after restoring track
-        # caches) so the first visitor doesn't pay for the whole library.
+        # The per-trip derived cache (the overview map's lines AND the stats
+        # page's driving days) rebuilds itself lazily, so this is only ever a
+        # warm-up: run it after a deploy (or after restoring track caches) so
+        # the first visitor doesn't pay for the whole library.
         force = "--force" in sys.argv[2:]
         t0 = time.time()
         all_trips = parse_trips()
