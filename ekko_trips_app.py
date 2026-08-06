@@ -5277,19 +5277,28 @@ TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 # a host that already has a cache would otherwise keep serving the old shape.
 #   2: one continuous line per trip (was: a list of gap-split segments)
 #   3: entries also carry per-day driving distance/duration
-TRIP_ROUTE_CACHE_VERSION = 3
+#   4: a day's drive is bounded by leaving/reaching a place, not by mileage
+TRIP_ROUTE_CACHE_VERSION = 4
 
 # Per-day driving, derived from the same cleaned + windowed track the overview
 # line is (see `_build_trip_derived`), so a day can't be measured off pings the
 # maps have already rejected.
 #
-# A day's elapsed time runs from the first ping that's part of the day's
-# movement to the last — a morning spent at the campground isn't part of the
-# drive, but the lunch stop in the middle of one is. `DRIVE_IDLE_TRIM_M` is how
-# much cumulative wander at either end still reads as parked: big enough to
-# absorb GPS jitter and a walk to the bathhouse, small enough not to swallow
-# the first block of a real departure.
-DRIVE_IDLE_TRIM_M = 300
+# A day's drive runs from leaving where it started to reaching where it ended,
+# and both ends are found by POSITION rather than by mileage. An earlier
+# version trimmed the ends by cumulative distance — anything under a few
+# hundred metres of travel still counted as parked — and it did not survive
+# contact with a real campground: an evening at Hunting Island logged 4.5
+# miles of wander and jitter without going anywhere, which kept "the drive"
+# running until 23:00 and turned an 8-hour day into a reported 14h40m.
+#
+# So: the drive begins at the LAST ping still within `DRIVE_ANCHOR_RADIUS_M`
+# of where the day started, and ends at the FIRST ping within that radius of
+# where it ended. Neither wandering around camp before leaving nor a run to
+# the beach after arriving can extend it, because neither leaves the circle.
+# 1 km is campground-sized: comfortably bigger than one, far smaller than the
+# first leg of any real drive.
+DRIVE_ANCHOR_RADIUS_M = 1000
 # Below this a day isn't a drive, it's a trip to the camp store. Also what
 # keeps the cached day list to the handful of rows per trip worth having.
 DRIVE_DAY_MIN_M = 1609
@@ -5483,12 +5492,18 @@ def _drive_days(kept, default_tz):
     `[[date, meters, seconds], ...]` for every local day that covered at
     least `DRIVE_DAY_MIN_M`.
 
-    Distance is the length of the day's GPS path — what was actually driven,
-    not the straight line between where it started and ended. Duration is
-    elapsed time across the day's movement (see `DRIVE_IDLE_TRIM_M`), so it
-    counts the stops along the way: a 400-mile day really does take eleven
-    hours, and reporting only the moving hours would describe a drive nobody
-    took.
+    Both numbers describe the span between leaving where the day started and
+    reaching where it ended (see `DRIVE_ANCHOR_RADIUS_M`), so an evening spent
+    driving around the campground you arrived at is not part of the drive.
+    Distance is the length of the GPS path across that span — what was
+    actually driven, not the straight line between its ends. Duration is
+    elapsed time across it, counting the stops along the way: a 400-mile day
+    really does take ten hours, and reporting only the moving hours would
+    describe a drive nobody took.
+
+    A day that never leaves its own starting circle isn't a drive at all —
+    a day at camp, however much local running-around it logs — and is
+    dropped rather than reported with a nonsensical span.
 
     Days are bucketed by each ping's OWN timezone via `_local_date_of_ping` —
     the same rule `_select_track_per_day` buckets by, so a trip that crosses
@@ -5506,18 +5521,27 @@ def _drive_days(kept, default_tz):
         if len(pts) < 2:
             continue
         pts.sort(key=lambda p: p["tst"])
-        # Cumulative distance along the day, so both the total and the
-        # start/end of movement come out of one pass.
-        cum = [0.0]
-        for a, b in zip(pts, pts[1:]):
-            cum.append(cum[-1] + _haversine_m(a["lat"], a["lon"],
-                                              b["lat"], b["lon"]))
-        total = cum[-1]
-        if total < DRIVE_DAY_MIN_M:
+
+        def near(p, q):
+            return _haversine_m(p["lat"], p["lon"],
+                                q["lat"], q["lon"]) <= DRIVE_ANCHOR_RADIUS_M
+
+        # Last ping still at the start, first ping already at the end. Taking
+        # the extremes rather than walking contiguous runs is what makes this
+        # robust to a local errand at either end: a hop to the store and back
+        # re-enters the circle, and a run-based scan would stop at the hop.
+        depart = max(i for i, p in enumerate(pts) if near(p, pts[0]))
+        arrive = min(i for i, p in enumerate(pts) if near(p, pts[-1]))
+        if arrive <= depart:
+            continue                      # never went anywhere: not a drive
+
+        meters = 0.0
+        for a, b in zip(pts[depart:arrive], pts[depart + 1:arrive + 1]):
+            meters += _haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+        if meters < DRIVE_DAY_MIN_M:
             continue
-        first = max(i for i, c in enumerate(cum) if c <= DRIVE_IDLE_TRIM_M)
-        last = min(i for i, c in enumerate(cum) if total - c <= DRIVE_IDLE_TRIM_M)
-        days.append([day, round(total), max(0, pts[last]["tst"] - pts[first]["tst"])])
+        days.append([day, round(meters),
+                     max(0, pts[arrive]["tst"] - pts[depart]["tst"])])
     return days
 
 
