@@ -1324,6 +1324,24 @@ def _require_uploader_or_admin():
     return None
 
 
+def _require_contributor():
+    """Gate APIs open to contributors (admins + uploader-role users) — the people
+    who plan and record the trips. `_is_contributor` is the same test the stats
+    page's Longest Driving Days uses."""
+    if not _is_contributor():
+        return jsonify({"error": "Contributor access required"}), 403
+    return None
+
+
+def _require_contributor_page():
+    """For contributor-only PAGE routes: send a reader to the trips map with a
+    notice, never to /login — same infinite-loop reasoning as
+    `_require_admin_page`, since anyone reaching the view is already logged in."""
+    if not _is_contributor():
+        return redirect(url_for('trips_map', notice='contributors_only'))
+    return None
+
+
 @app.context_processor
 def inject_share_identity():
     """Expose share-link guest identity to every template.
@@ -3627,8 +3645,12 @@ def api_ridb_availability():
 # the weather you want — a comfort band, or cooler/warmer than home is that same
 # day, optionally dry. Absorbed from the standalone "Summer Seeker" Flask app
 # (summer_seeker_app.py), which shared this repo's campgrounds.json but ran on
-# its own port with its own templates. Admin-only: it's a planning tool, and a
-# single search spends a real slice of the weather provider's free-tier budget.
+# its own port with its own templates. Contributor-only (admins + uploader-role
+# users): it's a trip-planning tool, and a single search spends a real slice of
+# the weather provider's free-tier budget, so it stays with the people who plan
+# the trips rather than everyone who reads about them. It's also a Campgrounds
+# page, so Trips-only users are gated out first — a contributor whose campground
+# access was cleared doesn't get in through this door.
 # The engine lives in weather_finder.py (shared with the find_summer.py CLI).
 
 # Ceiling on how far out the UI will search. Past this a search can't be covered
@@ -3640,7 +3662,7 @@ WEATHER_MAX_MILES = 500
 @app.route('/campgrounds/weather')
 def campgrounds_weather():
     """Page: find campgrounds whose forecast matches what you're after."""
-    denied = _require_admin_page()
+    denied = _require_campground_view_page() or _require_contributor_page()
     if denied:
         return denied
     home_cfg = _load_json(HOME_FILE)
@@ -3650,7 +3672,9 @@ def campgrounds_weather():
     today = date.today()
     return render_template(
         'weather_finder.html', title='Weather', active_nav='campweather',
-        is_admin=True,
+        # Real value, not a hardcoded True: base.html conditions the Manage /
+        # Users / Access Log nav links on it, and a contributor is not an admin.
+        is_admin=current_user.is_admin,
         home_lat=home_cfg.get("home_lat"), home_lng=home_cfg.get("home_long"),
         max_miles_cap=WEATHER_MAX_MILES,
         date_min=today.isoformat(),
@@ -3661,7 +3685,7 @@ def campgrounds_weather():
 @app.route('/api/weather-finder/search', methods=['POST'])
 def api_weather_finder_search():
     """Run a forecast search. Body mirrors the form; see weather_finder."""
-    denied = _require_admin()
+    denied = _require_campground_view_api() or _require_contributor()
     if denied:
         return denied
     data = request.get_json(silent=True) or {}
@@ -3747,7 +3771,7 @@ def api_weather_finder_lookup():
     Matched server-side rather than by shipping the name list to the browser:
     /api/campgrounds is ~12.9k rows, which is a lot to download to type into.
     """
-    denied = _require_admin()
+    denied = _require_campground_view_api() or _require_contributor()
     if denied:
         return denied
     q = (request.args.get('q') or '').strip().lower()
@@ -3765,7 +3789,7 @@ def api_weather_finder_lookup():
 @app.route('/api/weather-finder/forecast')
 def api_weather_finder_forecast():
     """Full forecast for one campground by id — no distance limit, no filters."""
-    denied = _require_admin()
+    denied = _require_campground_view_api() or _require_contributor()
     if denied:
         return denied
     cg_id = request.args.get('id', type=int)

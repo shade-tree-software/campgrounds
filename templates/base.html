@@ -635,6 +635,10 @@
 <nav id="site-nav">
   {% set is_admin = current_user.is_authenticated and current_user.is_admin %}
   {% set can_view_campgrounds = current_user.is_authenticated and current_user.can_view_campgrounds %}
+  {# Contributors are admins + uploader-role users (can_upload is implicitly on
+     for admins) — the people who plan and record the trips. Same test as the
+     server's _is_contributor(). #}
+  {% set is_contributor = current_user.is_authenticated and current_user.can_upload %}
   <div class="nav-collapse" id="nav-collapse">
   <span class="nav-group">
     <span class="nav-label">Trips:</span>
@@ -652,7 +656,7 @@
     <span class="nav-label">Campgrounds:</span>
     <a href="/campgrounds/map"{% if active_nav == 'campmap' %} class="active"{% endif %}>Map</a>
     <a href="/campgrounds/availability"{% if active_nav == 'campavail' %} class="active"{% endif %}>Availability</a>
-    {% if is_admin %}<a href="/campgrounds/weather"{% if active_nav == 'campweather' %} class="active"{% endif %}>Weather</a>{% endif %}
+    {% if is_contributor %}<a href="/campgrounds/weather"{% if active_nav == 'campweather' %} class="active"{% endif %}>Weather</a>{% endif %}
     {% if is_admin %}<a href="/campgrounds/manage"{% if active_nav == 'manage' %} class="active"{% endif %}>Manage</a>{% endif %}
   </span>
   {% endif %}
@@ -773,6 +777,7 @@
   const QUERY_NOTICES = {
     campgrounds_restricted: ["Campground pages aren't part of your access — here are the trips.", 'info'],
     admin_only: ["That page is admin-only — here are the trips.", 'info'],
+    contributors_only: ["That page is for trip contributors — here are the trips.", 'info'],
   };
   (function showQueryNotice() {
     const params = new URLSearchParams(location.search);
