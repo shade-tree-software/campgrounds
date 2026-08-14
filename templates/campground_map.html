@@ -460,6 +460,15 @@
   .rs-field textarea { min-height: 3.2rem; resize: vertical; }
   /* Roomier default for the note — the manage page's note box starts cramped. */
   .rs-field textarea.tall { min-height: 6.5rem; }
+  /* Visitor-center checkbox row: a label beside the box, not above it, and
+     exempt from the width:100% rule that governs the text inputs. */
+  .rs-check { display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem; }
+  .rs-check input { width: auto; margin: 0; flex: none; }
+  .rs-check label {
+    margin: 0; font-size: .9rem; font-weight: 600;
+    text-transform: none; letter-spacing: 0; color: var(--navy);
+  }
+  .rs-check .rs-hint { font-size: .8rem; font-weight: 400; color: var(--gray); }
   /* "More fields →" link to the full manage form, left-justified in the actions row. */
   .cq-more {
     margin-right: auto; align-self: center;
@@ -574,6 +583,12 @@
         <input type="text" id="rs-location" autocomplete="off" placeholder="e.g. 40.388427,-104.565111">
         <button type="button" onclick="rsPickOnMap()">Pick on map</button>
       </div>
+    </div>
+    <div class="rs-check">
+      <input type="checkbox" id="rs-visitor_center">
+      <label for="rs-visitor_center">Visitor center
+        <span class="rs-hint">— staffed travel info: maps &amp; brochures. A museum counts only
+        if it's free AND hands out travel info.</span></label>
     </div>
     <div class="rs-field">
       <label for="rs-notes">Notes</label>
@@ -772,6 +787,30 @@ const roadsideIcon = L.divIcon({
   iconAnchor: [11, 11],
 });
 
+// Some stops double as a staffed travel-information point — a state welcome
+// center, a travel/tourist info center, a park visitor center — where you can
+// pick up maps and brochures for the road ahead. That's a different reason to
+// pull over than "stretch your legs," so they get their own blue ℹ marker
+// instead of the green picnic table:
+// worth spotting on the map without opening every popup along the route. Same
+// size and shape as the picnic marker so they still read as one family of stops.
+const visitorCenterIcon = L.divIcon({
+  className: '',
+  html: `<div style="
+    width:22px;height:22px;border-radius:50%;
+    background:#1565c0;
+    display:flex;align-items:center;justify-content:center;
+    border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.4);
+  "><svg width="14" height="14" viewBox="0 0 24 24">
+    <circle cx="12" cy="6" r="1.9" fill="#fff"/>
+    <rect x="10.1" y="9.6" width="3.8" height="9" rx="1.4" fill="#fff"/>
+  </svg></div>`,
+  iconSize: [22, 22],
+  iconAnchor: [11, 11],
+});
+
+const roadsideIconFor = s => (s.visitor_center ? visitorCenterIcon : roadsideIcon);
+
 // id -> { marker, stop }, so an inline edit/delete can find and re-render the
 // exact marker without reloading. Kept in sync with roadsideMarkers (search).
 const roadsideById = new Map();
@@ -827,7 +866,7 @@ function locationPopupHtml(accTxt) {
         const place = [stop.town, stop.state].filter(Boolean).join(', ');
         html += `<div>`
           + `<a onclick="cgFlyToStop(${stop.id})" style="color:#002868;cursor:pointer;">`
-          + `🌳 ${escapeHtml(stop.name)}`
+          + `${stop.visitor_center ? 'ℹ️' : '🌳'} ${escapeHtml(stop.name)}`
           + (place ? ` <span style="color:#888;">(${escapeHtml(place)})</span>` : '')
           + ` — <span style="color:#1a73e8;font-weight:600;">${fmtMiles(d)} `
           + `${compassDir(userLocation.lat, userLocation.lng, stop.lat, stop.lng)}</span></a>`
@@ -898,7 +937,9 @@ function roadsidePopupHtml(s) {
   let popup = `<strong>${escapeHtml(s.name)}</strong>`;
   const place = [s.town, s.state].filter(Boolean).join(', ');
   if (place) popup += `<br><span style="color:#888;font-size:.9em;">${escapeHtml(place)}</span>`;
-  popup += `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
+  popup += s.visitor_center
+    ? `<br><span style="color:#1565c0;font-size:.85em;font-weight:600;">&#8505; Visitor center &middot; travel info, maps &amp; brochures</span>`
+    : `<br><span style="color:#2e7d32;font-size:.85em;font-weight:600;">Picnic / stretch-break stop</span>`;
   popup += distanceAndRouteLine(s.lat, s.lng);
   if (s.rating) {
     popup += `<br><span style="color:#555;font-size:.85em;">&#9733; ${s.rating}`;
@@ -929,7 +970,7 @@ function roadsidePopupHtml(s) {
 }
 
 function addRoadsideMarker(s) {
-  const marker = L.marker([s.lat, s.lng], { icon: roadsideIcon, zIndexOffset: 600 });
+  const marker = L.marker([s.lat, s.lng], { icon: roadsideIconFor(s), zIndexOffset: 600 });
   marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320, maxHeight: 320 });
   // Roadside stops double as route endpoints while the route tool is armed, like
   // the campground/home/family markers. Attach after bindPopup so routeMarkerClick's
@@ -1652,6 +1693,9 @@ const ROUTE_KINDS = {
     items: () => roadsideMarkers.map(({ stop }) => ({
       id: stop.id, name: stop.name, lat: stop.lat, lng: stop.lng,
       sub: [stop.town, stop.state].filter(Boolean).join(', '),
+      // Per-row override of the kind's icon, so a visitor center is spottable in
+      // the list the same way it is on the map. Campgrounds set none and keep 🏕️.
+      icon: stop.visitor_center ? 'ℹ️' : null,
     })),
     show: (id) => cgFlyToStop(id),
   },
@@ -1990,7 +2034,7 @@ function renderRouteListPanel(kind) {
   if (!data.list.length) { routeStopsPanel.classList.add('hidden'); return; }
   let html = `<div class="cg-route-stops-head"><span>${cfg.title}</span>`
     + `<span class="cg-route-stops-x" onclick="cgToggleRouteList('${kind}')">&times;</span></div>`;
-  data.list.forEach(({ id, name, sub: place, offMi, detourMi, legMi, legSec }) => {
+  data.list.forEach(({ id, name, sub: place, icon, offMi, detourMi, legMi, legSec }) => {
     // Driving distance + time to reach the item from the route start (A) — straight
     // out of the same /table matrix, no extra call.
     let leg = '';
@@ -2002,7 +2046,7 @@ function renderRouteListPanel(kind) {
       : (offMi < 0.25 ? 'on route' : `~${fmtMiles(offMi)} off`);
     const subLine = [leg, `<span class="detour">${off}</span>`].filter(Boolean).join(' · ');
     html += `<a class="cg-route-stops-row" onclick="cgShowRouteItem('${kind}', ${id})">`
-      + `${cfg.icon} ${escapeHtml(name)}`
+      + `${icon || cfg.icon} ${escapeHtml(name)}`
       + (place ? ` <span class="muted">(${escapeHtml(place)})</span>` : '')
       + `<div class="cg-route-stops-sub">${subLine}</div></a>`;
   });
@@ -2151,7 +2195,7 @@ routeControl.addTo(map);
       hay: (stop.name + ' ' + (stop.town || '') + ' ' + stateHay(stop.state)).toLowerCase(),
       states: stateKeys(stop.state),
       ll: [stop.lat, stop.lng],
-      prefix: '🌳 ',
+      prefix: stop.visitor_center ? 'ℹ️ ' : '🌳 ',
     }));
   }
 
@@ -2203,8 +2247,9 @@ routeControl.addTo(map);
     items = matches.map(entry => {
       const row = document.createElement('div');
       row.className = 'cg-search-option';
-      // Emoji prefix so the three kinds are distinguishable in one list: a tree
-      // for roadside stops, a house for family (matching the manage page's
+      // Emoji prefix so the kinds are distinguishable in one list: a tree for
+      // roadside stops (ℹ️ for the ones that are visitor centers, matching their
+      // blue map marker), a house for family (matching the manage page's
       // dropdown), nothing for campgrounds — the default and the bulk.
       const label = entry.prefix + entry.name;
       row.innerHTML = `<span>${escapeHtml(label)}</span>` +
@@ -2549,9 +2594,13 @@ function trimmedBounds(coords, frac) {
                      'notes', 'phone', 'website', 'google_maps_url'];
   const setField = (id, val) => { document.getElementById('rs-' + id).value = val == null ? '' : val; };
   const getField = (id) => document.getElementById('rs-' + id).value.trim();
+  // The visitor-center flag is a checkbox, so it's kept out of FIELD_IDS — a
+  // `.value = ''` reset would leave it checked.
+  const visitorBox = () => document.getElementById('rs-visitor_center');
 
   window.rsOpenModal = function(mode, id) {
     FIELD_IDS.forEach(f => setField(f, ''));
+    visitorBox().checked = false;
     const delBtn = document.getElementById('rs-delete-btn');
     if (mode === 'edit') {
       const rec = roadsideById.get(id);
@@ -2562,6 +2611,7 @@ function trimmedBounds(coords, frac) {
       setField('location', (s.lat != null && s.lng != null) ? s.lat + ',' + s.lng : '');
       setField('notes', s.notes); setField('phone', s.phone); setField('website', s.website);
       setField('google_maps_url', s.maps_url);
+      visitorBox().checked = !!s.visitor_center;
       document.getElementById('rs-modal-title').textContent = 'Edit roadside stop';
       delBtn.style.display = '';
     } else {
@@ -2597,6 +2647,7 @@ function trimmedBounds(coords, frac) {
       town: getField('town'), state: getField('state'),
       notes: getField('notes'), phone: getField('phone'),
       website: getField('website'), google_maps_url: getField('google_maps_url'),
+      visitor_center: visitorBox().checked,
     };
     const saveBtn = document.getElementById('rs-save-btn');
     saveBtn.disabled = true;
@@ -2646,6 +2697,7 @@ function trimmedBounds(coords, frac) {
     if (!rec) { addRoadsideMarker(stop); return; }
     Object.assign(rec.stop, stop);
     rec.marker.setLatLng([stop.lat, stop.lng]);
+    rec.marker.setIcon(roadsideIconFor(rec.stop));   // visitor-center flag may have flipped
     rec.marker.setPopupContent(roadsidePopupHtml(rec.stop));
   }
 

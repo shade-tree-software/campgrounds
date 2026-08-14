@@ -2134,6 +2134,13 @@ def _roadside_view(s):
     `approx_miles_from_start`) from how the list was generated; those aren't
     relevant to a general map and are dropped here. `google_maps_url` is
     surfaced as `maps_url`, and `latitude`/`longitude` as `lat`/`lng`.
+
+    `visitor_center` marks the stops that double as a staffed travel-information
+    point (state/DOT welcome centers, travel & tourist info centers, park visitor
+    centers) — they hand out maps and brochures for the road ahead, so they're
+    worth spotting from the map without opening a popup. Normalized to a real
+    bool here so the template can branch on it without caring whether the stored
+    field is absent, false, or missing.
     """
     return {
         "id": s.get("id"),
@@ -2142,6 +2149,7 @@ def _roadside_view(s):
         "state": s.get("state"),
         "lat": s.get("latitude"),
         "lng": s.get("longitude"),
+        "visitor_center": bool(s.get("visitor_center")),
         "notes": s.get("notes"),
         "rating": s.get("rating"),
         "rating_count": s.get("rating_count"),
@@ -4335,6 +4343,10 @@ def api_create_roadside():
         if v:
             entry[k] = v
     entry["latitude"], entry["longitude"] = ll
+    # Only stored when true — the flag is the exception, so an absent key is the
+    # (far more common) "ordinary stretch-break stop" and the file stays clean.
+    if data.get("visitor_center"):
+        entry["visitor_center"] = True
     for k in ("notes", "website", "phone", "google_maps_url"):
         v = (data.get(k) or "").strip()
         if v:
@@ -4373,6 +4385,13 @@ def api_update_roadside(stop_id):
                 target[k] = v
             else:
                 target.pop(k, None)
+    # Same store-only-when-true rule as create, so unchecking the box removes the
+    # key rather than leaving a `false` behind.
+    if "visitor_center" in data:
+        if data.get("visitor_center"):
+            target["visitor_center"] = True
+        else:
+            target.pop("visitor_center", None)
 
     _save_roadside(stops)
     return jsonify({"ok": True, "stop": _roadside_view(target)})
