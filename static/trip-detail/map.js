@@ -270,7 +270,10 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   const streets = window.ekkoStreetLayer().addTo(map);
   const satellite = window.ekkoSatelliteLayer();
   const baseLayers = { 'Map': streets, 'Satellite': satellite };
-  const overlayLayers = {};
+  // Offered but OFF by default, unlike the two overview maps: one trip is
+  // usually framed tight enough that you already know where you are, and the
+  // lazy fetch means an unshown layer costs this page nothing.
+  const overlayLayers = { '🗺️ State lines': window.ekkoBordersLayer() };
   const layerControl = L.control.layers(baseLayers, overlayLayers).addTo(map);
 
   const HOME = HOME_COORDS;

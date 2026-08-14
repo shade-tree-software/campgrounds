@@ -1014,8 +1014,13 @@ ROADSIDE.forEach(addRoadsideMarker);
 const campgroundsToggleLayer = L.layerGroup();
 if (campgroundsOn) campgroundsToggleLayer.addTo(map);  // checkbox reflects state
 
+// Borders start ON here: this map is filtered and searched BY STATE, so which
+// state a dot sits in is part of reading it.
+const bordersLayer = window.ekkoBordersLayer().addTo(map);
+
 const overlays = { '🏕️ Campgrounds': campgroundsToggleLayer };
 if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
+overlays['🗺️ State lines'] = bordersLayer;
 const layersControl = L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
 
 // Mirror the layer control's expanded/collapsed state onto the body so the

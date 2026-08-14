@@ -780,7 +780,11 @@ const map = L.map('all-trips-map', { zoomControl: false });
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
 const satellite = window.ekkoSatelliteLayer();
-const layerControl = L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
+// State lines start ON: at this map's continental framing they are the fastest
+// way to place a trip, and OSM's own boundary rendering is invisible up here.
+const bordersLayer = window.ekkoBordersLayer().addTo(map);
+const layerControl = L.control.layers({ 'Map': streets, 'Satellite': satellite },
+                                      { '🗺️ State lines': bordersLayer }).addTo(map);
 
 // Dedicated pane so stay (blue) circleMarkers render above event (gold) ones.
 // Event circleMarkers stay in the default overlayPane (z-index 400); this pane

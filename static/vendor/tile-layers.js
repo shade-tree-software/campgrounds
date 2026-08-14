@@ -66,6 +66,66 @@
         maxZoom: t.maxZoom, maxNativeZoom: t.maxNativeZoom }, opts));
   };
 
+  // State/province borders, as an overlay rather than a basemap choice.
+  //
+  // OSM's raster style draws admin boundaries as a pale dotted line that is
+  // effectively invisible at the zooms this app is used at — which matters
+  // because the campground database is ORGANIZED by state, so "which state am I
+  // looking at" is a question every one of these maps gets asked. The Esri
+  // satellite stack already includes a boundary layer; the street basemap had no
+  // equivalent, hence this.
+  //
+  // Drawn from a static Natural Earth extract (window.EKKO_BORDERS, set in
+  // base.html) rather than from another tile provider: it is 172 KB for all of
+  // the US and Canada, it costs no third-party requests, we control the styling,
+  // and — the deciding factor — it works on the offline USB build, where an
+  // extra tile source would not.
+  //
+  // Two deliberate choices in how it draws:
+  //   - Its own pane at z-index 350, ABOVE the tiles but BELOW overlayPane (400)
+  //     and markerPane (600). Borders are context, so nothing a border crosses —
+  //     campground dot, trip route, stay marker — is ever obscured by one.
+  //   - interactive: false, so a border line can never eat a marker's click.
+  // The GeoJSON is fetched LAZILY on first display, so a map whose borders start
+  // switched off pays nothing.
+  window.ekkoBordersLayer = function (opts) {
+    opts = opts || {};
+    var group = L.layerGroup();
+    var url = window.EKKO_BORDERS;
+    if (!url) return group;   // asset not wired up: an empty layer is fine
+    var started = false;
+    group.on('add', function () {
+      var map = group._map;
+      if (map && !map.getPane('bordersPane')) {
+        var pane = map.createPane('bordersPane');
+        pane.style.zIndex = 350;
+        pane.style.pointerEvents = 'none';
+      }
+      if (started) return;
+      started = true;
+      fetch(url).then(function (r) { return r.json(); }).then(function (geo) {
+        L.geoJSON(geo, {
+          pane: 'bordersPane',
+          interactive: false,
+          attribution: 'Borders: Natural Earth',
+          style: function (f) {
+            var country = f.properties && f.properties.kind === 'country';
+            return {
+              color: country ? '#4a148c' : '#7b1fa2',
+              weight: country ? 2.5 : 1.6,
+              opacity: country ? 0.75 : 0.65,
+              // Dashed for state lines, solid for international ones — the
+              // long-standing atlas convention, and it keeps a state line from
+              // reading as a road on the street basemap.
+              dashArray: country ? null : '6,4',
+            };
+          },
+        }).addTo(group);
+      }).catch(function () { /* a missing overlay must not break the map */ });
+    });
+    return group;
+  };
+
   // Satellite. Online => the 3-layer Esri stack (imagery + labels + roads).
   // Local => a single baked NAIP layer (native z16, gracefully upscaled above).
   // Pass { baseOnly: true } for imagery with no label/road overlays (the tiny
