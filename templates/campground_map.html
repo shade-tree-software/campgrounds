@@ -811,6 +811,20 @@ const visitorCenterIcon = L.divIcon({
 
 const roadsideIconFor = s => (s.visitor_center ? visitorCenterIcon : roadsideIcon);
 
+// Visitor centers ride 100 above the picnic stops in markerPane, so wherever the
+// two collide the ℹ marker is the one you can see and click. No pair is actually
+// co-located (the nearest visitor center to a picnic stop is 2 km away) — this
+// is about ZOOM: a 22 px marker covers ~40 km at z6 and ~10 km at z8, which puts
+// 14 of the 19 visitor centers under a picnic table at continental zoom and 4 at
+// state zoom. Without a rule, whichever happened to draw last won.
+// Leaflet adds the marker's screen Y to this offset (south draws in front), so
+// only the offset DIFFERENCE matters, and 100 px is far more separation than two
+// 22 px markers need to overlap. Stays under the ladder above it: family 900,
+// home 1000, your-location 1100, route endpoints 1200.
+const ROADSIDE_Z = 600;
+const VISITOR_CENTER_Z = 700;
+const roadsideZFor = s => (s.visitor_center ? VISITOR_CENTER_Z : ROADSIDE_Z);
+
 // id -> { marker, stop }, so an inline edit/delete can find and re-render the
 // exact marker without reloading. Kept in sync with roadsideMarkers (search).
 const roadsideById = new Map();
@@ -970,7 +984,9 @@ function roadsidePopupHtml(s) {
 }
 
 function addRoadsideMarker(s) {
-  const marker = L.marker([s.lat, s.lng], { icon: roadsideIconFor(s), zIndexOffset: 600 });
+  const marker = L.marker([s.lat, s.lng], {
+    icon: roadsideIconFor(s), zIndexOffset: roadsideZFor(s),
+  });
   marker.bindPopup(roadsidePopupHtml(s), { maxWidth: 320, maxHeight: 320 });
   // Roadside stops double as route endpoints while the route tool is armed, like
   // the campground/home/family markers. Attach after bindPopup so routeMarkerClick's
@@ -2697,7 +2713,9 @@ function trimmedBounds(coords, frac) {
     if (!rec) { addRoadsideMarker(stop); return; }
     Object.assign(rec.stop, stop);
     rec.marker.setLatLng([stop.lat, stop.lng]);
-    rec.marker.setIcon(roadsideIconFor(rec.stop));   // visitor-center flag may have flipped
+    // The visitor-center flag may have flipped: re-icon AND re-stack the marker.
+    rec.marker.setIcon(roadsideIconFor(rec.stop));
+    rec.marker.setZIndexOffset(roadsideZFor(rec.stop));
     rec.marker.setPopupContent(roadsidePopupHtml(rec.stop));
   }
 
