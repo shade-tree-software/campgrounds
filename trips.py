@@ -403,8 +403,11 @@ def _remap_json_keys(filepath, key_prefix, mapping):
         else:
             new_data[key] = value
 
-    with open(filepath, "w") as f:
-        json.dump(new_data, f, indent=2)
+    # ensure_ascii=False + explicit utf-8 to match how the app writes these
+    # stores (_save_json in ekko_trips_app.py). Without it, a re-sort rewrites
+    # every caption containing an em-dash or accent into escaped \uXXXX form.
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(new_data, f, indent=2, ensure_ascii=False)
 
 
 # ── Event CRUD ────────────────────────────────────────────────────────────
