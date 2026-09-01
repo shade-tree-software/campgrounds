@@ -4879,7 +4879,11 @@ def _write_track_cache(trip_id, points):
     plain `<id>.json` so each trip has exactly one cache file."""
     gz, plain = _track_cache_paths(trip_id)
     with open(gz, "wb") as f:
-        f.write(gzip.compress(json.dumps(points).encode("utf-8")))
+        # Level 6, not gzip's default 9. On a densely logged trip the cache is
+        # rewritten on every in-progress poll, and at 90k pings level 9 costs
+        # ~2.1 s against level 6's ~0.4 s to save 5% of a file nothing but this
+        # app reads.
+        f.write(gzip.compress(json.dumps(points).encode("utf-8"), 6))
     if os.path.isfile(plain):
         try:
             os.remove(plain)
@@ -4933,6 +4937,13 @@ def _sweep_legacy_track_caches():
 
 
 _sweep_legacy_track_caches()
+
+# How far back an in-progress trip re-fetches on each poll (see the
+# incremental re-poll block in `api_trip_track`). Two days is well past any
+# plausible upstream revision of an already-logged ping, and still turns a
+# 14-day trip's re-poll into a fraction of its pings.
+TRACK_REFETCH_OVERLAP_S = 48 * 3600
+
 
 # Frontend's auto-fallback near-anchor radius (templates/trip_detail.html
 # uses the same 5 km). Promoted to a Python constant so the per-day tid
@@ -5258,6 +5269,35 @@ def api_trip_track(trip_id):
         from_ts = start_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
         to_ts = end_dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
+        # Incremental re-poll. An in-progress trip re-fetches on every page
+        # load (that's the point — new pings should show up), but re-fetching
+        # the whole trip means re-downloading and re-timezoning every ping
+        # logged so far. At the tracker's current ~3 s sampling that is most
+        # of the wait: trip 95 is 90k pings, ~8 s of HTTP plus ~12 s of
+        # timezone lookups, repeated on every load, to learn about the
+        # handful of pings logged since the last one.
+        #
+        # So we keep the cached pings and re-fetch only the tail. The overlap
+        # is generous rather than exact because the upstream pre-processing
+        # app filters spurious pings and may revise recent ones — anything
+        # inside the window is re-fetched and replaces what we held, so a
+        # late correction still lands. A ping older than the overlap that
+        # upstream later revises is the accepted gap; `?refresh=1` forces a
+        # full re-fetch, and deleting the trip's cache file does the same.
+        cached = _read_track_cache(trip_id) or []
+        if cached:
+            _migrate_track_cache_tids(cached)
+        cached_tsts = [p.get("tst") for p in cached if p.get("tst") is not None]
+        floor_tst = None
+        if cached_tsts and request.args.get("refresh") != "1":
+            floor_tst = max(cached_tsts) - TRACK_REFETCH_OVERLAP_S
+            fetch_from = datetime.fromtimestamp(
+                floor_tst, timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            if fetch_from <= from_ts:
+                floor_tst = None  # overlap covers the whole trip; no saving
+            else:
+                from_ts = fetch_from
+
         primary_pts = _fetch_timeline_points(tid, token, from_ts, to_ts)
         for p in primary_pts:
             p["tid"] = "primary"
@@ -5272,12 +5312,19 @@ def api_trip_track(trip_id):
                 p["tid"] = "alt"
 
         all_points = primary_pts + alt_pts
+        if floor_tst is not None:
+            # Everything at or after the floor came from this fetch; keep only
+            # the older cached pings so a revised ping can't appear twice.
+            all_points += [p for p in cached
+                           if p.get("tst") is not None and p["tst"] < floor_tst]
         all_points.sort(key=lambda p: p["tst"])
     except Exception as e:
         if _track_cache_exists(trip_id):
             return _serve_cache()
         return jsonify({"error": str(e)}), 502
 
+    # Only pings without a `tz` are looked up, so on an incremental re-poll
+    # this touches the tail rather than the whole trip.
     _enrich_with_timezone(all_points)
     _write_track_cache(trip_id, all_points)
     return _build_response(all_points)
@@ -5539,8 +5586,9 @@ def _track_covers_trip(trip, in_window, home):
     if not anchors and not home_valid:
         return True
     radius_m = TRACK_NEAR_STAY_KM * 1000
-    if any(_haversine_m(p["lat"], p["lon"], a_lat, a_lng) <= radius_m
-           for p in in_window for a_lat, a_lng in anchors):
+    anchor_index = _AnchorProximityIndex(anchors, radius_m)
+    if any(anchor_index.nearest_within(p["lat"], p["lon"]) is not None
+           for p in in_window):
         return True
     try:
         in_progress = date.today() <= date.fromisoformat(trip["end"])
@@ -6072,7 +6120,6 @@ STOP_HOME_BOUNDARY_LOCK_S = 3600  # sustained-away duration that confirms
 
 def _haversine_m(lat1, lng1, lat2, lng2):
     """Great-circle distance between two coords in meters."""
-    import math
     R = 6371000.0
     a1 = math.radians(lat1)
     a2 = math.radians(lat2)
@@ -6080,6 +6127,101 @@ def _haversine_m(lat1, lng1, lat2, lng2):
     do = math.radians(lng2 - lng1)
     h = math.sin(da/2)**2 + math.cos(a1) * math.cos(a2) * math.sin(do/2)**2
     return 2 * R * math.asin(math.sqrt(h))
+
+
+# Metres in one degree of latitude on the sphere _haversine_m uses
+# (R * pi / 180). Exact for that model, so it's a safe conversion when
+# sizing grid cells below.
+_M_PER_DEG_LAT = 6371000.0 * math.pi / 180.0
+
+
+class _AnchorProximityIndex:
+    """Spatial hash over a trip's anchors, for the two "how close did this
+    ping get to the itinerary" scans that dominate track processing.
+
+    Both `_select_track_per_day` (per-day anchor-encounter counts) and
+    `_find_home_boundary_tsts` (streak-to-anchor closest approach) used to
+    compare every ping against every anchor. That is fine at a few hundred
+    pings — which is what a trip logged before the upstream tracker moved
+    to ~3 s sampling — and quadratic-feeling at tens of thousands: trip 95
+    is 90k pings x 76 anchors, and those two scans measured 34 s and 31 s.
+
+    The grid narrows each ping to the anchors that could possibly be within
+    `radius_m`; haversine still decides, so results are unchanged. Cells are
+    sized so an anchor within the radius is always in the queried cell or one
+    of its eight neighbours:
+
+      * latitude: a cell is `radius_m` tall in degrees, and great-circle
+        distance is never less than the latitude difference, so a match can
+        be at most one cell away.
+      * longitude: cells are sized with the cosine of the highest anchor
+        latitude (plus a cell of margin), which makes them the *narrowest*
+        they need to be anywhere a match can occur — a query point far enough
+        north to want narrower cells is already too far north to match.
+
+    Not meridian-safe (a trip straddling +/-180 would miss matches across the
+    seam); no trip in this database goes near it.
+    """
+
+    def __init__(self, anchors, radius_m):
+        self.radius_m = float(radius_m)
+        self.anchors = [(a[0], a[1]) for a in (anchors or [])
+                        if a is not None and a[0] is not None and a[1] is not None]
+        self.cells = {}
+        if not self.anchors or self.radius_m <= 0:
+            self.lat_cell = self.lon_cell = None
+            return
+        self.lat_cell = self.radius_m / _M_PER_DEG_LAT
+        max_abs_lat = max(abs(lat) for lat, _ in self.anchors) + self.lat_cell
+        cos_lat = math.cos(math.radians(min(max_abs_lat, 89.0)))
+        self.lon_cell = self.radius_m / (_M_PER_DEG_LAT * max(cos_lat, 1e-6))
+        for idx, (lat, lng) in enumerate(self.anchors):
+            self.cells.setdefault(self._key(lat, lng), []).append(idx)
+
+    def _key(self, lat, lng):
+        return (int(math.floor(lat / self.lat_cell)),
+                int(math.floor(lng / self.lon_cell)))
+
+    def _candidates(self, lat, lng):
+        """Anchor indices in the query point's cell and its 8 neighbours."""
+        ci, cj = self._key(lat, lng)
+        cells = self.cells
+        out = []
+        for i in (ci - 1, ci, ci + 1):
+            for j in (cj - 1, cj, cj + 1):
+                hit = cells.get((i, j))
+                if hit:
+                    out.extend(hit)
+        return out
+
+    def nearest_within(self, lat, lng):
+        """Distance in metres to the closest anchor within `radius_m`, or
+        None if none is. Exact inside the radius (which is all the callers
+        compare against); anchors further away are simply not reported."""
+        if self.lat_cell is None or lat is None or lng is None:
+            return None
+        best = None
+        for idx in self._candidates(lat, lng):
+            a_lat, a_lng = self.anchors[idx]
+            d = _haversine_m(lat, lng, a_lat, a_lng)
+            if d <= self.radius_m and (best is None or d < best):
+                best = d
+        return best
+
+    def hits(self, lat, lng, skip=None):
+        """Indices of every anchor within `radius_m` of the point, skipping
+        any index already in `skip` (callers counting *distinct* anchors have
+        no use for one they've already counted)."""
+        if self.lat_cell is None or lat is None or lng is None:
+            return ()
+        found = []
+        for idx in self._candidates(lat, lng):
+            if skip is not None and idx in skip:
+                continue
+            a_lat, a_lng = self.anchors[idx]
+            if _haversine_m(lat, lng, a_lat, a_lng) <= self.radius_m:
+                found.append(idx)
+        return found
 
 
 def _load_trip_track_for_detection(trip_id):
@@ -6508,18 +6650,30 @@ def _find_home_boundary_tsts(points, home,
     # otherwise fall back to the longest qualifying streak, which is
     # exactly the original behavior. Degrades to longest-streak when
     # `anchors` is empty/None, so callers that don't care are unaffected.
-    anchor_list = [(a[0], a[1]) for a in (anchors or [])
-                   if a and a[0] is not None and a[1] is not None]
+    anchor_index = _AnchorProximityIndex(anchors, anchor_radius_m)
+
+    # Memoized: the selection below asks each candidate streak for its
+    # closest approach two or three times (the `near` filter, then the
+    # `min` key), and on a densely logged trip one streak is tens of
+    # thousands of pings.
+    _streak_min_cache = {}
 
     def _streak_min_anchor_m(se):
-        if not anchor_list:
+        """Closest approach from this streak to any anchor, in metres, or
+        +inf when it never came within `anchor_radius_m`. Only distances
+        inside that radius are ever compared, so an out-of-radius streak
+        needs no exact figure — which is what lets the grid answer it."""
+        if not anchor_index.anchors:
             return float("inf")
+        hit = _streak_min_cache.get(se)
+        if hit is not None:
+            return hit
         best = float("inf")
         for k in range(se[0], se[1] + 1):
-            for a_lat, a_lng in anchor_list:
-                d = _haversine_m(pts[k]["lat"], pts[k]["lon"], a_lat, a_lng)
-                if d < best:
-                    best = d
+            d = anchor_index.nearest_within(pts[k]["lat"], pts[k]["lon"])
+            if d is not None and d < best:
+                best = d
+        _streak_min_cache[se] = best
         return best
 
     def _dur(se):
@@ -6742,6 +6896,14 @@ def _naive_utc(tst):
     return datetime.fromtimestamp(tst, timezone.utc).replace(tzinfo=None)
 
 
+# Keyed (tz name, tst // 900) -> "YYYY-MM-DD"; see `_local_date_of_ping`.
+# Bounded rather than LRU: the keys are quarter-hours, so a whole trip's worth
+# is a few thousand entries and the cap is only there so a long-lived worker
+# can't accumulate every quarter-hour it has ever seen.
+_LOCAL_DATE_CACHE = {}
+_LOCAL_DATE_CACHE_MAX = 200_000
+
+
 def _local_date_of_ping(p):
     """Return the local-date (YYYY-MM-DD) of a single ping, using its
     `tz` field stamped by `_enrich_with_timezone`. Falls back to UTC
@@ -6754,19 +6916,36 @@ def _local_date_of_ping(p):
     tst = p.get("tst")
     if tst is None:
         return None
+    tz_name = p.get("tz") or "UTC"
+    # Memoized per (zone, UTC quarter-hour). Every real-world UTC offset is a
+    # multiple of 15 minutes, so local midnight always lands exactly on a
+    # quarter-hour boundary and never falls *inside* one of these buckets —
+    # which makes the bucket an exact key, not an approximation. It matters
+    # because this is called once per ping by several passes over the track,
+    # and at the tracker's ~3 s sampling that's hundreds of pings sharing one
+    # answer (trip 95: ~360k calls collapsing to a few thousand conversions).
+    key = (tz_name, tst // 900)
+    hit = _LOCAL_DATE_CACHE.get(key)
+    if hit is not None:
+        return hit
     try:
         from zoneinfo import ZoneInfo
     except Exception:
         ZoneInfo = None
     utc = _naive_utc(tst)
-    tz_name = p.get("tz") or "UTC"
+    out = None
     if ZoneInfo and tz_name != "UTC":
         try:
-            return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(
+            out = utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(
                 ZoneInfo(tz_name)).date().isoformat()
         except Exception:
-            pass
-    return utc.date().isoformat()
+            out = None
+    if out is None:
+        out = utc.date().isoformat()
+    if len(_LOCAL_DATE_CACHE) > _LOCAL_DATE_CACHE_MAX:
+        _LOCAL_DATE_CACHE.clear()
+    _LOCAL_DATE_CACHE[key] = out
+    return out
 
 
 def _anchors_for_trip(trip):
@@ -6882,8 +7061,8 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
     except (TypeError, ValueError):
         return [], {}
 
-    anchor_list = [(a[0], a[1]) for a in (anchors or [])
-                   if a is not None and a[0] is not None and a[1] is not None]
+    anchor_index = _AnchorProximityIndex(anchors, near_radius_m)
+    anchor_total = len(anchor_index.anchors)
     home_lat = home[0] if home and home[0] is not None else None
     home_lng = home[1] if home and home[1] is not None else None
     overrides = tid_overrides or {}
@@ -6894,16 +7073,13 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
         discriminator: a phone that diverged from the trip after a
         shared morning encounter will hit fewer subsequent anchors
         than the phone that stayed on the trip."""
-        n = 0
-        for a_lat, a_lng in anchor_list:
-            for p in pts:
-                lat, lon = p.get("lat"), p.get("lon")
-                if lat is None or lon is None:
-                    continue
-                if _haversine_m(lat, lon, a_lat, a_lng) <= near_radius_m:
-                    n += 1
-                    break
-        return n
+        seen = set()
+        for p in pts:
+            for idx in anchor_index.hits(p.get("lat"), p.get("lon"), skip=seen):
+                seen.add(idx)
+            if len(seen) == anchor_total:
+                break  # every anchor already counted; nothing left to find
+        return len(seen)
 
     def _max_dist_from_home(pts):
         if home_lat is None or home_lng is None:

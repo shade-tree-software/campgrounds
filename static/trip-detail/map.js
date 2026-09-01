@@ -1192,44 +1192,65 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     // (`window.__gpsPointMarkers || []` throughout overrides.js), and the
     // select/suppress/relocate tooling those feed is admin-gated anyway, so
     // an empty layer + empty array is a complete answer for a regular user.
-    if (IS_ADMIN) sorted.forEach((p, i) => {
-      const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
-      m.__ping = p;
-      m.__pingIdx = i;
-      m.__selected = false;
-      // Popup content is built on open, not up front. Formatting a date in a
-      // named timezone is ~100us a call, which is nothing once and seconds
-      // across every ping on a long trip — and the reader opens at most a
-      // handful of these.
-      m.bindPopup(() => {
-        const fmtOpts = {
-          year: 'numeric', month: 'short', day: 'numeric',
-          hour: '2-digit', minute: '2-digit', second: '2-digit',
-          timeZoneName: 'short',
-        };
-        if (p.tz) fmtOpts.timeZone = p.tz;
-        const local = new Date(p.tst * 1000).toLocaleString(undefined, fmtOpts);
-        const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
-        return `<div style="font-size:.85rem;line-height:1.4">` +
-          `<div><strong>${local}</strong></div>` +
-          `<div style="font-family:monospace">${coords}</div>` +
-          `</div>`;
+    //
+    // The gate is also on WHEN they're built. At the tracker's
+    // current ~3 s sampling a long trip is tens of thousands of pings (trip
+    // 95: 45k), and they are invisible until the admin zooms to
+    // GPS_POINT_MIN_ZOOM or turns on selection mode — which on most page
+    // views never happens. Building them up front therefore charges every
+    // admin page load for a layer that usually stays hidden, delaying the
+    // moment the dashed route flips to the real line. `syncGpsPoints()`
+    // builds them the first time they're actually wanted; after that the
+    // array is stable and this is a no-op.
+    let gpsPointsBuilt = false;
+    function ensureGpsPointMarkers() {
+      if (gpsPointsBuilt || !IS_ADMIN) return;
+      gpsPointsBuilt = true;
+      sorted.forEach((p, i) => {
+        const m = L.circleMarker([p.lat, p.lon], { ...DEFAULT_PING_STYLE });
+        m.__ping = p;
+        m.__pingIdx = i;
+        m.__selected = false;
+        // Popup content is built on open, not up front. Formatting a date in a
+        // named timezone is ~100us a call, which is nothing once and seconds
+        // across every ping on a long trip — and the reader opens at most a
+        // handful of these.
+        m.bindPopup(() => {
+          const fmtOpts = {
+            year: 'numeric', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            timeZoneName: 'short',
+          };
+          if (p.tz) fmtOpts.timeZone = p.tz;
+          const local = new Date(p.tst * 1000).toLocaleString(undefined, fmtOpts);
+          const coords = `${p.lat.toFixed(5)}, ${p.lon.toFixed(5)}`;
+          return `<div style="font-size:.85rem;line-height:1.4">` +
+            `<div><strong>${local}</strong></div>` +
+            `<div style="font-family:monospace">${coords}</div>` +
+            `</div>`;
+        });
+        // Intercept clicks before Leaflet opens the popup when we're in
+        // selection mode. The popup-open event itself isn't suppressible
+        // cleanly from a popup binding, so we close it after-the-fact.
+        m.on('click', () => {
+          // A drag-move that just ended fires a click on the dragged marker
+          // — swallow it so we don't deselect the ping the user just moved.
+          if (window.__selectionDragJustEnded) return;
+          if (window.__selectionModeActive) {
+            togglePingSelection(i);
+            m.closePopup();
+          }
+        });
+        gpsPointLayer.addLayer(m);
+        gpsPointMarkers.push(m);
       });
-      // Intercept clicks before Leaflet opens the popup when we're in
-      // selection mode. The popup-open event itself isn't suppressible
-      // cleanly from a popup binding, so we close it after-the-fact.
-      m.on('click', () => {
-        // A drag-move that just ended fires a click on the dragged marker
-        // — swallow it so we don't deselect the ping the user just moved.
-        if (window.__selectionDragJustEnded) return;
-        if (window.__selectionModeActive) {
-          togglePingSelection(i);
-          m.closePopup();
-        }
-      });
-      gpsPointLayer.addLayer(m);
-      gpsPointMarkers.push(m);
-    });
+      // The drag binder attaches to whatever markers exist when it runs, and
+      // on a normal load that's now — after `_initSelectionDrag` already ran
+      // over an empty array. Re-binding here is what keeps drag-to-relocate
+      // working on markers built after the fact; `bindMarker` is guarded, so
+      // a marker never gets bound twice.
+      if (window.__rebindSelectionDrag) window.__rebindSelectionDrag();
+    }
     window.__gpsPings = sorted;
     window.__gpsPointMarkers = gpsPointMarkers;
     window.__gpsPointLayer = gpsPointLayer;
@@ -1243,6 +1264,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       // from revealing an empty layer and reading it as "the pings vanished".
       const wantVisible = window.__selectionModeActive ||
         (IS_ADMIN && trackVisible && map.getZoom() >= GPS_POINT_MIN_ZOOM);
+      if (wantVisible) ensureGpsPointMarkers();
       if (wantVisible && !map.hasLayer(gpsPointLayer)) gpsPointLayer.addTo(map);
       if (!wantVisible && map.hasLayer(gpsPointLayer)) map.removeLayer(gpsPointLayer);
     }
