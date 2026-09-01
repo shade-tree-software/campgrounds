@@ -780,9 +780,11 @@ const map = L.map('all-trips-map', { zoomControl: false });
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
 const satellite = window.ekkoSatelliteLayer();
-// State lines start ON: at this map's continental framing they are the fastest
-// way to place a trip, and OSM's own boundary rendering is invisible up here.
-const bordersLayer = window.ekkoBordersLayer().addTo(map);
+// Offered but OFF by default. At this map's continental framing the lines are
+// the fastest way to place a trip, which is why they stay in the layer
+// control — but the landing view reads cleaner without them, and the GeoJSON
+// is fetched lazily on first display, so leaving them off costs nothing.
+const bordersLayer = window.ekkoBordersLayer();
 const layerControl = L.control.layers({ 'Map': streets, 'Satellite': satellite },
                                       { '🗺️ State lines': bordersLayer }).addTo(map);
 

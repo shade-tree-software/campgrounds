@@ -1014,9 +1014,12 @@ ROADSIDE.forEach(addRoadsideMarker);
 const campgroundsToggleLayer = L.layerGroup();
 if (campgroundsOn) campgroundsToggleLayer.addTo(map);  // checkbox reflects state
 
-// Borders start ON here: this map is filtered and searched BY STATE, so which
-// state a dot sits in is part of reading it.
-const bordersLayer = window.ekkoBordersLayer().addTo(map);
+// Offered but OFF by default. This map is filtered and searched BY STATE, so
+// the lines earn their place in the layer control — but they're one more set
+// of strokes over a map already dense with dots, and most sessions don't need
+// to know which state a dot is in. The GeoJSON is fetched lazily on first
+// display, so a map that leaves them off pays nothing for them.
+const bordersLayer = window.ekkoBordersLayer();
 
 const overlays = { '🏕️ Campgrounds': campgroundsToggleLayer };
 if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
