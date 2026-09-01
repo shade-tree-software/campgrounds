@@ -83,6 +83,8 @@ ORDER_STORE = "photo_order.json"
 SKIP_DIRS = {".thumbs", ".views", "__pycache__"}
 # Below this many photos the library is almost certainly a partial mirror.
 MIN_EXPECTED_PHOTOS = 200
+# Safety stop for the settle loop; two or three passes is the realistic ceiling.
+MAX_PASSES = 8
 
 
 # ── scanning ──────────────────────────────────────────────────────────────
@@ -342,7 +344,6 @@ def main():
     print("  ambiguous (trip, filename) pairs: %d%s"
           % (len(dupes), "" if not dupes else "  — those records are skipped"))
 
-    plan = Plan()
     stores = {}
     for name in _PHOTO_METADATA_FILES:
         data = load_store(name)
@@ -350,11 +351,56 @@ def main():
             print("  (%s absent — skipped)" % name)
             continue
         stores[name] = data
-        if name == ORDER_STORE:
-            plan_order_store(data, live_idx, args.trip, plan)
-        else:
-            plan_keyed_store(name, data, live, trashed, live_idx, trash_idx,
-                             args.trip, plan)
+
+    def build_plan(current):
+        p = Plan()
+        for nm, data in current.items():
+            if nm == ORDER_STORE:
+                plan_order_store(data, live_idx, args.trip, p)
+            else:
+                plan_keyed_store(nm, data, live, trashed, live_idx, trash_idx,
+                                 args.trip, p)
+        return p
+
+    def changes_in(p):
+        return sum(len(p.relink.get(n, {})) +
+                   (len(p.drop.get(n, [])) if args.drop_dead else 0)
+                   for n in stores)
+
+    # Settle rather than single-pass. A refusal can be ordering-dependent: a
+    # record won't move onto an occupied destination, but the record occupying
+    # it may itself move away in the same pass, freeing it for the next one.
+    # Planning once left work on the table and made the real fix "run it
+    # twice", which is the kind of instruction that gets lost. So iterate on an
+    # in-memory copy until nothing more moves; `plan` then describes the
+    # settled state and `moves` the cumulative old->new key per store.
+    work = {n: dict(d) for n, d in stores.items()}
+    moves = {n: {k: k for k in d} for n, d in stores.items()}
+    dropped = {n: [] for n in stores}
+    passes = 0
+    while passes < MAX_PASSES:
+        step = build_plan(work)
+        if not changes_in(step):
+            break
+        for n in work:
+            rl, dd = step.relink.get(n, {}), step.drop.get(n, [])
+            work[n] = apply_store(n, work[n], rl, dd, args.drop_dead)
+            if rl or (args.drop_dead and dd):
+                gone = set(dd) if args.drop_dead else set()
+                for orig, cur in list(moves[n].items()):
+                    if cur in gone:
+                        dropped[n].append(orig)
+                        del moves[n][orig]
+                    elif cur in rl:
+                        moves[n][orig] = rl[cur]
+        passes += 1
+    plan = build_plan(work)          # what remains once everything has settled
+    for n in stores:
+        plan.relink[n] = {o: c for o, c in moves[n].items() if o != c}
+        plan.drop[n] = dropped[n] if args.drop_dead else plan.drop.get(n, [])
+    if passes > 1:
+        print("  (settled after %d passes — a refusal can free up once the "
+              "record blocking it moves)" % passes)
 
     print("\n%-38s %s" % ("outcome", "records"))
     print("-" * 50)
@@ -402,6 +448,16 @@ def main():
         if not rl and not (args.drop_dead and dd):
             continue
         new = apply_store(name, data, rl, dd, args.drop_dead)
+        # A dict rebuild would silently swallow a record if two keys ever
+        # landed on the same target. The planner's `claimed`/occupied checks
+        # should make that impossible; verify rather than trust, because the
+        # failure mode is losing a caption without saying so.
+        expected = len(data) - (len(dd) if args.drop_dead else 0)
+        if len(new) != expected:
+            print("  ABORTING %s: rebuild has %d records, expected %d — "
+                  "two keys collided. Nothing written for this store."
+                  % (name, len(new), expected), file=sys.stderr)
+            continue
         write_store(name, new, stamp)
         print("  wrote %s (backup: %s.bak-%s)" % (name, name, stamp))
     print("\nApplied %d change(s). Re-run without --apply to confirm it is clean."
