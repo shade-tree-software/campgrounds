@@ -11,6 +11,34 @@ from datetime import date, datetime, timedelta
 _DIR = os.path.dirname(os.path.abspath(__file__))
 TRIPS_JSON = os.path.join(_DIR, "trip_data", "trips.json")
 
+# Photo storage root. MUST match `UPLOAD_DIR` in ekko_trips_app.py — it is
+# deliberately a sibling of static/, not inside it (see the "Photo System"
+# notes there: anything under the deployment's static root is served straight
+# off disk by the front-end web server, bypassing Flask's login gate).
+#
+# This file used to build photo paths from `static/uploads/`, and kept doing
+# so after the photos moved. Nothing raised: every `os.path.isdir()` on a
+# path that no longer exists simply came back False, so the directory renames
+# below quietly did nothing while the metadata remap — which reads live paths
+# under trip_data/ — went ahead. That is exactly how photos came to shift a
+# slot when an event or campspot was inserted or deleted.
+UPLOAD_DIR = os.path.join(_DIR, "photo_uploads")
+
+# The per-photo metadata stores, all keyed "{trip_id}/{idx}[/events/{idx}]/file".
+# A new one belongs in this list, or it silently detaches from its photo the
+# first time an index moves.
+_PHOTO_METADATA_FILES = ("captions.json", "photo_order.json",
+                         "photo_uploaders.json", "photo_favorites.json",
+                         "photo_people.json")
+
+
+def _photo_paths(trip_id, kind):
+    """(photo directory root, metadata key prefix) for a trip's stays or events."""
+    if kind == "stay":
+        return (os.path.join(UPLOAD_DIR, str(trip_id)), str(trip_id))
+    return (os.path.join(UPLOAD_DIR, str(trip_id), "events"),
+            f"{trip_id}/events")
+
 
 # ── Public API ────────────────────────────────────────────────────────────
 
@@ -264,10 +292,9 @@ def delete_stay(trip_id, stay_idx):
                 return None
             t["stays"].pop(stay_idx)
 
-            # Rename photo directories to keep indices aligned
-            upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id))
-            if os.path.isdir(upload_base):
-                _shift_photo_dirs(upload_base, stay_idx, len(t["stays"]))
+            # Move photos + their metadata so each campspot keeps its own.
+            _remap_indices_after_delete(trip_id, "stay", stay_idx,
+                                        len(t["stays"]))
 
             if not t["stays"] and not t.get("events"):
                 raw = [tr for tr in raw if tr["id"] != trip_id]
@@ -283,78 +310,73 @@ def delete_stay(trip_id, stay_idx):
     return None
 
 
-def _shift_photo_dirs(upload_base, deleted_idx, remaining_count):
-    """After deleting stay at deleted_idx, shift higher-indexed photo dirs down."""
-    # Remove the deleted stay's photos
-    deleted_dir = os.path.join(upload_base, str(deleted_idx))
-    if os.path.isdir(deleted_dir):
-        shutil.rmtree(deleted_dir)
-
-    # Shift directories above deleted_idx down by one
-    for i in range(deleted_idx + 1, remaining_count + 2):
-        old_dir = os.path.join(upload_base, str(i))
-        new_dir = os.path.join(upload_base, str(i - 1))
-        if os.path.isdir(old_dir):
-            os.rename(old_dir, new_dir)
-
-
 def _remap_indices_after_sort(trip_id, old_items, new_items, kind):
-    """Remap photo directories and caption/order keys after a sort changes indices.
+    """Move photos to follow their stay/event after a sort changes indices.
 
     kind is 'stay' or 'event'. old_items and new_items are the lists before and
-    after sorting (items must be the same object references so identity comparison works).
+    after sorting (items must be the same object references so identity
+    comparison works).
     """
-    # Build old_idx -> new_idx mapping using object identity
     mapping = {}
     for old_idx, item in enumerate(old_items):
         new_idx = next(i for i, x in enumerate(new_items) if x is item)
         if old_idx != new_idx:
             mapping[old_idx] = new_idx
+    _apply_photo_index_mapping(trip_id, kind, mapping)
 
+
+def _remap_indices_after_delete(trip_id, kind, deleted_idx, remaining_count):
+    """Move photos to follow their stay/event after the one at `deleted_idx`
+    is removed: its own photos and metadata go with it, and everything above
+    it shifts down one slot."""
+    mapping = {deleted_idx: None}
+    for old_idx in range(deleted_idx + 1, remaining_count + 1):
+        mapping[old_idx] = old_idx - 1
+    _apply_photo_index_mapping(trip_id, kind, mapping)
+
+
+def _apply_photo_index_mapping(trip_id, kind, mapping):
+    """Apply an `old_idx -> new_idx` move to a trip's photo directories and to
+    every per-photo metadata store. A `None` target means the slot is gone: its
+    directory is removed and its metadata keys are dropped.
+
+    Sort and delete both funnel through here on purpose. They used to be
+    separate implementations, and the delete one (`_shift_photo_dirs`) moved
+    directories WITHOUT touching captions/order/uploaders/favorites/people — so
+    even once its path was right, a delete would have left every caption and
+    favorite pointing at the neighbouring campspot's photos.
+    """
     if not mapping:
         return
+    upload_base, key_prefix = _photo_paths(trip_id, kind)
 
-    # Determine path prefix for dirs and keys
-    if kind == "stay":
-        upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id))
-        key_prefix = str(trip_id)
-    else:
-        upload_base = os.path.join(_DIR, "static", "uploads", str(trip_id), "events")
-        key_prefix = f"{trip_id}/events"
-
-    # Phase 1: rename directories to temporary names to avoid collisions
-    tmp_names = {}
-    for old_idx in mapping:
-        old_dir = os.path.join(upload_base, str(old_idx))
-        if os.path.isdir(old_dir):
+    if os.path.isdir(upload_base):
+        # Two-phase rename: a shift-down maps 3->2 while 2 still exists, so
+        # every source moves aside first and only then lands on its target.
+        tmp_names = {}
+        for old_idx, new_idx in mapping.items():
+            old_dir = os.path.join(upload_base, str(old_idx))
+            if not os.path.isdir(old_dir):
+                continue
+            if new_idx is None:
+                shutil.rmtree(old_dir)
+                continue
             tmp_dir = os.path.join(upload_base, f"_tmp_{old_idx}")
+            if os.path.exists(tmp_dir):        # leftover from an interrupted run
+                shutil.rmtree(tmp_dir)
             os.rename(old_dir, tmp_dir)
             tmp_names[old_idx] = tmp_dir
+        for old_idx, tmp_dir in tmp_names.items():
+            os.rename(tmp_dir, os.path.join(upload_base, str(mapping[old_idx])))
 
-    # Phase 2: rename from temporary to final names
-    for old_idx, tmp_dir in tmp_names.items():
-        new_dir = os.path.join(upload_base, str(mapping[old_idx]))
-        os.rename(tmp_dir, new_dir)
-
-    # Phase 3: remap caption, photo_order, per-photo uploader, favorite and
-    # people keys (all five share the "{trip_id}/{idx}/..." key shape). Any
-    # new per-photo metadata file belongs in this list too — miss it and the
-    # metadata silently detaches from its photo the next time a date edit
-    # reorders the stays.
-    captions_file = os.path.join(_DIR, "trip_data", "captions.json")
-    order_file = os.path.join(_DIR, "trip_data", "photo_order.json")
-    uploaders_file = os.path.join(_DIR, "trip_data", "photo_uploaders.json")
-    favorites_file = os.path.join(_DIR, "trip_data", "photo_favorites.json")
-    people_file = os.path.join(_DIR, "trip_data", "photo_people.json")
-    _remap_json_keys(captions_file, key_prefix, mapping)
-    _remap_json_keys(order_file, key_prefix, mapping)
-    _remap_json_keys(uploaders_file, key_prefix, mapping)
-    _remap_json_keys(favorites_file, key_prefix, mapping)
-    _remap_json_keys(people_file, key_prefix, mapping)
+    for name in _PHOTO_METADATA_FILES:
+        _remap_json_keys(os.path.join(_DIR, "trip_data", name),
+                         key_prefix, mapping)
 
 
 def _remap_json_keys(filepath, key_prefix, mapping):
-    """Remap numeric index in JSON keys matching key_prefix/{idx}[/...]."""
+    """Remap the numeric index in JSON keys shaped `key_prefix/{idx}[/...]`.
+    A mapping value of None drops the key (its stay/event was deleted)."""
     if not os.path.exists(filepath):
         return
     with open(filepath, "r") as f:
@@ -374,9 +396,10 @@ def _remap_json_keys(filepath, key_prefix, mapping):
             new_data[key] = value
             continue
         if idx in mapping:
+            if mapping[idx] is None:
+                continue                       # deleted along with its slot
             suffix = ("/" + parts[1]) if len(parts) > 1 else ""
-            new_key = f"{prefix_slash}{mapping[idx]}{suffix}"
-            new_data[new_key] = value
+            new_data[f"{prefix_slash}{mapping[idx]}{suffix}"] = value
         else:
             new_data[key] = value
 
@@ -469,11 +492,9 @@ def delete_event(trip_id, event_idx):
                 return None
             events.pop(event_idx)
 
-            # Remove event photos and shift directories
-            upload_base = os.path.join(_DIR, "static", "uploads",
-                                       str(trip_id), "events")
-            if os.path.isdir(upload_base):
-                _shift_photo_dirs(upload_base, event_idx, len(events))
+            # Move photos + their metadata so each event keeps its own.
+            _remap_indices_after_delete(trip_id, "event", event_idx,
+                                        len(events))
 
             t["events"] = events
             _save_trips(raw)
