@@ -2997,6 +2997,13 @@ def trip_detail(trip_id):
     # convention rather than carrying a `tz` of their own. Only computed when
     # the trip spans several zones — on those, leaving the trip's start and end
     # as the one pair of bare times would make them the ambiguous ones.
+    # Per-day miles + driving time for the timeline's day dividers. Shown to
+    # every viewer: the numbers are precomputed, so unlike the stats page's
+    # Longest Driving Days there is no per-viewer work to skip by gating, and
+    # "we drove 520 miles that day" is a good detail for anyone reading the
+    # trip rather than a planning tool.
+    driving_by_day = _trip_driving_by_day(trip)
+
     home_tz_abbr = ""
     if trip.get("multi_timezone") and home:
         home_tz_abbr = tz_abbrev(
@@ -3008,6 +3015,7 @@ def trip_detail(trip_id):
         trip=trip,
         home_tz_abbr=home_tz_abbr,
         home_tz_offset_min=home_tz_offset_min,
+        driving_by_day=driving_by_day,
         stay_photos=stay_photos,
         event_photos=event_photos,
         family_locations=family,
@@ -5449,7 +5457,7 @@ TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 #   3: entries also carry per-day driving distance/duration
 #   4: a day's drive is bounded by leaving/reaching a place, not by mileage
 #   5: days also carry moving time (total time minus the stops)
-TRIP_ROUTE_CACHE_VERSION = 5
+TRIP_ROUTE_CACHE_VERSION = 8
 
 # Per-day driving, derived from the same cleaned + windowed track the overview
 # line is (see `_build_trip_derived`), so a day can't be measured off pings the
@@ -5482,6 +5490,34 @@ DRIVE_MOVING_MIN_MPS = 2.24
 # Below this a day isn't a drive, it's a trip to the camp store. Also what
 # keeps the cached day list to the handful of rows per trip worth having.
 DRIVE_DAY_MIN_M = 1609
+
+# A leg longer than this is a LOGGING GAP rather than a sample, and credits at
+# most this much driving time however long it really was. Across a six-hour
+# hole you cannot tell "drove slowly the whole time" from "drove half an hour
+# and parked", and the speed gate above resolves that ambiguity the wrong way:
+# straight-line displacement over a long gap only has to beat walking pace to
+# read as driving for the entire span. Trip 12's 2023-05-13 is the case — one
+# 6h05m gap covering 31 miles at 5.1 mph counted whole, reporting 9h43m at the
+# wheel on a day of ordinary driving.
+#
+# CLAMPED, not dropped, and the difference is measurable. Dropping a long leg
+# outright over-corrects on the oldest trips, whose OwnTracks logging was
+# sparse enough that real highway driving lives inside such legs: it left 4
+# leg-days implying over 70 mph. Clamping leaves none, while still removing
+# the phantom hours. Checked against the whole library by implied moving
+# speed, which is the one number that has to stay plausible:
+#
+#   rule                median   p10   p90   >70mph   <25mph
+#   uncapped                47    36    54        0        4
+#   drop legs >15min        48    39    55        4        1
+#   clamp to 15min          48    39    55        0        1   <-- chosen
+#   clamp to 5min           49    40    57        5        0
+#
+# 15 minutes is also 2.5x the p99 leg across the library (median 6 s, p90
+# 120 s, p99 360 s), so a densely-logged stretch is never touched — only 49
+# legs of 104,097 exceed it. Distance is unaffected either way: the vehicle
+# really did cover that ground, it is only the TIME that is uncertain.
+DRIVE_MOVING_MAX_LEG_S = 900
 
 
 def _rdp_keep_mask(xs, ys, eps):
@@ -5700,6 +5736,25 @@ def _track_covers_trip(trip, in_window, home):
     return False
 
 
+def _moving_seconds(pts):
+    """Seconds actually at the wheel across consecutive pings.
+
+    A leg counts when it averages at least `DRIVE_MOVING_MIN_MPS`, and credits
+    at most `DRIVE_MOVING_MAX_LEG_S` — see those constants for why a long leg
+    is clamped rather than either trusted or dropped. Shared by `_drive_days`
+    and `_day_totals` so "driving time" means the same thing on the stats page
+    and on a trip's day dividers."""
+    moving = 0
+    for a, b in zip(pts, pts[1:]):
+        dt = b["tst"] - a["tst"]
+        if dt <= 0:
+            continue
+        leg = _haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+        if leg / dt >= DRIVE_MOVING_MIN_MPS:
+            moving += min(dt, DRIVE_MOVING_MAX_LEG_S)
+    return moving
+
+
 def _drive_days(kept, default_tz):
     """Per-day driving from a trip's in-window pings, as
     `[[date, meters, seconds, moving_seconds], ...]` for every local day that
@@ -5753,13 +5808,10 @@ def _drive_days(kept, default_tz):
         if arrive <= depart:
             continue                      # never went anywhere: not a drive
 
-        meters, moving = 0.0, 0
-        for a, b in zip(pts[depart:arrive], pts[depart + 1:arrive + 1]):
-            leg = _haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
-            dt = b["tst"] - a["tst"]
-            meters += leg
-            if dt > 0 and leg / dt >= DRIVE_MOVING_MIN_MPS:
-                moving += dt
+        span = pts[depart:arrive + 1]
+        meters = sum(_haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+                     for a, b in zip(span, span[1:]))
+        moving = _moving_seconds(span)
         if meters < DRIVE_DAY_MIN_M:
             continue
         days.append([day, round(meters),
@@ -5789,7 +5841,7 @@ def _build_trip_derived(trip):
     opens its detail page, which is the right trade for a page that draws
     every trip at once: one cold trip must not turn the landing page into
     92 upstream requests."""
-    empty = {"line": [], "days": []}
+    empty = {"line": [], "days": [], "day_totals": []}
     if not trip.get("start") or not trip.get("end"):
         return empty
     points = _read_track_cache(trip["id"])
@@ -5859,7 +5911,13 @@ def _build_trip_derived(trip):
     # Days come off `kept` — the real pings — never off the gap-filled,
     # simplified line: an anchor spliced across a hole is where the trip went,
     # not a measurement of how far it drove.
-    return {"line": line, "days": _drive_days(kept, tz_name)}
+    # `days` ranks the longest LEGS (stats page); `day_totals` answers "what
+    # did we drive that day" for every day (the trip page's day dividers).
+    # Both ride the same cache entry: they come out of this one pass and go
+    # stale on exactly the same events.
+    return {"line": line,
+            "days": _drive_days(kept, tz_name),
+            "day_totals": _day_totals(kept, tz_name)}
 
 
 def _trip_route_signature(trip, raw_record):
@@ -5929,7 +5987,8 @@ def _save_trip_routes_cache(cache):
 
 
 def _trip_route_entries(trips, force=False, prune=False):
-    """Return `{trip_id: {"line": [...], "days": [...]}}`, rebuilding any
+    """Return `{trip_id: {"line": [...], "days": [...], "day_totals": [...]}}`,
+    rebuilding any
     entry whose signature drifted and persisting the cache if anything
     changed. One cache because both halves come from one pass over the
     track (`_build_trip_derived`) and go stale on exactly the same events.
@@ -5971,6 +6030,50 @@ def _trip_routes(trips, force=False, prune=False):
     return {tid: e["line"]
             for tid, e in _trip_route_entries(trips, force, prune).items()
             if e.get("line")}
+
+
+def _day_totals(kept, default_tz):
+    """Per-day driving totals as `[[date, meters, moving_seconds], ...]`.
+
+    Every local day the track covers gets a row — this answers "how far did we
+    drive that day", which is a different question from `_drive_days`' "how
+    far was the leg from where the day started to where it ended".
+
+    The distinction is not academic. `_drive_days` measures a LEG, which is
+    the right framing for ranking the longest drives but is degenerate for a
+    day that ends where it began: the day never leaves its starting circle, so
+    it is dropped entirely. Those are exactly the excursion days — 68 of them
+    across the library, 3,056 miles of real driving, including a 191-mile day
+    on trip 75 and every Rocky Mountain day on trip 95. A day-by-day readout
+    that showed nothing for them would be plainly wrong.
+
+    So there is no anchor trimming and no minimum here: the distance is the
+    whole day's GPS path and every day is reported, including a 0-mile day
+    sitting at camp (the template decides whether that's worth printing).
+    `moving_seconds` uses the same `DRIVE_MOVING_MIN_MPS` gate as
+    `_drive_days`, so "driving time" means the same thing on both surfaces.
+
+    There is no elapsed-time column, deliberately: without the leg's endpoints
+    "total time" would be the whole calendar day, which says nothing.
+
+    Days bucket by each ping's own zone via `_local_date_of_ping`, the same
+    rule everything else here buckets by, with the trip's home zone standing
+    in for the UTC fallback."""
+    by_day = {}
+    for p in kept:
+        d = _local_date_of_ping(p if p.get("tz") else dict(p, tz=default_tz))
+        if d:
+            by_day.setdefault(d, []).append(p)
+
+    out = []
+    for day, pts in sorted(by_day.items()):
+        if len(pts) < 2:
+            continue
+        pts.sort(key=lambda p: p["tst"])
+        meters = sum(_haversine_m(a["lat"], a["lon"], b["lat"], b["lon"])
+                     for a, b in zip(pts, pts[1:]))
+        out.append([day, round(meters), _moving_seconds(pts)])
+    return out
 
 
 def _drive_day_endpoints(trip, day):
@@ -6015,6 +6118,35 @@ def _hm(seconds):
         return ""
     hours, rem = divmod(int(seconds), 3600)
     return f"{hours}h {rem // 60:02d}m" if hours else f"{rem // 60}m"
+
+
+def _trip_driving_by_day(trip):
+    """`{date: {"miles": int, "moving": "2h 48m"}}` for one trip's timeline.
+
+    Reads the same precomputed cache the overview map's lines come from, so a
+    warm trip page costs a JSON read and a signature check rather than a walk
+    over the trip's pings — trip 95 is 90k of them. A trip whose track the
+    maps refuse to draw has no entry and gets `{}`, which is the same answer
+    the map gives: no track, nothing to report.
+
+    Days under a mile are dropped here rather than in the template. A day
+    parked at camp logs a few hundred metres of GPS jitter, and "0 mi" is a
+    worse answer than saying nothing — the reader would take it as a measured
+    zero rather than as "you didn't go anywhere"."""
+    try:
+        entry = _trip_route_entries([trip]).get(trip["id"]) or {}
+    except Exception:
+        return {}
+    out = {}
+    for row in entry.get("day_totals") or []:
+        try:
+            day, meters, moving = row[0], row[1], row[2]
+        except (IndexError, TypeError):
+            continue
+        if meters < DRIVE_DAY_MIN_M:
+            continue
+        out[day] = {"miles": round(meters / 1609.344), "moving": _hm(moving)}
+    return out
 
 
 def _longest_drives(limit=10):

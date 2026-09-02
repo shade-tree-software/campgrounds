@@ -791,6 +791,45 @@
     flex: 1;
     height: 1px;
     background: var(--gray-light);
+    /* The rule is drawn last so it fills whatever the labels leave; `order`
+       lets the driving chip sit after it, pushing the chip to the right
+       edge while the date stays left. */
+    order: 1;
+  }
+  /* Miles + driving time for the day, right-aligned opposite the date.
+     Deliberately lighter than the date: it qualifies the day rather than
+     naming it, and on a long trip these repeat every few cards.
+
+     Scoped as `.day-divider .day-drive` (0,2,0), NOT bare `.day-drive`
+     (0,1,0): the date rule above is `.day-divider span` (0,1,1), which the
+     chip also matches, so a single-class selector loses EVERY property to it
+     — size, weight, letter-spacing, padding and case alike. The `.nb` spans
+     are matched by that same rule directly, so they need naming too rather
+     than relying on inheritance. */
+  .day-divider .day-drive,
+  .day-divider .day-drive .nb {
+    /* "9H 06M" reads as an abbreviation gone wrong; the lowercase units are
+       what make it scan as a measurement. The mixed case also separates the
+       two halves of the row without spending another colour on it. */
+    text-transform: none;
+  }
+  .day-divider .day-drive {
+    order: 2;
+    padding: 0 0 0 .6rem;
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: .02em;
+  }
+  /* Each fact is nowrap so a narrow screen breaks BETWEEN them rather than
+     through "9h 06m" — same treatment as the stats page's drive list. */
+  .day-divider .day-drive .nb { white-space: nowrap; }
+  @media (max-width: 700px) {
+    /* Below ~360px the date, the rule and the chip stop fitting on one line;
+       wrapping drops the chip to its own row under the date rather than
+       letting it push the layout wide. */
+    .day-divider { flex-wrap: wrap; }
+    .day-divider .day-drive { padding-left: .35rem; }
   }
   .day-divider:first-child { margin-top: 0; }
 
@@ -2009,7 +2048,24 @@
   {% for item in trip.timeline %}
   {% if multi_day and item.sort_date and item.sort_date != ns.last_date %}
     {% set ns.last_date = item.sort_date %}
-    <div class="day-divider"><span>{{ item.sort_date | daylabel }}</span></div>
+    {#- Miles + driving time for the day, when the GPS says the day went
+        anywhere. `driving_by_day` omits a day under a mile, so a day parked
+        at camp shows just its date rather than a measured-looking "0 mi".
+        This is the WHOLE day's driving, not the leg from where the day
+        started to where it ended — the stats page's Longest Driving Days
+        ranks legs, which is why a loop day out of a base camp is absent
+        there and present here. -#}
+    {% set drive = driving_by_day.get(item.sort_date) %}
+    <div class="day-divider">
+      <span>{{ item.sort_date | daylabel }}</span>
+      {%- if drive %}
+      <span class="day-drive" title="Driven this day, measured from the GPS track"
+        >{#- whitespace between these spans is the only place the line may
+             break on a narrow screen, so it is kept deliberate and minimal -#}
+        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi</span>{% if drive.moving %} &middot;
+        <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
+      {%- endif %}
+    </div>
   {% endif %}
 
   {% if item.type == "stay" %}
