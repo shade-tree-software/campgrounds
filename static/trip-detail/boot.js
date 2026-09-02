@@ -16,6 +16,10 @@ const CURRENT_USERNAME = _BOOT.current_username || '';
 const FIRST_STAY_DATE = _BOOT.first_stay_date || '';
 const STAYS_ALL = _BOOT.stays_all || [];
 const EVENTS_ALL = _BOOT.events_all || [];
+// True when this trip's events span more than one timezone abbreviation, so
+// the map's popups label their times the way the timeline cards do. Decided
+// server-side (`_make_trip`) so the two surfaces can't disagree.
+const MULTI_TZ = !!_BOOT.multi_timezone;
 const FAMILY_LOCATIONS = _BOOT.family_locations || [];
 const TRIP_START = _BOOT.trip_start || '';
 const TRIP_END = _BOOT.trip_end || '';

@@ -435,10 +435,29 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     return h + cardLink('stay-' + stay.idx);
   }
 
+  // Zone label for a time, on trips that span more than one zone. MULTI_TZ and
+  // the per-event `tz_abbr` both come from the server (see `_make_trip`), so
+  // the map can't disagree with the timeline cards about when to show one.
+  function tzSuffix(evt) {
+    return (MULTI_TZ && evt.tz_abbr) ? ' ' + evt.tz_abbr : '';
+  }
+
+  // Chronological comparator for two events. `time_rank` is the server's
+  // minutes-from-UTC-midnight rank, which is what makes a westward zone
+  // crossing sort correctly — comparing "HH:MM" strings puts a stop that
+  // happened 44 minutes LATER first, because the clock went back an hour in
+  // between (trip 95, 2026-08-23). Falls back to the wall clock for an event
+  // with no rank, which is also exactly what the rank degrades to when a trip
+  // carries no zones at all.
+  function byEventTime(a, b) {
+    if (a.time_rank != null && b.time_rank != null) return a.time_rank - b.time_rank;
+    return (a.time || '12:00').localeCompare(b.time || '12:00');
+  }
+
   function eventWhen(evt) {
     let s = fmtDate(evt.date);
     if (evt.time) {
-      s += (s ? ' · ' : '') + evt.time + (evt.end_time ? '–' + evt.end_time : '');
+      s += (s ? ' · ' : '') + evt.time + (evt.end_time ? '–' + evt.end_time : '') + tzSuffix(evt);
     }
     return s;
   }
@@ -646,7 +665,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const evening = eveningLocation(dateStr);
     const dayEvents = mappedEvents
       .filter(e => e.date === dateStr)
-      .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'));
+      .sort(byEventTime);
 
     pushIfNew(morning);
     dayEvents.forEach(evt => pushIfNew([evt.lat, evt.lng]));
@@ -758,7 +777,12 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     if (manual) return;
     if (autoTst == null) return;
     const hm = formatHM(autoTst);
-    span.textContent = IS_ADMIN ? ` · ${hm} (auto)` : ` · ${hm}`;
+    // Home times are in the home zone; on a multi-timezone trip say so, or
+    // the trip's start and end become the only unlabelled times on the page.
+    // The abbreviation is rendered into the span's data attribute server-side
+    // (blank on a single-zone trip), so this doesn't re-derive it.
+    const tz = span.dataset.tzAbbr ? ` ${span.dataset.tzAbbr}` : '';
+    span.textContent = IS_ADMIN ? ` · ${hm}${tz} (auto)` : ` · ${hm}${tz}`;
     if (which === 'start') window.HOME_START_TIME_AUTO = hm;
     else window.HOME_END_TIME_AUTO = hm;
   }
@@ -1009,7 +1033,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       pushStop(localEpoch(dateStr, '00:00'), morningLocation(dateStr));
       mappedEvents
         .filter(e => e.date === dateStr)
-        .sort((a, b) => (a.time || '12:00').localeCompare(b.time || '12:00'))
+        .sort(byEventTime)
         .forEach(evt => pushStop(localEpoch(dateStr, evt.time || '12:00'),
                                  [evt.lat, evt.lng]));
       pushStop(localEpoch(dateStr, '23:59'), eveningLocation(dateStr));
@@ -1311,7 +1335,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // Event markers (gold stars, gray diamonds for waypoints, red houses for family visits)
   function eventDateLabel(evt) {
     let s = evt.date;
-    if (evt.time) s += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '');
+    if (evt.time) s += ' ' + evt.time + (evt.end_time ? '\u2013' + evt.end_time : '') + tzSuffix(evt);
     return s;
   }
 
@@ -1379,7 +1403,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     });
 
     const sorted = [...group].sort((a, b) =>
-      (a.date + ' ' + (a.time || '')).localeCompare(b.date + ' ' + (b.time || ''))
+      a.date === b.date ? byEventTime(a, b) : a.date.localeCompare(b.date)
     );
     // A single visit keeps the layout rule (two-column: scroll to its card;
     // stacked: popup). Several visits always open the popup so the reader can

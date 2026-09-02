@@ -410,6 +410,138 @@ def _remap_json_keys(filepath, key_prefix, mapping):
         json.dump(new_data, f, indent=2, ensure_ascii=False)
 
 
+# ── Event ordering across timezones ───────────────────────────────────────
+#
+# A trip that crosses a time-zone line breaks naive "HH:MM" ordering. Driving
+# WEST sets the clock back an hour, so a stop that happened later can carry an
+# earlier wall-clock stamp than one that happened before it. Trip 95 does
+# exactly this on 2026-08-23: the Macklin Bay overlook (08:47 CDT, Hitchcock
+# County NE) really precedes the Benkelman gas stop (08:35 MDT) by 44 minutes,
+# but sorted as strings "08:35" < "08:47" and the timeline showed them
+# backwards. Eastward crossings hide the bug — the clock jumps forward, which
+# happens to preserve the order — so it only ever surfaces going west.
+#
+# Events therefore carry an IANA `tz` (stamped from their coordinates when
+# written — see `_stamp_event_timezone` in ekko_trips_app.py) and are ranked by
+# their true instant. We store the ZONE rather than a UTC timestamp because
+# `time` stays user-editable: a stored instant would go stale the moment an
+# admin corrected a wall clock, whereas the zone stays valid. The zone is also
+# what lets the UI label a time "MDT" on a trip that spans several.
+#
+# Two properties worth preserving:
+#
+#   1. Items with no `tz` are assumed to be in the trip's reference zone, so
+#      for any trip where nothing carries a zone every item gets the same
+#      constant shift and the relative order is IDENTICAL to the old naive
+#      sort. That is what makes this safe to apply to the whole library.
+#
+#   2. Only the WITHIN-DAY order is normalized; `sort_date` stays the stored
+#      local date. A timeline day is a *local* day ("what we did on the 23rd"),
+#      so an event must never migrate to a neighbouring card group because of
+#      a UTC offset.
+
+def _minutes_of_day(time_str, default=720):
+    """Minutes past local midnight for an "HH:MM" string.
+
+    `default` (noon) matches the long-standing convention for an untimed
+    event, which sorts between the morning and evening of its day."""
+    try:
+        hh, mm = str(time_str).split(":")[:2]
+        hh, mm = int(hh), int(mm)
+    except (ValueError, AttributeError, TypeError):
+        return default
+    if not (0 <= hh < 24 and 0 <= mm < 60):
+        return default
+    return hh * 60 + mm
+
+
+def _tz_aware(date_str, time_str, tz_name):
+    """A zone-aware datetime for a stored date/time/zone, or None.
+
+    Returns None whenever anything is missing or unparseable — including when
+    `zoneinfo` itself is unavailable — so every caller degrades to the naive
+    behaviour rather than raising."""
+    if not tz_name or not date_str:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+    except Exception:
+        return None
+    try:
+        y, mo, d = (int(x) for x in str(date_str).split("-")[:3])
+        mins = _minutes_of_day(time_str)
+        return datetime(y, mo, d, mins // 60, mins % 60,
+                        tzinfo=ZoneInfo(tz_name))
+    except Exception:
+        return None
+
+
+def _utc_offset_minutes(date_str, time_str, tz_name):
+    """Minutes to ADD to this local wall clock to get UTC, or None.
+
+    Date-dependent on purpose: the offset for a zone changes across a DST
+    boundary, and a long trip can straddle one."""
+    aware = _tz_aware(date_str, time_str, tz_name)
+    if aware is None:
+        return None
+    off = aware.utcoffset()
+    if off is None:
+        return None
+    return -int(off.total_seconds() // 60)
+
+
+def tz_abbrev(date_str, time_str, tz_name):
+    """Short zone label for a stored date/time ("CDT", "MDT"), or "".
+
+    Date-dependent for the same reason as the offset — the same zone is "MST"
+    in December and "MDT" in August."""
+    aware = _tz_aware(date_str, time_str, tz_name)
+    if aware is None:
+        return ""
+    try:
+        return aware.strftime("%Z") or ""
+    except Exception:
+        return ""
+
+
+def reference_timezone(events):
+    """The zone to assume for items that don't carry one.
+
+    Any consistent choice yields the same ordering — the reference only sets a
+    constant that tz-less items share — so this just takes the first zone the
+    trip actually mentions. Returns "" for a trip with no stamped zones, which
+    is what collapses the ranking below back to the plain naive sort."""
+    for e in events or []:
+        tz = (e or {}).get("tz")
+        if tz:
+            return tz
+    return ""
+
+
+def event_time_rank(date_str, time_str, tz_name, ref_tz=""):
+    """Sort rank for one timed item: minutes from UTC midnight of its date.
+
+    May fall outside 0..1439 (an offset can push a time past either end of its
+    own day); that is fine and intended, because this only ever orders items
+    *within* one already-fixed `sort_date` group."""
+    local = _minutes_of_day(time_str)
+    offset = _utc_offset_minutes(date_str, time_str, tz_name or ref_tz)
+    return local + (offset or 0)
+
+
+def _sort_events(events):
+    """Order a trip's stored events chronologically, zone-aware.
+
+    This is the STORAGE order, which `_remap_indices_after_sort` keeps photo
+    directories aligned with — so it must use the same rule as the timeline's
+    display order in `_make_trip`, or the two would disagree about which event
+    is index N."""
+    ref_tz = reference_timezone(events)
+    events.sort(key=lambda e: (e["date"],
+                               event_time_rank(e["date"], e.get("time"),
+                                               e.get("tz"), ref_tz)))
+
+
 # ── Event CRUD ────────────────────────────────────────────────────────────
 
 def add_event(trip_id, event_data):
@@ -434,6 +566,10 @@ def add_event(trip_id, event_data):
                 "state": event_data.get("state", ""),
                 "waypoint": bool(event_data.get("waypoint", False)),
                 "family_id": event_data.get("family_id"),
+                # IANA zone this wall clock is in, stamped from `location` by
+                # the API layer (timezonefinder lives there, not here). Blank
+                # when it couldn't be resolved; see the ordering notes above.
+                "tz": event_data.get("tz", "") or "",
                 # True for events/waypoints auto-created by GPS-track stop
                 # detection; admin clears it by editing/saving. The detection
                 # endpoint creates these in bulk; the admin reviews each
@@ -443,7 +579,7 @@ def add_event(trip_id, event_data):
             events = t.get("events", [])
             events.append(event)
             old_order = list(events)
-            events.sort(key=lambda e: (e["date"], e.get("time") or "12:00"))
+            _sort_events(events)
             _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
@@ -462,7 +598,7 @@ def update_event(trip_id, event_idx, fields):
                 return None
             event = events[event_idx]
             for key in ("date", "time", "end_time", "name", "description",
-                        "location", "locale", "state", "family_id"):
+                        "location", "locale", "state", "family_id", "tz"):
                 if key in fields:
                     event[key] = fields[key]
             if "waypoint" in fields:
@@ -476,7 +612,7 @@ def update_event(trip_id, event_idx, fields):
             if event.get("end_time") and not event.get("time"):
                 event["end_time"] = ""
             old_order = list(events)
-            events.sort(key=lambda e: (e["date"], e.get("time") or "12:00"))
+            _sort_events(events)
             _remap_indices_after_sort(trip_id, old_order, events, "event")
             t["events"] = events
             _save_trips(raw)
@@ -1056,6 +1192,12 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
     # trip's second night at the campground, whichever campsite record it
     # belongs to. Every card gets a date RANGE so the format doesn't change
     # between a whole stay and one night of one.
+
+    # Reference zone for items with no `tz` of their own — every stay, and any
+    # event written before zones were stamped. See the ordering notes above
+    # `_minutes_of_day`.
+    ref_tz = reference_timezone(events)
+
     timeline = []
     for i, s in enumerate(stays):
         offset = s.get("visit_night_offset", 0)
@@ -1072,6 +1214,9 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                                      night_from=offset + n, night_to=offset + n,
                                      night_total=night_total,
                                      _order=1, _time="23:59",
+                                     _rank=event_time_rank(
+                                         night_date.isoformat(), "23:59",
+                                         "", ref_tz),
                                      copy_num=n, copy_count=nights))
         else:
             timeline.append(dict(s, type="stay", idx=i, sort_date=s["start"],
@@ -1080,6 +1225,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                                  night_to=offset + s.get("nights", 0),
                                  night_total=night_total,
                                  _order=1, _time="00:00",
+                                 _rank=event_time_rank(s["start"], "00:00",
+                                                       "", ref_tz),
                                  copy_num=1, copy_count=1))
     for i, e in enumerate(events):
         # Default optional fields and materialize family_visit label for display
@@ -1090,14 +1237,26 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         e.setdefault("locale", "")
         e.setdefault("state", "")
         e.setdefault("needs_vetting", False)
+        e.setdefault("tz", "")
+        # Display-only, recomputed on every load: the short zone label the
+        # templates show beside a time when a trip spans more than one zone.
+        # Never persisted — `_load_raw_trips()` re-reads from disk, so these
+        # mutations can't reach a save.
+        e["tz_abbr"] = tz_abbrev(e["date"], e.get("time"), e.get("tz"))
+        # Same rank the timeline sorts on, published so the map's day-by-day
+        # route walk and the occurrence-list popups order events the same way
+        # instead of re-deriving offset maths in JS.
+        e["time_rank"] = event_time_rank(e["date"], e.get("time"),
+                                         e.get("tz"), ref_tz)
         fid = e.get("family_id")
         if fid is not None and fid in locations:
             e["family_visit"] = locations[fid]["name"]
         else:
             e["family_visit"] = ""
         timeline.append(dict(e, type="event", idx=i, sort_date=e["date"],
-                             _order=0, _time=e.get("time") or "12:00"))
-    timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_time"]))
+                             _order=0, _time=e.get("time") or "12:00",
+                             _rank=e["time_rank"]))
+    timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
 
     if stays:
         start = stays[0]["start"]
@@ -1108,9 +1267,17 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
     else:
         start = end = ""
 
+    # Label times with their zone only when the trip actually spans more than
+    # one, so the 90-odd single-zone trips stay uncluttered. Keyed on the
+    # ABBREVIATION rather than the IANA name: America/Denver and America/Boise
+    # are different zones but both print "MDT", and labelling every time with
+    # the same three letters tells the reader nothing.
+    multi_timezone = len({e["tz_abbr"] for e in events if e["tz_abbr"]}) > 1
+
     return {
         "id": trip_id,
         "trip_note": trip_note,
+        "multi_timezone": multi_timezone,
         "stays": stays,
         "events": events,
         "timeline": timeline,

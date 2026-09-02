@@ -31,7 +31,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
                    campground_references, camping_nights, is_day_trip,
-                   is_home_stay, visit_runs, TRIPS_JSON)
+                   is_home_stay, visit_runs, TRIPS_JSON,
+                   event_time_rank, reference_timezone, tz_abbrev)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -2971,9 +2972,20 @@ def trip_detail(trip_id):
     prev_trip_summary = prev_trip["summary"] if prev_trip else ""
     next_trip_summary = next_trip["summary"] if next_trip else ""
 
+    # Zone label for the two home cards, whose times are in the home zone by
+    # convention rather than carrying a `tz` of their own. Only computed when
+    # the trip spans several zones — on those, leaving the trip's start and end
+    # as the one pair of bare times would make them the ambiguous ones.
+    home_tz_abbr = ""
+    if trip.get("multi_timezone") and home:
+        home_tz_abbr = tz_abbrev(
+            trip.get("start"), trip.get("home_start_time") or "12:00",
+            _tz_for_coord(home[0], home[1]))
+
     return render_template(
         'trip_detail.html',
         trip=trip,
+        home_tz_abbr=home_tz_abbr,
         stay_photos=stay_photos,
         event_photos=event_photos,
         family_locations=family,
@@ -3366,6 +3378,40 @@ def api_delete_stay(trip_id, stay_idx):
     return jsonify({"ok": True, "trip_deleted": False})
 
 
+def _stamp_event_timezone(payload):
+    """Fill an event payload's `tz` from its `location`, in place.
+
+    Events are ordered by their true instant rather than by wall clock (see the
+    ordering notes in trips.py), which needs to know what zone each stamp is
+    in. The lookup lives here rather than in trips.py because timezonefinder is
+    an optional dependency of the app layer and the data layer stays free of it
+    — trips.py only ever READS the field, using stdlib zoneinfo.
+
+    The zone is re-derived whenever `location` is present, so moving an event
+    across a zone line corrects it; clearing the location clears it. A payload
+    that doesn't mention `location` at all leaves `tz` untouched, which is what
+    keeps a plain caption/name edit from dropping it.
+
+    Best-effort: with timezonefinder unavailable `_tz_for_coord` returns None
+    and we leave whatever the payload already carried (detect-stops fills it in
+    from the ping's own zone), so the worst case is the old naive ordering.
+    """
+    if "location" not in payload:
+        return payload
+    loc = (payload.get("location") or "").strip()
+    if not loc:
+        payload["tz"] = ""
+        return payload
+    try:
+        lat, lng = (float(x) for x in loc.split(",")[:2])
+    except (ValueError, TypeError):
+        return payload
+    tz = _tz_for_coord(lat, lng)
+    if tz:
+        payload["tz"] = tz
+    return payload
+
+
 # ── Event CRUD API ─────────────────────────────────────────────────────────
 
 @app.route('/api/trips/<int:trip_id>/events', methods=['POST'])
@@ -3373,7 +3419,7 @@ def api_add_event(trip_id):
     denied = _require_admin()
     if denied:
         return denied
-    data = request.get_json() or {}
+    data = _stamp_event_timezone(request.get_json() or {})
     trip = add_event(trip_id, data)
     if not trip:
         return jsonify({"error": "Trip not found"}), 404
@@ -3385,7 +3431,7 @@ def api_update_event(trip_id, event_idx):
     denied = _require_admin()
     if denied:
         return denied
-    data = request.get_json() or {}
+    data = _stamp_event_timezone(request.get_json() or {})
     trip = update_event(trip_id, event_idx, data)
     if not trip:
         return jsonify({"error": "Trip or event not found"}), 404
@@ -5541,6 +5587,7 @@ def _trip_route_stops(trip, home, tz_name):
                 return (s["lat"], s["lng"])
         return home
 
+    ref_tz = reference_timezone(events)
     stops = []
 
     def push(tst, pt):
@@ -5556,7 +5603,12 @@ def _trip_route_stops(trip, home, tz_name):
             continue
         push(_trip_local_to_tst(date_str, "00:00", tz_name), morning(date_str))
         same_day = [e for e in events if e.get("date") == date_str]
-        same_day.sort(key=lambda e: e.get("time") or "12:00")
+        # By true instant, not wall clock: a westward zone crossing gives a
+        # later stop an earlier "HH:MM" and would walk the anchors backwards.
+        # Same rule the detail map's `byEventTime` uses, so the two maps draw
+        # the same route (see the ordering notes in trips.py).
+        same_day.sort(key=lambda e: event_time_rank(
+            date_str, e.get("time"), e.get("tz"), ref_tz))
         for e in same_day:
             push(_trip_local_to_tst(date_str, e.get("time") or "12:00", tz_name),
                  (e["lat"], e["lng"]))
@@ -7672,7 +7724,13 @@ def api_detect_stops(trip_id):
             "display": {
                 "duration_minutes": s["duration_minutes"],
                 "ping_count": s["ping_count"],
-                "start_local": start_local.strftime("%Y-%m-%d %H:%M"),
+                # Zone label on the review row itself. A stop detected just
+                # over a zone line reads as an hour out of sequence against
+                # its neighbours, and without this the admin has no way to see
+                # why from the modal.
+                "start_local": (start_local.strftime("%Y-%m-%d %H:%M")
+                                + (" " + start_local.strftime("%Z")
+                                   if start_local.tzinfo else "")),
                 "end_local": end_local.strftime("%H:%M"),
                 "classification": classification,
                 "center_lat": s["center_lat"],
@@ -7687,6 +7745,11 @@ def api_detect_stops(trip_id):
                 "date": start_local.strftime("%Y-%m-%d"),
                 "time": start_local.strftime("%H:%M"),
                 "end_time": end_local.strftime("%H:%M"),
+                # The zone these two stamps are in. Carried through so the
+                # created event can be ordered by its true instant — without
+                # it a westward zone crossing lands a later stop at an earlier
+                # wall clock and the timeline shows the day backwards.
+                "tz": s["tz"] or "",
                 "name": "Detected stop",
                 "description": (
                     f"Auto-detected from GPS track: "
@@ -7725,6 +7788,7 @@ def api_accept_stops(trip_id):
         # auto-created events.
         evt = dict(evt)
         evt["needs_vetting"] = True
+        _stamp_event_timezone(evt)
         result = add_event(trip_id, evt)
         if result is None:
             return jsonify({"error": "trip not found"}), 404

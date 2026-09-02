@@ -926,7 +926,7 @@ TRIPS.forEach(trip => {
     if (!eventLocMap[key]) {
       eventLocMap[key] = { lat: evt.lat, lng: evt.lng, events: [] };
     }
-    eventLocMap[key].events.push({ name: evt.name, date: evt.date, time: evt.time, end_time: evt.end_time, trip: trip, event_idx: eventIdx });
+    eventLocMap[key].events.push({ name: evt.name, date: evt.date, time: evt.time, end_time: evt.end_time, tz_abbr: evt.tz_abbr, trip: trip, event_idx: eventIdx });
   });
 });
 
@@ -946,7 +946,10 @@ Object.values(eventLocMap).forEach(loc => {
   let popup = '';
   loc.events.forEach((e, i) => {
     let dateStr = e.date;
-    if (e.time) dateStr += ' ' + e.time + (e.end_time ? '\u2013' + e.end_time : '');
+    // Zone label only for a trip that spans several — this marker can carry
+    // events from different trips, so the flag is read per-trip, not per-map.
+    if (e.time) dateStr += ' ' + e.time + (e.end_time ? '\u2013' + e.end_time : '')
+                         + (e.trip.multi_timezone && e.tz_abbr ? ' ' + e.tz_abbr : '');
     const d = new Date(e.trip.start + 'T00:00:00');
     const fmt = d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
     if (i > 0) popup += '<div style="height:6px;"></div>';

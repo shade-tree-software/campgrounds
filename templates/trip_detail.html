@@ -262,6 +262,15 @@
     font-size: .85rem;
     color: var(--gray);
   }
+  /* Zone label beside a time, on multi-timezone trips only. Deliberately
+     quiet — it qualifies the time rather than competing with it, so it reads
+     as a unit at a glance and doesn't turn the meta line into two facts. */
+  .tz-abbr {
+    margin-left: .3em;
+    font-size: .82em;
+    letter-spacing: .04em;
+    color: #8a8a8a;
+  }
 
   .event-card.waypoint {
     font-size: .9em;
@@ -1962,7 +1971,7 @@
       </div>
       <div class="event-info">
         <h3>Home<span class="card-where">Reston, VA</span></h3>
-        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% endif %}</span></div>
+        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
@@ -2155,7 +2164,14 @@
         {%- set where = [item.locale, item.state] | select | join(', ') %}
         <h3>{{ item.name }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
-          {{ item.date }}{% if item.time %} {{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% endif %}
+          {# The zone label only appears on a trip that spans more than one
+             (trip.multi_timezone). On a single-zone trip every time means the
+             same thing and three extra letters on every card is just noise;
+             on a multi-zone one it is the difference between a stop at 08:47
+             and one at 08:35 that actually happened 44 minutes later. Shown
+             once after the range, not on both ends — a stop does not change
+             zone while you are parked at it. #}
+          {{ item.date }}{% if item.time %} {{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% if trip.multi_timezone and item.tz_abbr %}<span class="tz-abbr" title="{{ item.tz }}">{{ item.tz_abbr }}</span>{% endif %}{% endif %}
         </div>
         {# Bare waypoint cards hide .event-body, so render description inline here.
            Non-bare cards still render description inside .event-body below. #}
@@ -2290,7 +2306,7 @@
       </div>
       <div class="event-info">
         <h3>Home<span class="card-where">Reston, VA</span></h3>
-        <div class="event-meta">{% if trip.end %}{{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% endif %}</span></div>
+        <div class="event-meta">{% if trip.end %}{{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
@@ -2543,6 +2559,7 @@ window.TRIP_BOOT = {
   first_stay_date: {{ (trip.stays[0].start if trip.stays else '') | tojson }},
   stays_all: {{ trip.stays | tojson }},
   events_all: {{ trip.events | tojson }},
+  multi_timezone: {{ 'true' if trip.multi_timezone else 'false' }},
   family_locations: {{ family_locations | tojson }},
   trip_start: {{ trip.start | tojson }},
   trip_end: {{ trip.end | tojson }},
