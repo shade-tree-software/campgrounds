@@ -25,8 +25,8 @@ import unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from ekko_trips_app import (  # noqa: E402
-    _day_totals, _drive_days, _moving_seconds,
-    DRIVE_MOVING_MAX_LEG_S, DRIVE_MOVING_MIN_MPS,
+    _day_totals, _drive_days, _moving_seconds, _most_driven_trip,
+    DRIVE_DAY_MIN_M, DRIVE_MOVING_MAX_LEG_S, DRIVE_MOVING_MIN_MPS,
 )
 
 TZ = "America/Denver"
@@ -233,3 +233,69 @@ class TestBothMeasuresAgreeOnATravelDay(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestMostDrivenTrip(unittest.TestCase):
+    """The stats page's "Most miles driven" record.
+
+    Driven off injected `prepared` inputs rather than the on-disk route cache,
+    so the ranking rule is pinned without depending on the library's data."""
+
+    @staticmethod
+    def _prepared(trips):
+        """`trips` as `{id: [(meters, ...), ...]}` of day_totals rows."""
+        by_id = {tid: {"id": tid, "number": tid, "summary": f"Trip {tid}"}
+                 for tid in trips}
+        entries = {tid: {"day_totals": [[f"2026-08-{i + 1:02d}", m, 3600]
+                                        for i, m in enumerate(rows)]}
+                   for tid, rows in trips.items()}
+        return by_id, entries
+
+    def test_picks_the_trip_with_the_most_total_mileage(self):
+        got = _most_driven_trip(self._prepared({
+            1: [500_000, 500_000],          # 1,000 km
+            2: [900_000],                   #   900 km
+            3: [100_000, 100_000, 100_000],  #  300 km
+        }))
+        self.assertEqual(got["trip_id"], 1)
+        self.assertAlmostEqual(got["miles"], round(1_000_000 / 1609.344))
+
+    def test_a_trip_of_only_round_trip_days_still_counts(self):
+        """The reason it sums `day_totals` and not `days`: a week of day
+        trips out of one campground has no A-to-B legs at all, and summing
+        legs would score it zero."""
+        got = _most_driven_trip(self._prepared({
+            1: [80_000] * 6,                # 480 km of excursions, no legs
+            2: [200_000],
+        }))
+        self.assertEqual(got["trip_id"], 1)
+
+    def test_days_under_the_minimum_do_not_accumulate(self):
+        """A fortnight parked at camp is not a driving record."""
+        got = _most_driven_trip(self._prepared({
+            1: [DRIVE_DAY_MIN_M - 1] * 30,
+            2: [50_000],
+        }))
+        self.assertEqual(got["trip_id"], 2)
+
+    def test_none_when_no_trip_has_a_track(self):
+        self.assertIsNone(_most_driven_trip(({}, {})))
+        self.assertIsNone(_most_driven_trip(self._prepared({1: []})))
+
+    def test_a_trip_missing_from_the_trip_list_is_skipped(self):
+        """The route cache can hold an entry for a trip the caller filtered
+        out (a home-only trip, for a non-admin)."""
+        by_id, entries = self._prepared({1: [50_000]})
+        entries[99] = {"day_totals": [["2026-08-01", 9_000_000, 3600]]}
+        self.assertEqual(_most_driven_trip((by_id, entries))["trip_id"], 1)
+
+    def test_a_malformed_row_is_skipped_not_raised(self):
+        by_id, entries = self._prepared({1: [50_000]})
+        entries[1]["day_totals"].insert(0, ["2026-08-01"])   # short row
+        self.assertEqual(_most_driven_trip((by_id, entries))["trip_id"], 1)
+
+    def test_carries_what_the_template_renders(self):
+        got = _most_driven_trip(self._prepared({7: [50_000]}))
+        self.assertEqual(
+            set(got) & {"trip_id", "number", "summary", "miles"},
+            {"trip_id", "number", "summary", "miles"})

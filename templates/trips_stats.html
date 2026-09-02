@@ -301,6 +301,17 @@
       <span class="cg-name">Highest campspot — {{ highest.name }}</span>
     </li>
     {% endif %}
+    {% if most_driven %}
+    {#- Every mile the trip drove, excursion days included — not the sum of
+        its A-to-B legs, which would score a week of day trips out of one
+        campground at zero. It is the total of that trip's own day dividers,
+        so the two pages add up. Linked, like the Longest Driving Days rows:
+        naming the trip and giving no way to open it is a dead end. -#}
+    <li>
+      <span class="cg-count">{{ '{:,}'.format(most_driven.miles) }} mi</span>
+      <a class="cg-name" href="/trips/{{ most_driven.trip_id }}">Most miles driven — Trip {{ most_driven.number }}: {{ most_driven.summary }}</a>
+    </li>
+    {% endif %}
     {% if busiest_month %}
     <li>
       <span class="cg-count">{{ busiest_month.count }}</span>
