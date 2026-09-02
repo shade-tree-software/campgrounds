@@ -2055,8 +2055,10 @@
         the stats page's Longest Driving Days shows for it, so the two pages
         cannot disagree about the same day. Anything driven on top of that
         (an evening run to the camp store, a loop before setting off) is
-        broken out as "local" rather than folded in, which is what keeps the
-        headline number comparable.
+        counted but not printed: it is a couple of miles on a day of several
+        hundred, and putting it on the line cost a third of the row's width
+        to say almost nothing. It lives in the tooltip instead, where it
+        still explains why the day's total is a shade above the leg.
 
         A day that came back to where it started has no leg to report — that
         is the case the stats page drops, and the whole reason this needs its
@@ -2076,8 +2078,7 @@
       <span class="day-drive" title="{{ tip }}"
         >{#- whitespace between these spans is the only place the line may
              break on a narrow screen, so it is kept deliberate and minimal -#}
-        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if not drive.round_trip and drive.local_miles %} +
-        <span class="nb">{{ drive.local_miles }} local</span>{% endif %}{% if drive.moving %} &middot;
+        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
         <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
       {%- endif %}
     </div>
