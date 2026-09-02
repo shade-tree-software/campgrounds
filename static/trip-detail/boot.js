@@ -20,6 +20,13 @@ const EVENTS_ALL = _BOOT.events_all || [];
 // the map's popups label their times the way the timeline cards do. Decided
 // server-side (`_make_trip`) so the two surfaces can't disagree.
 const MULTI_TZ = !!_BOOT.multi_timezone;
+// Minutes to ADD to a home-zone wall clock to reach UTC. Used to stamp the
+// map's day-boundary anchors and the trip window at the instant they mean,
+// rather than in whatever zone the person reading the page happens to be in.
+// null when home has no resolvable zone — then the browser's zone is used, as
+// it always was.
+const HOME_TZ_OFFSET_MIN = (_BOOT.home_tz_offset_min == null
+                            ? null : _BOOT.home_tz_offset_min);
 const FAMILY_LOCATIONS = _BOOT.family_locations || [];
 const TRIP_START = _BOOT.trip_start || '';
 const TRIP_END = _BOOT.trip_end || '';

@@ -32,7 +32,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    get_tid_overrides, set_tid_override, raw_trip_records,
                    campground_references, camping_nights, is_day_trip,
                    is_home_stay, visit_runs, TRIPS_JSON,
-                   event_time_rank, reference_timezone, tz_abbrev)
+                   event_time_rank, reference_timezone, tz_abbrev,
+                   utc_offset_minutes as trips_utc_offset_minutes)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -2972,6 +2973,25 @@ def trip_detail(trip_id):
     prev_trip_summary = prev_trip["summary"] if prev_trip else ""
     next_trip_summary = next_trip["summary"] if next_trip else ""
 
+    # UTC offsets for the map's gap-fill anchors. Events carry their own (from
+    # `tz`, stamped in _make_trip); a stay's comes from where it is, and HOME's
+    # from home. The map stamps each anchor at the instant it happened, and an
+    # anchor two hours out lands in the wrong gap and draws a detour that never
+    # happened — see `_trip_route_stops`, which does the same thing server-side
+    # for the overview map. A stay's offset is read on its own start date, so
+    # it follows DST.
+    home_tz_name = (_tz_for_coord(home[0], home[1])
+                    if home and home[0] is not None and home[1] is not None
+                    else None)
+    home_tz_offset_min = trips_utc_offset_minutes(
+        trip.get("start"), "12:00", home_tz_name)
+    for s_ in trip.get("stays", []):
+        s_["tz_offset_min"] = None
+        lat, lng = s_.get("lat"), s_.get("lng")
+        if lat is not None and lng is not None:
+            s_["tz_offset_min"] = trips_utc_offset_minutes(
+                s_.get("start"), "12:00", _tz_for_coord(lat, lng))
+
     # Zone label for the two home cards, whose times are in the home zone by
     # convention rather than carrying a `tz` of their own. Only computed when
     # the trip spans several zones — on those, leaving the trip's start and end
@@ -2980,12 +3000,13 @@ def trip_detail(trip_id):
     if trip.get("multi_timezone") and home:
         home_tz_abbr = tz_abbrev(
             trip.get("start"), trip.get("home_start_time") or "12:00",
-            _tz_for_coord(home[0], home[1]))
+            home_tz_name)
 
     return render_template(
         'trip_detail.html',
         trip=trip,
         home_tz_abbr=home_tz_abbr,
+        home_tz_offset_min=home_tz_offset_min,
         stay_photos=stay_photos,
         event_photos=event_photos,
         family_locations=family,
@@ -5553,10 +5574,15 @@ def _trip_route_stops(trip, home, tz_name):
     the same coords collapse (a stay's evening and the next morning are the
     same place), keeping the earlier timestamp for ordering.
 
-    Times are resolved in the home timezone. The detail map uses the
-    browser's local time, which is the same thing on the family's own
-    machines; anywhere else the skew is far smaller than the gaps this
-    slices anchors into."""
+    **Each anchor is timestamped in its OWN zone**, not the trip's or the
+    home one. These timestamps decide which gap an anchor is spliced into, so
+    a zone error here does not shift a line slightly — it teleports an anchor
+    into a different gap entirely. Stamping everything in the home zone put
+    every Mountain-time anchor on trip 95 two hours early, which dropped each
+    morning's first stops into the PREVIOUS NIGHT's gap: the line ran from the
+    campground out to Roaring Fork and straight back while the travelers were
+    asleep, a 9.3 km spike, one of six across trips 32 and 95. An event's zone
+    comes from its `tz` field; a stay's or home's from its coordinates."""
     stays = [s for s in trip.get("stays", [])
              if s.get("lat") is not None and s.get("lng") is not None]
     events = [e for e in trip.get("events", [])
@@ -5588,6 +5614,21 @@ def _trip_route_stops(trip, home, tz_name):
         return home
 
     ref_tz = reference_timezone(events)
+
+    # Zone of a fixed location, memoized: `_tz_for_coord` is a point-in-polygon
+    # lookup and the morning/evening walk asks about the same handful of
+    # campgrounds once per day of the trip. Falls back to the home zone, which
+    # is also what a trip with no resolvable coordinates gets.
+    _loc_tz_cache = {}
+
+    def loc_tz(pt):
+        if not pt or pt[0] is None or pt[1] is None:
+            return tz_name
+        key = (round(pt[0], 4), round(pt[1], 4))
+        if key not in _loc_tz_cache:
+            _loc_tz_cache[key] = _tz_for_coord(pt[0], pt[1]) or tz_name
+        return _loc_tz_cache[key]
+
     stops = []
 
     def push(tst, pt):
@@ -5601,7 +5642,11 @@ def _trip_route_stops(trip, home, tz_name):
     for date_str in sorted(dates):
         if date_str > today_str:
             continue
-        push(_trip_local_to_tst(date_str, "00:00", tz_name), morning(date_str))
+        # Midnight and 23:59 are read in the zone of the place you were, so a
+        # day boundary lands where the traveler experienced it.
+        morning_pt, evening_pt = morning(date_str), evening(date_str)
+        push(_trip_local_to_tst(date_str, "00:00", loc_tz(morning_pt)),
+             morning_pt)
         same_day = [e for e in events if e.get("date") == date_str]
         # By true instant, not wall clock: a westward zone crossing gives a
         # later stop an earlier "HH:MM" and would walk the anchors backwards.
@@ -5610,9 +5655,11 @@ def _trip_route_stops(trip, home, tz_name):
         same_day.sort(key=lambda e: event_time_rank(
             date_str, e.get("time"), e.get("tz"), ref_tz))
         for e in same_day:
-            push(_trip_local_to_tst(date_str, e.get("time") or "12:00", tz_name),
+            push(_trip_local_to_tst(date_str, e.get("time") or "12:00",
+                                    e.get("tz") or ref_tz or tz_name),
                  (e["lat"], e["lng"]))
-        push(_trip_local_to_tst(date_str, "23:59", tz_name), evening(date_str))
+        push(_trip_local_to_tst(date_str, "23:59", loc_tz(evening_pt)),
+             evening_pt)
     return stops
 
 

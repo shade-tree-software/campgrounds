@@ -629,6 +629,26 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
     return HOME;
   }
+  // The UTC offsets of those same two lookups. A day boundary is read in the
+  // zone of the place you were, so "the night of the 26th" ends when the
+  // travelers' own midnight arrives, not the reader's. Falls back to home's
+  // offset, which is what HOME itself uses.
+  function morningOffset(dateStr) {
+    for (const s of mapped) {
+      if (s.start < dateStr && dateStr <= s.end) {
+        return s.tz_offset_min != null ? s.tz_offset_min : HOME_TZ_OFFSET_MIN;
+      }
+    }
+    return HOME_TZ_OFFSET_MIN;
+  }
+  function eveningOffset(dateStr) {
+    for (const s of mapped) {
+      if (s.start <= dateStr && dateStr < s.end) {
+        return s.tz_offset_min != null ? s.tz_offset_min : HOME_TZ_OFFSET_MIN;
+      }
+    }
+    return HOME_TZ_OFFSET_MIN;
+  }
 
   // Collect all dates in the trip (stay date ranges + event dates)
   const allDates = new Set();
@@ -732,11 +752,27 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // Used to bound the trip window when filtering pings; tz-aware
   // conversion was retired with geo-suppression so we accept the small
   // skew when viewing a far-away trip.
-  function localEpoch(dateStr, timeStr) {
+  // Epoch seconds for a stored date + wall clock. `offsetMin` is the minutes
+  // to ADD to that wall clock to reach UTC; pass it whenever the zone the time
+  // was written in is known, and the answer is the true instant regardless of
+  // where the page is being read. Without it we fall back to the BROWSER's
+  // zone, which is what this always did.
+  //
+  // That fallback is why trip 95 drew a 9.3 km spike out to Roaring Fork and
+  // back in the middle of the night: read from Eastern, a 09:11 Mountain
+  // waypoint stamped as 07:11 Mountain, landing it inside the PREVIOUS
+  // night's gap, where the gap-filler dutifully routed the line through it.
+  // Anchors must therefore always pass an offset when one is available —
+  // these timestamps decide which gap an anchor falls in, so being two hours
+  // out doesn't nudge the line, it teleports the anchor.
+  function localEpoch(dateStr, timeStr, offsetMin) {
     if (!dateStr || !timeStr) return null;
     const [y, m, d] = dateStr.split('-').map(Number);
     const [hh, mm] = timeStr.split(':').map(Number);
     if ([y, m, d, hh, mm].some(isNaN)) return null;
+    if (offsetMin != null) {
+      return Date.UTC(y, m - 1, d, hh, mm, 0) / 1000 + offsetMin * 60;
+    }
     return new Date(y, m - 1, d, hh, mm, 0).getTime() / 1000;
   }
   function addDaysISO(dateStr, n) {
@@ -754,14 +790,14 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   function computeTripWindow(autoHomeStartTst, autoHomeEndTst) {
     let lowerCut = null, upperCut = null;
     if (TRIP_START) {
-      if (HOME_START_TIME) lowerCut = localEpoch(TRIP_START, HOME_START_TIME);
+      if (HOME_START_TIME) lowerCut = localEpoch(TRIP_START, HOME_START_TIME, HOME_TZ_OFFSET_MIN);
       else if (autoHomeStartTst != null) lowerCut = autoHomeStartTst;
-      else lowerCut = localEpoch(TRIP_START, '00:00');
+      else lowerCut = localEpoch(TRIP_START, '00:00', HOME_TZ_OFFSET_MIN);
     }
     if (TRIP_END) {
-      if (HOME_END_TIME) upperCut = localEpoch(TRIP_END, HOME_END_TIME);
+      if (HOME_END_TIME) upperCut = localEpoch(TRIP_END, HOME_END_TIME, HOME_TZ_OFFSET_MIN);
       else if (autoHomeEndTst != null) upperCut = autoHomeEndTst;
-      else upperCut = localEpoch(addDaysISO(TRIP_END, 1), '00:00');
+      else upperCut = localEpoch(addDaysISO(TRIP_END, 1), '00:00', HOME_TZ_OFFSET_MIN);
     }
     return { lowerCut, upperCut };
   }
@@ -1030,13 +1066,16 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     }
     sortedDates.forEach(dateStr => {
       if (dateStr > todayStr) return;  // don't gap-fill toward future (unvisited) anchors
-      pushStop(localEpoch(dateStr, '00:00'), morningLocation(dateStr));
+      pushStop(localEpoch(dateStr, '00:00', morningOffset(dateStr)),
+               morningLocation(dateStr));
       mappedEvents
         .filter(e => e.date === dateStr)
         .sort(byEventTime)
-        .forEach(evt => pushStop(localEpoch(dateStr, evt.time || '12:00'),
-                                 [evt.lat, evt.lng]));
-      pushStop(localEpoch(dateStr, '23:59'), eveningLocation(dateStr));
+        .forEach(evt => pushStop(
+          localEpoch(dateStr, evt.time || '12:00', evt.tz_offset_min),
+          [evt.lat, evt.lng]));
+      pushStop(localEpoch(dateStr, '23:59', eveningOffset(dateStr)),
+               eveningLocation(dateStr));
     });
 
     const latlngs = [];

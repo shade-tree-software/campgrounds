@@ -476,7 +476,7 @@ def _tz_aware(date_str, time_str, tz_name):
         return None
 
 
-def _utc_offset_minutes(date_str, time_str, tz_name):
+def utc_offset_minutes(date_str, time_str, tz_name):
     """Minutes to ADD to this local wall clock to get UTC, or None.
 
     Date-dependent on purpose: the offset for a zone changes across a DST
@@ -525,7 +525,7 @@ def event_time_rank(date_str, time_str, tz_name, ref_tz=""):
     own day); that is fine and intended, because this only ever orders items
     *within* one already-fixed `sort_date` group."""
     local = _minutes_of_day(time_str)
-    offset = _utc_offset_minutes(date_str, time_str, tz_name or ref_tz)
+    offset = utc_offset_minutes(date_str, time_str, tz_name or ref_tz)
     return local + (offset or 0)
 
 
@@ -1248,6 +1248,13 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         # instead of re-deriving offset maths in JS.
         e["time_rank"] = event_time_rank(e["date"], e.get("time"),
                                          e.get("tz"), ref_tz)
+        # Minutes to ADD to this wall clock to reach UTC. The detail map needs
+        # the offset itself (not just the rank) to stamp gap-fill anchors at
+        # the instant they happened — an anchor two hours out lands in the
+        # wrong gap entirely. None when the zone is unknown, which is the
+        # signal to fall back to the browser's own zone.
+        e["tz_offset_min"] = utc_offset_minutes(e["date"], e.get("time"),
+                                                 e.get("tz") or ref_tz)
         fid = e.get("family_id")
         if fid is not None and fid in locations:
             e["family_visit"] = locations[fid]["name"]
