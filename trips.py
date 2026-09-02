@@ -622,14 +622,19 @@ def update_event(trip_id, event_idx, fields):
 
 
 def delete_event(trip_id, event_idx):
-    """Delete an event from a trip. Returns updated trip or None."""
+    """Delete an event from a trip. Returns updated trip or None.
+
+    Deleting an event that has coordinates also records a **dismissed stop**
+    (see `_record_dismissed_stop`), so stop detection can flag the same place
+    next time rather than offering it again as if it were new."""
     raw = _load_raw_trips()
     for t in raw:
         if t["id"] == trip_id:
             events = t.get("events", [])
             if event_idx < 0 or event_idx >= len(events):
                 return None
-            events.pop(event_idx)
+            removed = events.pop(event_idx)
+            _record_dismissed_stop(t, removed)
 
             # Move photos + their metadata so each event keeps its own.
             _remap_indices_after_delete(trip_id, "event", event_idx,
@@ -639,6 +644,112 @@ def delete_event(trip_id, event_idx):
             _save_trips(raw)
             return _make_trip(t["id"], t["stays"], t.get("trip_note", ""),
                               t["events"])
+    return None
+
+
+# ── Dismissed stops ──────────────────────────────────────────────────────
+# Each trip carries an optional `dismissed_stops` list of
+# `{lat, lng, date, name, removed_at}` entries — places where an event once
+# existed and was deleted.
+#
+# Stop detection re-scans the same GPS track every run, so a cluster the admin
+# already looked at, accepted, and then thought better of comes back looking
+# exactly like a new discovery. The trip's own stays and events normally
+# suppress a cluster (`_drop_stops_at_known_locations`), but deleting the event
+# removes precisely the thing that was doing the suppressing — so the stop
+# reappears *because* it was rejected. This list remembers the rejection.
+#
+# It FLAGS rather than drops, mirroring the on-road treatment: the row still
+# renders, dimmed and unchecked, with a tag saying it was removed before. The
+# admin's earlier "no" is information, not a veto — they may have deleted the
+# event for an unrelated reason, and hiding the row outright would make that
+# undiscoverable.
+#
+# Matching is by position AND date, the same convention
+# `_drop_stops_at_known_locations` uses for stay/event anchors and for the same
+# reason: the same rest area on the outbound and return legs is two different
+# stops, and dismissing one must not silently flag the other.
+
+def _record_dismissed_stop(trip_record, event):
+    """Note that `event`'s place was rejected, on the raw trip record.
+
+    A no-op for an event with no usable coordinates — there is nothing to
+    match a future cluster against. Deduped by (rounded position, date) so
+    repeatedly creating and deleting at one spot doesn't grow the list."""
+    lat, lng = _parse_latlng(event.get("location"))
+    if lat is None:
+        return
+    entry = {
+        "lat": lat,
+        "lng": lng,
+        "date": event.get("date") or "",
+        "name": event.get("name") or "",
+        "removed_at": datetime.now().strftime("%Y-%m-%d"),
+    }
+    key = (round(lat, 5), round(lng, 5), entry["date"])
+    existing = trip_record.get("dismissed_stops") or []
+    kept = [d for d in existing
+            if (round(d.get("lat", 0), 5), round(d.get("lng", 0), 5),
+                d.get("date") or "") != key]
+    kept.append(entry)
+    trip_record["dismissed_stops"] = kept
+
+
+def _parse_latlng(value):
+    """(lat, lng) floats from a stored "lat,lng" string, or (None, None)."""
+    if not value:
+        return (None, None)
+    try:
+        lat, lng = (float(x) for x in str(value).split(",")[:2])
+    except (ValueError, TypeError):
+        return (None, None)
+    if not (-90 <= lat <= 90 and -180 <= lng <= 180):
+        return (None, None)
+    return (lat, lng)
+
+
+def get_dismissed_stops(trip_id):
+    """The trip's dismissed-stop list (empty if none)."""
+    for t in _load_raw_trips():
+        if t["id"] == trip_id:
+            return list(t.get("dismissed_stops") or [])
+    return []
+
+
+def clear_dismissed_stops_near(trip_id, points, radius_deg=0.0005):
+    """Drop dismissals matching any `(lat, lng, date)` in `points`.
+
+    Called when a stop is accepted: re-creating an event at a place that was
+    once rejected is the admin changing their mind, and leaving the dismissal
+    behind would flag the stop again the moment they deleted anything else
+    nearby. `radius_deg` (~55 m) absorbs the small centroid drift between one
+    detection run and the next.
+
+    Returns the resulting list, or None if the trip doesn't exist."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] != trip_id:
+            continue
+        current = t.get("dismissed_stops") or []
+        if not current:
+            return []
+        kept = []
+        for d in current:
+            match = any(
+                abs(d.get("lat", 0) - lat) <= radius_deg
+                and abs(d.get("lng", 0) - lng) <= radius_deg
+                and (not date_str or not d.get("date") or d["date"] == date_str)
+                for lat, lng, date_str in points)
+            if not match:
+                kept.append(d)
+        if len(kept) == len(current):
+            return current
+        if kept:
+            t["dismissed_stops"] = kept
+        else:
+            t.pop("dismissed_stops", None)
+        _save_trips(raw)
+        return kept
     return None
 
 

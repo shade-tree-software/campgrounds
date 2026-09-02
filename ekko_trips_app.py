@@ -33,7 +33,8 @@ from trips import (parse_trips, enrich_trip_locations,
                    campground_references, camping_nights, is_day_trip,
                    is_home_stay, visit_runs, TRIPS_JSON,
                    event_time_rank, reference_timezone, tz_abbrev,
-                   utc_offset_minutes as trips_utc_offset_minutes)
+                   utc_offset_minutes as trips_utc_offset_minutes,
+                   get_dismissed_stops, clear_dismissed_stops_near)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -7251,6 +7252,97 @@ def _select_track_per_day(primary_points, alt_points, anchors, home,
     return chosen, tid_choices
 
 
+def _iso_date_or_none(value):
+    """`date` from an ISO string, or None when absent/unparseable."""
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value).date()
+    except Exception:
+        return None
+
+
+def _cluster_local_date_range(c):
+    """(first, last) LOCAL dates a stop cluster spans, or (None, None).
+
+    Local at the recording location, via the cluster's `tz` — a cluster
+    straddling local midnight belongs to both days, and one recorded an hour
+    over a zone line belongs to the day the traveler was living, not UTC's."""
+    if c.get("start_tst") is None or c.get("end_tst") is None:
+        return (None, None)
+    try:
+        from zoneinfo import ZoneInfo
+    except Exception:
+        ZoneInfo = None
+    tz = None
+    if ZoneInfo:
+        try:
+            tz = ZoneInfo(c.get("tz") or "UTC")
+        except Exception:
+            tz = None
+
+    def _to_local_date(tst):
+        utc = _naive_utc(tst)
+        if tz is not None:
+            try:
+                return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(tz).date()
+            except Exception:
+                pass
+        return utc.date()
+
+    sd = _to_local_date(c["start_tst"])
+    ed = _to_local_date(c["end_tst"])
+    return (sd, ed if ed >= sd else sd)
+
+
+def _any_cluster_ping_within(c, a_lat, a_lng, radius_m):
+    """True when ANY ping in the cluster is within `radius_m` of the anchor.
+
+    Any ping, not just the centroid: an asymmetric cluster (a long dwell plus
+    slow approach/departure pings tailing toward a highway) has its centroid
+    pulled off the place it actually sat. Trip 9's Mountain Top campsite is
+    the case — centroid 314 m from the anchor, just past STOP_NEAR_ANCHOR_M,
+    while two pings inside the cluster were 0 m and 49 m from it."""
+    for p_lat, p_lng in c.get("coords") or [(c["center_lat"], c["center_lng"])]:
+        if _haversine_m(p_lat, p_lng, a_lat, a_lng) < radius_m:
+            return True
+    return False
+
+
+def _flag_dismissed_stops(stops, dismissed,
+                          near_radius_m=STOP_NEAR_ANCHOR_M):
+    """Mark each cluster that sits where a deleted event used to be.
+
+    Sets `_dismissed` on the cluster dict (a `{name, removed_at}` dict, or
+    absent). FLAGS rather than drops, deliberately — see the dismissed-stops
+    notes in trips.py: the admin's earlier "no" is information, not a veto, and
+    a silently withheld row is one they can never reconsider.
+
+    Uses the same "any ping in the cluster" proximity test and the same
+    date-bounding as `_drop_stops_at_known_locations`, so a dismissal behaves
+    exactly like the anchor it replaced: same 300 m radius, and the same rule
+    that the same physical place on a different day is a different stop.
+    A dismissal with no date matches on position alone (an event saved without
+    one), which is the conservative reading — flagging is cheap, and the row
+    is still there to be re-checked."""
+    if not dismissed:
+        return
+    for c in stops:
+        c_start, c_end = _cluster_local_date_range(c)
+        for d in dismissed:
+            lat, lng = d.get("lat"), d.get("lng")
+            if lat is None or lng is None:
+                continue
+            d_date = _iso_date_or_none(d.get("date"))
+            if d_date is not None and c_start is not None:
+                if d_date < c_start or d_date > c_end:
+                    continue
+            if _any_cluster_ping_within(c, lat, lng, near_radius_m):
+                c["_dismissed"] = {"name": d.get("name") or "",
+                                   "removed_at": d.get("removed_at") or ""}
+                break
+
+
 def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                                    near_radius_m=STOP_NEAR_ANCHOR_M,
                                    home_radius_m=STOP_AT_HOME_CENTROID_M):
@@ -7301,32 +7393,24 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
     km from home that's inside the 1.5 km near-home radius — are
     still fair game when they fall inside the inferred trip window;
     those are near-home stops, not home dwell."""
-    def _iso_to_date(s):
-        if not s:
-            return None
-        try:
-            return datetime.fromisoformat(s).date()
-        except Exception:
-            return None
-
     dated_anchors = []  # (lat, lng, start_date, end_date) — inclusive
     for s in trip.get("stays", []):
         if s.get("lat") is None or s.get("lng") is None:
             continue
-        sd = _iso_to_date(s.get("start"))
+        sd = _iso_date_or_none(s.get("start"))
         if sd is None:
             continue
-        ed = _iso_to_date(s.get("end")) or sd
+        ed = _iso_date_or_none(s.get("end")) or sd
         if ed < sd:
             ed = sd
         dated_anchors.append((s["lat"], s["lng"], sd, ed))
     for e in trip.get("events", []):
         if e.get("lat") is None or e.get("lng") is None:
             continue
-        sd = _iso_to_date(e.get("date"))
+        sd = _iso_date_or_none(e.get("date"))
         if sd is None:
             continue
-        ed = _iso_to_date(e.get("end_date")) or sd
+        ed = _iso_date_or_none(e.get("end_date")) or sd
         if ed < sd:
             ed = sd
         dated_anchors.append((e["lat"], e["lng"], sd, ed))
@@ -7340,35 +7424,6 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
 
     home_lat = home[0] if home and home[0] is not None else None
     home_lng = home[1] if home and home[1] is not None else None
-
-    try:
-        from zoneinfo import ZoneInfo
-    except Exception:
-        ZoneInfo = None
-
-    def _cluster_date_range(c):
-        tz_name = c.get("tz") or "UTC"
-        tz = None
-        if ZoneInfo:
-            try:
-                tz = ZoneInfo(tz_name)
-            except Exception:
-                tz = None
-
-        def _to_local_date(tst):
-            utc = _naive_utc(tst)
-            if tz is not None:
-                try:
-                    return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(tz).date()
-                except Exception:
-                    pass
-            return utc.date()
-
-        sd = _to_local_date(c["start_tst"])
-        ed = _to_local_date(c["end_tst"])
-        if ed < sd:
-            ed = sd
-        return sd, ed
 
     # Anchor proximity is tested against ANY ping in the cluster, not
     # just the centroid. An asymmetric cluster (long dwell at anchor +
@@ -7388,12 +7443,6 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
     # override is a minute off), not "this cluster passed through
     # home". A real stop near home should NOT be dropped just because
     # a single ping wandered close to the home centroid.
-    def _any_ping_within(c, a_lat, a_lng, radius_m):
-        for p_lat, p_lng in c.get("coords") or [(c["center_lat"], c["center_lng"])]:
-            if _haversine_m(p_lat, p_lng, a_lat, a_lng) < radius_m:
-                return True
-        return False
-
     out = []
     for c in stops:
         if home_lat is not None and home_lng is not None:
@@ -7402,15 +7451,15 @@ def _drop_stops_at_known_locations(stops, trip, family_locations, home=None,
                 continue
         too_close = False
         for a_lat, a_lng in date_agnostic_anchors:
-            if _any_ping_within(c, a_lat, a_lng, near_radius_m):
+            if _any_cluster_ping_within(c, a_lat, a_lng, near_radius_m):
                 too_close = True
                 break
-        if not too_close and dated_anchors:
-            c_start, c_end = _cluster_date_range(c)
+        c_start, c_end = _cluster_local_date_range(c)
+        if not too_close and dated_anchors and c_start is not None:
             for a_lat, a_lng, a_start, a_end in dated_anchors:
                 if a_end < c_start or a_start > c_end:
                     continue
-                if _any_ping_within(c, a_lat, a_lng, near_radius_m):
+                if _any_cluster_ping_within(c, a_lat, a_lng, near_radius_m):
                     too_close = True
                     break
         if not too_close:
@@ -7731,6 +7780,10 @@ def api_detect_stops(trip_id):
     # two off the true arrival, so an at-home dwell straddles the
     # boundary-tst and slips through the time-window filter above.
     raw_stops = _drop_stops_at_known_locations(raw_stops, trip, family, home)
+    # Runs AFTER the drop: a stop still covered by a live stay or event is
+    # gone already, so what's left to flag is exactly the places whose event
+    # the admin deleted — the ones detection would otherwise re-offer as new.
+    _flag_dismissed_stops(raw_stops, get_dismissed_stops(trip_id))
 
     # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
     # not have it. Fall back to UTC formatting if it's missing.
@@ -7780,6 +7833,9 @@ def api_detect_stops(trip_id):
                                    if start_local.tzinfo else "")),
                 "end_local": end_local.strftime("%H:%M"),
                 "classification": classification,
+                # Present when an event here was created and later deleted;
+                # the modal dims the row and leaves it unchecked.
+                "dismissed": s.get("_dismissed"),
                 "center_lat": s["center_lat"],
                 "center_lng": s["center_lng"],
                 # Per-ping (lat, lng) pairs for the frontend's row-level
@@ -7829,6 +7885,7 @@ def api_accept_stops(trip_id):
         return jsonify({"error": "events must be a list"}), 400
     created = 0
     last_trip = None
+    accepted = []
     for evt in events_payload:
         # Hard-set needs_vetting True so a tampered client can't smuggle in
         # already-vetted entries. The flag's whole purpose is to mark
@@ -7841,6 +7898,22 @@ def api_accept_stops(trip_id):
             return jsonify({"error": "trip not found"}), 404
         last_trip = result
         created += 1
+        accepted.append(evt)
+    # Accepting a stop that was previously rejected is the admin changing
+    # their mind, so retire the dismissal — otherwise the flag would come
+    # straight back the next time anything near it was deleted.
+    points = []
+    for evt in accepted:
+        lat, lng = (None, None)
+        try:
+            lat, lng = (float(x) for x in
+                        (evt.get("location") or "").split(",")[:2])
+        except (ValueError, TypeError):
+            continue
+        points.append((lat, lng, evt.get("date") or ""))
+    if points:
+        clear_dismissed_stops_near(trip_id, points)
+
     return jsonify({"ok": True, "created": created,
                     "event_count": len(last_trip["events"]) if last_trip else 0})
 

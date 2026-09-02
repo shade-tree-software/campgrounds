@@ -135,6 +135,13 @@ function _renderDetectStopRow(s, i) {
   // — almost always traffic, not a stop). The badge + dim styling let
   // the admin opt back in for a legit roadside stop.
   const onRoad = d.on_road === true;
+  // An event was created here and later deleted. Detection re-scans the same
+  // track every run, so without this the stop comes back looking brand new —
+  // in fact it comes back BECAUSE it was rejected, since deleting the event
+  // removed the very anchor that was suppressing the cluster. Flagged, not
+  // hidden: the admin may have deleted it for an unrelated reason, and a row
+  // withheld is a row they can never reconsider.
+  const dismissed = d.dismissed || null;
   const name = s.event.name || '(unnamed)';
   const place = [d.start_local, dur].filter(Boolean).join(' · ');
   const loc = [s.event.locale, s.event.state].filter(Boolean).join(', ');
@@ -145,11 +152,19 @@ function _renderDetectStopRow(s, i) {
   const trafficTag = onRoad
     ? ' <span class="stop-traffic-tag" title="Cluster centroid snapped to a real road — usually a traffic jam or stop light, not a real stop. Check the box if this was actually a roadside stop.">on road · likely traffic</span>'
     : '';
+  const dismissedTag = dismissed
+    ? ` <span class="stop-dismissed-tag" title="${escapeHtml(
+        (dismissed.name ? `"${dismissed.name}" was ` : 'An event was ')
+        + 'added here from a previous Detect Stops run and later deleted'
+        + (dismissed.removed_at ? ` (${dismissed.removed_at})` : '')
+        + '. Check the box if you want it back.')}">removed before${
+        dismissed.removed_at ? ' · ' + escapeHtml(dismissed.removed_at) : ''}</span>`
+    : '';
   return `
-    <label class="stop-row${onRoad ? ' on-road' : ''}" data-stop-idx="${i}">
-      <input type="checkbox" data-idx="${i}" ${onRoad ? '' : 'checked'} onchange="updateDetectStopsCount()">
+    <label class="stop-row${onRoad ? ' on-road' : ''}${dismissed ? ' dismissed' : ''}" data-stop-idx="${i}">
+      <input type="checkbox" data-idx="${i}" ${(onRoad || dismissed) ? '' : 'checked'} onchange="updateDetectStopsCount()">
       <div>
-        <div class="stop-name">${escapeHtml(name)}${trafficTag}</div>
+        <div class="stop-name">${escapeHtml(name)}${trafficTag}${dismissedTag}</div>
         <div class="stop-meta">${escapeHtml(place)} — ${tail}</div>
         <div class="stop-meta" style="font-size:.72rem;opacity:.7;">${escapeHtml(coords)}${d.ping_count ? ' · ' + d.ping_count + ' pings' : ''}</div>
       </div>
