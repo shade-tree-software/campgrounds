@@ -2048,21 +2048,36 @@
   {% for item in trip.timeline %}
   {% if multi_day and item.sort_date and item.sort_date != ns.last_date %}
     {% set ns.last_date = item.sort_date %}
-    {#- Miles + driving time for the day, when the GPS says the day went
-        anywhere. `driving_by_day` omits a day under a mile, so a day parked
-        at camp shows just its date rather than a measured-looking "0 mi".
-        This is the WHOLE day's driving, not the leg from where the day
-        started to where it ended — the stats page's Longest Driving Days
-        ranks legs, which is why a loop day out of a base camp is absent
-        there and present here. -#}
+    {#- What the GPS says the day drove.
+
+        A day that ENDED SOMEWHERE ELSE reports the leg — leaving where the
+        day started to reaching where it ended — which is exactly the figure
+        the stats page's Longest Driving Days shows for it, so the two pages
+        cannot disagree about the same day. Anything driven on top of that
+        (an evening run to the camp store, a loop before setting off) is
+        broken out as "local" rather than folded in, which is what keeps the
+        headline number comparable.
+
+        A day that came back to where it started has no leg to report — that
+        is the case the stats page drops, and the whole reason this needs its
+        own measure — so it reports the whole day and says "round trip" to
+        name what it is counting.
+
+        `driving_by_day` omits a day under a mile, so a day parked at camp
+        shows just its date rather than a measured-looking "0 mi". -#}
     {% set drive = driving_by_day.get(item.sort_date) %}
     <div class="day-divider">
       <span>{{ item.sort_date | daylabel }}</span>
       {%- if drive %}
-      <span class="day-drive" title="Driven this day, measured from the GPS track"
+      {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
+                     if drive.round_trip
+                     else '{:,}'.format(drive.miles) ~ ' mi from where the day started to where it ended — the same figure the stats page shows'
+                          ~ (', plus ' ~ drive.local_miles ~ ' mi driven locally on either side of it.' if drive.local_miles else '.')) %}
+      <span class="day-drive" title="{{ tip }}"
         >{#- whitespace between these spans is the only place the line may
              break on a narrow screen, so it is kept deliberate and minimal -#}
-        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi</span>{% if drive.moving %} &middot;
+        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if not drive.round_trip and drive.local_miles %} +
+        <span class="nb">{{ drive.local_miles }} local</span>{% endif %}{% if drive.moving %} &middot;
         <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
       {%- endif %}
     </div>

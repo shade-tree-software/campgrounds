@@ -46,6 +46,17 @@ def _line(*pairs):
     return [_ping(s, m) for s, m in pairs]
 
 
+def _split(pts, leg_row):
+    """What `_trip_driving_by_day` derives for one day, without the cache."""
+    whole = _day_totals(pts, TZ)[0]
+    if leg_row is None:
+        return {"miles": round(whole[1] / 1609.344), "local_miles": 0,
+                "round_trip": True}
+    return {"miles": round(leg_row[1] / 1609.344),
+            "local_miles": round(max(0, whole[1] - leg_row[1]) / 1609.344),
+            "round_trip": False}
+
+
 class TestMovingSeconds(unittest.TestCase):
 
     def test_a_fast_leg_counts_in_full(self):
@@ -142,6 +153,64 @@ class TestDayTotals(unittest.TestCase):
                + [_ping(86400 + i * 600, 50 + i) for i in range(3)])
         self.assertEqual([r[0] for r in _day_totals(pts, TZ)],
                          ["2026-08-27", "2026-08-28"])
+
+
+class TestTheTwoSurfacesCannotDisagree(unittest.TestCase):
+    """The trip page's headline figure for a day that went somewhere IS the
+    stats page's figure for that day — not a second measurement of it.
+
+    Reporting the whole day in both places looked equivalent but was not:
+    across the library only 14% of shared days rounded to the same mileage,
+    and trip 26's 2024-04-08 read 5 mi on the stats page against 160 mi on the
+    timeline. So an A->B day now reports the LEG, with the extra split out as
+    `local_miles`, and an A->A day — which the stats page drops entirely —
+    reports the whole day and says "round trip"."""
+
+    # A morning errand out of camp and back (5 mi each way), THEN a 20-mile
+    # drive to the next campground. The anchor trimming clips the errand off
+    # the leg — it re-enters the starting circle — so the leg is 20 and the
+    # other 10 are local. A day with no wander at either end has leg == whole
+    # and no local miles at all, which is why the fixture needs the loop.
+    A_TO_B = [(0, 0), (300, 5), (600, 0), (900, 20), (1200, 20)]
+
+    def test_an_a_to_b_day_reports_the_leg_not_the_whole_day(self):
+        pts = _line(*self.A_TO_B)
+        leg = _drive_days(pts, TZ)[0]
+        got = _split(pts, leg)
+        self.assertEqual(got["miles"], round(leg[1] / 1609.344))
+        self.assertAlmostEqual(got["miles"], 20, delta=1)
+        self.assertFalse(got["round_trip"])
+        self.assertAlmostEqual(got["local_miles"], 10, delta=1)
+
+    def test_leg_plus_local_accounts_for_the_whole_day(self):
+        pts = _line(*self.A_TO_B)
+        leg = _drive_days(pts, TZ)[0]
+        whole = _day_totals(pts, TZ)[0]
+        got = _split(pts, leg)
+        self.assertEqual(got["miles"] + got["local_miles"],
+                         round(whole[1] / 1609.344))
+
+    def test_a_day_with_no_wander_has_no_local_miles(self):
+        """leg == whole, so the divider reads exactly like the stats row."""
+        pts = _line((0, 0), (600, 20), (1200, 40))
+        got = _split(pts, _drive_days(pts, TZ)[0])
+        self.assertEqual(got["local_miles"], 0)
+
+    def test_an_a_to_a_day_reports_the_whole_day_and_says_so(self):
+        pts = _line((0, 0), (900, 15), (1800, 0))
+        self.assertEqual(_drive_days(pts, TZ), [])     # the stats page drops it
+        got = _split(pts, None)
+        self.assertTrue(got["round_trip"])
+        self.assertEqual(got["local_miles"], 0)
+        self.assertAlmostEqual(got["miles"], 30, delta=1)
+
+    def test_local_miles_can_never_go_negative(self):
+        """The leg is a sub-span of the day so it cannot exceed it, but the
+        guard is what stops a rounding edge printing "+ -1 local"."""
+        for fixture in (self.A_TO_B, [(i * 600, i * 8) for i in range(10)]):
+            pts = _line(*fixture)
+            leg = _drive_days(pts, TZ)[0]
+            self.assertGreaterEqual(_split(pts, leg)["local_miles"], 0)
 
 
 class TestBothMeasuresAgreeOnATravelDay(unittest.TestCase):

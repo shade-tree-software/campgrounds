@@ -6121,31 +6121,69 @@ def _hm(seconds):
 
 
 def _trip_driving_by_day(trip):
-    """`{date: {"miles": int, "moving": "2h 48m"}}` for one trip's timeline.
+    """Per-day driving for the timeline's day dividers, keyed by local date.
+
+    Each value is `{"miles", "moving", "local_miles", "round_trip"}`.
+
+    Two shapes, because a day is one of two things:
+
+      - **A -> B** (the day ended somewhere else): `miles` and `moving` are the
+        LEG — leaving where the day started to reaching where it ended — which
+        are byte-for-byte the numbers the stats page's Longest Driving Days
+        shows for that day. Anything driven beyond the leg (an evening run to
+        the camp store, a morning loop before setting off) is broken out as
+        `local_miles` rather than folded in, so the two pages can never
+        disagree about the same day.
+      - **A -> A** (`round_trip`): the day came back to where it started, so
+        there is no leg to report — `_drive_days` drops it entirely, which is
+        why 68 days across the library used to show nothing here. `miles` and
+        `moving` are then the whole day's, which is the only honest answer for
+        a day spent driving around a park out of a base camp.
 
     Reads the same precomputed cache the overview map's lines come from, so a
     warm trip page costs a JSON read and a signature check rather than a walk
-    over the trip's pings — trip 95 is 90k of them. A trip whose track the
-    maps refuse to draw has no entry and gets `{}`, which is the same answer
-    the map gives: no track, nothing to report.
+    over the trip's pings. A trip whose track the maps refuse to draw has no
+    entry and gets `{}` — the same answer the map gives.
 
-    Days under a mile are dropped here rather than in the template. A day
-    parked at camp logs a few hundred metres of GPS jitter, and "0 mi" is a
-    worse answer than saying nothing — the reader would take it as a measured
+    Days under `DRIVE_DAY_MIN_M` are dropped here rather than in the template.
+    A day parked at camp logs a few hundred metres of GPS jitter, and "0 mi"
+    is a worse answer than saying nothing: a reader takes it as a measured
     zero rather than as "you didn't go anywhere"."""
     try:
         entry = _trip_route_entries([trip]).get(trip["id"]) or {}
     except Exception:
         return {}
+
+    # Leg rows, keyed by day. Tolerate a row shorter than today's shape rather
+    # than raising on a cache written by an older build.
+    legs = {}
+    for row in entry.get("days") or []:
+        try:
+            legs[row[0]] = (row[1], row[3])
+        except (IndexError, TypeError):
+            continue
+
     out = {}
     for row in entry.get("day_totals") or []:
         try:
-            day, meters, moving = row[0], row[1], row[2]
+            day, whole_m, whole_moving = row[0], row[1], row[2]
         except (IndexError, TypeError):
             continue
-        if meters < DRIVE_DAY_MIN_M:
+        leg = legs.get(day)
+        if leg is None:
+            if whole_m < DRIVE_DAY_MIN_M:
+                continue
+            out[day] = {"miles": round(whole_m / 1609.344),
+                        "moving": _hm(whole_moving),
+                        "local_miles": 0, "round_trip": True}
             continue
-        out[day] = {"miles": round(meters / 1609.344), "moving": _hm(moving)}
+        leg_m, leg_moving = leg
+        # `max(0, ...)` is belt and braces: the leg is a sub-span of the day,
+        # so it can never be the longer of the two.
+        local = round(max(0, whole_m - leg_m) / 1609.344)
+        out[day] = {"miles": round(leg_m / 1609.344),
+                    "moving": _hm(leg_moving),
+                    "local_miles": local, "round_trip": False}
     return out
 
 
