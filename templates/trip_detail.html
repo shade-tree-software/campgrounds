@@ -1108,6 +1108,19 @@
     margin-bottom: 1rem;
   }
 
+  /* Around 1576px wide, auto-fill finds room for a 4th column and the tiles
+     SHRINK to ~163px — smaller than the ~195px they were on a 1400px laptop,
+     and they stay there because the layout caps at 1600px. Pin 3 across on
+     wide viewports so widening a window can't make the photos smaller
+     (~221px at the cap). 1500 is a no-op boundary: it's already 3 across
+     there, so this only removes the 4-column step. Don't "fix" this by
+     raising the minmax floor instead — a 190-200px floor also pushes the
+     3-column threshold to ~1390px, dropping ordinary laptops to 2 columns at
+     250-283px, past what the 480px thumb (THUMB_MAX_PX) can serve at 2x. */
+  @media (min-width: 1500px) {
+    .photo-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
   /* "Show all N photos" — phones only. Desktop has the width to show every
      tile, so the button is hidden there and .collapsible does nothing.
      The hidden tiles stay in the DOM, so lightbox paging still walks the
