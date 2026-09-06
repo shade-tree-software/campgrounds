@@ -270,10 +270,33 @@ function saveCaption(tripId, stayIdx, filename, caption) {
   });
 }
 
+// The tile carries draggable="true" for photo reordering, and a draggable
+// ancestor takes the mouse away from the text inside it: a click-drag across
+// the caption starts dragging the PHOTO instead of selecting, and Firefox goes
+// further and won't even give the textarea a caret from a click. So stand the
+// tile's drag down for as long as its caption is open — reordering and typing
+// are never wanted in the same moment — and put it back when the field closes.
+// Flagged in a data attribute so the restore only re-arms tiles we disarmed
+// (an uploader's own tiles are never draggable in the first place).
+function suspendTileDrag(el) {
+  const item = el.closest('.photo-item');
+  if (!item || !item.draggable) return;
+  item.draggable = false;
+  item.dataset.dragSuspended = '1';
+}
+
+function resumeTileDrag(el) {
+  const item = el.closest('.photo-item');
+  if (!item || !item.dataset.dragSuspended) return;
+  item.draggable = true;
+  delete item.dataset.dragSuspended;
+}
+
 function editCaption(spanEl) {
   const textarea = spanEl.nextElementSibling;
   spanEl.style.display = 'none';
   textarea.style.display = 'block';
+  suspendTileDrag(textarea);
   textarea.focus();
 }
 
@@ -291,6 +314,7 @@ function saveCaptionField(textarea, tripId, idx, filename, type) {
   }
   spanEl.style.display = '';
   textarea.style.display = 'none';
+  resumeTileDrag(textarea);
 
   // Save to server
   const url = type === 'event'
