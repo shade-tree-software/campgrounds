@@ -81,51 +81,106 @@ function highlightMarker(cardId) {
   setTimeout(() => el.classList.remove('marker-pulse'), 2400);
 }
 
-// Freeze the page while two or more fingers are on `el` (the map), and thaw it
-// when the last one lifts. See the call site for why the scroll has to be taken
-// away rather than cancelled.
+// Take every touch gesture on `el` (the map) away from the browser, and scroll
+// the page ourselves when it's a one-finger drag. See the call site for why the
+// browser can't be left to do it.
 //
-// The lock is the standard one: `position: fixed` on <body> with a compensating
-// negative `top`, which leaves the page looking pixel-identical while making it
-// unscrollable, and the offset is put back on release.
-function freezePageDuringPinch(el) {
+// `touch-action: none` is the whole point: it's read by the compositor when the
+// first finger lands, BEFORE any JavaScript runs, so it's the only thing that
+// can stop the browser claiming a map gesture as a page pan (and, on Firefox,
+// sliding the address bar with it). The cost is that a swipe on the map no
+// longer scrolls the page — so this puts that back, by hand:
+//   1 finger  → scroll the page by the finger's delta, with a fling on release
+//   2 fingers → nothing; the gesture belongs to Leaflet's pinch zoom/pan
+// A hand-rolled fling is never quite the platform's own, but the alternative is
+// a map that can't be panned without the page moving underneath it (AWH chose
+// this trade 2026-09-06).
+function enableMapPageScroll(el) {
   if (!el) return;
-  let lockedY = null;
+  el.style.touchAction = 'none';
 
-  function lock() {
-    if (lockedY !== null) return;
-    lockedY = window.scrollY || window.pageYOffset || 0;
-    const s = document.body.style;
-    s.position = 'fixed';
-    s.top = -lockedY + 'px';
-    s.left = '0';
-    s.right = '0';
-    s.width = '100%';
+  const MIN_FLING_V = 0.05;   // px/ms — below this a drag was a nudge, not a throw
+  const MAX_FLING_V = 4;      // px/ms — cap so a flick can't launch the page
+  const FLING_DECAY = 0.95;   // per frame, ≈ the platform's own feel
+  const FLING_STOP = 0.3;     // px/frame — slow enough to look stopped
+  const PAUSE_MS = 100;       // a gap this long means the finger stopped moving
+
+  let tracking = false;
+  let startY = 0, startScroll = 0, lastY = 0, lastT = 0, velocity = 0;
+  let flingId = null;
+
+  function stopFling() {
+    if (flingId) cancelAnimationFrame(flingId);
+    flingId = null;
   }
 
-  function unlock() {
-    if (lockedY === null) return;
-    const y = lockedY;
-    lockedY = null;
-    const s = document.body.style;
-    s.position = s.top = s.left = s.right = s.width = '';
-    // Instant, not smooth: this is putting back the offset the page was already
-    // rendering at, so any animation would be a scroll the reader didn't ask for.
-    window.scrollTo(0, y);
+  // The admin lasso takes over the map's touches to draw a selection; scrolling
+  // the page from the same drag would fight it.
+  function suppressed() {
+    return document.body.classList.contains('map-selection-mode')
+      || document.body.classList.contains('selection-dragging');
   }
 
   // Capture phase, because Leaflet's controls (legend, layer switcher, scale)
-  // call stopPropagation on touchstart — a pinch that begins with a finger on
-  // one of those would never reach a bubbling listener here.
+  // call stopPropagation on touchstart — a drag that begins on one of those
+  // would never reach a bubbling listener here.
+  const opts = { capture: true, passive: true };
+
   el.addEventListener('touchstart', (e) => {
-    if (e.touches && e.touches.length >= 2) lock();
-  }, { capture: true, passive: true });
-  // Thawed only once EVERY finger is up. A pinch that ends with one finger
-  // still down is still a map gesture; re-arming the page scroll underneath it
-  // would hand that finger the timeline.
-  const release = (e) => { if (!e.touches || e.touches.length === 0) unlock(); };
-  el.addEventListener('touchend', release, { capture: true, passive: true });
-  el.addEventListener('touchcancel', release, { capture: true, passive: true });
+    stopFling();                       // a finger down always stops the page
+    tracking = e.touches.length === 1 && !suppressed();
+    if (!tracking) return;
+    startY = lastY = e.touches[0].clientY;
+    startScroll = window.scrollY || window.pageYOffset || 0;
+    lastT = e.timeStamp;
+    velocity = 0;
+  }, opts);
+
+  el.addEventListener('touchmove', (e) => {
+    // A second finger ends the scroll rather than pausing it: the gesture has
+    // become a pinch, and resuming from a stale anchor would jump the page.
+    if (!tracking || e.touches.length !== 1) { tracking = false; return; }
+    const y = e.touches[0].clientY;
+    // Anchored to where the finger started, not accumulated per move, so
+    // rounding can't drift the page away from the finger over a long drag.
+    window.scrollTo(0, startScroll + (startY - y));
+    // Smoothed, because the last touchmove alone is noisy: a 3 ms sample with a
+    // few px of jitter reads as a hard flick and would launch the page. A long
+    // gap means the finger paused, so the estimate starts over from what it is
+    // doing NOW rather than carrying the speed it had before the pause.
+    const dt = e.timeStamp - lastT;
+    if (dt > 0) {
+      const inst = (lastY - y) / dt;
+      velocity = dt > PAUSE_MS ? inst : velocity * 0.4 + inst * 0.6;
+    }
+    lastY = y;
+    lastT = e.timeStamp;
+  }, opts);
+
+  el.addEventListener('touchend', (e) => {
+    // A finger that came to rest before lifting means "stop here", so a pause
+    // longer than a couple of frames discards the velocity it arrived with.
+    if (e.timeStamp - lastT > PAUSE_MS) velocity = 0;
+    const flingable = tracking && e.touches.length === 0
+      && Math.abs(velocity) >= MIN_FLING_V;
+    tracking = false;
+    if (!flingable) return;
+    // px/ms → px/frame at 60fps, then decay. Ends early when the page has
+    // nothing left to give, so a fling into the top or bottom stops dead
+    // instead of spinning out its frames against a wall.
+    let v = Math.max(-MAX_FLING_V, Math.min(MAX_FLING_V, velocity)) * 16;
+    const step = () => {
+      v *= FLING_DECAY;
+      if (Math.abs(v) < FLING_STOP) { flingId = null; return; }
+      const before = window.scrollY || window.pageYOffset || 0;
+      window.scrollBy(0, v);
+      if ((window.scrollY || window.pageYOffset || 0) === before) { flingId = null; return; }
+      flingId = requestAnimationFrame(step);
+    };
+    flingId = requestAnimationFrame(step);
+  }, opts);
+
+  el.addEventListener('touchcancel', () => { tracking = false; }, opts);
 }
 
 // Click a card HEADER → center & zoom the map on its marker, then pulse it.
@@ -315,23 +370,22 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   window.__tripMapDragDefault = !touchPrimary;
   window.tripMap = map;
   // Two fingers on the map are a MAP gesture — pinch to zoom, or pan by the
-  // pinch midpoint — and must never scroll the timeline underneath it.
+  // pinch midpoint — and nothing about the page may move underneath it.
   //
-  // They could, because one-finger dragging is off here (see above), which
-  // leaves the container at Leaflet's `touch-action: pan-x pan-y` — the browser
-  // is free to scroll the PAGE from a touch that starts on the map. Leaflet
-  // does call preventDefault when the second finger lands, but that only helps
-  // if the browser hasn't committed yet: if the first finger drifts past the
-  // scroll slop before the second arrives, the page scroll has already begun,
-  // every later touch event is `cancelable: false`, and the timeline slides
-  // while the map pinches — which reads as the map running away. It's
-  // intermittent for exactly that reason: it depends on how far, and how soon,
-  // the first finger moved.
+  // Leaving one-finger dragging off (above) also left the container at
+  // Leaflet's `touch-action: pan-x pan-y`, which hands every touch that starts
+  // on the map to the browser as a possible page pan. That decision is made by
+  // the compositor when the FIRST finger lands, so nothing JavaScript does
+  // afterwards can take it back: Leaflet's preventDefault on the second finger
+  // arrives too late if the first one already drifted past the scroll slop, and
+  // even freezing the page mid-gesture (what this used to do) only stopped the
+  // content — Firefox still slid its address bar, because the gesture was
+  // already claimed.
   //
-  // So don't try to cancel a scroll that's already underway — take the page's
-  // ability to scroll away for the length of the gesture. Touch-primary only,
-  // which is the only place dragging is off and the only place this happens.
-  if (touchPrimary) freezePageDuringPinch(map.getContainer());
+  // So the map now declares `touch-action: none` and the one-finger page scroll
+  // it gives up is re-implemented on top (see enableMapPageScroll). Touch-primary
+  // only: with a mouse, dragging is on and Leaflet already sets touch-action.
+  if (touchPrimary) enableMapPageScroll(map.getContainer());
   if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
   // Dedicated SVG pane for the suppressed/relocated ghost layers so they
   // render above every regular marker (markerPane is zIndex 600; this sits
