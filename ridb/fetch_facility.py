@@ -78,8 +78,20 @@ def _get(path, params=None):
     return None
 
 
-def search_facilities(query):
-    data = _get("facilities", {"query": query, "limit": 20, "activity": "CAMPING"})
+def search_facilities(query, limit=20, state=None):
+    """Facilities matching `query`, in RIDB's own relevance order.
+
+    RIDB matches the query against the facility DESCRIPTION as well as its name,
+    so a campground on the "big bend" of some river outranks the one actually
+    named Big Bend — which is why callers that show a short list should ask for
+    a generous `limit` and re-rank by name themselves. `state` (a 2-letter code)
+    narrows to that state, which is the cheap way to disambiguate a name the
+    federal catalog reuses.
+    """
+    params = {"query": query, "limit": limit, "activity": "CAMPING"}
+    if state:
+        params["state"] = state
+    data = _get("facilities", params)
     return data.get("RECDATA", [])
 
 

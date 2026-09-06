@@ -3704,13 +3704,67 @@ def campgrounds_availability():
                            is_admin=is_admin, default_fit_ft=DEFAULT_FIT_FT)
 
 
+# How many facilities to ask RIDB for, and how many to hand the picker. RIDB
+# ranks by its own full-text relevance over name AND description, so the pool
+# has to be big enough that a name match is IN it before we can rank it up.
+RIDB_SEARCH_FETCH = 50
+RIDB_SEARCH_RETURN = 25
+# Trailing words that say "this is a campground" rather than which campground.
+# Stripped from both sides so "Big Bend Campground" matches RIDB's "BIG BEND (WV)".
+_RIDB_GENERIC_TAIL = (" campgrounds", " campground", " camping area", " cg")
+
+
+def _ridb_name_key(name):
+    """Comparable form of a facility name: no parenthetical, no punctuation.
+
+    RIDB disambiguates reused names with a parenthetical — "BIG BEND (WV)",
+    "Cottonwood (Big Bend, TX)" — while `campgrounds.json` spells the same place
+    "Big Bend Campground". Dropping the parenthetical and the generic tail makes
+    the two comparable; the state is carried separately (see `state` below),
+    which is the part that actually disambiguates.
+    """
+    s = re.sub(r"\([^)]*\)", " ", (name or "").lower())
+    s = re.sub(r"[^a-z0-9]+", " ", s).strip()
+    for tail in _RIDB_GENERIC_TAIL:
+        if s.endswith(tail):
+            return s[: -len(tail)].strip()
+    return s
+
+
+def _ridb_match_rank(name, q_key):
+    """0 = same name, 1 = starts with the query, 2 = every query word appears, 3 = no name match.
+
+    Rank 3 is the "RIDB matched the description, not the name" case — it stays in
+    the list (the description hit may be what the reader meant) but sorts below
+    anything whose NAME matches, which is what keeps an exact match from falling
+    off the end of a truncated picker.
+    """
+    key = _ridb_name_key(name)
+    if key == q_key:
+        return 0
+    if key.startswith(q_key):
+        return 1
+    words = key.split()
+    if q_key and all(any(w.startswith(t) for w in words) for t in q_key.split()):
+        return 2
+    return 3
+
+
 @app.route('/api/ridb/search')
 def api_ridb_search():
-    """Search recreation.gov campgrounds by name (for the availability picker)."""
+    """Search recreation.gov campgrounds by name (for the availability picker).
+
+    `state` (2-letter code) is optional and narrows the RIDB query — the map
+    popup's "Check availability" link passes the entry's own state so a name the
+    federal catalog reuses ("Big Bend" is a campground in both WV and OK) lands
+    on the right one. A state that finds nothing falls back to a nationwide
+    search rather than reporting no such campground.
+    """
     denied = _require_campground_view_api()
     if denied:
         return denied
     q = request.args.get('q', '').strip()
+    state = request.args.get('state', '').strip().upper()[:2]
     if len(q) < 2:
         return jsonify([])
     if not os.environ.get("RIDB_API_KEY"):
@@ -3722,14 +3776,26 @@ def api_ridb_search():
                                  "yet — ask Andrew. You can still book directly "
                                  "on recreation.gov."}), 503
     try:
-        results = search_facilities(q)
+        results = search_facilities(q, limit=RIDB_SEARCH_FETCH, state=state or None)
+        if state and not results:
+            results = search_facilities(q, limit=RIDB_SEARCH_FETCH)
     except Exception:
         return jsonify({"error": "Search failed (RIDB request error)."}), 502
+    q_key = _ridb_name_key(q)
     out = [{"id": f.get("FacilityID"), "name": f.get("FacilityName"),
-            "type": f.get("FacilityTypeDescription", "")}
+            "type": f.get("FacilityTypeDescription", ""),
+            "rank": _ridb_match_rank(f.get("FacilityName"), q_key)}
            for f in results
            if f.get("FacilityTypeDescription") == "Campground" and f.get("Reservable", True)]
-    return jsonify(out)
+    # Stable, so RIDB's relevance still orders the ties inside each rank.
+    out.sort(key=lambda r: r["rank"])
+    # `exact` is the picker's licence to auto-select without asking, so it's set
+    # only when ONE result carries the name — "Big Bend" is a campground in WV
+    # and in OK, and choosing for the reader there would be guessing.
+    sole = sum(1 for r in out if r["rank"] == 0) == 1
+    for r in out:
+        r["exact"] = r.pop("rank") == 0 and sole
+    return jsonify(out[:RIDB_SEARCH_RETURN])
 
 
 @app.route('/api/ridb/availability')

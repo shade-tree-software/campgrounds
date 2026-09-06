@@ -518,18 +518,29 @@
   })();
 
   const presetCg = new URLSearchParams(location.search).get('cg');
+  // The campground-map popup sends the entry's state alongside its name. RIDB
+  // reuses names across states ("Big Bend" is a campground in WV and in OK), so
+  // without it the prefill has nothing to pick by.
+  const presetState = new URLSearchParams(location.search).get('state') || '';
   if (presetCg) {
     searchInput.value = presetCg;
-    prefillFromName(presetCg);
+    prefillFromName(presetCg, presetState);
   }
 
-  async function prefillFromName(q) {
+  async function prefillFromName(q, state) {
     try {
-      const r = await fetch('/api/ridb/search?q=' + encodeURIComponent(q));
+      const url = '/api/ridb/search?q=' + encodeURIComponent(q)
+        + (state ? '&state=' + encodeURIComponent(state) : '');
+      const r = await fetch(url);
       const data = await r.json();
       if (!Array.isArray(data) || !data.length) return;
       const lc = q.toLowerCase();
-      const match = data.find(f => f.name.toLowerCase() === lc) ||
+      // `exact` is the server's name match with the "(WV)"-style suffix and the
+      // generic "Campground" tail normalized away, and it's only set when a
+      // single result carries the name — so it's safe to auto-select. The
+      // literal-string tests below stay as the fallback.
+      const match = data.find(f => f.exact) ||
+        data.find(f => f.name.toLowerCase() === lc) ||
         data.find(f => f.name.toLowerCase().startsWith(lc)) ||
         data.find(f => f.name.toLowerCase().includes(lc));
       if (match) {

@@ -1224,7 +1224,10 @@ function cgPopupHtml(cg) {
   // Federal campgrounds are on recreation.gov — link to the availability page
   // with the name pre-filled (it searches RIDB and auto-selects the match).
   if (cg.ownership === 'federal') {
-    popup += `<br><a href="/campgrounds/availability?cg=${encodeURIComponent(cg.name)}">`
+    // Send the state too: RIDB reuses campground names across states, so the
+    // availability page needs it to know which "Big Bend" this link meant.
+    popup += `<br><a href="/campgrounds/availability?cg=${encodeURIComponent(cg.name)}`
+      + `${cg.state ? '&state=' + encodeURIComponent(cg.state) : ''}">`
       + `Check availability &rarr;</a>`;
   }
   const [cgLat, cgLng] = (cg.location || '').split(',').map(parseFloat);
