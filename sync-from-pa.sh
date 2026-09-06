@@ -15,8 +15,8 @@
 # Usage:
 #   ./sync-from-pa.sh                 # data + photos into this repo
 #   ./sync-from-pa.sh --data          # trip_data/ only (small, fast)
-#   ./sync-from-pa.sh --photos        # photo_uploads/ only
-#   ./sync-from-pa.sh --trip 92       # photos for trip 92 only (repeatable)
+#   ./sync-from-pa.sh --photos        # photo_uploads/ only (every trip)
+#   ./sync-from-pa.sh --photos 92     # photos for trip 92 only (ids repeatable)
 #   ./sync-from-pa.sh -n              # dry run: show what would transfer
 #   ./sync-from-pa.sh --dest /media/andrew/EKKO/app     # refresh the SD card
 #   ./sync-from-pa.sh --delete        # also remove local files gone from PA
@@ -37,15 +37,24 @@ DEL=()
 while [ $# -gt 0 ]; do
   case "$1" in
     --data)        DO_DATA=1; shift ;;
-    --photos)      DO_PHOTOS=1; shift ;;
+    # Bare --photos means the whole library; any trip ids that follow narrow it
+    # to those trips. One flag rather than two because "--photos --trip 92" read
+    # as "all photos AND trip 92" while actually meaning only trip 92.
+    #
     # Photo directories are keyed by TRIP ID -- photo_uploads/<trip_id>/... --
     # which is the number in the trip's own URL (/trips/92), not the display
     # "Trip N" number (that one is computed from chronological position and
-    # shifts whenever a trip is added). Repeatable to pull several trips.
-    --trip)        case "${2:-}" in
-                     ''|*[!0-9]*) echo "error: --trip needs a trip id (the number in /trips/<id>)" >&2; exit 2 ;;
-                   esac
-                   TRIPS+=("$2"); DO_PHOTOS=1; shift 2 ;;
+    # shifts whenever a trip is added).
+    #
+    # Consuming only all-digit tokens is unambiguous here because the script
+    # takes no positional arguments -- a bare number can't mean anything else.
+    --photos)      DO_PHOTOS=1; shift
+                   while [ $# -gt 0 ]; do
+                     case "$1" in
+                       ''|*[!0-9]*) break ;;
+                       *) TRIPS+=("$1"); shift ;;
+                     esac
+                   done ;;
     --dest)        DEST="$2"; shift 2 ;;
     -n|--dry-run)  DRY=(--dry-run); shift ;;
     # --force lets --delete replace a directory with a non-directory. It does NOT
@@ -120,7 +129,7 @@ reap_orphaned_dirs() {          # reap_orphaned_dirs <target> <label>
 }
 
 # Does a directory exist on PA? --list-only is a read, so it works over the
-# read-only rrsync key. Used to turn a typo'd --trip into a clear error instead
+# read-only rrsync key. Used to turn a typo'd trip id into a clear error instead
 # of an rsync "No such file or directory" after a local directory was created.
 remote_has() {                # remote_has <remote-subdir>
   rsync --list-only -e "$SSH_CMD" "$PA_HOST:/$1/" >/dev/null 2>&1
