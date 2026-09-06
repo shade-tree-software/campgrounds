@@ -16,6 +16,7 @@
 #   ./sync-from-pa.sh                 # data + photos into this repo
 #   ./sync-from-pa.sh --data          # trip_data/ only (small, fast)
 #   ./sync-from-pa.sh --photos        # photo_uploads/ only
+#   ./sync-from-pa.sh --trip 92       # photos for trip 92 only (repeatable)
 #   ./sync-from-pa.sh -n              # dry run: show what would transfer
 #   ./sync-from-pa.sh --dest /media/andrew/EKKO/app     # refresh the SD card
 #   ./sync-from-pa.sh --delete        # also remove local files gone from PA
@@ -29,6 +30,7 @@ HERE="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 DEST="$HERE"
 DO_DATA=0
 DO_PHOTOS=0
+TRIPS=()
 DRY=()
 DEL=()
 
@@ -36,6 +38,14 @@ while [ $# -gt 0 ]; do
   case "$1" in
     --data)        DO_DATA=1; shift ;;
     --photos)      DO_PHOTOS=1; shift ;;
+    # Photo directories are keyed by TRIP ID -- photo_uploads/<trip_id>/... --
+    # which is the number in the trip's own URL (/trips/92), not the display
+    # "Trip N" number (that one is computed from chronological position and
+    # shifts whenever a trip is added). Repeatable to pull several trips.
+    --trip)        case "${2:-}" in
+                     ''|*[!0-9]*) echo "error: --trip needs a trip id (the number in /trips/<id>)" >&2; exit 2 ;;
+                   esac
+                   TRIPS+=("$2"); DO_PHOTOS=1; shift 2 ;;
     --dest)        DEST="$2"; shift 2 ;;
     -n|--dry-run)  DRY=(--dry-run); shift ;;
     # --force lets --delete replace a directory with a non-directory. It does NOT
@@ -44,7 +54,7 @@ while [ $# -gt 0 ]; do
     # "cannot delete non-empty directory" and moves on. reap_orphaned_dirs()
     # below cleans those up afterwards.
     --delete)      DEL=(--delete --force); shift ;;
-    -h|--help)     sed -n '2,20p' "$0"; exit 0 ;;
+    -h|--help)     sed -n '2,22p' "$0"; exit 0 ;;
     *) echo "unknown arg: $1" >&2; exit 2 ;;
   esac
 done
@@ -107,6 +117,13 @@ reap_orphaned_dirs() {          # reap_orphaned_dirs <target> <label>
     rmdir -p --ignore-fail-on-non-empty "$(dirname "$dir")" 2>/dev/null || true
   done < <(tr '\r' '\n' < "$RSYNC_LOG" |
            sed -n 's/.*cannot delete non-empty directory: //p' | sort -ru)
+}
+
+# Does a directory exist on PA? --list-only is a read, so it works over the
+# read-only rrsync key. Used to turn a typo'd --trip into a clear error instead
+# of an rsync "No such file or directory" after a local directory was created.
+remote_has() {                # remote_has <remote-subdir>
+  rsync --list-only -e "$SSH_CMD" "$PA_HOST:/$1/" >/dev/null 2>&1
 }
 
 pull() {                      # pull <remote-subdir> <local-subdir> [extra excludes...]
@@ -173,8 +190,22 @@ if [ $DO_PHOTOS -eq 1 ]; then
   # .thumbs/ and .views/ are regenerated on demand from the originals (and are
   # large), .trash/
   # holds already-deleted photos pending purge. Neither is worth the bandwidth.
-  pull photo_uploads photo_uploads \
-    --exclude '.thumbs/' --exclude '.views/' --exclude '.trash/'
+  PHOTO_EXCLUDES=(--exclude '.thumbs/' --exclude '.views/' --exclude '.trash/')
+  if [ ${#TRIPS[@]} -gt 0 ]; then
+    # One trip is a few dozen MB against ~7 GB for the library, so this is the
+    # cheap way to pick up the photos from the trip you just got home from.
+    # Pulling the subdirectory itself (rather than filtering the whole tree)
+    # keeps the space preflight, --delete and the orphan reap scoped to it too.
+    for t in "${TRIPS[@]}"; do
+      remote_has "photo_uploads/$t" || {
+        echo "error: PA has no photo_uploads/$t — is $t the trip id from /trips/<id>?" >&2
+        exit 1
+      }
+      pull "photo_uploads/$t" "photo_uploads/$t" "${PHOTO_EXCLUDES[@]}"
+    done
+  else
+    pull photo_uploads photo_uploads "${PHOTO_EXCLUDES[@]}"
+  fi
 fi
 
 echo
