@@ -56,7 +56,10 @@ system's actual site-type list.
   Prefer the ReserveMN coords as a starting point but move onto the loop if needed.
 - **`elevation_meters`** — `https://api.open-meteo.com/v1/elevation?latitude=<lat>&longitude=<lng>`
   at your final pinned coord (number, not string).
-- **`ownership`** — `state` for state parks/SRAs/forests/DNR areas. If you discover a
+- **`ownership`** — `state` for state parks/SRAs/forests/DNR areas. Use **`wma`** for a
+  state wildlife-agency tract (WMA/SWA/WHMA/wildlife area) whose camping is informal —
+  a permit plus a parking area or undesignated clearing, no numbered sites/hookups/
+  reservations; a wildlife area running a real campground stays `state`. If you discover a
   candidate is actually county/city/federal/private, set the correct value and note it.
 - **`website`** — official park/forest page first, then the deep reservation link
   (newline-separated, deduped by domain). URLs go HERE, not in `note`.

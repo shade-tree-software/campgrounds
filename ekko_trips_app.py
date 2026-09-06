@@ -3579,6 +3579,12 @@ STATE_NAMES = {
 # listed (or blank) fall back to a title-cased label and sort to the end.
 OWNERSHIP_LABELS = {
     "state": "State",
+    # Wildlife-management areas are state-owned, but the camping on them is a
+    # different animal: no designated campground, just a permit and an
+    # understanding that you may overnight in a parking area or pull-off. Its
+    # own ownership value so the map's Ownership filter can hide the class in
+    # one click, rather than mixing it into "State" with the parks and SRAs.
+    "wma": "State WMA",
     "federal": "Federal",
     "local": "Local",
     "private": "Private",
