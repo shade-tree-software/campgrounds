@@ -716,8 +716,14 @@ const STORE = {
   },
 };
 // Dimmed (hidden) legend categories / ownership filters, restored from the session.
+// Two ownership classes start OFF: `wma` is informal wildlife-area camping (a
+// permit and a parking lot, not a campground) and `hipcamp` is a booking
+// platform rather than a public campground — both are answers to a narrower
+// question than "where can we camp", so they're opt-in. Only the FALLBACK is
+// seeded: a session that has turned either on keeps it on across page loads.
+const DEFAULT_HIDDEN_OWNERSHIPS = ['wma', 'hipcamp'];
 const hiddenCategories = new Set(STORE.get('hiddenCategories', []));
-const hiddenOwnerships = new Set(STORE.get('hiddenOwnerships', []));
+const hiddenOwnerships = new Set(STORE.get('hiddenOwnerships', DEFAULT_HIDDEN_OWNERSHIPS));
 function persistCategories() { STORE.set('hiddenCategories', [...hiddenCategories]); }
 function persistOwnerships() { STORE.set('hiddenOwnerships', [...hiddenOwnerships]); }
 // Master campground on/off — lets the map show only the roadside stops. When off,
