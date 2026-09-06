@@ -81,14 +81,21 @@ function highlightMarker(cardId) {
   setTimeout(() => el.classList.remove('marker-pulse'), 2400);
 }
 
-// Click a card → center & zoom the map on its marker, then pulse the marker.
+// Click a card HEADER → center & zoom the map on its marker, then pulse it.
 // Copy ids (stay-3-2) resolve to their base stay (stay-3).
 // Skipped on the stacked single-column layout, where the map is off-screen
 // while you're reading cards — moving it there is invisible work that only
 // shows up later as a mysteriously re-zoomed map.
+//
+// The header, not the whole card: the body is where you read a description,
+// select a bit of text, or work with the photo grid, and every one of those
+// re-zoomed the map out from under you. The header is the card's identity —
+// the circle, the name, the dates — so clicking it reads as "show me this
+// one". A bare card is nothing BUT its header, so those are unchanged.
 document.querySelectorAll('.stay-card, .event-card').forEach(card => {
   card.addEventListener('click', (e) => {
     if (isSingleColumnLayout()) return;
+    if (!e.target.closest('.stay-header, .event-header')) return;
     if (e.target.closest('a, button, img, input, textarea, select, label')) return;
     const id = card.id || '';
     const m = id.match(/^stay-(\d+)-\d+$/);
