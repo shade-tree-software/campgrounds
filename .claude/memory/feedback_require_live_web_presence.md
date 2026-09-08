@@ -19,4 +19,16 @@ AWH 2026-09-08: a campground must have at least one **live** web presence — a 
 - A Facebook page alone is weak — accept it only if it is actually current and carries prices/contact.
 - This bites hardest in the **private** stage of a sweep, where phone-only mom-and-pop parks with expired domains are common. Apply it at add time so the entry never lands.
 
-See also [[feedback_note_rate_sourcing]], [[feedback_campground_vetting_discipline]], [[feedback_urls_in_website_not_notes]].
+**How to audit a whole state/ownership slice for this (method proven on 178 private entries, 2026-09-08 — 119 removed, 20 rescued):** four independent signals, cheap and deterministic, no per-entry research until the end.
+1. **RV Life park pages carry the operator URL** in embedded JSON as `cg_url` (the Algolia `park` index does NOT expose it — fetch the park page). Values are JSON-escaped: unescape `\/` → `/` before probing, or every request dies as "no host given".
+2. **Probe every URL** (ours + RV Life's), follow redirects, then **retry failures with browser headers** — a first-pass 403 or TLS timeout is usually blocking, not death. Facebook returns HTTP 400 to any non-browser client; never read that as a dead page.
+3. **Hipcamp's sitemap is the bookability oracle**: `robots.txt` → `sitemaps/v2/main.xml.gz` → per-state `us-lands-XX.xml.gz` / `ca-lands-XX.xml.gz`. It lists only live/bookable lands, so a listing that is `status: ASLEEP` / `isBookable: false` is *correctly* absent — the sitemap's own criterion matches this rule exactly. **Campspot has the equivalent** at `campspot.com/about/documents/park-sitemap.xml` (~3,100 parks); checking Hipcamp alone misses parks that book through Campspot.
+4. **Good Sam's Algolia record carries `campground.urls.campground`** — an independent second source for an operator site (see [[reference_good_sam_ratings]] for the key). Query per candidate with a `campground.address.stateCode` filter; a state-wide pull silently truncates at Algolia's 1,000-result cap.
+
+**Always verify a name match by coordinate (<8 km).** Campground names repeat relentlessly and fuzzy matching is worthless without it: "Pioneer RV Park" matched a park 600 km away, "Junction RV Park" one 120 km away, and 8 of 11 Hipcamp name-matches and 14 of 15 Campspot ones were different properties. Also guard the empty-string case — a normalizer that strips generic words turns "A & A Park" into `""`, which then substring-matches everything.
+
+**A live URL is not enough — classify what it IS.** Sort into operator/parent site, booking platform, third-party directory, and junk. Tourism directories (travelok, go-utah, bonjourquebec, state tourism sites), a Camping World *dealer* page, an expired domain reselling as a video site, and a NameBright parking page all return HTTP 200.
+
+**Two gotchas when writing results back to `campgrounds.json`:** apply website backfills **additively** (an entry may already hold several newline-separated URLs — replacing the value drops them), and never build the replacement with `re.sub`'s template, which interprets the `\n` inside a JSON string as a real newline and corrupts the file. Use a lambda replacement. Strip `utm_*` params off URLs that came from a directory.
+
+See also [[feedback_note_rate_sourcing]], [[feedback_campground_vetting_discipline]], [[feedback_urls_in_website_not_notes]], [[reference_good_sam_ratings]], [[reference_rvlife_price]].
