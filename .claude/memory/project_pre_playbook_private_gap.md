@@ -21,13 +21,21 @@ commercial -> 39 pass <=$$ / >=4-star -> 7 already in DB -> 32 candidates ->
 **15 adds, 17 skips**; waterfront audit 5 changes / 10 confirmed. Instructions
 file `audit/add_research_instructions_va_private.md` is reusable for the rest.
 
-**STILL OPEN**, measured 2026-09-07 with the same gate + dedup:
-- **PA** — 28 pass gate, ~18 not in DB
-- **WV** — 36 pass gate, ~13 not in DB
-- **MD** — 9 pass gate, ~8 not in DB
-- **DE** — 3 pass gate, ~3 not in DB
+**PA is DONE** (2026-09-08, commits `cae6715` add + `2f4fa00` audit, ids
+13101-13118). 511 PA parks -> 399 commercial -> 62 pass gate -> 29 already in DB
+-> 33 candidates -> **18 adds, 15 skips**; waterfront audit 7 changes / 11
+confirmed. Instructions: `audit/add_research_instructions_pa_private.md`.
 
-~42 candidates; at VA's ~47% keep rate expect roughly 20 real adds.
+**STILL OPEN**, re-measured 2026-09-08 with a bounding box that actually covers
+each state (an earlier pass used one box clipped at lat 40.9 and undercounted PA
+by half - measure per state):
+- **WV** — 36 pass gate, 23 in DB, **13 candidates**
+- **MD** — 9 pass gate, 1 in DB, **8 candidates**
+- **DE** — 3 pass gate, 0 in DB, **3 candidates**
+
+24 candidates left; at the VA/PA keep rate (47% / 55%) expect roughly 12 adds.
+Candidate lists saved to /tmp/{wv,md,de}_candidates.json during that pass -
+regenerate rather than trusting them if /tmp has been cleared.
 
 **Why:** the gap is invisible from inside the data — a campground that was never
 a candidate leaves no trace, and every VA entry passed its inclusion audit, so
@@ -52,3 +60,20 @@ and [[reference_rvlife_price]].
    Bluegreen timeshare, an Airstream-owners co-op, 2 deeded-membership/lot-
    ownership parks, 2 closed, 1 unconfirmable. Budget agent time accordingly —
    the gate is a candidate filter, never a keep decision.
+
+**Two more lessons from PA:**
+3. **Agents can emit HTML entities into structured output.** Three PA park names
+   came back as `L &amp; M Campground` etc. and would have been stored literally,
+   showing as `&amp;` in the picker and every map popup. Run `html.unescape` over
+   every string field of an agent's JSON before appending. Check with
+   `grep -o '&\(amp\|gt\|lt\|quot\);' campgrounds.json`.
+4. **Roughly 6% of gate-passing parks no longer exist**, and RV Life keeps serving
+   the records with 4-star ratings intact (one PA slug literally contained
+   `-closed-` while the record still rated 4*). VA had 2 closures, PA 2. The
+   satellite look is what catches these - a park reading 4*/$$ can be a field.
+
+**Method note for eastern sweeps** (from the PA waterfront audit): state leaf-off
+orthoimagery beats Esri's summer tiles where canopy is the obstacle - PA's PEMA
+2021-23 layer resolved entries Esri could not, converting forced default-downs
+into real verdicts. A **USGS 3DEP elevation transect** settles bluff-versus-open-
+bank when imagery argues either way. Look for the equivalent state layer in WV/MD/DE.
