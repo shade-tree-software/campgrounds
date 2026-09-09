@@ -395,6 +395,8 @@ Shared across campground manage and event location picker via `static/map-picker
 
 All Leaflet maps offer a satellite layer that includes three Esri tile layers: World_Imagery (base), World_Boundaries_and_Places (labels), and World_Transportation (roads). This applies to trip detail, trips map, campground map, and campground manage templates.
 
+**The trip-detail and trips maps pass `zoomSnap: 0`** so `fitBounds` can land on a FRACTIONAL zoom. Integer zoom levels double the visible area each step, so missing one by a hair costs the entire doubling: trip 95 spans 27.3° of longitude, needs zoom 5.04, snapped down to 4, and opened on a 63°-wide view — the trip in a thin band with two-thirds of the frame ocean. It is also why the landing map framed the trips correctly on one desktop and opened on Oregon, Mexico and most of Canada on another: two window sizes falling either side of an integer boundary. The cost is that tiles are CSS-scaled at fractional zooms and read slightly softer. Tile REQUESTS stay at integer zoom (Leaflet rounds for the URL), so the service worker's `ekko-tiles-*` cache and the offline PMTiles build are unaffected. **The poster does NOT do this** — it needs crisp tiles for print, and solves the same problem by fitting at `ceil(zoom)` and scaling the div back down (see `docs/poster.md`); don't unify them.
+
 **No map anywhere carries Leaflet's +/− zoom control** — every `L.map()` call passes `zoomControl: false`. Wheel, pinch, double-click and the keyboard +/− all zoom, so the buttons only spent map area (worst on the small map-picker popup and on phones). Keep new maps consistent.
 
 ### Responsive / Mobile Design

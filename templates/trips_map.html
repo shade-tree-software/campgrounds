@@ -776,7 +776,16 @@ try {
 
 // No zoom control anywhere in the app: the wheel, pinch, double-click and the
 // keyboard +/- all zoom, and the buttons only cost map.
-const map = L.map('all-trips-map', { zoomControl: false });
+// zoomSnap: 0 lets fitBounds land on a FRACTIONAL zoom. Integer levels double
+// the visible area each step, so missing one by a hair costs the whole
+// doubling — which is why this map framed the trips correctly on one desktop
+// and opened on Oregon, Mexico and most of Canada on another: the two window
+// sizes fell either side of an integer boundary. The poster hit the same wall
+// and worked around it by fitting at ceil(zoom) and scaling the div (it needs
+// crisp tiles for print); an interactive map can just take the fractional zoom
+// and accept slightly softer tiles. Tile REQUESTS stay at integer zoom, so the
+// service worker's tile cache and the offline PMTiles build are unaffected.
+const map = L.map('all-trips-map', { zoomControl: false, zoomSnap: 0 });
 map.whenReady(() => addMilesScaleBar(map));   // miles-only scale bar, bottom-right above attribution
 const streets = window.ekkoStreetLayer().addTo(map);
 const satellite = window.ekkoSatelliteLayer();

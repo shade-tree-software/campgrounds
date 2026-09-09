@@ -368,7 +368,18 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // is true for anything that merely supports touch events.
   const touchPrimary = window.matchMedia('(pointer: coarse)').matches;
   // zoomControl: false app-wide — wheel/pinch/double-click/keyboard all zoom.
-  const map = L.map('trip-map', { dragging: !touchPrimary, zoomControl: false });
+  // zoomSnap: 0 lets fitBounds land on a FRACTIONAL zoom instead of rounding
+  // down to an integer one. Integer levels double the visible area each step,
+  // so missing one by a hair costs the whole doubling: trip 95 spans 27.3 deg
+  // of longitude and needs zoom 5.04, which snapped to 4 and opened on a view
+  // 63 deg wide — the trip in a thin band with two-thirds of the frame ocean.
+  // The cost is that tiles are CSS-scaled at fractional zooms and read a touch
+  // softer; framing the trip is worth more than that. Tile REQUESTS are still
+  // at integer zoom (Leaflet rounds for the URL), so nothing changes for the
+  // service worker's tile cache or the offline PMTiles build.
+  const map = L.map('trip-map', {
+    dragging: !touchPrimary, zoomControl: false, zoomSnap: 0,
+  });
   // Published so anything that temporarily suppresses dragging (the admin
   // select-pings lasso) restores it to this page's baseline rather than
   // unconditionally enabling it — which on a phone would reinstate the
