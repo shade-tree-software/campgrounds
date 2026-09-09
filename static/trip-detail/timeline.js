@@ -914,7 +914,7 @@ function _modalFormHtml(kind, v) {
             <div class="nearby-dropdown"></div>
           </div>
         </div>
-        <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
+        <div><div class="field-label-row"><label>Date</label></div><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
           <div class="field-label-row">
             <label>Time</label>
@@ -962,7 +962,7 @@ function _modalFormHtml(kind, v) {
           <label>Event Name <span style="color:var(--gray);font-weight:normal;font-size:.75rem">(blank to use family location name)</span></label>
           <input type="text" data-field="name" value="${escapeHtml(nameVal)}" autocomplete="off">
         </div>
-        <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
+        <div><div class="field-label-row"><label>Date</label></div><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
           <div class="field-label-row">
             <label>Time</label>

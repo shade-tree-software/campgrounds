@@ -1853,12 +1853,20 @@
      the modal both, so the label margin is set here — `.event-edit-form
      .form-grid label` is (0,2,1) and would otherwise beat a bare
      `.field-label-row label` (0,1,1) in the inline form only, leaving the
-     two contexts subtly misaligned. */
+     two contexts subtly misaligned.
+
+     `min-height` is what keeps the Time inputs level with the Date ones
+     beside them. Grid cells stack their own contents from their own top, so
+     a label row made taller by the button pushed only that cell's inputs
+     down. The Date cell wears the same class (with no button in it) and the
+     min-height sizes both rows to the button, so the two agree whether or
+     not a button is present. */
   .field-label-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: .5rem;
+    min-height: 1.5rem;
     margin-bottom: .2rem;
   }
   .form-grid .field-label-row label { margin: 0; }
@@ -2343,7 +2351,7 @@
           <input type="text" data-field="name" value="{{ item.name }}" autocomplete="off">
         </div>
         <div>
-          <label>Date</label>
+          <div class="field-label-row"><label>Date</label></div>
           <input type="date" data-field="date" value="{{ item.date }}" autocomplete="off">
         </div>
         <div>
@@ -2370,7 +2378,7 @@
           </div>
         </div>
         <div>
-          <label>Date</label>
+          <div class="field-label-row"><label>Date</label></div>
           <input type="date" data-field="date" value="{{ item.date }}" autocomplete="off">
         </div>
         <div>
