@@ -681,6 +681,121 @@ function familyVisitCoordsById(id) {
 
 function addFamilyVisit() { openAddModal('family_visit'); }
 
+// ── Times from GPS ────────────────────────────────────────────────────────
+//
+// A card added while the trip is happening carries the moment the admin got
+// around to opening the form — a few minutes after actually arriving — and
+// almost never an end time, because by the time you leave you are thinking
+// about the road rather than the form. The trip's own GPS track knows both.
+//
+// This FILLS THE OPEN FORM and never saves: the times come off a heuristic
+// (see `_visit_windows_at` in ekko_trips_app.py) and the admin is the one
+// who was actually there, so they get to look before committing. Cancelling
+// the form is the undo.
+function fillTimesFromGps(btn) {
+  const grid = btn.closest('.form-grid');
+  if (!grid) return;
+  const dateI = grid.querySelector('[data-field="date"]');
+  const timeI = grid.querySelector('[data-field="time"]');
+  const endI = grid.querySelector('[data-field="end_time"]');
+
+  // Read the coordinate off the form rather than the stored record, so a
+  // location just moved with Pick on Map answers for where the admin means.
+  // The family-visit forms have no location of their own to read (the modal
+  // one is just a family selector), so fall back to the selected family
+  // location's driveway — the same coordinate saving the card would use.
+  let loc = '';
+  const locI = grid.querySelector('[data-field="location"]');
+  if (locI) loc = (locI.value || '').trim();
+  if (!loc) {
+    const famSel = grid.querySelector('[data-field="family_id"]');
+    if (famSel) loc = familyVisitCoordsById(Number(famSel.value));
+  }
+  const parts = (loc || '').split(',');
+  const lat = parseFloat(parts[0]);
+  const lng = parseFloat(parts[1]);
+  if (!isFinite(lat) || !isFinite(lng)) {
+    toast('Set a location first — the times are read off the GPS fixes near it.', 'error');
+    return;
+  }
+
+  // The date + time already on the card pick between several visits to the
+  // same place on one trip; both are optional, and the server falls back to
+  // the day, then to the longest visit.
+  const params = new URLSearchParams({ lat: lat, lng: lng });
+  if (dateI && dateI.value) params.set('date', dateI.value);
+  if (timeI && timeI.value) params.set('time', timeI.value);
+  // Which event this is, when it already exists — the server credits each
+  // ping to the nearest card of that day, and a saved card must not compete
+  // with the form that is editing it.
+  if (btn.dataset.eventIdx !== undefined && btn.dataset.eventIdx !== '') {
+    params.set('exclude_event', btn.dataset.eventIdx);
+  }
+
+  const label = btn.innerHTML;
+  btn.disabled = true;
+  btn.textContent = 'Reading…';
+  fetch(`/api/trips/${TRIP_ID}/gps-times?` + params.toString(),
+        { credentials: 'same-origin' })
+    .then(r => r.json())
+    .then(data => {
+      if (data.error) { toast(data.error, 'error'); return; }
+      if (!data.found) {
+        toast(data.reason || 'No GPS fixes found for this place.', 'error');
+        return;
+      }
+      const notes = [];
+      if (dateI && data.date && dateI.value !== data.date) {
+        dateI.value = data.date;
+        notes.push('date moved to ' + data.date);
+      }
+      if (timeI) timeI.value = data.time;
+      if (data.end_time) {
+        if (endI) endI.value = data.end_time;
+      } else {
+        notes.push('only one fix here, so no end time');
+      }
+      if (data.visit_count > 1) {
+        notes.push(data.visit_count + ' visits to this spot — took '
+                   + (data.gap_minutes == null
+                      ? 'the longest' : 'the one nearest the time on the card'));
+      }
+      // An hour off is not necessarily wrong (a card typed up that evening),
+      // but it is the case where the wrong visit could have been matched, so
+      // say so rather than quietly overwriting a time by hours.
+      if (data.gap_minutes != null && data.gap_minutes >= 60) {
+        notes.push(_fmtGpsDuration(data.gap_minutes)
+                   + ' from the time on the card — check it is the right visit');
+      }
+      let msg = 'GPS: ' + _fmt12h(data.time)
+        + (data.end_time ? '–' + _fmt12h(data.end_time) : '')
+        + (data.tz_abbr ? ' ' + data.tz_abbr : '');
+      if (data.end_time) msg += ' · ' + _fmtGpsDuration(data.duration_minutes);
+      msg += ' · ' + data.ping_count + (data.ping_count === 1 ? ' fix' : ' fixes')
+        + ' within ' + data.radius_m + ' m';
+      if (notes.length) msg += ' — ' + notes.join('; ');
+      toast(msg, 'info', { duration: 8000 });
+    })
+    .catch(() => toast('Could not read the GPS track.', 'error'))
+    .finally(() => { btn.disabled = false; btn.innerHTML = label; });
+}
+
+// "HH:MM" → "h:MM AM/PM", matching the `to12h` Jinja filter the cards use.
+function _fmt12h(hhmm) {
+  const m = /^(\d{1,2}):(\d{2})/.exec(hhmm || '');
+  if (!m) return hhmm || '';
+  const h = Number(m[1]);
+  return (h % 12 || 12) + ':' + m[2] + ' ' + (h < 12 ? 'AM' : 'PM');
+}
+
+function _fmtGpsDuration(minutes) {
+  const mins = Math.round(minutes);
+  if (mins < 60) return mins + ' min';
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return m ? h + 'h ' + m + 'm' : h + 'h';
+}
+
 // ── Add/Edit modal ────────────────────────────────────────────────────────
 let addModalKind = null;
 let addModalMode = 'add';        // 'add' | 'edit'
@@ -745,6 +860,14 @@ function addDays(isoDate, days) {
   return d.toISOString().slice(0, 10);
 }
 
+// The event index the modal is editing, as a `data-event-idx` attribute for
+// the "From GPS" button — empty while adding, since there is no saved card to
+// exclude yet. `_openModal` sets these globals before it builds the form.
+function _gpsTimesIdxAttr() {
+  return (addModalMode === 'edit' && addModalEditIdx != null)
+    ? ` data-event-idx="${addModalEditIdx}"` : '';
+}
+
 // Build the form HTML for a given kind, pre-filling values from `v` (or empty)
 function _modalFormHtml(kind, v) {
   v = v || {};
@@ -793,7 +916,11 @@ function _modalFormHtml(kind, v) {
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
-          <label>Time</label>
+          <div class="field-label-row">
+            <label>Time</label>
+            <button type="button" class="btn-gps-times"${_gpsTimesIdxAttr()} onclick="fillTimesFromGps(this)"
+                    title="Read this stop's arrival and departure off the trip's GPS track">&#9201; From GPS</button>
+          </div>
           <div style="display:flex;gap:.5rem;align-items:center;">
             <input type="time" data-field="time" value="${escapeHtml(v.time || '')}" autocomplete="off">
             <span>&ndash;</span>
@@ -837,7 +964,11 @@ function _modalFormHtml(kind, v) {
         </div>
         <div><label>Date</label><input type="date" data-field="date" value="${date}" autocomplete="off"></div>
         <div>
-          <label>Time</label>
+          <div class="field-label-row">
+            <label>Time</label>
+            <button type="button" class="btn-gps-times"${_gpsTimesIdxAttr()} onclick="fillTimesFromGps(this)"
+                    title="Read this stop's arrival and departure off the trip's GPS track">&#9201; From GPS</button>
+          </div>
           <div style="display:flex;gap:.5rem;align-items:center;">
             <input type="time" data-field="time" value="${escapeHtml(v.time || '')}" autocomplete="off">
             <span>&ndash;</span>

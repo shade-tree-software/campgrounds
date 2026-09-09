@@ -6915,6 +6915,155 @@ def _detect_stops(points,
     return stops
 
 
+# ── Visit windows ──────────────────────────────────────────────────────────
+#
+# "When did we arrive at, and leave, THIS place?" — the question behind the
+# timeline cards' "Times from GPS" button. A card added on the road carries
+# the moment the admin got around to typing it (a few minutes after actually
+# arriving) and almost never an end time, because by the time you leave you
+# are thinking about the road, not the form. The track knows both.
+#
+# Deliberately not routed through `_detect_stops`, which answers a different
+# question: it asks "where did we linger?" over the whole track, with no
+# knowledge of the card. Two consequences make it the wrong tool here. Its
+# clusters form around a running centroid, so a long dwell approached slowly
+# can end up centred hundreds of metres off the pin and match the wrong card
+# (the same asymmetry `_drop_stops_at_known_locations` has to compensate for
+# by testing every ping rather than the centroid). And it has a duration
+# floor — a 2-minute waypoint produces no cluster at all, yet still has a
+# real arrival time worth reading off the track.
+
+VISIT_AT_PLACE_M = STOP_NEAR_ANCHOR_M      # 300 m: a ping this close counts
+                                           # as being at the card's location.
+                                           # Same radius detect-stops uses to
+                                           # decide a cluster is already
+                                           # represented by an anchor, which
+                                           # is the same judgement call.
+VISIT_DEPART_M = STOP_DWELL_GAP_RADIUS_M   # 600 m: only a ping beyond this
+                                           # ends the visit. Reuses the
+                                           # calibrated "still the same dwell
+                                           # despite the jitter" radius.
+VISIT_SELF_ANCHOR_M = 60                   # a stored card this close to the
+                                           # coordinate being asked about IS
+                                           # that card (or one pinned to the
+                                           # same spot), not a rival for its
+                                           # pings.
+
+
+def _visit_windows_at(points, lat, lng,
+                      at_place_m=VISIT_AT_PLACE_M,
+                      depart_m=VISIT_DEPART_M,
+                      other_anchors=None):
+    """Split a trip's pings into the separate visits they made to one place.
+
+    A ping is *at the place* when it sits within `at_place_m` of (lat, lng);
+    a visit ends only once a later ping is beyond `depart_m` — i.e. when the
+    track shows the traveller actually leaving. Pings in the band between the
+    two radii neither extend nor break a visit: that band is stationary-GPS
+    drift, or a walk to the far side of a large site, not a departure.
+
+    Two radii rather than one because either single-radius rule fails. A
+    tight one splits a real visit every time a parked phone's fix wanders
+    (the same 100–200 m drift STOP_CLUSTER_RADIUS_M is sized for), reporting
+    a three-hour museum stop as four short ones. A loose one merges the gas
+    station and the diner across the road into one "visit" spanning the drive
+    between them.
+
+    `other_anchors` — the coordinates of the trip's OTHER cards — settles
+    that second case where the fringe band alone cannot. A ping is credited
+    to the nearest card, so a ping sitting in another card's own at-place
+    radius, closer to it than to here, both fails to extend this visit and
+    ends it. Trip 95 needs this: North Park and the Hy-Vee 346 m away are
+    inside each other's fringe band, so without it the supermarket's visit
+    swallowed the hour spent at the park and reported a 17:02 arrival for an
+    18:02 stop. The cost is that jitter across the midpoint between two
+    close cards can clip a visit by a ping — minutes of error where the
+    merge was an hour of it.
+
+    Elapsed time is deliberately NOT a break condition. OwnTracks suspends
+    reporting while a device sits still, so a genuine multi-hour dwell can
+    consist of an arrival ping, a departure ping, and nothing in between —
+    splitting on the gap would cut exactly the visits this is for in half.
+
+    Returns `[{start_tst, end_tst, ping_count, tz}, ...]` in time order.
+    """
+    visits = []
+    cur = None
+    ordered = sorted(
+        (p for p in points
+         if p.get("lat") is not None
+         and p.get("lon") is not None
+         and p.get("tst") is not None),
+        key=lambda p: p["tst"],
+    )
+    # Only a card near enough to reach into this one's departure radius can
+    # ever win a ping from it: the rival test needs a ping within `depart_m`
+    # of here AND within `at_place_m` of the rival, so anything farther than
+    # the sum is unreachable. A trip's other cards are mostly hundreds of
+    # miles away, and this is what keeps the scan one distance per ping
+    # instead of one per ping per card (trip 95: 45k pings × 95 cards).
+    rivals = [a for a in (other_anchors or ())
+              if _haversine_m(a[0], a[1], lat, lng) <= depart_m + at_place_m]
+    for p in ordered:
+        d = _haversine_m(p["lat"], p["lon"], lat, lng)
+        nearest_other = float("inf")
+        # Beyond the departure radius the ping ends the visit whatever the
+        # rivals say, so don't pay for them.
+        if rivals and d <= depart_m:
+            for (a_lat, a_lng) in rivals:
+                nearest_other = min(
+                    nearest_other,
+                    _haversine_m(p["lat"], p["lon"], a_lat, a_lng))
+        if d <= at_place_m and d <= nearest_other:
+            if cur is None:
+                cur = {"start_tst": p["tst"], "end_tst": p["tst"],
+                       "ping_count": 1, "tz": p.get("tz")}
+            else:
+                cur["end_tst"] = p["tst"]
+                cur["ping_count"] += 1
+        elif cur is not None and (d > depart_m
+                                  or (nearest_other <= at_place_m
+                                      and nearest_other < d)):
+            visits.append(cur)
+            cur = None
+    if cur is not None:
+        visits.append(cur)
+    return visits
+
+
+def _pick_visit(visits, reference_tst):
+    """Choose which visit a card refers to, and how far it sits from the
+    time already on the card.
+
+    With a reference instant (the card's stored date+time, read in its own
+    zone) the visit containing it wins; otherwise the nearest one does, ties
+    going to the longer visit. The typed time lands inside the real visit in
+    the ordinary case — the admin types it while standing there — so this
+    picks the right one of several visits to the same place on one trip
+    without needing them to agree to the minute.
+
+    Returns `(visit, gap_seconds)`; `gap_seconds` is 0 when the reference
+    falls inside the visit and None when there was no reference at all. The
+    caller surfaces a large gap rather than refusing: a card whose time is
+    hours off is exactly the one most in need of correcting, and only the
+    admin can tell a mistyped time from a wrong match."""
+    if not visits:
+        return None, None
+    if reference_tst is None:
+        return max(visits, key=lambda v: (v["end_tst"] - v["start_tst"],
+                                          -v["start_tst"])), None
+
+    def _gap(v):
+        if v["start_tst"] <= reference_tst <= v["end_tst"]:
+            return 0
+        return min(abs(reference_tst - v["start_tst"]),
+                   abs(reference_tst - v["end_tst"]))
+
+    best = min(visits, key=lambda v: (_gap(v),
+                                      -(v["end_tst"] - v["start_tst"])))
+    return best, _gap(best)
+
+
 def _find_home_boundary_tsts(points, home,
                              home_radius_m=STOP_NEAR_HOME_M,
                              at_home_centroid_m=STOP_AT_HOME_CENTROID_M,
@@ -7292,6 +7441,24 @@ def _naive_utc(tst):
     aware datetime.
     """
     return datetime.fromtimestamp(tst, timezone.utc).replace(tzinfo=None)
+
+
+def _local_dt(tst, tz_name):
+    """A unix timestamp as a datetime in `tz_name`, or naive UTC when the
+    zone is missing, is "UTC", or can't be loaded (a stripped runtime with
+    no `zoneinfo`).
+
+    Shared so every surface that turns a ping's instant into a wall clock
+    — the detect-stops review rows and the visit-window lookup behind the
+    cards' "Times from GPS" — labels it the same way."""
+    utc = _naive_utc(tst)
+    if tz_name and tz_name != "UTC":
+        try:
+            from zoneinfo import ZoneInfo
+            return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
+        except Exception:
+            pass
+    return utc
 
 
 # Keyed (tz name, tst // 900) -> "YYYY-MM-DD"; see `_local_date_of_ping`.
@@ -8083,24 +8250,6 @@ def api_detect_stops(trip_id):
     # the admin deleted — the ones detection would otherwise re-offer as new.
     _flag_dismissed_stops(raw_stops, get_dismissed_stops(trip_id))
 
-    # Defer ZoneInfo import — pre-3.9 hosts (or stripped runtimes) may
-    # not have it. Fall back to UTC formatting if it's missing.
-    try:
-        from zoneinfo import ZoneInfo
-        _HAS_ZONEINFO = True
-    except Exception:
-        ZoneInfo = None
-        _HAS_ZONEINFO = False
-
-    def _local(tst, tz_name):
-        utc = _naive_utc(tst)
-        if _HAS_ZONEINFO and tz_name and tz_name != "UTC":
-            try:
-                return utc.replace(tzinfo=ZoneInfo("UTC")).astimezone(ZoneInfo(tz_name))
-            except Exception:
-                pass
-        return utc
-
     # Reverse-geocoding deliberately runs on the client (one call per
     # stop, throttled to 1 req/sec) so the modal can render immediately
     # and report progress. `event.name` carries a placeholder; the
@@ -8109,8 +8258,8 @@ def api_detect_stops(trip_id):
     # list has been geocoded.
     enriched = []
     for s in raw_stops:
-        start_local = _local(s["start_tst"], s["tz"])
-        end_local = _local(s["end_tst"], s["tz"])
+        start_local = _local_dt(s["start_tst"], s["tz"])
+        end_local = _local_dt(s["end_tst"], s["tz"])
         classification = "waypoint" if s["duration_minutes"] <= STOP_WAYPOINT_MAX_MINUTES else "event"
         # The "event" sub-dict is the exact payload format that
         # /accept-stops feeds into add_event(), so the frontend can just
@@ -8214,6 +8363,140 @@ def api_accept_stops(trip_id):
 
     return jsonify({"ok": True, "created": created,
                     "event_count": len(last_trip["events"]) if last_trip else 0})
+
+
+@app.route('/api/trips/<int:trip_id>/gps-times')
+def api_trip_gps_times(trip_id):
+    """Read the arrival and departure times for one place off the trip's
+    GPS track — what the timeline cards' "Times from GPS" button asks for.
+
+    Query: `lat`, `lng` (required), optional `date` + `time` (the card's
+    current values, used to pick between several visits to the same place)
+    and `radius_m`. Advisory only: nothing is persisted, the answer goes
+    into the open edit form's fields and the admin still has to save. That
+    is the point — the times come from a heuristic and the admin is the one
+    who was there.
+
+    Takes coordinates rather than an event index so the button works
+    against what the form currently SHOWS: a location just moved with Pick
+    on Map, or a brand-new card that hasn't been saved yet, both answer for
+    where the admin means rather than where the stored record still points.
+
+    Returns `{found: false, reason}` — not an error — when there is no
+    track, or no fix near the place. Neither is a failure: a phone can be
+    off, and a card can name a place the track never came within reach of.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    trip = next((t for t in parse_trips() if t["id"] == trip_id), None)
+    if not trip:
+        return jsonify({"error": "trip not found"}), 404
+    lat = request.args.get('lat', type=float)
+    lng = request.args.get('lng', type=float)
+    if lat is None or lng is None:
+        return jsonify({"error": "lat and lng required"}), 400
+    radius = request.args.get('radius_m', type=float) or VISIT_AT_PLACE_M
+    radius = max(50.0, min(radius, 2000.0))
+    # The departure radius has to stay clear of the at-place one or a single
+    # jittery fix would end the visit; widen it with a caller-widened radius.
+    depart = max(radius * 2, VISIT_DEPART_M)
+    date_str = (request.args.get('date') or '').strip()
+    time_str = (request.args.get('time') or '').strip()
+    # Index of the event this lookup is FOR, when it already exists — so the
+    # card can't compete with itself for its own pings. Passing the index
+    # rather than matching on coordinates keeps that exact after a Pick-on-Map
+    # nudge, where the stored location is a few metres from the one asked
+    # about and would otherwise look like a rival card sitting on top of it.
+    exclude_idx = request.args.get('exclude_event', type=int)
+
+    points = _load_trip_track_for_detection(trip_id)
+    if not points:
+        return jsonify({"found": False,
+                        "reason": "no GPS track available for this trip"})
+
+    enrich_trip_locations(trip)
+    # Rival cards — the ones a ping might belong to instead of this place —
+    # are drawn from the SAME DAY only. A trip that returns to one overlook
+    # on two days has two cards for it, pinned by hand a couple of hundred
+    # metres apart (trip 95: 196 m at Forest Canyon, 19 m at Rainbow Curve),
+    # and letting those compete had each steal the other's pings: Forest
+    # Canyon's real 14:45–15:15 visit collapsed to a single fix. They can't
+    # be told apart from genuine neighbours by distance — the gas station
+    # beside Kaibab Park is 221 m away, closer than that same overlook to
+    # itself — but they are never about the same moment, which is what the
+    # day scope uses. Undated card: no scope to apply, so everything rivals.
+    def _same_day(a_date):
+        return not date_str or not a_date or a_date == date_str
+    other_anchors = [
+        (s_["lat"], s_["lng"]) for s_ in trip.get("stays", [])
+        if s_.get("lat") is not None and s_.get("lng") is not None
+        and (not date_str
+             or (s_.get("start") or "") <= date_str <= (s_.get("end") or ""))
+    ]
+    other_anchors += [(e["lat"], e["lng"])
+                      for i, e in enumerate(trip.get("events", []))
+                      if i != exclude_idx and _same_day(e.get("date"))
+                      and e.get("lat") is not None and e.get("lng") is not None]
+    # A card saved at (or a hair from) the coordinate being asked about is
+    # this same card — an un-passed `exclude_event`, or a stay and an event
+    # pinned to one spot. Letting it compete would credit every ping to it
+    # and report no visit at all.
+    other_anchors = [a for a in other_anchors
+                     if _haversine_m(a[0], a[1], lat, lng) > VISIT_SELF_ANCHOR_M]
+
+    # The zone of the PLACE, matching what `_stamp_event_timezone` will
+    # write when the admin saves — so the times handed back are in the same
+    # zone the card will later be read in. Falls back to the ping's own zone
+    # when timezonefinder isn't installed.
+    tz_name = _tz_for_coord(lat, lng) or ""
+    reference_tst = (_trip_local_to_tst(date_str, time_str, tz_name or None)
+                     if date_str and time_str else None)
+
+    visits = _visit_windows_at(points, lat, lng, radius, depart,
+                               other_anchors=other_anchors)
+    if not visits:
+        return jsonify({
+            "found": False,
+            "reason": (f"the GPS track never came within {int(radius)} m "
+                       "of this location"),
+        })
+    # With a date but no time, keep the visits from that day if there are
+    # any — a place visited on several days of one trip would otherwise
+    # answer with whichever visit ran longest, on a day the card isn't about.
+    if reference_tst is None and date_str:
+        same_day = [v for v in visits
+                    if _local_date_of_ping({"tst": v["start_tst"],
+                                            "tz": tz_name or v.get("tz")
+                                            or "UTC"}) == date_str]
+        if same_day:
+            visits = same_day
+
+    visit, gap_s = _pick_visit(visits, reference_tst)
+    tz_out = tz_name or visit.get("tz") or "UTC"
+    start_local = _local_dt(visit["start_tst"], tz_out)
+    end_local = _local_dt(visit["end_tst"], tz_out)
+    duration_min = (visit["end_tst"] - visit["start_tst"]) / 60.0
+    return jsonify({
+        "found": True,
+        "date": start_local.strftime("%Y-%m-%d"),
+        "time": start_local.strftime("%H:%M"),
+        # A visit the track saw only once has an arrival and nothing else.
+        # Reporting that instant as the end time too would invent a
+        # zero-length visit; blank lets the caller leave the field alone.
+        "end_time": ("" if duration_min < 1
+                     else end_local.strftime("%H:%M")),
+        "tz": tz_out if tz_out != "UTC" else "",
+        "tz_abbr": (start_local.strftime("%Z") if start_local.tzinfo else ""),
+        "duration_minutes": round(duration_min, 1),
+        "ping_count": visit["ping_count"],
+        "radius_m": int(radius),
+        "visit_count": len(visits),
+        # Minutes between the time already on the card and the visit
+        # matched to it; 0 when the card's time falls inside the visit,
+        # null when the card had no time to compare against.
+        "gap_minutes": None if gap_s is None else round(gap_s / 60.0),
+    })
 
 
 @app.route('/api/elevation')

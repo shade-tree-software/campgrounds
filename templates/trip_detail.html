@@ -338,6 +338,38 @@
 
   .event-edit-form.active { display: block; }
 
+  /* These live UP HERE, beside the rest of the form's base styles and
+     mirroring `.stay-edit-form`, because the phone rule that collapses the
+     grid to one column sits further down the file. Declared after it, this
+     block's `grid-template-columns: 1fr 1fr` won on equal specificity — a
+     media query adds none — and the two time pickers stayed side by side on
+     a 390 px screen, clipped to "07:". */
+  .event-edit-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+
+  .event-edit-form .form-grid .full-width {
+    grid-column: 1 / -1;
+  }
+
+  .event-edit-form .form-grid label {
+    margin-bottom: .2rem;
+  }
+
+  /* Grid items default to min-width:auto, which lets wide inputs (esp. the
+     two side-by-side time pickers) push the whole grid past a phone's
+     viewport. min-width:0 + max-width:100% lets them shrink to the column. */
+  .event-edit-form .form-grid > div { min-width: 0; }
+  .event-edit-form .form-grid input,
+  .event-edit-form .form-grid select,
+  .event-edit-form .form-grid textarea {
+    margin-bottom: 0;
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .event-edit-form label {
     display: block;
     font-size: .75rem;
@@ -1790,32 +1822,6 @@
     cursor: grabbing !important;
   }
 
-  .event-edit-form .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .75rem;
-  }
-
-  .event-edit-form .form-grid .full-width {
-    grid-column: 1 / -1;
-  }
-
-  .event-edit-form .form-grid label {
-    margin-bottom: .2rem;
-  }
-
-  /* Grid items default to min-width:auto, which lets wide inputs (esp. the
-     two side-by-side time pickers) push the whole grid past a phone's
-     viewport. min-width:0 + max-width:100% lets them shrink to the column. */
-  .event-edit-form .form-grid > div { min-width: 0; }
-  .event-edit-form .form-grid input,
-  .event-edit-form .form-grid select,
-  .event-edit-form .form-grid textarea {
-    margin-bottom: 0;
-    min-width: 0;
-    max-width: 100%;
-  }
-
   .event-location-field {
     display: flex;
     gap: .5rem;
@@ -1839,6 +1845,38 @@
   }
 
   .btn-pick-location:hover { border-color: var(--red); color: var(--red); }
+
+  /* ── "From GPS" time fix-up ───────────────────────────────────────
+     The button shares a row with the field's LABEL rather than sitting
+     beside the inputs: the time cell already holds two time pickers and a
+     dash, which is a full row on a phone. Used by the inline event form and
+     the modal both, so the label margin is set here — `.event-edit-form
+     .form-grid label` is (0,2,1) and would otherwise beat a bare
+     `.field-label-row label` (0,1,1) in the inline form only, leaving the
+     two contexts subtly misaligned. */
+  .field-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    margin-bottom: .2rem;
+  }
+  .form-grid .field-label-row label { margin: 0; }
+
+  .btn-gps-times {
+    background: var(--offwhite);
+    border: 1px solid var(--gray-light);
+    color: var(--gray);
+    padding: .15rem .45rem;
+    border-radius: 4px;
+    font-size: .7rem;
+    line-height: 1.5;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-gps-times:hover:not(:disabled) { border-color: var(--red); color: var(--red); }
+  .btn-gps-times:disabled { opacity: .55; cursor: default; }
 
   /* ── Current-location marker ───────────────────────
      Pulsing green dot dropped at the most recent in-window GPS ping when
@@ -2309,7 +2347,11 @@
           <input type="date" data-field="date" value="{{ item.date }}" autocomplete="off">
         </div>
         <div>
-          <label>Time</label>
+          <div class="field-label-row">
+            <label>Time</label>
+            <button type="button" class="btn-gps-times" data-event-idx="{{ item.idx }}" onclick="fillTimesFromGps(this)"
+                    title="Read this stop's arrival and departure off the trip's GPS track">&#9201; From GPS</button>
+          </div>
           <div style="display:flex;gap:.5rem;align-items:center;">
             <input type="time" data-field="time" value="{{ item.time }}" autocomplete="off">
             <span>&ndash;</span>
@@ -2332,7 +2374,11 @@
           <input type="date" data-field="date" value="{{ item.date }}" autocomplete="off">
         </div>
         <div>
-          <label>Time</label>
+          <div class="field-label-row">
+            <label>Time</label>
+            <button type="button" class="btn-gps-times" data-event-idx="{{ item.idx }}" onclick="fillTimesFromGps(this)"
+                    title="Read this stop's arrival and departure off the trip's GPS track">&#9201; From GPS</button>
+          </div>
           <div style="display:flex;gap:.5rem;align-items:center;">
             <input type="time" data-field="time" value="{{ item.time }}" autocomplete="off">
             <span>&ndash;</span>
