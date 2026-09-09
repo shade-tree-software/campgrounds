@@ -1637,6 +1637,8 @@ class _BackgroundScan:
         self._wake = threading.Event()
         self._thread = None
         self._python = ...          # sentinel: not probed yet
+        # Keys this process has already handed to a subprocess, for queue_once.
+        self._tried = set()
 
     def python(self):
         """Interpreter to run the script with, or None if no candidate can.
@@ -1736,6 +1738,33 @@ class _BackgroundScan:
                     target=self._worker, name=self.name, daemon=True)
                 self._thread.start()
         self._wake.set()
+
+    def queue_once(self, keys):
+        """Queue only the keys this process hasn't already tried.
+
+        The catch-up path. Work is normally triggered at upload time, which
+        silently does nothing if the dependency wasn't installed yet or the
+        worker recycled inside the debounce window — and nothing ever revisits
+        it, so the item stays stuck forever. Sweeping from a read path fixes
+        that class of problem rather than the instance: install, restart, open
+        the page, done.
+
+        The guard is what stops the sweep becoming a treadmill. A key whose
+        work genuinely cannot succeed — the file is gone, or this host has no
+        model — would otherwise re-trigger a subprocess and a model load on
+        every single page view. It is per-process and in-memory on purpose: a
+        restart is exactly the event after which a retry is worth making again,
+        since a restart is what follows installing the missing dependency.
+        """
+        if not self.enabled or not keys:
+            return
+        with self._lock:
+            fresh = [k for k in keys if k not in self._tried]
+            self._tried.update(fresh)
+        if not fresh:
+            return          # every page load calls this; usually there is nothing
+        # Outside the lock: queue() takes it too, and it isn't reentrant.
+        self.queue(fresh)
 
 
 _people_scan = _BackgroundScan(
@@ -4619,6 +4648,19 @@ def api_memos_list():
              for t in parse_trips()}
     for m in out:
         m["trip_name"] = names.get(m["trip_id"], "")
+    # Catch up anything that missed its upload-time trigger. Computed over
+    # every memo, not the filtered page, so a search view heals the library
+    # rather than only what it happens to show. Capped at one subprocess batch
+    # per request so a big backlog drains as the page is used instead of in one
+    # unattended storm; the rest are still untried and come up next load.
+    # Newest first: a memo from the trip you just got back from is the one
+    # worth having text for.
+    stale = [mid for mid, r in sorted(memos.items(),
+                                      key=lambda kv: kv[1].get("recorded_at") or 0,
+                                      reverse=True)
+             if not (r.get("transcript") or "").strip()]
+    _memo_transcribe.queue_once(stale[:MEMO_TRANSCRIBE_MAX_BATCH])
+
     return jsonify({"memos": out,
                     "unfiled": sum(1 for r in memos.values()
                                    if r.get("trip_id") is None),
