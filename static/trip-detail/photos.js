@@ -33,6 +33,8 @@ function _unbarifyGrid(grid) {
   if (!grid) return;
   const card = grid.closest('.event-card');
   if (card) card.classList.remove('bare');
+  // A folded waypoint that just gained a photo is no longer a brief stop.
+  releaseWaypointCard(card);
   const section = grid.closest('.photos-section');
   const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
   if (removeAllBtn) removeAllBtn.style.display = '';
@@ -519,6 +521,10 @@ function initPhotoDrag(grid) {
       // keeps the body — and the photo it now contains — on screen.
       const dstCard = grid.closest('.event-card');
       if (dstCard) dstCard.classList.remove('bare');
+      // Same trap one level up: a folded waypoint is only on screen because
+      // body.photo-dragging is revealing it, so it must leave the run here or
+      // it takes the dropped photo with it when the drag ends.
+      releaseWaypointCard(dstCard);
       const dstRemoveAll = grid.closest('.photos-section')
         && grid.closest('.photos-section').querySelector('.btn-delete-all-photos');
       if (dstRemoveAll) dstRemoveAll.style.display = '';

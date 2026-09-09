@@ -1343,3 +1343,52 @@ function showAddModalStayLocationMap() {
 function hideEventLocationMap() {
   eventLocationPicker.hide();
 }
+
+// ── Folded waypoint runs ──────────────────────────────────────────────────
+// A run of consecutive waypoints with nothing to show renders as one chip
+// (see `_collapse_waypoint_runs` server-side). The cards are in the DOM but
+// hidden; this reveals or re-hides one run's worth of them.
+function toggleWaypointRun(btn) {
+  const chip = btn.closest('.wp-run');
+  if (!chip) return;
+  const open = chip.classList.toggle('open');
+  revealWaypointRun(chip.dataset.run, open);
+  btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+
+// Show/hide every card belonging to one run, keeping its chip's state in sync.
+// Exposed separately because `scrollToCard` has to be able to open a run it
+// was never told about — a map marker click can land on a folded waypoint,
+// and scrolling to a `display: none` card would silently do nothing.
+function revealWaypointRun(runId, open) {
+  if (!runId) return;
+  document.querySelectorAll(`.event-card[data-wp-run="${CSS.escape(runId)}"]`)
+    .forEach(card => card.classList.toggle('wp-shown', open));
+  const chip = document.querySelector(`.wp-run[data-run="${CSS.escape(runId)}"]`);
+  if (chip) {
+    chip.classList.toggle('open', open);
+    const btn = chip.querySelector('.wp-run-toggle');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+}
+
+// A folded card that gains a photo has earned a card of its own — take it out
+// of the run for good. Without this it would vanish the moment `dragend`
+// strips `body.photo-dragging`, since that class is the only thing revealing
+// it mid-drag; the same trap the un-barify beside this call site avoids. The
+// chip's count follows, and a chip whose run is now empty is removed.
+function releaseWaypointCard(card) {
+  if (!card || !card.classList.contains('wp-collapsed')) return;
+  const runId = card.dataset.wpRun;
+  card.classList.remove('wp-collapsed', 'wp-shown');
+  delete card.dataset.wpRun;
+  if (!runId) return;
+  const chip = document.querySelector(`.wp-run[data-run="${CSS.escape(runId)}"]`);
+  if (!chip) return;
+  const left = document.querySelectorAll(
+    `.event-card[data-wp-run="${CSS.escape(runId)}"]`).length;
+  if (!left) { chip.remove(); return; }
+  const label = chip.querySelector('.wp-run-label');
+  // textContent leaves the ::after chevron alone.
+  if (label) label.textContent = `${left} brief stop${left === 1 ? '' : 's'}`;
+}

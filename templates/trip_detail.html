@@ -311,6 +311,72 @@
   }
   .event-card.bare .event-body { display: none; }
 
+  /* ── Folded waypoint runs ────────────────────────────────────────────────
+     A run of consecutive waypoints with nothing to show (no photos, no
+     description) collapses to one chip sitting in their timeline slot. See
+     `_collapse_waypoint_runs` for what earns a card instead.
+
+     The cards are hidden, never removed: a map-marker click reveals one
+     (`scrollToCard`), and during an admin's photo drag every one of them is
+     revealed so it can still serve as a drop target — the same bargain the
+     `.photo-dragging` rules already make for bare cards. */
+  .event-card.wp-collapsed { display: none; }
+  .event-card.wp-collapsed.wp-shown,
+  body.photo-dragging .event-card.wp-collapsed { display: block; }
+
+  .wp-run { position: relative; z-index: 1; margin-bottom: 1rem; }
+  .wp-run-toggle {
+    /* Same 1.25rem padding + 2rem icon + 1rem gap as an event header, so the
+       dot lands on the 2.25rem timeline axis and the label starts on the same
+       vertical as every card title beside it. */
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: .35rem 1.25rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+  }
+  .wp-run-dot {
+    width: 2rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+  .wp-run-dot::before {
+    content: '';
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: var(--gray-light);
+    /* Masks the timeline axis line behind the dot, the same trick the day
+       divider's date label uses. */
+    box-shadow: 0 0 0 4px var(--offwhite);
+  }
+  .wp-run-label {
+    color: var(--gray);
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    background: var(--offwhite);
+    padding: 0 .5rem 0 0;
+  }
+  .wp-run-label::after {
+    content: '\203A';        /* › — rotates to ⌄ when open */
+    display: inline-block;
+    margin-left: .4em;
+    transition: transform .15s ease;
+  }
+  .wp-run.open .wp-run-label::after { transform: rotate(90deg); }
+  .wp-run-toggle:hover .wp-run-label { color: var(--navy); }
+  .wp-run-toggle:hover .wp-run-dot::before { background: var(--navy); }
+
   .home-card .event-icon { background: #bf0a30; }
 
   .event-body {
@@ -2297,7 +2363,18 @@
      Admins still get a hidden body in the DOM so the photo-dragging CSS
      can reveal it as a drop target — see the `.photo-dragging` rules above. #}
   {% set is_bare = (not event_photos[item.idx]) and (item.waypoint or item.family_visit or not item.description) %}
-  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}" id="event-{{ item.idx }}">
+  {%- if item.wp_run_len %}
+  {#- One chip per run of foldable waypoints. `wp_run_len` is set only on the
+      item that starts the run, so this fires exactly once per run. -#}
+  <div class="wp-run" data-run="{{ item.wp_run_id }}">
+    <button type="button" class="wp-run-toggle" aria-expanded="false"
+            title="{{ item.wp_run_names }}" onclick="toggleWaypointRun(this)">
+      <span class="wp-run-dot" aria-hidden="true"></span>
+      <span class="wp-run-label">{{ item.wp_run_len }} brief stop{% if item.wp_run_len == 1 %}{% else %}s{% endif %}</span>
+    </button>
+  </div>
+  {%- endif %}
+  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}{% if item.wp_collapsed %} wp-collapsed{% endif %}" id="event-{{ item.idx }}"{% if item.wp_run_id %} data-wp-run="{{ item.wp_run_id }}"{% endif %}>
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}{# Drawn, not the &#9670; text glyph: that glyph's ink
       sits high in its line box by a font-dependent amount, so it never centred

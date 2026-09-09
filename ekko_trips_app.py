@@ -2878,6 +2878,65 @@ def _stats_photo_count():
     return sum(1 for p in _collect_photo_pool() if not p["home_only"])
 
 
+def _collapse_waypoint_runs(timeline, event_photos, is_admin):
+    """Mark runs of consecutive throwaway waypoints so the timeline can fold
+    them into one "N brief stops" chip.
+
+    Detect Stops is generous by design — 747 of the library's 1,116 events are
+    waypoints, and trip 90 alone carries 68 — so a timeline that renders every
+    one of them buries the days it exists to describe. A waypoint earns its own
+    card only by carrying something a reader wants: photos, a description, or
+    (for an admin) a `needs_vetting` flag that still wants attention. Anything
+    else is the gas station, and nobody reads a trip for the gas station.
+
+    Runs fold IN PLACE rather than being hoisted into the day divider, so the
+    chip keeps its chronological slot — "left camp → 3 brief stops → Fort
+    Necessity" — which is the same claim about what happened when that the rest
+    of the timeline makes. A run therefore breaks on any card-worthy item AND on
+    a change of `sort_date`: a day divider is emitted between two dates, and a
+    chip may not straddle one.
+
+    Annotates each item with `wp_collapsed` and, for members of a run, a shared
+    `wp_run_id`; the item that STARTS a run also gets `wp_run_len`, which is
+    what makes the template emit the chip. The cards themselves stay in the DOM
+    (hidden), because a map-marker click has to be able to reveal one and an
+    admin's photo drag still needs them as drop targets.
+    """
+    def _close(run):
+        if not run:
+            return
+        run_id = "wp-%d" % run[0]["idx"]
+        for member in run:
+            member["wp_run_id"] = run_id
+        run[0]["wp_run_len"] = len(run)
+        # "2 brief stops" says nothing about which two. The names ride along as
+        # the chip's tooltip so a reader can check without expanding — the one
+        # thing folding actually costs them.
+        run[0]["wp_run_names"] = " \u00b7 ".join(
+            m.get("name") or "Unnamed stop" for m in run)
+
+    run = []
+    for item in timeline:
+        collapsible = (
+            item.get("type") == "event"
+            and item.get("waypoint")
+            and not item.get("family_visit")
+            and not event_photos.get(item["idx"])
+            and not (item.get("description") or "").strip()
+            and not (item.get("needs_vetting") and is_admin)
+        )
+        # run[-1] is the previous collapsible item, so an empty run already
+        # means "the item before this one earned a card" — the date test only
+        # has to catch the day boundary between two foldable stops.
+        if collapsible and run and item.get("sort_date") == run[-1].get("sort_date"):
+            run.append(item)
+        else:
+            _close(run)
+            run = [item] if collapsible else []
+        item["wp_collapsed"] = collapsible
+    _close(run)
+
+
 @app.route('/trips/<int:trip_id>')
 def trip_detail(trip_id):
     trips = parse_trips()
@@ -3066,6 +3125,10 @@ def trip_detail(trip_id):
         home_tz_abbr = tz_abbrev(
             trip.get("start"), trip.get("home_start_time") or "12:00",
             home_tz_name)
+
+    # Fold the throwaway waypoints into chips before rendering (see the
+    # helper's docstring for what earns a card).
+    _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     return render_template(
         'trip_detail.html',

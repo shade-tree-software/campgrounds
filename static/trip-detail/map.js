@@ -53,6 +53,12 @@ function isSingleColumnLayout() {
 function scrollToCard(cardId) {
   const el = document.getElementById(cardId);
   if (!el) return;
+  // A folded waypoint's card is `display: none`, which would make the scroll
+  // below a silent no-op — so open its run first and let layout settle before
+  // measuring. Marker clicks are the main way anyone reaches one of these.
+  if (el.classList.contains('wp-collapsed') && !el.classList.contains('wp-shown')) {
+    revealWaypointRun(el.dataset.wpRun, true);
+  }
   const rs = getComputedStyle(document.documentElement);
   const siteTop = parseFloat(rs.getPropertyValue('--site-top-height')) || 0;
   const tripHdr = parseFloat(rs.getPropertyValue('--trip-header-height')) || 0;
