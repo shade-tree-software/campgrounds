@@ -36,7 +36,9 @@ photographed from behind or at great distance won't register. That's fine for
 the poster: a false negative just leaves a photo in the general pool, and a
 false positive merely promotes a photo that would otherwise be a coin flip.
 
-Needs: pip install opencv-python-headless (pillow + numpy already app deps).
+Needs: pip install -r tools_requirements.txt (which also installs the app's
+own requirements). opencv is deliberately NOT in ekko_trips_requirements.txt —
+the web app never imports it, and the split is what keeps that checkable.
 Optional: pillow-heif, only if the library contains .heic uploads.
 """
 import argparse

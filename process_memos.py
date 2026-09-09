@@ -34,7 +34,9 @@ write time — re-read, then apply just this run's deltas — because the web ap
 edits the same file (filing a memo, deleting one) and, since it also triggers
 this script, the two really can overlap.
 
-Needs: pip install faster-whisper
+Needs: pip install -r tools_requirements.txt (which also installs the app's
+own requirements). faster_whisper is deliberately NOT in
+ekko_trips_requirements.txt — the web app never imports it.
 """
 import argparse
 import json

@@ -1,20 +1,52 @@
-blinker==1.9.0
-cffi==2.1.1
-click==8.3.1
-cryptography==47.0.0
+# What the WEB APP needs, and nothing else.
+#
+#     pip install -r ekko_trips_requirements.txt
+#
+# The offline batch tools (detect_people.py, process_memos.py) are NOT here —
+# they live in tools_requirements.txt, which installs this file too. That split
+# is not tidiness: "the web app never imports cv2 / faster_whisper" is a
+# load-bearing invariant (those models cost 100 MB and several hundred MB
+# resident, which a one-shot subprocess pays for seconds and a web worker would
+# pay for its whole life). Keeping their dependencies out of this file is what
+# makes the invariant checkable rather than merely stated, and keeps a host that
+# only serves pages from carrying ~190 MB it will never load.
+#
+# Every line below is reachable from the app. Verified by walking the imports of
+# ekko_trips_app.py / trips.py / weather_finder.py / ridb/ and resolving the
+# dependency closure; pyOpenSSL and python-dotenv were listed here for a long
+# time and are imported by nothing (Werkzeug's dev-cert path uses cryptography,
+# and the one .env reader in the tree is hand-rolled in tests/ specifically to
+# avoid the dependency).
+
+# ── Direct imports ─────────────────────────────────────────────────────────
 Flask==3.1.2
 Flask-Login==0.6.3
-flatbuffers==25.12.19
-h3==4.5.0
+pillow==12.2.0            # EXIF dates, thumbnails and the 1600px view derivative
+timezonefinder==8.3.0     # IANA zone from a coordinate: event tz, GPS day bucketing
+Werkzeug==3.1.5           # imported directly for safe_join / security helpers
+
+# Not imported, but required to run: Werkzeug's make_ssl_devcert builds the
+# persistent dev cert behind the HTTPS dev server (see "Local HTTPS"), and that
+# path needs cryptography. Production hosts terminate TLS themselves.
+cryptography==47.0.0
+
+# ── Transitive, pinned for reproducible installs ──────────────────────────
+# Flask
+blinker==1.9.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
+# Flask needs click>=8.1.3; the 8.4.2 floor comes from huggingface_hub in
+# tools_requirements.txt, which installs this file. Pinned to the version both
+# resolve to so a full host doesn't silently upgrade the app's own dependency.
+click==8.5.0
+# timezonefinder
 numpy==2.5.2
-pillow==12.2.0
-pycparser==3.0
-pyOpenSSL==26.1.0
-python-dotenv==1.2.2
-timezonefinder==8.3.0
+h3==4.5.0
+flatbuffers==25.12.19
 timezonefinder-data==1.2026.3
-typing_extensions==4.15.0
-Werkzeug==3.1.5
+# cryptography / timezonefinder
+cffi==2.1.1
+pycparser==3.0
+# cryptography on Python < 3.11 only; harmless and pinned on newer.
+typing_extensions==4.16.0
