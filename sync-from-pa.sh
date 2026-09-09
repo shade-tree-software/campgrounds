@@ -193,6 +193,12 @@ if [ $DO_DATA -eq 1 ]; then
   # here instead — which is why family.json lives under trip_data/.
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/'
+
+  # Voice memos ride with the data rather than with --photos: they are small
+  # (tens of KB each), and like family.json this sync is the only way the
+  # recordings ever leave PA. trip_data/memos.json came down just above; this
+  # is the audio those records point at.
+  remote_has memo_uploads && pull memo_uploads memo_uploads
 fi
 
 if [ $DO_PHOTOS -eq 1 ]; then

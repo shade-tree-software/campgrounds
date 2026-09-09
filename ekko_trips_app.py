@@ -5,6 +5,7 @@ import json
 import math
 import os
 import re
+import bisect
 import secrets
 import shutil
 import sqlite3
@@ -283,6 +284,47 @@ TRIP_DATA_DIR = os.path.join(os.path.dirname(__file__), "trip_data")
 # optional --delete, and photos are synced separately (--photos), so nesting
 # them there would let a data-only sync wipe the library.
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "photo_uploads")
+
+# Voice memos. A sibling of static/ for exactly the reason UPLOAD_DIR is one:
+# a front-end server that maps /static/ straight to disk never consults Flask,
+# so nothing under a deployment's static root can be gated by the app.
+#
+# Deliberately NOT keyed by trip the way photo_uploads/ is. A photo's PATH
+# encodes its position, which is why inserting or deleting an item has to move
+# directories (`_apply_photo_index_mapping`) and why that silently breaking
+# cost a library-wide metadata repair. A memo's trip and day live only in
+# memos.json, so re-filing one — which the record-it-months-later path does
+# routinely — is a JSON edit that touches no files at all. The year buckets
+# exist only to keep one directory from growing without bound.
+MEMO_DIR = os.path.join(os.path.dirname(__file__), "memo_uploads")
+MEMOS_FILE = os.path.join(TRIP_DATA_DIR, "memos.json")
+
+# MediaRecorder hands back audio/mp4 on Safari and audio/webm on Chrome; the
+# Voice Memos app exports .m4a. The rest are here so a file picked off a
+# desktop isn't refused for a format ffmpeg/whisper would read anyway.
+ALLOWED_MEMO_EXTENSIONS = {"m4a", "mp4", "webm", "ogg", "oga", "opus",
+                           "mp3", "wav", "aac", "caf", "3gp", "amr"}
+MEMO_MAX_BYTES = 25 * 1024 * 1024     # ~35 min of speech-rate Opus
+
+# How far from a memo's instant a track ping may sit and still be taken as
+# where it was recorded. Generous on purpose: OwnTracks stops reporting while
+# the phone is still, so an evening at camp — the moment this feature exists
+# for — can be hours from its nearest ping, and that ping is nonetheless
+# exactly where you were. `pos_gap_s` is stored so a weak fix can be shown as
+# one rather than silently trusted.
+MEMO_NEAR_PING_S = 6 * 3600
+# Slack on either end of a trip's track when deciding which trip a memo is on.
+# Small, because trips do not overlap and the track already runs a day either
+# side of the dates.
+MEMO_TRIP_MARGIN_S = 6 * 3600
+# A stay or event this close to the recording gets its name attached, purely so
+# the list reads as places rather than coordinates.
+MEMO_PLACE_M = 2000
+# How far outside every trip's dates a memo may fall and still be adopted by
+# the nearest one. Covers the drive home and the night before setting off;
+# past it, an unfiled memo you place by hand beats one silently filed onto the
+# wrong week.
+MEMO_ADOPT_DAYS = 2
 CAPTIONS_FILE = os.path.join(TRIP_DATA_DIR, "captions.json")
 PHOTO_ORDER_FILE = os.path.join(TRIP_DATA_DIR, "photo_order.json")
 USERS_FILE = os.path.join(os.path.dirname(__file__), "users.json")
@@ -4224,6 +4266,393 @@ def api_photo_favorite():
 # ── Campground CRUD API ────────────────────────────────────────────────────
 
 # ── User management API (admin-only) ────────────────────────────────────────
+
+# ── Voice memos ───────────────────────────────────────────────────────────
+#
+# Step 1 of the memo-to-rollup pipeline: capture and filing only. Nothing here
+# transcribes or summarises; a memo lands, gets attached to the right trip and
+# day, and waits. That is useful on its own — a dated, located voice note on
+# the right day is more than the app has ever held — and it means the parts
+# that cost money can be built and judged separately.
+
+
+def _allowed_memo_file(filename):
+    return ("." in filename
+            and filename.rsplit(".", 1)[1].lower() in ALLOWED_MEMO_EXTENSIONS)
+
+
+def _memo_path(rec):
+    """Absolute path of a memo's audio file from its record."""
+    return os.path.join(MEMO_DIR, rec["year"], rec["filename"])
+
+
+def _nearest_ping(points, tst):
+    """The track ping closest in time to `tst`, or None for an empty track.
+
+    Points come off the cache already sorted by `tst`, so this is a bisect
+    rather than a scan — it runs per upload against tracks of ~50k points.
+    """
+    if not points:
+        return None
+    lo = bisect.bisect_left([p["tst"] for p in points], tst)
+    best = None
+    for i in (lo - 1, lo):
+        if 0 <= i < len(points):
+            gap = abs(points[i]["tst"] - tst)
+            if best is None or gap < best[0]:
+                best = (gap, points[i])
+    return best[1] if best else None
+
+
+def _memo_place_name(trip, lat, lng):
+    """Name of the stay or event the recording sits closest to, within
+    MEMO_PLACE_M. Cosmetic — it makes the memo list read as places instead of
+    coordinates — so an unresolvable location is an empty string, not an error.
+    """
+    if lat is None or lng is None:
+        return ""
+    best = (None, None)
+    for stay in trip.get("stays", []):
+        if stay.get("lat") is not None:
+            d = _haversine_m(lat, lng, stay["lat"], stay["lng"])
+            if best[0] is None or d < best[0]:
+                best = (d, stay.get("place") or "")
+    for evt in trip.get("events", []):
+        if evt.get("lat") is not None:
+            d = _haversine_m(lat, lng, evt["lat"], evt["lng"])
+            if best[0] is None or d < best[0]:
+                best = (d, evt.get("name") or "")
+    if best[0] is not None and best[0] <= MEMO_PLACE_M:
+        return best[1]
+    return ""
+
+
+def _file_memo_by_time(recorded_at):
+    """Work out which trip and which day a memo belongs to, from the instant it
+    was recorded, by looking that instant up in the trips' own GPS tracks.
+
+    This is the whole reason the feature is practical here and nowhere else.
+    Filing is normally the hard part of "just give me memos" — which day, which
+    place — and EKKO already knows, to five minutes, where the phone was.
+
+    Returns a dict of what could be determined (any of `trip_id`, `date`,
+    `lat`, `lng`, `tz`, `place`, `pos_gap_s`), empty when the instant belongs
+    to no trip. **An empty answer is a normal outcome, not an error**: a memo
+    recorded at home, or one recorded months after the trip it describes,
+    genuinely cannot be placed by its timestamp and has to be filed by hand.
+    That second case is the known gap in this design, not a bug to fix here.
+
+    Candidates are narrowed by UTC date before any track is read. A UTC date is
+    within one day of the local date anywhere on earth, so widening the trip's
+    range by a day on each side is an exact filter rather than a guess — and it
+    keeps an upload from gunzipping 95 track caches to answer one question.
+    """
+    try:
+        recorded_at = int(recorded_at)
+    except (TypeError, ValueError):
+        return {}
+    utc_date = datetime.fromtimestamp(recorded_at, timezone.utc).date()
+
+    # Track caches deliberately overrun their trip — `_load_trip_track_for_detection`
+    # fetches from start-1d to end+2d — so back-to-back trips' caches hold the
+    # SAME pings at the seam and nearest-ping distance cannot tell them apart
+    # (trip 64's cache and trip 65's cache both contain 2025-07-29 at gap 0).
+    # The trip's own date range is the authority; the track is what turns an
+    # instant into a local day and a position, not what picks the trip.
+    #
+    # The date pre-filter is ±3 days rather than ±1 for the same reason: it has
+    # to be at least as wide as the cache overrun, or a ping the cache really
+    # holds gets excluded before it can be considered.
+    candidates = []
+    for trip in parse_trips():
+        t_start, t_end = trip.get("start"), trip.get("end")
+        if not t_start or not t_end:
+            continue
+        try:
+            if not (date.fromisoformat(t_start) - timedelta(days=3)
+                    <= utc_date
+                    <= date.fromisoformat(t_end) + timedelta(days=3)):
+                continue
+        except ValueError:
+            continue
+        candidates.append(trip)
+    if not candidates:
+        return {}
+
+    # One pass for the position: whichever candidate's track has the closest
+    # fix supplies the coordinates and — via its zone — the local day.
+    best = None
+    for trip in candidates:
+        points = _read_track_cache(trip["id"]) or []
+        if not points:
+            continue
+        if not (points[0]["tst"] - MEMO_TRIP_MARGIN_S
+                <= recorded_at
+                <= points[-1]["tst"] + MEMO_TRIP_MARGIN_S):
+            continue
+        ping = _nearest_ping(points, recorded_at)
+        gap = abs(ping["tst"] - recorded_at)
+        if best is None or gap < best[0]:
+            best = (gap, ping)
+
+    if best is None:
+        # No track reaches this instant. The dates still narrow it, so name the
+        # trip and the UTC day and leave the position unknown rather than
+        # inventing one. If the dates don't settle it either, it's unfiled —
+        # a normal outcome, not a failure.
+        day = utc_date.isoformat()
+        for trip in candidates:
+            if trip["start"] <= day <= trip["end"]:
+                return {"trip_id": trip["id"], "date": day}
+        return {}
+
+    gap, ping = best
+    tz_name = ping.get("tz") or ""
+    # The DAY is read in the zone the phone was in, not the home zone — the
+    # same rule the timeline uses, so a memo recorded at 9pm in Colorado lands
+    # on that evening's card rather than the next morning's.
+    day = _local_date_of_ping({"tst": recorded_at, "tz": tz_name}) or utc_date.isoformat()
+
+    # Now the trip: the one whose dates actually contain that day. Only when no
+    # trip does — a memo from the drive home, or the night before setting off —
+    # does the nearest track win instead, with the day clamped so the memo
+    # names a day that trip's page can show.
+    trip = next((t for t in candidates if t["start"] <= day <= t["end"]), None)
+    if trip is None:
+        # The day falls between trips — the drive home, or the evening before
+        # setting off. Give it to the trip whose dates are NEAREST, which is
+        # almost always the one just finished, and clamp so it names a day that
+        # trip's page can show. Measuring to the range rather than to a track
+        # edge is what keeps "the day after trip 16 ended" on trip 16 instead
+        # of on trip 17 three days later.
+        def _day_distance(t):
+            return max(0,
+                       (date.fromisoformat(t["start"]) - date.fromisoformat(day)).days,
+                       (date.fromisoformat(day) - date.fromisoformat(t["end"])).days)
+        trip = min(candidates, key=_day_distance)
+        # Beyond a couple of days it is not a trip memo at all — an unfiled
+        # memo you place by hand beats one silently attached to the wrong week.
+        if _day_distance(trip) > MEMO_ADOPT_DAYS:
+            return {}
+        day = min(max(day, trip["start"]), trip["end"])
+
+    out = {"trip_id": trip["id"], "date": day, "tz": tz_name, "pos_gap_s": gap}
+    if gap <= MEMO_NEAR_PING_S:
+        out["lat"] = ping["lat"]
+        out["lon"] = ping["lon"]
+        enrich_trip_locations(trip)
+        out["place"] = _memo_place_name(trip, ping["lat"], ping["lon"])
+    return out
+
+
+
+@app.route('/memos')
+def memos_page():
+    """Record and review voice memos. Contributor-only: a memo is unguarded
+    speech, and the people who record the trips are the only ones who should
+    hear it back. The rollups this eventually feeds are for everyone."""
+    denied = _require_contributor_page()
+    if denied:
+        return denied
+    trips = [t for t in parse_trips() if t.get("start")]
+    trips.sort(key=lambda t: t["start"], reverse=True)
+    return render_template(
+        'memos.html', active_nav='memos',
+        trip_options=[{"id": t["id"],
+                       "label": (f"Trip {t['number']}: {t['summary']}"
+                                 if t.get("number") else t.get("summary", "")),
+                       "start": t.get("start", ""), "end": t.get("end", "")}
+                      for t in trips])
+
+
+@app.route('/memo/<path:subpath>')
+def serve_memo(subpath):
+    """Audio for one memo. Contributor-gated on top of the global login
+    requirement — the recording is the rawest layer of this feature and the
+    only one a reader never sees."""
+    denied = _require_contributor()
+    if denied:
+        return denied
+    if any(part.startswith('.') for part in subpath.replace('\\', '/').split('/')):
+        return jsonify({"error": "not found"}), 404
+    path = safe_join(MEMO_DIR, subpath)
+    if not path or not os.path.isfile(path) or not _allowed_memo_file(os.path.basename(path)):
+        return jsonify({"error": "not found"}), 404
+    return send_file(path, conditional=True)
+
+
+def _memo_view(memo_id, rec):
+    """Project a stored memo into what the page renders."""
+    trip_id = rec.get("trip_id")
+    return {
+        "id": memo_id,
+        "trip_id": trip_id,
+        "date": rec.get("date", ""),
+        "recorded_at": rec.get("recorded_at"),
+        "duration_s": rec.get("duration_s"),
+        "place": rec.get("place", ""),
+        "lat": rec.get("lat"),
+        "lon": rec.get("lon"),
+        "pos_gap_s": rec.get("pos_gap_s"),
+        "note": rec.get("note", ""),
+        "uploaded_by": rec.get("uploaded_by", ""),
+        "filed": trip_id is not None,
+        "audio_url": f"/memo/{rec['year']}/{rec['filename']}",
+    }
+
+
+@app.route('/api/memos')
+def api_memos_list():
+    """Every memo, newest first. `?trip=<id>` narrows to one trip;
+    `?unfiled=1` to the ones the timestamp couldn't place."""
+    denied = _require_contributor()
+    if denied:
+        return denied
+    memos = _load_json(MEMOS_FILE)
+    trip_filter = request.args.get('trip', type=int)
+    unfiled_only = request.args.get('unfiled') == '1'
+
+    out = []
+    for memo_id, rec in memos.items():
+        if unfiled_only and rec.get("trip_id") is not None:
+            continue
+        if trip_filter is not None and rec.get("trip_id") != trip_filter:
+            continue
+        out.append(_memo_view(memo_id, rec))
+    out.sort(key=lambda m: m.get("recorded_at") or 0, reverse=True)
+
+    names = {t["id"]: (f"Trip {t['number']}: {t['summary']}"
+                       if t.get("number") else t.get("summary", ""))
+             for t in parse_trips()}
+    for m in out:
+        m["trip_name"] = names.get(m["trip_id"], "")
+    return jsonify({"memos": out,
+                    "unfiled": sum(1 for r in memos.values()
+                                   if r.get("trip_id") is None)})
+
+
+@app.route('/api/memos', methods=['POST'])
+def api_memo_upload():
+    """Store one recording and file it against a trip and day.
+
+    Multipart: `audio` (required), `recorded_at` (epoch seconds — WHEN it was
+    spoken, which is not when it was uploaded and is the only thing filing can
+    use), optional `duration_s`, and an optional explicit `trip_id` + `date`
+    that skips auto-filing entirely.
+
+    That explicit path is not a debugging affordance — it is how a memo
+    recorded months after the trip gets filed at all, since its timestamp
+    describes the November evening it was spoken, not the March day it is
+    about.
+    """
+    denied = _require_contributor()
+    if denied:
+        return denied
+
+    f = request.files.get('audio')
+    if not f or not f.filename:
+        return jsonify({"error": "No audio file"}), 400
+    if not _allowed_memo_file(f.filename):
+        return jsonify({"error": "Unsupported audio format"}), 400
+
+    try:
+        recorded_at = int(float(request.form.get('recorded_at') or 0))
+    except ValueError:
+        recorded_at = 0
+    if recorded_at <= 0:
+        recorded_at = int(time.time())
+
+    # Read into memory to enforce the cap before anything touches disk; the
+    # ceiling is ~35 minutes of speech, so this is bounded by design.
+    blob = f.read()
+    if not blob:
+        return jsonify({"error": "Empty recording"}), 400
+    if len(blob) > MEMO_MAX_BYTES:
+        return jsonify({"error": "Recording too large"}), 413
+
+    ext = f.filename.rsplit(".", 1)[1].lower()
+    memo_id = secrets.token_hex(8)
+    year = datetime.fromtimestamp(recorded_at, timezone.utc).strftime("%Y")
+    folder = os.path.join(MEMO_DIR, year)
+    os.makedirs(folder, exist_ok=True)
+    filename = f"{memo_id}.{ext}"
+    with open(os.path.join(folder, filename), "wb") as out:
+        out.write(blob)
+
+    rec = {"year": year, "filename": filename, "recorded_at": recorded_at,
+           "uploaded_at": int(time.time()),
+           "uploaded_by": getattr(current_user, "username", ""),
+           "note": (request.form.get('note') or "").strip()}
+    try:
+        rec["duration_s"] = round(float(request.form.get('duration_s')), 1)
+    except (TypeError, ValueError):
+        rec["duration_s"] = None
+
+    explicit_trip = request.form.get('trip_id', type=int)
+    explicit_date = (request.form.get('date') or "").strip()
+    if explicit_trip is not None:
+        rec["trip_id"] = explicit_trip
+        rec["date"] = explicit_date
+        rec["filed_by"] = "manual"
+    else:
+        rec.update(_file_memo_by_time(recorded_at))
+        rec.setdefault("trip_id", None)
+        rec["filed_by"] = "gps" if rec["trip_id"] is not None else "unfiled"
+
+    memos = _load_json(MEMOS_FILE)
+    memos[memo_id] = rec
+    _save_json(MEMOS_FILE, memos)
+    return jsonify({"ok": True, "memo": _memo_view(memo_id, rec)})
+
+
+@app.route('/api/memos/<memo_id>', methods=['PUT'])
+def api_memo_update(memo_id):
+    """Re-file a memo or edit its note. Body may carry `trip_id` (null to
+    unfile), `date`, `note`. The audio never moves — the trip lives in the
+    JSON precisely so re-filing costs nothing."""
+    denied = _require_contributor()
+    if denied:
+        return denied
+    memos = _load_json(MEMOS_FILE)
+    rec = memos.get(memo_id)
+    if rec is None:
+        return jsonify({"error": "not found"}), 404
+    data = request.get_json() or {}
+    if "trip_id" in data:
+        rec["trip_id"] = data["trip_id"] if data["trip_id"] is not None else None
+        rec["filed_by"] = "manual" if rec["trip_id"] is not None else "unfiled"
+    if "date" in data:
+        rec["date"] = (data["date"] or "").strip()
+    if "note" in data:
+        rec["note"] = (data["note"] or "").strip()
+    memos[memo_id] = rec
+    _save_json(MEMOS_FILE, memos)
+    return jsonify({"ok": True, "memo": _memo_view(memo_id, rec)})
+
+
+@app.route('/api/memos/<memo_id>', methods=['DELETE'])
+def api_memo_delete(memo_id):
+    """Delete a memo outright — record and audio both.
+
+    No trash/undo, unlike photos: a memo is deleted seconds after it is made,
+    by the person who just made it, because it caught the wrong thing or was
+    started by accident. A photo is deleted much later, from a grid, where the
+    click that removes the wrong one is the mistake worth protecting against.
+    """
+    denied = _require_contributor()
+    if denied:
+        return denied
+    memos = _load_json(MEMOS_FILE)
+    rec = memos.pop(memo_id, None)
+    if rec is None:
+        return jsonify({"error": "not found"}), 404
+    try:
+        os.remove(_memo_path(rec))
+    except OSError:
+        pass          # record goes regardless; a missing file is already gone
+    _save_json(MEMOS_FILE, memos)
+    return jsonify({"ok": True})
+
 
 @app.route('/admin/users')
 def users_manage():

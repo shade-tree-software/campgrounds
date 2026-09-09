@@ -1,0 +1,545 @@
+{% extends "base.html" %}
+{% block title %}Voice Memos{% endblock %}
+
+{% block style %}
+  .memos-wrap { max-width: 780px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+
+  /* ── Recorder ──────────────────────────────────────────────────────────
+     The whole point of this page is the button, so it gets the top of the
+     screen and enough of a target to hit one-handed in the dark. */
+  .recorder {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .9rem;
+    text-align: center;
+  }
+  .rec-btn {
+    width: 7rem; height: 7rem;
+    border-radius: 50%;
+    border: none;
+    background: var(--red);
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(191,10,48,.32);
+    transition: transform .12s ease, background .2s ease;
+  }
+  .rec-btn:hover { transform: scale(1.03); }
+  .rec-btn:active { transform: scale(.97); }
+  .rec-btn[disabled] { background: var(--gray-light); box-shadow: none; cursor: not-allowed; }
+  .rec-btn.recording { background: var(--navy); box-shadow: 0 4px 14px rgba(0,40,104,.35); }
+  .rec-btn.recording::before {
+    content: '';
+    width: 1.6rem; height: 1.6rem;
+    background: #fff; border-radius: 3px;
+  }
+  .rec-btn.recording span { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .rec-btn, .rec-btn:hover, .rec-btn:active { transition: none; transform: none; }
+    .rec-pulse { animation: none !important; }
+  }
+  .rec-pulse {
+    position: absolute; inset: -.5rem;
+    border-radius: 50%;
+    border: 2px solid var(--navy);
+    opacity: 0;
+    animation: recpulse 1.8s ease-out infinite;
+    pointer-events: none;
+  }
+  @keyframes recpulse {
+    0%   { transform: scale(.92); opacity: .5; }
+    100% { transform: scale(1.12); opacity: 0; }
+  }
+  .rec-shell { position: relative; display: inline-flex; }
+  .rec-timer {
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--navy);
+    letter-spacing: .02em;
+  }
+  .rec-hint { color: var(--gray); font-size: .9rem; max-width: 30rem; }
+  .rec-secondary {
+    display: flex; gap: .75rem; flex-wrap: wrap; justify-content: center;
+    align-items: center;
+  }
+  .rec-secondary label {
+    font-size: .88rem;
+    color: var(--navy);
+    border: 1px solid var(--gray-light);
+    border-radius: 999px;
+    padding: .4rem .9rem;
+    cursor: pointer;
+    background: var(--offwhite);
+  }
+  .rec-secondary input[type=file] { display: none; }
+
+  /* Pending uploads. Only rendered when there are any — a permanent "0
+     waiting" would be noise on every load. */
+  .queue-bar {
+    background: #fff5db;
+    border: 1px solid #e0c268;
+    border-radius: 8px;
+    padding: .6rem .9rem;
+    margin-top: 1rem;
+    font-size: .9rem;
+    display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+  }
+  /* Author `display: flex` beats the UA's [hidden] rule, so hiding the bar
+     has to be said explicitly or an empty queue renders as "0 recordings". */
+  .queue-bar[hidden] { display: none; }
+  .queue-bar button {
+    border: 1px solid #c9a84c; background: #fff; color: #6b5316;
+    border-radius: 6px; padding: .25rem .7rem; cursor: pointer; font-size: .85rem;
+  }
+
+  /* ── List ──────────────────────────────────────────────────────────── */
+  .memo-controls {
+    display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+    margin: 2rem 0 .75rem;
+  }
+  .memo-controls h2 { font-size: 1.1rem; margin: 0; }
+  .memo-controls select { padding: .35rem .5rem; border: 1px solid var(--gray-light); border-radius: 6px; }
+  .memo-count { color: var(--gray); font-size: .88rem; margin-left: auto; }
+
+  .memo-day { margin-top: 1.5rem; }
+  .memo-day-head {
+    font-size: .78rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--gray);
+    display: flex; align-items: center; gap: .6rem;
+    margin-bottom: .5rem;
+  }
+  .memo-day-head::after { content: ''; flex: 1; height: 1px; background: var(--gray-light); }
+  .memo-day-head .trip { color: var(--navy); }
+
+  .memo {
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: .85rem 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: .5rem .75rem;
+    align-items: start;
+    margin-bottom: .6rem;
+  }
+  .memo.unfiled { box-shadow: 0 0 0 2px #e0a020; }
+  .memo-meta { display: flex; flex-wrap: wrap; gap: .1rem .6rem; align-items: baseline; }
+  .memo-time { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+  .memo-place { color: var(--gray); }
+  .memo-dur { color: var(--gray); font-size: .85rem; font-variant-numeric: tabular-nums; }
+  .memo-weak { color: #8a6d1f; font-size: .8rem; }
+  .memo audio { grid-column: 1 / -1; width: 100%; height: 34px; }
+  .memo-actions { display: flex; gap: .4rem; }
+  .memo-actions button {
+    border: 1px solid var(--gray-light); background: var(--offwhite);
+    border-radius: 6px; padding: .25rem .6rem; cursor: pointer; font-size: .82rem;
+    color: var(--gray);
+  }
+  .memo-actions button:hover { border-color: var(--red); color: var(--red); }
+  .memo-file {
+    grid-column: 1 / -1;
+    display: flex; gap: .5rem; flex-wrap: wrap; align-items: center;
+    font-size: .85rem; color: var(--gray);
+  }
+  .memo-file select, .memo-file input {
+    padding: .3rem .45rem; border: 1px solid var(--gray-light); border-radius: 6px;
+    font-size: .85rem; max-width: 100%;
+  }
+  .memo-file select { max-width: 15rem; }
+
+  .memo-empty {
+    text-align: center; color: var(--gray); padding: 2.5rem 1rem;
+    background: var(--white); border-radius: 10px; box-shadow: var(--shadow);
+  }
+
+  @media (max-width: 700px) {
+    .memos-wrap { padding: 1rem .75rem 2rem; }
+    .memo { grid-template-columns: 1fr; }
+    .memo-actions { justify-self: start; }
+    .memo-file select { max-width: 100%; width: 100%; }
+  }
+{% endblock %}
+
+{% block content %}
+<div class="memos-wrap">
+
+  <div class="recorder">
+    <div class="rec-shell">
+      <button id="rec-btn" class="rec-btn" onclick="toggleRecording()"><span>Record</span></button>
+      <div class="rec-pulse" id="rec-pulse" hidden></div>
+    </div>
+    <div class="rec-timer" id="rec-timer">0:00</div>
+    <p class="rec-hint" id="rec-hint">Say what happened. It files itself against the GPS track — right trip, right day, right place.</p>
+    <div class="rec-secondary">
+      <label>Upload a recording
+        <input type="file" id="memo-file-input" accept="audio/*" onchange="uploadPickedFile(this)">
+      </label>
+    </div>
+  </div>
+
+  <div class="queue-bar" id="queue-bar" hidden>
+    <span id="queue-text"></span>
+    <button type="button" onclick="flushQueue()">Try now</button>
+  </div>
+
+  <div class="memo-controls">
+    <h2>Memos</h2>
+    <select id="trip-filter" onchange="loadMemos()">
+      <option value="">All trips</option>
+      <option value="unfiled">Needs filing</option>
+      {% for t in trip_options %}
+      <option value="{{ t.id }}">{{ t.label }}</option>
+      {% endfor %}
+    </select>
+    <span class="memo-count" id="memo-count"></span>
+  </div>
+
+  <div id="memo-list"></div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const TRIP_OPTIONS = {{ trip_options | tojson }};
+
+// ── Offline queue ────────────────────────────────────────────────────────
+// A memo is recorded exactly where there is no signal, so the recording has to
+// survive the trip home. IndexedDB (not localStorage) because the payload is a
+// Blob, and blobs are what localStorage cannot hold.
+const DB_NAME = 'ekko-memos', STORE = 'queue';
+let _db = null;
+
+function db() {
+  if (_db) return Promise.resolve(_db);
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      req.result.createObjectStore(STORE, { keyPath: 'id', autoIncrement: true });
+    };
+    req.onsuccess = () => { _db = req.result; resolve(_db); };
+    req.onerror = () => reject(req.error);
+  });
+}
+
+function _tx(mode, fn) {
+  return db().then(d => new Promise((resolve, reject) => {
+    const tx = d.transaction(STORE, mode);
+    const req = fn(tx.objectStore(STORE));
+    tx.oncomplete = () => resolve(req && req.result);
+    tx.onerror = () => reject(tx.error);
+  }));
+}
+
+const queueAdd  = item => _tx('readwrite', s => s.add(item));
+const queueAll  = ()   => _tx('readonly',  s => s.getAll());
+const queueDrop = id   => _tx('readwrite', s => s.delete(id));
+
+async function refreshQueueBar() {
+  let items = [];
+  try { items = await queueAll(); } catch (e) { /* private mode: no queue, no bar */ }
+  const bar = document.getElementById('queue-bar');
+  bar.hidden = items.length === 0;
+  document.getElementById('queue-text').textContent =
+    items.length === 1 ? '1 recording waiting to upload'
+                       : `${items.length} recordings waiting to upload`;
+}
+
+// Send everything queued, oldest first. Called on load, when the browser says
+// it's back online, and from the "Try now" button. A failure leaves the item in
+// the queue — that is the whole point of the queue.
+let flushing = false;
+async function flushQueue() {
+  if (flushing) return;
+  flushing = true;
+  try {
+    const items = await queueAll();
+    let sent = 0;
+    for (const item of items) {
+      try {
+        await postMemo(item.blob, item.recordedAt, item.durationS, item.ext);
+        await queueDrop(item.id);
+        sent++;
+      } catch (e) {
+        break;                       // still offline; keep the rest queued
+      }
+    }
+    await refreshQueueBar();
+    if (sent) {
+      toast(sent === 1 ? 'Memo uploaded' : `${sent} memos uploaded`, 'success');
+      loadMemos();
+    }
+  } finally {
+    flushing = false;
+  }
+}
+
+function postMemo(blob, recordedAt, durationS, ext, extra) {
+  const fd = new FormData();
+  fd.append('audio', blob, `memo.${ext}`);
+  fd.append('recorded_at', String(Math.round(recordedAt / 1000)));
+  if (durationS != null) fd.append('duration_s', String(durationS));
+  Object.entries(extra || {}).forEach(([k, v]) => fd.append(k, v));
+  return fetch('/api/memos', { method: 'POST', body: fd }).then(r => {
+    if (!r.ok) throw new Error('upload failed');
+    return r.json();
+  });
+}
+
+// ── Recording ────────────────────────────────────────────────────────────
+// MediaRecorder's container differs by browser — Safari gives audio/mp4,
+// Chrome audio/webm — so the extension is picked from what the browser
+// actually agreed to record, never assumed.
+const MIME_CHOICES = [
+  ['audio/mp4', 'm4a'],
+  ['audio/webm;codecs=opus', 'webm'],
+  ['audio/webm', 'webm'],
+  ['audio/ogg;codecs=opus', 'ogg'],
+];
+
+let recorder = null, chunks = [], startedAt = 0, timerId = null, recExt = 'webm';
+
+function pickMime() {
+  if (typeof MediaRecorder === 'undefined') return null;
+  for (const [mime, ext] of MIME_CHOICES) {
+    if (MediaRecorder.isTypeSupported(mime)) return { mime, ext };
+  }
+  return { mime: '', ext: 'webm' };     // let the browser choose its default
+}
+
+function fmtClock(s) {
+  const m = Math.floor(s / 60);
+  return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+}
+
+async function toggleRecording() {
+  if (recorder && recorder.state === 'recording') { stopRecording(); return; }
+  const choice = pickMime();
+  if (!choice) {
+    toast('This browser can’t record audio. Use “Upload a recording” instead.', 'error');
+    return;
+  }
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+  } catch (e) {
+    toast('Microphone access was refused. Allow it in your browser settings to record here.', 'error');
+    return;
+  }
+  chunks = [];
+  recExt = choice.ext;
+  recorder = new MediaRecorder(stream, choice.mime ? { mimeType: choice.mime } : undefined);
+  recorder.ondataavailable = e => { if (e.data && e.data.size) chunks.push(e.data); };
+  recorder.onstop = () => {
+    stream.getTracks().forEach(t => t.stop());
+    finishRecording();
+  };
+  // startedAt is when you SPOKE, not when the upload lands. It is the only
+  // thing filing can use, so it is captured here and carried through the
+  // queue untouched.
+  startedAt = Date.now();
+  recorder.start();
+  document.getElementById('rec-btn').classList.add('recording');
+  document.getElementById('rec-pulse').hidden = false;
+  document.getElementById('rec-hint').textContent = 'Recording — tap the square to stop.';
+  timerId = setInterval(() => {
+    document.getElementById('rec-timer').textContent =
+      fmtClock((Date.now() - startedAt) / 1000);
+  }, 200);
+}
+
+function stopRecording() {
+  if (recorder && recorder.state === 'recording') recorder.stop();
+}
+
+async function finishRecording() {
+  clearInterval(timerId);
+  const durationS = (Date.now() - startedAt) / 1000;
+  document.getElementById('rec-btn').classList.remove('recording');
+  document.getElementById('rec-pulse').hidden = true;
+  document.getElementById('rec-timer').textContent = '0:00';
+  document.getElementById('rec-hint').textContent =
+    'Say what happened. It files itself against the GPS track — right trip, right day, right place.';
+
+  const blob = new Blob(chunks, { type: chunks[0] ? chunks[0].type : 'audio/webm' });
+  chunks = [];
+  if (durationS < 1 || !blob.size) { toast('That was too short to keep.', 'error'); return; }
+
+  // Queue FIRST, then try to send. If the upload fails — or the page is closed
+  // mid-flight — the recording is already durable. Uploading first and queueing
+  // on failure would lose exactly the memo that mattered.
+  try {
+    await queueAdd({ blob, recordedAt: startedAt, durationS, ext: recExt });
+    await refreshQueueBar();
+  } catch (e) {
+    // No IndexedDB (private browsing). Send it directly or lose it — say so.
+    try {
+      await postMemo(blob, startedAt, durationS, recExt);
+      toast('Memo saved', 'success');
+      loadMemos();
+    } catch (err) {
+      toast('Could not save that memo, and this browser has no offline storage.', 'error');
+    }
+    return;
+  }
+  flushQueue();
+}
+
+async function uploadPickedFile(input) {
+  const file = input.files && input.files[0];
+  input.value = '';
+  if (!file) return;
+  const ext = (file.name.split('.').pop() || '').toLowerCase();
+  // A picked file's timestamp is when it was RECORDED, which for a memo made
+  // months after the trip is not when the trip happened. lastModified is the
+  // best guess available; filing it by hand is the fallback the list offers.
+  const recordedAt = file.lastModified || Date.now();
+  try {
+    await postMemo(file, recordedAt, null, ext);
+    toast('Memo uploaded', 'success');
+    loadMemos();
+  } catch (e) {
+    toast('Upload failed — check the format and try again.', 'error');
+  }
+}
+
+// ── List ─────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g,
+    c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function localTime(epochS) {
+  if (!epochS) return '';
+  return new Date(epochS * 1000).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+
+function dayLabel(iso) {
+  if (!iso) return 'No date';
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString([],
+    { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+async function loadMemos() {
+  const filter = document.getElementById('trip-filter').value;
+  const qs = filter === 'unfiled' ? '?unfiled=1' : (filter ? `?trip=${filter}` : '');
+  let data;
+  try {
+    data = await fetch('/api/memos' + qs).then(r => r.json());
+  } catch (e) {
+    document.getElementById('memo-list').innerHTML =
+      '<div class="memo-empty">Couldn’t load memos. You may be offline — anything you record now is still queued.</div>';
+    return;
+  }
+  const memos = data.memos || [];
+  const count = document.getElementById('memo-count');
+  count.textContent = memos.length === 1 ? '1 memo' : `${memos.length} memos`;
+  if (data.unfiled && filter !== 'unfiled') {
+    count.textContent += data.unfiled === 1
+      ? ' · 1 needs filing' : ` · ${data.unfiled} need filing`;
+  }
+
+  const list = document.getElementById('memo-list');
+  if (!memos.length) {
+    list.innerHTML = '<div class="memo-empty">No memos yet. Tap Record above.</div>';
+    return;
+  }
+
+  // Group by day, in the order the API already sorted them (newest first).
+  const groups = [];
+  for (const m of memos) {
+    const key = `${m.trip_id}|${m.date}`;
+    if (!groups.length || groups[groups.length - 1].key !== key) {
+      groups.push({ key, trip_name: m.trip_name, date: m.date, filed: m.filed, items: [] });
+    }
+    groups[groups.length - 1].items.push(m);
+  }
+  list.innerHTML = groups.map(g => `
+    <div class="memo-day">
+      <div class="memo-day-head">
+        <span>${g.filed ? esc(dayLabel(g.date)) : 'Needs filing'}</span>
+        ${g.filed && g.trip_name ? `<span class="trip">${esc(g.trip_name)}</span>` : ''}
+      </div>
+      ${g.items.map(memoHtml).join('')}
+    </div>`).join('');
+}
+
+function memoHtml(m) {
+  const weak = m.pos_gap_s != null && m.pos_gap_s > 3600
+    ? `<span class="memo-weak">nearest fix ${Math.round(m.pos_gap_s / 3600)}h away</span>` : '';
+  return `
+  <div class="memo${m.filed ? '' : ' unfiled'}" id="memo-${esc(m.id)}">
+    <div class="memo-meta">
+      <span class="memo-time">${esc(localTime(m.recorded_at))}</span>
+      ${m.place ? `<span class="memo-place">${esc(m.place)}</span>` : ''}
+      ${m.duration_s ? `<span class="memo-dur">${esc(fmtClock(m.duration_s))}</span>` : ''}
+      ${weak}
+    </div>
+    <div class="memo-actions">
+      <button type="button" onclick="deleteMemo('${esc(m.id)}')">Delete</button>
+    </div>
+    <audio controls preload="none" src="${esc(m.audio_url)}"></audio>
+    ${m.filed ? '' : fileFormHtml(m)}
+  </div>`;
+}
+
+// Shown only on an unfiled memo: the manual path for a recording whose
+// timestamp can't place it — anything spoken months after the trip it's about.
+function fileFormHtml(m) {
+  const opts = TRIP_OPTIONS.map(t =>
+    `<option value="${t.id}" data-start="${esc(t.start)}">${esc(t.label)}</option>`).join('');
+  return `
+    <div class="memo-file">
+      <span>File to</span>
+      <select id="ft-${esc(m.id)}" onchange="syncFileDate('${esc(m.id)}')">
+        <option value="">Choose a trip…</option>${opts}
+      </select>
+      <input type="date" id="fd-${esc(m.id)}">
+      <button type="button" onclick="fileMemo('${esc(m.id)}')">Save</button>
+    </div>`;
+}
+
+// Default the date to the trip's first day, so filing is usually one choice.
+function syncFileDate(id) {
+  const sel = document.getElementById('ft-' + id);
+  const opt = sel.selectedOptions[0];
+  const input = document.getElementById('fd-' + id);
+  if (opt && opt.dataset.start && !input.value) input.value = opt.dataset.start;
+}
+
+async function fileMemo(id) {
+  const trip_id = parseInt(document.getElementById('ft-' + id).value, 10);
+  const date = document.getElementById('fd-' + id).value;
+  if (!trip_id || !date) { toast('Pick a trip and a day first.', 'error'); return; }
+  const r = await fetch('/api/memos/' + encodeURIComponent(id), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ trip_id, date }),
+  });
+  if (r.ok) { toast('Memo filed', 'success'); loadMemos(); }
+  else toast('Could not file that memo.', 'error');
+}
+
+async function deleteMemo(id) {
+  if (!confirm('Delete this memo? The recording is removed for good.')) return;
+  const r = await fetch('/api/memos/' + encodeURIComponent(id), { method: 'DELETE' });
+  if (r.ok) { toast('Memo deleted', 'success'); loadMemos(); }
+  else toast('Could not delete that memo.', 'error');
+}
+
+window.addEventListener('online', flushQueue);
+refreshQueueBar();
+flushQueue();
+loadMemos();
+</script>
+{% endblock %}

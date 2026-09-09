@@ -344,6 +344,23 @@ The full pipeline — cluster radius/duration tunables and their calibration, su
 
 **Trip-boundary calculation has one implementation.** `_find_home_boundary_tsts()` in `ekko_trips_app.py` is the sole home-boundary detector (its docstring carries the full algorithm and the SINGLE-SOURCE-OF-TRUTH contract). It feeds two consumers: (1) `api_trip_track` returns `home_auto_start_tst` / `home_auto_end_tst` in the `/track` payload, which the frontend uses for both the polyline window cuts (`computeTripWindow`) and the home card's "(auto)" time — the frontend never recomputes; (2) detect-stops calls it directly. Manual `trip.home_start_time` / `trip.home_end_time` win over the auto values on both. **Do not reintroduce a JS reimplementation** — a prior one (`findHomeBoundaryTimes`) drifted and was deleted. The constants (`STOP_NEAR_HOME_M`, `STOP_AT_HOME_CENTROID_M`, `STOP_HOME_BOUNDARY_LOCK_S`, `TRACK_NEAR_STAY_KM`) live only on the Python side.
 
+### Voice Memos (Contributor)
+
+**Step 1 of the memo-to-rollup pipeline: capture and filing only.** Nothing here transcribes or summarizes — a memo lands, attaches itself to the right trip and day, and waits. That is useful on its own (a dated, located voice note on the right day is more than the app has ever held) and it lets the parts that cost money be built and judged separately. See [[project_travelogue_capture_gap]] for why writing, not plumbing, is the bottleneck this exists to route around.
+
+- **Page:** `/memos` (`templates/memos.html`), contributor-only via `_require_contributor_page()`. Nav entry under Trips **and a sixth phone tab**, both `{% if is_contributor %}` — the feature is phone-first, so it earns a tab, and a reader's bar is unchanged. Records with `MediaRecorder` (iOS Safari >= 14.3), queues to **IndexedDB**, uploads when there's signal.
+  - **The recording is queued BEFORE it is sent, always.** A memo is made exactly where there is no signal; uploading first and queueing on failure would lose the one that mattered. `localStorage` can't hold a Blob, which is why this is IndexedDB. A browser with neither (private mode) falls back to send-or-say-so.
+  - `startedAt` is when you SPOKE, not when the upload landed. It is the only thing filing can use, so it is captured at `recorder.start()` and carried through the queue untouched.
+  - The container differs by browser — Safari gives `audio/mp4`, Chrome `audio/webm` — so the extension comes from what the browser agreed to record (`MIME_CHOICES`), never assumed.
+- **Storage:** audio in `memo_uploads/{YYYY}/{memo_id}.{ext}` (gitignored), records in `trip_data/memos.json`. `MEMO_DIR` is a sibling of `static/` for the same reason `UPLOAD_DIR` is. **Deliberately NOT keyed by trip the way `photo_uploads/` is:** a photo's path encodes its position, which is why every insert or delete must move directories and why that breaking silently cost a library-wide repair. A memo's trip and day live only in the JSON, so re-filing — which the record-it-months-later path does routinely — is a JSON edit that touches no files. Year buckets exist only to bound one directory's growth.
+- **`_file_memo_by_time(recorded_at)` is the whole reason this is practical here.** Filing is normally the hard part of "just record and sort it later"; EKKO knows where the phone was to a few minutes. Three rules, each earned:
+  - **The trip's DATE RANGE picks the trip, not track proximity.** Track caches deliberately overrun their trip (`start-1d` to `end+2d`), so back-to-back trips' caches hold the *same pings* at the seam at gap 0 and nearest-ping cannot separate them — that filed trip 32's opening ping onto trip 31. The date pre-filter is +/-3 days for the same reason: it must be at least as wide as the overrun.
+  - **The track picks the DAY and the position.** The local day is read in the zone the phone was in (`_local_date_of_ping`), the same rule the timeline uses, so a memo spoken at 9pm in Colorado lands on that evening rather than the next morning. `pos_gap_s` is stored and shown when large: `MEMO_NEAR_PING_S` is 6 h on purpose, because OwnTracks stops reporting while the phone is still, so an evening at camp — the moment this exists for — can be hours from its nearest ping and that ping is nonetheless exactly where you were.
+  - **A memo between trips goes to the NEAREST trip by date, within `MEMO_ADOPT_DAYS` (2), day clamped into range.** That's the drive home, or the night before setting off. Measuring to the date *range* rather than to a track edge is what keeps "the day after trip 16 ended" on trip 16 instead of on trip 17 three days later. Past the window it is **unfiled — a normal outcome, not an error**; the page offers a trip+day picker, which is also the only path for a memo recorded months after the trip it describes (its timestamp describes the November evening it was spoken, not the March day it is about). Verified against every real track: 285/285 pings file to the trip that owns their day.
+- **Visibility is three layers and they default differently.** Audio and the record are contributor-only (`_require_contributor` on `/memo/<subpath>` and every `/api/memos` route) — a memo is unguarded speech. The rollups this eventually feeds are for everyone. `_is_contributor()` already draws that line for Weather Finder and Longest Driving Days.
+- **Deletes are immediate, with no trash — deliberately unlike photos.** A memo is deleted seconds after it is made, by the person who just made it, because it caught the wrong thing. A photo is deleted much later from a grid, where the click that removes the wrong one is the mistake worth protecting against.
+- **It travels by `backup.sh` / `sync-from-pa.sh`, not git.** `memo_uploads/` is in the BASE backup bundle rather than behind `--with-photos`: gitignored like the photos but three orders of magnitude smaller, and the bundle is the only copy that leaves the host. `tests/test_memo_filing.py` pins all three filing rules.
+
 ### Times from GPS (Admin)
 
 A card added while the trip is happening carries the moment the admin got around to opening the form — a few minutes after actually arriving — and almost never an end time, because by the time you leave you're thinking about the road rather than the form. The **⏱ From GPS** button beside the Time field on every event / waypoint / family-visit edit form (inline and modal both) reads the real arrival and departure off the trip's own track and fills the two time inputs. It **never saves**: the times come off a heuristic and the admin is the one who was there, so cancelling the form is the undo.
@@ -466,6 +483,14 @@ It refuses rather than guessing when the two sides could both be right: local un
 - `POST /api/roadside` — create a stop
 - `PUT /api/roadside/<int:id>` — update a stop
 - `DELETE /api/roadside/<int:id>` — delete a stop
+
+### Voice Memos (contributor)
+- `GET /memos` — the record-and-review page
+- `GET /api/memos[?trip=<id>][&unfiled=1]` — memos newest-first, with an `unfiled` count
+- `POST /api/memos` — multipart `audio` + `recorded_at` (epoch seconds — when it was SPOKEN, the only thing filing can use), optional `duration_s`, optional explicit `trip_id`+`date` which skips auto-filing (the months-later path)
+- `PUT /api/memos/<id>` — re-file (`trip_id`, `date`) or edit `note`. The audio never moves
+- `DELETE /api/memos/<id>` — remove record and recording, no trash
+- `GET /memo/<subpath>` — the audio, contributor-gated on top of the global login
 
 ### Users, Share Links, Access Log (admin)
 - `GET/POST /api/users`, `PUT/DELETE /api/users/<username>` — user CRUD (`is_admin`, `can_upload`, `can_view_campgrounds`)

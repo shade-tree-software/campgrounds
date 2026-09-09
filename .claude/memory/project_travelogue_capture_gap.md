@@ -31,7 +31,11 @@ Agreed direction, in build order:
 
 1. **Waypoint collapse — DONE 2026-09-09** (committed; see CLAUDE.md "Folded
    waypoint runs"). Removes work rather than adding it: 347 timeline rows gone.
-2. **Voice memo ingest — the big unlock, not yet built.** Talking works tired,
+2. **Voice memo ingest — step 1 (capture + filing) SHIPPED 2026-09-09**;
+   transcription and rollups still to come. See CLAUDE.md "Voice Memos
+   (Contributor)". Design doc:
+   https://claude.ai/code/artifact/eff04982-ac31-45d9-b696-2640d9a2ef97
+   The unlock it was built for: Talking works tired,
    in the dark, one-handed, with no signal and no keyboard. iPhone Voice Memos
    needs no app written. **The differentiator nobody else has: a memo's
    timestamp × the OwnTracks track = exact coordinates = exact trip/day/card,
