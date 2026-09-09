@@ -76,7 +76,13 @@ shows them. Do not use headings or bullet points. Prose only.
 6. "unremarkable_stops" is a count of gas stations and rest areas, kept \
 deliberately nameless. Mention it only if the day is otherwise thin, and never \
 name or characterise them.
-7. Numbers stay as given. Do not round 520 miles to "over 500" or convert units.
+7. Photo counts tell you which stops mattered most — the family photographed \
+them. Use them to decide what to write about. NEVER state a photo count; \
+"fourteen photos for the day" is a fact about the archive, not about the day.
+8. Do not list who was there. The names are on the page already, and a day \
+reads as an inventory when it ends in a roll call. Name someone only when \
+something is said about them.
+9. Numbers stay as given. Do not round 520 miles to "over 500" or convert units.
 
 Return only the entry text."""
 
