@@ -1186,6 +1186,26 @@ def is_day_trip(trip):
     return not trip.get("stays") and bool(trip.get("events"))
 
 
+def camper_names(text):
+    """The names in a free-text `campers` field, stripped of its qualifiers.
+
+    The field is prose people actually typed, so it carries parentheses and
+    per-night notes: "(Laura--3rd night)", "Donna--first two nights only".
+    Everything after a `--` is a qualifier about WHEN, not part of the name.
+
+    Shared by `_make_trip` (which builds `trip["campers"]`) and the voice-memo
+    speaker list, so the two can't disagree about what a person is called.
+    """
+    out = []
+    for chunk in (text or "").split(","):
+        name = chunk.strip().lstrip("(").rstrip(")")
+        if "--" in name:
+            name = name.split("--")[0].strip()
+        if name:
+            out.append(name)
+    return out
+
+
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                home_start_time="", home_end_time="",
                bad_track_windows=None, tid_overrides=None,
@@ -1254,13 +1274,7 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
     # Collect all unique campers across stays
     all_campers = set()
     for s in stays:
-        if s["campers"]:
-            for c in s["campers"].split(","):
-                name = c.strip().lstrip("(").rstrip(")")
-                if "--" in name:
-                    name = name.split("--")[0].strip()
-                if name:
-                    all_campers.add(name)
+        all_campers.update(camper_names(s["campers"]))
 
     home_only = bool(stays) and all(is_home_stay(s) for s in stays)
 

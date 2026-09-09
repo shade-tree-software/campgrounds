@@ -22,7 +22,8 @@ from werkzeug.utils import secure_filename
 from ridb.fetch_facility import (search_facilities, fetch_facility,
                                  availability_matrix, DEFAULT_FIT_FT)
 import weather_finder
-from trips import (parse_trips, enrich_trip_locations,
+from trips import (
+    camper_names,parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
                    add_stay, update_stay, delete_stay,
                    add_event, update_event, delete_event,
@@ -4569,7 +4570,8 @@ def memos_page():
                        "label": (f"Trip {t['number']}: {t['summary']}"
                                  if t.get("number") else t.get("summary", "")),
                        "start": t.get("start", ""), "end": t.get("end", "")}
-                      for t in trips])
+                      for t in trips],
+        speaker_options=_memo_speakers())
 
 
 @app.route('/memo/<path:subpath>')
@@ -4588,6 +4590,33 @@ def serve_memo(subpath):
     return send_file(path, conditional=True)
 
 
+def _memo_speakers():
+    """Who could plausibly have spoken a memo, most-travelled first.
+
+    Drawn from the `campers` people already type on every stay rather than from
+    `users.json`, because those answer different questions. Only one account can
+    upload, so `uploaded_by` says "andrew" on every memo no matter whose voice
+    it is — and Donna, who is on 120 stays, has no account at all. The list of
+    people who go on the trips is the useful one, and it already exists.
+    """
+    counts = {}
+    for trip in parse_trips():
+        for stay in trip.get("stays", []):
+            for name in camper_names(stay.get("campers", "")):
+                counts[name] = counts.get(name, 0) + 1
+    return sorted(counts, key=lambda n: (-counts[n], n))
+
+
+def _default_speaker(username):
+    """Best guess at who is talking: the uploading account, if that account
+    name matches someone who actually travels. Right for the overwhelming
+    majority of memos and one tap to change when it isn't."""
+    for name in _memo_speakers():
+        if name.lower() == (username or "").lower():
+            return name
+    return ""
+
+
 def _memo_view(memo_id, rec):
     """Project a stored memo into what the page renders."""
     trip_id = rec.get("trip_id")
@@ -4602,6 +4631,7 @@ def _memo_view(memo_id, rec):
         "lon": rec.get("lon"),
         "pos_gap_s": rec.get("pos_gap_s"),
         "note": rec.get("note", ""),
+        "speaker": rec.get("speaker", ""),
         "transcript": rec.get("transcript", ""),
         # Which of these two is set tells the reader whether they are looking
         # at what a model heard or at what a human confirmed — the same
@@ -4637,7 +4667,7 @@ def api_memos_list():
             continue
         if terms:
             hay = " ".join([rec.get("transcript", ""), rec.get("note", ""),
-                            rec.get("place", "")]).lower()
+                            rec.get("place", ""), rec.get("speaker", "")]).lower()
             if not all(t in hay for t in terms):
                 continue
         out.append(_memo_view(memo_id, rec))
@@ -4722,6 +4752,11 @@ def api_memo_upload():
     rec = {"year": year, "filename": filename, "recorded_at": recorded_at,
            "uploaded_at": int(time.time()),
            "uploaded_by": getattr(current_user, "username", ""),
+           # Who was TALKING, which is not the same as which account posted:
+           # only one account can upload, so uploaded_by can never distinguish
+           # them. Guessed from the account name and changed with one tap.
+           "speaker": (request.form.get('speaker') or "").strip()
+                      or _default_speaker(getattr(current_user, "username", "")),
            "note": (request.form.get('note') or "").strip()}
     try:
         rec["duration_s"] = round(float(request.form.get('duration_s')), 1)
@@ -4768,6 +4803,8 @@ def api_memo_update(memo_id):
         rec["date"] = (data["date"] or "").strip()
     if "note" in data:
         rec["note"] = (data["note"] or "").strip()
+    if "speaker" in data:
+        rec["speaker"] = (data["speaker"] or "").strip()
     if "transcript" in data:
         rec["transcript"] = (data["transcript"] or "").strip()
         # The flag is the whole point: process_memos.py skips an edited

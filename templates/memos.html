@@ -162,6 +162,25 @@
   }
   .memo-file select { max-width: 15rem; }
 
+  /* Who was talking. A select rather than a label-plus-edit-button: it is
+     wrong often enough (whoever's phone it is isn't always whose voice it is)
+     that changing it has to be one tap. */
+  .memo-speaker {
+    border: 1px solid var(--gray-light);
+    border-radius: 999px;
+    padding: .15rem 1.5rem .15rem .6rem;
+    font-size: .82rem;
+    color: var(--navy);
+    background: var(--offwhite)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.5'/%3E%3C/svg%3E")
+      no-repeat right .55rem center;
+    appearance: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .memo-speaker.unset { color: var(--gray); font-style: italic; }
+  .memo-speaker:hover { border-color: var(--navy); }
+
   /* The transcript is the point of the memo once step 2 has run, so it gets
      the body of the card rather than a disclosure triangle. */
   .memo-transcript {
@@ -249,6 +268,7 @@
 {% block scripts %}
 <script>
 const TRIP_OPTIONS = {{ trip_options | tojson }};
+const SPEAKER_OPTIONS = {{ speaker_options | tojson }};
 
 // ── Offline queue ────────────────────────────────────────────────────────
 // A memo is recorded exactly where there is no signal, so the recording has to
@@ -539,6 +559,7 @@ function memoHtml(m) {
     <div class="memo-meta">
       <span class="memo-time">${esc(localTime(m.recorded_at))}</span>
       ${m.place ? `<span class="memo-place">${esc(m.place)}</span>` : ''}
+      ${speakerHtml(m)}
       ${m.duration_s ? `<span class="memo-dur">${esc(fmtClock(m.duration_s))}</span>` : ''}
       ${weak}
     </div>
@@ -593,6 +614,29 @@ async function deleteMemo(id) {
   const r = await fetch('/api/memos/' + encodeURIComponent(id), { method: 'DELETE' });
   if (r.ok) { toast('Memo deleted', 'success'); loadMemos(); }
   else toast('Could not delete that memo.', 'error');
+}
+
+// Whose voice it is. Defaulted from the uploading account on the way in, but
+// only one account can upload, so the guess is wrong whenever anyone else is
+// holding the phone — which is why it is a one-tap change and not a form.
+function speakerHtml(m) {
+  const opts = SPEAKER_OPTIONS.map(n =>
+    `<option value="${esc(n)}"${n === m.speaker ? ' selected' : ''}>${esc(n)}</option>`).join('');
+  return `
+    <select class="memo-speaker${m.speaker ? '' : ' unset'}" title="Who recorded this"
+            onchange="setSpeaker('${esc(m.id)}', this.value)">
+      <option value=""${m.speaker ? '' : ' selected'}>Who?</option>${opts}
+    </select>`;
+}
+
+async function setSpeaker(id, speaker) {
+  const r = await fetch('/api/memos/' + encodeURIComponent(id), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ speaker }),
+  });
+  if (r.ok) loadMemos();
+  else toast('Could not save that.', 'error');
 }
 
 // The transcript is machine output until someone corrects it, and the card
