@@ -1,0 +1,37 @@
+# The offline batch tools, plus everything the web app needs.
+#
+#     pip install -r tools_requirements.txt
+#
+# One command provisions a host that does the lot — PythonAnywhere, or a dev
+# box. A host that only serves pages should install ekko_trips_requirements.txt
+# instead and stay ~190 MB lighter.
+#
+# These packages are deliberately NOT in the app's file. The web app never
+# imports cv2 or faster_whisper: both models are far too expensive to hold
+# resident in a web worker (~100 MB and several hundred MB), so the app shells
+# out to these scripts as one-shot subprocesses and pays the cost for seconds.
+# Splitting the dependency lists is what keeps that invariant checkable.
+#
+# Installing this file is what makes the auto-triggers work: _BackgroundScan's
+# interpreter probe asks each candidate Python to import the script's deps and
+# uses the first that can, so putting them in the app's own virtualenv is the
+# way to make the probe's answer predictable. Without them the app logs one
+# warning per feature and is otherwise unaffected — the scripts still run by
+# hand wherever the packages do live.
+#
+# Not pinned transitively, unlike the app's file: this tree is ~190 MB of
+# ML wheels whose exact build varies by platform (onnxruntime and ctranslate2
+# ship per-arch), and nothing user-facing depends on their versions matching
+# across hosts. The two tools themselves are pinned.
+
+-r ekko_trips_requirements.txt
+
+# detect_people.py — YuNet face detection, for the poster's hero ranking.
+# The headless build on purpose: no GUI libraries on a server.
+opencv-python-headless==5.0.0.93
+
+# process_memos.py — local Whisper transcription of voice memos.
+# Pulls ctranslate2, onnxruntime, av, tokenizers and huggingface-hub (~190 MB).
+# Model weights are downloaded on first run into trip_data/models/, which is
+# gitignored and excluded from sync-from-pa.sh.
+faster-whisper==1.2.1
