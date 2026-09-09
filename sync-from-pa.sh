@@ -191,8 +191,12 @@ if [ $DO_DATA -eq 1 ]; then
   # manage-page edits to the *tracked* location file, campgrounds.json, via git;
   # a family entry added or edited in that same UI is gitignored, so it rides
   # here instead — which is why family.json lives under trip_data/.
+  # models/ holds downloaded model weights (YuNet for detect_people.py, Whisper
+  # for process_memos.py — the latter is ~150 MB). Both re-download on demand
+  # wherever they're needed, so they are never worth the transfer.
   pull trip_data trip_data \
-    --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/'
+    --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
+    --exclude 'models/'
 
   # Voice memos ride with the data rather than with --photos: they are small
   # (tens of KB each), and like family.json this sync is the only way the

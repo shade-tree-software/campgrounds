@@ -108,7 +108,12 @@
     margin: 2rem 0 .75rem;
   }
   .memo-controls h2 { font-size: 1.1rem; margin: 0; }
-  .memo-controls select { padding: .35rem .5rem; border: 1px solid var(--gray-light); border-radius: 6px; }
+  .memo-controls select,
+  .memo-controls input[type=search] {
+    padding: .35rem .5rem; border: 1px solid var(--gray-light); border-radius: 6px;
+    font: inherit; font-size: .9rem;
+  }
+  .memo-controls input[type=search] { flex: 1 1 12rem; min-width: 0; }
   .memo-count { color: var(--gray); font-size: .88rem; margin-left: auto; }
 
   .memo-day { margin-top: 1.5rem; }
@@ -157,6 +162,36 @@
   }
   .memo-file select { max-width: 15rem; }
 
+  /* The transcript is the point of the memo once step 2 has run, so it gets
+     the body of the card rather than a disclosure triangle. */
+  .memo-transcript {
+    grid-column: 1 / -1;
+    background: var(--offwhite);
+    border-left: 3px solid var(--gray-light);
+    border-radius: 0 6px 6px 0;
+    padding: .55rem .8rem;
+    color: #24303f;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    cursor: text;
+  }
+  .memo-transcript.edited { border-left-color: var(--navy); }
+  .memo-transcript.pending { color: var(--gray); font-style: italic; cursor: default; }
+  .memo-transcript textarea {
+    width: 100%; min-height: 5rem; border: 1px solid var(--gray-light);
+    border-radius: 6px; padding: .5rem; font: inherit; resize: vertical;
+  }
+  .memo-transcript .tx-actions { display: flex; gap: .4rem; margin-top: .5rem; }
+  .memo-transcript .tx-actions button {
+    border: 1px solid var(--gray-light); background: var(--white);
+    border-radius: 6px; padding: .25rem .7rem; cursor: pointer; font-size: .82rem;
+  }
+  .memo-transcript .tx-actions .tx-save { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .memo-source {
+    grid-column: 1 / -1;
+    font-size: .72rem; color: var(--gray); letter-spacing: .02em;
+  }
+
   .memo-empty {
     text-align: center; color: var(--gray); padding: 2.5rem 1rem;
     background: var(--white); border-radius: 10px; box-shadow: var(--shadow);
@@ -194,6 +229,9 @@
 
   <div class="memo-controls">
     <h2>Memos</h2>
+    <input type="search" id="memo-search" placeholder="Search what you said…"
+           autocomplete="off" oninput="onSearchInput()"
+           onkeydown="if(event.key==='Escape'){this.value='';onSearchInput();}">
     <select id="trip-filter" onchange="loadMemos()">
       <option value="">All trips</option>
       <option value="unfiled">Needs filing</option>
@@ -430,9 +468,22 @@ function dayLabel(iso) {
     { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
 }
 
+let searchTimer = null;
+function onSearchInput() {
+  // Debounced rather than per-keystroke: the filter runs server-side over
+  // every memo, and a search is a whole round trip.
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(loadMemos, 250);
+}
+
 async function loadMemos() {
   const filter = document.getElementById('trip-filter').value;
-  const qs = filter === 'unfiled' ? '?unfiled=1' : (filter ? `?trip=${filter}` : '');
+  const q = document.getElementById('memo-search').value.trim();
+  const params = new URLSearchParams();
+  if (filter === 'unfiled') params.set('unfiled', '1');
+  else if (filter) params.set('trip', filter);
+  if (q) params.set('q', q);
+  const qs = params.toString() ? '?' + params.toString() : '';
   let data;
   try {
     data = await fetch('/api/memos' + qs).then(r => r.json());
@@ -448,10 +499,16 @@ async function loadMemos() {
     count.textContent += data.unfiled === 1
       ? ' · 1 needs filing' : ` · ${data.unfiled} need filing`;
   }
+  if (data.untranscribed) {
+    count.textContent += data.untranscribed === 1
+      ? ' · 1 awaiting transcription' : ` · ${data.untranscribed} awaiting transcription`;
+  }
 
   const list = document.getElementById('memo-list');
   if (!memos.length) {
-    list.innerHTML = '<div class="memo-empty">No memos yet. Tap Record above.</div>';
+    list.innerHTML = q
+      ? `<div class="memo-empty">Nothing said about “${esc(q)}”.</div>`
+      : '<div class="memo-empty">No memos yet. Tap Record above.</div>';
     return;
   }
 
@@ -489,6 +546,7 @@ function memoHtml(m) {
       <button type="button" onclick="deleteMemo('${esc(m.id)}')">Delete</button>
     </div>
     <audio controls preload="none" src="${esc(m.audio_url)}"></audio>
+    ${transcriptHtml(m)}
     ${m.filed ? '' : fileFormHtml(m)}
   </div>`;
 }
@@ -535,6 +593,49 @@ async function deleteMemo(id) {
   const r = await fetch('/api/memos/' + encodeURIComponent(id), { method: 'DELETE' });
   if (r.ok) { toast('Memo deleted', 'success'); loadMemos(); }
   else toast('Could not delete that memo.', 'error');
+}
+
+// The transcript is machine output until someone corrects it, and the card
+// says which — process_memos.py skips an edited transcript even under --force.
+function transcriptHtml(m) {
+  if (!m.transcript) {
+    return `<div class="memo-transcript pending">Not transcribed yet.</div>`;
+  }
+  const src = m.transcript_edited
+    ? 'Corrected by hand'
+    : (m.transcript_model ? `Transcribed by ${esc(m.transcript_model)}` : '');
+  return `
+    <div class="memo-transcript${m.transcript_edited ? ' edited' : ''}"
+         id="tx-${esc(m.id)}" title="Click to correct"
+         onclick="editTranscript('${esc(m.id)}')">${esc(m.transcript)}</div>
+    ${src ? `<div class="memo-source">${src}</div>` : ''}`;
+}
+
+function editTranscript(id) {
+  const box = document.getElementById('tx-' + id);
+  if (!box || box.querySelector('textarea')) return;
+  const current = box.textContent;
+  box.removeAttribute('onclick');
+  box.innerHTML = `
+    <textarea id="txa-${esc(id)}"></textarea>
+    <div class="tx-actions">
+      <button type="button" class="tx-save" onclick="saveTranscript('${esc(id)}')">Save</button>
+      <button type="button" onclick="loadMemos()">Cancel</button>
+    </div>`;
+  const ta = document.getElementById('txa-' + id);
+  ta.value = current;      // set as a value, never as markup
+  ta.focus();
+}
+
+async function saveTranscript(id) {
+  const text = document.getElementById('txa-' + id).value;
+  const r = await fetch('/api/memos/' + encodeURIComponent(id), {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ transcript: text }),
+  });
+  if (r.ok) { toast('Transcript saved', 'success'); loadMemos(); }
+  else toast('Could not save that correction.', 'error');
 }
 
 window.addEventListener('online', flushQueue);

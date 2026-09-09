@@ -31,8 +31,8 @@ Agreed direction, in build order:
 
 1. **Waypoint collapse — DONE 2026-09-09** (committed; see CLAUDE.md "Folded
    waypoint runs"). Removes work rather than adding it: 347 timeline rows gone.
-2. **Voice memo ingest — step 1 (capture + filing) SHIPPED 2026-09-09**;
-   transcription and rollups still to come. See CLAUDE.md "Voice Memos
+2. **Voice memo ingest — steps 1 (capture + filing) and 2 (local Whisper
+   transcription) SHIPPED 2026-09-09**; only the rollup step remains. See CLAUDE.md "Voice Memos
    (Contributor)". Design doc:
    https://claude.ai/code/artifact/eff04982-ac31-45d9-b696-2640d9a2ef97
    The unlock it was built for: Talking works tired,
@@ -43,7 +43,8 @@ Agreed direction, in build order:
    Transcribe at home with local faster-whisper / whisper.cpp — the Claude API
    has no audio input, and a local model is free, offline and private. Keep the
    audio regardless: AWH's recorded voice at a campsite beats any paragraph.
-3. **Machine day-drafts, human edits.** Editing beats writing-from-blank when
+3. **Machine day-drafts, human edits — NEXT.** The input is now real: memo
+   transcripts, filed to the day, alongside the structured facts. Editing beats writing-from-blank when
    tired, and works months later because GPS facts don't decay. Estimated
    **~$12 for all 331 trip-days** (claude-opus-5 + thumbnails), ~$9 for all
    1,718 photo captions; halve both via the Batch API.

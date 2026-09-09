@@ -1588,115 +1588,193 @@ PEOPLE_SCAN_TIMEOUT_S = 300
 # mirror where scanning is done elsewhere).
 PEOPLE_SCAN_ENABLED = os.environ.get("EKKO_AUTO_PEOPLE_SCAN", "1") != "0"
 
-_people_scan_pending = set()
-_people_scan_lock = threading.Lock()
-_people_scan_wake = threading.Event()
-_people_scan_thread = None
+# Transcription, same arrangement and same reasoning: the web app never imports
+# faster_whisper, it shells out to process_memos.py. Whisper is a worse
+# offender than OpenCV — hundreds of MB resident — so the argument for a
+# one-shot process is only stronger.
+MEMO_SCRIPT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "process_memos.py")
+# Longer than the photo debounce: memos usually arrive alone, but a day of
+# offline recordings flushes as a burst the moment signal returns, and loading
+# the Whisper model once for ten of them beats loading it ten times.
+MEMO_TRANSCRIBE_DEBOUNCE_S = 20
+MEMO_TRANSCRIBE_MAX_BATCH = 25
+# Transcription runs at several times realtime on CPU, but the model load is
+# tens of seconds on a cold cache and the first run downloads it.
+MEMO_TRANSCRIBE_TIMEOUT_S = 900
+# Escape hatch for a host that shouldn't transcribe — no faster_whisper, or a
+# CPU budget better spent serving pages.
+MEMO_TRANSCRIBE_ENABLED = os.environ.get("EKKO_AUTO_TRANSCRIBE", "1") != "0"
 
+class _BackgroundScan:
+    """Queue, debounce and run one out-of-band scanner script as a subprocess.
 
-_people_scan_python_cache = ...  # sentinel: not probed yet
+    Two features need exactly this shape — the people scan behind photo
+    uploads and the memo transcriber behind memo uploads — and both need the
+    same three awkward details right: coalescing an upload burst into one
+    process, probing for an interpreter that actually has the dependency, and
+    never letting a background failure reach the request that triggered it.
+    Kept as one object rather than two copies for the same reason
+    `_apply_photo_index_mapping` is one function: the second copy is where the
+    subtle half of the logic quietly drifts.
 
-
-def _people_scan_python():
-    """Interpreter to run the scanner with, or None if no candidate can.
-
-    Probed rather than assumed, because "which python has opencv" varies by
-    host: it may be the app's virtualenv (PythonAnywhere) or the system python
-    (a `pip install --user` on a dev box, where the venv can't see ~/.local at
-    all). Guessing wrong fails silently in a background thread, so each
-    candidate is asked to import the scanner's deps and the first that can
-    wins. Cached — including the None answer, since installing opencv means a
-    restart anyway.
-
-    sys.prefix is tried before sys.executable because under a WSGI server the
-    latter can be the server binary rather than a Python, while the former is
-    still the virtualenv the app was loaded from.
+    All of it is a nicety layered on top of a script that also runs perfectly
+    well by hand, so nothing here raises into the caller.
     """
-    global _people_scan_python_cache
-    if _people_scan_python_cache is not ...:
-        return _people_scan_python_cache
-    import subprocess
-    _people_scan_python_cache = None
-    for cand in (os.path.join(sys.prefix, "bin", "python3"),
-                 os.path.join(sys.prefix, "bin", "python"),
-                 sys.executable if os.path.basename(
-                     sys.executable or "").startswith("python") else None,
-                 shutil.which("python3")):
-        if not (cand and os.path.isfile(cand) and os.access(cand, os.X_OK)):
-            continue
+
+    def __init__(self, name, script, probe_imports, debounce_s, max_batch,
+                 timeout_s, enabled=True, on_done=None):
+        self.name = name
+        self.script = script
+        self.probe_imports = probe_imports
+        self.debounce_s = debounce_s
+        self.max_batch = max_batch
+        self.timeout_s = timeout_s
+        self.enabled = enabled
+        self.on_done = on_done
+        self._pending = set()
+        self._lock = threading.Lock()
+        self._wake = threading.Event()
+        self._thread = None
+        self._python = ...          # sentinel: not probed yet
+
+    def python(self):
+        """Interpreter to run the script with, or None if no candidate can.
+
+        Probed rather than assumed, because "which python has this dependency"
+        varies by host: it may be the app's virtualenv (PythonAnywhere) or the
+        system python (a `pip install --user` on a dev box, where the venv
+        can't see ~/.local at all). Guessing wrong fails silently in a
+        background thread, so each candidate is asked to import the script's
+        deps and the first that can wins. Cached — including the None answer,
+        since installing the dependency means a restart anyway.
+
+        sys.prefix is tried before sys.executable because under a WSGI server
+        the latter can be the server binary rather than a Python, while the
+        former is still the virtualenv the app was loaded from.
+        """
+        if self._python is not ...:
+            return self._python
+        import subprocess
+        self._python = None
+        for cand in (os.path.join(sys.prefix, "bin", "python3"),
+                     os.path.join(sys.prefix, "bin", "python"),
+                     sys.executable if os.path.basename(
+                         sys.executable or "").startswith("python") else None,
+                     shutil.which("python3")):
+            if not (cand and os.path.isfile(cand) and os.access(cand, os.X_OK)):
+                continue
+            try:
+                probe = subprocess.run(
+                    [cand, "-c", f"import {self.probe_imports}"],
+                    capture_output=True, timeout=60)
+            except Exception:
+                continue
+            if probe.returncode == 0:
+                self._python = cand
+                break
+        if self._python is None:
+            app.logger.warning(
+                "%s: no interpreter with %s found; automatic runs are off "
+                "(run %s by hand instead)",
+                self.name, self.probe_imports, os.path.basename(self.script))
+        return self._python
+
+    def run(self, keys):
+        """One scanner run over `keys`. Never raises — this is a background
+        nicety and must not take the thread (or the next batch) down."""
+        python = self.python()
+        if not python:
+            return  # already logged by the probe
+        import subprocess
         try:
-            probe = subprocess.run([cand, "-c", "import cv2, numpy, PIL"],
-                                   capture_output=True, timeout=60)
-        except Exception:
-            continue
-        if probe.returncode == 0:
-            _people_scan_python_cache = cand
-            break
-    if _people_scan_python_cache is None:
-        app.logger.warning(
-            "auto people scan disabled: no interpreter with opencv "
-            "(pip install opencv-python-headless), tried sys.prefix/bin, "
-            "sys.executable and python3 on PATH")
-    return _people_scan_python_cache
+            proc = subprocess.run(
+                [python, self.script, "--only", *keys],
+                cwd=os.path.dirname(self.script),
+                capture_output=True, text=True, timeout=self.timeout_s)
+        except Exception as e:
+            app.logger.warning("%s failed to start: %s", self.name, e)
+            return
+        if proc.returncode != 0:
+            app.logger.warning("%s exited %s: %s", self.name, proc.returncode,
+                               (proc.stderr or proc.stdout or "").strip()[-500:])
+            return
+        if self.on_done:
+            try:
+                self.on_done()
+            except Exception as e:
+                app.logger.warning("%s post-run hook failed: %s", self.name, e)
+
+    def _worker(self):
+        while True:
+            self._wake.wait()
+            # Coalesce the rest of an upload burst before spending a process.
+            time.sleep(self.debounce_s)
+            # Cleared BEFORE the batch is taken: a key queued from here on
+            # re-sets the event, so it can't be stranded waiting for an upload
+            # that never comes. A spurious wake just finds an empty batch.
+            self._wake.clear()
+            with self._lock:
+                batch = sorted(self._pending)[:self.max_batch]
+                self._pending.difference_update(batch)
+                more = bool(self._pending)
+            if batch:
+                self.run(batch)
+            if more:
+                self._wake.set()
+
+    def queue(self, keys):
+        """Ask the background worker to process these just-uploaded keys."""
+        if not self.enabled or not keys:
+            return
+        with self._lock:
+            self._pending.update(keys)
+            if self._thread is None or not self._thread.is_alive():
+                # Started on first upload rather than at import, so a worker
+                # process that only ever serves reads never spawns the thread.
+                self._thread = threading.Thread(
+                    target=self._worker, name=self.name, daemon=True)
+                self._thread.start()
+        self._wake.set()
 
 
-def _run_people_scan(keys):
-    """One scanner run over `keys`. Never raises — this is a background nicety
-    and must not take the thread (or the next batch) down with it."""
-    python = _people_scan_python()
-    if not python:
-        return  # already logged by the probe
-    import subprocess
-    try:
-        proc = subprocess.run(
-            [python, PEOPLE_SCAN_SCRIPT, "--only", *keys],
-            cwd=os.path.dirname(PEOPLE_SCAN_SCRIPT),
-            capture_output=True, text=True, timeout=PEOPLE_SCAN_TIMEOUT_S)
-    except Exception as e:
-        app.logger.warning("people scan failed to start: %s", e)
-        return
-    if proc.returncode != 0:
-        app.logger.warning("people scan exited %s: %s", proc.returncode,
-                           (proc.stderr or proc.stdout or "").strip()[-500:])
-        return
-    # The pool carries the `people` flag, so surface the new records now
+_people_scan = _BackgroundScan(
+    name="people-scan",
+    script=PEOPLE_SCAN_SCRIPT,
+    probe_imports="cv2, numpy, PIL",
+    debounce_s=PEOPLE_SCAN_DEBOUNCE_S,
+    max_batch=PEOPLE_SCAN_MAX_BATCH,
+    timeout_s=PEOPLE_SCAN_TIMEOUT_S,
+    enabled=PEOPLE_SCAN_ENABLED,
+    # The photo pool carries the `people` flag, so surface the new records now
     # instead of waiting out its TTL.
-    _invalidate_photo_pool()
+    on_done=lambda: _invalidate_photo_pool(),
+)
 
-
-def _people_scan_worker():
-    while True:
-        _people_scan_wake.wait()
-        # Coalesce the rest of an upload burst before spending a process.
-        time.sleep(PEOPLE_SCAN_DEBOUNCE_S)
-        # Cleared BEFORE the batch is taken: a key queued from here on re-sets
-        # the event, so it can't be stranded waiting for an upload that never
-        # comes. A spurious wake just finds an empty batch.
-        _people_scan_wake.clear()
-        with _people_scan_lock:
-            batch = sorted(_people_scan_pending)[:PEOPLE_SCAN_MAX_BATCH]
-            _people_scan_pending.difference_update(batch)
-            more = bool(_people_scan_pending)
-        if batch:
-            _run_people_scan(batch)
-        if more:
-            _people_scan_wake.set()
+_memo_transcribe = _BackgroundScan(
+    name="memo-transcribe",
+    script=MEMO_SCRIPT,
+    probe_imports="faster_whisper",
+    debounce_s=MEMO_TRANSCRIBE_DEBOUNCE_S,
+    max_batch=MEMO_TRANSCRIBE_MAX_BATCH,
+    timeout_s=MEMO_TRANSCRIBE_TIMEOUT_S,
+    enabled=MEMO_TRANSCRIBE_ENABLED,
+)
 
 
 def _queue_people_scan(photo_keys):
-    """Ask the background worker to scan these just-uploaded photos."""
-    if not PEOPLE_SCAN_ENABLED or not photo_keys:
-        return
-    global _people_scan_thread
-    with _people_scan_lock:
-        _people_scan_pending.update(photo_keys)
-        if _people_scan_thread is None or not _people_scan_thread.is_alive():
-            # Started on first upload rather than at import, so a worker
-            # process that only ever serves reads never spawns the thread.
-            _people_scan_thread = threading.Thread(
-                target=_people_scan_worker, name="people-scan", daemon=True)
-            _people_scan_thread.start()
-    _people_scan_wake.set()
+    _people_scan.queue(photo_keys)
+
+
+def _queue_memo_transcribe(memo_ids):
+    """Transcribe just-uploaded memos in the background.
+
+    Unlike the photo scan there is rarely a burst to coalesce — memos arrive
+    one at a time — but the queue still earns its place on the trip home, when
+    a whole day of offline recordings flushes at once the moment signal
+    returns.
+    """
+    _memo_transcribe.queue(memo_ids)
 
 
 def _can_edit_photo(photo_key):
@@ -4495,6 +4573,12 @@ def _memo_view(memo_id, rec):
         "lon": rec.get("lon"),
         "pos_gap_s": rec.get("pos_gap_s"),
         "note": rec.get("note", ""),
+        "transcript": rec.get("transcript", ""),
+        # Which of these two is set tells the reader whether they are looking
+        # at what a model heard or at what a human confirmed — the same
+        # generated-vs-human distinction waterfront_evidence draws.
+        "transcript_model": rec.get("transcript_model", ""),
+        "transcript_edited": bool(rec.get("transcript_edited")),
         "uploaded_by": rec.get("uploaded_by", ""),
         "filed": trip_id is not None,
         "audio_url": f"/memo/{rec['year']}/{rec['filename']}",
@@ -4511,6 +4595,10 @@ def api_memos_list():
     memos = _load_json(MEMOS_FILE)
     trip_filter = request.args.get('trip', type=int)
     unfiled_only = request.args.get('unfiled') == '1'
+    # Terms are ANDed and matched against the transcript, the note and the
+    # place — the same shape as the photo gallery's search, so "acadia rain"
+    # means both words rather than either.
+    terms = [t for t in (request.args.get('q') or "").lower().split() if t]
 
     out = []
     for memo_id, rec in memos.items():
@@ -4518,6 +4606,11 @@ def api_memos_list():
             continue
         if trip_filter is not None and rec.get("trip_id") != trip_filter:
             continue
+        if terms:
+            hay = " ".join([rec.get("transcript", ""), rec.get("note", ""),
+                            rec.get("place", "")]).lower()
+            if not all(t in hay for t in terms):
+                continue
         out.append(_memo_view(memo_id, rec))
     out.sort(key=lambda m: m.get("recorded_at") or 0, reverse=True)
 
@@ -4528,7 +4621,12 @@ def api_memos_list():
         m["trip_name"] = names.get(m["trip_id"], "")
     return jsonify({"memos": out,
                     "unfiled": sum(1 for r in memos.values()
-                                   if r.get("trip_id") is None)})
+                                   if r.get("trip_id") is None),
+                    # Surfaced so a transcriber that never ran — no
+                    # faster_whisper on this host — shows up as a number rather
+                    # than as memos that quietly never gain text.
+                    "untranscribed": sum(1 for r in memos.values()
+                                         if not (r.get("transcript") or "").strip())})
 
 
 @app.route('/api/memos', methods=['POST'])
@@ -4602,6 +4700,9 @@ def api_memo_upload():
     memos = _load_json(MEMOS_FILE)
     memos[memo_id] = rec
     _save_json(MEMOS_FILE, memos)
+    # Transcribe in the background so the text is there by the time anyone
+    # looks, rather than waiting for someone to remember to run the script.
+    _queue_memo_transcribe([memo_id])
     return jsonify({"ok": True, "memo": _memo_view(memo_id, rec)})
 
 
@@ -4625,6 +4726,13 @@ def api_memo_update(memo_id):
         rec["date"] = (data["date"] or "").strip()
     if "note" in data:
         rec["note"] = (data["note"] or "").strip()
+    if "transcript" in data:
+        rec["transcript"] = (data["transcript"] or "").strip()
+        # The flag is the whole point: process_memos.py skips an edited
+        # transcript even under --force, because a correction you made is worth
+        # more than anything a re-run produces — and this text is what the
+        # rollup will eventually be built from.
+        rec["transcript_edited"] = True
     memos[memo_id] = rec
     _save_json(MEMOS_FILE, memos)
     return jsonify({"ok": True, "memo": _memo_view(memo_id, rec)})
