@@ -305,6 +305,34 @@
      the start/end home-cards. Render as just the colored circle + text,
      no card chrome. Circle x-position still matches regular cards so
      every timeline marker lines up on the same vertical axis. */
+  /* ── The day's write-up ──────────────────────────────────────────────────
+     Set in the cards column, indented to the timeline axis so it reads as
+     belonging to the day rather than floating beside it. Deliberately not a
+     card: it is prose about the day, not another thing that happened in it. */
+  .day-rollup {
+    margin: .1rem 0 1.1rem 2.25rem;
+    padding: 0 1.25rem 0 .85rem;
+    border-left: 3px solid var(--gold);
+    max-width: 60ch;
+  }
+  .day-rollup p {
+    margin: 0;
+    color: #3d3d42;
+    font-size: .95rem;
+    line-height: 1.62;
+    white-space: pre-wrap;
+  }
+  .day-rollup-source {
+    color: var(--gray);
+    font-size: .68rem;
+    letter-spacing: .03em;
+    margin-top: .4rem;
+    text-transform: uppercase;
+  }
+  @media (max-width: 700px) {
+    .day-rollup { margin-left: 1rem; padding-right: 0; }
+  }
+
   /* ── Compact waypoint rows ───────────────────────────────────────────────
      A waypoint with no photo and no description is a landmark, not a story:
      worth seeing in its slot, not worth a card. This renders it as one line at
@@ -2430,6 +2458,24 @@
               onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
       {%- endif %}
     </div>
+    {%- set rollup = day_rollups.get(item.sort_date) %}
+    {%- if rollup %}
+    {#- The day's write-up, drafted from its own facts and whatever was said
+        into the phone. It sits under the divider and above the day's cards
+        because it is about the whole day: the cards are what happened, this is
+        what the day WAS.
+
+        The attribution line is not decoration. A generated sentence must never
+        be mistaken for one of the family's own — the same line the memo page
+        draws between what a model heard and what a human confirmed. Once
+        someone has edited a write-up it is theirs, and the line goes. -#}
+    <div class="day-rollup{% if rollup.edited %} edited{% endif %}">
+      <p>{{ rollup.text }}</p>
+      {%- if not rollup.edited %}
+      <div class="day-rollup-source" title="Drafted from this day's stops, photos, captions and voice memos">Drafted by {{ rollup.model or 'a model' }}</div>
+      {%- endif %}
+    </div>
+    {%- endif %}
     {%- if is_admin and item.sort_date not in road_photos %}
     {#- An empty road card, hidden until a photo is actually being dragged.
         Without it there is nowhere to DROP a photo on a day that has no road

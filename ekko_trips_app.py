@@ -1080,16 +1080,35 @@ def _load_json(path):
         if not isinstance(data, dict):
             app.logger.error("%s is corrupt and unsalvageable: %s", path, e)
             raise
-        keep = f"{path}.corrupt-{int(time.time())}"
-        try:
-            if not os.path.exists(keep):
+        # ONE preserved copy, ever. The first version stamped the filename with
+        # the current second, so a torn file that nobody repaired produced a new
+        # copy on every page load — 35 of them accumulated on the live host in
+        # an afternoon. The tail is identical every time; keeping it 35 times
+        # preserves nothing extra.
+        import glob as _glob
+        kept = sorted(_glob.glob(f"{path}.corrupt-*"))
+        if not kept:
+            keep = f"{path}.corrupt-{int(time.time())}"
+            try:
                 shutil.copy2(path, keep)
+            except OSError:
+                keep = "(could not be saved)"
+        else:
+            keep = kept[0]
+        # Repair it, rather than salvaging the same damage forever. The
+        # recovered document is complete and valid; the bytes that follow it are
+        # already set aside. Without this the file stays torn for good, every
+        # reader pays the salvage, and the log fills with the same line.
+        healed = ""
+        try:
+            _save_json(path, data)
+            healed = " — file repaired"
         except OSError:
             pass
         app.logger.error(
             "%s was torn by concurrent writes (%s); salvaged %d entries from "
-            "the first %d bytes, damaged copy kept at %s",
-            path, e, len(data), end, keep)
+            "the first %d bytes, damaged copy kept at %s%s",
+            path, e, len(data), end, keep, healed)
         return data
 
 
@@ -3142,6 +3161,40 @@ def _stats_photo_count():
     return sum(1 for p in _collect_photo_pool() if not p["home_only"])
 
 
+# ── Day write-ups ─────────────────────────────────────────────────────────
+DAY_ROLLUPS_FILE = os.path.join(TRIP_DATA_DIR, "day_rollups.json")
+_day_rollups_cache = {"mtime": None, "data": {}}
+
+
+def _load_day_rollups():
+    """Every drafted day write-up, keyed "<trip id>/<date>".
+
+    Written by process_rollups.py on whichever host holds the API key, which is
+    not PythonAnywhere — so an absent file is the normal case for a fresh clone
+    or the live host, and every reader treats it as "no write-ups yet".
+    """
+    try:
+        mtime = os.path.getmtime(DAY_ROLLUPS_FILE)
+    except OSError:
+        _day_rollups_cache.update(mtime=None, data={})
+        return {}
+    if _day_rollups_cache["mtime"] != mtime:
+        try:
+            with open(DAY_ROLLUPS_FILE) as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            data = {}
+        _day_rollups_cache.update(mtime=mtime, data=data)
+    return _day_rollups_cache["data"]
+
+
+def _trip_day_rollups(trip_id):
+    """This trip's write-ups, keyed by date, for the day dividers."""
+    prefix = f"{trip_id}/"
+    return {k[len(prefix):]: v for k, v in _load_day_rollups().items()
+            if k.startswith(prefix) and (v.get("text") or "").strip()}
+
+
 # ── On-the-road photos ────────────────────────────────────────────────────
 #
 # Photographs taken from a moving vehicle had nowhere to live. Every photo in
@@ -3803,6 +3856,7 @@ def trip_detail(trip_id):
         stay_photos=stay_photos,
         event_photos=event_photos,
         road_photos=road_photos,
+        day_rollups=_trip_day_rollups(trip_id),
         family_locations=family,
         home=home,
         is_admin=is_admin,
