@@ -247,6 +247,19 @@ class TestWhereThingsAre(unittest.TestCase):
         self.assertEqual(d["sleeping_at"]["photo_captions"],
                          ["Just like the album cover"])
 
+    def test_a_stays_captions_are_told_once_on_arrival(self):
+        # A stay appears on two days — sleeping_at, then woke_up_at — and each
+        # day is a separate call with no memory of the others, so anything on
+        # both is said twice.
+        stay = {"start": "2026-08-28", "end": "2026-08-29", "place": "Prairie Dog"}
+        caps = {"stay-0": ["Donna says prairie dogs are vicious"]}
+        arrival = R.day_dossier(_trip(stays=[stay]), "2026-08-28", {}, {}, {}, {},
+                                {}, caps)
+        departure = R.day_dossier(_trip(stays=[stay]), "2026-08-29", {}, {}, {}, {},
+                                  {}, caps)
+        self.assertIn("photo_captions", arrival["sleeping_at"])
+        self.assertNotIn("photo_captions", departure["woke_up_at"])
+
     def test_a_day_with_no_captions_carries_no_caption_key(self):
         trip = _trip(events=[{"date": DAY, "name": "Bear Lake"}])
         d = _dossier(trip, card_photos={"event-0": 3})

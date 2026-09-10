@@ -56,7 +56,13 @@ MODEL = "claude-opus-5"
 # Short on purpose. The failure mode is padding: given four facts and room for
 # three hundred words, a model reaches for atmosphere. A tight ceiling makes
 # "not much happened" an available answer.
-MAX_TOKENS = 700
+# 16000, the documented default for a non-streaming request — NOT a ceiling
+# chosen to match the length of an entry. Adaptive thinking is on by default on
+# Opus 5 and its tokens come out of this same budget, so a low cap does not
+# produce a short entry; it produces a TRUNCATED one. At 700 the two richest
+# days of trip 95 stopped mid-sentence ("where US-34 — our compan") and were
+# written to the file as though complete, because nothing checked stop_reason.
+MAX_TOKENS = 16000
 
 SYSTEM = """You write one short diary entry for one day of a family's camping trip, \
 from a dossier of facts.
@@ -89,7 +95,10 @@ in behind.
    Name a person only when what was said is about them or belongs to them \
 ("Donna had read that Lily Lake was a must-see"). Otherwise the family speaks \
 as "we", like the rest of the entry — a speaker's name on every sentence is \
-just attribution noise.
+just attribution noise. In particular do not turn a memo into a quotation with \
+the speaker attached: "Andrew decided Nebraska might be the opposite of \
+Northern Virginia" is the seam this rule exists to remove. It was simply the \
+opposite of Northern Virginia, and "we" saw it.
    A phrase may stay verbatim when it is the whole point of the sentence and \
 paraphrase would flatten it — an aside like "we still don't know why the town \
 has a lit Christmas tree in August" survives because the wording is the joke. \
@@ -103,8 +112,10 @@ shows them. Do not use headings or bullet points. Prose only.
 deliberately nameless. Mention it only if the day is otherwise thin, and never \
 name or characterise them.
 7. Photo counts tell you which stops mattered most — the family photographed \
-them. Use them to decide what to write about. NEVER state a photo count; \
-"fourteen photos for the day" is a fact about the archive, not about the day.
+them. Use them to decide what to write about. NEVER state or allude to one. \
+Not "fourteen photos for the day", and equally not "where we took most of the \
+day's pictures" or "more of our film than anything else" — a comparison is \
+still a fact about the archive rather than about the day.
 8. Do not list who was there. The names are on the page already, and a day \
 reads as an inventory when it ends in a roll call. Name someone only when \
 something is said about them.
@@ -279,7 +290,13 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
             night.pop("where")
         if stay.get("site"):
             night["site"] = stay["site"]
-        if card_captions.get(f"stay-{stay_idx}"):
+        # Captions belong to the day you pull in, exactly as the place's own
+        # description does. A stay appears on two days — as `sleeping_at` and
+        # again as `woke_up_at` — and each day is drafted by a SEPARATE call
+        # with no knowledge of the others, so anything present on both is
+        # guaranteed to be said twice. "Donna says prairie dogs are vicious"
+        # duly turned up on the 28th and again on the 29th.
+        if start == day and card_captions.get(f"stay-{stay_idx}"):
             night["photo_captions"] = card_captions[f"stay-{stay_idx}"]
         # The place's own description belongs to the day you PULL IN. Attached
         # to every day of a stay it gets recited on each of them — trip 95 told
@@ -498,7 +515,17 @@ def main():
             failed += 1
             continue
         if resp.stop_reason == "refusal":
-            print(f"  {key}: refused", file=sys.stderr)
+            # stop_details is populated only for refusals; guard before reading.
+            why = getattr(getattr(resp, "stop_details", None), "category", "")
+            print(f"  {key}: refused{f' ({why})' if why else ''}", file=sys.stderr)
+            failed += 1
+            continue
+        if resp.stop_reason == "max_tokens":
+            # A truncated entry is worse than none: it reads as finished prose
+            # until you reach the end of it, and it would be stored stamped
+            # with the model as though it were complete.
+            print(f"  {key}: hit max_tokens — entry would be truncated, skipping",
+                  file=sys.stderr)
             failed += 1
             continue
         text = "\n".join(b.text for b in resp.content if b.type == "text").strip()
