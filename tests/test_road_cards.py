@@ -300,5 +300,35 @@ class TestWhereARoadPhotoWasTaken(unittest.TestCase):
         self.assertIsNone(A._road_photo_position(scrambled, self._at(2000)))
 
 
+
+
+class TestWhichDayAPhotoBelongsOn(RoadCardBase):
+    """A road card is keyed by DATE, and during a drag every day of the trip
+    shows a placeholder — fourteen of them on trip 95. Dropping on the wrong
+    one filed the photo under the wrong day and nothing said so. But the photo
+    already knows the answer: EXIF is the same field that orders the card and
+    places its photos on the map."""
+
+    def test_the_photo_decides_not_the_card_it_landed_on(self):
+        with mock.patch.object(A, "_photo_date_taken",
+                               lambda p: "2026-08-27 14:30:00"):
+            self.assertEqual(A._road_day_for_photo("/x/a.jpg", "2026-08-22"),
+                             "2026-08-27")
+
+    def test_a_photo_with_no_exif_stays_where_it_was_put(self):
+        # Nothing better is known about it, and refusing it would be worse
+        # than filing it where the admin pointed.
+        with mock.patch.object(A, "_photo_date_taken", lambda p: ""):
+            self.assertEqual(A._road_day_for_photo("/x/a.jpg", "2026-08-22"),
+                             "2026-08-22")
+
+    def test_a_malformed_exif_date_does_not_become_a_directory_name(self):
+        # The result is interpolated into a filesystem path.
+        for junk in ("not-a-date", "2026-8-2 10:00:00", "../../etc/passwd"):
+            with mock.patch.object(A, "_photo_date_taken", lambda p, j=junk: j):
+                self.assertEqual(A._road_day_for_photo("/x/a.jpg", "2026-08-22"),
+                                 "2026-08-22")
+
+
 if __name__ == "__main__":
     unittest.main()

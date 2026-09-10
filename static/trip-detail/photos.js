@@ -259,6 +259,7 @@ function _runUploads(url, files) {
   // from the view.
   const htmls = [];
   let missingHtml = false;
+  let spreadAcrossDays = false;
 
   // A zip holds many photos, so "Uploading 1 of 1 photo" misleads —
   // call the batch "files" whenever a zip is among them.
@@ -276,7 +277,9 @@ function _runUploads(url, files) {
       // down. Fall back to a reload when we can't (no target grid in the DOM,
       // or a response without tile HTML) — correctness over the no-flash nicety.
       const grid = _uploadTargetGrid(url);
-      if (grid && htmls.length && !missingHtml) {
+      // A road upload may have been spread across several days by its EXIF
+      // timestamps, in which case there is no single grid to splice into.
+      if (grid && htmls.length && !missingHtml && !spreadAcrossDays) {
         _insertUploadedTiles(grid, htmls);
         banner.remove();
       } else {
@@ -308,6 +311,11 @@ function _runUploads(url, files) {
         if (data.error) { errors.push(file.name + ': ' + data.error); return; }
         // Single upload → data.html; zip → data.files[].html. A successful
         // response with no tile HTML forces the reload fallback in finish().
+        const wantDay = (url.match(/\/road\/(\d{4}-\d{2}-\d{2})\/upload/) || [])[1];
+        if (wantDay && data.day && data.day !== wantDay) spreadAcrossDays = true;
+        if (data.files && data.files.some(f => f.day && f.day !== wantDay)) {
+          spreadAcrossDays = true;
+        }
         if (data.html) htmls.push(data.html);
         else if (Array.isArray(data.files)) {
           data.files.forEach(f => { if (f.html) htmls.push(f.html); else missingHtml = true; });
@@ -644,6 +652,16 @@ function initPhotoDrag(grid) {
           img.src = '/thumb/' + sub;
           img.dataset.view = '/view/' + sub;
           img.dataset.full = '/photo/' + sub;
+        }
+        // The server files a road photo by its OWN EXIF day, which may not be
+        // the card it was dropped on — fourteen placeholders are visible during
+        // a drag and hitting the wrong one is easy. When that happens the tile
+        // is sitting in a grid it does not belong to, so let the server redraw.
+        if (dst.type === 'road' && data.day && data.day !== String(dst.idx)) {
+          toast(`Filed under ${data.day} — that's when the photo was taken.`,
+                'success');
+          setTimeout(_reloadKeepingMapView, 900);
+          return;
         }
         const wasPlaceholder = _promoteRoadPlaceholder(grid);
         _maybeDemoteRoadCard(movedSourceGrid);

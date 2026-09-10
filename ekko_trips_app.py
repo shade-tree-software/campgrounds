@@ -3225,6 +3225,26 @@ def _collect_road_photos(trip_id, day, captions, photo_order,
     return out
 
 
+def _road_day_for_photo(path, fallback_day):
+    """Which day's road card a photo belongs on: its own, not the one it landed on.
+
+    A road card is keyed by date, and during a drag every day of the trip shows
+    a placeholder — fourteen of them on trip 95 — so dropping onto the wrong one
+    is easy and, once dropped, invisible. But the photo already knows the answer:
+    the EXIF timestamp is the same field that orders the card and places it on
+    the map. So the drop means "this is a road photo" and the day comes from the
+    photograph, which is also what lets a whole mixed batch be dropped at once
+    and sort itself out.
+
+    Falls back to the day it was dropped on when there is no EXIF date — nothing
+    better is known, and refusing the photo would be worse than filing it where
+    the admin pointed.
+    """
+    taken = _photo_date_taken(path)
+    return taken[:10] if len(taken) >= 10 and _ISO_DATE_RE.match(taken[:10]) \
+        else fallback_day
+
+
 def _road_photo_position(track, taken):
     """Where the RV was when a photo was taken: the nearest ping in TIME.
 
@@ -3283,12 +3303,34 @@ def _track_tsts(track):
 
 
 def _road_card_unresolved(track, photos):
-    """True when a card HAS a position but nothing has named it yet."""
+    """The coordinate keys this card needs named and nothing has named yet."""
+    out = []
     for photo in (photos[0], photos[-1]) if photos else ():
         pos = _road_photo_position(track, photo.get("date_taken"))
         if pos and trips_place_context(f"{pos[0]},{pos[1]}") is None:
-            return True
-    return False
+            out.append(f"{round(pos[0], 4)},{round(pos[1], 4)}")
+    return out
+
+
+# Coordinates this process has already asked about. The guard has to be keyed
+# on the COORDINATE, not the trip: keyed on the trip, a page that resolved its
+# first road card would never ask again, so every photo added to that trip
+# afterwards stayed nameless for the life of the worker. That is exactly what
+# happened — a card resolved, three more photos were dragged in, and the sweep
+# refused to look at them.
+_PLACE_ATTEMPTED = set()
+_PLACE_ATTEMPTED_GUARD = threading.Lock()
+
+
+def _sweep_unresolved_places(trip_id, track, road_photos):
+    needed = set()
+    for photos in road_photos.values():
+        needed.update(_road_card_unresolved(track, photos))
+    with _PLACE_ATTEMPTED_GUARD:
+        fresh = needed - _PLACE_ATTEMPTED
+        _PLACE_ATTEMPTED.update(fresh)
+    if fresh:
+        _queue_place_resolve([trip_id])
 
 
 def _road_card_where(track, photos):
@@ -3611,8 +3653,7 @@ def trip_detail(trip_id):
         # wait a few seconds, reload. `queue_once` makes this safe to call on
         # every render, since it hands the same trip over at most once per
         # process and a restart is exactly when retrying is worth it again.
-        if any(_road_card_unresolved(road_track, p) for p in road_photos.values()):
-            _place_resolve.queue_once([str(trip_id)])
+        _sweep_unresolved_places(trip_id, road_track, road_photos)
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     return render_template(
@@ -3872,33 +3913,58 @@ def upload_road_photo(trip_id, day):
         return jsonify({"error": "No file selected"}), 400
 
     photo_dir = _road_photo_dir(trip_id, day)
-    subpath = f"{trip_id}/{ROAD_DIRNAME}/{day}"
-    url_prefix = f"/photo/{subpath}"
+
+    def _refile(fname, from_dir):
+        """Move a just-saved photo onto the day its EXIF says it belongs to.
+
+        The chip that started this upload names ONE day, but a batch pulled off
+        a phone routinely spans several — so the day is taken from each
+        photograph and a mixed selection sorts itself out, the same bargain
+        every other filing decision in the app makes.
+        """
+        path = os.path.join(from_dir, fname)
+        real = _road_day_for_photo(path, day)
+        if real == day:
+            return day, fname
+        dest_dir = _road_photo_dir(trip_id, real)
+        os.makedirs(dest_dir, exist_ok=True)
+        dest = os.path.join(dest_dir, fname)
+        if os.path.exists(dest):        # same name already on that day
+            base, ext = os.path.splitext(fname)
+            fname = f"{base}_{int(time.time())}{ext}"
+            dest = os.path.join(dest_dir, fname)
+        os.replace(path, dest)
+        return real, fname
 
     if file.filename.lower().endswith('.zip'):
         saved = _extract_zip_photos(file, photo_dir)
         if not saved:
             return jsonify({"error": "No image files found in zip"}), 400
-        keys = [f"{subpath}/{f}" for f in saved]
+        placed = [_refile(f, photo_dir) for f in saved]
+        keys = [f"{trip_id}/{ROAD_DIRNAME}/{d}/{f}" for d, f in placed]
         _record_uploaders(keys, current_user.username)
         _queue_people_scan(keys)
         _queue_place_resolve([trip_id])
         _invalidate_photo_pool()
         return jsonify({"files": [
-            {"filename": f, "url": f"{url_prefix}/{f}",
-             "html": _render_photo_tile(subpath, f, 'road', day, trip_id)}
-            for f in saved]})
+            {"filename": f, "day": d,
+             "url": f"/photo/{trip_id}/{ROAD_DIRNAME}/{d}/{f}",
+             "html": _render_photo_tile(f"{trip_id}/{ROAD_DIRNAME}/{d}", f,
+                                        'road', d, trip_id)}
+            for d, f in placed]})
 
     filename = _save_photo(file, photo_dir)
     if not filename:
         return jsonify({"error": "File type not allowed"}), 400
+    day, filename = _refile(filename, photo_dir)
+    subpath = f"{trip_id}/{ROAD_DIRNAME}/{day}"
     _record_uploader(f"{subpath}/{filename}", current_user.username)
     _queue_people_scan([f"{subpath}/{filename}"])
     _queue_place_resolve([trip_id])
     _invalidate_photo_pool()
     return jsonify({
-        "filename": filename,
-        "url": f"{url_prefix}/{filename}",
+        "filename": filename, "day": day,
+        "url": f"/photo/{subpath}/{filename}",
         "html": _render_photo_tile(subpath, filename, 'road', day, trip_id),
     })
 
@@ -4737,11 +4803,16 @@ def move_photo(trip_id):
         return f"{order_key(ptype, idx)}/{fname}"
 
     src_dir = photo_dir(src_type, src_idx)
-    dst_dir = photo_dir(dst_type, dst_idx)
     src_path = os.path.join(src_dir, secure_filename(filename))
 
     if not os.path.exists(src_path):
         return jsonify({"error": "Source photo not found"}), 404
+
+    # A road card's day comes from the photograph, not from which of the
+    # fourteen placeholders the drop landed on.
+    if dst_type == "road":
+        dst_idx = _road_day_for_photo(src_path, str(dst_idx))
+    dst_dir = photo_dir(dst_type, dst_idx)
 
     os.makedirs(dst_dir, exist_ok=True)
 
@@ -4788,7 +4859,16 @@ def move_photo(trip_id):
         photo_order[dst_ok].append(dst_filename)
         _save_json(PHOTO_ORDER_FILE, photo_order)
 
-    return jsonify({"ok": True, "filename": dst_filename})
+    # A photo that just arrived on a road card has no place name yet, and
+    # nothing else will ask for one — the upload routes trigger this, but a
+    # drag is not an upload.
+    if "road" in (src_type, dst_type):
+        _queue_place_resolve([trip_id])
+
+    # `day` tells the client where the photo actually went, which is not
+    # necessarily the card it was dropped on.
+    return jsonify({"ok": True, "filename": dst_filename,
+                    "day": dst_idx if dst_type == "road" else None})
 
 
 # ── Photo favorites API ────────────────────────────────────────────────────
