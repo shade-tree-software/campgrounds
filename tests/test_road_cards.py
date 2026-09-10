@@ -330,5 +330,62 @@ class TestWhichDayAPhotoBelongsOn(RoadCardBase):
                                  "2026-08-22")
 
 
+
+
+class TestOneCardPerLeg(RoadCardBase):
+    """A day's road photos can be hundreds of miles apart.
+
+    Trip 95's 28 August ran from Granby to Kansas with five stops along the
+    way, so a single card for that day put a photo from the Colorado mountains
+    and one from the Kansas plains in the same grid under one heading. A card
+    covers the driving BETWEEN two consecutive stops instead, using the breaks
+    the timeline already knows about — so the split matches what the reader
+    sees above and below it.
+    """
+
+    DAY = "2026-08-28"
+
+    def _cards(self, photo_times, stop_ranks):
+        trip = {"events": [], "timeline": [
+            {"type": "event", "sort_date": self.DAY, "_order": 0, "_rank": r}
+            for r in stop_ranks]}
+        photos = [{"date_taken": f"{self.DAY} {t}:00"} for t in photo_times]
+        A._add_road_cards(trip, {self.DAY: photos})
+        return [i for i in trip["timeline"] if i["type"] == "road"]
+
+    def test_photos_either_side_of_a_stop_become_two_cards(self):
+        cards = self._cards(["09:30", "17:00"], [12 * 60])
+        self.assertEqual(len(cards), 2)
+        self.assertEqual([c["photo_count"] for c in cards], [1, 1])
+
+    def test_photos_in_the_same_gap_stay_on_one_card(self):
+        cards = self._cards(["09:30", "10:15"], [12 * 60])
+        self.assertEqual(len(cards), 1)
+        self.assertEqual(cards[0]["photo_count"], 2)
+
+    def test_a_day_with_no_stops_is_a_single_leg(self):
+        cards = self._cards(["09:30", "17:00"], [])
+        self.assertEqual(len(cards), 1)
+
+    def test_each_card_sits_where_its_driving_happened(self):
+        # Interleaved with the stops, not hoisted to the top of the day —
+        # the same reasoning that keeps a folded waypoint run in place.
+        trip = {"events": [], "timeline": [
+            {"type": "event", "sort_date": self.DAY, "_order": 0, "_rank": 12 * 60}]}
+        A._add_road_cards(trip, {self.DAY: [
+            {"date_taken": f"{self.DAY} 09:30:00"},
+            {"date_taken": f"{self.DAY} 17:00:00"}]})
+        self.assertEqual([i["type"] for i in trip["timeline"]],
+                         ["road", "event", "road"])
+
+    def test_later_legs_get_distinct_dom_ids(self):
+        # Several cards share one day; without a suffix they would share an id
+        # and a marker click could only ever reach the first.
+        cards = self._cards(["09:30", "17:00"], [12 * 60])
+        self.assertEqual([c["leg"] for c in cards], [0, 1])
+        self.assertEqual(len({c["idx"] for c in cards}), 1,
+                         "every leg still belongs to one day's directory")
+
+
 if __name__ == "__main__":
     unittest.main()

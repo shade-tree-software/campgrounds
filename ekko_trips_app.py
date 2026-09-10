@@ -3357,25 +3357,63 @@ def _road_card_where(track, photos):
         ", ".join(x for x in (only["name"], only["state"]) if x)
 
 
-def _add_road_cards(trip, road_photos, ref_tz="", track=None):
-    """Splice a road card into the timeline for each day that has one.
+def _photo_rank(day, taken, ref_tz):
+    """Where a photo falls in its day, on the same scale the timeline sorts on."""
+    clock = taken[11:16] if len(taken) >= 16 else "12:00"
+    return clock, event_time_rank(day, clock, "", ref_tz)
 
-    Positioned at its FIRST photo's timestamp, so the card lands among the
-    day's stops where the driving actually began rather than being hoisted to
-    the top of the day — the same reasoning that keeps folded waypoint runs in
-    place. A card whose photos carry no EXIF time at all sorts to noon, which
-    is where an untimed event goes too.
+
+def _add_road_cards(trip, road_photos, ref_tz="", track=None):
+    """Splice road cards into the timeline — ONE PER LEG, not one per day.
+
+    A day's road photos can be hundreds of miles apart. Trip 95's 28 August ran
+    from Granby to Kansas with five stops along the way, so a single card for
+    that day would put a photo from the Colorado mountains and one from the
+    Kansas plains in the same grid, under one heading, with a place label that
+    could only be a range spanning the whole state. That is the same objection
+    that made the label a range in the first place; the answer is to stop
+    pretending it is one thing.
+
+    So a card covers the driving BETWEEN two consecutive stops. The timeline
+    already knows where those breaks are, and using it means the split matches
+    what the reader sees above and below the card. Photos taken before the
+    day's first stop are their own leg; so are the ones after the last.
+
+    STORAGE IS UNCHANGED AND STAYS KEYED BY DATE. The grouping is derived at
+    render time, so several cards can share one `road/{date}/` directory and
+    the property that made date-keying worth having — a road photo's path never
+    renumbers, whatever is inserted around it — survives intact. The cost is
+    that several grids now belong to one day, which `saveGridOrder` handles the
+    way it already handles a stay split across nights: concatenate across every
+    grid carrying the same key.
     """
+    cards = []
     for day, photos in road_photos.items():
-        first = next((p["date_taken"] for p in photos if p["date_taken"]), "")
-        clock = first[11:16] if len(first) >= 16 else "12:00"
-        trip["timeline"].append({
-            "type": "road", "idx": day, "sort_date": day, "date": day,
-            "time": clock, "photo_count": len(photos),
-            "where_label": _road_card_where(track, photos),
-            "_order": 0, "_time": clock,
-            "_rank": event_time_rank(day, clock, "", ref_tz),
-        })
+        # The day's other timeline entries, in the order the reader sees them.
+        breaks = sorted(i["_rank"] for i in trip["timeline"]
+                        if i.get("sort_date") == day)
+        legs = {}
+        for photo in photos:
+            _clock, rank = _photo_rank(day, photo.get("date_taken") or "", ref_tz)
+            # Which gap between stops this photo sits in.
+            leg = sum(1 for b in breaks if b <= rank)
+            legs.setdefault(leg, []).append(photo)
+        for n, leg in enumerate(sorted(legs)):
+            group = legs[leg]
+            first = next((p["date_taken"] for p in group if p["date_taken"]), "")
+            clock, rank = _photo_rank(day, first, ref_tz)
+            cards.append({
+                "type": "road", "idx": day, "sort_date": day, "date": day,
+                "time": clock, "photo_count": len(group),
+                "where_label": _road_card_where(track, group),
+                # Cards after the first on a day need distinct DOM ids, the
+                # same shape a stay split across nights uses (stay-3, stay-3-2).
+                "leg": n,
+                "photos": group,
+                "_order": 0, "_time": clock,
+                "_rank": rank,
+            })
+    trip["timeline"].extend(cards)
     trip["timeline"].sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
 
 

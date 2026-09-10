@@ -2328,7 +2328,8 @@
       </div>
       <div class="event-body">
         <div class="photos-section">
-          <div class="photo-grid" id="road-photos-{{ item.sort_date }}"></div>
+          <div class="photo-grid" id="road-photos-{{ item.sort_date }}"
+               data-road-day="{{ item.sort_date }}"></div>
         </div>
       </div>
     </div>
@@ -2668,7 +2669,10 @@
      card exists exactly as long as it has photos in it. Keyed by DATE, which
      is why it can never be caught by the index-remapping that campspot and
      event photos need. #}
-  <div class="event-card road-card" id="road-{{ item.idx }}">
+  {#- `leg` distinguishes several cards sharing one day, the same shape a stay
+      split across nights uses (stay-3, stay-3-2). They all upload and reorder
+      against the DAY, which is why every grid carries data-road-day. -#}
+  <div class="event-card road-card" id="road-{{ item.idx }}{% if item.leg %}-{{ item.leg + 1 }}{% endif %}">
     <div class="event-header">
       <div class="event-icon road-icon" title="Photographed from the road">
         <svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M8 2 h4 l1 5 h-6 z M7 8 h6 l1 10 h-3 l-.4-4 h-1.2 l-.4 4 h-3 z"/></svg>
@@ -2685,13 +2689,15 @@
     </div>
     <div class="event-body">
       <div class="photos-section">
-        <div class="photo-grid{% if road_photos[item.idx] | length > 6 %} collapsible{% endif %}" id="road-photos-{{ item.idx }}">
-          {% for photo in road_photos[item.idx] %}
+        <div class="photo-grid{% if item.photos | length > 6 %} collapsible{% endif %}"
+             id="road-photos-{{ item.idx }}{% if item.leg %}-{{ item.leg + 1 }}{% endif %}"
+             data-road-day="{{ item.idx }}">
+          {% for photo in item.photos %}
           {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='road', p_alt='On the road' %}{% include "_photo_item.html" %}{% endwith %}
           {% endfor %}
         </div>
-        {% if road_photos[item.idx] | length > 6 %}
-        <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ road_photos[item.idx] | length }} photos</button>
+        {% if item.photos | length > 6 %}
+        <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ item.photos | length }} photos</button>
         {% endif %}
       </div>
     </div>

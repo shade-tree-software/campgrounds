@@ -110,7 +110,10 @@ function _uploadTargetGrid(url) {
   // photos. Returning null is the right answer there: finish() falls back to a
   // reload, which is what draws the new card.
   m = url.match(/\/road\/(\d{4}-\d{2}-\d{2})\/upload/);
-  if (m) return document.getElementById('road-photos-' + m[1]);
+  if (m) {
+    const grids = document.querySelectorAll(`.photo-grid[data-road-day="${m[1]}"]`);
+    return grids.length ? grids[grids.length - 1] : null;
+  }
   return null;
 }
 
@@ -428,9 +431,10 @@ function parseGridId(grid) {
   }
   const id = grid.id;
   if (id.startsWith('event-photos-')) return { type: 'event', idx: parseInt(id.replace('event-photos-', '')) };
-  // A road card's index is a DATE, not a number — checked before the stay
-  // fallback below, whose 'photos-' replace would otherwise mangle it.
-  if (id.startsWith('road-photos-')) return { type: 'road', idx: id.replace('road-photos-', '') };
+  // A road card's index is a DATE, not a number, and several cards can share
+  // one day — one per leg of the driving — so the day comes from the explicit
+  // attribute rather than from the id, which carries a leg suffix.
+  if (grid.dataset.roadDay) return { type: 'road', idx: grid.dataset.roadDay };
   // Fallback for single-copy stay grids whose ID is "photos-{idx}".
   return { type: 'stay', idx: parseInt(id.replace('photos-', '')) };
 }
@@ -449,7 +453,17 @@ function saveGridOrder(grid) {
   // Concatenate filenames across every grid for this stay in document order
   // so the whole-stay photo_order reflects the visible arrangement.
   let filenames;
-  if (info.type === 'stay') {
+  if (info.type === 'road') {
+    // One day's photos live in one directory and have one stored order, but
+    // they may be shown across several cards — one per leg. Concatenating in
+    // document order is what keeps the saved order equal to the visible one,
+    // exactly as a stay split across nights does it.
+    const grids = document.querySelectorAll(`.photo-grid[data-road-day="${info.idx}"]`);
+    filenames = [];
+    (grids.length ? Array.from(grids) : [grid]).forEach(g => {
+      g.querySelectorAll('.photo-item').forEach(el => filenames.push(el.dataset.filename));
+    });
+  } else if (info.type === 'stay') {
     const grids = document.querySelectorAll(`.photo-grid[data-stay-idx="${info.idx}"]`);
     const collector = grids.length > 0 ? Array.from(grids) : [grid];
     filenames = [];
