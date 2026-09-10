@@ -27,6 +27,9 @@ const MULTI_TZ = !!_BOOT.multi_timezone;
 // it always was.
 const HOME_TZ_OFFSET_MIN = (_BOOT.home_tz_offset_min == null
                             ? null : _BOOT.home_tz_offset_min);
+// Where each road photo was taken, resolved server-side from its EXIF time
+// against the GPS track. Empty on a trip with no road photos, which is most.
+const ROAD_POINTS = _BOOT.road_points || [];
 const FAMILY_LOCATIONS = _BOOT.family_locations || [];
 const TRIP_START = _BOOT.trip_start || '';
 const TRIP_END = _BOOT.trip_end || '';

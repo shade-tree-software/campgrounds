@@ -199,9 +199,15 @@ if [ $DO_DATA -eq 1 ]; then
   # trips.json by backfill_place_context.py and is likewise per-host — without
   # these excludes a --delete sync wipes whichever ones this machine built and
   # PA happens not to have, which is exactly what happened the first time.
+  #
+  # day_rollups.json is the sharper case: it exists ONLY here, because the API
+  # key is local and PA cannot write it, and it cost real money to generate. A
+  # --delete sync deleted a whole trip's drafted prose before this exclude
+  # existed. It is also in backup.sh now, for the same reason.
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
-    --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json'
+    --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json' \
+    --exclude 'day_rollups.json'
 
   # Voice memos ride with the data rather than with --photos: they are small
   # (tens of KB each), and like family.json this sync is the only way the

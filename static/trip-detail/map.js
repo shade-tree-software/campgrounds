@@ -1568,6 +1568,43 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     cardMarkers['event-' + evt.idx] = evtMarker;
   });
 
+  // ── Road photos ─────────────────────────────────────────────────────────
+  // One marker per photo taken from the moving RV. These are the only markers
+  // on the page that stand for a moment rather than a place, which is why they
+  // are drawn small and unlabelled-by-default: a run of them along a highway
+  // should read as a trail beside the route line, not compete with the stops.
+  ROAD_POINTS.forEach((pt, i) => {
+    const ll = [pt.lat, pt.lng];
+    bounds.push(ll);
+    const dot = L.divIcon({
+      className: '',
+      html: `<div style="
+        width:11px;height:11px;border-radius:50%;
+        background:#6f8a7f;border:2px solid #fff;
+        box-shadow:0 1px 3px rgba(0,0,0,.4);box-sizing:border-box;
+      "></div>`,
+      iconSize: [11, 11],
+      iconAnchor: [5.5, 5.5],
+    });
+    // Below every stop (stays 800, events default, waypoints 100) so a photo
+    // taken while rolling past a campground never covers the campground.
+    const marker = label(
+      L.marker(ll, { icon: dot, zIndexOffset: -200 }).addTo(map),
+      pt.time ? `Photo, ${pt.time}` : 'Photo from the road');
+    const bits = ['<strong>On the road</strong>'];
+    if (pt.where) bits.push(escapeHtml(pt.where));
+    if (pt.time) bits.push(escapeHtml(pt.time));
+    if (pt.caption) bits.push(`<em>${escapeHtml(pt.caption)}</em>`);
+    if (pt.thumb) {
+      bits.push(`<img src="${escapeHtml(pt.thumb)}" alt="" `
+                + `style="width:100%;max-width:220px;border-radius:6px;margin-top:.35rem">`);
+    }
+    onMarkerClick(marker, bits.join('<br>'), pt.card);
+    // Deliberately NOT registered in cardTargets: several photos share a card,
+    // and a card click may only pulse one marker. The map→card direction works;
+    // the reverse would have to pick arbitrarily.
+  });
+
   familyVisitGroups.forEach(group => {
     const ll = [group[0].lat, group[0].lng];
     bounds.push(ll);

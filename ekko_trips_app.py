@@ -3460,15 +3460,37 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
                                       zones.get(id(first_photo), day_tz))
             cards.append({
                 "type": "road", "idx": day, "sort_date": day, "date": day,
+                "dom_id": f"road-{day}" + (f"-{n + 1}" if n else ""),
                 "time": clock, "photo_count": len(group),
                 "where_label": _road_card_where(track, group, day_tz),
                 # Cards after the first on a day need distinct DOM ids, the
                 # same shape a stay split across nights uses (stay-3, stay-3-2).
                 "leg": n,
                 "photos": group,
+                "_tz": zones.get(id(first_photo), day_tz),
                 "_order": 0, "_time": clock,
                 "_rank": rank,
             })
+    # One map marker per PHOTO, not per card: the whole reason a road card
+    # exists is that the vehicle was moving, so two photos on one card can be
+    # thirty miles apart. Each marker carries the card it belongs to, so a
+    # click behaves like every other marker on the page.
+    points = []
+    for card in cards:
+        for photo in card["photos"]:
+            fix = _road_photo_fix(track, photo.get("date_taken") or "",
+                                  card.get("_tz") or "") if track else None
+            if not fix:
+                continue
+            points.append({
+                "lat": fix[0], "lng": fix[1],
+                "card": card["dom_id"],
+                "time": (photo.get("date_taken") or "")[11:16],
+                "thumb": photo.get("thumb_url", ""),
+                "caption": photo.get("caption", ""),
+                "where": card.get("where_label", ""),
+            })
+    trip["road_points"] = points
     trip["timeline"].extend(cards)
     trip["timeline"].sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
 

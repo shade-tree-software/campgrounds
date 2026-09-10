@@ -4,6 +4,8 @@
 #
 # Packages exactly the data that is NOT in git and NOT regenerable:
 #   users.json, home.json, and trip_data/*.json (family, trips, captions,
+#   day_rollups — the drafted day write-ups, which exist only on the host
+#   holding the API key and cost money to regenerate,
 #   photo_order, photo_uploaders, photo_favorites, photo_people, share_tokens)
 #   + trip_data/access_log.jsonl
 #   + trip_data/track_cache/.
@@ -65,6 +67,7 @@ CANDIDATES=(
   trip_data/family.json
   trip_data/trips.json
   trip_data/captions.json
+  trip_data/day_rollups.json
   trip_data/photo_order.json
   trip_data/photo_uploaders.json
   trip_data/photo_favorites.json
