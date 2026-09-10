@@ -60,38 +60,41 @@ Park → in Wray; Forest Canyon Overlook → nothing.
 
 THE GAZETTEER
 -------------
-GeoNames' per-country dumps, feature class P (populated places), cached under
-`trip_data/geonames/` — gitignored and re-downloadable, the same arrangement
-`detect_people.py` and `process_memos.py` use for their model weights. A live
-Overpass query was the obvious alternative and is the wrong shape: 1,100 fixed
-coordinates is a gazetteer job, not an API job, and the public endpoint answered
-the first probe with a 504. Offline also means this works on the USB build.
+A committed extract of GeoNames' populated places (feature class P) for the US
+and Canada -- `places.tsv.gz`, 2.2 MB, built by `build_gazetteer.py`, which is
+the only thing in the tree that ever talks to GeoNames.
+
+It is tracked rather than downloaded because every host needs it and no host
+can be handed a generated file: trip_data/ is gitignored, sync runs PA -> local
+only, PA has an outbound whitelist, and the USB build has no network. The same
+reasoning that put `static/vendor/na-borders.json` in the repo. This module
+therefore makes no network calls at all and needs nothing installed.
+
+A live Overpass query was the obvious alternative and is the wrong shape
+besides: 1,100 fixed coordinates is a gazetteer job, not an API job, and the
+public endpoint answered the first probe with a 504.
 
 Feature codes are filtered to real places: PPLQ and PPLH are abandoned or
 historical, PPLX is a neighbourhood *inside* another place, and names ending in
-"Subdivision" or containing "Mobile Home Park" are developments rather than
-somewhere you would say you were near.
+"Subdivision" or containing "Estates" are developments rather than somewhere
+you would say you were near.
 
 Stdlib only, like `weather_finder.py`.
 """
 
+import gzip
 import math
 import os
-import io
-import urllib.request
-import zipfile
 
-GEONAMES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            "trip_data", "geonames")
-GEONAMES_URL = "https://download.geonames.org/export/dump/{country}.zip"
-COUNTRIES = ("US", "CA")
-_UA = "EKKO-Trips/1.0 (+https://github.com/; contact via repo owner)"
+GAZETTEER_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                              "places.tsv.gz")
 
-# Real places only. PPLQ/PPLH are abandoned or historical; PPLX is a section of
-# another place, so naming it points at a neighbourhood rather than a town.
-_KEEP_CODES = {"PPL", "PPLL", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPLC", "PPLS"}
-_JUNK_NAME = ("subdivision", "mobile home", "trailer park",
-              "(historical)", "estates")
+# Real places only, and public because `build_gazetteer.py` filters the raw
+# dumps with exactly these. PPLQ/PPLH are abandoned or historical, PPLX is a
+# section of another place.
+KEEP_CODES = {"PPL", "PPLL", "PPLA", "PPLA2", "PPLA3", "PPLA4", "PPLC", "PPLS"}
+JUNK_NAME = ("subdivision", "mobile home", "trailer park",
+             "(historical)", "estates")
 
 # How far a place of a given size can still be the thing you name. The pop==0
 # tier is the load-bearing one: GeoNames records no population for most
@@ -139,58 +142,35 @@ def _bearing(lat1, lng1, lat2, lng2):
     return _COMPASS[int((deg + 22.5) // 45) % 8]
 
 
-def _dump_path(country):
-    return os.path.join(GEONAMES_DIR, f"{country}.zip")
+def load(path=None):
+    """Parse the committed extract into memory and index it. Idempotent.
 
-
-def ensure_gazetteer(countries=COUNTRIES, download=True):
-    """Make sure the dumps are on disk. Returns the paths that exist."""
-    os.makedirs(GEONAMES_DIR, exist_ok=True)
-    have = []
-    for country in countries:
-        path = _dump_path(country)
-        if not os.path.exists(path) and download:
-            req = urllib.request.Request(GEONAMES_URL.format(country=country),
-                                         headers={"User-Agent": _UA})
-            tmp = path + ".part"
-            with urllib.request.urlopen(req, timeout=120) as resp, \
-                    open(tmp, "wb") as out:
-                while True:
-                    chunk = resp.read(1 << 20)
-                    if not chunk:
-                        break
-                    out.write(chunk)
-            os.replace(tmp, path)
-        if os.path.exists(path):
-            have.append(path)
-    return have
-
-
-def load(countries=COUNTRIES, download=True):
-    """Parse the dumps into memory and index them. Idempotent."""
+    Returns the number of places, or 0 when the extract is missing — which is
+    not an error anywhere: `trips.where_label` falls back to the stored
+    `locale` for every coordinate, so a tree without it renders exactly as the
+    app did before this existed.
+    """
     global _places, _grid
     if _places is not None:
         return len(_places)
+    path = path or GAZETTEER_FILE
     places, grid = [], {}
-    for path in ensure_gazetteer(countries, download=download):
-        with zipfile.ZipFile(path) as zf:
-            name = next(n for n in zf.namelist()
-                        if n.endswith(".txt") and "readme" not in n.lower())
-            with zf.open(name) as fh:
-                for line in io.TextIOWrapper(fh, "utf-8"):
-                    f = line.rstrip("\n").split("\t")
-                    if len(f) < 15 or f[6] != "P" or f[7] not in _KEEP_CODES:
-                        continue
-                    label = f[1]
-                    low = label.lower()
-                    if any(j in low for j in _JUNK_NAME):
-                        continue
-                    try:
-                        lat, lng, pop = float(f[4]), float(f[5]), int(f[14] or 0)
-                    except ValueError:
-                        continue
-                    grid.setdefault((int(lat * 2), int(lng * 2)), []).append(len(places))
-                    places.append((lat, lng, label, f[10], pop))
+    try:
+        fh = gzip.open(path, "rt", encoding="utf-8")
+    except OSError:
+        _places, _grid = [], {}
+        return 0
+    with fh:
+        for line in fh:
+            parts = line.rstrip("\n").split("\t")
+            if len(parts) != 5:
+                continue
+            try:
+                lat, lng, pop = float(parts[0]), float(parts[1]), int(parts[4])
+            except ValueError:
+                continue
+            grid.setdefault((int(lat * 2), int(lng * 2)), []).append(len(places))
+            places.append((lat, lng, parts[2], parts[3], pop))
     _places, _grid = places, grid
     return len(places)
 

@@ -92,7 +92,13 @@ def main():
     todo = {k: v for k, v in coords.items() if k not in existing}
     print(f"{len(coords):,} distinct coordinates, {len(todo):,} to resolve")
     if todo:
-        print(f"loading gazetteer ({nearest_town.load():,} places)…")
+        count = nearest_town.load()
+        if not count:
+            print(f"No gazetteer at {nearest_town.GAZETTEER_FILE} — it ships with "
+                  "the repo, so a clone should have it; rebuild with "
+                  "build_gazetteer.py --apply.", file=sys.stderr)
+            return 1
+        print(f"loading gazetteer ({count:,} places)…")
 
     out = dict(existing)
     named = near = nothing = 0
