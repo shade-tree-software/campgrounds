@@ -260,25 +260,30 @@ class TestWhereARoadPhotoWasTaken(unittest.TestCase):
     the definition of one. But the trip knows where the vehicle was every few
     minutes and the photo knows when it was taken, so the two combine."""
 
-    TRACK = [{"tst": 1000, "lat": 41.0, "lon": -93.0},
-             {"tst": 2000, "lat": 41.5, "lon": -94.0},
-             {"tst": 3000, "lat": 42.0, "lon": -95.0}]
+    # Iowa coordinates, so the zone the convergence settles on is Central and
+    # the wall clocks below are written in it.
+    TRACK = [{"tst": 1787923200, "lat": 41.0, "lon": -93.0},
+             {"tst": 1787924200, "lat": 41.5, "lon": -94.0},
+             {"tst": 1787925200, "lat": 42.0, "lon": -95.0}]
+    ZONE = "America/Chicago"
 
     @staticmethod
     def _at(epoch):
         import datetime
-        return datetime.datetime.fromtimestamp(epoch).strftime("%Y-%m-%d %H:%M:%S")
+        from zoneinfo import ZoneInfo
+        return datetime.datetime.fromtimestamp(
+            epoch, ZoneInfo("America/Chicago")).strftime("%Y-%m-%d %H:%M:%S")
 
     def test_the_nearest_ping_in_time_wins(self):
-        pos = A._road_photo_position(self.TRACK, self._at(2100))
+        pos = A._road_photo_position(self.TRACK, self._at(1787924300), self.ZONE)
         self.assertEqual(pos, (41.5, -94.0))
 
     def test_it_looks_both_ways_not_just_forward(self):
         # bisect lands on the ping AFTER the photo; the one before is often
         # nearer, and only checking forward would silently bias every answer.
-        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1900)),
+        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1787924100), self.ZONE),
                          (41.5, -94.0))
-        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1100)),
+        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1787923300), self.ZONE),
                          (41.0, -93.0))
 
     def test_a_photo_the_track_does_not_cover_gets_no_position(self):
@@ -286,18 +291,18 @@ class TestWhereARoadPhotoWasTaken(unittest.TestCase):
         # this moment. A road photo is taken while MOVING, so its ping should
         # be minutes away — unlike an evening at camp, where OwnTracks goes
         # quiet for hours and a distant ping is still exactly right.
-        self.assertIsNone(A._road_photo_position(self.TRACK, self._at(99999)))
+        self.assertIsNone(A._road_photo_position(self.TRACK, self._at(1788000000), self.ZONE))
 
     def test_no_track_and_no_timestamp_are_both_survivable(self):
-        self.assertIsNone(A._road_photo_position([], self._at(2000)))
-        self.assertIsNone(A._road_photo_position(self.TRACK, ""))
-        self.assertIsNone(A._road_photo_position(self.TRACK, "2026-08-22"))
+        self.assertIsNone(A._road_photo_position([], self._at(1787924200), self.ZONE))
+        self.assertIsNone(A._road_photo_position(self.TRACK, "", self.ZONE))
+        self.assertIsNone(A._road_photo_position(self.TRACK, "2026-08-22", self.ZONE))
 
     def test_an_unsorted_track_is_refused_rather_than_misread(self):
         # The lookup bisects, so an out-of-order list would not error — it
         # would quietly return the wrong ping.
         scrambled = [self.TRACK[2], self.TRACK[0], self.TRACK[1]]
-        self.assertIsNone(A._road_photo_position(scrambled, self._at(2000)))
+        self.assertIsNone(A._road_photo_position(scrambled, self._at(1787924200), self.ZONE))
 
 
 
@@ -385,6 +390,66 @@ class TestOneCardPerLeg(RoadCardBase):
         self.assertEqual([c["leg"] for c in cards], [0, 1])
         self.assertEqual(len({c["idx"] for c in cards}), 1,
                          "every leg still belongs to one day's directory")
+
+
+
+
+class TestReadingAPhotosClock(unittest.TestCase):
+    """An EXIF timestamp is wall clock wherever the photo was taken, and that
+    place is the thing being looked up.
+
+    strptime(...).timestamp() reads a naive time in the SERVER's zone, which is
+    never the right answer: PythonAnywhere runs UTC and these photos were taken
+    in Mountain Time, so every lookup landed six hours early and reported where
+    the trip had been that morning — a 1:57pm photo on the Colorado plains came
+    back as Granby, on the far side of the mountains.
+    """
+
+    # Two pings six hours apart, in different places.
+    TRACK = [{"tst": 1787923200, "lat": 40.15, "lon": -105.88},   # 08:00 MDT
+             {"tst": 1787944800, "lat": 39.74, "lon": -103.78}]   # 14:00 MDT
+
+    def test_the_clock_is_read_in_the_zone_it_was_written_in(self):
+        a = A._wall_to_epoch("2026-08-28 14:00:00", "America/Denver")
+        b = A._wall_to_epoch("2026-08-28 14:00:00", "America/Chicago")
+        self.assertEqual(a - b, 3600, "an hour between Mountain and Central")
+
+    def test_a_missing_zone_falls_back_rather_than_failing(self):
+        self.assertIsNotNone(A._wall_to_epoch("2026-08-28 14:00:00", ""))
+        self.assertIsNotNone(A._wall_to_epoch("2026-08-28 14:00:00", "Not/AZone"))
+
+    def test_a_malformed_stamp_is_none(self):
+        self.assertIsNone(A._wall_to_epoch("not a time", "America/Denver"))
+
+    def test_the_right_zone_finds_the_afternoon_ping(self):
+        fix = A._road_photo_fix(self.TRACK, "2026-08-28 14:00:00", "America/Denver")
+        self.assertIsNotNone(fix)
+        self.assertAlmostEqual(fix[0], 39.74)
+
+    def test_a_wrong_hint_corrects_itself(self):
+        # Start from UTC — what the server would have assumed — and the
+        # convergence still lands on the afternoon ping: reading the clock in
+        # UTC finds the morning position, asking what zone THAT place is in
+        # answers Denver, and the second pass settles there. Which is why the
+        # starting hint only has to be close, not right.
+        fix = A._road_photo_fix(self.TRACK, "2026-08-28 14:00:00", "UTC")
+        self.assertIsNotNone(fix)
+        self.assertAlmostEqual(fix[0], 39.74)
+        self.assertEqual(fix[2], "America/Denver")
+
+
+class TestWhereACardSitsInTheDay(RoadCardBase):
+    def test_a_photo_ranks_in_its_own_zone_not_the_trips_first_one(self):
+        # Trip 95's reference zone is Eastern, from an event in Maryland nine
+        # days before Colorado. Ranked there, a 13:57 Mountain photo came out
+        # as 17:57 UTC and sorted ahead of a 13:03 Mountain stop (19:03 UTC).
+        _clock, eastern = A._photo_rank("2026-08-28", "2026-08-28 13:57:00",
+                                        "America/New_York", "America/New_York")
+        _clock, mountain = A._photo_rank("2026-08-28", "2026-08-28 13:57:00",
+                                         "America/New_York", "America/Denver")
+        stop = A.event_time_rank("2026-08-28", "13:03", "America/Denver", "")
+        self.assertLess(eastern, stop, "the bug: photo sorts before the stop")
+        self.assertGreater(mountain, stop, "the fix: after it, where it happened")
 
 
 if __name__ == "__main__":

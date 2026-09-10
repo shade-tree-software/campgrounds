@@ -3245,40 +3245,75 @@ def _road_day_for_photo(path, fallback_day):
         else fallback_day
 
 
-def _road_photo_position(track, taken):
-    """Where the RV was when a photo was taken: the nearest ping in TIME.
+def _wall_to_epoch(taken, tz_name):
+    """An EXIF wall clock as a real instant, read in a named zone.
 
-    A road photo's whole distinguishing feature is that nobody stopped, so it
-    has no stay or event to inherit a location from — but the trip knows where
-    the vehicle was every few minutes, and the photo knows when it was taken.
-    Returns (lat, lng) or None when the track has nothing near that moment.
+    datetime.strptime(...).timestamp() reads a naive time in the SERVER's zone,
+    which is never the right answer: PythonAnywhere runs UTC and the photos
+    were taken in Mountain Time, so every lookup landed six hours early and
+    reported where the trip was that morning. A 1:57pm photo on the Colorado
+    plains came back as Granby, on the far side of the mountains.
+    """
+    try:
+        naive = datetime.strptime(taken[:19], "%Y-%m-%d %H:%M:%S")
+    except ValueError:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+        return naive.replace(tzinfo=ZoneInfo(tz_name)).timestamp() if tz_name \
+            else naive.timestamp()
+    except Exception:
+        return naive.timestamp()
+
+
+def _road_photo_fix(track, taken, tz_hint=""):
+    """Where the RV was when a photo was taken, and in which zone.
+
+    The zone is the awkward part: a photo's EXIF time is wall clock wherever it
+    was taken, and that is the thing being looked up. So this converges on it —
+    read the clock in the best zone known so far, find the nearest ping, ask
+    what zone THAT place is in, and repeat if the answer changed. Two passes
+    settle it in practice, and a day that crosses a zone line settles on the
+    right side of the line rather than on whatever the trip started in.
+
+    Returns (lat, lng, tz_name, gap_seconds) or None.
     """
     if not track or not taken or len(taken) < 19:
         return None
-    try:
-        stamp = datetime.strptime(taken[:19], "%Y-%m-%d %H:%M:%S").timestamp()
-    except ValueError:
-        return None
-    # Tracks are time-ordered and can run to 45,000 pings, where a linear scan
-    # costs ~3 ms per lookup — real page time once a trip has several road
-    # cards. The sorted key list is memoized on the track object's identity,
-    # since the caller hands the same list to every card on the page.
     tsts = _track_tsts(track)
     if not tsts:
         return None
-    i = bisect.bisect_left(tsts, stamp)
+    zone = tz_hint or ""
     best = None
-    for j in (i - 1, i):
-        if 0 <= j < len(track):
-            gap = abs(tsts[j] - stamp)
-            if best is None or gap < best[0]:
-                best = (gap, track[j].get("lat"), track[j].get("lon"))
+    for _ in range(3):
+        stamp = _wall_to_epoch(taken, zone)
+        if stamp is None:
+            return None
+        i = bisect.bisect_left(tsts, stamp)
+        best = None
+        for j in (i - 1, i):
+            if 0 <= j < len(track):
+                gap = abs(tsts[j] - stamp)
+                if best is None or gap < best[0]:
+                    best = (gap, track[j].get("lat"), track[j].get("lon"))
+        if best is None or best[1] is None:
+            return None
+        found = _tz_for_coord(best[1], best[2]) or zone
+        if found == zone:
+            break
+        zone = found
     # OwnTracks stops reporting while the phone is still, but a road photo is
     # by definition taken while moving, so a ping should be minutes away. An
     # hour means the track does not really cover this moment.
     if best is None or best[0] > 3600 or best[1] is None:
         return None
-    return (best[1], best[2])
+    return (best[1], best[2], zone, best[0])
+
+
+def _road_photo_position(track, taken, tz_hint=""):
+    """Just the coordinates from `_road_photo_fix`, for callers that want them."""
+    fix = _road_photo_fix(track, taken, tz_hint)
+    return (fix[0], fix[1]) if fix else None
 
 
 _TRACK_TSTS = {}
@@ -3302,11 +3337,11 @@ def _track_tsts(track):
     return tsts
 
 
-def _road_card_unresolved(track, photos):
+def _road_card_unresolved(track, photos, tz_hint=""):
     """The coordinate keys this card needs named and nothing has named yet."""
     out = []
     for photo in (photos[0], photos[-1]) if photos else ():
-        pos = _road_photo_position(track, photo.get("date_taken"))
+        pos = _road_photo_position(track, photo.get("date_taken"), tz_hint)
         if pos and trips_place_context(f"{pos[0]},{pos[1]}") is None:
             out.append(f"{round(pos[0], 4)},{round(pos[1], 4)}")
     return out
@@ -3333,7 +3368,7 @@ def _sweep_unresolved_places(trip_id, track, road_photos):
         _queue_place_resolve([trip_id])
 
 
-def _road_card_where(track, photos):
+def _road_card_where(track, photos, tz_hint=""):
     """How to name where a day's road photos were taken.
 
     A driving day can cover four hundred miles, so one town would be a lie for
@@ -3342,7 +3377,7 @@ def _road_card_where(track, photos):
     """
     ends = []
     for photo in (photos[0], photos[-1]) if photos else ():
-        pos = _road_photo_position(track, photo.get("date_taken"))
+        pos = _road_photo_position(track, photo.get("date_taken"), tz_hint)
         ends.append(trips_place_context(f"{pos[0]},{pos[1]}") if pos else None)
     if not ends or not any(ends):
         return ""
@@ -3352,15 +3387,24 @@ def _road_card_where(track, photos):
         b = ", ".join(x for x in (last["name"], last["state"]) if x)
         return f"{a} \u2192 {b}"
     only = first or last
-    pos = _road_photo_position(track, (photos[0] if first else photos[-1]).get("date_taken"))
+    pos = _road_photo_position(track, (photos[0] if first else photos[-1]).get("date_taken"),
+                               tz_hint)
     return trips_where_label(f"{pos[0]},{pos[1]}") if pos else \
         ", ".join(x for x in (only["name"], only["state"]) if x)
 
 
-def _photo_rank(day, taken, ref_tz):
-    """Where a photo falls in its day, on the same scale the timeline sorts on."""
+def _photo_rank(day, taken, ref_tz, tz_name=""):
+    """Where a photo falls in its day, on the same scale the timeline sorts on.
+
+    `tz_name` is the zone the photo's clock was read in, and passing it is what
+    makes the card land in the right place. Without it the rank fell back to
+    the trip's REFERENCE zone — the first zone the trip mentions, which for
+    trip 95 is Eastern, from an event in Maryland nine days earlier. A photo
+    taken at 13:57 Mountain then ranked as 17:57 UTC against a stop at 13:03
+    Mountain / 19:03 UTC, and sorted ahead of a stop it happened after.
+    """
     clock = taken[11:16] if len(taken) >= 16 else "12:00"
-    return clock, event_time_rank(day, clock, "", ref_tz)
+    return clock, event_time_rank(day, clock, tz_name, ref_tz)
 
 
 def _add_road_cards(trip, road_photos, ref_tz="", track=None):
@@ -3392,20 +3436,31 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
         # The day's other timeline entries, in the order the reader sees them.
         breaks = sorted(i["_rank"] for i in trip["timeline"]
                         if i.get("sort_date") == day)
-        legs = {}
+        # Where the trip was that day, as the starting guess for reading a
+        # photo's clock. The events of the day itself are far closer to the
+        # truth than the trip's reference zone, which is wherever it began.
+        day_tz = next((i.get("tz") for i in trip["timeline"]
+                       if i.get("sort_date") == day and i.get("tz")), ref_tz)
+        legs, zones = {}, {}
         for photo in photos:
-            _clock, rank = _photo_rank(day, photo.get("date_taken") or "", ref_tz)
+            taken = photo.get("date_taken") or ""
+            fix = _road_photo_fix(track, taken, day_tz) if track else None
+            tz_name = fix[2] if fix else day_tz
+            zones[id(photo)] = tz_name
+            _clock, rank = _photo_rank(day, taken, ref_tz, tz_name)
             # Which gap between stops this photo sits in.
             leg = sum(1 for b in breaks if b <= rank)
             legs.setdefault(leg, []).append(photo)
         for n, leg in enumerate(sorted(legs)):
             group = legs[leg]
-            first = next((p["date_taken"] for p in group if p["date_taken"]), "")
-            clock, rank = _photo_rank(day, first, ref_tz)
+            first_photo = next((p for p in group if p.get("date_taken")), None)
+            first = first_photo.get("date_taken") if first_photo else ""
+            clock, rank = _photo_rank(day, first, ref_tz,
+                                      zones.get(id(first_photo), day_tz))
             cards.append({
                 "type": "road", "idx": day, "sort_date": day, "date": day,
                 "time": clock, "photo_count": len(group),
-                "where_label": _road_card_where(track, group),
+                "where_label": _road_card_where(track, group, day_tz),
                 # Cards after the first on a day need distinct DOM ids, the
                 # same shape a stay split across nights uses (stay-3, stay-3-2).
                 "leg": n,
