@@ -3205,6 +3205,15 @@ def _track_tsts(track):
     return tsts
 
 
+def _road_card_unresolved(track, photos):
+    """True when a card HAS a position but nothing has named it yet."""
+    for photo in (photos[0], photos[-1]) if photos else ():
+        pos = _road_photo_position(track, photo.get("date_taken"))
+        if pos and trips_place_context(f"{pos[0]},{pos[1]}") is None:
+            return True
+    return False
+
+
 def _road_card_where(track, photos):
     """How to name where a day's road photos were taken.
 
@@ -3514,9 +3523,19 @@ def trip_detail(trip_id):
     if road_photos:
         # The track is only read when a trip actually HAS road photos, which is
         # rare — an ordinary trip page pays nothing for this.
+        road_track = _load_trip_track_for_detection(trip_id)
         _add_road_cards(trip, road_photos,
-                        reference_timezone(trip.get("events")),
-                        _load_trip_track_for_detection(trip_id))
+                        reference_timezone(trip.get("events")), road_track)
+        # Straggler sweep, the same fix `GET /api/memos` makes for transcripts.
+        # The upload-time trigger silently does nothing when the worker recycles
+        # inside its debounce window — which on a host that recycles often is
+        # not a rare event — and nothing else ever revisited it, so a card could
+        # sit unnamed forever. Reading the page is now what heals it: open it,
+        # wait a few seconds, reload. `queue_once` makes this safe to call on
+        # every render, since it hands the same trip over at most once per
+        # process and a restart is exactly when retrying is worth it again.
+        if any(_road_card_unresolved(road_track, p) for p in road_photos.values()):
+            _place_resolve.queue_once([str(trip_id)])
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     return render_template(
