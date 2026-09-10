@@ -187,7 +187,7 @@ def _where(locale, state):
     state = (state or "").strip()
     if _ADMIN_UNIT.search(locale):
         locale = ""
-    if state and locale.endswith(", " + state):
+    if state and (locale == state or locale.endswith(", " + state)):
         return locale
     return ", ".join(x for x in (locale, state) if x)
 

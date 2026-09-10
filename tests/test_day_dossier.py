@@ -180,6 +180,21 @@ class TestWhereThingsAre(unittest.TestCase):
             stop = _dossier(trip)["stops"][0]
             self.assertEqual(stop["where"], "CO", f"{admin!r} reached the model")
 
+    def test_a_resolved_label_is_not_given_its_state_twice(self):
+        # trips.where_label already carries the state, and falls back to the
+        # bare state when a coordinate resolves to nowhere worth naming — so a
+        # naive join produced "CO, CO" for every Rocky Mountain overlook.
+        trip = _trip(events=[{"date": DAY, "name": "Forest Canyon Overlook",
+                              "where_label": "CO", "state": "CO",
+                              "description": "x"},
+                             {"date": DAY, "name": "Bear Lake",
+                              "where_label": "8 miles southwest of Estes Park, CO",
+                              "state": "CO", "description": "x"}])
+        wheres = [s["where"] for s in _dossier(trip)["stops"]]
+        self.assertIn("CO", wheres)
+        self.assertIn("8 miles southwest of Estes Park, CO", wheres)
+        self.assertNotIn("CO, CO", wheres)
+
     def test_a_stop_with_no_locale_at_all_gets_no_where(self):
         trip = _trip(events=[{"date": DAY, "name": "Alpine Visitors Center",
                               "locale": "", "state": "", "description": "x"}])
