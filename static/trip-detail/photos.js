@@ -68,6 +68,16 @@ function _maybeBarifyEmptyGrid(grid) {
     if (isWaypointOrFamily || !hasDescription) {
       card.classList.add('bare');
     }
+    // ...and back to a one-line row, if that is what it was. Same predicate
+    // the template uses: a waypoint with nothing to read and no review flag.
+    // Without this half the card would sit open and empty at full height
+    // until the next load — the trap the .bare pairing above documents.
+    if (card.classList.contains('waypoint')
+        && !card.classList.contains('family-visit')
+        && !card.classList.contains('needs-vetting')
+        && !hasDescription) {
+      card.classList.add('wp-compact');
+    }
   }
   const section = grid.closest('.photos-section');
   const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
@@ -82,7 +92,7 @@ function _maybeBarifyEmptyGrid(grid) {
 function _unbarifyGrid(grid) {
   if (!grid) return;
   const card = grid.closest('.event-card');
-  if (card) card.classList.remove('bare');
+  if (card) card.classList.remove('bare', 'wp-compact');
   // A folded waypoint that just gained a photo is no longer a brief stop.
   releaseWaypointCard(card);
   const section = grid.closest('.photos-section');
@@ -162,7 +172,7 @@ function _deleteWithUndo(item, deleteUrl) {
     if (nextSibling && nextSibling.parentNode === grid) grid.insertBefore(item, nextSibling);
     else grid.appendChild(item);
     // Reverse a barify if this was the card's last photo.
-    if (card) card.classList.remove('bare');
+    if (card) card.classList.remove('bare', 'wp-compact');
     const section = grid.closest('.photos-section');
     const removeAllBtn = section && section.querySelector('.btn-delete-all-photos');
     if (removeAllBtn) removeAllBtn.style.display = '';
@@ -618,7 +628,7 @@ function initPhotoDrag(grid) {
       // (and revealing the previously-hidden "Remove All Photos" button)
       // keeps the body — and the photo it now contains — on screen.
       const dstCard = grid.closest('.event-card');
-      if (dstCard) dstCard.classList.remove('bare');
+      if (dstCard) dstCard.classList.remove('bare', 'wp-compact');
       // Same trap one level up: a folded waypoint is only on screen because
       // body.photo-dragging is revealing it, so it must leave the run here or
       // it takes the dropped photo with it when the drag ends.

@@ -305,6 +305,106 @@
      the start/end home-cards. Render as just the colored circle + text,
      no card chrome. Circle x-position still matches regular cards so
      every timeline marker lines up on the same vertical axis. */
+  /* ── Compact waypoint rows ───────────────────────────────────────────────
+     A waypoint with no photo and no description is a landmark, not a story:
+     worth seeing in its slot, not worth a card. This renders it as one line at
+     roughly a third the height, which is the answer that replaced folding runs
+     of them into chips — that hid the stops a reader navigates by in order to
+     tidy rows nobody was struggling with.
+
+     It keeps .bare as well, so the `body.photo-dragging` rules still reveal a
+     drop target on it and a photo dropped here still promotes it to a full
+     card on the next load. */
+  .event-card.wp-compact { margin-bottom: .1rem; }
+  .event-card.wp-compact .event-header {
+    /* .35rem against a full card's 1rem. The icon below is what holds the
+       circle centre on the 2.25rem timeline axis, so the padding is free to
+       shrink without moving it. */
+    padding: .35rem 1.25rem;
+    gap: .55rem;
+    align-items: center;
+  }
+  /* A 2rem-wide slot with a smaller dot centred in it — the same device the
+     folded-run chip used, and the reason the axis line still runs through the
+     middle of every marker on the page whatever size the marker is. */
+  .event-card.wp-compact .event-icon {
+    width: 2rem;
+    height: 1.35rem;
+    background: none;
+    border-radius: 0;
+    position: relative;
+    flex: 0 0 2rem;
+  }
+  .event-card.wp-compact .event-icon::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 50%;
+    background: #8f959e;
+    /* Masks the timeline axis line behind the dot, as the day divider does. */
+    box-shadow: 0 0 0 4px var(--offwhite);
+  }
+  .event-card.wp-compact .event-icon svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 9px;
+    height: 9px;
+    z-index: 1;
+  }
+  /* Name, place and time on one baseline instead of a heading over a meta row. */
+  .event-card.wp-compact .event-info {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    min-width: 0;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .event-card.wp-compact .event-info h3 {
+    display: block;
+    font-size: .88rem;
+    font-weight: 600;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 1 auto;
+  }
+  .event-card.wp-compact .card-where {
+    font-size: .78rem;
+    margin-left: .45rem;
+  }
+  .event-card.wp-compact .event-meta {
+    font-size: .72rem;
+    color: var(--gray);
+    white-space: nowrap;
+    flex: 0 0 auto;
+    margin-left: auto;
+    padding-left: .5rem;
+  }
+  /* The controls are still there; they just stop shouting on a row that is
+     mostly whitespace. Revealed on hover or keyboard focus, and unconditional
+     wherever hover does not exist, since a touch device has no hover to reveal
+     them with. */
+  @media (hover: hover) {
+    .event-card.wp-compact .card-actions {
+      opacity: 0;
+      transition: opacity .12s ease;
+    }
+    .event-card.wp-compact:hover .card-actions,
+    .event-card.wp-compact:focus-within .card-actions { opacity: 1; }
+  }
+  .event-card.wp-compact .card-actions button {
+    font-size: .7rem;
+    padding: .1rem .45rem;
+  }
+
   .event-card.bare {
     background: transparent;
     box-shadow: none;
@@ -2493,6 +2593,19 @@
      Admins still get a hidden body in the DOM so the photo-dragging CSS
      can reveal it as a drop target — see the `.photo-dragging` rules above. #}
   {% set is_bare = (not event_photos[item.idx]) and (item.waypoint or item.family_visit or not item.description) %}
+  {#- A waypoint carrying nothing to read collapses to ONE LINE rather than a
+      card: name, time and place on a single row, at about a third the height.
+      Every stop stays visible and in its own slot — these are what a reader
+      orients by, which is why folding them away was withdrawn — but fifty of
+      them no longer read as fifty cards.
+
+      Same predicate the folding used, minus the family-visits (a relative's
+      house is never a throwaway) and minus anything still flagged for review,
+      since the badge exists to be found. A photo or a description promotes it
+      back to a full card, so the row is never hiding anything. -#}
+  {% set is_compact = is_bare and item.waypoint and not item.family_visit
+                      and not item.description
+                      and not (item.needs_vetting and is_admin) %}
   {%- if item.wp_run_len %}
   {#- One chip per run of foldable waypoints. `wp_run_len` is set only on the
       item that starts the run, so this fires exactly once per run. -#}
@@ -2508,7 +2621,7 @@
     </button>
   </div>
   {%- endif %}
-  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}{% if item.wp_collapsed %} wp-collapsed{% endif %}" id="event-{{ item.idx }}"{% if item.wp_run_id %} data-wp-run="{{ item.wp_run_id }}"{% endif %}>
+  <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if is_compact %} wp-compact{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}{% if item.wp_collapsed %} wp-collapsed{% endif %}" id="event-{{ item.idx }}"{% if item.wp_run_id %} data-wp-run="{{ item.wp_run_id }}"{% endif %}>
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}{# Drawn, not the &#9670; text glyph: that glyph's ink
       sits high in its line box by a font-dependent amount, so it never centred
@@ -2522,7 +2635,11 @@
       size. #}<svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M10 1 L12.02 7.22 L18.56 7.22 L13.27 11.06 L15.29 17.28 L10 13.44 L4.71 17.28 L6.73 11.06 L1.44 7.22 L7.98 7.22 Z"/></svg>{% endif %}</div>
       <div class="event-info">
         {%- set where = item.where_label %}
-        <h3>{{ item.name }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
+        {#- On a one-line row a place that merely repeats the stop's own name
+            ("Point of Rocks" / "Point of Rocks, MD") spends width saying
+            nothing. Suppressed only there — a full card has the room, and the
+            state is still worth having on it. -#}
+        <h3>{{ item.name }}{% if where and not (is_compact and where.lower().startswith(item.name.lower())) %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
           {# The zone label only appears on a trip that spans more than one
              (trip.multi_timezone). On a single-zone trip every time means the
@@ -2531,7 +2648,12 @@
              and one at 08:35 that actually happened 44 minutes later. Shown
              once after the range, not on both ends — a stop does not change
              zone while you are parked at it. #}
-          {{ item.date }}{% if item.time %} {{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% if trip.multi_timezone and item.tz_abbr %}<span class="tz-abbr" title="{{ item.tz }}">{{ item.tz_abbr }}</span>{% endif %}{% endif %}
+          {#- The compact row drops the date: it sits under a day divider that
+              already says which day this is, and on one line that string is
+              most of the width. The zone label stays, because on a trip that
+              crosses one it is the difference between two stops an hour
+              apart. -#}
+          {% if not is_compact %}{{ item.date }}{% endif %}{% if item.time %}{% if not is_compact %} {% endif %}{{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% if trip.multi_timezone and item.tz_abbr %}<span class="tz-abbr" title="{{ item.tz }}">{{ item.tz_abbr }}</span>{% endif %}{% endif %}
         </div>
         {# Bare waypoint cards hide .event-body, so render description inline here.
            Non-bare cards still render description inside .event-body below. #}
