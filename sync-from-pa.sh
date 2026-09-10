@@ -207,7 +207,7 @@ if [ $DO_DATA -eq 1 ]; then
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
     --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json' \
-    --exclude 'day_rollups.json' --exclude '*.corrupt-*'
+    --exclude 'day_rollups.json' --exclude '*.corrupt-*' --exclude '*.tmp'
 
   # Voice memos ride with the data rather than with --photos: they are small
   # (tens of KB each), and like family.json this sync is the only way the
