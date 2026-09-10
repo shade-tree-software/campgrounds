@@ -1206,6 +1206,64 @@ def camper_names(text):
     return out
 
 
+PLACE_CONTEXT_FILE = os.path.join(_DIR, "trip_data", "place_context.json")
+_place_context_cache = {"mtime": None, "data": {}}
+
+
+def _load_place_context():
+    """Coordinate -> the town a person would name for it.
+
+    Built by `backfill_place_context.py` from a local gazetteer; see that
+    script for why the answer lives in a side file rather than on the record.
+    Cached on the file's mtime, and an absent file is normal (a fresh clone
+    has no trip_data at all) — every caller falls back to the stored `locale`.
+    """
+    try:
+        mtime = os.path.getmtime(PLACE_CONTEXT_FILE)
+    except OSError:
+        _place_context_cache.update(mtime=None, data={})
+        return {}
+    if _place_context_cache["mtime"] != mtime:
+        try:
+            with open(PLACE_CONTEXT_FILE) as fh:
+                data = json.load(fh)
+        except (OSError, ValueError):
+            data = {}
+        _place_context_cache.update(mtime=mtime, data=data)
+    return _place_context_cache["data"]
+
+
+def _place_context_key(location):
+    if not location or "," not in str(location):
+        return ""
+    try:
+        lat, lng = [float(x) for x in str(location).split(",")[:2]]
+    except ValueError:
+        return ""
+    return f"{round(lat, 4)},{round(lng, 4)}"
+
+
+def where_label(location, locale="", state=""):
+    """How to name where something is, for display and for the rollups.
+
+    Prefers the measured answer ("just outside Napier, WV", "5 miles west of
+    Estes Park, CO") over Nominatim's stored `locale`, which is an admin
+    polygon lookup and says "Braxton County" for 29% of the library's events —
+    and which claims a park is IN a town it is three miles outside of. Falls
+    back to the stored value whenever the coordinate has not been resolved, so
+    an un-backfilled install renders exactly as it did before.
+    """
+    ctx = _load_place_context().get(_place_context_key(location))
+    if ctx is not None:
+        label = ctx.get("label") or ""
+        if label:
+            return label
+        # Resolved to nothing on purpose: out in the country with no town worth
+        # naming. The state is still true and still worth showing.
+        return (state or "").strip()
+    return ", ".join(x for x in ((locale or "").strip(), (state or "").strip()) if x)
+
+
 def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
                home_start_time="", home_end_time="",
                bad_track_windows=None, tid_overrides=None,
@@ -1231,6 +1289,10 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         else:
             s["place"] = s.get("custom_place", "") or ""
         s["site_label"] = _site_label(s.get("site"))
+        cg = locations.get(cid) or {}
+        s["where_label"] = where_label(
+            s.get("campsite_location") or cg.get("driveway_location")
+            or cg.get("location"), s.get("locale"), s.get("state"))
 
     # Consecutive stays at one place are ONE visit (see `visit_runs`). Each
     # stay carries where it sits in its own visit so a card can say "night 2
@@ -1368,6 +1430,8 @@ def _make_trip(trip_id, stays, trip_note="", events=None, locations=None,
         # Never persisted — `_load_raw_trips()` re-reads from disk, so these
         # mutations can't reach a save.
         e["tz_abbr"] = tz_abbrev(e["date"], e.get("time"), e.get("tz"))
+        e["where_label"] = where_label(e.get("location"), e.get("locale"),
+                                       e.get("state"))
         # Same rank the timeline sorts on, published so the map's day-by-day
         # route walk and the occurrence-list popups order events the same way
         # instead of re-deriving offset maths in JS.

@@ -861,7 +861,8 @@ TRIPS.forEach(trip => {
       return;
     }
     if (!locMap[key]) {
-      locMap[key] = { lat, lng, place: stay.place, locale: stay.locale, state: stay.state, visits: [] };
+      locMap[key] = { lat, lng, place: stay.place, locale: stay.locale, state: stay.state,
+                      whereLabel: stay.where_label, visits: [] };
     } else {
       // Blank never wins. The marker's text is the first stay's (trips are
       // sorted oldest-first), but `locale` is optional and frequently left
@@ -874,6 +875,7 @@ TRIPS.forEach(trip => {
       if (!m.place) m.place = stay.place;
       if (!m.locale) m.locale = stay.locale;
       if (!m.state) m.state = stay.state;
+      if (!m.whereLabel) m.whereLabel = stay.where_label;
     }
     const continuesVisit = (stay.visit_num || 1) > 1 && key === prevKey;
     prevKey = key;
@@ -908,9 +910,10 @@ Object.values(locMap).forEach(loc => {
   const sortedVisits = loc.visits.slice().sort((a, b) =>
     (a.stay_start || a.start || '').localeCompare(b.stay_start || b.start || ''));
 
-  // Locale is optional on a stay (plenty are blank), so the comma has to be
-  // part of the join rather than typed into the template string.
-  const where = [loc.locale, loc.state].filter(Boolean).join(', ');
+  // `where_label` is the measured answer the trip pages show ("just outside
+  // Napier, WV"); it already falls back to locale+state server-side. The old
+  // join stays as the last resort for a stay the server didn't label.
+  const where = loc.whereLabel || [loc.locale, loc.state].filter(Boolean).join(', ');
   let popup = `<strong>${loc.place}</strong>`;
   if (where) popup += `<br>${where}`;
   popup += `<br>${visits} visit${visits !== 1 ? 's' : ''}`;

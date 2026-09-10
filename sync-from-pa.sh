@@ -194,9 +194,14 @@ if [ $DO_DATA -eq 1 ]; then
   # models/ holds downloaded model weights (YuNet for detect_people.py, Whisper
   # for process_memos.py — the latter is ~150 MB). Both re-download on demand
   # wherever they're needed, so they are never worth the transfer.
+  # models/ and geonames/ are per-host caches that regenerate on demand (Whisper
+  # + YuNet weights; the GeoNames gazetteer). place_context.json is derived from
+  # trips.json by backfill_place_context.py and is likewise per-host — without
+  # these excludes a --delete sync wipes whichever ones this machine built and
+  # PA happens not to have, which is exactly what happened the first time.
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
-    --exclude 'models/'
+    --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json'
 
   # Voice memos ride with the data rather than with --photos: they are small
   # (tens of KB each), and like family.json this sync is the only way the

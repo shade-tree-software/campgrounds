@@ -38,9 +38,12 @@ environment or in the repo's gitignored .env.
 import argparse
 import json
 import os
+import re
 import sys
 import time
 from datetime import date as _date
+
+from trips import event_time_rank, reference_timezone
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _DIR)
@@ -82,7 +85,28 @@ them. Use them to decide what to write about. NEVER state a photo count; \
 8. Do not list who was there. The names are on the page already, and a day \
 reads as an inventory when it ends in a roll call. Name someone only when \
 something is said about them.
-9. Numbers stay as given. Do not round 520 miles to "over 500" or convert units.
+9. "driving" is how the day FELT, not a figure to quote. Say it was a long day \
+if it is worth saying; the exact mileage and hours are printed beside your entry \
+already. A day with no "driving" key does not need its travel mentioned at all.
+10. Times order the day; they are not for reciting. "time"/"until" tell you what \
+came first and how long it took, so write "the afternoon went to" or "an hour or \
+so at" — never "from a quarter to nine until nearly four".
+11. Say where something is only when the dossier gives a "where". A stop with \
+none is out in the country, and the honest thing is to name the stop and stop \
+there. Never invent a town, county, or region for it.
+12. Never invent HOW a place was experienced. Walked, drove, hiked, toured, \
+climbed, paddled, ate — unless the dossier says which, the verb is "went to", \
+"stopped at" or "spent time at". Writing "we drove Snake Alley" about a street \
+the dossier only calls the crookedest in the world is a fabrication, and it is \
+wrong: they walked it.
+13. "photo_captions" are what the family wrote ON their own photographs. Like \
+memos they are the family speaking, so prefer them to any statistic, and a \
+caption is often the only reason a stop is worth a sentence at all. Weave what \
+it says into the prose; do not quote it as a caption or say "one photo is \
+captioned".
+14. A stop's own times bound how big it may sound. Forty-five minutes is "a \
+stop" or "three quarters of an hour", never "we spent the afternoon". Do not \
+inflate a short visit into a long one to give a thin day more weight.
 
 Return only the entry text."""
 
@@ -135,14 +159,73 @@ def _fmt_time(t):
     return (t or "").strip()
 
 
+# An admin unit is not a place anyone says out loud. Nominatim's reverse
+# geocode falls through city → town → village → hamlet → municipality →
+# township → county, so a point outside every town's polygon comes back as
+# "Braxton County" or "Wharton Township" — 29% of the library's events. Handed
+# to a writer that becomes "Bulltown Campground in Braxton County", which no
+# traveller would ever write. Suppressing it yields silence, which is honest;
+# saying "near Napier" needs the nearest-town lookup, which is a separate job.
+_ADMIN_UNIT = re.compile(
+    # Both shapes Nominatim hands back: a trailing type ("Larimer County",
+    # "Wharton Township", "Bedminster Twp") and a leading one ("Municipality
+    # of Anchorage", "Township of Washington").
+    r"\b(county|parish|borough|township|twp\.?|municipality)$"
+    r"|^(county|parish|borough|township|municipality)\s+of\b",
+    re.IGNORECASE)
+
+
+def _where(locale, state):
+    """"<locale>, <ST>" — but only when the locale is a real named place.
+
+    `trips.where_label` already carries the state when it has resolved the
+    coordinate ("just outside Napier, WV"), so a value that already names the
+    state passes through untouched; this stays as the guard for the stored
+    `locale` it falls back to.
+    """
+    locale = (locale or "").strip()
+    state = (state or "").strip()
+    if _ADMIN_UNIT.search(locale):
+        locale = ""
+    if state and locale.endswith(", " + state):
+        return locale
+    return ", ".join(x for x in (locale, state) if x)
+
+
+# Distance and duration are already on the day divider beside the entry, and
+# nobody recalls a day as "124 miles in 2h 24m". What prose can add is whether
+# the day FELT like a haul, so the dossier carries a bucket and no numbers —
+# the model cannot recite a figure it was never given. Bars are the library's
+# own distribution over 242 A-to-B days (median 174, p75 234, p90 336): 300
+# is comfortably a long day, 450 is a grind. A round trip out of camp is never
+# worth mentioning however far it wandered.
+DRIVE_LONG_MI = 300
+DRIVE_VERY_LONG_MI = 450
+
+
+def _drive_bucket(drive):
+    if not drive or drive.get("round_trip"):
+        return ""
+    miles = drive.get("miles") or 0
+    if miles >= DRIVE_VERY_LONG_MI:
+        return "very long"
+    return "long" if miles >= DRIVE_LONG_MI else ""
+
+
 def day_dossier(trip, day, driving, locations, memos, photo_counts,
-                card_photos=None):
+                card_photos=None, card_captions=None):
     """Everything known about one day of one trip, as a plain dict.
 
     This is the half worth getting right. The model can only be as honest as
     its input, and an empty dossier is what produces invented atmosphere — so
     anything genuinely unknown is simply absent rather than guessed at.
     """
+    card_photos = card_photos or {}
+    # What was written ON the photos. Captions are the second-most human thing
+    # in the archive after the memos — "Just like the Bruce Springsteen album
+    # cover", "No mountains yet" — and the dossier used to carry only photo
+    # COUNTS, so every one of them was invisible to the rollups.
+    card_captions = card_captions or {}
     d = {"date": day, "weekday": "", "trip": trip.get("summary", ""),
          "stops": [], "memos": [], "photos": photo_counts.get(day, 0)}
     try:
@@ -150,35 +233,55 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
     except ValueError:
         pass
 
-    drive = driving.get(day) or {}
-    if drive.get("miles"):
-        d["driving"] = {
-            "miles": drive["miles"],
-            "time": drive.get("moving") or "",
-            "round_trip": bool(drive.get("round_trip")),
-        }
+    bucket = _drive_bucket(driving.get(day))
+    if bucket:
+        d["driving"] = bucket
 
-    # Where we slept, and what the campground record knows about it. The
-    # curated `note` is the owner's own words about the place and is often the
-    # most human thing available on a day with no memos.
-    for stay in trip.get("stays", []):
-        if not (stay.get("start", "") <= day <= stay.get("end", "")):
+    # Where we slept, named as the two different facts they are.
+    #
+    # One `nights` list matched with `start <= day <= end` conflated them: on a
+    # departure day it handed over the night BEFORE, flagged `leaving: true`,
+    # and said nothing about where the day ended. On the last day of a trip
+    # that is every fact the model has, so trip 95's 1 September came out as
+    # "that night was our last at Bulltown Campground" — they had left Bulltown
+    # that morning and driven 243 miles home. Every trip's final day had it.
+    for stay_idx, stay in enumerate(trip.get("stays", [])):
+        start, end = stay.get("start", ""), stay.get("end", "")
+        tonight = start <= day < end          # we sleep here
+        last_night = start < day <= end       # we woke here
+        if not (tonight or last_night):
             continue
         night = {"place": stay.get("place", ""),
-                 "where": ", ".join(x for x in (stay.get("locale"), stay.get("state")) if x),
-                 "arriving": stay.get("start") == day,
-                 "leaving": stay.get("end") == day}
-        for key in ("site", "campers", "notes"):
-            if stay.get(key):
-                night[key] = stay[key]
-        cg = locations.get(stay.get("campground_id"))
-        if cg:
-            for src, dst in (("elevation_meters", "elevation_m"),
-                             ("waterfront", "waterfront"),
-                             ("ownership", "ownership"), ("note", "campground_note")):
-                if cg.get(src) and cg.get(src) != "not waterfront":
-                    night[dst] = cg[src]
-        d.setdefault("nights", []).append(night)
+                 "where": _where(stay.get("where_label") or stay.get("locale"),
+                                 stay.get("state"))}
+        if not night["where"]:
+            night.pop("where")
+        if stay.get("site"):
+            night["site"] = stay["site"]
+        if card_captions.get(f"stay-{stay_idx}"):
+            night["photo_captions"] = card_captions[f"stay-{stay_idx}"]
+        # The place's own description belongs to the day you PULL IN. Attached
+        # to every day of a stay it gets recited on each of them — trip 95 told
+        # us about Prophetstown's prairie grass on both the 20th and the 21st,
+        # and Moraine Park's elevation three days running.
+        if start == day:
+            if stay.get("notes"):
+                night["notes"] = stay["notes"]
+            cg = locations.get(stay.get("campground_id"))
+            if cg:
+                for src, dst in (("elevation_meters", "elevation_m"),
+                                 ("waterfront", "waterfront"),
+                                 ("ownership", "ownership"),
+                                 ("note", "campground_note")):
+                    val = cg.get(src)
+                    if val and not (src == "waterfront" and val == "not waterfront"):
+                        night[dst] = val
+        if tonight:
+            d["sleeping_at"] = night
+        else:
+            d["woke_up_at"] = night
+    if "sleeping_at" not in d and d.get("woke_up_at"):
+        d["ended"] = "home — the last day of the trip"
 
     # What we stopped at — applying the SAME test the timeline applies.
     #
@@ -192,7 +295,7 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
     #
     # Keeping the two rules identical also keeps the page honest: a rollup
     # should not describe something the timeline above it has folded away.
-    card_photos = card_photos or {}
+    ref_tz = reference_timezone(trip.get("events"))
     brief = 0
     for i, evt in enumerate(trip.get("events", [])):
         if evt.get("date") != day:
@@ -204,17 +307,32 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
             brief += 1
             continue
         stop = {"name": evt.get("name", ""),
-                "where": ", ".join(x for x in (evt.get("locale"), evt.get("state")) if x)}
+                "where": _where(evt.get("where_label") or evt.get("locale"),
+                                evt.get("state"))}
+        if not stop["where"]:
+            stop.pop("where")
         if evt.get("waypoint"):
             stop["brief"] = True
         if card_photos.get(f"event-{i}"):
             stop["photos"] = card_photos[f"event-{i}"]
+        if card_captions.get(f"event-{i}"):
+            stop["photo_captions"] = card_captions[f"event-{i}"]
         for key, out in (("time", "time"), ("end_time", "until"),
                          ("description", "description"), ("family_visit", "visiting")):
             if evt.get(key):
                 stop[out] = _fmt_time(evt[key]) if "time" in key else evt[key]
+        stop["_rank"] = event_time_rank(day, evt.get("time"), evt.get("tz"), ref_tz)
         d["stops"].append(stop)
-    d["stops"].sort(key=lambda s: s.get("time", "99:99"))
+    # By true instant, not by wall clock. A trip that crosses a time-zone line
+    # westward sets the clock BACK, so a later stop wears an earlier stamp:
+    # trip 95's Macklin Bay (08:47 CDT) really precedes the Benkelman gas stop
+    # (08:35 MDT) by 44 minutes, and a naive sort on "time" hands the model the
+    # two backwards. `trips.event_time_rank` is the app's single definition of
+    # what happened first, shared with storage order, the timeline, the route
+    # anchor walk and the detail map; this is the fifth consumer.
+    d["stops"].sort(key=lambda s: s["_rank"])
+    for stop in d["stops"]:
+        del stop["_rank"]
     if brief:
         d["unremarkable_stops"] = brief
 
@@ -292,11 +410,14 @@ def main():
             card = (f"stay-{item['idx']}" if item["type"] == "stay"
                     else f"event-{item['idx']}")
             card_day.setdefault(card, item.get("sort_date"))
-        counts, per_card = {}, {}
+        counts, per_card, per_card_caps = {}, {}, {}
         for p in pool:
             if p["trip_id"] != trip["id"]:
                 continue
             per_card[p["card"]] = per_card.get(p["card"], 0) + 1
+            caption = (p.get("caption") or "").strip()
+            if caption:
+                per_card_caps.setdefault(p["card"], []).append(caption)
             day = card_day.get(p["card"])
             if day:
                 counts[day] = counts.get(day, 0) + 1
@@ -310,7 +431,7 @@ def main():
                 continue
             jobs.append((key, trip, day,
                          day_dossier(trip, day, driving, locations, memos,
-                                     counts, per_card)))
+                                     counts, per_card, per_card_caps)))
 
     if args.limit:
         jobs = jobs[:args.limit]

@@ -2217,7 +2217,10 @@
         {#- The town sits with the campground name, not down on the meta line:
             together they're the answer to "where is this". Same treatment on
             event and home cards — see the `.card-where` CSS for how it wraps. -#}
-        {% set where = [item.locale, item.state] | select | join(', ') %}
+        {# `where_label` is the measured answer — "just outside Napier, WV", or a
+   distance and bearing when the place is near a town rather than in it.
+   It falls back to locale+state on its own, so no || needed here. #}
+        {% set where = item.where_label %}
         <h3>{{ item.place }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}</h3>
         <div class="stay-meta">
           {#- Nights are numbered across the whole VISIT (consecutive stays at
@@ -2387,7 +2390,7 @@
       the house's 14: a star's concavities make it read smaller at equal box
       size. #}<svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M10 1 L12.02 7.22 L18.56 7.22 L13.27 11.06 L15.29 17.28 L10 13.44 L4.71 17.28 L6.73 11.06 L1.44 7.22 L7.98 7.22 Z"/></svg>{% endif %}</div>
       <div class="event-info">
-        {%- set where = [item.locale, item.state] | select | join(', ') %}
+        {%- set where = item.where_label %}
         <h3>{{ item.name }}{% if where %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
         <div class="event-meta">
           {# The zone label only appears on a trip that spans more than one
