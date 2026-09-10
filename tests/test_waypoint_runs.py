@@ -49,7 +49,9 @@ def _stay(idx, date=D1):
 
 
 def _run(timeline, photos=None, is_admin=False):
-    _collapse_waypoint_runs(timeline, photos or {}, is_admin)
+    # Folding is off in the app (WAYPOINT_FOLDING_ENABLED); forced on here
+    # so the run-boundary rules stay pinned for whatever replaces it.
+    _collapse_waypoint_runs(timeline, photos or {}, is_admin, enabled=True)
     return [bool(i.get("wp_collapsed")) for i in timeline]
 
 

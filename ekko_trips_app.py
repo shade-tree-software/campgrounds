@@ -3474,9 +3474,29 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
 
 
 
-def _collapse_waypoint_runs(timeline, event_photos, is_admin):
+# OFF, at AWH's request (2026-09-10). The premise was that nobody reads a trip
+# for the gas station, and as a statement about what is INTERESTING that holds.
+# But it mistook what the timeline is for: "I use those stops to mentally orient
+# myself about the trip." A fuel stop outside a town you remember is a landmark
+# in the day's sequence even when it carries nothing to read, and folding fifty
+# of them into chips took away the scaffolding a reader navigates by in order to
+# tidy up rows nobody was struggling with.
+#
+# Kept rather than deleted because a better answer probably exists — a compact
+# one-line row instead of a full card, say — and the run-boundary rules below
+# are subtle enough to be worth not re-deriving: they break on a day change as
+# well as on a card-worthy item, treat photos and descriptions as escape
+# hatches, and keep every folded card in the DOM so scroll-to-card and admin
+# drag targets still work. The tests exercise them with folding forced on.
+WAYPOINT_FOLDING_ENABLED = False
+
+
+def _collapse_waypoint_runs(timeline, event_photos, is_admin, enabled=None):
     """Mark runs of consecutive throwaway waypoints so the timeline can fold
     them into one "N brief stops" chip.
+
+    Disabled by default — see WAYPOINT_FOLDING_ENABLED above for why. `enabled`
+    overrides it, which is how the tests keep the rules below pinned.
 
     Detect Stops is generous by design — 747 of the library's 1,116 events are
     waypoints, and trip 90 alone carries 68 — so a timeline that renders every
@@ -3498,6 +3518,8 @@ def _collapse_waypoint_runs(timeline, event_photos, is_admin):
     (hidden), because a map-marker click has to be able to reveal one and an
     admin's photo drag still needs them as drop targets.
     """
+    if not (WAYPOINT_FOLDING_ENABLED if enabled is None else enabled):
+        return
     def _close(run):
         if not run:
             return
