@@ -315,12 +315,18 @@
      It keeps .bare as well, so the `body.photo-dragging` rules still reveal a
      drop target on it and a photo dropped here still promotes it to a full
      card on the next load. */
+  /* `.bare.wp-compact`, not `.wp-compact`. A compact row is ALSO a bare card,
+     and `.event-card.bare .event-header` sets the same properties at the same
+     specificity further down the file — so source order decided it and the
+     1rem padding below won. The row rendered at full card height and the only
+     visible change was the smaller type. Naming both classes states the
+     relationship (this overrides that) and cannot be undone by moving code. */
   .event-card.wp-compact { margin-bottom: 0; }
-  .event-card.wp-compact .event-header {
-    /* .35rem against a full card's 1rem. The icon below is what holds the
-       circle centre on the 2.25rem timeline axis, so the padding is free to
-       shrink without moving it. The dot's own 1.35rem plus this is the whole
-       row height — about a fifth of a full card. */
+  .event-card.bare.wp-compact .event-header {
+    /* .1rem against a full card's 1rem. The icon below holds the circle centre
+       on the 2.25rem timeline axis regardless, so the padding is free to
+       shrink without moving the marker: the dot's own 1.35rem plus this is
+       essentially the whole row height. */
     padding: .1rem 1.25rem;
     gap: .55rem;
     align-items: center;
@@ -386,13 +392,29 @@
     color: var(--gray);
     white-space: nowrap;
     flex: 0 0 auto;
-    margin-left: auto;
-    padding-left: .5rem;
+    /* Beside the name rather than flung to the right margin: the times belong
+       with the stop they describe, and pushing them to the far edge left a
+       lake of whitespace between. */
+    padding-left: .35rem;
   }
   /* The controls are still there; they just stop shouting on a row that is
      mostly whitespace. Revealed on hover or keyboard focus, and unconditional
      wherever hover does not exist, since a touch device has no hover to reveal
      them with. */
+  /* Taken out of flow entirely. `opacity: 0` still reserves the buttons' full
+     width, which on a one-line row squeezed the place name into an ellipsis —
+     "1 mile northwest of Harbor Hi…" with a third of the row empty to its
+     right. Absolute keeps the reveal free of layout shift, which `display:
+     none` would not. */
+  .event-card.wp-compact { position: relative; }
+  .event-card.wp-compact .card-actions {
+    position: absolute;
+    right: 1.25rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--offwhite);
+    padding-left: .5rem;
+  }
   @media (hover: hover) {
     .event-card.wp-compact .card-actions {
       opacity: 0;
