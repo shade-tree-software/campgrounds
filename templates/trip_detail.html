@@ -360,15 +360,34 @@
     position: relative;
     z-index: 2;
   }
+  /* The chip stands for N waypoint cards, so it wears their marker: the same
+     grey circle and white diamond, not an anonymous dot that said only
+     "something is here". Sized 1.4rem against a card's 2rem — deliberately
+     smaller, because a chip that matched a card would stop reading as several
+     things folded away. The 2rem-wide parent keeps the circle's centre on the
+     2.25rem timeline axis either way, so the chip's geometry is unchanged. */
   .wp-run-dot::before {
     content: '';
-    width: .5rem;
-    height: .5rem;
+    width: 1.4rem;
+    height: 1.4rem;
     border-radius: 50%;
-    background: var(--gray-light);
+    background: #8f959e;
     /* Masks the timeline axis line behind the dot, the same trick the day
        divider's date label uses. */
     box-shadow: 0 0 0 4px var(--offwhite);
+  }
+  /* The diamond sits over the circle rather than inside it, so the circle can
+     keep the ring shadow that masks the axis line. */
+  .wp-run-dot svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    /* Explicit rather than leaning on an abspos flex child's static position,
+       which browsers resolve inconsistently. */
+    transform: translate(-50%, -50%);
+    width: 9px;
+    height: 9px;
+    z-index: 1;
   }
   .wp-run-label {
     color: var(--gray);
@@ -388,6 +407,7 @@
   .wp-run.open .wp-run-label::after { transform: rotate(90deg); }
   .wp-run-toggle:hover .wp-run-label { color: var(--navy); }
   .wp-run-toggle:hover .wp-run-dot::before { background: var(--navy); }
+  .wp-run.open .wp-run-dot::before { background: var(--navy); }
 
   .home-card .event-icon { background: #bf0a30; }
 
@@ -2478,7 +2498,11 @@
   <div class="wp-run" data-run="{{ item.wp_run_id }}">
     <button type="button" class="wp-run-toggle" aria-expanded="false"
             title="{{ item.wp_run_names }}" onclick="toggleWaypointRun(this)">
-      <span class="wp-run-dot" aria-hidden="true"></span>
+      {#- The waypoint card's own diamond, so the chip is visibly the same kind
+          of thing as what it hides. Struck about the viewBox centre for the
+          reason the card's copy documents: &#9670;'s ink does not sit centred
+          in its line box, so a glyph would never centre in the circle. -#}
+      <span class="wp-run-dot" aria-hidden="true"><svg viewBox="0 0 20 20" fill="#fff"><path d="M10 1 L19 10 L10 19 L1 10 Z"/></svg></span>
       <span class="wp-run-label">{{ item.wp_run_len }} brief stop{% if item.wp_run_len == 1 %}{% else %}s{% endif %}</span>
     </button>
   </div>
