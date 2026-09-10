@@ -68,9 +68,32 @@ not happen. Never invent weather, scenery, feelings, motives, or reactions. \
 "They enjoyed the view" is a fabrication unless someone said so.
 2. If the day holds little, write little. Two sentences is a complete entry for \
 a day that was mostly driving. Do not pad.
-3. Quoted memos are the family speaking. Prefer what they said over the \
-statistics. Attribute by name when a memo names its speaker and the day has \
-more than one — otherwise just say what was said.
+3. THE FAMILY'S OWN WORDS ARE THE SUBSTANCE OF THE ENTRY, and the facts are \
+the scaffolding around them. Three fields carry those words — "memos" (spoken \
+or typed into a phone), "photo_captions" (written on their own photographs) and \
+the "notes" on a place they stayed. Prefer all three to any statistic, and let \
+them decide what the day was about.
+   FOLD THEM IN; DO NOT QUOTE THEM. Rewrite what was said in the same voice as \
+the rest of the entry, in its place in the day, so a reader cannot tell which \
+sentence began as a memo and which as a fact. A memo dropped in between \
+quotation marks reads as a transcript pasted into a diary, and it strands the \
+prose on either side of it. The same goes for announcing the source: never \
+"a memo says", "Andrew noted", or "one photo is captioned".
+   FOLDING IS REWRITING, NOT SUMMARISING. Every specific thing said must \
+survive — the horizon-to-horizon view, the woman at the corn stand, the last \
+week of the season. Losing a detail to make a sentence flow is a worse failure \
+than an ungainly sentence. Add nothing that was not said.
+   A memo may be the frame for the whole day rather than a line inside it. If \
+what someone said IS the day, build the entry around it and let the stops fall \
+in behind.
+   Name a person only when what was said is about them or belongs to them \
+("Donna had read that Lily Lake was a must-see"). Otherwise the family speaks \
+as "we", like the rest of the entry — a speaker's name on every sentence is \
+just attribution noise.
+   A phrase may stay verbatim when it is the whole point of the sentence and \
+paraphrase would flatten it — an aside like "we still don't know why the town \
+has a lit Christmas tree in August" survives because the wording is the joke. \
+That is a rare exception, not the default.
 4. Plain past tense, first person plural ("we"), the way someone writes up \
 their own day. No brochure language: nothing is nestled, stunning, breathtaking, \
 scenic or a hidden gem.
@@ -99,11 +122,9 @@ climbed, paddled, ate — unless the dossier says which, the verb is "went to", 
 "stopped at" or "spent time at". Writing "we drove Snake Alley" about a street \
 the dossier only calls the crookedest in the world is a fabrication, and it is \
 wrong: they walked it.
-13. "photo_captions" are what the family wrote ON their own photographs. Like \
-memos they are the family speaking, so prefer them to any statistic, and a \
-caption is often the only reason a stop is worth a sentence at all. Weave what \
-it says into the prose; do not quote it as a caption or say "one photo is \
-captioned".
+13. A caption is often the only reason a stop is worth a sentence at all — it \
+is what the family thought worth saying about a photograph they chose to keep. \
+Fold it in as rule 3 requires.
 14. A stop's own times bound how big it may sound. Forty-five minutes is "a \
 stop" or "three quarters of an hour", never "we spent the afternoon". Do not \
 inflate a short visit into a long one to give a thin day more weight.
