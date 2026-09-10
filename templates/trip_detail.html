@@ -275,11 +275,23 @@
   .event-card.waypoint {
     font-size: .9em;
   }
+  /* Waypoints are the quietest card type, but #f0f0f0 was quiet to the point
+     of invisible: a NEUTRAL on a faintly blue page separates by neither
+     lightness nor colour (ΔE 3.5 against --offwhite), which put it below the
+     card's own drop shadow, so the shadow read as the card. A neutral cannot
+     borrow the trick the gold header uses — that separates almost entirely by
+     colour, ΔE 15.7 at the same lightness — so this pays in lightness
+     instead, reaching ΔE 9.7. Deliberately still the least assertive of the
+     four: waypoint 9.7 < campspot 12.2 < family 13.8 < event 15.7 keeps the
+     hierarchy the timeline is trying to express. */
   .event-card.waypoint .event-header {
-    background: #f0f0f0;
+    background: #dadde4;
   }
+  /* Darkened with the header it sits on — #aaa lost a third of its contrast
+     against the new background and the white glyph inside it was already thin
+     at 2.3:1. */
   .event-card.waypoint .event-icon {
-    background: #aaa;
+    background: #8f959e;
   }
 
   .event-card.family-visit .event-header {
@@ -1111,7 +1123,12 @@
   }
 
   .stay-header {
-    background: var(--blue-bg);
+    /* NOT --blue-bg. That variable is the app-wide hover/selection tint —
+       table rows, dropdown options, calendar ranges — where a barely-there
+       wash is exactly right. As a card header on --offwhite it was ΔE 5.1,
+       nearly invisible, because it is the same hue family as the page it sits
+       on. This is the same blue carried far enough to read as a surface. */
+    background: #d6e1f5;
     padding: 1rem 1.25rem;
     display: flex;
     align-items: center;
@@ -1435,14 +1452,30 @@
      navy of a campspot or the gold of an event, so the timeline still reads as
      "these are the places we stopped". Same 2rem circle as every other card so
      the vertical axis line runs through its centre. */
-  .road-card { background: transparent; }
+  /* A road card holds photos, so it is a real card on --white like the others
+     — `background: transparent` here was wrong twice over: it flattened the
+     card AND left `.event-header` on its inherited gold, so the card rendered
+     as an event with a grey circle. Its own header is a soft green-grey: far
+     enough from the page to read as a surface (ΔE 10.1) and from waypoint grey
+     to be a different kind of thing (ΔE 7.8, wider than the 7.3 that already
+     separates waypoint from campspot). */
+  .road-card .event-header { background: #d9e5df; }
   /* Invisible until a drag is in flight; `promoted` is set by the drop handler
      so a card that just received a photo does not vanish the instant dragend
      strips .photo-dragging — the same trap the .bare pairing documents. */
   .road-placeholder:not(.promoted) { display: none; }
   body.photo-dragging .road-placeholder { display: block; opacity: .85; }
+  /* The placeholder is an invitation, not a card that exists yet — dashed,
+     and it drops the card chrome so it cannot be mistaken for a real one. */
+  .road-placeholder:not(.promoted) .event-header { background: transparent; }
+  .road-placeholder:not(.promoted) {
+    background: transparent;
+    box-shadow: none;
+    border: 2px dashed var(--gray-light);
+    border-radius: 10px;
+  }
   .road-placeholder .event-meta { font-style: italic; }
-  .road-card .event-icon.road-icon { background: var(--gray, #6b7280); }
+  .road-card .event-icon.road-icon { background: #6f8a7f; }
   .road-card h3 { font-weight: 600; }
 
   .photos-section { display: flex; flex-direction: column; }
