@@ -1243,6 +1243,14 @@ def _place_context_key(location):
     return f"{round(lat, 4)},{round(lng, 4)}"
 
 
+def place_context(location):
+    """The resolved {name, state, miles, direction, inside} for a coordinate,
+    or None. `where_label` is the phrase; this is the parts, for callers that
+    need to compare two places rather than print one."""
+    ctx = _load_place_context().get(_place_context_key(location))
+    return ctx if ctx and ctx.get("name") else None
+
+
 def where_label(location, locale="", state=""):
     """How to name where something is, for display and for the rollups.
 

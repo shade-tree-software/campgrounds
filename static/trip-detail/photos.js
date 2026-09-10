@@ -24,7 +24,9 @@ function _photoSubpath(info) {
 // event card that just gained its first photo.
 function _promoteRoadPlaceholder(grid) {
   const card = grid && grid.closest('.road-placeholder');
-  if (card) card.classList.add('promoted');
+  if (!card) return false;
+  card.classList.add('promoted');
+  return true;
 }
 
 // The symmetric half: drag the last photo OUT of a road card and it becomes a
@@ -36,6 +38,24 @@ function _maybeDemoteRoadCard(grid) {
     card.classList.add('road-placeholder');
     card.classList.remove('promoted');
   }
+}
+
+// Toggling `photo-dragging` reveals every hidden drop target at once — folded
+// waypoint runs and, on a trip page, one road placeholder per DAY. All of that
+// height appears in the document in a single frame, and every bit of it ABOVE
+// the viewport pushes the page down under the reader: the timeline appeared to
+// leap away from the card you were dragging from, then leap back on drop.
+//
+// So the toggle is wrapped: measure a stable anchor, mutate, measure again, and
+// scroll by the difference. The anchor is the dragged photo itself, which keeps
+// it visually pinned through both transitions — including after a cross-card
+// move, where it means the reader keeps looking at the photo they just filed.
+function _keepingAnchorStill(anchor, mutate) {
+  if (!anchor) { mutate(); return; }
+  const before = anchor.getBoundingClientRect().top;
+  mutate();
+  const delta = anchor.getBoundingClientRect().top - before;
+  if (delta) window.scrollBy(0, delta);
 }
 
 function _maybeBarifyEmptyGrid(grid) {
@@ -488,7 +508,7 @@ function initPhotoDrag(grid) {
     item.classList.add('dragging');
     // Enlarge / outline empty grids on other cards so they're droppable.
     grid.classList.add('drag-source');
-    document.body.classList.add('photo-dragging');
+    _keepingAnchorStill(item, () => document.body.classList.add('photo-dragging'));
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/plain', '');
   });
@@ -614,10 +634,22 @@ function initPhotoDrag(grid) {
           img.dataset.view = '/view/' + sub;
           img.dataset.full = '/photo/' + sub;
         }
-        _promoteRoadPlaceholder(grid);
+        const wasPlaceholder = _promoteRoadPlaceholder(grid);
         _maybeDemoteRoadCard(movedSourceGrid);
         saveGridOrder(movedSourceGrid);
         saveGridOrder(grid);
+        // A placeholder is rendered at the TOP of its day — it has no photos,
+        // so it has no time to be placed by. A real road card is positioned at
+        // its first photo's EXIF timestamp, so the one just created is sitting
+        // in the wrong slot until the server rebuilds the timeline.
+        //
+        // The tile carries data-date-taken, so this could be re-sorted here
+        // instead — and should not be. That would be a second implementation
+        // of timeline ordering living in the browser, and the last time two
+        // orderings disagreed a westward time-zone crossing put trip 95's
+        // Macklin Bay stop 44 minutes on the wrong side of a gas stop. The
+        // server owns the order; ask it.
+        if (wasPlaceholder) _reloadKeepingMapView();
       });
     } else {
       saveGridOrder(grid);
@@ -635,7 +667,8 @@ function initPhotoDrag(grid) {
     document.querySelectorAll('.photo-grid.drag-source').forEach(el => {
       el.classList.remove('drag-source');
     });
-    document.body.classList.remove('photo-dragging');
+    _keepingAnchorStill(dragItem,
+      () => document.body.classList.remove('photo-dragging'));
     dragItem = null;
     dragSourceGrid = null;
     dropTarget = null;

@@ -36,7 +36,9 @@ from trips import (
                    is_home_stay, visit_runs, TRIPS_JSON,
                    event_time_rank, reference_timezone, tz_abbrev,
                    utc_offset_minutes as trips_utc_offset_minutes,
-                   get_dismissed_stops, clear_dismissed_stops_near)
+                   get_dismissed_stops, clear_dismissed_stops_near,
+                   place_context as trips_place_context,
+                   where_label as trips_where_label)
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -1582,6 +1584,8 @@ def _rename_people_key(old_key, new_key):
 # inside the debounce window those photos are missed, and a plain
 # `python detect_people.py` (incremental) picks up anything that fell through.
 
+PLACE_RESOLVE_SCRIPT = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "backfill_place_context.py")
 PEOPLE_SCAN_SCRIPT = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                   "detect_people.py")
 # Long enough to swallow a multi-photo upload burst, short enough that a single
@@ -1788,6 +1792,31 @@ _people_scan = _BackgroundScan(
     # instead of waiting out its TTL.
     on_done=lambda: _invalidate_photo_pool(),
 )
+
+# Resolving a road photo's position means matching its EXIF time against the
+# GPS track and then naming the nearest town — which needs the 177k-place
+# gazetteer. Out of process for the same reason the people scan is: a one-shot
+# subprocess pays that memory for a second or two instead of every worker
+# paying it for its lifetime.
+_place_resolve = _BackgroundScan(
+    name="place-resolve",
+    script=PLACE_RESOLVE_SCRIPT,
+    probe_imports="PIL",
+    debounce_s=PEOPLE_SCAN_DEBOUNCE_S,
+    max_batch=PEOPLE_SCAN_MAX_BATCH,
+    timeout_s=PEOPLE_SCAN_TIMEOUT_S,
+    enabled=PEOPLE_SCAN_ENABLED,
+)
+
+
+def _queue_place_resolve(trip_ids):
+    """Name the places a just-uploaded road photo passed through.
+
+    Keyed by TRIP rather than by photo: the backfill is incremental, so handing
+    it a trip id costs only the coordinates it has not already resolved.
+    """
+    _place_resolve.queue([str(t) for t in trip_ids])
+
 
 _memo_transcribe = _BackgroundScan(
     name="memo-transcribe",
@@ -3119,7 +3148,88 @@ def _collect_road_photos(trip_id, day, captions, photo_order,
     return out
 
 
-def _add_road_cards(trip, road_photos, ref_tz=""):
+def _road_photo_position(track, taken):
+    """Where the RV was when a photo was taken: the nearest ping in TIME.
+
+    A road photo's whole distinguishing feature is that nobody stopped, so it
+    has no stay or event to inherit a location from — but the trip knows where
+    the vehicle was every few minutes, and the photo knows when it was taken.
+    Returns (lat, lng) or None when the track has nothing near that moment.
+    """
+    if not track or not taken or len(taken) < 19:
+        return None
+    try:
+        stamp = datetime.strptime(taken[:19], "%Y-%m-%d %H:%M:%S").timestamp()
+    except ValueError:
+        return None
+    # Tracks are time-ordered and can run to 45,000 pings, where a linear scan
+    # costs ~3 ms per lookup — real page time once a trip has several road
+    # cards. The sorted key list is memoized on the track object's identity,
+    # since the caller hands the same list to every card on the page.
+    tsts = _track_tsts(track)
+    if not tsts:
+        return None
+    i = bisect.bisect_left(tsts, stamp)
+    best = None
+    for j in (i - 1, i):
+        if 0 <= j < len(track):
+            gap = abs(tsts[j] - stamp)
+            if best is None or gap < best[0]:
+                best = (gap, track[j].get("lat"), track[j].get("lon"))
+    # OwnTracks stops reporting while the phone is still, but a road photo is
+    # by definition taken while moving, so a ping should be minutes away. An
+    # hour means the track does not really cover this moment.
+    if best is None or best[0] > 3600 or best[1] is None:
+        return None
+    return (best[1], best[2])
+
+
+_TRACK_TSTS = {}
+
+
+def _track_tsts(track):
+    """The track's timestamps as a sorted list, memoized per track object.
+
+    Pings arrive time-ordered, but this asserts rather than assumes it — an
+    unsorted list would make the bisect above silently pick a wrong ping.
+    """
+    key = id(track)
+    cached = _TRACK_TSTS.get(key)
+    if cached is not None and cached[0] is track:
+        return cached[1]
+    tsts = [p.get("tst") or 0 for p in track]
+    if any(a > b for a, b in zip(tsts, tsts[1:])):
+        tsts = None                      # caller falls back to no position
+    _TRACK_TSTS.clear()                  # one page render, one track
+    _TRACK_TSTS[key] = (track, tsts)
+    return tsts
+
+
+def _road_card_where(track, photos):
+    """How to name where a day's road photos were taken.
+
+    A driving day can cover four hundred miles, so one town would be a lie for
+    most of the card. When the first and last photo resolve to different
+    places the label is a RANGE, which is what the day actually was.
+    """
+    ends = []
+    for photo in (photos[0], photos[-1]) if photos else ():
+        pos = _road_photo_position(track, photo.get("date_taken"))
+        ends.append(trips_place_context(f"{pos[0]},{pos[1]}") if pos else None)
+    if not ends or not any(ends):
+        return ""
+    first, last = ends[0], ends[-1]
+    if first and last and first["name"] != last["name"]:
+        a = ", ".join(x for x in (first["name"], first["state"]) if x)
+        b = ", ".join(x for x in (last["name"], last["state"]) if x)
+        return f"{a} \u2192 {b}"
+    only = first or last
+    pos = _road_photo_position(track, (photos[0] if first else photos[-1]).get("date_taken"))
+    return trips_where_label(f"{pos[0]},{pos[1]}") if pos else \
+        ", ".join(x for x in (only["name"], only["state"]) if x)
+
+
+def _add_road_cards(trip, road_photos, ref_tz="", track=None):
     """Splice a road card into the timeline for each day that has one.
 
     Positioned at its FIRST photo's timestamp, so the card lands among the
@@ -3134,6 +3244,7 @@ def _add_road_cards(trip, road_photos, ref_tz=""):
         trip["timeline"].append({
             "type": "road", "idx": day, "sort_date": day, "date": day,
             "time": clock, "photo_count": len(photos),
+            "where_label": _road_card_where(track, photos),
             "_order": 0, "_time": clock,
             "_rank": event_time_rank(day, clock, "", ref_tz),
         })
@@ -3401,8 +3512,11 @@ def trip_detail(trip_id):
     # Fold the throwaway waypoints into chips before rendering (see the
     # helper's docstring for what earns a card).
     if road_photos:
+        # The track is only read when a trip actually HAS road photos, which is
+        # rare — an ordinary trip page pays nothing for this.
         _add_road_cards(trip, road_photos,
-                        reference_timezone(trip.get("events")))
+                        reference_timezone(trip.get("events")),
+                        _load_trip_track_for_detection(trip_id))
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     return render_template(
@@ -3671,6 +3785,7 @@ def upload_road_photo(trip_id, day):
         keys = [f"{subpath}/{f}" for f in saved]
         _record_uploaders(keys, current_user.username)
         _queue_people_scan(keys)
+        _queue_place_resolve([trip_id])
         _invalidate_photo_pool()
         return jsonify({"files": [
             {"filename": f, "url": f"{url_prefix}/{f}",
@@ -3682,6 +3797,7 @@ def upload_road_photo(trip_id, day):
         return jsonify({"error": "File type not allowed"}), 400
     _record_uploader(f"{subpath}/{filename}", current_user.username)
     _queue_people_scan([f"{subpath}/{filename}"])
+    _queue_place_resolve([trip_id])
     _invalidate_photo_pool()
     return jsonify({
         "filename": filename,

@@ -51,10 +51,38 @@ def _parse(value):
     return lat, lng
 
 
+def road_coords(trip):
+    """Where the RV was when this trip's road photos were taken.
+
+    Road photos have no stay or event to inherit a location from — that is the
+    point of them — so their position comes from the trip's own GPS track,
+    matched on the photo's EXIF timestamp. Resolved here rather than live in
+    the request so the web process never has to load the 177k-place gazetteer.
+    """
+    import ekko_trips_app as A
+    days = A._road_days(trip["id"])
+    if not days:
+        return []
+    track = A._load_trip_track_for_detection(trip["id"])
+    out = []
+    for day in days:
+        photo_dir = A._road_photo_dir(trip["id"], day)
+        for fname in sorted(os.listdir(photo_dir)):
+            if not A._allowed_file(fname):
+                continue
+            taken = A._photo_date_taken(os.path.join(photo_dir, fname))
+            pos = A._road_photo_position(track, taken)
+            if pos:
+                out.append(pos)
+    return out
+
+
 def collect_coords(trips, locations):
     """Every coordinate the app draws or describes, deduped."""
     out = {}
     for trip in trips:
+        for pos in road_coords(trip):
+            out[coord_key(*pos)] = pos
         for stay in trip.get("stays", []):
             pos = _parse(stay.get("campsite_location"))
             if pos is None:
@@ -74,7 +102,12 @@ def main():
     ap.add_argument("--apply", action="store_true", help="write the file")
     ap.add_argument("--rebuild", action="store_true",
                     help="recompute every key, not just the missing ones")
+    ap.add_argument("--only", nargs="+", metavar="TRIP_ID",
+                    help="resolve only these trips, and write (this is the "
+                         "path the app takes after a road photo is uploaded)")
     args = ap.parse_args()
+    if args.only:
+        args.apply = True
 
     sys.path.insert(0, HERE)
     from trips import _load_locations_by_id
@@ -82,6 +115,9 @@ def main():
     with open(TRIPS_FILE) as fh:
         raw = json.load(fh)
     trips = raw["trips"] if isinstance(raw, dict) else raw
+    if args.only:
+        wanted = {str(t) for t in args.only}
+        trips = [t for t in trips if str(t.get("id")) in wanted]
     coords = collect_coords(trips, _load_locations_by_id())
 
     existing = {}
@@ -117,8 +153,10 @@ def main():
         out[key] = {"label": label, "name": hit["name"], "state": hit["state"],
                     "miles": hit["miles"], "direction": hit["direction"],
                     "inside": hit["inside"]}
-    # Drop keys for coordinates nothing points at any more (a moved pin).
-    stale = [k for k in out if k not in coords]
+    # Drop keys for coordinates nothing points at any more (a moved pin). Never
+    # when --only narrowed the sweep to one trip: every OTHER trip's
+    # coordinates would look stale and the file would be gutted.
+    stale = [] if args.only else [k for k in out if k not in coords]
     for k in stale:
         del out[k]
 

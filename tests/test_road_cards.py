@@ -253,5 +253,52 @@ class TestTheDropTarget(RoadCardBase):
         self.assertEqual(len(ids), len(set(ids)))
 
 
+
+
+class TestWhereARoadPhotoWasTaken(unittest.TestCase):
+    """A road photo has no stay or event to inherit a location from — that is
+    the definition of one. But the trip knows where the vehicle was every few
+    minutes and the photo knows when it was taken, so the two combine."""
+
+    TRACK = [{"tst": 1000, "lat": 41.0, "lon": -93.0},
+             {"tst": 2000, "lat": 41.5, "lon": -94.0},
+             {"tst": 3000, "lat": 42.0, "lon": -95.0}]
+
+    @staticmethod
+    def _at(epoch):
+        import datetime
+        return datetime.datetime.fromtimestamp(epoch).strftime("%Y-%m-%d %H:%M:%S")
+
+    def test_the_nearest_ping_in_time_wins(self):
+        pos = A._road_photo_position(self.TRACK, self._at(2100))
+        self.assertEqual(pos, (41.5, -94.0))
+
+    def test_it_looks_both_ways_not_just_forward(self):
+        # bisect lands on the ping AFTER the photo; the one before is often
+        # nearer, and only checking forward would silently bias every answer.
+        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1900)),
+                         (41.5, -94.0))
+        self.assertEqual(A._road_photo_position(self.TRACK, self._at(1100)),
+                         (41.0, -93.0))
+
+    def test_a_photo_the_track_does_not_cover_gets_no_position(self):
+        # An hour from the nearest ping means the track is not really about
+        # this moment. A road photo is taken while MOVING, so its ping should
+        # be minutes away — unlike an evening at camp, where OwnTracks goes
+        # quiet for hours and a distant ping is still exactly right.
+        self.assertIsNone(A._road_photo_position(self.TRACK, self._at(99999)))
+
+    def test_no_track_and_no_timestamp_are_both_survivable(self):
+        self.assertIsNone(A._road_photo_position([], self._at(2000)))
+        self.assertIsNone(A._road_photo_position(self.TRACK, ""))
+        self.assertIsNone(A._road_photo_position(self.TRACK, "2026-08-22"))
+
+    def test_an_unsorted_track_is_refused_rather_than_misread(self):
+        # The lookup bisects, so an out-of-order list would not error — it
+        # would quietly return the wrong ping.
+        scrambled = [self.TRACK[2], self.TRACK[0], self.TRACK[1]]
+        self.assertIsNone(A._road_photo_position(scrambled, self._at(2000)))
+
+
 if __name__ == "__main__":
     unittest.main()
