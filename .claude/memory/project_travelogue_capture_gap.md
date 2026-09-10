@@ -1,85 +1,68 @@
 ---
 name: project_travelogue_capture_gap
-description: Memo-to-rollup pipeline — why it exists, steps 1-3 shipped 2026-09-09, what's left (display + judging the prose + running the archive)
+description: Memo-to-rollup pipeline — steps 1-3 shipped and displayed; RESUME at judging trip 95's prose after the seam-rule rework, then the archive run
 metadata:
   type: project
 ---
 
 Measured 2026-09-09: the app records trips beautifully and contained almost no
 human writing. **1,116 events → 37 descriptions (3.3%). 172 campspots → 11
-notes (6.4%). 1,718 photos → 51 captions (3.0%). 3 favorites, ever.** Meanwhile
-747 of those 1,116 events are machine-detected waypoints.
+notes. 1,718 photos → 51 captions.** AWH's constraint, in his words: "I rarely
+have the desire to write up a day report at the end of a long day... Just
+uploading the pics is hard enough." So: **never ship a feature that asks him to
+type prose on the road.** The machine supplies facts; he supplies meaning in the
+cheapest possible form. Design doc (artifact): "Memo to Rollup" —
+https://claude.ai/code/artifact/eff04982-ac31-45d9-b696-2640d9a2ef97
 
-**AWH's constraint, in his words (2026-09-09) — the design input, not a
-motivation problem:** "I rarely have the desire to write up a day report at the
-end of a long day, partly because I'm tired, partly because I don't have a
-decent keyboard and display with me, partly because I often have no signal.
-After the trip I've forgotten things, back at work, other things to do. Just
-uploading the pics is hard enough."
+That worked. By 2026-09-10 trip 95 had 33 event descriptions, 4 campspot notes
+and 20 captions — he writes when the writing has somewhere to go.
 
-**So: never ship a feature that asks him to type prose on the road.** A blank
-day-entry box was proposed and correctly rejected. The split instead: the
-machine supplies facts (it already knows them and still will in five years),
-AWH supplies meaning only, in the cheapest possible form. Design doc (artifact):
-"Memo to Rollup" — https://claude.ai/code/artifact/eff04982-ac31-45d9-b696-2640d9a2ef97
+## Shipped
 
-## Shipped 2026-09-09 (all deployed to PA)
+Steps 1-3 plus display: `/memos` capture (voice AND typed — see
+[[feedback_waypoints_are_orientation]] for the sibling reversal), GPS filing,
+local Whisper transcription, `process_rollups.py`, and the day-divider display
+on the trip page. Every unedited write-up carries "Drafted by <model>", the same
+generated-vs-human line the memo page draws.
 
-- **Waypoint collapse** — 663 of 747 waypoints fold into "N brief stops" chips.
-- **Step 1: memo capture + filing** — `/memos`, MediaRecorder in the PWA,
-  IndexedDB queue, filed against the GPS track. 285/285 real pings file to the
-  trip that owns their day.
-- **Step 2: local Whisper transcription** — `process_memos.py`, auto-triggered
-  on upload, plus a read-path catch-up sweep (`queue_once`).
-- **`speaker` field** — who talked, from `campers` not `users.json`.
-- **Step 3 generator: `process_rollups.py`** — see below.
-- Requirements split (`ekko_trips_requirements.txt` vs `tools_requirements.txt`)
-  and the map fractional-zoom fix. All detail is in CLAUDE.md.
+## RESUME HERE
 
-## Where step 3 stands — RESUME HERE
+1. **AWH has not judged the current prose.** He critiqued the 2026-09-10 run in
+   nine specific places and the fixes are committed but NOT yet exercised —
+   `--force --trip 95` costs ~$0.21. Verify against his nine before anything else.
+2. **The archive is on hold at his request** (~321 days, ~$3.50-5). Do not run
+   it until he approves the trip-95 output.
+3. **Open design question he asked, unanswered:** each day is a separate API
+   call with no knowledge of the other thirteen, which loses the trip's arc and
+   repeats material across consecutive days. He said "there's a reason and a
+   theme on most trips, and some of that develops throughout." Proposal to put
+   to him: a factual trip-arc block in every dossier (day N of M, where it began
+   and ends, the shape of the days) plus the previous day's finished text for
+   continuity — NOT one call for the whole trip, which trades away the guard
+   that a day cannot borrow another day's facts. **Gap found while checking:
+   there is nowhere to record a trip's reason or theme.** `trip_note` exists on
+   93 of 95 trips but is just the trip's name ("Rocky Mountain National Park").
 
-Generator works and trip 95 is drafted (14 days, in the gitignored
-`trip_data/day_rollups.json`). Three things left:
+## The lesson worth keeping from the nine faults
 
-1. **AWH has not yet read the prose.** That was the whole point of doing one
-   trip first — the judgement is his, not mine. `--force --trip 95` redraws for
-   $0.15 if the prompt needs another turn.
-2. **Nothing displays rollups yet.** The trip page's day divider is where they
-   belong, beside the mileage chip. This is the natural last commit of step 3.
-3. **The archive has not been run.** ~321 days ≈ **$3.50** (measured, not
-   estimated — far under the $12 in the design doc).
+They were one fault. The model was not fabricating whole facts — it was
+inventing the CONNECTIVE TISSUE that makes sentences flow, which is exactly what
+a dossier lacks: where something happened relative to something else, why a stop
+ran long, the mood of a day, whose idea something was, what a stop was for.
+"We talked briefly to a group of men on Harleys" became "at the top we talked to
+them"; they were in the car park. Four of the nine came from captions, which are
+**labels on a photograph the model cannot see** — "Not in service" was an
+abandoned phone booth, not the town. See rules 2 and 14 in `SYSTEM`.
 
-**Verified: no fabrication, on the first attempt.** Audit method worth reusing —
-take every evaluative-sounding phrase and trace it back. "A nice overlook of the
-Swanson Reservoir", "an unexpected outdoor church service" and "gas in
-Benkelman" were all verbatim from event descriptions or a photographed waypoint.
-What DID go wrong was reciting the archive (all 14 days stated a photo count,
-four ended in a roll call of who was there); fixed in the system prompt — photo
-counts are now a signal for choosing what to write about, never something to
-state.
+## Environment facts that do not travel with the repo
 
-**AWH's decision (2026-09-09):** a day with **no memos still gets an entry**,
-written from facts alone. Memos improve a day, they don't gate it. That is what
-lets the whole back catalogue be covered before a single new memo exists.
-
-## Environment facts that aren't in the repo
-
-- **`ANTHROPIC_API_KEY` is in the LOCAL `.env` only** (added by AWH 2026-09-09,
-  `sk-ant-api03-…`). `.env` is gitignored, so **PA does not have it** — if
-  rollups should ever run there, the key has to be added separately.
-- `faster-whisper` and `anthropic` are installed in the local
-  `ekko_trips_venv`; PA has the tools requirements installed in its own venv.
-- Installing faster-whisper bumped `click` 8.3.1 → 8.5.0; the pin was updated
-  because huggingface_hub requires >=8.4.2.
-
-## Still not built, from the original review
-
-- **Reader comments** — 6 share links, 3 users, no feedback channel. Still the
-  cheapest thing with the biggest effect on whether AWH keeps feeding the app.
-- Photo captions on the ~907 face-flagged shortlist (~$9 batched).
-- `campers` is still free text, so "every trip Chris came on" is unanswerable —
-  but `trips.camper_names()` is now the shared normalizer, so the parsing half
-  is done.
-- **The memo feature has never met a real campsite.** Zero real memos exist. A
-  single overnight would test mic permission, no signal, and the button in the
-  dark better than any further building. See [[project_ux_review_2026_07]].
+- **`ANTHROPIC_API_KEY` is in the LOCAL `.env` only.** PA does not have it and
+  cannot generate rollups.
+- **`trip_data/day_rollups.json` exists only on the host that generated it.**
+  Gitignored, excluded from sync (a `--delete` sync deleted a whole trip's prose
+  before that exclude existed), now in `backup.sh`. On a new machine it does not
+  exist — regenerate, or move it with `backup.sh`/`restore.sh`.
+- `trip_data/place_context.json` likewise, but it regenerates free from the
+  committed `places.tsv.gz`: `python backfill_place_context.py --apply`.
+- A new machine needs its own PA SSH keys ([[reference_pa_ssh_keys]]), a `.env`
+  with `GITHUB_PAT`, and `git config core.askPass`.
