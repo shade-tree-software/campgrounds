@@ -1436,6 +1436,12 @@
      "these are the places we stopped". Same 2rem circle as every other card so
      the vertical axis line runs through its centre. */
   .road-card { background: transparent; }
+  /* Invisible until a drag is in flight; `promoted` is set by the drop handler
+     so a card that just received a photo does not vanish the instant dragend
+     strips .photo-dragging — the same trap the .bare pairing documents. */
+  .road-placeholder:not(.promoted) { display: none; }
+  body.photo-dragging .road-placeholder { display: block; opacity: .85; }
+  .road-placeholder .event-meta { font-style: italic; }
   .road-card .event-icon.road-icon { background: var(--gray, #6b7280); }
   .road-card h3 { font-weight: 600; }
 
@@ -2248,6 +2254,32 @@
               onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
       {%- endif %}
     </div>
+    {%- if is_admin and item.sort_date not in road_photos %}
+    {#- An empty road card, hidden until a photo is actually being dragged.
+        Without it there is nowhere to DROP a photo on a day that has no road
+        card yet — and since the card only exists once its directory has
+        photos, correcting a shot that was filed onto some invented waypoint
+        would be impossible. Same device as `body.photo-dragging` revealing a
+        bare card's body, and it reuses all of that machinery: initPhotoDrag
+        binds every .photo-grid at load, and parseGridId reads the day back out
+        of the grid id. -#}
+    <div class="event-card road-card road-placeholder" id="road-{{ item.sort_date }}">
+      <div class="event-header">
+        <div class="event-icon road-icon">
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M8 2 h4 l1 5 h-6 z M7 8 h6 l1 10 h-3 l-.4-4 h-1.2 l-.4 4 h-3 z"/></svg>
+        </div>
+        <div class="event-info">
+          <h3>On the road</h3>
+          <div class="event-meta">Drop a photo here to file it under this day</div>
+        </div>
+      </div>
+      <div class="event-body">
+        <div class="photos-section">
+          <div class="photo-grid" id="road-photos-{{ item.sort_date }}"></div>
+        </div>
+      </div>
+    </div>
+    {%- endif %}
   {% endif %}
 
   {% if item.type == "stay" %}

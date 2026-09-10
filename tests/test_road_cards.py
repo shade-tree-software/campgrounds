@@ -216,5 +216,42 @@ class TestKeyShapes(unittest.TestCase):
                          "95/road/2026-08-22/a.jpg")
 
 
+
+
+class TestTheDropTarget(RoadCardBase):
+    """A road card you cannot create is a road card you cannot drag onto.
+
+    The card exists only once its directory has photos, so on a day with none
+    there is nothing in the DOM to drop on -- and correcting a shot that was
+    filed onto some invented waypoint, which is the whole reason moving exists,
+    would be impossible. An empty placeholder is rendered for every day and
+    revealed only while a drag is in flight, the same device
+    `body.photo-dragging` uses to reveal a bare card's body.
+    """
+
+    def _page(self):
+        client = A.app.test_client()
+        with client.session_transaction() as sess:
+            sess["_user_id"] = TestMovingPhotosInAndOut._an_admin()
+            sess["_fresh"] = True
+        return client.get("/trips/95").data.decode("utf-8", "replace")
+
+    def test_every_day_offers_somewhere_to_drop(self):
+        import re
+        html = self._page()
+        days = re.findall(r'id="road-photos-(\d{4}-\d{2}-\d{2})"', html)
+        self.assertTrue(days, "no road drop targets rendered at all")
+        # One per day, and no duplicate ids -- parseGridId reads the day back
+        # out of the grid id, so a collision would file photos on the wrong day.
+        self.assertEqual(len(days), len(set(days)))
+
+    def test_a_day_with_a_real_card_gets_no_placeholder(self):
+        # Otherwise two grids would share an id on that day.
+        import re
+        html = self._page()
+        ids = re.findall(r'id="road-photos-(\d{4}-\d{2}-\d{2})"', html)
+        self.assertEqual(len(ids), len(set(ids)))
+
+
 if __name__ == "__main__":
     unittest.main()

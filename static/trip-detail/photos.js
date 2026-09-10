@@ -8,6 +8,36 @@
 // (closest('.event-card') returns null) are never bare, but their
 // "Remove All Photos" button still gets hidden when the grid empties.
 // No-op when the grid still has photos.
+// Where a photo lives on disk, given a parsed grid identity. One place, so a
+// moved photo's thumb/view/full URLs cannot disagree with the server about
+// where the file went — they 404 the moment the file moves otherwise.
+function _photoSubpath(info) {
+  if (info.type === 'event') return `${TRIP_ID}/events/${info.idx}`;
+  if (info.type === 'road') return `${TRIP_ID}/road/${info.idx}`;
+  return `${TRIP_ID}/${info.idx}`;
+}
+
+// A road placeholder is `display: none` except while a drag is in flight, so a
+// photo dropped into one would disappear the instant `dragend` strips
+// `photo-dragging` — taking the photo the admin just filed with it. Marking it
+// promoted keeps it on screen, exactly as the cross-card handler un-bares an
+// event card that just gained its first photo.
+function _promoteRoadPlaceholder(grid) {
+  const card = grid && grid.closest('.road-placeholder');
+  if (card) card.classList.add('promoted');
+}
+
+// The symmetric half: drag the last photo OUT of a road card and it becomes a
+// drop target again rather than an empty card claiming a day has road photos.
+function _maybeDemoteRoadCard(grid) {
+  if (!grid || grid.querySelectorAll('.photo-item').length > 0) return;
+  const card = grid.closest('.road-card');
+  if (card) {
+    card.classList.add('road-placeholder');
+    card.classList.remove('promoted');
+  }
+}
+
 function _maybeBarifyEmptyGrid(grid) {
   if (!grid || grid.querySelectorAll('.photo-item').length > 0) return;
   const card = grid.closest('.event-card');
@@ -579,12 +609,13 @@ function initPhotoDrag(grid) {
         // opens the lightbox before the next reload).
         const img = movedItem.querySelector('img');
         if (img) {
-          const sub = (dst.type === 'event' ? `${TRIP_ID}/events/${dst.idx}` : `${TRIP_ID}/${dst.idx}`)
-            + '/' + encodeURIComponent(data.filename);
+          const sub = _photoSubpath(dst) + '/' + encodeURIComponent(data.filename);
           img.src = '/thumb/' + sub;
           img.dataset.view = '/view/' + sub;
           img.dataset.full = '/photo/' + sub;
         }
+        _promoteRoadPlaceholder(grid);
+        _maybeDemoteRoadCard(movedSourceGrid);
         saveGridOrder(movedSourceGrid);
         saveGridOrder(grid);
       });
