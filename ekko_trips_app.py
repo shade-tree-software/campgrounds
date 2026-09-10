@@ -300,6 +300,9 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "photo_uploads")
 # routinely — is a JSON edit that touches no files at all. The year buckets
 # exist only to keep one directory from growing without bound.
 MEMO_DIR = os.path.join(os.path.dirname(__file__), "memo_uploads")
+# A typed memo is a note, not an essay — generous enough for a long
+# paragraph, bounded so the JSON store stays small and quick to load.
+MEMO_TEXT_MAX_CHARS = 4000
 MEMOS_FILE = os.path.join(TRIP_DATA_DIR, "memos.json")
 
 # MediaRecorder hands back audio/mp4 on Safari and audio/webm on Chrome; the
@@ -5006,7 +5009,10 @@ def _memo_view(memo_id, rec):
         "transcript_edited": bool(rec.get("transcript_edited")),
         "uploaded_by": rec.get("uploaded_by", ""),
         "filed": trip_id is not None,
-        "audio_url": f"/memo/{rec['year']}/{rec['filename']}",
+        # A typed memo has no recording, so no player and no path to build.
+        "kind": "text" if not rec.get("filename") else "voice",
+        "audio_url": (f"/memo/{rec['year']}/{rec['filename']}"
+                      if rec.get("filename") else ""),
     }
 
 
@@ -5051,10 +5057,13 @@ def api_memos_list():
     # unattended storm; the rest are still untried and come up next load.
     # Newest first: a memo from the trip you just got back from is the one
     # worth having text for.
+    # `filename` is the test for "has audio". A typed memo has none, so it is
+    # neither transcribable nor missing a transcript — queueing one would start
+    # a several-hundred-megabyte model load for a file that does not exist.
     stale = [mid for mid, r in sorted(memos.items(),
                                       key=lambda kv: kv[1].get("recorded_at") or 0,
                                       reverse=True)
-             if not (r.get("transcript") or "").strip()]
+             if r.get("filename") and not (r.get("transcript") or "").strip()]
     _memo_transcribe.queue_once(stale[:MEMO_TRANSCRIBE_MAX_BATCH])
 
     return jsonify({"memos": out,
@@ -5064,7 +5073,8 @@ def api_memos_list():
                     # faster_whisper on this host — shows up as a number rather
                     # than as memos that quietly never gain text.
                     "untranscribed": sum(1 for r in memos.values()
-                                         if not (r.get("transcript") or "").strip())})
+                                         if r.get("filename")
+                                         and not (r.get("transcript") or "").strip())})
 
 
 @app.route('/api/memos', methods=['POST'])
@@ -5085,11 +5095,20 @@ def api_memo_upload():
     if denied:
         return denied
 
+    # A memo is either spoken or typed. Typing is not a lesser path: it is the
+    # one that works in a quiet campground, in a conversation, or when the
+    # thing worth keeping is a name or a number rather than a sentence — and
+    # like the recording, it must survive being made with no signal, which is
+    # why the page queues it the same way.
+    typed = (request.form.get('text') or "").strip()
     f = request.files.get('audio')
     if not f or not f.filename:
-        return jsonify({"error": "No audio file"}), 400
-    if not _allowed_memo_file(f.filename):
+        if not typed:
+            return jsonify({"error": "No audio file or text"}), 400
+    elif not _allowed_memo_file(f.filename):
         return jsonify({"error": "Unsupported audio format"}), 400
+    if typed and len(typed) > MEMO_TEXT_MAX_CHARS:
+        return jsonify({"error": "Memo too long"}), 413
 
     try:
         recorded_at = int(float(request.form.get('recorded_at') or 0))
@@ -5098,22 +5117,23 @@ def api_memo_upload():
     if recorded_at <= 0:
         recorded_at = int(time.time())
 
-    # Read into memory to enforce the cap before anything touches disk; the
-    # ceiling is ~35 minutes of speech, so this is bounded by design.
-    blob = f.read()
-    if not blob:
-        return jsonify({"error": "Empty recording"}), 400
-    if len(blob) > MEMO_MAX_BYTES:
-        return jsonify({"error": "Recording too large"}), 413
-
-    ext = f.filename.rsplit(".", 1)[1].lower()
     memo_id = secrets.token_hex(8)
     year = datetime.fromtimestamp(recorded_at, timezone.utc).strftime("%Y")
-    folder = os.path.join(MEMO_DIR, year)
-    os.makedirs(folder, exist_ok=True)
-    filename = f"{memo_id}.{ext}"
-    with open(os.path.join(folder, filename), "wb") as out:
-        out.write(blob)
+    filename = ""
+    if f and f.filename:
+        # Read into memory to enforce the cap before anything touches disk; the
+        # ceiling is ~35 minutes of speech, so this is bounded by design.
+        blob = f.read()
+        if not blob:
+            return jsonify({"error": "Empty recording"}), 400
+        if len(blob) > MEMO_MAX_BYTES:
+            return jsonify({"error": "Recording too large"}), 413
+        ext = f.filename.rsplit(".", 1)[1].lower()
+        folder = os.path.join(MEMO_DIR, year)
+        os.makedirs(folder, exist_ok=True)
+        filename = f"{memo_id}.{ext}"
+        with open(os.path.join(folder, filename), "wb") as out:
+            out.write(blob)
 
     rec = {"year": year, "filename": filename, "recorded_at": recorded_at,
            "uploaded_at": int(time.time()),
@@ -5128,6 +5148,21 @@ def api_memo_upload():
         rec["duration_s"] = round(float(request.form.get('duration_s')), 1)
     except (TypeError, ValueError):
         rec["duration_s"] = None
+
+    if typed:
+        # Typed words go in `transcript` rather than a second field, and that
+        # is deliberate. Four things read a memo's words — the rollup dossier,
+        # the search, the page, and the transcriber's straggler sweep — and a
+        # parallel `text` field means each of them has to remember to check
+        # both, with a silent omission as the failure. One field cannot drift.
+        # `filename` is what distinguishes the two kinds, and it has to be
+        # checked anywhere audio is assumed.
+        rec["transcript"] = typed
+        # True by definition: nothing generated these words, so a re-run of the
+        # transcriber must never overwrite them, and the page must credit the
+        # human rather than a model.
+        rec["transcript_edited"] = True
+        rec["transcript_model"] = ""
 
     explicit_trip = request.form.get('trip_id', type=int)
     explicit_date = (request.form.get('date') or "").strip()
@@ -5199,10 +5234,11 @@ def api_memo_delete(memo_id):
     rec = memos.pop(memo_id, None)
     if rec is None:
         return jsonify({"error": "not found"}), 404
-    try:
-        os.remove(_memo_path(rec))
-    except OSError:
-        pass          # record goes regardless; a missing file is already gone
+    if rec.get("filename"):
+        try:
+            os.remove(_memo_path(rec))
+        except OSError:
+            pass      # record goes regardless; a missing file is already gone
     _save_json(MEMOS_FILE, memos)
     return jsonify({"ok": True})
 

@@ -140,8 +140,13 @@ def main():
     else:
         ids = sorted(memos, key=lambda m: memos[m].get("recorded_at") or 0)
 
+    # A typed memo has no audio and its words are not a transcript of anything,
+    # so it is never a candidate — not even under --force-edited, which exists
+    # to redo a MACHINE transcript a human corrected, not to erase what a human
+    # wrote in the first place.
     todo = [m for m in ids
-            if _needs_transcript(memos[m], args.force, args.force_edited)]
+            if memos[m].get("filename")
+            and _needs_transcript(memos[m], args.force, args.force_edited)]
     if not todo:
         print(f"Nothing to do — {len(ids)} memo(s) already transcribed.")
         return 0

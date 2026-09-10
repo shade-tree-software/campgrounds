@@ -144,6 +144,30 @@
   .memo-dur { color: var(--gray); font-size: .85rem; font-variant-numeric: tabular-nums; }
   .memo-weak { color: #8a6d1f; font-size: .8rem; }
   .memo audio { grid-column: 1 / -1; width: 100%; height: 34px; }
+  .rec-write {
+    background: none;
+    border: 1px solid var(--gray-light);
+    border-radius: 999px;
+    color: var(--navy);
+    cursor: pointer;
+    font: inherit;
+    font-size: .85rem;
+    padding: .3rem .9rem;
+  }
+  .rec-write:hover { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .rec-writer { margin-top: .75rem; }
+  .rec-writer textarea {
+    width: 100%;
+    font: inherit;
+    padding: .6rem .7rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 8px;
+    resize: vertical;
+  }
+  .rec-writer-actions { display: flex; gap: .5rem; margin-top: .5rem; }
+  /* A typed memo has no player, so its words ARE the card — no "transcribed
+     by" line under them either, since nothing transcribed anything. */
+  .memo.typed .memo-transcript { margin-top: 0; }
   .memo-actions { display: flex; gap: .4rem; }
   .memo-actions button {
     border: 1px solid var(--gray-light); background: var(--offwhite);
@@ -235,9 +259,22 @@
     <div class="rec-timer" id="rec-timer">0:00</div>
     <p class="rec-hint" id="rec-hint">Say what happened. It files itself against the GPS track — right trip, right day, right place.</p>
     <div class="rec-secondary">
+      <button type="button" class="rec-write" onclick="toggleWriter()">Write one instead</button>
       <label>Upload a recording
         <input type="file" id="memo-file-input" accept="audio/*" onchange="uploadPickedFile(this)">
       </label>
+    </div>
+    {#- Typing is not a lesser path: it is the one that works in a quiet
+        campground, mid-conversation, or when the thing worth keeping is a name
+        or a number rather than a sentence. It queues offline exactly as a
+        recording does, because it is made in the same places. -#}
+    <div class="rec-writer" id="rec-writer" hidden>
+      <textarea id="memo-text" rows="3" maxlength="4000"
+                placeholder="Type what happened. It files itself the same way."></textarea>
+      <div class="rec-writer-actions">
+        <button type="button" class="tx-save" onclick="saveTextMemo()">Save memo</button>
+        <button type="button" onclick="toggleWriter(false)">Cancel</button>
+      </div>
     </div>
   </div>
 
@@ -307,9 +344,11 @@ async function refreshQueueBar() {
   try { items = await queueAll(); } catch (e) { /* private mode: no queue, no bar */ }
   const bar = document.getElementById('queue-bar');
   bar.hidden = items.length === 0;
+  // "memo", not "recording" — the queue now holds typed ones too, and a
+  // reader who typed a note should see it counted in the words they used.
   document.getElementById('queue-text').textContent =
-    items.length === 1 ? '1 recording waiting to upload'
-                       : `${items.length} recordings waiting to upload`;
+    items.length === 1 ? '1 memo waiting to upload'
+                       : `${items.length} memos waiting to upload`;
 }
 
 // Send everything queued, oldest first. Called on load, when the browser says
@@ -324,7 +363,8 @@ async function flushQueue() {
     let sent = 0;
     for (const item of items) {
       try {
-        await postMemo(item.blob, item.recordedAt, item.durationS, item.ext);
+        if (item.text) await postTextMemo(item.text, item.recordedAt);
+        else await postMemo(item.blob, item.recordedAt, item.durationS, item.ext);
         await queueDrop(item.id);
         sent++;
       } catch (e) {
@@ -351,6 +391,50 @@ function postMemo(blob, recordedAt, durationS, ext, extra) {
     if (!r.ok) throw new Error('upload failed');
     return r.json();
   });
+}
+
+function postTextMemo(text, recordedAt) {
+  const fd = new FormData();
+  fd.append('text', text);
+  fd.append('recorded_at', String(Math.round(recordedAt / 1000)));
+  return fetch('/api/memos', { method: 'POST', body: fd }).then(r => {
+    if (!r.ok) throw new Error('upload failed');
+    return r.json();
+  });
+}
+
+function toggleWriter(show) {
+  const box = document.getElementById('rec-writer');
+  const open = show === undefined ? box.hidden : show;
+  box.hidden = !open;
+  if (open) document.getElementById('memo-text').focus();
+  else document.getElementById('memo-text').value = '';
+}
+
+// Queued BEFORE it is sent, exactly like a recording. A note typed at a
+// campsite with no bars is the one most worth not losing, and the queue is
+// what makes "write it now, worry later" true rather than aspirational.
+async function saveTextMemo() {
+  const el = document.getElementById('memo-text');
+  const text = (el.value || '').trim();
+  if (!text) return;
+  const recordedAt = Date.now();
+  try {
+    await queueAdd({ text, recordedAt });
+  } catch (e) {
+    // No IndexedDB (private mode): send it or say so, same fallback the
+    // recorder makes.
+    try {
+      await postTextMemo(text, recordedAt);
+      toggleWriter(false); toast('Memo saved', 'success'); loadMemos();
+    } catch (_) {
+      toast('Couldn\u2019t save the memo, and this browser can\u2019t queue it.', 'error');
+    }
+    return;
+  }
+  toggleWriter(false);
+  await refreshQueueBar();
+  flushQueue();
 }
 
 // ── Recording ────────────────────────────────────────────────────────────
@@ -555,7 +639,7 @@ function memoHtml(m) {
   const weak = m.pos_gap_s != null && m.pos_gap_s > 3600
     ? `<span class="memo-weak">nearest fix ${Math.round(m.pos_gap_s / 3600)}h away</span>` : '';
   return `
-  <div class="memo${m.filed ? '' : ' unfiled'}" id="memo-${esc(m.id)}">
+  <div class="memo${m.filed ? '' : ' unfiled'}${m.kind === 'text' ? ' typed' : ''}" id="memo-${esc(m.id)}">
     <div class="memo-meta">
       <span class="memo-time">${esc(localTime(m.recorded_at))}</span>
       ${m.place ? `<span class="memo-place">${esc(m.place)}</span>` : ''}
@@ -566,7 +650,7 @@ function memoHtml(m) {
     <div class="memo-actions">
       <button type="button" onclick="deleteMemo('${esc(m.id)}')">Delete</button>
     </div>
-    <audio controls preload="none" src="${esc(m.audio_url)}"></audio>
+    ${m.audio_url ? `<audio controls preload="none" src="${esc(m.audio_url)}"></audio>` : ''}
     ${transcriptHtml(m)}
     ${m.filed ? '' : fileFormHtml(m)}
   </div>`;
@@ -643,11 +727,15 @@ async function setSpeaker(id, speaker) {
 // says which — process_memos.py skips an edited transcript even under --force.
 function transcriptHtml(m) {
   if (!m.transcript) {
-    return `<div class="memo-transcript pending">Not transcribed yet.</div>`;
+    return m.kind === 'text' ? ''
+      : `<div class="memo-transcript pending">Not transcribed yet.</div>`;
   }
-  const src = m.transcript_edited
-    ? 'Corrected by hand'
-    : (m.transcript_model ? `Transcribed by ${esc(m.transcript_model)}` : '');
+  // A typed memo needs no provenance line: nobody transcribed it and nobody
+  // corrected it, so "Corrected by hand" would be quietly untrue.
+  const src = m.kind === 'text' ? ''
+    : (m.transcript_edited
+        ? 'Corrected by hand'
+        : (m.transcript_model ? `Transcribed by ${esc(m.transcript_model)}` : ''));
   return `
     <div class="memo-transcript${m.transcript_edited ? ' edited' : ''}"
          id="tx-${esc(m.id)}" title="Click to correct"
