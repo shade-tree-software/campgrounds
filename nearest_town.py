@@ -175,7 +175,16 @@ def load(path=None):
     return len(places)
 
 
-def nearest_town(lat, lng):
+# A last resort, used only where the thing being placed has no name of its own.
+# The tiered radii above exist because naming Grand Lake ten miles from Forest
+# Canyon Overlook was worse than silence — the overlook already names itself. A
+# stretch of US-36 does not. Out on the eastern Colorado plains the nearest
+# place with any recorded population is sixteen miles away, and saying so is
+# more use than a blank: the distance is the information.
+FAR_MILES = 25.0
+
+
+def nearest_town(lat, lng, far_miles=0.0):
     """The place a person would name for this coordinate, or None.
 
     Returns {name, state, miles, direction, population, inside} where
@@ -213,6 +222,25 @@ def nearest_town(lat, lng):
             or (crossroads[1] <= _CROSSROADS_MAX_MI
                 and crossroads[1] * _CROSSROADS_RATIO <= best[1])):
         best = crossroads
+    if best is None and far_miles:
+        # Nothing qualified. Take the best-scoring place that has a population
+        # at all within the wider radius — never an unpopulated crossroads,
+        # which at this distance would be a name nobody could place.
+        far = None
+        for dla in (-1, 0, 1):
+            for dlo in (-1, 0, 1):
+                for i in _grid.get((cell[0] + dla, cell[1] + dlo), ()):
+                    p_lat, p_lng, name, admin1, pop = _places[i]
+                    if pop <= 0:
+                        continue
+                    miles = _haversine_mi(lat, lng, p_lat, p_lng)
+                    if miles > far_miles:
+                        continue
+                    score = miles / (1 + math.log10(1 + pop))
+                    row = (score, miles, name, admin1, pop, p_lat, p_lng)
+                    if far is None or score < far[0]:
+                        far = row
+        best = far
     if best is None:
         return None
     _score, miles, name, admin1, pop, p_lat, p_lng = best
@@ -226,9 +254,9 @@ def nearest_town(lat, lng):
     }
 
 
-def describe(lat, lng):
+def describe(lat, lng, far_miles=0.0):
     """`nearest_town` as the phrase a person would write, or ""."""
-    hit = nearest_town(lat, lng)
+    hit = nearest_town(lat, lng, far_miles)
     if not hit:
         return ""
     where = ", ".join(x for x in (hit["name"], hit["state"]) if x)

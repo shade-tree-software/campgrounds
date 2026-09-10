@@ -3342,7 +3342,7 @@ def _road_card_unresolved(track, photos, tz_hint=""):
     out = []
     for photo in (photos[0], photos[-1]) if photos else ():
         pos = _road_photo_position(track, photo.get("date_taken"), tz_hint)
-        if pos and trips_place_context(f"{pos[0]},{pos[1]}") is None:
+        if pos and trips_place_context(f"{pos[0]},{pos[1]}", far=True) is None:
             out.append(f"{round(pos[0], 4)},{round(pos[1], 4)}")
     return out
 
@@ -3378,7 +3378,8 @@ def _road_card_where(track, photos, tz_hint=""):
     ends = []
     for photo in (photos[0], photos[-1]) if photos else ():
         pos = _road_photo_position(track, photo.get("date_taken"), tz_hint)
-        ends.append(trips_place_context(f"{pos[0]},{pos[1]}") if pos else None)
+        ends.append(trips_place_context(f"{pos[0]},{pos[1]}", far=True)
+                    if pos else None)
     if not ends or not any(ends):
         return ""
     first, last = ends[0], ends[-1]
@@ -3389,7 +3390,7 @@ def _road_card_where(track, photos, tz_hint=""):
     only = first or last
     pos = _road_photo_position(track, (photos[0] if first else photos[-1]).get("date_taken"),
                                tz_hint)
-    return trips_where_label(f"{pos[0]},{pos[1]}") if pos else \
+    return trips_where_label(f"{pos[0]},{pos[1]}", far=True) if pos else \
         ", ".join(x for x in (only["name"], only["state"]) if x)
 
 

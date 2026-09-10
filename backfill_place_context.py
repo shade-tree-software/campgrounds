@@ -125,7 +125,15 @@ def main():
         with open(OUT_FILE) as fh:
             existing = json.load(fh)
 
-    todo = {k: v for k, v in coords.items() if k not in existing}
+    # A key already resolved to nothing is redone when it has no far answer
+    # recorded either — those were written before the far fallback existed and
+    # would otherwise stay blank forever, since they are technically present.
+    def _stale(k):
+        e = existing.get(k)
+        return e is None or (not e.get("label") and "far_label" not in e
+                             and "far_checked" not in e)
+
+    todo = {k: v for k, v in coords.items() if _stale(k)}
     print(f"{len(coords):,} distinct coordinates, {len(todo):,} to resolve")
     if todo:
         count = nearest_town.load()
@@ -140,17 +148,28 @@ def main():
     named = near = nothing = 0
     for key, (lat, lng) in todo.items():
         hit = nearest_town.nearest_town(lat, lng)
-        label = nearest_town.describe(lat, lng)
         if not hit:
             nothing += 1
-            out[key] = {"label": ""}
+            # Nothing qualified under the strict tiers. A far answer is stored
+            # ALONGSIDE rather than instead, because only some callers should
+            # see it: a road card has no name of its own and is helped by "16
+            # miles northeast of Deer Trail", while an overlook names itself
+            # and is better left silent. The coordinate cannot know which it
+            # is, so it carries both and the caller chooses.
+            far = nearest_town.nearest_town(lat, lng, nearest_town.FAR_MILES)
+            entry = {"label": "", "far_checked": True}
+            if far:
+                entry.update(far_label=nearest_town.describe(
+                                 lat, lng, nearest_town.FAR_MILES),
+                             far_name=far["name"], far_state=far["state"])
+            out[key] = entry
             continue
-        (named if hit["inside"] else near)
         if hit["inside"]:
             named += 1
         else:
             near += 1
-        out[key] = {"label": label, "name": hit["name"], "state": hit["state"],
+        out[key] = {"label": nearest_town.describe(lat, lng),
+                    "name": hit["name"], "state": hit["state"],
                     "miles": hit["miles"], "direction": hit["direction"],
                     "inside": hit["inside"]}
     # Drop keys for coordinates nothing points at any more (a moved pin). Never

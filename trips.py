@@ -1243,15 +1243,25 @@ def _place_context_key(location):
     return f"{round(lat, 4)},{round(lng, 4)}"
 
 
-def place_context(location):
-    """The resolved {name, state, miles, direction, inside} for a coordinate,
-    or None. `where_label` is the phrase; this is the parts, for callers that
-    need to compare two places rather than print one."""
+def place_context(location, far=False):
+    """The resolved parts for a coordinate, or None.
+
+    `where_label` is the phrase; this is the pieces, for callers that need to
+    compare two places rather than print one. `far` opts into the wider
+    last-resort answer — see `where_label`.
+    """
     ctx = _load_place_context().get(_place_context_key(location))
-    return ctx if ctx and ctx.get("name") else None
+    if not ctx:
+        return None
+    if ctx.get("name"):
+        return ctx
+    if far and ctx.get("far_name"):
+        return {"name": ctx["far_name"], "state": ctx.get("far_state", ""),
+                "inside": False}
+    return None
 
 
-def where_label(location, locale="", state=""):
+def where_label(location, locale="", state="", far=False):
     """How to name where something is, for display and for the rollups.
 
     Prefers the measured answer ("just outside Napier, WV", "5 miles west of
@@ -1266,6 +1276,13 @@ def where_label(location, locale="", state=""):
         label = ctx.get("label") or ""
         if label:
             return label
+        # `far` is for a thing with no name of its own — a stretch of road,
+        # where the nearest town sixteen miles off is the only reference there
+        # is and the distance itself says how empty it was. A stop keeps the
+        # stricter rule: Forest Canyon Overlook names itself, so "11 miles west
+        # of Estes Park" would be noise rather than help.
+        if far and ctx.get("far_label"):
+            return ctx["far_label"]
         # Resolved to nothing on purpose: out in the country with no town worth
         # naming. The state is still true and still worth showing.
         return (state or "").strip()

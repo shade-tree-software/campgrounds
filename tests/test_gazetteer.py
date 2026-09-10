@@ -107,5 +107,51 @@ class TestTheRule(unittest.TestCase):
         self.assertEqual(N.describe(40.28, -75.0), "")
 
 
+
+
+class TestTheLastResortRadius(unittest.TestCase):
+    """A road card has no name of its own; a stop does.
+
+    The tiered radii exist because naming Grand Lake ten miles from Forest
+    Canyon Overlook was worse than silence — the overlook already names itself.
+    But a stretch of US-36 does not, and out on the eastern Colorado plains the
+    nearest place with any recorded population is sixteen miles away. Saying so
+    is more use than a blank: the distance is the information.
+
+    So the coordinate carries both answers and the CALLER chooses, since the
+    coordinate cannot know which kind of thing is being placed.
+    """
+
+    def tearDown(self):
+        N._places = N._grid = None
+
+    def test_nothing_qualifies_under_the_strict_rule(self):
+        _fresh([(39.90, -104.05, "Deer Trail", "CO", 612)])   # ~16 mi away
+        self.assertEqual(N.describe(39.74, -103.787), "")
+
+    def test_the_wider_radius_names_it_with_the_distance(self):
+        _fresh([(39.90, -104.05, "Deer Trail", "CO", 612)])
+        got = N.describe(39.74, -103.787, N.FAR_MILES)
+        self.assertIn("Deer Trail", got)
+        self.assertRegex(got, r"^\d+ miles \w+ of ")
+
+    def test_it_never_reaches_for_an_unpopulated_crossroads(self):
+        # At sixteen miles a name nobody could place is worse than a blank.
+        _fresh([(39.90, -104.05, "Shamrock", "CO", 0)])
+        self.assertEqual(N.describe(39.74, -103.787, N.FAR_MILES), "")
+
+    def test_beyond_the_wider_radius_is_still_silence(self):
+        _fresh([(41.00, -104.05, "Faraway", "CO", 5000)])     # ~87 mi
+        self.assertEqual(N.describe(39.74, -103.787, N.FAR_MILES), "")
+
+    def test_a_place_that_already_qualifies_is_unaffected(self):
+        # Two miles out, comfortably inside a pop-150 place's five-mile tier,
+        # so the wider radius has nothing left to add.
+        _fresh([(39.8279, -100.2450, "Norcatur", "KS", 150)])
+        strict = N.describe(39.8279, -100.2802)
+        self.assertIn("Norcatur", strict)
+        self.assertEqual(strict, N.describe(39.8279, -100.2802, N.FAR_MILES))
+
+
 if __name__ == "__main__":
     unittest.main()
