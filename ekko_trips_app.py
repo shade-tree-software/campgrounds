@@ -10,6 +10,7 @@ import secrets
 import shutil
 import sqlite3
 import sys
+import tempfile
 import threading
 import time
 from datetime import date, datetime, time as dt_time, timedelta, timezone
@@ -1043,20 +1044,93 @@ def _collect_photo_pool():
     return pool
 
 
+# One lock per JSON store, serializing the read-modify-write cycles that every
+# one of these files is edited by. It does not make the write atomic — that is
+# what the temp-file dance in _save_json is for — it stops two requests in the
+# same worker interleaving a read and a write and losing one of the updates.
+_JSON_LOCKS = {}
+_JSON_LOCKS_GUARD = threading.Lock()
+
+
+def json_store_lock(path):
+    with _JSON_LOCKS_GUARD:
+        return _JSON_LOCKS.setdefault(os.path.abspath(path), threading.RLock())
+
+
 def _load_json(path):
-    if os.path.exists(path):
-        with open(path) as f:
-            return json.load(f)
-    return {}
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        raw = f.read()
+    try:
+        return json.loads(raw)
+    except ValueError as e:
+        # A torn write: a complete document followed by the tail of a longer
+        # one. Every page that reads this store 500s until it is repaired, so
+        # salvage the leading object and keep going rather than taking the
+        # whole site down over a display-order file.
+        #
+        # The damaged bytes are never discarded — they are set aside next to
+        # the file, because the tail holds whichever update lost the race and
+        # is the only remaining copy of it.
+        try:
+            data, end = json.JSONDecoder().raw_decode(raw.lstrip())
+        except ValueError:
+            data, end = None, 0
+        if not isinstance(data, dict):
+            app.logger.error("%s is corrupt and unsalvageable: %s", path, e)
+            raise
+        keep = f"{path}.corrupt-{int(time.time())}"
+        try:
+            if not os.path.exists(keep):
+                shutil.copy2(path, keep)
+        except OSError:
+            pass
+        app.logger.error(
+            "%s was torn by concurrent writes (%s); salvaged %d entries from "
+            "the first %d bytes, damaged copy kept at %s",
+            path, e, len(data), end, keep)
+        return data
 
 
 def _save_json(path, data):
-    # ensure_ascii=False keeps em-dashes/accents/unicode in notes literal (— not
-    # —) so a UI edit to one campground doesn't rewrite every other entry's
-    # note into escaped form — that churn made git diffs/merges noisy. Explicit
-    # utf-8 so the literal bytes are written regardless of host locale.
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+    """Write a JSON store whole, or not at all.
+
+    This used to open(path, "w") and dump straight into it, which truncates
+    first and writes second — so two requests writing the same store at once
+    interleaved into a file that was a complete document followed by the tail
+    of a longer one, and every page reading it 500'd. Dragging a photo between
+    cards fires three such writes (move-photo, then a reorder for each grid),
+    which is how it was finally provoked.
+
+    Writing to a temp file in the SAME directory and renaming over the target
+    makes each write atomic: a reader sees the old file or the new one, never
+    half of each. The lock serializes writers within this worker; the rename is
+    what protects against the ones in other workers.
+
+    ensure_ascii=False keeps em-dashes/accents/unicode in notes literal (— not
+    \u2014) so a UI edit to one campground doesn't rewrite every other entry's
+    note into escaped form — that churn made git diffs/merges noisy. Explicit
+    utf-8 so the literal bytes are written regardless of host locale.
+    """
+    with json_store_lock(path):
+        directory = os.path.dirname(os.path.abspath(path)) or "."
+        os.makedirs(directory, exist_ok=True)
+        fd, tmp = tempfile.mkstemp(dir=directory,
+                                   prefix=os.path.basename(path) + ".",
+                                   suffix=".tmp")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, path)
+        except BaseException:
+            try:
+                os.unlink(tmp)
+            except OSError:
+                pass
+            raise
 
 
 # Keys the app reads out of home.json (gitignored per-machine config).
@@ -3724,9 +3798,10 @@ def reorder_stay_photos(trip_id, stay_idx):
     data = request.get_json()
     filenames = data.get("filenames", [])
     order_key = f"{trip_id}/{stay_idx}"
-    photo_order = _load_json(PHOTO_ORDER_FILE)
-    photo_order[order_key] = filenames
-    _save_json(PHOTO_ORDER_FILE, photo_order)
+    with json_store_lock(PHOTO_ORDER_FILE):
+        photo_order = _load_json(PHOTO_ORDER_FILE)
+        photo_order[order_key] = filenames
+        _save_json(PHOTO_ORDER_FILE, photo_order)
     return jsonify({"ok": True})
 
 
@@ -3959,9 +4034,10 @@ def reorder_event_photos(trip_id, event_idx):
     data = request.get_json()
     filenames = data.get("filenames", [])
     order_key = f"{trip_id}/events/{event_idx}"
-    photo_order = _load_json(PHOTO_ORDER_FILE)
-    photo_order[order_key] = filenames
-    _save_json(PHOTO_ORDER_FILE, photo_order)
+    with json_store_lock(PHOTO_ORDER_FILE):
+        photo_order = _load_json(PHOTO_ORDER_FILE)
+        photo_order[order_key] = filenames
+        _save_json(PHOTO_ORDER_FILE, photo_order)
     return jsonify({"ok": True})
 
 
@@ -4681,33 +4757,36 @@ def move_photo(trip_id):
     _remove_thumb(src_path)  # dest thumb regenerates lazily on next view
     _invalidate_photo_pool()
 
-    # Update captions
-    captions = _load_json(CAPTIONS_FILE)
+    # Update captions. The lock spans the read and the write: two moves in
+    # flight at once would otherwise both read the old dict and the second
+    # would write back a copy with the first one's change missing.
     old_cap_key = caption_key(src_type, src_idx, filename)
     new_cap_key = caption_key(dst_type, dst_idx, dst_filename)
-    cap = captions.pop(old_cap_key, None)
-    if cap:
-        captions[new_cap_key] = cap
-    _save_json(CAPTIONS_FILE, captions)
+    with json_store_lock(CAPTIONS_FILE):
+        captions = _load_json(CAPTIONS_FILE)
+        cap = captions.pop(old_cap_key, None)
+        if cap:
+            captions[new_cap_key] = cap
+        _save_json(CAPTIONS_FILE, captions)
 
     # Update uploader + favorite + people records (same key shape as captions).
     _rename_uploader_key(old_cap_key, new_cap_key)
     _rename_favorite_key(old_cap_key, new_cap_key)
     _rename_people_key(old_cap_key, new_cap_key)
 
-    # Update photo order — remove from source
-    photo_order = _load_json(PHOTO_ORDER_FILE)
-    src_ok = order_key(src_type, src_idx)
-    if src_ok in photo_order:
-        photo_order[src_ok] = [f for f in photo_order[src_ok] if f != filename]
-
-    # Add to destination order
-    dst_ok = order_key(dst_type, dst_idx)
-    if dst_ok not in photo_order:
-        photo_order[dst_ok] = []
-    photo_order[dst_ok].append(dst_filename)
-
-    _save_json(PHOTO_ORDER_FILE, photo_order)
+    # Photo order, read and written under one lock. The client follows this
+    # request with a reorder POST for EACH grid, so three writers touch this
+    # store within a few milliseconds of one another — which is what tore it.
+    with json_store_lock(PHOTO_ORDER_FILE):
+        photo_order = _load_json(PHOTO_ORDER_FILE)
+        src_ok = order_key(src_type, src_idx)
+        if src_ok in photo_order:
+            photo_order[src_ok] = [f for f in photo_order[src_ok] if f != filename]
+        dst_ok = order_key(dst_type, dst_idx)
+        if dst_ok not in photo_order:
+            photo_order[dst_ok] = []
+        photo_order[dst_ok].append(dst_filename)
+        _save_json(PHOTO_ORDER_FILE, photo_order)
 
     return jsonify({"ok": True, "filename": dst_filename})
 

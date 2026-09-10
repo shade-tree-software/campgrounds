@@ -427,6 +427,14 @@ function parseGridId(grid) {
   return { type: 'stay', idx: parseInt(id.replace('photos-', '')) };
 }
 
+// Order saves are chained rather than fired together. Each one is a
+// read-modify-write of photo_order.json on the server, and a cross-card drop
+// issues a move plus one save per grid — three writers within a few
+// milliseconds. The server now locks and writes atomically, but two requests
+// still race to decide what the file SAYS, and the loser's update is dropped.
+// Serialising here means the second save reads the first one's result.
+let _orderSaveChain = Promise.resolve();
+
 function saveGridOrder(grid) {
   const info = parseGridId(grid);
   // For multi-copy stays, each copy has its own grid (all share data-stay-idx).
@@ -448,11 +456,14 @@ function saveGridOrder(grid) {
     : info.type === 'road'
     ? `/trips/${TRIP_ID}/road/${info.idx}/reorder`
     : `/trips/${TRIP_ID}/stays/${info.idx}/reorder`;
-  fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ filenames })
-  });
+  _orderSaveChain = _orderSaveChain.then(() =>
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filenames })
+    }).catch(() => {})            // one failed save must not stall the chain
+  );
+  return _orderSaveChain;
 }
 
 function initPhotoDrag(grid) {
