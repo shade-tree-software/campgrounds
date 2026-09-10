@@ -3690,21 +3690,50 @@ def upload_road_photo(trip_id, day):
     })
 
 
+@app.route('/trips/<int:trip_id>/road/<day>/reorder', methods=['POST'])
+def reorder_road_photos(trip_id, day):
+    """Drag order within a road card.
+
+    Photos default to EXIF order here rather than filename order, which is
+    usually already right — but a burst fired out of a window can want
+    rearranging like any other grid, and without this the drag handler that
+    every `.photo-grid` shares would post to a route that does not exist.
+    """
+    denied = _require_admin()
+    if denied:
+        return denied
+    if not _ISO_DATE_RE.match(day or ""):
+        return jsonify({"error": "Bad date"}), 400
+    data = request.get_json() or {}
+    filenames = data.get("filenames", [])
+    photo_order = _load_json(PHOTO_ORDER_FILE)
+    photo_order[f"{trip_id}/{ROAD_DIRNAME}/{day}"] = filenames
+    _save_json(PHOTO_ORDER_FILE, photo_order)
+    _invalidate_photo_pool()
+    return jsonify({"ok": True})
+
+
 @app.route('/trips/<int:trip_id>/road/<day>/caption', methods=['POST'])
 def save_road_caption(trip_id, day):
-    data = request.get_json(silent=True) or {}
+    # Logged-in non-admin uploaders may only caption photos they uploaded.
+    denied = _require_uploader_or_admin()
+    if denied:
+        return denied
+    if not _ISO_DATE_RE.match(day or ""):
+        return jsonify({"error": "Bad date"}), 400
+    data = request.get_json()
     filename = data.get("filename", "")
-    key = f"{trip_id}/{ROAD_DIRNAME}/{day}/{filename}"
-    if not _can_edit_photo(key):
-        return jsonify({"error": "Forbidden"}), 403
-    captions = _load_json(CAPTIONS_FILE, {})
-    caption = (data.get("caption") or "").strip()
-    if caption:
-        captions[key] = caption
-    else:
-        captions.pop(key, None)
+    caption = data.get("caption", "")
+
+    photo_key = f"{trip_id}/{ROAD_DIRNAME}/{day}/{filename}"
+    if not _can_edit_photo(photo_key):
+        return jsonify({"error": "You can only edit captions on photos you uploaded"}), 403
+    captions = _load_json(CAPTIONS_FILE)
+    captions[photo_key] = caption
     _save_json(CAPTIONS_FILE, captions)
+    # The slideshow pool carries captions, so an edit must not wait out the TTL.
     _invalidate_photo_pool()
+
     return jsonify({"ok": True})
 
 
@@ -4459,7 +4488,7 @@ def move_photo(trip_id):
         return denied
     data = request.get_json() or {}
     filename = data.get("filename", "")
-    src_type = data.get("src_type", "")   # "stay" or "event"
+    src_type = data.get("src_type", "")   # "stay", "event" or "road"
     src_idx = data.get("src_idx")
     dst_type = data.get("dst_type", "")
     dst_idx = data.get("dst_idx")
@@ -4468,21 +4497,30 @@ def move_photo(trip_id):
                 src_idx is not None, dst_idx is not None]):
         return jsonify({"error": "Missing fields"}), 400
 
+    # A road card's index is a DATE, and it is interpolated straight into a
+    # filesystem path — so unlike a stay or event index, which Flask's <int:>
+    # converter has already proved numeric, it has to be validated here.
+    for ptype, idx in ((src_type, src_idx), (dst_type, dst_idx)):
+        if ptype == "road" and not _ISO_DATE_RE.match(str(idx)):
+            return jsonify({"error": "Bad road date"}), 400
+
     # Build source and destination paths
     def photo_dir(ptype, idx):
         if ptype == "event":
             return os.path.join(UPLOAD_DIR, str(trip_id), "events", str(idx))
+        if ptype == "road":
+            return _road_photo_dir(trip_id, str(idx))
         return os.path.join(UPLOAD_DIR, str(trip_id), str(idx))
 
     def order_key(ptype, idx):
         if ptype == "event":
             return f"{trip_id}/events/{idx}"
+        if ptype == "road":
+            return f"{trip_id}/{ROAD_DIRNAME}/{idx}"
         return f"{trip_id}/{idx}"
 
     def caption_key(ptype, idx, fname):
-        if ptype == "event":
-            return f"{trip_id}/events/{idx}/{fname}"
-        return f"{trip_id}/{idx}/{fname}"
+        return f"{order_key(ptype, idx)}/{fname}"
 
     src_dir = photo_dir(src_type, src_idx)
     dst_dir = photo_dir(dst_type, dst_idx)

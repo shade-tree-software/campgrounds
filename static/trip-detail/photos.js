@@ -55,6 +55,12 @@ function _uploadTargetGrid(url) {
   }
   m = url.match(/\/events\/(\d+)\/upload/);
   if (m) return document.getElementById('event-photos-' + m[1]);
+  // Road cards are addressed by date, and on the FIRST upload of a day there
+  // is no grid to splice into — the card only exists once the directory has
+  // photos. Returning null is the right answer there: finish() falls back to a
+  // reload, which is what draws the new card.
+  m = url.match(/\/road\/(\d{4}-\d{2}-\d{2})\/upload/);
+  if (m) return document.getElementById('road-photos-' + m[1]);
   return null;
 }
 
@@ -364,6 +370,9 @@ function parseGridId(grid) {
   }
   const id = grid.id;
   if (id.startsWith('event-photos-')) return { type: 'event', idx: parseInt(id.replace('event-photos-', '')) };
+  // A road card's index is a DATE, not a number — checked before the stay
+  // fallback below, whose 'photos-' replace would otherwise mangle it.
+  if (id.startsWith('road-photos-')) return { type: 'road', idx: id.replace('road-photos-', '') };
   // Fallback for single-copy stay grids whose ID is "photos-{idx}".
   return { type: 'stay', idx: parseInt(id.replace('photos-', '')) };
 }
@@ -386,6 +395,8 @@ function saveGridOrder(grid) {
   }
   const url = info.type === 'event'
     ? `/trips/${TRIP_ID}/events/${info.idx}/reorder`
+    : info.type === 'road'
+    ? `/trips/${TRIP_ID}/road/${info.idx}/reorder`
     : `/trips/${TRIP_ID}/stays/${info.idx}/reorder`;
   fetch(url, {
     method: 'POST',

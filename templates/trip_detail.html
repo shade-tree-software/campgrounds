@@ -875,6 +875,28 @@
     display: flex;
     align-items: center;
   }
+  /* Sits with the drive chip, but reads as an action rather than a fact: no
+     background until hovered, so a divider with nothing to add stays quiet. */
+  .day-divider .day-add-road {
+    background: none;
+    border: 1px solid var(--border, #d4d4d8);
+    border-radius: 999px;
+    color: var(--gray, #6b7280);
+    cursor: pointer;
+    font: inherit;
+    font-size: .7rem;
+    letter-spacing: .02em;
+    margin-left: .5rem;
+    padding: .1rem .55rem;
+    text-transform: none;
+    white-space: nowrap;
+  }
+  .day-divider .day-add-road:hover {
+    background: var(--navy, #002868);
+    border-color: var(--navy, #002868);
+    color: #fff;
+  }
+
   .day-divider span {
     background: var(--offwhite);
     color: var(--gray);
@@ -2214,6 +2236,17 @@
         <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
         <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
       {%- endif %}
+      {%- if (is_admin or is_uploader) and item.sort_date not in road_photos %}
+      {#- A road card exists exactly when its directory has photos, which
+          leaves no way to upload the FIRST one — the card carrying the upload
+          button is the thing that doesn't exist yet. The day divider is the
+          only surface that knows a date is real whether or not anything has
+          been filed under it, so the way in lives here, and disappears again
+          once the card it creates can speak for itself. -#}
+      <button type="button" class="day-add-road"
+              title="Add photos taken while driving on this day"
+              onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
+      {%- endif %}
     </div>
   {% endif %}
 
@@ -2555,7 +2588,7 @@
         <h3>On the road</h3>
         <div class="event-meta">{{ item.date }}{% if item.photo_count %} &middot; {{ item.photo_count }} photo{% if item.photo_count == 1 %}{% else %}s{% endif %}{% endif %}</div>
       </div>
-      {% if is_admin or can_upload %}
+      {% if is_admin or is_uploader %}
       <div class="card-actions">
         <button class="btn-upload" onclick="uploadPhotosForItem('road', '{{ item.idx }}')">Upload Photos</button>
       </div>

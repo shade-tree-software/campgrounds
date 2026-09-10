@@ -167,5 +167,54 @@ class TestTimelinePlacement(RoadCardBase):
                          ["2026-08-21", DAY, "2026-08-23"])
 
 
+class TestMovingPhotosInAndOut(RoadCardBase):
+    """A photo filed onto an invented waypoint has to be able to come back.
+
+    Before road cards existed the only way to keep a shot taken through the
+    windscreen was to hang it off some nearby waypoint, so the move path is
+    not a nicety — it is how the existing library gets corrected.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.client = A.app.test_client()
+        with self.client.session_transaction() as sess:
+            sess["_user_id"] = self._an_admin()
+            sess["_fresh"] = True
+
+    @staticmethod
+    def _an_admin():
+        import json
+        with open(os.path.join(os.path.dirname(os.path.dirname(
+                os.path.abspath(__file__))), "users.json")) as fh:
+            users = json.load(fh)
+        return next(u for u, v in users.items() if v.get("is_admin"))
+
+    def _move(self, **kw):
+        return self.client.post("/trips/95/move-photo", json=kw)
+
+    def test_a_road_date_that_is_not_a_date_is_refused(self):
+        # dst_idx goes straight into a filesystem path, and unlike a stay or
+        # event index Flask's <int:> converter has not already vetted it.
+        for bad in ("../../etc", "2026-8-2", "", "road"):
+            r = self._move(filename="a.jpg", src_type="event", src_idx=0,
+                           dst_type="road", dst_idx=bad)
+            self.assertEqual(r.status_code, 400, f"{bad!r} was accepted")
+
+    def test_a_bad_date_is_refused_as_the_SOURCE_too(self):
+        r = self._move(filename="a.jpg", src_type="road", src_idx="../../x",
+                       dst_type="event", dst_idx=0)
+        self.assertEqual(r.status_code, 400)
+
+
+class TestKeyShapes(unittest.TestCase):
+    def test_a_road_key_names_the_day(self):
+        # The five metadata stores are keyed on this shape, so it is what makes
+        # a road photo's caption follow it. Positional keys ("95/3/x.jpg") move
+        # when a trip is edited; this one cannot.
+        self.assertEqual(f"95/{A.ROAD_DIRNAME}/2026-08-22/a.jpg",
+                         "95/road/2026-08-22/a.jpg")
+
+
 if __name__ == "__main__":
     unittest.main()
