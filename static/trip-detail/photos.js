@@ -144,12 +144,16 @@ function deleteAllEventPhotos(tripId, eventIdx) {
     });
 }
 
-// Upload photos for a stay or event directly from its card's header button.
-// Triggers a hidden file input, then hands the files to _runUploads.
+// Upload photos for a stay, event or road card directly from its card's header
+// button. Triggers a hidden file input, then hands the files to _runUploads.
+// For a road card `idx` is the DATE (YYYY-MM-DD), not a number — its photos are
+// keyed by day precisely so they never renumber.
 function uploadPhotosForItem(kind, idx) {
   if (!IS_ADMIN && !IS_UPLOADER) return;
   const url = kind === 'stay'
     ? `/trips/${TRIP_ID}/stays/${idx}/upload`
+    : kind === 'road'
+    ? `/trips/${TRIP_ID}/road/${idx}/upload`
     : `/trips/${TRIP_ID}/events/${idx}/upload`;
   const input = document.createElement('input');
   input.type = 'file';

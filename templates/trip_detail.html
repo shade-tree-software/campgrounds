@@ -1409,6 +1409,14 @@
      section, beneath the photo grid. Photos-section is a flex column
      so the button can be align-self: flex-end without affecting the
      grid's full-width layout. */
+  /* The road card is a photographic thing, not a place — grey rather than the
+     navy of a campspot or the gold of an event, so the timeline still reads as
+     "these are the places we stopped". Same 2rem circle as every other card so
+     the vertical axis line runs through its centre. */
+  .road-card { background: transparent; }
+  .road-card .event-icon.road-icon { background: var(--gray, #6b7280); }
+  .road-card h3 { font-weight: 600; }
+
   .photos-section { display: flex; flex-direction: column; }
   .btn-delete-all-photos {
     background: none;
@@ -2530,6 +2538,41 @@
       {% endif %}
     </div>
     {% endif %}
+  </div>
+
+  {% elif item.type == "road" %}
+  {# Photos taken from the moving RV. Derived from the directory, not from a
+     trips.json record, so there is nothing to edit and no Edit button — the
+     card exists exactly as long as it has photos in it. Keyed by DATE, which
+     is why it can never be caught by the index-remapping that campspot and
+     event photos need. #}
+  <div class="event-card road-card" id="road-{{ item.idx }}">
+    <div class="event-header">
+      <div class="event-icon road-icon" title="Photographed from the road">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M8 2 h4 l1 5 h-6 z M7 8 h6 l1 10 h-3 l-.4-4 h-1.2 l-.4 4 h-3 z"/></svg>
+      </div>
+      <div class="event-info">
+        <h3>On the road</h3>
+        <div class="event-meta">{{ item.date }}{% if item.photo_count %} &middot; {{ item.photo_count }} photo{% if item.photo_count == 1 %}{% else %}s{% endif %}{% endif %}</div>
+      </div>
+      {% if is_admin or can_upload %}
+      <div class="card-actions">
+        <button class="btn-upload" onclick="uploadPhotosForItem('road', '{{ item.idx }}')">Upload Photos</button>
+      </div>
+      {% endif %}
+    </div>
+    <div class="event-body">
+      <div class="photos-section">
+        <div class="photo-grid{% if road_photos[item.idx] | length > 6 %} collapsible{% endif %}" id="road-photos-{{ item.idx }}">
+          {% for photo in road_photos[item.idx] %}
+          {% with photo=photo, trip_id=trip.id, p_idx=item.idx, p_type='road', p_alt='On the road' %}{% include "_photo_item.html" %}{% endwith %}
+          {% endfor %}
+        </div>
+        {% if road_photos[item.idx] | length > 6 %}
+        <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ road_photos[item.idx] | length }} photos</button>
+        {% endif %}
+      </div>
+    </div>
   </div>
   {% endif %}
 

@@ -999,6 +999,14 @@ def _collect_photo_pool():
         cards += [(f"{tid}/events/{i}", f"event-{i}",
                    os.path.join(UPLOAD_DIR, str(tid), "events", str(i)))
                   for i, _event in enumerate(trip.get("events", []))]
+        # Road cards are enumerated from the DIRECTORY rather than from a list
+        # on the trip, because there is no record of them on the trip — the day
+        # having photos is the whole of their existence. Without this they
+        # would render on the trip page and be invisible to the slideshow,
+        # the poster, the photo gallery and the people scan.
+        cards += [(f"{tid}/{ROAD_DIRNAME}/{day}", f"road-{day}",
+                   _road_photo_dir(tid, day))
+                  for day in _road_days(tid)]
         for key_base, card, photo_dir in cards:
             if not os.path.isdir(photo_dir):
                 continue
@@ -3028,6 +3036,111 @@ def _stats_photo_count():
     return sum(1 for p in _collect_photo_pool() if not p["home_only"])
 
 
+# ── On-the-road photos ────────────────────────────────────────────────────
+#
+# Photographs taken from a moving vehicle had nowhere to live. Every photo in
+# the app hangs off a campspot or an event, and both of those are places you
+# STOPPED — so a day spent crossing Nebraska, with the passenger shooting out
+# the window the whole way, offered no upload target at all short of inventing
+# a fake waypoint to hold them.
+#
+# A road card is one day's worth of those, and it is DERIVED, not recorded:
+# there is no entry in trips.json, and the card exists exactly when the
+# directory has files in it. That keeps a purely photographic thing out of the
+# trip record, and it means adding or removing one is a file operation.
+#
+# STORAGE IS KEYED BY DATE, AND THAT IS THE WHOLE POINT.
+# `photo_uploads/{trip}/road/{YYYY-MM-DD}/`, with the five metadata stores
+# keyed the same way. Campspot and event photos are keyed by POSITION, so
+# inserting an item mid-trip renumbers every directory above it — the app's
+# most fragile machinery, which broke silently and library-wide the day photos
+# moved out of static/ (see `_apply_photo_index_mapping`). A date never
+# renumbers. Road cards can never need remapping, so they are deliberately
+# absent from `trips._PHOTO_METADATA_FILES`' remapping path.
+_ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+ROAD_DIRNAME = "road"
+
+
+def _road_photo_dir(trip_id, day):
+    return os.path.join(UPLOAD_DIR, str(trip_id), ROAD_DIRNAME, day)
+
+
+def _road_days(trip_id):
+    """Dates this trip has road photos for, as sorted ISO strings."""
+    root = os.path.join(UPLOAD_DIR, str(trip_id), ROAD_DIRNAME)
+    if not os.path.isdir(root):
+        return []
+    days = []
+    for name in os.listdir(root):
+        if not _ISO_DATE_RE.match(name):
+            continue
+        path = os.path.join(root, name)
+        if os.path.isdir(path) and any(_allowed_file(f) for f in os.listdir(path)):
+            days.append(name)
+    return sorted(days)
+
+
+def _collect_road_photos(trip_id, day, captions, photo_order,
+                         photo_uploaders, favorites):
+    """One road card's photos, in the order they were actually taken.
+
+    EXIF time is the natural order for these — they are a sequence shot out of
+    a window, not a grid someone arranged — so it leads, with an explicit drag
+    order overriding it as everywhere else and filename as the last resort for
+    a photo whose EXIF was stripped.
+    """
+    photo_dir = _road_photo_dir(trip_id, day)
+    if not os.path.isdir(photo_dir):
+        return []
+    files = [f for f in os.listdir(photo_dir) if _allowed_file(f)]
+    taken = {f: _photo_date_taken(os.path.join(photo_dir, f)) for f in files}
+    ordered = photo_order.get(f"{trip_id}/{ROAD_DIRNAME}/{day}")
+    if ordered:
+        seen = set(ordered)
+        fnames = [f for f in ordered if f in set(files)]
+        fnames += sorted((f for f in files if f not in seen),
+                         key=lambda f: (taken[f] or "9999", f))
+    else:
+        fnames = sorted(files, key=lambda f: (taken[f] or "9999", f))
+    out = []
+    for fname in fnames:
+        key = f"{trip_id}/{ROAD_DIRNAME}/{day}/{fname}"
+        out.append({
+            "filename": fname,
+            "url": f"/photo/{key}",
+            "thumb_url": f"/thumb/{key}",
+            "view_url": f"/view/{key}",
+            "caption": captions.get(key, ""),
+            "date_taken": taken[fname],
+            "uploader": photo_uploaders.get(key, ""),
+            "key": key,
+            "favorite": bool(favorites.get(key)),
+        })
+    return out
+
+
+def _add_road_cards(trip, road_photos, ref_tz=""):
+    """Splice a road card into the timeline for each day that has one.
+
+    Positioned at its FIRST photo's timestamp, so the card lands among the
+    day's stops where the driving actually began rather than being hoisted to
+    the top of the day — the same reasoning that keeps folded waypoint runs in
+    place. A card whose photos carry no EXIF time at all sorts to noon, which
+    is where an untimed event goes too.
+    """
+    for day, photos in road_photos.items():
+        first = next((p["date_taken"] for p in photos if p["date_taken"]), "")
+        clock = first[11:16] if len(first) >= 16 else "12:00"
+        trip["timeline"].append({
+            "type": "road", "idx": day, "sort_date": day, "date": day,
+            "time": clock, "photo_count": len(photos),
+            "_order": 0, "_time": clock,
+            "_rank": event_time_rank(day, clock, "", ref_tz),
+        })
+    trip["timeline"].sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
+
+
+
 def _collapse_waypoint_runs(timeline, event_photos, is_admin):
     """Mark runs of consecutive throwaway waypoints so the timeline can fold
     them into one "N brief stops" chip.
@@ -3169,6 +3282,15 @@ def trip_detail(trip_id):
                 })
         event_photos[i] = photos
 
+    # Photos taken from the moving RV — one card per day, derived from the
+    # directory rather than recorded in trips.json. See `_add_road_cards`.
+    road_photos = {}
+    for day in _road_days(trip_id):
+        photos = _collect_road_photos(trip_id, day, captions, photo_order,
+                                      photo_uploaders, favorites)
+        if photos:
+            road_photos[day] = photos
+
     # Bucket stay photos across per-night copies for split multi-night stays.
     # Each copy is represented by (arrival + copy_num - 1) at 20:00; each photo
     # is assigned to the copy whose representative time is closest to its EXIF
@@ -3278,6 +3400,9 @@ def trip_detail(trip_id):
 
     # Fold the throwaway waypoints into chips before rendering (see the
     # helper's docstring for what earns a card).
+    if road_photos:
+        _add_road_cards(trip, road_photos,
+                        reference_timezone(trip.get("events")))
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     return render_template(
@@ -3288,6 +3413,7 @@ def trip_detail(trip_id):
         driving_by_day=driving_by_day,
         stay_photos=stay_photos,
         event_photos=event_photos,
+        road_photos=road_photos,
         family_locations=family,
         home=home,
         is_admin=is_admin,
@@ -3513,6 +3639,73 @@ def upload_event_photo(trip_id, event_idx):
         "url": f"{url_prefix}/{filename}",
         "html": _render_photo_tile(subpath, filename, 'event', event_idx, trip_id),
     })
+
+
+@app.route('/trips/<int:trip_id>/road/<day>/upload', methods=['POST'])
+def upload_road_photo(trip_id, day):
+    """Upload a photo taken while driving, filed under the day it belongs to.
+
+    The date IS the key — there is no index to renumber and no trips.json
+    record to keep in step, so unlike every other upload target this one can
+    be created by the act of uploading to it.
+    """
+    denied = _require_uploader_or_admin()
+    if denied:
+        return denied
+    if not _ISO_DATE_RE.match(day or ""):
+        return jsonify({"error": "Bad date"}), 400
+    if 'photo' not in request.files:
+        return jsonify({"error": "No file provided"}), 400
+    file = request.files['photo']
+    if file.filename == '':
+        return jsonify({"error": "No file selected"}), 400
+
+    photo_dir = _road_photo_dir(trip_id, day)
+    subpath = f"{trip_id}/{ROAD_DIRNAME}/{day}"
+    url_prefix = f"/photo/{subpath}"
+
+    if file.filename.lower().endswith('.zip'):
+        saved = _extract_zip_photos(file, photo_dir)
+        if not saved:
+            return jsonify({"error": "No image files found in zip"}), 400
+        keys = [f"{subpath}/{f}" for f in saved]
+        _record_uploaders(keys, current_user.username)
+        _queue_people_scan(keys)
+        _invalidate_photo_pool()
+        return jsonify({"files": [
+            {"filename": f, "url": f"{url_prefix}/{f}",
+             "html": _render_photo_tile(subpath, f, 'road', day, trip_id)}
+            for f in saved]})
+
+    filename = _save_photo(file, photo_dir)
+    if not filename:
+        return jsonify({"error": "File type not allowed"}), 400
+    _record_uploader(f"{subpath}/{filename}", current_user.username)
+    _queue_people_scan([f"{subpath}/{filename}"])
+    _invalidate_photo_pool()
+    return jsonify({
+        "filename": filename,
+        "url": f"{url_prefix}/{filename}",
+        "html": _render_photo_tile(subpath, filename, 'road', day, trip_id),
+    })
+
+
+@app.route('/trips/<int:trip_id>/road/<day>/caption', methods=['POST'])
+def save_road_caption(trip_id, day):
+    data = request.get_json(silent=True) or {}
+    filename = data.get("filename", "")
+    key = f"{trip_id}/{ROAD_DIRNAME}/{day}/{filename}"
+    if not _can_edit_photo(key):
+        return jsonify({"error": "Forbidden"}), 403
+    captions = _load_json(CAPTIONS_FILE, {})
+    caption = (data.get("caption") or "").strip()
+    if caption:
+        captions[key] = caption
+    else:
+        captions.pop(key, None)
+    _save_json(CAPTIONS_FILE, captions)
+    _invalidate_photo_pool()
+    return jsonify({"ok": True})
 
 
 @app.route('/trips/<int:trip_id>/events/<int:event_idx>/caption', methods=['POST'])

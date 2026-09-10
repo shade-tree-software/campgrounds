@@ -1,0 +1,171 @@
+"""The on-the-road card — a day's photos taken from the moving RV.
+
+Every other photo in the app hangs off a campspot or an event, and both of
+those are places you STOPPED. A day spent crossing Nebraska with the passenger
+shooting out the window had no upload target at all, short of inventing a fake
+waypoint to hold the photos.
+
+The rule that matters most here is the LAST one: road photos are keyed by
+DATE, not by position. Campspot and event photos are keyed by index, so
+inserting an item mid-trip renumbers every directory above it — the app's most
+fragile machinery, which broke silently and library-wide the day photos moved
+out of static/ (see tests/test_photo_index_remap.py). A date never renumbers,
+so a road card can never need remapping at all.
+
+    python -m unittest tests.test_road_cards -v
+"""
+
+import os
+import shutil
+import sys
+import tempfile
+import unittest
+from unittest import mock
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+import ekko_trips_app as A  # noqa: E402
+
+DAY = "2026-08-22"
+
+
+class RoadCardBase(unittest.TestCase):
+    def setUp(self):
+        self.root = tempfile.mkdtemp()
+        self.patch = mock.patch.object(A, "UPLOAD_DIR", self.root)
+        self.patch.start()
+        self.addCleanup(self.patch.stop)
+        self.addCleanup(shutil.rmtree, self.root, True)
+
+    def _write(self, trip_id, day, *names):
+        d = os.path.join(self.root, str(trip_id), "road", day)
+        os.makedirs(d, exist_ok=True)
+        for n in names:
+            with open(os.path.join(d, n), "wb") as fh:
+                fh.write(b"\xff\xd8\xff\xe0")   # enough to be a file
+        return d
+
+
+class TestWhichDaysHaveOne(RoadCardBase):
+    def test_a_day_with_photos_gets_a_card(self):
+        self._write(95, DAY, "a.jpg", "b.jpg")
+        self.assertEqual(A._road_days(95), [DAY])
+
+    def test_an_empty_directory_is_not_a_card(self):
+        # The card's existence IS the directory having photos in it, so an
+        # emptied one must stop rendering rather than leave a hollow card.
+        os.makedirs(os.path.join(self.root, "95", "road", DAY))
+        self.assertEqual(A._road_days(95), [])
+
+    def test_a_directory_of_non_images_is_not_a_card(self):
+        self._write(95, DAY, "notes.txt")
+        self.assertEqual(A._road_days(95), [])
+
+    def test_a_directory_that_is_not_a_date_is_ignored(self):
+        self._write(95, "events", "a.jpg")
+        self._write(95, "12", "a.jpg")
+        self.assertEqual(A._road_days(95), [])
+
+    def test_days_come_back_in_order(self):
+        for day in ("2026-08-24", "2026-08-22", "2026-08-23"):
+            self._write(95, day, "a.jpg")
+        self.assertEqual(A._road_days(95),
+                         ["2026-08-22", "2026-08-23", "2026-08-24"])
+
+    def test_a_trip_with_no_road_photos_has_no_cards(self):
+        self.assertEqual(A._road_days(99), [])
+
+
+class TestPhotoOrder(RoadCardBase):
+    def _collect(self, order=None):
+        return A._collect_road_photos(95, DAY, {}, order or {}, {}, {})
+
+    def test_photos_run_in_the_order_they_were_taken(self):
+        # These are a sequence shot out of a window, not a grid someone
+        # arranged, so EXIF time leads rather than filename.
+        self._write(95, DAY, "z.jpg", "a.jpg")
+        taken = {"z.jpg": "2026-08-22 09:15:00", "a.jpg": "2026-08-22 14:40:00"}
+        with mock.patch.object(A, "_photo_date_taken",
+                               lambda p: taken[os.path.basename(p)]):
+            self.assertEqual([p["filename"] for p in self._collect()],
+                             ["z.jpg", "a.jpg"])
+
+    def test_an_explicit_drag_order_still_wins(self):
+        self._write(95, DAY, "a.jpg", "b.jpg")
+        with mock.patch.object(A, "_photo_date_taken",
+                               lambda p: "2026-08-22 09:00:00"):
+            got = self._collect({f"95/road/{DAY}": ["b.jpg", "a.jpg"]})
+        self.assertEqual([p["filename"] for p in got], ["b.jpg", "a.jpg"])
+
+    def test_a_photo_with_no_exif_sorts_last_not_first(self):
+        # Empty string would sort ABOVE every real timestamp and put the one
+        # photo we know least about at the top of the card.
+        self._write(95, DAY, "a.jpg", "b.jpg")
+        taken = {"a.jpg": "", "b.jpg": "2026-08-22 09:00:00"}
+        with mock.patch.object(A, "_photo_date_taken",
+                               lambda p: taken[os.path.basename(p)]):
+            self.assertEqual([p["filename"] for p in self._collect()],
+                             ["b.jpg", "a.jpg"])
+
+    def test_keys_are_dated_not_indexed(self):
+        self._write(95, DAY, "a.jpg")
+        with mock.patch.object(A, "_photo_date_taken", lambda p: ""):
+            photo = self._collect()[0]
+        self.assertEqual(photo["key"], f"95/road/{DAY}/a.jpg")
+        self.assertEqual(photo["thumb_url"], f"/thumb/95/road/{DAY}/a.jpg")
+
+
+class TestTimelinePlacement(RoadCardBase):
+    def _timeline(self, photos):
+        trip = {"timeline": [], "events": []}
+        A._add_road_cards(trip, {DAY: photos})
+        return trip["timeline"][0]
+
+    def test_the_card_sits_at_its_first_photos_time(self):
+        # In place among the day's stops, where the driving began — not
+        # hoisted to the top of the day, for the same reason a folded waypoint
+        # run stays where it happened.
+        card = self._timeline([{"date_taken": "2026-08-22 09:15:00"},
+                               {"date_taken": "2026-08-22 14:40:00"}])
+        self.assertEqual(card["time"], "09:15")
+        self.assertEqual(card["sort_date"], DAY)
+
+    def test_a_card_with_no_timestamps_lands_at_noon(self):
+        # Where an untimed event goes too.
+        self.assertEqual(self._timeline([{"date_taken": ""}])["time"], "12:00")
+
+    def test_the_first_TIMED_photo_sets_the_position(self):
+        card = self._timeline([{"date_taken": ""},
+                               {"date_taken": "2026-08-22 08:05:00"}])
+        self.assertEqual(card["time"], "08:05")
+
+    def test_the_card_carries_its_day_as_its_idx(self):
+        # `idx` is the date, which is what the upload URL and the DOM id use.
+        card = self._timeline([{"date_taken": ""}])
+        self.assertEqual(card["idx"], DAY)
+        self.assertEqual(card["type"], "road")
+
+    def test_the_card_interleaves_rather_than_appending(self):
+        # 15:00 is rank 900, between a morning stop (500) and an evening one
+        # (1300) — the card lands mid-day among the stops it happened between,
+        # which is the whole reason it is placed by time at all.
+        trip = {"events": [], "timeline": [
+            {"type": "event", "sort_date": DAY, "_order": 0, "_rank": 500},
+            {"type": "event", "sort_date": DAY, "_order": 0, "_rank": 1300},
+        ]}
+        A._add_road_cards(trip, {DAY: [{"date_taken": "2026-08-22 15:00:00"}]})
+        self.assertEqual([i["type"] for i in trip["timeline"]],
+                         ["event", "road", "event"])
+
+    def test_a_card_sorts_onto_its_own_day(self):
+        trip = {"events": [], "timeline": [
+            {"type": "event", "sort_date": "2026-08-21", "_order": 0, "_rank": 1400},
+            {"type": "event", "sort_date": "2026-08-23", "_order": 0, "_rank": 10},
+        ]}
+        A._add_road_cards(trip, {DAY: [{"date_taken": "2026-08-22 09:00:00"}]})
+        self.assertEqual([i["sort_date"] for i in trip["timeline"]],
+                         ["2026-08-21", DAY, "2026-08-23"])
+
+
+if __name__ == "__main__":
+    unittest.main()
