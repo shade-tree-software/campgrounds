@@ -5,7 +5,7 @@
     Expects: photo (filename/url/thumb_url/view_url/caption/date_taken/uploader/
                     key/favorite),
              trip_id,
-             p_idx, p_type ('stay'|'event'), p_alt, is_admin, is_uploader,
+             p_idx, p_type ('stay'|'event'|'road'), p_alt, is_admin, is_uploader,
              current_username. -#}
 {%- set can_edit_caption = is_admin or (is_uploader and photo.uploader and photo.uploader == current_username) -%}
 <div class="photo-item" data-filename="{{ photo.filename }}"{% if is_admin %} draggable="true"{% endif %}>
@@ -16,14 +16,19 @@
       page is the surface for bulk marking. -#}
   <img src="{{ photo.thumb_url }}" data-view="{{ photo.view_url }}" data-full="{{ photo.url }}" data-photo-key="{{ photo.key }}" data-favorite="{{ '1' if photo.favorite else '0' }}" alt="{{ photo.caption or p_alt }}" data-date-taken="{{ photo.date_taken }}" loading="lazy" tabindex="0" role="button" onclick="openLightbox(this)">
   {% if is_admin %}
-  <button class="delete-photo" aria-label="Delete this photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', this)">&times;</button>
+  {#- p_idx is QUOTED. For a road card it is a date, and unquoted
+      `deletePhoto(95, 2026-08-22, ...)` is not a syntax error — it is
+      arithmetic, and it silently passed 1996 as the index. Stay and event
+      indices are interpolated straight into URLs, so a string is equivalent
+      for them. -#}
+  <button class="delete-photo" aria-label="Delete this photo" onclick="{% if p_type == 'event' %}deleteEventPhoto{% elif p_type == 'road' %}deleteRoadPhoto{% else %}deletePhoto{% endif %}({{ trip_id }}, '{{ p_idx }}', '{{ photo.filename }}', this)">&times;</button>
   {% endif %}
   {% if can_edit_caption %}
   <div class="caption-area">
     <span class="caption-text{{ ' placeholder' if not photo.caption else '' }}"
           onclick="editCaption(this)">{{ photo.caption or 'Add a caption...' }}</span>
     <textarea class="caption-input" rows="1"
-              onblur="saveCaptionField(this, {{ trip_id }}, {{ p_idx }}, '{{ photo.filename }}', '{{ p_type }}')"
+              onblur="saveCaptionField(this, {{ trip_id }}, '{{ p_idx }}', '{{ photo.filename }}', '{{ p_type }}')"
               onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();this.blur();}">{{ photo.caption }}</textarea>
   </div>
   {% elif photo.caption %}

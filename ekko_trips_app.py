@@ -4108,6 +4108,38 @@ def reorder_road_photos(trip_id, day):
     return jsonify({"ok": True})
 
 
+@app.route('/trips/<int:trip_id>/road/<day>/photos/<filename>', methods=['DELETE'])
+def delete_road_photo(trip_id, day, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
+    if not _ISO_DATE_RE.match(day or ""):
+        return jsonify({"error": "Bad date"}), 400
+    filename = secure_filename(filename)
+    photo_dir = _road_photo_dir(trip_id, day)
+    photo_path = os.path.join(photo_dir, filename)
+    if os.path.exists(photo_path):
+        _trash_photo(photo_path)
+    _remove_thumb(photo_path)
+    _invalidate_photo_pool()
+    # Metadata kept for Undo; scrubbed at purge time (see delete_photo).
+    key = f"{trip_id}/{ROAD_DIRNAME}/{day}"
+    _purge_old_trash(photo_dir, f"{key}/", key)
+    return jsonify({"ok": True})
+
+
+@app.route('/trips/<int:trip_id>/road/<day>/photos/<filename>/restore', methods=['POST'])
+def restore_road_photo(trip_id, day, filename):
+    denied = _require_admin()
+    if denied:
+        return denied
+    if not _ISO_DATE_RE.match(day or ""):
+        return jsonify({"error": "Bad date"}), 400
+    err = _restore_from_trash(_road_photo_dir(trip_id, day),
+                              secure_filename(filename))
+    return err if err else jsonify({"ok": True})
+
+
 @app.route('/trips/<int:trip_id>/road/<day>/caption', methods=['POST'])
 def save_road_caption(trip_id, day):
     # Logged-in non-admin uploaders may only caption photos they uploaded.

@@ -452,5 +452,41 @@ class TestWhereACardSitsInTheDay(RoadCardBase):
         self.assertGreater(mountain, stop, "the fix: after it, where it happened")
 
 
+
+
+class TestCaptioningAndDeletingARoadPhoto(RoadCardBase):
+    """Both were broken from the day road cards shipped, in the same way.
+
+    Every per-photo control is rendered by _photo_item.html from `p_type` and
+    `p_idx`, and a road card's index is a DATE. `p_idx` was interpolated
+    UNQUOTED, so `deletePhoto(95, 2026-08-22, ...)` was not a syntax error — it
+    was arithmetic, and it silently passed 1996. The caption URL had no road
+    branch either, so it posted to /stays/2026-08-22/caption and 404'd; nothing
+    checked the response, so the text stayed on screen until a reload discarded
+    it. That is the report: "caption edits don't survive a page reload".
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.client = A.app.test_client()
+        with self.client.session_transaction() as sess:
+            sess["_user_id"] = TestMovingPhotosInAndOut._an_admin()
+            sess["_fresh"] = True
+
+    def test_the_old_url_a_road_photo_used_is_not_a_route(self):
+        # A date cannot match <int:stay_idx>, which is why it 404'd.
+        r = self.client.post("/trips/95/stays/2026-08-22/caption",
+                             json={"filename": "a.jpg", "caption": "x"})
+        self.assertEqual(r.status_code, 404)
+
+    def test_a_bad_date_is_refused_everywhere_it_reaches_a_path(self):
+        for url in ("/trips/95/road/../../etc/caption",
+                    "/trips/95/road/nope/photos/a.jpg",
+                    "/trips/95/road/nope/photos/a.jpg/restore"):
+            r = (self.client.delete(url) if "/photos/" in url and
+                 not url.endswith("/restore") else self.client.post(url, json={}))
+            self.assertIn(r.status_code, (400, 404), url)
+
+
 if __name__ == "__main__":
     unittest.main()

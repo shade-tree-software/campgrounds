@@ -402,12 +402,29 @@ function saveCaptionField(textarea, tripId, idx, filename, type) {
   // Save to server
   const url = type === 'event'
     ? `/trips/${tripId}/events/${idx}/caption`
+    : type === 'road'
+    ? `/trips/${tripId}/road/${idx}/caption`
     : `/trips/${tripId}/stays/${idx}/caption`;
+  // The result was ignored entirely, which is how a road caption could 404 on
+  // every save and still look like it worked: the text stayed on screen until
+  // a reload threw it away. A caption is typed once and checked much later, so
+  // a save that fails quietly is worse here than almost anywhere else.
   fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ filename, caption })
+  }).then(r => {
+    if (!r.ok) throw new Error(r.status);
+  }).catch(() => {
+    if (window.toast) toast("That caption didn't save — copy it before reloading.", 'error');
   });
+}
+
+// A road card's index is a date, so its URL segment differs; the undo flow is
+// identical (the restore endpoint is the delete URL plus /restore).
+function deleteRoadPhoto(tripId, day, filename, btn) {
+  _deleteWithUndo(btn.closest('.photo-item'),
+    `/trips/${tripId}/road/${day}/photos/${encodeURIComponent(filename)}`);
 }
 
 function deletePhoto(tripId, stayIdx, filename, btn) {
