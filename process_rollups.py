@@ -128,13 +128,20 @@ recorded", "nothing else on the day", "nothing but the drive", "with nothing \
 on it at all". That is commentary about the archive rather than about the day, \
 it draws attention to a thin day instead of letting it be brief, and it is the \
 single most common way these entries go wrong. Name what there is and stop.
-6. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
+6. DO NOT GLOSS A SMALL DISTANCE. If the driving was trivial, leave it out \
+altogether — no "barely out of town", "hardly moved", "a couple of miles", \
+"no distance to speak of". "Fireworks at Franklin Park in Purcellville" is the \
+whole entry; adding where it sits relative to home says nothing a reader \
+wanted. Comparing a day to the rest of the trip ("the shortest drive of the \
+six") is different and still allowed — that places the day; a gloss on \
+smallness just fills space.
+7. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
 the day's place in the trip are given. Do not invent terrain, weather, mood, \
 fatigue, or why anything took as long as it did. "states" is the ordered list \
 of states the day drove through, so "across Pennsylvania, a corner of West \
 Virginia and the whole width of Ohio into Indiana" is supported and anything \
 about what those states LOOKED like is not.
-7. USE "trip_outline" TO PLACE THE DAY. It is every day of the trip in order \
+8. USE "trip_outline" TO PLACE THE DAY. It is every day of the trip in order \
 with its distance and where it slept, so you can see whether this was the \
 biggest day, the first easy one after a run of hauls, a second night at the \
 same campground, or the highest the trip reached. Saying where a day sits in \
@@ -146,26 +153,26 @@ number or as evidence the trip paused.
    The outline is for placing THIS day. Do not narrate other days or restate \
 their numbers, and do not say what happened on them — you are not told what \
 happened on them, only how far they went and where they stopped.
-8. "left_at" AND "arrived_at" ARE WHEN THE TRAVELLING STARTED AND FINISHED, \
+9. "left_at" AND "arrived_at" ARE WHEN THE TRAVELLING STARTED AND FINISHED, \
 local time, and they are the shape of a travel day. A day that leaves at 14:00 \
 spent its morning somewhere — say so ("at the Svendsens' until mid-afternoon, \
 then the drive home") rather than writing it up as though it were all road. \
 Describe them in plain words — first thing, mid-morning, mid-afternoon, into \
 the evening — never as clock times. Absent means the day never left one place.
-9. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
+10. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
-10. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
+11. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
 ended in the same place, so it was BASED there and the "events" are what it \
 was for — write about those. No distance is given for such a day and you must \
 not estimate, imply or allude to one: no "a short drive out", no "loops", no \
 "a few miles". A round-trip day with no events at all was a quiet one at camp; \
 say that plainly and briefly.
-11. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
+12. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
 distance is unknown and you must not say the day had no driving, was parked, \
 or stayed put — read "moved" instead, and if it is true describe the move \
 without a figure. Only "driving": "negligible" or a matching "from" and "to" \
 license saying the day stayed in one place.
-12. Do not restate the date, the weekday, the trip name or the day number — \
+13. Do not restate the date, the weekday, the trip name or the day number — \
 the page already shows them.
 
 WORKED EXAMPLES. These are the target, written by hand and approved. Match \
