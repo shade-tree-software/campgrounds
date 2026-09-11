@@ -427,10 +427,15 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
     drive = driving.get(day) or {}
     if drive.get("round_trip"):
         # Out and back from one campground. The distance is deliberately NOT
-        # offered (AWH 2026-09-11: "let's just not mention driving at all on
-        # round-trip days") — on a day based somewhere, mileage is the least
-        # interesting fact about it, and a figure in the dossier is a figure
-        # that ends up in the prose. What the day was FOR is in `events`.
+        # offered, and the rule holds even when the day has few events and many
+        # stops — the Trail Ridge case, where 54 miles of looping arguably WAS
+        # the day. AWH 2026-09-11, on why it still shouldn't be mentioned:
+        # "Mileage is interesting on a 502 mile day, not on a day when miles
+        # just incidentally happened to add up due to a lot of local
+        # activities." The test is whether the distance was the day's
+        # achievement or its by-product, and round_trip is the proxy for that.
+        # A figure in the dossier is a figure that ends up in the prose, so it
+        # is withheld rather than forbidden. What the day was FOR is `events`.
         d["round_trip"] = True
     elif drive.get("miles"):
         d["miles"] = drive["miles"]
