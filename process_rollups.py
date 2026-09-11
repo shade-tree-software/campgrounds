@@ -102,8 +102,11 @@ reader cannot assemble for themselves.
 least interesting fact about a day spent at one place, and a summary that \
 leads with it says nothing at all. Lead with where the day was based and what \
 it was spent on; the distance, if it earns a mention, comes last or not at all.
-2. 25 TO 45 WORDS. One paragraph, often one or two sentences. This is a caption, \
-not an entry. If you are writing a third sentence, you are listing.
+2. AS SHORT AS THE DAY IS. 45 words is a ceiling, not a target, and plenty of \
+days want far fewer — a day with one thing in it gets one clause, not a \
+sentence padded out to length. "North for the new year, 188 miles out of \
+Virginia through Maryland to the Svendsens'" is a complete entry. Never add \
+words to reach a length.
 3. IMPERSONAL VOICE. Never "we", "our" or "I". The family's own words are all \
 over the page already; this stands above them as a different kind of text, and \
 the reader should be able to tell in one glance which is which. Write "a short \
@@ -120,13 +123,18 @@ the end of what you know about it.
    Minor stops — fuel, rest areas, pull-offs — are not in the dossier in any \
 form, not even as a count. Do not speculate about them or about how busy a \
 day was beyond what "events" shows. If something mattered, it is an event.
-5. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
+5. NEVER REMARK ON WHAT THE RECORD DOES OR DOESN'T HOLD. No "the only thing \
+recorded", "nothing else on the day", "nothing but the drive", "with nothing \
+on it at all". That is commentary about the archive rather than about the day, \
+it draws attention to a thin day instead of letting it be brief, and it is the \
+single most common way these entries go wrong. Name what there is and stop.
+6. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
 the day's place in the trip are given. Do not invent terrain, weather, mood, \
 fatigue, or why anything took as long as it did. "states" is the ordered list \
 of states the day drove through, so "across Pennsylvania, a corner of West \
 Virginia and the whole width of Ohio into Indiana" is supported and anything \
 about what those states LOOKED like is not.
-6. USE "trip_outline" TO PLACE THE DAY. It is every day of the trip in order \
+7. USE "trip_outline" TO PLACE THE DAY. It is every day of the trip in order \
 with its distance and where it slept, so you can see whether this was the \
 biggest day, the first easy one after a run of hauls, a second night at the \
 same campground, or the highest the trip reached. Saying where a day sits in \
@@ -138,20 +146,26 @@ number or as evidence the trip paused.
    The outline is for placing THIS day. Do not narrate other days or restate \
 their numbers, and do not say what happened on them — you are not told what \
 happened on them, only how far they went and where they stopped.
-7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
+8. "left_at" AND "arrived_at" ARE WHEN THE TRAVELLING STARTED AND FINISHED, \
+local time, and they are the shape of a travel day. A day that leaves at 14:00 \
+spent its morning somewhere — say so ("at the Svendsens' until mid-afternoon, \
+then the drive home") rather than writing it up as though it were all road. \
+Describe them in plain words — first thing, mid-morning, mid-afternoon, into \
+the evening — never as clock times. Absent means the day never left one place.
+9. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
-8. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
+10. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
 ended in the same place, so it was BASED there and the "events" are what it \
 was for — write about those. No distance is given for such a day and you must \
 not estimate, imply or allude to one: no "a short drive out", no "loops", no \
 "a few miles". A round-trip day with no events at all was a quiet one at camp; \
 say that plainly and briefly.
-9. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
+11. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
 distance is unknown and you must not say the day had no driving, was parked, \
 or stayed put — read "moved" instead, and if it is true describe the move \
 without a figure. Only "driving": "negligible" or a matching "from" and "to" \
 license saying the day stayed in one place.
-10. Do not restate the date, the weekday, the trip name or the day number — \
+12. Do not restate the date, the weekday, the trip name or the day number — \
 the page already shows them.
 
 WORKED EXAMPLES. These are the target, written by hand and approved. Match \
@@ -400,8 +414,48 @@ def _day_moved(trip, day):
     return where(woke) != where(slept)
 
 
+def day_clock(pings, radius_m=1000):
+    """When the day's travelling actually started and finished, local time.
+
+    The shape of a travel day is not only its distance: leaving the Svendsens'
+    at three in the afternoon and leaving at seven in the morning are different
+    days, and nothing else in the dossier distinguishes them. AWH pointed at a
+    New Year's Day summary that read as a pure driving day when most of it had
+    been spent with family before setting off.
+
+    Same rule `_drive_days` uses for the stats page, so the two agree about
+    when a day's driving began: the LAST ping still within `radius_m` of where
+    the day started is the departure, and the FIRST ping already within
+    `radius_m` of where it ended is the arrival. A campground-sized radius,
+    bounding by position rather than by mileage — an evening of GPS jitter at
+    camp would otherwise keep the drive "running" for hours.
+    """
+    if len(pings or []) < 3:
+        return {}
+    import zoneinfo
+    pts = sorted(pings, key=lambda p: p["tst"])
+    a, b = (pts[0]["lat"], pts[0]["lon"]), (pts[-1]["lat"], pts[-1]["lon"])
+    if _haversine_mi(*a, *b) * 1609.34 < radius_m:
+        return {}                       # never left its own circle: not a travel day
+    left = max((p for p in pts if _haversine_mi(p["lat"], p["lon"], *a) * 1609.34 <= radius_m),
+               key=lambda p: p["tst"], default=None)
+    arrived = min((p for p in pts if _haversine_mi(p["lat"], p["lon"], *b) * 1609.34 <= radius_m),
+                  key=lambda p: p["tst"], default=None)
+    out = {}
+    for key, ping in (("left_at", left), ("arrived_at", arrived)):
+        if not ping:
+            continue
+        try:
+            tz = zoneinfo.ZoneInfo(ping.get("tz") or "UTC")
+            out[key] = datetime.fromtimestamp(ping["tst"], tz).strftime("%H:%M")
+        except Exception:
+            pass
+    return out
+
+
 def day_dossier(trip, day, driving, elevations, day_states=None,
-                trip_outline=None, day_index=None, track_known=True):
+                trip_outline=None, day_index=None, track_known=True,
+                day_times=None):
     """The facts one day's paragraph is written from, and nothing else.
 
     Deliberately much narrower than the dossier the long rollups used. That one
@@ -470,6 +524,11 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         d["moved"] = _day_moved(trip, day)
     if day_states:
         d["states"] = list(day_states)
+    if day_times:
+        # When the travelling actually started and finished. Two days of equal
+        # distance are different days if one set off at seven and the other at
+        # three, and nothing else here distinguishes them.
+        d.update(day_times)
 
     # What HAPPENED, named but not described. The long rollups were rejected
     # for reproducing the descriptions, captions and notes printed on the cards
@@ -747,7 +806,8 @@ def main():
             jobs.append((key, trip, day, sig,
                          day_dossier(trip, day, driving, elevations,
                                      states_crossed(pings), outline,
-                                     (day_i, len(days)), bool(pings))))
+                                     (day_i, len(days)), bool(pings),
+                                     day_clock(pings))))
 
     if args.limit:
         jobs = jobs[:args.limit]
