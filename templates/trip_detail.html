@@ -367,7 +367,13 @@
     margin-top: .4rem;
   }
   @media (max-width: 700px) {
-    .day-writeup { margin-left: 1rem; padding-right: 0; }
+    /* Only the right gutter goes. The left indent must stay at the desktop
+       4.25rem: it is what keeps the prose clear of the timeline axis, and an
+       earlier 1rem here — written when this block still had a gold border
+       sitting ON the axis — left the text running straight across the gray
+       line on every phone (AWH 2026-09-11). Narrower prose is the right
+       trade: it then runs in the same column as the card text below it. */
+    .day-writeup { padding-right: 0; }
     /* The add button is the only tap target here on a phone, so give it a
        finger-sized row rather than the desktop text link's height. */
     .day-writeup-add { font-size: .85rem; padding: .35rem 0; }
@@ -494,6 +500,30 @@
   .event-card.wp-compact .card-actions button {
     font-size: .7rem;
     padding: .1rem .45rem;
+  }
+  @media (max-width: 700px) {
+    /* A phone has room for the name OR the times, not both on one line — and
+       the row's own overflow rule settled that argument by ellipsizing the
+       NAME, which is the one thing a stop is identified by (AWH 2026-09-11).
+       So the row wraps: the name (with its place if it fits) takes the full
+       width, the times sit under it. Two short lines is still about a third
+       of a card, which is what "compact" was ever claiming. */
+    .event-card.wp-compact .event-info { flex-wrap: wrap; }
+    .event-card.wp-compact .event-info h3 { flex: 1 1 100%; }
+    .event-card.wp-compact .event-meta { padding-left: 0; }
+    /* And the controls come back into flow, onto the third row the mobile
+       header grid already defines for them. Absolute positioning works on a
+       desktop because hover hides them; a touch device has no hover, so they
+       stayed visible and — being opaque — painted over the right-hand end of
+       the row they were supposed to be sitting quietly beside. Reserving
+       their width instead would have left ~130px for the name, which is
+       worse than the problem. */
+    .event-card.wp-compact .card-actions {
+      position: static;
+      transform: none;
+      background: none;
+      padding-left: 0;
+    }
   }
 
   .event-card.bare {
@@ -1113,9 +1143,14 @@
     align-items: center;
   }
   .day-divider:first-child { margin-top: 0; }
-  /* Sits with the drive chip, but reads as an action rather than a fact: no
-     background until hovered, so a divider with nothing to add stays quiet. */
-  .day-divider .day-add-road {
+  /* Its own row under the divider, indented to 4.25rem like the write-up and
+     the card titles — clear of the 2.25rem axis, which would otherwise run
+     straight through a pill that has no fill of its own. Pulled up tight so a
+     contributor's page doesn't gain a whole row's worth of air per day. */
+  .day-road-add { margin: -.15rem 0 .1rem 4.25rem; }
+  /* Reads as an action rather than a fact: no background until hovered, so a
+     day with nothing to add stays quiet. */
+  .day-road-add .day-add-road {
     background: none;
     border: 1px solid var(--border, #d4d4d8);
     border-radius: 999px;
@@ -1124,12 +1159,11 @@
     font: inherit;
     font-size: .7rem;
     letter-spacing: .02em;
-    margin-left: .5rem;
     padding: .1rem .55rem;
     text-transform: none;
     white-space: nowrap;
   }
-  .day-divider .day-add-road:hover {
+  .day-road-add .day-add-road:hover {
     background: var(--navy, #002868);
     border-color: var(--navy, #002868);
     color: #fff;
@@ -2499,18 +2533,26 @@
         <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
         <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
       {%- endif %}
-      {%- if (is_admin or is_uploader) and item.sort_date not in road_photos %}
-      {#- A road card exists exactly when its directory has photos, which
-          leaves no way to upload the FIRST one — the card carrying the upload
-          button is the thing that doesn't exist yet. The day divider is the
-          only surface that knows a date is real whether or not anything has
-          been filed under it, so the way in lives here, and disappears again
-          once the card it creates can speak for itself. -#}
+    </div>
+    {%- if (is_admin or is_uploader) and item.sort_date not in road_photos %}
+    {#- A road card exists exactly when its directory has photos, which leaves
+        no way to upload the FIRST one — the card carrying the upload button is
+        the thing that doesn't exist yet. The day divider is the only surface
+        that knows a date is real whether or not anything has been filed under
+        it, so the way in lives beside it, and disappears again once the card
+        it creates can speak for itself.
+
+        On its OWN ROW rather than inside the divider (AWH 2026-09-11). In the
+        row it was a third flex item competing with the date and the day's
+        mileage, and on a phone it won: the drive chip was pushed onto a second
+        line and the row broke apart. A contributor's extra control must not be
+        able to reshape a line every reader sees. -#}
+    <div class="day-road-add">
       <button type="button" class="day-add-road"
               title="Add photos taken while driving on this day"
               onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
-      {%- endif %}
     </div>
+    {%- endif %}
     {%- set writeup = day_writeups.get(item.sort_date) %}
     {#- The day's write-up. It sits under the divider and above the day's cards
         because it is about the whole day: the cards are what happened, this is
