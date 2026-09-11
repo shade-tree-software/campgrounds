@@ -117,9 +117,9 @@ descriptions, no photo captions, no campsite notes, no site numbers, no photo \
 counts, no people beyond a family visit\'s own label. The dossier does not \
 carry them, and you must not invent them to fill the gap — naming a place is \
 the end of what you know about it.
-   "waypoint_stops" is a COUNT of minor stops (overlooks, fuel, rest areas) \
-and they are never named. Use it only to say whether the day was busy or \
-spare, never to imply what was at them.
+   Minor stops — fuel, rest areas, pull-offs — are not in the dossier in any \
+form, not even as a count. Do not speculate about them or about how busy a \
+day was beyond what "events" shows. If something mattered, it is an event.
 5. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
 the day's place in the trip are given. Do not invent terrain, weather, mood, \
 fatigue, or why anything took as long as it did. "states" is the ordered list \
@@ -130,16 +130,18 @@ about what those states LOOKED like is not.
 order, so you can see whether this was the biggest day, the first easy one \
 after a run of hauls, or a short hop before a long one. Saying where a day sits \
 in the trip is the most useful thing you can do with 40 words. Do not restate \
-the numbers of other days. A null in that list is a day whose distance was \
-never recorded — NOT a day that stayed still; never read a null as a low \
-number or as evidence the trip paused.
+the numbers of other days. A null in that list is a day with no travel \
+distance — either never recorded, or a day based at one campground — and NOT \
+a day that covered a small distance. Never read a null as a low number, and \
+never count nulls as evidence the trip paused.
 7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
-8. A DAY THAT BARELY DROVE IS NOT A FAILURE TO REPORT. "round_trip" means the \
-day began and ended in the same place — so it was BASED somewhere, and the \
-"events" are what it was for. Say that, rather than straining to make the \
-mileage sound like travel. A day with no events and no driving was genuinely \
-a quiet one at camp; say so plainly and briefly.
+8. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
+ended in the same place, so it was BASED there and the "events" are what it \
+was for — write about those. No distance is given for such a day and you must \
+not estimate, imply or allude to one: no "a short drive out", no "loops", no \
+"a few miles". A round-trip day with no events at all was a quiet one at camp; \
+say that plainly and briefly.
 9. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
 distance is unknown and you must not say the day had no driving, was parked, \
 or stayed put — read "moved" instead, and if it is true describe the move \
@@ -423,13 +425,17 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         d["trip_miles_by_day"] = trip_miles
 
     drive = driving.get(day) or {}
-    if drive.get("miles"):
+    if drive.get("round_trip"):
+        # Out and back from one campground. The distance is deliberately NOT
+        # offered (AWH 2026-09-11: "let's just not mention driving at all on
+        # round-trip days") — on a day based somewhere, mileage is the least
+        # interesting fact about it, and a figure in the dossier is a figure
+        # that ends up in the prose. What the day was FOR is in `events`.
+        d["round_trip"] = True
+    elif drive.get("miles"):
         d["miles"] = drive["miles"]
         if drive.get("moving"):
             d["driving_time"] = drive["moving"]
-        if drive.get("round_trip"):
-            # No leg to describe: the day went out and came back.
-            d["round_trip"] = True
     elif track_known:
         # Measured, and it came out under `DRIVE_DAY_MIN_M` — the day really
         # did stay put. `_trip_driving_by_day` omits these rather than printing
@@ -453,27 +459,27 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
     # below — but a NAME is not a description, and withholding it left a local
     # day with nothing to say but its mileage, which on a day that barely drove
     # is the least interesting fact available.
+    #
+    # WAYPOINTS ARE NOT HERE AT ALL, not even as a count (AWH 2026-09-11): "If
+    # a stop is interesting, it's my job to mark it as an event rather than a
+    # waypoint, not the model's job to reinterpret." A count could only be
+    # characterised by guessing what was at them — seven scenic overlooks and
+    # seven fuel stops are the same integer — so the honest move is to let the
+    # event/waypoint flag, which a person sets, be the whole answer.
     events, family = [], []
-    waypoints = 0
     for item in trip.get("timeline", []):
         if item.get("type") != "event" or item.get("sort_date") != day:
             continue
         if item.get("family_visit"):
             if item["family_visit"] not in family:
                 family.append(item["family_visit"])
-        elif item.get("waypoint"):
-            # Counted, never named: two thirds of the library's events are
-            # auto-detected stops and a travel day's raw list is mostly rest
-            # areas. A count still lets a busy day read as busy.
-            waypoints += 1
-        elif item.get("name") and item["name"] not in events:
-            events.append(item["name"])
+        elif not item.get("waypoint") and item.get("name") not in events:
+            if item.get("name"):
+                events.append(item["name"])
     if events:
         d["events"] = events
     if family:
         d["family_visits"] = family
-    if waypoints:
-        d["waypoint_stops"] = waypoints
 
     woke = slept = None
     for stay in trip.get("stays", []):
@@ -661,7 +667,8 @@ def main():
         # trip 47 as "two days of staying put" when the second of them moved
         # between campgrounds. JSON renders these as null, which reads as
         # unknown; 0 reads as measured.
-        miles_by_day = [(driving.get(d) or {}).get("miles") or None
+        miles_by_day = [None if (driving.get(d) or {}).get("round_trip")
+                        else ((driving.get(d) or {}).get("miles") or None)
                         for d in days]
         # The track is read ONCE per trip and bucketed by local day. Only
         # pulled when there is actually something to draft, because a trip

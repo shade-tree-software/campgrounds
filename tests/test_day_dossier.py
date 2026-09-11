@@ -85,12 +85,13 @@ class TestNamesInDescriptionsOut(unittest.TestCase):
     def test_a_family_visit_is_named_by_its_label(self):
         self.assertEqual(self._full_day()["family_visits"], ["The Svendsens"])
 
-    def test_a_waypoint_is_counted_never_named(self):
-        """Two thirds of the library's events are auto-detected stops and a
-        travel day's raw list is mostly rest areas — the same test that decides
-        whether one earns a card on the timeline."""
+    def test_a_waypoint_is_absent_entirely_not_even_counted(self):
+        """AWH: "If a stop is interesting, it's my job to mark it as an event
+        rather than a waypoint, not the model's job to reinterpret." A count
+        could only be characterised by guessing what was at them — seven
+        scenic overlooks and seven fuel stops are the same integer."""
         d = self._full_day()
-        self.assertEqual(d["waypoint_stops"], 1)
+        self.assertNotIn("waypoint_stops", d)
         self.assertNotIn("Sinclair", json.dumps(d))
 
     def test_the_campground_is_named_and_placed(self):
@@ -122,14 +123,17 @@ class TestTheShapeOfTheDay(unittest.TestCase):
     def test_a_day_that_did_not_drive_carries_no_mileage(self):
         self.assertNotIn("miles", _dossier(_trip()))
 
-    def test_a_round_trip_is_flagged_and_has_no_heading(self):
-        """It started and ended in one place, so a compass direction would be
-        a fiction — and the prompt needs to know to describe a different kind
-        of day."""
+    def test_a_round_trip_carries_no_distance_at_all(self):
+        """Flagged, but with no mileage and no driving time: on a day based at
+        one campground the distance is the least interesting fact about it, and
+        a figure in the dossier is a figure that ends up in the prose. A
+        compass heading would be a fiction too."""
         trip = _trip(stays=[_stay("2026-08-22", "2026-08-25")])
-        d = _dossier(trip, driving={DAY: {"miles": 54, "round_trip": True}})
+        d = _dossier(trip, driving={DAY: {"miles": 54, "moving": "1h 57m",
+                                          "round_trip": True}})
         self.assertTrue(d["round_trip"])
-        self.assertNotIn("heading", d)
+        for absent in ("miles", "driving_time", "heading"):
+            self.assertNotIn(absent, d)
 
     def test_heading_comes_from_where_the_day_started_and_ended(self):
         trip = _trip(stays=[
