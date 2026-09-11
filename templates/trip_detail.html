@@ -309,16 +309,20 @@
      Set in the cards column, indented to the timeline axis so it reads as
      belonging to the day rather than floating beside it. Deliberately not a
      card: it is prose about the day, not another thing that happened in it. */
+  /* No left rule. It used to carry a 3px gold border at margin-left 2.25rem —
+     exactly where the column's vertical axis runs — so the gold painted over
+     the spine and the timeline appeared to change colour for the height of
+     the write-up. Gold is the EVENT accent here too, so it was borrowed
+     colour with no matching meaning.
+
+     Indented to the date pill's own left edge instead (2.25rem + its .75rem
+     offset), which says what the border was trying to: this belongs to that
+     day. Keep the two in step. The empty state needs no special case now. */
   .day-writeup {
-    margin: .1rem 0 1.1rem 2.25rem;
-    padding: 0 1.25rem 0 .85rem;
-    border-left: 3px solid var(--gold);
+    margin: .45rem 0 1.25rem 3rem;
+    padding: 0 1.25rem 0 0;
     max-width: 60ch;
   }
-  /* Nothing written yet: the slot is only the add button, so it carries no
-     rule of its own — an empty gold bar on every dividerless day would read
-     as a missing thing rather than an offer. */
-  .day-writeup.empty { border-left-color: transparent; padding-left: 0; }
   .day-writeup p {
     margin: 0;
     color: #3d3d42;
@@ -1102,17 +1106,17 @@
      stay and event circles (2rem) — it marks the day without competing with
      the things that happened in it. The axis is centred on this element's own
      left edge (the column rule sits at `2.25rem - 1px`, 2px wide, and the
-     divider is indented 2.25rem), so -5px on a 10px dot centres it exactly.
+     divider is indented 2.25rem), so -7px on a 14px dot centres it exactly.
      `top` is a fixed offset rather than 50% because the divider wraps to two
      rows on a narrow screen, and the dot belongs beside the date. */
   .day-divider::before {
     content: '';
     position: absolute;
-    left: -5px;
-    top: .5rem;
-    margin-top: -5px;
-    width: 10px;
-    height: 10px;
+    left: -7px;
+    top: .69rem;
+    margin-top: -7px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: var(--navy);
     z-index: 2;
@@ -1145,15 +1149,20 @@
      class the chip simply doesn't match, and `.nb` inherits from `.day-drive`
      the way it always should have. */
   .day-divider .day-date {
-    background: var(--offwhite);
-    color: var(--navy);
-    font-size: .8rem;
+    /* Filled, not tinted. Against a column of shadowed white cards a label has
+       to be an object rather than a colour of text, and navy is already the
+       structural colour here (stay circles, header, the axis dot). */
+    background: var(--navy);
+    color: var(--white);
+    font-size: .78rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .05em;
-    /* Left padding clears the axis dot; the dot paints above this background
-       (z-index 2) so the two can overlap without the label masking it. */
-    padding: 0 .6rem 0 .9rem;
+    letter-spacing: .06em;
+    padding: .22rem .75rem;
+    border-radius: 999px;
+    /* Clears the axis dot rather than covering it: the dot sits ON the spine,
+       the pill beside it, and the rule runs on from there. */
+    margin-left: .75rem;
   }
   .day-divider::after {
     content: '';
