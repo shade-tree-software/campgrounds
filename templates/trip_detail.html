@@ -2456,14 +2456,15 @@
   {#- Day dividers. Every timeline item carries `sort_date` (stay copies get
       their night's date), so a divider is just "the date changed since the
       last card". On a 10-day trip the cards otherwise ran together with no
-      sense of where one day ended. Only emitted when the trip actually spans
-      more than one day — a single-day trip would just get one redundant
-      heading. `ns` is a namespace so the loop body can mutate it (a plain
+      sense of where one day ended. Emitted on EVERY trip, including
+      single-day ones: the heading is mildly redundant there, but the divider
+      carries the day's write-up slot with it, and gating it meant nine trips
+      could never show one at all. `ns` is a namespace so the loop body can
+      mutate it (a plain
       `{% set %}` inside a for-loop doesn't persist between iterations). -#}
-  {% set multi_day = trip.timeline | map(attribute='sort_date') | unique | list | length > 1 %}
   {% set ns = namespace(last_date='') %}
   {% for item in trip.timeline %}
-  {% if multi_day and item.sort_date and item.sort_date != ns.last_date %}
+  {% if item.sort_date and item.sort_date != ns.last_date %}
     {% set ns.last_date = item.sort_date %}
     {#- What the GPS says the day drove.
 
