@@ -82,8 +82,10 @@ class TestNamesInDescriptionsOut(unittest.TestCase):
     def test_a_real_event_is_named_with_its_time(self):
         """The time is half the fact. Without it a single event reads as having
         filled the day and the first of several reads as the morning — AWH on
-        trip 14's Ocean City, which ran 19:30 to 20:47: "We didn't spend the
-        day in Ocean City. We spent only a short part of the evening there.""""
+        trip 14's Ocean City, which ran 19:30 to 20:47 — AWH: "We didn't spend
+        the day in Ocean City. We spent only a short part of the evening
+        there."
+        """
         self.assertEqual(self._full_day()["events"],
                          [{"name": "Alpine Visitor Center", "time": "10:00"}])
 
