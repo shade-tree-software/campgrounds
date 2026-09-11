@@ -315,11 +315,14 @@
      the write-up. Gold is the EVENT accent here too, so it was borrowed
      colour with no matching meaning.
 
-     Indented to the date pill's own left edge instead (2.25rem + its .75rem
-     offset), which says what the border was trying to: this belongs to that
-     day. Keep the two in step. The empty state needs no special case now. */
+     Indented to the card TITLES instead (1.25rem card padding + the 2rem
+     circle + the header's 1rem gap = 4.25rem), so the day's prose runs in the
+     same column as the prose below it. That says what the border was reaching
+     for — this belongs to that day — and keeps it clear of the axis, which a
+     backgroundless block would otherwise have running through its text.
+     The empty state needs no special case now. */
   .day-writeup {
-    margin: .45rem 0 1.25rem 3rem;
+    margin: .45rem 0 1.25rem 4.25rem;
     padding: 0 1.25rem 0 0;
     max-width: 60ch;
   }
@@ -1096,31 +1099,18 @@
        or a new day reads as a smaller break than the one between two stops
        of the same day — which is what made the divisions get lost. The gap
        BELOW stays tight so the date binds to the day it introduces rather
-       than floating between the two. */
-    margin: 2.75rem 0 .5rem 2.25rem;
+       than floating between the two.
+
+       Indented 1.25rem, NOT 2.25rem: that is where every stay and event
+       circle begins (2rem wide, centred on the 2.25rem axis), so the date
+       pill's left edge lines up with all of them down the page. It also
+       puts the pill across the axis, masking it — which is what the separate
+       dot used to do, so the dot is gone. */
+    margin: 2.75rem 0 .5rem 1.25rem;
     display: flex;
     align-items: center;
   }
   .day-divider:first-child { margin-top: 0; }
-  /* A station on the timeline axis, at the scale of a tick rather than of the
-     stay and event circles (2rem) — it marks the day without competing with
-     the things that happened in it. The axis is centred on this element's own
-     left edge (the column rule sits at `2.25rem - 1px`, 2px wide, and the
-     divider is indented 2.25rem), so -7px on a 14px dot centres it exactly.
-     `top` is a fixed offset rather than 50% because the divider wraps to two
-     rows on a narrow screen, and the dot belongs beside the date. */
-  .day-divider::before {
-    content: '';
-    position: absolute;
-    left: -7px;
-    top: .69rem;
-    margin-top: -7px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--navy);
-    z-index: 2;
-  }
   /* Sits with the drive chip, but reads as an action rather than a fact: no
      background until hovered, so a divider with nothing to add stays quiet. */
   .day-divider .day-add-road {
@@ -1151,18 +1141,19 @@
   .day-divider .day-date {
     /* Filled, not tinted. Against a column of shadowed white cards a label has
        to be an object rather than a colour of text, and navy is already the
-       structural colour here (stay circles, header, the axis dot). */
+       structural colour here: the stay circles, the header, the nav. */
     background: var(--navy);
     color: var(--white);
-    font-size: .78rem;
+    /* Sized against the card titles it shares the page with (1.05rem/600),
+       not against the small print. Uppercase carries more weight per point,
+       so .95rem/700 reads at least as large; with .4rem of vertical padding
+       the pill lands at ~2rem tall, the height of the circles below it. */
+    font-size: .95rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .06em;
-    padding: .22rem .75rem;
+    padding: .4rem 1rem;
     border-radius: 999px;
-    /* Clears the axis dot rather than covering it: the dot sits ON the spine,
-       the pill beside it, and the rule runs on from there. */
-    margin-left: .75rem;
   }
   .day-divider::after {
     content: '';
