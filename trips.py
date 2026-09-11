@@ -1235,8 +1235,9 @@ def camper_names(text):
     per-night notes: "(Laura--3rd night)", "Donna--first two nights only".
     Everything after a `--` is a qualifier about WHEN, not part of the name.
 
-    Shared by `_make_trip` (which builds `trip["campers"]`) and the voice-memo
-    speaker list, so the two can't disagree about what a person is called.
+    Used by `_make_trip` to build `trip["campers"]`. The field is prose people
+    typed, carrying "(Laura--3rd night)" and "Donna--first two nights only", so
+    the parsing is worth having in one named place rather than inline.
     """
     out = []
     for chunk in (text or "").split(","):

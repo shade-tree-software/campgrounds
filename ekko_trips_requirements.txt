@@ -2,10 +2,10 @@
 #
 #     pip install -r ekko_trips_requirements.txt
 #
-# The offline batch tools (detect_people.py, process_memos.py) are NOT here —
+# The offline batch tools (detect_people.py, process_rollups.py) are NOT here —
 # they live in tools_requirements.txt, which installs this file too. That split
-# is not tidiness: "the web app never imports cv2 / faster_whisper" is a
-# load-bearing invariant (those models cost 100 MB and several hundred MB
+# is not tidiness: "the web app never imports cv2" is a load-bearing
+# invariant (that model costs 100 MB
 # resident, which a one-shot subprocess pays for seconds and a web worker would
 # pay for its whole life). Keeping their dependencies out of this file is what
 # makes the invariant checkable rather than merely stated, and keeps a host that
@@ -36,9 +36,10 @@ blinker==1.9.0
 itsdangerous==2.2.0
 Jinja2==3.1.6
 MarkupSafe==3.0.3
-# Flask needs click>=8.1.3; the 8.4.2 floor comes from huggingface_hub in
-# tools_requirements.txt, which installs this file. Pinned to the version both
-# resolve to so a full host doesn't silently upgrade the app's own dependency.
+# Flask needs click>=8.1.3. The 8.4.2 floor that forced this pin came from
+# huggingface_hub, pulled in by faster-whisper — both gone with the voice
+# memos — so only Flask's floor is left. Left at 8.5.0 rather than churned
+# back down: nothing needs it lower.
 click==8.5.0
 # timezonefinder
 numpy==2.5.2

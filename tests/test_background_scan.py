@@ -2,14 +2,13 @@
 
 Work is normally triggered at upload time. That silently does nothing when the
 dependency isn't installed yet or the worker recycles inside the debounce
-window — and nothing ever revisited it, so a memo uploaded before
-`faster-whisper` was installed said "Not transcribed yet" through every page
-reload, forever. `queue_once` sweeps from the read path to fix that class of
-problem rather than that instance.
+window — and nothing ever revisited it, so an item could sit unprocessed
+through every page reload, forever. `queue_once` sweeps from the read path to
+fix that class of problem rather than any one instance of it.
 
 The guard is the load-bearing half. Without it a key whose work genuinely
-cannot succeed — audio deleted, or a host with no model — re-triggers a
-subprocess and a several-hundred-MB model load on every single page view.
+cannot succeed — the file deleted, or a host with no model — re-triggers a
+subprocess and its whole model load on every single page view.
 
 Run from the project root with the venv active:
 
@@ -94,12 +93,13 @@ class TestConfiguration(unittest.TestCase):
     the refactor that merged this machinery is exactly where that could slip."""
 
     def test_both_scans_are_configured_independently(self):
-        from ekko_trips_app import _people_scan, _memo_transcribe
+        from ekko_trips_app import _people_scan, _place_resolve
         self.assertTrue(_people_scan.script.endswith("detect_people.py"))
         self.assertEqual(_people_scan.probe_imports, "cv2, numpy, PIL")
-        self.assertTrue(_memo_transcribe.script.endswith("process_memos.py"))
-        self.assertEqual(_memo_transcribe.probe_imports, "faster_whisper")
-        self.assertIsNot(_people_scan._tried, _memo_transcribe._tried)
+        self.assertTrue(_place_resolve.script.endswith(".py"))
+        # Separate dicts, or one scanner's "this interpreter can't" would
+        # silently disable the other.
+        self.assertIsNot(_people_scan._tried, _place_resolve._tried)
 
 
 if __name__ == "__main__":

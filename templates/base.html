@@ -650,9 +650,6 @@
     <a href="/trips/calendar" id="nav-calendar"{% if active_nav == 'calendar' %} class="active"{% endif %}>Calendar</a>
     <a href="/trips/list" id="nav-list"{% if active_nav == 'list' %} class="active"{% endif %}>List</a>
     <a href="/trips/stats"{% if active_nav == 'stats' %} class="active"{% endif %}>Stats</a>
-    {# Contributor-only: a memo is unguarded speech, and only the people who
-       record the trips should hear it back. See _require_contributor_page. #}
-    {% if is_contributor %}<a href="/memos"{% if active_nav == 'memos' %} class="active"{% endif %}>Memos</a>{% endif %}
   </span>
   {# Campground map is read-only for non-admins (the route was never
      admin-gated; edit affordances are IS_ADMIN-conditioned) — the
@@ -718,10 +715,6 @@
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V13M12 21V5M19 21V9"/></svg>
     <span>Stats</span>
   </a>
-  {% if is_contributor %}  <a href="/memos" id="tab-memos"{% if active_nav == 'memos' %} class="active"{% endif %}>
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 14a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v5a3 3 0 0 0 3 3z"/><path d="M17 11a1 1 0 1 1 2 0 7 7 0 0 1-6 6.93V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.07A7 7 0 0 1 5 11a1 1 0 1 1 2 0 5 5 0 0 0 10 0z"/></svg>
-    <span>Memos</span>
-  </a>{% endif %}
   {% if current_user.can_view_campgrounds %}
   <a href="/campgrounds/map" id="tab-campgrounds"{% if active_nav == 'campmap' %} class="active"{% endif %}>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20 L12 5 L21 20"/><path d="M12 12 L8.5 20"/><path d="M12 12 L15.5 20"/><path d="M2 20 H22"/></svg>

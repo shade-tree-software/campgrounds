@@ -9,9 +9,6 @@
 #   photo_order, photo_uploaders, photo_favorites, photo_people, share_tokens)
 #   + trip_data/access_log.jsonl
 #   + trip_data/track_cache/.
-#   + memo_uploads/ (voice memos — included in the BASE bundle, unlike photos:
-#     they are gitignored like the photos but three orders of magnitude smaller,
-#     and this bundle is the only copy that leaves the host).
 #
 # trip_data/family.json is in that list for a privacy reason, not just a
 # regenerability one: family locations are relatives' names + driveway pins, so
@@ -73,10 +70,8 @@ CANDIDATES=(
   trip_data/photo_favorites.json
   trip_data/photo_people.json
   trip_data/share_tokens.json
-  trip_data/memos.json
   trip_data/access_log.jsonl
   trip_data/track_cache
-  memo_uploads
 )
 [[ "$WITH_PHOTOS" -eq 1 ]] && CANDIDATES+=(photo_uploads)
 

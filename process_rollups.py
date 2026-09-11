@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Draft a short write-up for each day of a trip.
 
-Step 3 of the memo-to-rollup pipeline, and the first part of it whose output is
-a judgement call rather than a verifiable answer. Steps 1 and 2 file voice
-memos against the right day and turn them into text; this assembles everything
-known about a day — the GPS, the campground, the photos, and whatever was said
-into the phone — and asks Claude for a few sentences.
+The first part of the trip archive whose output is a judgement call rather than
+a verifiable answer: it assembles everything known about a day — the GPS, the
+campground, the photos and whatever the family wrote on them — and asks Claude
+for a few sentences.
 
     python process_rollups.py --trip 95 --dry-run   # see the facts, no API call
     python process_rollups.py --trip 95             # draft one trip
@@ -16,11 +15,11 @@ into the phone — and asks Claude for a few sentences.
 and costs nothing. Garbage in is confabulation out, so the dossier is the half
 worth checking first; the prose is easy to judge and cheap to redo.
 
-**A day with no memos still gets an entry**, written from facts alone — the
+**A day nobody wrote a word about still gets an entry**, from facts alone — the
 GPS knows the route, the mileage and the stops, and the campground record knows
-where you slept. That is deliberate: memos should make a day better, not decide
-whether it gets written at all, and it is what lets the whole back catalogue be
-covered before a single new memo exists.
+where you slept. That is deliberate: captions and notes should make a day
+better, not decide whether it gets written at all, and it is what lets the
+whole back catalogue be covered.
 
 **The constraint against invention is the point of this script.** A model handed
 facts will write fluent prose and will also invent connective tissue — the
@@ -30,7 +29,7 @@ nothing to embroider, and every rollup is stamped with the model that wrote it
 so a generated sentence is never mistaken for something you said.
 
 **A hand-edited rollup is never overwritten**, not even by --force; the app sets
-`edited` when you fix one. Same rule as memo transcripts, for the same reason.
+`edited` when you fix one.
 
 **Two rules decide when a day is drafted, and together they are what makes an
 unattended run safe to schedule:**
@@ -64,7 +63,6 @@ _DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, _DIR)
 
 ROLLUPS_FILE = os.path.join(_DIR, "trip_data", "day_rollups.json")
-MEMOS_FILE = os.path.join(_DIR, "trip_data", "memos.json")
 
 MODEL = "claude-opus-5"
 
@@ -116,30 +114,26 @@ invents one is not.
 3. If the day holds little, write little. Two sentences is a complete entry for \
 a day that was mostly driving. Do not pad.
 4. THE FAMILY'S OWN WORDS ARE THE SUBSTANCE OF THE ENTRY, and the facts are \
-the scaffolding around them. Three fields carry those words — "memos" (spoken \
-or typed into a phone), "photo_captions" (written on their own photographs) and \
-the "notes" on a place they stayed. Prefer all three to any statistic, and let \
-them decide what the day was about.
-   FOLD THEM IN; DO NOT QUOTE THEM. Rewrite what was said in the same voice as \
-the rest of the entry, in its place in the day, so a reader cannot tell which \
-sentence began as a memo and which as a fact. A memo dropped in between \
-quotation marks reads as a transcript pasted into a diary, and it strands the \
+the scaffolding around them. Two fields carry those words — "photo_captions" \
+(written on their own photographs) and the "notes" on a place they stayed. \
+Prefer both to any statistic, and let them decide what the day was about.
+   FOLD THEM IN; DO NOT QUOTE THEM. Rewrite what was written in the same voice \
+as the rest of the entry, in its place in the day, so a reader cannot tell \
+which sentence began as a caption and which as a fact. One dropped in between \
+quotation marks reads as a clipping pasted into a diary, and it strands the \
 prose on either side of it. The same goes for announcing the source: never \
-"a memo says", "Andrew noted", or "one photo is captioned".
-   FOLDING IS REWRITING, NOT SUMMARISING. Every specific thing said must \
+"one photo is captioned" or "the note says".
+   FOLDING IS REWRITING, NOT SUMMARISING. Every specific thing written must \
 survive — the horizon-to-horizon view, the woman at the corn stand, the last \
 week of the season. Losing a detail to make a sentence flow is a worse failure \
-than an ungainly sentence. Add nothing that was not said.
-   A memo may be the frame for the whole day rather than a line inside it. If \
-what someone said IS the day, build the entry around it and let the stops fall \
+than an ungainly sentence. Add nothing that was not written.
+   What someone wrote may be the frame for the whole day rather than a line \
+inside it. If it IS the day, build the entry around it and let the stops fall \
 in behind.
-   Name a person only when what was said is about them or belongs to them \
+   Name a person only when what was written is about them or belongs to them \
 ("Donna had read that Lily Lake was a must-see"). Otherwise the family speaks \
-as "we", like the rest of the entry — a speaker's name on every sentence is \
-just attribution noise. In particular do not turn a memo into a quotation with \
-the speaker attached: "Andrew decided Nebraska might be the opposite of \
-Northern Virginia" is the seam this rule exists to remove. It was simply the \
-opposite of Northern Virginia, and "we" saw it.
+as "we", like the rest of the entry — a name on every sentence is just \
+attribution noise.
    A phrase may stay verbatim when it is the whole point of the sentence and \
 paraphrase would flatten it — an aside like "we still don't know why the town \
 has a lit Christmas tree in August" survives because the wording is the joke. \
@@ -230,9 +224,8 @@ def _load(path):
 def _merge_and_write(updates):
     """Apply this run's deltas to the file on disk, per key.
 
-    Same contract as process_memos.py: the app edits this file (a hand
-    correction sets `edited`), so a long batch must not dump a stale snapshot
-    over the top of an edit made while it ran.
+    The app edits this file (a hand correction sets `edited`), so a long batch
+    must not dump a stale snapshot over the top of an edit made while it ran.
     """
     current = _load(ROLLUPS_FILE)
     for key, fields in updates.items():
@@ -303,7 +296,7 @@ def _drive_bucket(drive):
     return "long" if miles >= DRIVE_LONG_MI else ""
 
 
-def day_dossier(trip, day, driving, locations, memos, photo_counts,
+def day_dossier(trip, day, driving, locations, photo_counts,
                 card_photos=None, card_captions=None):
     """Everything known about one day of one trip, as a plain dict.
 
@@ -313,12 +306,12 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
     """
     card_photos = card_photos or {}
     # What was written ON the photos. Captions are the second-most human thing
-    # in the archive after the memos — "Just like the Bruce Springsteen album
+    # in the archive — "Just like the Bruce Springsteen album
     # cover", "No mountains yet" — and the dossier used to carry only photo
     # COUNTS, so every one of them was invisible to the rollups.
     card_captions = card_captions or {}
     d = {"date": day, "weekday": "", "trip": trip.get("summary", ""),
-         "stops": [], "memos": [], "photos": photo_counts.get(day, 0)}
+         "stops": [], "photos": photo_counts.get(day, 0)}
     try:
         d["weekday"] = _date.fromisoformat(day).strftime("%A")
     except ValueError:
@@ -433,14 +426,6 @@ def day_dossier(trip, day, driving, locations, memos, photo_counts,
     if brief:
         d["unremarkable_stops"] = brief
 
-    for rec in memos.values():
-        if rec.get("trip_id") != trip["id"] or rec.get("date") != day:
-            continue
-        text = (rec.get("transcript") or "").strip()
-        if not text:
-            continue
-        d["memos"].append({"said_by": rec.get("speaker") or "", "said": text,
-                           "at": rec.get("place", "")})
     return d
 
 
@@ -457,7 +442,7 @@ def day_signature(trip, day, driving):
 
     How narrow this is decides whether the drafter can run unattended at all.
     A trip collects hundreds of edits while it happens and for weeks after —
-    photos, captions, descriptions, waypoints, notes, memos, reordering — and
+    photos, captions, descriptions, waypoints, notes, reordering — and
     **not one of them is an input to a summary**, which says what kind of day
     it was: how far, which way, what sort of country, where you slept. Hash
     something wider and every one of those edits reads as a reason to rewrite
@@ -468,9 +453,9 @@ def day_signature(trip, day, driving):
     on anchors and overrides scattered all through the record — and exactly
     wrong here: it changes on every edit.
 
-    **If the dossier is ever widened back toward captions, descriptions or
-    memos, widen this with it.** A dossier field that isn't in here is one the
-    drafter will never notice has changed.
+    **If the dossier is ever widened toward captions or descriptions, widen
+    this with it.** A dossier field that isn't in here is one the drafter will
+    never notice has changed.
     """
     nights = []
     for stay in trip.get("stays", []):
@@ -556,7 +541,6 @@ def main():
             return 1
 
     locations = _load_locations_by_id()
-    memos = _load(MEMOS_FILE)
     rollups = _load(ROLLUPS_FILE)
 
     # Photos per day, via the card each photo hangs off.
@@ -611,7 +595,7 @@ def main():
                 held += 1
                 continue
             jobs.append((key, trip, day, sig,
-                         day_dossier(trip, day, driving, locations, memos,
+                         day_dossier(trip, day, driving, locations,
                                      counts, per_card, per_card_caps)))
 
     if args.limit:
@@ -697,9 +681,6 @@ def main():
             # What this entry was drafted FROM. The next run redrafts the day
             # only if these facts moved (see day_signature).
             "inputs_sig": sig,
-            "source_memo_ids": [m for m, r in memos.items()
-                                if r.get("trip_id") == trip["id"]
-                                and r.get("date") == day],
             "edited": False,
         }})
         written += 1

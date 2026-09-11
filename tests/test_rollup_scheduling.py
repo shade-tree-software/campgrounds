@@ -5,7 +5,7 @@ both encode a judgement that is easy to get backwards.
 
 `day_signature` must stay NARROW. A trip gathers hundreds of edits while it
 happens and for weeks afterwards — photos, captions, descriptions, waypoints,
-notes, memos, reordering — and none of them change what a summary says, which
+notes, reordering — and none of them change what a summary says, which
 is what kind of day it was: how far, which way, where you slept. A wider hash
 (`_trip_route_signature`, say, which hashes the whole raw trip record and is
 right for a route) would make every one of those edits look like a reason to

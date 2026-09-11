@@ -30,14 +30,7 @@
 # The headless build on purpose: no GUI libraries on a server.
 opencv-python-headless==5.0.0.93
 
-# process_memos.py — local Whisper transcription of voice memos.
-# Pulls ctranslate2, onnxruntime, av, tokenizers and huggingface-hub (~190 MB).
-# Model weights are downloaded on first run into trip_data/models/, which is
-# gitignored and excluded from sync-from-pa.sh.
-faster-whisper==1.2.1
-
-# process_rollups.py — drafts a day's write-up from the facts plus whatever was
-# said into the phone. Needs ANTHROPIC_API_KEY in the environment or in the
-# repo's gitignored .env. Pure Python, no model weights: the drafting happens
-# on Anthropic's side, unlike the transcription above.
+# process_rollups.py — drafts a day's write-up from the facts. Needs
+# ANTHROPIC_API_KEY in the environment or in the repo's gitignored .env. Pure
+# Python, no model weights: the drafting happens on Anthropic's side.
 anthropic

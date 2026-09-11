@@ -19,11 +19,28 @@ and 20 captions — he writes when the writing has somewhere to go.
 
 ## Shipped
 
-Steps 1-3 plus display: `/memos` capture (voice AND typed — see
-[[feedback_waypoints_are_orientation]] for the sibling reversal), GPS filing,
-local Whisper transcription, `process_rollups.py`, and the day-divider display
-on the trip page. Every unedited write-up carries "Drafted by <model>", the same
-generated-vs-human line the memo page draws.
+`process_rollups.py` and the day-divider display on the trip page. Every
+unedited write-up carries "Drafted by <model>".
+
+## The memo capability was REMOVED ENTIRELY (2026-09-11)
+
+`/memos`, the API routes, `process_memos.py`, local Whisper transcription,
+`memo_uploads/`, `trip_data/memos.json`, the nav entry and the sixth phone tab
+— all gone, along with the two memos that existed. AWH: "It was added to give
+the long-format rollups something to work with, and possibly to allow recording
+a memo with no internet signal; but no internet signal also means no web app
+unless the SD card version is around, which we cannot depend on."
+
+**Don't rebuild it on the offline argument.** The service worker *could* serve
+a previously-visited `/memos` and IndexedDB *would* queue the recording, so the
+offline path was not strictly impossible — but pages are network-first, so it
+only works if you happened to visit first, and that is a thin thread to hang a
+feature on. The real reason it went is that the thing it fed was rejected.
+
+What survived because it was always shared, not memo-specific:
+`_BackgroundScan` (now behind the people scan and the place resolver),
+`trips.camper_names()` (used by `_make_trip` for `trip["campers"]`), and the
+`--force`/`edited` discipline the transcripts and the rollups both used.
 
 ## Where it landed (2026-09-10)
 
@@ -61,23 +78,28 @@ a generated write-up, editing a draft writes a note OVER it rather than editing
 it, and the "Drafted by <model>" line keys on `model` so a note retires it. See
 CLAUDE.md "The Day's Write-Up". `tests/test_day_notes.py`, 10 tests.
 
-## RESUME ON THE OTHER MACHINE
+## Where the summaries live (settled 2026-09-11)
 
-**The trip-95 summaries are NOT in git** — they are in `trip_data/day_rollups.json`,
-which is gitignored and excluded from the PA sync, and PA has never had them.
-The code travels by git; the summaries travel only in the backup bundle made
-2026-09-10 (`backup/ekko-backup-*.tar.gz`, `restore.sh` on the far side). Without
-it the other machine shows a trip 95 with no write-ups at all.
+**The trip-95 summaries are NOT in git** — `trip_data/day_rollups.json` is
+gitignored and excluded from the PA sync. They were recovered on 2026-09-11
+from the 2026-09-10 bundle and are in place locally; each carries
+`source: "conversation"`, which now outranks `--force` in the drafter.
+
+**Restore that bundle with a surgical copy of the one file, NOT `restore.sh`** —
+it also holds a `users.json` predating the `laura` account and hamfam's
+Trips-only flag, and a shorter `access_log.jsonl`. Only three files in it
+differed at all.
 
 Open, in his hands:
-1. **Publishing them to PA.** There is no automated local->PA path (deploy key is
-   a forced command, sync key is read-only), so either he re-types them on the
-   live site or they ride a bundle. Note the natural workflow does it for him:
-   editing a summary turns it into a day note in `trips.json`.
-2. **The other 94 trips.** ~321 days. Doing them the way trip 95 was done is a
-   conversation, not a script; automating it is the cheap-prompt note above.
-3. `process_rollups.py` and its 17-rule SYSTEM prompt are now superseded but not
-   deleted. Ask before removing them.
+1. **Publishing them to PA.** No automated local->PA path (deploy key is a
+   forced command, sync key read-only), so they ride a bundle or get re-typed
+   live. The natural workflow does it: editing a summary turns it into a day
+   note in `trips.json`, which DOES sync home.
+2. **The other 94 trips.** ~321 days, ~$3.50 by API or free in conversation.
+   Do the first dozen by hand regardless: they become the few-shot exemplars
+   that keep an automated run in the approved voice.
+3. `process_rollups.py`'s 17-rule SYSTEM prompt still targets the LONG form and
+   is superseded but not deleted. Ask before removing it.
 
 ## The lesson worth keeping from the nine faults
 
@@ -97,8 +119,13 @@ abandoned phone booth, not the town. See rules 2 and 14 in `SYSTEM`.
   (the same split `_people_scan_python()` probes for). `anthropic` was installed
   there 2026-09-10 to run the rollups. A `source ekko_trips_venv/bin/activate`
   fails silently and leaves you on system python, which has none of it.
-- **`ANTHROPIC_API_KEY` is in the LOCAL `.env` only.** PA does not have it and
-  cannot generate rollups.
+- **`ANTHROPIC_API_KEY` is in the repo-root `.env` on BOTH this machine and PA**
+  (AWH added it to PA 2026-09-11), the same gitignored file that holds
+  `GITHUB_PAT`. `.env` is excluded from `backup.sh` and can't travel by git, so
+  each host has its own. `_load_dotenv()` uses `setdefault`, so a real env var
+  wins over the file. Anthropic keys don't expire on a timer — only revocation
+  or exhausted credit — and when that happens the WEBSITE is unaffected (the
+  app never imports `anthropic`); the drafter just reports every day failed.
 - **`trip_data/day_rollups.json` exists only on the host that generated it.**
   Gitignored, excluded from sync (a `--delete` sync deleted a whole trip's prose
   before that exclude existed), now in `backup.sh`. On a new machine it does not

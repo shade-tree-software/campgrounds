@@ -39,10 +39,10 @@ def _trip(**kw):
     return t
 
 
-def _dossier(trip, driving=None, locations=None, memos=None,
+def _dossier(trip, driving=None, locations=None,
              photos=None, card_photos=None, card_captions=None):
     return R.day_dossier(trip, DAY, driving or {}, locations or {},
-                         memos or {}, photos or {}, card_photos or {},
+                         photos or {}, card_photos or {},
                          card_captions or {})
 
 
@@ -236,7 +236,7 @@ class TestWhereThingsAre(unittest.TestCase):
     def test_captions_reach_the_dossier(self):
         # They did not, for the life of the feature: the dossier carried photo
         # COUNTS and nothing else, so the most human material in the archive
-        # after the memos never reached the writer.
+        # after the captions never reached the writer.
         trip = _trip(events=[{"date": DAY, "name": "Bear Lake"}],
                      stays=[{"start": DAY, "end": "2026-08-26",
                              "place": "Moraine Park"}])
@@ -253,9 +253,9 @@ class TestWhereThingsAre(unittest.TestCase):
         # both is said twice.
         stay = {"start": "2026-08-28", "end": "2026-08-29", "place": "Prairie Dog"}
         caps = {"stay-0": ["Donna says prairie dogs are vicious"]}
-        arrival = R.day_dossier(_trip(stays=[stay]), "2026-08-28", {}, {}, {}, {},
+        arrival = R.day_dossier(_trip(stays=[stay]), "2026-08-28", {}, {}, {},
                                 {}, caps)
-        departure = R.day_dossier(_trip(stays=[stay]), "2026-08-29", {}, {}, {}, {},
+        departure = R.day_dossier(_trip(stays=[stay]), "2026-08-29", {}, {}, {},
                                   {}, caps)
         self.assertIn("photo_captions", arrival["sleeping_at"])
         self.assertNotIn("photo_captions", departure["woke_up_at"])
@@ -264,18 +264,6 @@ class TestWhereThingsAre(unittest.TestCase):
         trip = _trip(events=[{"date": DAY, "name": "Bear Lake"}])
         d = _dossier(trip, card_photos={"event-0": 3})
         self.assertNotIn("photo_captions", d["stops"][0])
-
-    def test_only_this_trips_memos_for_this_day(self):
-        memos = {
-            "a": {"trip_id": 95, "date": DAY, "speaker": "Andrew",
-                  "transcript": "Elk in the meadow."},
-            "b": {"trip_id": 95, "date": "2026-08-24", "transcript": "Other day."},
-            "c": {"trip_id": 12, "date": DAY, "transcript": "Other trip."},
-            "d": {"trip_id": 95, "date": DAY, "transcript": "   "},   # untranscribed
-        }
-        d = _dossier(_trip(), memos=memos)
-        self.assertEqual(d["memos"],
-                         [{"said_by": "Andrew", "said": "Elk in the meadow.", "at": ""}])
 
 
 class TestTripDays(unittest.TestCase):
@@ -295,7 +283,7 @@ class TestMergeAndWrite(unittest.TestCase):
         self.addCleanup(p.stop)
 
     def test_an_edit_made_during_a_long_batch_is_not_clobbered(self):
-        # Same contract as the memo transcriber: a batch takes minutes and the
+        # A batch takes minutes and the
         # app writes to this file, so deltas merge per-key against disk.
         R._merge_and_write({"95/2026-08-23": {"text": "first"}})
         R._merge_and_write({"95/2026-08-24": {"text": "second"}})

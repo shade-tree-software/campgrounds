@@ -2499,16 +2499,15 @@
         Two things can fill this slot and a typed note always wins over a
         drafted one (see `_trip_day_writeups`). The attribution line is not
         decoration: a generated sentence must never be mistaken for one of the
-        family's own — the same line the memo page draws between what a model
-        heard and what a human confirmed — so it appears exactly when the text
-        came from a model. Writing over a draft replaces it with a note, which
+        family's own — so it appears exactly when the text came from a
+        model. Writing over a draft replaces it with a note, which
         is what retires the line. -#}
     {%- if writeup or is_admin %}
     <div class="day-writeup{% if not writeup %} empty{% endif %}" id="writeup-{{ item.sort_date }}" data-date="{{ item.sort_date }}">
       {%- if writeup %}
       <p class="day-writeup-text"{% if is_admin %} onclick="editDayNote('{{ item.sort_date }}')" title="Click to write over this"{% endif %}>{{ writeup.text }}</p>
       {%- if not writeup.by_hand %}
-      <div class="day-writeup-source" title="Drafted from this day's stops, photos, captions and voice memos">Drafted by {{ writeup.model or 'a model' }}</div>
+      <div class="day-writeup-source" title="Drafted from this day's stops, photos and captions">Drafted by {{ writeup.model or 'a model' }}</div>
       {%- endif %}
       {%- elif is_admin %}
       <button type="button" class="day-writeup-add" onclick="editDayNote('{{ item.sort_date }}')">+ note about this day</button>
