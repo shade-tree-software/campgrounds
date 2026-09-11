@@ -708,12 +708,23 @@ def main():
         for day_i, day in enumerate(days, 1):
             key = f"{trip['id']}/{day}"
             existing = rollups.get(key) or {}
-            # `edited` is a human correcting a draft; `source: conversation`
-            # is a human having written the whole thing (trip 95's set, which
-            # is also the voice the prompt is calibrated against). Both outrank
-            # --force for the same reason, and only --force-edited passes.
-            human = existing.get("edited") or existing.get("source") == "conversation"
-            if human and not args.force_edited:
+            # NOTHING here is immune to being redrafted, and that is
+            # deliberate (AWH 2026-09-11). `source: "conversation"` used to
+            # outrank --force, on the reasoning that hand-written text
+            # shouldn't be clobbered — but it is LLM text either way, and the
+            # cost of freezing it is a library that cannot respond to its own
+            # facts being corrected: promote a waypoint to an event, fix a
+            # campspot date, re-fetch a track, and the day that should change
+            # silently keeps its old prose forever. Provenance without
+            # immunity: `source` still records who wrote it.
+            #
+            # The human channel is `day_notes` on the trip record, which needs
+            # no protection here because it outranks every rollup at display
+            # time (`_trip_day_writeups`). `edited` is vestigial — the app
+            # writes a note OVER a draft rather than editing it, so nothing
+            # sets the flag any more; the check stays as a cheap guard in case
+            # something ever does.
+            if existing.get("edited") and not args.force_edited:
                 continue
             sig = day_signature(trip, day, driving)
             # A rollup written before signatures existed has none. Absence
