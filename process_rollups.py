@@ -123,6 +123,11 @@ the end of what you know about it.
    Minor stops — fuel, rest areas, pull-offs — are not in the dossier in any \
 form, not even as a count. Do not speculate about them or about how busy a \
 day was beyond what "events" shows. If something mattered, it is an event.
+   EACH EVENT CARRIES ITS "time" AND OFTEN AN "until". Use them and do not
+   exceed them. An event at 19:30 lasting an hour is a short evening out, not
+   a day spent somewhere; one event on a day does not mean it filled the day.
+   Say "in the morning", "after lunch", "a short evening" only when the times
+   support it, and never quote the clock itself.
 5. NEVER REMARK ON WHAT THE RECORD DOES OR DOESN'T HOLD. No "the only thing \
 recorded", "nothing else on the day", "nothing but the drive", "with nothing \
 on it at all". That is commentary about the archive rather than about the day, \
@@ -167,6 +172,12 @@ was for — write about those. No distance is given for such a day and you must 
 not estimate, imply or allude to one: no "a short drive out", no "loops", no \
 "a few miles". A round-trip day with no events at all was a quiet one at camp; \
 say that plainly and briefly.
+   NOR ITS ABSENCE. "No need to move the camper at all", "with the camper left
+   exactly where it stood", "without moving an inch" — these mention driving by
+   describing its absence, which is the same fault wearing a different coat, and
+   they add nothing to "a full day based at Assateague". Say where the day was
+   based and what was in it; the reader does not need telling that a day based
+   somewhere did not also drive.
 12. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
 distance is unknown and you must not say the day had no driving, was parked, \
 or stayed put — read "moved" instead, and if it is true describe the move \
@@ -174,6 +185,14 @@ without a figure. Only "driving": "negligible" or a matching "from" and "to" \
 license saying the day stayed in one place.
 13. Do not restate the date, the weekday, the trip name or the day number — \
 the page already shows them.
+
+FACTS ABOUT THIS FAMILY, true of every trip:
+
+- THEY TRAVEL IN THE CAMPER AND NOTHING ELSE. There is no second car. Any
+local drive longer than a walk was made in the camper, so never write it as
+though the camper stayed on the pitch while they went off in something else —
+no "leaving the camper at the campsite", no "the camper stayed put while...".
+A day based somewhere still moved the camper if it went anywhere.
 
 WORKED EXAMPLES. These are the target, written by hand and approved. Match \
 their length, voice and altitude, not their wording:
@@ -556,9 +575,19 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         if item.get("family_visit"):
             if item["family_visit"] not in family:
                 family.append(item["family_visit"])
-        elif not item.get("waypoint") and item.get("name") not in events:
-            if item.get("name"):
-                events.append(item["name"])
+        elif not item.get("waypoint") and item.get("name"):
+            # The TIME matters as much as the name. Without it a bare list in
+            # order invites reading the first entry as the morning and a single
+            # entry as the whole day — AWH on trip 14's Ocean City: "We didn't
+            # spend the day in Ocean City. We spent only a short part of the
+            # evening there." It ran 19:30 to 20:47. 98% of non-waypoint events
+            # carry a time, so this is nearly always knowable.
+            ev = {k: v for k, v in (("name", item["name"]),
+                                    ("time", (item.get("time") or "").strip()),
+                                    ("until", (item.get("end_time") or "").strip()))
+                  if v}
+            if ev not in events:
+                events.append(ev)
     if events:
         d["events"] = events
     if family:
