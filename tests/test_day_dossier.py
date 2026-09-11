@@ -1,19 +1,21 @@
-"""What a day's rollup is written FROM.
+"""What a day's write-up is built FROM.
 
-The dossier is the half of step 3 with a right answer. The prose is a judgement
-call, but garbage in is confabulation out — a thin dossier is exactly what makes
-a model reach for invented atmosphere, and a dossier full of gas stations is
-what makes it write a paragraph about buying fuel.
+The dossier is the half with a right answer. The prose is a judgement call, but
+garbage in is confabulation out.
 
-The rule that matters most here is the last one: **a stop earns a mention in the
-rollup exactly as it earns a card on the timeline** — by having photos or a
-description. Two thirds of the library's events are auto-detected waypoints, and
-a travel day's raw list is mostly rest areas (trip 95's 20 August: Amoco, I-70
-West Rest Area, South Vienna Rest Area). Keeping the two tests identical also
-keeps the page honest: a rollup must not describe something the timeline above
-it has folded away.
+**What this file mostly pins is what the dossier REFUSES to carry.** The long
+rollups were rejected because they restated the timeline, and they restated it
+because the dossier handed the model the day's stops by name, their
+descriptions, the captions on their photos and the notes on the campground —
+all of which are printed on the cards directly below the write-up. A model
+handed a list of places will name them; no prompt rule survives contact with
+the data. So the fix was to stop offering them.
 
-Run from the project root with the venv active:
+What is left is the part a reader scrolling the cards cannot assemble: how far,
+which way, across what, how high it ended, and where the day sits in the trip.
+`states` is the one fact that was nowhere in the trip record — a day's stops
+name only the states it STOPPED in, silently dropping every state it merely
+drove across.
 
     python -m unittest tests.test_day_dossier -v
 """
@@ -39,231 +41,200 @@ def _trip(**kw):
     return t
 
 
-def _dossier(trip, driving=None, locations=None,
-             photos=None, card_photos=None, card_captions=None):
-    return R.day_dossier(trip, DAY, driving or {}, locations or {},
-                         photos or {}, card_photos or {},
-                         card_captions or {})
+def _stay(start, end, **kw):
+    s = {"start": start, "end": end, "place": "Moraine Park",
+         "where_label": "5 miles west of Estes Park, CO", "state": "CO",
+         "campground_id": 7, "lat": 40.36, "lng": -105.58}
+    s.update(kw)
+    return s
 
 
-class TestWhatEarnsAMention(unittest.TestCase):
-    def test_a_bare_waypoint_is_counted_not_named(self):
-        trip = _trip(events=[{"date": DAY, "name": "Amoco", "waypoint": True}])
+def _dossier(trip, driving=None, elevations=None, states=None,
+             trip_miles=None, day_index=None, day=DAY):
+    return R.day_dossier(trip, day, driving or {}, elevations or {},
+                         states, trip_miles, day_index)
+
+
+class TestWhatIsDeliberatelyAbsent(unittest.TestCase):
+    """The whole reason the long form failed. Each of these was IN the old
+    dossier and is what the model reached for."""
+
+    def _full_day(self):
+        trip = _trip(
+            stays=[_stay("2026-08-22", "2026-08-24", notes="prairie grass",
+                         site="7")],
+            events=[{"date": DAY, "name": "Alpine Visitor Center",
+                     "description": "a ranger talk", "time": "10:00"},
+                    {"date": DAY, "name": "Sinclair, Benkelman",
+                     "waypoint": True}])
+        return _dossier(trip, driving={DAY: {"miles": 273, "moving": "5h 27m"}})
+
+    def test_no_stop_is_named(self):
+        blob = json.dumps(self._full_day())
+        for named in ("Alpine", "Sinclair", "Benkelman"):
+            self.assertNotIn(named, blob)
+
+    def test_the_campground_is_not_named(self):
+        """It is characterised by where it is, never by what it is called —
+        the card below carries the name."""
+        d = self._full_day()
+        self.assertNotIn("Moraine Park", json.dumps(d))
+        self.assertEqual(d["to"]["where"], "5 miles west of Estes Park, CO")
+
+    def test_no_descriptions_notes_captions_or_site_numbers(self):
+        blob = json.dumps(self._full_day())
+        for leaked in ("ranger talk", "prairie grass", "site", "Site", '"7"'):
+            self.assertNotIn(leaked, blob)
+
+    def test_no_photo_counts(self):
+        """Photo counts told the old dossier which stops mattered. With no
+        stops to rank, they are just another number to pad a sentence with."""
+        self.assertNotIn("photos", json.dumps(self._full_day()))
+
+
+class TestTheShapeOfTheDay(unittest.TestCase):
+    def test_mileage_is_a_real_figure_not_a_bucket(self):
+        """The old dossier said "very long" and the approved summaries all
+        quote exact miles, so the bucket could never have produced them."""
+        d = _dossier(_trip(), driving={DAY: {"miles": 520, "moving": "9h 01m"}})
+        self.assertEqual(d["miles"], 520)
+        self.assertEqual(d["driving_time"], "9h 01m")
+
+    def test_a_day_that_did_not_drive_carries_no_mileage(self):
+        self.assertNotIn("miles", _dossier(_trip()))
+
+    def test_a_round_trip_is_flagged_and_has_no_heading(self):
+        """It started and ended in one place, so a compass direction would be
+        a fiction — and the prompt needs to know to describe a different kind
+        of day."""
+        trip = _trip(stays=[_stay("2026-08-22", "2026-08-25")])
+        d = _dossier(trip, driving={DAY: {"miles": 54, "round_trip": True}})
+        self.assertTrue(d["round_trip"])
+        self.assertNotIn("heading", d)
+
+    def test_heading_comes_from_where_the_day_started_and_ended(self):
+        trip = _trip(stays=[
+            _stay("2026-08-22", DAY, lat=40.0, lng=-100.0),
+            _stay(DAY, "2026-08-24", lat=40.0, lng=-105.0)])
+        self.assertEqual(_dossier(trip, driving={DAY: {"miles": 273}})["heading"],
+                         "west")
+
+    def test_a_day_that_barely_moved_gets_no_heading(self):
+        """Two campsites at the same park are not a direction of travel."""
+        trip = _trip(stays=[_stay("2026-08-22", DAY, lat=40.36, lng=-105.58),
+                            _stay(DAY, "2026-08-24", lat=40.37, lng=-105.59)])
+        self.assertNotIn("heading", _dossier(trip, driving={DAY: {"miles": 3}}))
+
+
+class TestWhereTheDayBeganAndEnded(unittest.TestCase):
+    def test_waking_and_sleeping_are_separate_facts(self):
+        trip = _trip(stays=[_stay("2026-08-22", DAY, state="NE",
+                                  where_label="in Trenton, NE"),
+                            _stay(DAY, "2026-08-24")])
         d = _dossier(trip)
-        self.assertEqual(d["stops"], [])
-        self.assertEqual(d["unremarkable_stops"], 1)
+        self.assertEqual(d["from"]["where"], "in Trenton, NE")
+        self.assertEqual(d["to"]["where"], "5 miles west of Estes Park, CO")
 
-    def test_a_waypoint_with_a_description_is_named(self):
-        trip = _trip(events=[{"date": DAY, "name": "Greenfield Rest Area",
-                              "waypoint": True, "description": "Dinner"}])
-        d = _dossier(trip)
-        self.assertEqual([s["name"] for s in d["stops"]], ["Greenfield Rest Area"])
-        self.assertNotIn("unremarkable_stops", d)
+    def test_the_last_day_has_no_destination(self):
+        """They drove home; there is no next campground. The prompt reads the
+        absence, together with day N of N, as the turn for home."""
+        d = _dossier(_trip(stays=[_stay("2026-08-22", DAY)]))
+        self.assertIn("from", d)
+        self.assertNotIn("to", d)
 
-    def test_a_waypoint_with_photos_is_named(self):
-        trip = _trip(events=[{"date": DAY, "name": "Fort Necessity", "waypoint": True}])
-        d = _dossier(trip, card_photos={"event-0": 3})
-        self.assertEqual([s["name"] for s in d["stops"]], ["Fort Necessity"])
-        self.assertEqual(d["stops"][0]["photos"], 3)
-
-    def test_a_real_event_is_always_named(self):
-        trip = _trip(events=[{"date": DAY, "name": "Bear Lake", "waypoint": False}])
-        self.assertEqual([s["name"] for s in _dossier(trip)["stops"]], ["Bear Lake"])
-
-    def test_other_days_events_are_not_included(self):
-        trip = _trip(events=[{"date": "2026-08-22", "name": "Elsewhere"}])
-        self.assertEqual(_dossier(trip)["stops"], [])
-
-    def test_the_photo_index_follows_the_events_real_position(self):
-        # card_photos is keyed "event-<index into trip['events']>", so an event
-        # from another day sitting earlier in the list must not shift it.
-        trip = _trip(events=[{"date": "2026-08-01", "name": "Other"},
-                             {"date": DAY, "name": "Ours", "waypoint": True}])
-        d = _dossier(trip, card_photos={"event-1": 2})
-        self.assertEqual([s["name"] for s in d["stops"]], ["Ours"])
-
-    def test_stops_come_out_in_time_order(self):
-        trip = _trip(events=[
-            {"date": DAY, "name": "Late", "time": "17:00"},
-            {"date": DAY, "name": "Early", "time": "08:30"}])
-        self.assertEqual([s["name"] for s in _dossier(trip)["stops"]],
-                         ["Early", "Late"])
-
-
-class TestFacts(unittest.TestCase):
-    def test_a_long_drive_is_a_bucket_never_a_figure(self):
-        # No mileage and no duration reach the model: both are printed on the
-        # day divider beside the entry, and given the numbers it writes "we
-        # drove 124 miles in 2h 24m", which is not how anyone recalls a day.
-        d = _dossier(_trip(), driving={DAY: {"miles": 460, "moving": "8h 10m",
-                                             "round_trip": False}})
-        self.assertEqual(d["driving"], "very long")
-        self.assertNotIn("460", json.dumps(d))
-        self.assertNotIn("8h 10m", json.dumps(d))
-
-    def test_an_ordinary_drive_is_not_worth_mentioning(self):
-        # Median A-to-B day in the library is 174 miles. A day like that is
-        # just how you get to the next campground.
-        d = _dossier(_trip(), driving={DAY: {"miles": 174, "moving": "3h 30m"}})
-        self.assertNotIn("driving", d)
-
-    def test_a_round_trip_is_never_mentioned_however_far(self):
-        # A loop out of camp and back is the day's activity, not its travel;
-        # trip 95's 54-mile run up to the Alpine Visitors Center is the drive.
-        d = _dossier(_trip(), driving={DAY: {"miles": 191, "moving": "5h 00m",
-                                             "round_trip": True}})
-        self.assertNotIn("driving", d)
-
-    def test_a_day_that_did_not_drive_carries_no_driving_key(self):
-        # Absent, not zero: "0 mi" reads as a measured stillness rather than as
-        # nothing to say, and invites the model to remark on it.
-        self.assertNotIn("driving", _dossier(_trip()))
-
-    def test_where_we_wake_and_where_we_sleep_are_separate_facts(self):
-        trip = _trip(stays=[{"start": "2026-08-22", "end": DAY,
-                             "place": "Spring Canyon"},
-                            {"start": DAY, "end": "2026-08-26",
-                             "place": "Moraine Park"}])
-        d = _dossier(trip)
-        self.assertEqual(d["woke_up_at"]["place"], "Spring Canyon")
-        self.assertEqual(d["sleeping_at"]["place"], "Moraine Park")
-        self.assertNotIn("ended", d)
-
-    def test_the_last_day_of_a_trip_ends_at_home(self):
-        # The bug this replaces: one `nights` list matched start <= day <= end,
-        # so a departure day inherited the night BEFORE it and nothing said the
-        # day ended anywhere else. Trip 95's 1 September came out as "that night
-        # was our last at Bulltown Campground" — they had left that morning and
-        # driven 243 miles home. Every trip's final day had this shape.
-        trip = _trip(stays=[{"start": "2026-08-22", "end": DAY,
-                             "place": "Bulltown Campground"}])
-        d = _dossier(trip)
-        self.assertEqual(d["woke_up_at"]["place"], "Bulltown Campground")
-        self.assertNotIn("sleeping_at", d)
-        self.assertIn("home", d["ended"])
-
-    def test_a_day_in_the_middle_of_a_stay_is_only_sleeping_at(self):
-        trip = _trip(stays=[{"start": "2026-08-22", "end": "2026-08-26",
-                             "place": "Moraine Park"}])
-        d = _dossier(trip)
-        self.assertEqual(d["sleeping_at"]["place"], "Moraine Park")
-        self.assertNotIn("ended", d)
-
-
-class TestWhereThingsAre(unittest.TestCase):
-    """An admin unit is not a place anyone says out loud.
-
-    Nominatim's reverse geocode falls through city → town → village → hamlet →
-    municipality → township → county, and a point outside every town's polygon
-    lands on the last two: 29% of the library's 1,116 events (177 townships,
-    144 counties). Handed to a writer that becomes "Bulltown Campground in
-    Braxton County", which no traveller would write, and on trip 95 every one
-    of Rocky Mountain's overlooks was "Larimer County, CO".
-    """
-
-    def test_a_named_town_is_kept(self):
-        trip = _trip(events=[{"date": DAY, "name": "Rainbow Park",
-                              "locale": "Wray", "state": "CO",
-                              "description": "breakfast"}])
-        self.assertEqual(_dossier(trip)["stops"][0]["where"], "Wray, CO")
+    def test_mid_stay_days_wake_and_sleep_in_the_same_place(self):
+        d = _dossier(_trip(stays=[_stay("2026-08-22", "2026-08-25")]))
+        self.assertEqual(d["from"]["where"], d["to"]["where"])
 
     def test_a_county_or_township_is_dropped_the_state_survives(self):
-        # The state is kept deliberately. On a day that crosses four of them,
-        # breakfast in Pennsylvania and dinner in Indiana is how the day is
-        # actually recalled; on a day that never leaves Colorado it is merely
-        # redundant, which the model can judge. The county never is.
-        for admin in ("Larimer County", "Wharton Township", "Iberville Parish",
-                      "Bedminster Twp", "Municipality of Anchorage"):
-            trip = _trip(events=[{"date": DAY, "name": "Forest Canyon Overlook",
-                                  "locale": admin, "state": "CO",
-                                  "description": "overlook"}])
-            stop = _dossier(trip)["stops"][0]
-            self.assertEqual(stop["where"], "CO", f"{admin!r} reached the model")
+        """An admin unit is not a place anyone says out loud."""
+        trip = _trip(stays=[_stay(DAY, "2026-08-24", where_label=None,
+                                  locale="Braxton County", state="WV")])
+        self.assertEqual(_dossier(trip)["to"]["where"], "WV")
 
     def test_a_resolved_label_is_not_given_its_state_twice(self):
-        # trips.where_label already carries the state, and falls back to the
-        # bare state when a coordinate resolves to nowhere worth naming — so a
-        # naive join produced "CO, CO" for every Rocky Mountain overlook.
-        trip = _trip(events=[{"date": DAY, "name": "Forest Canyon Overlook",
-                              "where_label": "CO", "state": "CO",
-                              "description": "x"},
-                             {"date": DAY, "name": "Bear Lake",
-                              "where_label": "8 miles southwest of Estes Park, CO",
-                              "state": "CO", "description": "x"}])
-        wheres = [s["where"] for s in _dossier(trip)["stops"]]
-        self.assertIn("CO", wheres)
-        self.assertIn("8 miles southwest of Estes Park, CO", wheres)
-        self.assertNotIn("CO, CO", wheres)
+        trip = _trip(stays=[_stay(DAY, "2026-08-24",
+                                  where_label="1 mile east of Battle Ground, IN",
+                                  state="IN")])
+        self.assertEqual(_dossier(trip)["to"]["where"],
+                         "1 mile east of Battle Ground, IN")
 
-    def test_a_stop_with_no_locale_at_all_gets_no_where(self):
-        trip = _trip(events=[{"date": DAY, "name": "Alpine Visitors Center",
-                              "locale": "", "state": "", "description": "x"}])
-        self.assertNotIn("where", _dossier(trip)["stops"][0])
 
-    def test_a_stay_gets_the_same_treatment(self):
-        trip = _trip(stays=[{"start": DAY, "end": "2026-09-01",
-                             "place": "Bulltown Campground",
-                             "locale": "Braxton County", "state": "WV"}])
-        self.assertEqual(_dossier(trip)["sleeping_at"]["where"], "WV")
-        self.assertNotIn("Braxton", json.dumps(_dossier(trip)))
+class TestElevation(unittest.TestCase):
+    """The only licence the prompt gives for saying anything about terrain."""
 
-    def test_campground_detail_is_attached_but_not_waterfront_boilerplate(self):
-        trip = _trip(stays=[{"start": DAY, "end": "2026-08-26",
-                             "place": "Moraine Park", "campground_id": 2303,
-                             "notes": "8195 feet"}])
-        locations = {2303: {"elevation_meters": 2498, "waterfront": "not waterfront",
-                            "ownership": "federal", "note": "NPS campground"}}
-        night = _dossier(trip, locations=locations)["sleeping_at"]
-        self.assertEqual(night["elevation_m"], 2498)
-        self.assertEqual(night["campground_note"], "NPS campground")
-        # "not waterfront" is the DEFAULT for an audited campground, so passing
-        # it along would state a non-fact about every inland site in the library.
-        self.assertNotIn("waterfront", night)
+    def test_offered_for_where_the_day_ended(self):
+        trip = _trip(stays=[_stay(DAY, "2026-08-24", campground_id=7)])
+        self.assertEqual(_dossier(trip, elevations={7: 8196})["to"]["elevation_ft"],
+                         8200)
 
-    def test_a_places_description_is_told_once_on_the_day_you_pull_in(self):
-        # Attached to every day of a stay it gets recited on each of them: trip
-        # 95 described Prophetstown's prairie grass on both the 20th and the
-        # 21st, and Moraine Park's elevation three days running.
-        stay = {"start": "2026-08-20", "end": "2026-08-26",
-                "place": "Moraine Park", "campground_id": 2303,
-                "notes": "Prairie grass grown up around the park"}
-        locations = {2303: {"note": "NPS campground"}}
-        night = _dossier(_trip(stays=[stay]), locations=locations)["sleeping_at"]
-        self.assertEqual(night["place"], "Moraine Park")
-        self.assertNotIn("notes", night)
-        self.assertNotIn("campground_note", night)
+    def test_never_offered_for_where_it_began(self):
+        """Both ends would invite narrating a climb whose profile the model
+        cannot see."""
+        trip = _trip(stays=[_stay("2026-08-22", DAY, campground_id=7),
+                            _stay(DAY, "2026-08-24", campground_id=9)])
+        d = _dossier(trip, elevations={7: 8196, 9: 1200})
+        self.assertNotIn("elevation_ft", d["from"])
+        self.assertIn("elevation_ft", d["to"])
 
-    def test_captions_reach_the_dossier(self):
-        # They did not, for the life of the feature: the dossier carried photo
-        # COUNTS and nothing else, so the most human material in the archive
-        # after the captions never reached the writer.
-        trip = _trip(events=[{"date": DAY, "name": "Bear Lake"}],
-                     stays=[{"start": DAY, "end": "2026-08-26",
-                             "place": "Moraine Park"}])
-        d = _dossier(trip, card_photos={"event-0": 3, "stay-0": 2},
-                     card_captions={"event-0": ["No mountains yet"],
-                                    "stay-0": ["Just like the album cover"]})
-        self.assertEqual(d["stops"][0]["photo_captions"], ["No mountains yet"])
-        self.assertEqual(d["sleeping_at"]["photo_captions"],
-                         ["Just like the album cover"])
+    def test_an_unknown_elevation_is_simply_absent(self):
+        trip = _trip(stays=[_stay(DAY, "2026-08-24", campground_id=7)])
+        self.assertNotIn("elevation_ft", _dossier(trip, elevations={})["to"])
 
-    def test_a_stays_captions_are_told_once_on_arrival(self):
-        # A stay appears on two days — sleeping_at, then woke_up_at — and each
-        # day is a separate call with no memory of the others, so anything on
-        # both is said twice.
-        stay = {"start": "2026-08-28", "end": "2026-08-29", "place": "Prairie Dog"}
-        caps = {"stay-0": ["Donna says prairie dogs are vicious"]}
-        arrival = R.day_dossier(_trip(stays=[stay]), "2026-08-28", {}, {}, {},
-                                {}, caps)
-        departure = R.day_dossier(_trip(stays=[stay]), "2026-08-29", {}, {}, {},
-                                  {}, caps)
-        self.assertIn("photo_captions", arrival["sleeping_at"])
-        self.assertNotIn("photo_captions", departure["woke_up_at"])
 
-    def test_a_day_with_no_captions_carries_no_caption_key(self):
-        trip = _trip(events=[{"date": DAY, "name": "Bear Lake"}])
-        d = _dossier(trip, card_photos={"event-0": 3})
-        self.assertNotIn("photo_captions", d["stops"][0])
+class TestStatesCrossed(unittest.TestCase):
+    """The fact that was nowhere in the trip record."""
+
+    def _pings(self, *states):
+        # One ping per state, in order; the stub resolves by longitude.
+        return [{"lat": 40.0, "lng": i, "lon": i} for i, _ in enumerate(states)]
+
+    def _with_gazetteer(self, states):
+        seq = list(states)
+
+        class Stub:
+            @staticmethod
+            def load(): pass
+
+            @staticmethod
+            def nearest_town(lat, lon):
+                return {"state": seq[int(lon)]}
+        return mock.patch.dict(sys.modules, {"nearest_town": Stub})
+
+    def test_order_is_preserved_and_repeats_collapse(self):
+        states = ["MD", "PA", "PA", "WV", "OH", "OH", "IN"]
+        with self._with_gazetteer(states):
+            self.assertEqual(R.states_crossed(self._pings(*states), samples=99),
+                             ["MD", "PA", "WV", "OH", "IN"])
+
+    def test_a_state_re_entered_later_is_listed_again(self):
+        """Not a set: crossing back is part of the day's shape."""
+        states = ["VA", "WV", "VA"]
+        with self._with_gazetteer(states):
+            self.assertEqual(R.states_crossed(self._pings(*states), samples=99),
+                             ["VA", "WV", "VA"])
+
+    def test_no_track_means_no_states_not_an_error(self):
+        self.assertEqual(R.states_crossed([]), [])
+        self.assertEqual(R.states_crossed(None), [])
+
+    def test_a_host_with_no_gazetteer_just_loses_the_field(self):
+        """The USB build and a fresh clone must still draft."""
+        with mock.patch.dict(sys.modules, {"nearest_town": None}):
+            self.assertEqual(R.states_crossed([{"lat": 1, "lon": 1}]), [])
+
+
+class TestPlaceInTheTrip(unittest.TestCase):
+    def test_the_day_is_numbered_within_the_trip(self):
+        d = _dossier(_trip(), day_index=(2, 14))
+        self.assertEqual((d["day_of_trip"], d["trip_days"]), (2, 14))
+
+    def test_every_days_mileage_is_offered_in_order(self):
+        """What lets the model say "the biggest driving day of the trip"
+        without being told which day that was."""
+        miles = [124, 520, 405]
+        self.assertEqual(_dossier(_trip(), trip_miles=miles)["trip_miles_by_day"],
+                         miles)
 
 
 class TestTripDays(unittest.TestCase):
@@ -283,8 +254,8 @@ class TestMergeAndWrite(unittest.TestCase):
         self.addCleanup(p.stop)
 
     def test_an_edit_made_during_a_long_batch_is_not_clobbered(self):
-        # A batch takes minutes and the
-        # app writes to this file, so deltas merge per-key against disk.
+        # A batch takes minutes and the app writes to this file, so deltas
+        # merge per-key against disk.
         R._merge_and_write({"95/2026-08-23": {"text": "first"}})
         R._merge_and_write({"95/2026-08-24": {"text": "second"}})
         with open(R.ROLLUPS_FILE) as f:

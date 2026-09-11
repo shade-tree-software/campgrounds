@@ -51,6 +51,7 @@ environment or in the repo's gitignored .env.
 import argparse
 import hashlib
 import json
+import math
 import os
 import re
 import sys
@@ -82,118 +83,75 @@ SETTLE_AFTER_S = 48 * 3600
 # written to the file as though complete, because nothing checked stop_reason.
 MAX_TOKENS = 16000
 
-SYSTEM = """You write one short diary entry for one day of a family's camping trip, \
-from a dossier of facts.
+SYSTEM = """You write ONE SHORT PARAGRAPH about one day of a family's camping \
+trip, from a dossier of facts. It sits above that day's own timeline cards on \
+the page, as a subtitle to them.
+
+WHAT IT IS FOR. A first-time reader scrolling the trip wants to know what kind \
+of day this was before they read the individual stops. That is the only job. \
+The cards below already list every stop, photo, campsite and note, so anything \
+you name from them is wasted words — the reader is about to read it anyway.
 
 RULES, in order of importance:
 
-1. Every statement must come from the dossier. If it is not in there, it did \
-not happen. Never invent weather, scenery, feelings, motives, or reactions. \
-"They enjoyed the view" is a fabrication unless someone said so.
-2. THE INVENTION IS ALWAYS IN THE JOINS. Rule 1 is easy to keep for whole \
-facts and almost impossible to keep while making sentences flow, because \
-fluent prose wants a preposition, a motive, a mood — and those are exactly what \
-the dossier does not have. Every one of the following was written from a source \
-that did not say it:
-   WHERE, relative to something else. "We talked briefly to a group of men on \
-Harleys" became "at the top we talked to them"; they were in the car park. \
-"A quick stop at the park sign" became "on the way back through town"; there is \
-no town within miles of it.
-   HOW NEARLY something was missed, or any other counterfactual. "We would have \
-missed it were it not for her research" became "we'd have driven right past it" \
-— a specific claim about a road nobody mentioned.
-   WHY a stop took as long as it did. A seventy-minute stop labelled "breakfast" \
-is not a seventy-minute breakfast; it is a stop at which breakfast happened.
-   THE MOOD OF THE DAY. "After the day we'd had" turned a long day into a bad \
-one. Length is in the dossier; disappointment, relief and exhaustion are not.
-   WHOSE IDEA something was, WHO NAMED something, and WHAT ANYTHING WAS FOR. \
-"One more stop" does not become "a stop for the car".
-   If you cannot say something without inventing the join, say the smaller true \
-thing, or leave it out. An entry that omits a detail is fine. An entry that \
-invents one is not.
-3. If the day holds little, write little. Two sentences is a complete entry for \
-a day that was mostly driving. Do not pad.
-4. THE FAMILY'S OWN WORDS ARE THE SUBSTANCE OF THE ENTRY, and the facts are \
-the scaffolding around them. Two fields carry those words — "photo_captions" \
-(written on their own photographs) and the "notes" on a place they stayed. \
-Prefer both to any statistic, and let them decide what the day was about.
-   FOLD THEM IN; DO NOT QUOTE THEM. Rewrite what was written in the same voice \
-as the rest of the entry, in its place in the day, so a reader cannot tell \
-which sentence began as a caption and which as a fact. One dropped in between \
-quotation marks reads as a clipping pasted into a diary, and it strands the \
-prose on either side of it. The same goes for announcing the source: never \
-"one photo is captioned" or "the note says".
-   FOLDING IS REWRITING, NOT SUMMARISING. Every specific thing written must \
-survive — the horizon-to-horizon view, the woman at the corn stand, the last \
-week of the season. Losing a detail to make a sentence flow is a worse failure \
-than an ungainly sentence. Add nothing that was not written.
-   What someone wrote may be the frame for the whole day rather than a line \
-inside it. If it IS the day, build the entry around it and let the stops fall \
-in behind.
-   Name a person only when what was written is about them or belongs to them \
-("Donna had read that Lily Lake was a must-see"). Otherwise the family speaks \
-as "we", like the rest of the entry — a name on every sentence is just \
-attribution noise.
-   A phrase may stay verbatim when it is the whole point of the sentence and \
-paraphrase would flatten it — an aside like "we still don't know why the town \
-has a lit Christmas tree in August" survives because the wording is the joke. \
-That is a rare exception, not the default.
-5. Plain past tense, first person plural ("we"), the way someone writes up \
-their own day. No brochure language: nothing is nestled, stunning, breathtaking, \
-scenic or a hidden gem.
-6. Do not restate the date, the trip name, or the day number — the page already \
-shows them. Do not use headings or bullet points. Prose only.
-7. "unremarkable_stops" is a count of gas stations and rest areas, kept \
-deliberately nameless. Mention it only if the day is otherwise thin, and never \
-name or characterise them.
-8. Photo counts tell you which stops mattered most — the family photographed \
-them. Use them to decide what to write about. NEVER state or allude to one. \
-Not "fourteen photos for the day", and equally not "where we took most of the \
-day's pictures" or "more of our film than anything else" — a comparison is \
-still a fact about the archive rather than about the day.
-9. Do not list who was there. The names are on the page already, and a day \
-reads as an inventory when it ends in a roll call. Name someone only when \
-something is said about them.
-10. "driving" is how the day FELT, not a figure to quote. Say it was a long day \
-if it is worth saying; the exact mileage and hours are printed beside your entry \
-already. A day with no "driving" key does not need its travel mentioned at all.
-11. Times order the day; they are not for reciting. "time"/"until" tell you what \
-came first and how long it took, so write "the afternoon went to" or "an hour or \
-so at" — never "from a quarter to nine until nearly four".
-12. Say where something is only when the dossier gives a "where". A stop with \
-none is out in the country, and the honest thing is to name the stop and stop \
-there. Never invent a town, county, or region for it.
-13. Never invent HOW a place was experienced. Walked, drove, hiked, toured, \
-climbed, paddled, ate — unless the dossier says which, the verb is "went to", \
-"stopped at" or "spent time at". Writing "we drove Snake Alley" about a street \
-the dossier only calls the crookedest in the world is a fabrication, and it is \
-wrong: they walked it.
-14. A CAPTION IS A LABEL ON A PHOTOGRAPH YOU CANNOT SEE, and most of what it \
-means is in the picture. "That's the moon" identifies something in a frame. \
-"Not in service" is about an object in one — an abandoned phone booth, as it \
-happens, not the town it stands in. "Munchkinland" turned out to be a sign on a \
-playground, not what the family called the place.
-   So: use a caption only when it stands ON ITS OWN as a statement about the \
-day, the way "Donna says prairie dogs are vicious" and "Idaho Springs claims to \
-be where the Gold Rush started" do. If understanding it requires seeing the \
-photograph, leave it out — a caption you cannot place is not a fact you have. \
-Never guess its subject, never guess who wrote or said it, and never rebuild it \
-into an action the family took.
-   Captions are often jokes, and a joke reported as a fact is worse than a joke \
-left out: "Wait, they have trees in Nebraska?" is an aside about a photograph, \
-not a question the family set out to answer.
-15. A NAME IS A NAME, NOT A DESCRIPTION. "Sinclair (dinosaur) gas" is a \
-parenthetical telling the family which chain it was — every Sinclair sign \
-carries that dinosaur — not a distinguishing feature of that one station. Do \
-not unpack a name into prose about what the place is like.
-16. They travel in a 23-foot camper, and it is a camper or the RV — never a \
-car. "A stop for the car" is wrong twice over: wrong vehicle, and an invented \
-reason for a stop the dossier only counted.
-17. A stop's own times bound how big it may sound. Forty-five minutes is "a \
-stop" or "three quarters of an hour", never "we spent the afternoon". Do not \
-inflate a short visit into a long one to give a thin day more weight.
+1. THE SHAPE OF THE DAY IS THE CONTENT. How far, which way, across what, and \
+what kind of day that made — a haul, a touring day, a moving day, a day that \
+barely moved, the turn for home. That is what the cards below cannot say and a \
+reader cannot assemble for themselves.
+2. 25 TO 45 WORDS. One paragraph, often one or two sentences. This is a caption, \
+not an entry. If you are writing a third sentence, you are listing.
+3. IMPERSONAL VOICE. Never "we", "our" or "I". The family's own words are all \
+over the page already; this stands above them as a different kind of text, and \
+the reader should be able to tell in one glance which is which. Write "a short \
+evening run west", not "we drove west".
+4. NAME NOTHING THE CARDS ALREADY NAME. No stop names, no campsite numbers, no \
+photo subjects, no people. Regions, states, rivers and mountain ranges are \
+fine — they are the shape, not the contents. The campground you end at may be \
+characterised ("ending at a reservoir in the southwestern corner of the state") \
+but not named.
+5. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
+the day's place in the trip are given. Do not invent terrain, weather, mood, \
+fatigue, or why anything took as long as it did. "states" is the ordered list \
+of states the day drove through, so "across Pennsylvania, a corner of West \
+Virginia and the whole width of Ohio into Indiana" is supported and anything \
+about what those states LOOKED like is not.
+6. USE "trip_miles_by_day" TO PLACE THE DAY. It is every day's mileage in \
+order, so you can see whether this was the biggest day, the first easy one \
+after a run of hauls, or a short hop before a long one. Saying where a day sits \
+in the trip is the most useful thing you can do with 40 words. Do not restate \
+the numbers of other days.
+7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
+breathtaking or a hidden gem. No exclamation marks. Plain past tense.
+8. A DAY THAT BARELY DROVE IS NOT A FAILURE TO REPORT. "round_trip" means the \
+day started and ended in the same place; say what that kind of day was (based \
+at one campground, a day out and back) rather than straining to make it sound \
+like travel. A day with no driving at all gets a sentence about being parked.
+9. Do not restate the date, the weekday, the trip name or the day number — the \
+page already shows them.
 
-Return only the entry text."""
+WORKED EXAMPLES. These are the target, written by hand and approved. Match \
+their length, voice and altitude, not their wording:
+
+  520 miles, MD→PA→WV→OH→IN, day 2 of 14, the trip's longest:
+  "The long haul: 520 miles and nine hours at the wheel, across Pennsylvania, \
+a corner of West Virginia and the whole width of Ohio into Indiana. The \
+biggest driving day of the trip."
+
+  124 miles, MD only, day 1 of 14, next day 520:
+  "A short evening run west to get the trip started — 124 miles into the \
+Maryland mountains, with the real driving saved for tomorrow."
+
+  405 miles, IL→IA, day 3 of 14, after two hauls, several real stops:
+  "West across Illinois and over the Mississippi into Iowa. Still 405 miles, \
+but the first day that felt like touring rather than hauling — a handful of \
+real stops spaced through it."
+
+  454 miles, IA→NE, day 4 of 14, ending at a reservoir campground in SW NE:
+  "The rest of Iowa and most of Nebraska, 454 miles of country opening out and \
+emptying as it went, ending at a reservoir in the southwestern corner of the \
+state within reach of Colorado."
+
+Return only the paragraph."""
 
 
 # ── .env ──────────────────────────────────────────────────────────────────
@@ -296,137 +254,190 @@ def _drive_bucket(drive):
     return "long" if miles >= DRIVE_LONG_MI else ""
 
 
-def day_dossier(trip, day, driving, locations, photo_counts,
-                card_photos=None, card_captions=None):
-    """Everything known about one day of one trip, as a plain dict.
+def _haversine_mi(lat1, lng1, lat2, lng2):
+    r = 3958.8
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dp, dl = p2 - p1, math.radians(lng2 - lng1)
+    a = (math.sin(dp / 2) ** 2
+         + math.cos(p1) * math.cos(p2) * math.sin(dl / 2) ** 2)
+    return 2 * r * math.asin(min(1.0, math.sqrt(a)))
 
-    This is the half worth getting right. The model can only be as honest as
-    its input, and an empty dossier is what produces invented atmosphere — so
-    anything genuinely unknown is simply absent rather than guessed at.
+
+def _bearing(lat1, lng1, lat2, lng2):
+    p1, p2 = math.radians(lat1), math.radians(lat2)
+    dl = math.radians(lng2 - lng1)
+    y = math.sin(dl) * math.cos(p2)
+    x = math.cos(p1) * math.sin(p2) - math.sin(p1) * math.cos(p2) * math.cos(dl)
+    return (math.degrees(math.atan2(y, x)) + 360) % 360
+
+
+def _stay_point(stay):
+    """(lat, lng) of a stay, or None. `enrich_trip_locations` has already
+    resolved `campsite_location` over the campground's listed coords."""
+    try:
+        return float(stay["lat"]), float(stay["lng"])
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _elevation_ft(stay, elevations):
+    """Feet, because the app shows feet everywhere a human reads elevation.
+
+    Only offered for where the day ENDED: "up into the mountains" is a fact
+    about arriving somewhere, and giving both ends invites the model to narrate
+    a climb whose profile it cannot see. It is also the ONLY licence the prompt
+    gives for saying anything about terrain — rule 5 forbids inventing it, so
+    without this every day reads as flat.
+
+    Note `_load_locations_by_id()` cannot supply this: it trims entries to
+    name/lat/lng/kind, so an elevation read from there is always None.
     """
-    card_photos = card_photos or {}
-    # What was written ON the photos. Captions are the second-most human thing
-    # in the archive — "Just like the Bruce Springsteen album
-    # cover", "No mountains yet" — and the dossier used to carry only photo
-    # COUNTS, so every one of them was invisible to the rollups.
-    card_captions = card_captions or {}
-    d = {"date": day, "weekday": "", "trip": trip.get("summary", ""),
-         "stops": [], "photos": photo_counts.get(day, 0)}
+    try:
+        return round(float(elevations[stay["campground_id"]]) / 10) * 10
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _heading(from_pt, to_pt):
+    """Rough compass direction of the day's travel, or "" if it barely moved.
+
+    The single most useful word in a one-line summary of a driving day and
+    nowhere in the trip record — a reader places "west across Illinois" instantly
+    and "Illinois to Iowa" not at all.
+    """
+    if not from_pt or not to_pt:
+        return ""
+    if _haversine_mi(*from_pt, *to_pt) < 15:
+        return ""          # a day spent around one place has no heading
+    brg = _bearing(*from_pt, *to_pt)
+    return ["north", "northeast", "east", "southeast",
+            "south", "southwest", "west", "northwest"][round(brg / 45) % 8]
+
+
+def states_crossed(track_day, samples=40):
+    """The states the day drove through, in order, deduped.
+
+    The fact the hand-written exemplars lean on hardest and the ONLY one that
+    was not already somewhere in the trip record: a day's stops name the states
+    it stopped in, which silently drops every state it merely drove across —
+    trip 95's second day stopped in MD, PA and IN and also crossed a corner of
+    West Virginia and the whole width of Ohio.
+
+    Read from the GPS with the offline gazetteer (`nearest_town`), so it costs
+    no API call and works on the USB build. Sampling rather than walking every
+    ping is deliberate: a 6,000-ping day resolves in 40 lookups, and a state
+    you were in for less time than the gap between samples is not one a reader
+    needs told about. The nearest populated place's state can be wrong within a
+    few miles of a border — accepted, because the alternative is a polygon set
+    the repo does not carry, and a mislabelled border town changes one item in
+    a list rather than inventing a fact.
+    """
+    if not track_day:
+        return []
+    try:
+        import nearest_town as _nt
+        _nt.load()
+    except Exception:
+        return []          # no gazetteer on this host: the day just loses states
+    step = max(1, len(track_day) // samples)
+    out = []
+    for p in track_day[::step] + [track_day[-1]]:
+        try:
+            st = (_nt.nearest_town(p["lat"], p["lon"]) or {}).get("state")
+        except Exception:
+            continue
+        if st and (not out or out[-1] != st):
+            out.append(st)
+    return out
+
+
+def day_dossier(trip, day, driving, elevations, day_states=None,
+                trip_miles=None, day_index=None):
+    """The facts one day's paragraph is written from, and nothing else.
+
+    Deliberately much narrower than the dossier the long rollups used. That one
+    carried the day's stops by name, their descriptions, the captions on their
+    photos and the notes on the campground — and was assembled FROM the very
+    cards printed directly below the write-up, so faithful prose could only
+    restate them. It was rejected for exactly that.
+
+    What is left is the part a reader cannot assemble by scrolling: how far,
+    which way, across what, and where the day sits in the trip. Keeping the
+    stop names OUT is not a saving, it is the feature — a model handed a list
+    of places will name them.
+    """
+    d = {"date": day, "weekday": ""}
     try:
         d["weekday"] = _date.fromisoformat(day).strftime("%A")
     except ValueError:
         pass
+    if day_index:
+        d["day_of_trip"], d["trip_days"] = day_index
+    if trip_miles:
+        # Every day's mileage in order, so the model can see whether this was
+        # the biggest day, the first easy one, or a hop before a long haul.
+        # Cheap (one small list) and it buys the most useful sentence available.
+        d["trip_miles_by_day"] = trip_miles
 
-    bucket = _drive_bucket(driving.get(day))
-    if bucket:
-        d["driving"] = bucket
+    drive = driving.get(day) or {}
+    if drive.get("miles"):
+        d["miles"] = drive["miles"]
+        if drive.get("moving"):
+            d["driving_time"] = drive["moving"]
+        if drive.get("round_trip"):
+            # No leg to describe: the day went out and came back.
+            d["round_trip"] = True
+    if day_states:
+        d["states"] = list(day_states)
 
-    # Where we slept, named as the two different facts they are.
-    #
-    # One `nights` list matched with `start <= day <= end` conflated them: on a
-    # departure day it handed over the night BEFORE, flagged `leaving: true`,
-    # and said nothing about where the day ended. On the last day of a trip
-    # that is every fact the model has, so trip 95's 1 September came out as
-    # "that night was our last at Bulltown Campground" — they had left Bulltown
-    # that morning and driven 243 miles home. Every trip's final day had it.
-    for stay_idx, stay in enumerate(trip.get("stays", [])):
+    woke = slept = None
+    for stay in trip.get("stays", []):
         start, end = stay.get("start", ""), stay.get("end", "")
-        tonight = start <= day < end          # we sleep here
-        last_night = start < day <= end       # we woke here
-        if not (tonight or last_night):
-            continue
-        night = {"place": stay.get("place", ""),
-                 "where": _where(stay.get("where_label") or stay.get("locale"),
-                                 stay.get("state"))}
-        if not night["where"]:
-            night.pop("where")
-        if stay.get("site"):
-            night["site"] = stay["site"]
-        # Captions belong to the day you pull in, exactly as the place's own
-        # description does. A stay appears on two days — as `sleeping_at` and
-        # again as `woke_up_at` — and each day is drafted by a SEPARATE call
-        # with no knowledge of the others, so anything present on both is
-        # guaranteed to be said twice. "Donna says prairie dogs are vicious"
-        # duly turned up on the 28th and again on the 29th.
-        if start == day and card_captions.get(f"stay-{stay_idx}"):
-            night["photo_captions"] = card_captions[f"stay-{stay_idx}"]
-        # The place's own description belongs to the day you PULL IN. Attached
-        # to every day of a stay it gets recited on each of them — trip 95 told
-        # us about Prophetstown's prairie grass on both the 20th and the 21st,
-        # and Moraine Park's elevation three days running.
-        if start == day:
-            if stay.get("notes"):
-                night["notes"] = stay["notes"]
-            cg = locations.get(stay.get("campground_id"))
-            if cg:
-                for src, dst in (("elevation_meters", "elevation_m"),
-                                 ("waterfront", "waterfront"),
-                                 ("ownership", "ownership"),
-                                 ("note", "campground_note")):
-                    val = cg.get(src)
-                    if val and not (src == "waterfront" and val == "not waterfront"):
-                        night[dst] = val
-        if tonight:
-            d["sleeping_at"] = night
-        else:
-            d["woke_up_at"] = night
-    if "sleeping_at" not in d and d.get("woke_up_at"):
-        d["ended"] = "home — the last day of the trip"
+        if start < day <= end:
+            woke = stay
+        if start <= day < end:
+            slept = stay
 
-    # What we stopped at — applying the SAME test the timeline applies.
-    #
-    # Detect Stops is generous: two thirds of the library's events are
-    # waypoints, and a travel day's list is mostly gas stations and rest areas
-    # (trip 95's 20 August: Amoco, I-70 West Rest Area, South Vienna Rest
-    # Area...). Handing those to a writer is how you get a paragraph about
-    # buying fuel. A waypoint earns a mention exactly as it earns a card — by
-    # having photos or a description — and the rest become a count, so the day
-    # can still say four stops were made without naming any of them.
-    #
-    # Keeping the two rules identical also keeps the page honest: a rollup
-    # should not describe something the timeline above it has folded away.
-    ref_tz = reference_timezone(trip.get("events"))
-    brief = 0
-    for i, evt in enumerate(trip.get("events", [])):
-        if evt.get("date") != day:
-            continue
-        earned = (not evt.get("waypoint")
-                  or (evt.get("description") or "").strip()
-                  or card_photos.get(f"event-{i}"))
-        if not earned:
-            brief += 1
-            continue
-        stop = {"name": evt.get("name", ""),
-                "where": _where(evt.get("where_label") or evt.get("locale"),
-                                evt.get("state"))}
-        if not stop["where"]:
-            stop.pop("where")
-        if evt.get("waypoint"):
-            stop["brief"] = True
-        if card_photos.get(f"event-{i}"):
-            stop["photos"] = card_photos[f"event-{i}"]
-        if card_captions.get(f"event-{i}"):
-            stop["photo_captions"] = card_captions[f"event-{i}"]
-        for key, out in (("time", "time"), ("end_time", "until"),
-                         ("description", "description"), ("family_visit", "visiting")):
-            if evt.get(key):
-                stop[out] = _fmt_time(evt[key]) if "time" in key else evt[key]
-        stop["_rank"] = event_time_rank(day, evt.get("time"), evt.get("tz"), ref_tz)
-        d["stops"].append(stop)
-    # By true instant, not by wall clock. A trip that crosses a time-zone line
-    # westward sets the clock BACK, so a later stop wears an earlier stamp:
-    # trip 95's Macklin Bay (08:47 CDT) really precedes the Benkelman gas stop
-    # (08:35 MDT) by 44 minutes, and a naive sort on "time" hands the model the
-    # two backwards. `trips.event_time_rank` is the app's single definition of
-    # what happened first, shared with storage order, the timeline, the route
-    # anchor walk and the detail map; this is the fifth consumer.
-    d["stops"].sort(key=lambda s: s["_rank"])
-    for stop in d["stops"]:
-        del stop["_rank"]
-    if brief:
-        d["unremarkable_stops"] = brief
+    # Characterised, never named: rule 4 forbids the model repeating a
+    # campground name the card below it already carries, so the name is not
+    # offered in the first place — only roughly where it was.
+    if woke:
+        where = _where(woke.get("where_label") or woke.get("locale"),
+                       woke.get("state"))
+        if where:
+            d["from"] = {"where": where}
+    if slept:
+        where = _where(slept.get("where_label") or slept.get("locale"),
+                       slept.get("state"))
+        ft = _elevation_ft(slept, elevations)
+        to = {k: v for k, v in (("where", where), ("elevation_ft", ft)) if v}
+        if to:
+            d["to"] = to
 
+    if not d.get("round_trip"):
+        heading = _heading(_stay_point(woke) if woke else None,
+                           _stay_point(slept) if slept else None)
+        if heading:
+            d["heading"] = heading
     return d
+
+
+def _track_by_local_day(A, trip_id):
+    """The trip's GPS pings grouped by the local day they happened on.
+
+    Bucketed by each ping's OWN timezone (`_local_date_of_ping`), the same rule
+    the timeline and the driving stats use — otherwise an evening of westward
+    driving lands on the next day and the states come out in the wrong day's
+    list. Returns {} when the trip has no track, which just means those days
+    carry no "states".
+    """
+    out = {}
+    try:
+        for ping in A._load_trip_track_for_detection(trip_id) or []:
+            out.setdefault(A._local_date_of_ping(ping), []).append(ping)
+    except Exception:
+        return {}
+    return out
 
 
 def _prompt(dossier):
@@ -526,7 +537,6 @@ def main():
 
     _load_dotenv()
     import ekko_trips_app as A
-    from trips import _load_locations_by_id
 
     # One number, owned by the app: the track re-fetch window IS the settle
     # window, and a copy here would drift the day someone tuned it.
@@ -540,11 +550,11 @@ def main():
             print(f"no such trip: {args.trip}", file=sys.stderr)
             return 1
 
-    locations = _load_locations_by_id()
+    # id -> feet. _load_campgrounds() already converts and is cached; the raw
+    # file carries metres and the trimmed locations index carries neither.
+    elevations = {c["id"]: c["elevation_feet"] for c in A._load_campgrounds()
+                  if c.get("elevation_feet") is not None}
     rollups = _load(ROLLUPS_FILE)
-
-    # Photos per day, via the card each photo hangs off.
-    pool = A._collect_photo_pool()
 
     jobs = []
     held = 0
@@ -552,24 +562,17 @@ def main():
     for trip in trips:
         A.enrich_trip_locations(trip)
         driving = A._trip_driving_by_day(trip)
-        card_day = {}
-        for item in trip.get("timeline", []):
-            card = (f"stay-{item['idx']}" if item["type"] == "stay"
-                    else f"event-{item['idx']}")
-            card_day.setdefault(card, item.get("sort_date"))
-        counts, per_card, per_card_caps = {}, {}, {}
-        for p in pool:
-            if p["trip_id"] != trip["id"]:
-                continue
-            per_card[p["card"]] = per_card.get(p["card"], 0) + 1
-            caption = (p.get("caption") or "").strip()
-            if caption:
-                per_card_caps.setdefault(p["card"], []).append(caption)
-            day = card_day.get(p["card"])
-            if day:
-                counts[day] = counts.get(day, 0) + 1
+        days = trip_days(trip)
+        # Every day's mileage in order — what lets the model say "the biggest
+        # driving day of the trip" without being told which day that was.
+        miles_by_day = [int((driving.get(d) or {}).get("miles") or 0)
+                        for d in days]
+        # The track is read ONCE per trip and bucketed by local day. Only
+        # pulled when there is actually something to draft, because a trip
+        # whose days all have current rollups should cost nothing at all.
+        track_by_day = None
 
-        for day in trip_days(trip):
+        for day_i, day in enumerate(days, 1):
             key = f"{trip['id']}/{day}"
             existing = rollups.get(key) or {}
             # `edited` is a human correcting a draft; `source: conversation`
@@ -594,9 +597,12 @@ def main():
             if not (args.ignore_settle or day_settled(day, settle_s=settle_s)):
                 held += 1
                 continue
+            if track_by_day is None:
+                track_by_day = _track_by_local_day(A, trip["id"])
             jobs.append((key, trip, day, sig,
-                         day_dossier(trip, day, driving, locations,
-                                     counts, per_card, per_card_caps)))
+                         day_dossier(trip, day, driving, elevations,
+                                     states_crossed(track_by_day.get(day, [])),
+                                     miles_by_day, (day_i, len(days)))))
 
     if args.limit:
         jobs = jobs[:args.limit]
