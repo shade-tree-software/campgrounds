@@ -1081,21 +1081,40 @@ def _load_json(path):
         if not isinstance(data, dict):
             app.logger.error("%s is corrupt and unsalvageable: %s", path, e)
             raise
-        # ONE preserved copy, ever. The first version stamped the filename with
-        # the current second, so a torn file that nobody repaired produced a new
-        # copy on every page load — 35 of them accumulated on the live host in
-        # an afternoon. The tail is identical every time; keeping it 35 times
-        # preserves nothing extra.
+        # One preserved copy PER DISTINCT TEAR. The first version stamped the
+        # filename with the current second, so a torn file that nobody repaired
+        # produced a new copy on every page load — 35 of them accumulated on the
+        # live host in an afternoon. Those 35 were byte-identical, so the fix was
+        # to keep only the first; but "a copy already exists" is the wrong test
+        # once the file has been repaired, because the NEXT tear is different
+        # damage and pointing at the stale copy would throw away the only record
+        # of it. Compare the bytes instead: repeated salvage of the same damage
+        # still keeps one copy, and genuinely new damage still gets preserved.
         import glob as _glob
-        kept = sorted(_glob.glob(f"{path}.corrupt-*"))
-        if not kept:
-            keep = f"{path}.corrupt-{int(time.time())}"
+        keep = ""
+        for existing in sorted(_glob.glob(f"{path}.corrupt-*")):
+            try:
+                with open(existing, encoding="utf-8") as f:
+                    same = f.read() == raw
+            except OSError:
+                same = False
+            if same:
+                keep = existing
+                break
+        if not keep:
+            # Second granularity is not enough on its own: two DIFFERENT tears
+            # inside the same second would land on one name and the second copy
+            # would overwrite the first.
+            stem = f"{path}.corrupt-{int(time.time())}"
+            keep = stem
+            n = 2
+            while os.path.exists(keep):
+                keep = f"{stem}-{n}"
+                n += 1
             try:
                 shutil.copy2(path, keep)
             except OSError:
                 keep = "(could not be saved)"
-        else:
-            keep = kept[0]
         # Repair it, rather than salvaging the same damage forever. The
         # recovered document is complete and valid; the bytes that follow it are
         # already set aside. Without this the file stays torn for good, every
