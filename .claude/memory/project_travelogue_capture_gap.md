@@ -1,6 +1,6 @@
 ---
 name: project_travelogue_capture_gap
-description: Memo-to-rollup pipeline — AWH judged the drafts redundant with the timeline 2026-09-10; a typed day note now owns that slot and the archive run is off
+description: Day write-ups — AWH rejected the long rollups as redundant and APPROVED short per-day summaries (trip 95 done by hand in-session 2026-09-10); typed day notes own the slot; resuming on another machine
 metadata:
   type: project
 ---
@@ -27,34 +27,57 @@ generated-vs-human line the memo page draws.
 
 ## Where it landed (2026-09-10)
 
-Trip 95 was re-drafted after the join-invention fixes (14 days, $0.22, no
-truncation) and AWH's verdict on the prose was **not that it was wrong — that
-it was redundant**: "The rollups are OK, but they basically repeat what anyone
-can read later on in the timeline for that day. If we simply add a new option
-to add a visible note for each day, it will probably be just as nice without
-the need to make API calls to an AI." He is right and it is the diagnosis the
-whole project needed: the dossier is assembled FROM the cards printed directly
-below the write-up, so faithful prose is by construction a restatement. The
-model can only add what it is not allowed to add.
+The long rollups are OUT and **short per-day summaries are IN**. AWH on the
+rollups: "they basically repeat what anyone can read later on in the timeline
+for that day" — and he was right for a structural reason, not a prose one: the
+dossier is assembled FROM the cards printed directly below the write-up, so
+faithful prose is a restatement by construction. The model could only add what
+the rules forbid it to add.
 
-**So the day note now owns that slot** (`day_notes` on the trip record; a typed
-note always beats a draft — see CLAUDE.md "The Day's Write-Up"). This is
-consistent with the capture-gap finding rather than a contradiction of it: he
-won't write a day REPORT, but he writes a sentence when it has somewhere to go
-(33 event descriptions on trip 95).
+What he asked for instead, and approved ("This is good. Much better than the big
+rollups."): **a short summary telling a first-time reader the gist of the day,
+deliberately NOT repeating the notes and captions**, which he can then add to by
+hand. Trip 95's 14 days were written **by me in conversation, no API call**, from
+the route/mileage/day-shape alone. Choices that earned the approval, keep them:
 
-**The generated half is not deleted, just demoted**, and two questions are open:
-1. **Retire the drafts or keep them as a fallback?** Trip 95's 14 still display
-   on days he hasn't written over. Ask before deleting `day_rollups.json` —
-   unwritten days are the only case they were ever the better answer.
-2. **The archive run (~321 days, ~$3.50-5) is OFF** unless he revives it. Its
-   one real argument survives his verdict: he will never hand-write 321 days of
-   back-catalogue, and there the restatement is of cards a reader would
-   otherwise have to assemble themselves.
+- **Impersonal voice, not "we"** — it reads as a subtitle standing over his own
+  words rather than competing in the same voice, and keeps whose text is whose
+  obvious at a glance.
+- **The SHAPE of the day is the content**: distance, direction, terrain, what
+  kind of day it was (haul / touring / moving day / the turn for home). That is
+  exactly what the cards below cannot say and a first-time reader cannot
+  assemble.
+- **Name nothing the cards already name.** No Harleys, no Snake Alley, no
+  Christmas tree in August. 24-41 words each, about a third of a rollup.
 
-Still unanswered from before, and now probably moot: each day was a separate API
-call with no knowledge of the other thirteen, losing the trip's arc — and there
-is nowhere to record a trip's reason or theme (`trip_note` is just the name).
+**If this is ever automated, the prompt is much cheaper than the rollup one:**
+it needs the route, the mileage and the day's shape — NOT the descriptions and
+captions, which were most of the dossier's cost and all of its redundancy.
+
+## Two slots, one page (shipped 2026-09-10)
+
+`day_notes` on the trip record + `_trip_day_writeups` — a typed note always beats
+a generated write-up, editing a draft writes a note OVER it rather than editing
+it, and the "Drafted by <model>" line keys on `model` so a note retires it. See
+CLAUDE.md "The Day's Write-Up". `tests/test_day_notes.py`, 10 tests.
+
+## RESUME ON THE OTHER MACHINE
+
+**The trip-95 summaries are NOT in git** — they are in `trip_data/day_rollups.json`,
+which is gitignored and excluded from the PA sync, and PA has never had them.
+The code travels by git; the summaries travel only in the backup bundle made
+2026-09-10 (`backup/ekko-backup-*.tar.gz`, `restore.sh` on the far side). Without
+it the other machine shows a trip 95 with no write-ups at all.
+
+Open, in his hands:
+1. **Publishing them to PA.** There is no automated local->PA path (deploy key is
+   a forced command, sync key is read-only), so either he re-types them on the
+   live site or they ride a bundle. Note the natural workflow does it for him:
+   editing a summary turns it into a day note in `trips.json`.
+2. **The other 94 trips.** ~321 days. Doing them the way trip 95 was done is a
+   conversation, not a script; automating it is the cheap-prompt note above.
+3. `process_rollups.py` and its 17-rule SYSTEM prompt are now superseded but not
+   deleted. Ask before removing them.
 
 ## The lesson worth keeping from the nine faults
 
