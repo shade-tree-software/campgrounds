@@ -593,6 +593,31 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
     return d
 
 
+def track_is_trustworthy(A, trip, pings):
+    """Does this trip's GPS actually belong to it?
+
+    The same gate the maps use (`_track_covers_trip`): at least one ping within
+    `TRACK_NEAR_STAY_KM` of a stay or event. A trip the detail map refuses to
+    draw a line for must not have its write-up built from that line either.
+
+    Trip 43 is why. Its campspot is the Grove City KOA in Pennsylvania and its
+    track never leaves Northern Virginia — the phone stayed home. The dossier
+    reported `states: ["VA"]` and `driving: negligible`, which is not a thin
+    fact but a false one, and a drafter would have written a quiet weekend at
+    home for a trip to another state. Wrong data is worse than absent data,
+    and absent is what this turns it into.
+    """
+    if not pings:
+        return False
+    # `_map_config()` is how every other caller gets home — it returns
+    # (home, family) and is cached on the config mtimes.
+    try:
+        home, _fam = A._map_config()
+        return bool(A._track_covers_trip(trip, pings, home))
+    except Exception:
+        return True          # can't judge: leave the track alone
+
+
 def _track_by_local_day(A, trip_id):
     """The trip's GPS pings grouped by the local day they happened on.
 
@@ -762,6 +787,7 @@ def main():
         # The track is read ONCE per trip and bucketed by local day. Only
         # pulled when there is actually something to draft, because a trip
         # whose days all have current rollups should cost nothing at all.
+        # `None` means not yet loaded; `{}` means loaded and unusable.
         track_by_day = None
 
         for day_i, day in enumerate(days, 1):
@@ -802,6 +828,18 @@ def main():
                 continue
             if track_by_day is None:
                 track_by_day = _track_by_local_day(A, trip["id"])
+                pings_all = [p for v in track_by_day.values() for p in v]
+                if pings_all and not track_is_trustworthy(A, trip, pings_all):
+                    # The track belongs to something else — the phone stayed
+                    # home, or roamed on the trip's dates without ever reaching
+                    # the itinerary. The maps refuse to draw it; the dossier
+                    # refuses to describe it. Dropping it here turns wrong
+                    # facts into absent ones: no states, no clock, and a day
+                    # with no mileage reports "not recorded" rather than
+                    # "measured, stayed put".
+                    print(f"  [{trip['id']}] track does not cover this trip — "
+                          f"no states or times will be offered", file=sys.stderr)
+                    track_by_day = {}
             pings = track_by_day.get(day, [])
             jobs.append((key, trip, day, sig,
                          day_dossier(trip, day, driving, elevations,
