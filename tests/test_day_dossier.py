@@ -50,9 +50,9 @@ def _stay(start, end, **kw):
 
 
 def _dossier(trip, driving=None, elevations=None, states=None,
-             trip_miles=None, day_index=None, day=DAY):
+             trip_miles=None, day_index=None, day=DAY, track_known=True):
     return R.day_dossier(trip, day, driving or {}, elevations or {},
-                         states, trip_miles, day_index)
+                         states, trip_miles, day_index, track_known)
 
 
 class TestWhatIsDeliberatelyAbsent(unittest.TestCase):
@@ -124,6 +124,54 @@ class TestTheShapeOfTheDay(unittest.TestCase):
         trip = _trip(stays=[_stay("2026-08-22", DAY, lat=40.36, lng=-105.58),
                             _stay(DAY, "2026-08-24", lat=40.37, lng=-105.59)])
         self.assertNotIn("heading", _dossier(trip, driving={DAY: {"miles": 3}}))
+
+
+class TestAbsentMileageIsNotZero(unittest.TestCase):
+    """The bug the first back-catalogue run actually shipped.
+
+    `_trip_driving_by_day` omits a day rather than reporting "0 mi", so the
+    dossier had no figure for a day with no GPS — and the model read the
+    silence as zero. It wrote "the trip opened parked" for a day that drove
+    from home, and "a second day without driving" for one that moved between
+    two campgrounds. Three of the four track-less days in the library were
+    wrong. Whether a day moved is knowable from the beds alone, so it is now
+    stated rather than inferred."""
+
+    def test_a_measured_day_under_the_threshold_says_it_stayed_put(self):
+        d = _dossier(_trip(stays=[_stay("2026-08-22", "2026-08-25")]),
+                     track_known=True)
+        self.assertIn("negligible", d["driving"])
+        self.assertNotIn("mileage", d)
+        self.assertNotIn("moved", d)
+
+    def test_an_unmeasured_day_says_the_distance_is_unknown(self):
+        d = _dossier(_trip(stays=[_stay("2026-08-22", "2026-08-25")]),
+                     track_known=False)
+        self.assertIn("not recorded", d["mileage"])
+        self.assertNotIn("driving", d)
+
+    def test_an_unmeasured_day_that_changed_campground_reports_moved(self):
+        """Trip 47's 2024-11-22: Grove City to Silver Canoe, drafted as
+        "parked in western Pennsylvania"."""
+        trip = _trip(stays=[_stay("2026-08-22", DAY, where_label="in Mercer, PA"),
+                            _stay(DAY, "2026-08-24",
+                                  where_label="in Rural Valley, PA")])
+        self.assertTrue(_dossier(trip, track_known=False)["moved"])
+
+    def test_an_unmeasured_first_day_reports_moved(self):
+        """Only a destination: they drove out from home. Drafted as "the trip
+        opened parked"."""
+        trip = _trip(stays=[_stay(DAY, "2026-08-24")])
+        self.assertTrue(_dossier(trip, track_known=False)["moved"])
+
+    def test_an_unmeasured_last_day_reports_moved(self):
+        trip = _trip(stays=[_stay("2026-08-22", DAY)])
+        self.assertTrue(_dossier(trip, track_known=False)["moved"])
+
+    def test_an_unmeasured_day_in_one_place_reports_not_moved(self):
+        """The one of the four that was right, and must stay right."""
+        trip = _trip(stays=[_stay("2026-08-22", "2026-08-25")])
+        self.assertFalse(_dossier(trip, track_known=False)["moved"])
 
 
 class TestWhereTheDayBeganAndEnded(unittest.TestCase):

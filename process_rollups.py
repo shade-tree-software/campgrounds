@@ -119,15 +119,22 @@ about what those states LOOKED like is not.
 order, so you can see whether this was the biggest day, the first easy one \
 after a run of hauls, or a short hop before a long one. Saying where a day sits \
 in the trip is the most useful thing you can do with 40 words. Do not restate \
-the numbers of other days.
+the numbers of other days. A null in that list is a day whose distance was \
+never recorded — NOT a day that stayed still; never read a null as a low \
+number or as evidence the trip paused.
 7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
 8. A DAY THAT BARELY DROVE IS NOT A FAILURE TO REPORT. "round_trip" means the \
 day started and ended in the same place; say what that kind of day was (based \
 at one campground, a day out and back) rather than straining to make it sound \
 like travel. A day with no driving at all gets a sentence about being parked.
-9. Do not restate the date, the weekday, the trip name or the day number — the \
-page already shows them.
+9. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
+distance is unknown and you must not say the day had no driving, was parked, \
+or stayed put — read "moved" instead, and if it is true describe the move \
+without a figure. Only "driving": "negligible" or a matching "from" and "to" \
+license saying the day stayed in one place.
+10. Do not restate the date, the weekday, the trip name or the day number — \
+the page already shows them.
 
 WORKED EXAMPLES. These are the target, written by hand and approved. Match \
 their length, voice and altitude, not their wording:
@@ -351,8 +358,32 @@ def states_crossed(track_day, samples=40):
     return out
 
 
+def _day_moved(trip, day):
+    """Did the day end somewhere other than it began, GPS or no GPS?
+
+    Read off the stays, which exist whether or not a track does: waking and
+    sleeping in different places means it moved, and so does having only one
+    of the two (the drive out from home on day one, or the drive home on the
+    last day).
+    """
+    woke = slept = None
+    for stay in trip.get("stays", []):
+        start, end = stay.get("start", ""), stay.get("end", "")
+        if start < day <= end:
+            woke = stay
+        if start <= day < end:
+            slept = stay
+    if bool(woke) != bool(slept):
+        return True
+    if not woke:
+        return False
+    def where(s):
+        return s.get("where_label") or s.get("place") or ""
+    return where(woke) != where(slept)
+
+
 def day_dossier(trip, day, driving, elevations, day_states=None,
-                trip_miles=None, day_index=None):
+                trip_miles=None, day_index=None, track_known=True):
     """The facts one day's paragraph is written from, and nothing else.
 
     Deliberately much narrower than the dossier the long rollups used. That one
@@ -387,6 +418,21 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         if drive.get("round_trip"):
             # No leg to describe: the day went out and came back.
             d["round_trip"] = True
+    elif track_known:
+        # Measured, and it came out under `DRIVE_DAY_MIN_M` — the day really
+        # did stay put. `_trip_driving_by_day` omits these rather than printing
+        # "0 mi", which a reader would take as a measured zero.
+        d["driving"] = "negligible — measured, the day stayed put"
+    else:
+        # NO TRACK AT ALL. Absence of a figure is not a figure of zero, and
+        # conflating them is not hypothetical: on the first run of the back
+        # catalogue this omission alone produced "the trip opened parked" for
+        # a day that drove from home, and "a second day without driving" for
+        # one that moved between two campgrounds 40 miles apart. Whether the
+        # day moved is knowable without the GPS — the beds are in the trip
+        # record — so it is stated outright rather than left to inference.
+        d["mileage"] = "not recorded — no GPS for this day, distance unknown"
+        d["moved"] = _day_moved(trip, day)
     if day_states:
         d["states"] = list(day_states)
 
@@ -565,7 +611,14 @@ def main():
         days = trip_days(trip)
         # Every day's mileage in order — what lets the model say "the biggest
         # driving day of the trip" without being told which day that was.
-        miles_by_day = [int((driving.get(d) or {}).get("miles") or 0)
+        #
+        # `None`, never 0, for a day with no recorded figure. The same
+        # absent-vs-zero trap as the per-day `mileage` field, and it bit in
+        # exactly the same way one fix later: with zeros here the model read
+        # trip 47 as "two days of staying put" when the second of them moved
+        # between campgrounds. JSON renders these as null, which reads as
+        # unknown; 0 reads as measured.
+        miles_by_day = [(driving.get(d) or {}).get("miles") or None
                         for d in days]
         # The track is read ONCE per trip and bucketed by local day. Only
         # pulled when there is actually something to draft, because a trip
@@ -599,10 +652,11 @@ def main():
                 continue
             if track_by_day is None:
                 track_by_day = _track_by_local_day(A, trip["id"])
+            pings = track_by_day.get(day, [])
             jobs.append((key, trip, day, sig,
                          day_dossier(trip, day, driving, elevations,
-                                     states_crossed(track_by_day.get(day, [])),
-                                     miles_by_day, (day_i, len(days)))))
+                                     states_crossed(pings), miles_by_day,
+                                     (day_i, len(days)), bool(pings))))
 
     if args.limit:
         jobs = jobs[:args.limit]
