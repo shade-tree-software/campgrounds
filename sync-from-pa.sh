@@ -200,14 +200,16 @@ if [ $DO_DATA -eq 1 ]; then
   # these excludes a --delete sync wipes whichever ones this machine built and
   # PA happens not to have, which is exactly what happened the first time.
   #
-  # day_rollups.json is the sharper case: it exists ONLY here, because the API
-  # key is local and PA cannot write it, and it cost real money to generate. A
-  # --delete sync deleted a whole trip's drafted prose before this exclude
-  # existed. It is also in backup.sh now, for the same reason.
+  # day_rollups.json used to be excluded here, and that inverted on 2026-09-11.
+  # It was written only on whichever host held the API key — never PA — so a
+  # --delete sync once deleted a whole trip's drafted prose. Now all 321 days
+  # are written and uploaded, PA holds the authoritative copy, and this is the
+  # path by which it comes home. backup.sh carries it too, for the machine that
+  # never talks to PA.
   pull trip_data trip_data \
     --exclude 'secret_key' --exclude 'dev_cert.*' --exclude '__pycache__/' \
     --exclude 'models/' --exclude 'geonames/' --exclude 'place_context.json' \
-    --exclude 'day_rollups.json' --exclude '*.corrupt-*' --exclude '*.tmp'
+    --exclude '*.corrupt-*' --exclude '*.tmp'
 
 fi
 
