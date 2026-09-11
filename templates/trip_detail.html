@@ -1087,9 +1087,35 @@
   .day-divider {
     position: relative;
     z-index: 1;
-    margin: 1.25rem 0 .5rem 2.25rem;
+    /* Asymmetric on purpose, and the asymmetry is the whole separation. The
+       gap ABOVE has to beat the 1.5rem that separates two ordinary cards,
+       or a new day reads as a smaller break than the one between two stops
+       of the same day — which is what made the divisions get lost. The gap
+       BELOW stays tight so the date binds to the day it introduces rather
+       than floating between the two. */
+    margin: 2.75rem 0 .5rem 2.25rem;
     display: flex;
     align-items: center;
+  }
+  .day-divider:first-child { margin-top: 0; }
+  /* A station on the timeline axis, at the scale of a tick rather than of the
+     stay and event circles (2rem) — it marks the day without competing with
+     the things that happened in it. The axis is centred on this element's own
+     left edge (the column rule sits at `2.25rem - 1px`, 2px wide, and the
+     divider is indented 2.25rem), so -5px on a 10px dot centres it exactly.
+     `top` is a fixed offset rather than 50% because the divider wraps to two
+     rows on a narrow screen, and the dot belongs beside the date. */
+  .day-divider::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: .5rem;
+    margin-top: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--navy);
+    z-index: 2;
   }
   /* Sits with the drive chip, but reads as an action rather than a fact: no
      background until hovered, so a divider with nothing to add stays quiet. */
@@ -1113,20 +1139,30 @@
     color: #fff;
   }
 
-  .day-divider span {
+  /* Named rather than `.day-divider span`, which also matched the drive chip
+     and the `.nb` spans inside it — every property here had to be undone
+     there, and anything added here silently leaked into the mileage. With a
+     class the chip simply doesn't match, and `.nb` inherits from `.day-drive`
+     the way it always should have. */
+  .day-divider .day-date {
     background: var(--offwhite);
-    color: var(--gray);
-    font-size: .78rem;
+    color: var(--navy);
+    font-size: .8rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .05em;
-    padding: 0 .6rem 0 .35rem;
+    /* Left padding clears the axis dot; the dot paints above this background
+       (z-index 2) so the two can overlap without the label masking it. */
+    padding: 0 .6rem 0 .9rem;
   }
   .day-divider::after {
     content: '';
     flex: 1;
-    height: 1px;
-    background: var(--gray-light);
+    /* 2px and navy-tinted rather than a 1px hairline: it has to hold its own
+       against a column of shadowed white cards. Tinted rather than solid
+       navy so it still reads as structure, not as content. */
+    height: 2px;
+    background: rgba(0, 40, 104, .16);
     /* The rule is drawn last so it fills whatever the labels leave; `order`
        lets the driving chip sit after it, pushing the chip to the right
        edge while the date stays left. */
@@ -1136,26 +1172,24 @@
      Deliberately lighter than the date: it qualifies the day rather than
      naming it, and on a long trip these repeat every few cards.
 
-     Scoped as `.day-divider .day-drive` (0,2,0), NOT bare `.day-drive`
-     (0,1,0): the date rule above is `.day-divider span` (0,1,1), which the
-     chip also matches, so a single-class selector loses EVERY property to it
-     — size, weight, letter-spacing, padding and case alike. The `.nb` spans
-     are matched by that same rule directly, so they need naming too rather
-     than relying on inheritance. */
-  .day-divider .day-drive,
-  .day-divider .day-drive .nb {
-    /* "9H 06M" reads as an abbreviation gone wrong; the lowercase units are
-       what make it scan as a measurement. The mixed case also separates the
-       two halves of the row without spending another colour on it. */
-    text-transform: none;
-  }
+     This used to carry a warning about `.day-divider span` (0,1,1) beating a
+     bare `.day-drive` (0,1,0) and silently overriding every property here,
+     `.nb` included. The date now has its own class, so nothing about the
+     chip is fighting the label any more — but keep the chip's own rules
+     scoped to `.day-divider .day-drive` rather than reintroducing element
+     selectors inside this row. */
   .day-divider .day-drive {
     order: 2;
+    background: var(--offwhite);
     padding: 0 0 0 .6rem;
     font-size: .75rem;
     font-weight: 600;
     color: var(--gray);
     letter-spacing: .02em;
+    /* "9H 06M" reads as an abbreviation gone wrong; lowercase units are what
+       make it scan as a measurement, and the mixed case separates the two
+       halves of the row without spending another colour on it. */
+    text-transform: none;
   }
   /* Each fact is nowrap so a narrow screen breaks BETWEEN them rather than
      through "9h 06m" — same treatment as the stats page's drive list. */
@@ -1167,7 +1201,6 @@
     .day-divider { flex-wrap: wrap; }
     .day-divider .day-drive { padding-left: .35rem; }
   }
-  .day-divider:first-child { margin-top: 0; }
 
   .cards-column .stay-card,
   .cards-column .event-card { position: relative; z-index: 1; }
@@ -2418,22 +2451,6 @@
 
   <!-- Cards column: timeline of interleaved stays and events -->
   <div class="cards-column">
-  {% if trip.timeline %}
-  <div class="event-card bare home-card home-card-start" id="home-card-start">
-    <div class="event-header">
-      <div class="event-icon home-icon">
-        <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
-      </div>
-      <div class="event-info">
-        <h3>Home<span class="card-where">Reston, VA</span></h3>
-        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
-      </div>
-      {% if is_admin %}
-      <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
   {#- Day dividers. Every timeline item carries `sort_date` (stay copies get
       their night's date), so a divider is just "the date changed since the
       last card". On a 10-day trip the cards otherwise ran together with no
@@ -2467,7 +2484,7 @@
         shows just its date rather than a measured-looking "0 mi". -#}
     {% set drive = driving_by_day.get(item.sort_date) %}
     <div class="day-divider">
-      <span>{{ item.sort_date | daylabel }}</span>
+      <span class="day-date">{{ item.sort_date | daylabel }}</span>
       {%- if drive %}
       {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
                      if drive.round_trip
@@ -2542,6 +2559,35 @@
     </div>
     {%- endif %}
   {% endif %}
+
+  {#- Home, on the day they left it. This used to render above the first
+      day divider, outside the loop, which put the departure in no day at
+      all — every other card on the page sits under the date it happened
+      on, and leaving home happened on day one. Emitted on the first
+      iteration so it lands under that first divider (and under its
+      write-up, which is about the whole day) but still ahead of the first
+      real card.
+
+      Still correct on a single-day trip, where no dividers are emitted at
+      all: `loop.first` puts it at the top regardless. The end card needs
+      no equivalent — sitting after the loop already places it under the
+      last day's divider, which is the day they got back. -#}
+  {%- if loop.first %}
+  <div class="event-card bare home-card home-card-start" id="home-card-start">
+    <div class="event-header">
+      <div class="event-icon home-icon">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
+      </div>
+      <div class="event-info">
+        <h3>Home<span class="card-where">Reston, VA</span></h3>
+        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
+      </div>
+      {% if is_admin %}
+      <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
+      {% endif %}
+    </div>
+  </div>
+  {%- endif %}
 
   {% if item.type == "stay" %}
   <div class="stay-card" id="stay-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}">
