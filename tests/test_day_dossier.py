@@ -50,9 +50,9 @@ def _stay(start, end, **kw):
 
 
 def _dossier(trip, driving=None, elevations=None, states=None,
-             trip_miles=None, day_index=None, day=DAY, track_known=True):
+             trip_outline=None, day_index=None, day=DAY, track_known=True):
     return R.day_dossier(trip, day, driving or {}, elevations or {},
-                         states, trip_miles, day_index, track_known)
+                         states, trip_outline, day_index, track_known)
 
 
 class TestNamesInDescriptionsOut(unittest.TestCase):
@@ -300,12 +300,16 @@ class TestPlaceInTheTrip(unittest.TestCase):
         d = _dossier(_trip(), day_index=(2, 14))
         self.assertEqual((d["day_of_trip"], d["trip_days"]), (2, 14))
 
-    def test_every_days_mileage_is_offered_in_order(self):
-        """What lets the model say "the biggest driving day of the trip"
-        without being told which day that was."""
-        miles = [124, 520, 405]
-        self.assertEqual(_dossier(_trip(), trip_miles=miles)["trip_miles_by_day"],
-                         miles)
+    def test_the_whole_trip_is_outlined_in_order(self):
+        """Distance AND where each day slept. Mileage alone reached "the
+        biggest driving day" but nothing about continuity — "a second day
+        based at X", "the highest point of the trip" — which is what a day
+        with no distance of its own has to be placed by."""
+        outline = [{"day": 1, "miles": 124, "slept": "Rocky Gap"},
+                   {"day": 2, "miles": None, "slept": "Moraine Park",
+                    "elevation_ft": 8200}]
+        self.assertEqual(_dossier(_trip(), trip_outline=outline)["trip_outline"],
+                         outline)
 
 
 class TestTripDays(unittest.TestCase):

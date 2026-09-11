@@ -126,14 +126,18 @@ fatigue, or why anything took as long as it did. "states" is the ordered list \
 of states the day drove through, so "across Pennsylvania, a corner of West \
 Virginia and the whole width of Ohio into Indiana" is supported and anything \
 about what those states LOOKED like is not.
-6. USE "trip_miles_by_day" TO PLACE THE DAY. It is every day's mileage in \
-order, so you can see whether this was the biggest day, the first easy one \
-after a run of hauls, or a short hop before a long one. Saying where a day sits \
-in the trip is the most useful thing you can do with 40 words. Do not restate \
-the numbers of other days. A null in that list is a day with no travel \
-distance — either never recorded, or a day based at one campground — and NOT \
-a day that covered a small distance. Never read a null as a low number, and \
-never count nulls as evidence the trip paused.
+6. USE "trip_outline" TO PLACE THE DAY. It is every day of the trip in order \
+with its distance and where it slept, so you can see whether this was the \
+biggest day, the first easy one after a run of hauls, a second night at the \
+same campground, or the highest the trip reached. Saying where a day sits in \
+the trip is the most useful thing you can do with 40 words, and on a day with \
+no distance of its own it is often the ONLY comparison available.
+   A null "miles" is a day with no travel distance — never recorded, or based \
+at one campground — and NOT a small distance. Never read a null as a low \
+number or as evidence the trip paused.
+   The outline is for placing THIS day. Do not narrate other days or restate \
+their numbers, and do not say what happened on them — you are not told what \
+happened on them, only how far they went and where they stopped.
 7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
 8. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
@@ -397,7 +401,7 @@ def _day_moved(trip, day):
 
 
 def day_dossier(trip, day, driving, elevations, day_states=None,
-                trip_miles=None, day_index=None, track_known=True):
+                trip_outline=None, day_index=None, track_known=True):
     """The facts one day's paragraph is written from, and nothing else.
 
     Deliberately much narrower than the dossier the long rollups used. That one
@@ -418,11 +422,19 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         pass
     if day_index:
         d["day_of_trip"], d["trip_days"] = day_index
-    if trip_miles:
-        # Every day's mileage in order, so the model can see whether this was
-        # the biggest day, the first easy one, or a hop before a long haul.
-        # Cheap (one small list) and it buys the most useful sentence available.
-        d["trip_miles_by_day"] = trip_miles
+    if trip_outline:
+        # Every day of the trip in order: its distance and where it slept. The
+        # mileage alone supported the comparisons a reader values most ("the
+        # biggest driving day", "the third of four days near four hundred
+        # miles") but nothing about CONTINUITY — "a second day based at X",
+        # "the first full day in the park", "the highest point of the trip"
+        # all need to know what the OTHER days did, and none of them were
+        # reachable from a list of numbers. Those are also disproportionately
+        # the lines that carry a local day, which has no mileage to compare.
+        #
+        # Deliberately NOT the other days' events: a much larger payload, and
+        # it invites writing about days that are not this one.
+        d["trip_outline"] = trip_outline
 
     drive = driving.get(day) or {}
     if drive.get("round_trip"):
@@ -666,15 +678,28 @@ def main():
         # Every day's mileage in order — what lets the model say "the biggest
         # driving day of the trip" without being told which day that was.
         #
-        # `None`, never 0, for a day with no recorded figure. The same
-        # absent-vs-zero trap as the per-day `mileage` field, and it bit in
-        # exactly the same way one fix later: with zeros here the model read
-        # trip 47 as "two days of staying put" when the second of them moved
-        # between campgrounds. JSON renders these as null, which reads as
-        # unknown; 0 reads as measured.
-        miles_by_day = [None if (driving.get(d) or {}).get("round_trip")
-                        else ((driving.get(d) or {}).get("miles") or None)
-                        for d in days]
+        # `None`, never 0, for a day with no travel distance — unrecorded or
+        # round-trip alike. The same absent-vs-zero trap as the per-day
+        # `mileage` field, and it bit the same way one fix later: with zeros
+        # here the model read trip 47 as "two days of staying put" when the
+        # second of them moved between campgrounds.
+        def _slept_on(d):
+            for st in trip.get("stays", []):
+                if st.get("start", "") <= d < st.get("end", ""):
+                    return st
+            return None
+        outline = []
+        for n, dd in enumerate(days, 1):
+            e = driving.get(dd) or {}
+            st = _slept_on(dd)
+            row = {"day": n,
+                   "miles": None if e.get("round_trip") else (e.get("miles") or None),
+                   "slept": (st or {}).get("place") or None}
+            ft = _elevation_ft(st, elevations) if st else None
+            if ft:
+                row["elevation_ft"] = ft
+            outline.append(row)
+
         # The track is read ONCE per trip and bucketed by local day. Only
         # pulled when there is actually something to draft, because a trip
         # whose days all have current rollups should cost nothing at all.
@@ -710,7 +735,7 @@ def main():
             pings = track_by_day.get(day, [])
             jobs.append((key, trip, day, sig,
                          day_dossier(trip, day, driving, elevations,
-                                     states_crossed(pings), miles_by_day,
+                                     states_crossed(pings), outline,
                                      (day_i, len(days)), bool(pings))))
 
     if args.limit:
