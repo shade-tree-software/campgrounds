@@ -32,16 +32,31 @@ so a generated sentence is never mistaken for something you said.
 **A hand-edited rollup is never overwritten**, not even by --force; the app sets
 `edited` when you fix one. Same rule as memo transcripts, for the same reason.
 
+**Two rules decide when a day is drafted, and together they are what makes an
+unattended run safe to schedule:**
+
+  - *Only when its facts have moved.* Each entry stores `inputs_sig`, a hash of
+    the narrow set a summary is actually built from — the day's driving and the
+    campspots that bound it (`day_signature`). A trip gathers hundreds of edits
+    during it and for weeks after; none of them touch that set, so a nightly run
+    over the whole library normally drafts nothing and costs nothing. When the
+    mileage or a campspot really does change, that day alone is redrafted.
+  - *Only once its GPS has stopped moving.* An in-progress trip re-polls the
+    tail of its track, so a day inside that window can still gain distance
+    (`day_settled`). Days that aren't settled are held back and reported rather
+    than written up early and wrongly. `--ignore-settle` overrides.
+
 Needs: pip install -r tools_requirements.txt, and ANTHROPIC_API_KEY in the
 environment or in the repo's gitignored .env.
 """
 import argparse
+import hashlib
 import json
 import os
 import re
 import sys
 import time
-from datetime import date as _date
+from datetime import date as _date, datetime, timedelta
 
 from trips import event_time_rank, reference_timezone
 
@@ -52,6 +67,11 @@ ROLLUPS_FILE = os.path.join(_DIR, "trip_data", "day_rollups.json")
 MEMOS_FILE = os.path.join(_DIR, "trip_data", "memos.json")
 
 MODEL = "claude-opus-5"
+
+# Fallback only. main() reads the real number off ekko_trips_app so the two
+# can't drift; this is what day_settled() uses when called without the app
+# loaded (the tests do that).
+SETTLE_AFTER_S = 48 * 3600
 
 # Short on purpose. The failure mode is padding: given four facts and room for
 # three hundred words, a model reaches for atmosphere. A tight ceiling makes
@@ -431,6 +451,63 @@ def _prompt(dossier):
             + json.dumps(dossier, indent=2, ensure_ascii=False))
 
 
+# ── When to draft, and when not to bother ─────────────────────────────────
+def day_signature(trip, day, driving):
+    """Fingerprint ONLY the facts a day's write-up is built from.
+
+    How narrow this is decides whether the drafter can run unattended at all.
+    A trip collects hundreds of edits while it happens and for weeks after —
+    photos, captions, descriptions, waypoints, notes, memos, reordering — and
+    **not one of them is an input to a summary**, which says what kind of day
+    it was: how far, which way, what sort of country, where you slept. Hash
+    something wider and every one of those edits reads as a reason to rewrite
+    prose nobody asked to have rewritten, at a cost per day, forever.
+
+    So this deliberately does NOT reuse `_trip_route_signature`. That one
+    hashes the whole raw trip record, which is right for a route — it depends
+    on anchors and overrides scattered all through the record — and exactly
+    wrong here: it changes on every edit.
+
+    **If the dossier is ever widened back toward captions, descriptions or
+    memos, widen this with it.** A dossier field that isn't in here is one the
+    drafter will never notice has changed.
+    """
+    nights = []
+    for stay in trip.get("stays", []):
+        start, end = stay.get("start", ""), stay.get("end", "")
+        if not (start <= day < end or start < day <= end):
+            continue
+        nights.append([stay.get("place", ""),
+                       stay.get("where_label") or stay.get("locale") or "",
+                       stay.get("state") or "",
+                       start, end])
+    payload = {"v": 1, "day": day, "drive": driving.get(day), "nights": nights}
+    blob = json.dumps(payload, sort_keys=True, default=str)
+    return hashlib.sha1(blob.encode("utf-8")).hexdigest()
+
+
+def day_settled(day, now=None, settle_s=SETTLE_AFTER_S):
+    """Has this day's mileage stopped moving?
+
+    A day is drafted from its GPS, and an in-progress trip re-polls the tail of
+    its track on every page load — `TRACK_REFETCH_OVERLAP_S` back from the
+    newest ping — so a day still inside that window can gain distance after it
+    is over. Drafting one then means writing "312 miles" about a day that ends
+    up at 400, and the entry reads as finished either way.
+
+    Measured from the END of the day rather than from the trip's end, so one
+    rule covers both cases: a finished trip's days are all long settled, and a
+    trip still happening can have the day before yesterday written up while
+    today is still being driven.
+    """
+    try:
+        ends = datetime.combine(_date.fromisoformat(day), datetime.min.time()) \
+            + timedelta(days=1)
+    except (ValueError, TypeError):
+        return False          # undated: never settled, so never drafted
+    return (now or datetime.now()) >= ends + timedelta(seconds=settle_s)
+
+
 # ── Days of a trip ────────────────────────────────────────────────────────
 def trip_days(trip):
     """Every date the trip's own timeline mentions, in order."""
@@ -455,6 +532,9 @@ def main():
                     help="also overwrite rollups a human has edited")
     ap.add_argument("-n", "--dry-run", action="store_true",
                     help="print the dossiers and stop — no API call, no cost")
+    ap.add_argument("--ignore-settle", action="store_true",
+                    help="draft days whose GPS may still be settling "
+                         "(default: hold them back — see day_settled)")
     ap.add_argument("--limit", type=int, help="stop after this many days")
     ap.add_argument("--model", default=MODEL)
     args = ap.parse_args()
@@ -462,6 +542,10 @@ def main():
     _load_dotenv()
     import ekko_trips_app as A
     from trips import _load_locations_by_id
+
+    # One number, owned by the app: the track re-fetch window IS the settle
+    # window, and a copy here would drift the day someone tuned it.
+    settle_s = getattr(A, "TRACK_REFETCH_OVERLAP_S", SETTLE_AFTER_S)
 
     trips = [t for t in A.parse_trips()
              if t.get("start") and not t.get("home_only")]
@@ -479,6 +563,8 @@ def main():
     pool = A._collect_photo_pool()
 
     jobs = []
+    held = 0
+    stamps = {}
     for trip in trips:
         A.enrich_trip_locations(trip)
         driving = A._trip_driving_by_day(trip)
@@ -502,23 +588,49 @@ def main():
         for day in trip_days(trip):
             key = f"{trip['id']}/{day}"
             existing = rollups.get(key) or {}
-            if existing.get("edited") and not args.force_edited:
+            # `edited` is a human correcting a draft; `source: conversation`
+            # is a human having written the whole thing (trip 95's set, which
+            # is also the voice the prompt is calibrated against). Both outrank
+            # --force for the same reason, and only --force-edited passes.
+            human = existing.get("edited") or existing.get("source") == "conversation"
+            if human and not args.force_edited:
                 continue
-            if existing.get("text") and not (args.force or args.force_edited):
+            sig = day_signature(trip, day, driving)
+            # A rollup written before signatures existed has none. Absence
+            # means "legacy", not "changed" — read the other way, the first
+            # run after this shipped would redraft the entire library.
+            legacy = existing.get("text") and not existing.get("inputs_sig")
+            stale = (existing.get("text") and existing.get("inputs_sig")
+                     and existing["inputs_sig"] != sig)
+            if existing.get("text") and not (args.force or args.force_edited
+                                             or stale):
+                if legacy:
+                    stamps[key] = {"inputs_sig": sig}   # free, no API call
                 continue
-            jobs.append((key, trip, day,
+            if not (args.ignore_settle or day_settled(day, settle_s=settle_s)):
+                held += 1
+                continue
+            jobs.append((key, trip, day, sig,
                          day_dossier(trip, day, driving, locations, memos,
                                      counts, per_card, per_card_caps)))
 
     if args.limit:
         jobs = jobs[:args.limit]
+    held_note = (f" {held} day(s) held back — GPS not settled yet."
+                 if held else "")
+    # Dry run must cost nothing and change nothing, stamps included.
+    if stamps and not args.dry_run:
+        _merge_and_write(stamps)
+        print(f"Stamped {len(stamps)} existing rollup(s) with an input "
+              f"signature (no API calls).")
     if not jobs:
-        print("Nothing to draft — every day already has a rollup.")
+        print("Nothing to draft — every day already has a current rollup."
+              + held_note)
         return 0
-    print(f"{len(jobs)} day(s) to draft.\n")
+    print(f"{len(jobs)} day(s) to draft.{held_note}\n")
 
     if args.dry_run:
-        for key, _trip, _day, dossier in jobs:
+        for key, _trip, _day, _sig, dossier in jobs:
             print(f"=== {key} ===")
             print(json.dumps(dossier, indent=2, ensure_ascii=False))
             print()
@@ -537,7 +649,7 @@ def main():
 
     in_tok = out_tok = cached = 0
     written = failed = 0
-    for i, (key, trip, day, dossier) in enumerate(jobs, 1):
+    for i, (key, trip, day, sig, dossier) in enumerate(jobs, 1):
         try:
             resp = client.messages.create(
                 model=args.model,
@@ -582,6 +694,9 @@ def main():
             # draws on campground data.
             "model": args.model,
             "generated_at": int(time.time()),
+            # What this entry was drafted FROM. The next run redrafts the day
+            # only if these facts moved (see day_signature).
+            "inputs_sig": sig,
             "source_memo_ids": [m for m, r in memos.items()
                                 if r.get("trip_id") == trip["id"]
                                 and r.get("date") == day],
