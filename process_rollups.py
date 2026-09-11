@@ -98,17 +98,28 @@ RULES, in order of importance:
 what kind of day that made — a haul, a touring day, a moving day, a day that \
 barely moved, the turn for home. That is what the cards below cannot say and a \
 reader cannot assemble for themselves.
+   ON A DAY THAT BARELY DROVE, WHAT HAPPENED IS THE SHAPE. Mileage is the \
+least interesting fact about a day spent at one place, and a summary that \
+leads with it says nothing at all. Lead with where the day was based and what \
+it was spent on; the distance, if it earns a mention, comes last or not at all.
 2. 25 TO 45 WORDS. One paragraph, often one or two sentences. This is a caption, \
 not an entry. If you are writing a third sentence, you are listing.
 3. IMPERSONAL VOICE. Never "we", "our" or "I". The family's own words are all \
 over the page already; this stands above them as a different kind of text, and \
 the reader should be able to tell in one glance which is which. Write "a short \
 evening run west", not "we drove west".
-4. NAME NOTHING THE CARDS ALREADY NAME. No stop names, no campsite numbers, no \
-photo subjects, no people. Regions, states, rivers and mountain ranges are \
-fine — they are the shape, not the contents. The campground you end at may be \
-characterised ("ending at a reservoir in the southwestern corner of the state") \
-but not named.
+4. NAMES YES, DESCRIPTIONS NO. Name what the dossier names: the day\'s \
+"events", its "family_visits", and the campground in "from"/"to". A name \
+orients a reader; it is not a retelling, and withholding it is what left a \
+day at one campground with nothing to say but its mileage.
+   What you must NOT do is reproduce what the cards say ABOUT those things: no \
+descriptions, no photo captions, no campsite notes, no site numbers, no photo \
+counts, no people beyond a family visit\'s own label. The dossier does not \
+carry them, and you must not invent them to fill the gap — naming a place is \
+the end of what you know about it.
+   "waypoint_stops" is a COUNT of minor stops (overlooks, fuel, rest areas) \
+and they are never named. Use it only to say whether the day was busy or \
+spare, never to imply what was at them.
 5. EVERY FACT FROM THE DOSSIER. The mileage, the states, the driving time and \
 the day's place in the trip are given. Do not invent terrain, weather, mood, \
 fatigue, or why anything took as long as it did. "states" is the ordered list \
@@ -125,9 +136,10 @@ number or as evidence the trip paused.
 7. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
 8. A DAY THAT BARELY DROVE IS NOT A FAILURE TO REPORT. "round_trip" means the \
-day started and ended in the same place; say what that kind of day was (based \
-at one campground, a day out and back) rather than straining to make it sound \
-like travel. A day with no driving at all gets a sentence about being parked.
+day began and ended in the same place — so it was BASED somewhere, and the \
+"events" are what it was for. Say that, rather than straining to make the \
+mileage sound like travel. A day with no events and no driving was genuinely \
+a quiet one at camp; say so plainly and briefly.
 9. ABSENT MILEAGE IS NOT ZERO MILEAGE. If "mileage" says not recorded, the \
 distance is unknown and you must not say the day had no driving, was parked, \
 or stayed put — read "moved" instead, and if it is true describe the move \
@@ -436,6 +448,33 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
     if day_states:
         d["states"] = list(day_states)
 
+    # What HAPPENED, named but not described. The long rollups were rejected
+    # for reproducing the descriptions, captions and notes printed on the cards
+    # below — but a NAME is not a description, and withholding it left a local
+    # day with nothing to say but its mileage, which on a day that barely drove
+    # is the least interesting fact available.
+    events, family = [], []
+    waypoints = 0
+    for item in trip.get("timeline", []):
+        if item.get("type") != "event" or item.get("sort_date") != day:
+            continue
+        if item.get("family_visit"):
+            if item["family_visit"] not in family:
+                family.append(item["family_visit"])
+        elif item.get("waypoint"):
+            # Counted, never named: two thirds of the library's events are
+            # auto-detected stops and a travel day's raw list is mostly rest
+            # areas. A count still lets a busy day read as busy.
+            waypoints += 1
+        elif item.get("name") and item["name"] not in events:
+            events.append(item["name"])
+    if events:
+        d["events"] = events
+    if family:
+        d["family_visits"] = family
+    if waypoints:
+        d["waypoint_stops"] = waypoints
+
     woke = slept = None
     for stay in trip.get("stays", []):
         start, end = stay.get("start", ""), stay.get("end", "")
@@ -444,21 +483,25 @@ def day_dossier(trip, day, driving, elevations, day_states=None,
         if start <= day < end:
             slept = stay
 
-    # Characterised, never named: rule 4 forbids the model repeating a
-    # campground name the card below it already carries, so the name is not
-    # offered in the first place — only roughly where it was.
+    # Named as well as placed. The name was withheld while the only thing a
+    # summary could say was how far it drove; once a day is allowed to say
+    # what happened in it, "based at X for a second day" is the sentence a
+    # reader of a local day actually wants.
     if woke:
-        where = _where(woke.get("where_label") or woke.get("locale"),
-                       woke.get("state"))
-        if where:
-            d["from"] = {"where": where}
+        entry = {k: v for k, v in (
+            ("place", woke.get("place")),
+            ("where", _where(woke.get("where_label") or woke.get("locale"),
+                             woke.get("state")))) if v}
+        if entry:
+            d["from"] = entry
     if slept:
-        where = _where(slept.get("where_label") or slept.get("locale"),
-                       slept.get("state"))
-        ft = _elevation_ft(slept, elevations)
-        to = {k: v for k, v in (("where", where), ("elevation_ft", ft)) if v}
-        if to:
-            d["to"] = to
+        entry = {k: v for k, v in (
+            ("place", slept.get("place")),
+            ("where", _where(slept.get("where_label") or slept.get("locale"),
+                             slept.get("state"))),
+            ("elevation_ft", _elevation_ft(slept, elevations))) if v}
+        if entry:
+            d["to"] = entry
 
     if not d.get("round_trip"):
         heading = _heading(_stay_point(woke) if woke else None,

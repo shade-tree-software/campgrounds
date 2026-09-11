@@ -55,40 +55,59 @@ def _dossier(trip, driving=None, elevations=None, states=None,
                          states, trip_miles, day_index, track_known)
 
 
-class TestWhatIsDeliberatelyAbsent(unittest.TestCase):
-    """The whole reason the long form failed. Each of these was IN the old
-    dossier and is what the model reached for."""
+class TestNamesInDescriptionsOut(unittest.TestCase):
+    """Where the line sits, and it has moved once.
+
+    The long rollups were rejected for restating the cards, so the first short
+    dossier withheld every name too — which left a day spent at one campground
+    with nothing to say but its mileage, the least interesting fact about it
+    (AWH: "on local days the driving is not the important part"). A NAME is not
+    a description. Names are in; what the cards say ABOUT them stays out."""
 
     def _full_day(self):
         trip = _trip(
             stays=[_stay("2026-08-22", "2026-08-24", notes="prairie grass",
                          site="7")],
-            events=[{"date": DAY, "name": "Alpine Visitor Center",
+            events=[{"date": DAY, "sort_date": DAY, "type": "event",
+                     "name": "Alpine Visitor Center",
                      "description": "a ranger talk", "time": "10:00"},
-                    {"date": DAY, "name": "Sinclair, Benkelman",
-                     "waypoint": True}])
+                    {"date": DAY, "sort_date": DAY, "type": "event",
+                     "name": "Sinclair, Benkelman", "waypoint": True},
+                    {"date": DAY, "sort_date": DAY, "type": "event",
+                     "name": "Lunch with the Svendsens",
+                     "family_visit": "The Svendsens"}])
+        trip["timeline"] = trip["events"]
         return _dossier(trip, driving={DAY: {"miles": 273, "moving": "5h 27m"}})
 
-    def test_no_stop_is_named(self):
-        blob = json.dumps(self._full_day())
-        for named in ("Alpine", "Sinclair", "Benkelman"):
-            self.assertNotIn(named, blob)
+    def test_a_real_event_is_named(self):
+        self.assertEqual(self._full_day()["events"], ["Alpine Visitor Center"])
 
-    def test_the_campground_is_not_named(self):
-        """It is characterised by where it is, never by what it is called —
-        the card below carries the name."""
+    def test_a_family_visit_is_named_by_its_label(self):
+        self.assertEqual(self._full_day()["family_visits"], ["The Svendsens"])
+
+    def test_a_waypoint_is_counted_never_named(self):
+        """Two thirds of the library's events are auto-detected stops and a
+        travel day's raw list is mostly rest areas — the same test that decides
+        whether one earns a card on the timeline."""
         d = self._full_day()
-        self.assertNotIn("Moraine Park", json.dumps(d))
+        self.assertEqual(d["waypoint_stops"], 1)
+        self.assertNotIn("Sinclair", json.dumps(d))
+
+    def test_the_campground_is_named_and_placed(self):
+        d = self._full_day()
+        self.assertEqual(d["to"]["place"], "Moraine Park")
         self.assertEqual(d["to"]["where"], "5 miles west of Estes Park, CO")
 
-    def test_no_descriptions_notes_captions_or_site_numbers(self):
+    def test_no_descriptions_notes_or_site_numbers(self):
+        """The half that did NOT move: naming a place is the end of what the
+        dossier knows about it."""
         blob = json.dumps(self._full_day())
-        for leaked in ("ranger talk", "prairie grass", "site", "Site", '"7"'):
+        for leaked in ("ranger talk", "prairie grass", "Site", '"7"'):
             self.assertNotIn(leaked, blob)
 
     def test_no_photo_counts(self):
-        """Photo counts told the old dossier which stops mattered. With no
-        stops to rank, they are just another number to pad a sentence with."""
+        """Photo counts told the old dossier which stops mattered most. With
+        the stops named outright they are just a number to pad a sentence."""
         self.assertNotIn("photos", json.dumps(self._full_day()))
 
 
