@@ -42,64 +42,68 @@ What survived because it was always shared, not memo-specific:
 `trips.camper_names()` (used by `_make_trip` for `trip["campers"]`), and the
 `--force`/`edited` discipline the transcripts and the rollups both used.
 
-## Where it landed (2026-09-10)
+## DONE: all 321 days written, deployed 2026-09-11
 
-The long rollups are OUT and **short per-day summaries are IN**. AWH on the
-rollups: "they basically repeat what anyone can read later on in the timeline
-for that day" — and he was right for a structural reason, not a prose one: the
-dossier is assembled FROM the cards printed directly below the write-up, so
-faithful prose is a restatement by construction. The model could only add what
-the rules forbid it to add.
+Every day of all 90 non-home trips has a short write-up, **written by hand in
+conversation at no API cost**, and both `day_rollups.json` and `trips.json` are
+uploaded to PA and verified identical by checksum. An earlier API run (~$1.85,
+303 days) is entirely superseded.
 
-What he asked for instead, and approved ("This is good. Much better than the big
-rollups."): **a short summary telling a first-time reader the gist of the day,
-deliberately NOT repeating the notes and captions**, which he can then add to by
-hand. Trip 95's 14 days were written **by me in conversation, no API call**, from
-the route/mileage/day-shape alone. Choices that earned the approval, keep them:
+**The short form replaced the long rollups.** AWH on the rollups: "they
+basically repeat what anyone can read later on in the timeline for that day" —
+structurally true, because the dossier was assembled FROM the cards printed
+below the write-up. The approved form is impersonal, names what happened, and
+leads a local day with what it was for rather than its mileage.
 
-- **Impersonal voice, not "we"** — it reads as a subtitle standing over his own
-  words rather than competing in the same voice, and keeps whose text is whose
-  obvious at a glance.
-- **The SHAPE of the day is the content**: distance, direction, terrain, what
-  kind of day it was (haul / touring / moving day / the turn for home). That is
-  exactly what the cards below cannot say and a first-time reader cannot
-  assemble.
-- **Name nothing the cards already name.** No Harleys, no Snake Alley, no
-  Christmas tree in August. 24-41 words each, about a third of a rollup.
+### The rules, each earned by a correction
 
-**If this is ever automated, the prompt is much cheaper than the rollup one:**
-it needs the route, the mileage and the day's shape — NOT the descriptions and
-captions, which were most of the dossier's cost and all of its redundancy.
+Every one of these is in `process_rollups.py`'s SYSTEM prompt. They are listed
+here because the reasoning is not recoverable from the rule text alone:
 
-## Two slots, one page (shipped 2026-09-10)
+- **Length is a CEILING (45), never a target.** Every floor I set rejected text
+  AWH had already approved — 25 rejected his own 24-word entries, 22 rejected
+  "North for the new year...", 8 rejected "Fireworks at Franklin Park in
+  Purcellville" as he called it good. Padding to reach a floor is exactly what
+  produced "with nothing else on the day".
+- **Never remark on what the record holds.** No "the only thing recorded",
+  "nothing but the drive". Commentary about the archive, and it makes a thin day
+  conspicuous instead of letting it be brief. 17 of my first 147 were guilty.
+- **Never gloss a small distance OR its absence.** Not "barely out of town",
+  not "no need to move the camper at all". AWH: "'Fireworks at Franklin Park in
+  Purcellville' is good. 'barely out of town' is unnecessary."
+- **A round_trip day carries NO distance at all** — the dossier withholds it
+  rather than the prompt forbidding it. "Mileage is interesting on a 502 mile
+  day, not on a day when miles just incidentally happened to add up due to a lot
+  of local activities." The test is achievement vs by-product; round_trip is the
+  proxy.
+- **Waypoints are absent entirely, not even counted.** "If a stop is
+  interesting, it's my job to mark it as an event rather than a waypoint, not
+  the model's job to reinterpret." A count can only be characterised by guessing
+  what was at them.
+- **Names yes, descriptions no.** Events, family visits and campgrounds are
+  named; their descriptions, captions, notes, site numbers and photo counts are
+  not. Withholding names is what left a local day with nothing but mileage.
+- **Events carry `time`/`until`, and the drive carries `left_at`/`arrived_at`.**
+  Without them a single event reads as filling the day. AWH on trip 14's Ocean
+  City (19:30-20:47): "We didn't spend the day in Ocean City."
+- **THEY TRAVEL IN THE CAMPER AND NOTHING ELSE.** No second car; any local drive
+  was in the camper. Never write it as though the camper stayed on the pitch.
+- **Nothing is immune to redrafting.** `source: "conversation"` is provenance,
+  not protection — freezing hand-written text would leave a library that cannot
+  respond to its own facts being corrected. `day_notes` are the human channel
+  and need no protection, since they outrank at display time.
 
-`day_notes` on the trip record + `_trip_day_writeups` — a typed note always beats
-a generated write-up, editing a draft writes a note OVER it rather than editing
-it, and the "Drafted by <model>" line keys on `model` so a note retires it. See
-CLAUDE.md "The Day's Write-Up". `tests/test_day_notes.py`, 10 tests.
+### Two open items, AWH intends to address them next time
 
-## Where the summaries live (settled 2026-09-11)
-
-**The trip-95 summaries are NOT in git** — `trip_data/day_rollups.json` is
-gitignored and excluded from the PA sync. They were recovered on 2026-09-11
-from the 2026-09-10 bundle and are in place locally; each carries
-`source: "conversation"`, which now outranks `--force` in the drafter.
-
-**Restore that bundle with a surgical copy of the one file, NOT `restore.sh`** —
-it also holds a `users.json` predating the `laura` account and hamfam's
-Trips-only flag, and a shorter `access_log.jsonl`. Only three files in it
-differed at all.
-
-Open, in his hands:
-1. **Publishing them to PA.** No automated local->PA path (deploy key is a
-   forced command, sync key read-only), so they ride a bundle or get re-typed
-   live. The natural workflow does it: editing a summary turns it into a day
-   note in `trips.json`, which DOES sync home.
-2. **The other 94 trips.** ~321 days, ~$3.50 by API or free in conversation.
-   Do the first dozen by hand regardless: they become the few-shot exemplars
-   that keep an automated run in the approved voice.
-3. `process_rollups.py`'s 17-rule SYSTEM prompt still targets the LONG form and
-   is superseded but not deleted. Ask before removing it.
+1. **Day one of any trip has no `heading`** — `_heading` needs both ends and
+   home is not a campspot, so the drafter can never say which way a trip set
+   off.
+2. **The waypoint/event split is now the main lever on quality.** A report found
+   135 of 747 waypoints carry a signal; **26 in tiers A/B carry photos or a
+   description**, which is the app's OWN test for earning a full timeline card —
+   so the page already treats them as interesting while the write-up cannot see
+   them. Regenerate that report with a scan over `timeline` items where
+   `waypoint` is true and the card has photos or a description.
 
 ## The lesson worth keeping from the nine faults
 
@@ -119,13 +123,12 @@ abandoned phone booth, not the town. See rules 2 and 14 in `SYSTEM`.
   (the same split `_people_scan_python()` probes for). `anthropic` was installed
   there 2026-09-10 to run the rollups. A `source ekko_trips_venv/bin/activate`
   fails silently and leaves you on system python, which has none of it.
-- **`ANTHROPIC_API_KEY` is in the repo-root `.env` on BOTH this machine and PA**
-  (AWH added it to PA 2026-09-11), the same gitignored file that holds
-  `GITHUB_PAT`. `.env` is excluded from `backup.sh` and can't travel by git, so
-  each host has its own. `_load_dotenv()` uses `setdefault`, so a real env var
-  wins over the file. Anthropic keys don't expire on a timer — only revocation
-  or exhausted credit — and when that happens the WEBSITE is unaffected (the
-  app never imports `anthropic`); the drafter just reports every day failed.
+- **`ANTHROPIC_API_KEY` is COMMENTED OUT in this machine's `.env`** (line 8,
+  `#export ANTHROPIC_API_KEY=...`) and live on PA. To use it here without
+  editing the file: `export ANTHROPIC_API_KEY="$(sed -n '8s/^#\s*export\s*ANTHROPIC_API_KEY=//p' .env)"`.
+  `.env` is gitignored and excluded from `backup.sh`, so each host has its own.
+  Anthropic keys do not expire on a timer, and when one fails the WEBSITE is
+  unaffected — the app never imports `anthropic`.
 - **`trip_data/day_rollups.json` exists only on the host that generated it.**
   Gitignored, excluded from sync (a `--delete` sync deleted a whole trip's prose
   before that exclude existed), now in `backup.sh`. On a new machine it does not
