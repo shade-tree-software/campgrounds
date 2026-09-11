@@ -195,6 +195,67 @@ function saveTripNote() {
   });
 }
 
+// ── The day's note ────────────────────────────────────────────────────────
+// One slot under each day divider, filled by hand. A drafted write-up shows
+// there until someone types over it, and typing over it does not edit the
+// draft — it writes a note that wins from then on, so the draft is never
+// silently rewritten into something a person appears to have said.
+function editDayNote(date) {
+  const slot = document.getElementById(`writeup-${date}`);
+  if (!slot || slot.querySelector('textarea')) return;
+  const existing = slot.querySelector('.day-writeup-text');
+  const current = existing ? existing.textContent.trim() : '';
+  slot.dataset.prevHtml = slot.innerHTML;
+  slot.classList.remove('empty');
+  slot.innerHTML = `
+    <textarea rows="4" id="day-note-input-${date}" placeholder="What was this day?">${escapeHtml(current)}</textarea>
+    <div class="day-writeup-actions">
+      <button class="btn-save" onclick="saveDayNote('${date}')">Save</button>
+      <button class="btn-cancel" onclick="cancelDayNote('${date}')">Cancel</button>
+    </div>`;
+  const input = document.getElementById(`day-note-input-${date}`);
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function cancelDayNote(date) {
+  const slot = document.getElementById(`writeup-${date}`);
+  if (!slot || slot.dataset.prevHtml === undefined) return;
+  slot.innerHTML = slot.dataset.prevHtml;
+  delete slot.dataset.prevHtml;
+  if (!slot.querySelector('.day-writeup-text')) slot.classList.add('empty');
+}
+
+function saveDayNote(date) {
+  const input = document.getElementById(`day-note-input-${date}`);
+  if (!input) return;
+  const text = input.value.trim();
+  fetch(`/api/trips/${TRIP_ID}/day-note`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date: date, text: text })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { toast(data.error); return; }
+    const slot = document.getElementById(`writeup-${date}`);
+    delete slot.dataset.prevHtml;
+    // Rendered here rather than by a reload: the page is long, the map holds
+    // its own view state, and a note is usually written while reading the day
+    // it is about. A cleared note falls back to the add button rather than to
+    // whatever draft it replaced — the draft is still in the file and the next
+    // load will show it again, which is the honest answer either way.
+    if (data.text) {
+      slot.classList.remove('empty');
+      slot.innerHTML = `<p class="day-writeup-text" onclick="editDayNote('${date}')" title="Click to write over this">${escapeHtml(data.text)}</p>`;
+    } else {
+      slot.classList.add('empty');
+      slot.innerHTML = `<button type="button" class="day-writeup-add" onclick="editDayNote('${date}')">+ note about this day</button>`;
+    }
+  })
+  .catch(() => toast('Could not save that note.'));
+}
+
 function editHomeTime(which) {
   const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
   const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;

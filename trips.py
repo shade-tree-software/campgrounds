@@ -957,6 +957,48 @@ def set_tid_override(trip_id, day, value):
     return None
 
 
+def get_day_notes(trip_id):
+    """Return the trip's day_notes dict ({"YYYY-MM-DD": text}), empty if none."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return dict(t.get("day_notes", {}))
+    return {}
+
+
+def set_day_note(trip_id, day, text):
+    """Set or clear one day's note. Returns the resulting dict, None if no trip.
+
+    The note lives ON THE TRIP RECORD rather than in `day_rollups.json`
+    alongside the drafted write-ups, and that is the whole difference between
+    the two: a draft is regenerable from facts on whichever host holds the API
+    key, so it is gitignored, excluded from `sync-from-pa.sh`, and absent on a
+    fresh clone. A sentence someone typed exists nowhere else. Putting it in
+    `trips.json` is what makes it travel home from the live host by the same
+    path as every other thing written about a trip, and survive a regeneration
+    of the drafts.
+
+    Blank text deletes the key (and the whole dict once it empties), so an
+    emptied note leaves no trace and lets the draft, if there is one, show
+    through again."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = dict(t.get("day_notes", {}))
+            cleaned = (text or "").strip()
+            if cleaned:
+                current[day] = cleaned
+            else:
+                current.pop(day, None)
+            if current:
+                t["day_notes"] = current
+            else:
+                t.pop("day_notes", None)
+            _save_trips(raw)
+            return current
+    return None
+
+
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):

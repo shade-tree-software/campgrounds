@@ -1,6 +1,6 @@
 ---
 name: project_travelogue_capture_gap
-description: Memo-to-rollup pipeline — steps 1-3 shipped and displayed; RESUME at judging trip 95's prose after the seam-rule rework, then the archive run
+description: Memo-to-rollup pipeline — AWH judged the drafts redundant with the timeline 2026-09-10; a typed day note now owns that slot and the archive run is off
 metadata:
   type: project
 ---
@@ -25,23 +25,36 @@ local Whisper transcription, `process_rollups.py`, and the day-divider display
 on the trip page. Every unedited write-up carries "Drafted by <model>", the same
 generated-vs-human line the memo page draws.
 
-## RESUME HERE
+## Where it landed (2026-09-10)
 
-1. **AWH has not judged the current prose.** He critiqued the 2026-09-10 run in
-   nine specific places and the fixes are committed but NOT yet exercised —
-   `--force --trip 95` costs ~$0.21. Verify against his nine before anything else.
-2. **The archive is on hold at his request** (~321 days, ~$3.50-5). Do not run
-   it until he approves the trip-95 output.
-3. **Open design question he asked, unanswered:** each day is a separate API
-   call with no knowledge of the other thirteen, which loses the trip's arc and
-   repeats material across consecutive days. He said "there's a reason and a
-   theme on most trips, and some of that develops throughout." Proposal to put
-   to him: a factual trip-arc block in every dossier (day N of M, where it began
-   and ends, the shape of the days) plus the previous day's finished text for
-   continuity — NOT one call for the whole trip, which trades away the guard
-   that a day cannot borrow another day's facts. **Gap found while checking:
-   there is nowhere to record a trip's reason or theme.** `trip_note` exists on
-   93 of 95 trips but is just the trip's name ("Rocky Mountain National Park").
+Trip 95 was re-drafted after the join-invention fixes (14 days, $0.22, no
+truncation) and AWH's verdict on the prose was **not that it was wrong — that
+it was redundant**: "The rollups are OK, but they basically repeat what anyone
+can read later on in the timeline for that day. If we simply add a new option
+to add a visible note for each day, it will probably be just as nice without
+the need to make API calls to an AI." He is right and it is the diagnosis the
+whole project needed: the dossier is assembled FROM the cards printed directly
+below the write-up, so faithful prose is by construction a restatement. The
+model can only add what it is not allowed to add.
+
+**So the day note now owns that slot** (`day_notes` on the trip record; a typed
+note always beats a draft — see CLAUDE.md "The Day's Write-Up"). This is
+consistent with the capture-gap finding rather than a contradiction of it: he
+won't write a day REPORT, but he writes a sentence when it has somewhere to go
+(33 event descriptions on trip 95).
+
+**The generated half is not deleted, just demoted**, and two questions are open:
+1. **Retire the drafts or keep them as a fallback?** Trip 95's 14 still display
+   on days he hasn't written over. Ask before deleting `day_rollups.json` —
+   unwritten days are the only case they were ever the better answer.
+2. **The archive run (~321 days, ~$3.50-5) is OFF** unless he revives it. Its
+   one real argument survives his verdict: he will never hand-write 321 days of
+   back-catalogue, and there the restatement is of cards a reader would
+   otherwise have to assemble themselves.
+
+Still unanswered from before, and now probably moot: each day was a separate API
+call with no knowledge of the other thirteen, losing the trip's arc — and there
+is nowhere to record a trip's reason or theme (`trip_note` is just the name).
 
 ## The lesson worth keeping from the nine faults
 
@@ -56,6 +69,11 @@ abandoned phone booth, not the town. See rules 2 and 14 in `SYSTEM`.
 
 ## Environment facts that do not travel with the repo
 
+- **This laptop has NO `ekko_trips_venv/`** despite every doc naming it; the
+  interpreter that has the app's dependencies is `~/.virtualenvs/ekko/bin/python3`
+  (the same split `_people_scan_python()` probes for). `anthropic` was installed
+  there 2026-09-10 to run the rollups. A `source ekko_trips_venv/bin/activate`
+  fails silently and leaves you on system python, which has none of it.
 - **`ANTHROPIC_API_KEY` is in the LOCAL `.env` only.** PA does not have it and
   cannot generate rollups.
 - **`trip_data/day_rollups.json` exists only on the host that generated it.**

@@ -33,6 +33,7 @@ from trips import (
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
+                   get_day_notes, set_day_note,
                    campground_references, camping_nights, is_day_trip,
                    is_home_stay, visit_runs, TRIPS_JSON,
                    event_time_rank, reference_timezone, tz_abbrev,
@@ -3195,6 +3196,28 @@ def _trip_day_rollups(trip_id):
             if k.startswith(prefix) and (v.get("text") or "").strip()}
 
 
+def _trip_day_writeups(trip_id):
+    """What to print under each day divider: {date: {text, model}}.
+
+    One slot, two possible sources, and a hand-written note always wins. The
+    day note is the plain answer to what a day was — it costs nothing, it says
+    what only the person who was there knows, and a drafted rollup that merely
+    restates the cards below it earns nothing by standing in front of it.
+
+    `model` is present only on a draft, which is what the attribution line
+    keys on: a generated sentence must never be mistaken for one of the
+    family's own. Editing a draft therefore does not edit the draft — it
+    writes a note over it, which is why there is no "edited" flag to keep.
+    """
+    writeups = dict(_trip_day_rollups(trip_id))
+    for day, text in (get_day_notes(trip_id) or {}).items():
+        if (text or "").strip():
+            writeups[day] = {"text": text, "by_hand": True}
+        else:
+            writeups.pop(day, None)
+    return writeups
+
+
 # ── On-the-road photos ────────────────────────────────────────────────────
 #
 # Photographs taken from a moving vehicle had nowhere to live. Every photo in
@@ -3856,7 +3879,7 @@ def trip_detail(trip_id):
         stay_photos=stay_photos,
         event_photos=event_photos,
         road_photos=road_photos,
-        day_rollups=_trip_day_rollups(trip_id),
+        day_writeups=_trip_day_writeups(trip_id),
         family_locations=family,
         home=home,
         is_admin=is_admin,
@@ -9531,6 +9554,31 @@ def api_set_tid_override(trip_id):
     if result is None:
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "tid_overrides": result})
+
+
+@app.route('/api/trips/<int:trip_id>/day-note', methods=['PUT'])
+def api_set_day_note(trip_id):
+    """Set or clear one day's note. Body: {date: 'YYYY-MM-DD', text: str}.
+
+    Empty text deletes it. Stored on the trip record (see trips.set_day_note
+    for why it does not go in day_rollups.json), so it syncs home from the
+    live host and outlives any redraft of the generated write-ups."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    day = (data.get("date") or "").strip()
+    text = data.get("text") or ""
+    if not day:
+        return jsonify({"error": "date is required (YYYY-MM-DD)"}), 400
+    try:
+        date.fromisoformat(day)
+    except ValueError:
+        return jsonify({"error": "date must be YYYY-MM-DD"}), 400
+    result = set_day_note(trip_id, day, text)
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
+    return jsonify({"ok": True, "text": result.get(day, ""), "day_notes": result})
 
 
 @app.route('/api/trips/<int:trip_id>/tid-choices', methods=['GET'])

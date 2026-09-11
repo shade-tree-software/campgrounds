@@ -309,28 +309,61 @@
      Set in the cards column, indented to the timeline axis so it reads as
      belonging to the day rather than floating beside it. Deliberately not a
      card: it is prose about the day, not another thing that happened in it. */
-  .day-rollup {
+  .day-writeup {
     margin: .1rem 0 1.1rem 2.25rem;
     padding: 0 1.25rem 0 .85rem;
     border-left: 3px solid var(--gold);
     max-width: 60ch;
   }
-  .day-rollup p {
+  /* Nothing written yet: the slot is only the add button, so it carries no
+     rule of its own — an empty gold bar on every dividerless day would read
+     as a missing thing rather than an offer. */
+  .day-writeup.empty { border-left-color: transparent; padding-left: 0; }
+  .day-writeup p {
     margin: 0;
     color: #3d3d42;
     font-size: .95rem;
     line-height: 1.62;
     white-space: pre-wrap;
   }
-  .day-rollup-source {
+  .day-writeup-source {
     color: var(--gray);
     font-size: .68rem;
     letter-spacing: .03em;
     margin-top: .4rem;
     text-transform: uppercase;
   }
+  .day-writeup-add {
+    background: none;
+    border: none;
+    color: var(--gray);
+    cursor: pointer;
+    font-family: inherit;
+    font-size: .78rem;
+    padding: .15rem 0;
+  }
+  .day-writeup-add:hover { color: var(--navy); text-decoration: underline; }
+  .day-writeup textarea {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: .95rem;
+    line-height: 1.62;
+    padding: .5rem .6rem;
+    resize: vertical;
+    width: 100%;
+  }
+  .day-writeup-actions {
+    display: flex;
+    gap: .5rem;
+    margin-top: .4rem;
+  }
   @media (max-width: 700px) {
-    .day-rollup { margin-left: 1rem; padding-right: 0; }
+    .day-writeup { margin-left: 1rem; padding-right: 0; }
+    /* The add button is the only tap target here on a phone, so give it a
+       finger-sized row rather than the desktop text link's height. */
+    .day-writeup-add { font-size: .85rem; padding: .35rem 0; }
   }
 
   /* ── Compact waypoint rows ───────────────────────────────────────────────
@@ -2458,21 +2491,27 @@
               onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
       {%- endif %}
     </div>
-    {%- set rollup = day_rollups.get(item.sort_date) %}
-    {%- if rollup %}
-    {#- The day's write-up, drafted from its own facts and whatever was said
-        into the phone. It sits under the divider and above the day's cards
+    {%- set writeup = day_writeups.get(item.sort_date) %}
+    {#- The day's write-up. It sits under the divider and above the day's cards
         because it is about the whole day: the cards are what happened, this is
         what the day WAS.
 
-        The attribution line is not decoration. A generated sentence must never
-        be mistaken for one of the family's own — the same line the memo page
-        draws between what a model heard and what a human confirmed. Once
-        someone has edited a write-up it is theirs, and the line goes. -#}
-    <div class="day-rollup{% if rollup.edited %} edited{% endif %}">
-      <p>{{ rollup.text }}</p>
-      {%- if not rollup.edited %}
-      <div class="day-rollup-source" title="Drafted from this day's stops, photos, captions and voice memos">Drafted by {{ rollup.model or 'a model' }}</div>
+        Two things can fill this slot and a typed note always wins over a
+        drafted one (see `_trip_day_writeups`). The attribution line is not
+        decoration: a generated sentence must never be mistaken for one of the
+        family's own — the same line the memo page draws between what a model
+        heard and what a human confirmed — so it appears exactly when the text
+        came from a model. Writing over a draft replaces it with a note, which
+        is what retires the line. -#}
+    {%- if writeup or is_admin %}
+    <div class="day-writeup{% if not writeup %} empty{% endif %}" id="writeup-{{ item.sort_date }}" data-date="{{ item.sort_date }}">
+      {%- if writeup %}
+      <p class="day-writeup-text"{% if is_admin %} onclick="editDayNote('{{ item.sort_date }}')" title="Click to write over this"{% endif %}>{{ writeup.text }}</p>
+      {%- if not writeup.by_hand %}
+      <div class="day-writeup-source" title="Drafted from this day's stops, photos, captions and voice memos">Drafted by {{ writeup.model or 'a model' }}</div>
+      {%- endif %}
+      {%- elif is_admin %}
+      <button type="button" class="day-writeup-add" onclick="editDayNote('{{ item.sort_date }}')">+ note about this day</button>
       {%- endif %}
     </div>
     {%- endif %}
