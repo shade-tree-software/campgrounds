@@ -9,7 +9,7 @@ This folder's instructions + apply script serve **two** purposes:
    instead of run later. Add entries with `waterfront: "not waterfront"` as a
    placeholder, then run these same subagents over the new ids and apply — so
    entries land correctly marked the first time. The per-state sweep pipeline is
-   in `CLAUDE.md` ("Waterfront audit is a built-in sweep stage"); the mechanics
+   in `../docs/campground-curation.md` ("Waterfront audit is a built-in sweep stage"); the mechanics
    below (batching, subagent prompt, apply, commit) are identical for both uses.
 
 Re-audit scope (purpose 1): all entries with `waterfront != "not waterfront"`
@@ -88,4 +88,4 @@ Separate from the waterfront audit: verifies an entry is a **real, currently-ope
 - **`inclusion_audit_instructions.md`** — subagent gate. Authority = operator/agency page + reservation-system per-site site-type list; aggregators inflate cabin/day-use parks into fake "RV sites" — never keep on an aggregator alone.
 - **`apply_inclusion_audit.py <results.json>`** — stamps `inclusion_evidence` on `keep` verdicts; **reports** `remove`/`review` candidates without auto-deleting (human reviews the remove list before excising; check `trip_data/` for `campground_id` refs first).
 - Durable record: the **`inclusion_evidence`** JSON field (non-empty == validity-audited & confirmed keep).
-- **In a new-state sweep this is recorded at ADD time** (the research agent emits `inclusion_evidence` since it already vets keep/drop) — no separate pass needed. The standalone subagents here are for **retroactive** re-vetting of states added before that discipline. **PA was the pilot** (2026-06-25): 169 entries audited, 11 removed (5 cabins/day-use/tent-only state parks, 3 under-20ft state-forest sites, 1 hike-in, 1 defunct, 1 unconfirmable FCFS). See `../CLAUDE.md` "Inclusion (validity) audit is a built-in sweep stage".
+- **In a new-state sweep this is recorded at ADD time** (the research agent emits `inclusion_evidence` since it already vets keep/drop) — no separate pass needed. The standalone subagents here are for **retroactive** re-vetting of states added before that discipline. **PA was the pilot** (2026-06-25): 169 entries audited, 11 removed (5 cabins/day-use/tent-only state parks, 3 under-20ft state-forest sites, 1 hike-in, 1 defunct, 1 unconfirmable FCFS). See `../docs/campground-curation.md` "Inclusion (validity) audit is a built-in sweep stage".
