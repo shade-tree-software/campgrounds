@@ -122,5 +122,58 @@ class TestPrecedence(unittest.TestCase):
         self.assertNotIn(DAY, got)
 
 
+class TestClearingUncoversTheDraft(unittest.TestCase):
+    """The route answers with what BELONGS in the slot, not with what was typed.
+
+    Clearing a note does not empty the day — it uncovers the draft the note was
+    standing in front of. The endpoint returns the resolved write-up so the
+    client can render it in place; without that the page showed an empty slot
+    until a reload showed the draft again, which is two different answers to
+    the same question.
+    """
+
+    def setUp(self):
+        self._saved = (A._require_admin, A.set_day_note, A.get_day_notes,
+                       A._trip_day_rollups)
+        self.notes = {DAY: "typed"}
+        A._require_admin = lambda: None
+        A._trip_day_rollups = lambda trip_id: {
+            DAY: {"text": "drafted", "model": "claude-opus-5"}}
+        A.get_day_notes = lambda trip_id: dict(self.notes)
+
+        def _set(trip_id, day, text):
+            cleaned = (text or "").strip()
+            if cleaned:
+                self.notes[day] = cleaned
+            else:
+                self.notes.pop(day, None)
+            return dict(self.notes)
+        A.set_day_note = _set
+
+    def tearDown(self):
+        (A._require_admin, A.set_day_note, A.get_day_notes,
+         A._trip_day_rollups) = self._saved
+
+    def _put(self, text):
+        with A.app.test_request_context(json={"date": DAY, "text": text}):
+            return A.api_set_day_note(1).get_json()
+
+    def test_clearing_a_note_returns_the_draft_it_covered(self):
+        got = self._put("")
+        self.assertEqual(got["text"], "")
+        self.assertEqual(got["writeup"]["text"], "drafted")
+        self.assertEqual(got["writeup"]["model"], "claude-opus-5")
+
+    def test_saving_a_note_returns_the_note_with_no_attribution(self):
+        got = self._put("what the day was")
+        self.assertEqual(got["writeup"]["text"], "what the day was")
+        self.assertTrue(got["writeup"]["by_hand"])
+        self.assertNotIn("model", got["writeup"])
+
+    def test_clearing_with_no_draft_leaves_the_slot_empty(self):
+        A._trip_day_rollups = lambda trip_id: {}
+        self.assertIsNone(self._put("")["writeup"])
+
+
 if __name__ == "__main__":
     unittest.main()

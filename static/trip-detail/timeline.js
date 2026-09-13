@@ -226,6 +226,15 @@ function cancelDayNote(date) {
   if (!slot.querySelector('.day-writeup-text')) slot.classList.add('empty');
 }
 
+// Mirrors the write-up markup in `trip_detail.html`'s day_divider macro —
+// keep the two in step. The attribution line appears exactly when the text
+// came from a model, which is what `by_hand` records.
+function dayWriteupHtml(date, w) {
+  const source = w.by_hand ? '' :
+    `<div class="day-writeup-source" title="Drafted from this day's stops, photos and captions">Drafted by ${escapeHtml(w.model || 'a model')}</div>`;
+  return `<p class="day-writeup-text" onclick="editDayNote('${date}')" title="Click to write over this">${escapeHtml(w.text)}</p>${source}`;
+}
+
 function saveDayNote(date) {
   const input = document.getElementById(`day-note-input-${date}`);
   if (!input) return;
@@ -242,16 +251,13 @@ function saveDayNote(date) {
     delete slot.dataset.prevHtml;
     // Rendered here rather than by a reload: the page is long, the map holds
     // its own view state, and a note is usually written while reading the day
-    // it is about. A cleared note falls back to the add button rather than to
-    // whatever draft it replaced — the draft is still in the file and the next
-    // load will show it again, which is the honest answer either way.
-    if (data.text) {
-      slot.classList.remove('empty');
-      slot.innerHTML = `<p class="day-writeup-text" onclick="editDayNote('${date}')" title="Click to write over this">${escapeHtml(data.text)}</p>`;
-    } else {
-      slot.classList.add('empty');
-      slot.innerHTML = `<button type="button" class="day-writeup-add" onclick="editDayNote('${date}')">+ note about this day</button>`;
-    }
+    // it is about. What goes in the slot is the SERVER'S answer, not the text
+    // just typed — clearing a note doesn't empty the day, it uncovers the
+    // draft the note was standing in front of, attribution line and all.
+    const w = data.writeup;
+    slot.classList.toggle('empty', !w);
+    slot.innerHTML = w ? dayWriteupHtml(date, w)
+      : `<button type="button" class="day-writeup-add" onclick="editDayNote('${date}')">+ note about this day</button>`;
   })
   .catch(() => toast('Could not save that note.'));
 }

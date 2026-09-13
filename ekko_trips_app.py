@@ -8999,7 +8999,14 @@ def api_set_day_note(trip_id):
 
     Empty text deletes it. Stored on the trip record (see trips.set_day_note
     for why it does not go in day_rollups.json), so it syncs home from the
-    live host and outlives any redraft of the generated write-ups."""
+    live host and outlives any redraft of the generated write-ups.
+
+    Returns the RESOLVED write-up for that day (`writeup`, null when the slot
+    is now empty) rather than only the note text, because clearing a note does
+    not empty the slot — it uncovers whatever draft the note was standing in
+    front of. The client renders what comes back, so `_trip_day_writeups`
+    stays the single answer to what belongs in that slot and the page can't
+    show one thing until a reload shows another."""
     denied = _require_admin()
     if denied:
         return denied
@@ -9015,7 +9022,8 @@ def api_set_day_note(trip_id):
     result = set_day_note(trip_id, day, text)
     if result is None:
         return jsonify({"error": "trip not found"}), 404
-    return jsonify({"ok": True, "text": result.get(day, ""), "day_notes": result})
+    return jsonify({"ok": True, "text": result.get(day, ""), "day_notes": result,
+                    "writeup": _trip_day_writeups(trip_id).get(day)})
 
 
 @app.route('/api/trips/<int:trip_id>/tid-choices', methods=['GET'])
