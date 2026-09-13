@@ -227,6 +227,21 @@ the evening — never as clock times. Absent means the day never left one place.
 WEEKDAY LEFT AFTER WORK, and "after work" is the phrase for it — a short \
 evening run to get the trip started, not a driving day. Check "weekday" and \
 "day_of_trip" before using it; a Saturday afternoon is just an afternoon.
+   DO NOT OPEN AN ENTRY WITH A BARE "AWAY". "Away mid-morning and 295 miles \
+southeast for home" is this drafter's tic and nobody else's — it opened a \
+quarter of the last batch, so the days it fronts all read as one day. Four \
+things to do instead, every one of them the family's own: let the direction be \
+the verb and drop the departure altogether ("Northeast 188 miles to the \
+Svendsens'"); name the drive as a thing ("an evening drive after work", "a \
+24-mile hop down to Pohick Bay", "the last leg"); use a phrase with a body in \
+it ("back on the road before midday", "headed out after work", "on to home"); \
+or put the morning first and reach the drive with "then" ("a last run in the \
+kayaks, then 207 miles north for home"). WHEN THE MORNING HELD NOTHING, THE \
+DIRECTION AND THE DISTANCE ARE THE WHOLE OPENING and the departure time goes — \
+a bare "away <time of day>" spends words on nothing, the same as an hour on \
+an arrival. Keeping the time is only worth it when something concrete \
+hangs off it ("away mid-morning under light snow"), and "away from <place>" is \
+a different phrase and fine.
 13. PLAIN LANGUAGE. No brochure words: nothing is nestled, stunning, scenic, \
 breathtaking or a hidden gem. No exclamation marks. Plain past tense.
 14. ON A "round_trip" DAY, DO NOT MENTION DRIVING AT ALL. The day began and \
