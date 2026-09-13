@@ -93,11 +93,12 @@ here because the reasoning is not recoverable from the rule text alone:
   respond to its own facts being corrected. `day_notes` are the human channel
   and need no protection, since they outrank at display time.
 
-### Two open items, AWH intends to address them next time
+### Two open items
 
-1. **Day one of any trip has no `heading`** — `_heading` needs both ends and
-   home is not a campspot, so the drafter can never say which way a trip set
-   off.
+1. ~~**Day one of any trip has no `heading`**~~ — FIXED 2026-09-13: home.json is
+   the missing anchor on the first and last day (`day_anchors`). See
+   [[project_rollup_examples_from_notes]], which also replaced the frozen
+   few-shot exemplars with AWH's own day notes.
 2. **The waypoint/event split is now the main lever on quality.** A report found
    135 of 747 waypoints carry a signal; **26 in tiers A/B carry photos or a
    description**, which is the app's OWN test for earning a full timeline card —

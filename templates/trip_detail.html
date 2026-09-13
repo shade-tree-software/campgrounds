@@ -2496,10 +2496,14 @@
       could never show one at all. `ns` is a namespace so the loop body can
       mutate it (a plain
       `{% set %}` inside a for-loop doesn't persist between iterations). -#}
-  {% set ns = namespace(last_date='') %}
-  {% for item in trip.timeline %}
-  {% if item.sort_date and item.sort_date != ns.last_date %}
-    {% set ns.last_date = item.sort_date %}
+{#- One day divider: the date, what the GPS says it drove, the way in
+    for road photos, and the day's write-up slot. A MACRO because it is
+    emitted from two places — inside the timeline loop whenever the date
+    changes, and once more after it for the day they got home, which
+    carries no card of its own (see below). Duplicating this markup was
+    the alternative, and the write-up slot is the part that must not
+    drift. -#}
+{% macro day_divider(day, drive, writeup, can_add_road, no_road_card) %}
     {#- What the GPS says the day drove.
 
         A day that ENDED SOMEWHERE ELSE reports the leg — leaving where the
@@ -2519,9 +2523,9 @@
 
         `driving_by_day` omits a day under a mile, so a day parked at camp
         shows just its date rather than a measured-looking "0 mi". -#}
-    {% set drive = driving_by_day.get(item.sort_date) %}
+    
     <div class="day-divider">
-      <span class="day-date">{{ item.sort_date | daylabel }}</span>
+      <span class="day-date">{{ day | daylabel }}</span>
       {%- if drive %}
       {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
                      if drive.round_trip
@@ -2534,7 +2538,7 @@
         <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
       {%- endif %}
     </div>
-    {%- if (is_admin or is_uploader) and item.sort_date not in road_photos %}
+    {%- if can_add_road and no_road_card %}
     {#- A road card exists exactly when its directory has photos, which leaves
         no way to upload the FIRST one — the card carrying the upload button is
         the thing that doesn't exist yet. The day divider is the only surface
@@ -2550,10 +2554,10 @@
     <div class="day-road-add">
       <button type="button" class="day-add-road"
               title="Add photos taken while driving on this day"
-              onclick="uploadPhotosForItem('road', '{{ item.sort_date }}')">+ from the road</button>
+              onclick="uploadPhotosForItem('road', '{{ day }}')">+ from the road</button>
     </div>
     {%- endif %}
-    {%- set writeup = day_writeups.get(item.sort_date) %}
+    
     {#- The day's write-up. It sits under the divider and above the day's cards
         because it is about the whole day: the cards are what happened, this is
         what the day WAS.
@@ -2565,18 +2569,18 @@
         model. Writing over a draft replaces it with a note, which
         is what retires the line. -#}
     {%- if writeup or is_admin %}
-    <div class="day-writeup{% if not writeup %} empty{% endif %}" id="writeup-{{ item.sort_date }}" data-date="{{ item.sort_date }}">
+    <div class="day-writeup{% if not writeup %} empty{% endif %}" id="writeup-{{ day }}" data-date="{{ day }}">
       {%- if writeup %}
-      <p class="day-writeup-text"{% if is_admin %} onclick="editDayNote('{{ item.sort_date }}')" title="Click to write over this"{% endif %}>{{ writeup.text }}</p>
+      <p class="day-writeup-text"{% if is_admin %} onclick="editDayNote('{{ day }}')" title="Click to write over this"{% endif %}>{{ writeup.text }}</p>
       {%- if not writeup.by_hand %}
       <div class="day-writeup-source" title="Drafted from this day's stops, photos and captions">Drafted by {{ writeup.model or 'a model' }}</div>
       {%- endif %}
       {%- elif is_admin %}
-      <button type="button" class="day-writeup-add" onclick="editDayNote('{{ item.sort_date }}')">+ note about this day</button>
+      <button type="button" class="day-writeup-add" onclick="editDayNote('{{ day }}')">+ note about this day</button>
       {%- endif %}
     </div>
     {%- endif %}
-    {%- if is_admin and item.sort_date not in road_photos %}
+    {%- if is_admin and no_road_card %}
     {#- An empty road card, hidden until a photo is actually being dragged.
         Without it there is nowhere to DROP a photo on a day that has no road
         card yet — and since the card only exists once its directory has
@@ -2585,7 +2589,7 @@
         bare card's body, and it reuses all of that machinery: initPhotoDrag
         binds every .photo-grid at load, and parseGridId reads the day back out
         of the grid id. -#}
-    <div class="event-card road-card road-placeholder" id="road-{{ item.sort_date }}">
+    <div class="event-card road-card road-placeholder" id="road-{{ day }}">
       <div class="event-header">
         <div class="event-icon road-icon">
           <svg width="15" height="15" viewBox="0 0 20 20" fill="#fff"><path d="M8 2 h4 l1 5 h-6 z M7 8 h6 l1 10 h-3 l-.4-4 h-1.2 l-.4 4 h-3 z"/></svg>
@@ -2597,12 +2601,22 @@
       </div>
       <div class="event-body">
         <div class="photos-section">
-          <div class="photo-grid" id="road-photos-{{ item.sort_date }}"
-               data-road-day="{{ item.sort_date }}"></div>
+          <div class="photo-grid" id="road-photos-{{ day }}"
+               data-road-day="{{ day }}"></div>
         </div>
       </div>
     </div>
     {%- endif %}
+{% endmacro %}
+
+  {% set ns = namespace(last_date='') %}
+  {% for item in trip.timeline %}
+  {% if item.sort_date and item.sort_date != ns.last_date %}
+    {% set ns.last_date = item.sort_date %}
+    {{ day_divider(item.sort_date, driving_by_day.get(item.sort_date),
+                   day_writeups.get(item.sort_date),
+                   is_admin or is_uploader,
+                   item.sort_date not in road_photos) }}
   {% endif %}
 
   {#- Home, on the day they left it. This used to render above the first
@@ -3025,6 +3039,21 @@
   {% endif %}
 
   {% endfor %}
+
+  {#- The day they got HOME often carries no card of its own: the last stay's
+      card sits on the night it began, so a trip that drove home the next
+      morning — or, on trips 46 and 61, four days later — ends its loop on an
+      earlier date. The end card then landed under the wrong day's divider, and
+      the write-up already drafted for the homeward day was rendered nowhere at
+      all. Seven trips in the library were in that state, each with a summary of
+      the drive home that nothing displayed. `ns.last_date` is the last divider
+      the loop actually emitted, so this fires exactly when the two disagree. -#}
+  {% if trip.timeline and trip.end and trip.end > ns.last_date %}
+    {{ day_divider(trip.end, driving_by_day.get(trip.end),
+                   day_writeups.get(trip.end),
+                   is_admin or is_uploader,
+                   trip.end not in road_photos) }}
+  {% endif %}
 
   {% if trip.timeline %}
   <div class="event-card bare home-card home-card-end">

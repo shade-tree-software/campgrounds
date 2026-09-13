@@ -50,9 +50,11 @@ def _stay(start, end, **kw):
 
 
 def _dossier(trip, driving=None, elevations=None, states=None,
-             trip_outline=None, day_index=None, day=DAY, track_known=True):
+             trip_outline=None, day_index=None, day=DAY, track_known=True,
+             day_times=None, home_pt=None, contexts=None, high_point_ft=None):
     return R.day_dossier(trip, day, driving or {}, elevations or {},
-                         states, trip_outline, day_index, track_known)
+                         states, trip_outline, day_index, track_known,
+                         day_times, home_pt, contexts, high_point_ft)
 
 
 class TestNamesInDescriptionsOut(unittest.TestCase):
@@ -332,6 +334,20 @@ class TestTripDays(unittest.TestCase):
         self.assertEqual(R.trip_days(trip),
                          ["2026-08-19", "2026-08-20", "2026-08-21"])
 
+    def test_a_day_only_the_TIMELINE_names_still_counts(self):
+        """An interior night of a split multi-night stay appears nowhere in the
+        record, but the page puts a divider — and a write-up slot — on it."""
+        trip = _trip(stays=[{"start": "2023-11-22", "end": "2023-11-26"}],
+                     timeline=[{"sort_date": "2023-11-24"}])
+        self.assertIn("2023-11-24", R.trip_days(trip))
+
+    def test_the_day_the_trip_drove_home_still_counts(self):
+        """`end` carries no timeline card on a trip that left the morning after
+        its last night — the union is what keeps it."""
+        trip = _trip(stays=[{"start": "2024-04-21", "end": "2024-04-22"}],
+                     timeline=[{"sort_date": "2024-04-21"}])
+        self.assertEqual(R.trip_days(trip), ["2024-04-21", "2024-04-22"])
+
 
 class TestMergeAndWrite(unittest.TestCase):
     def setUp(self):
@@ -353,6 +369,213 @@ class TestMergeAndWrite(unittest.TestCase):
     def test_write_leaves_no_temp_file(self):
         R._merge_and_write({"95/2026-08-23": {"text": "x"}})
         self.assertEqual([f for f in os.listdir(self.tmp) if f.endswith(".tmp")], [])
+
+
+class TestTheDayIsAnchoredOnTheBedsNotThePings(unittest.TestCase):
+    """The fix for the most heavily rewritten entry in the library.
+
+    OwnTracks suspends reporting while a device sits still, so the first ping
+    of a day that began at home is routinely already miles away — on trip 90's
+    first day it was the drive to work. Anchored on that ping, the departure
+    circle formed around the office and the dossier reported a fourteen-hour
+    span for a two-hour evening drive.
+    """
+
+    HOME = (38.93, -77.37)
+    CAMP = (40.08, -76.90)
+
+    def _pings(self):
+        def p(tst, lat, lon):
+            return {"tst": tst, "lat": lat, "lon": lon, "tz": "UTC"}
+        return [
+            p(1000, 38.96, -77.33),      # 07:10-ish, out at work
+            p(2000, *self.HOME),         # home again all afternoon
+            p(3000, 38.94, -77.34),      # leaving for good
+            p(4000, 39.50, -77.10),      # on the road
+            p(5000, *self.CAMP),         # arrived
+        ]
+
+    def test_the_departure_is_the_last_time_it_left_home(self):
+        clock = R.day_clock(self._pings(), start_pt=self.HOME, end_pt=self.CAMP)
+        self.assertEqual(clock["left_at"], "00:33")      # tst 2000, UTC
+        self.assertEqual(clock["arrived_at"], "01:23")   # tst 5000
+
+    def test_without_the_beds_the_commute_becomes_the_departure(self):
+        """What the old behaviour was, kept as the fallback for a day whose
+        beds can't be resolved: earlier is worse, but it is never invented."""
+        clock = R.day_clock(self._pings())
+        self.assertEqual(clock["left_at"], "00:16")      # tst 1000, the commute
+
+    def test_home_is_the_anchor_only_on_the_first_and_last_day(self):
+        trip = _trip(stays=[_stay("2026-08-19", "2026-08-21")])
+        home = (38.93, -77.37)
+        # Day 1: woke at home, slept at the campground.
+        self.assertEqual(R.day_anchors(trip, "2026-08-19", home, (1, 3))[0], home)
+        # Last day: woke at the campground, came home.
+        self.assertEqual(R.day_anchors(trip, "2026-08-21", home, (3, 3))[1], home)
+        # A mid-trip day with no stay is a gap in the record, not a night home.
+        self.assertEqual(R.day_anchors(trip, "2026-08-25", home, (2, 3)),
+                         (None, None))
+
+
+class TestTheCompass(unittest.TestCase):
+    """Cardinals get a 60-degree bucket, diagonals 30.
+
+    People say "south" for a drive 28 degrees off south: AWH's note for the
+    409-mile run to South Carolina (bearing 208) says "South", where an even
+    eight-point split says southwest. The diagonals stay for the drives that
+    really are diagonal — home to western Pennsylvania is 42 degrees off north
+    and reads "northwest" to anyone who has driven it.
+    """
+
+    def _at(self, bearing):
+        """A point that bearing-degrees away from a fixed origin."""
+        import math
+        lat0, lng0 = 39.0, -78.0
+        d = math.radians(bearing)
+        return (lat0 + 3 * math.cos(d), lng0 + 3 * math.sin(d) / math.cos(math.radians(lat0)))
+
+    def test_a_drive_nearly_south_is_called_south(self):
+        self.assertEqual(R._heading((39.0, -78.0), self._at(208)), "south")
+
+    def test_a_genuinely_diagonal_drive_keeps_its_diagonal(self):
+        self.assertEqual(R._heading((39.0, -78.0), self._at(318)), "northwest")
+
+    def test_every_bucket_lands_where_it_should(self):
+        """The diagonal index was off by one bucket when this was written, and
+        a run home to the southeast came out "northeast"."""
+        for bearing, want in ((0, "north"), (45, "northeast"), (95, "east"),
+                              (123, "southeast"), (185, "south"),
+                              (220, "southwest"), (270, "west"),
+                              (310, "northwest"), (350, "north")):
+            self.assertEqual(R._heading((39.0, -78.0), self._at(bearing)), want,
+                             f"bearing {bearing}")
+
+
+class TestHeadingOnTheDaysThatLeaveAndReturn(unittest.TestCase):
+    """Every wrong compass word in the library was one of these two days.
+
+    `_heading` needs a stay at both ends and those days have one, so the field
+    was absent and the model guessed from the state list: a run to western
+    Pennsylvania read "north" (northwest) and two runs home from the northwest
+    read "south" (southeast).
+    """
+
+    HOME = (38.93, -77.37)
+
+    def test_the_first_day_takes_its_heading_from_home(self):
+        trip = _trip(stays=[_stay("2026-05-08", "2026-05-10",
+                                  lat=41.30, lng=-80.20)])
+        d = _dossier(trip, day="2026-05-08", day_index=(1, 3), home_pt=self.HOME)
+        self.assertEqual(d["heading"], "northwest")
+
+    def test_the_last_day_heads_home(self):
+        trip = _trip(stays=[_stay("2026-05-08", "2026-05-10",
+                                  lat=41.30, lng=-80.20)])
+        d = _dossier(trip, day="2026-05-10", day_index=(3, 3), home_pt=self.HOME)
+        self.assertEqual(d["heading"], "southeast")
+
+    def test_no_home_configured_just_loses_the_field(self):
+        trip = _trip(stays=[_stay("2026-05-08", "2026-05-10")])
+        self.assertNotIn("heading",
+                         _dossier(trip, day="2026-05-08", day_index=(1, 3)))
+
+
+class TestWhatTheCampgroundSitsIn(unittest.TestCase):
+    """Read off the campground record, never off the model's geography.
+
+    This is the one kind of scene-setting the entries are allowed, which is
+    why it has to be precise: a wrong river is worse than no river.
+    """
+
+    def test_the_water_and_the_park_come_off_the_note(self):
+        ctx = R.campground_context(
+            {"name": "Deep Bend Landing", "waterfront": "riverfront",
+             "note": "Family-owned campground on the Satilla River."})
+        self.assertEqual(ctx, {"waterfront": "riverfront",
+                               "water": "Satilla River"})
+
+    def test_a_dry_campground_is_never_given_water(self):
+        """A lake named in the note of a campground that doesn't front one is
+        a nearby lake, not this one's."""
+        ctx = R.campground_context(
+            {"name": "Pine Hollow", "waterfront": "not waterfront",
+             "note": "Ten minutes from Raystown Lake."})
+        self.assertNotIn("water", ctx)
+        self.assertNotIn("waterfront", ctx)
+
+    def test_a_name_never_runs_across_a_clause_boundary(self):
+        """Without the clause bound, "...Boundary Campground. USFS Cherokee
+        National Forest" parses as one four-word park name."""
+        ctx = R.campground_context(
+            {"name": "Indian Boundary Campground", "waterfront": "lakefront",
+             "note": "Indian Boundary Campground. USFS Cherokee National Forest."})
+        self.assertEqual(ctx.get("within"), "Cherokee National Forest")
+
+    def test_the_campground_s_own_name_is_not_repeated_back(self):
+        ctx = R.campground_context(
+            {"name": "Clearwater Lake campground", "waterfront": "lakeview",
+             "note": "Gate code required after 6pm."})
+        self.assertEqual(ctx, {"waterfront": "lakeview"})
+
+    def test_it_reaches_the_dossier_on_where_the_day_ENDED(self):
+        trip = _trip(stays=[_stay("2026-08-22", "2026-08-24")])
+        d = _dossier(trip, day="2026-08-23",
+                     contexts={7: {"waterfront": "lakefront"}})
+        self.assertEqual(d["to"]["waterfront"], "lakefront")
+        self.assertNotIn("waterfront", d["from"])
+
+
+class TestTheDayHighPoint(unittest.TestCase):
+    """Where the day WENT, as against where it slept.
+
+    A day spent on Trail Ridge Road near 12,000 feet was written up as "based
+    at Moraine Park at 8,200 feet" — the elevation of the bed it left and came
+    back to, the only height the dossier knew.
+    """
+
+    def setUp(self):
+        # The DEM answers are cached by coordinate, so two tests over the same
+        # made-up track would otherwise share one answer — which is the point
+        # of the cache in the field and a trap in here.
+        tmp = tempfile.mkdtemp()
+        p = mock.patch.object(R, "ELEVATION_CACHE",
+                              os.path.join(tmp, "elev.json"))
+        p.start()
+        self.addCleanup(p.stop)
+
+    def _pings(self, n=8):
+        return [{"tst": 100 * i, "lat": 40.0 + i / 100, "lon": -105.0,
+                 "tz": "UTC"} for i in range(n)]
+
+    def test_offered_when_it_clears_both_beds(self):
+        with mock.patch.object(R, "_fetch_max_elevation_m", return_value=3700):
+            feet = R.day_high_point_ft(self._pings(), bed_elevations=[8200])
+        self.assertEqual(feet, 12100)
+
+    def test_withheld_when_the_day_barely_rose_above_camp(self):
+        """A figure in the dossier is a figure that ends up in the prose."""
+        with mock.patch.object(R, "_fetch_max_elevation_m", return_value=2550):
+            self.assertIsNone(
+                R.day_high_point_ft(self._pings(), bed_elevations=[8200]))
+
+    def test_a_host_with_no_network_simply_loses_the_field(self):
+        with mock.patch.object(R, "_fetch_max_elevation_m", return_value=None):
+            self.assertIsNone(R.day_high_point_ft(self._pings()))
+
+    def test_a_day_with_almost_no_track_asks_nothing(self):
+        with mock.patch.object(R, "_fetch_max_elevation_m") as fetch:
+            self.assertIsNone(R.day_high_point_ft([{"tst": 1, "lat": 1, "lon": 1}]))
+        fetch.assert_not_called()
+
+    def test_samples_are_spaced_along_the_drive_not_by_ping(self):
+        """Ping density is highest where the day STOPPED moving; an hour
+        parked at a rest area would otherwise outweigh a mountain pass."""
+        pings = ([{"tst": i, "lat": 40.0, "lon": -105.0} for i in range(20)]
+                 + [{"tst": 100, "lat": 41.0, "lon": -105.0}])
+        got = R._even_samples(pings, 5)
+        self.assertEqual(len(got), 5)
+        self.assertAlmostEqual(got[2][0], 40.5, places=2)
 
 
 if __name__ == "__main__":
