@@ -23,11 +23,13 @@ Net effect: clone/pull + start Claude wires memory automatically; new memories C
 
 ## Key Files
 
-Three bodies of detail that outgrew this file live in `docs/` — treat them as part of these
+Four bodies of detail that outgrew this file live in `docs/` — treat them as part of these
 instructions and read them before touching that code or data: **`docs/poster.md`** (the
-print/PNG poster), **`docs/gps-track.md`** (GPS tracks, trip routes, ping overrides), and
+print/PNG poster), **`docs/gps-track.md`** (GPS tracks, trip routes, ping overrides),
 **`docs/campground-curation.md`** (what earns an entry in `campgrounds.json`, the waterfront
-evidence gate, the per-state sweep pipeline).
+evidence gate, the per-state sweep pipeline), and **`docs/campground-schema.md`** (the
+structured amenity/booking/fee/season fields, the provenance model, the policy registry, and
+the deep-merge rules the manage page's PUT must obey).
 
 - `ekko_trips_app.py` — Main Flask app: routes, auth, photo endpoints, campground CRUD API, geocode proxy
 - `trips.py` — Trip data CRUD, JSON persistence, trip parsing logic, location resolution via `_load_locations_by_id()`, photo index remapping on sort

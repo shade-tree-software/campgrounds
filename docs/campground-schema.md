@@ -1,0 +1,529 @@
+# Campground Schema (structured fields, provenance, and the policy registry)
+
+Split out of CLAUDE.md alongside `docs/campground-curation.md`. That file governs **what
+earns an entry** and how `waterfront` is proven. This one governs **what an entry holds**:
+the structured amenity/booking/fee/season fields, where each fact's authority comes from,
+and how the web UI may edit them without silently destroying what a script wrote.
+
+**Read this before adding a field, writing an extraction pass, or touching the manage
+page's PUT path.** As in the curation doc, most rules here correct a specific mistake —
+several of them mistakes this repo has already made in other subsystems and would
+otherwise make again here at 12,768× the scale.
+
+---
+
+## 1. Format: JSON stays, and the diff is the reason
+
+Measured on the live file before this schema was designed:
+
+| | |
+|---|---|
+| file | 13.6 MB, 190,014 lines, 12,768 entries (~15 lines each) |
+| a one-entry edit from the manage UI | `+21 / -18` lines |
+| a 5-entry audit correction | `+5 / -5` lines |
+| `json.load` | 48 ms |
+| full-scan filter (state + ownership) | 1.0 ms |
+| `json.dumps` (whole file) | 102 ms |
+
+The three things a database would buy are **not needed, already solved, or actively
+harmful here**:
+
+- **Query speed** — a full scan over the whole database is 1 ms. An index solves nothing.
+  Even at 10× the entries this is not the bottleneck.
+- **Safe concurrent writes** — already solved. `_save_json` writes a temp file in the same
+  directory and renames over the target, so a reader sees the old file or the new one and
+  never half of each, with a lock serializing writers inside a worker. That fix has its own
+  war story in its docstring; don't re-solve it with a storage engine.
+- **Reviewable diffs** — this is the one JSON wins outright, and it is load-bearing.
+  The entire curation discipline is *audit by commit review*: a sweep appends entries, an
+  audit changes `waterfront` plus its evidence, and a human reads that diff. Pretty-printed
+  JSON with stable key order makes a single-field correction show up as a single changed
+  line. **SQLite would put a binary blob in git and end that**, and it would complicate the
+  offline USB build for no gain.
+
+**JSONL (one entry per line) is worse, not better, and the reason is non-obvious.** It
+makes a one-entry edit a `+1 / -1` diff, which sounds ideal until you try to review it: the
+changed line is ~1 KB of JSON and the reviewer cannot see *which field moved*. Today's
+`+21 / -18` is more lines and far more information. For a human-audited dataset,
+pretty-printed JSON is the optimum, not a legacy compromise.
+
+**The one real pressure point is write amplification**, and it is not a format problem:
+every UI save re-dumps all 13.2 MB (~102 ms). Adding structured fields grows that. The
+release valve when it hurts is the **evidence sidecar** — `waterfront_evidence` and
+`inclusion_evidence` are 4.1 MB, 30% of the file, and no client ever reads them — not a
+new storage format.
+
+**Revisit this decision if**: entries pass ~50k, or the app ever needs genuinely concurrent
+multi-user writes. Neither is on the horizon.
+
+Unchanged rules from CLAUDE.md that this schema inherits: write with `ensure_ascii=False`
+(or every em-dash in every note re-escapes and churns the whole diff), append rather than
+re-dump when adding entries, and ids come from `max(id) + 1` across **both** location files.
+
+---
+
+## 2. The two rules everything else hangs on
+
+### 2.1 Absent means unknown. Never store a placeholder.
+
+`"showers": false` is a claim that somebody looked and there are none.
+A **missing key** means nobody looked. These must never collapse into each other.
+
+This exact trap has bitten this repo twice in `process_rollups.py` — a day with no GPS had
+no `miles` key and the model read the silence as a measured zero, writing "the trip opened
+parked" for a day that drove from home. At 12,768 entries the same mistake is far more
+expensive, because a default written once is indistinguishable from twelve thousand
+verified facts.
+
+Consequences, all mandatory:
+
+- **An extraction pass writes nothing for what it could not determine.** It does not write
+  `false`, `0`, `null`, or `""` to mean "not found."
+- **The manage form uses tri-state selects, never checkboxes.** A checkbox cannot express
+  unknown. Ship one and the first unrelated save writes `false` across every amenity on
+  that entry, permanently, and nothing will ever flag it.
+- **Search treats absent as "cannot rule out," never as "no."** See §2.2.
+
+### 2.2 Eligibility defaults UP. (This inverts the waterfront rule — deliberately.)
+
+`waterfront` defaults **down**: "couldn't confirm" resolves to `not waterfront`, because an
+unearned on-water claim sends the family to a campground that isn't on the water.
+
+Structured search fields default the **other way**: a campground whose `hookups` are
+unknown must **never be filtered out** of a search for electric. It is shown, flagged
+unverified, and ranked below confirmed matches.
+
+The asymmetry is not inconsistency — in both cases the rule protects against the failure
+the reader cannot detect. A wrong `waterfront` is visible on arrival. A campground silently
+**missing** from a result list is invisible forever, and the searcher concludes it does not
+exist. **Never let an unknown value exclude an entry.**
+
+The worked proof is Indiana (§5.1): a naive `min_stay: 2` filter removes all 41 Indiana
+state parks from a one-night search, when in fact every one of them qualifies.
+
+---
+
+## 3. Provenance: an entry stores only what is true *of that entry*
+
+Policy is mostly set by an agency, not a campground — Indiana's 41 state parks share one
+rule. But **the agency rule is a prior, not a truth**: Hither Hills charges double the
+nightly rate for non-residents where most NY state parks charge a nominal fee, and Indian
+Island (Suffolk County) requires a pricey county season pass.
+
+If an inherited value renders identically to a verified one, the registry **manufactures
+confident falsehoods at scale** — 102 NY entries all displaying "nominal non-resident fee,"
+uniform and authoritative-looking and wrong exactly at the park you'd want. That is worse
+than blank, and it is the same failure shape as §2.1: a default read as a measurement.
+
+### The resolution rule
+
+**An entry stores only facts verified for that entry. Everything else resolves from the
+policy registry at read time.** Nothing is copied into the entry.
+
+```
+effective(entry, field)  =  entry[field]              if present  → scope "entry"
+                            registry[policy_ref][field] if present → scope "agency"
+                            absent                                → scope unknown
+```
+
+This is the same merge shape as `_load_locations_by_id()` reading both location files: one
+source of truth, merged on read. It matters because:
+
+- A registry correction propagates to all inheritors instantly. Copies would need re-syncing
+  and would silently go stale.
+- The file does not grow by a booking block × 6,635 entries.
+- **"Verified" becomes literally checkable**: the entry has its own key, or it does not.
+
+### `policy_ref`
+
+One optional string per entry naming its registry row. Defaults to `{ownership}:{state}`.
+
+```jsonc
+"policy_ref": "federal:usfs"              // ownership alone is too coarse for federal
+"policy_ref": "local:suffolk-county-ny"   // Indian Island
+// omitted on a NY state park → defaults to "state:NY"
+```
+
+### `provenance`
+
+Records the source and date for entry-scoped verifications only, per **group** — not per
+field, because that is how research actually happens (you read one agency page and fill one
+block).
+
+```jsonc
+"provenance": {
+  "fees":   {"source": "https://parks.ny.gov/...fees", "checked": "2026-09-14"},
+  "season": {"source": "recreation.gov availability calendar", "checked": "2026-09-14",
+             "method": "derived"}
+}
+```
+
+`method` is optional: `derived` marks a value a machine extracted (from note prose or an
+API) rather than a human confirming it. Derived outranks inherited and is outranked by a
+human check.
+
+### Display and ranking
+
+- Inherited values **never phrase themselves as a fact about the park**. "NY state parks
+  typically charge a small non-resident surcharge," not "$5 non-resident fee."
+- Verified > derived > inherited in search ranking.
+- An inherited value may never be the sole basis for excluding an entry (§2.2).
+- Outliers are **not randomly distributed**: within a state system, fee variance tracks
+  demand, so the exceptions cluster in destination parks — precisely the ones worth
+  booking. The outlier rate among entries you would realistically choose is higher than the
+  base rate. Verify opportunistically, driven by what searches actually surface, rather
+  than uniformly.
+
+---
+
+## 4. Field groups
+
+All groups are optional. Within a group, every key is optional, and **absent is unknown**
+(§2.1). Groups exist rather than 20 flat fields because both the PUT whitelist and the
+manage form become unmanageable otherwise.
+
+```jsonc
+"rating": {
+  "source": "rvlife",            // "rvlife" | "goodsam"
+  "stars": 4.5,                  // as published
+  "price_tier": 2,               // 0-4, the RV Life "$" count
+  "checked": "2026-06"           // YYYY-MM
+},
+
+"hookups": {
+  "electric": 50,                // 0 | 20 | 30 | 50 — the HIGHEST amp available on site
+  "water": true,                 // at the site, not a communal spigot
+  "sewer": true,
+  "dump": true                   // dump station on site; independent of "sewer"
+},
+
+"sites": {
+  "count": 44,
+  "max_rig_ft": 40,
+  "pull_through": true
+},
+
+"facilities": {
+  "showers": true,
+  "flush_toilets": true,
+  "vault_toilets": false,
+  "potable_water": true,         // communal spigots, even with no site hookups
+  "laundry": false,
+  "camp_store": false,
+  "wifi": false
+},
+
+"season": {
+  "year_round": true
+  // ── or ──
+  // "opens": "04-01", "closes": "10-31",   MM-DD, no year: this recurs
+  // "note": "loop B closes after Labor Day"
+},
+
+"booking": {
+  "reservable": true,
+  "platform": "recreation.gov",  // recreation.gov | reserveamerica | usedirect |
+                                 // goingtocamp | campspot | roverpass | hipcamp |
+                                 // sepaq | operator | phone | none
+  "url": "https://...",          // deep link, when it differs from "website"
+  "window_opens_days": 180,      // how far ahead booking opens
+  "reserve_until": { ... },      // see §4.1
+  "fcfs": "after_cutoff",        // "never" | "always" | "after_cutoff" | "some_sites"
+  "min_stay": { ... },           // see §4.1
+  "max_stay_nights": 14
+},
+
+"fees": {
+  "nightly_low": 25,
+  "nightly_high": 45,
+  "currency": "USD",             // "USD" | "CAD" — see the CAD caveat in §4.3
+  "reservation_fee": 8,          // per-reservation booking fee, if separate
+  "nonresident": { ... },        // see §4.2
+  "prereq_pass": { ... },        // see §4.2
+  "checked": "2026"
+},
+
+"discounts": {
+  "good_sam": true,              // accepts the Good Sam member discount
+  "passport_america": false,
+  "koa_value_kard": false,
+  "military": true,
+  "interagency_senior_access": true   // America the Beautiful Senior/Access pass
+}
+```
+
+### 4.1 Booking rules are conditional, and a scalar loses the fact
+
+The three real cases that drove this shape are near-opposites at the same instant, and a
+flat `fcfs: true/false` cannot tell them apart — Iowa's FCFS *is what its cutoff creates*.
+
+```jsonc
+// reserve_until — when booking closes
+{"relative_to": "arrival", "at": "23:00"}            // IN: until 11pm on arrival night
+{"relative_to": "arrival", "offset_hours": -48}      // IA: closes 48h before arrival
+{"relative_to": "arrival", "at": "14:00"}            // MD: early afternoon day-of
+
+// min_stay — with its waiver, which is the whole point
+{"nights": 2, "applies": "weekend", "waived_if": {"booking_within_days": 3}}
+{"nights": 2, "applies": "holiday"}
+```
+
+`applies`: `always` | `weekend` | `holiday` | `summer`.
+`waived_if`: `{"booking_within_days": N}` — the only waiver shape observed so far; extend
+deliberately rather than by adding a free-text escape.
+
+**These are evaluated against the query's arrival date and booking time**, never stored as a
+verdict. A rule the evaluator cannot interpret degrades to "verify" and the entry is still
+shown (§2.2).
+
+Anything the vocabulary cannot hold goes in a prose `booking.note` — and the entry's `note`
+remains the source of truth for nuance (§6).
+
+### 4.2 Fees have three distinct mechanics
+
+Flattening these into one "surcharge" number loses the cases that matter:
+
+| mechanic | shape | effect on one night |
+|---|---|---|
+| per-stay surcharge | `{"type": "surcharge", "amount": 15, "per": "stay"}` | +$15 |
+| **multiplier** | `{"type": "multiplier", "factor": 2.0}` | doubles the rate |
+| **prerequisite pass** | `{"name": "...", "price": 25, "valid": "season"}` | whole pass price lands on night one |
+
+`per`: `stay` | `night`. `valid`: `season` | `year` | `day`.
+
+The third is the one a flat model cannot express at all: a season pass amortizes fine over a
+week and terribly over one night, so its cost is **a function of trip length**. Which means
+the honest presentation is not a stored tier but **effective cost for this stay**, computed
+at query time from `home.json` residency, the number of nights, and whether the pass is
+already held.
+
+### 4.3 Do not fold fees into `rating.price_tier`
+
+`price_tier` is RV Life's number, computed on a raw nominal average rate. It is already
+known-lossy in two ways: it is **not CAD-adjusted** (Canadian parks are over-tiered by
+roughly one level; use avg_rate ≤ ~$55 CAD as the affordable gate), and it knows nothing
+about non-resident surcharges.
+
+Keep the stored tier as the imported number it is. Let the presentation layer say
+*"$$ nominally, but ~$$$$ for one night as a non-resident"* — computed, labelled, and
+attributable. Overwriting the tier would destroy the only thing it is good for: comparing
+against other RV Life tiers.
+
+### 4.4 `discounts`
+
+Named booleans, same absent-is-unknown rule. `good_sam` is the one asked for; the others are
+here because they answer the same question ("what does this actually cost me") and cost
+nothing to carry.
+
+Two population notes:
+
+- **`good_sam` is derivable in bulk, not a research chore.** Membership in the Good Sam
+  network is queryable through the Algolia index already documented in the Good Sam ratings
+  reference — presence in that index effectively *is* the flag. Match by name + coordinate,
+  and treat a non-match as **unknown**, not `false` (§2.1): absence from an index is not
+  evidence of refusal.
+- **`interagency_senior_access` is strongly agency-inheritable** and materially large — the
+  America the Beautiful Senior/Access pass halves camping fees at most USFS and USACE sites.
+  It belongs in the registry rows for those agencies, not on 3,738 individual entries.
+
+---
+
+## 5. The registry
+
+`campground_policies.json`, tracked in git, keyed by `policy_ref` (§3). Roughly 70 rows
+cover 6,635 entries — state 2,197 across ~48 rows, provincial 700 across ~13, federal 3,738
+across ~6-10. Median state bucket is 38 entries, so the leverage is about 50:1.
+
+Each row carries the same group shapes as an entry, plus mandatory `source` and `checked`.
+
+**~70 rows are re-checkable annually; 12,768 entries are not.** Fee schedules and
+reservation windows change most years, so this is not only the cheaper way to build the
+data — it is the only version that stays true.
+
+The remaining 6,133 entries (private, local, hipcamp, wma) have **no agency to inherit
+from**. Do not attempt to research booking cutoffs for them: FCFS/walk-up is the norm rather
+than a system, notes already mention walk-up on 2% of entries, and the correct answer at 5pm
+on the road is the phone number. Carry `phone`, leave policy unknown, let the UI say
+"call ahead."
+
+### 5.1 Worked cases
+
+These six pin the schema. Any change to the vocabulary must still express all six.
+
+**Indiana state parks** (`state:IN`, 41 entries) — *the reason conditional rules exist.*
+```jsonc
+"booking": {"reservable": true,
+            "reserve_until": {"relative_to": "arrival", "at": "23:00"},
+            "min_stay": {"nights": 2, "applies": "weekend",
+                         "waived_if": {"booking_within_days": 3}}},
+"fees": {"nonresident": {"type": "surcharge", "amount": 15, "per": "stay"}}
+```
+A scalar `min_stay: 2` would drop all 41 from a one-night search. The waiver is what makes
+every one of them eligible — and the $15 can push a `$$` park into `$$$` territory for a
+single night, which is why §4.3 computes rather than overwrites.
+
+**Iowa state parks** (`state:IA`) — reservations close 48h out, and unbooked sites then
+revert to first-come at the park.
+```jsonc
+"booking": {"reservable": true,
+            "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+            "fcfs": "after_cutoff"}
+```
+
+**Maryland state parks** (`state:MD`) — booking closes early afternoon day-of, and there is
+**no** FCFS after. Structurally near-identical to Iowa at the same instant; only `fcfs`
+separates them.
+```jsonc
+"booking": {"reservable": true,
+            "reserve_until": {"relative_to": "arrival", "at": "14:00"},
+            "fcfs": "never"}
+```
+
+**Hither Hills** (NY state park) — *the reason inheritance is a prior, not a truth.*
+Entry-scoped override against a `state:NY` row whose non-resident fee is nominal:
+```jsonc
+"fees": {"nonresident": {"type": "multiplier", "factor": 2.0}},
+"provenance": {"fees": {"source": "https://parks.ny.gov/...", "checked": "2026-09-14"}}
+```
+
+**Indian Island** (Suffolk County, NY) — *the reason `prereq_pass` exists.*
+```jsonc
+"policy_ref": "local:suffolk-county-ny",
+"fees": {"prereq_pass": {"name": "Suffolk County Green Key",
+                         "price": 25, "valid": "season"}}
+```
+
+**A rec.gov federal campground** — most of the block resolves from `federal:usfs` or
+`federal:nps`; season and FCFS are *derived* per entry from the availability calendar (§7).
+```jsonc
+"policy_ref": "federal:usfs",
+"season": {"opens": "05-15", "closes": "09-30"},
+"provenance": {"season": {"source": "recreation.gov availability calendar",
+                          "checked": "2026-09-14", "method": "derived"}}
+```
+
+---
+
+## 6. Extraction is additive. The notes stay.
+
+Structured fields are a **searchable index derived from** the note, not a replacement for
+it. The note remains the source of truth for anything the schema cannot hold — *"longer rigs
+may curb-park (32-ft limit suggested)"*, *"water off Dec-Mar"*, *"pay/permit at City Hall
+(721 W. Robertson St)"*. No vocabulary holds those, and gutting the prose to populate fields
+would lose them permanently.
+
+**One exception, and only one.** The templated RV Life tail — `RV Life 4*/$$ (auto 6/2026)`
+— is purely structured data stored as prose on 6,002 entries (47%), and it moves into
+`rating` and comes **out** of the note. Nothing else is removed from a note by an extraction
+pass.
+
+Attribution markers (`--AWH`, `--Claude`) survive intact; keep someone else's marker and
+append your own, per the curation doc.
+
+---
+
+## 7. Population, cheapest first
+
+What is actually recoverable, measured across all 12,768 notes:
+
+| field | present in notes | channel |
+|---|---|---|
+| RV Life rating (`4*/$$ (auto 6/2026)`) | **80.4%** (47% fully templated) | mechanical regex |
+| restrooms · site count · season · reservable · FCFS | 29–37% | LLM extraction |
+| showers · amp service · full hookups · no hookups | 25–28% | LLM extraction |
+| dump station · nightly rate | ~20% | LLM extraction |
+| max rig length | **3.6%** | research |
+| min stay · booking cutoff · non-resident fee | **0.1–1.2%** | research |
+
+The fields most wanted are the ones least present — extraction and research are separate
+projects with separate costs, and an extraction pass aimed at booking rules would return
+almost nothing.
+
+| phase | work | coverage | cost |
+|---|---|---|---|
+| 1 | Schema, deep-merge PUT, form sections (§8) | — | ~2 days |
+| 2 | RV Life tail → `rating` | 6,002 entries | hours, mechanical, reversible |
+| 3 | LLM extraction pass over notes | 20–37% per field | 1 day + cheap batch |
+| 4 | rec.gov calendar walk → season + FCFS | 2,389 federal | unattended, slow |
+| 5 | Good Sam network match → `discounts.good_sam` | bulk | hours |
+| 6 | Agency registry (~70 rows) | 6,635 as inherited | **20–25 h research** |
+| 7 | Per-entry verification | use-driven | ongoing, never "done" |
+
+**Phase 3** must be incremental the way `day_rollups` is: hash the note, re-extract only
+what changed, and merge deltas into the store at write time rather than dumping a dict
+loaded at startup — a batch racing a UI edit must not clobber it.
+
+**Phase 4** exploits something already in the tree. `AVAIL_URL` in `ridb/fetch_facility.py`
+returns per-site, per-night status for a whole month, keyless. Walk a facility across the
+year and **the season appears as the closed band, and FCFS loops appear as sites that never
+become reservable** — both read off the same API, no agency-site reading. Sampling four
+months to find the edges is ~9.5k requests across 2,389 entries: slow against an
+undocumented endpoint, but unattended and cacheable.
+
+**Phase 7 is the one that makes this tractable.** Uniform verification of 12,768 entries is
+a project that never finishes. Verification driven by the queries that actually surface
+entries converges on the campgrounds that matter within a season of use. Surfacing
+*"inherited, never verified"* in the UI is what turns that into a prompt.
+
+Migration: this rewrites all 12,768 entries once, against the usual append-don't-re-dump
+rule. Acceptable as a **single mechanical commit with the transform script committed beside
+it**, and `ensure_ascii=False` or every note's em-dashes re-escape.
+
+---
+
+## 8. Editing from the web interface
+
+### 8.1 The nested PUT is a clobbering hazard one level down
+
+Today's `PUT /api/campgrounds/<id>` merges from a flat field whitelist and shallow-assigns.
+That is what keeps a UI save from destroying `waterfront_evidence`, which the client never
+receives.
+
+A nested group reintroduces the identical bug one level down: if the form sends `hookups`
+containing only the four keys it knows about, it **wipes any key a later script added**.
+
+**The merge must be deep, with a per-subkey whitelist.** A group the client omits entirely
+is left untouched; a subkey the client omits within a group it *did* send is left untouched.
+Only an explicit `null` clears a subkey. A subkey absent from the whitelist silently will
+not save — the same trap the flat whitelist already carries, now multiplied by the number of
+groups, so extend the whitelist in the same commit that adds a field.
+
+### 8.2 Tri-state controls, never checkboxes
+
+Every boolean renders as a three-way select — **yes / no / unknown** — defaulting to
+unknown. See §2.1 for what shipping a checkbox costs.
+
+### 8.3 Form layout
+
+The manage form is already a wide grid and the repo's primary UI rule is that every page
+must work on desktop, tablet **and** phone. Twenty more inputs in one grid fails that.
+
+Collapsible sections — Identity · Location · Amenities · Booking & Fees · Season ·
+Evidence — with Identity and Location open by default and the rest collapsed. Each
+non-identity section shows a one-line summary when collapsed, and marks whether its values
+are entry-verified or inherited (§3).
+
+### 8.4 Payload placement
+
+`_MAP_MARKER_FIELDS` ships inline for **every** entry in the campground map's HTML — already
+~9 MB of HTML at ~1.9 MB gzipped. `_MAP_POPUP_FIELDS` is fetched per campground on demand.
+
+**New groups go in the popup fetch.** Leaking them into the marker payload adds an estimated
+2–3 MB to a page that is already the heaviest in the app, to render data no one is looking
+at yet. The exception is any field the map's **filter** UI needs to evaluate client-side —
+that must ride inline, so add it deliberately and keep it small (a boolean or a short enum,
+never a group).
+
+The audit-evidence strip applies unchanged: `waterfront_evidence` and `inclusion_evidence`
+never reach the browser, and the whitelist is what makes that safe.
+
+### 8.5 Search surfaces
+
+The campground map already has the pattern to extend: a legend control with clickable
+toggles and a second ownership box built from `OWNERSHIP_LABELS` with
+`DEFAULT_HIDDEN_OWNERSHIPS` seeding a sessionStorage fallback. New filters (hookups, season,
+FCFS, Good Sam) follow that shape.
+
+Every such filter obeys §2.2: an unknown value is **shown and flagged**, never filtered out.
+A filter that silently hides unverified entries turns a 30%-populated field into a search
+that quietly returns a tenth of the database.
