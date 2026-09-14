@@ -643,5 +643,223 @@
         "method": "reported"
       }
     }
+  },
+  "provincial:BC": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://bcparks.ca/reservations/",
+      "window_opens_days": 90,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -48
+      },
+      "fcfs": "after_cutoff",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "The strongest walk-up wording found anywhere: 'Campsites that cannot be reserved are offered on a first come, first served basis. In many cases, reservable sites that have not been booked can also be used on a first come, first served basis.' Booking shuts early - 'most reservations can only be made up until 8 pm two days before your arrival date' - but with a caveat no other agency has: 'Parks that have internet connectivity accept reservations right up until your planned arrival date.' So the cutoff is a function of whether the park has a signal, not of policy, and reserve_until holds the conservative two-day figure. THE WINDOW CHANGED FOR 2026: three months, down from four; anything citing four months is stale. Released 7am Pacific daily. Statutory holiday weekends need three nights. MAX STAY IS PER CALENDAR YEAR, not per visit - 'At most parks, you can stay a maximum of 14 nights each calendar year in total (consecutive or non-consecutive)', and seven at sWiWs and Porteau Cove. That is a different kind of limit from everywhere else in this registry and max_stay_nights cannot express it; read the note."
+    },
+    "fees": {
+      "currency": "CAD",
+      "note": "Reservation fee '$6 per campsite per night, to a maximum of $18 per site (plus tax)'; phone adds a $5 per-transaction surcharge. Cancelling more than seven days out refunds camping fees but never the transaction fees. No out-of-province rate difference. NOTE on rating.price_tier for Canadian entries: the imported RV Life tier is computed on nominal dollars with no CAD conversion, so Canadian parks sit roughly one level high - see docs/campground-schema.md 4.3."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://bcparks.ca/reservations/frontcountry-camping/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://bcparks.ca/reservations/frontcountry-camping/ and https://bcparks.ca/reservations/camping-fees/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "provincial:AB": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://shop.albertaparks.ca/",
+      "window_opens_days": 90,
+      "max_stay_nights": 10,
+      "note": "'Individual Campsites: 90 day booking window', advancing one day each morning at 9 a.m. MT; group and comfort camping open at 180 days. 'Campers can book a maximum of 10 consecutive nights per reservation' - up to 16 at one site by stacking bookings - and five nights in a group area. First-come camping exists as its own category on the Alberta Parks site but the FAQ does not state the rule, so fcfs is absent rather than guessed. No same-day cutoff published, hence no reserve_until. No minimum stay found and no out-of-province rate difference. A reservation booked on the first day of the window is frozen to date changes for 31 days."
+    },
+    "fees": {
+      "currency": "CAD",
+      "note": "The reservation FAQ names only 'non-refundable administrative fees' without amounts, so reservation_fee is absent. See the BC row's note on Canadian rating.price_tier being roughly one level high."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.albertaparks.ca/albertaparks-ca/visit-our-parks/camping-in-alberta-parks/online-reservations/reservation-faqs/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.albertaparks.ca/.../reservation-faqs/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "provincial:ON": {
+    "booking": {
+      "reservable": true,
+      "platform": "goingtocamp",
+      "url": "https://reservations.ontarioparks.ca/",
+      "window_opens_days": 150,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "21:00"
+      },
+      "max_stay_nights": 23,
+      "note": "Verbatim: 'Reservations can be made up to 9:00 pm on your day of arrival' - equal to North Carolina and second only to Indiana's 11pm, and much the most generous of the three provinces here (BC effectively shuts two days out). 'Reservations are accepted up to five months in advance', released 7am ET. Maximum stay is the longest in the registry: 'The maximum stay on a campsite at all other parks and during off-season is twenty-three consecutive nights', reduced to 7-14 nights in peak season (July 1 to Labour Day Saturday) at the busiest parks such as Algonquin and Pinery - so max_stay_nights holds the off-season figure and a July booking should assume less. No minimum stay is published. Walk-in availability is not addressed in the rules, so fcfs is absent."
+    },
+    "fees": {
+      "currency": "CAD",
+      "note": "'A non-refundable reservation fee is required for all reservations' with no amount published in the rules; cancellation penalties live on a separate page. See the BC row's note on Canadian rating.price_tier."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.ontarioparks.ca/reservations/rules",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.ontarioparks.ca/reservations/rules",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:WI": {
+    "booking": {
+      "reservable": true,
+      "platform": "goingtocamp",
+      "window_opens_days": 330,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "23:59"
+      },
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "summer",
+          "season": "stays May 15 - Oct 31 BOOKED before May 15"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations are mandatory - 'Campers must make a reservation before setting up on any site' - but same-day booking is allowed: 'Camping reservations are required and can be made on the same day of your arrival or up to 11 months before your planned occupancy date.' No clock time is published, so reserve_until holds end-of-day. THE 2-NIGHT MINIMUM KEYS ON WHEN YOU BOOK, NOT WHEN YOU STAY, which no other agency here does: 'reservations booked before May 15 for stays between May 15 and Oct. 31 require a minimum 2-night reservation', while sites still available after May 15 may be booked for one night. So it never binds a late booker, and a one-night search must NOT exclude Wisconsin on the strength of it. Holiday weekends need 3 nights. Remote forest areas may have non-reservable camping; standard park sites do not."
+    },
+    "fees": {
+      "currency": "USD",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 15,
+        "per": "night"
+      },
+      "note": "'Nonresident campers will pay $15 per night in addition to the standard campsite fee' - THE LARGEST per-night non-resident surcharge in the registry, three times New York's $5 and roughly double Virginia's worst case. On a four-night stay that is $60 before the campsite is paid for. A vehicle admission pass is required on top (daily, or a 12-month pass); resident/non-resident amounts for the pass were not published on the page checked."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://dnr.wisconsin.gov/topic/parks/camping/faq",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://dnr.wisconsin.gov/topic/parks/camping/faq",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:WA": {
+    "booking": {
+      "reservable": true,
+      "platform": "goingtocamp",
+      "url": "https://washington.goingtocamp.com/",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "14:00"
+      },
+      "fcfs": "after_cutoff",
+      "max_stay_nights": 10,
+      "note": "THE CLEANEST HANDOFF IN THE REGISTRY, and the model the others should be read against: 'Campers can book a same-day reservation until 2 p.m. on their intended day of arrival' and 'First come, first served camping is still available for unreserved sites after 2:30 p.m.' Two mechanisms with a published boundary and a half-hour of slack between them, effective 2025-03-24 when same-day booking expanded from a few parks to all reservable campgrounds. Reservable season is May 15 - Sept 15 at most parks, some year-round or wider; outside it, and in winter when loops close, sites may be first-come anyway. From 2025-08-19 a reservation cannot exceed 10 nights, nor push the camper past a 90-night annual total - max_stay_nights holds the per-reservation cap, not the annual one."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "A Discover Pass is the state's vehicle access pass; its interaction with camping fees was not confirmed on the pages checked, so no entrance figures are recorded."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://parks.wa.gov/news/2025/state-parks-expands-same-day-camping-reservations-all-campgrounds and https://parks.wa.gov/passes-permits/reservations",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://parks.wa.gov/passes-permits/reservations",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
+  },
+  "state:NE": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "note": "180 days for camping, a year for cabins and lodges. Walk-up is explicit and has a registration path: 'Non-reservable campsites are assigned on a first-come, first-served basis' and 'first-come, first-served campers must register at the entrance booth or office, or at a self-registration drop box' - the same honour-system shape as Pennsylvania. fcfs is 'some_sites' rather than 'always' because the wording covers NON-RESERVABLE sites specifically and does not say unbooked reservable ones may be taken. No minimum stay for standard sites (cabins need two nights). No same-day cutoff published."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "'A Motor Vehicle Park Entry Permit is required on all licensed vehicles entering any state park, state recreation area or state historical park' - so, as in Indiana, Michigan, Colorado and Minnesota, the campsite price is not the whole price. Resident/non-resident amounts were not published on the pages checked, so entrance is absent rather than guessed."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://outdoornebraska.gov/parks/reservations/ and https://outdoornebraska.gov/parks/go-camping/campground-policy/",
+        "checked": "2026-09-14",
+        "method": "reported"
+      },
+      "fees": {
+        "source": "https://outdoornebraska.gov/permits/park-permits/",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
+  },
+  "state:SD": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 90,
+      "fcfs": "always",
+      "note": "'Reservations are not required for campsites, but are highly recommended' - one of the few agencies left where turning up is a supported way to camp rather than a fallback. 90 days ahead, released 7am CT / 6am MT, except Custer State Park which opens a full year out. The recommendation is not idle: most summer weekend sites go within a week of the window opening, so fcfs 'always' describes the policy, not the odds."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "'Camping fees do not include entrance fees, which are required year-round and in most areas' - an annual entrance licence can be bought ahead online and mailed. Resident/non-resident amounts were not published on the pages checked."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://gfp.sd.gov/camp/ and https://gfp.sd.gov/faq/detail/185/",
+        "checked": "2026-09-14",
+        "method": "reported"
+      },
+      "fees": {
+        "source": "https://gfp.sd.gov/camp/",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
   }
 }
