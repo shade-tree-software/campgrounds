@@ -6361,7 +6361,8 @@ def api_trip_track(trip_id):
                                       bad_windows, _relocate)
         home, _fam = _map_config()
         hs, he = _find_home_boundary_tsts(
-            cleaned, home, anchors=_anchors_for_trip(trip))
+            cleaned, home, anchors=_anchors_for_trip(trip),
+            trip_start_date=trip.get("start"))
         return jsonify({
             "points": _apply_overrides(chosen),
             "home_auto_start_tst": hs,
@@ -6633,7 +6634,8 @@ def _trip_window_cuts(trip, cleaned, home):
     boundary fills in when there's no manual override, and None falls back
     to the full local days `_clean_track_points()` already trimmed to."""
     hs, he = _find_home_boundary_tsts(
-        cleaned, home, anchors=_anchors_for_trip(trip))
+        cleaned, home, anchors=_anchors_for_trip(trip),
+        trip_start_date=trip.get("start"))
     tz_name = (_tz_for_coord(home[0], home[1])
                if home and home[0] is not None and home[1] is not None
                else None)
@@ -7993,7 +7995,8 @@ def _find_home_boundary_tsts(points, home,
                              at_home_centroid_m=STOP_AT_HOME_CENTROID_M,
                              lock_seconds=STOP_HOME_BOUNDARY_LOCK_S,
                              anchors=None,
-                             anchor_radius_m=TRACK_NEAR_STAY_KM * 1000):
+                             anchor_radius_m=TRACK_NEAR_STAY_KM * 1000,
+                             trip_start_date=None):
     """Return (home_departure_tst, home_arrival_tst) — when the user
     left HOME for the trip and when they returned. Either may be None
     when home isn't configured, no pings exist, or no away period meets
@@ -8053,7 +8056,35 @@ def _find_home_boundary_tsts(points, home,
     workday-before-trip case (the workday is shorter than the trip)
     and the errand-after-arrival case (the errand is shorter than the
     trip) without time-window heuristics; the anchor step in 4 sits in
-    front of it for the case those size assumptions don't hold."""
+    front of it for the case those size assumptions don't hold.
+
+      5. A DEPARTURE ON A LATER DAY THAN THE TRIP'S START IS NOT A
+         DEPARTURE. `home_departure_tst` is the away streak's first
+         ping, which is a home departure only if the track actually
+         begins at home — nothing above checks that. When someone else
+         drives the EKKO out and their phone isn't reporting, the
+         trip's own `bad_track_windows` carves those days away and the
+         first surviving ping is hundreds of miles out, days later: on
+         trip 58 the EKKO left on the Tuesday and the earliest ping is
+         Friday 12:39 at Royersford, 131 miles from home, which the
+         home card then prints as the Tuesday departure. Given
+         `trip_start_date`, a departure landing on a LATER local date
+         is withheld (None) so the card falls back to blank and an
+         admin can set `home_start_time`. Three trips are affected
+         (58, 47, 37 — all "Donna drove up with EKKO" notes).
+
+         Deliberately a DATE test and not a distance one. The ordinary
+         failure is OwnTracks going quiet over the real departure, which
+         leaves the first away ping tens of miles down the road on the
+         RIGHT day (trip 2: a 213-minute gap, first ping 26 miles out;
+         trip 5: nothing between home at 10:28 and camp at 21:31). Those
+         times are late but they belong to the day the trip left, and a
+         distance threshold would have to sit between 2.3 and 26 miles
+         to separate them — a line with nothing to anchor it. A wrong
+         DAY is unambiguous.
+
+         The arrival is left alone: it is the first at-home ping after
+         the streak, so it is anchored at home by construction."""
     if not home or home[0] is None or home[1] is None:
         return None, None
     home_lat, home_lng = home[0], home[1]
@@ -8162,7 +8193,30 @@ def _find_home_boundary_tsts(points, home,
     home_departure_tst = pts[main_s]["tst"]
     home_arrival_tst = (pts[main_e + 1]["tst"]
                         if main_e + 1 < n else pts[main_e]["tst"])
+
+    # 5. Withhold a "departure" that happened on a later day than the trip
+    # started — the track doesn't contain the departure at all (see above).
+    if trip_start_date and home_departure_tst is not None:
+        tz_name = (_tz_for_coord(home_lat, home_lng)
+                   if home_lat is not None and home_lng is not None else None)
+        local = _local_date_of_tst(home_departure_tst, tz_name)
+        if local and local > trip_start_date:
+            home_departure_tst = None
     return home_departure_tst, home_arrival_tst
+
+
+def _local_date_of_tst(tst, tz_name):
+    """A UTC epoch second as its `YYYY-MM-DD` local date in `tz_name`, or
+    None if it can't be resolved. The inverse framing of
+    `_trip_local_to_tst`, used to ask which local day a ping fell on."""
+    if tst is None:
+        return None
+    try:
+        from zoneinfo import ZoneInfo
+        tz = ZoneInfo(tz_name) if tz_name else None
+        return datetime.fromtimestamp(tst, tz).date().isoformat()
+    except Exception:
+        return None
 
 
 def _trip_local_to_tst(date_str, time_str, tz_name):
@@ -9173,7 +9227,8 @@ def api_detect_stops(trip_id):
     # arrival are dropped: end_tst < departure → pre-trip;
     # start_tst > arrival → post-trip.
     home_departure_tst, home_arrival_tst = _find_home_boundary_tsts(
-        points, home, anchors=_anchors_for_trip(trip))
+        points, home, anchors=_anchors_for_trip(trip),
+        trip_start_date=trip.get("start"))
     home_tz_name = None
     if home and home[0] is not None and home[1] is not None:
         home_tz_name = _tz_for_coord(home[0], home[1])
