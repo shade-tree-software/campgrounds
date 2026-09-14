@@ -463,5 +463,185 @@
         "method": "manual"
       }
     }
+  },
+  "state:OH": {
+    "booking": {
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://reserveohio.com/",
+      "window_opens_days": 180,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "23:59"
+      },
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        },
+        {
+          "nights": 3,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "note": "Verbatim: 'Parks that use the reservation system no longer offer walk-in campsites. NOTE: Jesse Owens State Park is the only park that offers first-come, first-served camping with on-site registration.' So fcfs is 'never' at the agency level with exactly ONE named exception, which carries its own entry-level override. 'Reservations for campsites can be made as late as the day of your desired arrival' - no published clock time, so reserve_until holds end-of-day; do not read 23:59 as a quoted figure. Minimum stay: 'The minimum stay for regular weekend reservations is 2 nights. On Memorial Day and Labor Day weekends, the minimum stay is 3 nights', with 'no minimum for camping ... made for Sunday-Thursday nights'. The waiver is 'If it is within 7 days of your desired stay and campsites are available, reservations will be accepted for 1 night' - stated under Minimum Stay generally, AFTER both rules and without the carve-out Indiana makes explicit, so it is applied to both here. That reading is an inference, not a quote; check before relying on it for a holiday weekend. Campsites 6 months ahead, cabins 12."
+    },
+    "fees": {
+      "currency": "USD",
+      "reservation_fee": 6.5,
+      "note": "'Applicable taxes plus a $6.50 reservation fee are added to every reservation.' No non-resident rate difference found."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://ohiodnr.gov/rules-and-regulations/rules-and-regulations-by-division/state-parks-and-watercraft/ohio-state-park-rules/0-reservation-policy (page dated 2026-06-29)",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://ohiodnr.gov/.../0-reservation-policy",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:CO": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.cpwshop.com/",
+      "window_opens_days": 180,
+      "fcfs": "never",
+      "note": "Verbatim: 'All parks are reservation only.' Colorado abolished walk-up camping outright, which makes it one of the worst states in the database to roll into at 7pm without a booking - there is no fallback at all, unlike Pennsylvania's honor-envelope system or Maryland's any-unreserved-site rule. 'A reservation can be made no more than six months before your arrival date', released at midnight Mountain Time. No published same-day cutoff, so reserve_until is absent. No minimum stay found."
+    },
+    "fees": {
+      "currency": "USD",
+      "entrance": {
+        "resident": 10,
+        "nonresident": 10,
+        "per": "vehicle_day"
+      },
+      "note": "'Daily park entrance fees of $10-11 apply in addition to camping fees, or a valid annual pass must be displayed' - so, like Indiana and Michigan, the campsite price is not the whole price. Unlike them, Colorado does NOT split the vehicle fee by residency, so resident and nonresident are recorded the same; the $10-11 range is by park. Nightly sites run $13-41 by type and season."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://cpw.state.co.us/camping",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://cpw.state.co.us/camping",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:IL": {
+    "booking": {
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://camp.exploremoreil.com/",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -72
+      },
+      "fcfs": "after_cutoff",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "season": "Memorial Day, July 4 (when it falls Fri-Mon), Labor Day"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "ILLINOIS DOCUMENTS THE PATTERN IOWA'S OWN PAGES ONLY HINT AT, and clearly: 'reservations must be made three days before the campsite is needed' AND 'Most campgrounds have first-come, first-served sites; please contact the park for availability'. So booking shuts three days out and walk-up takes over - the same mechanism reported for Iowa, here stated unambiguously by the agency. Worth knowing when reading the Iowa row, whose two official pages contradict each other on exactly this. Minimum stay applies only to named holidays: 'Memorial Day, Fourth of July (if July 4th falls on a Friday, Saturday, Sunday or Monday) and Labor Day weekends require a two night minimum stay. Some facilities will require a three night minimum stay for Columbus Day.' Season: 'Most campsites may be reserved from May 1 through October 31. Some parks accept reservations year-round.' Reservations moved to an updated exploremoreil.com platform on 2026-05-01, and an administrative-rule/fee change is dated 2026-08-31 for 2027 - re-check this row before the 2027 season."
+    },
+    "fees": {
+      "currency": "USD",
+      "reservation_fee": 5,
+      "note": "'The reservation fee is $5.00, plus the entire camping fee for each camp site reserved. This $5.00 reservation fee is non-refundable.' No non-resident rate difference found. A 2027 camping-fee change was published 2026-08-31."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://dnr.illinois.gov/parks/camp/reservation-information.html",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://dnr.illinois.gov/parks/camp/reservation-information.html",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:MN": {
+    "booking": {
+      "reservable": true,
+      "platform": "usedirect",
+      "window_opens_days": 120,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'All campsites in Minnesota state parks and recreation areas now require a reservation before they may be occupied', and the DNR is explicit that this was a deliberate abolition: 'No more arriving on a Friday hoping to stay at a first-come, first-served site, only to find there isn't one available!' BUT unlike Colorado, the same-day path works and is free: 'Reserve a site online Friday morning and be camping in it that same night!' So fcfs is never while a late arrival is still perfectly possible - the two facts must be read together, and a search that treats 'no FCFS' as 'no late arrival' would wrongly exclude every Minnesota park. The 120-day window is the shortest found (against 180 typical and South Carolina's 395). State FORESTS are a separate system and DO keep first-come sites; this row covers state parks and recreation areas only."
+    },
+    "fees": {
+      "currency": "USD",
+      "entrance": {
+        "resident": 7,
+        "nonresident": 7,
+        "per": "vehicle_day"
+      },
+      "note": "'Overnight guests need a state park vehicle permit in addition to a camping or lodging reservation' - $7 daily, or $35 for a year-round permit good 12 months from purchase. No residency split, so both sides are recorded the same. Five nights of day permits exceeds the annual."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.dnr.state.mn.us/state_parks/self_service.html",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.dnr.state.mn.us/state_parks/ and DNR camping guidance",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
+  },
+  "state:TX": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 150,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "note": "Five months ahead for camping, 30 days for day passes. Minimum stay is triggered by ANY of Friday, Saturday or Sunday being included - broader than Pennsylvania (Saturday only) and stated to vary by park, so treat it as the default rather than a certainty. No waiver published. Walk-up availability is not addressed on the pages checked, so fcfs is absent."
+    },
+    "fees": {
+      "currency": "USD",
+      "entrance": {
+        "per": "person_day"
+      },
+      "note": "Texas charges entrance PER PERSON per day rather than per vehicle - the only agency checked that does - 'unless you hold a Texas State Parks Pass'. The amount varies by park and is not recorded here because there is no single figure; check the park. That distinction matters for a family: a per-person gate fee scales with headcount where Indiana's and Michigan's per-vehicle ones do not. Campsites run $10-35 by type and season."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://tpwd.texas.gov/state-parks/park-reservation-information/reservations",
+        "checked": "2026-09-14",
+        "method": "reported"
+      },
+      "fees": {
+        "source": "https://tpwd.texas.gov/state-parks/park-reservation-information/reservations",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
   }
 }
