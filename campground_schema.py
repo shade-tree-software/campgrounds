@@ -41,12 +41,17 @@ MMDD = ("mmdd", None)          # "MM-DD" — recurring, so deliberately no year
 
 
 def INT(*allowed):
-    """Integer field; with args, restricted to those values."""
-    return ("int", set(allowed) if allowed else None)
+    """Integer field; with args, restricted to those values.
+
+    The allowed values stay an ordered tuple rather than a set: the manage form
+    renders them as a dropdown, and "0, 20, 30, 50" is the order an author would
+    read them in. Membership tests on a handful of values cost nothing.
+    """
+    return ("int", tuple(allowed) if allowed else None)
 
 
 def ENUM(*values):
-    return ("str", set(values))
+    return ("str", tuple(values))
 
 
 def OBJ(**fields):
@@ -196,7 +201,7 @@ def _coerce(spec, value, path):
                 raise SchemaError(f"{path}: expected a whole number, got {value!r}")
             num = int(num)
             if constraint is not None and num not in constraint:
-                allowed = ", ".join(str(v) for v in sorted(constraint))
+                allowed = ", ".join(str(v) for v in constraint)
                 raise SchemaError(f"{path}: {num} is not one of {allowed}")
         return num
 
@@ -214,7 +219,7 @@ def _coerce(spec, value, path):
     if kind == "str":
         s = str(value).strip()
         if constraint is not None and s not in constraint:
-            allowed = ", ".join(sorted(constraint))
+            allowed = ", ".join(constraint)
             raise SchemaError(f"{path}: {s!r} is not one of {allowed}")
         return s
 
@@ -389,3 +394,81 @@ def validate_row(row, label="row"):
     staged = {}
     apply_update(staged, {k: v for k, v in row.items() if k != POLICY_REF})
     return staged
+
+
+# ── Client projection ───────────────────────────────────────────────────────
+# The manage form renders from THIS, served by the route, rather than from a
+# hand-kept copy in the template. A second vocabulary in JavaScript would drift
+# the first time a field was added on one side only, and the failure mode is
+# quiet: the form would keep saving happily while silently omitting the field.
+
+GROUP_LABELS = {
+    "rating": "Rating",
+    "hookups": "Hookups",
+    "sites": "Sites",
+    "facilities": "Facilities",
+    "season": "Season",
+    "booking": "Booking",
+    "fees": "Fees",
+    "discounts": "Discounts",
+}
+
+# Only where the key doesn't read well on its own; everything else is derived.
+FIELD_LABELS = {
+    "fcfs": "First-come, first-served",
+    "url": "Booking URL",
+    "window_opens_days": "Booking opens (days ahead)",
+    "reserve_until": "Booking closes",
+    "min_stay": "Minimum stay",
+    "max_stay_nights": "Maximum stay (nights)",
+    "max_rig_ft": "Max rig length (ft)",
+    "electric": "Electric (amps)",
+    "dump": "Dump station",
+    "potable_water": "Potable water",
+    "nightly_low": "Nightly rate (low)",
+    "nightly_high": "Nightly rate (high)",
+    "reservation_fee": "Reservation fee",
+    "nonresident": "Non-resident charge",
+    "prereq_pass": "Required pass",
+    "price_tier": "Price tier ($ count)",
+    "good_sam": "Good Sam",
+    "passport_america": "Passport America",
+    "koa_value_kard": "KOA Value Kard",
+    "interagency_senior_access": "America the Beautiful Senior/Access",
+    "opens": "Opens (MM-DD)",
+    "closes": "Closes (MM-DD)",
+    "year_round": "Open year-round",
+    "relative_to": "Relative to",
+    "at": "At (HH:MM)",
+    "offset_hours": "Offset (hours)",
+    "booking_within_days": "Waived if booking within (days)",
+    "waived_if": "Waiver",
+    "applies": "Applies",
+    "nights": "Nights",
+    "checked": "Checked (YYYY-MM)",
+}
+
+
+def _label(key):
+    return FIELD_LABELS.get(key) or key.replace("_", " ").capitalize()
+
+
+def _spec_to_client(spec, key):
+    kind, constraint = spec
+    if kind == "obj":
+        return {"kind": "obj", "label": _label(key),
+                "fields": [dict(_spec_to_client(s, k), key=k)
+                           for k, s in constraint.items()]}
+    out = {"kind": kind, "label": _label(key)}
+    if constraint is not None:
+        out["choices"] = list(constraint)
+    return out
+
+
+def to_client():
+    """The vocabulary as the manage form needs it: ordered groups and fields."""
+    return [{"key": group,
+             "label": GROUP_LABELS.get(group, group.title()),
+             "fields": [dict(_spec_to_client(spec, key), key=key)
+                        for key, spec in fields.items()]}
+            for group, fields in SCHEMA.items()]

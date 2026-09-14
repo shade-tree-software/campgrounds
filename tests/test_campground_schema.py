@@ -300,6 +300,49 @@ if __name__ == "__main__":
     unittest.main()
 
 
+class TestManageFormPayload(unittest.TestCase):
+    """The shape the manage form actually sends.
+
+    It renders the WHOLE vocabulary and sends every control it drew, with blank
+    meaning unknown -> null. That is only safe because null CLEARS rather than
+    stores: a form that sent `false` for blank would, on one unrelated save,
+    convert an entry's unknowns into twelve thousand confident negatives.
+    """
+
+    def _form_payload(self, **set_values):
+        """Every field of every group, null unless named — what the form posts."""
+        payload = {}
+        for group, fields in cs.SCHEMA.items():
+            payload[group] = {key: set_values.get(f"{group}.{key}")
+                              for key in fields}
+        return payload
+
+    def test_a_blank_form_clears_rather_than_populating(self):
+        entry = {"hookups": {"electric": 30}, "discounts": {"good_sam": True}}
+        cs.apply_update(entry, self._form_payload())
+        self.assertEqual(entry, {})
+
+    def test_one_set_field_survives_and_the_rest_clear(self):
+        entry = {}
+        cs.apply_update(entry, self._form_payload(**{"hookups.electric": 50}))
+        self.assertEqual(entry, {"hookups": {"electric": 50}})
+
+    def test_an_unrendered_group_is_left_alone(self):
+        # A stale tab whose schema predates a new group must not clear it.
+        entry = {"discounts": {"good_sam": True}, "hookups": {"electric": 30}}
+        payload = self._form_payload(**{"hookups.electric": 50})
+        del payload["discounts"]
+        cs.apply_update(entry, payload)
+        self.assertEqual(entry["discounts"], {"good_sam": True})
+
+    def test_explicit_no_is_preserved_through_a_full_form_save(self):
+        entry = {}
+        cs.apply_update(entry, self._form_payload(**{"facilities.showers": False,
+                                                     "hookups.electric": 0}))
+        self.assertEqual(entry, {"facilities": {"showers": False},
+                                 "hookups": {"electric": 0}})
+
+
 class TestShippedRegistry(unittest.TestCase):
     """The committed registry must parse against the vocabulary it claims.
 

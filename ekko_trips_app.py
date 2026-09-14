@@ -5380,8 +5380,17 @@ def campgrounds_manage():
     is_admin = current_user.is_authenticated and current_user.is_admin
     config = _load_json(HOME_FILE)
     home = [config.get("home_lat"), config.get("home_long")]
+    # The structured-field form renders from the server's own vocabulary rather
+    # than a hand-kept copy in the template: a second schema in JavaScript would
+    # drift the first time a field was added on one side only, and the form
+    # would keep saving happily while silently omitting it. The policy registry
+    # rides along (~70 small rows) so the form can show what a blank field would
+    # INHERIT, which is the difference between "unknown" and "covered by the
+    # agency default".
     return render_template('campground_manage.html', active_nav='manage',
-                           is_admin=is_admin, home=home)
+                           is_admin=is_admin, home=home,
+                           cg_schema=campground_schema.to_client(),
+                           cg_policies=_load_policies())
 
 
 @app.route('/api/campgrounds/all')

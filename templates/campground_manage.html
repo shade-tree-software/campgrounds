@@ -107,6 +107,35 @@
   .ef-website { grid-column: span 6; }
   .ef-driveway { grid-column: span 6; }
   .ef-note { grid-column: 1 / -1; }
+  .ef-groups { grid-column: 1 / -1; display: flex; flex-direction: column; gap: .35rem; margin-top: .3rem; }
+  /* Collapsed by default: the identity and location fields are what most edits
+     touch, and nine open sections would bury them — on a phone especially,
+     where the grid is already one column. */
+  details.efg { border: 1px solid var(--line, #ddd); border-radius: 5px; background: #fafafa; }
+  details.efg > summary {
+    cursor: pointer; padding: .4rem .6rem; font-size: .72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .03em; color: var(--gray);
+    display: flex; gap: .5rem; align-items: baseline;
+  }
+  details.efg > summary::-webkit-details-marker { color: var(--gray); }
+  details.efg[open] > summary { border-bottom: 1px solid var(--line, #ddd); }
+  .efg-count { font-weight: 500; text-transform: none; letter-spacing: 0; font-size: .7rem; }
+  .efg-count.set { color: var(--navy, #002868); }
+  .efg-body { display: grid; grid-template-columns: repeat(12, 1fr); gap: .5rem .7rem; padding: .55rem .6rem .7rem; }
+  .efg-body .ef { grid-column: span 3; }
+  .efg-body .ef.wide { grid-column: span 6; }
+  .efg-body .ef.full { grid-column: 1 / -1; }
+  /* A nested rule (minimum stay, non-resident charge) is ONE value: it is
+     replaced whole on save, so it reads as one bordered block rather than as
+     loose fields that look independently editable. */
+  .efg-obj { grid-column: 1 / -1; border: 1px dashed var(--line, #ddd); border-radius: 4px; padding: .4rem .5rem .5rem; }
+  .efg-obj > .efg-obj-label {
+    font-size: .66rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .03em; color: var(--gray); margin-bottom: .3rem;
+  }
+  .efg-obj .efg-body { padding: 0; }
+  .ef-inherit { font-weight: 400; text-transform: none; letter-spacing: 0; color: #8a7a4a; }
+  .efg-inherit-note { grid-column: 1 / -1; font-size: .72rem; color: #8a7a4a; margin: -.15rem 0 .2rem; }
   .cg-table td.edit-cell .edit-actions { margin-top: .7rem; }
 
   .count-info { color: var(--gray); font-size: .85rem; }
@@ -163,6 +192,7 @@
        visible, so each field stacks cleanly). */
     .edit-form { grid-template-columns: 1fr; gap: .5rem; }
     .edit-form .ef { grid-column: 1 / -1 !important; }
+    .efg-body { grid-template-columns: 1fr; }
   }
 
 {% endblock %}
@@ -224,6 +254,11 @@ const KIND_OPTIONS = ['campground','family'];
 const METERS_TO_FEET = 3.281;
 const HOME_LAT = {{ home[0] if home else 38.93 }};
 const HOME_LNG = {{ home[1] if home else -77.37 }};
+// Rendered from the SERVER's vocabulary, never a copy kept here: a second
+// schema in JavaScript drifts the first time a field is added on one side
+// only, and the form would go on saving happily while omitting it.
+const CG_SCHEMA = {{ cg_schema|tojson }};
+const CG_POLICIES = {{ cg_policies|tojson }};
 
 let campgrounds = [];
 let sortField = 'name';
@@ -409,6 +444,142 @@ function viewOnMap(id) {
   window.location.href = '/campgrounds/map?focus=' + id;
 }
 
+// ── Structured fields (hookups, booking, fees, ...) ───────────────────────
+//
+// Two rules from docs/campground-schema.md are implemented here rather than
+// merely honoured:
+//
+//   Absent means unknown. Every control has an explicit blank option and blank
+//   SENDS null, which clears the key server-side. A checkbox cannot express
+//   that third state, so there are none here — ship one and the first save
+//   writes `false` across every amenity on the entry, permanently, with nothing
+//   to distinguish it from twelve thousand verified facts.
+//
+//   A blank field may still be COVERED by the agency default. That is a
+//   different thing from unknown, so a blank whose registry row has a value
+//   says so next to the label instead of looking empty.
+
+function sfId(path) { return 'sf-' + path.join('-'); }
+
+function policyRefFor(c) {
+  const explicit = (c.policy_ref || '').trim();
+  if (explicit) return explicit;
+  const own = (c.ownership || '').trim(), st = (c.state || '').trim();
+  return (own && st) ? own + ':' + st : null;
+}
+
+function inheritedValue(c, groupKey, fieldKey) {
+  const row = CG_POLICIES[policyRefFor(c)];
+  const group = row && row[groupKey];
+  return group ? group[fieldKey] : undefined;
+}
+
+function sfDisplay(v) {
+  if (v === true) return 'yes';
+  if (v === false) return 'no';
+  if (v && typeof v === 'object') {
+    return Object.keys(v).map(k => k + ' ' + sfDisplay(v[k])).join(', ');
+  }
+  return String(v);
+}
+
+function sfControlHtml(field, path, value, inherited) {
+  const id = sfId(path);
+  const hint = (value === undefined || value === null) && inherited !== undefined
+    ? ` <span class="ef-inherit">(agency: ${escapeHtml(sfDisplay(inherited))})</span>` : '';
+  const label = `<label>${escapeHtml(field.label)}${hint}</label>`;
+
+  if (field.kind === 'obj') {
+    const val = (value && typeof value === 'object') ? value : {};
+    const inner = field.fields.map(f =>
+      sfControlHtml(f, path.concat(f.key), val[f.key], undefined)).join('');
+    return `<div class="efg-obj"><div class="efg-obj-label">${escapeHtml(field.label)}${hint}</div>
+      <div class="efg-body">${inner}</div></div>`;
+  }
+
+  // Blank is always first and always means unknown.
+  if (field.kind === 'bool') {
+    const sel = v => (value === v ? ' selected' : '');
+    return `<div class="ef">${label}<select id="${id}">
+      <option value=""${value === undefined || value === null ? ' selected' : ''}>unknown</option>
+      <option value="true"${sel(true)}>yes</option>
+      <option value="false"${sel(false)}>no</option></select></div>`;
+  }
+  if (field.choices) {
+    const opts = field.choices.map(ch =>
+      `<option value="${escapeAttr(String(ch))}"${String(value) === String(ch) ? ' selected' : ''}>${escapeHtml(String(ch))}</option>`).join('');
+    const blank = `<option value=""${value === undefined || value === null ? ' selected' : ''}>unknown</option>`;
+    const wide = field.choices.some(ch => String(ch).length > 12) ? ' wide' : '';
+    return `<div class="ef${wide}">${label}<select id="${id}">${blank}${opts}</select></div>`;
+  }
+  const numeric = (field.kind === 'int' || field.kind === 'num');
+  const val = (value === undefined || value === null) ? '' : String(value);
+  const step = field.kind === 'int' ? ' step="1"' : '';
+  return `<div class="ef${numeric ? '' : ' wide'}">${label}
+    <input id="${id}" type="${numeric ? 'number' : 'text'}"${step} value="${escapeAttr(val)}"></div>`;
+}
+
+function structuredSectionsHtml(c) {
+  const ref = policyRefFor(c);
+  const row = CG_POLICIES[ref] || {};
+  const sections = CG_SCHEMA.map(g => {
+    const own = c[g.key] || {};
+    const setCount = Object.keys(own).length;
+    const inheritedKeys = Object.keys(row[g.key] || {}).filter(k => !(k in own));
+    const body = g.fields.map(f =>
+      sfControlHtml(f, [g.key, f.key], own[f.key],
+                    inheritedValue(c, g.key, f.key))).join('');
+    const note = inheritedKeys.length
+      ? `<div class="efg-inherit-note">${inheritedKeys.length} field${inheritedKeys.length === 1 ? '' : 's'} inherited from <strong>${escapeHtml(ref)}</strong> — verified values typed here override the agency default for this campground only.</div>`
+      : '';
+    const count = setCount
+      ? `<span class="efg-count set">${setCount} set</span>`
+      : (inheritedKeys.length ? `<span class="efg-count">inherited</span>`
+                              : `<span class="efg-count">unknown</span>`);
+    return `<details class="efg" id="${sfId([g.key, 'section'])}">
+      <summary>${escapeHtml(g.label)}${count}</summary>
+      <div class="efg-body">${note}${body}</div></details>`;
+  }).join('');
+  return `<div class="ef-groups">${sections}</div>`;
+}
+
+function sfRead(field, path) {
+  if (field.kind === 'obj') {
+    // A nested rule is replaced WHOLE, so it is all-or-nothing: every sub-field
+    // blank clears the rule, anything set sends the rule as typed.
+    const out = {};
+    field.fields.forEach(f => {
+      const v = sfRead(f, path.concat(f.key));
+      if (v !== null) out[f.key] = v;
+    });
+    return Object.keys(out).length ? out : null;
+  }
+  const el = document.getElementById(sfId(path));
+  if (!el) return null;
+  const raw = el.value;
+  if (raw === '') return null;               // unknown -> clear the key
+  if (field.kind === 'bool') return raw === 'true';
+  if (field.kind === 'int' || field.kind === 'num') {
+    const n = parseFloat(raw);
+    return isNaN(n) ? null : n;
+  }
+  return raw.trim();
+}
+
+// Only the groups actually on screen are sent. A group the page never rendered
+// is left out entirely, so a stale tab cannot clear a field the server learned
+// about after it loaded.
+function readStructuredFields() {
+  const out = {};
+  CG_SCHEMA.forEach(g => {
+    if (!document.getElementById(sfId([g.key, 'section']))) return;
+    const group = {};
+    g.fields.forEach(f => { group[f.key] = sfRead(f, [g.key, f.key]); });
+    out[g.key] = group;
+  });
+  return out;
+}
+
 function editRowHtml(c) {
   const isFamily = c.kind === 'family';
   const elevFeet = c.elevation_meters ? Math.round(c.elevation_meters * METERS_TO_FEET) : '';
@@ -440,6 +611,7 @@ function editRowHtml(c) {
                  onfocus="showLocationMap(this.value, 'ed-location')" onblur="onLocationBlur('ed-location')">
         </div>${typeFields}
         <div class="ef ef-note"><label>Note</label><textarea id="ed-note">${escapeHtml(c.note || '')}</textarea></div>
+        ${isFamily ? '' : structuredSectionsHtml(c)}
       </div>
       <div class="edit-actions">
         <button class="btn btn-save" onclick="saveEdit()">Save</button>
@@ -474,9 +646,11 @@ function onKindChange() {
   const fields = readPresentFields();
   if (editingId !== null) {
     const c = campgrounds.find(e => e.id === editingId);
-    if (c) Object.assign(c, fields);
+    if (c) { mergeStructuredLocal(c, fields); Object.assign(c, fields); }
   } else if (addingNew) {
-    newDraft = Object.assign(newDraft || blankDraft(), fields);
+    newDraft = newDraft || blankDraft();
+    mergeStructuredLocal(newDraft, fields);
+    newDraft = Object.assign(newDraft, fields);
   }
   render();
   // Focus back to name so the user can keep typing.
@@ -552,6 +726,7 @@ function readEditFields() {
     fields.ownership = document.getElementById('ed-ownership').value;
     fields.website = document.getElementById('ed-website').value;
     fields.phone = document.getElementById('ed-phone').value.trim();
+    Object.assign(fields, readStructuredFields());
   }
   return fields;
 }
@@ -583,7 +758,28 @@ function readPresentFields() {
   grab('ed-phone', 'phone', trim);
   const elev = el('ed-elev');
   if (elev) fields.elevation_meters = (parseFloat(elev.value) || 0) / METERS_TO_FEET;
+  // Carry the structured groups across the kind-change re-render too, or a
+  // stray click on the Kind selector would silently drop everything typed here.
+  Object.assign(fields, readStructuredFields());
   return fields;
+}
+
+// The payload's nulls are CLEARS, not values — the server drops those keys and
+// deletes an emptied group. Mirror that on the cached row, or the table and the
+// next re-open would show `{electric: null}` where the store holds nothing.
+// Consumes the group keys so the caller's Object.assign can't put them back.
+function mergeStructuredLocal(c, fields) {
+  CG_SCHEMA.forEach(g => {
+    if (!(g.key in fields)) return;
+    const incoming = fields[g.key];
+    const cur = Object.assign({}, c[g.key] || {});
+    Object.keys(incoming).forEach(k => {
+      if (incoming[k] === null || incoming[k] === undefined) delete cur[k];
+      else cur[k] = incoming[k];
+    });
+    if (Object.keys(cur).length) c[g.key] = cur; else delete c[g.key];
+    delete fields[g.key];
+  });
 }
 
 function saveEdit() {
@@ -598,7 +794,7 @@ function saveEdit() {
   .then(data => {
     if (data.error) { toast(data.error); return; }
     const c = campgrounds.find(e => e.id === editingId);
-    if (c) Object.assign(c, fields);
+    if (c) { mergeStructuredLocal(c, fields); Object.assign(c, fields); }
     editingId = null;
     render();
     hideLocationMap();
@@ -633,7 +829,9 @@ function saveNew() {
   .then(r => r.json())
   .then(data => {
     if (data.error) { toast(data.error); return; }
-    campgrounds.push(Object.assign({ id: data.id }, fields));
+    const created = { id: data.id };
+    mergeStructuredLocal(created, fields);
+    campgrounds.push(Object.assign(created, fields));
     addingNew = false;
     newDraft = null;
     render();
