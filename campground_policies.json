@@ -1,0 +1,48 @@
+{
+  "state:IN": {
+    "booking": {
+      "reservable": true,
+      "reserve_until": {"relative_to": "arrival", "at": "23:00"},
+      "min_stay": {
+        "nights": 2,
+        "applies": "weekend",
+        "waived_if": {"booking_within_days": 3}
+      }
+    },
+    "fees": {
+      "nonresident": {"type": "surcharge", "amount": 15, "per": "stay"}
+    },
+    "provenance": {
+      "booking": {"source": "AWH, reported 2026-09-14 — NOT yet verified against in.gov/dnr", "checked": "2026-09-14"},
+      "fees": {"source": "AWH, reported 2026-09-14 — NOT yet verified against in.gov/dnr", "checked": "2026-09-14"}
+    }
+  },
+  "state:IA": {
+    "booking": {
+      "reservable": true,
+      "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+      "fcfs": "after_cutoff"
+    },
+    "provenance": {
+      "booking": {"source": "AWH, reported 2026-09-14 — NOT yet verified against iowadnr.gov", "checked": "2026-09-14"}
+    }
+  },
+  "state:MD": {
+    "booking": {
+      "reservable": true,
+      "fcfs": "never",
+      "note": "Booking closes at some point in the afternoon on the day of arrival and there is no first-come fallback after it. The CUTOFF TIME IS NOT CONFIRMED, so reserve_until is deliberately absent rather than guessed - an invented time would evaluate a query wrongly and look verified doing it."
+    },
+    "provenance": {
+      "booking": {"source": "AWH, reported 2026-09-14 (hedged: 'seems to') — NOT yet verified against dnr.maryland.gov", "checked": "2026-09-14"}
+    }
+  },
+  "state:NY": {
+    "fees": {
+      "nonresident": {"type": "surcharge", "per": "stay"}
+    },
+    "provenance": {
+      "fees": {"source": "AWH, reported 2026-09-14: most NY parks charge only a nominal out-of-state fee. AMOUNT NOT STATED, so it is absent rather than guessed. Hither Hills is a known entry-level exception (double the nightly rate).", "checked": "2026-09-14"}
+    }
+  }
+}

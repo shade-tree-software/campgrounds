@@ -1,0 +1,339 @@
+"""The structured-field merge must not destroy what it cannot see.
+
+`campgrounds.json` is written by two kinds of author: the admin manage page,
+which sends whatever its form knows about, and offline extraction/research
+passes, which write fields the form has never heard of. The flat field whitelist
+on `PUT /api/campgrounds/<id>` is what keeps the first from clobbering the
+second — `waterfront_evidence` survives a UI save only because the client never
+receives it and the server merges from a list.
+
+Nesting the new amenity/booking/fee groups re-creates that bug one level down:
+a form that sends `hookups` containing the four keys it knows about would wipe a
+fifth an extraction pass wrote, silently, on every save. These tests pin the
+per-subkey merge that prevents it.
+
+They also pin the rule the whole schema rests on — **absent means unknown**. A
+missing key means nobody looked; `False` means somebody looked and there is
+none. `process_rollups` read a missing mileage as a measured zero twice; at
+12,768 entries the same confusion is unrecoverable, because a default written
+once is indistinguishable from twelve thousand verified facts.
+
+Run from the project root:
+
+    python -m unittest tests.test_campground_schema -v
+"""
+
+import unittest
+
+import campground_schema as cs
+
+
+class TestPerSubkeyMerge(unittest.TestCase):
+    """A save must only touch what the payload actually named."""
+
+    def test_omitted_subkey_survives_a_save(self):
+        # The hazard in one test: an extraction pass wrote `dump`; the form
+        # doesn't know about it and sends the three fields it does know.
+        entry = {"hookups": {"electric": 30, "water": True, "dump": True}}
+        cs.apply_update(entry, {"hookups": {"electric": 50, "water": False,
+                                            "sewer": True}})
+        self.assertEqual(entry["hookups"],
+                         {"electric": 50, "water": False, "sewer": True,
+                          "dump": True})
+
+    def test_omitted_group_is_untouched(self):
+        entry = {"hookups": {"electric": 30}, "discounts": {"good_sam": True}}
+        cs.apply_update(entry, {"hookups": {"electric": 50}})
+        self.assertEqual(entry["discounts"], {"good_sam": True})
+
+    def test_unrelated_top_level_fields_are_untouched(self):
+        # The groups must not disturb the flat fields the old whitelist owns.
+        entry = {"name": "X", "waterfront_evidence": "satellite at ...",
+                 "hookups": {"electric": 30}}
+        cs.apply_update(entry, {"hookups": {"water": True}})
+        self.assertEqual(entry["waterfront_evidence"], "satellite at ...")
+        self.assertEqual(entry["name"], "X")
+
+    def test_nested_rule_objects_are_replaced_whole(self):
+        # min_stay is ONE rule. Part-merging a waiver into it would yield a rule
+        # nobody wrote — worse than either version.
+        entry = {"booking": {"min_stay": {"nights": 2, "applies": "weekend",
+                                          "waived_if": {"booking_within_days": 3}}}}
+        cs.apply_update(entry, {"booking": {"min_stay": {"nights": 3}}})
+        self.assertEqual(entry["booking"]["min_stay"], {"nights": 3})
+
+
+class TestAbsentMeansUnknown(unittest.TestCase):
+    """Absent, False and 0 are three different claims and must stay distinct."""
+
+    def test_false_is_stored_not_dropped(self):
+        entry = {}
+        cs.apply_update(entry, {"facilities": {"showers": False}})
+        self.assertIs(entry["facilities"]["showers"], False)
+
+    def test_zero_amps_is_stored_not_dropped(self):
+        # electric: 0 is "somebody looked, there are no hookups" — a real datum
+        # that must not collapse into "nobody looked".
+        entry = {}
+        cs.apply_update(entry, {"hookups": {"electric": 0}})
+        self.assertEqual(entry["hookups"], {"electric": 0})
+
+    def test_null_clears_a_subkey_back_to_unknown(self):
+        entry = {"facilities": {"showers": False, "laundry": True}}
+        cs.apply_update(entry, {"facilities": {"showers": None}})
+        self.assertEqual(entry["facilities"], {"laundry": True})
+
+    def test_empty_string_clears_too(self):
+        # A tri-state select set to "unknown" may send "" rather than null.
+        entry = {"facilities": {"showers": False, "laundry": True}}
+        cs.apply_update(entry, {"facilities": {"showers": ""}})
+        self.assertEqual(entry["facilities"], {"laundry": True})
+
+    def test_emptied_group_is_removed_not_left_blank(self):
+        # {} would read as "this entry has an amenities record", which is a
+        # different claim from "nobody has looked".
+        entry = {"facilities": {"showers": True}}
+        cs.apply_update(entry, {"facilities": {"showers": None}})
+        self.assertNotIn("facilities", entry)
+
+    def test_whole_group_cleared_by_null(self):
+        entry = {"hookups": {"electric": 30, "water": True}}
+        cs.apply_update(entry, {"hookups": None})
+        self.assertNotIn("hookups", entry)
+
+    def test_nothing_is_invented_for_fields_not_sent(self):
+        entry = {}
+        cs.apply_update(entry, {"hookups": {"electric": 50}})
+        self.assertEqual(entry, {"hookups": {"electric": 50}})
+
+
+class TestUnknownFieldsAreRefused(unittest.TestCase):
+    """Loud failure, because the flat whitelist's quiet one is a known trap."""
+
+    def test_unknown_subkey_raises(self):
+        with self.assertRaises(cs.SchemaError) as ctx:
+            cs.apply_update({}, {"hookups": {"elektrik": 50}})
+        self.assertIn("hookups.elektrik", str(ctx.exception))
+
+    def test_unknown_nested_field_raises(self):
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"fees": {"nonresident": {"typo": 1}}})
+
+    def test_a_refused_write_mutates_nothing(self):
+        # Validation runs over the whole payload before anything is applied, so
+        # a typo in the last group cannot leave the first one half-written.
+        entry = {"hookups": {"electric": 30}}
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update(entry, {"hookups": {"electric": 50},
+                                    "facilities": {"showerz": True}})
+        self.assertEqual(entry, {"hookups": {"electric": 30}})
+
+    def test_non_group_keys_are_left_to_the_flat_whitelist(self):
+        entry = {}
+        touched = cs.apply_update(entry, {"name": "Somewhere", "phone": "555"})
+        self.assertEqual(touched, set())
+        self.assertEqual(entry, {})
+
+
+class TestCoercion(unittest.TestCase):
+    """Forms send strings; the store must hold typed values or refuse."""
+
+    def test_string_booleans_and_numbers(self):
+        entry = {}
+        cs.apply_update(entry, {"hookups": {"electric": "50", "water": "true",
+                                            "sewer": "false"}})
+        self.assertEqual(entry["hookups"],
+                         {"electric": 50, "water": True, "sewer": False})
+
+    def test_ambiguous_boolean_is_refused(self):
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"facilities": {"showers": "maybe"}})
+
+    def test_bool_is_not_accepted_as_a_number(self):
+        # bool subclasses int in Python; True must not become 1 amp-service.
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"sites": {"count": True}})
+
+    def test_enum_is_enforced(self):
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"booking": {"fcfs": "sometimes"}})
+        entry = {}
+        cs.apply_update(entry, {"booking": {"fcfs": "after_cutoff"}})
+        self.assertEqual(entry["booking"]["fcfs"], "after_cutoff")
+
+    def test_restricted_int_is_enforced(self):
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"hookups": {"electric": 42}})
+
+    def test_season_dates_are_mmdd(self):
+        entry = {}
+        cs.apply_update(entry, {"season": {"opens": "04-01", "closes": "10-31"}})
+        self.assertEqual(entry["season"], {"opens": "04-01", "closes": "10-31"})
+        for bad in ("2026-04-01", "4-1", "13-01", "04-32"):
+            with self.assertRaises(cs.SchemaError, msg=bad):
+                cs.apply_update({}, {"season": {"opens": bad}})
+
+
+class TestWorkedCases(unittest.TestCase):
+    """The six cases that drove the vocabulary must all still express."""
+
+    def test_indiana_min_stay_with_waiver(self):
+        entry = {}
+        cs.apply_update(entry, {"booking": {
+            "reserve_until": {"relative_to": "arrival", "at": "23:00"},
+            "min_stay": {"nights": 2, "applies": "weekend",
+                         "waived_if": {"booking_within_days": 3}}}})
+        self.assertEqual(entry["booking"]["min_stay"]["waived_if"],
+                         {"booking_within_days": 3})
+
+    def test_iowa_and_maryland_differ_only_in_fcfs(self):
+        ia, md = {}, {}
+        cs.apply_update(ia, {"booking": {
+            "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+            "fcfs": "after_cutoff"}})
+        cs.apply_update(md, {"booking": {
+            "reserve_until": {"relative_to": "arrival", "at": "14:00"},
+            "fcfs": "never"}})
+        self.assertNotEqual(ia["booking"]["fcfs"], md["booking"]["fcfs"])
+
+    def test_hither_hills_multiplier_and_indian_island_pass(self):
+        hh, ii = {}, {}
+        cs.apply_update(hh, {"fees": {"nonresident": {"type": "multiplier",
+                                                      "factor": 2.0}}})
+        cs.apply_update(ii, {"policy_ref": "local:suffolk-county-ny",
+                             "fees": {"prereq_pass": {"name": "Green Key",
+                                                      "price": 25,
+                                                      "valid": "season"}}})
+        self.assertEqual(hh["fees"]["nonresident"]["factor"], 2.0)
+        self.assertEqual(ii["policy_ref"], "local:suffolk-county-ny")
+        self.assertEqual(ii["fees"]["prereq_pass"]["valid"], "season")
+
+    def test_good_sam_discount_flag(self):
+        entry = {}
+        cs.apply_update(entry, {"discounts": {"good_sam": True,
+                                              "passport_america": False}})
+        self.assertEqual(entry["discounts"],
+                         {"good_sam": True, "passport_america": False})
+
+
+class TestRegistryResolution(unittest.TestCase):
+    """Inheritance happens on READ. Nothing is copied into an entry."""
+
+    REGISTRY = {
+        "state:NY": {"fees": {"nonresident": {"type": "surcharge", "amount": 5,
+                                              "per": "stay"}},
+                     "booking": {"reservable": True, "fcfs": "never"}},
+        "state:IN": {"booking": {"min_stay": {"nights": 2, "applies": "weekend",
+                                              "waived_if": {"booking_within_days": 3}}}},
+    }
+
+    def test_policy_ref_defaults_to_ownership_and_state(self):
+        self.assertEqual(cs.policy_ref({"ownership": "state", "state": "NY"}),
+                         "state:NY")
+
+    def test_explicit_policy_ref_wins(self):
+        entry = {"ownership": "local", "state": "NY",
+                 "policy_ref": "local:suffolk-county-ny"}
+        self.assertEqual(cs.policy_ref(entry), "local:suffolk-county-ny")
+
+    def test_a_plain_entry_inherits_and_is_marked_agency(self):
+        entry = {"ownership": "state", "state": "NY"}
+        got = cs.resolve(entry, self.REGISTRY)
+        self.assertEqual(got["fees"]["scope"], "agency")
+        self.assertEqual(got["fees"]["values"]["nonresident"]["amount"], 5)
+
+    def test_hither_hills_overrides_its_agency_default(self):
+        # The case the whole provenance model exists for: 102 NY entries all
+        # reading "nominal non-resident fee" would be wrong exactly here.
+        entry = {"ownership": "state", "state": "NY",
+                 "fees": {"nonresident": {"type": "multiplier", "factor": 2.0}}}
+        got = cs.resolve(entry, self.REGISTRY)
+        self.assertEqual(got["fees"]["values"]["nonresident"]["type"],
+                         "multiplier")
+        self.assertEqual(got["fees"]["scope"], "entry")
+        self.assertEqual(got["booking"]["scope"], "agency")
+
+    def test_field_scope_distinguishes_verified_from_inherited(self):
+        entry = {"ownership": "state", "state": "NY",
+                 "fees": {"nightly_low": 20}}
+        self.assertEqual(cs.field_scope(entry, "fees", "nightly_low",
+                                        self.REGISTRY), "entry")
+        self.assertEqual(cs.field_scope(entry, "fees", "nonresident",
+                                        self.REGISTRY), "agency")
+        self.assertIsNone(cs.field_scope(entry, "season", "opens",
+                                         self.REGISTRY))
+
+    def test_unknown_stays_absent_rather_than_defaulting(self):
+        entry = {"ownership": "private", "state": "PA"}
+        self.assertEqual(cs.resolve(entry, self.REGISTRY), {})
+
+    def test_a_missing_registry_is_normal_not_an_error(self):
+        entry = {"ownership": "state", "state": "NY", "hookups": {"electric": 30}}
+        got = cs.resolve(entry)
+        self.assertEqual(got["hookups"]["scope"], "entry")
+
+    def test_resolution_does_not_mutate_the_entry(self):
+        entry = {"ownership": "state", "state": "NY"}
+        cs.resolve(entry, self.REGISTRY)
+        self.assertEqual(entry, {"ownership": "state", "state": "NY"})
+
+
+class TestProvenance(unittest.TestCase):
+    def test_provenance_is_per_group_and_validated(self):
+        entry = {}
+        cs.apply_update(entry, {"provenance": {
+            "fees": {"source": "https://parks.ny.gov/x", "checked": "2026-09-14"}}})
+        self.assertEqual(entry["provenance"]["fees"]["checked"], "2026-09-14")
+
+    def test_provenance_for_an_unknown_group_is_refused(self):
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"provenance": {"nonsense": {"source": "x"}}})
+
+    def test_derived_method_is_recordable(self):
+        entry = {}
+        cs.apply_update(entry, {"provenance": {
+            "season": {"source": "recreation.gov calendar", "method": "derived"}}})
+        self.assertEqual(entry["provenance"]["season"]["method"], "derived")
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+
+class TestShippedRegistry(unittest.TestCase):
+    """The committed registry must parse against the vocabulary it claims.
+
+    A malformed row is not a local error: inheritance is invisible in the
+    entries themselves, so a bad `state:IN` row would hand a wrong booking rule
+    to all 41 Indiana state parks with nothing on any entry to show for it.
+    """
+
+    def setUp(self):
+        import json
+        import os
+        path = os.path.join(os.path.dirname(__file__), os.pardir,
+                            "campground_policies.json")
+        if not os.path.exists(path):
+            self.skipTest("campground_policies.json not present")
+        with open(path) as f:
+            self.rows = json.load(f)
+
+    def test_every_row_validates(self):
+        for ref, row in self.rows.items():
+            with self.subTest(ref=ref):
+                cs.validate_row(row, ref)
+
+    def test_no_row_invents_an_unconfirmed_cutoff(self):
+        # Maryland's cutoff time was reported as "sometime in the afternoon".
+        # Writing 14:00 would evaluate queries wrongly AND look verified doing
+        # it, which is worse than the honest gap.
+        md = self.rows.get("state:MD", {}).get("booking", {})
+        self.assertNotIn("reserve_until", md)
+        self.assertIn("note", md)
+
+    def test_unverified_rows_say_so_in_provenance(self):
+        for ref, row in self.rows.items():
+            for group, prov in (row.get("provenance") or {}).items():
+                with self.subTest(ref=ref, group=group):
+                    self.assertTrue((prov.get("source") or "").strip(),
+                                    "a registry row must name its source")

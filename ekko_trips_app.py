@@ -23,6 +23,7 @@ from werkzeug.utils import secure_filename
 from ridb.fetch_facility import (search_facilities, fetch_facility,
                                  availability_matrix, DEFAULT_FIT_FT)
 import weather_finder
+import campground_schema
 from trips import (
     parse_trips, enrich_trip_locations,
                    create_trip, update_trip, delete_trip,
@@ -496,6 +497,12 @@ CAMPGROUNDS_JSON = os.path.join(os.path.dirname(__file__), "campgrounds.json")
 # live edits made in the manage UI on PA back down. See `_read_campgrounds_raw`.
 FAMILY_JSON = os.path.join(TRIP_DATA_DIR, "family.json")
 ROADSIDE_JSON = os.path.join(os.path.dirname(__file__), "roadside.json")
+# Agency-level booking/fee/season defaults, keyed by `policy_ref`
+# ({ownership}:{state} unless an entry overrides it). ~70 rows cover the 6,635
+# state/provincial/federal entries; the rest have no agency to inherit from.
+# Tracked in git like campgrounds.json, and absent is normal (a host that has
+# not pulled it yet just gets no inheritance).
+POLICIES_JSON = os.path.join(os.path.dirname(__file__), "campground_policies.json")
 HOME_FILE = os.path.join(os.path.dirname(__file__), "home.json")
 
 WATERFRONT_COLORS = {
@@ -2166,6 +2173,47 @@ def _read_family_raw():
     except FileNotFoundError:
         return []
     return entries if isinstance(entries, list) else []
+
+
+_policies_cache = {"key": None, "rows": {}}
+
+
+def _load_policies():
+    """The agency policy registry, cached by file mtime.
+
+    Inheritance happens on READ (`campground_schema.resolve`), never by copying
+    defaults into entries: a registry correction then propagates instantly, the
+    file does not grow by a booking block times 6,635 entries, and "verified"
+    stays literally checkable — the entry has its own key, or it does not.
+
+    READ-ONLY, like `_read_campgrounds_raw`: the rows are shared across callers.
+    """
+    key = _file_mtime_ns(POLICIES_JSON)
+    if _policies_cache["key"] != key:
+        rows = {}
+        if os.path.exists(POLICIES_JSON):
+            try:
+                with open(POLICIES_JSON) as f:
+                    loaded = json.load(f)
+                if isinstance(loaded, dict):
+                    # Validate per row and drop only the bad ones. A malformed
+                    # row would otherwise inherit a wrong value to every
+                    # campground under it — silently, since inheritance is
+                    # invisible in the entries themselves.
+                    for ref, row in loaded.items():
+                        try:
+                            campground_schema.validate_row(row, ref)
+                        except campground_schema.SchemaError as exc:
+                            app.logger.warning(
+                                "policy row %s ignored: %s", ref, exc)
+                            continue
+                        rows[ref] = row
+            except (OSError, ValueError):
+                app.logger.warning("campground_policies.json unreadable; "
+                                   "no agency defaults will be applied")
+        _policies_cache["rows"] = rows
+        _policies_cache["key"] = key
+    return _policies_cache["rows"]
 
 
 def _read_campgrounds_raw():
@@ -4497,6 +4545,7 @@ OWNERSHIP_LABELS = {
 # code would reintroduce it.
 _MAP_ETAG_INPUTS = (
     CAMPGROUNDS_JSON, FAMILY_JSON, HOME_FILE, TRIPS_JSON, ROADSIDE_JSON,
+    POLICIES_JSON,
     os.path.join(os.path.dirname(__file__), "templates", "campground_map.html"),
     os.path.join(os.path.dirname(__file__), "templates", "base.html"),
     os.path.abspath(__file__),
@@ -4565,7 +4614,19 @@ def api_campground_popup(cg_id):
     row = next((r for r in _load_campgrounds() if r.get("id") == cg_id), None)
     if row is None:
         return jsonify({"error": "Campground not found"}), 404
-    resp = jsonify({k: row[k] for k in _MAP_POPUP_FIELDS if k in row})
+    payload = {k: row[k] for k in _MAP_POPUP_FIELDS if k in row}
+    # Resolved here rather than shipped inline with the markers: the structured
+    # groups are popup filler by the same argument `note` and `website` are, and
+    # putting them on all ~12.9k markers would add an estimated 2-3 MB to the
+    # heaviest page in the app to render data nobody is looking at. Each group
+    # carries its `scope`, so the popup can say whether a value was verified for
+    # THIS campground or inherited from its agency — an inherited value that
+    # reads as a fact about the park is the failure this whole model exists to
+    # prevent.
+    policy = campground_schema.resolve(row, _load_policies())
+    if policy:
+        payload["policy"] = policy
+    resp = jsonify(payload)
     resp.headers["ETag"] = _map_etag("popup", cg_id)
     return resp
 
@@ -5395,6 +5456,13 @@ def api_create_campground():
         entry["ownership"] = data.get("ownership", "")
         entry["website"] = data.get("website", "")
         entry["phone"] = data.get("phone", "")
+    # Same vocabulary as PUT, so a create is not a second-class write that has
+    # to be followed by an edit to carry amenities.
+    try:
+        campground_schema.apply_update(entry, data)
+    except campground_schema.SchemaError as exc:
+        return jsonify({"error": str(exc)}), 400
+
     entries.append(entry)
     _save_json(target_path, entries)
     return jsonify({"ok": True, "id": next_id})
@@ -5424,6 +5492,18 @@ def api_update_campground(cg_id):
             if key == "elevation_meters":
                 val = float(val) if val not in ("", None) else 0.0
             target[key] = val
+
+    # The structured groups (hookups, booking, fees, season, ...) merge PER
+    # SUBKEY rather than being assigned whole. The flat whitelist above is what
+    # stops a UI save clobbering `waterfront_evidence`, which the client never
+    # receives; assigning a nested group wholesale would re-create that bug one
+    # level down, wiping any subkey an extraction pass wrote but the form does
+    # not know about. `apply_update` validates the entire payload before it
+    # mutates anything, so a refused write leaves the entry exactly as it was.
+    try:
+        campground_schema.apply_update(target, data)
+    except campground_schema.SchemaError as exc:
+        return jsonify({"error": str(exc)}), 400
 
     # The manage page's kind selector can flip an entry between campground and
     # family, and the two kinds live in different files — so a flip has to MOVE
