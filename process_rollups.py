@@ -169,6 +169,17 @@ smallness is the point and the phrase is shorter for it — "a 24-mile hop down 
 to Pohick Bay" says it in four words — but "South 66 miles to Casa Vargas" \
 should have been "an hour and a half south to Casa Vargas". Never print both \
 for the same leg, and never convert driving time into a pace or an average.
+   THE FIGURE IS THE WHOLE DAY'S DRIVE, BED TO BED — NEVER A LEG. "miles" \
+and "driving_time" cover everything between where the day woke and where it \
+slept, including the driving done BEFORE the stops you name. So a figure may \
+never be hung on the stretch that follows a stop: "Church at Grace Anglican in \
+the morning, then 160 miles east for home" reads as a 160-mile run from the \
+church, when the church was 101 miles into a 160-mile day and only 59 came \
+after it. Put the figure where it governs the day — open with it, or attach it \
+to the day rather than to a segment ("160 miles east out of the Monongahela, \
+church at White Post midway, then home") — and never write "<a stop>, then <N> \
+miles to <the night's campground>" unless that stop was the day's starting \
+point. The same holds for driving time.
 8. DO NOT GLOSS A SMALL DISTANCE. If the driving was trivial, leave it out \
 altogether — no "barely out of town", "hardly moved", "a couple of miles", \
 "no distance to speak of". "Fireworks at Franklin Park in Purcellville" is the \
