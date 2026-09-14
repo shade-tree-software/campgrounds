@@ -297,5 +297,171 @@
         "method": "manual"
       }
     }
+  },
+  "state:NC": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "21:00"
+      },
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'You have until 9 p.m. on a given day to book a campsite for that night' - among the latest same-day cutoffs found, second only to Indiana's 11pm. Minimum stay: 'On holiday weekends, a two-night minimum stay is required. This requirement is lifted within 7 days of arrival' - the same waiver shape as Indiana but a 7-day window instead of 3, and unlike Indiana the waiver DOES cover the holiday rule, because the holiday rule is the only one. Cabins are excluded: their 2-night minimum 'cannot be lifted, even if you are booking it within 7 days of arrival'. Walk-up sites exist but are identifiable only in the booking UI - 'An X means that the site is not available to book online - this would show up if the site has been designated as a walk-up only site' - so fcfs is 'some_sites' and which ones is not published as data. Max stay is 14 consecutive nights within any 30-day period. A secondary source said reservations must be made 1 day ahead; the agency's own page contradicts that and wins. Booking window not stated on the agency page (a secondary source says 6 months), so window_opens_days is absent."
+    },
+    "fees": {
+      "currency": "USD",
+      "reservation_fee": 3,
+      "note": "$3 per night per site non-refundable service fee; $6 cancellation fee; $6 transfer fee for same-day changes. As of 2025-05-01, tent sites $20-30 and full-hookup RV sites $45. No non-resident rate difference found."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.ncparks.gov/recreation/camping/reserving-campsites",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.ncparks.gov/about-us/state-parks-reservation-rates-and-activity-fees",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:SC": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        }
+      ],
+      "note": "Verbatim: 'Reservations at state parks may be made up to 13 months in advance' - the longest window found so far, against 6-11 months elsewhere. Minimum stay is unusual in applying YEAR-ROUND rather than to weekends: 'Cabin and campsite rentals are typically accepted for a two-night minimum, however, during busier periods, minimum stays may be increased at some parks.' Note 'typically' and 'some parks' - the agency hedges, so treat the 2-night rule as the default and not a certainty, and no waiver is published. Inside a day of arrival the CHANNEL changes rather than closing: 'Reservations requested less than one (1) day in advance of check-in must be made directly through the park' - so same-day booking is possible but not online, which is why reserve_until is absent (nothing shuts) and why a late arrival should call the park. FCFS is not addressed anywhere on the agency site."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "Campsite cancellation ladder: '60 + days away - no charge; 15 - 59 days away - $10 Administrative Fee; 4-14 days - 1st night's stay; 3 days or less - no refund.' Out-of-state seniors/disabled get discounts at specific parks only; no general non-resident rate difference."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://southcarolinaparks.com/faqs",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://southcarolinaparks.com/faqs",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:DE": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "max_stay_nights": 14,
+      "note": "Delaware publishes very little of what this schema wants. Confirmed: 'Camping is permitted for a maximum of 14 days within a 21-day period per park', one mobile unit plus one tent (or two tents) and one vehicle per site, and an 18-day change freeze from the day the reservation is made, during which arrival dates cannot be moved and reservations cannot be transferred. NOT PUBLISHED on the agency site: the advance booking window, any same-day cutoff, any minimum stay, and whether unreserved sites can be walked up to. Those stay absent rather than being borrowed from a neighbouring state. Only 5 entries inherit this row, so the cost of the gap is small."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Delaware scales the America the Beautiful Access Pass discount BY RESIDENCY, which no other agency checked does: Delaware residents holding the pass get 20% off camping, non-residents holding the same pass get 10%. So the flag is true either way but the value is not - a VA family gets the smaller half."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://destateparks.com/Reservations/RVandTentCamping and https://www.destateparks.com/reservation-information/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.destateparks.com/passes-permits-and-fees/",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:FL": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 330,
+      "note": "UNCONFIRMED AGAINST THE PRIMARY SOURCE - floridastateparks.org returns HTTP 403 to automated fetches, so everything here comes from search-surfaced summaries of it rather than the page itself. Verify before relying on it. Florida is the only agency found that varies the BOOKING WINDOW by residency rather than the price: residents may reserve up to 11 months ahead, non-residents up to 10, so a Virginia family is bidding for the same sites a month behind every Floridian. window_opens_days holds the RESIDENT figure, matching the convention that stored values are the resident base; a non-resident should read 300. Residents are also reported to be able to book same-day up to 1 p.m., with no equivalent stated for non-residents - if that asymmetry is real it matters more than the price for a late arrival, so it is the first thing to check. Reported fees: $6.70 non-refundable service fee, $17.75 cancellation, plus the first night if cancelling on the day of arrival."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.floridastateparks.org/reservation-information and .../early-access-camping-florida-residents - NOT directly retrievable (403); figures are secondary",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
+  },
+  "state:MI": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://midnrreservations.com/",
+      "window_opens_days": 180,
+      "max_stay_nights": 15,
+      "note": "Six months ahead. Max stay is 15 nights during peak season (May 15 - Sept 15), after which a 5-night break is required before returning to the SAME park - a cumulative rule the schema stores only as the nightly cap. No minimum stay found, and walk-in availability is not addressed on the agency pages checked."
+    },
+    "fees": {
+      "currency": "USD",
+      "entrance": {
+        "resident": 15,
+        "nonresident": 40,
+        "per": "vehicle_year"
+      },
+      "note": "The Recreation Passport is required for vehicle entry to ALL state park and forest campgrounds, so it is unavoidable, not optional. Residents buy it with vehicle registration at $15/year (two years $29); non-residents pay $40/year or $11/DAY. Which is cheaper turns purely on trip length - four nights of day passes ($44) already exceeds the annual one, so a family visiting Michigan even once for a week should buy the annual. Prices effective 2026-01-01. Motorcycles $7, commercial vehicles $22. entrance holds the annual figures because that is how the passport is sold; the $11 day rate is the alternative, not the default."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://midnrreservations.com/ and Michigan DNR camping guidance",
+        "checked": "2026-09-14",
+        "method": "reported"
+      },
+      "fees": {
+        "source": "https://www.michigan.gov/dnr/buy-and-apply/rec-pp",
+        "checked": "2026-09-14",
+        "method": "reported"
+      }
+    }
+  },
+  "state:CA": {
+    "booking": {
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://www.reservecalifornia.com/",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "note": "Verbatim: 'The public can reserve the highly sought-after campsites and lodging six months in advance from the current date', with 'Each new date opens at 8 a.m. PST' - a rolling daily release, so a sought-after site is won at 8am six months out rather than by planning earlier. Walk-up survives: 'Yes, you may still enjoy walk-up camping. Some sites will remain first-come, first-served.' Which sites is not published. No minimum stay stated at the agency level, and no resident/non-resident distinction of any kind - notable given how many states have one, and it makes California one of the few where a Virginia family pays exactly what a Californian does."
+    },
+    "fees": {
+      "currency": "USD",
+      "reservation_fee": 8.25,
+      "note": "$8.25 non-refundable reservation fee and $8.25 cancellation fee (both since 2024-08-01). No non-resident surcharge and no resident/non-resident entrance split."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.parks.ca.gov/?page_id=29676 (ReserveCalifornia FAQs)",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.parks.ca.gov/?page_id=29676",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
   }
 }

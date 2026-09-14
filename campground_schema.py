@@ -165,8 +165,13 @@ SCHEMA = {
         # York has no differential gate fee and a real $5/night camping
         # surcharge. Stored as both sides so the differential is derivable
         # rather than baked in.
+        # `per` matters as much as the amount: Indiana's $15 is once per camping
+        # stay, Michigan's Recreation Passport is an annual vehicle pass at $15
+        # resident / $40 non-resident, and a day rate can be better or worse
+        # than the annual one depending purely on trip length.
         "entrance": OBJ(resident=NUM, nonresident=NUM,
-                        per=ENUM("vehicle_day", "vehicle_stay", "person_day")),
+                        per=ENUM("vehicle_day", "vehicle_stay", "vehicle_year",
+                                 "person_day")),
         # Per-night add-ons on top of the base rate. Both systems verified so
         # far price the amenities separately, and they are exactly what a search
         # filters on: electric costs $7-8/night extra in NY State and in Suffolk
@@ -202,7 +207,15 @@ PROVENANCE = "provenance"
 PROVENANCE_FIELDS = {
     "source": STR,
     "checked": STR,
-    "method": ENUM("derived", "manual"),   # derived = machine-extracted
+    # derived  = a machine read it (note prose, an availability calendar)
+    # manual   = a person read the agency's own page
+    # reported = sourced, but NOT from the primary — a search summary of a page
+    #            that blocks automated fetch, or a firsthand account. Ranks
+    #            below manual and must say so in `source`; without this value a
+    #            secondary reading is indistinguishable from an unrecorded one,
+    #            and the Florida row would look exactly like a row nobody
+    #            bothered to stamp.
+    "method": ENUM("derived", "manual", "reported"),
 }
 
 _TRUE = {"true", "yes", "1", "on", "t"}

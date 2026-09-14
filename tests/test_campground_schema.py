@@ -503,6 +503,39 @@ class TestShippedRegistry(unittest.TestCase):
                          "Suffolk's in-season RESIDENT rate, not the $36 "
                          "non-resident one")
 
+    def test_entrance_fees_keep_their_period(self):
+        """`per` matters as much as the amount, and they differ per agency."""
+        ind = self.rows["state:IN"]["fees"]["entrance"]
+        mich = self.rows["state:MI"]["fees"]["entrance"]
+        # Indiana: once per camping stay (the hang-tag rule, confirmed
+        # firsthand). Michigan: an annual vehicle passport. Same field, and a
+        # cost estimate that ignored `per` would be wrong in both directions.
+        self.assertEqual(ind["per"], "vehicle_stay")
+        self.assertEqual(mich["per"], "vehicle_year")
+        self.assertGreater(mich["nonresident"], mich["resident"])
+        self.assertGreater(ind["nonresident"], ind["resident"])
+
+    def test_secondary_sources_are_stamped_as_reported(self):
+        """A row read off a search summary must not look hand-verified.
+
+        Florida's site returns 403 to automated fetches, so its figures come
+        from summaries of the page rather than the page. Without the `reported`
+        method that row is indistinguishable from one nobody bothered to stamp.
+        """
+        fl = self.rows["state:FL"]["provenance"]["booking"]
+        self.assertEqual(fl.get("method"), "reported")
+        self.assertIn("403", fl["source"])
+
+    def test_no_row_claims_a_minimum_stay_it_cannot_waive_correctly(self):
+        # Indiana's waiver does NOT cover its holiday rule; North Carolina's
+        # does, because the holiday rule is its only one. Both must survive.
+        ind = self.rows["state:IN"]["booking"]["min_stay"]
+        self.assertEqual(len(ind), 2)
+        self.assertNotIn("waived_if", ind[1])
+        nc = self.rows["state:NC"]["booking"]["min_stay"]
+        self.assertEqual(nc[0]["applies"], "holiday")
+        self.assertEqual(nc[0]["waived_if"]["booking_within_days"], 7)
+
     def test_verified_rows_cite_a_real_source_url(self):
         for ref, row in self.rows.items():
             for group, prov in (row.get("provenance") or {}).items():
