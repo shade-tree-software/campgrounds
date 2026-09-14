@@ -18,7 +18,7 @@ Two questions, because the drafts got both wrong in different ways:
 
 Read-only; prints findings and exits non-zero if any are found.
 """
-import datetime, gzip, json, math, os, re, sys
+import datetime, json, math, os, re, sys
 
 _DIR = os.path.dirname(os.path.abspath(__file__))
 ROLLUPS = os.path.join(_DIR, "trip_data", "day_rollups.json")
@@ -123,16 +123,36 @@ def _path_miles(pings):
                for i in range(len(pings) - 1)) / 1609.34
 
 
-def _track(trip_id, _cache={}):
-    if trip_id not in _cache:
-        path = os.path.join(TRACKS, f"{trip_id}.json.gz")
-        raw = None
-        if os.path.exists(path):
-            with gzip.open(path) as fh:
-                raw = json.load(fh)
-            raw = raw["points"] if isinstance(raw, dict) else raw
-        _cache[trip_id] = raw
-    return _cache[trip_id]
+def _track(trip, _cache={}):
+    """The trip's track AS THE APP SEES IT -- every override applied.
+
+    Reading `track_cache/*.json.gz` directly is wrong and quietly so: the
+    cache is raw by design and `suppressed_pings`, `relocated_pings`,
+    `bad_track_windows` and the per-day tid selection are all applied on
+    serve. Trip 58 is the case that proves it -- its raw track has the
+    phone at home for three days and then driving 423 miles, because the
+    EKKO was driven up by someone else and the un-tracked days are carved
+    out by a `bad_track_windows` entry. Audited raw, that trip reports a
+    206-mile morning that the app itself never counts, and the audit
+    invents a finding against correct prose.
+    """
+    tid = trip["id"]
+    if not trip.get("start") or not trip.get("end"):
+        return None
+    if tid not in _cache:
+        points = _APP._read_track_cache(tid)
+        if not points:
+            _cache[tid] = None
+            return None
+        _APP._migrate_track_cache_tids(points)
+        suppressed, bad_windows, relocate = _APP._track_override_context(trip)
+        chosen = _APP._select_chosen_track(trip, points, suppressed,
+                                           bad_windows, relocate)
+        cleaned = _APP._clean_track_points(trip, chosen, suppressed,
+                                           bad_windows, relocate)
+        cleaned.sort(key=lambda p: p.get("tst") or 0)
+        _cache[tid] = cleaned or None
+    return _cache[tid]
 
 
 def _day_pings(points, day):
@@ -148,10 +168,18 @@ def _day_pings(points, day):
 
 
 def main():
+    global _APP
+    sys.path.insert(0, _DIR)
+    import ekko_trips_app as _APP          # noqa: E402  (needs _DIR on the path)
+
     rollups = json.load(open(ROLLUPS))
     routes = json.load(open(ROUTES))
-    trips = json.load(open(TRIPS))
-    trips = {t["id"]: t for t in (trips["trips"] if isinstance(trips, dict) else trips)}
+    raw = json.load(open(TRIPS))
+    trips = {t["id"]: t for t in (raw["trips"] if isinstance(raw, dict) else raw)}
+    # The override pipeline needs a PARSED trip: `start`/`end` are derived by
+    # `_make_trip()` and absent from the stored record. Events come off the raw
+    # record, which is where their stored times live.
+    parsed = {t["id"]: t for t in _APP.parse_trips()}
 
     measured = {}
     for tid, entry in routes.items():
@@ -187,7 +215,8 @@ def main():
                            for r in (ref.get("leg"), ref.get("total"))):
             invented.append((key, quoted, ref, text))
 
-        events = sorted([e for e in (trips.get(int(tid)) or {}).get("events", [])
+        record = trips.get(int(tid))
+        events = sorted([e for e in (record or {}).get("events", [])
                          if e.get("date") == day and e.get("time")],
                         key=lambda e: e["time"])
         low = text.lower()
@@ -202,7 +231,7 @@ def main():
                 break
         if not named:
             continue
-        points = _track(int(tid))
+        points = _track(parsed.get(int(tid))) if parsed.get(int(tid)) else None
         if not points:
             continue
         pings, tz = _day_pings(points, day)
