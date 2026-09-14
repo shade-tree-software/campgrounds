@@ -121,6 +121,9 @@
   details.efg[open] > summary { border-bottom: 1px solid var(--line, #ddd); }
   .efg-count { font-weight: 500; text-transform: none; letter-spacing: 0; font-size: .7rem; }
   .efg-count.set { color: var(--navy, #002868); }
+  /* Deliberately NOT the verified colour: an inherited value is the agency's
+     default, not a fact checked for this campground. */
+  .efg-count.inherited { color: #8a7a4a; font-style: italic; }
   .efg-body { display: grid; grid-template-columns: repeat(12, 1fr); gap: .5rem .7rem; padding: .55rem .6rem .7rem; }
   .efg-body .ef { grid-column: span 3; }
   .efg-body .ef.wide { grid-column: span 6; }
@@ -543,6 +546,10 @@ const SF_SUMMARY_SKIP = new Set(['source', 'checked', 'note', 'url', 'platform',
 // "4 set", which on the Rating section is worse than useless: Prophetstown is a
 // 5-star park whose chip said "4 set", and a bare number beside the word Rating
 // reads as a score. The count also answered a question nobody asks.
+function sfMoney(n) {
+  return '$' + (Number.isInteger(n) ? n : Number(n).toFixed(2));
+}
+
 function sfChip(groupKey, field, value) {
   const k0 = groupKey + '.' + field.key;
   // "reservable" is true on almost every row and would spend one of the three
@@ -561,8 +568,8 @@ function sfChip(groupKey, field, value) {
   if (k === 'booking.max_stay_nights') return 'max ' + value + 'n';
   // nightly_high is skipped and folded in here, so a rate reads "$33-37"
   // rather than "$33 · $37" — two numbers that look like unrelated facts.
-  if (k === 'fees.nightly_low') return '$' + value;
-  if (k === 'fees.reservation_fee') return '+$' + value + ' res';
+  if (k === 'fees.nightly_low') return sfMoney(value);
+  if (k === 'fees.reservation_fee') return '+' + sfMoney(value) + ' res';
   // Raw enum values are meaningless alone: a Booking section reading "always"
   // tells you nothing about what is always true.
   if (k === 'booking.fcfs') {
@@ -579,19 +586,19 @@ function sfChip(groupKey, field, value) {
   if (k === 'fees.nonresident') {
     if (value && value.type === 'multiplier') return 'non-res \u00d7' + value.factor;
     if (value && value.amount != null) {
-      return 'non-res +$' + value.amount + (value.per === 'night' ? '/night' : '');
+      return 'non-res +' + sfMoney(value.amount) + (value.per === 'night' ? '/night' : '');
     }
     return 'non-res extra';
   }
   if (k === 'fees.entrance') {
     const r = value && value.resident, n = value && value.nonresident;
     if (r != null && n != null) {
-      return r === n ? 'entry $' + r : 'entry $' + r + '/$' + n;
+      return r === n ? 'entry ' + sfMoney(r) : 'entry ' + sfMoney(r) + '/' + sfMoney(n);
     }
     return 'entry fee';
   }
   if (k === 'fees.prereq_pass') {
-    return 'pass $' + (value && value.price != null ? value.price : '?');
+    return 'pass ' + (value && value.price != null ? sfMoney(value.price) : '$?');
   }
   if (Array.isArray(value)) {
     return value.length + ' ' + field.label.toLowerCase()
@@ -634,12 +641,42 @@ function structuredSectionsHtml(c) {
     const note = inheritedKeys.length
       ? `<div class="efg-inherit-note">${inheritedKeys.length} field${inheritedKeys.length === 1 ? '' : 's'} inherited from <strong>${escapeHtml(ref)}</strong> — verified values typed here override the agency default for this campground only.</div>`
       : '';
+    // A collapsed section shows what is IN it, whether the values are this
+    // entry's or its agency's. Saying only "inherited" hid the most useful
+    // thing on the page: an Indiana park inherits an 11pm booking cutoff and a
+    // $7/$15 gate fee, and neither was visible without opening the section.
+    //
+    // But an inherited value must never READ as a fact about this campground
+    // (docs/campground-schema.md 3) — that is how 102 New York entries would
+    // all come to claim a nominal non-resident fee that Hither Hills doubles.
+    // So it keeps the word "inherited", carries the agency it came from in the
+    // tooltip, and is styled apart rather than shown in the verified colour.
     const summary = setCount ? sfSummary(g, own) : null;
-    const count = summary
-      ? `<span class="efg-count set">${escapeHtml(summary)}</span>`
-      : (setCount ? `<span class="efg-count set">note only</span>`
-        : (inheritedKeys.length ? `<span class="efg-count">inherited</span>`
-                                : `<span class="efg-count">unknown</span>`));
+    const inheritedSummary = inheritedKeys.length
+      ? sfSummary(g, Object.fromEntries(inheritedKeys.map(k => [k, row[g.key][k]])))
+      : null;
+    const inheritTitle = escapeAttr('inherited from ' + ref
+                                    + ' \u2014 not verified for this campground');
+    let count;
+    if (summary) {
+      const extra = inheritedKeys.length ? ` +${inheritedKeys.length} agency` : '';
+      count = `<span class="efg-count set" title="verified for this campground">`
+            + `${escapeHtml(summary)}</span>`
+            + (extra ? `<span class="efg-count inherited" title="${inheritTitle}">`
+                     + `${escapeHtml(extra)}</span>` : '');
+    } else if (inheritedSummary) {
+      // Ahead of "note only" on purpose: an entry carrying nothing but a prose
+      // note still inherits its agency's values, and those are the useful part.
+      count = `<span class="efg-count inherited" title="${inheritTitle}">`
+            + `inherited: ${escapeHtml(inheritedSummary)}</span>`;
+    } else if (setCount) {
+      count = `<span class="efg-count set">note only</span>`;
+    } else if (inheritedKeys.length) {
+      count = `<span class="efg-count inherited" title="${inheritTitle}">`
+            + `inherited (note only)</span>`;
+    } else {
+      count = `<span class="efg-count">unknown</span>`;
+    }
     return `<details class="efg" id="${sfId([g.key, 'section'])}">
       <summary>${escapeHtml(g.label)}${count}</summary>
       <div class="efg-body">${note}${body}</div></details>`;
