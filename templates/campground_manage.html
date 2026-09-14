@@ -534,6 +534,93 @@ function sfControlHtml(field, path, value, inherited) {
     <input id="${id}" type="${numeric ? 'number' : 'text'}"${step} value="${escapeAttr(val)}"></div>`;
 }
 
+// Fields that say nothing useful in a one-line collapsed summary — provenance,
+// prose, and plumbing. They still render inside the open section.
+const SF_SUMMARY_SKIP = new Set(['source', 'checked', 'note', 'url', 'platform',
+                                 'currency', 'nightly_high', 'closes']);
+
+// A collapsed section shows its VALUES, not a count of them. It used to read
+// "4 set", which on the Rating section is worse than useless: Prophetstown is a
+// 5-star park whose chip said "4 set", and a bare number beside the word Rating
+// reads as a score. The count also answered a question nobody asks.
+function sfChip(groupKey, field, value) {
+  const k0 = groupKey + '.' + field.key;
+  // "reservable" is true on almost every row and would spend one of the three
+  // summary slots saying nothing. Its FALSE is worth a slot.
+  if (k0 === 'booking.reservable') return value ? null : 'not reservable';
+  if (value === true) return field.label.toLowerCase();
+  if (value === false) return 'no ' + field.label.toLowerCase();
+  if (value === null || value === undefined) return null;
+  const k = groupKey + '.' + field.key;
+  if (k === 'rating.stars') return value + '\u2605';
+  if (k === 'rating.price_tier') return value > 0 ? '$'.repeat(value) : 'free';
+  if (k === 'hookups.electric') return value > 0 ? value + 'A' : 'no electric';
+  if (k === 'sites.count') return value + ' sites';
+  if (k === 'sites.max_rig_ft') return 'to ' + value + ' ft';
+  if (k === 'booking.window_opens_days') return value + 'd ahead';
+  if (k === 'booking.max_stay_nights') return 'max ' + value + 'n';
+  // nightly_high is skipped and folded in here, so a rate reads "$33-37"
+  // rather than "$33 · $37" — two numbers that look like unrelated facts.
+  if (k === 'fees.nightly_low') return '$' + value;
+  if (k === 'fees.reservation_fee') return '+$' + value + ' res';
+  // Raw enum values are meaningless alone: a Booking section reading "always"
+  // tells you nothing about what is always true.
+  if (k === 'booking.fcfs') {
+    return {never: 'no walk-ups', always: 'walk-ups',
+            after_cutoff: 'walk-ups after cutoff',
+            some_sites: 'some walk-ups'}[value] || value;
+  }
+  if (k === 'booking.reserve_until') {
+    if (value && value.at) return 'closes ' + value.at;
+    if (value && value.offset_hours) return 'closes ' + (-value.offset_hours) + 'h before';
+    return 'has a cutoff';
+  }
+  // The two fee shapes that matter most read as bare labels otherwise.
+  if (k === 'fees.nonresident') {
+    if (value && value.type === 'multiplier') return 'non-res \u00d7' + value.factor;
+    if (value && value.amount != null) {
+      return 'non-res +$' + value.amount + (value.per === 'night' ? '/night' : '');
+    }
+    return 'non-res extra';
+  }
+  if (k === 'fees.entrance') {
+    const r = value && value.resident, n = value && value.nonresident;
+    if (r != null && n != null) {
+      return r === n ? 'entry $' + r : 'entry $' + r + '/$' + n;
+    }
+    return 'entry fee';
+  }
+  if (k === 'fees.prereq_pass') {
+    return 'pass $' + (value && value.price != null ? value.price : '?');
+  }
+  if (Array.isArray(value)) {
+    return value.length + ' ' + field.label.toLowerCase()
+           + (value.length === 1 ? '' : 's');
+  }
+  if (value && typeof value === 'object') return field.label.toLowerCase();
+  return String(value);
+}
+
+function sfSummary(group, values) {
+  const parts = [];
+  group.fields.forEach(f => {
+    if (SF_SUMMARY_SKIP.has(f.key) || !(f.key in values)) return;
+    let chip = sfChip(group.key, f, values[f.key]);
+    if (chip && f.key === 'nightly_low' && values.nightly_high != null
+        && values.nightly_high !== values.nightly_low) {
+      chip += '-' + values.nightly_high;
+    }
+    // A season is one span, not two dates that happen to sit next to each other.
+    if (chip && f.key === 'opens' && values.closes) {
+      chip += ' to ' + values.closes;
+    }
+    if (chip) parts.push(chip);
+  });
+  if (!parts.length) return null;
+  const shown = parts.slice(0, 3).join(' \u00b7 ');
+  return parts.length > 3 ? `${shown} +${parts.length - 3}` : shown;
+}
+
 function structuredSectionsHtml(c) {
   const ref = policyRefFor(c);
   const row = CG_POLICIES[ref] || {};
@@ -547,10 +634,12 @@ function structuredSectionsHtml(c) {
     const note = inheritedKeys.length
       ? `<div class="efg-inherit-note">${inheritedKeys.length} field${inheritedKeys.length === 1 ? '' : 's'} inherited from <strong>${escapeHtml(ref)}</strong> — verified values typed here override the agency default for this campground only.</div>`
       : '';
-    const count = setCount
-      ? `<span class="efg-count set">${setCount} set</span>`
-      : (inheritedKeys.length ? `<span class="efg-count">inherited</span>`
-                              : `<span class="efg-count">unknown</span>`);
+    const summary = setCount ? sfSummary(g, own) : null;
+    const count = summary
+      ? `<span class="efg-count set">${escapeHtml(summary)}</span>`
+      : (setCount ? `<span class="efg-count set">note only</span>`
+        : (inheritedKeys.length ? `<span class="efg-count">inherited</span>`
+                                : `<span class="efg-count">unknown</span>`));
     return `<details class="efg" id="${sfId([g.key, 'section'])}">
       <summary>${escapeHtml(g.label)}${count}</summary>
       <div class="efg-body">${note}${body}</div></details>`;
