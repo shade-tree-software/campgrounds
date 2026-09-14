@@ -32,8 +32,9 @@
       "entrance": {
         "resident": 7,
         "nonresident": 15,
-        "per": "vehicle_day"
-      }
+        "per": "vehicle_stay"
+      },
+      "note": "The $15/$7 figure is the park ENTRANCE fee (out-of-state / Indiana plates), not a camping surcharge - Indiana has no non-resident camping rate. For CAMPERS it is effectively once per stay, not daily: 'when staying overnight, you will be required to pay the entrance fee the first time you enter and your receipt or hang tag will serve as your in/out pass the remainder of your stay.' Exceptions: Prophetstown $8/$16, Indiana Dunes $7/$20. A Non-Resident Annual Entrance Pass is $120. FIRSTHAND (AWH, 2026): booking online charges the campsite fee, tax and the $6 reservation fee, and the $15 entrance fee is then collected AT THE GATE on arrival with no mention of it during booking. So the booking total understates a one-night out-of-state stay by 15 dollars - which is why entrance is a separate field and must be added to any quoted cost rather than assumed included. --AWH/--Claude"
     },
     "provenance": {
       "booking": {
@@ -42,7 +43,7 @@
         "method": "manual"
       },
       "fees": {
-        "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/entrance-fees/ plus the $6 transaction fee in CAMPING_BUSINESS_RULES.pdf",
+        "source": "https://www.in.gov/dnr/state-parks/rates-and-fees/entrance-fees/ plus the $6 transaction fee in CAMPING_BUSINESS_RULES.pdf; per-stay hang-tag rule and the at-the-gate collection confirmed firsthand by AWH 2026",
         "checked": "2026-09-14",
         "method": "manual"
       }
@@ -176,6 +177,122 @@
       },
       "fees": {
         "source": "https://suffolkcountyny.gov/Portals/0/formsdocs/parks/pdf/ParksFeeSchedule.pdf (GREEN KEY CARD FEES, CAMPING FEES)",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:PA": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 330,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "12:00"
+      },
+      "fcfs": "always",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend",
+          "season": "Memorial Day weekend - Labor Day weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'Most campsites in Pennsylvania state parks can be reserved 11 months in advance to noon of the day of arrival.' Minimum stay: 'During the summer season (Memorial Day weekend through Labor Day weekend), campsites can be reserved for a minimum stay of one night (Sunday - Friday), and two nights if reserving a Saturday' - so the two-night rule is triggered by SATURDAY specifically, not by Friday, unlike IN/MD/IA. Outside summer there is no minimum. Strong walk-up: 'Unreserved sites are available on a first-come, first-served basis. If park employee is unavailable, read posted instructions, check the site availability listing, and then proceed to an available campsite and set up. The appropriate fee must be paid to a park employee or deposited in a supplied honor system envelope before setting up on a campsite.' Max stay is 14 consecutive nights Memorial Day-Labor Day and 21 the rest of the year; max_stay_nights holds the stricter camping-season figure."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "NON-RESIDENT RATE UNRESOLVED for state PARK campsites - no official page found stating one, so nonresident is absent rather than guessed. What IS published is a state FOREST rate, which is a different program: 'Motorized roadside, hike-in roadside, equestrian, and rustic campsites can be reserved for a fee of $10.00 a night for Pennsylvania residents and $15.00 a night for non-residents.' Do not apply that to state park campgrounds."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.pa.gov/agencies/dcnr/recreation/what-to-do/stay-overnight/rv-and-tent-campsites",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.pa.gov/agencies/dcnr/recreation/what-to-do/stay-overnight/overnight-prices-and-policies",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "state:VA": {
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 330,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "14:00"
+      },
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'Campsites may be reserved up until 2 p.m. on the date of arrival' and 'Overnight accommodations, picnic shelters and some meeting facilities are available for reservations up to 11 months in advance.' FCFS NOT CONFIRMED - neither the reservations page nor the FAQ says whether an unreserved site can be taken on arrival, so fcfs is absent. Max stay is '14 nights in a 30-day period in any one park', which is not the same as 14 CONSECUTIVE nights; max_stay_nights approximates it. No weekend or holiday minimum stay found."
+    },
+    "fees": {
+      "currency": "USD",
+      "nightly_low": 27,
+      "nightly_high": 43,
+      "reservation_fee": 5,
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 5,
+        "per": "night"
+      },
+      "surcharges": {
+        "electric": 10,
+        "full_hookup": 16
+      },
+      "note": "The non-resident difference is NOT flat - it scales with site type: standard $27 resident / $32 non-resident (+$5), electric & water $37/$43 (+$6), full hookup $41-43/$48-50 (+$7-8). nonresident.amount holds the +$5 that applies to the standard site nightly_low describes; AN RV SITE WITH HOOKUPS SHOULD USE $7-8, so a cost estimate for a hookup site understates by up to $3/night if it uses the stored figure. Left as a single number deliberately rather than adding a range shape for one agency - revisit if a second state prices it this way. surcharges are derived from the resident rates ($37-$27, $43-$27). 'A $5 non-refundable transaction fee and applicable Virginia sales tax will be added to all fees.' Rates effective 5/12/2025."
+    },
+    "season": {
+      "opens": "03-01",
+      "closes": "12-07",
+      "note": "'Most campgrounds are open from the first Friday in March through the first Monday in December; primitive sites are available year-round.' The dates FLOAT with the weekday, so 03-01/12-07 is an approximation of the widest span - check the individual park before relying on an edge date."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.dcr.virginia.gov/state-parks/reservations and https://www.dcr.virginia.gov/state-parks/faq",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.dcr.virginia.gov/state-parks/camping-fees",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.dcr.virginia.gov/state-parks/faq",
+        "checked": "2026-09-14",
+        "method": "manual"
+      }
+    }
+  },
+  "federal": {
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "note": "DELIBERATELY THIN - federal is the one ownership where an agency default helps LEAST, and treating it like a state row would be the most expensive mistake in the registry (3,738 entries). Federal camping policy is set per FACILITY, not per agency: the 6-month rolling window at 10:00 ET is the recreation.gov standard, but group sites often open 12 months out and some BLM/USFS facilities use 14- or 30-day windows, and FCFS varies campground by campground - many USACE and USFS sites are entirely first-come. So fcfs and min_stay are absent here on purpose rather than defaulted. The right instrument for federal entries is the per-facility recreation.gov availability walk (docs/campground-schema.md phase 4), which answers season and FCFS from the calendar itself; this row exists only to supply the handful of facts that really are agency-wide. Note the doc's estimate of '3,738 entries from ~6-10 rows' was optimistic for exactly this reason."
+    },
+    "fees": {
+      "currency": "USD",
+      "note": "No resident/non-resident distinction exists on federal land."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "America the Beautiful Senior and Access passes, per NPS: 'The Senior Pass may provide a 50 percent discount on some amenity fees charged for facilities and services such as camping, swimming, boat launch, and specialized interpretive services', honored by NPS, USFWS, USFS, BLM, Bureau of Reclamation and USACE. NOTE THE AGENCY'S OWN HEDGE - 'may' and 'some'. The discount is real and worth asking about at any federally operated campground, but it is discretionary per site, so treat this as 'ask', not 'guaranteed'. The standard $80 Annual Pass carries NO camping discount, which is a common and expensive assumption."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://www.recreation.gov/articles/list/tips-for-making-campsite-reservations-at-popular-locations/281 (6-month rolling window); facility-level variance observed across BLM/USFS listings",
+        "checked": "2026-09-14",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/planyourvisit/passes.htm",
         "checked": "2026-09-14",
         "method": "manual"
       }

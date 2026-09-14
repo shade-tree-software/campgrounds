@@ -388,21 +388,54 @@ def _stage_provenance(incoming):
 
 # ── Registry resolution ─────────────────────────────────────────────────────
 
-def policy_ref(entry):
-    """Which registry row this entry inherits from.
+def policy_refs(entry):
+    """Registry rows this entry inherits from, MOST SPECIFIC FIRST.
 
-    Explicit `policy_ref` wins — `ownership` alone is too coarse for federal
-    (USFS and NPS differ) and says nothing about a county. Otherwise
-    `{ownership}:{state}`, which covers the state and provincial rows.
+    Three levels, because two kinds of agency are shaped differently:
+
+      1. an explicit `policy_ref` — a county, or a named federal agency
+      2. `{ownership}:{state}` — where the state IS the agency (state parks,
+         provincial parks), which is most of the database
+      3. `{ownership}` alone — where it is not. Federal camping policy is set
+         per-agency and largely by recreation.gov, not per state, so without
+         this level a single federal rule would need fifty identical
+         `federal:XX` rows. This level is what makes the 3,738 federal entries
+         reachable at all.
+
+    More specific wins per FIELD, not per row, so a `federal` baseline and a
+    `federal:usfs` override compose rather than replacing one another.
     """
+    refs = []
     explicit = (entry.get(POLICY_REF) or "").strip()
     if explicit:
-        return explicit
+        refs.append(explicit)
     ownership = (entry.get("ownership") or "").strip()
     state = (entry.get("state") or "").strip()
-    if not ownership or not state:
-        return None
-    return f"{ownership}:{state}"
+    if ownership and state:
+        refs.append(f"{ownership}:{state}")
+    if ownership:
+        refs.append(ownership)
+    return refs
+
+
+def policy_ref(entry):
+    """The most specific registry row this entry names. See `policy_refs`."""
+    refs = policy_refs(entry)
+    return refs[0] if refs else None
+
+
+def _inherited(entry, registry):
+    """Merge every registry level this entry inherits, least specific first."""
+    merged = {}
+    for ref in reversed(policy_refs(entry)):
+        row = registry.get(ref)
+        if not row:
+            continue
+        for group, values in row.items():
+            if group == PROVENANCE or not isinstance(values, dict):
+                continue
+            merged.setdefault(group, {}).update(values)
+    return merged
 
 
 def resolve(entry, registry=None):
@@ -418,7 +451,7 @@ def resolve(entry, registry=None):
     grounds to exclude the entry from a search (doc §2.2).
     """
     registry = registry or {}
-    row = registry.get(policy_ref(entry)) or {}
+    row = _inherited(entry, registry)
     out = {}
     for group in SCHEMA:
         own = entry.get(group) or {}
@@ -439,8 +472,7 @@ def field_scope(entry, group, key, registry=None):
     """Where one field's value comes from: 'entry', 'agency', or None."""
     if key in (entry.get(group) or {}):
         return "entry"
-    registry = registry or {}
-    row = registry.get(policy_ref(entry)) or {}
+    row = _inherited(entry, registry or {})
     if key in (row.get(group) or {}):
         return "agency"
     return None

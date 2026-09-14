@@ -134,15 +134,30 @@ source of truth, merged on read. It matters because:
 - The file does not grow by a booking block × 6,635 entries.
 - **"Verified" becomes literally checkable**: the entry has its own key, or it does not.
 
-### `policy_ref`
+### `policy_ref` and the three-level chain
 
-One optional string per entry naming its registry row. Defaults to `{ownership}:{state}`.
+An entry inherits from up to three rows, **most specific first, merged per field**:
 
-```jsonc
-"policy_ref": "federal:usfs"              // ownership alone is too coarse for federal
-"policy_ref": "local:suffolk-county-ny"   // Indian Island
-// omitted on a NY state park → defaults to "state:NY"
 ```
+1. an explicit `policy_ref`      "local:suffolk-county-ny" · "federal:usfs"
+2. "{ownership}:{state}"         "state:IN" — where the state IS the agency
+3. "{ownership}"                 "federal" — where it is not
+```
+
+Level 2 covers most of the database, because a state park system is both an owner and an
+agency. **Level 3 exists for federal**, whose policy is set per agency and largely by
+recreation.gov rather than per state — without it a single federal rule would need fifty
+identical `federal:XX` rows, and the 3,738 federal entries would be unreachable in practice.
+Levels compose per field, so a `federal` baseline and a `federal:usfs` override merge
+instead of replacing one another.
+
+**But federal is also where the registry helps least, and the leverage table above
+oversells it.** Federal camping policy varies by *facility*: the 6-month rolling window is
+the recreation.gov standard, yet group sites often open 12 months out and some BLM/USFS
+facilities use 14- or 30-day windows, and FCFS varies campground by campground. So the
+`federal` row deliberately carries only what is genuinely agency-wide and **withholds `fcfs`
+and `min_stay` entirely** — defaulting either would be wrong at scale and invisible in the
+entries. The right instrument there is the per-facility availability walk (§7 phase 4).
 
 ### `provenance`
 

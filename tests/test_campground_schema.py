@@ -273,6 +273,35 @@ class TestRegistryResolution(unittest.TestCase):
                  "policy_ref": "local:suffolk-county-ny"}
         self.assertEqual(cs.policy_ref(entry), "local:suffolk-county-ny")
 
+    def test_the_ref_chain_runs_most_specific_first(self):
+        entry = {"ownership": "federal", "state": "VA"}
+        self.assertEqual(cs.policy_refs(entry), ["federal:VA", "federal"])
+        named = {"ownership": "federal", "state": "ID",
+                 "policy_ref": "federal:usfs"}
+        self.assertEqual(cs.policy_refs(named),
+                         ["federal:usfs", "federal:ID", "federal"])
+
+    def test_ownership_alone_is_what_makes_federal_reachable(self):
+        # Federal policy is set per agency, not per state. Without this level a
+        # single federal rule would need fifty identical `federal:XX` rows.
+        reg = {"federal": {"booking": {"platform": "recreation.gov"}}}
+        entry = {"ownership": "federal", "state": "WV"}
+        got = cs.resolve(entry, reg)
+        self.assertEqual(got["booking"]["values"]["platform"], "recreation.gov")
+        self.assertEqual(got["booking"]["scope"], "agency")
+
+    def test_chain_levels_compose_per_field(self):
+        # A federal baseline and a named-agency override must merge, not replace
+        # each other: usfs keeps the platform it never restated.
+        reg = {"federal": {"booking": {"platform": "recreation.gov",
+                                       "window_opens_days": 180}},
+               "federal:usfs": {"booking": {"window_opens_days": 365}}}
+        entry = {"ownership": "federal", "state": "ID",
+                 "policy_ref": "federal:usfs"}
+        vals = cs.resolve(entry, reg)["booking"]["values"]
+        self.assertEqual(vals, {"platform": "recreation.gov",
+                                "window_opens_days": 365})
+
     def test_a_plain_entry_inherits_and_is_marked_agency(self):
         entry = {"ownership": "state", "state": "NY"}
         got = cs.resolve(entry, self.REGISTRY)
@@ -455,6 +484,14 @@ class TestShippedRegistry(unittest.TestCase):
         ii_fees = cs.resolve(ii, self.rows)["fees"]["values"]
         self.assertEqual(ii_fees["prereq_pass"]["price"], 50)
         self.assertEqual(ii_fees["prereq_pass"]["valid"], "year")
+
+    def test_the_federal_row_withholds_what_varies_per_facility(self):
+        # The most expensive possible default in the registry: 3,738 entries.
+        # FCFS and minimum stay vary campground by campground on federal land,
+        # so defaulting either would be wrong at scale and invisibly so.
+        fed = self.rows["federal"]["booking"]
+        self.assertNotIn("fcfs", fed)
+        self.assertNotIn("min_stay", fed)
 
     def test_base_rates_are_the_resident_price(self):
         # nightly_low/high must be comparable between agencies, so they hold the
