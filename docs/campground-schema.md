@@ -307,6 +307,19 @@ Flattening these into one "surcharge" number loses the cases that matter:
 
 `per`: `stay` | `night`. `valid`: `season` | `year` | `day`.
 
+**`nightly_low` / `nightly_high` are the BASE rate — what a RESIDENT pays for a plain
+site with no amenities.** Every other key in `fees` modifies it. Storing the
+non-resident price, or the with-hookups price, makes the field incomparable between
+agencies and double-counts the moment a modifier is applied on top.
+
+**Amenities are priced separately, and they are what a search filters on.** Both systems
+verified so far charge per night for exactly the things a traveller specifies: electric is
++$7 in NY state parks and +$8 in Suffolk County, a waterfront site +$6, oceanfront +$10,
+full hook-ups +$13–15. A cost estimate that quotes the base rate for a query that demanded
+electric hookups understates the night the traveller actually needs, so `fees.surcharges`
+carries them. Anything with no cross-agency equivalent — Suffolk's Premier/Tier I/Tier II
+site classes — stays in `fees.note`.
+
 **A park ENTRANCE fee is a fourth mechanic and must not be folded into
 `nonresident`** (2026-09-14). Indiana charges every vehicle to enter — $7 with
 Indiana plates, $15 without — and has no non-resident *camping* rate at all;
@@ -438,19 +451,49 @@ website until 5 pm"*, and Maryland does not publish which parks. So the cutoff b
 entries once known, not on the row; writing `17:00` here would promise same-day booking at
 parks that do not offer it.
 
-**Hither Hills** (NY state park) — *the reason inheritance is a prior, not a truth.*
-Entry-scoped override against a `state:NY` row whose non-resident fee is nominal:
+**Hither Hills** (NY state park, id 291) — *the reason inheritance is a prior, not a truth.*
+Verified 2026-09-14 against the park's own fees page.
 ```jsonc
-"fees": {"nonresident": {"type": "multiplier", "factor": 2.0}},
-"provenance": {"fees": {"source": "https://parks.ny.gov/...", "checked": "2026-09-14"}}
+"fees": {"nightly_low": 33, "nightly_high": 37,
+         "nonresident": {"type": "multiplier", "factor": 2.0}},
+"season": {"opens": "04-10", "closes": "11-22"}
 ```
+| | resident | non-resident |
+|---|---|---|
+| weekday | $33 | **$66** |
+| weekend | $37 | **$74** |
 
-**Indian Island** (Suffolk County, NY) — *the reason `prereq_pass` exists.*
+Exactly double in both bands, and it **replaces** the statewide $5/night surcharge rather
+than adding to it. Inheriting `state:NY` here would understate a weekend night by $32 — on
+the most sought-after campground on Long Island, which is precisely where an entry is most
+likely to be an exception (§3: fee variance tracks demand). The `*` beside it on the
+statewide fees page is unrelated to residency: it marks a **flagship** campground, *"premier
+facilities that provide premium amenities"*, +$3.00/night.
+
+**Indian Island** (Suffolk County, NY, id 1448) — *the reason `prereq_pass` exists, and the
+reason `policy_ref` does.*
 ```jsonc
 "policy_ref": "local:suffolk-county-ny",
-"fees": {"prereq_pass": {"name": "Suffolk County Green Key",
-                         "price": 25, "valid": "season"}}
+"fees": {"prereq_pass": {"name": "Suffolk County Non-Resident Reservation Green Key",
+                         "price": 50, "valid": "year"}}
 ```
+It is a **county** park in a state whose `state:NY` row describes state parks, so without
+the explicit `policy_ref` it would fall through to entirely the wrong agency — the default
+`{ownership}:{state}` key gives `local:NY`, which does not exist, but a careless row added
+under that name later would be worse than nothing.
+
+The Green Key is not a discount card, it is **an access gate**: *"The Green Key card is also
+required to access the online reservation system for camping and marina reservations."* A
+non-resident cannot book at all without the $50 one-year key. One night in season with
+electric runs $36 base + $8 electric + $5–22 site tier + $10 reservation + $3 registration —
+and then the $50 key roughly doubles the trip, while over a year of Long Island camping it
+disappears. That is exactly why a prerequisite pass is priced separately from the nightly
+rate and resolved against trip length (§4.2) rather than folded into a tier.
+
+Suffolk's non-resident camping rate is **also exactly double** the resident rate ($18 → $36
+in season, $9 → $18 off season), so the county row carries the same multiplier Hither Hills
+does. Two independent agencies reaching for the same mechanic is the argument for keeping
+`multiplier` in the vocabulary rather than treating it as a one-off.
 
 **A rec.gov federal campground** — most of the block resolves from `federal:usfs` or
 `federal:nps`; season and FCFS are *derived* per entry from the availability calendar (§7).

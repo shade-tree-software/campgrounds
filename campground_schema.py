@@ -143,6 +143,10 @@ SCHEMA = {
         "note": STR,                         # anything the vocabulary can't hold
     },
     "fees": {
+        # BASE rate: what a RESIDENT pays for a plain site with no amenities.
+        # Every other key here modifies it. Storing the non-resident or
+        # with-hookups price instead would make the field incomparable between
+        # agencies and double-count whenever a modifier is applied on top.
         "nightly_low": NUM,
         "nightly_high": NUM,
         "currency": ENUM("USD", "CAD"),
@@ -163,6 +167,14 @@ SCHEMA = {
         # rather than baked in.
         "entrance": OBJ(resident=NUM, nonresident=NUM,
                         per=ENUM("vehicle_day", "vehicle_stay", "person_day")),
+        # Per-night add-ons on top of the base rate. Both systems verified so
+        # far price the amenities separately, and they are exactly what a search
+        # filters on: electric costs $7-8/night extra in NY State and in Suffolk
+        # County, and a waterfront site $6-10. A cost estimate that ignores them
+        # understates the night a traveller actually needs.
+        "surcharges": OBJ(electric=NUM, sewer=NUM, full_hookup=NUM,
+                          waterfront=NUM, oceanfront=NUM, weekend=NUM,
+                          premium_site=NUM, pet=NUM),
         "checked": STR,
         "note": STR,
     },
@@ -496,6 +508,12 @@ FIELD_LABELS = {
     "booking_within_days": "Waived if booking within (days)",
     "waived_if": "Waiver",
     "entrance": "Park entrance fee",
+    "surcharges": "Per-night amenity surcharges",
+    "full_hookup": "Full hookup",
+    "premium_site": "Premium/flagship site",
+    "oceanfront": "Oceanfront",
+    "nightly_low": "Base nightly rate (low, resident)",
+    "nightly_high": "Base nightly rate (high, resident)",
     "resident": "Resident",
     "nonresident": "Non-resident",
     "season": "Season it applies in",

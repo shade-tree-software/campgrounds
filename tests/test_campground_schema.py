@@ -420,6 +420,52 @@ class TestShippedRegistry(unittest.TestCase):
                          "Iowa's post-cutoff FCFS is not confirmed by any "
                          "official source")
 
+    def test_the_two_verified_entry_overrides_beat_their_agency_row(self):
+        """Hither Hills and Indian Island, against the real files.
+
+        These are the cases the inherited/verified split exists for. If either
+        silently started inheriting its agency default, the failure would be
+        invisible in the entry itself — which is exactly why it is pinned here.
+        """
+        import json
+        import os
+        cg = os.path.join(os.path.dirname(__file__), os.pardir,
+                          "campgrounds.json")
+        with open(cg) as f:
+            by_id = {e["id"]: e for e in json.load(f)}
+
+        # Hither Hills doubles the nightly rate for non-residents; the rest of
+        # the NY system charges a flat $5/night. Inheriting would understate a
+        # weekend night by $32.
+        hh = by_id[291]
+        self.assertEqual(cs.policy_ref(hh), "state:NY")
+        fees = cs.resolve(hh, self.rows)["fees"]["values"]
+        self.assertEqual(fees["nonresident"],
+                         {"type": "multiplier", "factor": 2.0})
+        self.assertEqual(cs.field_scope(hh, "fees", "nonresident", self.rows),
+                         "entry")
+        ny = self.rows["state:NY"]["fees"]["nonresident"]
+        self.assertEqual(ny["type"], "surcharge",
+                         "the agency default must still be the $5 surcharge")
+
+        # Indian Island is a COUNTY park in a state whose default row is for
+        # state parks, so it must not fall through to state:NY.
+        ii = by_id[1448]
+        self.assertEqual(cs.policy_ref(ii), "local:suffolk-county-ny")
+        ii_fees = cs.resolve(ii, self.rows)["fees"]["values"]
+        self.assertEqual(ii_fees["prereq_pass"]["price"], 50)
+        self.assertEqual(ii_fees["prereq_pass"]["valid"], "year")
+
+    def test_base_rates_are_the_resident_price(self):
+        # nightly_low/high must be comparable between agencies, so they hold the
+        # resident base and every modifier applies on top. Storing the
+        # non-resident price would double-count against the multiplier.
+        hh = self.rows.get("state:NY")
+        suffolk = self.rows["local:suffolk-county-ny"]["fees"]
+        self.assertEqual(suffolk["nightly_high"], 18,
+                         "Suffolk's in-season RESIDENT rate, not the $36 "
+                         "non-resident one")
+
     def test_verified_rows_cite_a_real_source_url(self):
         for ref, row in self.rows.items():
             for group, prov in (row.get("provenance") or {}).items():
