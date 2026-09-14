@@ -229,7 +229,7 @@ manage form become unmanageable otherwise.
   "window_opens_days": 180,      // how far ahead booking opens
   "reserve_until": { ... },      // see §4.1
   "fcfs": "after_cutoff",        // "never" | "always" | "after_cutoff" | "some_sites"
-  "min_stay": { ... },           // see §4.1
+  "min_stay": [ ... ],           // a LIST of rules — see §4.1
   "max_stay_nights": 14
 },
 
@@ -240,6 +240,7 @@ manage form become unmanageable otherwise.
   "reservation_fee": 8,          // per-reservation booking fee, if separate
   "nonresident": { ... },        // see §4.2
   "prereq_pass": { ... },        // see §4.2
+  "entrance": { ... },           // see §4.2 — a gate fee, NOT a camping surcharge
   "checked": "2026"
 },
 
@@ -252,6 +253,11 @@ manage form become unmanageable otherwise.
 }
 ```
 
+Every group also accepts a free-text `note` for whatever the vocabulary cannot
+hold. Use it for the qualifier that changes the meaning — "only at a limited
+number of parks", "the two official pages disagree" — never as a substitute for
+a field that exists.
+
 ### 4.1 Booking rules are conditional, and a scalar loses the fact
 
 The three real cases that drove this shape are near-opposites at the same instant, and a
@@ -263,10 +269,20 @@ flat `fcfs: true/false` cannot tell them apart — Iowa's FCFS *is what its cuto
 {"relative_to": "arrival", "offset_hours": -48}      // IA: closes 48h before arrival
 {"relative_to": "arrival", "at": "14:00"}            // MD: early afternoon day-of
 
-// min_stay — with its waiver, which is the whole point
-{"nights": 2, "applies": "weekend", "waived_if": {"booking_within_days": 3}}
-{"nights": 2, "applies": "holiday"}
+// min_stay — a LIST, because agencies run several rules at once
+[{"nights": 2, "applies": "weekend", "waived_if": {"booking_within_days": 3}},
+ {"nights": 3, "applies": "holiday"}]
 ```
+
+**`min_stay` is a list because the first agency verified proved one rule is not
+enough** (2026-09-14). Indiana waives its two-night weekend minimum for sites
+still unrented three days out — and says in the same breath that "Required
+holiday minimum stays are excluded from this relaxed rule", with holiday
+weekends needing three nights. A single rule object can hold the waiver or the
+holiday, not both, and **all four states verified so far carry the same
+weekend + holiday pair**. An evaluator takes the strictest rule whose `applies`
+matches the arrival date. An empty list clears the key rather than storing `[]`,
+which would claim the agency has no minimum at all.
 
 `applies`: `always` | `weekend` | `holiday` | `summer`.
 `waived_if`: `{"booking_within_days": N}` — the only waiver shape observed so far; extend
@@ -290,6 +306,20 @@ Flattening these into one "surcharge" number loses the cases that matter:
 | **prerequisite pass** | `{"name": "...", "price": 25, "valid": "season"}` | whole pass price lands on night one |
 
 `per`: `stay` | `night`. `valid`: `season` | `year` | `day`.
+
+**A park ENTRANCE fee is a fourth mechanic and must not be folded into
+`nonresident`** (2026-09-14). Indiana charges every vehicle to enter — $7 with
+Indiana plates, $15 without — and has no non-resident *camping* rate at all;
+New York is the exact opposite, with no gate-fee split and a real $5/night
+camping surcharge. Recording Indiana's $15 as a camping surcharge would
+overstate a one-night stay and misattribute the charge:
+
+```jsonc
+"entrance": {"resident": 7, "nonresident": 15, "per": "vehicle_day"}
+```
+
+Both sides are stored so the differential ($8) is derivable rather than baked
+in, and so a resident cost can be shown too.
 
 The third is the one a flat model cannot express at all: a season pass amortizes fine over a
 week and terribly over one night, so its cost is **a function of trip length**. Which means
@@ -349,35 +379,64 @@ on the road is the phone number. Carry `phone`, leave policy unknown, let the UI
 ### 5.1 Worked cases
 
 These six pin the schema. Any change to the vocabulary must still express all six.
+Four were verified against agency sources on 2026-09-14; the two NY entry-level
+cases (Hither Hills, Indian Island) are still as reported and not yet checked.
 
-**Indiana state parks** (`state:IN`, 41 entries) — *the reason conditional rules exist.*
+**Indiana state parks** (`state:IN`, 41 entries) — *the reason rules are a list.*
+Verified 2026-09-14 against `CAMPING_BUSINESS_RULES.pdf`.
 ```jsonc
-"booking": {"reservable": true,
+"booking": {"reservable": true, "window_opens_days": 180, "fcfs": "always",
             "reserve_until": {"relative_to": "arrival", "at": "23:00"},
-            "min_stay": {"nights": 2, "applies": "weekend",
-                         "waived_if": {"booking_within_days": 3}}},
-"fees": {"nonresident": {"type": "surcharge", "amount": 15, "per": "stay"}}
+            "min_stay": [
+              {"nights": 2, "applies": "weekend",
+               "waived_if": {"booking_within_days": 3}},
+              {"nights": 3, "applies": "holiday"}],
+            "max_stay_nights": 14},
+"fees": {"reservation_fee": 6,
+         "entrance": {"resident": 7, "nonresident": 15, "per": "vehicle_day"}}
 ```
-A scalar `min_stay: 2` would drop all 41 from a one-night search. The waiver is what makes
-every one of them eligible — and the $15 can push a `$$` park into `$$$` territory for a
-single night, which is why §4.3 computes rather than overwrites.
+Verbatim: *"campsites can, and should be, reserved until 11pm ET on the date of arrival"*
+and *"Indiana is 100% reservable until 11pm ET on the day of arrival"* — no sites are held
+back, though walk-in registration is still taken on the day of arrival. A scalar
+`min_stay: 2` would drop all 41 from a one-night search; the *One-Night Relaxed Rule*
+(*"If a campsite is not rented within 3 days of arrival, it will be available for one-night
+rental"*) is what makes every one eligible. **The second rule is the catch**: *"Required
+holiday minimum stays are excluded from this relaxed rule."*
 
-**Iowa state parks** (`state:IA`) — reservations close 48h out, and unbooked sites then
-revert to first-come at the park.
-```jsonc
-"booking": {"reservable": true,
-            "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
-            "fcfs": "after_cutoff"}
-```
+The reported "$15 out-of-state fee" turned out to be the **park entrance fee** ($7 with
+Indiana plates), not a camping surcharge — see §4.2.
 
-**Maryland state parks** (`state:MD`) — booking closes early afternoon day-of, and there is
-**no** FCFS after. Structurally near-identical to Iowa at the same instant; only `fcfs`
-separates them.
+**Iowa state parks** (`state:IA`) — *the reason a conflict is recorded rather than resolved.*
 ```jsonc
-"booking": {"reservable": true,
-            "reserve_until": {"relative_to": "arrival", "at": "14:00"},
-            "fcfs": "never"}
+"booking": {"reservable": true, "window_opens_days": 90,
+            "min_stay": [{"nights": 2, "applies": "weekend",
+                          "season": "May 1 - Oct 31"},
+                         {"nights": 3, "applies": "holiday", "season": "..."}],
+            "note": "CUTOFF UNRESOLVED - two DNR pages contradict each other..."}
 ```
+No `reserve_until` and no `fcfs`. Two Iowa DNR pages disagree — the overnight-camping page
+says *"The last day to make a camping reservation, if paying by credit/debit card, is 2 days
+prior to arrival"* (matching the reported 48-hour rule), while the make-reservation page
+says *"up to the day of to the arrival date if paying by credit card"*. Neither is obviously
+stale. **And the FCFS half is unconfirmed by any official source**, which matters because it
+is the whole reason an Iowa park would answer a late-in-the-day query. Resolve by phone
+before writing either.
+
+**Maryland state parks** (`state:MD`) — *the reason a reported policy must be checked.*
+```jsonc
+"booking": {"reservable": true, "window_opens_days": 365, "fcfs": "always",
+            "min_stay": [{"nights": 2, "applies": "weekend",
+                          "season": "Memorial Day - Labor Day"},
+                         {"nights": 3, "applies": "holiday"}],
+            "note": "Same-day booking closes 17:00 but only at SOME parks..."}
+```
+Maryland was reported as having no same-day booking after an afternoon cutoff **and no
+FCFS**. The second half is wrong: *"Walk-in guests at parks and forests can request any
+non-reserved sites."* The first half is real but narrower than an agency default can carry —
+*"Same day reservations are allowed at a limited number of parks through the call center and
+website until 5 pm"*, and Maryland does not publish which parks. So the cutoff belongs on
+entries once known, not on the row; writing `17:00` here would promise same-day booking at
+parks that do not offer it.
 
 **Hither Hills** (NY state park) — *the reason inheritance is a prior, not a truth.*
 Entry-scoped override against a `state:NY` row whose non-resident fee is nominal:

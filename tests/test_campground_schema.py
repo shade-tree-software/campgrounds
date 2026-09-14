@@ -55,12 +55,26 @@ class TestPerSubkeyMerge(unittest.TestCase):
         self.assertEqual(entry["name"], "X")
 
     def test_nested_rule_objects_are_replaced_whole(self):
-        # min_stay is ONE rule. Part-merging a waiver into it would yield a rule
+        # A rule is ONE value. Part-merging a waiver into it would yield a rule
         # nobody wrote — worse than either version.
-        entry = {"booking": {"min_stay": {"nights": 2, "applies": "weekend",
-                                          "waived_if": {"booking_within_days": 3}}}}
-        cs.apply_update(entry, {"booking": {"min_stay": {"nights": 3}}})
-        self.assertEqual(entry["booking"]["min_stay"], {"nights": 3})
+        entry = {"fees": {"nonresident": {"type": "surcharge", "amount": 5,
+                                          "per": "night"}}}
+        cs.apply_update(entry, {"fees": {"nonresident": {"type": "multiplier",
+                                                         "factor": 2.0}}})
+        self.assertEqual(entry["fees"]["nonresident"],
+                         {"type": "multiplier", "factor": 2.0})
+
+    def test_a_rule_list_is_replaced_whole(self):
+        entry = {"booking": {"min_stay": [{"nights": 2, "applies": "weekend"},
+                                          {"nights": 3, "applies": "holiday"}]}}
+        cs.apply_update(entry, {"booking": {"min_stay": [{"nights": 2}]}})
+        self.assertEqual(entry["booking"]["min_stay"], [{"nights": 2}])
+
+    def test_an_empty_rule_list_clears_rather_than_storing_it(self):
+        # [] would read as "this agency has no minimum stay", which is a claim.
+        entry = {"booking": {"min_stay": [{"nights": 2}]}}
+        cs.apply_update(entry, {"booking": {"min_stay": []}})
+        self.assertNotIn("booking", entry)
 
 
 class TestAbsentMeansUnknown(unittest.TestCase):
@@ -177,14 +191,37 @@ class TestCoercion(unittest.TestCase):
 class TestWorkedCases(unittest.TestCase):
     """The six cases that drove the vocabulary must all still express."""
 
-    def test_indiana_min_stay_with_waiver(self):
+    def test_indiana_runs_two_minimum_stay_rules_at_once(self):
+        # Verified 2026-09-14 against Indiana's CAMPING_BUSINESS_RULES.pdf: two
+        # nights on weekends, waived for sites still unrented three days out —
+        # but "Required holiday minimum stays are excluded from this relaxed
+        # rule", and holiday weekends need three. One rule object cannot hold
+        # both, which is why min_stay is a list.
         entry = {}
         cs.apply_update(entry, {"booking": {
             "reserve_until": {"relative_to": "arrival", "at": "23:00"},
-            "min_stay": {"nights": 2, "applies": "weekend",
-                         "waived_if": {"booking_within_days": 3}}}})
-        self.assertEqual(entry["booking"]["min_stay"]["waived_if"],
-                         {"booking_within_days": 3})
+            "min_stay": [
+                {"nights": 2, "applies": "weekend",
+                 "waived_if": {"booking_within_days": 3}},
+                {"nights": 3, "applies": "holiday"}]}})
+        rules = entry["booking"]["min_stay"]
+        self.assertEqual(len(rules), 2)
+        self.assertEqual(rules[0]["waived_if"], {"booking_within_days": 3})
+        self.assertNotIn("waived_if", rules[1],
+                         "the holiday minimum is explicitly NOT waivable")
+
+    def test_an_entrance_fee_is_not_a_camping_surcharge(self):
+        # Indiana charges every vehicle to enter and has no non-resident camping
+        # rate; New York has the opposite. Conflating them misreports both.
+        ind, ny = {}, {}
+        cs.apply_update(ind, {"fees": {"entrance": {"resident": 7,
+                                                    "nonresident": 15,
+                                                    "per": "vehicle_day"}}})
+        cs.apply_update(ny, {"fees": {"nonresident": {"type": "surcharge",
+                                                      "amount": 5,
+                                                      "per": "night"}}})
+        self.assertNotIn("nonresident", ind["fees"])
+        self.assertNotIn("entrance", ny["fees"])
 
     def test_iowa_and_maryland_differ_only_in_fcfs(self):
         ia, md = {}, {}
@@ -367,12 +404,28 @@ class TestShippedRegistry(unittest.TestCase):
                 cs.validate_row(row, ref)
 
     def test_no_row_invents_an_unconfirmed_cutoff(self):
-        # Maryland's cutoff time was reported as "sometime in the afternoon".
-        # Writing 14:00 would evaluate queries wrongly AND look verified doing
-        # it, which is worse than the honest gap.
+        # Maryland publishes a 5pm same-day cutoff but only for "a limited
+        # number of parks" and does not say which, so the agency row carries no
+        # reserve_until: applying it to all of Maryland would claim same-day
+        # booking at parks that do not offer it.
         md = self.rows.get("state:MD", {}).get("booking", {})
         self.assertNotIn("reserve_until", md)
         self.assertIn("note", md)
+
+        # Iowa's two official pages contradict each other on the cutoff (2 days
+        # prior vs up to the day of arrival). Unresolved stays unwritten.
+        ia = self.rows.get("state:IA", {}).get("booking", {})
+        self.assertNotIn("reserve_until", ia)
+        self.assertNotIn("fcfs", ia,
+                         "Iowa's post-cutoff FCFS is not confirmed by any "
+                         "official source")
+
+    def test_verified_rows_cite_a_real_source_url(self):
+        for ref, row in self.rows.items():
+            for group, prov in (row.get("provenance") or {}).items():
+                with self.subTest(ref=ref, group=group):
+                    self.assertIn("http", prov.get("source", ""),
+                                  "a verified row must cite the page it came from")
 
     def test_unverified_rows_say_so_in_provenance(self):
         for ref, row in self.rows.items():

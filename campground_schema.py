@@ -58,6 +58,21 @@ def OBJ(**fields):
     return ("obj", fields)
 
 
+def LIST(spec, slots=2):
+    """An ordered list of rules, replaced whole like an OBJ.
+
+    Forced by the first agency actually verified. Indiana runs TWO minimum-stay
+    rules at once — two nights on weekends, waived if the site is still unrented
+    three days out, and three nights on holiday weekends which the waiver
+    explicitly does NOT touch ("Required holiday minimum stays are excluded from
+    this relaxed rule"). A single rule object cannot hold that, and every one of
+    the four states verified so far has the same weekend + holiday pair.
+
+    `slots` is how many the manage form draws; the value itself is unbounded.
+    """
+    return ("list", (spec, slots))
+
+
 # ── The schema ──────────────────────────────────────────────────────────────
 # Mirrors docs/campground-schema.md §4. Every key is optional at every level;
 # absent is unknown. Adding a field here is what makes it savable — see
@@ -69,17 +84,20 @@ SCHEMA = {
         "stars": NUM,
         "price_tier": INT(0, 1, 2, 3, 4),   # the RV Life "$" count, as imported
         "checked": STR,                      # "YYYY-MM"
+        "note": STR,
     },
     "hookups": {
         "electric": INT(0, 20, 30, 50),      # HIGHEST amp available at a site
         "water": BOOL,                       # at the site, not a communal spigot
         "sewer": BOOL,
         "dump": BOOL,                        # on-site dump station; independent of sewer
+        "note": STR,
     },
     "sites": {
         "count": INT(),
         "max_rig_ft": INT(),
         "pull_through": BOOL,
+        "note": STR,
     },
     "facilities": {
         "showers": BOOL,
@@ -89,6 +107,7 @@ SCHEMA = {
         "laundry": BOOL,
         "camp_store": BOOL,
         "wifi": BOOL,
+        "note": STR,
     },
     "season": {
         "year_round": BOOL,
@@ -112,9 +131,14 @@ SCHEMA = {
         "fcfs": ENUM("never", "always", "after_cutoff", "some_sites"),
         # The waiver is the whole point: a scalar nights=2 drops all 41 Indiana
         # state parks from a one-night search when every one of them qualifies.
-        "min_stay": OBJ(nights=INT(),
-                        applies=ENUM("always", "weekend", "holiday", "summer"),
-                        waived_if=OBJ(booking_within_days=INT())),
+        # A LIST because agencies run several at once and a waiver may apply to
+        # one but not another. An evaluator takes the strictest rule whose
+        # `applies` matches the arrival date.
+        "min_stay": LIST(OBJ(nights=INT(),
+                             applies=ENUM("always", "weekend", "holiday",
+                                          "summer"),
+                             season=STR,
+                             waived_if=OBJ(booking_within_days=INT()))),
         "max_stay_nights": INT(),
         "note": STR,                         # anything the vocabulary can't hold
     },
@@ -131,7 +155,16 @@ SCHEMA = {
                            per=ENUM("stay", "night")),
         "prereq_pass": OBJ(name=STR, price=NUM,
                            valid=ENUM("season", "year", "day")),
+        # A park ENTRANCE fee is not a camping surcharge, and conflating them
+        # misreports both. Indiana charges every vehicle to enter ($7 resident,
+        # $15 non-resident) and has no non-resident camping rate at all; New
+        # York has no differential gate fee and a real $5/night camping
+        # surcharge. Stored as both sides so the differential is derivable
+        # rather than baked in.
+        "entrance": OBJ(resident=NUM, nonresident=NUM,
+                        per=ENUM("vehicle_day", "vehicle_stay", "person_day")),
         "checked": STR,
+        "note": STR,
     },
     "discounts": {
         "good_sam": BOOL,
@@ -141,6 +174,7 @@ SCHEMA = {
         # America the Beautiful Senior/Access — halves camping at most USFS and
         # USACE sites, so it belongs on the registry row, not on 3,738 entries.
         "interagency_senior_access": BOOL,
+        "note": STR,
     },
 }
 
@@ -223,6 +257,19 @@ def _coerce(spec, value, path):
             raise SchemaError(f"{path}: {s!r} is not one of {allowed}")
         return s
 
+    if kind == "list":
+        item_spec, _ = constraint
+        if not isinstance(value, list):
+            raise SchemaError(f"{path}: expected a list, got {value!r}")
+        out = []
+        for i, item in enumerate(value):
+            if item in _CLEARS:
+                continue          # a blank slot in the form is not a rule
+            coerced = _coerce(item_spec, item, f"{path}[{i}]")
+            if coerced:
+                out.append(coerced)
+        return out
+
     if kind == "obj":
         if not isinstance(value, dict):
             raise SchemaError(f"{path}: expected an object, got {value!r}")
@@ -278,8 +325,13 @@ def apply_update(target, data):
         for key, value in incoming.items():
             if key not in fields:
                 raise SchemaError(f"{group}.{key}: unknown field")
-            staged_group[key] = (None if value in _CLEARS
-                                 else _coerce(fields[key], value, f"{group}.{key}"))
+            if value in _CLEARS:
+                staged_group[key] = None
+                continue
+            coerced = _coerce(fields[key], value, f"{group}.{key}")
+            # An empty list or object is the ABSENCE of a rule, not a rule that
+            # says nothing — clear the key rather than storing [] or {}.
+            staged_group[key] = coerced if coerced or coerced in (0, False) else None
         staged[group] = staged_group
 
     touched = set()
@@ -443,6 +495,10 @@ FIELD_LABELS = {
     "offset_hours": "Offset (hours)",
     "booking_within_days": "Waived if booking within (days)",
     "waived_if": "Waiver",
+    "entrance": "Park entrance fee",
+    "resident": "Resident",
+    "nonresident": "Non-resident",
+    "season": "Season it applies in",
     "applies": "Applies",
     "nights": "Nights",
     "checked": "Checked (YYYY-MM)",
@@ -455,6 +511,10 @@ def _label(key):
 
 def _spec_to_client(spec, key):
     kind, constraint = spec
+    if kind == "list":
+        item_spec, slots = constraint
+        return {"kind": "list", "label": _label(key), "slots": slots,
+                "item": _spec_to_client(item_spec, key)}
     if kind == "obj":
         return {"kind": "obj", "label": _label(key),
                 "fields": [dict(_spec_to_client(s, k), key=k)

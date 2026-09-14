@@ -2,47 +2,68 @@
   "state:IN": {
     "booking": {
       "reservable": true,
+      "platform": "usedirect",
+      "url": "https://camp.in.gov",
+      "window_opens_days": 180,
       "reserve_until": {"relative_to": "arrival", "at": "23:00"},
-      "min_stay": {
-        "nights": 2,
-        "applies": "weekend",
-        "waived_if": {"booking_within_days": 3}
-      }
+      "fcfs": "always",
+      "min_stay": [
+        {"nights": 2, "applies": "weekend", "waived_if": {"booking_within_days": 3}},
+        {"nights": 3, "applies": "holiday"}
+      ],
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'campsites can, and should be, reserved until 11pm ET on the date of arrival' and 'Indiana is 100% reservable until 11pm ET on the day of arrival' - no sites are held back for walk-ins. Walk-in registration is still accepted on the day of arrival only, with the camper present, but is being phased out and guarantees nothing. Weekend rule: a Friday night must include Thursday or Saturday; a Saturday night must include Friday or Sunday. The One-Night Relaxed Rule waives that for sites still unrented 3 days out, but 'Required holiday minimum stays are excluded from this relaxed rule' - hence two rules, not one."
     },
     "fees": {
-      "nonresident": {"type": "surcharge", "amount": 15, "per": "stay"}
+      "currency": "USD",
+      "reservation_fee": 6,
+      "entrance": {"resident": 7, "nonresident": 15, "per": "vehicle_day"}
     },
     "provenance": {
-      "booking": {"source": "AWH, reported 2026-09-14 — NOT yet verified against in.gov/dnr", "checked": "2026-09-14"},
-      "fees": {"source": "AWH, reported 2026-09-14 — NOT yet verified against in.gov/dnr", "checked": "2026-09-14"}
+      "booking": {"source": "https://indianastateparks.reserveamerica.com/brands/in/htm/CAMPING_BUSINESS_RULES.pdf (Minimum Stay, Maximum Stay, Minimum Booking Window, Walk-In Registrations, Opening Maximum Window)", "checked": "2026-09-14", "method": "manual"},
+      "fees": {"source": "https://www.in.gov/dnr/state-parks/rates-and-fees/entrance-fees/ plus the $6 transaction fee in CAMPING_BUSINESS_RULES.pdf", "checked": "2026-09-14", "method": "manual"}
+    }
+  },
+  "state:NY": {
+    "fees": {
+      "currency": "USD",
+      "nonresident": {"type": "surcharge", "amount": 5, "per": "night"},
+      "note": "Verbatim: 'Non-NY State residents will pay an additional $5.00 per night fee at camping locations.' Cabins and yurts differ: $7.00 per night or $28 per week. This is a CAMPING surcharge; NY has no resident/non-resident split on park entrance. Hither Hills is reported to charge a doubled non-resident rate and is NOT covered by this row - verify it on the entry itself before relying on the default there."
+    },
+    "provenance": {
+      "fees": {"source": "https://parks.ny.gov/camping/fees-policies", "checked": "2026-09-14", "method": "manual"}
     }
   },
   "state:IA": {
     "booking": {
       "reservable": true,
-      "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
-      "fcfs": "after_cutoff"
+      "platform": "reserveamerica",
+      "window_opens_days": 90,
+      "min_stay": [
+        {"nights": 2, "applies": "weekend", "season": "May 1 - Oct 31"},
+        {"nights": 3, "applies": "holiday", "season": "Memorial Day, Independence Day, Labor Day"}
+      ],
+      "max_stay_nights": 14,
+      "note": "CUTOFF UNRESOLVED - two Iowa DNR pages contradict each other and neither is obviously stale, so reserve_until is deliberately absent. iowadnr.gov/places-go/state-parks/make-reservation/overnight-camping: 'The last day to make a camping reservation, if paying by credit/debit card, is 2 days prior to arrival.' iowadnr.gov/places-go/state-parks/make-reservation: 'The window for reserving campsites is 3 months in advance and up to the day of to the arrival date if paying by credit card.' The 2-day version matches the 48-hour rule reported by AWH. FCFS AFTER THE CUTOFF IS ALSO UNCONFIRMED: no official page found saying unreserved sites revert to first-come at the park. What IS documented is that all campers must register, and that Fort Defiance and Preparation Canyon are walk-in only year-round. Resolve by phone (1-877-427-2757) before trusting either."
     },
     "provenance": {
-      "booking": {"source": "AWH, reported 2026-09-14 — NOT yet verified against iowadnr.gov", "checked": "2026-09-14"}
+      "booking": {"source": "https://www.iowadnr.gov/places-go/state-parks/make-reservation/overnight-camping and https://www.iowadnr.gov/media/7065/download (State Park Rules & Reservation Information) - see note, the two disagree", "checked": "2026-09-14", "method": "manual"}
     }
   },
   "state:MD": {
     "booking": {
       "reservable": true,
-      "fcfs": "never",
-      "note": "Booking closes at some point in the afternoon on the day of arrival and there is no first-come fallback after it. The CUTOFF TIME IS NOT CONFIRMED, so reserve_until is deliberately absent rather than guessed - an invented time would evaluate a query wrongly and look verified doing it."
+      "platform": "reserveamerica",
+      "window_opens_days": 365,
+      "fcfs": "always",
+      "min_stay": [
+        {"nights": 2, "applies": "weekend", "season": "Memorial Day - Labor Day"},
+        {"nights": 3, "applies": "holiday"}
+      ],
+      "note": "Same-day booking closes at 17:00, but only SOME parks accept it - verbatim: 'Same day reservations are allowed at a limited number of parks through the call center and website until 5 pm.' Which parks is not published, so reserve_until is absent at the agency level and belongs on the entries once known. FCFS does exist statewide: 'Walk-in guests at parks and forests can request any non-reserved sites', with named first-come areas at Hart-Miller Island and Green Ridge State Forest (self-registration). Weekend minimum runs Memorial Day through Labor Day and must be Thu/Fri, Fri/Sat or Sat/Sun; holiday weekends need Fri/Sat/Sun. No non-resident surcharge found."
     },
     "provenance": {
-      "booking": {"source": "AWH, reported 2026-09-14 (hedged: 'seems to') — NOT yet verified against dnr.maryland.gov", "checked": "2026-09-14"}
-    }
-  },
-  "state:NY": {
-    "fees": {
-      "nonresident": {"type": "surcharge", "per": "stay"}
-    },
-    "provenance": {
-      "fees": {"source": "AWH, reported 2026-09-14: most NY parks charge only a nominal out-of-state fee. AMOUNT NOT STATED, so it is absent rather than guessed. Hither Hills is a known entry-level exception (double the nightly rate).", "checked": "2026-09-14"}
+      "booking": {"source": "https://dnr.maryland.gov/Publiclands/Pages/campinginfo.aspx", "checked": "2026-09-14", "method": "manual"}
     }
   }
 }

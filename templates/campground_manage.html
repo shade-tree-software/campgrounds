@@ -489,6 +489,21 @@ function sfControlHtml(field, path, value, inherited) {
     ? ` <span class="ef-inherit">(agency: ${escapeHtml(sfDisplay(inherited))})</span>` : '';
   const label = `<label>${escapeHtml(field.label)}${hint}</label>`;
 
+  // A list of rules (minimum stay). Rendered as numbered slots plus one spare,
+  // with a hidden count so the reader knows how many were drawn — probing for
+  // missing elements would stop at the first rule left blank in the middle.
+  if (field.kind === 'list') {
+    const items = Array.isArray(value) ? value : [];
+    const slots = Math.max(field.slots || 2, items.length + 1);
+    let rows = '';
+    for (let i = 0; i < slots; i++) {
+      const item = Object.assign({}, field.item,
+                                 { label: field.label + ' ' + (i + 1) });
+      rows += sfControlHtml(item, path.concat(String(i)), items[i], undefined);
+    }
+    return `<div class="ef full"><input type="hidden" id="${id}-count" value="${slots}">${rows}</div>`;
+  }
+
   if (field.kind === 'obj') {
     const val = (value && typeof value === 'object') ? value : {};
     const inner = field.fields.map(f =>
@@ -544,6 +559,16 @@ function structuredSectionsHtml(c) {
 }
 
 function sfRead(field, path) {
+  if (field.kind === 'list') {
+    const counter = document.getElementById(sfId(path) + '-count');
+    if (!counter) return null;
+    const out = [];
+    for (let i = 0; i < parseInt(counter.value, 10); i++) {
+      const item = sfRead(field.item, path.concat(String(i)));
+      if (item !== null) out.push(item);      // a blank slot is not a rule
+    }
+    return out.length ? out : null;
+  }
   if (field.kind === 'obj') {
     // A nested rule is replaced WHOLE, so it is all-or-nothing: every sub-field
     // blank clears the rule, anything set sends the rule as typed.
