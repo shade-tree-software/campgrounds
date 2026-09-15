@@ -1,6 +1,6 @@
 ---
 name: project_pre_playbook_private_gap
-description: Pre-playbook states (VA/MD/DE/PA/WV) had Good-Sam-sourced private stages, so independent parks with no Good Sam rating were never candidates; VA/PA/WV/MD all done 2026-09-07..15, ONLY DE LEFT (3 candidates)
+description: CLOSED 2026-09-15. Pre-playbook states (VA/MD/DE/PA/WV) had Good-Sam-sourced private stages so unrated independents were never candidates; all five re-swept, 39 adds total
 metadata:
   type: project
 ---
@@ -35,11 +35,26 @@ never added leaves no trace in the data, so the skip reasons are the only record
 **MD is DONE** (2026-09-15, commit `2c24291`, ids 13123-13124). 8 candidates ->
 **2 adds, 6 skips**. Reasoning in `audit/md_private/results_*.json`.
 
-**STILL OPEN — only DE**, 3 candidates (3 pass gate, 0 in DB), measured
-2026-09-08 with a per-state bounding box (an earlier pass used one box clipped
-at lat 40.9 and undercounted PA by half - measure per state). List at
-/tmp/de_candidates.json; regenerate rather than trusting it if /tmp is cleared.
-At the running 4-state rate expect 1 add, possibly 0.
+**DE is DONE** (2026-09-15, commit below). 3 candidates -> **0 adds, 3 skips**:
+two Elks lodges, and Sun Retreats Rehoboth Bay, which is predominantly a
+manufactured-home community (see `audit/de_private/results_de.json`). The
+predicted yield was "1 add, possibly 0" and it was 0 - a state can be genuinely
+finished.
+
+**PROJECT CLOSED.** All five pre-playbook states re-swept: VA 15 + PA 18 + WV 4
++ MD 2 + DE 0 = **39 campgrounds** that were invisible to the original Good-Sam
+sourcing. Nothing is outstanding. Do NOT re-open without a new reason - the
+remaining skips are documented per candidate and several are deliberate
+"cannot verify" holds, not oversights.
+
+**One finding worth keeping loose from the project:** Sun Communities runs TWO
+different Delaware properties both named "Rehoboth Bay" - `Sun Outdoors Rehoboth
+Bay` (id 959, ex-Resort at Massey's Landing, 20628 Long Beach Dr, 302-947-2600,
+the one in the DB) and `Sun Retreats Rehoboth Bay` (ex-Leisure Point RV Resort,
+25491 Dogwood Ln, 302-945-2000, 4.9 km away, skipped). A future sweep hitting
+either name should check WHICH before calling it a duplicate. Verified 2026-09-15
+that id 959's name is still current - Sun's Outdoors->Retreats rebrand has not
+reached it.
 
 **What the last two states added to the method:**
 - **Do the research INLINE, not in a subagent** (AWH 2026-09-15). One agent on 7
