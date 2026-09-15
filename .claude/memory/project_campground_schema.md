@@ -40,18 +40,42 @@ a phone ~90px even collapsed and the mobile `margin-bottom: 28px` rule applies t
 stacked boxes also open a dead gap. Payload measured before adding (§8.4): +20 KB gzipped,
 ~1%; a terse `s`/`p` encoding saved 3 KB more and wasn't worth unreadable client code.
 
-**Not done:** the LLM extraction pass over note prose for amenities/season (doc phase 3);
-Good Sam bulk match (phase 5); more registry rows (phase 6); manage-table sort on the new
-fields; the NL corridor search that started the whole thread (deliberately tabled).
+**PHASE 3 SHIPPED 2026-09-15 as `extract_fields.py`** (doc §7 has the full write-up).
+Reads `hookups`/`sites`/`facilities`/`season`/`booking` out of note prose via `claude-opus-5`;
+the note itself is never edited. Things worth carrying forward that the doc does not stress:
 
-**Next: phase 3, the LLM extraction over note prose**, which is now the blocking item rather
-than one option among several — it is what would give `hookups`/`facilities`/`season` any
-coverage at all, and until it runs there is no second map filter worth building and no
-manage-table sort with anything to sort on. Must be incremental like `day_rollups` (hash the
-inputs, redraft only what moved) and must write NOTHING for what it could not determine
-(§2.1 — no `false`, no `0`, no `""`). It also inherits the §8.6 debt: any pass that empties
-prose into a field owes that field a place a reader looks. After that: phase 5 (Good Sam
-bulk match), phase 6 (more rows).
+- **The chunking design is the reusable part**, and AWH asked for it explicitly: "no huge
+  unstoppable tasks that lose all their data if the session limit hits. Small chunks,
+  sequentially, stoppable, easy to commit work." Batches of 12, N in flight, written in
+  WAVES (one writer, so no lock), `--limit` per run, SIGINT finishes the wave. Progress
+  lives in the DATA (`note_scan` = hash of the note that was read) rather than a cursor
+  file, so resuming is just running it again. Exercised for real: a mid-run Ctrl-C finished
+  its wave, wrote 144 entries and exited with a full summary. Use this shape for any future
+  bulk pass over the library.
+- **`note_scan` is written even when the note yields nothing.** That is the whole of the
+  incrementality — without it the ~70% of notes with no structured fact are re-billed every
+  pass. Same distinction as `detect_people.py`'s recorded 0. See [[feedback-absent-is-not-unknown]].
+- **Effort was measured, not assumed** — `low` looked obviously right for "read a fact off a
+  sentence" and was wrong: it MISSED four explicit facts out of 24 to save ~$2.60/1,000.
+  Same for workers (1→53/min, 4→82, 16→338, no 429s).
+- **Two prompt rules each cost a review round:** an approximate figure is still a figure
+  ("rigs to ~45 ft" → 45) and `max_rig_ft` is dropped only when the note UNDERCUTS its own
+  number; and a bare "reservable online" names no platform (an early version answered
+  `operator`, inventing a channel).
+- **Verify a sample against the notes by hand before a bulk run.** That is what caught the
+  `operator` bug and confirmed every stored `false` traced to an explicit negative in the
+  prose ("restrooms (no showers)", "no potable water", "no hookups").
+
+**Not done:** Good Sam bulk match (phase 5); more registry rows (phase 6); manage-table sort
+on the new fields; the NL corridor search that started the whole thread (deliberately
+tabled).
+
+**Next: more map filters, and RE-MEASURE COVERAGE FIRST.** The rating filter shipped the same
+day on the argument that everything else was at 0%; phase 3 is falsifying that, so the choice
+of the next filter has to be re-derived from `extract_fields.py --report` rather than from
+anything written here. Doc §8.5 has the shape and §2.2 the rule that makes it non-trivial
+(an unknown value is shown and flagged, never filtered out); §8.4 caps what may ride in the
+inline marker payload. After that: phase 5, phase 6.
 
 **Priority came from joining `trips.json` against `campgrounds.json` by nights slept**,
 not entry count — that is what put PA/MD/VA ahead of MI/CA. Re-run that join before
