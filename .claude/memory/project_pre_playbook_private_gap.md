@@ -26,16 +26,42 @@ file `audit/add_research_instructions_va_private.md` is reusable for the rest.
 -> 33 candidates -> **18 adds, 15 skips**; waterfront audit 7 changes / 11
 confirmed. Instructions: `audit/add_research_instructions_pa_private.md`.
 
-**STILL OPEN**, re-measured 2026-09-08 with a bounding box that actually covers
-each state (an earlier pass used one box clipped at lat 40.9 and undercounted PA
-by half - measure per state):
-- **WV** — 36 pass gate, 23 in DB, **13 candidates**
-- **MD** — 9 pass gate, 1 in DB, **8 candidates**
-- **DE** — 3 pass gate, 0 in DB, **3 candidates**
+**WV is DONE** (2026-09-15, commit `68f7811`, ids 13119-13122). 13 candidates ->
+**4 adds, 9 skips** (31%, well under VA/PA). Instructions:
+`audit/add_research_instructions_wv_private.md`; per-candidate reasoning in
+`audit/wv_private/results_*.json`, which is COMMITTED - a campground that was
+never added leaves no trace in the data, so the skip reasons are the only record.
 
-24 candidates left; at the VA/PA keep rate (47% / 55%) expect roughly 12 adds.
-Candidate lists saved to /tmp/{wv,md,de}_candidates.json during that pass -
-regenerate rather than trusting them if /tmp has been cleared.
+**MD is DONE** (2026-09-15, commit `2c24291`, ids 13123-13124). 8 candidates ->
+**2 adds, 6 skips**. Reasoning in `audit/md_private/results_*.json`.
+
+**STILL OPEN — only DE**, 3 candidates (3 pass gate, 0 in DB), measured
+2026-09-08 with a per-state bounding box (an earlier pass used one box clipped
+at lat 40.9 and undercounted PA by half - measure per state). List at
+/tmp/de_candidates.json; regenerate rather than trusting it if /tmp is cleared.
+At the running 4-state rate expect 1 add, possibly 0.
+
+**What the last two states added to the method:**
+- **Do the research INLINE, not in a subagent** (AWH 2026-09-15). One agent on 7
+  WV candidates ate half a session and returned all-or-nothing; done inline the
+  remaining 6 took a fraction of that, with a stop point after every candidate
+  and each verdict written to disk as it was made. See
+  [[feedback_sequential_sweep_agents]] and `audit/README.md` step 2.
+- **The parked official domain is the dominant WV/MD failure**, hit 3 of 13 WV
+  candidates. familyfishingncamping.com and littlecoalrivercampground.com both
+  return a stub that JS-redirects to /lander. Probe with
+  `curl -sS -L -w '%{size_download}'` - a ~114-byte 200 is the tell - before
+  trusting a domain an aggregator lists. Gheny Nook survived the same dead-domain
+  problem only because its operator has a live Facebook page and a county CVB
+  listing.
+- **Skip reasons must say WHICH KIND of no.** Several of these are "real campground,
+  cannot verify" (parked domain, no booking channel) or "real campground, wrong
+  size" (Spring Gap's 20-ft NPS cap) rather than "not a campground". Those are
+  re-openable and the reason has to record that, with the phone number where one
+  exists.
+- **`append_state.py` now writes `rating`** (commit `1617f6d`) - it did not before,
+  so VA/PA got theirs only by accident of a later `extract_rating.py` pass. No
+  manual step needed any more.
 
 **Why:** the gap is invisible from inside the data — a campground that was never
 a candidate leaves no trace, and every VA entry passed its inclusion audit, so
