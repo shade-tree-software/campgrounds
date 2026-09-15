@@ -42,6 +42,7 @@ looking at — it just writes nothing.
 """
 
 import argparse
+import concurrent.futures as cf
 import datetime as dt
 import hashlib
 import json
@@ -69,6 +70,13 @@ BATCH = 12
 # Default cap per RUN, so an unattended invocation cannot turn into an hour-long
 # job that is awkward to stop and awkward to commit.
 DEFAULT_LIMIT = 200
+
+# Batches in flight at once. The run is latency-bound — almost all of its wall
+# clock is spent waiting on the model — so this is what decides whether the full
+# library takes an afternoon or an hour. Kept low anyway: the whole wave has to
+# finish before its write, so one slow batch holds up three, and a bigger number
+# mostly buys rate-limit retries.
+WORKERS = 4
 
 # The groups this pass is allowed to write. `rating` is phase 2's and mechanical;
 # `fees` and `discounts` are excluded because doc §7 measured them at 0.1-1.2%
@@ -319,6 +327,18 @@ def clean_proposal(proposal):
     return out, rejected
 
 
+def _safe_extract(client, batch, args):
+    """Run one batch, returning the exception rather than raising it.
+
+    A wave must not lose three good batches because the fourth timed out, and
+    the entries in a failed batch simply stay queued for the next run.
+    """
+    try:
+        return extract_batch(client, batch, args.model, args.effort)
+    except Exception as e:                       # noqa: BLE001 — batch-local
+        return e
+
+
 def extract_batch(client, entries, model, effort=EFFORT):
     """One request. Returns {id: {group: {...}}} plus usage, or raises."""
     resp = client.messages.create(
@@ -418,6 +438,8 @@ def main():
     ap.add_argument("--model", default=MODEL)
     ap.add_argument("--effort", default=EFFORT,
                     choices=("low", "medium", "high", "xhigh", "max"))
+    ap.add_argument("--workers", type=int, default=WORKERS,
+                    help=f"batches in flight at once (default {WORKERS})")
     ap.add_argument("--dry-run", action="store_true",
                     help="call the model and print proposals, write nothing")
     ap.add_argument("--report", action="store_true",
@@ -473,54 +495,76 @@ def main():
           f"in {len(batches)} batch(es) of {args.batch}"
           f"{' [DRY RUN]' if args.dry_run else ''}\n")
 
-    for n, batch in enumerate(batches, 1):
-        try:
-            proposals, usage = extract_batch(client, batch, args.model,
-                                             args.effort)
-        except Exception as e:                       # noqa: BLE001 — batch-local
-            print(f"batch {n}/{len(batches)}: FAILED ({e})", file=sys.stderr)
-            failed += len(batch)
-            if stopping["now"]:
-                break
-            continue
+    # Batches run concurrently but are WRITTEN IN WAVES: every request in a
+    # wave completes, then one write applies all of them. That keeps the API
+    # time overlapped (the run is latency-bound, not CPU-bound — 4 workers take
+    # it from ~3.7 hours to under an hour) while leaving exactly one writer, so
+    # the read-modify-write in write_deltas stays race-free without a lock. The
+    # blast radius of a kill grows from one batch to one wave, which at the
+    # defaults is 48 entries out of 12,689 — still small, and still recoverable
+    # by simply running again.
+    waves = [batches[i:i + args.workers]
+             for i in range(0, len(batches), args.workers)]
+    done_batches = 0
 
-        in_tok += usage.input_tokens
-        out_tok += usage.output_tokens
-        cached += getattr(usage, "cache_read_input_tokens", 0) or 0
-        # Counted separately because it is billed at ~1.25x and, on the first
-        # call of a run, it is the whole system prompt — leaving it out made a
-        # run look several times cheaper than it was.
-        cache_write += getattr(usage, "cache_creation_input_tokens", 0) or 0
+    for wave in waves:
+        results = []
+        if args.workers == 1:
+            results = [(wave[0], _safe_extract(client, wave[0], args))]
+        else:
+            with cf.ThreadPoolExecutor(max_workers=len(wave)) as pool:
+                futures = {pool.submit(_safe_extract, client, b, args): b
+                           for b in wave}
+                for fut in cf.as_completed(futures):
+                    results.append((futures[fut], fut.result()))
 
-        by_id = {e["id"]: e for e in batch}
         deltas = {}
-        for proposal in proposals:
-            cid = proposal.get("id")
-            entry = by_id.get(cid)
-            if entry is None:
-                print(f"  ignoring unknown id {cid!r} in reply", file=sys.stderr)
+        for batch, outcome in results:
+            done_batches += 1
+            if isinstance(outcome, Exception):
+                print(f"batch {done_batches}/{len(batches)}: FAILED ({outcome})",
+                      file=sys.stderr)
+                failed += len(batch)
                 continue
-            groups, rejected = clean_proposal(proposal)
-            for r in rejected:
-                print(f"  {cid}: dropped {r}", file=sys.stderr)
-            deltas[cid] = (groups, note_sig(entry.get("note")))
-            if groups:
-                values_found += 1
-            if args.dry_run:
-                summary = ("nothing" if not groups else json.dumps(
-                    groups, ensure_ascii=False, sort_keys=True))
-                print(f"  {cid} {entry.get('name', '')[:44]:<44} {summary}")
+            proposals, usage = outcome
+            in_tok += usage.input_tokens
+            out_tok += usage.output_tokens
+            cached += getattr(usage, "cache_read_input_tokens", 0) or 0
+            # Counted separately because it is billed at ~1.25x and, on the
+            # first call of a run, it is the whole system prompt — leaving it
+            # out made a run look several times cheaper than it was.
+            cache_write += getattr(usage, "cache_creation_input_tokens", 0) or 0
 
-        # An entry the model skipped entirely got no answer, so it is NOT
-        # stamped — leaving it queued for the next run rather than silently
-        # recorded as read.
+            by_id = {e["id"]: e for e in batch}
+            for proposal in proposals:
+                cid = proposal.get("id")
+                entry = by_id.get(cid)
+                if entry is None:
+                    print(f"  ignoring unknown id {cid!r} in reply",
+                          file=sys.stderr)
+                    continue
+                groups, rejected = clean_proposal(proposal)
+                for r in rejected:
+                    print(f"  {cid}: dropped {r}", file=sys.stderr)
+                # An entry the model skipped entirely got no answer, so it is
+                # NOT stamped — leaving it queued for the next run rather than
+                # silently recorded as read.
+                deltas[cid] = (groups, note_sig(entry.get("note")))
+                if groups:
+                    values_found += 1
+                if args.dry_run:
+                    summary = ("nothing" if not groups else json.dumps(
+                        groups, ensure_ascii=False, sort_keys=True))
+                    print(f"  {cid} {entry.get('name', '')[:44]:<44} {summary}")
+
         scanned += len(deltas)
         if not args.dry_run and deltas:
             written += write_deltas(deltas, args.model, today)
 
-        print(f"batch {n}/{len(batches)}: {len(deltas)} scanned, "
-              f"{sum(1 for g, _ in deltas.values() if g)} with values"
-              f"{'' if args.dry_run else ' — written'}")
+        print(f"{done_batches}/{len(batches)} batches | "
+              f"{scanned:,}/{len(todo):,} scanned | "
+              f"{values_found:,} with values"
+              f"{'' if args.dry_run else ' — written'}", flush=True)
         if stopping["now"]:
             break
 
