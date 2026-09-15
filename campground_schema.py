@@ -454,10 +454,17 @@ def _inherited(entry, registry):
 def resolve(entry, registry=None):
     """Effective structured fields for one entry, with each group's scope.
 
-    Returns ``{group: {"values": {...}, "scope": "entry"|"agency"|"mixed"}}``.
-    Nothing is copied into stored entries — inheritance happens HERE, on read,
-    so a registry correction propagates instantly and "verified" stays literally
-    checkable: the entry has its own key, or it does not.
+    Returns ``{group: {"values": {...}, "scope": ..., "inherited": [keys]}}``,
+    where scope is ``"entry"``, ``"agency"`` or ``"mixed"``. Nothing is copied
+    into stored entries — inheritance happens HERE, on read, so a registry
+    correction propagates instantly and "verified" stays literally checkable:
+    the entry has its own key, or it does not.
+
+    `inherited` names the keys the AGENCY supplied, because a group-level scope
+    is not enough for a reader-facing surface. A mixed group holds both kinds of
+    value at once, and doc §3 forbids an inherited one from phrasing itself as a
+    fact about the park — so the popup has to know which half is which, field by
+    field, not merely that the group has some of each.
 
     A group absent from both the entry and the registry is absent from the
     result. It is unknown, and unknown must never render as a value, nor be
@@ -477,7 +484,8 @@ def resolve(entry, registry=None):
             scope = "entry" if set(own) >= set(inherited) else "mixed"
         else:
             scope = "entry" if own else "agency"
-        out[group] = {"values": values, "scope": scope}
+        out[group] = {"values": values, "scope": scope,
+                      "inherited": [k for k in values if k not in own]}
     return out
 
 

@@ -249,6 +249,7 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="{{ static_v('campground-schema.js') }}"></script>
 <script src="{{ static_v('map-picker.js') }}"></script>
 <script>
 const WATERFRONT_OPTIONS = ['not waterfront','lakefront','lakeview','riverfront','riverview','creekside','pond','bayfront','bayview','coastal dunes','coastal woods'];
@@ -477,15 +478,6 @@ function inheritedValue(c, groupKey, fieldKey) {
   return group ? group[fieldKey] : undefined;
 }
 
-function sfDisplay(v) {
-  if (v === true) return 'yes';
-  if (v === false) return 'no';
-  if (v && typeof v === 'object') {
-    return Object.keys(v).map(k => k + ' ' + sfDisplay(v[k])).join(', ');
-  }
-  return String(v);
-}
-
 function sfControlHtml(field, path, value, inherited) {
   const id = sfId(path);
   const hint = (value === undefined || value === null) && inherited !== undefined
@@ -535,97 +527,6 @@ function sfControlHtml(field, path, value, inherited) {
   const step = field.kind === 'int' ? ' step="1"' : '';
   return `<div class="ef${numeric ? '' : ' wide'}">${label}
     <input id="${id}" type="${numeric ? 'number' : 'text'}"${step} value="${escapeAttr(val)}"></div>`;
-}
-
-// Fields that say nothing useful in a one-line collapsed summary — provenance,
-// prose, and plumbing. They still render inside the open section.
-const SF_SUMMARY_SKIP = new Set(['source', 'checked', 'note', 'url', 'platform',
-                                 'currency', 'nightly_high', 'closes']);
-
-// A collapsed section shows its VALUES, not a count of them. It used to read
-// "4 set", which on the Rating section is worse than useless: Prophetstown is a
-// 5-star park whose chip said "4 set", and a bare number beside the word Rating
-// reads as a score. The count also answered a question nobody asks.
-function sfMoney(n) {
-  return '$' + (Number.isInteger(n) ? n : Number(n).toFixed(2));
-}
-
-function sfChip(groupKey, field, value) {
-  const k0 = groupKey + '.' + field.key;
-  // "reservable" is true on almost every row and would spend one of the three
-  // summary slots saying nothing. Its FALSE is worth a slot.
-  if (k0 === 'booking.reservable') return value ? null : 'not reservable';
-  if (value === true) return field.label.toLowerCase();
-  if (value === false) return 'no ' + field.label.toLowerCase();
-  if (value === null || value === undefined) return null;
-  const k = groupKey + '.' + field.key;
-  if (k === 'rating.stars') return value + '\u2605';
-  if (k === 'rating.price_tier') return value > 0 ? '$'.repeat(value) : 'free';
-  if (k === 'hookups.electric') return value > 0 ? value + 'A' : 'no electric';
-  if (k === 'sites.count') return value + ' sites';
-  if (k === 'sites.max_rig_ft') return 'to ' + value + ' ft';
-  if (k === 'booking.window_opens_days') return value + 'd ahead';
-  if (k === 'booking.max_stay_nights') return 'max ' + value + 'n';
-  // nightly_high is skipped and folded in here, so a rate reads "$33-37"
-  // rather than "$33 · $37" — two numbers that look like unrelated facts.
-  if (k === 'fees.nightly_low') return sfMoney(value);
-  if (k === 'fees.reservation_fee') return '+' + sfMoney(value) + ' res';
-  // Raw enum values are meaningless alone: a Booking section reading "always"
-  // tells you nothing about what is always true.
-  if (k === 'booking.fcfs') {
-    return {never: 'no walk-ups', always: 'walk-ups',
-            after_cutoff: 'walk-ups after cutoff',
-            some_sites: 'some walk-ups'}[value] || value;
-  }
-  if (k === 'booking.reserve_until') {
-    if (value && value.at) return 'closes ' + value.at;
-    if (value && value.offset_hours) return 'closes ' + (-value.offset_hours) + 'h before';
-    return 'has a cutoff';
-  }
-  // The two fee shapes that matter most read as bare labels otherwise.
-  if (k === 'fees.nonresident') {
-    if (value && value.type === 'multiplier') return 'non-res \u00d7' + value.factor;
-    if (value && value.amount != null) {
-      return 'non-res +' + sfMoney(value.amount) + (value.per === 'night' ? '/night' : '');
-    }
-    return 'non-res extra';
-  }
-  if (k === 'fees.entrance') {
-    const r = value && value.resident, n = value && value.nonresident;
-    if (r != null && n != null) {
-      return r === n ? 'entry ' + sfMoney(r) : 'entry ' + sfMoney(r) + '/' + sfMoney(n);
-    }
-    return 'entry fee';
-  }
-  if (k === 'fees.prereq_pass') {
-    return 'pass ' + (value && value.price != null ? sfMoney(value.price) : '$?');
-  }
-  if (Array.isArray(value)) {
-    return value.length + ' ' + field.label.toLowerCase()
-           + (value.length === 1 ? '' : 's');
-  }
-  if (value && typeof value === 'object') return field.label.toLowerCase();
-  return String(value);
-}
-
-function sfSummary(group, values) {
-  const parts = [];
-  group.fields.forEach(f => {
-    if (SF_SUMMARY_SKIP.has(f.key) || !(f.key in values)) return;
-    let chip = sfChip(group.key, f, values[f.key]);
-    if (chip && f.key === 'nightly_low' && values.nightly_high != null
-        && values.nightly_high !== values.nightly_low) {
-      chip += '-' + values.nightly_high;
-    }
-    // A season is one span, not two dates that happen to sit next to each other.
-    if (chip && f.key === 'opens' && values.closes) {
-      chip += ' to ' + values.closes;
-    }
-    if (chip) parts.push(chip);
-  });
-  if (!parts.length) return null;
-  const shown = parts.slice(0, 3).join(' \u00b7 ');
-  return parts.length > 3 ? `${shown} +${parts.length - 3}` : shown;
 }
 
 function structuredSectionsHtml(c) {

@@ -344,6 +344,57 @@ class TestRegistryResolution(unittest.TestCase):
         self.assertEqual(entry, {"ownership": "state", "state": "NY"})
 
 
+class TestInheritedKeysAreNamed(unittest.TestCase):
+    """`resolve` says WHICH keys the agency supplied, not just that some were.
+
+    A group-level scope is enough for the manage form, which draws every field
+    as its own control and can ask `field_scope` one at a time. It is not enough
+    for a reader-facing surface that renders a group as one line: a `mixed`
+    group holds a verified value and an inherited one side by side, and doc §3
+    forbids the inherited half from phrasing itself as a fact about the park.
+    Hither Hills is the case — its own doubled rate must read as this park's
+    fee, while the statewide surcharges beside it must not.
+    """
+
+    REGISTRY = {
+        "state:NY": {"fees": {"nightly_low": 20,
+                              "nonresident": {"type": "surcharge", "amount": 5,
+                                              "per": "night"}},
+                     "booking": {"reservable": True, "fcfs": "never"}},
+    }
+
+    def test_a_wholly_inherited_group_names_every_key(self):
+        got = cs.resolve({"ownership": "state", "state": "NY"}, self.REGISTRY)
+        self.assertEqual(got["booking"]["scope"], "agency")
+        self.assertEqual(sorted(got["booking"]["inherited"]),
+                         ["fcfs", "reservable"])
+
+    def test_a_mixed_group_names_only_the_agency_half(self):
+        entry = {"ownership": "state", "state": "NY",
+                 "fees": {"nightly_low": 33}}
+        got = cs.resolve(entry, self.REGISTRY)
+        self.assertEqual(got["fees"]["scope"], "mixed")
+        self.assertEqual(got["fees"]["inherited"], ["nonresident"])
+        # And the verified half is exactly what is left over.
+        verified = [k for k in got["fees"]["values"]
+                    if k not in got["fees"]["inherited"]]
+        self.assertEqual(verified, ["nightly_low"])
+
+    def test_an_entry_scoped_group_inherits_nothing(self):
+        entry = {"ownership": "private", "state": "PA",
+                 "hookups": {"electric": 50}}
+        self.assertEqual(cs.resolve(entry, self.REGISTRY)["hookups"]["inherited"],
+                         [])
+
+    def test_an_override_moves_a_key_out_of_the_inherited_list(self):
+        # Overriding one field must not claim the others were verified too.
+        entry = {"ownership": "state", "state": "NY",
+                 "booking": {"fcfs": "always"}}
+        got = cs.resolve(entry, self.REGISTRY)
+        self.assertEqual(got["booking"]["inherited"], ["reservable"])
+        self.assertEqual(got["booking"]["values"]["fcfs"], "always")
+
+
 class TestProvenance(unittest.TestCase):
     def test_provenance_is_per_group_and_validated(self):
         entry = {}

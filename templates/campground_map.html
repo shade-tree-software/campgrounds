@@ -5,6 +5,7 @@
 {% block head_extra %}
 <link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}" />
 <script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
+<script src="{{ static_v('campground-schema.js') }}"></script>
 <script>L.Icon.Default.imagePath = "/static/vendor/leaflet/images/";</script>
 {% if is_admin %}<link rel="stylesheet" href="{{ static_v('map-picker.css') }}" />{% endif %}
 {% endblock %}
@@ -376,6 +377,16 @@
   .cg-visits.expanded .show-more { display: none; }
   .cg-visits .show-more { cursor: pointer; font-style: italic; }
 
+  /* Structured facts (docs/campground-schema.md) inside a campground popup. */
+  .cg-facts { margin-top: .35rem; font-size: .85em; line-height: 1.5; }
+  .cg-facts b { color: #002868; font-weight: 600; margin-right: .3em; }
+  /* The agency half is deliberately NOT the verified colour — it is the same
+     muted tan the manage form uses for an inherited value, so the two pages
+     agree about what "this came from the agency, not the park" looks like. */
+  .cg-facts-agency, .cg-facts-agency b { color: #8a7a4a; }
+  .cg-facts-agency { font-style: italic; }
+  .cg-agency-head { font-style: normal; font-size: .95em; }
+
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
   .cg-popup-loading::after {
@@ -700,6 +711,7 @@ const COLOR_MODES = {{ color_modes | tojson }};
 const DEFAULT_MODE = {{ default_mode | tojson }};
 const OWNERSHIP_LABELS = {{ ownership_labels | tojson }};
 const STATE_NAMES = {{ state_names | tojson }};
+const CG_SCHEMA = {{ cg_schema | tojson }};
 const HOME = {{ home | tojson }};
 const FAMILY = {{ family_locations | tojson }};
 const IS_ADMIN = {{ is_admin | tojson }};
@@ -1163,6 +1175,51 @@ function loadCgDetail(cg, onDone) {
     .then(d => { cg._detail = d; cgDetailPending.delete(cg.id); onDone(); });
 }
 
+// The structured fields, as two visually distinct halves (docs/campground-schema.md).
+//
+// Splitting them is the whole point. `resolve()` merges what was verified for
+// THIS campground with what its agency supplies, and §3 forbids the inherited
+// half from phrasing itself as a fact about the park: 102 New York entries all
+// reading "$5 non-resident fee" would be uniform, authoritative-looking, and
+// wrong exactly at Hither Hills, which charges double. So the agency half keeps
+// its own colour, its own voice ("Typical for ..."), and never appears without
+// naming who it belongs to.
+//
+// The chips themselves come from the shared formatter the manage page uses, so
+// a value cannot be spoken one way there and another way here.
+const CG_FACT_CHIP_MAX = 6;   // a popup is a summary; the manage form has it all
+
+function cgFactRow(label, chips) {
+  if (!chips.length) return '';
+  const shown = chips.slice(0, CG_FACT_CHIP_MAX).map(escapeHtml).join(' \u00b7 ');
+  const extra = chips.length > CG_FACT_CHIP_MAX
+    ? ` +${chips.length - CG_FACT_CHIP_MAX}` : '';
+  return `<div><b>${escapeHtml(label)}</b>${shown}${extra}</div>`;
+}
+
+function cgFactsHtml(d) {
+  if (!d.policy) return '';
+  let own = '', agency = '';
+  CG_SCHEMA.forEach(g => {
+    const block = d.policy[g.key];
+    if (!block) return;
+    const inherited = new Set(block.inherited || []);
+    const verified = new Set(Object.keys(block.values).filter(k => !inherited.has(k)));
+    own += cgFactRow(g.label, verified.size ? sfChips(g, block.values, verified) : []);
+    agency += cgFactRow(g.label, inherited.size ? sfChips(g, block.values, inherited) : []);
+  });
+  let html = own ? `<div class="cg-facts">${own}</div>` : '';
+  // Without a name for the agency the inherited half cannot be attributed, and
+  // an unattributed inherited value is exactly the confident falsehood above.
+  // So it is shown only when the server could name where it came from.
+  if (agency && d.policy_label) {
+    html += `<div class="cg-facts cg-facts-agency">`
+          + `<div class="cg-agency-head">Typical for ${escapeHtml(d.policy_label)}`
+          + ` \u2014 not checked for this campground</div>${agency}</div>`;
+  }
+  return html;
+}
+
 // Popup HTML for one campground. Extracted so an inline edit can regenerate it
 // (marker.setPopupContent) without a reload. Renders whatever is known now: the
 // header is always available, the detail block fills in once the fetch lands.
@@ -1183,6 +1240,7 @@ function cgPopupHtml(cg) {
   } else if (d.failed) {
     popup += `<br><span style="color:#888;font-size:.9em;">Details unavailable — you may be offline.</span>`;
   } else {
+    popup += cgFactsHtml(d);
     if (cg.visit_count) {
       popup += '<div class="cg-visits" style="margin-top:4px;font-size:12px;">';
       const SHOW_BY_DEFAULT = 3;

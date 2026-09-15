@@ -644,3 +644,36 @@ FCFS, Good Sam) follow that shape.
 Every such filter obeys §2.2: an unknown value is **shown and flagged**, never filtered out.
 A filter that silently hides unverified entries turns a 30%-populated field into a search
 that quietly returns a tenth of the database.
+
+### 8.6 The popup draws the two halves separately
+
+The map popup fetches the resolved groups along with the rest of its detail (§8.4) and
+renders them as chip runs: the verified half in the page's own voice, the inherited half
+in the manage form's muted tan, italic, under *"Typical for <agency> — not checked for this
+campground"*. Three parts of that are load-bearing rather than decorative.
+
+- **`resolve()` names the inherited KEYS, not just each group's scope.** A `mixed` group
+  holds both kinds of value at once — Hither Hills' own doubled rate sits beside the
+  statewide surcharges it never overrode — and §3's ban applies field by field, not group
+  by group. The renderer subtracts `inherited` from `values` to get the verified half, so a
+  key missing from that list is silently promoted to a fact about the park.
+- **The agency half appears only when the server could NAME the agency.** A registry key
+  (`state:IN`) cannot finish that sentence, so `_policy_label()` spells one out of the
+  entry's own ownership and state ("Indiana state parks", "federal campgrounds" — never
+  per-state, since level 3 exists precisely because federal policy is not), and title-cases
+  the slug of an explicit `policy_ref`. An unattributed inherited value is exactly the
+  confident falsehood this model exists to prevent, so **no label means no agency block**.
+- **Both pages format a value through one shared module**, `static/campground-schema.js`.
+  A second copy of the phrasing in the other template would drift the first time a field
+  was worded on one side only, and the failure is quiet: both pages keep rendering, and
+  disagree. The field metadata still comes from `to_client()`; only the phrasing lives
+  there.
+
+The popup is a summary — six chips a group, then a `+N` tail. The manage form is where
+every value is visible and the only place any of them can be edited.
+
+**Surfacing the rating was a fix, not a garnish.** Phase 2 lifted `RV Life 4*/$$` out of
+the note prose on 11,771 entries, and the popup renders the note — so between that pass and
+this one, a published fact about four fifths of the database was visible nowhere but the
+admin form. Any future extraction that empties prose into a field inherits the same
+obligation: the field has to come back out somewhere a reader looks.

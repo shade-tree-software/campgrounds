@@ -4538,6 +4538,45 @@ OWNERSHIP_LABELS = {
 }
 
 
+# How each ownership's agency is spoken about when a popup attributes an
+# inherited value to it. The registry is keyed by slug (`state:IN`), which is
+# right for a lookup and useless in a sentence: doc §3 requires an inherited
+# value to read as the agency's norm rather than as a fact about this park, and
+# "state:IN" cannot carry that sentence.
+_POLICY_SYSTEM = {
+    "state": "state parks",
+    "wma": "wildlife-management areas",
+    "provincial": "provincial parks",
+    "local": "county and municipal parks",
+    "federal": "federal campgrounds",
+    "private": "private parks",
+    "hipcamp": "HipCamp sites",
+}
+
+
+def _policy_label(row, registry):
+    """Human phrase for the agency `row` inherits policy from, or None.
+
+    Names the most specific registry row that actually exists, which is also the
+    one whose values dominate the merge. A level-2/3 ref is spelled out of the
+    entry's own ownership and state; an explicit `policy_ref` names an agency no
+    ownership/state pair can spell, so its slug is title-cased instead.
+    """
+    ref = next((r for r in campground_schema.policy_refs(row) if r in registry), None)
+    if ref is None:
+        return None
+    ownership = (row.get("ownership") or "").strip()
+    state = (row.get("state") or "").strip()
+    system = _POLICY_SYSTEM.get(ownership)
+    if system and ref == ownership:
+        return system
+    if system and ref == f"{ownership}:{state}":
+        return f"{STATE_NAMES.get(state, state)} {system}"
+    slug = ref.split(":", 1)[-1]
+    return " ".join(w.upper() if len(w) == 2 else w.capitalize()
+                    for w in slug.split("-"))
+
+
 # Everything that can change the rendered map page. The data files are the
 # obvious inputs; the templates and this module are in there so a DEPLOY
 # invalidates every client's copy — serving a stale page after a code change is
@@ -4546,6 +4585,8 @@ OWNERSHIP_LABELS = {
 _MAP_ETAG_INPUTS = (
     CAMPGROUNDS_JSON, FAMILY_JSON, HOME_FILE, TRIPS_JSON, ROADSIDE_JSON,
     POLICIES_JSON,
+    os.path.join(os.path.dirname(__file__), "campground_schema.py"),
+    os.path.join(os.path.dirname(__file__), "static", "campground-schema.js"),
     os.path.join(os.path.dirname(__file__), "templates", "campground_map.html"),
     os.path.join(os.path.dirname(__file__), "templates", "base.html"),
     os.path.abspath(__file__),
@@ -4586,6 +4627,10 @@ def campgrounds_map():
         title='Map',
         campgrounds=_map_marker_rows(_load_campgrounds()),
         roadside=_load_roadside(),
+        # Metadata only — labels and field order for the eight groups, ~5.8 KB
+        # for the whole vocabulary rather than per entry. The VALUES still
+        # arrive with the popup fetch (doc §8.4).
+        cg_schema=campground_schema.to_client(),
         color_modes=COLOR_MODES,
         default_mode=mode,
         ownership_labels=OWNERSHIP_LABELS,
@@ -4623,9 +4668,13 @@ def api_campground_popup(cg_id):
     # THIS campground or inherited from its agency — an inherited value that
     # reads as a fact about the park is the failure this whole model exists to
     # prevent.
-    policy = campground_schema.resolve(row, _load_policies())
+    policies = _load_policies()
+    policy = campground_schema.resolve(row, policies)
     if policy:
         payload["policy"] = policy
+        label = _policy_label(row, policies)
+        if label:
+            payload["policy_label"] = label
     resp = jsonify(payload)
     resp.headers["ETag"] = _map_etag("popup", cg_id)
     return resp
