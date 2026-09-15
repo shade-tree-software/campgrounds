@@ -509,6 +509,69 @@ def report(rows):
               + ", ".join(f"{s} {n:,}" for s, n in top))
 
 
+# ── Working without the API ─────────────────────────────────────────────────
+# The API account ran out of credit with 5,145 notes unread (AWH 2026-09-15:
+# "we won't be getting more API credits for the time being"), so the same
+# extraction can be done by a model reading the notes directly in a session and
+# handing back the same JSON. These two modes are that path, and the point of
+# routing it through here rather than editing campgrounds.json by hand is that
+# EVERY rule still applies: the proposals go through `clean_proposal` and
+# `write_deltas` exactly as the API's do, so the vocabulary is enforced, a
+# human-verified group is still protected, a null still cannot delete a field,
+# and `note_scan` is still stamped so the work is resumable.
+#
+# Follow the rules in SYSTEM above when reading the notes. They are not
+# suggestions — most of them are a specific mistake that was made and caught.
+
+SESSION_MODEL = "claude-opus-5/session"
+
+
+def dump_queued(rows, count, state=None, path=None):
+    """Write the next `count` queued notes as JSON for a reader to work from."""
+    todo = candidates(rows, state=state)[:count]
+    payload = [{"id": e["id"], "note": (e.get("note") or "").strip()}
+               for e in todo]
+    text = json.dumps(payload, ensure_ascii=False, indent=1)
+    if path:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+        print(f"{len(payload)} notes -> {path}")
+    else:
+        print(text)
+    return len(payload)
+
+
+def apply_file(path, model, today, dry_run=False):
+    """Apply proposals from a JSON file through the normal validation path."""
+    with open(path, encoding="utf-8") as fh:
+        proposals = json.load(fh)
+    rows = load_rows()
+    by_id = {r.get("id"): r for r in rows}
+    deltas, with_values, unknown = {}, 0, []
+    for proposal in proposals:
+        cid = proposal.get("id")
+        entry = by_id.get(cid)
+        if entry is None:
+            unknown.append(cid)
+            continue
+        groups, rejected = clean_proposal(proposal)
+        for r in rejected:
+            print(f"  {cid}: dropped {r}", file=sys.stderr)
+        deltas[cid] = (groups, note_sig(entry.get("note")))
+        if groups:
+            with_values += 1
+    if unknown:
+        print(f"  ignoring {len(unknown)} unknown id(s): {unknown[:8]}",
+              file=sys.stderr)
+    print(f"{len(deltas)} entries, {with_values} with values"
+          + (" [DRY RUN]" if dry_run else ""))
+    if dry_run:
+        return 0
+    written = write_deltas(deltas, model, today)
+    print(f"written {written}")
+    return written
+
+
 # ── Main ────────────────────────────────────────────────────────────────────
 
 def main():
@@ -528,11 +591,27 @@ def main():
                     help="call the model and print proposals, write nothing")
     ap.add_argument("--report", action="store_true",
                     help="coverage and what is left; no API call")
+    ap.add_argument("--dump", type=int, metavar="N",
+                    help="write the next N queued notes as JSON and exit; "
+                         "no API call (for reading them without the API)")
+    ap.add_argument("--out", help="file for --dump")
+    ap.add_argument("--apply-file", metavar="PATH",
+                    help="apply proposals from a JSON file through the same "
+                         "validation and write path; no API call")
     args = ap.parse_args()
 
     rows = load_rows()
     if args.report:
         report(rows)
+        return 0
+
+    today = dt.date.today().isoformat()
+    if args.dump is not None:
+        dump_queued(rows, args.dump, state=args.state, path=args.out)
+        return 0
+    if args.apply_file:
+        apply_file(args.apply_file, SESSION_MODEL, today,
+                   dry_run=args.dry_run)
         return 0
 
     ids = None
@@ -554,7 +633,6 @@ def main():
 
     import anthropic
     client = anthropic.Anthropic()
-    today = dt.date.today().isoformat()
 
     # Ctrl-C between batches stops cleanly; inside one it finishes the write
     # first, so the interrupt costs at most the batch in flight and never a
