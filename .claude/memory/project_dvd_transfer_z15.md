@@ -1,12 +1,16 @@
 ---
 name: project_dvd_transfer_z15
-description: Work machine is DVD-only (no USB/SD allowed off it) — street-us-z15.pmtiles is split into 3 dual-layer DVD parts in /data/ekko-us-build/dvd-split/
+description: DONE 2026-09-14 — z15 tiles transferred and the card loaded; kept for the standing rule that the work machine is DVD-only and how a big artifact gets off it
 metadata: 
   node_type: memory
   type: project
   originSessionId: d73f68ff-c0cc-41c8-8f13-f881a2c4f99c
   modified: 2026-07-22T12:31:26.829Z
 ---
+
+**>>> DONE 2026-09-14 (AWH): the transfer is complete and the card is loaded.** The staged parts
+in `/data/ekko-us-build/dvd-split/` (~18.6 GB) can go. What stays true is the rule in the first
+paragraph — this is the method for any future large artifact.
 
 The work machine has a **no-USB-stick / no-SD-card policy — burning to DVD is the only way to get files off it**. Any large artifact built there (tile files, archives) must be split to disc-sized parts, not copied to removable flash. The earlier corridor-era tile files were moved off this way too.
 

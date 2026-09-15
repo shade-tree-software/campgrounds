@@ -1,12 +1,17 @@
 ---
 name: project_usb_standalone_edition
-description: "A standalone offline USB-stick edition of the EKKO Trips app; layout, build recipe, and the offline tile pipeline (satellite DONE 2026-07-19, street rendering) — see STATUS + RESUME sections"
+description: "COMPLETE 2026-09-14 — the offline SD-card edition of EKKO Trips is built, loaded and off the list; kept for the build recipe and the offline tile pipeline"
 metadata: 
   node_type: memory
   type: project
   originSessionId: 8d60efa1-9fa1-4ef7-b075-4178d82597ae
   modified: 2026-07-21T14:07:24.263Z
 ---
+
+**>>> COMPLETE 2026-09-14 (AWH): the card is built and loaded — nationwide z15 street tiles
+included. Nothing here is outstanding.** Everything below is the build record, kept because a
+re-render or a second card would start from it, not because any of it is still to do. Ignore the
+"pending"/"REMAINING"/"TODO" wording in the dated status blocks; it was true when written.
 
 Built a fully self-contained, offline-capable USB edition of the EKKO Trips app on 2026-07-17 (owner's request). Runs on any x86_64 recent Linux Mint with NO system Python and NO internet.
 
