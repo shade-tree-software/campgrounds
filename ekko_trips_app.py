@@ -105,9 +105,14 @@ def _cache_static(resp):
 
 
 # Audit-trail fields on a campground entry: the proof strings behind its
-# waterfront and inclusion calls. Source of truth in campgrounds.json, but no
-# client reads them, so every browser-bound payload strips them.
-_AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence")
+# waterfront and inclusion calls, plus `note_scan` — the extraction pass's
+# record of having read the note (extract_fields.py). Source of truth in
+# campgrounds.json, but no client reads any of them, so every browser-bound
+# payload strips them. Stripping is safe for the same reason it always was:
+# PUT merges from a field whitelist, so a save can't clobber a field the client
+# never received. `note_scan` alone is ~1.9 MB across the database.
+_AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence",
+                          "note_scan")
 
 # Compress text responses above this size. Below it the CPU cost and the ~20
 # bytes of gzip framing aren't worth it.
@@ -2312,8 +2317,7 @@ def _load_campgrounds():
     # 14.4 MB. Dropping them here keeps them out of every browser payload while
     # leaving the file untouched (PUT merges from a field whitelist, so a UI
     # save can't clobber what the client never received).
-    excluded = {"index", "stays", "elevation_meters",
-                "waterfront_evidence", "inclusion_evidence"}
+    excluded = {"index", "stays", "elevation_meters"} | set(_AUDIT_EVIDENCE_FIELDS)
     rows = []
     for entry in entries:
         if "location" not in entry:

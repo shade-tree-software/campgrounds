@@ -1,0 +1,547 @@
+#!/usr/bin/env python3
+"""Read structured fields out of campground note prose (doc §7 phase 3).
+
+The notes are the richest thing in `campgrounds.json` and the least searchable.
+Roughly a third of them name a toilet type, a site count, a season or a booking
+channel in plain English — facts the schema can hold but nothing can filter on
+while they live in a sentence. This pass reads each note once and writes what it
+actually says into `hookups` / `sites` / `facilities` / `season` / `booking`.
+
+**Extraction is additive: the note is never touched** (doc §6). The structured
+fields are an index derived from the prose, not a replacement for it — "longer
+rigs may curb-park (32-ft limit suggested)" has no field, and gutting the note
+to populate one would lose it permanently. The single exception to that rule,
+the templated RV Life tail, was phase 2's job and is already done.
+
+Three rules carry most of the design:
+
+**Absent is unknown** (doc §2.1). The model writes a key only when the note
+SAYS so. It never writes `false` for "not mentioned" — and the difference is not
+cosmetic, because the map filter shipped for phase 2's fields treats a missing
+key as "cannot rule out" and a present `false` as a checked fact. One careless
+default here is indistinguishable from twelve thousand verifications.
+
+**A human always outranks this.** A group whose `provenance` says `manual` or
+`reported` is never overwritten, however confident the model is.
+
+**Every run is resumable and every batch is durable.** The work is chunked, each
+chunk is written to disk before the next one starts, and progress lives in the
+data (`note_scan`) rather than in a cursor file — so an interrupted run resumes
+by simply being run again, and a killed process loses at most one batch.
+
+Run it in small pieces and commit between them:
+
+    ./extract_fields.py --report                 # what is left, costs nothing
+    ./extract_fields.py --limit 20 --dry-run     # see what it WOULD write
+    ./extract_fields.py --limit 200              # do 200, write as it goes
+    git add -u && git commit
+
+Needs `ANTHROPIC_API_KEY` (the repo's .env carries it) and `pip install
+anthropic`. `--dry-run` still calls the API — the proposals are the thing worth
+looking at — it just writes nothing.
+"""
+
+import argparse
+import datetime as dt
+import hashlib
+import json
+import os
+import re
+import signal
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import campground_schema as cs  # noqa: E402
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
+CAMPGROUNDS_JSON = os.path.join(ROOT, "campgrounds.json")
+
+MODEL = "claude-opus-5"
+MAX_TOKENS = 8000
+
+# Notes per request. Small on purpose. A batch is the unit of durability — it is
+# written to disk before the next one starts — so a big batch risks more work on
+# a kill, and the per-call overhead it would save is already paid for by caching
+# the system prompt. 12 notes is ~1,200 tokens in and ~700 out.
+BATCH = 12
+
+# Default cap per RUN, so an unattended invocation cannot turn into an hour-long
+# job that is awkward to stop and awkward to commit.
+DEFAULT_LIMIT = 200
+
+# The groups this pass is allowed to write. `rating` is phase 2's and mechanical;
+# `fees` and `discounts` are excluded because doc §7 measured them at 0.1-1.2%
+# in note prose — an extraction pass aimed at them returns almost nothing and
+# invites the model to infer a price from adjectives.
+TARGET_GROUPS = ("hookups", "sites", "facilities", "season", "booking")
+
+# Groups whose provenance marks a human reading. Never overwritten (doc §3:
+# verified > derived > inherited).
+HUMAN_METHODS = {"manual", "reported"}
+
+# MEASURED, not assumed. Reading a fact off a sentence looks like a task that
+# should run fine at `low`, and it does not. A/B on the same 24 entries: `low`
+# costs ~$4.30 per 1,000 against ~$6.90, and differed on 7 of 24 — but four of
+# those were facts `low` simply missed (an explicit "reserve May-Sept", a "water
+# station", a "no hookups" that should set water and sewer false, a stated
+# May-Sep season), against two where it was rightly more cautious about an
+# approximate rig length. Omissions are the expensive failure here: the point of
+# the pass is coverage, and the caution that earned `low` its two wins was
+# recovered by tightening the max_rig_ft rule in the prompt instead. Re-run the
+# A/B before changing this.
+EFFORT = "high"
+
+
+SYSTEM = """\
+You extract structured facts from short descriptions of RV campgrounds. Each
+description was written by hand or by an earlier research pass; you are turning
+what it already says into fields, not researching the campground.
+
+Return a JSON array, one object per input, each `{"id": <id>, ...groups}`. Emit
+ONLY the groups and keys listed below. Return the array and nothing else.
+
+THE RULE THAT MATTERS MOST: absent means unknown. Write a key ONLY when the
+description states or plainly implies it. If it is silent, OMIT the key. Never
+write false, 0, null or "" to mean "not mentioned" — a stored false is a claim
+that somebody checked and there are none, and it is indistinguishable from a
+real verification forever after. An object with no keys at all is a perfectly
+good answer for a description that is pure marketing prose. Most inputs should
+yield only two or three keys.
+
+Do not infer from the campground's name, its agency, or what is typical. "USFS
+campground" does not imply vault toilets. "Resort" does not imply a pool. Only
+what this description says.
+
+GROUPS AND KEYS
+
+hookups   electric: highest amps AT A SITE — one of 0, 20, 30, 50.
+                    "50/30-amp" -> 50. "electric sites" with no amperage -> OMIT
+                    (do not guess 30). "no hookups" -> 0.
+          water:    bool, piped to the site. A communal spigot is NOT this.
+          sewer:    bool, at the site.
+          dump:     bool, a dump station on the property (independent of sewer).
+          "full hookup(s)" -> water true and sewer true; electric only if the
+          amperage is actually stated.
+          "no hookups" / "primitive" / "non-electric" -> electric 0 (and, for
+          "no hookups" specifically, water false and sewer false).
+
+sites     count:        integer, total campsites. "34 single-family sites" -> 34.
+                        If the description breaks sites into types, use the total
+                        only when it is stated or is an unambiguous sum.
+          max_rig_ft:   integer, the longest rig that fits. An approximate
+                        figure is still a figure: "rigs to ~45 ft" -> 45,
+                        "sites to ~85 ft" -> 85. OMIT only when the description
+                        UNDERCUTS its own number or gives no number at all:
+                        "max RV ~40 ft (tight spacing, best for smaller rigs)",
+                        "reviewers say it tightens over ~24 ft (sites 4/7/8 no
+                        large RVs)", "RV length cap not published". The test is
+                        whether the note contradicts itself, not whether it
+                        hedges. A pad dimension ("40x15 pads") is not a rig
+                        limit.
+          pull_through: bool. "some pull-throughs" -> true.
+
+facilities showers, flush_toilets, vault_toilets, laundry, camp_store, wifi:
+                        bool, each only if named.
+          potable_water: bool. "drinking water" or communal spigots -> true.
+          Note "restrooms" alone does NOT tell you flush vs vault — omit both.
+
+season    year_round:  bool. "open year round" -> true. A stated closed season
+                       -> false.
+          opens/closes: "MM-DD", only when a clean date is given ("open May 15
+                       to Oct 1"). OMIT when hedged or alternative
+                       ("~Apr 15/May 1-Oct 15/31", "roughly mid-May"). A month
+                       with no day is not a date — omit it.
+
+booking   reservable: bool, whether sites can be booked ahead.
+          platform:   one of recreation.gov, reserveamerica, usedirect,
+                      goingtocamp, campspot, roverpass, hipcamp, sepaq, operator,
+                      phone, none — ONLY when the description identifies the
+                      channel. `operator` means the campground's or agency's own
+                      booking system, and needs to be pointed at ("book on their
+                      website", "via the county's OneGov portal"). A bare
+                      "reservable online" or "bookable" names no channel: set
+                      reservable true and OMIT platform. `phone` for call-only.
+          fcfs:       one of never, always, after_cutoff, some_sites.
+                      "first-come first-served" with no reservations -> always
+                      (and reservable false). "17 reservable / 17 FCFS" ->
+                      some_sites (and reservable true). Do NOT write `never`
+                      just because the description mentions reservations —
+                      `never` is a claim that no site is ever FCFS.
+          max_stay_nights: integer, only if a stay limit is stated.
+
+WORKED EXAMPLES
+
+In: {"id": 1, "note": "Carson NF campground on the Red River along NM-578 near
+Red River, ~8,600 ft; 23 sites, drinking water, vault toilets; first-come
+first-served. Sites back to the river; reviewers note maneuvering tightens over
+~24 ft (sites 4/7/8 no large RVs) but smaller-to-mid rigs fit."}
+Out: {"id": 1, "sites": {"count": 23}, "facilities": {"potable_water": true,
+"vault_toilets": true}, "booking": {"reservable": false, "fcfs": "always"}}
+(no max_rig_ft: the note undercuts its own 24 ft in the same breath)
+
+In: {"id": 2, "note": "Small quiet RV park off US-287 N in Grapeland set in ~8
+acres of pines; ~20 extra-large 40x15 concrete full-hookup pads (50/30/20-amp),
+some pull-through, on-site laundry, fiber internet. Nightly-bookable."}
+Out: {"id": 2, "hookups": {"electric": 50, "water": true, "sewer": true},
+"sites": {"count": 20, "pull_through": true}, "facilities": {"laundry": true,
+"wifi": true}, "booking": {"reservable": true}}
+(no platform: "nightly-bookable" names no channel. No sites.count from "~8
+acres" — that is area; the 20 comes from "~20 ... pads". "40x15" is a pad
+dimension, not a rig limit, so no max_rig_ft.)
+
+In: {"id": 3, "note": "Chequamegon-Nicolet NF on the east shore of Spectacle
+Lake. 34 single-family sites; up to 40 ft. Non-electric, vault toilets, drinking
+water, 500-ft sandy swim beach. 17 reservable online / 17 FCFS."}
+Out: {"id": 3, "hookups": {"electric": 0}, "sites": {"count": 34,
+"max_rig_ft": 40}, "facilities": {"vault_toilets": true, "potable_water": true},
+"booking": {"reservable": true, "fcfs": "some_sites"}}
+
+In: {"id": 4, "note": "Bayfront RV resort & marina on 17 acres at Palacios on
+Tres Palacios Bay; full-hookup RV sites, floating marina slips, fishing pier,
+pool/hot tub, clubhouse; short- and long-term stays. Reservable online."}
+Out: {"id": 4, "hookups": {"water": true, "sewer": true}, "booking":
+{"reservable": true}}
+(no electric: "full-hookup" with no amperage stated. No sites.count: "17 acres"
+is area. A pool and a clubhouse are not keys in the vocabulary — drop them.)
+"""
+
+
+# ── Selection ───────────────────────────────────────────────────────────────
+
+def note_sig(note):
+    """Stable short hash of the note text a scan read."""
+    return hashlib.sha256((note or "").encode("utf-8")).hexdigest()[:16]
+
+
+def human_verified(entry, group):
+    """True when a person's reading of this group must not be overwritten."""
+    block = (entry.get(cs.PROVENANCE) or {}).get(group) or {}
+    return block.get("method") in HUMAN_METHODS
+
+
+def needs_scan(entry):
+    """Whether this entry's note still has to be read.
+
+    Incrementality lives here. An entry is done when the note it was scanned
+    against is byte-for-byte the note it has now — so editing a note re-queues
+    exactly that entry and nothing else, and a note nobody has touched is never
+    paid for twice.
+    """
+    note = (entry.get("note") or "").strip()
+    if not note:
+        return False
+    if all(human_verified(entry, g) for g in TARGET_GROUPS):
+        return False
+    scan = entry.get(cs.NOTE_SCAN) or {}
+    return scan.get("sig") != note_sig(entry.get("note"))
+
+
+def load_rows():
+    with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
+def candidates(rows, state=None, ids=None):
+    out = []
+    for r in rows:
+        if r.get("kind") == "family":
+            continue
+        if ids is not None:
+            if r.get("id") in ids:
+                out.append(r)
+            continue
+        if state and (r.get("state") or "").upper() != state.upper():
+            continue
+        if needs_scan(r):
+            out.append(r)
+    return out
+
+
+# ── The model call ──────────────────────────────────────────────────────────
+
+def build_batch(entries):
+    return json.dumps([{"id": e["id"], "note": (e.get("note") or "").strip()}
+                       for e in entries], ensure_ascii=False, indent=None)
+
+
+def parse_reply(text):
+    """Pull the JSON array out of a reply, tolerantly.
+
+    Deliberately NOT structured outputs. A JSON schema for these groups would
+    need `required` and `additionalProperties: false` to be worth having, and
+    `required` is the opposite of what this pass needs: the whole discipline is
+    that the model OMITS what the note does not say. A schema that pushes toward
+    filling every field would fight the one rule that matters (§2.1).
+    """
+    text = text.strip()
+    fence = re.search(r"```(?:json)?\s*(.+?)```", text, re.S)
+    if fence:
+        text = fence.group(1).strip()
+    start, end = text.find("["), text.rfind("]")
+    if start < 0 or end < start:
+        raise ValueError("no JSON array in reply")
+    return json.loads(text[start:end + 1])
+
+
+def clean_proposal(proposal):
+    """Validate one entry's proposed groups, dropping anything out of vocabulary.
+
+    The model is not trusted to have stayed inside the schema, and a batch must
+    not be lost because one field in one entry was hallucinated. Each group is
+    staged through `apply_update` against a throwaway dict, so anything the
+    vocabulary refuses is dropped with a warning and the rest still lands.
+    """
+    out, rejected = {}, []
+    for group, values in proposal.items():
+        if group == "id":
+            continue
+        if group not in TARGET_GROUPS:
+            rejected.append(f"{group} (not a target group)")
+            continue
+        if not isinstance(values, dict) or not values:
+            continue
+        kept = {}
+        for key, value in values.items():
+            # `None` from the model means "unknown", which is the absence of a
+            # key — never a write. apply_update would read it as "clear this",
+            # which on an entry a human had filled would be a deletion.
+            if value is None or value == "":
+                continue
+            try:
+                cs.apply_update({}, {group: {key: value}})
+            except cs.SchemaError as e:
+                rejected.append(f"{group}.{key}={value!r} ({e})")
+                continue
+            kept[key] = value
+        if kept:
+            out[group] = kept
+    return out, rejected
+
+
+def extract_batch(client, entries, model, effort=EFFORT):
+    """One request. Returns {id: {group: {...}}} plus usage, or raises."""
+    resp = client.messages.create(
+        model=model,
+        max_tokens=MAX_TOKENS,
+        thinking={"type": "adaptive"},
+        output_config={"effort": effort},
+        # Identical on every call, so caching turns hundreds of repeats of a
+        # ~1,900-token prompt into one.
+        system=[{"type": "text", "text": SYSTEM,
+                 "cache_control": {"type": "ephemeral"}}],
+        messages=[{"role": "user", "content": build_batch(entries)}],
+    )
+    if resp.stop_reason == "refusal":
+        why = getattr(getattr(resp, "stop_details", None), "category", "")
+        raise RuntimeError(f"refused{f' ({why})' if why else ''}")
+    if resp.stop_reason == "max_tokens":
+        # A truncated array would parse as a SHORTER one — some entries silently
+        # missing rather than an error — so this must never be salvaged.
+        raise RuntimeError("hit max_tokens; batch would be silently short")
+    text = "\n".join(b.text for b in resp.content if b.type == "text").strip()
+    return parse_reply(text), resp.usage
+
+
+# ── Writing ─────────────────────────────────────────────────────────────────
+
+def write_deltas(deltas, model, today):
+    """Merge this batch into campgrounds.json, re-reading first.
+
+    Re-reading rather than dumping a dict held since startup is the same rule
+    `detect_people.py` follows: a long run races the live admin UI on PA, and a
+    campground edited there mid-run must not be reverted by a batch that loaded
+    the file ten minutes ago.
+
+    The file round-trips byte-identically at indent=2 / ensure_ascii=False, so
+    only the entries actually touched show up in the diff.
+    """
+    rows = load_rows()
+    by_id = {r.get("id"): r for r in rows}
+    written = 0
+    for cid, (groups, sig) in deltas.items():
+        entry = by_id.get(cid)
+        if entry is None:
+            continue
+        payload = {g: v for g, v in groups.items() if not human_verified(entry, g)}
+        if payload:
+            prov = dict(entry.get(cs.PROVENANCE) or {})
+            for group in payload:
+                prov[group] = {"source": "note prose", "checked": today,
+                               "method": "derived"}
+            payload[cs.PROVENANCE] = prov
+        # Stamped even when the note yielded nothing: that is the record that
+        # makes the next run skip it instead of re-billing the same silence.
+        payload[cs.NOTE_SCAN] = {"sig": sig, "checked": today, "model": model}
+        cs.apply_update(entry, payload)
+        written += 1
+
+    tmp = CAMPGROUNDS_JSON + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(rows, fh, indent=2, ensure_ascii=False)
+        fh.write("\n")
+    os.replace(tmp, CAMPGROUNDS_JSON)
+    return written
+
+
+# ── Reporting ───────────────────────────────────────────────────────────────
+
+def report(rows):
+    scannable = [r for r in rows
+                 if r.get("kind") != "family" and (r.get("note") or "").strip()]
+    todo = [r for r in scannable if needs_scan(r)]
+    print(f"{len(rows):,} entries, {len(scannable):,} with a note")
+    print(f"{len(scannable) - len(todo):,} scanned, {len(todo):,} left\n")
+    print(f"{'group':12} {'entries with a value':>22}")
+    for group in TARGET_GROUPS:
+        n = sum(1 for r in rows if r.get(group))
+        print(f"{group:12} {n:>13,} {100 * n / max(len(rows), 1):>7.1f}%")
+    if todo:
+        by_state = {}
+        for r in todo:
+            by_state[r.get("state") or "??"] = by_state.get(r.get("state") or "??", 0) + 1
+        top = sorted(by_state.items(), key=lambda kv: -kv[1])[:8]
+        print("\nremaining by state: "
+              + ", ".join(f"{s} {n:,}" for s, n in top))
+
+
+# ── Main ────────────────────────────────────────────────────────────────────
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    ap.add_argument("--limit", type=int, default=DEFAULT_LIMIT,
+                    help=f"max entries this run (default {DEFAULT_LIMIT})")
+    ap.add_argument("--batch", type=int, default=BATCH,
+                    help=f"notes per request (default {BATCH})")
+    ap.add_argument("--state", help="only this state/province")
+    ap.add_argument("--ids", help="comma-separated ids, ignores the done-check")
+    ap.add_argument("--model", default=MODEL)
+    ap.add_argument("--effort", default=EFFORT,
+                    choices=("low", "medium", "high", "xhigh", "max"))
+    ap.add_argument("--dry-run", action="store_true",
+                    help="call the model and print proposals, write nothing")
+    ap.add_argument("--report", action="store_true",
+                    help="coverage and what is left; no API call")
+    args = ap.parse_args()
+
+    rows = load_rows()
+    if args.report:
+        report(rows)
+        return 0
+
+    ids = None
+    if args.ids:
+        ids = {int(x) for x in args.ids.split(",") if x.strip()}
+    todo = candidates(rows, state=args.state, ids=ids)
+    total_left = len(todo)
+    todo = todo[:args.limit]
+    if not todo:
+        print("nothing to do — every note in scope has been scanned")
+        return 0
+
+    if not (os.environ.get("ANTHROPIC_API_KEY")
+            or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        print("ANTHROPIC_API_KEY is not set. Put it in the repo's .env "
+              "(export ANTHROPIC_API_KEY=sk-ant-...) or the environment.",
+              file=sys.stderr)
+        return 2
+
+    import anthropic
+    client = anthropic.Anthropic()
+    today = dt.date.today().isoformat()
+
+    # Ctrl-C between batches stops cleanly; inside one it finishes the write
+    # first, so the interrupt costs at most the batch in flight and never a
+    # half-written file.
+    stopping = {"now": False}
+
+    def on_sigint(_sig, _frm):
+        if stopping["now"]:
+            raise KeyboardInterrupt
+        stopping["now"] = True
+        print("\n-- stopping after this batch (Ctrl-C again to abort now) --",
+              file=sys.stderr)
+
+    signal.signal(signal.SIGINT, on_sigint)
+
+    batches = [todo[i:i + args.batch] for i in range(0, len(todo), args.batch)]
+    in_tok = out_tok = cached = cache_write = 0
+    scanned = written = failed = 0
+    values_found = 0
+
+    print(f"{total_left:,} entries left overall; doing {len(todo):,} "
+          f"in {len(batches)} batch(es) of {args.batch}"
+          f"{' [DRY RUN]' if args.dry_run else ''}\n")
+
+    for n, batch in enumerate(batches, 1):
+        try:
+            proposals, usage = extract_batch(client, batch, args.model,
+                                             args.effort)
+        except Exception as e:                       # noqa: BLE001 — batch-local
+            print(f"batch {n}/{len(batches)}: FAILED ({e})", file=sys.stderr)
+            failed += len(batch)
+            if stopping["now"]:
+                break
+            continue
+
+        in_tok += usage.input_tokens
+        out_tok += usage.output_tokens
+        cached += getattr(usage, "cache_read_input_tokens", 0) or 0
+        # Counted separately because it is billed at ~1.25x and, on the first
+        # call of a run, it is the whole system prompt — leaving it out made a
+        # run look several times cheaper than it was.
+        cache_write += getattr(usage, "cache_creation_input_tokens", 0) or 0
+
+        by_id = {e["id"]: e for e in batch}
+        deltas = {}
+        for proposal in proposals:
+            cid = proposal.get("id")
+            entry = by_id.get(cid)
+            if entry is None:
+                print(f"  ignoring unknown id {cid!r} in reply", file=sys.stderr)
+                continue
+            groups, rejected = clean_proposal(proposal)
+            for r in rejected:
+                print(f"  {cid}: dropped {r}", file=sys.stderr)
+            deltas[cid] = (groups, note_sig(entry.get("note")))
+            if groups:
+                values_found += 1
+            if args.dry_run:
+                summary = ("nothing" if not groups else json.dumps(
+                    groups, ensure_ascii=False, sort_keys=True))
+                print(f"  {cid} {entry.get('name', '')[:44]:<44} {summary}")
+
+        # An entry the model skipped entirely got no answer, so it is NOT
+        # stamped — leaving it queued for the next run rather than silently
+        # recorded as read.
+        scanned += len(deltas)
+        if not args.dry_run and deltas:
+            written += write_deltas(deltas, args.model, today)
+
+        print(f"batch {n}/{len(batches)}: {len(deltas)} scanned, "
+              f"{sum(1 for g, _ in deltas.values() if g)} with values"
+              f"{'' if args.dry_run else ' — written'}")
+        if stopping["now"]:
+            break
+
+    cost = None
+    if "opus" in args.model:                      # $5/$25 per MTok, cache 1.25x/0.1x
+        cost = ((in_tok + 1.25 * cache_write + 0.1 * cached) / 1e6 * 5
+                + out_tok / 1e6 * 25)
+    print(f"\nscanned {scanned:,}  |  yielded values {values_found:,}  |  "
+          f"failed {failed:,}"
+          + ("" if args.dry_run else f"  |  written {written:,}"))
+    print(f"tokens: {in_tok:,} in, {cache_write:,} cache-write, "
+          f"{cached:,} cache-read, {out_tok:,} out"
+          + (f"  ~${cost:.2f}" if cost else ""))
+    if scanned:
+        per = (cost / scanned) if cost else 0
+        print(f"~${per * 1000:.2f} per 1,000 entries at this batch size"
+              if per else "")
+    if not args.dry_run and written:
+        print("\nreview and commit:  git diff --stat && git add -u && git commit")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

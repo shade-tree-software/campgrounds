@@ -218,6 +218,30 @@ PROVENANCE_FIELDS = {
     "method": ENUM("derived", "manual", "reported"),
 }
 
+# The record that an extraction pass READ this entry's note — kept whether or
+# not the note yielded anything, which is the only thing that makes a re-run
+# incremental. Without it, the ~70% of notes that hold no structured fact would
+# be re-sent to the model on every single pass, and re-billed, forever.
+#
+# It is the same distinction `detect_people.py` stores in photo_people.json: a
+# recorded 0 means "looked, nobody there", an absent key means "not scanned".
+# Here, absent means nobody has read this note; present with no resulting values
+# means it was read and said nothing extractable. Neither is a claim about the
+# campground, so this is not the placeholder §2.1 forbids — a placeholder is a
+# fabricated VALUE, this is an audit record of an action that really happened.
+#
+# One block per ENTRY rather than per group, deliberately: five group-level
+# provenance blocks on each of 12.7k entries would add a quarter of a million
+# lines to the file to record the same fact five times. Groups that actually
+# yield a value still get their own `provenance` entry, which is where doc §3's
+# per-group source/method record belongs.
+NOTE_SCAN = "note_scan"
+NOTE_SCAN_FIELDS = {
+    "sig": STR,        # hash of the note text this scan read
+    "checked": STR,    # "YYYY-MM-DD"
+    "model": STR,      # which model read it, so a re-read can be targeted
+}
+
 _TRUE = {"true", "yes", "1", "on", "t"}
 _FALSE = {"false", "no", "0", "off", "f"}
 # What a form sends for "unknown". Both clear the key; neither stores a value.
@@ -338,6 +362,10 @@ def apply_update(target, data):
         if group == PROVENANCE:
             staged[group] = _stage_provenance(incoming)
             continue
+        if group == NOTE_SCAN:
+            staged[group] = (None if incoming in _CLEARS else
+                             _coerce(OBJ(**NOTE_SCAN_FIELDS), incoming, NOTE_SCAN))
+            continue
         if group not in SCHEMA:
             continue                   # not ours — the flat whitelist handles it
         if incoming in _CLEARS:
@@ -365,7 +393,7 @@ def apply_update(target, data):
         if value is None:
             target.pop(group, None)
             continue
-        if group == POLICY_REF:
+        if group in (POLICY_REF, NOTE_SCAN):
             target[group] = value
             continue
         current = dict(target.get(group) or {})
@@ -445,7 +473,7 @@ def _inherited(entry, registry):
         if not row:
             continue
         for group, values in row.items():
-            if group == PROVENANCE or not isinstance(values, dict):
+            if group in (PROVENANCE, NOTE_SCAN) or not isinstance(values, dict):
                 continue
             merged.setdefault(group, {}).update(values)
     return merged
@@ -509,7 +537,8 @@ def validate_row(row, label="row"):
     if not isinstance(row, dict):
         raise SchemaError(f"{label}: expected an object")
     staged = {}
-    apply_update(staged, {k: v for k, v in row.items() if k != POLICY_REF})
+    apply_update(staged, {k: v for k, v in row.items()
+                         if k not in (POLICY_REF, NOTE_SCAN)})
     return staged
 
 
