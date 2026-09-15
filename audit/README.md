@@ -35,7 +35,8 @@ as the standard going forward.
 
 ## Per-state workflow
 
-1. Extract the state's entries to audit and split into batch files of ~8:
+1. Extract the state's entries to audit and split into **one-entry batch files**
+   (see the batch-size note below):
    `{id, name, location, waterfront, ownership, website}` per entry, written to
    `/tmp/<st>_batch_<n>.json`. **Optimize the seam:** when the entries were just
    added in the same session, carry forward the research pass's per-entry
@@ -44,14 +45,31 @@ as the standard going forward.
    of re-discovering it (see the "Lead packet" section of
    `waterfront_audit_instructions.md`). The lead is a head start, never a verdict
    — the satellite look stays mandatory and the gate still decides.
-2. Run subagents SEQUENTIALLY, one batch each (~8 ids/batch), one agent at a
-   time — parallel batches hit the session limit and lose work; parallelize only
-   on an explicit per-stage user OK. Each agent gets:
+2. Run subagents SEQUENTIALLY, one batch each, one agent at a time — parallel
+   batches hit the session limit and lose work; parallelize only on an explicit
+   per-stage user OK. Each agent gets:
    "Read audit/waterfront_audit_instructions.md and follow it exactly. Your
    batch file is /tmp/<st>_batch_<n>.json. Return ONLY the JSON array."
    The instructions make the satellite look mandatory/asymmetric, default down,
    and require a one-line evidence string per entry. Tell agents to keep Esri
    export requests at size=1000,1000 or smaller (one agent died on a >32MB fetch).
+   **Batch size: ONE entry per agent** (AWH 2026-09-15; this file said ~8 until
+   then). A batch is all-or-nothing — if the session limit lands mid-run, every
+   candidate in it is lost — so the batch size sets how much work a single bad
+   moment can destroy. Measured: one add-stage research agent handling 7 WV
+   campgrounds consumed **half a session** without returning, which is half a
+   session a limit one minute later would have taken with it. Sequential fixes
+   the collateral damage from parallel failure; small fixes the other half,
+   where a huge sequential batch never offers a safe place to stop. The cost is
+   real and accepted: the instructions file and the WebFetch/WebSearch load are
+   paid once per batch, so more batches burn more in total. Granularity is the
+   point, throughput is not. **Persist each agent's JSON the moment it returns**
+   — a checkpoint that lives only in the conversation dies with the session
+   exactly like in-flight work. The measurement came from the ADD stage, which
+   is much the heavier of the two (many fetches per candidate against this
+   stage's satellite look plus maybe one map); if AWH ever wants to ramp back
+   up, the waterfront audit is the place to try it first.
+
 3. Consolidate agent outputs into one results JSON array, then apply with
    `python3 audit/apply_waterfront_audit.py <results.json>` — surgical text edits
    (waterfront / location / elevation_meters by id, **plus the `waterfront_evidence`
