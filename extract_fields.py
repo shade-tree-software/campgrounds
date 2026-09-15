@@ -130,9 +130,15 @@ what this description says.
 
 GROUPS AND KEYS
 
-hookups   electric: highest amps AT A SITE — one of 0, 20, 30, 50.
-                    "50/30-amp" -> 50. "electric sites" with no amperage -> OMIT
-                    (do not guess 30). "no hookups" -> 0.
+hookups   electric: highest amps AT A SITE — one of 0, 20, 30, 50 and NOTHING
+                    else. "50/30-amp" -> 50. "electric sites" with no amperage
+                    -> OMIT (do not guess 30). "no hookups" -> 0.
+                    NEVER round an odd amperage up to reach an allowed value:
+                    "15-amp electric only" is not 20-amp service, and a rig that
+                    needs 30 cannot draw either. If the stated amperage is not
+                    one of the four, OMIT the key — the description keeps the
+                    detail, and a wrong number here is a rig that arrives and
+                    cannot plug in.
           water:    bool, piped to the site. A communal spigot is NOT this.
           sewer:    bool, at the site.
           dump:     bool, a dump station on the property (independent of sewer).
