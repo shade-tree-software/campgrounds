@@ -390,6 +390,27 @@ def clean_proposal(proposal):
     return out, rejected
 
 
+# Errors that will not come right by trying the next batch: no credit, a bad or
+# unauthorized key, a model this account cannot reach. Everything else — a
+# timeout, a 429, a malformed reply — is worth carrying on past.
+_FATAL_ERROR = re.compile(
+    r"credit balance|authentication|invalid x-api-key|permission|"
+    r"not_found_error|billing", re.I)
+
+
+def fatal(exc):
+    """Whether this failure makes every remaining batch pointless.
+
+    Learned the hard way: the account ran out of credit mid-run and the pass
+    carried on issuing requests, failing 190 more batches in about a minute
+    because each one now returned instantly. Nothing was corrupted — the
+    entries stay queued either way — but it buries the real error in a wall of
+    identical ones, and on a larger run it would be a long stream of doomed
+    requests. A run that cannot succeed should say so once and stop.
+    """
+    return bool(_FATAL_ERROR.search(str(exc)))
+
+
 def _safe_extract(client, batch, args):
     """Run one batch, returning the exception rather than raising it.
 
@@ -538,7 +559,7 @@ def main():
     # Ctrl-C between batches stops cleanly; inside one it finishes the write
     # first, so the interrupt costs at most the batch in flight and never a
     # half-written file.
-    stopping = {"now": False}
+    stopping = {"now": False, "fatal": None}
 
     def on_sigint(_sig, _frm):
         if stopping["now"]:
@@ -586,8 +607,13 @@ def main():
             done_batches += 1
             if isinstance(outcome, Exception):
                 print(f"batch {done_batches}/{len(batches)}: FAILED ({outcome})",
-                      file=sys.stderr)
+                      file=sys.stderr, flush=True)
                 failed += len(batch)
+                if fatal(outcome):
+                    # Say it once and stop the run, rather than reprinting the
+                    # same error for every batch left.
+                    stopping["now"] = True
+                    stopping["fatal"] = str(outcome)
                 continue
             proposals, usage = outcome
             in_tok += usage.input_tokens
@@ -638,6 +664,11 @@ def main():
     print(f"\nscanned {scanned:,}  |  yielded values {values_found:,}  |  "
           f"failed {failed:,}"
           + ("" if args.dry_run else f"  |  written {written:,}"))
+    if stopping["fatal"]:
+        print(f"\nSTOPPED — this run could not continue:\n  {stopping['fatal']}\n"
+              "Whatever was scanned is written and committed-ready; the rest "
+              "stays queued.\nFix the cause and run the same command again.",
+              file=sys.stderr)
     print(f"tokens: {in_tok:,} in, {cache_write:,} cache-write, "
           f"{cached:,} cache-read, {out_tok:,} out"
           + (f"  ~${cost:.2f}" if cost else ""))

@@ -242,6 +242,34 @@ class TestParseReply(unittest.TestCase):
             ef.parse_reply("[ totally broken ]")
 
 
+class TestFatalErrors(unittest.TestCase):
+    """Which failures should stop the whole run rather than the batch.
+
+    The account ran out of credit mid-run and the pass kept going, failing 190
+    more batches in about a minute. Nothing was corrupted — entries stay queued
+    either way — but it buried the real error and spent a stream of doomed
+    requests.
+    """
+
+    def test_a_run_that_cannot_succeed_stops(self):
+        for msg in ("Error code: 400 - Your credit balance is too low to "
+                    "access the Anthropic API.",
+                    "authentication_error: invalid x-api-key",
+                    "{'type': 'not_found_error', 'message': 'model: nope'}",
+                    "billing is not configured"):
+            with self.subTest(msg=msg[:40]):
+                self.assertTrue(ef.fatal(Exception(msg)))
+
+    def test_a_transient_failure_does_not(self):
+        """A 429 or a bad reply is exactly what the next batch may not hit."""
+        for msg in ("Error code: 429 - rate_limit_error: too many requests",
+                    "Request timed out.",
+                    "Expecting ',' delimiter: line 2 column 78",
+                    "Connection error."):
+            with self.subTest(msg=msg[:40]):
+                self.assertFalse(ef.fatal(Exception(msg)))
+
+
 class TestTargetGroups(unittest.TestCase):
 
     def test_every_target_group_is_real(self):
