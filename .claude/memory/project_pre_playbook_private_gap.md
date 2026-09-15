@@ -1,6 +1,6 @@
 ---
 name: project_pre_playbook_private_gap
-description: Pre-playbook states (VA/MD/DE/PA/WV) had Good-Sam-sourced private stages, so independent parks with no Good Sam rating were never candidates; VA re-swept 2026-09-07, MD/DE/PA/WV still open
+description: Pre-playbook states (VA/MD/DE/PA/WV) had Good-Sam-sourced private stages, so independent parks with no Good Sam rating were never candidates; VA/PA/WV/MD all done 2026-09-07..15, ONLY DE LEFT (3 candidates)
 metadata:
   type: project
 ---
@@ -68,12 +68,14 @@ a candidate leaves no trace, and every VA entry passed its inclusion audit, so
 the coverage looked complete. Only re-running detection from the other source
 surfaces it.
 
-**How to apply:** point the batches at
-`audit/add_research_instructions_va_private.md` (swap the VA-specific
-authorities section for the state's own), run research agents SEQUENTIALLY at
-~8/batch, `append_state.py --state <ST> --leads`, then the waterfront audit
-subagents and `apply_waterfront_audit.py`. See [[feedback_sequential_sweep_agents]]
-and [[reference_rvlife_price]].
+**How to apply:** copy the nearest state's instructions file (WV's is the most
+evolved: `audit/add_research_instructions_wv_private.md`) and swap the
+state-specific authorities section, then **do the research inline yourself, one
+candidate at a time**, writing each verdict to `audit/<st>_private/results_*.json`
+as you make it. Then `append_state.py --state <ST> --leads`, the waterfront audit,
+and `apply_waterfront_audit.py`. If you ever do use subagents instead, it is ONE
+candidate per agent - see [[feedback_sequential_sweep_agents]] and
+`audit/README.md` step 2. Also [[reference_rvlife_price]].
 
 **Two lessons worth carrying into any private stage** (both cost real entries in VA):
 1. **A dead official domain is a strike, NOT an automatic skip.** 4 of the 16 VA
