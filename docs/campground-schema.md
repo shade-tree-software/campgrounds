@@ -398,6 +398,23 @@ Each row carries the same group shapes as an entry, plus mandatory `source` and 
 reservation windows change most years, so this is not only the cheaper way to build the
 data — it is the only version that stays true.
 
+### Which row to write next: `policy_priority.py`
+
+Read-only, stdlib, no arguments needed. It joins `trip_data/trips.json` against the
+location database and ranks the uncovered rows **by nights actually slept**, because
+entry count is the wrong question — the database is nationwide and the trips are not, and
+that join is what put PA/MD/VA ahead of MI/CA in the first pass. Run it before picking a
+row; the script's docstring carries the two traps that made an earlier version of the same
+join silently wrong (`is_home_stay()` needs the `place` that only `parse_trips()`
+materializes, and family driveways carry no `ownership`).
+
+**As of 2026-09-15 the nights signal is spent**, so it prints an entry ranking too. Every
+uncovered row above the best remaining agency is `private:*` / `hipcamp:*` / `local:*` —
+the rows named below, which are not research targets — and the agency rows left are at two
+nights or fewer (`state:MA` 2, `state:GA` 1, then nothing). Pick the next ones on entry
+count, or on a trip actually being planned. They are printed and marked `skip` rather than
+hidden, because a row withheld is one nobody can reconsider.
+
 The remaining 6,133 entries (private, local, hipcamp, wma) have **no agency to inherit
 from**. Do not attempt to research booking cutoffs for them: FCFS/walk-up is the norm rather
 than a system, notes already mention walk-up on 2% of entries, and the correct answer at 5pm

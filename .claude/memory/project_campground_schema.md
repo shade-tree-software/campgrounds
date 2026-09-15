@@ -40,12 +40,11 @@ incremental like `day_rollups`), phase 5 (Good Sam bulk match), phase 6 (more ro
 
 **Priority came from joining `trips.json` against `campgrounds.json` by nights slept**,
 not entry count — that is what put PA/MD/VA ahead of MI/CA. Re-run that join before
-picking the next rows; there is no script for it in the repo, it is ~40 lines over
-`trips.parse_trips()` + `campground_schema.policy_refs()`. **Two traps when rewriting it:**
-`trips.is_home_stay()` reads `stay["place"]`, which only `parse_trips()` materializes (raw
-`trips.json` records give a silent False and 23 home nights in the denominator), and
-family-kind entries carry no `ownership`, so 47 driveway nights land in a bogus bucket
-unless excluded.
+picking the next rows — **`./policy_priority.py`** (committed 2026-09-15, read-only, no
+args) is that join, and doc §5 names it. **Two traps it exists to hold:** `is_home_stay()`
+reads `stay["place"]`, which only `parse_trips()` materializes (raw `trips.json` records
+give a silent False and 23 home nights in the denominator), and family-kind entries carry
+no `ownership`, so 47 driveway nights land in a bogus bucket unless excluded.
 
 **The nights signal is now spent, as of the 2026-09-15 run.** Every row above the best
 remaining agency is `private:*` / `hipcamp:*` / `local:*`, which doc §5 says to leave alone,
