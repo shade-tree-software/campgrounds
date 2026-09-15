@@ -29,6 +29,15 @@ Good Sam bulk match (phase 5); more registry rows (phase 6); map FILTERS and man
 sort on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
 
+**Next, in the order that made sense on 2026-09-14:** map FILTERS on the new fields are
+the natural follow-on now that the values are visible — doc §8.5 has the shape (extend the
+legend/ownership control pattern), and §2.2 is what makes it non-trivial: an unknown value
+must be SHOWN and flagged, never filtered out, or a 30%-populated field turns into a search
+that quietly returns a tenth of the database. Anything the filter evaluates client-side has
+to ride in the inline marker payload (§8.4), so keep it to a boolean or short enum — the
+page is already ~1.9 MB gzipped. After that: phase 3 (LLM extraction over notes, must be
+incremental like `day_rollups`), phase 5 (Good Sam bulk match), phase 6 (more rows).
+
 **Priority came from joining `trips.json` against `campgrounds.json` by nights slept**,
 not entry count — that is what put PA/MD/VA ahead of MI/CA. Re-run that join before
 picking the next rows.
@@ -47,4 +56,5 @@ per visit.
 and its post-cutoff FCFS is uncorroborated — resolve by phone. Florida's site 403s
 automated fetch so its row is `method: reported`, not verified.
 
-See [[feedback-absent-is-not-unknown]] and [[reference-recgov-calendar-limits]].
+See [[feedback-absent-is-not-unknown]], [[reference-recgov-calendar-limits]] and
+[[reference-js-testing-without-node]] (how the shared JS was verified with no browser).
