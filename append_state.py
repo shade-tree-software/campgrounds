@@ -9,8 +9,20 @@ Each results file is a JSON array of {decision, name, location, elevation_meters
 ownership, website, phone, note, inclusion_evidence, waterfront, lead}. Only
 decision=="add" rows are appended. waterfront is stored as the placeholder; the
 waterfront audit fills waterfront_evidence later. Leads are saved to the leads file
-keyed by new id for the audit stage."""
+keyed by new id for the audit stage.
+
+`rating` is read off the note's own "RV Life 4*/$$ (auto 9/2026)" tail with
+extract_rating.parse_rating -- the SAME parser that populated the field on 92% of
+the database -- so a swept-in entry carries the structured rating from its first
+commit. Without this the field was only ever filled by whoever next happened to run
+extract_rating.py across the whole file: the VA and PA re-sweep adds got theirs a
+week later by accident of the schema project, and anything added after that pass
+would have sat with no rating indefinitely. Populate only -- the note's prose tail
+is left exactly as written, because excision is the conservative half and stays
+extract_rating.py's job (see its module docstring)."""
 import json, sys, os, re, argparse
+
+from extract_rating import parse_rating
 
 # repo root = this script's directory; resolves correctly on any machine/clone
 _REPO = os.path.dirname(os.path.abspath(__file__))
@@ -19,9 +31,11 @@ CG = os.path.join(_REPO, 'campgrounds.json')
 # the same id space — see next_id below.
 FAMILY = os.path.join(_REPO, 'trip_data', 'family.json')
 
+# 'rating' is optional and last, matching where extract_rating.py puts it on the
+# entries it fills; the projection below skips any key an entry doesn't have.
 FIELD_ORDER = ['id', 'kind', 'name', 'location', 'elevation_meters', 'state',
                'ownership', 'waterfront', 'inclusion_evidence', 'website',
-               'phone', 'note']
+               'phone', 'note', 'rating']
 
 
 def load_results(paths):
@@ -119,7 +133,10 @@ def main():
              'inclusion_evidence': r.get('inclusion_evidence', ''),
              'website': r.get('website', ''), 'phone': r.get('phone', ''),
              'note': r.get('note', '')}
-        e = {k: e[k] for k in FIELD_ORDER}
+        rating, _ = parse_rating(e['note'])
+        if rating:
+            e['rating'] = rating
+        e = {k: e[k] for k in FIELD_ORDER if k in e}
         entries.append(e)
         if p:
             st_coords.append((p, next_id, r['name']))   # catch within-batch dups too
