@@ -648,12 +648,21 @@ at yet. The exception is any field the map's **filter** UI needs to evaluate cli
 that must ride inline, so add it deliberately and keep it small (a boolean or a short enum,
 never a group).
 
+So far the exception is exactly two scalars, `rating.stars` and `rating.price_tier`
+(`_MAP_RATING_FIELDS`), flattened onto the marker rather than nested so the client reads
+`cg.stars` without a group lookup on each of 12.8k markers per filter pass. **Measure before
+adding a third:** these took the marker payload from 304 KB to 324 KB gzipped, ~1% of the
+page. A terse encoding (`s` = stars × 10) was tried and saved 3 KB more — not worth the
+unreadable client code, because gzip already collapses 12.8k repetitions of a key name to
+nearly nothing. Absent stays absent here too (§2.1): an unrated entry carries no key, which
+is the distinction the whole filter turns on.
+
 The audit-evidence strip applies unchanged: `waterfront_evidence` and `inclusion_evidence`
 never reach the browser, and the whitelist is what makes that safe.
 
 ### 8.5 Search surfaces
 
-The campground map already has the pattern to extend: a legend control with clickable
+The campground map already had the pattern to extend: a legend control with clickable
 toggles and a second ownership box built from `OWNERSHIP_LABELS` with
 `DEFAULT_HIDDEN_OWNERSHIPS` seeding a sessionStorage fallback. New filters (hookups, season,
 FCFS, Good Sam) follow that shape.
@@ -661,6 +670,42 @@ FCFS, Good Sam) follow that shape.
 Every such filter obeys §2.2: an unknown value is **shown and flagged**, never filtered out.
 A filter that silently hides unverified entries turns a 30%-populated field into a search
 that quietly returns a tenth of the database.
+
+**Shipped 2026-09-15: the rating filter**, which is the worked example of all of the above.
+
+- **Rating is what could be filtered on first, and coverage is the whole reason.** 76% of
+  entries carry `rating.stars` and 90% `rating.price_tier`; `hookups`, `facilities` and
+  `season` are at **0%** until the extraction pass (§7 phase 3) runs, and everything
+  populated in `booking`/`fees` is inherited from the registry, which §3 forbids being the
+  sole basis for excluding an entry. A filter for a field nothing carries is a control that
+  empties the map. **Measure coverage before building the next one.**
+- **One box, not three.** The rating controls went *into* the bottom-right ownership box,
+  which is now headed **Filters** with an `Ownership` sub-heading. A third bottom-corner
+  control costs a phone ~90 px of map even fully collapsed, and the mobile rule that lifts
+  bottom controls clear of the attribution (`margin-bottom: 28px`) applies to each of them,
+  so stacked boxes also open a dead gap between themselves. The legend stays separate
+  because it explains the colors; these two both narrow what is drawn.
+- **§2.2 is implemented as fading, plus an explicit opt-out.** An entry the active threshold
+  cannot evaluate stays on the map at `fillOpacity` 0.25 instead of 0.8 — opacity because
+  the fill color already carries the waterfront/climate category the legend explains, so it
+  is the one channel free to mean "unverified". An **Include unrated** checkbox, on by
+  default, is the only way to drop them, and the box states the count either way ("2,940
+  faded dots are unrated, not excluded" / "2,940 unrated campgrounds hidden").
+- **The number that justifies the code:** a naive `stars >= 4` shows 8,688 of 12,774
+  campgrounds. Honouring §2.2 shows 11,694. The 3,006 difference is **24% of the database**,
+  concentrated in the public land RV Life never rated — which is most of what the map is
+  for.
+- **"Unknown" is scoped to the thresholds actually set**, and an unknown on one field never
+  launders a failure on the other. With only a price filter on, a star-less campground is
+  not unrated; a `$$$$` entry with no stars under "4+ and $$ or less" is *hidden*, because
+  it fails on a value somebody measured rather than on a silence.
+- **Both counts are taken from the render pass**, not recomputed over `CAMPGROUNDS` —
+  otherwise the note includes entries the ownership filter had already removed and
+  contradicts the map it is describing.
+- `tests/test_rating_filter.py` pins all of it by lifting the predicates **verbatim** out of
+  the template and running them in quickjs against the real `campgrounds.json`. A Python
+  reimplementation would be a paraphrase, and a paraphrase of the rule under test can agree
+  with the doc while the shipped code disagrees.
 
 ### 8.6 The popup draws the two halves separately
 

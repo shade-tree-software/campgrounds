@@ -2448,6 +2448,22 @@ _MAP_MARKER_FIELDS = ("id", "name", "state", "location",
 # Popup-only fields, served per-id by the detail endpoint.
 _MAP_POPUP_FIELDS = ("elevation_feet", "note", "phone", "website", "trips")
 
+# The structured groups (doc §8.4) load with the popup, with ONE exception: a
+# field the map's own filter evaluates client-side has to be on the page, and
+# these two are the whole of that exception. They come from `rating`, the only
+# group with entry-level coverage worth filtering on — 76% of entries carry
+# `stars` and 90% `price_tier`, against 0% for hookups/facilities/season, whose
+# filters have nothing to act on until the extraction pass (doc phase 3) runs.
+#
+# Measured before adding them, because §8.4's warning is about exactly this:
+# the marker payload goes from 304 KB to 324 KB gzipped, ~1% of the page. A
+# terse encoding (`s` = stars x10, `p`) was tried and saves 3 KB more — not
+# worth the unreadable client code, because gzip already collapses 12.8k
+# repetitions of a key name to nearly nothing. Keep future additions to this
+# same shape (one scalar, checked with a measurement) or the exception eats the
+# rule.
+_MAP_RATING_FIELDS = ("stars", "price_tier")
+
 
 def _map_marker_rows(rows):
     """Project campground rows down to the per-marker essentials.
@@ -2456,8 +2472,23 @@ def _map_marker_rows(rows):
     `climate` label derived from it) and `kind`, which is the constant
     "campground" here because `_load_campgrounds` already filtered family
     entries out — together ~384 KB of pure padding.
+
+    `rating.stars` / `rating.price_tier` are flattened onto the marker rather
+    than nested, so the client reads `cg.stars` without a group lookup on every
+    one of 12.8k markers per filter pass. Absent stays absent (doc §2.1): an
+    unrated entry carries no key at all, which is what lets the filter tell
+    "nobody rated it" from "rated badly" — and it must, because §2.2 says the
+    unknown one may never be filtered out.
     """
-    return [{k: r[k] for k in _MAP_MARKER_FIELDS if k in r} for r in rows]
+    out = []
+    for r in rows:
+        d = {k: r[k] for k in _MAP_MARKER_FIELDS if k in r}
+        rating = r.get("rating") or {}
+        for k in _MAP_RATING_FIELDS:
+            if rating.get(k) is not None:
+                d[k] = rating[k]
+        out.append(d)
+    return out
 
 
 def _parse_latlng(loc):

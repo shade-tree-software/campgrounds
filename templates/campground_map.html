@@ -370,6 +370,54 @@
   }
   .map-legend .legend-row.dimmed .legend-box { background: #fff; }
 
+  /* Rating filter: two threshold selects plus the unrated switch. Reuses the
+     legend-color-by row shape so the three boxes read as one family. */
+  .map-legend .legend-select {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--gray);
+    margin-bottom: .35rem;
+  }
+  .map-legend .legend-select label { flex-shrink: 0; }
+  .map-legend .legend-select select {
+    flex: 1;
+    min-width: 0;
+    font-size: .8rem;
+    padding: .2rem .35rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 6px;
+    color: var(--navy);
+    background: #fff;
+  }
+  /* The unrated count, explaining the faded dots. Only rendered while a rating
+     threshold is actually active, so it never nags on an unfiltered map. */
+  .map-legend .legend-note {
+    font-size: .72rem;
+    line-height: 1.3;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+  .map-legend .legend-note:empty { display: none; }
+
+  /* The "Include unrated" switch reuses .legend-toggle for its shape, but that
+     class carries a bottom rule meant to separate the legend's "On the water"
+     from the category rows below it. Here the Ownership subhead's own top rule
+     does that job, and the two land ~7px apart as a double line. */
+  .map-legend .legend-rows > .legend-toggle:not(:first-child) { border-bottom: 0; }
+
+  /* Divider heading between the two halves of the Filters box. */
+  .map-legend .legend-subhead {
+    margin: .5rem 0 .3rem;
+    padding-top: .4rem;
+    border-top: 1px solid var(--gray-light);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--gray);
+  }
+
   /* Visit-list "Show more" toggle inside campground popups */
   .cg-visits a { display: block; color: #002868; }
   .cg-visits .extra { display: none; }
@@ -770,6 +818,53 @@ function ownerLabel(v) {
   if (!v) return 'Unspecified';
   return v.charAt(0).toUpperCase() + v.slice(1);
 }
+
+// ── Rating thresholds (doc §8.5) ────────────────────────────────────────────
+// The RV Life star rating and price tier, the only structured fields with
+// enough entry-level coverage to filter on (76% / 90%; every other group is
+// either empty or wholly inherited from the policy registry, and doc §3 forbids
+// an inherited value being the sole reason an entry is excluded).
+//
+// 0 means "no threshold" for both. Stars are half-steps, so the options are the
+// values the data actually takes; price is the imported 1-4 "$" count.
+let ratingMin = STORE.get('ratingMin', 0);      // minimum stars, 0 = any
+let priceMax = STORE.get('priceMax', 0);        // maximum $ tier, 0 = any
+// Doc §2.2, and the reason this is a switch rather than a silent rule: an
+// unknown value must never be what removes an entry from a search, because a
+// campground missing from a list is invisible forever while a wrong one is
+// visible on arrival. 3,006 entries have no star rating and 1,256 no price
+// tier — filter them out by default and a "4+ stars" search quietly loses a
+// quarter of the database, most of it the public land the ratings never
+// covered. So they stay ON the map, drawn faded, and hiding them is a
+// deliberate click.
+let includeUnrated = STORE.get('includeUnrated', true);
+
+function ratingFilterActive() { return ratingMin > 0 || priceMax > 0; }
+
+// True when an ACTIVE threshold has nothing to evaluate on this entry. Scoped
+// to the active ones on purpose: with only a price filter set, a campground
+// with no stars is not unrated for this search.
+function ratingUnknown(cg) {
+  return (ratingMin > 0 && cg.stars == null) || (priceMax > 0 && cg.price_tier == null);
+}
+
+// Whether the entry fails a threshold on a value that IS known. An entry can be
+// unknown on one field and known-and-failing on the other ($$$$ with no stars,
+// under "4+ and $$ or less") — that is an exclusion on a measured value, not on
+// a silence, so it is hidden rather than faded.
+function ratingPasses(cg) {
+  if (ratingMin > 0 && cg.stars != null && cg.stars < ratingMin) return false;
+  if (priceMax > 0 && cg.price_tier != null && cg.price_tier > priceMax) return false;
+  return true;
+}
+
+function ratingVisible(cg) {
+  if (!ratingPasses(cg)) return false;
+  return includeUnrated || !ratingUnknown(cg);
+}
+
+// Faded = shown but flagged: it met no threshold because none could be applied.
+function ratingFaded(cg) { return ratingFilterActive() && ratingUnknown(cg); }
 
 // ── Build map ─────────────────────────────────────────────────────────────
 // zoomControl: false — the +/- buttons are dropped (pinch / scroll / double-click
@@ -1307,35 +1402,74 @@ function cgPopupHtml(cg) {
   return popup;
 }
 
+// Split out so the Filters box can count the entries the unrated switch is
+// suppressing WITHOUT double-counting ones the ownership or category filters
+// had already removed — the note has to describe the dots actually on screen.
+function passesNonRatingFilters(cg) {
+  return campgroundsOn && activeCategories.has(colorCat(cg))
+    && activeOwnerships.has(ownerKey(cg));
+}
+
 function markerVisible(cg) {
-  return campgroundsOn && activeCategories.has(colorCat(cg)) && activeOwnerships.has(ownerKey(cg));
+  return passesNonRatingFilters(cg) && ratingVisible(cg);
 }
 
 // Apply the master campground toggle: re-evaluate marker visibility and show or
 // hide the campground-only controls (color legend — which now also hosts the
-// "Color by" picker — and the ownership filter). Called on load (for a restored
+// "Color by" picker — and the Filters box). Called on load (for a restored
 // off-state) and whenever the toggle flips.
 function applyCampgroundsToggle() {
   applyVisibility();
   const disp = campgroundsOn ? '' : 'none';
   const legendEl = legendControl.getContainer();
-  const ownerEl = ownershipControl.getContainer();
+  const filterEl = filterControl.getContainer();
   if (legendEl) legendEl.style.display = disp;
-  if (ownerEl) ownerEl.style.display = disp;
+  if (filterEl) filterEl.style.display = disp;
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
 // circleMarker stays on the map (canvas-rendered) and still captures clicks
 // (its popup would open on a "hidden" marker), so filtered-out campgrounds must
 // actually leave the map to be truly non-interactive.
+// Fill opacity for a dot the rating filter could not evaluate. Faded rather
+// than hidden (doc §2.2) and rather than recolored, because the fill already
+// carries the waterfront/climate category the legend explains — opacity is the
+// one channel free to mean "unverified".
+const FILL_OPACITY_FULL = 0.8;
+const FILL_OPACITY_FADED = 0.25;
+
+// setStyle merges, so this composes with the zoom tier's radius/weight. Guarded
+// by the record's own last value: a filter change would otherwise push 12.8k
+// canvas restyles through for the handful of dots that actually changed. The
+// off-map branch mirrors syncMarkerTier — an unprojected marker can't be
+// styled, and applyVisibility re-adds it with these options already set.
+function setMarkerFade(rec, faded) {
+  if (rec.faded === faded) return;
+  rec.faded = faded;
+  const fillOpacity = faded ? FILL_OPACITY_FADED : FILL_OPACITY_FULL;
+  if (map.hasLayer(rec.marker)) rec.marker.setStyle({ fillOpacity });
+  else rec.marker.options.fillOpacity = fillOpacity;
+}
+
 function applyVisibility() {
   let shown = 0;
-  markers.forEach(({ marker, cg }) => {
+  let faded = 0;
+  let unratedHidden = 0;
+  markers.forEach(rec => {
+    const { marker, cg } = rec;
     const vis = markerVisible(cg);
     if (vis) shown++;
+    else if (!includeUnrated && passesNonRatingFilters(cg)
+             && ratingPasses(cg) && ratingUnknown(cg)) unratedHidden++;
     if (vis && !map.hasLayer(marker)) marker.addTo(map);
     else if (!vis && map.hasLayer(marker)) map.removeLayer(marker);
+    // After the add/remove, so a marker that just joined the map is projected
+    // and takes the style directly.
+    const f = vis && ratingFaded(cg);
+    if (f) faded++;
+    setMarkerFade(rec, f);
   });
   updateShownCount(shown);
+  updateUnratedNote(faded, unratedHidden);
 }
 
 // "Showing N of M" under the legend. Filters are sticky across a session, so
@@ -1579,30 +1713,146 @@ legendControl.onAdd = function() {
 legendControl.addTo(map);
 rebuildLegend();
 
-// ── Ownership filter ────────────────────────────────────────────────────────
-// Present ownership values: known labels first (in their defined order), then
-// any others sorted alphabetically.
+// ── Filters (rating thresholds + ownership) ─────────────────────────────────
+// One box, not two. A third bottom-corner control would cost a phone ~90px of
+// map even fully collapsed, and the mobile rule that lifts bottom controls
+// clear of the attribution (`margin-bottom: 28px`) applies to each of them, so
+// stacked boxes also open a dead gap between themselves. The legend stays
+// separate because it explains the colors; these two both narrow what is drawn.
 const ownerOrder = Object.keys(OWNERSHIP_LABELS);
 const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
 const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
   .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
 ownerValues.forEach(v => { if (!hiddenOwnerships.has(v)) activeOwnerships.add(v); });
 
+// Star thresholds are the half-steps the data actually takes; anything finer
+// would offer a cut that matches nothing. `null` = no threshold.
+const STAR_STEPS = [4.5, 4, 3.5, 3];
+const PRICE_LABELS = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+
+let unratedNoteEl = null;
+
+// Explains the faded dots, and only while a threshold is on — with no filter
+// active nothing is faded and the line would just be noise. Doc §2.2: the
+// count is the honest answer to "is this all of them?", which a filtered map
+// otherwise cannot give.
+function updateUnratedNote(faded, unratedHidden) {
+  if (!unratedNoteEl) return;
+  if (!ratingFilterActive()) { unratedNoteEl.textContent = ''; return; }
+  // Both counts come from the pass that just ran, so they describe the map as
+  // drawn. Counting over all of CAMPGROUNDS instead would quietly include the
+  // entries the ownership filter had already taken off the map.
+  if (!includeUnrated) {
+    unratedNoteEl.textContent = unratedHidden === 1
+      ? '1 unrated campground hidden'
+      : `${unratedHidden.toLocaleString()} unrated campgrounds hidden`;
+  } else {
+    unratedNoteEl.textContent = faded === 1
+      ? '1 faded dot is unrated, not excluded'
+      : `${faded.toLocaleString()} faded dots are unrated, not excluded`;
+  }
+}
+
+function persistRating() {
+  STORE.set('ratingMin', ratingMin);
+  STORE.set('priceMax', priceMax);
+  STORE.set('includeUnrated', includeUnrated);
+}
+
 // Bottom-right, across the map from the bottom-left legend.
-const ownershipControl = L.control({ position: 'bottomright' });
-ownershipControl.onAdd = function() {
+const filterControl = L.control({ position: 'bottomright' });
+filterControl.onAdd = function() {
   const div = L.DomUtil.create('div', 'map-legend');
   L.DomEvent.disableClickPropagation(div);
+  // Without this a scroll/drag started on the selects zooms or pans the map
+  // underneath, which on a phone makes the box nearly unusable.
+  L.DomEvent.disableScrollPropagation(div);
 
   const header = document.createElement('div');
   header.className = 'legend-header';
-  header.textContent = 'Ownership';
+  header.textContent = 'Filters';
   header.addEventListener('click', () => div.classList.toggle('collapsed'));
   div.appendChild(header);
 
   const rows = document.createElement('div');
   rows.className = 'legend-rows';
   div.appendChild(rows);
+
+  // ── Rating thresholds ──
+  const starRow = document.createElement('div');
+  starRow.className = 'legend-select';
+  const starLabel = document.createElement('label');
+  starLabel.textContent = 'Rating';
+  starLabel.htmlFor = 'cg-rating-min';
+  const starSel = document.createElement('select');
+  starSel.id = 'cg-rating-min';
+  [['0', 'Any']].concat(STAR_STEPS.map(v => [String(v), `${v}\u2605 and up`]))
+    .forEach(([value, text]) => {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = text;
+      if (parseFloat(value) === ratingMin) opt.selected = true;
+      starSel.appendChild(opt);
+    });
+  starSel.addEventListener('change', () => {
+    ratingMin = parseFloat(starSel.value) || 0;
+    applyVisibility();
+    persistRating();
+  });
+  starRow.appendChild(starLabel);
+  starRow.appendChild(starSel);
+  rows.appendChild(starRow);
+
+  const priceRow = document.createElement('div');
+  priceRow.className = 'legend-select';
+  const priceLabel = document.createElement('label');
+  priceLabel.textContent = 'Price';
+  priceLabel.htmlFor = 'cg-price-max';
+  const priceSel = document.createElement('select');
+  priceSel.id = 'cg-price-max';
+  [['0', 'Any']].concat([1, 2, 3, 4].map(v => [String(v), `${PRICE_LABELS[v]} or less`]))
+    .forEach(([value, text]) => {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = text;
+      if (parseInt(value, 10) === priceMax) opt.selected = true;
+      priceSel.appendChild(opt);
+    });
+  priceSel.addEventListener('change', () => {
+    priceMax = parseInt(priceSel.value, 10) || 0;
+    applyVisibility();
+    persistRating();
+  });
+  priceRow.appendChild(priceLabel);
+  priceRow.appendChild(priceSel);
+  rows.appendChild(priceRow);
+
+  // The §2.2 escape hatch, checked by default. Unchecking is the user saying
+  // "I accept losing the ones nobody rated" — which is a legitimate thing to
+  // want, and quite different from the filter deciding it for them.
+  const unratedToggle = document.createElement('label');
+  unratedToggle.className = 'legend-toggle';
+  const unratedCb = document.createElement('input');
+  unratedCb.type = 'checkbox';
+  unratedCb.checked = includeUnrated;
+  unratedCb.addEventListener('change', () => {
+    includeUnrated = unratedCb.checked;
+    applyVisibility();
+    persistRating();
+  });
+  unratedToggle.appendChild(unratedCb);
+  unratedToggle.appendChild(document.createTextNode('Include unrated'));
+  rows.appendChild(unratedToggle);
+
+  unratedNoteEl = document.createElement('div');
+  unratedNoteEl.className = 'legend-note';
+  rows.appendChild(unratedNoteEl);
+
+  // ── Ownership ──
+  const ownerHeading = document.createElement('div');
+  ownerHeading.className = 'legend-subhead';
+  ownerHeading.textContent = 'Ownership';
+  rows.appendChild(ownerHeading);
 
   ownerValues.forEach(v => {
     const count = CAMPGROUNDS.filter(c => ownerKey(c) === v).length;
@@ -1630,7 +1880,7 @@ ownershipControl.onAdd = function() {
   if (window.innerWidth <= 700) div.classList.add('collapsed');
   return div;
 };
-ownershipControl.addTo(map);
+filterControl.addTo(map);
 
 // Apply a restored "campgrounds off" state now that both controls exist (hides
 // their widgets + the "Color by" picker, and keeps every campground marker off).
