@@ -1,6 +1,6 @@
 ---
 name: project-campground-schema
-description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — shipped 2026-09-14, phases 1/2/4 done, registry at 26 rows
+description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — shipped 2026-09-14, phases 1/2/4 done, registry at 27 rows
 metadata:
   type: project
 ---
@@ -12,8 +12,8 @@ and the things that are not written down there.
 **Done:** schema vocabulary + deep-merge PUT + policy registry (`campground_schema.py`,
 `campground_policies.json`); manage-form UI with tri-state selects; RV Life rating lifted
 out of note prose into `rating` on 11,771 entries (`extract_rating.py`); rec.gov season
-derivation (`recgov_calendar.py`); 26 registry rows covering 5,675 entries (44%) and 56%
-of nights actually slept.
+derivation (`recgov_calendar.py`); 27 registry rows covering 5,704 entries (44.7%) and 57.2%
+of nights actually slept (`state:WV` added 2026-09-15).
 
 **Map popup surfacing DONE 2026-09-14** (commit `95879c2`): verified and inherited chip
 runs, the agency half attributed ("Typical for Indiana state parks") and withheld when
@@ -40,7 +40,19 @@ incremental like `day_rollups`), phase 5 (Good Sam bulk match), phase 6 (more ro
 
 **Priority came from joining `trips.json` against `campgrounds.json` by nights slept**,
 not entry count — that is what put PA/MD/VA ahead of MI/CA. Re-run that join before
-picking the next rows.
+picking the next rows; there is no script for it in the repo, it is ~40 lines over
+`trips.parse_trips()` + `campground_schema.policy_refs()`. **Two traps when rewriting it:**
+`trips.is_home_stay()` reads `stay["place"]`, which only `parse_trips()` materializes (raw
+`trips.json` records give a silent False and 23 home nights in the denominator), and
+family-kind entries carry no `ownership`, so 47 driveway nights land in a bogus bucket
+unless excluded.
+
+**The nights signal is now spent, as of the 2026-09-15 run.** Every row above the best
+remaining agency is `private:*` / `hipcamp:*` / `local:*`, which doc §5 says to leave alone,
+and the agency rows left are at 2 nights or fewer: `state:MA` (2 nights, 22 entries),
+`state:GA` (1, 53), then nothing. So the next rows should be picked on **entries** or on a
+trip actually being planned — `state:OR` (55), `state:GA` (53), `provincial:MB` (53),
+`state:OK` (52), `provincial:SK` (52) lead that ranking; 961 entries across 34 rows remain.
 
 **Realistic ceiling is ~52%.** `local:*` rows are mostly dead ends (`local:IA` is 245
 entries across 245 different counties); Suffolk County worked only because it genuinely
@@ -51,6 +63,13 @@ second instance before extending the vocabulary: Hither Hills' one-reservation-p
 household peak-season limit; Virginia's non-resident surcharge scaling by site type
 ($5 standard → $8 full hookup); BC's maximum stay being per calendar year rather than
 per visit.
+
+**WV is the third row that could not state a booking window** (after IA's contradicted
+cutoff and PA's absent non-resident rate), and the first with NO published rates at all —
+West Virginia puts every number inside its Inntopia booking engine and nothing on the web.
+The pre-online brochures still served from `wvstateparks.com` are the trap: they describe
+held-back FCFS sites and a two-days-prior cutoff the current system contradicts, and a
+search engine will hand you both as current.
 
 **Unresolved:** Iowa's two official pages contradict each other on the booking cutoff,
 and its post-cutoff FCFS is uncorroborated — resolve by phone. Florida's site 403s
