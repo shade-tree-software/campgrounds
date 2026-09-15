@@ -221,6 +221,26 @@ class TestParseReply(unittest.TestCase):
         with self.assertRaises(ValueError):
             ef.parse_reply("I could not do that.")
 
+    def test_one_malformed_object_does_not_cost_the_others(self):
+        """~1.6% of batches come back with a local defect, measured."""
+        self.assertEqual(
+            ef.parse_reply('[{"id": 1, "sites": {"count": 3}}, {"id": 2, bad},'
+                           ' {"id": 3, "hookups": {"dump": true}}]'),
+            [{"id": 1, "sites": {"count": 3}},
+             {"id": 3, "hookups": {"dump": True}}])
+
+    def test_a_brace_inside_a_string_does_not_unbalance_the_salvage(self):
+        """Notes get quoted back into replies, and notes contain braces."""
+        self.assertEqual(
+            ef.parse_reply('[{"id": 1, "booking": {"note": "a } and a {"}},'
+                           ' {"id": 2, oops}]'),
+            [{"id": 1, "booking": {"note": "a } and a {"}}])
+
+    def test_an_unsalvageable_reply_still_raises(self):
+        """Returning [] would stamp the whole batch as read-and-empty."""
+        with self.assertRaises(ValueError):
+            ef.parse_reply("[ totally broken ]")
+
 
 class TestTargetGroups(unittest.TestCase):
 

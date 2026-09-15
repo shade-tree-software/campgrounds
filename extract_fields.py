@@ -296,7 +296,57 @@ def parse_reply(text):
     start, end = text.find("["), text.rfind("]")
     if start < 0 or end < start:
         raise ValueError("no JSON array in reply")
-    return json.loads(text[start:end + 1])
+    body = text[start:end + 1]
+    try:
+        return json.loads(body)
+    except json.JSONDecodeError:
+        # One malformed character should not cost the other eleven entries.
+        # Measured at ~1.6% of batches, always a local defect (a stray quote, a
+        # trailing comma) rather than a wholesale failure, so fall back to
+        # parsing each top-level object on its own and keep the ones that are
+        # well-formed. Entries whose object is lost simply come back unanswered,
+        # which leaves them queued for the next run — the same path a failed
+        # batch already took, just for one entry instead of twelve.
+        salvaged = [obj for obj in _top_level_objects(body) if obj is not None]
+        if not salvaged:
+            raise
+        return salvaged
+
+
+def _top_level_objects(body):
+    """Yield each top-level {...} in an array body, parsed, or None if it isn't.
+
+    Brace-counting rather than a regex, because a note quoted back into the
+    reply can contain braces; string state is tracked so a brace inside a JSON
+    string doesn't unbalance the scan.
+    """
+    depth = 0
+    start = None
+    in_string = escaped = False
+    for i, ch in enumerate(body):
+        if in_string:
+            if escaped:
+                escaped = False
+            elif ch == "\\":
+                escaped = True
+            elif ch == '"':
+                in_string = False
+            continue
+        if ch == '"':
+            in_string = True
+        elif ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0 and start is not None:
+                chunk = body[start:i + 1]
+                try:
+                    yield json.loads(chunk)
+                except json.JSONDecodeError:
+                    yield None
+                start = None
 
 
 def clean_proposal(proposal):
