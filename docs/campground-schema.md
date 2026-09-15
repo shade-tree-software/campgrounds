@@ -587,6 +587,51 @@ almost nothing.
 what changed, and merge deltas into the store at write time rather than dumping a dict
 loaded at startup — a batch racing a UI edit must not clobber it.
 
+**Phase 3 shipped 2026-09-15 as `extract_fields.py`.** Targets `hookups` / `sites` /
+`facilities` / `season` / `booking`; `fees` and `discounts` are excluded because the table
+above measures them at 0.1-1.2% of notes, where a pass returns almost nothing and invites
+the model to infer a price from adjectives. What the build settled:
+
+- **`note_scan` is the incremental record**, a top-level scalar this module owns:
+  `{sig, checked, model}`, where `sig` hashes the note the scan read. It is written **even
+  when the note yielded nothing**, which is the only thing that stops the ~70% of notes
+  holding no structured fact from being re-sent and re-billed on every pass. That is not the
+  placeholder §2.1 forbids — a placeholder is a fabricated VALUE; this is an audit record of
+  an action that really happened, the same distinction `detect_people.py` draws between a
+  stored 0 and an absent key. One block per ENTRY, not per group: five group-level
+  provenance blocks across 12.7k entries would add a quarter of a million lines to record
+  the same fact five times. Groups that DO yield a value still get their own `provenance`
+  entry with `method: derived`.
+- **It is chunked and stoppable, because a pass over 12,689 notes cannot be one job.**
+  Batches of 12 are each written to disk before the next starts, `--limit` caps a run, and
+  SIGINT finishes the batch in flight. Progress lives in the data rather than a cursor file,
+  so an interrupted run resumes by being run again and a kill costs at most one batch.
+  `--report` shows what is left and costs nothing.
+- **A human is never overwritten:** a group whose provenance says `manual` or `reported` is
+  skipped, and the entry is still stamped so it is not re-read every run to be refused every
+  run.
+- **Not structured outputs.** A JSON schema worth having needs `required`, and `required` is
+  the opposite of what this pass needs — the whole discipline is OMITTING what the note does
+  not say. The reply is parsed tolerantly instead and every field staged through
+  `apply_update`, so one hallucinated value is dropped with a warning rather than costing
+  the batch. A model `null` is discarded before it reaches that call, because `apply_update`
+  reads null as "clear this field" and on a human-filled entry that is a silent deletion.
+- **Effort `high`, measured.** `low` is ~$4.30 per 1,000 against ~$6.90 and differed on 7 of
+  24 — but four were facts it simply missed (an explicit "reserve May-Sept", a "water
+  station", a "no hookups" that should set water and sewer false, a stated May-Sep season)
+  against two where it was rightly cautious about an approximate rig length. Omissions are
+  the expensive failure for a pass whose point is coverage; the caution was recovered in the
+  prompt instead.
+- **Two prompt rules that cost a round of review each.** An approximate figure is still a
+  figure ("rigs to ~45 ft" -> 45) — `max_rig_ft` is dropped only when the note UNDERCUTS its
+  own number ("max RV ~40 ft (tight spacing, best for smaller rigs)"), so the test is
+  self-contradiction, not hedging. And `platform` needs the channel actually identified: a
+  bare "reservable online" names none, and an early version answered `operator` for it,
+  inventing a booking channel out of nothing.
+- Yield depends on who wrote the note. AWH's own early waterfront notes ("Many sites are
+  right on the lake") yield ~19%; the later Claude-written sweep notes yield ~96%. A
+  low-yield stretch is the data, not a broken pass.
+
 **Phase 4** exploits something already in the tree. `AVAIL_URL` in `ridb/fetch_facility.py`
 returns per-site, per-night status for a whole month, keyless. Walk a facility across the
 year and **the season appears as the closed band, and FCFS loops appear as sites that never
