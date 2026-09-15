@@ -72,11 +72,18 @@ BATCH = 12
 DEFAULT_LIMIT = 200
 
 # Batches in flight at once. The run is latency-bound — almost all of its wall
-# clock is spent waiting on the model — so this is what decides whether the full
-# library takes an afternoon or an hour. Kept low anyway: the whole wave has to
-# finish before its write, so one slow batch holds up three, and a bigger number
-# mostly buys rate-limit retries.
-WORKERS = 4
+# clock is spent waiting on the model — so this is what decides whether the
+# library takes an afternoon or half an hour. Measured on this data:
+#
+#     1 worker    ~53 entries/min        16 workers  ~338/min
+#     4 workers   ~82/min                (no 429s at any of these)
+#
+# It scales nearly linearly because a wave is pure waiting, and the default is
+# nonetheless 8 rather than 16: rate limits are per-account and per-tier, this
+# was measured on one account on one afternoon, and a default that 429s on
+# somebody else's key is a worse failure than a slower run. Raise it with
+# --workers once you have watched a run come back clean.
+WORKERS = 8
 
 # The groups this pass is allowed to write. `rating` is phase 2's and mechanical;
 # `fees` and `discounts` are excluded because doc §7 measured them at 0.1-1.2%
