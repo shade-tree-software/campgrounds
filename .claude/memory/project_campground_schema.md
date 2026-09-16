@@ -92,6 +92,40 @@ profile as the API pass, so the two are interchangeable in quality.
 says "individual sites first-come, first-served; group sites reservable", the entry gets
 `reservable: false` / `fcfs: always`, because an RVer looking for a site cannot reserve one.
 
+### Resuming the hand pass on another machine (written 2026-09-15 for the next session)
+
+Assume **no API credit**. The loop is two commands per batch, and it is stateless — just
+start it:
+
+    ./extract_fields.py --dump 60          # read the 60 notes it prints
+    ./extract_fields.py --apply-file <path to your JSON>   # then: git add -u && git commit
+
+**Read `SYSTEM` in `extract_fields.py` before the first batch and follow it literally.** It
+is the same prompt the API pass used and nearly every rule in it is a mistake that was made
+and caught. The ones that come up constantly:
+
+- **Absent is unknown.** Emit a key only when the note says it. Most entries yield two or
+  three keys, and `{}` is a fine answer. Never write `false` for "not mentioned".
+- `electric` is one of 0/20/30/50 and **nothing else** — "electric sites" with no amperage
+  OMITS the key; "50/30-amp" is 50; "50 & 60-amp" is 50 (highest ALLOWED value genuinely
+  offered); "15-amp only" omits it (never round up to reach an allowed value).
+- "full hookup" = water+sewer true, electric only if the amperage is stated.
+- "no hookups" = electric 0, water false, sewer false. "primitive"/"non-electric" = electric 0.
+- A **dump station is not a sewer hookup**, and "dump station ~6 blocks away" is not on-site.
+- `max_rig_ft`: an approximate figure is still a figure ("rigs to ~45 ft" -> 45). Omit only
+  when the note UNDERCUTS its own number ("max ~40 ft, tight spacing, best for smaller rigs")
+  or gives a bare range ("24-32 ft"). A pad dimension ("40x15") is not a rig limit.
+- `platform` only when the channel is NAMED. A bare "reservable online" names none.
+- `season.opens/closes` only for clean dates ("Open May 1-Oct 15"); a stated season with no
+  clean dates still gives `year_round: false`.
+- Counts: use a stated total or an unambiguous sum; skip ranges ("128-130", "~18-22").
+
+**Practicalities:** batches of 60 cost roughly 20K tokens round-trip and one commit each;
+write the JSON with a heredoc to a scratch file, not into the repo. Run
+`./audit_extracted_fields.py` every several batches — a ~5% flag rate in the known-benign
+categories is normal and healthy; a NEW category appearing is the signal to stop and look.
+`python -m unittest tests.test_extract_fields` needs no API and no network.
+
 **Not done:** Good Sam bulk match (phase 5); more registry rows (phase 6); manage-table sort
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
