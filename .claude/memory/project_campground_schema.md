@@ -111,13 +111,13 @@ and caught. The ones that come up constantly:
   offered); "15-amp only" omits it (never round up to reach an allowed value).
 - "full hookup" = water+sewer true, electric only if the amperage is stated.
 - "no hookups" = electric 0, water false, sewer false. "primitive"/"non-electric" = electric 0.
-- A **dump station is not a sewer hookup**, and "dump station ~6 blocks away" is not on-site.
+- A **dump station is not a sewer hookup**, and "dump station ~6 blocks away" / "sani-dump nearby" is `dump: false` (the note says it is elsewhere). Committed data is inconsistent here (18 false vs 25 omitted as of 2026-09-16).
 - `max_rig_ft`: an approximate figure is still a figure ("rigs to ~45 ft" -> 45). Omit only
   when the note UNDERCUTS its own number ("max ~40 ft, tight spacing, best for smaller rigs")
   or gives a bare range ("24-32 ft"). A pad dimension ("40x15") is not a rig limit.
 - `platform` only when the channel is NAMED. A bare "reservable online" names none.
-- `season.opens/closes` only for clean dates ("Open May 1-Oct 15"); a stated season with no
-  clean dates still gives `year_round: false`.
+- `season.opens/closes` for day-level dates, **tilde included** (AWH 2026-09-16: "~Apr 15-Oct 15" shifts a little each year, often to a weekend, but it still says the place is shut in December). Omit alternatives ("Apr 15/May 1") and month-only; a stated season with no dates still gives `year_round: false`. Only 6 of the first 250 scanned tilde-date notes got dates under the old rule.
+- **Sonnet is fit for this** (2026-09-16 blind re-run of 8585-8644: 398/427 values agreed, a similar number of clear errors on each side). Spot-check a batch against the committed data now and then.
 - Counts: use a stated total or an unambiguous sum; skip ranges ("128-130", "~18-22").
 
 **Practicalities:** batches of 60 cost roughly 20K tokens round-trip and one commit each;

@@ -142,6 +142,9 @@ hookups   electric: highest amps AT A SITE — one of 0, 20, 30, 50 and NOTHING
           water:    bool, piped to the site. A communal spigot is NOT this.
           sewer:    bool, at the site.
           dump:     bool, a dump station on the property (independent of sewer).
+                    One described as elsewhere ("city sani-dump nearby", "dump
+                    station ~6 blocks away") -> false: the note says where it
+                    is, and it is not here.
           "full hookup(s)" -> water true and sewer true; electric only if the
           amperage is actually stated.
           "no hookups" / "primitive" / "non-electric" -> electric 0 (and, for
@@ -169,10 +172,13 @@ facilities showers, flush_toilets, vault_toilets, laundry, camp_store, wifi:
 
 season    year_round:  bool. "open year round" -> true. A stated closed season
                        -> false.
-          opens/closes: "MM-DD", only when a clean date is given ("open May 15
-                       to Oct 1"). OMIT when hedged or alternative
-                       ("~Apr 15/May 1-Oct 15/31", "roughly mid-May"). A month
-                       with no day is not a date — omit it.
+          opens/closes: "MM-DD", only when a day-level date is given ("open
+                       May 15 to Oct 1"). A tilde still counts: "Open ~Apr
+                       15-Oct 15" -> "04-15" / "10-15". The dates shift a little
+                       each year (often to land on a weekend), but the shape of
+                       the season is known. OMIT when the dates are alternatives
+                       or vague ("Apr 15/May 1-Oct 15/31", "roughly mid-May").
+                       A month with no day is not a date — omit it.
 
 booking   reservable: bool, whether sites can be booked ahead.
           platform:   one of recreation.gov, reserveamerica, usedirect,
