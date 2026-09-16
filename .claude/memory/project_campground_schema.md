@@ -66,6 +66,32 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
+**PHASE 3 IS PAUSED PART-WAY: 8,026 of 12,689 notes scanned (63%), 4,663 left.**
+The API account ran out of credit at 7,544 (AWH 2026-09-15: "we won't be getting more API
+credits for the time being"), so the last 482 were done by reading the notes in-session and
+feeding them back through `--apply-file`. **To resume, with or without credits:**
+
+    ./extract_fields.py --report                        # free, what is left
+    ./extract_fields.py --limit 4700 --workers 16       # with API credit
+    ./extract_fields.py --dump 60                       # without: read them yourself,
+    ./extract_fields.py --apply-file proposals.json     #   same validation + write path
+
+Nothing is half-done and there is no cursor to repair — `--dump` always returns what is
+still queued. Coverage at the pause: hookups 48%, booking 45%, sites 45%, facilities 35%,
+season 17%. Everything is committed and deployed to PA through commit `d62464d`; the ten
+hand-extracted batches after that are committed locally but **not yet pushed**.
+
+**Quality was checked, not assumed.** `./audit_extracted_fields.py` re-reads every derived
+value against its own note; it flags ~5% and the flags are overwhelmingly benign (the doc and
+the script's own docstring list which). It found exactly one real error in the first 3,675
+numbers — a "15-amp electric only" rounded up to the enum's 20 — now fixed, with the rule
+"never round up to reach an allowed value" in the prompt. The hand pass shows the same flag
+profile as the API pass, so the two are interchangeable in quality.
+
+**One judgement call applied uniformly** and worth revisiting if it looks wrong: where a note
+says "individual sites first-come, first-served; group sites reservable", the entry gets
+`reservable: false` / `fcfs: always`, because an RVer looking for a site cannot reserve one.
+
 **Not done:** Good Sam bulk match (phase 5); more registry rows (phase 6); manage-table sort
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
