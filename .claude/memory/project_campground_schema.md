@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-16T14:51:33.528Z
+  modified: 2026-09-16T17:09:58.945Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,21 +69,23 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 9,646 of 12,689 notes scanned (76%), 3,043 left**
-(as of commit `808a44c`, notes through id 10032). Coverage: hookups 59.3%,
-booking 58.5%, sites 57.7%, facilities 46.1%, season 22.4%.
-**Remaining states, in order:** CA 854, OR 592, WA 399, AZ 279, QC 160, UT 157,
-NV 121, ON 84 (plus smaller pockets). Two long sittings on 2026-09-16 covered
-notes 8645-10032 (23 batches of 60): the rest of BC private resorts, all of
-Alberta, all of Saskatchewan, Manitoba, all of Idaho (USFS/BLM/IDPR/county —
-the tail was almost entirely small FCFS-or-recreation.gov vault-toilet
-no-hookup sites and went fast), and Utah is roughly half done (BLM Bears
-Ears/Canyon Rims/Moab river corridors, Zion/Bryce/Capitol Reef/Arches/
-Canyonlands/Glen Canyon NPs, Fishlake NF, Manti-La Sal NF, Dixie NF,
-Uinta-Wasatch-Cache NF, Ashley NF — next up in Utah per `--report` is
-whatever's left after Ashley NF, likely BLM Vernal/Price-area or the
-Wasatch Front foothills). **Resume with `./extract_fields.py --dump 60`
-immediately — no state was left mid-batch.**
+**PHASE 3 IS PAUSED PART-WAY: 9,826 of 12,689 notes scanned (77%), 2,863 left**
+(as of commit `09a5e02`, notes through id 10216). Coverage: hookups 60.5%,
+booking 59.8%, sites 58.8%, facilities 47.3%, season 23.0%.
+**Remaining states, in order:** CA 854, OR 592, WA 375, AZ 279, QC 160, NV 121,
+ON 84, NS 81 (plus smaller pockets). **Utah is now fully done** — the run
+finished with a long tail of private RV parks (Zion/Bryce corridor,
+Circleville/Marysvale/Nine Mile Canyon, small-town parks) and a big block of
+Utah State Parks (Coral Pink Sand Dunes, Sand Hollow, Quail Creek, Kodachrome
+Basin, Dead Horse Point, Fremont Indian, Yuba, Scofield, Deer Creek,
+Steinaker/Red Fleet, Wasatch Mountain, Rockport, East Canyon, Echo, Antelope
+Island, Willard Bay, Hyrum, Bear Lake). **Washington is now underway**,
+started with Gifford Pinchot NF (Mount Adams/Cowlitz Valley RDs), USACE
+Columbia/Snake River reservoirs, Umatilla NF (Blue Mountains), and Mount
+Rainier NP. Idaho, Alberta, Saskatchewan, Manitoba, BC are all fully done as
+of this run (see earlier notes in this file for their conventions).
+**Resume with `./extract_fields.py --dump 60` immediately — no state was
+left mid-batch.**
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
