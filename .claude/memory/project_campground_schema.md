@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-16T14:17:59.220Z
+  modified: 2026-09-16T14:51:33.528Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,18 +69,21 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 9,226 of 12,689 notes scanned (73%), 3,463 left**
-(as of commit `e82ec2f`, notes through id 9610). Coverage: hookups 56.9%,
-booking 55.6%, sites 54.9%, facilities 43.2%, season 21.9%.
-**Remaining states, in order:** CA 854, OR 592, WA 399, UT 318, AZ 279, ID 259,
-QC 160, NV 121 (plus smaller pockets). A 16-batch run on 2026-09-16 covered
-notes 8645-9610 in one sitting: the rest of BC private resorts, all of Alberta
-(provincial parks + PRAs + local/municipal + private), all of Saskatchewan
-(SKPP/ReserveAmerica provincial parks + regional parks + local/private),
-Manitoba (RMNP, goingtocamp provincial parks, Whiteshell, local/commercial),
-and about half of Idaho's USFS campgrounds (Caribou-Targhee, Sawtooth,
-Boise, Salmon-Challis, Payette NFs) — the last are almost all small,
-FCFS-or-recreation.gov, vault-toilet, no-hookup sites and go fast.
+**PHASE 3 IS PAUSED PART-WAY: 9,646 of 12,689 notes scanned (76%), 3,043 left**
+(as of commit `808a44c`, notes through id 10032). Coverage: hookups 59.3%,
+booking 58.5%, sites 57.7%, facilities 46.1%, season 22.4%.
+**Remaining states, in order:** CA 854, OR 592, WA 399, AZ 279, QC 160, UT 157,
+NV 121, ON 84 (plus smaller pockets). Two long sittings on 2026-09-16 covered
+notes 8645-10032 (23 batches of 60): the rest of BC private resorts, all of
+Alberta, all of Saskatchewan, Manitoba, all of Idaho (USFS/BLM/IDPR/county —
+the tail was almost entirely small FCFS-or-recreation.gov vault-toilet
+no-hookup sites and went fast), and Utah is roughly half done (BLM Bears
+Ears/Canyon Rims/Moab river corridors, Zion/Bryce/Capitol Reef/Arches/
+Canyonlands/Glen Canyon NPs, Fishlake NF, Manti-La Sal NF, Dixie NF,
+Uinta-Wasatch-Cache NF, Ashley NF — next up in Utah per `--report` is
+whatever's left after Ashley NF, likely BLM Vernal/Price-area or the
+Wasatch Front foothills). **Resume with `./extract_fields.py --dump 60`
+immediately — no state was left mid-batch.**
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
