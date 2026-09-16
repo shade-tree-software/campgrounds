@@ -1,8 +1,11 @@
 ---
 name: project-campground-schema
 description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/4 + popup surfacing + map rating filter done; registry at 27 rows; phase 3 extraction is next
-metadata:
+metadata: 
+  node_type: memory
   type: project
+  originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
+  modified: 2026-09-16T14:17:59.220Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -66,7 +69,95 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 8,026 of 12,689 notes scanned (63%), 4,663 left.**
+**PHASE 3 IS PAUSED PART-WAY: 9,226 of 12,689 notes scanned (73%), 3,463 left**
+(as of commit `e82ec2f`, notes through id 9610). Coverage: hookups 56.9%,
+booking 55.6%, sites 54.9%, facilities 43.2%, season 21.9%.
+**Remaining states, in order:** CA 854, OR 592, WA 399, UT 318, AZ 279, ID 259,
+QC 160, NV 121 (plus smaller pockets). A 16-batch run on 2026-09-16 covered
+notes 8645-9610 in one sitting: the rest of BC private resorts, all of Alberta
+(provincial parks + PRAs + local/municipal + private), all of Saskatchewan
+(SKPP/ReserveAmerica provincial parks + regional parks + local/private),
+Manitoba (RMNP, goingtocamp provincial parks, Whiteshell, local/commercial),
+and about half of Idaho's USFS campgrounds (Caribou-Targhee, Sawtooth,
+Boise, Salmon-Challis, Payette NFs) — the last are almost all small,
+FCFS-or-recreation.gov, vault-toilet, no-hookup sites and go fast.
+
+**More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
+run, beyond what the Alberta section below already covers:**
+- **Same "province-wide agency portal earns no platform" rule extends to
+  SKPP/Sask Parks and Manitoba's goingtocamp**, exactly like Alberta Parks
+  and Parks Canada below. `recreation.gov` and `reserveamerica` still get
+  named when the note spells one out (or names "ReserveAmerica SKPP" — SKPP's
+  own reservation system runs on ReserveAmerica, confirmed by sibling notes
+  that spell it out in full next to others that just say "Sask Parks").
+- **A note naming TWO concrete channels with no clear primary** ("online/by
+  phone", "phone/email or website", "Campspot or by phone", "in person,
+  phone, or online") -> `reservable: true` with platform omitted every time,
+  even when one of the two is a named enum value — picking one would be a
+  guess. Exception: "phone/email" alone (no third "online") still resolves to
+  `platform: "phone"`, matching the pre-existing data precedent this was
+  checked against.
+- **"100% reservable" / "fully reservable" / "reservation only" / "no
+  self-registration" / "no FCFS"** -> `fcfs: "never"`, not just `reservable:
+  true` — matches the existing "reservations required" -> never convention.
+- **A range for any numeric field ("12-18 sites", "25-32 ft", "50-63 sites")
+  is always omitted, never split-the-difference** — consistent with the
+  existing "skip ranges" rule for counts, extended here to `max_rig_ft`
+  ranges too, which came up constantly in Idaho USFS notes citing
+  reviewer-reported rig-length ranges.
+- **A temporary outage/closure note (wildfire, hazard-tree removal, "no water
+  summer 2026", repairs) is never encoded as a permanent `false`** — omit the
+  affected keys rather than assert a durable fact about a fixable, dated
+  condition. Came up constantly in the Idaho/Alberta forest-service entries.
+- **"Book direct" == "reservable via/by the operator"** — both phrasings
+  point at the campground's own booking system as opposed to a third-party
+  platform, and both map to `platform: "operator"`.
+
+**A long run of Alberta Parks provincial/PRA campgrounds (8826-9005) settled a
+few more conventions, all confirmed against already-scanned precedent:**
+- **"Walk-in tent sites" are excluded from `sites.count`** unless the note
+  itself states a combined total (e.g. "10 sites: 7 walk-in + 3 vehicle" ->
+  10; "16 unserviced ... plus 3 walk-in" with no combined figure -> 16). Same
+  exclusion as group/equestrian sites. The existing corpus is actually split
+  on this (checked both ways), but exclusion is the more common prior pattern
+  and the more conservative reading of "total campsites."
+- **A subset that stays open/FCFS through the off-season does NOT flip
+  `season.year_round` to true** when it's a small minority of the campground
+  (a few sites of hundreds) — matches the existing "Loop A FCFS year-round"
+  precedent. It only goes to `true` when the note frames the MAJORITY as
+  continuous (e.g. "47 of 61 sites powered year-round").
+- **`fcfs: "some_sites"`** for an explicit "mix of reservable and FCFS"
+  statement, as opposed to `after_cutoff` for a genuine within-season DATE
+  switch ("reservable May-Sep, sites 186-195 add FCFS after early Sep").
+- **A facility named as being at a DIFFERENT loop/location within the same
+  park ("showers available at nearby Lakeview loop", "dump station in nearby
+  Lac La Biche") is treated as off-site — omitted or `false`, never claimed
+  for the entry being scanned** — same rule as the existing "dump station 6
+  blocks away" convention, just extended to showers/potable water and to
+  "nearby"/loop-level phrasing, not only literal distances.
+- **"Reservable via/by the operator"** (an explicit, singular, named booking
+  party — a concessionaire like West Fraser Mills, not a province-wide
+  agency) -> `platform: "operator"`. But "Reservable via Alberta Parks" (the
+  province-wide portal covering hundreds of parks) still gets **no platform**,
+  same as the Parks Canada precedent — the agency itself isn't in the enum
+  and isn't a single campground's own system.
+- **A temporary 2026 outage note** ("showers/flush toilets closed for repairs,
+  alt sani-dump elsewhere") was NOT encoded as a permanent `false` — omitted
+  those keys rather than asserting a durable fact about a fixable outage.
+
+**New wrinkle handled in the Parks Canada / Banff / Jasper / Kananaskis batch
+(8766-8825):** several notes give `max_rig_ft` only in metres ("RVs/trailers to
+10 m"). Converted to feet by arithmetic (10 m -> 33 ft) since the audit script's
+own docstring already treats unit conversion as an expected source of "number
+not in note" flags (same bucket as "3-week max stay" -> 21 nights). Where a
+note already carried a parenthetical (e.g. "8.2m (27')") that number was used
+directly rather than recomputed. Also settled: "reservable via/through Parks
+Canada" -> `reservable: true` with **no** platform (Parks Canada isn't in the
+platform enum and isn't a third-party channel to point at) — matches
+already-scanned entries 8265/8573. A season that is reservable in the main
+window and FCFS in the shoulder (or a summer/winter-loop split covering the
+whole year) -> `fcfs: "after_cutoff"`, matching the existing USACE/USFS
+"reservable in peak season, FCFS off-peak" convention already in the data.
 The API account ran out of credit at 7,544 (AWH 2026-09-15: "we won't be getting more API
 credits for the time being"), so the last 482 were done by reading the notes in-session and
 feeding them back through `--apply-file`. **To resume, with or without credits:**
