@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-16T17:09:58.945Z
+  modified: 2026-09-17T15:30:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,19 +69,25 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 10,186 of 12,689 notes scanned (80%), 2,503 left**
-(as of commit `fce7d7c`, notes through id 10579). Coverage: hookups 62.9%,
-booking 62.5%, sites 61.4%, facilities 49.2%, season 23.4%.
-**Remaining states, in order:** CA 854, OR 592, AZ 279, QC 160, NV 121, ON 84,
-NS 81, NB 76 (plus smaller pockets). **Washington is now fully done** — this
-run (six batches, notes 10217-10579) covered the rest of Mt Baker-Snoqualmie/
-Okanogan-Wenatchee/Olympic/Gifford Pinchot NF drainages, Colville NF (Kettle
-River/Sullivan Lake/Pend Oreille), Lake Roosevelt NRA, North Cascades NP,
-the full WA State Parks roster (Pacific coast, Puget Sound, San Juans,
-Columbia River/Gorge, Cascades), then a long tail of county fairgrounds,
-port-district, PUD/utility, tribal and private RV parks across the state.
-Oregon is next per `--report`. **Resume with `./extract_fields.py --dump 60`
+**PHASE 3 IS PAUSED PART-WAY: 10,486 of 12,689 notes scanned (83%), 2,203 left**
+(as of commit `d5d500d`, notes through id 10879). Coverage: hookups 64.8%,
+booking 64.7%, sites 63.6%, facilities 51.0%, season 24.0%.
+**Remaining states, in order:** CA 854, OR 307, AZ 279, QC 160, NV 121, ON 84,
+NS 81, NB 76 (plus smaller pockets). **Washington is fully done; Oregon is
+~45% done and mid-run** — notes 10580-10879 (5 batches) covered OR private RV
+parks (Republic/Curlew Lake/Tonasket/Oroville), the full Oregon State Parks
+coastal + Willamette Valley + Columbia Gorge + high-desert roster, then a
+long run of USFS campgrounds (Rogue River-Siskiyou, Deschutes, Umpqua,
+Willamette, Mt. Hood, Wallowa-Whitman, Malheur, Fremont-Winema, Umatilla,
+Siuslaw) and BLM sites (Steens Mountain, Prineville, Roseburg, Vale, Lakeview,
+Klamath Falls districts). **Resume with `./extract_fields.py --dump 60`
 immediately — no state was left mid-batch.**
+
+**A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
+10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
+`audit_extracted_fields.py` (a guessed-but-plausible platform isn't a shape the auditor
+flags); it was caught by re-reading the whole file, not just the most recent paragraph,
+before the next batch. Do that each time.
 
 **Recurring judgment calls settled during the WA run, worth reusing:**
 - **A named hookup SUBSET implies the unnamed utility is absent.** "partial-hookup
@@ -96,9 +102,13 @@ immediately — no state was left mid-batch.**
 - **"Pit toilets" and a bare "toilet"/"restroom" (type unnamed) map differently**: pit
   toilet → `vault_toilets: true` (same fixture, different name); a bare "toilet"/
   "restroom" with no type word → omit per the doc's existing flush-vs-vault rule.
-- **Two reservation channels named in one note (e.g. "by phone or via RoverPass/Hipcamp")**
-  → pick the named third-party platform over `phone` (phone is the fallback when nothing
-  else is named, not equal-priority with a real platform word).
+- **CORRECTED (was wrong in this file, see below):** two reservation channels named in one
+  note (e.g. "by phone or via RoverPass/Hipcamp") do NOT get the third-party platform —
+  this bullet used to say pick it over `phone`, which contradicts the SK/MB/ID-era rule
+  below ("two channels, no clear primary → omit platform entirely") and caused two real
+  extraction errors (ids 10540, 10548; fixed in commit `c0856bc`). The correct rule is the
+  one below: omit platform when two channels are named with no clear primary, except a
+  bare "phone/email" pair still resolves to `platform: "phone"`.
 - **A stated total that doesn't quite match the sum of subcategories** ("40 campsites: 8
   full-hookup, 24 standard, 5 equestrian, 1 hiker/biker" summing to 38) → trust the
   directly-stated total over re-deriving it, since the note author had the real count and
@@ -107,6 +117,38 @@ immediately — no state was left mid-batch.**
   still `year_round: true`, deferring to the note's own words over the literal exception;
   a temporary/one-off closure (construction, fire damage, flood) never sets `year_round`
   either way regardless of duration.
+
+**Judgment calls settled over the Oregon USFS/BLM/OPRD run (notes 10580-10879):**
+- **"Max spur X ft" is read as `max_rig_ft`** even though a spur is nominally pad length
+  not rig length — this notation is USFS-specific shorthand for the site's vehicle
+  capacity, used interchangeably with "max RV/vehicle length" across hundreds of these
+  notes, unlike a WIDTH×LENGTH pad dimension (doc's worked example 2), which stays
+  excluded.
+- **A number followed by an advisory caution about that SAME number is the undercut
+  pattern and still gets omitted** — "listed to 40 ft... favor shorter rigs", "posted 20-ft
+  cap but... rigs over 19 ft face tight turns", "not recommended for large rigs (max spur
+  40 ft)". But a number followed by a DIFFERENT, unrelated caution (rough access road,
+  washboard gravel, high-clearance advised) is not an undercut and the figure stands —
+  the test is whether the caution is ABOUT the stated length specifically.
+- **"Rigs over N ft not recommended" / "not recommended for rigs over N ft" is itself a
+  usable max_rig_ft = N** (not an undercut of some other number) when N is the only figure
+  in the sentence — it's a negatively-phrased direct statement, not a hedge.
+- **Oregon State Parks' "electrical" (or "electrical only") site type, unlike WA's
+  "partial-hookup (water/electric)", names NO water** — `water: false, sewer: false` (not
+  omitted), because OPRD's own site-type vocabulary is electrical / electric+water /
+  full-hookup as three distinct tiers, and a bare "electrical" is the bottom tier.
+  "Electric+water" or "electrical with water" sites → `water: true` per the existing WA
+  subset rule. Don't confuse this with a vague, non-official "some sites have electrical"
+  aside (no tier name) — that stays omitted, unresolved.
+- **A firsthand/reviewer-reported rig length ("Campendium reports rigs to ~28 ft",
+  "reviewers confirm a 30-ft trailer fits") is usable as `max_rig_ft`** when it's the ONLY
+  figure given and isn't contradicted by an official number — same footing as an
+  agency-stated approximate figure, per doc's "an approximate figure is still a figure."
+  It stops being usable the moment an official figure conflicts with it (then it's the
+  undercut/contradiction pattern above, and both get omitted).
+- **"No published/posted max length" is an explicit statement, not silence** — omit
+  `max_rig_ft` the same as the doc's own "RV length cap not published" worked example,
+  don't treat the sentence as just absent information.
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
