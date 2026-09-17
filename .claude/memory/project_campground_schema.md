@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-17T22:15:00.000Z
+  modified: 2026-09-17T23:10:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,23 +69,28 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 11,206 of 12,689 notes scanned (88%), 1,483 left**
-(as of commit `9c29bfb`, notes through id 11616). Coverage: hookups 69.5%,
-booking 69.5%, sites 68.5%, facilities 55.4%, season 26.1%.
-**Remaining states, in order:** CA 842, QC 160, ON 84, NS 81, NB 76, BC 75,
+**PHASE 3 IS PAUSED PART-WAY: 11,506 of 12,689 notes scanned (90.7%), 1,183 left**
+(as of commit `537acc3`, notes through id 11860). Coverage: hookups 70.7%,
+booking 70.8%, sites 69.8%, facilities 56.3%, season 26.4%.
+**Remaining states, in order:** CA 602, QC 160, ON 84, NS 81, NB 76, BC 75,
 NL 72, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
-are now all fully done.** This run (notes 11369-11616, 4 batches) finished
-Arizona: a long run of small USFS FCFS forest camps (Apache-Sitgreaves/
-Coconino/Tonto/Prescott/Coronado/Kaibab NFs — mostly vault-toilet, no-hookup,
-22-35 ft max_rig_ft), several BLM dispersed/LTVA areas (Quartzsite, Yuma,
-Lake Havasu, Safford), county regional parks (Maricopa/Pima/Pinal — mostly
-water+electric hookup loops, no sewer at site), Arizona State Parks & Trails
-(the same water+electric-no-sewer pattern, ~10 parks), and a very long tail
-of private/casino/snowbird RV resorts (mostly clean full-hookup 30/50-amp
-pull-through records with little ambiguity). **California is now the only
-large state left (842 entries) and is squarely underway** (notes
-11605-11616 already dip into it: Humboldt Redwoods SP, Anza-Borrego,
-Lake Oroville SRA, ReserveCalifornia-booked state parks). **Resume with
+are now all fully done; California is well underway (past the state-park and
+early-CA-county tail into county fairgrounds, regional-park districts, water/
+irrigation districts and USFS Mendocino/Six Rivers NF camps).** Notes
+11605-11860 covered: ReserveCalifornia-booked state parks, Inyo/Humboldt/
+Sonoma/San Diego/San Bernardino/Riverside/Monterey/Ventura/Stanislaus/SLO/
+Kern/Alpine/Tulare/Imperial county parks and regional-park districts (heavy
+"named subset implies the unnamed utility is false" pattern — "water/electric
+hookups" reads `sewer:false` just like AZ), a long run of county-fairgrounds
+RV parks (Placer/Humboldt/Mendocino/Santa Cruz/Sonoma/Alameda/Yolo/Trinity/
+Tulelake-Butte Valley/Tri-County-Bishop — almost all year-round transient
+full-hookup, several with a stated max-stay-then-cooldown cycle where the
+first number is what's usable), PG&E-operated Lake Pillsbury/Butte Valley
+camps (private by the standing utility-land convention, vault toilet/no
+hookup, several with contradicting or undercut max_rig_ft figures), and a
+run of small Mendocino/Six Rivers NF FCFS forest camps (vault toilet, no
+hookup, scan-and-pay, max_rig_ft mostly 22-40 ft with the usual undercut/
+reverse-undercut/pad-dimension tests applying). **Resume with
 `./extract_fields.py --dump 60` immediately — no state was left mid-batch.**
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
@@ -429,6 +434,36 @@ password login cannot. Back up and restore both that file and `users.json`, and 
 afterwards. A non-default control state (a filter already applied) is reachable by
 temporarily editing the `STORE.get(..., default)` in the template, screenshotting, and
 reverting.
+
+**Judgment calls settled over the California county/district-park and fairgrounds run
+(notes 11738-11860):**
+- **California county-park and regional-park-district prose reads exactly like Arizona's:
+  a named subset ("water/electric hookups", "many with water/electric hookups") implies
+  `sewer: false`**, and a "full-hookup" mention (even for only a subset of sites, e.g. "18
+  full-hookup, 78 non-hookup") gets the whole record `water: true, sewer: true` per the
+  existing union-across-subsets rule — this pattern is now confirmed dominant across CA
+  county/district parks (East Bay Regional, Santa Clara/San Mateo/Sonoma/Solano/Riverside/
+  San Bernardino/Stanislaus county parks) as well as AZ.
+- **County-fairgrounds RV parks often state a max-stay-then-cooldown cycle** ("28-day max
+  stay then a 10-day break", "14-day max continuous stay, 28 days/year") — the FIRST
+  number (the continuous-stay cap) is what goes in `max_stay_nights`; the cooldown/annual
+  cap isn't a schema field and is dropped.
+- **PG&E-operated recreation land (Lake Pillsbury, Butte Valley Reservoir) stays classed
+  private** by the existing utility-land convention, same as OR/WA PUD parks.
+- **A posted vehicle-length maximum survives even when a pad dimension is given right next
+  to it** ("posted vehicle max ~22 ft (pads ~12x25 ft)") — the pad WxL pair is still
+  excluded per the standing rule, but the separately-stated posted max is a normal usable
+  figure, not the excluded pad number.
+- **A firsthand rig-length note for a DIFFERENT subset of sites at the same campground
+  doesn't undercut the stated figure for the sites actually being described** ("RVs/
+  trailers to 30 ft use sites 1 and 6-10; sites 2-5 not recommended for trailers" → 30 ft
+  stands; it's a which-sites-fit distinction, not a caution about the 30 ft number itself).
+  Likewise "best for rigs to ~24 ft (pull-through sites 7 and 10 take larger)" keeps 24 ft
+  — the exception carves OUT specific sites rather than casting doubt on the figure.
+- **A single vague "hookups available" or "some sites have hookups"/"many with hookups"
+  with no water/electric/sewer word at all stays fully omitted** (not even `water: true`)
+  — this is stricter than the named-subset rule above, which requires at least one
+  specific utility word (water, electric, sewer, or "full hookup") to trigger a value.
 
 See [[feedback-absent-is-not-unknown]], [[feedback-responsive-all-screens]],
 [[reference-recgov-calendar-limits]] and [[reference-js-testing-without-node]] (how the
