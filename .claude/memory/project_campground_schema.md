@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-17T18:00:00.000Z
+  modified: 2026-09-17T20:30:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,22 +69,27 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 10,726 of 12,689 notes scanned (85%), 1,963 left**
-(as of commit `dba009f`, notes through id 11121). Coverage: hookups 66.1%,
-booking 66.5%, sites 65.3%, facilities 52.6%, season 24.8%.
-**Remaining states, in order:** CA 854, AZ 279, QC 160, NV 121, ON 84, NS 81,
-NB 76, BC 75 (plus smaller pockets). **Washington AND Oregon are now both
-fully done.** The OR tail (notes 10880-11121, 4 more batches beyond the
-~45%-done checkpoint) finished the USFS run (Umpqua/Rogue River-Siskiyou/
-Deschutes/Willamette/Mt. Hood/Wallowa-Whitman/Malheur/Fremont-Winema/
-Umatilla — mostly small vault-toilet no-hookup forest camps) and BLM
-(Coos Bay/Medford/Burns/Prineville districts), then a long tail of Oregon
-county parks (Jackson/Douglas/Linn/Clackamas/Josephine/Coos/Tillamook/
-Columbia and more — mostly water/electric hookup county-run campgrounds)
-and private/port-district RV resorts. **California is next per `--report`
-and is by far the largest remaining state (854 entries) — expect it to span
-many sessions.** **Resume with `./extract_fields.py --dump 60` immediately
-— no state was left mid-batch.**
+**PHASE 3 IS PAUSED PART-WAY: 10,966 of 12,689 notes scanned (86%), 1,723 left**
+(as of commit `c16b8ce`, notes through id 11368). Coverage: hookups 67.7%,
+booking 68.0%, sites 66.9%, facilities 54.2%, season 25.5%.
+**Remaining states, in order:** CA 854, AZ 228, QC 160, ON 84, NS 81, NB 76,
+BC 75, NL 72 (plus smaller pockets). **Washington, Oregon AND Nevada are now
+all fully done.** This run (notes 11122-11368, 4 more batches) finished a
+long Oregon private/county-RV-park tail (mostly straightforward full-hookup
+water/sewer/electric records), then all of Nevada — Humboldt-Toiyabe NF
+(dozens of small vault-toilet FCFS forest camps across the Austin-Tonopah,
+Ely, Mountain City-Ruby Mtns-Jarbidge, Spring Mountains/Mt. Charleston
+districts), NV State Parks (mostly water/electric hookup loops), BLM
+districts (Winnemucca/Ely/Carson City/Battle Mountain — mostly free
+dispersed/primitive), Lake Mead NRA, and a long tail of Nevada casino/private
+RV resorts (large full-hookup pull-through parks, Pahrump/Las Vegas/Laughlin/
+Mesquite). **Arizona is now underway** (notes 11317-11368 already dip into
+it: Organ Pipe Cactus NM, Grand Canyon North/South Rim, Chiricahua NM, Kaibab/
+Coconino/Tonto/Prescott/Apache-Sitgreaves/Coronado NFs, several BLM
+Quartzsite-area LTVA/dispersed areas). **California remains the largest
+state left (854 entries) — expect it to span many sessions; work through
+AZ (228) first since it's already mid-run.** **Resume with
+`./extract_fields.py --dump 60` immediately — no state was left mid-batch.**
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
@@ -176,6 +181,34 @@ parks-and-rec prose:**
   phone/in person", "reservable online/by phone or FCFS") — the SK/MB/ID-era rule (below)
   held for the whole run once the earlier contradiction was fixed; no further violations
   found on a spot re-check.
+
+**Judgment calls settled over the Nevada / early-Arizona federal-land run (notes
+11184-11368), which is almost entirely BLM/USFS/NPS/state-park primitive-to-moderate
+campgrounds again, after the OR county-park detour:**
+- **The "elsewhere" facility rule (doc precedent: a dump station described as being at
+  another named place reads false) extends to `vault_toilets` too**, not just
+  `potable_water`/`showers`/`dump` — "vault toilet/water ~1.25 mi at Empire Ranch HQ" got
+  `vault_toilets: false, potable_water: false` for the campground itself, the same as an
+  off-site dump station would.
+- **A seasonal split expressed as two DATE WINDOWS that together cover (or nearly cover)
+  the whole year — "Reservable Nov 1-Mar 15... FCFS Apr 1-Oct 31" — still doesn't earn
+  `year_round: true`.** Only the note's own literal "year-round" (or equivalent) phrase
+  does that, per the standing OR-era rule; don't derive it by adding up two windows
+  yourself, even when they visibly sum to ~12 months.
+- **A dual/ambiguous stay limit ("7-day/30-day limit", "14-day/28-day limit") is omitted
+  from `max_stay_nights`** rather than guessing which figure is the real cap — these
+  typically mean "N days per M-day period" and the note doesn't say which number the
+  schema's single integer should hold.
+- **BLM/NPS boilerplate variants of the undercut pattern keep showing up and the same test
+  applies**: "listed max RV 22 ft but firsthand reviews confirm 24-25 ft... fitting" is the
+  REVERSE undercut (official number contradicted upward) and also gets omitted — not just
+  the "official number contradicted downward by a caution" version documented earlier.
+  Both directions of contradiction mean the figure isn't reliable, so both get dropped.
+- **A number for one named alternate location or a different loop/campground is not an
+  undercut of the number in front of you** — "not recommended for large rigs (max spur
+  40 ft)" IS an undercut (same figure, same site); "sites fit ~25 ft (larger rigs use
+  Wahweap instead)" is NOT (different named place). Read carefully which noun the caution
+  is actually about before dropping a number.
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
