@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T01:45:00.000Z
+  modified: 2026-09-18T02:10:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,23 +69,76 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 12,048 of 12,689 notes scanned (95.0%), 641 left**
-(as of commit `8d9086b`, notes through id 12473). Coverage: hookups 75.7%,
-booking 75.8%, sites 74.3%, facilities 60.4%, season 27.4%.
+**PHASE 3 IS PAUSED PART-WAY: 12,108 of 12,689 notes scanned (95.4%), 581 left**
+(as of commit `3ea4b68`, notes through id 12533). Coverage as of the CA
+finish line (12,048 scanned): hookups 75.7%, booking 75.8%, sites 74.3%,
+facilities 60.4%, season 27.4% (re-run `--report` for the current numbers).
 **EVERY US STATE IS NOW FULLY DONE — California finished with commit
-`8d9086b` (notes 12409-12473: a private-RV-park/USACE-reservoir/USFS-Sierra
-tail closing out the CA sweep). The entire remainder of phase 3 is Canada:**
-QC 160, ON 84, NS 81, NB 76, BC 75, NL 72, AB 26, PE 25 (641 entries, all
-Canadian). No US work is left. Resume with `./extract_fields.py --dump 60`
-immediately — no state was left mid-batch. Expect Canadian note style to
-differ: goingtocamp/Aspira and Parks Canada booking language, provincial
-park agencies (SEPAQ for QC, Alberta Parks, Ontario Parks, Nova Scotia
-Parks, etc.) rather than US federal/state vocabulary — the existing
-Alberta/Saskatchewan/Manitoba/Ontario/BC judgment-call bullets earlier in
-this file (province-wide portal → no platform, walk-in exclusion, etc.)
-were settled on a PRIOR Canada sweep (data collection, not extraction) and
-should still transfer, but re-verify against the actual note prose since
-this is extraction, not sourcing.
+`8d9086b`.** The entire remainder of phase 3 is Canada: QC now ~100 left
+(started with commit `3ea4b68`, SEPAQ/Parks-Canada/municipal notes
+12474-12533), then ON 84, NS 81, NB 76, BC 75, NL 72, AB 26, PE 25. Resume
+with `./extract_fields.py --dump 60` immediately — no state was left
+mid-batch. **Quebec's note style is a hard break from every US batch** — see
+the dedicated bullet block below before touching another QC batch; the
+existing Alberta/Saskatchewan/Manitoba/Ontario/BC bullets earlier in this
+file were settled on a PRIOR Canada sweep (data collection, not extraction)
+and mostly still transfer once you're past QC.
+
+**Judgment calls settled on the first Quebec/SEPAQ batch (notes 12474-12533),
+where the note style and vocabulary differ from every US batch so far:**
+- **Quebec's "N-service" (service/services) tiering has NO fixed universal
+  meaning — each note (or family of notes about the same park) must be read
+  for its OWN definition, never assumed from a prior park.** Confirmed
+  readings seen: "two-service (water+electricity)" appears constantly across
+  SEPAQ parks (Presqu'Îles, Frontenac, Gaspésie, Mont-Mégantic, Lac-Saint-Jean,
+  Aiguebelle) → `water:true`, electric omitted unless an amp is stated,
+  `sewer:false`. "Three-service (full hookup)" appears at several parks
+  (Rimouski, Port-Daniel, Ville-de-Québec private park, L'Islet, Île-Melville)
+  → `water:true, sewer:true` via the standing union-across-subsets rule. But
+  **Lac-Walker's own note explicitly redefines "full 2-service" as
+  water+SEWER** (no electric) for that one specific remote reserve — the
+  explicit in-note definition always overrides the corpus-wide default.
+  When a note gives NO explicit definition, only extend the water+electric
+  default when the SAME named park/sector is defined elsewhere in the batch
+  (e.g. Frontenac's Saint-Daniel sector, defined once at 12499, reused for
+  12501 with no restated parenthetical).
+- **A composite entry describing SEVERAL differently-serviced campgrounds/
+  sectors under one record (a whole park's frontcountry system, e.g.
+  Presqu'Îles' five named campgrounds, or Le Bic's four) gets NO single
+  hookup/count value** — extracting one number would misrepresent whichever
+  sector wasn't the one meant. Record only facts true of the WHOLE entry
+  (a dump station present somewhere, `reservable:true`) and leave hookups/
+  sites empty rather than picking one sector's numbers to stand for all.
+- **"Unserviced" / "sans service" / "no-service" / "sur l'emplacement" is the
+  French-corpus equivalent of the US "no hookups" trigger phrase** — same
+  triple `electric:0, water:false, sewer:false` when it's stated as the WHOLE
+  record's condition, same omission when it's just one grade among several
+  offered at the site (semi-serviced/serviced/unserviced together, no single
+  answer for "this entry").
+- **Ready-to-camp units (yurts, oTENTiks, Huttopia tents, prospector tents,
+  Cool Box micro-cabins, rental chalets) are excluded from `sites.count` the
+  same way US walk-in/tent-only sites are** — they're not RV/trailer-capable
+  and several notes say so explicitly ("not counted").
+- **A pad dimension given as `L x W m` (metric WxL pair, e.g. "12.5 x 10 m")
+  is excluded from `max_rig_ft` exactly like the US-corpus pad-dimension
+  rule** — but a single-figure metric length WITH a feet conversion already
+  supplied in the note ("up to 8 m / 25 ft") is used directly as the feet
+  value already given, no conversion arithmetic needed on my part.
+- **"Rigs over N ft allowed" (SEPAQ Ashuapmushuan's phrasing) is a floor
+  statement like the US "30 ft-plus" cases, not a cap** — omit `max_rig_ft`
+  rather than reading N as the maximum.
+- **A named third-party regional booking site not in the platform enum**
+  (`campin.ca`, a Quebec-wide municipal-campground booking portal) is
+  `platform: "operator"`, same treatment as a concessionaire's own site —
+  it's a single named channel, just not one of the big enum platforms.
+  Reservable via **Parks Canada** (federal, not SEPAQ) still gets NO platform,
+  matching the established Parks-Canada precedent from the Alberta run.
+- **A remote reserve managed by a named Indigenous corporation/nation for the
+  province** (Corporation Nibiischii for Réserve faunique des
+  Lacs-Albanel-Mistassini-et-Waconichi) books through that corporation, not a
+  SEPAQ portal — `platform: "operator"`, ownership stays whatever the land
+  registry says (these are provincial wildlife reserves, not tribal land, so
+  don't reclassify ownership on this basis alone).
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
