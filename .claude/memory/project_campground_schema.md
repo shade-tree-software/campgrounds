@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-17T15:30:00.000Z
+  modified: 2026-09-17T18:00:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,19 +69,22 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 10,486 of 12,689 notes scanned (83%), 2,203 left**
-(as of commit `d5d500d`, notes through id 10879). Coverage: hookups 64.8%,
-booking 64.7%, sites 63.6%, facilities 51.0%, season 24.0%.
-**Remaining states, in order:** CA 854, OR 307, AZ 279, QC 160, NV 121, ON 84,
-NS 81, NB 76 (plus smaller pockets). **Washington is fully done; Oregon is
-~45% done and mid-run** — notes 10580-10879 (5 batches) covered OR private RV
-parks (Republic/Curlew Lake/Tonasket/Oroville), the full Oregon State Parks
-coastal + Willamette Valley + Columbia Gorge + high-desert roster, then a
-long run of USFS campgrounds (Rogue River-Siskiyou, Deschutes, Umpqua,
-Willamette, Mt. Hood, Wallowa-Whitman, Malheur, Fremont-Winema, Umatilla,
-Siuslaw) and BLM sites (Steens Mountain, Prineville, Roseburg, Vale, Lakeview,
-Klamath Falls districts). **Resume with `./extract_fields.py --dump 60`
-immediately — no state was left mid-batch.**
+**PHASE 3 IS PAUSED PART-WAY: 10,726 of 12,689 notes scanned (85%), 1,963 left**
+(as of commit `dba009f`, notes through id 11121). Coverage: hookups 66.1%,
+booking 66.5%, sites 65.3%, facilities 52.6%, season 24.8%.
+**Remaining states, in order:** CA 854, AZ 279, QC 160, NV 121, ON 84, NS 81,
+NB 76, BC 75 (plus smaller pockets). **Washington AND Oregon are now both
+fully done.** The OR tail (notes 10880-11121, 4 more batches beyond the
+~45%-done checkpoint) finished the USFS run (Umpqua/Rogue River-Siskiyou/
+Deschutes/Willamette/Mt. Hood/Wallowa-Whitman/Malheur/Fremont-Winema/
+Umatilla — mostly small vault-toilet no-hookup forest camps) and BLM
+(Coos Bay/Medford/Burns/Prineville districts), then a long tail of Oregon
+county parks (Jackson/Douglas/Linn/Clackamas/Josephine/Coos/Tillamook/
+Columbia and more — mostly water/electric hookup county-run campgrounds)
+and private/port-district RV resorts. **California is next per `--report`
+and is by far the largest remaining state (854 entries) — expect it to span
+many sessions.** **Resume with `./extract_fields.py --dump 60` immediately
+— no state was left mid-batch.**
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
@@ -149,6 +152,30 @@ before the next batch. Do that each time.
 - **"No published/posted max length" is an explicit statement, not silence** — omit
   `max_rig_ft` the same as the doc's own "RV length cap not published" worked example,
   don't treat the sentence as just absent information.
+
+**Judgment calls settled over the Oregon county-park / private-RV-park tail (notes
+10940-11121), where the note style shifts from federal-forest terse facts to county
+parks-and-rec prose:**
+- **A record's OWN headline label ("full-hookup RV park", "full hookup sites") carries
+  water+sewer even when a later sentence only names the amperage** ("76-80 sites (30/50-amp)"
+  under a "Private full-hookup RV park" lead sentence still gets `water: true, sewer: true`)
+  — the type is asserted once and the amp clause is just adding detail, not re-scoping it.
+  This is different from a bare "X-amp electric" sentence with no headline hookup claim,
+  which still gets no water/sewer per the existing WA subset rule.
+- **A facility explicitly placed away from the site (\"potable water at nearby Anthony Lake
+  CG\", \"dump 5 mi away at Tenmile County Park\", \"restroom a short walk down at the dock\")
+  reads the same as the doc's \"dump station ~6 blocks away\" example — false, not omitted**,
+  extended from dump stations to `potable_water` and `showers` too: the note is telling you
+  where it actually is, which is not here.
+- **"Open year-round except [a specific recurring closure]" still needs the note's OWN words
+  to say "year-round"** — a schedule that's merely described as open Month-Month even when
+  paired with "(regular season ...)" doesn't get `year_round: true` by inference; only take it
+  when the note explicitly uses "year-round" (or "24/7 for public camping", equivalent
+  wording), consistent with the WA-era rule already in this file.
+- **Two named booking channels stayed correctly omitted throughout this tail** ("reserve by
+  phone/in person", "reservable online/by phone or FCFS") — the SK/MB/ID-era rule (below)
+  held for the whole run once the earlier contradiction was fixed; no further violations
+  found on a spot re-check.
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
