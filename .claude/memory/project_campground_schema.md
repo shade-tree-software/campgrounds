@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-17T20:30:00.000Z
+  modified: 2026-09-17T22:15:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,26 +69,23 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 10,966 of 12,689 notes scanned (86%), 1,723 left**
-(as of commit `c16b8ce`, notes through id 11368). Coverage: hookups 67.7%,
-booking 68.0%, sites 66.9%, facilities 54.2%, season 25.5%.
-**Remaining states, in order:** CA 854, AZ 228, QC 160, ON 84, NS 81, NB 76,
-BC 75, NL 72 (plus smaller pockets). **Washington, Oregon AND Nevada are now
-all fully done.** This run (notes 11122-11368, 4 more batches) finished a
-long Oregon private/county-RV-park tail (mostly straightforward full-hookup
-water/sewer/electric records), then all of Nevada — Humboldt-Toiyabe NF
-(dozens of small vault-toilet FCFS forest camps across the Austin-Tonopah,
-Ely, Mountain City-Ruby Mtns-Jarbidge, Spring Mountains/Mt. Charleston
-districts), NV State Parks (mostly water/electric hookup loops), BLM
-districts (Winnemucca/Ely/Carson City/Battle Mountain — mostly free
-dispersed/primitive), Lake Mead NRA, and a long tail of Nevada casino/private
-RV resorts (large full-hookup pull-through parks, Pahrump/Las Vegas/Laughlin/
-Mesquite). **Arizona is now underway** (notes 11317-11368 already dip into
-it: Organ Pipe Cactus NM, Grand Canyon North/South Rim, Chiricahua NM, Kaibab/
-Coconino/Tonto/Prescott/Apache-Sitgreaves/Coronado NFs, several BLM
-Quartzsite-area LTVA/dispersed areas). **California remains the largest
-state left (854 entries) — expect it to span many sessions; work through
-AZ (228) first since it's already mid-run.** **Resume with
+**PHASE 3 IS PAUSED PART-WAY: 11,206 of 12,689 notes scanned (88%), 1,483 left**
+(as of commit `9c29bfb`, notes through id 11616). Coverage: hookups 69.5%,
+booking 69.5%, sites 68.5%, facilities 55.4%, season 26.1%.
+**Remaining states, in order:** CA 842, QC 160, ON 84, NS 81, NB 76, BC 75,
+NL 72, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
+are now all fully done.** This run (notes 11369-11616, 4 batches) finished
+Arizona: a long run of small USFS FCFS forest camps (Apache-Sitgreaves/
+Coconino/Tonto/Prescott/Coronado/Kaibab NFs — mostly vault-toilet, no-hookup,
+22-35 ft max_rig_ft), several BLM dispersed/LTVA areas (Quartzsite, Yuma,
+Lake Havasu, Safford), county regional parks (Maricopa/Pima/Pinal — mostly
+water+electric hookup loops, no sewer at site), Arizona State Parks & Trails
+(the same water+electric-no-sewer pattern, ~10 parks), and a very long tail
+of private/casino/snowbird RV resorts (mostly clean full-hookup 30/50-amp
+pull-through records with little ambiguity). **California is now the only
+large state left (842 entries) and is squarely underway** (notes
+11605-11616 already dip into it: Humboldt Redwoods SP, Anza-Borrego,
+Lake Oroville SRA, ReserveCalifornia-booked state parks). **Resume with
 `./extract_fields.py --dump 60` immediately — no state was left mid-batch.**
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
@@ -209,6 +206,37 @@ campgrounds again, after the OR county-park detour:**
   40 ft)" IS an undercut (same figure, same site); "sites fit ~25 ft (larger rigs use
   Wahweap instead)" is NOT (different named place). Read carefully which noun the caution
   is actually about before dropping a number.
+
+**Judgment calls settled over the Arizona run (notes 11369-11616) — mostly USFS forest
+camps, then AZ county/state parks, then a long private-RV-park tail:**
+- **"Rigs over N ft not recommended" and "listed max RV N ft" appear constantly as the
+  SAME pattern with no caution attached** (unlike the undercut/contradiction cases) — most
+  of AZ's USFS camps just state a plain `max_rig_ft` this way, often specifically because a
+  switchbacked access road (Swift Trail, Catalina Hwy, Mingus Mtn) caps it well under the
+  doc's 23-ft baseline (22 ft shows up dozens of times). Take these at face value; only
+  drop the figure when the note itself hedges or contradicts it, not just because the
+  number is small.
+- **Arizona county regional parks and AZ State Parks & Trails share one hookup pattern
+  worth recognizing on sight: "water and electric hookups" with NO water, sewer field
+  set true** — sewer stays `false` (or omitted if truly unaddressed) unless the note
+  separately says "full hookup" or names sewer/septic explicitly. This is the same
+  WA-era subset rule, but it is so dominant across this agency family (Maricopa/Pima/
+  Pinal County parks, nearly every AZSP&T entry) that entries naming ONLY "electric"
+  (no "and water") get `water: false, sewer: false` too, not just "unaddressed" —
+  several AZSP&T entries state "electric only (no water/sewer at site)" outright.
+- **A stated hookup type at the PARK/AREA level ("Central Shooter's Campground ~24
+  full-hookup...") that then lists per-loop or per-site-range subsets with different
+  hookup levels is summed by counting the numbered subsets, same as the doc's
+  unambiguous-sum rule** — but the hookup fields themselves take the UNION across
+  subsets (if any subset has full hookup, `sewer: true` for the whole record), since
+  the schema has no way to say "sewer present at 40% of sites."
+- **Private/casino/snowbird RV parks are the cleanest note style in the whole corpus**:
+  almost every one states "full hookups (NN/NN-amp, water, sewer)" plainly with no
+  hedge, undercut, or ambiguity — the main judgment calls left are pad-dimension
+  exclusion (own examples keep appearing: "30x60 concrete pads", "22'x120'" — the
+  X-by-Y pair is excluded from `max_rig_ft` regardless of how large the numbers are)
+  and the recurring two-channel-booking omission (their own site + Hipcamp/RoverPass
+  together, or "online/phone" — still omit platform per the standing rule).
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
