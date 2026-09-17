@@ -138,7 +138,15 @@ function sfChip(groupKey, field, value, cur) {
       const applies = when[r.applies] !== undefined ? when[r.applies]
                     : (r.applies ? ' ' + r.applies : '');
       const nights = r.nights != null ? r.nights + (i === 0 ? ' nights' : '') : '?';
-      return nights + applies;
+      // `season` BOUNDS the rule, so dropping it states a summer-only minimum
+      // as a year-round one — which is the stricter, wrong direction, and the
+      // question a reader actually asks of Maryland and Pennsylvania (both run
+      // their weekend minimum Memorial Day to Labor Day and neither has one
+      // outside it). Verbatim, however long: these strings are prose because
+      // the rule is ("July 4 when it falls Fri-Mon"), and paraphrasing a date
+      // range is how a bound stops being true.
+      const season = r.season ? ' (' + r.season + ')' : '';
+      return nights + applies + season;
     }).join(', ');
   }
   // "closes 21:00" left the reader two questions \u2014 what closes, and 21:00 of

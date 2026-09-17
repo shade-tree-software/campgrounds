@@ -804,6 +804,13 @@ came out of it:
   vehicle pass and read as a gate fee, so `entrance.per` is now always spoken (*annual park
   pass …*, *park entry $7 resident, $15 non-resident (per vehicle/stay)*). Same reasoning
   makes a nightly rate say `/night` and `fees.currency` render `C$` rather than `$`.
+- **A bound dropped is a rule overstated.** `min_stay[].season` was not rendered, so
+  Maryland's and Pennsylvania's weekend minimum — Memorial Day to Labor Day, absent the
+  rest of the year — read as year-round. It is spelled verbatim in parentheses now,
+  however long: these strings are prose because the rules are ("July 4 when it falls
+  Fri-Mon"), and paraphrasing a date range is how a bound stops being true. Five registry
+  rows carry one. The `waived_if` on four others still goes unmentioned, per §4.1 — but
+  note that it errs the *same* way, toward the stricter reading.
 - **Fold where the reader already read it; expand where the chip only hinted.**
   `50A · water · sewer` is one chip (*full hookups (50A)*) and its opposite is *no hookups*;
   a dated season drops the redundant *seasonal*. Against that, `surcharges` rendered as the

@@ -79,6 +79,19 @@ class ChipPhrasingTest(unittest.TestCase):
                                                 {"nights": 3, "applies": "holiday"}]}),
             ["min stay 2 nights on weekends, 3 on holidays"])
 
+    def test_min_stay_season_bound_is_never_dropped(self):
+        """Maryland's and Pennsylvania's weekend minimum runs Memorial Day to
+        Labor Day and does not exist outside it. Dropping `season` reported
+        both as year-round — stricter than the rule, in the direction a reader
+        cannot check."""
+        self.assertEqual(
+            self.chips("booking", {"min_stay": [
+                {"nights": 2, "applies": "weekend",
+                 "season": "Memorial Day - Labor Day"},
+                {"nights": 3, "applies": "holiday"}]}),
+            ["min stay 2 nights on weekends (Memorial Day - Labor Day), "
+             "3 on holidays"])
+
     def test_booking_cutoff_says_what_closes_and_relative_to_what(self):
         self.assertEqual(
             self.chips("booking", {"reserve_until": {"relative_to": "arrival",
