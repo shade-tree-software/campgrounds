@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-17T23:10:00.000Z
+  modified: 2026-09-18T00:20:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,29 +69,23 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 11,506 of 12,689 notes scanned (90.7%), 1,183 left**
-(as of commit `537acc3`, notes through id 11860). Coverage: hookups 70.7%,
-booking 70.8%, sites 69.8%, facilities 56.3%, season 26.4%.
-**Remaining states, in order:** CA 602, QC 160, ON 84, NS 81, NB 76, BC 75,
+**PHASE 3 IS PAUSED PART-WAY: 11,686 of 12,689 notes scanned (92.1%), 1,003 left**
+(as of commit `1a17ec5`, notes through id 12100). Coverage: hookups 72.9%,
+booking 73.1%, sites 71.9%, facilities 58.2%, season 26.8%.
+**Remaining states, in order:** CA 362, QC 160, ON 84, NS 81, NB 76, BC 75,
 NL 72, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
-are now all fully done; California is well underway (past the state-park and
-early-CA-county tail into county fairgrounds, regional-park districts, water/
-irrigation districts and USFS Mendocino/Six Rivers NF camps).** Notes
-11605-11860 covered: ReserveCalifornia-booked state parks, Inyo/Humboldt/
-Sonoma/San Diego/San Bernardino/Riverside/Monterey/Ventura/Stanislaus/SLO/
-Kern/Alpine/Tulare/Imperial county parks and regional-park districts (heavy
-"named subset implies the unnamed utility is false" pattern — "water/electric
-hookups" reads `sewer:false` just like AZ), a long run of county-fairgrounds
-RV parks (Placer/Humboldt/Mendocino/Santa Cruz/Sonoma/Alameda/Yolo/Trinity/
-Tulelake-Butte Valley/Tri-County-Bishop — almost all year-round transient
-full-hookup, several with a stated max-stay-then-cooldown cycle where the
-first number is what's usable), PG&E-operated Lake Pillsbury/Butte Valley
-camps (private by the standing utility-land convention, vault toilet/no
-hookup, several with contradicting or undercut max_rig_ft figures), and a
-run of small Mendocino/Six Rivers NF FCFS forest camps (vault toilet, no
-hookup, scan-and-pay, max_rig_ft mostly 22-40 ft with the usual undercut/
-reverse-undercut/pad-dimension tests applying). **Resume with
-`./extract_fields.py --dump 60` immediately — no state was left mid-batch.**
+are now all fully done; California is in its final stretch** — past the
+county/fairgrounds tail (11605-11860) and now deep in the Sierra/southern-Cal
+USFS forest-camp belt: Yosemite NP, Stanislaus/Eldorado/Tahoe/Plumas/Lassen/
+Sierra/Sequoia/Inyo/Klamath/Modoc/Los Padres/Cleveland/San Bernardino/
+Angeles/Six Rivers/Mendocino/Shasta-Trinity NFs, plus Sequoia & Kings Canyon
+NP, Death Valley NP and Joshua Tree NP (notes 11861-12100). This stretch is
+almost entirely primitive-to-moderate no-hookup vault-toilet FCFS/reservable
+forest camps with the same recurring max_rig_ft judgment calls (undercut,
+reverse-undercut, "rigs over N ft not recommended" as a direct statement,
+pad-dimension exclusion, off-site facility → false) — see the new bullets
+below for what's specific to this run. **Resume with `./extract_fields.py
+--dump 60` immediately — no state was left mid-batch.**
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
@@ -464,6 +458,58 @@ reverting.
   with no water/electric/sewer word at all stays fully omitted** (not even `water: true`)
   — this is stricter than the named-subset rule above, which requires at least one
   specific utility word (water, electric, sewer, or "full hookup") to trigger a value.
+
+**Judgment calls settled over the Sierra/southern-CA USFS+NPS forest-camp run
+(notes 11861-12100), the densest run of primitive vault-toilet camps in the
+whole corpus:**
+- **A "walk-in"/"tent-only" subset named alongside a total is subtracted from
+  the total to get the RV-usable `sites.count`** ("19 sites (7 tent-only)" →
+  12; "88 sites across several loops (incl 19 tent-only)" → 69) — extends the
+  standing walk-in-exclusion rule to an explicit subtraction when the note
+  gives both numbers, rather than just omitting a combined figure.
+- **An equestrian or double/triple/quad subset named alongside a total is
+  KEPT in the count** (unlike walk-in/tent-only) when the note frames it as
+  part of one general campground ("19 sites (three equestrian)" → 19; "12
+  sites (single/double/triple/quad)" → 12) — the distinction is whether the
+  subset is still a drive-in vehicle site (equestrian, multi-unit) or not
+  (walk-in, tent-only).
+- **"RVs over/rigs over N ft not recommended" is a direct usable max_rig_ft =
+  N** (confirmed again dozens of times this run, AZ's original pattern) —
+  but **a reviewer's or agency's OWN N-ft rig succeeding is reinforcement,
+  not an undercut**, distinct from a caution ABOUT that number: "RVs to ~22
+  ft (a reviewer drove an 18-ft rig in without incident)" keeps 22 ft, same
+  logic as "some 35-ft rigs reported" keeping a stated 30 ft cap.
+- **A number for a specific NAMED SUBSET of sites (the largest site, "site
+  003", the sites that take trailers) is usable as `max_rig_ft` for the
+  record** even when most sites are smaller — the field means "the longest
+  rig that fits somewhere," so "largest RV site fits 30 ft (site 003)" or
+  "7 with trailer space, max ~33 ft" both give a clean number. This is
+  different from a bare RANGE ("18-34 ft", "28-45 ft"), which still gets
+  omitted per the standing rule.
+- **A closure window stated as calendar dates ("may close Nov 1-Apr 30 under
+  MVUM") is convertible to a season the same way a stated open-window is** —
+  `year_round: false`, `opens`/`closes` set to the complement of the closure
+  (Nov 1-Apr 30 closed → opens 05-01, closes 10-31). Same footing as reading
+  an explicit open-window directly.
+- **"Dump station/water in the village" / "... in Cedar Grove" (the named
+  developed area the campground itself sits within, not a different park)
+  still reads as off-site (`false`), not on-site** — extends the "elsewhere"
+  rule to a shared area-wide facility serving several campgrounds, not just
+  a differently-named location.
+- **A temporary "no water/no running water for the 2026 season" notice is
+  never encoded as a permanent `false`** — omit the key, consistent with the
+  standing temporary-outage rule; came up repeatedly in this NF-heavy run
+  (Fish Lake, Dillon Creek, Highway 20 Pioneer Trail).
+- **A stated per-park closure that is itself just a one-time current-year
+  event ("recreation.gov shows it temporarily closed for hazard-tree
+  removal")** is likewise not encoded into `season` — that field is for the
+  recurring annual pattern, not this year's outage.
+- **Group/reservable-only sites named alongside FCFS individual sites are
+  excluded from BOTH the count and the booking read** — the record describes
+  the individual sites being scanned, so "individual sites FCFS (group site
+  reservable online)" still gets `reservable: false, fcfs: "always"`, same
+  as the existing "individual FCFS, group reservable" convention, now seen
+  dozens more times without exception.
 
 See [[feedback-absent-is-not-unknown]], [[feedback-responsive-all-screens]],
 [[reference-recgov-calendar-limits]] and [[reference-js-testing-without-node]] (how the
