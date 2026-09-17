@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T01:15:00.000Z
+  modified: 2026-09-18T01:45:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,22 +69,23 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 11,986 of 12,689 notes scanned (94.5%), 703 left**
-(as of commit `ad42a9f`, notes through id 12408). Coverage: hookups 75.2%,
-booking 75.4%, sites 73.9%, facilities 60.0%, season 27.2%.
-**Remaining states, in order:** QC 160, ON 84, NS 81, NB 76, BC 75, NL 72,
-CA 62, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
-are now all fully done; California is DOWN TO ITS LAST 62 ENTRIES** — the
-Sierra/southern-Cal USFS forest-camp belt (Yosemite, Stanislaus/Eldorado/
-Tahoe/Plumas/Lassen/Sierra/Sequoia/Inyo/Klamath/Modoc/Los Padres/Cleveland/
-San Bernardino/Angeles/Six Rivers/Mendocino/Shasta-Trinity NFs, Sequoia &
-Kings Canyon NP, Death Valley NP, Joshua Tree NP) is essentially finished
-(notes 11861-12341), followed by a run of BLM desert LTVAs/dispersed areas
-and USACE reservoir campgrounds (California-based but not USFS) and a private
-RV park tail (notes 12342-12408). **Once CA's last 62 clear, Canada (QC/ON/
-NS/NB/BC/NL/AB, 574 entries) is the entire remainder of phase 3.** Resume
-with `./extract_fields.py --dump 60` immediately — no state was left
-mid-batch.
+**PHASE 3 IS PAUSED PART-WAY: 12,048 of 12,689 notes scanned (95.0%), 641 left**
+(as of commit `8d9086b`, notes through id 12473). Coverage: hookups 75.7%,
+booking 75.8%, sites 74.3%, facilities 60.4%, season 27.4%.
+**EVERY US STATE IS NOW FULLY DONE — California finished with commit
+`8d9086b` (notes 12409-12473: a private-RV-park/USACE-reservoir/USFS-Sierra
+tail closing out the CA sweep). The entire remainder of phase 3 is Canada:**
+QC 160, ON 84, NS 81, NB 76, BC 75, NL 72, AB 26, PE 25 (641 entries, all
+Canadian). No US work is left. Resume with `./extract_fields.py --dump 60`
+immediately — no state was left mid-batch. Expect Canadian note style to
+differ: goingtocamp/Aspira and Parks Canada booking language, provincial
+park agencies (SEPAQ for QC, Alberta Parks, Ontario Parks, Nova Scotia
+Parks, etc.) rather than US federal/state vocabulary — the existing
+Alberta/Saskatchewan/Manitoba/Ontario/BC judgment-call bullets earlier in
+this file (province-wide portal → no platform, walk-in exclusion, etc.)
+were settled on a PRIOR Canada sweep (data collection, not extraction) and
+should still transfer, but re-verify against the actual note prose since
+this is extraction, not sourcing.
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
