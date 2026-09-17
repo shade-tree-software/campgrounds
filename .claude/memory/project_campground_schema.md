@@ -1,11 +1,11 @@
 ---
 name: project-campground-schema
-description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/4 + popup surfacing + map rating filter done; registry at 27 rows; phase 3 extraction is next
+description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/3/4 + popup surfacing + map rating filter ALL DONE; phase 3 (note-prose extraction) finished 2026-09-18, all 12,689 notes scanned
 metadata: 
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T03:45:00.000Z
+  modified: 2026-09-18T04:15:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,22 +69,31 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 12,468 of 12,689 notes scanned (98.3%), 221 left**
-(as of commit `7fd9441`, notes through id 12894). Coverage: hookups 78.6%,
-booking 78.9%, sites 77.1%, facilities 62.1%, season 29.4%.
-**CORRECTION (still relevant): small US-state pockets keep surfacing in the
-queue** — confirmed real (not mistags): PA (Pennsylvania), VA (Virginia),
-WV (West Virginia), MD (Maryland) all showed up mixed into otherwise-Canadian
-`--report` batches. **Always read every line of `--report`'s state
-breakdown** rather than assuming Canada-only; sweep any US pocket with the
-same `--dump 60` loop, no special handling. **QC, ON, BC, AB, SK, MB and NB
-ARE ALL FULLY DONE** (QC: commit `b9e9647`; ON: `ab0f4a1`; BC/AB/SK/MB
-private-park runs: `7c13487`/`c77030f`; NB: `7fd9441`, ending with Parks NB
-provincial campgrounds on Grand Manan/Campobello/Mactaquac). **Remaining:
-NS 81, NL 72, PE 25, PA 17, VA 14, NB 6, WV 4, MD 2 (221 total) — this is
-close to the finish line.** Resume with `./extract_fields.py --dump 60`
-immediately — no state was left mid-batch; the 60-note dumps interleave
-jurisdictions by id order.
+**PHASE 3 IS COMPLETE — all 12,689 notes scanned, 0 left** (finished with
+commit `7982373`, 2026-09-18). Final coverage: hookups 80.2%, sites 78.3%,
+facilities 63.2%, season 30.5%, booking 80.3%. `python3 -m unittest
+tests.test_extract_fields` green (30 tests) at the finish line.
+
+**How the last stretch went, for anyone auditing the tail:** every US state
+finished (including three small pockets — PA/Pennsylvania, VA/Virginia,
+WV/West Virginia, MD/Maryland — that had NOT been part of the original
+50-state sweep and were mistaken mid-session for typos/mistags before being
+confirmed real and swept in), then every Canadian province/territory with
+entries in the corpus: QC (`b9e9647`), ON (`ab0f4a1`), BC/AB/SK/MB
+(`7c13487`/`c77030f`), NB (`7fd9441`), NS+PE (`2d49c4c`), NL (`c9535ef`),
+and a final 41-entry mixed batch (`7982373`) that closed out the last of NL
+plus VA/PA/WV/MD stragglers. **No further `--dump`/`--apply-file` work is
+needed for phase 3.** If `--report` ever shows entries again, it means new
+campground entries were added to `campgrounds.json` after this pass (a new
+sweep, an edit) — treat that as a fresh, much smaller incremental pass using
+the exact same loop and judgment calls documented in this file, not as
+unfinished phase-3 work.
+
+**Next phase-3-adjacent work (not started):** re-measure `--report` coverage
+periodically as new entries get added, and revisit **phase 5** (Good Sam
+bulk match) and **phase 6** (more policy-registry rows) per the "Not done"
+paragraph below — those were always separate from the note-extraction pass
+and remain open.
 
 **Judgment calls settled on the Ontario private-RV-park run (notes
 12634-12653), a private/commercial-heavy tail with a recurring "mostly
