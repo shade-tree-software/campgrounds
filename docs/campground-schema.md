@@ -776,8 +776,43 @@ campground"*. Three parts of that are load-bearing rather than decorative.
   disagree. The field metadata still comes from `to_client()`; only the phrasing lives
   there.
 
-The popup is a summary — six chips a group, then a `+N` tail. The manage form is where
-every value is visible and the only place any of them can be edited.
+The popup is a summary — six chips a group in the verified half, **four in the agency
+half**, then a `+N more` tail. The manage form is where every value is visible and the only
+place any of them can be edited.
+
+### 8.7 A chip is read by someone who has never seen the schema
+
+The stored shapes are terse because storage should be; the chips were terse because they
+were written next to the storage. A pass over every distinct phrasing the database can
+produce (rendered through the real module against the real data, not imagined) turned up
+one collision and a run of shorthand nobody outside this repo could expand. The rules that
+came out of it:
+
+- **No invented abbreviation, and no unit left to inference.** `180d ahead`, `max 14n`,
+  `2n weekends` and `to 25 ft` became *books 180 days ahead*, *max stay 14 nights*,
+  *min stay 2 nights on weekends* and *rigs to 25 ft*. This bites hardest in the agency
+  half, which is the one telling the reader something indirect already.
+- **`res` meant two things one chip apart.** A reservation fee rendered `+$5 res` while a
+  non-resident surcharge rendered `non-res +$5/night`, and Virginia's row printed both. The
+  reservation fee is now *+$5 booking fee*; resident/non-resident are spelled in full.
+- **A negative has to be English.** `season.year_round` false is *seasonal*, never
+  "no open year-round" — a label that cannot carry its own negation gets an explicit chip.
+- **A stored date is not a written one.** `05-01` renders *May 1*, and a span renders as
+  one chip (*open May 1 – Oct 1*); an opening date alone says *opens May 1*, because
+  "open May 1" reads as if that day were the season.
+- **What a fee is charged PER changes what it is.** Michigan's `$15/$40` is an annual
+  vehicle pass and read as a gate fee, so `entrance.per` is now always spoken (*annual park
+  pass …*, *park entry $7 resident, $15 non-resident (per vehicle/stay)*). Same reasoning
+  makes a nightly rate say `/night` and `fees.currency` render `C$` rather than `$`.
+- **Fold where the reader already read it; expand where the chip only hinted.**
+  `50A · water · sewer` is one chip (*full hookups (50A)*) and its opposite is *no hookups*;
+  a dated season drops the redundant *seasonal*. Against that, `surcharges` rendered as the
+  bare label *per-night amenity surcharges* — the existence of a cost, with no cost — and
+  now expands to one chip per add-on (*electric +$7/night*), letting the six-chip cap trim
+  the tail instead of the formatter.
+
+Both surfaces change together because both call `sfChips`; the manage form's collapsed
+summary is the same run cut to three.
 
 **Surfacing the rating was a fix, not a garnish.** Phase 2 lifted `RV Life 4*/$$` out of
 the note prose on 11,771 entries, and the popup renders the note — so between that pass and

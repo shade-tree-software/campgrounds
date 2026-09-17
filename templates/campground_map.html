@@ -1283,12 +1283,18 @@ function loadCgDetail(cg, onDone) {
 // The chips themselves come from the shared formatter the manage page uses, so
 // a value cannot be spoken one way there and another way here.
 const CG_FACT_CHIP_MAX = 6;   // a popup is a summary; the manage form has it all
+// The agency half is capped tighter than the verified one, and the reason is
+// proportion rather than space: spelling the chips out (doc \u00a78.7) took an
+// Indiana Booking row to ~150 characters, which on a phone is four lines of
+// italic tan about what its agency USUALLY does, above one line of what is
+// actually known about this campground. Four chips keeps the emphasis where
+// the reader's question is; the rest is one click away on the manage form.
+const CG_FACT_AGENCY_CHIP_MAX = 4;
 
-function cgFactRow(label, chips) {
+function cgFactRow(label, chips, max = CG_FACT_CHIP_MAX) {
   if (!chips.length) return '';
-  const shown = chips.slice(0, CG_FACT_CHIP_MAX).map(escapeHtml).join(' \u00b7 ');
-  const extra = chips.length > CG_FACT_CHIP_MAX
-    ? ` +${chips.length - CG_FACT_CHIP_MAX}` : '';
+  const shown = chips.slice(0, max).map(escapeHtml).join(' \u00b7 ');
+  const extra = chips.length > max ? ` +${chips.length - max} more` : '';
   return `<div><b>${escapeHtml(label)}</b>${shown}${extra}</div>`;
 }
 
@@ -1301,7 +1307,8 @@ function cgFactsHtml(d) {
     const inherited = new Set(block.inherited || []);
     const verified = new Set(Object.keys(block.values).filter(k => !inherited.has(k)));
     own += cgFactRow(g.label, verified.size ? sfChips(g, block.values, verified) : []);
-    agency += cgFactRow(g.label, inherited.size ? sfChips(g, block.values, inherited) : []);
+    agency += cgFactRow(g.label, inherited.size ? sfChips(g, block.values, inherited) : [],
+                        CG_FACT_AGENCY_CHIP_MAX);
   });
   let html = own ? `<div class="cg-facts">${own}</div>` : '';
   // Without a name for the agency the inherited half cannot be attributed, and
