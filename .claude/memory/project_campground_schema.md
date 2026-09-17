@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T02:10:00.000Z
+  modified: 2026-09-18T02:45:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,20 +69,68 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 12,108 of 12,689 notes scanned (95.4%), 581 left**
-(as of commit `3ea4b68`, notes through id 12533). Coverage as of the CA
-finish line (12,048 scanned): hookups 75.7%, booking 75.8%, sites 74.3%,
-facilities 60.4%, season 27.4% (re-run `--report` for the current numbers).
-**EVERY US STATE IS NOW FULLY DONE — California finished with commit
-`8d9086b`.** The entire remainder of phase 3 is Canada: QC now ~100 left
-(started with commit `3ea4b68`, SEPAQ/Parks-Canada/municipal notes
-12474-12533), then ON 84, NS 81, NB 76, BC 75, NL 72, AB 26, PE 25. Resume
+**PHASE 3 IS PAUSED PART-WAY: 12,228 of 12,689 notes scanned (96.4%), 461 left**
+(as of commit `b9e9647`, notes through id 12653). Coverage: hookups 76.9%,
+booking 77.1%, sites 75.5%, facilities 61.0%, season 28.1%.
+**CORRECTION: "US states all done" was premature** — the `--report` state
+breakdown showed a stray "PA 17" that I assumed was a PEI mistag; it is
+actually **Pennsylvania** (confirmed: `campgrounds.json` entries with
+`state: "PA"` are real US Pennsylvania campgrounds, e.g. id 47 "Red Bridge
+Campground"). **17 Pennsylvania notes are still unscanned** and were missed
+when California finished — don't skip them for Canada; sweep them in
+whenever `--report` shows them, same `--dump 60` loop. **QUEBEC IS FULLY
+DONE** (commit `b9e9647` closed out QC's private/municipal seaside-Gaspésie
+tail, notes 12474-12633). **Ontario is underway** (64 left of 84, notes
+12634-12653 covered private RV-resort/KOA/municipal-conservation-authority
+parks in the Muskoka/Peterborough/Ottawa-Valley/Sarnia corridor). Remaining:
+NS 81, NB 76, BC 75, NL 72, ON 64, AB 26, PE 25, PA 17 (461 total). Resume
 with `./extract_fields.py --dump 60` immediately — no state was left
-mid-batch. **Quebec's note style is a hard break from every US batch** — see
-the dedicated bullet block below before touching another QC batch; the
-existing Alberta/Saskatchewan/Manitoba/Ontario/BC bullets earlier in this
-file were settled on a PRIOR Canada sweep (data collection, not extraction)
-and mostly still transfer once you're past QC.
+mid-batch; the 60-note dumps interleave states/provinces by id order so a
+PA note may appear mixed into a mostly-Canadian batch.
+
+**Judgment calls settled on the Ontario private-RV-park run (notes
+12634-12653), a private/commercial-heavy tail with a recurring "mostly
+seasonal but keeps a transient section" pattern:**
+- **When a note gives ONE hookup spec that explicitly covers the WHOLE site
+  count ("245 sites, all with electric/water/sewer"), use the whole count**
+  — even when the note also breaks that same total down by booking category
+  (full-season vs. overnight), because the hookup fact and the site count
+  both describe the same physical inventory (Petersburg 12648, Killaloe
+  12650, Vermilion Bay's Crystal Lake 12651).
+- **When a note gives DIFFERENT hookup specs for different named subsets
+  (a leased "full-season" block vs. a separate "overnight/traveler"
+  section with its own stated hookup type), use ONLY the subset's own count**
+  paired with ITS hookup facts — using the grand total would attach the
+  transient section's water/electric/sewer facts to sites that were never
+  described that way (Midland's Georgian Bay camp 12637: 165 seasonal sites
+  left unspecified, 15 hydro/water OVERNIGHT sites described in detail →
+  `count:15`, not 180; Powassan's Wasi Lake 12642: 63 full-season sites
+  unspecified, 8 RV overnight sites explicitly "no sewer at the overnight
+  sites" → `count:8, sewer:false`, not 72).
+- **"No sewer at the overnight sites" / "no sewer hookups at the sites —
+  there's an on-site dump station" is an explicit negative, not an omission**
+  — `sewer:false` (not omitted), `dump:true` when a dump station is named
+  separately (KOA Cardinal 12646, same pattern).
+- **A named booking SOFTWARE platform not in the enum** (CampLife, ResNexus,
+  Good Sam Booking, a KOA/franchise's own booking system) is `platform:
+  "operator"` only when it's the SOLE channel named; when the note pairs it
+  with "or by phone" (two channels, no clear primary), the standing
+  two-channel-omit-platform rule wins even though one of the two is a real
+  enum value like `roverpass` (North Bay's Lavase River park 12653: "book
+  online through RoverPass or by phone" → platform omitted, not roverpass).
+- **The bare "phone/email" exception is narrow — it requires BOTH named
+  together with no third channel**, not phone alone or email alone. "Reserve
+  by phone" alone → `platform: "phone"`. "Reservations by email preferred"
+  alone (no phone mentioned) → platform omitted, doesn't invoke the
+  phone/email exception (Vermilion Bay's Crystal Lake 12651).
+- **"Reserve by phone/email; no online booking engine"** (stated as the pair,
+  no third channel) → `platform: "phone"`, confirmed twice this run
+  (Killaloe 12650's sibling notes, Bushwell Bay 12643).
+- **"Short-term/nightly camping offered year-round" inside a note that also
+  describes a seasonal LEASE program running a shorter window** still earns
+  `year_round: true` — the seasonal program's dates describe the lease
+  product, not whether the campground itself operates that time of year
+  (White Lake resort 12638).
 
 **Judgment calls settled on the first Quebec/SEPAQ batch (notes 12474-12533),
 where the note style and vocabulary differ from every US batch so far:**
