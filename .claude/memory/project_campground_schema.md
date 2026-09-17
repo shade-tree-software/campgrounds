@@ -69,23 +69,44 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 9,826 of 12,689 notes scanned (77%), 2,863 left**
-(as of commit `09a5e02`, notes through id 10216). Coverage: hookups 60.5%,
-booking 59.8%, sites 58.8%, facilities 47.3%, season 23.0%.
-**Remaining states, in order:** CA 854, OR 592, WA 375, AZ 279, QC 160, NV 121,
-ON 84, NS 81 (plus smaller pockets). **Utah is now fully done** — the run
-finished with a long tail of private RV parks (Zion/Bryce corridor,
-Circleville/Marysvale/Nine Mile Canyon, small-town parks) and a big block of
-Utah State Parks (Coral Pink Sand Dunes, Sand Hollow, Quail Creek, Kodachrome
-Basin, Dead Horse Point, Fremont Indian, Yuba, Scofield, Deer Creek,
-Steinaker/Red Fleet, Wasatch Mountain, Rockport, East Canyon, Echo, Antelope
-Island, Willard Bay, Hyrum, Bear Lake). **Washington is now underway**,
-started with Gifford Pinchot NF (Mount Adams/Cowlitz Valley RDs), USACE
-Columbia/Snake River reservoirs, Umatilla NF (Blue Mountains), and Mount
-Rainier NP. Idaho, Alberta, Saskatchewan, Manitoba, BC are all fully done as
-of this run (see earlier notes in this file for their conventions).
-**Resume with `./extract_fields.py --dump 60` immediately — no state was
-left mid-batch.**
+**PHASE 3 IS PAUSED PART-WAY: 10,186 of 12,689 notes scanned (80%), 2,503 left**
+(as of commit `fce7d7c`, notes through id 10579). Coverage: hookups 62.9%,
+booking 62.5%, sites 61.4%, facilities 49.2%, season 23.4%.
+**Remaining states, in order:** CA 854, OR 592, AZ 279, QC 160, NV 121, ON 84,
+NS 81, NB 76 (plus smaller pockets). **Washington is now fully done** — this
+run (six batches, notes 10217-10579) covered the rest of Mt Baker-Snoqualmie/
+Okanogan-Wenatchee/Olympic/Gifford Pinchot NF drainages, Colville NF (Kettle
+River/Sullivan Lake/Pend Oreille), Lake Roosevelt NRA, North Cascades NP,
+the full WA State Parks roster (Pacific coast, Puget Sound, San Juans,
+Columbia River/Gorge, Cascades), then a long tail of county fairgrounds,
+port-district, PUD/utility, tribal and private RV parks across the state.
+Oregon is next per `--report`. **Resume with `./extract_fields.py --dump 60`
+immediately — no state was left mid-batch.**
+
+**Recurring judgment calls settled during the WA run, worth reusing:**
+- **A named hookup SUBSET implies the unnamed utility is absent.** "partial-hookup
+  (water/electric)" or "utility (elec/water)" → `water: true`, `sewer: false` (electric
+  amp omitted unless a number is given) — the type name IS the inventory, so what it
+  doesn't list isn't there. Reserve `sewer: true` for "full hookup" / an explicit sewer
+  mention. This reading was applied consistently across ~40 entries; revisit if a
+  counterexample turns up (a "partial-hookup" site that turns out to have sewer too).
+- **"Non-hookup" / "no-hookup" sites are a fourth trigger phrase** alongside "no hookups"/
+  "primitive"/"non-electric" in the doc's list — treated as equivalent (electric 0, water
+  false, sewer false).
+- **"Pit toilets" and a bare "toilet"/"restroom" (type unnamed) map differently**: pit
+  toilet → `vault_toilets: true` (same fixture, different name); a bare "toilet"/
+  "restroom" with no type word → omit per the doc's existing flush-vs-vault rule.
+- **Two reservation channels named in one note (e.g. "by phone or via RoverPass/Hipcamp")**
+  → pick the named third-party platform over `phone` (phone is the fallback when nothing
+  else is named, not equal-priority with a real platform word).
+- **A stated total that doesn't quite match the sum of subcategories** ("40 campsites: 8
+  full-hookup, 24 standard, 5 equestrian, 1 hiker/biker" summing to 38) → trust the
+  directly-stated total over re-deriving it, since the note author had the real count and
+  the category breakdown may have a typo or omitted category.
+- **"Open year-round except an annual N-day closure"** (e.g. "except Dec 20-Jan 1") →
+  still `year_round: true`, deferring to the note's own words over the literal exception;
+  a temporary/one-off closure (construction, fire damage, flood) never sets `year_round`
+  either way regardless of duration.
 
 **More conventions settled over the Saskatchewan/Manitoba/Idaho tail of that
 run, beyond what the Alberta section below already covers:**
