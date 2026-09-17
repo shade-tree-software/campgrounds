@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T02:45:00.000Z
+  modified: 2026-09-18T03:15:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -72,21 +72,25 @@ the note itself is never edited. Things worth carrying forward that the doc does
 **PHASE 3 IS PAUSED PART-WAY: 12,228 of 12,689 notes scanned (96.4%), 461 left**
 (as of commit `b9e9647`, notes through id 12653). Coverage: hookups 76.9%,
 booking 77.1%, sites 75.5%, facilities 61.0%, season 28.1%.
-**CORRECTION: "US states all done" was premature** — the `--report` state
-breakdown showed a stray "PA 17" that I assumed was a PEI mistag; it is
-actually **Pennsylvania** (confirmed: `campgrounds.json` entries with
+**CORRECTION: "US states all done" was premature, twice.** The `--report`
+state breakdown showed a stray "PA 17" that I first assumed was a PEI mistag;
+it is actually **Pennsylvania** (confirmed: `campgrounds.json` entries with
 `state: "PA"` are real US Pennsylvania campgrounds, e.g. id 47 "Red Bridge
-Campground"). **17 Pennsylvania notes are still unscanned** and were missed
-when California finished — don't skip them for Canada; sweep them in
-whenever `--report` shows them, same `--dump 60` loop. **QUEBEC IS FULLY
-DONE** (commit `b9e9647` closed out QC's private/municipal seaside-Gaspésie
-tail, notes 12474-12633). **Ontario is underway** (64 left of 84, notes
-12634-12653 covered private RV-resort/KOA/municipal-conservation-authority
-parks in the Muskoka/Peterborough/Ottawa-Valley/Sarnia corridor). Remaining:
-NS 81, NB 76, BC 75, NL 72, ON 64, AB 26, PE 25, PA 17 (461 total). Resume
-with `./extract_fields.py --dump 60` immediately — no state was left
-mid-batch; the 60-note dumps interleave states/provinces by id order so a
-PA note may appear mixed into a mostly-Canadian batch.
+Campground"). A later `--report` also showed **"VA 14"** — Virginia, same
+story. **Small pockets of US states (leftover from before the state-by-state
+extraction sweep began, or added/edited after their state's main pass) stay
+mixed into the queue and surface as the Canadian batches thin out** — don't
+assume the queue is Canada-only just because the big provinces dominate the
+`remaining by state` list; read every line each time you run `--report` and
+sweep in ANY US state pocket you see (PA, VA, or others) using the exact
+same `--dump 60` loop, no special handling needed. **QUEBEC and ONTARIO are
+both FULLY DONE** (QC: commit `b9e9647`, private/municipal seaside-Gaspésie
+tail, notes 12474-12633; ON: commit `ab0f4a1`, private RV-resort/KOA/
+municipal-conservation-authority parks, notes 12634-12713). Remaining: NS
+81, NB 76, BC 75, NL 72, AB 26, PE 25, PA 17, VA 14 (401 total). Resume with
+`./extract_fields.py --dump 60` immediately — no state was left mid-batch;
+the 60-note dumps interleave jurisdictions by id order, so a stray US note
+can appear mixed into an otherwise-Canadian batch.
 
 **Judgment calls settled on the Ontario private-RV-park run (notes
 12634-12653), a private/commercial-heavy tail with a recurring "mostly
@@ -131,6 +135,41 @@ seasonal but keeps a transient section" pattern:**
   `year_round: true` — the seasonal program's dates describe the lease
   product, not whether the campground itself operates that time of year
   (White Lake resort 12638).
+
+**A second, larger Ontario private-park run (notes 12654-12713) sharpened
+the subset-vs-whole-total call from the bullet above — it is genuinely a
+judgment call each time, not a fixed rule:**
+- **When a hookup breakdown's own subset numbers SUM to (or land very close
+  to) the site count actually being used, that confirms the breakdown covers
+  the WHOLE inventory being described** — e.g. "192 sites with 30-amp hydro/
+  water/sewer and 31 with hydro and water" against a stated "223 sites
+  total" (192+31=223 exactly) means the union applies campground-wide, not
+  just to a named subsection. Do this arithmetic check before deciding
+  whether to use the grand total or carve out a subset.
+- **Water/sewer facts sold as an ADD-ON SERVICE rather than a per-site
+  connection are NOT a hookup** — "mobile water fill and pump-out sold
+  separately rather than site sewer" (12693) or "weekly septic pump-out"
+  bundled with power+water (12682) both read as `water:false/sewer:false`
+  with `dump:true` (a delivered/collected service), not as a water or sewer
+  hookup — the schema's water/sewer fields mean a fixed connection AT the
+  site, and a note that explicitly contrasts "at the site" vs "sold
+  separately" is doing the work of telling you which one it is.
+- **"Sites are assigned on arrival rather than pre-booked" (an all-transient
+  park that explicitly does NOT take advance reservations) is `reservable:
+  false, fcfs: "always"`**, even though the rest of the note reads exactly
+  like every other bookable private park (nightly rate card, full hookups,
+  pool) — the operator's own stated booking mechanism overrides the
+  default assumption that a private RV park is reservable.
+- **"Book by phone/e-transfer" is NOT the phone/email exception** — e-transfer
+  is a payment method, not a second communication channel, so this reads as
+  a single named channel (`platform: "phone"`), same outcome as the
+  exception but for a different reason: read what the second word actually
+  names before applying the phone/email shortcut.
+- **A named booking-software brand appearing ALONE (no "or by phone")** is a
+  clean single channel → `platform: "operator"` (Staylist, ResNexus,
+  PitchCamp, KOA's own system, a park's own CampLife listing with no phone
+  alternative given) — only demote to "omit platform" when a second channel
+  is explicitly offered alongside it.
 
 **Judgment calls settled on the first Quebec/SEPAQ batch (notes 12474-12533),
 where the note style and vocabulary differ from every US batch so far:**
