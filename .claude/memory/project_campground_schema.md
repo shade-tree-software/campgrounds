@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T03:15:00.000Z
+  modified: 2026-09-18T03:45:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,28 +69,22 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 12,228 of 12,689 notes scanned (96.4%), 461 left**
-(as of commit `b9e9647`, notes through id 12653). Coverage: hookups 76.9%,
-booking 77.1%, sites 75.5%, facilities 61.0%, season 28.1%.
-**CORRECTION: "US states all done" was premature, twice.** The `--report`
-state breakdown showed a stray "PA 17" that I first assumed was a PEI mistag;
-it is actually **Pennsylvania** (confirmed: `campgrounds.json` entries with
-`state: "PA"` are real US Pennsylvania campgrounds, e.g. id 47 "Red Bridge
-Campground"). A later `--report` also showed **"VA 14"** — Virginia, same
-story. **Small pockets of US states (leftover from before the state-by-state
-extraction sweep began, or added/edited after their state's main pass) stay
-mixed into the queue and surface as the Canadian batches thin out** — don't
-assume the queue is Canada-only just because the big provinces dominate the
-`remaining by state` list; read every line each time you run `--report` and
-sweep in ANY US state pocket you see (PA, VA, or others) using the exact
-same `--dump 60` loop, no special handling needed. **QUEBEC and ONTARIO are
-both FULLY DONE** (QC: commit `b9e9647`, private/municipal seaside-Gaspésie
-tail, notes 12474-12633; ON: commit `ab0f4a1`, private RV-resort/KOA/
-municipal-conservation-authority parks, notes 12634-12713). Remaining: NS
-81, NB 76, BC 75, NL 72, AB 26, PE 25, PA 17, VA 14 (401 total). Resume with
-`./extract_fields.py --dump 60` immediately — no state was left mid-batch;
-the 60-note dumps interleave jurisdictions by id order, so a stray US note
-can appear mixed into an otherwise-Canadian batch.
+**PHASE 3 IS PAUSED PART-WAY: 12,468 of 12,689 notes scanned (98.3%), 221 left**
+(as of commit `7fd9441`, notes through id 12894). Coverage: hookups 78.6%,
+booking 78.9%, sites 77.1%, facilities 62.1%, season 29.4%.
+**CORRECTION (still relevant): small US-state pockets keep surfacing in the
+queue** — confirmed real (not mistags): PA (Pennsylvania), VA (Virginia),
+WV (West Virginia), MD (Maryland) all showed up mixed into otherwise-Canadian
+`--report` batches. **Always read every line of `--report`'s state
+breakdown** rather than assuming Canada-only; sweep any US pocket with the
+same `--dump 60` loop, no special handling. **QC, ON, BC, AB, SK, MB and NB
+ARE ALL FULLY DONE** (QC: commit `b9e9647`; ON: `ab0f4a1`; BC/AB/SK/MB
+private-park runs: `7c13487`/`c77030f`; NB: `7fd9441`, ending with Parks NB
+provincial campgrounds on Grand Manan/Campobello/Mactaquac). **Remaining:
+NS 81, NL 72, PE 25, PA 17, VA 14, NB 6, WV 4, MD 2 (221 total) — this is
+close to the finish line.** Resume with `./extract_fields.py --dump 60`
+immediately — no state was left mid-batch; the 60-note dumps interleave
+jurisdictions by id order.
 
 **Judgment calls settled on the Ontario private-RV-park run (notes
 12634-12653), a private/commercial-heavy tail with a recurring "mostly
@@ -170,6 +164,32 @@ judgment call each time, not a fixed rule:**
   PitchCamp, KOA's own system, a park's own CampLife listing with no phone
   alternative given) — only demote to "omit platform" when a second channel
   is explicitly offered alongside it.
+
+**BC/AB/SK/MB/NB private-park runs (notes 12714-12894, ~180 entries) were
+the same private-RV-park genre as Ontario and confirmed every rule above
+holds nationwide with no new exceptions** — same union-across-subsets logic,
+same subset-vs-whole-count judgment call, same phone/email narrowness, same
+platform-omission-on-two-channels rule. Two additions specific to this run:
+- **"Rented as available" / "sites assigned... contact ahead" language for
+  an otherwise ordinary private park is NOT automatically FCFS** — only the
+  Ontario-style explicit "sites are assigned on arrival rather than
+  pre-booked" (a stated absence of advance reservations) earns
+  `fcfs: "always"`; "long-stay focus but nightly sites rented as available"
+  (Osoyoos Lake resort) still reads `reservable: true` with no fcfs, because
+  it describes availability, not booking mechanism.
+- **A note with NO reservation language at all — full hookup facts, pool,
+  laundry, but nothing about booking — genuinely omits `booking` entirely**,
+  rather than inferring `reservable: true` from "this is a private RV
+  park" — happened several times this run (12763, 12767, 12790, 12822,
+  12880) and is the correct conservative read: private parks that don't
+  take advance reservations exist (walk-up FCFS lots), so silence isn't
+  evidence either way.
+- **"May long weekend" (Victoria Day, a floating Canadian holiday) is NOT a
+  day-level date** — omit `opens` rather than guess a specific day, even
+  though "Thanksgiving weekend" (mid-October) and named months are common
+  in this corpus; only encode a date when the note gives an actual
+  day-of-month or an unambiguous "mid-May" style approximation already used
+  elsewhere in this project's convention.
 
 **Judgment calls settled on the first Quebec/SEPAQ batch (notes 12474-12533),
 where the note style and vocabulary differ from every US batch so far:**
