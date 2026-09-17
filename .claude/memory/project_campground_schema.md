@@ -5,7 +5,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T00:20:00.000Z
+  modified: 2026-09-18T01:15:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -69,23 +69,22 @@ the note itself is never edited. Things worth carrying forward that the doc does
   `operator` bug and confirmed every stored `false` traced to an explicit negative in the
   prose ("restrooms (no showers)", "no potable water", "no hookups").
 
-**PHASE 3 IS PAUSED PART-WAY: 11,686 of 12,689 notes scanned (92.1%), 1,003 left**
-(as of commit `1a17ec5`, notes through id 12100). Coverage: hookups 72.9%,
-booking 73.1%, sites 71.9%, facilities 58.2%, season 26.8%.
-**Remaining states, in order:** CA 362, QC 160, ON 84, NS 81, NB 76, BC 75,
-NL 72, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
-are now all fully done; California is in its final stretch** — past the
-county/fairgrounds tail (11605-11860) and now deep in the Sierra/southern-Cal
-USFS forest-camp belt: Yosemite NP, Stanislaus/Eldorado/Tahoe/Plumas/Lassen/
-Sierra/Sequoia/Inyo/Klamath/Modoc/Los Padres/Cleveland/San Bernardino/
-Angeles/Six Rivers/Mendocino/Shasta-Trinity NFs, plus Sequoia & Kings Canyon
-NP, Death Valley NP and Joshua Tree NP (notes 11861-12100). This stretch is
-almost entirely primitive-to-moderate no-hookup vault-toilet FCFS/reservable
-forest camps with the same recurring max_rig_ft judgment calls (undercut,
-reverse-undercut, "rigs over N ft not recommended" as a direct statement,
-pad-dimension exclusion, off-site facility → false) — see the new bullets
-below for what's specific to this run. **Resume with `./extract_fields.py
---dump 60` immediately — no state was left mid-batch.**
+**PHASE 3 IS PAUSED PART-WAY: 11,986 of 12,689 notes scanned (94.5%), 703 left**
+(as of commit `ad42a9f`, notes through id 12408). Coverage: hookups 75.2%,
+booking 75.4%, sites 73.9%, facilities 60.0%, season 27.2%.
+**Remaining states, in order:** QC 160, ON 84, NS 81, NB 76, BC 75, NL 72,
+CA 62, AB 26 (plus smaller pockets). **Washington, Oregon, Nevada AND Arizona
+are now all fully done; California is DOWN TO ITS LAST 62 ENTRIES** — the
+Sierra/southern-Cal USFS forest-camp belt (Yosemite, Stanislaus/Eldorado/
+Tahoe/Plumas/Lassen/Sierra/Sequoia/Inyo/Klamath/Modoc/Los Padres/Cleveland/
+San Bernardino/Angeles/Six Rivers/Mendocino/Shasta-Trinity NFs, Sequoia &
+Kings Canyon NP, Death Valley NP, Joshua Tree NP) is essentially finished
+(notes 11861-12341), followed by a run of BLM desert LTVAs/dispersed areas
+and USACE reservoir campgrounds (California-based but not USFS) and a private
+RV park tail (notes 12342-12408). **Once CA's last 62 clear, Canada (QC/ON/
+NS/NB/BC/NL/AB, 574 entries) is the entire remainder of phase 3.** Resume
+with `./extract_fields.py --dump 60` immediately — no state was left
+mid-batch.
 
 **A rule this same file stated wrong got applied and then fixed (commit `c0856bc`, ids
 10540/10548)** — see the CORRECTED bullet just below. The wrong version wasn't caught by
@@ -510,6 +509,34 @@ whole corpus:**
   reservable online)" still gets `reservable: false, fcfs: "always"`, same
   as the existing "individual FCFS, group reservable" convention, now seen
   dozens more times without exception.
+
+**Judgment calls settled over the BLM-desert/USACE-reservoir/private-park tail
+that closes out California (notes 12342-12408):**
+- **BLM LTVA (Long Term Visitor Area) permit systems are not a `booking`
+  fact** — "$180 long-term Sep15-Apr15 / $40 short-visit" is a fee-permit
+  scheme, not a reservation or FCFS system, so `booking` is left out entirely
+  rather than guessing `reservable`/`fcfs` either way. Facilities actually
+  present (dump station, showers, water) are still recorded normally.
+- **"RVs/trailers to N ft and up" or "accommodates 30 ft-plus RVs" states a
+  FLOOR, not a cap, and is NOT usable as `max_rig_ft`** — the field means the
+  longest rig that fits, and a phrase describing the shortest rig a site
+  guarantees says nothing about the upper limit. Distinct from "sites over
+  90 ft" language used to advertise big-rig capacity (private RV parks), which
+  IS usable as a (large) `max_rig_ft` since it's marketing the site's actual
+  length capacity, not just a minimum.
+- **A private RV park's own booking phone line is `platform: "phone"`**, not
+  `operator` — reserve `operator` for a distinguishable NAMED third-party or
+  concessionaire system; "reserve by phone" at a small family-run park is the
+  phone rule, confirmed dozens of times across this Bakersfield/Tehachapi/San
+  Diego-backcountry private-park run.
+- **"Full/partial hookup" stated together with no other detail still reads as
+  the union rule (any full-hookup subset present → water+sewer true for the
+  whole record)** — same as the standing AZ/CA-county convention, now
+  confirmed for private parks too.
+- **Two booking channels named for a resort-scale private park ("reservable
+  online or by phone") still gets platform omitted**, same as the federal-
+  land rule — this shows up on the biggest private parks in the corpus
+  (482-site Desert Hot Springs resort) and the rule holds without exception.
 
 See [[feedback-absent-is-not-unknown]], [[feedback-responsive-all-screens]],
 [[reference-recgov-calendar-limits]] and [[reference-js-testing-without-node]] (how the
