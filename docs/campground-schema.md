@@ -756,8 +756,11 @@ that quietly returns a tenth of the database.
 
 The map popup fetches the resolved groups along with the rest of its detail (§8.4) and
 renders them as chip runs: the verified half in the page's own voice, the inherited half
-in the manage form's muted tan, italic, under *"Typical for <agency> — not checked for this
-campground"*. Three parts of that are load-bearing rather than decorative.
+in the manage form's muted tan, italic, under the heading *"Typical for <agency>"* and the
+caveat line *"Not checked for this campground"*. The heading is bold small caps inside a tan
+left rule that runs down the whole block (AWH 2026-09-18): it used to be one plain tan line in
+the rows' own size and weight, which read as the first row's text rather than a title over
+them. Three parts of this are load-bearing rather than decorative.
 
 - **`resolve()` names the inherited KEYS, not just each group's scope.** A `mixed` group
   holds both kinds of value at once — Hither Hills' own doubled rate sits beside the

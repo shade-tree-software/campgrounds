@@ -432,8 +432,22 @@
      muted tan the manage form uses for an inherited value, so the two pages
      agree about what "this came from the agency, not the park" looks like. */
   .cg-facts-agency, .cg-facts-agency b { color: #8a7a4a; }
-  .cg-facts-agency { font-style: italic; }
-  .cg-agency-head { font-style: normal; font-size: .95em; }
+  /* A tan rule down the left groups the agency rows under their heading, so the
+     block reads as a section with a title rather than one more run of text. */
+  .cg-facts-agency {
+    font-style: italic; margin-top: .5rem;
+    border-left: 2px solid #d8cca6; padding-left: .5rem;
+  }
+  /* The heading has to look like a heading: it used to be the same tan, size and
+     weight as the rows under it, so "Typical for Maryland state parks — not
+     checked for this campground" read as the first row's text. Small caps and
+     bold give it a different SHAPE, not just a different shade, and the caveat
+     drops to its own quieter line so the title stays short. */
+  .cg-agency-head {
+    font-style: normal; font-weight: 700; color: #6f6238;
+    font-size: .82em; letter-spacing: .05em; text-transform: uppercase;
+  }
+  .cg-agency-caveat { font-size: .9em; margin-bottom: .15rem; }
 
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
@@ -1316,8 +1330,9 @@ function cgFactsHtml(d) {
   // So it is shown only when the server could name where it came from.
   if (agency && d.policy_label) {
     html += `<div class="cg-facts cg-facts-agency">`
-          + `<div class="cg-agency-head">Typical for ${escapeHtml(d.policy_label)}`
-          + ` \u2014 not checked for this campground</div>${agency}</div>`;
+          + `<div class="cg-agency-head">Typical for ${escapeHtml(d.policy_label)}</div>`
+          + `<div class="cg-agency-caveat">Not checked for this campground</div>`
+          + `${agency}</div>`;
   }
   return html;
 }
