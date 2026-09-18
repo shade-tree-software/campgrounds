@@ -2454,10 +2454,11 @@ _MAP_POPUP_FIELDS = ("elevation_feet", "note", "phone", "website", "trips")
 
 # The structured groups (doc §8.4) load with the popup, with ONE exception: a
 # field the map's own filter evaluates client-side has to be on the page, and
-# these two are the whole of that exception. They come from `rating`, the only
-# group with entry-level coverage worth filtering on — 76% of entries carry
-# `stars` and 90% `price_tier`, against 0% for hookups/facilities/season, whose
-# filters have nothing to act on until the extraction pass (doc phase 3) runs.
+# these two plus the hookup flags below are the whole of that exception. These
+# come from `rating`, the only group with entry-level coverage worth filtering
+# on when they shipped — 76% of entries carry `stars` and 90% `price_tier`,
+# against 0% for hookups/facilities/season before the extraction pass (doc
+# phase 3) ran.
 #
 # Measured before adding them, because §8.4's warning is about exactly this:
 # the marker payload goes from 304 KB to 324 KB gzipped, ~1% of the page. A
@@ -2467,6 +2468,14 @@ _MAP_POPUP_FIELDS = ("elevation_feet", "note", "phone", "website", "trips")
 # same shape (one scalar, checked with a measurement) or the exception eats the
 # rule.
 _MAP_RATING_FIELDS = ("stars", "price_tier")
+# The second exception (2026-09-18), added once phase 3 had filled `hookups` from
+# note prose: electric 58%, water 67%, sewer 57% of entries, all verified — the
+# registry supplies no hookups, so none of it is inherited. Flattened to three
+# booleans for the map's Hookups filter; `electric` is `amps > 0`, because the
+# filter asks "is there power" and the amperage lives in the popup. Measured:
+# +16.5 KB gzipped on a 345 KB marker payload, the same order as the rating
+# pair. Absent stays absent, exactly as for ratings.
+_MAP_HOOKUP_FIELDS = ("electric", "water", "sewer")
 
 
 def _map_marker_rows(rows):
@@ -2491,6 +2500,11 @@ def _map_marker_rows(rows):
         for k in _MAP_RATING_FIELDS:
             if rating.get(k) is not None:
                 d[k] = rating[k]
+        hookups = r.get("hookups") or {}
+        for k in _MAP_HOOKUP_FIELDS:
+            v = hookups.get(k)
+            if v is not None:
+                d[k] = v > 0 if k == "electric" else bool(v)
         out.append(d)
     return out
 

@@ -381,7 +381,8 @@
     color: var(--gray);
     margin-bottom: .35rem;
   }
-  .map-legend .legend-select label { flex-shrink: 0; }
+  /* A common label width, so the Rating / Price / Hookups selects line up. */
+  .map-legend .legend-select label { flex-shrink: 0; min-width: 3.9rem; }
   .map-legend .legend-select select {
     flex: 1;
     min-width: 0;
@@ -851,7 +852,24 @@ let priceMax = STORE.get('priceMax', 0);        // maximum $ tier, 0 = any
 // quarter of the database, most of it the public land the ratings never
 // covered. So they stay ON the map, drawn faded, and hiding them is a
 // deliberate click.
-let includeUnrated = STORE.get('includeUnrated', true);
+// One switch for every structured filter, not one per filter: the rule is the
+// same rule, and a second checkbox would let the two disagree about it. The old
+// rating-only key seeds it so a session that had unchecked it stays unchecked.
+let includeUnknown = STORE.get('includeUnknown', STORE.get('includeUnrated', true));
+
+// ── Hookups (doc §8.5) ──────────────────────────────────────────────────────
+// Each level names the hookups it requires; a campground must have all of them.
+// "Has" means at SOME sites — that is what `hookups` records — so a park with a
+// handful of electric sites passes "Electric", and the popup says how many.
+// The marker carries three booleans (`electric` is amps > 0), each absent when
+// nobody recorded it.
+const HOOKUP_LEVELS = {
+  electric: ['electric'],
+  ew: ['electric', 'water'],
+  full: ['electric', 'water', 'sewer'],
+};
+let hookupMin = STORE.get('hookupMin', '');
+if (!HOOKUP_LEVELS[hookupMin]) hookupMin = '';
 
 function ratingFilterActive() { return ratingMin > 0 || priceMax > 0; }
 
@@ -872,13 +890,30 @@ function ratingPasses(cg) {
   return true;
 }
 
-function ratingVisible(cg) {
-  if (!ratingPasses(cg)) return false;
-  return includeUnrated || !ratingUnknown(cg);
+function hookupNeeds() { return HOOKUP_LEVELS[hookupMin] || []; }
+function hookupFilterActive() { return hookupNeeds().length > 0; }
+
+// Same two halves as the rating pair. Unknown = a required hookup nobody
+// recorded; failing = one recorded as absent. A park with electric known and
+// water unrecorded is unknown under "Electric + water", not a failure — and one
+// with no electric fails every level whatever else is unrecorded.
+function hookupUnknown(cg) { return hookupNeeds().some(k => cg[k] == null); }
+function hookupPasses(cg) { return !hookupNeeds().some(k => cg[k] === false); }
+
+// The combined answer every caller uses. Unknown on ANY active filter makes an
+// entry unknown; failing ANY on a measured value hides it — so an unknown on one
+// filter still never launders a measured failure on another.
+function schemaFilterActive() { return ratingFilterActive() || hookupFilterActive(); }
+function schemaUnknown(cg) { return ratingUnknown(cg) || hookupUnknown(cg); }
+function schemaPasses(cg) { return ratingPasses(cg) && hookupPasses(cg); }
+
+function schemaVisible(cg) {
+  if (!schemaPasses(cg)) return false;
+  return includeUnknown || !schemaUnknown(cg);
 }
 
 // Faded = shown but flagged: it met no threshold because none could be applied.
-function ratingFaded(cg) { return ratingFilterActive() && ratingUnknown(cg); }
+function schemaFaded(cg) { return schemaFilterActive() && schemaUnknown(cg); }
 
 // ── Build map ─────────────────────────────────────────────────────────────
 // zoomControl: false — the +/- buttons are dropped (pinch / scroll / double-click
@@ -1433,7 +1468,7 @@ function passesNonRatingFilters(cg) {
 }
 
 function markerVisible(cg) {
-  return passesNonRatingFilters(cg) && ratingVisible(cg);
+  return passesNonRatingFilters(cg) && schemaVisible(cg);
 }
 
 // Apply the master campground toggle: re-evaluate marker visibility and show or
@@ -1480,13 +1515,13 @@ function applyVisibility() {
     const { marker, cg } = rec;
     const vis = markerVisible(cg);
     if (vis) shown++;
-    else if (!includeUnrated && passesNonRatingFilters(cg)
-             && ratingPasses(cg) && ratingUnknown(cg)) unratedHidden++;
+    else if (!includeUnknown && passesNonRatingFilters(cg)
+             && schemaPasses(cg) && schemaUnknown(cg)) unratedHidden++;
     if (vis && !map.hasLayer(marker)) marker.addTo(map);
     else if (!vis && map.hasLayer(marker)) map.removeLayer(marker);
     // After the add/remove, so a marker that just joined the map is projected
     // and takes the style directly.
-    const f = vis && ratingFaded(cg);
+    const f = vis && schemaFaded(cg);
     if (f) faded++;
     setMarkerFade(rec, f);
   });
@@ -1735,7 +1770,7 @@ legendControl.onAdd = function() {
 legendControl.addTo(map);
 rebuildLegend();
 
-// ── Filters (rating thresholds + ownership) ─────────────────────────────────
+// ── Filters (rating + hookups + ownership) ──────────────────────────────────
 // One box, not two. A third bottom-corner control would cost a phone ~90px of
 // map even fully collapsed, and the mobile rule that lifts bottom controls
 // clear of the attribution (`margin-bottom: 28px`) applies to each of them, so
@@ -1758,27 +1793,47 @@ let unratedNoteEl = null;
 // active nothing is faded and the line would just be noise. Doc §2.2: the
 // count is the honest answer to "is this all of them?", which a filtered map
 // otherwise cannot give.
+let unknownToggleText = null;
+
+// What "unknown" means for the filters actually set, in words a reader can act
+// on. Scoped like the predicates: with only a hookup level set, a campground
+// with no stars is not unknown, so the note must not call it unrated.
+function unknownReason() {
+  const r = ratingFilterActive(), h = hookupFilterActive();
+  if (r && h) return 'unrated or without hookup data';
+  if (h) return 'without hookup data';
+  return 'unrated';
+}
+
 function updateUnratedNote(faded, unratedHidden) {
   if (!unratedNoteEl) return;
-  if (!ratingFilterActive()) { unratedNoteEl.textContent = ''; return; }
+  const reason = unknownReason();
+  if (unknownToggleText) {
+    unknownToggleText.textContent = reason === 'unrated' ? 'Include unrated'
+      : reason === 'without hookup data' ? 'Include unknown hookups'
+      : 'Include unknown';
+  }
+  if (!schemaFilterActive()) { unratedNoteEl.textContent = ''; return; }
   // Both counts come from the pass that just ran, so they describe the map as
   // drawn. Counting over all of CAMPGROUNDS instead would quietly include the
   // entries the ownership filter had already taken off the map.
-  if (!includeUnrated) {
-    unratedNoteEl.textContent = unratedHidden === 1
-      ? '1 unrated campground hidden'
-      : `${unratedHidden.toLocaleString()} unrated campgrounds hidden`;
+  if (!includeUnknown) {
+    const what = reason === 'unrated'
+      ? (unratedHidden === 1 ? 'unrated campground' : 'unrated campgrounds')
+      : (unratedHidden === 1 ? 'campground' : 'campgrounds') + ' ' + reason;
+    unratedNoteEl.textContent = `${unratedHidden.toLocaleString()} ${what} hidden`;
   } else {
     unratedNoteEl.textContent = faded === 1
-      ? '1 faded dot is unrated, not excluded'
-      : `${faded.toLocaleString()} faded dots are unrated, not excluded`;
+      ? `1 faded dot is ${reason}, not excluded`
+      : `${faded.toLocaleString()} faded dots are ${reason}, not excluded`;
   }
 }
 
 function persistRating() {
   STORE.set('ratingMin', ratingMin);
   STORE.set('priceMax', priceMax);
-  STORE.set('includeUnrated', includeUnrated);
+  STORE.set('hookupMin', hookupMin);
+  STORE.set('includeUnknown', includeUnknown);
 }
 
 // Bottom-right, across the map from the bottom-left legend.
@@ -1849,6 +1904,31 @@ filterControl.onAdd = function() {
   priceRow.appendChild(priceSel);
   rows.appendChild(priceRow);
 
+  const hookupRow = document.createElement('div');
+  hookupRow.className = 'legend-select';
+  const hookupLabel = document.createElement('label');
+  hookupLabel.textContent = 'Hookups';
+  hookupLabel.htmlFor = 'cg-hookup-min';
+  const hookupSel = document.createElement('select');
+  hookupSel.id = 'cg-hookup-min';
+  [['', 'Any'], ['electric', 'Electric'], ['ew', 'Electric + water'],
+   ['full', 'Full (elec/water/sewer)']]
+    .forEach(([value, text]) => {
+      const opt = document.createElement('option');
+      opt.value = value;
+      opt.textContent = text;
+      if (value === hookupMin) opt.selected = true;
+      hookupSel.appendChild(opt);
+    });
+  hookupSel.addEventListener('change', () => {
+    hookupMin = HOOKUP_LEVELS[hookupSel.value] ? hookupSel.value : '';
+    applyVisibility();
+    persistRating();
+  });
+  hookupRow.appendChild(hookupLabel);
+  hookupRow.appendChild(hookupSel);
+  rows.appendChild(hookupRow);
+
   // The §2.2 escape hatch, checked by default. Unchecking is the user saying
   // "I accept losing the ones nobody rated" — which is a legitimate thing to
   // want, and quite different from the filter deciding it for them.
@@ -1856,14 +1936,16 @@ filterControl.onAdd = function() {
   unratedToggle.className = 'legend-toggle';
   const unratedCb = document.createElement('input');
   unratedCb.type = 'checkbox';
-  unratedCb.checked = includeUnrated;
+  unratedCb.checked = includeUnknown;
   unratedCb.addEventListener('change', () => {
-    includeUnrated = unratedCb.checked;
+    includeUnknown = unratedCb.checked;
     applyVisibility();
     persistRating();
   });
   unratedToggle.appendChild(unratedCb);
-  unratedToggle.appendChild(document.createTextNode('Include unrated'));
+  // Worded for the filters actually set (updateUnratedNote keeps it current).
+  unknownToggleText = document.createTextNode('Include unrated');
+  unratedToggle.appendChild(unknownToggleText);
   rows.appendChild(unratedToggle);
 
   unratedNoteEl = document.createElement('div');

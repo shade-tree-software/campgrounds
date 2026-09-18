@@ -693,11 +693,13 @@ at yet. The exception is any field the map's **filter** UI needs to evaluate cli
 that must ride inline, so add it deliberately and keep it small (a boolean or a short enum,
 never a group).
 
-So far the exception is exactly two scalars, `rating.stars` and `rating.price_tier`
-(`_MAP_RATING_FIELDS`), flattened onto the marker rather than nested so the client reads
+So far the exception is five scalars: `rating.stars` and `rating.price_tier`
+(`_MAP_RATING_FIELDS`), and since 2026-09-18 the hookup flags `electric` / `water` /
+`sewer` (`_MAP_HOOKUP_FIELDS`, booleans — `electric` is `amps > 0`; the amperage stays in
+the popup). All are flattened onto the marker rather than nested so the client reads
 `cg.stars` without a group lookup on each of 12.8k markers per filter pass. **Measure before
-adding a third:** these took the marker payload from 304 KB to 324 KB gzipped, ~1% of the
-page. A terse encoding (`s` = stars × 10) was tried and saved 3 KB more — not worth the
+adding more:** the rating pair took the marker payload from 304 KB to 324 KB gzipped, ~1% of
+the page, and the hookup flags added another 16.5 KB. A terse encoding (`s` = stars × 10) was tried and saved 3 KB more — not worth the
 unreadable client code, because gzip already collapses 12.8k repetitions of a key name to
 nearly nothing. Absent stays absent here too (§2.1): an unrated entry carries no key, which
 is the distinction the whole filter turns on.
@@ -751,6 +753,37 @@ that quietly returns a tenth of the database.
   the template and running them in quickjs against the real `campgrounds.json`. A Python
   reimplementation would be a paraphrase, and a paraphrase of the rule under test can agree
   with the doc while the shipped code disagrees.
+
+**Shipped 2026-09-18: the hookups filter**, the second one, built the moment phase 3 made
+it possible and on the same pattern.
+
+- **Coverage, measured first:** `electric` is recorded on 58% of entries, `water` 67%,
+  `sewer` 57%, and none of it is inherited — the registry supplies no `hookups`. Facilities
+  (showers 29%, flush toilets 8%) and season (30%) were too thin to be next.
+- **One select, cumulative levels:** Any / Electric / Electric + water / Full
+  (elec/water/sewer). A level requires every hookup it names. "Has" means at SOME sites,
+  which is all `hookups` records; the popup says how many.
+- **The same two halves as ratings.** A required hookup recorded as absent (`electric: 0`,
+  `water: false`) hides the entry; one nobody recorded fades it. So `electric: 0` with water
+  unrecorded fails every level, while electric known and water unrecorded is merely unknown
+  under Electric + water.
+- **One unknown switch for every structured filter**, not one per filter. It is the same
+  rule, and two switches could disagree about it. Its label and the note under it are
+  worded for the filters actually set ("Include unrated" / "Include unknown hookups" /
+  "Include unknown"), and unknown is scoped the same way: with only a hookup level set, an
+  unrated campground is not unknown. The combined predicates are `schemaPasses` /
+  `schemaUnknown` / `schemaVisible` / `schemaFaded`; a measured failure on one filter is
+  never rescued by an unknown on the other.
+- **The fade is large, and that is the honest answer.** Electric is known-yes on 4,388
+  entries, known-no on 2,987, and unrecorded on 5,399 (42%). Full hookups leaves 6,475
+  unknown (51%). The unknowns are spread across every ownership class (34% of private, 41%
+  federal, 44% local, 53% state), so the fade hides no pattern. A naive filter would drop
+  all of them. **The lever for shrinking the fade is more data, not a different rule**:
+  RIDB's per-campsite attributes could fill the federal share, and phase 5 (Good Sam) the
+  private one.
+- `tests/test_rating_filter.py` now lifts the whole block, from `includeUnknown` through
+  `schemaFaded`, and builds its fixture through `_map_marker_rows` itself, so the tests
+  see exactly what rides inline.
 
 ### 8.6 The popup draws the two halves separately
 

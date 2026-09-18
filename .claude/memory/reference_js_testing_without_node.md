@@ -5,6 +5,11 @@ metadata:
   type: reference
 ---
 
+**2026-09-18: the scratchpad (/tmp/claude-*) is mounted noexec** — quickjs's .so fails with
+"failed to map segment". Install to `~/.cache/ekko-jslib` instead and run tests with
+`PYTHONPATH=~/.cache/ekko-jslib`. Without it the quickjs tests SKIP silently (26 of them),
+which reads like a pass.
+
 **There is no JavaScript runtime on this machine** (checked 2026-09-14: no `node`,
 `nodejs`, `deno`, `bun`, `qjs`, `d8`). Check again on a new box before assuming it.
 

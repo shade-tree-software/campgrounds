@@ -545,7 +545,14 @@ categories is normal and healthy; a NEW category appearing is the signal to stop
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
 
-**Next: more map filters, and RE-MEASURE COVERAGE FIRST.** The rating filter shipped the same
+**HOOKUPS FILTER SHIPPED 2026-09-18** (doc §8.5 has the design): Any / Electric /
+Electric + water / Full, one shared "include unknown" switch for both filters, three
+booleans inline. ~42-51% of the map fades depending on level, spread across all ownership
+classes — AWH hasn't reacted to that yet; if it bothers him, the answer is MORE DATA (RIDB
+per-campsite attributes for federal hookups; phase 5 Good Sam for private), never hiding
+the unknowns. Facilities (showers 29%) and season (30%) were too thin to be next.
+
+**(Superseded — kept for the reasoning) Next: more map filters, and RE-MEASURE COVERAGE FIRST.** The rating filter shipped the same
 day on the argument that everything else was at 0%; phase 3 is falsifying that, so the choice
 of the next filter has to be re-derived from `extract_fields.py --report` rather than from
 anything written here. Doc §8.5 has the shape and §2.2 the rule that makes it non-trivial
