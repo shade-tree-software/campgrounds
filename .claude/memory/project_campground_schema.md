@@ -545,6 +545,12 @@ categories is normal and healthy; a NEW category appearing is the signal to stop
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
 
+**RIDB hookups pass DONE 2026-09-18** (`recgov_hookups.py`, doc §7): 888 entries filled, electric
+coverage 57.7% -> 64.1%, Electric-filter fade 42% -> 36%. 53 note-vs-RIDB conflicts left UNRESOLVED
+on purpose (`python recgov_hookups.py --conflicts` lists them) — a reading job, offered to AWH.
+The cache also holds Driveway Length / Driveway Entry / Max Vehicle Length per site, fetched
+for a future `sites` pass (max_rig_ft, pull_through) — no refetch needed for that.
+
 **`wma:VA` registry row added 2026-09-18** (28 rows now), from AWH's question about VA WMA
 permits: no camping fee; DWR Access Permit $4/person/day as `fees.entrance` per person_day
 (17+, exempt with a VA hunting/fishing/trapping license or boat registration); a daily permit

@@ -639,6 +639,31 @@ become reservable** — both read off the same API, no agency-site reading. Samp
 months to find the edges is ~9.5k requests across 2,389 entries: slow against an
 undocumented endpoint, but unattended and cacheable.
 
+**Hookups from the RIDB campsite catalog (2026-09-18, `recgov_hookups.py`).** RIDB lists every
+campsite of a recreation.gov facility, and each one's `CampsiteType` says ELECTRIC or
+NONELECTRIC; electric sites also carry `Electricity Hookup` ("20/30/50"), `Water Hookup` and
+`Sewer Hookup`. That is per-site evidence from the booking system itself, better than any note.
+Same two-step shape as the calendar walk: `--fetch` fills a gitignored cache
+(`trip_data/ridb_campsites.json`, written after every facility, ~2,275 facilities in ~80
+minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, each pinned in
+`tests/test_recgov_hookups.py`:
+
+- Only sites an RV can book count: `STANDARD*`/`RV*` types, minus ones whose equipment list
+  names no RV. Group, tent-only, walk-to and MANAGEMENT (host) sites answer a different question.
+- `electric` is the highest amperage, snapped DOWN to 0/20/30/50. `0` only when EVERY RV site
+  is typed NONELECTRIC; an electric site with no amperage writes nothing rather than guess one.
+- `water`/`sewer`: true on any yes; false only when EVERY RV site says an explicit no. Most
+  non-electric sites carry no such attribute, and a missing one is silence, not a no.
+- It FILLS ONLY. A value already held that disagrees is reported (`--conflicts`), never
+  overwritten, and a `manual`/`reported` group is never touched. Entries sharing one facility
+  link are skipped: some are duplicates and some are wrong links.
+
+First run: 888 entries gained keys (electric 0 ×377, 30 ×66, 50 ×365), taking `electric` from
+57.7% to 64.1% of the database. Where the notes and RIDB both answered, they agreed 1,280 times
+and disagreed 53, usually RIDB listing a few electric sites where a note said "no hookups"
+(Signal Mountain, Colter Bay, Namekagon). Some of those notes are likely wrong; resolving them
+is a reading job. Re-run `--fetch --max-age-days 365` yearly; catalogs change slowly.
+
 **Phase 7 is the one that makes this tractable.** Uniform verification of 12,768 entries is
 a project that never finishes. Verification driven by the queries that actually surface
 entries converges on the campgrounds that matter within a season of use. Surfacing
@@ -774,8 +799,9 @@ it possible and on the same pattern.
   unrated campground is not unknown. The combined predicates are `schemaPasses` /
   `schemaUnknown` / `schemaVisible` / `schemaFaded`; a measured failure on one filter is
   never rescued by an unknown on the other.
-- **The fade is large, and that is the honest answer.** Electric is known-yes on 4,388
-  entries, known-no on 2,987, and unrecorded on 5,399 (42%). Full hookups leaves 6,475
+- **The fade is large, and that is the honest answer.** Electric was known-yes on 4,388
+  entries, known-no on 2,987, and unrecorded on 5,399 (42%) at ship; the RIDB pass (§7) took
+  the unrecorded share to 4,591 (36%) the same day. Full hookups leaves 6,475
   unknown (51%). The unknowns are spread across every ownership class (34% of private, 41%
   federal, 44% local, 53% state), so the fade hides no pattern. A naive filter would drop
   all of them. **The lever for shrinking the fade is more data, not a different rule**:
