@@ -19,10 +19,11 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import recgov_hookups as R
 
 
-def site(t, equip=(), **attrs):
+def site(t, equip=(), name="", reservable=True, **attrs):
     names = {"elec": "Electricity Hookup", "water": "Water Hookup",
              "sewer": "Sewer Hookup"}
-    return {"type": t, "equip": list(equip),
+    return {"type": t, "equip": list(equip), "name": name,
+            "reservable": reservable,
             "attrs": {names[k]: v for k, v in attrs.items()}}
 
 
@@ -82,9 +83,63 @@ class TestDerive(unittest.TestCase):
                         site("STANDARD NONELECTRIC", equip=["RV", "TENT"])])
         self.assertEqual(got, {"electric": 0})
 
+    def test_a_site_named_host_is_not_a_public_site(self):
+        """Boise Creek: the only electric site is a STANDARD ELECTRIC called Host."""
+        got = R.derive([site("STANDARD ELECTRIC", name="Host", elec="50",
+                             water="Yes"),
+                        site("STANDARD NONELECTRIC")])
+        self.assertEqual(got, {"electric": 0})
+
+    def test_a_lone_unbookable_electric_site_may_be_the_hosts(self):
+        """AWH: it may never be available to the public. Unknown, never 0."""
+        got = R.derive([site("RV ELECTRIC", reservable=False, elec="50",
+                             water="Yes", sewer="Yes"),
+                        site("STANDARD NONELECTRIC", reservable=False)])
+        self.assertEqual(got, {})
+
+    def test_a_lone_bookable_electric_site_is_public(self):
+        """Reservable on recreation.gov means anyone can book it."""
+        got = R.derive([site("STANDARD ELECTRIC", elec="30"),
+                        site("STANDARD NONELECTRIC")])
+        self.assertEqual(got["electric"], 30)
+
+    def test_the_host_rule_only_applies_to_a_few_electric_sites(self):
+        """An all-walk-up campground with 20 electric sites is not one host pad."""
+        sites = [site("STANDARD ELECTRIC", reservable=False, elec="50")
+                 for _ in range(20)]
+        self.assertEqual(R.derive(sites)["electric"], 50)
+
     def test_no_rv_sites_says_nothing(self):
         self.assertEqual(R.derive([site("TENT ONLY NONELECTRIC")]), {})
         self.assertEqual(R.derive([]), {})
+
+
+class TestUnstablePaging(unittest.TestCase):
+    """RIDB's offset paging can repeat one site and skip another."""
+
+    def test_pages_are_reread_until_every_site_is_seen(self):
+        ids = [str(i) for i in range(60)]
+        reads = {"n": 0}
+
+        def fake_get(path, params):
+            # First read: page two repeats site 10 and never returns site 59.
+            # Later reads are clean.
+            off = params["offset"]
+            first = reads["n"] < 2
+            reads["n"] += 1
+            page = ids[off:off + 50]
+            if first and off == 50:
+                page = ids[50:59] + ["10"]
+            return {"RECDATA": [{"CampsiteID": i} for i in page],
+                    "METADATA": {"RESULTS": {"TOTAL_COUNT": 60}}}
+
+        real = R._get_paced
+        R._get_paced = fake_get
+        try:
+            got = R.fetch_campsites("1")
+        finally:
+            R._get_paced = real
+        self.assertEqual(sorted(str(s["CampsiteID"]) for s in got), sorted(ids))
 
 
 class TestPlan(unittest.TestCase):

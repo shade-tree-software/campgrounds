@@ -654,6 +654,18 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
   is typed NONELECTRIC; an electric site with no amperage writes nothing rather than guess one.
 - `water`/`sewer`: true on any yes; false only when EVERY RV site says an explicit no. Most
   non-electric sites carry no such attribute, and a missing one is silence, not a no.
+- **Camp-host sites never count** (AWH 2026-09-18: a lone electric site "may be reserved for the
+  camp host, and it may never be available to the general public"). RIDB types most host pads
+  MANAGEMENT, but not all, so a site NAMED host is dropped outright: Boise Creek's only electric
+  site is a STANDARD ELECTRIC called "Host", Kellettville's only water hookup is on "012 Host",
+  and Joe T. Fallini's only 30-amp site is "Host Site 15" (the public sites are 15/20). And when
+  a campground has only one or two electric sites, they count only if `CampsiteReservable` says
+  the public can book them; otherwise electric is UNKNOWN, never 0, because the site exists and
+  we cannot tell whose it is.
+- **RIDB's offset paging is not stable.** Reading a multi-page facility can repeat one site and
+  skip another (43 of 717 did, 497 repeats), and a skipped site can turn "some electric" into a
+  measured 0. `fetch_campsites` unions pages by `CampsiteID` and re-reads until it reaches
+  `TOTAL_COUNT`.
 - It FILLS ONLY. A value already held that disagrees is reported (`--conflicts`), never
   overwritten, and a `manual`/`reported` group is never touched. Entries sharing one facility
   link are skipped: some are duplicates and some are wrong links.
@@ -663,6 +675,10 @@ First run: 888 entries gained keys (electric 0 ×377, 30 ×66, 50 ×365), taking
 and disagreed 53, usually RIDB listing a few electric sites where a note said "no hookups"
 (Signal Mountain, Colter Bay, Namekagon). Some of those notes are likely wrong; resolving them
 is a reading job. Re-run `--fetch --max-age-days 365` yearly; catalogs change slowly.
+Because it fills only, a rule that TIGHTENS cannot undo its own earlier writes, so
+`--retract <git ref from before the fill>` drops the RIDB-written values the current rules
+no longer derive (never a note's). The host rule retracted three: Big Biloxi and Joe T.
+Fallini's electric, and Kellettville's water.
 
 **Phase 7 is the one that makes this tractable.** Uniform verification of 12,768 entries is
 a project that never finishes. Verification driven by the queries that actually surface

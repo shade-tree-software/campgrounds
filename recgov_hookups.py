@@ -49,6 +49,10 @@ CACHE_JSON = os.path.join("trip_data", "ridb_campsites.json")
 KEEP_ATTRS = ("Electricity Hookup", "Water Hookup", "Sewer Hookup",
               "Driveway Length", "Driveway Entry", "Max Vehicle Length")
 
+# Bumped when compact_site keeps something new; older records are refetched.
+# v2 (2026-09-18) added the site name and CampsiteReservable for the host check.
+CACHE_VERSION = 2
+
 # RIDB answers 50 requests a minute on a key; stay well under it so a long run
 # never trips the limit, since a burst is held against you long afterwards
 # (the calendar endpoint taught that — reference_recgov_calendar_limits).
@@ -81,6 +85,10 @@ def compact_site(site):
         if name in KEEP_ATTRS:
             attrs[name] = (a.get("AttributeValue") or "").strip()
     return {
+        "id": str(site.get("CampsiteID") or ""),
+        "name": (site.get("CampsiteName") or "").strip(),
+        # Whether the public can book it online. The host-site check reads it.
+        "reservable": bool(site.get("CampsiteReservable")),
         "type": (site.get("CampsiteType") or "").strip().upper(),
         "equip": sorted({(e.get("EquipmentName") or "").strip().upper()
                          for e in site.get("PERMITTEDEQUIPMENT") or []} - {""}),
@@ -101,18 +109,33 @@ def _get_paced(path, params):
             time.sleep(wait)
 
 
-def fetch_campsites(fid):
-    sites, offset = [], 0
-    while True:
-        data = _get_paced(f"facilities/{fid}/campsites",
-                          {"limit": 50, "offset": offset}) or {}
-        rec = data.get("RECDATA") or []
-        sites.extend(rec)
-        total = (data.get("METADATA") or {}).get("RESULTS", {}).get(
-            "TOTAL_COUNT", len(sites))
-        offset += len(rec)
-        if not rec or offset >= total:
-            return sites
+def fetch_campsites(fid, passes=4):
+    """Every campsite of a facility, de-duplicated by CampsiteID.
+
+    RIDB's offset paging is NOT stable: across one read of the pages, a site
+    can appear twice while another never appears (43 of 717 multi-page
+    facilities did on 2026-09-18, 497 repeats). A skipped site matters —
+    missing the only electric loop would turn "some electric" into a measured
+    0 — so pages are re-read, unioned by id, until the count reaches
+    TOTAL_COUNT or `passes` runs out.
+    """
+    by_id, total = {}, None
+    for _ in range(passes):
+        offset = 0
+        while True:
+            data = _get_paced(f"facilities/{fid}/campsites",
+                              {"limit": 50, "offset": offset}) or {}
+            rec = data.get("RECDATA") or []
+            for site in rec:
+                by_id.setdefault(str(site.get("CampsiteID")), site)
+            total = (data.get("METADATA") or {}).get("RESULTS", {}).get(
+                "TOTAL_COUNT", len(by_id))
+            offset += len(rec)
+            if not rec or offset >= total:
+                break
+        if len(by_id) >= total:
+            break
+    return list(by_id.values())
 
 
 def run_fetch(limit, max_age_days):
@@ -124,7 +147,15 @@ def run_fetch(limit, max_age_days):
 
     def stale(fid):
         held = cache.get(fid)
-        if not held:
+        # A record from before a field was added is refetched rather than
+        # derived from with a gap (see CACHE_VERSION).
+        if not held or held.get("v", 1) < CACHE_VERSION:
+            return True
+        # A record from before fetch_campsites de-duplicated shows the unstable
+        # paging as repeated sites; those are incomplete, so fetch again.
+        seen = Counter((s.get("name"), s.get("type")) for s in held["sites"])
+        if any(n > 1 for n in seen.values()) and not all(
+                s.get("id") for s in held["sites"]):
             return True
         if max_age_days is None:
             return False
@@ -156,7 +187,7 @@ def run_fetch(limit, max_age_days):
             # "not fetched", and a failure must never be stored as a result.
             print(f"  {fid}: {e}", flush=True)
             continue
-        cache[fid] = {"fetched": today.isoformat(),
+        cache[fid] = {"v": CACHE_VERSION, "fetched": today.isoformat(),
                       "sites": [compact_site(s) for s in sites]}
         save_cache(cache)
         done += 1
@@ -170,6 +201,15 @@ def run_fetch(limit, max_age_days):
 # Equipment that makes a site usable by an RV (upper-cased RIDB names), the same
 # set `ridb.fetch_facility` judges fit with.
 from ridb.fetch_facility import RV_EQUIPMENT
+
+HOST_NAME = re.compile(r"\bhost\b", re.I)
+
+# A campground with only this many electric RV sites or fewer may be showing
+# the camp host's pad rather than anything the public can book (AWH 2026-09-18:
+# "a single electric site may be reserved for the camp host, and it may never
+# be available to the general public"). Such a site counts only if RIDB says
+# it is reservable, because then the public can in fact book it.
+FEW_ELECTRIC_SITES = 2
 
 YES = {"yes", "y"}
 NO = {"no", "n"}
@@ -190,6 +230,10 @@ def rv_sites(sites):
     for site in sites:
         t = site["type"]
         if not (t.startswith("STANDARD") or t.startswith("RV")):
+            continue
+        # Most host sites are typed MANAGEMENT and fall out above, but not all:
+        # Boise Creek's only electric site is a STANDARD ELECTRIC named "Host".
+        if HOST_NAME.search(site.get("name") or ""):
             continue
         equip = set(site.get("equip") or [])
         if equip and not equip & RV_EQUIPMENT:
@@ -250,22 +294,32 @@ def derive(sites):
         return {}
     out = {}
 
+    powered = [s for s in rv if electric_kind(s["type"]) == "yes"]
+    # One or two electric sites that nobody can book online look exactly like
+    # a host pad, so they are set aside: not evidence of public electric, and
+    # not evidence against it either — electric stays unknown, never 0. Their
+    # water/sewer values are set aside with them.
+    suspect = []
+    if len(powered) <= FEW_ELECTRIC_SITES:
+        suspect = [s for s in powered if s.get("reservable") is not True]
+        powered = [s for s in powered if s.get("reservable") is True]
+        rv = [s for s in rv if not any(s is x for x in suspect)]
+
     kinds = [electric_kind(s["type"]) for s in rv]
-    powered = [s for s, k in zip(rv, kinds) if k == "yes"]
     if powered:
         amps = [a for a in (_amps(s["attrs"].get("Electricity Hookup"))
                             for s in powered) if a]
         snapped = snap_amps(max(amps)) if amps else None
         if snapped:
             out["electric"] = snapped
-    elif all(k == "no" for k in kinds):
+    elif not suspect and rv and all(k == "no" for k in kinds):
         out["electric"] = 0
 
     for key, attr in (("water", "Water Hookup"), ("sewer", "Sewer Hookup")):
         flags = [_flag(s["attrs"].get(attr)) for s in rv]
         if any(f is True for f in flags):
             out[key] = True
-        elif all(f is False for f in flags):
+        elif flags and all(f is False for f in flags):
             out[key] = False
     return out
 
@@ -354,6 +408,64 @@ def apply(fills, today):
     return written
 
 
+def retract(base_ref, cache, apply_it, today):
+    """Remove values an earlier RIDB fill wrote that the CURRENT rules no longer derive.
+
+    `plan` only ever fills, which is right for a note-derived value but leaves
+    a RIDB value standing forever once a rule tightens (the host-site rule of
+    2026-09-18 is the case that needed this). A key counts as RIDB's when the
+    entry's hookups cite RIDB and `base_ref` — a git ref from before the fill —
+    did not hold that key. Everything else is left alone, including every value
+    a note supplied.
+    """
+    import subprocess
+    base = {e["id"]: e for e in json.loads(subprocess.check_output(
+        ["git", "show", f"{base_ref}:{CAMPGROUNDS_JSON}"]))}
+    with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
+        rows = json.load(fh)
+    links = facility_ids(rows)
+    shared = Counter(links.values())
+    changes = []
+    for entry in rows:
+        prov = (entry.get(cs.PROVENANCE) or {}).get("hookups") or {}
+        if SOURCE not in (prov.get("source") or "") or human_verified(entry):
+            continue
+        before = (base.get(entry["id"]) or {}).get("hookups") or {}
+        fid = links.get(entry["id"])
+        now = derive(cache[fid]["sites"]) if fid in cache and shared[fid] == 1 else {}
+        held = entry.get("hookups") or {}
+        ours = [k for k in held if k not in before]
+        gone = [k for k in ours if now.get(k) != held[k]]
+        if gone:
+            changes.append((entry, gone, before))
+    for entry, gone, before in changes:
+        print(f"  {entry['id']:6} {entry.get('state')} {entry['name'][:44]:44} "
+              f"drop {', '.join(f'{k}={entry['hookups'][k]}' for k in gone)}")
+        if not apply_it:
+            continue
+        cs.apply_update(entry, {"hookups": {k: None for k in gone}})
+        prov = dict(entry.get(cs.PROVENANCE) or {})
+        remaining = set(entry.get("hookups") or {})
+        if not remaining:
+            prov.pop("hookups", None)
+        elif remaining <= set(before):
+            # Only note-derived keys left: the group's source is the note again.
+            prov["hookups"] = dict(prov["hookups"],
+                                   source=prov["hookups"]["source"]
+                                   .replace(f"; {SOURCE}", ""))
+        entry[cs.PROVENANCE] = prov
+        if not prov:
+            entry.pop(cs.PROVENANCE)
+    print(f"{len(changes):,} entries hold a RIDB value the current rules don't derive")
+    if apply_it and changes:
+        tmp = CAMPGROUNDS_JSON + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            json.dump(rows, fh, indent=2, ensure_ascii=False)
+            fh.write("\n")
+        os.replace(tmp, CAMPGROUNDS_JSON)
+        print("retracted")
+
+
 def describe(rows, cache, fills, conflicts, skipped, verbose):
     links = facility_ids(rows)
     print(f"{len(set(links.values())):,} linked facilities, {len(cache):,} cached")
@@ -385,9 +497,17 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--conflicts", action="store_true",
                     help="list every conflicting entry")
+    ap.add_argument("--retract", metavar="BASE_REF",
+                    help="drop RIDB-filled values the current rules no longer "
+                         "derive; BASE_REF is a git ref from before the fill "
+                         "(dry run unless --apply)")
     args = ap.parse_args()
     if args.fetch:
         run_fetch(args.limit, args.max_age_days)
+        return
+    if args.retract:
+        retract(args.retract, load_cache(), args.apply,
+                datetime.date.today().isoformat())
         return
     with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
         rows = json.load(fh)
