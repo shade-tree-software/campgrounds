@@ -30,6 +30,9 @@
     width: 280px;
   }
 
+  .visited-toggle { display: flex; align-items: center; gap: .35rem; font-size: .85rem; color: var(--navy); white-space: nowrap; cursor: pointer; }
+  .visited-toggle #visited-count { color: var(--gray); }
+
   .btn { padding: .4rem 1rem; border: none; border-radius: 6px; cursor: pointer; font-size: .85rem; }
   .btn-add { background: var(--red); color: #fff; }
   .btn-add:hover { background: var(--red-light); }
@@ -207,6 +210,8 @@
     <div style="display:flex;gap:1rem;align-items:center;">
       <span class="count-info" id="count-info"></span>
       <input type="text" class="search-box" id="search-box" placeholder="Search campgrounds..." oninput="filterTable()">
+      <label class="visited-toggle"><input type="checkbox" id="visited-only" onchange="render()">
+        Visited only <span id="visited-count"></span></label>
       <button class="btn btn-add" onclick="startAdd()">+ Add Campground</button>
     </div>
   </div>
@@ -357,7 +362,12 @@ fetch('/api/campgrounds/all')
 // ── Render ─────────────────────────────────────────────────────────────────
 function render() {
   const query = (document.getElementById('search-box').value || '').toLowerCase();
-  let rows = campgrounds;
+  // `visit_count` comes from trips.json (one per visit) and is only present on
+  // entries that have one.
+  const visitedOnly = document.getElementById('visited-only').checked;
+  const visitedTotal = campgrounds.filter(c => c.visit_count).length;
+  document.getElementById('visited-count').textContent = `(${visitedTotal})`;
+  let rows = visitedOnly ? campgrounds.filter(c => c.visit_count) : campgrounds;
   if (query) {
     rows = rows.filter(c =>
       c.name.toLowerCase().includes(query) ||
@@ -378,10 +388,11 @@ function render() {
   });
 
   const total = rows.length;
-  let countText = query ? `${total} of ${campgrounds.length} campgrounds`
-                        : `${campgrounds.length} campgrounds`;
+  const filtered = query || visitedOnly;
+  let countText = filtered ? `${total} of ${campgrounds.length} campgrounds`
+                           : `${campgrounds.length} campgrounds`;
   if (total > RENDER_CAP) {
-    countText += ` · showing first ${RENDER_CAP} — ${query ? 'refine search' : 'search'} to see more`;
+    countText += ` · showing first ${RENDER_CAP} — ${filtered ? 'refine search' : 'search'} to see more`;
   }
   document.getElementById('count-info').textContent = countText;
 

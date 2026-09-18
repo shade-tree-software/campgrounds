@@ -5511,9 +5511,18 @@ def api_campground_all():
     with open(CAMPGROUNDS_JSON) as f:
         entries = json.load(f)
     entries += _read_family_raw()
+    # Visit counts back the page's "Visited only" filter. Same definition as
+    # the campground map's (one per visit, not per stay record — see
+    # `trips.visit_runs`), and only stamped on entries that HAVE visits, so
+    # the ~12.8k never-visited rows carry nothing extra; absent reads as 0.
+    # Never saved back: PUT merges from a field whitelist that doesn't list it.
+    visits = _campground_visits_index()
     for e in entries:
         for field in _AUDIT_EVIDENCE_FIELDS:
             e.pop(field, None)
+        n = len(visits.get(e.get("id"), ()))
+        if n:
+            e["visit_count"] = n
     # The gzip itself is handled by the _compress_response after_request hook,
     # which covers every large text response rather than just this one.
     return app.response_class(json.dumps(entries).encode("utf-8"),
