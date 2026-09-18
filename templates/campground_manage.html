@@ -19,7 +19,10 @@
     max-height: calc(100vh - var(--site-top-height, 0px) - 120px);
     min-height: 300px;
   }
-  .manage-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  /* Wraps rather than overflowing: title + count + search + Visited only + Add
+     is ~1,000px, wider than a tablet in portrait or a narrow desktop window. */
+  .manage-header { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+  .manage-tools { display: flex; flex-wrap: wrap; gap: .75rem 1rem; align-items: center; justify-content: flex-end; }
   .manage-header h2 { font-size: 1.4rem; color: var(--navy); }
 
   .search-box {
@@ -207,7 +210,7 @@
 <div class="manage-page">
   <div class="manage-header">
     <h2>Manage Campgrounds</h2>
-    <div style="display:flex;gap:1rem;align-items:center;">
+    <div class="manage-tools">
       <span class="count-info" id="count-info"></span>
       <input type="text" class="search-box" id="search-box" placeholder="Search campgrounds..." oninput="filterTable()">
       <label class="visited-toggle"><input type="checkbox" id="visited-only" onchange="render()">
