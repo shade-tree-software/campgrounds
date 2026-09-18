@@ -666,16 +666,21 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
   skip another (43 of 717 did, 497 repeats), and a skipped site can turn "some electric" into a
   measured 0. `fetch_campsites` unions pages by `CampsiteID` and re-reads until it reaches
   `TOTAL_COUNT`.
-- It FILLS ONLY. A value already held that disagrees is reported (`--conflicts`), never
-  overwritten, and a `manual`/`reported` group is never touched. Entries sharing one facility
-  link are skipped: some are duplicates and some are wrong links.
+- **The catalog outranks a machine-derived value; a person outranks the catalog.** AWH
+  2026-09-18: "I would trust current rec.gov over older auto-generated notes with unknown
+  source." The notes were written during the state sweeps from unrecorded sources, so where
+  one disagrees with the booking system's own per-site record, the record wins and the change
+  is listed by `--conflicts`. A `manual`/`reported` group is never touched. Entries sharing one
+  facility link are skipped: some are duplicates and some are wrong links.
 
 First run: 888 entries gained keys (electric 0 ×377, 30 ×66, 50 ×365), taking `electric` from
 57.7% to 64.1% of the database. Where the notes and RIDB both answered, they agreed 1,280 times
 and disagreed 53, usually RIDB listing a few electric sites where a note said "no hookups"
-(Signal Mountain, Colter Bay, Namekagon). Some of those notes are likely wrong; resolving them
-is a reading job. Re-run `--fetch --max-age-days 365` yearly; catalogs change slowly.
-Because it fills only, a rule that TIGHTENS cannot undo its own earlier writes, so
+(Signal Mountain, Colter Bay, Namekagon). The first run held those back for review; on AWH's
+ruling above, a second run replaced all 53 (46 entries). The note prose itself is untouched
+(§6), so such a note may still say "no hookups" beside a verified electric chip. Re-run `--fetch --max-age-days 365` yearly; catalogs change slowly.
+A rule that TIGHTENS cannot undo its own earlier writes (a derive that now says nothing
+writes nothing), so
 `--retract <git ref from before the fill>` drops the RIDB-written values the current rules
 no longer derive (never a note's). The host rule retracted three: Big Biloxi and Joe T.
 Fallini's electric, and Kellettville's water.

@@ -338,11 +338,14 @@ def human_verified(entry):
 def plan(rows, cache):
     """What an apply would do, per entry — computed, never written.
 
-    Returns (fills, conflicts, skipped): fills maps entry id -> {key: value} for
-    keys the entry does not hold; conflicts lists (entry, key, held, ridb) where
-    the entry already says something else. Conflicts are reported, NEVER
-    overwritten: the note that produced the held value may know about a
-    campground the catalog is stale on, and deciding that is a reading job.
+    Returns (fills, conflicts, skipped). fills maps entry id -> {key: value} to
+    write. conflicts lists (entry, key, held, ridb) where the entry already held
+    something else; those are IN fills too, because the catalog outranks a
+    machine-derived value (AWH 2026-09-18: "I would trust current rec.gov over
+    older auto-generated notes with unknown source"). The notes were written
+    during the state sweeps from unrecorded sources; the catalog is the booking
+    system's own per-site record. A person's reading (`manual` / `reported`) is
+    still never touched — `human_verified` skips the entry before this runs.
     """
     links = facility_ids(rows)
     shared = Counter(links.values())
@@ -373,6 +376,7 @@ def plan(rows, cache):
                 new[key] = value
             elif held[key] != value:
                 conflicts.append((entry, key, held[key], value))
+                new[key] = value
         if new:
             fills[cid] = new
         else:
@@ -380,8 +384,14 @@ def plan(rows, cache):
     return fills, conflicts, skipped
 
 
-def apply(fills, today):
-    """Write the fills, re-reading campgrounds.json first (a live edit wins)."""
+def apply(fills, conflicts, today):
+    """Write the fills, re-reading campgrounds.json first.
+
+    A key is written only if it still holds what `plan` saw — absent for a fill,
+    the conflicting value for a replacement — so an edit made while this ran
+    (the live admin UI on PA) is never overwritten.
+    """
+    expected = {(e["id"], k): h for e, k, h, _ in conflicts}
     with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
         rows = json.load(fh)
     by_id = {r["id"]: r for r in rows}
@@ -391,12 +401,14 @@ def apply(fills, today):
         if entry is None or human_verified(entry):
             continue
         held = entry.get("hookups") or {}
-        new = {k: v for k, v in new.items() if k not in held}
+        new = {k: v for k, v in new.items()
+               if (k not in held and (cid, k) not in expected)
+               or ((cid, k) in expected and held.get(k) == expected[(cid, k)])}
         if not new:
             continue
         prov = dict(entry.get(cs.PROVENANCE) or {})
         before = (prov.get("hookups") or {}).get("source")
-        source = SOURCE if not before or before == SOURCE else f"{before}; {SOURCE}"
+        source = SOURCE if not before or SOURCE in before else f"{before}; {SOURCE}"
         prov["hookups"] = {"source": source, "checked": today, "method": "derived"}
         cs.apply_update(entry, {"hookups": new, cs.PROVENANCE: prov})
         written += 1
@@ -478,7 +490,7 @@ def describe(rows, cache, fills, conflicts, skipped, verbose):
         print(f"  {k:9} {str(v):6} {n:6,}")
     for why, n in skipped.most_common():
         print(f"  skipped — {why}: {n:,}")
-    print(f"{len(conflicts):,} conflicts with a value already held (never overwritten)")
+    print(f"{len(conflicts):,} held values the catalog replaces (included above)")
     by_key = Counter((k, str(h), str(r)) for _, k, h, r in conflicts)
     for (k, h, r), n in by_key.most_common(12):
         print(f"  {k:9} held {h:6} catalog {r:6} {n:5,}")
@@ -496,7 +508,7 @@ def main():
                     help="alias for the dry run; free, reads only the cache")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--conflicts", action="store_true",
-                    help="list every conflicting entry")
+                    help="list every held value the catalog replaces")
     ap.add_argument("--retract", metavar="BASE_REF",
                     help="drop RIDB-filled values the current rules no longer "
                          "derive; BASE_REF is a git ref from before the fill "
@@ -515,7 +527,7 @@ def main():
     fills, conflicts, skipped = plan(rows, cache)
     describe(rows, cache, fills, conflicts, skipped, args.conflicts)
     if args.apply:
-        n = apply(fills, datetime.date.today().isoformat())
+        n = apply(fills, conflicts, datetime.date.today().isoformat())
         print(f"wrote {n:,} entries")
     else:
         print("(dry run — --apply writes)")

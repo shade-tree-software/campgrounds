@@ -159,9 +159,14 @@ class TestPlan(unittest.TestCase):
         self.assertEqual(fills, {1: {"electric": 0}})
         self.assertEqual(conflicts, [])
 
-    def test_a_disagreement_is_reported_not_written(self):
-        fills, conflicts, _ = R.plan(self.rows(hookups={"electric": 30}), self.CACHE)
-        self.assertEqual(fills, {})
+    def test_the_catalog_replaces_a_note_derived_value(self):
+        """AWH: trust current rec.gov over older auto-generated notes."""
+        rows = self.rows(hookups={"electric": 30},
+                         provenance={"hookups": {"method": "derived",
+                                                 "source": "note prose",
+                                                 "checked": "2026"}})
+        fills, conflicts, _ = R.plan(rows, self.CACHE)
+        self.assertEqual(fills, {1: {"electric": 0}})
         self.assertEqual([(k, h, r) for _, k, h, r in conflicts], [("electric", 30, 0)])
 
     def test_a_person_outranks_the_catalog(self):

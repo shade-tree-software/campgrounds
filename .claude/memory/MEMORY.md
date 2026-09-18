@@ -70,6 +70,7 @@
 - [Researching an agency policy row](reference_agency_policy_research.md) — scrape ALL of an agency's park pages and count the boilerplate (19 of 23 IS the evidence); the legislative rule beats the website; brochures on the agency's own domain are stale traps
 - [Testing JS with no node](reference_js_testing_without_node.md) — dev box has no JS runtime; pip-install quickjs into ~/.cache/ekko-jslib (scratchpad is noexec) and run the real pure modules (and diff old vs new) against live data
 - [Bulk passes in stoppable chunks](feedback_chunked_bulk_passes.md) — AWH 2026-09-15: small chunks, sequential, stoppable, committable; write each batch to disk, put progress in the DATA not a cursor file, cap each run, free --report
+- [Trust rec.gov over sweep notes](feedback_trust_recgov_over_sweep_notes.md) — current RIDB/rec.gov outranks auto-generated notes; AWH can't adjudicate conflicts (hasn't been there); --AWH notes and manual checks still win
 - [Lone electric site may be the host's](feedback_lone_electric_site_may_be_host.md) — 1-2 electric sites that the public can't book = unknown electric, never a yes; drop sites named Host
 - [Absent is not zero](feedback_absent_is_not_unknown.md) — the same trap has now bitten four subsystems; omit the key, never cache a failure as a result, never let unknown EXCLUDE a search result
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR carries no information, one run sees ~120 days not 365, FCFS is not derivable, back off in minutes
