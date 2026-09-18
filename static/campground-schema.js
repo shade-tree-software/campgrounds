@@ -190,10 +190,17 @@ function sfChip(groupKey, field, value, cur) {
     }
     return head.trim() + ' fee' + tail;
   }
+  // The name is what the reader has to go and get ("WMA camping authorization",
+  // "Green Key"); a price alone read as an anonymous surcharge. A free pass
+  // says free, and one with no stored price just names itself.
   if (k === 'fees.prereq_pass') {
-    const price = value && value.price != null ? sfMoney(value.price, cur) : null;
-    const valid = value && value.valid ? '/' + value.valid : '';
-    return price ? 'requires ' + price + valid + ' pass' : 'pass required';
+    const name = value && value.name;
+    const price = value && value.price != null
+      ? (value.price === 0 ? 'free' : sfMoney(value.price, cur)
+         + (value.valid ? '/' + value.valid : ''))
+      : null;
+    if (name) return 'requires ' + name + (price ? ' (' + price + ')' : '');
+    return price ? 'requires ' + price + ' pass' : 'pass required';
   }
   if (Array.isArray(value)) {
     return value.length + ' ' + field.label.toLowerCase()

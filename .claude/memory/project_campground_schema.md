@@ -545,6 +545,14 @@ categories is normal and healthy; a NEW category appearing is the signal to stop
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
 
+**`wma:VA` registry row added 2026-09-18** (28 rows now), from AWH's question about VA WMA
+permits: no camping fee; DWR Access Permit $4/person/day as `fees.entrance` per person_day
+(17+, exempt with a VA hunting/fishing/trapping license or boat registration); a daily permit
+covers only its own date, so an overnight needs one for BOTH days (read from the wording,
+DWR doesn't state it outright); the camping authorization is ONE PER PARTY of up to 6, stored
+as `prereq_pass` with NO price because it goes free -> $10 on 2026-10-01 (the note gives both).
+Annual permit $23 -> $28 the same day. The `prereq_pass` chip now names the pass.
+
 **HOOKUPS FILTER SHIPPED 2026-09-18** (doc §8.5 has the design): Any / Electric /
 Electric + water / Full, one shared "include unknown" switch for both filters, three
 booleans inline. ~42-51% of the map fades depending on level, spread across all ownership
