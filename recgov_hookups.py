@@ -202,7 +202,27 @@ def run_fetch(limit, max_age_days):
 # set `ridb.fetch_facility` judges fit with.
 from ridb.fetch_facility import RV_EQUIPMENT
 
-HOST_NAME = re.compile(r"\bhost\b", re.I)
+# "host" anywhere a word could start: "Host", "Host Site 15", "Host 1A", and
+# the "1Host" a plain \bhost\b missed at Mount Rose — but never "Ghost".
+HOST_NAME = re.compile(r"(?<![a-z])host", re.I)
+
+# Fewer RV sites than this is a placeholder, not a catalog: Long Pool lists ONE
+# "STANDARD NONELECTRIC" site for a 38-site campground with an electric loop,
+# and reading it as "no electric" is a claim the catalog never made.
+MIN_CATALOG_SITES = 3
+
+# At a campground that takes online bookings, unbookable sites carrying a
+# hookup are staff and host pads unless they are a real share of that hookup's
+# sites AND of the campground — then they are a walk-up LOOP and count. Tuned
+# on the cases that set it:
+#   Mott Park / Clear Lake: 4 unbookable of 22-32 electric (12-18%)  -> staff
+#   Los Alamos: 3 unbookable water+sewer sites, the ONLY ones, but 3 of 93
+#     RV sites (3%)                                                   -> staff
+#   South Rim Loop B: 22 unbookable electric, 100% of electric, 27% of
+#     the campground                                                  -> loop
+#   Whiteface: 12 of 28 electric (43%), 27% of the campground         -> loop
+WALKUP_MIN_SHARE = 0.25          # of the sites carrying this hookup
+WALKUP_MIN_CAMPGROUND = 0.10     # of all RV sites
 
 # A campground with only this many electric RV sites or fewer may be showing
 # the camp host's pad rather than anything the public can book (AWH 2026-09-18:
@@ -276,50 +296,74 @@ def snap_amps(amps):
     return None
 
 
+def public_with(rv, has):
+    """The RV sites carrying a hookup that the public can actually use.
+
+    At a campground that takes online bookings, the unbookable ones are staff
+    pads unless they are a real share of that hookup's sites (then they are a
+    walk-up loop; see WALKUP_MIN_SHARE). An all-walk-up campground has no such signal, so every
+    site counts there.
+    """
+    carrying = [s for s in rv if has(s)]
+    if not any(s.get("reservable") is True for s in rv):
+        return carrying
+    booked = [s for s in carrying if s.get("reservable") is True]
+    walkup = [s for s in carrying if s.get("reservable") is not True]
+    loop = (len(walkup) > FEW_ELECTRIC_SITES
+            and len(walkup) >= WALKUP_MIN_SHARE * len(carrying)
+            and len(walkup) >= WALKUP_MIN_CAMPGROUND * len(rv))
+    return booked + (walkup if loop else [])
+
+
 def derive(sites):
     """{electric, water, sewer} this facility's RV sites establish, or {}.
 
-    Every key is written only when the catalog SAYS it (doc §2.1):
+    Every key is written only when the catalog SAYS it (doc §2.1), and only from
+    sites the PUBLIC can use — a camp host's pad is real but not an answer to
+    "can we plug in" (AWH 2026-09-18):
 
-    - electric: an ELECTRIC site with an amperage gives the highest amperage.
-      `0` only when EVERY RV site is typed NONELECTRIC — the site type is the
-      booking system's own classification, so a whole campground of them is a
-      measured no. One site whose type says neither leaves it unknown.
-    - water / sewer: true when any RV site says yes; false only when EVERY RV
-      site carries an explicit no. A blank or missing attribute is silence, and
-      most non-electric sites carry none at all.
+    - A catalog of fewer than MIN_CATALOG_SITES RV sites says nothing.
+    - Staff pads are set aside by name (`rv_sites`) and by `public_with`.
+    - electric: the highest amperage among public ELECTRIC sites, read off the
+      bookable ones when they state it; if there are
+      only one or two, they must be bookable online. `0` only when EVERY RV
+      site is typed NONELECTRIC; an electric site set aside leaves it unknown.
+    - water / sewer: true when more than FEW_ELECTRIC_SITES public sites say
+      yes. Unlike the site TYPE, these are free-form per-site attributes, and
+      one or two stray yeses at a no-hookup campground (Emery Bay, Wheeler Peak,
+      Bismarck Lake) are noise, not a hookup loop. False only when EVERY RV site
+      carries an explicit no.
     """
     rv = rv_sites(sites)
-    if not rv:
+    if len(rv) < MIN_CATALOG_SITES:
         return {}
     out = {}
 
-    powered = [s for s in rv if electric_kind(s["type"]) == "yes"]
-    # One or two electric sites that nobody can book online look exactly like
-    # a host pad, so they are set aside: not evidence of public electric, and
-    # not evidence against it either — electric stays unknown, never 0. Their
-    # water/sewer values are set aside with them.
-    suspect = []
-    if len(powered) <= FEW_ELECTRIC_SITES:
-        suspect = [s for s in powered if s.get("reservable") is not True]
-        powered = [s for s in powered if s.get("reservable") is True]
-        rv = [s for s in rv if not any(s is x for x in suspect)]
-
     kinds = [electric_kind(s["type"]) for s in rv]
+    powered = public_with(rv, lambda s: electric_kind(s["type"]) == "yes")
+    if len(powered) <= FEW_ELECTRIC_SITES:
+        powered = [s for s in powered if s.get("reservable") is True]
     if powered:
-        amps = [a for a in (_amps(s["attrs"].get("Electricity Hookup"))
-                            for s in powered) if a]
-        snapped = snap_amps(max(amps)) if amps else None
+        # Amperage comes from the BOOKABLE sites when they state one: a host's
+        # 50-amp pad is never bookable, and a single one would otherwise set
+        # the figure for a campground whose public sites are all 30-amp.
+        def top(group):
+            amps = [a for a in (_amps(s["attrs"].get("Electricity Hookup"))
+                                for s in group) if a]
+            return snap_amps(max(amps)) if amps else None
+        snapped = (top([s for s in powered if s.get("reservable") is True])
+                   or top(powered))
         if snapped:
             out["electric"] = snapped
-    elif not suspect and rv and all(k == "no" for k in kinds):
+    elif all(k == "no" for k in kinds):
         out["electric"] = 0
 
     for key, attr in (("water", "Water Hookup"), ("sewer", "Sewer Hookup")):
         flags = [_flag(s["attrs"].get(attr)) for s in rv]
-        if any(f is True for f in flags):
+        yes = public_with(rv, lambda s, a=attr: _flag(s["attrs"].get(a)) is True)
+        if len(yes) > FEW_ELECTRIC_SITES:
             out[key] = True
-        elif flags and all(f is False for f in flags):
+        elif all(f is False for f in flags):
             out[key] = False
     return out
 
@@ -421,14 +465,14 @@ def apply(fills, conflicts, today):
 
 
 def retract(base_ref, cache, apply_it, today):
-    """Remove values an earlier RIDB fill wrote that the CURRENT rules no longer derive.
+    """Undo values an earlier RIDB run wrote that the CURRENT rules no longer derive.
 
     `plan` only ever fills, which is right for a note-derived value but leaves
     a RIDB value standing forever once a rule tightens (the host-site rule of
     2026-09-18 is the case that needed this). A key counts as RIDB's when the
-    entry's hookups cite RIDB and `base_ref` — a git ref from before the fill —
-    did not hold that key. Everything else is left alone, including every value
-    a note supplied.
+    entry's hookups cite RIDB and it differs from `base_ref`, a git ref from
+    before the first RIDB run. Undoing restores that ref's value (a note's), or
+    clears the key if there was none; nothing else is touched.
     """
     import subprocess
     base = {e["id"]: e for e in json.loads(subprocess.check_output(
@@ -446,16 +490,20 @@ def retract(base_ref, cache, apply_it, today):
         fid = links.get(entry["id"])
         now = derive(cache[fid]["sites"]) if fid in cache and shared[fid] == 1 else {}
         held = entry.get("hookups") or {}
-        ours = [k for k in held if k not in before]
+        # A key RIDB wrote: absent before the fill, or replaced (differs from
+        # before). If the current rules no longer derive it, put back what was
+        # there before — the note's value, or nothing.
+        ours = [k for k in held if before.get(k) != held[k]]
         gone = [k for k in ours if now.get(k) != held[k]]
         if gone:
             changes.append((entry, gone, before))
     for entry, gone, before in changes:
+        undo = {k: before.get(k) for k in gone}      # None clears the key
         print(f"  {entry['id']:6} {entry.get('state')} {entry['name'][:44]:44} "
-              f"drop {', '.join(f'{k}={entry['hookups'][k]}' for k in gone)}")
+              + ", ".join(f"{k} {entry['hookups'][k]} -> {undo[k]}" for k in gone))
         if not apply_it:
             continue
-        cs.apply_update(entry, {"hookups": {k: None for k in gone}})
+        cs.apply_update(entry, {"hookups": undo})
         prov = dict(entry.get(cs.PROVENANCE) or {})
         remaining = set(entry.get("hookups") or {})
         if not remaining:

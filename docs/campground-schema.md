@@ -654,14 +654,23 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
   is typed NONELECTRIC; an electric site with no amperage writes nothing rather than guess one.
 - `water`/`sewer`: true on any yes; false only when EVERY RV site says an explicit no. Most
   non-electric sites carry no such attribute, and a missing one is silence, not a no.
-- **Camp-host sites never count** (AWH 2026-09-18: a lone electric site "may be reserved for the
-  camp host, and it may never be available to the general public"). RIDB types most host pads
-  MANAGEMENT, but not all, so a site NAMED host is dropped outright: Boise Creek's only electric
-  site is a STANDARD ELECTRIC called "Host", Kellettville's only water hookup is on "012 Host",
-  and Joe T. Fallini's only 30-amp site is "Host Site 15" (the public sites are 15/20). And when
-  a campground has only one or two electric sites, they count only if `CampsiteReservable` says
-  the public can book them; otherwise electric is UNKNOWN, never 0, because the site exists and
-  we cannot tell whose it is.
+- **Only sites the PUBLIC can use count**, because a camp host's pad is real but no answer to
+  "can we plug in" (AWH 2026-09-18). Three rules, each tuned on named cases (the constants'
+  comments list them):
+  - A site NAMED host is dropped (`(?<![a-z])host`: "Host", "1Host", "Host Site 15", never
+    "Ghost"). RIDB types most host pads MANAGEMENT, but not all.
+  - At a campground that takes online bookings, UNBOOKABLE sites carrying a hookup are staff
+    pads unless they are ≥25% of that hookup's sites AND ≥10% of the campground — then they
+    are a walk-up loop (South Rim's Loop B, 22 sites). Mott Park's and Clear Lake's three
+    unbookable 50-amp pads beside 30-amp bookable loops are not.
+  - Amperage is read off the bookable electric sites when they state one, so a host's 50-amp
+    outlet never sets the figure. One or two electric sites count only if bookable; otherwise
+    electric is unknown, never 0.
+- **Water/sewer need more than two public sites saying yes.** Unlike the site TYPE, these are
+  free-form attributes, and one or two stray yeses at a no-hookup campground (Emery Bay,
+  Wheeler Peak, Bismarck Lake) are noise, not a hookup loop.
+- **A catalog under three RV sites is a placeholder** and says nothing: Long Pool lists ONE
+  site for a 38-site campground with an electric loop, which had read as "no electric".
 - **RIDB's offset paging is not stable.** Reading a multi-page facility can repeat one site and
   skip another (43 of 717 did, 497 repeats), and a skipped site can turn "some electric" into a
   measured 0. `fetch_campsites` unions pages by `CampsiteID` and re-reads until it reaches
@@ -673,17 +682,18 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
   is listed by `--conflicts`. A `manual`/`reported` group is never touched. Entries sharing one
   facility link are skipped: some are duplicates and some are wrong links.
 
-First run: 888 entries gained keys (electric 0 ×377, 30 ×66, 50 ×365), taking `electric` from
-57.7% to 64.1% of the database. Where the notes and RIDB both answered, they agreed 1,280 times
-and disagreed 53, usually RIDB listing a few electric sites where a note said "no hookups"
-(Signal Mountain, Colter Bay, Namekagon). The first run held those back for review; on AWH's
-ruling above, a second run replaced all 53 (46 entries). The note prose itself is untouched
-(§6), so such a note may still say "no hookups" beside a verified electric chip. Re-run `--fetch --max-age-days 365` yearly; catalogs change slowly.
-A rule that TIGHTENS cannot undo its own earlier writes (a derive that now says nothing
-writes nothing), so
-`--retract <git ref from before the fill>` drops the RIDB-written values the current rules
-no longer derive (never a note's). The host rule retracted three: Big Biloxi and Joe T.
-Fallini's electric, and Kellettville's water.
+First run: 888 entries gained keys. Two same-day corrections followed, from AWH's host-site
+point and from reading the replacements' notes: the rules above retracted 104 values (`--retract`
+restores a note's value or clears the key), and a catalog under three sites stopped counting.
+**Net, stable result:** `electric` 57.7% -> 63.7% of the database; 33 note-derived values
+replaced by the catalog, and the 29 sweep notes whose wording contradicted the final value had
+that phrase REMOVED (AWH: "just remove the faulty information... no need to add an
+explanation") — pure deletions, `note_scan` re-stamped so extraction doesn't requeue them. The
+one to watch is Tortilla (AZ): all 76 sites say water+sewer yes against a note that said "no
+hookups". The catalog was followed there, as ruled. Re-run `--fetch --max-age-days 365` yearly.
+A rule that TIGHTENS cannot undo its own earlier writes (a derive that now says nothing writes
+nothing), so `--retract <git ref from before the first run>` undoes the RIDB-written values the
+current rules no longer derive — restoring a note's value where one was replaced.
 
 **Phase 7 is the one that makes this tractable.** Uniform verification of 12,768 entries is
 a project that never finishes. Verification driven by the queries that actually surface

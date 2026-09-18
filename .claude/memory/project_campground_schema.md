@@ -545,11 +545,12 @@ categories is normal and healthy; a NEW category appearing is the signal to stop
 on the new fields; the NL corridor search that started the whole thread (deliberately
 tabled).
 
-**RIDB hookups pass DONE 2026-09-18** (`recgov_hookups.py`, doc §7): 888 entries filled, electric
-coverage 57.7% -> 64.1%, Electric-filter fade 42% -> 36%. 53 note-vs-RIDB conflicts left UNRESOLVED
-on purpose (`python recgov_hookups.py --conflicts` lists them) — a reading job, offered to AWH.
-The cache also holds Driveway Length / Driveway Entry / Max Vehicle Length per site, fetched
-for a future `sites` pass (max_rig_ft, pull_through) — no refetch needed for that.
+**RIDB hookups pass DONE 2026-09-18** (`recgov_hookups.py`, doc §7): stable after two same-day
+corrections (host/staff-pad rules, placeholder catalogs) — electric coverage 57.7% -> 63.7%.
+Per AWH, rec.gov wins over sweep notes, and 29 contradicting note phrases were REMOVED (no
+explanation added). Tortilla (AZ, all 76 sites water+sewer yes vs note "no hookups") is the one
+catalog value worth doubting. The cache also holds Driveway Length / Entry / Max Vehicle Length
+per site for a future `sites` pass (max_rig_ft, pull_through) — no refetch needed.
 
 **`wma:VA` registry row added 2026-09-18** (28 rows now), from AWH's question about VA WMA
 permits: no camping fee; DWR Access Permit $4/person/day as `fees.entrance` per person_day
