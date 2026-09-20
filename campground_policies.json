@@ -935,5 +935,63 @@
         "method": "manual"
       }
     }
+  },
+  "state:GA": {
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://gastateparks.reserveamerica.com",
+      "window_opens_days": 395,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "at": "16:00"
+      },
+      "fcfs": "after_cutoff",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Verbatim: 'Reservations can be made up to 13 months in advance. Georgia residents may make reservations up to 14 months in advance.' window_opens_days is the 13 months every traveller gets (395 days); GA residents get 425. That RESIDENT-ADVANTAGE WINDOW is the first one found in any agency checked - elsewhere residency changes the price, not the queue. Cutoff: 'Campsites can be reserved until 4:00pm on the day of arrival. All other facilities can be reserved up to 7:00am on day of arrival' - so 16:00 is the CAMPSITE figure and the cabin/yurt one is earlier, not later. Minimum stay: 'A two-night minimum is required for weekend reservations, and a three-night minimum is required for Memorial Day, Labor Day and Independence Day weekends' - the same weekend+holiday pair as every other state verified, but note the holiday list is THREE summer weekends and excludes Thanksgiving, which DOES carry the 3-night rule for cottages. No booking-window waiver is published, so the IN/NC waived_if shape is deliberately absent; the relief is a different shape entirely - 'Walk-ins may occupy a site for just one night', i.e. the minimum binds RESERVATIONS, not arrivals. fcfs is 'after_cutoff' for that reason: unlike NC, Georgia designates no walk-up-only sites, so what exists after 4pm is an unreserved site you take on arrival. One park publishes an actual self-registration lock box - Watson Mill Bridge, December-February, when the office and main campground are closed and only equestrian sites, stalls and log cabins are available first-come. max_stay_nights is 14 CONSECUTIVE days at any one park, then 'must vacate the park for at least three nights before returning'. DO NOT confuse that with Georgia's WMA rule (391-4-2-.61: 14 days then SEVEN days out, plus a one-mile radius clause) - a search for the state-park limit hands back the WMA one, and three of this database's GA entries really are wildlife-division sites. Check-in 1pm-10pm, check-out before noon, and most park gates lock at 10pm, which matters more than the cutoff for a late arrival. Four LODGE parks - Amicalola Falls, Georgia Veterans, Little Ocmulgee, Unicoi - are run by Coral Hospitality / the North Georgia Mountain Authority, which the agency says handle 'their reservations and policies' themselves."
+    },
+    "fees": {
+      "nightly_low": 23.0,
+      "nightly_high": 50.0,
+      "currency": "USD",
+      "entrance": {
+        "resident": 10.0,
+        "nonresident": 10.0,
+        "per": "vehicle_stay"
+      },
+      "checked": "2026",
+      "note": "Rates are published as a RANGE and hedged: 'In most cases, rates are $23 to $50 for regular campsites'. That range spans site types - Georgia publishes no base-vs-hookup breakdown anywhere on its own site, so no `surcharges` can be derived and nightly_high is not a plain-site figure. Measured negative: not one of the 42 park pages scraped carries a camping rate; the only dollar figures on them are historic-site admission, museum admission and Don Carter's $15 equestrian trail fee. ParkPass is the charge a camper actually forgets: $10 per vehicle per day, 'required for all vehicles', NOT included in the reservation - but 'Overnight customers pay the daily Park Pass fee only once during their stay', which is why per is vehicle_stay rather than vehicle_day. An annual pass is $70 (50% off for seniors 62+, 25% for active military and veterans, in person only), so it pays for itself on the eighth park day of a year. The pass is NOT valid at Jekyll Island, Stone Mountain, Corps of Engineers lakes, Lake Lanier, or at WMAs and Public Fishing Areas (those need a Lands Pass) - all of which this database holds GA entries for. No separate reservation/booking fee is charged and none is published, and there is no non-resident camping rate: residency in Georgia buys an earlier booking window instead (see booking.note). Cancellation, campsites: one change free, then a $10 transfer fee; cancelling 8+ days out costs $10; 7 or fewer days out forfeits 50% of the use fee. A no-show - not checked in by noon the day AFTER arrival - is treated as a cancellation, forfeits 50%, and releases the rest of the nights. Deposit: 50% at booking 15+ days out, 100% within 14 days. 'We do not charge a separate cleaning fee' for any accommodation."
+    },
+    "discounts": {
+      "military": true,
+      "note": "Both discounts here are real but NARROWER than the flag suggests, so read the terms before quoting either. Military: 'Disabled veterans who are Georgia residents AND present a Certificate of Eligibility card are entitled to a 25% discount on individual accommodations' (O.C.G.A. 12-3-9.1) - Georgia residency AND a disability certificate, and it is REIMBURSED AT CHECK-IN rather than taken off the online price. An out-of-state veteran gets nothing on the campsite; the only general military discount is 25% off the $70 annual ParkPass. Seniors 62+ get 20% off campsite rates year-round, one campsite per senior, not valid for group camping, and only 'when reservation is registered to a senior' - that is an AGENCY discount, not the America the Beautiful pass, which is why interagency_senior_access is absent rather than true. Friends of Georgia State Parks membership also discounts camping."
+    },
+    "provenance": {
+      "booking": {
+        "source": "https://gastateparks.org/ReservationPolicies",
+        "checked": "2026-09-20",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://gastateparks.org/ParkPass",
+        "checked": "2026-09-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://gastateparks.org/Reservations",
+        "checked": "2026-09-20",
+        "method": "manual"
+      }
+    }
   }
 }
