@@ -199,6 +199,16 @@ GROUPS = tuple(SCHEMA)
 
 # Top-level scalars this module owns, alongside the groups.
 POLICY_REF = "policy_ref"
+# `policy_ref: "none"` means INHERIT NOTHING — the entry is its own agency. It
+# exists because `{ownership}:{state}` is derived and therefore unavoidable: an
+# entry cannot be `ownership: state` in Georgia without inheriting `state:GA`,
+# and Jekyll Island is legitimately both a state park and outside the state
+# park system (its own authority, Campspot rather than ReserveAmerica, its own
+# gate fee, and a Georgia ParkPass explicitly not valid). Leaving it to inherit
+# would print the agency's booking window and cutoff under "Typical for Georgia
+# state parks" on the one campground they are wrong for, which is exactly the
+# confident-falsehood-at-scale failure doc §3 exists to prevent.
+POLICY_REF_NONE = "none"
 PROVENANCE = "provenance"
 
 # Per-group provenance for ENTRY-scoped verification (see doc §3). Group-level
@@ -445,9 +455,16 @@ def policy_refs(entry):
 
     More specific wins per FIELD, not per row, so a `federal` baseline and a
     `federal:usfs` override compose rather than replacing one another.
+
+    The sentinel `policy_ref: "none"` returns NO rows at all. Levels 2 and 3 are
+    derived from ownership and state, so they cannot otherwise be declined, and
+    an entry that is genuinely state-owned yet outside the state agency's system
+    would inherit terms that are wrong for it (see POLICY_REF_NONE).
     """
     refs = []
     explicit = (entry.get(POLICY_REF) or "").strip()
+    if explicit.lower() == POLICY_REF_NONE:
+        return refs
     if explicit:
         refs.append(explicit)
     ownership = (entry.get("ownership") or "").strip()

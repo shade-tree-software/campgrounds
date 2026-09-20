@@ -151,6 +151,22 @@ identical `federal:XX` rows, and the 3,738 federal entries would be unreachable 
 Levels compose per field, so a `federal` baseline and a `federal:usfs` override merge
 instead of replacing one another.
 
+**`policy_ref: "none"` declines all three, and exists because levels 2 and 3 are DERIVED
+and therefore cannot otherwise be refused.** An entry cannot be `ownership: state` in
+Georgia without inheriting `state:GA`. Jekyll Island Campground (id 590) is the case that
+forced it: the island calls itself a state park and is state-owned, but it is run by its own
+authority, books through Campspot rather than the state's ReserveAmerica contract, charges
+its own per-day gate fee, and a Georgia ParkPass is explicitly not valid there. Inheriting
+would print the state system's 13-month window, 4pm cutoff and walk-up behaviour under
+*"Typical for Georgia state parks"* on the one campground each of them is wrong for — the
+confident-falsehood-at-scale failure this section exists to prevent, aimed at a single
+entry. The sentinel is matched case-insensitively, a row named `none` is consequently
+unreachable, and the entry's own verified groups still resolve as `entry` scope. Use it only
+when the entry is genuinely outside its agency's system, never to paper over a row that
+merely has the wrong value — fix the row. **Both sides must agree:** `policy_refs()` in
+`campground_schema.py` and `policyRefFor()` in `templates/campground_manage.html`, or the
+manage form keeps offering agency hints the server no longer applies.
+
 **But federal is also where the registry helps least, and the leverage table above
 oversells it.** Federal camping policy varies by *facility*: the 6-month rolling window is
 the recreation.gov standard, yet group sites often open 12 months out and some BLM/USFS

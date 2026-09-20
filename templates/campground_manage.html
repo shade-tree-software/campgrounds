@@ -481,6 +481,10 @@ function sfId(path) { return 'sf-' + path.join('-'); }
 
 function policyRefFor(c) {
   const explicit = (c.policy_ref || '').trim();
+  // Mirrors campground_schema.policy_refs: "none" declines the derived
+  // {ownership}:{state} level too, so the form must stop offering agency hints
+  // for an entry the server no longer resolves any against.
+  if (explicit.toLowerCase() === 'none') return null;
   if (explicit) return explicit;
   const own = (c.ownership || '').trim(), st = (c.state || '').trim();
   return (own && st) ? own + ':' + st : null;

@@ -281,6 +281,37 @@ class TestRegistryResolution(unittest.TestCase):
         self.assertEqual(cs.policy_refs(named),
                          ["federal:usfs", "federal:ID", "federal"])
 
+    def test_policy_ref_none_declines_every_level(self):
+        # The derived {ownership}:{state} level cannot be declined any other
+        # way, and Jekyll Island is state-owned but outside the state system.
+        entry = {"ownership": "state", "state": "GA", "policy_ref": "none"}
+        self.assertEqual(cs.policy_refs(entry), [])
+        self.assertIsNone(cs.policy_ref(entry))
+
+    def test_policy_ref_none_inherits_nothing(self):
+        reg = {"state:GA": {"booking": {"reservable": True,
+                                        "window_opens_days": 395}}}
+        entry = {"ownership": "state", "state": "GA", "policy_ref": "none"}
+        self.assertEqual(cs.resolve(entry, reg), {})
+        self.assertIsNone(cs.field_scope(entry, "booking", "window_opens_days",
+                                         reg))
+        # Its OWN values still resolve, and are entry-scoped.
+        cs.apply_update(entry, {"booking": {"platform": "campspot"}})
+        got = cs.resolve(entry, reg)
+        self.assertEqual(got["booking"]["values"], {"platform": "campspot"})
+        self.assertEqual(got["booking"]["scope"], "entry")
+        self.assertEqual(got["booking"].get("inherited"), [])
+
+    def test_policy_ref_none_is_case_insensitive_and_not_a_row_name(self):
+        for value in ("none", "None", " NONE "):
+            entry = {"ownership": "state", "state": "GA", "policy_ref": value}
+            self.assertEqual(cs.policy_refs(entry), [], value)
+        # A row literally called "none" is never reachable, so it can never be
+        # inherited by accident.
+        entry = {"ownership": "state", "state": "GA", "policy_ref": "none"}
+        self.assertEqual(cs.resolve(entry, {"none": {"booking":
+                                                     {"fcfs": "always"}}}), {})
+
     def test_ownership_alone_is_what_makes_federal_reachable(self):
         # Federal policy is set per agency, not per state. Without this level a
         # single federal rule would need fifty identical `federal:XX` rows.
