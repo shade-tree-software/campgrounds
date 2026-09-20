@@ -841,24 +841,61 @@
     "booking": {
       "reservable": true,
       "platform": "operator",
+      "url": "https://reservations.gooutdoorssouthdakota.com/",
       "window_opens_days": 90,
       "fcfs": "always",
-      "note": "'Reservations are not required for campsites, but are highly recommended' - one of the few agencies left where turning up is a supported way to camp rather than a fallback. 90 days ahead, released 7am CT / 6am MT, except Custer State Park which opens a full year out. The recommendation is not idle: most summer weekend sites go within a week of the window opening, so fcfs 'always' describes the policy, not the odds."
+      "max_stay_nights": 14,
+      "note": "'Reservations are not required for campsites, but are highly recommended' - one of the few agencies left where turning up is a supported way to camp rather than a fallback, and seven parks run self-registration envelope stations for exactly that (Bear Butte, Burke Lake, Little Moreau, North Wheeler, Okobojo Point and all Lakeside Use Areas). The recommendation is not idle: 'For summer weekend stays, most campsites and cabins are reserved within a week of reservations opening', so fcfs 'always' describes the policy, not the odds. WINDOW: 90 days, released at 7 a.m. CT / 6 a.m. MT on the first day, EXCEPT CUSTER STATE PARK, which takes reservations ONE YEAR ahead - the seven Custer campgrounds carry that on their own entries. FOUR PARKS CANNOT BE RESERVED AT ALL: gfp.sd.gov/first-come lists Bear Butte, Burke Lake, Little Moreau and Okobojo Point as non-reservable, 'Campers must be at the park to reserve the campsite. Camping units must be left on-site at time of registration.' The camp page's own first-come accordion lists three more (Lake Hiddenwood, Lake Louise, North Wheeler) but their park pages say 'Make reservation online or call' - the two pages disagree, so only the four appear on entries. SAME-DAY booking is not statewide: it exists at exactly two campgrounds, Yankton at Lewis and Clark and Center Lake at Custer, from 7 a.m. CT / 6 a.m. MT on the arrival day, and the unit must be ON the site by 10 p.m. or the rest of the reservation is forfeited. reserve_until is therefore absent rather than a statewide cutoff. NO MINIMUM STAY is published anywhere - none on the camp, campsite, regulation or fee pages - so absent here means looked-for and not found. max_stay_nights is 'the maximum number of consecutive nights that a camper may stay at any one state park area is 14'. CHECK-IN AND CHECK-OUT ARE BOTH 4 P.M. (Custer: noon and noon), which is a full 24-hour site and unlike any other agency in this registry - an afternoon arrival costs no part of the night before. Occupancy is capped at 6 people and ONE camping unit per site: 'If two camping units share a site, each unit must pay the camping fee.' Cancelling within 7 days of arrival costs half a night (30 days for cabins, lodges and Custer's French Creek Horse Camp), and 'cancellations to the beginning of a reservation are not allowed' - you cannot trim the front of a stay, only cancel it."
     },
     "fees": {
+      "nightly_low": 16.0,
+      "nightly_high": 23.0,
       "currency": "USD",
-      "note": "'Camping fees do not include entrance fees, which are required year-round and in most areas' - an annual entrance licence can be bought ahead online and mailed. Resident/non-resident amounts were not published on the pages checked."
+      "reservation_fee": 0.0,
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 10.0,
+        "per": "stay"
+      },
+      "entrance": {
+        "resident": 10.0,
+        "nonresident": 15.0,
+        "per": "vehicle_day"
+      },
+      "surcharges": {
+        "electric": 7.0
+      },
+      "checked": "2026",
+      "note": "Two statewide camping tiers, the same price for everyone: Statewide Basic $16, Statewide Modern $23, plus a flat $7 Electrical Fee on an electric site. Custer State Park is its own tier ($27 modern, $37 equestrian) and its campgrounds carry that on their entries. Each park publishes its own pair on its gfp.sd.gov page, which is where the entry-level figures come from. SOUTH DAKOTA'S NON-RESIDENT CHARGE IS A BOOKING FEE, NOT A RATE: 'A $10 per site, non-refundable reservation fee applies to non-residents' - so it lands ONCE per site reservation however many nights, which is why `per` is stay. reservation_fee 0 is a real zero: a resident booking online pays nothing to reserve ('Save money by making your reservation online'). Phone booking costs $6 resident / $16 non-resident. THE ENTRANCE LICENCE IS THE CHARGE PEOPLE FORGET - 'Camping fees do not include entrance fees, which are required year-round', it is per VEHICLE not per site, and a daily licence issued to a registered camper runs to 4 p.m. the following day, so one covers one night. Daily $10 resident / $15 non-resident; annual $40 / $60; double (two vehicles) $60 / $90; a resident-only transferable licence $90; motorcycles the same as cars, as a handlebar wristband. CUSTER IS SEPARATE AND BUYING IN THE WRONG ORDER COSTS MONEY: the daily licence is 'not available for purchase at Custer State Park' and Custer's $25 seven-day, per-vehicle licence is 'not available for purchase outside of Custer State Park', though an annual licence is valid in both. For a non-resident a week at Custer is $25 against the $60 annual, but add two daily licences elsewhere at $15 and the annual wins. None of them is valid on the George S. Mickelson Trail, which sells its own ($20 annual / $5 daily) - worth knowing in the Black Hills, where the trail runs past several of these campgrounds. Firewood $6.72 a bundle; out-of-state firewood is banned."
+    },
+    "season": {
+      "year_round": true,
+      "note": "'Camping is welcome year-round in most parks', which is unusual this far north and is the agency default rather than a promise about a given park - a few close for eagle nesting. What closes everywhere is the plumbing: 'Between Oct. 1 and April 30, showers, flush toilets and other water systems may be closed... Vault toilets usually remain open.' So an off-season night is a dry-camping night, and the electric may still be on. Each park page states its own 'Open:' line."
+    },
+    "discounts": {
+      "military": true,
+      "note": "The military discount is real but NARROW, and it is residency-gated like everything else here: 'South Dakota State Parks offers lifetime state park entrance licenses for disabled veterans who are residents of South Dakota and are deemed 100% disabled. Approved applicants will also receive a 50% discount on camping fees' (also POW and Purple Heart recipients). An out-of-state veteran gets nothing; past and present military can apply for free entrance only when attending an approved military-group event. SENIORS GET NOTHING, and GFP says so in as many words: 'No, there is not a senior discount for park entrance or camping fees.' The only other break is Go Fourth, a free daily or discounted annual entrance licence for South Dakota fourth-graders."
     },
     "provenance": {
       "booking": {
-        "source": "https://gfp.sd.gov/camp/ and https://gfp.sd.gov/faq/detail/185/",
-        "checked": "2026-09-14",
-        "method": "reported"
+        "source": "https://gfp.sd.gov/camp/, https://gfp.sd.gov/first-come/, https://gfp.sd.gov/same-day/ and https://gfp.sd.gov/camping-regulations/",
+        "checked": "2026-09-20",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://gfp.sd.gov/camp/",
-        "checked": "2026-09-14",
-        "method": "reported"
+        "source": "https://gfp.sd.gov/pel-fees/, https://gfp.sd.gov/pel/ and https://gfp.sd.gov/campsites/",
+        "checked": "2026-09-20",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://gfp.sd.gov/camp/ and the per-park 'Park Specs' blocks under https://gfp.sd.gov/parks/",
+        "checked": "2026-09-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://gfp.sd.gov/pel/, https://gfp.sd.gov/faq/detail/191/ and https://gfp.sd.gov/faq/detail/201",
+        "checked": "2026-09-20",
+        "method": "manual"
       }
     }
   },
