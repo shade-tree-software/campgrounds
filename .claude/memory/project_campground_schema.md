@@ -755,9 +755,19 @@ file should carry that the doc says more briefly:
 sites 78.3%, facilities 63.2%, season 30.5% (all note-derived — the rec.gov CALENDAR walk
 of §7 phase 4 has never been run at scale, and per [[reference-recgov-calendar-limits]] it
 must ACCUMULATE across runs months apart, so starting it early is worth more than starting
-it well). `discounts` now 13.9%. Remaining: phase 6 registry rows (28 rows / 44.8% of
-entries; 33 agency rows and 932 entries left, all at <=2 nights slept, so `policy_priority.py`
-says pick by entry count or by a trip actually being planned) and phase 7. A Good Sam map
+it well). `discounts` now 13.9%. Remaining: phase 6 registry rows (30 rows / 45.3% of
+entries after `state:GA` and `state:MA`, 2026-09-20; 31 agency rows and 857 entries left,
+**all now at ZERO nights slept** — the nights signal is spent, so `policy_priority.py` says
+pick by entry count (state:OR 55, provincial:MB 53, state:OK 52, provincial:SK 52,
+provincial:QC 47, state:UT 44 ...) or by a trip actually being planned) and phase 7.
+
+**`state:MA` (2026-09-20) is the template for a state that publishes per-campground data.**
+DCR names every campground in its fee table and its season schedule, so the row got the
+shape and the 22 ENTRIES got their own rates and dates (doc §3, §5.1). It also added
+`fees.surcharges.water` — Salisbury and Scusset sell water ($4) and electric ($6) separately
+on one site. MA's non-resident rate is ~3.2x the resident one ($17->$54 inland, $22->$70
+coastal), charged as the CAMPING rate so no pass avoids it, which is what AWH's Loraine note
+("High surcharge for out-of-state") was about. A Good Sam map
 filter was NOT added — 13.9% coverage is far below the 76-90% that justified the rating
 filter; re-measure before choosing the next one.
 
