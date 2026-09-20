@@ -761,6 +761,17 @@ entries after `state:GA` and `state:MA`, 2026-09-20; 31 agency rows and 857 entr
 pick by entry count (state:OR 55, provincial:MB 53, state:OK 52, provincial:SK 52,
 provincial:QC 47, state:UT 44 ...) or by a trip actually being planned) and phase 7.
 
+**`state:SD` (2026-09-20) was REPORTED, not checked, and re-doing it moved five things** —
+the 90-day window is 90 days *except Custer at a year*, four parks cannot be reserved at all,
+same-day booking exists at exactly two campgrounds, the $10 non-resident charge is a per-SITE
+BOOKING FEE (the registry's first `nonresident.per: "stay"`), and the park entrance licence —
+which camping fees never include, $10/$15 daily, $40/$60 annual, Custer's own $25 seven-day —
+was missing entirely. `policy_priority.py` counts a reported row as covered, so **read
+`method` before trusting a row's silence**; several early rows are still `reported`. SD's park
+pages publish per-park rates ($16 basic / $23 modern + a flat $7 electrical fee), so 57 entries
+got their own figures, the 8 Custer campgrounds their own tier/window/closing dates, and the
+State Fairgrounds `policy_ref: "none"` (state-owned, run by the Fair).
+
 **`state:MA` (2026-09-20) is the template for a state that publishes per-campground data.**
 DCR names every campground in its fee table and its season schedule, so the row got the
 shape and the 22 ENTRIES got their own rates and dates (doc §3, §5.1). It also added
