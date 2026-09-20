@@ -375,11 +375,20 @@ nothing to carry.
 
 Two population notes:
 
-- **`good_sam` is derivable in bulk, not a research chore.** Membership in the Good Sam
-  network is queryable through the Algolia index already documented in the Good Sam ratings
-  reference — presence in that index effectively *is* the flag. Match by name + coordinate,
-  and treat a non-match as **unknown**, not `false` (§2.1): absence from an index is not
-  evidence of refusal.
+- **`good_sam` is derivable in bulk, not a research chore** (shipped 2026-09-20, §7 phase 5).
+  Membership in the Good Sam network is queryable through the Algolia index already
+  documented in the Good Sam ratings reference. **Presence in that index is NOT the flag** —
+  this doc said it was, and it is not close: the index is the whole directory, 24,462 asset
+  rows over 14,993 campgrounds including national forests and county parks, and only 1,896 of
+  those campgrounds carry `campground.isGsPark`. That field is the designation, and it is the
+  one with a promise attached — Good Sam's own directory says "Every Good Sam Park offers a
+  10% discount to the more than 2-million Good Sam members," which is what makes it a
+  `discounts` fact rather than a listing. Being *rated* by a Good Sam inspector (the
+  three-number facility/restroom/appeal score most listed parks carry) promises nothing and
+  is not read. Match by name + coordinate, and treat a non-match as **unknown**, not `false`
+  (§2.1): absence from an index is not evidence of refusal. A listing that IS found and says
+  `isGsPark: false` is a different thing — a measured no — but it is only worth recording
+  where the question is live (see phase 5).
 - **`interagency_senior_access` is strongly agency-inheritable** and materially large — the
   America the Beautiful Senior/Access pass halves camping fees at most USFS and USACE sites.
   It belongs in the registry rows for those agencies, not on 3,738 individual entries.
@@ -694,6 +703,47 @@ hookups". The catalog was followed there, as ruled. Re-run `--fetch --max-age-da
 A rule that TIGHTENS cannot undo its own earlier writes (a derive that now says nothing writes
 nothing), so `--retract <git ref from before the first run>` undoes the RIDB-written values the
 current rules no longer derive — restoring a note's value where one was replaced.
+
+**Phase 5 shipped 2026-09-20 as `goodsam_discounts.py`.** Two steps like the RIDB walk:
+`--fetch` caches the whole directory to the gitignored `trip_data/goodsam_parks.json`
+(14,993 campgrounds, ~2 minutes) and every later run matches and derives from it for free.
+What the build settled:
+
+- **The index will not page past 1,000 records**, so a state over that is read as several
+  disjoint queries split on `campground.type`, then the asset `type`, then city. TX alone is
+  2,936 rows. The splitter also asks for the remainder a facet does not cover, because a
+  record missing the field would otherwise be dropped silently. The run accounts for every
+  row it was told to expect (24,462/24,462) and that equality is the check worth repeating.
+- **Matching is name + coordinate, and the subset guard is the rule that matters.** A Good
+  Sam pin is geocoded from a mailing address where this database pins the campground, so a
+  real pair can sit 1.9 km apart; the accept bands trade naming variation against distance
+  (3 km at 0.90 similarity but only for a WHOLE-name match, 800 m at 0.75, 250 m at 0.62).
+  A subset name is what the whole-name requirement exists for: `Camp Eagle Nest` scores 1.00
+  against `Eagle Nest Lake State Park` 1.7 km away, and `Rufus RV Park` against `Rufus
+  Landing Recreation Area`, and `Thousand Trails Crescent Bar` against `Crescent Bar
+  Recreation Area` — three private parks that wrote a discount onto three public campgrounds
+  before the guard existed. A distinguishing modifier on one side only (Silver Lake **East**
+  vs **West**) is a veto, and two plausible listings that DISAGREE about the flag drop the
+  entry rather than guess it. Good Sam's `Parent/Child` naming (`Lake Roosevelt
+  NRA/Keller Ferry Campground`) and this database's parentheticals are both expanded into
+  variants, which is where a third of the public-park matches come from.
+- **A negative is recorded only where the question is live** (AWH 2026-09-20). The directory
+  answers for all 5,828 matched entries, but 4,166 of those are federal/state/local/
+  provincial, and "no Good Sam discount" on a national forest campground is noise a reader
+  has to scroll past. So `good_sam: false` is written on private and hipcamp entries only,
+  while a `true` is written wherever it is found — the 22 municipal and concession-run
+  network parks are exactly the surprising ones.
+- **`military` came along free and is true-only.** `paymentInfo.discounts` carries
+  `militarydiscnt` and no Good Sam entry at all, so the list is read as a positive claim:
+  present -> true, absent -> unknown. Unlike `isGsPark` there is no directory-wide
+  designation whose absence means anything.
+
+Result: 1,784 entries written — `good_sam` true 336 / false 1,326, `military` true 757.
+336 of the 1,896 network parks reached an entry; of the rest, 1,267 have no entry within
+3 km at all, which is this database's coverage of RV parks (and the curation rules in
+`docs/campground-curation.md` excluding membership and residential parks), not a matching
+failure. `--retract` drops values this source wrote that the current rules no longer derive,
+since a tightening rule cannot undo its own earlier writes.
 
 **Phase 7 is the one that makes this tractable.** Uniform verification of 12,768 entries is
 a project that never finishes. Verification driven by the queries that actually surface

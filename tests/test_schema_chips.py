@@ -31,11 +31,14 @@ GROUPS = {
                 "min_stay", "max_stay_nights"],
     "fees": ["nightly_low", "nightly_high", "currency", "reservation_fee",
              "nonresident", "prereq_pass", "entrance", "surcharges"],
+    "discounts": ["good_sam", "military", "interagency_senior_access"],
 }
 
 LABELS = {"max_rig_ft": "Max rig length (ft)", "electric": "Electric (amps)",
           "dump": "Dump station", "year_round": "Open year-round",
-          "pull_through": "Pull through", "count": "Count"}
+          "pull_through": "Pull through", "count": "Count",
+          "good_sam": "Good Sam",
+          "interagency_senior_access": "America the Beautiful Senior/Access"}
 
 
 def group_spec(key):
@@ -60,6 +63,30 @@ class ChipPhrasingTest(unittest.TestCase):
     def chips(self, group, values):
         return json.loads(self.chips_fn(json.dumps(group_spec(group)),
                                         json.dumps(values)))
+
+    # ── Discounts ───────────────────────────────────────────────────────────
+
+    def test_a_discount_chip_names_what_it_buys(self):
+        """The label names the CLUB. "good sam" beside "showers" tells a reader
+        who has never heard of it nothing, and one who has cannot tell whether
+        it means a discount, a rating or a listing."""
+        self.assertEqual(self.chips("discounts", {"good_sam": True}),
+                         ["Good Sam discount"])
+
+    def test_a_measured_no_says_so(self):
+        self.assertEqual(self.chips("discounts", {"good_sam": False}),
+                         ["no Good Sam discount"])
+
+    def test_an_ordinary_word_is_not_capitalised(self):
+        """A chip run reads as prose, so only the proper nouns keep their case."""
+        self.assertEqual(self.chips("discounts", {"military": True, "good_sam": True}),
+                         ["Good Sam discount", "military discount"])
+
+    def test_the_interagency_pass_is_named_the_way_it_is_sold(self):
+        """"America the Beautiful Senior/Access discount" is the title of the
+        pass, not a sentence; the chip says what a camper buys at the gate."""
+        self.assertEqual(self.chips("discounts", {"interagency_senior_access": True}),
+                         ["America the Beautiful senior/access discount"])
 
     # ── Units and abbreviations ─────────────────────────────────────────────
 

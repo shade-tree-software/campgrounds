@@ -86,6 +86,16 @@ function sfChip(groupKey, field, value, cur) {
   if (k0 === 'sites.pull_through') {
     return value ? 'pull-throughs' : 'no pull-throughs';
   }
+  // A discount's label names the CLUB, not what it buys you, so the bare label
+  // is a chip reading "good sam" next to "showers" — a reader who has never
+  // heard of the club learns nothing, and one who has cannot tell whether it
+  // means a discount, a rating or a listing (doc §8.7). The noun is what the
+  // chip is for.
+  if (groupKey === 'discounts' && field.key !== 'note') {
+    const name = field.key === 'interagency_senior_access'
+      ? 'America the Beautiful senior/access' : field.label;
+    return (value ? '' : 'no ') + sfLower(name) + ' discount';
+  }
   if (value === true) return sfLower(field.label);
   if (value === false) return 'no ' + sfLower(field.label);
   if (value === null || value === undefined) return null;

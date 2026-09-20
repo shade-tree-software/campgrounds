@@ -1,11 +1,11 @@
 ---
 name: project-campground-schema
-description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/3/4 + popup surfacing + map rating filter ALL DONE; phase 3 (note-prose extraction) finished 2026-09-18, all 12,689 notes scanned
+description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/3/4/5 + popup surfacing + map rating/hookups filters ALL DONE; phase 5 (Good Sam discounts) shipped 2026-09-20; what's left is phase 6 (registry rows) and phase 7 (use-driven verification)
 metadata: 
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
-  modified: 2026-09-18T04:15:00.000Z
+  modified: 2026-09-20T00:00:00.000Z
 ---
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
@@ -729,6 +729,37 @@ that closes out California (notes 12342-12408):**
   online or by phone") still gets platform omitted**, same as the federal-
   land rule — this shows up on the biggest private parks in the corpus
   (482-site Desert Hot Springs resort) and the rule holds without exception.
+
+**PHASE 5 (Good Sam) DONE 2026-09-20** — `goodsam_discounts.py`, rules in doc §7. 1,784
+entries written: `good_sam` 336 true / 1,326 false, `military` 757 true. Three things this
+file should carry that the doc says more briefly:
+
+- **The doc's own premise was wrong and that is the reusable lesson.** §4.4 had said
+  presence in the Good Sam Algolia index effectively IS the network flag. It is the whole
+  printed directory — 14,993 campgrounds including national forests — and `isGsPark` is on
+  1,896 of them. Checking the claim cost one query and changed the answer by 8x. The pattern
+  is [[feedback-absent-is-not-unknown]] wearing a different hat: a source that lists
+  something is not asserting the thing you want.
+- **The subset guard is the one rule to keep if the matcher is ever rewritten.** Name
+  similarity scored 1.00 on `Camp Eagle Nest` vs `Eagle Nest Lake State Park` (1.7 km),
+  `Rufus RV Park` vs `Rufus Landing Recreation Area`, `Thousand Trails Crescent Bar` vs
+  `Crescent Bar Recreation Area` — a private park's name contained in a public one's, three
+  times, each writing a discount onto a public campground. Containment is not identity; past
+  the close band a match must be WHOLE (token sets equal, or spelling/punctuation apart).
+- **Coverage is the ceiling, not the matcher.** Only 336 of 1,896 network parks reached an
+  entry, and 1,267 of the misses have no entry within 3 km — AK (out of scope) plus the
+  membership/residential parks [[feedback-exclude-seasonal-residential]] deliberately keeps
+  out. Don't read the ratio as a matching failure.
+
+**Where it stands after phase 5.** Coverage: rating 92.2%, hookups 84.3%, booking 80.4%,
+sites 78.3%, facilities 63.2%, season 30.5% (all note-derived — the rec.gov CALENDAR walk
+of §7 phase 4 has never been run at scale, and per [[reference-recgov-calendar-limits]] it
+must ACCUMULATE across runs months apart, so starting it early is worth more than starting
+it well). `discounts` now 13.9%. Remaining: phase 6 registry rows (28 rows / 44.8% of
+entries; 33 agency rows and 932 entries left, all at <=2 nights slept, so `policy_priority.py`
+says pick by entry count or by a trip actually being planned) and phase 7. A Good Sam map
+filter was NOT added — 13.9% coverage is far below the 76-90% that justified the rating
+filter; re-measure before choosing the next one.
 
 See [[feedback-absent-is-not-unknown]], [[feedback-responsive-all-screens]],
 [[reference-recgov-calendar-limits]] and [[reference-js-testing-without-node]] (how the
