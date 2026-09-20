@@ -57,7 +57,7 @@ const SF_FEE_PER = {
 };
 
 const SF_SURCHARGE_LABELS = {
-  electric: 'electric', sewer: 'sewer', full_hookup: 'full hookup',
+  electric: 'electric', water: 'water', sewer: 'sewer', full_hookup: 'full hookup',
   waterfront: 'waterfront', oceanfront: 'oceanfront', weekend: 'weekend',
   premium_site: 'premium site', pet: 'pet',
 };

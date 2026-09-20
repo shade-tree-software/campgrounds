@@ -177,7 +177,11 @@ SCHEMA = {
         # filters on: electric costs $7-8/night extra in NY State and in Suffolk
         # County, and a waterfront site $6-10. A cost estimate that ignores them
         # understates the night a traveller actually needs.
-        "surcharges": OBJ(electric=NUM, sewer=NUM, full_hookup=NUM,
+        # `water` is priced apart from `electric` where an agency sells the two
+        # separately: Salisbury and Scusset Beach charge $4 for water and $6 for
+        # electric on the same site, so folding them into full_hookup would
+        # invent a bundle Massachusetts does not sell.
+        "surcharges": OBJ(electric=NUM, water=NUM, sewer=NUM, full_hookup=NUM,
                           waterfront=NUM, oceanfront=NUM, weekend=NUM,
                           premium_site=NUM, pet=NUM),
         "checked": STR,
