@@ -440,6 +440,21 @@ nights or fewer (`state:MA` 2, `state:GA` 1, then nothing). Pick the next ones o
 count, or on a trip actually being planned. They are printed and marked `skip` rather than
 hidden, because a row withheld is one nobody can reconsider.
 
+**A `method: "reported"` row is a research TARGET, not a covered row** (2026-09-20). Several
+early rows were filled from a single page read and stamped `reported` rather than `manual`.
+`state:SD` was one, and re-doing it properly moved five things: the 90-day window is 90 days
+*except Custer at a year*, `fcfs: "always"` is right statewide but four parks cannot be
+reserved at all, same-day booking exists at exactly two campgrounds (so no statewide cutoff
+is recorded), the $10 non-resident charge is a per-SITE booking fee rather than a rate — the
+registry's first `nonresident.per: "stay"` — and the entrance licence, which camping fees
+never include, was entirely absent. `policy_priority.py` counts a reported row as covered,
+because it is keyed on the row existing; read the `method` before trusting a row's silence.
+
+South Dakota also turned out to be the second agency, after Massachusetts, that publishes
+**per-campground** rates and dates on its own site, so the row carries the shape and 57
+entries carry their own figures. Expect that pattern rather than the Indiana one wherever a
+state runs its own reservation system: the park pages are where the numbers live.
+
 The remaining 6,133 entries (private, local, hipcamp, wma) have **no agency to inherit
 from**. Do not attempt to research booking cutoffs for them: FCFS/walk-up is the norm rather
 than a system, notes already mention walk-up on 2% of entries, and the correct answer at 5pm
