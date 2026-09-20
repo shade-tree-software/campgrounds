@@ -448,7 +448,7 @@ on the road is the phone number. Carry `phone`, leave policy unknown, let the UI
 
 ### 5.1 Worked cases
 
-These six pin the schema. Any change to the vocabulary must still express all six.
+These seven pin the schema. Any change to the vocabulary must still express all seven.
 Four were verified against agency sources on 2026-09-14; the two NY entry-level
 cases (Hither Hills, Indian Island) are still as reported and not yet checked.
 
@@ -551,6 +551,30 @@ Suffolk's non-resident camping rate is **also exactly double** the resident rate
 in season, $9 → $18 off season), so the county row carries the same multiplier Hither Hills
 does. Two independent agencies reaching for the same mechanic is the argument for keeping
 `multiplier` in the vocabulary rather than treating it as a one-off.
+
+**Massachusetts DCR** (`state:MA`, 22 entries, 2026-09-20) — *the case where the agency page
+is entry-level data, and the one that added a field.*
+```jsonc
+// on the ENTRY, not the row — DCR's fee table names every campground:
+"fees": {"nightly_low": 22, "nightly_high": 22,
+         "nonresident": {"type": "surcharge", "amount": 48, "per": "night"},
+         "surcharges": {"electric": 6, "water": 4}}
+```
+Two lessons. First, **an agency page can be entry-scope evidence**: the registry exists
+because policy is usually set agency-wide, but Massachusetts publishes a per-campground rate
+table and a per-campground season schedule, so the right move was to write 21 entries' own
+rates and 22 entries' own dates and leave the row carrying only the shape. A row is the
+cheap answer, not the goal. Second, `fees.surcharges` gained **`water`**: Salisbury and
+Scusset Beach sell water at $4 and electric at $6 *on the same site*, and only
+`full_hookup` existed for the pair — which would have invented a bundle DCR does not sell.
+
+Massachusetts is also the sharpest non-resident case in the registry so far: ~3.2× the
+resident rate, charged as the camping rate rather than a gate fee, so no pass avoids it
+($17 → $54 inland, $22 → $70 coastal). And its published *"2-day minimum stay at most
+campsites"* carries no weekend or holiday scoping, unlike every other state verified — yet
+trip 16 booked two separate single weekend nights at Harold Parker in August 2023 with that
+exact sentence live on mass.gov. It is stored, because it is what the agency says, and the
+note carries the contradiction; §2.2 is what keeps it from ever emptying a one-night search.
 
 **A rec.gov federal campground** — most of the block resolves from `federal:usfs` or
 `federal:nps`; season and FCFS are *derived* per entry from the availability calendar (§7).
