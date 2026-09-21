@@ -415,8 +415,37 @@ def nearest_db(lat, lng, pts):
     return {"km": round(best[0], 2), "name": best[1], "id": best[2]}
 
 
+def worked_facilities():
+    """Every facility a per-state decisions file has already judged.
+
+    Progress lives in the DATA rather than a cursor file: each state's
+    `audit/ridb_gap_<ST>_decisions.json` records what was added, excluded or
+    dropped there, so re-running this pass always knows what is left without
+    anyone maintaining a separate list. A facility absent from every
+    decisions file is simply not yet worked.
+    """
+    import glob
+    out = {}
+    for path in sorted(glob.glob(os.path.join("audit", "ridb_gap_*_decisions.json"))):
+        try:
+            with open(path, encoding="utf-8") as fh:
+                doc = json.load(fh)
+        except (OSError, ValueError):
+            continue
+        st = doc.get("state") or "?"
+        for key, how in (("added", "added"), ("excluded", "excluded"),
+                         ("dropped_by_triage", "dropped")):
+            for item in doc.get(key) or []:
+                fid = str(item.get("facility_id") or "")
+                if fid:
+                    out[fid] = {"outcome": how, "state": st,
+                                "id": item.get("id")}
+    return out
+
+
 def build(rows, cache):
     pts = db_points()
+    worked = worked_facilities()
     out = []
     for row in rows:
         rec = cache.get(row["facility_id"])
@@ -448,6 +477,9 @@ def build(rows, cache):
                 item["site_coord"] = rec["site_coord"]
         if fac.get("phone"):
             item["phone"] = fac["phone"]
+        done = worked.get(row["facility_id"])
+        if done:
+            item["worked"] = done
         if cls == "likely_rv":
             item["fit"] = fit_summary(rv_sites(rec.get("sites") or []))
             item["site_total"] = rec.get("site_total")
@@ -485,6 +517,17 @@ def report(items):
     dup = [i for i in by.get("likely_rv", []) if i.get("nearest_db")]
     print(f"{len(dup)} likely_rv rows sit within 8 km of an existing entry "
           f"(possible duplicate — check by hand)")
+    todo = [i for i in lr if not i.get("worked")]
+    done = len(lr) - len(todo)
+    print(f"\nWORKED so far: {done} of {len(lr)} likely_rv. "
+          f"{len(todo)} still to sweep:")
+    st = Counter(i["state"] for i in todo)
+    print("  " + "  ".join(f"{k}:{v}" for k, v in st.most_common()))
+    nc = by.get("no_catalog", [])
+    print(f"\n{len(nc)} no_catalog rows need a DIFFERENT method — no per-site "
+          f"data, so no size gate and no inclusion evidence from the catalog:")
+    print("  " + "  ".join(f"{k}:{v}" for k, v in
+                           Counter(i["agency"] or "?" for i in nc).most_common()))
 
 
 def main():
