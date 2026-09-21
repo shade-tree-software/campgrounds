@@ -46,8 +46,8 @@ from collections import Counter, defaultdict
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from ridb.fetch_facility import _get, RV_EQUIPMENT           # noqa: E402
-from recgov_hookups import compact_site, HOST_NAME, MIN_CATALOG_SITES  # noqa: E402
+from ridb.fetch_facility import _get, RV_EQUIPMENT, DEFAULT_FIT_FT  # noqa: E402
+from recgov_hookups import HOST_NAME, MIN_CATALOG_SITES     # noqa: E402
 
 GAP_JSON = os.path.join("audit", "ridb_gap_2026-09-21.json")
 CAMPGROUNDS_JSON = "campgrounds.json"
@@ -56,7 +56,12 @@ CAMPGROUNDS_JSON = "campgrounds.json"
 # this run has no business rewriting entries it did not fetch for that purpose.
 CACHE_JSON = os.path.join("trip_data", "ridb_gap_cache.json")
 
-CACHE_VERSION = 1
+# v2 keeps EVERY campsite attribute rather than recgov_hookups' six. That pass
+# caches 12k facilities and has to stay small; this one caches 585 and has to
+# answer questions not yet asked — the waterfront gate counts a rec.gov
+# per-site "SHORELINE SITE" flag as evidence, and a keep-list written before
+# meeting one would drop it silently on the facilities that publish it.
+CACHE_VERSION = 2
 
 # RIDB answers 50 requests a minute on a key. Same pacing recgov_hookups uses,
 # and for the same reason: a burst is held against you long after it ends.
@@ -110,6 +115,34 @@ def _get_paced(path, params=None):
 def _strip_html(text):
     text = re.sub(r"<[^>]+>", " ", text or "")
     return re.sub(r"\s+", " ", text).strip()
+
+
+def compact_site(site):
+    """One RIDB campsite, keeping every attribute it carries.
+
+    Deliberately NOT recgov_hookups.compact_site: that one keeps six
+    attributes because it caches the whole federal catalog and has to stay a
+    few MB. Here the set is 585 facilities, so the cache can afford to hold
+    what a later stage might need — site length, shade, driveway surface, and
+    any waterfront flag.
+    """
+    attrs = {}
+    for a in site.get("ATTRIBUTES") or []:
+        name = (a.get("AttributeName") or "").strip()
+        if name:
+            attrs[name] = (a.get("AttributeValue") or "").strip()
+    return {
+        "id": str(site.get("CampsiteID") or ""),
+        "name": (site.get("CampsiteName") or "").strip(),
+        "reservable": bool(site.get("CampsiteReservable")),
+        "type": (site.get("CampsiteType") or "").strip().upper(),
+        "loop": (site.get("Loop") or "").strip(),
+        "lat": site.get("CampsiteLatitude"),
+        "lng": site.get("CampsiteLongitude"),
+        "equip": sorted({(e.get("EquipmentName") or "").strip().upper()
+                         for e in site.get("PERMITTEDEQUIPMENT") or []} - {""}),
+        "attrs": attrs,
+    }
 
 
 def compact_facility(f):
@@ -235,6 +268,39 @@ def rv_sites(sites):
     return out
 
 
+def _site_ft(site):
+    """The longest rig one catalog site claims to take.
+
+    Two attributes say it and they disagree as often as not, so take the
+    larger: Driveway Length is the pad and Max Vehicle Length is the rule,
+    and a site is usable if EITHER clears the rig.
+    """
+    best = 0
+    for key in ("Max Vehicle Length", "Driveway Length"):
+        raw = (site.get("attrs") or {}).get(key) or ""
+        m = re.search(r"\d+", raw)
+        if m:
+            best = max(best, int(m.group()))
+    return best
+
+
+def fit_summary(rv):
+    """How many catalog sites take EKKO, which is the inclusion size gate.
+
+    The gate is "at least some drive-in sites fit a 23-ft rig", and a site
+    that publishes no length is unknown rather than too small, so it is
+    counted apart and never held against the campground.
+    """
+    lengths = [_site_ft(s) for s in rv]
+    stated = [n for n in lengths if n]
+    return {
+        "max_ft": max(stated) if stated else None,
+        "fit_sites": sum(1 for n in stated if n >= DEFAULT_FIT_FT),
+        "stated": len(stated),
+        "unstated": len(lengths) - len(stated),
+    }
+
+
 def classify(rec):
     """One facility's verdict, plus the reason a human can check it against.
 
@@ -358,6 +424,9 @@ def build(rows, cache):
                 item["site_coord"] = rec["site_coord"]
         if fac.get("phone"):
             item["phone"] = fac["phone"]
+        if cls == "likely_rv":
+            item["fit"] = fit_summary(rv_sites(rec.get("sites") or []))
+            item["site_total"] = rec.get("site_total")
         out.append(item)
     return out
 
@@ -382,6 +451,13 @@ def report(items):
     print("  " + "  ".join(f"{k}:{v}" for k, v in ag.most_common()))
     moved = [i for i in items if i.get("gap_state") not in (i["state"], None)]
     print(f"\nstate corrected from RIDB on {len(moved)} rows")
+    lr = by.get("likely_rv", [])
+    no_fit = [i for i in lr if i.get("fit", {}).get("stated")
+              and not i["fit"]["fit_sites"]]
+    unknown_fit = [i for i in lr if not i.get("fit", {}).get("stated")]
+    print(f"{len(no_fit)} likely_rv rows state lengths but none reach "
+          f"{DEFAULT_FIT_FT} ft (size gate excludes them); "
+          f"{len(unknown_fit)} state no length at all (unknown, check by hand)")
     dup = [i for i in by.get("likely_rv", []) if i.get("nearest_db")]
     print(f"{len(dup)} likely_rv rows sit within 8 km of an existing entry "
           f"(possible duplicate — check by hand)")
