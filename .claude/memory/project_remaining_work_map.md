@@ -9,10 +9,10 @@ Measured 2026-09-21, after AR and CO. AWH framed it as three bodies; the third i
 
 ## 1. Schema — real, and partly blocked
 
-Coverage: rating 92.0%, hookups 84.3%, booking 80.4%, sites 78.4%, facilities 63.1%, season 30.6%, discounts 14.1%, **fees 0.7%**. Note scanning is DONE — 12,747 of 12,747 scannable notes, queue zero (see [[reference_session_note_scan]] for running it with no API key).
+Coverage: rating 92.0%, hookups 84.3%, booking 80.4%, sites 78.4%, facilities 63.1%, season 32.7%, discounts 14.1%, **fees 0.7%**. Note scanning is DONE — 12,747 of 12,747 scannable notes, queue zero (see [[reference_session_note_scan]] for running it with no API key).
 
 - **Phase 6, the policy registry**: 30 rows covering 45.4% of entries. `policy_priority.py` now reports every remaining candidate at **zero nights slept** — the nights signal that used to prioritise it is spent, so what is left is pick-by-entry-count or pick-when-a-trip-needs-it.
-- **Phase 4, the season walk**: running on the other machine as of 2026-09-21. Must accumulate across months ([[reference_recgov_calendar_limits]]).
+- **Phase 4, the season walk**: first full walk APPLIED 2026-09-21 — 323 seasons written, season 30.6% -> 32.7%, and 1,943 facilities still without a verdict. The cache lives on the laptop. Re-run it months apart; that remainder only closes by accrual ([[reference_recgov_calendar_limits]]).
 - **Phase 7**: the "inherited, never verified" UI surfacing, which is what makes the other 55% tractable without hand-verifying 12,832 entries.
 
 ## 2. Federal gap — the only body measured AND tooled

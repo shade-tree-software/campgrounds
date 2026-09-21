@@ -29,5 +29,19 @@ keyless sibling of RIDB. Measured 2026-09-14 while building `recgov_calendar.py`
   facility that simply is not taking bookings. **So don't walk a region expecting an answer
   this season**; walk it to start the accrual. Note the cache is gitignored, so the accrual
   lives on whichever machine ran it.
+- **Measured at scale 2026-09-21: the full walk yields ~14%.** 2,290 of 2,308 linked
+  facilities, twelve months each, applied 323 seasons (208 seasonal, 115 year-round) and
+  left **1,943 with no verdict** — 115 with no calendar data at all, the rest holding too
+  few observed days to show a transition. Season coverage went 30.6% -> 32.7%. So a
+  region-wide walk is worth applying, but the bulk still waits on accrual.
+- **The Labor-Day check is how you tell a real closure from a window artifact.** 146 of 186
+  `closes` edges landed in September, which looks exactly like the booking window being
+  misread — but the most common single date was **09-07 with 37 campgrounds (Labor Day
+  2026)** and the next four were Saturdays and a Sunday. Real closures fall on holidays and
+  weekends; a window artifact would not. Run that check before trusting a September-heavy
+  batch.
+- **Some facility ids 404.** Ten of the entries' `/camping/campgrounds/<id>` links returned
+  HTTP 404 — the calendar is gone, not empty. They stay unwalked and are worth a look as a
+  data-quality signal (renamed or retired facility).
 - ~2,283 entries carry a `/camping/campgrounds/<id>` link; `/camping/poi/<id>` ones are
   dispersed areas with no calendar. Full walk is ~27,000 requests — a multi-day job.
