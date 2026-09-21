@@ -145,6 +145,30 @@ def compact_site(site):
     }
 
 
+# RIDB's AddressStateCode is usually a 2-letter code and sometimes the whole
+# state name ("OREGON", "TENNESSEE"), which splits a state's work list in two.
+_STATE_NAMES = {
+    "ALABAMA": "AL", "ARIZONA": "AZ", "ARKANSAS": "AR", "CALIFORNIA": "CA",
+    "COLORADO": "CO", "CONNECTICUT": "CT", "DELAWARE": "DE", "FLORIDA": "FL",
+    "GEORGIA": "GA", "IDAHO": "ID", "ILLINOIS": "IL", "INDIANA": "IN",
+    "IOWA": "IA", "KANSAS": "KS", "KENTUCKY": "KY", "LOUISIANA": "LA",
+    "MAINE": "ME", "MARYLAND": "MD", "MASSACHUSETTS": "MA", "MICHIGAN": "MI",
+    "MINNESOTA": "MN", "MISSISSIPPI": "MS", "MISSOURI": "MO", "MONTANA": "MT",
+    "NEBRASKA": "NE", "NEVADA": "NV", "NEW HAMPSHIRE": "NH", "NEW JERSEY": "NJ",
+    "NEW MEXICO": "NM", "NEW YORK": "NY", "NORTH CAROLINA": "NC",
+    "NORTH DAKOTA": "ND", "OHIO": "OH", "OKLAHOMA": "OK", "OREGON": "OR",
+    "PENNSYLVANIA": "PA", "RHODE ISLAND": "RI", "SOUTH CAROLINA": "SC",
+    "SOUTH DAKOTA": "SD", "TENNESSEE": "TN", "TEXAS": "TX", "UTAH": "UT",
+    "VERMONT": "VT", "VIRGINIA": "VA", "WASHINGTON": "WA",
+    "WEST VIRGINIA": "WV", "WISCONSIN": "WI", "WYOMING": "WY",
+}
+
+
+def norm_state(raw):
+    raw = (raw or "").strip().upper()
+    return _STATE_NAMES.get(raw, raw)
+
+
 def compact_facility(f):
     """The part of one RIDB facility record this triage and a later add read."""
     addr = (f.get("FACILITYADDRESS") or [{}])[0]
@@ -152,7 +176,7 @@ def compact_facility(f):
     rec = (f.get("RECAREA") or [{}])[0]
     return {
         "name": (f.get("FacilityName") or "").strip(),
-        "state": (addr.get("AddressStateCode") or "").strip().upper(),
+        "state": norm_state(addr.get("AddressStateCode")),
         "city": (addr.get("City") or "").strip(),
         "lat": f.get("FacilityLatitude"),
         "lng": f.get("FacilityLongitude"),
