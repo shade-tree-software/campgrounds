@@ -28,4 +28,6 @@ A dot is a pad, not a verdict — the buffer still has to be read off the image,
 
 **Leave `hookups` unset on the new entries.** `recgov_hookups.py` fills them from this same catalog under its own provenance and walk-up rules — the right seam ([[feedback_lone_electric_site_may_be_host]]).
 
-Per-state decisions go in `audit/ridb_gap_<ST>_decisions.json`, recording added / excluded / **held** and *which kind of no* each was, so a later pass does not re-offer what was already judged. Blue Ridge Park (AR) is the worked "held": a real-looking Dierks Lake loop whose catalog states no length and no permitted equipment, so it waits on a call to the project office instead of being guessed either way.
+Per-state decisions go in `audit/ridb_gap_<ST>_decisions.json`, recording added / excluded and *which kind of no* each was, so a later pass does not re-offer what was already judged. A caveat that is expected to lift (a closure) goes under `recheck` with the facility ids, so the note gets corrected rather than quietly going stale.
+
+**A real campground with a problem gets an entry with the problem in the `note`** — see [[feedback_add_with_caveat_not_withhold]]. Only a genuine failure of the criteria is an exclusion; AR's single one was White Rock Mountain on the 20-ft size gate.
