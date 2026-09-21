@@ -107,3 +107,39 @@ Separate from the waterfront audit: verifies an entry is a **real, currently-ope
 - **`apply_inclusion_audit.py <results.json>`** — stamps `inclusion_evidence` on `keep` verdicts; **reports** `remove`/`review` candidates without auto-deleting (human reviews the remove list before excising; check `trip_data/` for `campground_id` refs first).
 - Durable record: the **`inclusion_evidence`** JSON field (non-empty == validity-audited & confirmed keep).
 - **In a new-state sweep this is recorded at ADD time** (the research agent emits `inclusion_evidence` since it already vets keep/drop) — no separate pass needed. The standalone subagents here are for **retroactive** re-vetting of states added before that discipline. **PA was the pilot** (2026-06-25): 169 entries audited, 11 removed (5 cabins/day-use/tent-only state parks, 3 under-20ft state-forest sites, 1 hike-in, 1 defunct, 1 unconfirmable FCFS). See `../docs/campground-curation.md` "Inclusion (validity) audit is a built-in sweep stage".
+
+## The federal gap list (RIDB), 2026-09-21
+
+Every per-state sweep marked COMPLETE is complete **against RV Life**, whose
+index silently omits real agency campgrounds. `audit/ridb_gap_2026-09-21.json`
+is the mechanical federal cross-check: 585 RIDB campgrounds with no entry in
+`campgrounds.json`. See `reference_rvlife_index_has_gaps` for how it was
+measured and `reference_ridb_gap_pipeline` for how to work it.
+
+- **`ridb_gap_triage.py`** — `--fetch` pulls each facility's record and
+  per-campsite catalog (cache `trip_data/ridb_gap_cache.json`, gitignored);
+  `--report` is free; `--write <out>` refreshes the work list. Five verdicts
+  and only `no_rv` is a drop — `thin`, `mgmt_only` and `no_catalog` are three
+  different kinds of *unknown* and folding any of them into `no_rv` drops
+  campgrounds the catalog never described.
+- **`sat_look.py`** — stitches Esri imagery around a facility and plots its
+  campsites' own coordinates with a scale bar, which is what lets the
+  waterfront gate's mandatory look work under canopy. `-z 18 --span 1` to
+  settle a close call. **Verify every pin by finding the loop in the image:**
+  Zapata Falls' RIDB coordinate is at a highway junction 600 m away and was
+  not flagged `coord_suspect`.
+- **`ridb_gap_<ST>_decisions.json`** — one per state worked, recording added /
+  excluded / dropped and *which kind of no* each was. The triage reads these,
+  so progress lives in the data and `--report` always says what is left.
+
+`python3 audit/ridb_gap_triage.py --status` answers "what is left" from the
+committed work list — **no cache and no network**, so it works on a fresh
+clone. `sat_look.py` likewise falls back to RIDB for a facility the cache
+does not hold, so neither tool needs the 5.8 MB gitignored cache rebuilt
+before the next campground can be audited.
+
+State of play: **AR and CO done (26 of 178 `likely_rv`), 152 to sweep**,
+heaviest CA 36, OR 23, UT 16, OK 14. The **182 `no_catalog`** rows (FS 113,
+BLM 63) need a different method entirely — no per-site data means no size
+gate and no inclusion evidence from the catalog, so they are closer to a
+conventional sweep than to what AR and CO were.
