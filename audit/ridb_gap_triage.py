@@ -530,13 +530,55 @@ def report(items):
                            Counter(i["agency"] or "?" for i in nc).most_common()))
 
 
+WORKLIST = os.path.join("audit", "ridb_gap_triage_2026-09-21.json")
+
+
+def status(path=WORKLIST):
+    """What is left, read from the COMMITTED work list rather than the cache.
+
+    `--report` needs `trip_data/ridb_gap_cache.json`, which is gitignored and
+    does not travel with a clone, so on a fresh machine it can say nothing
+    until 585 facilities have been refetched. The written work list and the
+    per-state decisions files are both tracked, and between them they already
+    hold the answer — so this reports progress with no cache and no network.
+    """
+    with open(path, encoding="utf-8") as fh:
+        rows = json.load(fh)["rows"]
+    worked = worked_facilities()
+    lr = [r for r in rows if r["verdict"] == "likely_rv"]
+    todo = [r for r in lr if r["facility_id"] not in worked]
+    done_states = sorted({v["state"] for v in worked.values()})
+    print(f"{len(rows)} triaged rows; "
+          f"{len(lr) - len(todo)} of {len(lr)} likely_rv worked "
+          f"({', '.join(done_states) or 'none'})")
+    print(f"\n{len(todo)} likely_rv still to sweep:")
+    print("  " + "  ".join(f"{k}:{v}" for k, v in
+                           Counter(r["state"] for r in todo).most_common()))
+    nc = [r for r in rows if r["verdict"] == "no_catalog"]
+    print(f"\n{len(nc)} no_catalog rows need a different method "
+          f"(no per-site data: no size gate, no inclusion evidence):")
+    print("  " + "  ".join(f"{k}:{v}" for k, v in
+                           Counter(r["agency"] or "?" for r in nc).most_common()))
+    drops = Counter(r["verdict"] for r in rows
+                    if r["verdict"] in ("no_rv", "thin", "mgmt_only"))
+    print(f"\nnot campgrounds to add: " +
+          ", ".join(f"{k} {v}" for k, v in drops.most_common()))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fetch", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--report", action="store_true")
+    ap.add_argument("--status", action="store_true",
+                    help="progress from the committed work list; no cache, "
+                         "no network")
     ap.add_argument("--write", metavar="OUT")
     args = ap.parse_args()
+
+    if args.status:
+        status()
+        return
 
     with open(GAP_JSON, encoding="utf-8") as fh:
         rows = json.load(fh)["rows"]

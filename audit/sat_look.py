@@ -116,6 +116,48 @@ def render(lat, lng, sites, z, span, out):
           f"{im.size[0] * mpp:.0f} m across  {plotted} pads plotted")
 
 
+def load_facility(fid):
+    """One facility's campsites, from the triage cache or straight from RIDB.
+
+    The cache lives under gitignored `trip_data/`, so it does NOT travel with
+    a clone — and this tool is useless without per-site coordinates, which is
+    the whole reason it exists. So a miss falls back to RIDB (one or two
+    requests for one facility, against the ~45 minutes a full triage refetch
+    costs) and writes the record back, which means a fresh machine can audit
+    the next campground immediately instead of rebuilding 585 of them first.
+    Needs RIDB_API_KEY only on the fallback path.
+    """
+    cache = {}
+    try:
+        with open(CACHE_JSON, encoding="utf-8") as fh:
+            cache = json.load(fh)
+    except (OSError, ValueError):
+        pass
+    if fid in cache and cache[fid].get("sites") is not None:
+        return cache[fid]
+
+    print(f"{fid} not in the triage cache — fetching from RIDB", flush=True)
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "ridb_gap_triage", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        "ridb_gap_triage.py"))
+    t = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(t)
+    raw = t._get_paced(f"facilities/{fid}", {"full": "true"})
+    if raw is None:
+        sys.exit(f"RIDB has no facility {fid}")
+    sites, total = t.fetch_campsites(fid)
+    rec = {"v": t.CACHE_VERSION, "facility": t.compact_facility(raw),
+           "sites": [t.compact_site(s) for s in sites],
+           "site_total": total, "site_coord": t.site_coords(sites)}
+    cache[fid] = rec
+    try:
+        t.save_cache(cache)
+    except OSError:
+        pass
+    return rec
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("facility_id", nargs="?")
@@ -131,8 +173,7 @@ def main():
     else:
         if not args.facility_id:
             ap.error("give a facility id or --at LAT LNG")
-        with open(CACHE_JSON, encoding="utf-8") as fh:
-            rec = json.load(fh)[args.facility_id]
+        rec = load_facility(args.facility_id)
         sites = rec.get("sites") or []
         lat, lng = (rec.get("site_coord")
                     or [rec["facility"]["lat"], rec["facility"]["lng"]])

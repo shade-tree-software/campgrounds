@@ -132,6 +132,12 @@ measured and `reference_ridb_gap_pipeline` for how to work it.
   excluded / dropped and *which kind of no* each was. The triage reads these,
   so progress lives in the data and `--report` always says what is left.
 
+`python3 audit/ridb_gap_triage.py --status` answers "what is left" from the
+committed work list — **no cache and no network**, so it works on a fresh
+clone. `sat_look.py` likewise falls back to RIDB for a facility the cache
+does not hold, so neither tool needs the 5.8 MB gitignored cache rebuilt
+before the next campground can be audited.
+
 State of play: **AR and CO done (26 of 178 `likely_rv`), 152 to sweep**,
 heaviest CA 36, OR 23, UT 16, OK 14. The **182 `no_catalog`** rows (FS 113,
 BLM 63) need a different method entirely — no per-site data means no size
