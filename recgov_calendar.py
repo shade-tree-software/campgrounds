@@ -42,9 +42,15 @@ field. The registry's `federal` row withholding `fcfs` remains the honest state.
 forward (checked 2026-09: May 2026 is a 400, June 2026 through May 2027 answer).
 Months outside it return HTTP 400, which is not an error to report. That means a
 single run usually sees a full year — but not always the same year, so
-observations ACCUMULATE in `trip_data/recgov_calendar.json` (gitignored,
-regenerable) and the season is re-derived from everything ever seen. A run in
-spring fills the opening edge a run in autumn could not reach.
+observations ACCUMULATE in `audit/recgov_calendar.json` and the season is
+re-derived from everything ever seen. A run in spring fills the opening edge a
+run in autumn could not reach.
+
+**That cache is TRACKED IN GIT, and it is not regenerable.** Once the rolling
+window moves past a month, that month's observations cannot be fetched again by
+anyone — so the file is the only copy of what was seen, not a cache of what
+could be seen again. It lived untracked under `trip_data/` until 2026-09-21,
+protected by neither git nor `backup.sh`; commit it after every walk.
 
 **Yield is partial by construction, and accrues.** A facility only publishes
 dates inside its own booking window, so one run typically observes ~120 days of
@@ -78,7 +84,7 @@ import campground_schema
 from ridb.fetch_facility import fetch_availability_month
 
 CAMPGROUNDS_JSON = "campgrounds.json"
-CACHE_JSON = os.path.join("trip_data", "recgov_calendar.json")
+CACHE_JSON = os.path.join("audit", "recgov_calendar.json")
 
 FACILITY_URL = re.compile(r'recreation\.gov/camping/campgrounds/(\d+)')
 
