@@ -87,7 +87,7 @@ def draw_scale(im, mpp):
     d.text((x + px + 10, y - 7), f"{metres} m", fill=(255, 255, 255))
 
 
-def render(lat, lng, sites, z, span, out):
+def render(lat, lng, sites, z, span, out, labels=False):
     im, x0, y0 = stitch(lat, lng, z, span)
     d = ImageDraw.Draw(im)
     plotted = 0
@@ -101,9 +101,21 @@ def render(lat, lng, sites, z, span, out):
         if not (0 <= px < im.size[0] and 0 <= py < im.size[1]):
             continue
         # Cyan reads against both water and summer canopy, which is the whole
-        # range of ground this pass looks at.
+        # range of ground this pass looks at. Magenta marks a site whose own
+        # catalog record carries a "Proximity to Water" value — the per-site
+        # flag the gate counts, so it has to be visible WHERE it is: a flag on
+        # a tent pad earns nothing, and one on a pad set behind a road is
+        # vetoed by the image. Grey is a site the RV test rejects.
+        water = bool((s.get("attrs") or {}).get("Proximity to Water"))
+        if s.get("rv") is False:
+            fill = (150, 150, 150)
+        else:
+            fill = (255, 0, 255) if water else (0, 255, 255)
         d.ellipse([px - 5, py - 5, px + 5, py + 5],
-                  fill=(0, 255, 255), outline=(0, 0, 0), width=2)
+                  fill=fill, outline=(0, 0, 0), width=2)
+        if labels and s.get("name"):
+            d.text((px + 7, py - 6), s["name"], fill=(255, 255, 255),
+                   stroke_width=2, stroke_fill=(0, 0, 0))
         plotted += 1
     cx, cy = to_px(lat, lng, z, x0, y0)
     for a, b in ((-16, -6), (6, 16)):
@@ -137,12 +149,7 @@ def load_facility(fid):
         return cache[fid]
 
     print(f"{fid} not in the triage cache — fetching from RIDB", flush=True)
-    import importlib.util
-    spec = importlib.util.spec_from_file_location(
-        "ridb_gap_triage", os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                        "ridb_gap_triage.py"))
-    t = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(t)
+    t = _triage()
     raw = t._get_paced(f"facilities/{fid}", {"full": "true"})
     if raw is None:
         sys.exit(f"RIDB has no facility {fid}")
@@ -158,6 +165,21 @@ def load_facility(fid):
     return rec
 
 
+def _triage():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "ridb_gap_triage", os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                        "ridb_gap_triage.py"))
+    t = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(t)
+    return t
+
+
+def _rv_sites(sites):
+    """The triage's own RV-site test, so grey means what its verdict means."""
+    return _triage().rv_sites(sites)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("facility_id", nargs="?")
@@ -165,21 +187,29 @@ def main():
     ap.add_argument("-z", type=int, default=17)
     ap.add_argument("--span", type=int, default=2, help="tiles each side of centre")
     ap.add_argument("-o", default="sat.png")
+    ap.add_argument("--labels", action="store_true",
+                    help="print each site's name beside its dot")
     args = ap.parse_args()
 
     sites = []
-    if args.at:
-        lat, lng = args.at
-    else:
-        if not args.facility_id:
-            ap.error("give a facility id or --at LAT LNG")
+    if not args.at and not args.facility_id:
+        ap.error("give a facility id or --at LAT LNG")
+    if args.facility_id:
         rec = load_facility(args.facility_id)
-        sites = rec.get("sites") or []
+        sites = [dict(s) for s in rec.get("sites") or []]
+        rv_ids = {id(s) for s in _rv_sites(rec.get("sites") or [])}
+        for plotted, orig in zip(sites, rec.get("sites") or []):
+            plotted["rv"] = id(orig) in rv_ids
         lat, lng = (rec.get("site_coord")
                     or [rec["facility"]["lat"], rec["facility"]["lng"]])
         print(f"{rec['facility']['name']} — {rec['facility']['recarea']} "
               f"({rec['facility']['org']}), {len(sites)} catalog sites")
-    render(lat, lng, sites, args.z, args.span, args.o)
+    # --at with a facility re-centres on part of it: a bundle facility (the
+    # John Day basin is four campgrounds under one id) spreads its pads over
+    # 30 km, so the whole-facility centroid frames none of them.
+    if args.at:
+        lat, lng = args.at
+    render(lat, lng, sites, args.z, args.span, args.o, labels=args.labels)
 
 
 if __name__ == "__main__":

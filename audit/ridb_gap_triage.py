@@ -415,6 +415,32 @@ def nearest_db(lat, lng, pts):
     return {"km": round(best[0], 2), "name": best[1], "id": best[2]}
 
 
+def cited_facilities():
+    """Facilities an existing entry already links to by recreation.gov id.
+
+    The gap list was built by coordinate, and RIDB's coordinates can be far
+    off: it pins South Twin Lake (Deschutes NF) near Eugene, ~150 km from the
+    lake, and Trout Creek (Willamette NF) 22 km east of its loop. Both were in
+    the database all along, carrying the very facility id in `website`, and
+    reached the work list as "missing". An id match is exact where distance
+    is a guess, so it outranks every coordinate test — 10 likely_rv rows
+    outside AR/CO fell out when this was added (2026-09-22).
+    """
+    try:
+        with open(CAMPGROUNDS_JSON, encoding="utf-8") as fh:
+            entries = json.load(fh)
+    except FileNotFoundError:
+        return {}
+    out = {}
+    for e in entries:
+        for fid in re.findall(r"recreation\.gov/camping/campgrounds/(\d+)",
+                              e.get("website") or ""):
+            out.setdefault(fid, {"outcome": "already_in_db",
+                                 "state": e.get("state") or "?",
+                                 "id": e.get("id")})
+    return out
+
+
 def worked_facilities():
     """Every facility a per-state decisions file has already judged.
 
@@ -425,7 +451,7 @@ def worked_facilities():
     decisions file is simply not yet worked.
     """
     import glob
-    out = {}
+    out = cited_facilities()
     for path in sorted(glob.glob(os.path.join("audit", "ridb_gap_*_decisions.json"))):
         try:
             with open(path, encoding="utf-8") as fh:
@@ -547,10 +573,15 @@ def status(path=WORKLIST):
     worked = worked_facilities()
     lr = [r for r in rows if r["verdict"] == "likely_rv"]
     todo = [r for r in lr if r["facility_id"] not in worked]
-    done_states = sorted({v["state"] for v in worked.values()})
+    done_states = sorted({v["state"] for v in worked.values()
+                          if v["outcome"] != "already_in_db"})
+    cited = sum(1 for r in lr
+                if worked.get(r["facility_id"], {}).get("outcome")
+                == "already_in_db")
     print(f"{len(rows)} triaged rows; "
           f"{len(lr) - len(todo)} of {len(lr)} likely_rv worked "
-          f"({', '.join(done_states) or 'none'})")
+          f"({', '.join(done_states) or 'none'}), {cited} of them already "
+          f"in the database by recreation.gov id")
     print(f"\n{len(todo)} likely_rv still to sweep:")
     print("  " + "  ".join(f"{k}:{v}" for k, v in
                            Counter(r["state"] for r in todo).most_common()))
