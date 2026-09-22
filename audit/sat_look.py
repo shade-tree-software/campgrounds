@@ -108,7 +108,10 @@ def render(lat, lng, sites, z, span, out, labels=False):
         # a tent pad earns nothing, and one on a pad set behind a road is
         # vetoed by the image. Grey is a site the RV test rejects.
         attrs = s.get("attrs") or {}
-        water = bool(attrs.get("Proximity to Water") or attrs.get("WATERFRONT SITES"))
+        # "N/A" is a value some catalogs fill in for every site (Saddle Lake,
+        # IN, is 350 m from its lake and flags all 13 pads that way).
+        water = any((attrs.get(k) or "").strip().upper() not in ("", "N/A", "NO")
+                    for k in ("Proximity to Water", "WATERFRONT SITES"))
         if s.get("rv") is False:
             fill = (150, 150, 150)
         else:
