@@ -102,11 +102,13 @@ def render(lat, lng, sites, z, span, out, labels=False):
             continue
         # Cyan reads against both water and summer canopy, which is the whole
         # range of ground this pass looks at. Magenta marks a site whose own
-        # catalog record carries a "Proximity to Water" value — the per-site
+        # catalog record carries a "Proximity to Water" (or, in some regions,
+        # "WATERFRONT SITES") value — the per-site
         # flag the gate counts, so it has to be visible WHERE it is: a flag on
         # a tent pad earns nothing, and one on a pad set behind a road is
         # vetoed by the image. Grey is a site the RV test rejects.
-        water = bool((s.get("attrs") or {}).get("Proximity to Water"))
+        attrs = s.get("attrs") or {}
+        water = bool(attrs.get("Proximity to Water") or attrs.get("WATERFRONT SITES"))
         if s.get("rv") is False:
             fill = (150, 150, 150)
         else:
