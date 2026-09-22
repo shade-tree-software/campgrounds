@@ -21,7 +21,7 @@ Coverage: rating 92.0%, hookups 84.3%, booking 80.4%, sites 78.4%, facilities 63
 
 ## 3. Non-RV-Life gap — four faces, only federal measured
 
-- **state** — 2,202 entries, ~48 agencies. One data point: SD, 5 missed of 59 (~8%). No list, no tool.
+- **state** — 2,202 entries, ~48 agencies. **MEASURED 2026-09-21 and it is small:** OH/FL/MN gave 3 real misses in 230 entries (1.3%), 2.8% pooled with SD, so ~30-60 statewide. Tooled: `audit/state_gap_portal.py` ([[reference_state_gap_measurement]]). Deprioritised below the federal gap.
 - **local** — 2,511 entries, the face AWH's framing omitted, and *worse* than state: detection is a name-scan of RV Life's own buckets, so it inherits RV Life's omissions twice over ([[reference_local_campground_method]]).
 - **Canada** — 700 provincial, and there is no RIDB equivalent at all.
 - **private** — 3,574, and probably fine: RV Life is natively a private-park directory and Good Sam independently cross-checked it ([[reference_good_sam_ratings]]).
@@ -34,4 +34,10 @@ They are not independent: **every gap add lands with zero schema fields**, so bo
 
 ## Recommended order
 
-Before committing to body 3, spend one session **measuring** it — walk two or three agency park lists and diff. SD's 8% is a single data point and the answer changes the priority a lot: 8% of 2,202 is ~175 campgrounds, 20% is ~440 and outranks everything else here.
+**The measuring session happened (2026-09-21) and settled this.** State came back at
+1.3–2.8%, ~30–60 campgrounds, so it is no longer a candidate for the next big push; the
+federal gap's 334 known rows (152 `likely_rv` + 182 `no_catalog`) are. **Local is still
+unmeasured** and is the one left worth measuring — 2,511 entries, and its detection
+inherits RV Life's omissions twice over, so it cannot borrow the state answer. The portal
+method does not reach it (counties and towns are on no state platform), so it needs a
+different instrument.
