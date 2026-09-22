@@ -138,12 +138,21 @@ clone. `sat_look.py` likewise falls back to RIDB for a facility the cache
 does not hold, so neither tool needs the 5.8 MB gitignored cache rebuilt
 before the next campground can be audited.
 
-State of play: **AR, CO and OR done (56 of 178 `likely_rv` worked, 10 of
-those turning out to be entries the database already had), 122 to sweep**,
-heaviest CA 33, UT 16, OK 13. The **182 `no_catalog`** rows (FS 113, BLM 63)
+State of play (2026-09-22): **everything east of the Mississippi is done** —
+AR, CO, OR, then the whole East in three regional batches (GA NC TN
+MS FL / IN MI WI MN / VT MD PA WV ME). 89 of 178 `likely_rv` worked, 10 of them
+entries the database already had; **89 left, all west of the Mississippi**: CA 33, UT 16,
+OK 13, WA 9, then single digits. The **182 `no_catalog`** rows (FS 113, BLM 63)
 need a different method entirely — no per-site data means no size gate and no
 inclusion evidence from the catalog, so they are closer to a conventional
 sweep than to what AR and CO were.
+
+**The East's gap was mostly things the rules exclude**, which is itself the
+finding: of 33 eastern rows only 16 were added. Seven failed the size gate
+on the AGENCY's own words (Thunder Rock, Chittenden Brook, three C&O Canal
+drive-ins at "20 ft maximum", Katahdin's van-only equipment list), six were
+horse camps (four of them Hoosier NF trailheads), and three were dispersed-site
+systems with no single place to pin (Dale Hollow, AuSable River, Delta NF).
 
 **The gap list was matched by coordinate, and RIDB's coordinates can be far
 off** — South Twin Lake is pinned near Eugene, ~150 km from the lake. So the

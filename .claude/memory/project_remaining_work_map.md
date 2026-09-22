@@ -17,7 +17,7 @@ Coverage: rating 92.0%, hookups 84.3%, booking 80.4%, sites 78.4%, facilities 63
 
 ## 2. Federal gap — the only body measured AND tooled
 
-**122 of 178 `likely_rv` left after OR (2026-09-22): CA 33, UT 16, OK 13, WA 9**, roughly one state per working chunk. 10 of the original 178 were never missing — already in the DB under the same rec.gov id, which the coordinate-only gap match could not see; the triage now checks ids. Plus **182 `no_catalog`** rows (FS 113, BLM 63) that are nominally federal but behave like body 3: no per-site data means no size gate, no inclusion evidence and no pad plotting, so all three shortcuts that made AR and CO fast are absent. `python3 audit/ridb_gap_triage.py --status` says what is left with no cache and no network. Method: [[reference_ridb_gap_pipeline]].
+**89 of 178 `likely_rv` left after OR and the whole East (2026-09-22), all west of the Mississippi: CA 33, UT 16, OK 13, WA 9**, roughly one state per working chunk. 10 of the original 178 were never missing — already in the DB under the same rec.gov id, which the coordinate-only gap match could not see; the triage now checks ids. The East yielded 16 adds from 33 rows: size gates, horse camps and dispersed-site systems account for most of the rest. Plus **182 `no_catalog`** rows (FS 113, BLM 63) that are nominally federal but behave like body 3: no per-site data means no size gate, no inclusion evidence and no pad plotting, so all three shortcuts that made AR and CO fast are absent. `python3 audit/ridb_gap_triage.py --status` says what is left with no cache and no network. Method: [[reference_ridb_gap_pipeline]].
 
 ## 3. Non-RV-Life gap — four faces, only federal measured
 

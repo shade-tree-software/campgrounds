@@ -38,3 +38,9 @@ Per-state decisions go in `audit/ridb_gap_<ST>_decisions.json`, recording added 
 - **"Proximity to Water" per-site attribute is a lead, not a verdict** — its value is often wrong ("Lakefront" on rivers) and at Indian Henry it meant a tributary creek. Measure each flagged pad to the OSM water line (Overpass, back off on 429) and apply the ~50 m bound: kept Cape Perpetua/Tollgate/Alsea/Still Creek, downgraded Clear Lake.
 - **Bundle facilities** (John Day basin = 4 campgrounds, one id): one entry per loop, `sat_look.py <fid> --at <loop> --labels`; recgov_hookups skips shared ids, so hookups come from the note scan.
 
+**The East (2026-09-22, 16 adds ids 13201-13216 from 33 rows) added:**
+- **Horse camps hide as STANDARD sites.** Hoosier NF trailhead camps (Blackwell, Hickory Ridge, Shirley Creek, Youngs Creek), Station Camp and Cottonwood Patch all type their sites STANDARD NONELECTRIC; only the description (hitching racks, high-lines, troughs, "geared to provide for horses") gives them away. A mixed campground whose general loop is separate stays (Harmon Den lower loop).
+- **Dispersed-site systems are one facility id over tens of miles** (Dale Hollow shoreline, AuSable River's 55 miles, Delta NF's forest roads) — no single pin describes them; excluded, Delta NF raised with AWH as a judgement.
+- **Catalogs fill "Proximity to Water: N/A"** on every site (Saddle Lake) and some regions use a "WATERFRONT SITES" attribute instead — sat_look handles both.
+- **The catalog's permitted-equipment list can be the size gate**: Katahdin's Sandbank Stream allows vans, pickup campers and pop-ups only.
+
