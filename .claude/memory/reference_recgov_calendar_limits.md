@@ -27,8 +27,12 @@ keyless sibling of RIDB. Measured 2026-09-14 while building `recgov_calendar.py`
   of them (Rod & Gun, Timon, Hanna, Dalton Lake, Ditch Creek, Beaver Creek, Castle Peak,
   Boxelder Forks) returned 21 days, all closed — too little to tell a winter closure from a
   facility that simply is not taking bookings. **So don't walk a region expecting an answer
-  this season**; walk it to start the accrual. Note the cache is gitignored, so the accrual
-  lives on whichever machine ran it.
+  this season**; walk it to start the accrual.
+- **The accrual is TRACKED: `audit/recgov_calendar.json`** (moved out of `trip_data/` and
+  committed 2026-09-21; it had been gitignored only incidentally and was in no backup).
+  **It is not a cache — it is the only copy.** Once the window rolls past a month, nobody
+  can fetch that month again, so a lost file is lost observations, not a re-run. Commit it
+  after every walk, and note it is the one thing here that gets MORE valuable with age.
 - **Measured at scale 2026-09-21: the full walk yields ~14%.** 2,290 of 2,308 linked
   facilities, twelve months each, applied 323 seasons (208 seasonal, 115 year-round) and
   left **1,943 with no verdict** — 115 with no calendar data at all, the rest holding too
