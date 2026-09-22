@@ -1,0 +1,60 @@
+{
+ "state": "OR",
+ "decided": "2026-09-22",
+ "source": "audit/ridb_gap_2026-09-21.json via audit/ridb_gap_triage.py",
+ "note": "Third state off the federal gap list. 23 likely_rv rows: 3 were already in the database under the same recreation.gov id (the coordinate-only gap match missed them; the triage now checks ids), leaving 20. 16 campgrounds added from 14 rows plus the John Day basin bundle, which is four BLM campgrounds under one facility id. 7 excluded, each for a stated reason. Mostly Mt. Hood, Willamette, Siuslaw and Malheur Forest Service sites, plus BLM Coast Range and John Day sites and one USACE.",
+ "added": [
+  {"id": 13185, "facility_id": "262767", "name": "Alder Glen Recreation Site (Nestucca River)", "waterfront": "riverfront"},
+  {"id": 13186, "facility_id": "255205", "name": "Alsea Falls Recreation Site (South Fork Alsea River)", "waterfront": "riverfront"},
+  {"id": 13187, "facility_id": "10372413", "name": "Big Creek Campground (Logan Valley)", "waterfront": "not waterfront"},
+  {"id": 13188, "facility_id": "233900", "name": "Cape Perpetua Campground (Cape Creek)", "waterfront": "creekside"},
+  {"id": 13189, "facility_id": "232849", "name": "Clear Lake Campground (Mt. Hood NF)", "waterfront": "lakeview"},
+  {"id": 13190, "facility_id": "233340", "name": "Delta Campground (McKenzie River)", "waterfront": "not waterfront"},
+  {"id": 13191, "facility_id": "10372450", "name": "Delintment Lake Campground", "waterfront": "not waterfront",
+   "caveat": "no published site length; phone recorded (Emigrant Creek RD)"},
+  {"id": 13192, "facility_id": "232851", "name": "Indian Henry Campground (Clackamas River)", "waterfront": "creekside",
+   "caveat": "CLOSED since the 2020 Riverside Fire; Upper Clackamas campground redesign under way, no reopening date"},
+  {"id": 13193, "facility_id": "10132176", "name": "Ivan Oakes Campground (Lookout Point Lake)", "waterfront": "lakeview"},
+  {"id": 13194, "facility_id": "232841", "name": "Lazy Bend Campground (Clackamas River)", "waterfront": "not waterfront",
+   "caveat": "CLOSED since the 2020 Riverside Fire; RIDB's per-site coordinates plot 4 km away at Promontory Park, so the location is the facility pin, checked against the imagery"},
+  {"id": 13195, "facility_id": "232856", "name": "Lake Harriet Campground", "waterfront": "lakeview"},
+  {"id": 13196, "facility_id": "232835", "name": "Still Creek Campground (Mt. Hood)", "waterfront": "creekside"},
+  {"id": 13197, "facility_id": "232836", "name": "Tollgate Campground (Zigzag River)", "waterfront": "riverfront"},
+  {"id": 13198, "facility_id": "10317439", "name": "Muleshoe Campground (John Day River)", "waterfront": "riverfront",
+   "caveat": "bundle facility (loop Muleshoe); no published site length; phone recorded (BLM Prineville District)"},
+  {"id": 13199, "facility_id": "10317439", "name": "Big Bend Campground (North Fork John Day River)", "waterfront": "riverfront",
+   "caveat": "bundle facility (loop Big Bend); no published site length; phone recorded"},
+  {"id": 13200, "facility_id": "10317439", "name": "Lone Pine Campground (North Fork John Day River)", "waterfront": "riverfront",
+   "caveat": "bundle facility (loop Lone Pine); no published site length; phone recorded"}
+ ],
+ "excluded": [
+  {"facility_id": "234193", "name": "HAUSER SAND CAMPING", "kind_of_no": "access",
+   "why": "Oregon Dunes OHV sand camping: 'only accessible to 4X4 vehicles on soft sand'"},
+  {"facility_id": "234196", "name": "UMPQUA SAND CAMPING", "kind_of_no": "access",
+   "why": "Oregon Dunes OHV sand camping: 'Sand campsites can only be accessed by 4X4 vehicles'"},
+  {"facility_id": "122890", "name": "EAGLE CREEK CAMPGROUND", "kind_of_no": "size gate",
+   "why": "recreation.gov notice: 'There is a 20' trailer limit. The road to the campground has tight switchbacks which larger vehicles may not be able to get beyond.' The catalog's per-site lengths (to 120 ft) describe the pads, not the road, and the agency's stated limit outranks them"},
+  {"facility_id": "233294", "name": "HOUSE ROCK CAMPGROUND", "kind_of_no": "size gate",
+   "why": "FS Willamette page: 'Trailers greater than 20 feet may find it difficult to enter and exit House Rock Campground. Parking for large trailers is not available'; the rec.gov overview says trailers only 'up to 22 feet'. Again the access, not the pads, is the limit"},
+  {"facility_id": "272092", "name": "Kinnikinnick (Laurance Lake) Campground", "kind_of_no": "access",
+   "why": "recreation.gov notice: 'a 16 to 18\" ford crossing the road at Elliot Creek ... The road is rough and not trailer friendly.' A ford that deep is not passable by a normal vehicle; a judgement call, recorded so it can be revisited if the crossing is bridged"},
+  {"facility_id": "274721", "name": "Yellowbottom Recreation Site", "kind_of_no": "camping discontinued",
+   "why": "BLM announcement 2025-08-18: the overnight area 'closed since 2022 and will remain closed to camping indefinitely due to hazardous tree conditions', with a walking trail now being built through it and only a day-use pass sold. Unlike Indian Henry/Lazy Bend there is no stated intent to reopen campsites, so this is not a closure-with-caveat"},
+  {"facility_id": "10317439", "name": "Service Creek (John Day River Basin bundle)", "kind_of_no": "no RV sites",
+   "why": "all four catalog sites are WALK TO; BLM describes Service Creek as four walk-in tent sites beside a boat-launch lot. The bundle's other three campgrounds are added above"}
+ ],
+ "already_in_db": [
+  {"facility_id": "233295", "id": 10713, "name": "Trout Creek Campground (Willamette NF)", "why": "RIDB pin 22 km east of the loop"},
+  {"facility_id": "251538", "id": 10683, "name": "South Twin Lake Campground", "why": "RIDB pins it near Eugene, ~150 km from the lake"},
+  {"facility_id": "267074", "id": 10970, "name": "Three Creek Meadow Campground", "why": "RIDB pin 3.2 km off"}
+ ],
+ "recheck": {
+  "why": "Indian Henry and Lazy Bend are closed pending the Upper Clackamas campground redesign; re-read their FS pages each season and clear the CLOSED sentence from the note when they reopen. Yellowbottom is recorded as excluded, but if BLM ever reopens campsites there it becomes a normal add.",
+  "facility_ids": ["232851", "232841", "274721"]
+ },
+ "method_notes": [
+  "recreation.gov's per-site 'Proximity to Water' attribute is the per-site flag the gate counts, and ten of these facilities carry it — but its VALUE is unreliable (Tollgate and Lazy Bend say 'Lakefront' beside rivers), and at Indian Henry it names a creek the imagery never shows. What made it usable was measuring each flagged pad against the OSM water line: Cape Perpetua 1-13 m (creekside), Tollgate 5-21 m (riverfront), Alsea Falls 27-45 m (riverfront), Still Creek 31-51 m (creekside), Indian Henry 20-41 m to Whale Creek rather than the Clackamas (creekside). Clear Lake's flags failed that test: 58-90 m behind a continuous pine band, so lakeview.",
+  "Two size-gate exclusions came from the AGENCY'S access notice, not the catalog: Eagle Creek's catalog lists pads to 120 ft behind a road with a 20-ft trailer limit, and House Rock's lists pads to 65 ft behind an entrance the FS says trailers over 20 ft struggle with. Read the rec.gov notices before trusting catalog lengths.",
+  "RIDB coordinates were wrong in three distinct ways this state: a facility pin 150 km off (South Twin Lake, already in the DB), per-site coordinates 4 km off at another park (Lazy Bend), and a bundle facility whose four campgrounds span 30 km (John Day). The bundle is handled by plotting it with sat_look --at <loop centre> and one entry per loop; recgov_hookups deliberately skips a facility shared by several entries, so those three take hookups from their notes."
+ ]
+}

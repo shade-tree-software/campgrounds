@@ -138,8 +138,25 @@ clone. `sat_look.py` likewise falls back to RIDB for a facility the cache
 does not hold, so neither tool needs the 5.8 MB gitignored cache rebuilt
 before the next campground can be audited.
 
-State of play: **AR and CO done (26 of 178 `likely_rv`), 152 to sweep**,
-heaviest CA 36, OR 23, UT 16, OK 14. The **182 `no_catalog`** rows (FS 113,
-BLM 63) need a different method entirely — no per-site data means no size
-gate and no inclusion evidence from the catalog, so they are closer to a
-conventional sweep than to what AR and CO were.
+State of play: **AR, CO and OR done (56 of 178 `likely_rv` worked, 10 of
+those turning out to be entries the database already had), 122 to sweep**,
+heaviest CA 33, UT 16, OK 13. The **182 `no_catalog`** rows (FS 113, BLM 63)
+need a different method entirely — no per-site data means no size gate and no
+inclusion evidence from the catalog, so they are closer to a conventional
+sweep than to what AR and CO were.
+
+**The gap list was matched by coordinate, and RIDB's coordinates can be far
+off** — South Twin Lake is pinned near Eugene, ~150 km from the lake. So the
+triage also treats a facility as covered when any entry's `website` already
+carries its recreation.gov id (`cited_facilities`); that is exact where
+distance is a guess, and it retired 10 phantom rows (CA 3, OR 3, GA/MT/NM/OK 1).
+
+**Two more things OR taught** (details in `ridb_gap_or_decisions.json`):
+read the recreation.gov *notices* before trusting catalog lengths — Eagle
+Creek's pads run to 120 ft behind a road with a stated 20-ft trailer limit —
+and treat the per-site "Proximity to Water" flag as a lead to measure, not a
+verdict: its value is often wrong ("Lakefront" beside rivers), so each flagged
+pad is measured against the OSM water line before it earns anything.
+`sat_look.py --labels` draws flagged pads magenta, other RV pads cyan and
+non-RV sites grey, and `--at` with a facility id re-centres on one loop of a
+bundle facility.

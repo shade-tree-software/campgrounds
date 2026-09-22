@@ -31,3 +31,10 @@ A dot is a pad, not a verdict — the buffer still has to be read off the image,
 Per-state decisions go in `audit/ridb_gap_<ST>_decisions.json`, recording added / excluded and *which kind of no* each was, so a later pass does not re-offer what was already judged. A caveat that is expected to lift (a closure) goes under `recheck` with the facility ids, so the note gets corrected rather than quietly going stale.
 
 **A real campground with a problem gets an entry with the problem in the `note`** — see [[feedback_add_with_caveat_not_withhold]]. Only a genuine failure of the criteria is an exclusion; AR's single one was White Rock Mountain on the 20-ft size gate.
+
+**Oregon (2026-09-22, 16 added ids 13185-13200, 7 excluded) added four rules:**
+- **Check the rec.gov id before anything else.** 3 of OR's 23 rows (10 of 178 overall) were already entries whose `website` carried the same facility id; RIDB pins can be 150 km off, so the coordinate dedup missed them. `cited_facilities()` in the triage now does this.
+- **Read the rec.gov `notices`** (`/api/camps/campgrounds/<id>`), not just the catalog: Eagle Creek (20-ft trailer limit on the road) and House Rock (trailers over 20 ft struggle) fail the size gate on ACCESS while their pads measure 65-120 ft. The notices also carry closures and ford crossings (Kinnikinnick).
+- **"Proximity to Water" per-site attribute is a lead, not a verdict** — its value is often wrong ("Lakefront" on rivers) and at Indian Henry it meant a tributary creek. Measure each flagged pad to the OSM water line (Overpass, back off on 429) and apply the ~50 m bound: kept Cape Perpetua/Tollgate/Alsea/Still Creek, downgraded Clear Lake.
+- **Bundle facilities** (John Day basin = 4 campgrounds, one id): one entry per loop, `sat_look.py <fid> --at <loop> --labels`; recgov_hookups skips shared ids, so hookups come from the note scan.
+
