@@ -21,7 +21,7 @@ Coverage: rating 92.0%, hookups 84.3%, booking 80.4%, sites 78.4%, facilities 63
 
 ## 3. Non-RV-Life gap — four faces, only federal measured
 
-- **state** — 2,202 entries, ~48 agencies. **MEASURED 2026-09-21 and it is small:** OH/FL/MN gave 3 real misses in 230 entries (1.3%), 2.8% pooled with SD, so ~30-60 statewide. Tooled: `audit/state_gap_portal.py` ([[reference_state_gap_measurement]]). Deprioritised below the federal gap.
+- **state** — 2,202 entries, ~48 agencies. **MEASURED 2026-09-21 and it is small:** OH/FL/MN gave 2 real misses in 230 entries (0.9%), 2.4% pooled with SD, so ~20-55 statewide. Tooled: `audit/state_gap_portal.py` ([[reference_state_gap_measurement]]). Deprioritised below the federal gap.
 - **local** — 2,511 entries, the face AWH's framing omitted, and *worse* than state: detection is a name-scan of RV Life's own buckets, so it inherits RV Life's omissions twice over ([[reference_local_campground_method]]).
 - **Canada** — 700 provincial, and there is no RIDB equivalent at all.
 - **private** — 3,574, and probably fine: RV Life is natively a private-park directory and Good Sam independently cross-checked it ([[reference_good_sam_ratings]]).

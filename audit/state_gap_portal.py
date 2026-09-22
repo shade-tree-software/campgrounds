@@ -116,44 +116,97 @@ def main():
         by_place[f.get("PlaceId")].append(f.get("Name") or "")
 
     ours = ours_for(state)
-    matched, unmatched = [], []
-    for p in parks:
-        la, lo = p.get("Latitude"), p.get("Longitude")
-        best = None
-        if la not in (None, 0) and lo not in (None, 0):
-            pt = toks(p.get("Name"))
+
+    # Match at FACILITY level, not park level. A campground is a facility; a place
+    # may hold several (Paul Bunyan State Forest holds both Mantrap Lake, which we
+    # have, and Gulch Lake, which we did not). Matching the PLACE name swallowed
+    # the second one, and matching only by distance from the place coordinate lost
+    # Ellis Lock #11 to an office address 35 km away. So test each camping facility
+    # by its own name first, then fall back to the park's coordinate.
+    # A facility name made only of these says nothing about WHICH campground it is
+    # ("CAMP", "Group Camp", "Family Campground"). ReserveFlorida's Long Key
+    # facility is literally "CAMP", and Lafayette Blue Springs' is "Family
+    # Campground", which name-matched a Kissimmee Prairie entry 300 km away. A
+    # generic name must be corroborated by position or it matches nothing.
+    GENERIC = {"family", "group", "cart", "backpack", "hike", "primitive", "walk",
+               "overflow", "main", "upper", "lower", "east", "west", "north",
+               "south", "rustic", "equestrian", "horse", "youth", "canoe"}
+    NAME_CORROBORATION_KM = 25.0
+
+    def held(fac_name, park):
+        """The entry of ours that IS this facility, or None.
+
+        Name first (the facility is the campground), position second — but a name
+        match is only trusted when it is either geographically plausible or the
+        park has no usable coordinate at all (MN's state forests are all 0,0).
+        """
+        ft = toks(fac_name)
+        la, lo = park.get("Latitude"), park.get("Longitude")
+        has_coord = la not in (None, 0) and lo not in (None, 0)
+        distinctive = bool(ft - GENERIC)
+
+        if distinctive:
+            for o in ours:
+                if (ft and ft <= o["t"]) or len(ft & o["t"]) >= 2:
+                    if not has_coord:
+                        return o
+                    if haversine(la, lo, o["lat"], o["lng"]) <= NAME_CORROBORATION_KM:
+                        return o
+        if has_coord:
+            pt = toks(park.get("Name"))
             for o in ours:
                 d = haversine(la, lo, o["lat"], o["lng"])
-                if d > args.radius_km:
-                    continue
-                score = (len(pt & o["t"]) > 0, -d)
-                if best is None or score > best[0]:
-                    best = (score, o, d, len(pt & o["t"]))
-        if best and (best[3] > 0 or best[2] <= 3.0):
-            matched.append(p)
-        else:
-            unmatched.append(p)
+                if d <= args.radius_km and (len(pt & o["t"]) > 0 or d <= 3.0):
+                    return o
+        return None
 
-    candidates = []
-    for p in unmatched:
-        fs = by_place.get(p["PlaceId"], [])
-        if any(kind(n) == "CAMP" for n in fs):
-            candidates.append({"place_id": p["PlaceId"], "name": p.get("Name"),
-                               "lat": p.get("Latitude"), "lng": p.get("Longitude"),
-                               "facilities": fs})
+    def far_namesake(fac_name):
+        """An entry sharing this facility's name but too far to trust as the match.
+
+        Surfaced with the candidate rather than silently matched or silently
+        dropped: ReserveOhio pins Muskingum River SP at an office 35 km from its
+        Ellis Lock #11 campground, which we hold as entry 1018 — so the row is a
+        candidate that a human should resolve, not a gap and not a match.
+        """
+        ft = toks(fac_name)
+        if not (ft - GENERIC):
+            return None
+        for o in ours:
+            if (ft and ft <= o["t"]) or len(ft & o["t"]) >= 2:
+                return f"{o['id']}: {o['name']}"
+        return None
+
+    candidates, held_count = [], 0
+    for p in parks:
+        for name in by_place.get(p["PlaceId"], []):
+            if kind(name) != "CAMP":
+                continue
+            match = held(name, p)
+            if match:
+                held_count += 1
+                continue
+            candidates.append({"place_id": p["PlaceId"], "park": p.get("Name"),
+                               "facility": name, "lat": p.get("Latitude"),
+                               "lng": p.get("Longitude"),
+                               "possibly_held": far_namesake(name),
+                               "siblings": [n for n in by_place.get(p["PlaceId"], [])]})
 
     print(f"{state}: portal lists {len(parks)} parks; we hold {len(ours)} state-ownership entries")
-    print(f"  matched          : {len(matched)}")
-    print(f"  unmatched        : {len(unmatched)}")
-    print(f"  WITH A CAMPGROUND: {len(candidates)}  <- judge these by hand\n")
+    print(f"  camping facilities we already hold : {held_count}")
+    print(f"  NOT HELD                           : {len(candidates)}  <- judge these by hand\n")
     for c in candidates:
-        print(f"  [{c['place_id']}] {c['name']}")
-        for n in c["facilities"][:8]:
-            print(f"        {kind(n):8} {n}")
+        print(f"  [{c['place_id']}] {c['park']}")
+        print(f"        -> {c['facility']}")
+        if c.get("possibly_held"):
+            print(f"           ** may already be held as {c['possibly_held']} (too far to match) **")
+        for n in c["siblings"]:
+            if n != c["facility"]:
+                print(f"           ({kind(n)}: {n})")
+
     if args.out:
         json.dump({"state": state, "portal": base, "parks": len(parks),
-                   "ours": len(ours), "matched": len(matched),
-                   "unmatched": len(unmatched), "candidates": candidates},
+                   "ours": len(ours), "held": held_count,
+                   "candidates": candidates},
                   open(args.out, "w", encoding="utf-8"), indent=1, ensure_ascii=False)
         print(f"\nwrote {args.out}")
     return 0
