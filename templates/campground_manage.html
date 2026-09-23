@@ -294,6 +294,8 @@ let newDraft = null;
 // we only DOM-render the first RENDER_CAP of the filtered/sorted set and prompt
 // the user to narrow with search. The row being edited is always kept rendered.
 const RENDER_CAP = 150;
+// One-shot: the row render() should keep and scroll to (the one just saved).
+let revealId = null;
 
 // ── Location map picker ──────────────────────────────────────────────────
 // The picker writes to whichever input was most recently focused (ed-location
@@ -418,12 +420,13 @@ function render() {
     html += newRowHtml();
   }
 
-  // Only materialize the first RENDER_CAP rows. Keep the row being edited in the
-  // slice even if it sorts past the cap, so an in-progress edit never vanishes.
+  // Only materialize the first RENDER_CAP rows. Keep the row being edited (or
+  // just saved) in the slice even if it sorts past the cap, so it never vanishes.
   let shown = rows.slice(0, RENDER_CAP);
-  if (editingId != null && !shown.some(c => c.id === editingId)) {
-    const editc = rows.find(c => c.id === editingId);
-    if (editc) shown = shown.concat(editc);
+  const pinnedId = editingId ?? revealId;
+  if (pinnedId != null && !shown.some(c => c.id === pinnedId)) {
+    const pinned = rows.find(c => c.id === pinnedId);
+    if (pinned) shown = shown.concat(pinned);
   }
 
   for (const c of shown) {
@@ -440,6 +443,13 @@ function render() {
 
   body.innerHTML = html;
   lockNoneGroups();
+  // The edit row is several times a view row's height, so collapsing it moves
+  // everything below; bring the row just saved back into view.
+  if (revealId != null) {
+    const row = body.querySelector(`tr[data-cg-id="${revealId}"]`);
+    if (row) row.scrollIntoView({ block: 'center' });
+    revealId = null;
+  }
 }
 
 function viewRowHtml(c) {
@@ -449,7 +459,7 @@ function viewRowHtml(c) {
     ? `<span title="Family location">&#127968;</span> ${escapeHtml(c.name)}`
     : escapeHtml(c.name);
   const note = escapeHtml(c.note || '');
-  return `<tr>
+  return `<tr data-cg-id="${c.id}">
     <td class="col-name">${nameDisplay}</td>
     <td class="col-state" data-label="State ">${escapeHtml(c.state || '')}</td>
     <td class="col-waterfront" data-label="Water ">${isFamily ? '' : escapeHtml(c.waterfront || '')}</td>
@@ -943,6 +953,7 @@ function saveEdit() {
     if (data.error) { toast(data.error); return; }
     const c = campgrounds.find(e => e.id === editingId);
     if (c) { mergeStructuredLocal(c, fields); Object.assign(c, fields); }
+    revealId = editingId;
     editingId = null;
     render();
     hideLocationMap();
