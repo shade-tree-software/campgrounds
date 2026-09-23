@@ -226,5 +226,83 @@ class ChipPhrasingTest(unittest.TestCase):
             ["C$35/night"])
 
 
+
+@unittest.skipIf(quickjs is None, "quickjs not installed (pip install quickjs)")
+class GroupNoneTest(unittest.TestCase):
+    """A group answered "none" as a whole (doc §8.8).
+
+    Built from the REAL `to_client()` rather than the hand-kept GROUPS above,
+    because the rule turns on server metadata: which groups carry `none`, and
+    each field's kind/choices, which decide its none value.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        sys.path.insert(0, REPO)
+        import campground_schema
+        cls.schema = campground_schema.to_client()
+        cls.ctx = quickjs.Context()
+        with open(os.path.join(REPO, "static", "campground-schema.js"),
+                  encoding="utf-8") as fh:
+            cls.ctx.eval(fh.read())
+        cls.ctx.eval("const S = " + json.dumps(cls.schema) + ";"
+                     "function g(k) { return S.find(x => x.key === k); }"
+                     "function chips(k, v, keys) { return JSON.stringify(sfChips("
+                     "g(k), JSON.parse(v), keys ? new Set(JSON.parse(keys)) : undefined)); }"
+                     "function noneOf(k) { const o = {}; g(k).fields.forEach(f => {"
+                     "const n = sfNoneValue(f); if (n !== undefined) o[f.key] = n; });"
+                     "return JSON.stringify(o); }")
+
+    def chips(self, group, values, keys=None):
+        return json.loads(self.ctx.eval(
+            "chips(%s, %s, %s)" % (json.dumps(group), json.dumps(json.dumps(values)),
+                                   json.dumps(json.dumps(keys)) if keys else "null")))
+
+    def none_of(self, group):
+        return json.loads(self.ctx.eval("noneOf(%s)" % json.dumps(group)))
+
+    def test_the_none_groups_are_the_three_asked_for(self):
+        self.assertEqual({g["key"] for g in self.schema if g["none"]},
+                         {"hookups", "facilities", "discounts"})
+
+    def test_every_field_of_a_none_group_has_a_none_value(self):
+        # Otherwise the checkbox would leave a field unknown and the popup's
+        # "none" would never fire for that group.
+        for g in self.schema:
+            if not g["none"]:
+                continue
+            fields = {f["key"] for f in g["fields"] if f["key"] != "note"}
+            self.assertEqual(set(self.none_of(g["key"])), fields, g["key"])
+
+    def test_electric_none_is_zero_amps(self):
+        self.assertEqual(self.none_of("hookups")["electric"], 0)
+
+    def test_whole_group_absent_reads_none(self):
+        for group in ("hookups", "facilities", "discounts"):
+            self.assertEqual(self.chips(group, self.none_of(group)), ["none"], group)
+
+    def test_one_unknown_field_keeps_the_itemised_chips(self):
+        # Unknown is not none: dump unrecorded means nobody looked.
+        values = self.none_of("hookups")
+        del values["dump"]
+        self.assertEqual(self.chips("hookups", values), ["no hookups"])
+
+    def test_one_yes_keeps_the_itemised_chips(self):
+        values = dict(self.none_of("facilities"), vault_toilets=True)
+        self.assertNotIn("none", self.chips("facilities", values))
+
+    def test_partial_key_run_is_not_a_whole_group(self):
+        # The popup's verified half restricted to two keys (the rest inherited)
+        # must not claim the whole group is none.
+        self.assertEqual(
+            self.chips("discounts", self.none_of("discounts"), ["good_sam", "military"]),
+            ["no Good Sam discount", "no military discount"])
+
+    def test_other_groups_never_fold(self):
+        self.assertEqual(self.chips("sites", {"pull_through": False}),
+                         ["no pull-throughs"])
+
+
 if __name__ == "__main__":
     unittest.main()

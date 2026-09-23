@@ -229,7 +229,34 @@ function sfChip(groupKey, field, value, cur) {
 // `keys`, when given, restricts the chips to those field keys. That is how the
 // popup separates what was verified for THIS campground from what its agency
 // supplies, without having to format the two halves differently.
+// The value a field stores to say "there is none of this" (doc §8.8): a
+// boolean's false, or 0 on a numeric field that offers it (electric amps).
+// undefined for a field that has no such value (notes, free text).
+function sfNoneValue(field) {
+  if (field.key === 'note') return undefined;
+  if (field.kind === 'bool') return false;
+  if (field.choices && field.choices.some(ch => ch === 0)) return 0;
+  return undefined;
+}
+
+// True when a "none"-capable group records EVERY field as absent. Unknown is
+// not none: one field left unrecorded means somebody didn't look, so the group
+// keeps its itemised chips rather than claiming a completeness it lacks.
+function sfAllNone(group, values) {
+  if (!group.none) return false;
+  const fields = group.fields.filter(f => sfNoneValue(f) !== undefined);
+  return fields.length > 0
+    && fields.every(f => f.key in values && values[f.key] === sfNoneValue(f));
+}
+
 function sfChips(group, values, keys) {
+  // "no showers · no flush toilets · no vault toilets · ..." is seven chips to
+  // say one thing. Only when the verified half holds the whole group — a
+  // partial run restricted by `keys` is not a whole group's answer.
+  if (sfAllNone(group, values)
+      && group.fields.every(f => sfNoneValue(f) === undefined || !keys || keys.has(f.key))) {
+    return ['none'];
+  }
   const parts = [];
   const has = k => (!keys || keys.has(k)) && k in values;
   const cur = values.currency;

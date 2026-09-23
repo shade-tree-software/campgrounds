@@ -684,10 +684,21 @@ def _spec_to_client(spec, key):
     return out
 
 
+# Groups whose every field can be answered "none" at once: a free dispersed
+# site has no hookups, no facilities and honours no discounts, and making the
+# editor set a dozen selects to "no" one by one is how some of them get skipped.
+# Every non-note field in these groups must have a stated "none" value (a BOOL's
+# False, or an INT whose choices include 0) — the form writes exactly that, so
+# "none" is the same stored claim as each "no" typed separately (doc §2.1: a
+# recorded absence, never a placeholder for unknown).
+NONE_GROUPS = ("hookups", "facilities", "discounts")
+
+
 def to_client():
     """The vocabulary as the manage form needs it: ordered groups and fields."""
     return [{"key": group,
              "label": GROUP_LABELS.get(group, group.title()),
+             "none": group in NONE_GROUPS,
              "fields": [dict(_spec_to_client(spec, key), key=key)
                         for key, spec in fields.items()]}
             for group, fields in SCHEMA.items()]

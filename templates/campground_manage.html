@@ -143,6 +143,13 @@
     letter-spacing: .03em; color: var(--gray); margin-bottom: .3rem;
   }
   .efg-obj .efg-body { padding: 0; }
+  /* Pushed to the right end of the summary line, clear of the value chips. */
+  .efg-none {
+    margin-left: auto; display: inline-flex; align-items: center; gap: .3rem;
+    font-weight: 500; text-transform: none; letter-spacing: 0; font-size: .75rem;
+    color: var(--navy, #002868); cursor: pointer; white-space: nowrap;
+  }
+  .efg-none input { margin: 0; width: auto; }
   .ef-inherit { font-weight: 400; text-transform: none; letter-spacing: 0; color: #8a7a4a; }
   .efg-inherit-note { grid-column: 1 / -1; font-size: .72rem; color: #8a7a4a; margin: -.15rem 0 .2rem; }
   .cg-table td.edit-cell .edit-actions { margin-top: .7rem; }
@@ -432,6 +439,7 @@ function render() {
   }
 
   body.innerHTML = html;
+  lockNoneGroups();
 }
 
 function viewRowHtml(c) {
@@ -469,9 +477,10 @@ function viewOnMap(id) {
 //
 //   Absent means unknown. Every control has an explicit blank option and blank
 //   SENDS null, which clears the key server-side. A checkbox cannot express
-//   that third state, so there are none here — ship one and the first save
-//   writes `false` across every amenity on the entry, permanently, with nothing
-//   to distinguish it from twelve thousand verified facts.
+//   that third state, so no stored value is a checkbox here — ship one and the
+//   first save writes `false` across every amenity on the entry, permanently,
+//   with nothing to distinguish it from twelve thousand verified facts. (The
+//   per-group "None" box is an input shortcut, not a stored value; doc §8.8.)
 //
 //   A blank field may still be COVERED by the agency default. That is a
 //   different thing from unknown, so a blank whose registry row has a value
@@ -618,11 +627,58 @@ function structuredSectionsHtml(c) {
     } else {
       count = `<span class="efg-count">unknown</span>`;
     }
+    // "None" answers the whole group at once (doc §8.8). It is a shortcut for
+    // setting every select to "no", NOT a stored boolean — its state is read
+    // back off the values each time the form opens, so §8.2's ban on
+    // checkboxes (a checkbox cannot say unknown) doesn't reach it.
+    const noneBox = g.none
+      ? `<label class="efg-none" onclick="event.stopPropagation()">`
+        + `<input type="checkbox" id="${sfId([g.key, 'none'])}"`
+        + `${sfAllNone(g, own) ? ' checked' : ''}`
+        + ` onchange="onGroupNoneChange('${g.key}', this.checked)"> None</label>`
+      : '';
     return `<details class="efg" id="${sfId([g.key, 'section'])}">
-      <summary>${escapeHtml(g.label)}${count}</summary>
+      <summary>${escapeHtml(g.label)}${count}${noneBox}</summary>
       <div class="efg-body">${note}${body}</div></details>`;
   }).join('');
   return `<div class="ef-groups">${sections}</div>`;
+}
+
+// Checking "None" sets every field in the group to its none value and locks
+// the controls, so the group can't be half-none by a stray edit. Unchecking
+// gives back what the controls held before — the box is an input shortcut, and
+// clearing it shouldn't silently discard values somebody had typed.
+const sfNoneSnapshot = {};
+
+function sfGroupControls(g) {
+  return g.fields
+    .filter(f => sfNoneValue(f) !== undefined)
+    .map(f => ({ f, el: document.getElementById(sfId([g.key, f.key])) }))
+    .filter(x => x.el);
+}
+
+function onGroupNoneChange(groupKey, checked) {
+  const g = CG_SCHEMA.find(x => x.key === groupKey);
+  const controls = sfGroupControls(g);
+  if (checked) {
+    sfNoneSnapshot[groupKey] = controls.map(x => x.el.value);
+    controls.forEach(x => { x.el.value = String(sfNoneValue(x.f)); x.el.disabled = true; });
+  } else {
+    const prev = sfNoneSnapshot[groupKey];
+    controls.forEach((x, i) => {
+      x.el.disabled = false;
+      if (prev) x.el.value = prev[i];
+    });
+    delete sfNoneSnapshot[groupKey];
+  }
+}
+
+// Controls under an already-"none" group render locked, matching the box.
+function lockNoneGroups() {
+  CG_SCHEMA.forEach(g => {
+    const box = document.getElementById(sfId([g.key, 'none']));
+    if (box && box.checked) sfGroupControls(g).forEach(x => { x.el.disabled = true; });
+  });
 }
 
 function sfRead(field, path) {

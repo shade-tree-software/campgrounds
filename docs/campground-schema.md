@@ -1043,3 +1043,29 @@ the note prose on 11,771 entries, and the popup renders the note — so between 
 this one, a published fact about four fifths of the database was visible nowhere but the
 admin form. Any future extraction that empties prose into a field inherits the same
 obligation: the field has to come back out somewhere a reader looks.
+
+### 8.8 A whole group can be answered "none"
+
+A free dispersed site has no hookups, no facilities and honours no discounts, and saying so
+field by field meant sixteen selects set to "no" — which is how some get skipped, leaving
+the group half-recorded. So `hookups`, `facilities` and `discounts` (`NONE_GROUPS` in
+`campground_schema.py`, published as `none: true` by `to_client()`) carry a **None**
+checkbox on the manage form's section line, and the popup and collapsed summary say
+*Hookups none* instead of listing every absence (AWH 2026-09-23).
+
+- **It stores nothing new.** Checking the box writes each field's own none value —
+  `false`, or `0` for `electric` (`sfNoneValue`) — exactly what setting each select to
+  "no" would. There is no `none` key in the data, so every reader (the hookups filter,
+  `resolve()`, the extraction scripts) sees ordinary recorded absences.
+- **It is not the checkbox §8.2 bans.** That ban is on a checkbox *as a stored boolean*,
+  because it cannot say unknown. This one is an input shortcut whose state is re-derived
+  from the values every time the form opens (`sfAllNone`); unchecking it restores what the
+  selects held before, rather than writing anything.
+- **"none" needs every field recorded.** One field left unknown means nobody looked, so
+  the group keeps its itemised chips: `electric 0 · water no · sewer no` with `dump`
+  unrecorded still reads *no hookups*, not *none*. Likewise the popup's verified half folds
+  only when it holds the whole group — a run restricted to a few keys, with the rest
+  inherited from the agency, is not the group's answer.
+- A new field added to one of these groups must have a none value (a BOOL, or an INT whose
+  choices include 0), or the box would leave it unknown and the fold would never fire.
+  `tests/test_schema_chips.py` (`GroupNoneTest`) checks that against the live schema.
