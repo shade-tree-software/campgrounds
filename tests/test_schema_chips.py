@@ -132,7 +132,7 @@ class ChipPhrasingTest(unittest.TestCase):
 
     def test_fcfs_enum_is_never_shown_raw(self):
         for value, expected in [("never", "no walk-up sites"),
-                                ("always", "walk-ups welcome"),
+                                ("always", "FCFS"),
                                 ("after_cutoff", "walk-ups after the booking cutoff"),
                                 ("some_sites", "some walk-up sites")]:
             self.assertEqual(self.chips("booking", {"fcfs": value}), [expected])

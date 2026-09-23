@@ -128,7 +128,7 @@ function sfChip(groupKey, field, value, cur) {
   // Raw enum values are meaningless alone: a Booking section reading "always"
   // tells you nothing about what is always true.
   if (k === 'booking.fcfs') {
-    return {never: 'no walk-up sites', always: 'walk-ups welcome',
+    return {never: 'no walk-up sites', always: 'FCFS',
             after_cutoff: 'walk-ups after the booking cutoff',
             some_sites: 'some walk-up sites'}[value] || value;
   }
