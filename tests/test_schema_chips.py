@@ -24,7 +24,8 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # here rather than imported so a field's LABEL changing (which is a server-side
 # decision) can't quietly rewrite what this asserts about the phrasing.
 GROUPS = {
-    "hookups": ["electric", "water", "sewer", "dump"],
+    "hookups": ["electric", "water", "sewer"],
+    "facilities": ["vault_toilets", "potable_water", "dump"],
     "sites": ["count", "max_rig_ft", "pull_through"],
     "season": ["year_round", "opens", "closes"],
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
@@ -175,13 +176,14 @@ class ChipPhrasingTest(unittest.TestCase):
 
     def test_full_and_absent_hookups_fold_to_one_chip(self):
         self.assertEqual(
-            self.chips("hookups", {"electric": 50, "water": True, "sewer": True,
-                                   "dump": True}),
-            ["full hookups (50A)", "dump station"])
-        self.assertEqual(
-            self.chips("hookups", {"electric": 0, "water": False, "sewer": False,
-                                   "dump": True}),
-            ["no hookups", "dump station"])
+            self.chips("hookups", {"electric": 50, "water": True, "sewer": True}),
+            ["full hookups (50A)"])
+
+    def test_dump_station_is_a_facility(self):
+        # Not a hookup: nothing at the site connects to it (AWH 2026-09-23).
+        self.assertEqual(self.chips("facilities", {"dump": True}), ["dump station"])
+        self.assertEqual(self.chips("facilities", {"dump": False}),
+                         ["no dump station"])
 
     def test_a_partial_hookup_set_is_not_folded(self):
         self.assertEqual(
@@ -284,9 +286,13 @@ class GroupNoneTest(unittest.TestCase):
 
     def test_one_unknown_field_keeps_the_itemised_chips(self):
         # Unknown is not none: dump unrecorded means nobody looked.
-        values = self.none_of("hookups")
+        values = self.none_of("facilities")
         del values["dump"]
-        self.assertEqual(self.chips("hookups", values), ["no hookups"])
+        self.assertNotIn("none", self.chips("facilities", values))
+
+    def test_hookups_none_is_the_three_connections(self):
+        self.assertEqual(set(self.none_of("hookups")), {"electric", "water", "sewer"})
+        self.assertIn("dump", self.none_of("facilities"))
 
     def test_one_yes_keeps_the_itemised_chips(self):
         values = dict(self.none_of("facilities"), vault_toilets=True)

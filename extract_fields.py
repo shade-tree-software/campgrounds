@@ -141,10 +141,6 @@ hookups   electric: highest amps AT A SITE — one of 0, 20, 30, 50 and NOTHING
                     cannot plug in.
           water:    bool, piped to the site. A communal spigot is NOT this.
           sewer:    bool, at the site.
-          dump:     bool, a dump station on the property (independent of sewer).
-                    One described as elsewhere ("city sani-dump nearby", "dump
-                    station ~6 blocks away") -> false: the note says where it
-                    is, and it is not here.
           "full hookup(s)" -> water true and sewer true; electric only if the
           amperage is actually stated.
           "no hookups" / "primitive" / "non-electric" -> electric 0 (and, for
@@ -168,6 +164,12 @@ sites     count:        integer, total campsites. "34 single-family sites" -> 34
 facilities showers, flush_toilets, vault_toilets, laundry, camp_store, wifi:
                         bool, each only if named.
           potable_water: bool. "drinking water" or communal spigots -> true.
+          dump:     bool, a dump station on the property. A FACILITY, not a
+                    hookup: a sewer connection at the site is hookups.sewer,
+                    and one does not imply the other. One described as
+                    elsewhere ("city sani-dump nearby", "dump station ~6 blocks
+                    away") -> false: the note says where it is, and it is not
+                    here.
           Note "restrooms" alone does NOT tell you flush vs vault — omit both.
 
 season    year_round:  bool. "open year round" -> true. A stated closed season

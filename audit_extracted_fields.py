@@ -64,7 +64,7 @@ BOOLEAN_KEYWORD = {
     ("facilities", "wifi"): r"wi-?fi|internet",
     ("hookups", "water"): r"water|hookup|hook-up",
     ("hookups", "sewer"): r"sewer|hookup|hook-up|full.service",
-    ("hookups", "dump"): r"dump|sani",
+    ("facilities", "dump"): r"dump|sani",
     ("sites", "pull_through"): r"pull.?thr|back.?in",
     ("season", "year_round"): r"year.?round|season|open|clos",
 }

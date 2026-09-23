@@ -90,7 +90,6 @@ SCHEMA = {
         "electric": INT(0, 20, 30, 50),      # HIGHEST amp available at a site
         "water": BOOL,                       # at the site, not a communal spigot
         "sewer": BOOL,
-        "dump": BOOL,                        # on-site dump station; independent of sewer
         "note": STR,
     },
     "sites": {
@@ -104,6 +103,9 @@ SCHEMA = {
         "flush_toilets": BOOL,
         "vault_toilets": BOOL,
         "potable_water": BOOL,               # communal spigots, even with no hookups
+        # On-site dump station. A facility, not a hookup: nothing at the site
+        # connects to it — that is `hookups.sewer` (AWH 2026-09-23).
+        "dump": BOOL,
         "laundry": BOOL,
         "camp_store": BOOL,
         "wifi": BOOL,
@@ -300,6 +302,11 @@ def _coerce(spec, value, path):
             if constraint is not None and num not in constraint:
                 allowed = ", ".join(str(v) for v in constraint)
                 raise SchemaError(f"{path}: {num} is not one of {allowed}")
+        # A whole number is stored as one: float() turned a form's "0" into
+        # 0.0, so every save of a free campground rewrote its fee lines, and a
+        # rating's "4" came back as 4.0. Same value, needless diff churn.
+        elif num.is_integer():
+            num = int(num)
         return num
 
     if kind == "mmdd":

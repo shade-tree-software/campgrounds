@@ -5567,7 +5567,7 @@ def api_create_campground():
         if data.get("driveway_location"):
             entry["driveway_location"] = data["driveway_location"]
     else:
-        entry["elevation_meters"] = float(data.get("elevation_meters", 0))
+        entry["elevation_meters"] = _clean_elevation(data.get("elevation_meters"))
         entry["waterfront"] = data.get("waterfront", "not waterfront")
         entry["ownership"] = data.get("ownership", "")
         entry["website"] = data.get("website", "")
@@ -5582,6 +5582,25 @@ def api_create_campground():
     entries.append(entry)
     _save_json(target_path, entries)
     return jsonify({"ok": True, "id": next_id})
+
+
+def _clean_elevation(val, stored=None):
+    """An elevation from a form, in meters, without the feet round trip's noise.
+
+    The manage form shows whole FEET and sends feet / 3.281, so saving any
+    field of an entry used to rewrite its elevation from 1088.0 to
+    1088.082901554404 — the same height, a noisy diff line. When the value
+    still reads as the stored one's whole feet, nothing was changed and the
+    stored value stands; otherwise it's a real edit, kept to 0.1 m, which is
+    finer than the one-foot input it came from.
+    """
+    if val in ("", None):
+        return 0.0
+    meters = float(val)
+    if (isinstance(stored, (int, float)) and not isinstance(stored, bool)
+            and round(meters * METERS_TO_FEET) == round(stored * METERS_TO_FEET)):
+        return stored
+    return round(meters, 1)
 
 
 @app.route('/api/campgrounds/<int:cg_id>', methods=['PUT'])
@@ -5606,7 +5625,7 @@ def api_update_campground(cg_id):
         if key in data:
             val = data[key]
             if key == "elevation_meters":
-                val = float(val) if val not in ("", None) else 0.0
+                val = _clean_elevation(val, target.get("elevation_meters"))
             target[key] = val
 
     # The structured groups (hookups, booking, fees, season, ...) merge PER

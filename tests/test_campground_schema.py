@@ -23,6 +23,7 @@ Run from the project root:
     python -m unittest tests.test_campground_schema -v
 """
 
+import os
 import unittest
 
 import campground_schema as cs
@@ -33,13 +34,23 @@ class TestPerSubkeyMerge(unittest.TestCase):
 
     def test_omitted_subkey_survives_a_save(self):
         # The hazard in one test: an extraction pass wrote `dump`; the form
-        # doesn't know about it and sends the three fields it does know.
-        entry = {"hookups": {"electric": 30, "water": True, "dump": True}}
-        cs.apply_update(entry, {"hookups": {"electric": 50, "water": False,
-                                            "sewer": True}})
-        self.assertEqual(entry["hookups"],
-                         {"electric": 50, "water": False, "sewer": True,
-                          "dump": True})
+        # doesn't know about it and sends the fields it does know.
+        entry = {"facilities": {"showers": True, "dump": True}}
+        cs.apply_update(entry, {"facilities": {"showers": False,
+                                               "vault_toilets": True}})
+        self.assertEqual(entry["facilities"],
+                         {"showers": False, "dump": True, "vault_toilets": True})
+
+    def test_whole_numbers_are_stored_as_ints(self):
+        # A form's "0" became 0.0 and churned every free campground's fee lines.
+        entry = {}
+        cs.apply_update(entry, {"fees": {"nightly_low": "0", "nightly_high": 25.0,
+                                         "reservation_fee": "7.5"},
+                                "rating": {"stars": "4"}})
+        self.assertEqual(entry["fees"], {"nightly_low": 0, "nightly_high": 25,
+                                         "reservation_fee": 7.5})
+        self.assertIs(type(entry["fees"]["nightly_low"]), int)
+        self.assertIs(type(entry["rating"]["stars"]), int)
 
     def test_omitted_group_is_untouched(self):
         entry = {"hookups": {"electric": 30}, "discounts": {"good_sam": True}}
@@ -689,3 +700,24 @@ class TestShippedRegistry(unittest.TestCase):
                 with self.subTest(ref=ref, group=group):
                     self.assertTrue((prov.get("source") or "").strip(),
                                     "a registry row must name its source")
+
+
+class TestElevationFromForm(unittest.TestCase):
+    """The manage form sends whole feet / 3.281; that round trip is not an edit."""
+
+    @classmethod
+    def setUpClass(cls):
+        import sys
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        import ekko_trips_app
+        cls.clean = staticmethod(ekko_trips_app._clean_elevation)
+
+    def test_unchanged_feet_keep_the_stored_value(self):
+        self.assertEqual(self.clean(3570 / 3.281, 1088.0), 1088.0)
+
+    def test_a_real_change_is_kept_to_a_tenth(self):
+        self.assertEqual(self.clean(3600 / 3.281, 1088.0), 1097.2)
+
+    def test_new_entry_and_blank(self):
+        self.assertEqual(self.clean(1088.082901554404), 1088.1)
+        self.assertEqual(self.clean(""), 0.0)

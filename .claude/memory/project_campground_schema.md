@@ -526,6 +526,7 @@ and caught. The ones that come up constantly:
   offered); "15-amp only" omits it (never round up to reach an allowed value).
 - "full hookup" = water+sewer true, electric only if the amperage is stated.
 - "no hookups" = electric 0, water false, sewer false. "primitive"/"non-electric" = electric 0.
+- **`dump` lives in `facilities`, not `hookups`** (moved 2026-09-23, AWH: "not something you connect to at a campsite"; 3,365 values migrated, provenance copied from hookups where facilities had none). Hookups is electric/water/sewer only; its "None" shortcut covers those three.
 - A **dump station is not a sewer hookup**, and "dump station ~6 blocks away" / "sani-dump nearby" is `dump: false` (the note says it is elsewhere). Committed data is inconsistent here (18 false vs 25 omitted as of 2026-09-16).
 - `max_rig_ft`: an approximate figure is still a figure ("rigs to ~45 ft" -> 45). Omit only
   when the note UNDERCUTS its own number ("max ~40 ft, tight spacing, best for smaller rigs")

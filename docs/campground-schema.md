@@ -243,8 +243,7 @@ manage form become unmanageable otherwise.
 "hookups": {
   "electric": 50,                // 0 | 20 | 30 | 50 — the HIGHEST amp available on site
   "water": true,                 // at the site, not a communal spigot
-  "sewer": true,
-  "dump": true                   // dump station on site; independent of "sewer"
+  "sewer": true
 },
 
 "sites": {
@@ -258,6 +257,9 @@ manage form become unmanageable otherwise.
   "flush_toilets": true,
   "vault_toilets": false,
   "potable_water": true,         // communal spigots, even with no site hookups
+  "dump": true,                  // dump station on the property. A FACILITY, not a
+                                 // hookup: nothing at the site connects to it (that is
+                                 // hookups.sewer). Moved here from hookups 2026-09-23.
   "laundry": false,
   "camp_store": false,
   "wifi": false
@@ -1062,8 +1064,8 @@ checkbox on the manage form's section line, and the popup and collapsed summary 
   from the values every time the form opens (`sfAllNone`); unchecking it restores what the
   selects held before, rather than writing anything.
 - **"none" needs every field recorded.** One field left unknown means nobody looked, so
-  the group keeps its itemised chips: `electric 0 · water no · sewer no` with `dump`
-  unrecorded still reads *no hookups*, not *none*. Likewise the popup's verified half folds
+  the group keeps its itemised chips: facilities with every field "no" but `dump`
+  unrecorded still lists them rather than reading *none*. Likewise the popup's verified half folds
   only when it holds the whole group — a run restricted to a few keys, with the rest
   inherited from the agency, is not the group's answer.
 - A new field added to one of these groups must have a none value (a BOOL, or an INT whose

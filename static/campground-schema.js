@@ -264,8 +264,8 @@ function sfChips(group, values, keys) {
   // the same thing twice in different words.
   const folded = new Set();
   // "50A \u00b7 water \u00b7 sewer" is three chips for the thing every RV park advertises
-  // as one. Dump stays its own chip \u2014 a site with full hookups may or may not
-  // have one, so it is a separate fact, not part of this one.
+  // as one. (A dump station is a facility, not part of this: nothing at the
+  // site connects to it.)
   if (has('electric') && has('water') && has('sewer')) {
     if (values.electric > 0 && values.water === true && values.sewer === true) {
       parts.push('full hookups (' + values.electric + 'A)');

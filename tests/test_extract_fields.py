@@ -225,9 +225,9 @@ class TestParseReply(unittest.TestCase):
         """~1.6% of batches come back with a local defect, measured."""
         self.assertEqual(
             ef.parse_reply('[{"id": 1, "sites": {"count": 3}}, {"id": 2, bad},'
-                           ' {"id": 3, "hookups": {"dump": true}}]'),
+                           ' {"id": 3, "facilities": {"dump": true}}]'),
             [{"id": 1, "sites": {"count": 3}},
-             {"id": 3, "hookups": {"dump": True}}])
+             {"id": 3, "facilities": {"dump": True}}])
 
     def test_a_brace_inside_a_string_does_not_unbalance_the_salvage(self):
         """Notes get quoted back into replies, and notes contain braces."""

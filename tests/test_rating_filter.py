@@ -260,8 +260,8 @@ class TestMarkerPayload(unittest.TestCase):
         sys.path.insert(0, ROOT)
         import ekko_trips_app as A
         out = A._map_marker_rows([{"id": 1, "name": "X", "location": "1,2",
-                                   "hookups": {"electric": 30, "water": True,
-                                               "dump": True}}])[0]
+                                   "hookups": {"electric": 30, "water": True},
+                                   "facilities": {"dump": True}}])[0]
         self.assertIs(out["electric"], True)
         self.assertIs(out["water"], True)
         self.assertNotIn("sewer", out, "unrecorded stays absent (doc §2.1)")
