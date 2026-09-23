@@ -167,6 +167,25 @@ merely has the wrong value — fix the row. **Both sides must agree:** `policy_r
 `campground_schema.py` and `policyRefFor()` in `templates/campground_manage.html`, or the
 manage form keeps offering agency hints the server no longer applies.
 
+**A verified entry fact can make an inherited one moot, and then it is dropped**
+(`_moot_agency_keys`, added 2026-09-23). The merge is per KEY, so an entry's own
+`reservable: false` overrides the agency's `reservable` but used to leave the agency's
+`window_opens_days` standing — Mower Basin's popup read "not reservable · walk-ups welcome"
+directly above *"Typical for federal campgrounds: books 180 days ahead"*, and 1,887 entries
+(1,536 federal, 220 state, 130 provincial) had the same contradiction. Two rules, each
+triggered **only by the entry's own value**, never by an inherited one (a default must not
+switch off another default):
+
+- own `booking.reservable: false` → drop the agency's `platform`, `url`,
+  `window_opens_days`, `reserve_until`. **`max_stay_nights` stays**: a 14-night limit
+  binds a first-come site too.
+- own `fees` free at both ends (`nightly_high: 0`, `nightly_low` 0 or absent) → drop the
+  agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
+  A $0 low beside a paid high is a campground with some free sites and keeps them.
+
+The manage form mirrors both in `agencyRowFor()` so its "(agency: …)" hints agree with the
+popup; `tests/test_campground_schema.py` pins them.
+
 **But federal is also where the registry helps least, and the leverage table above
 oversells it.** Federal camping policy varies by *facility*: the 6-month rolling window is
 the recreation.gov standard, yet group sites often open 12 months out and some BLM/USFS

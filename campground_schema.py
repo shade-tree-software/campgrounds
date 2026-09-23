@@ -486,8 +486,36 @@ def policy_ref(entry):
     return refs[0] if refs else None
 
 
+# Agency fields that only mean something when you can book. Once the entry's
+# OWN record says it can't be reserved, inheriting these prints "not reservable"
+# beside "books 180 days ahead" — the per-key merge overrides `reservable` but
+# not the facts that hang off it. `max_stay_nights` is deliberately absent: a
+# 14-night limit binds a first-come site just the same.
+RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until")
+
+
+def _moot_agency_keys(entry):
+    """Registry keys a verified entry fact makes meaningless, per group.
+
+    `None` in place of a key set drops the whole group. Only the entry's own
+    values can trigger this — an inherited `reservable: false` is a default,
+    and a default must never switch off another default.
+    """
+    moot = {}
+    if (entry.get("booking") or {}).get("reservable") is False:
+        moot["booking"] = set(RESERVATION_ONLY_KEYS)
+    fees = entry.get("fees") or {}
+    # Free camping: there is no fee for a Senior-pass (or any) discount to
+    # apply to. Both ends must say free — a $0 low beside a paid high is a
+    # campground with some free sites, and its discounts still matter.
+    if fees.get("nightly_high") == 0 and fees.get("nightly_low", 0) == 0:
+        moot["discounts"] = None
+    return moot
+
+
 def _inherited(entry, registry):
-    """Merge every registry level this entry inherits, least specific first."""
+    """Merge every registry level this entry inherits, least specific first,
+    minus whatever the entry's own verified facts make moot."""
     merged = {}
     for ref in reversed(policy_refs(entry)):
         row = registry.get(ref)
@@ -497,6 +525,16 @@ def _inherited(entry, registry):
             if group in (PROVENANCE, NOTE_SCAN) or not isinstance(values, dict):
                 continue
             merged.setdefault(group, {}).update(values)
+    for group, keys in _moot_agency_keys(entry).items():
+        if group not in merged:
+            continue
+        if keys is None:
+            del merged[group]
+        else:
+            for k in keys:
+                merged[group].pop(k, None)
+            if not merged[group]:
+                del merged[group]
     return merged
 
 

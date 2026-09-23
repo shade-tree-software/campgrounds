@@ -312,6 +312,64 @@ class TestRegistryResolution(unittest.TestCase):
         self.assertEqual(cs.resolve(entry, {"none": {"booking":
                                                      {"fcfs": "always"}}}), {})
 
+    def test_own_not_reservable_drops_agency_reservation_fields(self):
+        # Mower Basin: its own "not reservable" overrode the federal row's
+        # `reservable`, but the per-key merge still printed "books 180 days
+        # ahead" beside it. A stay limit binds a first-come site too, so it
+        # survives.
+        reg = {"federal": {"booking": {"reservable": True,
+                                       "platform": "recreation.gov",
+                                       "url": "https://www.recreation.gov",
+                                       "window_opens_days": 180,
+                                       "reserve_until": {"relative_to": "arrival",
+                                                         "at": "23:00"},
+                                       "max_stay_nights": 14,
+                                       "note": "thin"}}}
+        entry = {"ownership": "federal", "state": "WV",
+                 "booking": {"reservable": False, "fcfs": "always"}}
+        got = cs.resolve(entry, reg)["booking"]
+        self.assertEqual(got["values"], {"reservable": False, "fcfs": "always",
+                                         "max_stay_nights": 14, "note": "thin"})
+        self.assertEqual(sorted(got["inherited"]), ["max_stay_nights", "note"])
+        self.assertIsNone(cs.field_scope(entry, "booking", "window_opens_days",
+                                         reg))
+        self.assertEqual(cs.field_scope(entry, "booking", "max_stay_nights",
+                                        reg), "agency")
+
+    def test_only_the_entrys_own_not_reservable_triggers_the_drop(self):
+        # A registry row saying "not reservable" is a default; it must not
+        # switch off another default. And an entry that says nothing about
+        # reservability keeps every agency field.
+        reg = {"federal": {"booking": {"platform": "recreation.gov",
+                                       "window_opens_days": 180}},
+               "federal:blm": {"booking": {"reservable": False}}}
+        named = {"ownership": "federal", "state": "NV",
+                 "policy_ref": "federal:blm"}
+        self.assertEqual(
+            cs.resolve(named, reg)["booking"]["values"]["window_opens_days"], 180)
+        silent = {"ownership": "federal", "state": "WV", "booking": {"fcfs": "always"}}
+        self.assertEqual(
+            cs.resolve(silent, reg)["booking"]["values"]["platform"],
+            "recreation.gov")
+
+    def test_own_free_fees_drop_agency_discounts(self):
+        # There is nothing for a Senior-pass discount to apply to at $0.
+        reg = {"federal": {"discounts": {"interagency_senior_access": True},
+                           "fees": {"currency": "USD"}}}
+        free = {"ownership": "federal", "state": "WV",
+                "fees": {"nightly_low": 0, "nightly_high": 0}}
+        got = cs.resolve(free, reg)
+        self.assertNotIn("discounts", got)
+        self.assertEqual(got["fees"]["values"]["currency"], "USD")
+        # The entry's OWN discounts still stand, and a campground with only
+        # some free sites keeps the agency's discount.
+        own = dict(free, discounts={"military": True})
+        self.assertEqual(cs.resolve(own, reg)["discounts"]["values"],
+                         {"military": True})
+        some_free = {"ownership": "federal", "state": "WV",
+                     "fees": {"nightly_low": 0, "nightly_high": 20}}
+        self.assertIn("discounts", cs.resolve(some_free, reg))
+
     def test_ownership_alone_is_what_makes_federal_reachable(self):
         # Federal policy is set per agency, not per state. Without this level a
         # single federal rule would need fifty identical `federal:XX` rows.

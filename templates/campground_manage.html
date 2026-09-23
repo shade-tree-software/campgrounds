@@ -490,8 +490,30 @@ function policyRefFor(c) {
   return (own && st) ? own + ':' + st : null;
 }
 
-function inheritedValue(c, groupKey, fieldKey) {
+// Mirrors campground_schema._moot_agency_keys: an entry's OWN "not reservable"
+// makes the agency's reservation-only fields meaningless, and its OWN free
+// fees make the agency's discounts meaningless. The server already drops them
+// from the popup; without this the form would still hint "(agency: 180)" under
+// a campground it has just recorded as first-come.
+const RESERVATION_ONLY_KEYS = ['platform', 'url', 'window_opens_days', 'reserve_until'];
+
+function agencyRowFor(c) {
   const row = CG_POLICIES[policyRefFor(c)];
+  if (!row) return null;
+  const out = Object.assign({}, row);
+  if ((c.booking || {}).reservable === false && out.booking) {
+    out.booking = Object.assign({}, out.booking);
+    RESERVATION_ONLY_KEYS.forEach(k => delete out.booking[k]);
+  }
+  const fees = c.fees || {};
+  if (fees.nightly_high === 0 && (fees.nightly_low === undefined || fees.nightly_low === 0)) {
+    delete out.discounts;
+  }
+  return out;
+}
+
+function inheritedValue(c, groupKey, fieldKey) {
+  const row = agencyRowFor(c);
   const group = row && row[groupKey];
   return group ? group[fieldKey] : undefined;
 }
@@ -549,7 +571,7 @@ function sfControlHtml(field, path, value, inherited) {
 
 function structuredSectionsHtml(c) {
   const ref = policyRefFor(c);
-  const row = CG_POLICIES[ref] || {};
+  const row = agencyRowFor(c) || {};
   const sections = CG_SCHEMA.map(g => {
     const own = c[g.key] || {};
     const setCount = Object.keys(own).length;
