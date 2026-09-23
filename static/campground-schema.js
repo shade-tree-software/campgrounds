@@ -355,6 +355,12 @@ function sfPopupChips(group, values, keys) {
   const noToilets = known('flush_toilets') && known('vault_toilets')
     && values.flush_toilets === false && values.vault_toilets === false;
   if (noToilets) { k.delete('flush_toilets'); k.delete('vault_toilets'); }
+  // One kind present answers the question; "no flush toilets" beside it is noise.
+  if (values.flush_toilets === true || values.vault_toilets === true) {
+    ['flush_toilets', 'vault_toilets'].forEach(t => {
+      if (values[t] !== true) k.delete(t);
+    });
+  }
   const parts = sfChips(group, values, k);
   // Toilets sit right after showers in the schema's field order.
   if (noToilets) parts.splice(k.has('showers') && values.showers === true ? 1 : 0, 0, 'no toilets');

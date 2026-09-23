@@ -329,10 +329,13 @@ class PopupChipsTest(unittest.TestCase):
                                                    "vault_toilets": False, "dump": True}),
                          ["showers", "no toilets", "dump station"])
 
-    def test_one_kind_of_toilet_keeps_itemised(self):
+    def test_one_kind_of_toilet_shows_only_that_kind(self):
         self.assertEqual(self.chips("facilities", {"flush_toilets": False,
                                                    "vault_toilets": True}),
-                         ["no flush toilets", "vault toilets"])
+                         ["vault toilets"])
+        self.assertEqual(self.chips("facilities", {"flush_toilets": True,
+                                                   "vault_toilets": False}),
+                         ["flush toilets"])
 
     def test_comfort_facilities_speak_only_when_yes(self):
         self.assertEqual(self.chips("facilities", {"showers": False, "laundry": False,

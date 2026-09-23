@@ -1044,8 +1044,8 @@ summary is the same run cut to three.
 2026-09-23). Popup space is scarce, and *no laundry · no wifi · no Good Sam discount* spends
 it on things nobody plans around. So in the popup (both halves), `showers`, `laundry`,
 `camp_store`, `wifi`, hookups `water`/`sewer`, and every discount get a chip **only when
-true**; no flush toilets *and* no vault toilets fold to one *no toilets* chip (one kind
-missing still reads itemised). A whole group answered none still reads *none*, except
+true**; no flush toilets *and* no vault toilets fold to one *no toilets* chip, and when
+one kind exists only that one shows (never *no flush toilets · vault toilets*). A whole group answered none still reads *none*, except
 discounts, which then say nothing. The manage form keeps every value — this is a popup cut,
 not a change to what `sfChips` says. `PopupChipsTest` pins it.
 
