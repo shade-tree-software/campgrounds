@@ -1355,8 +1355,8 @@ function cgFactsHtml(d) {
     if (!block) return;
     const inherited = new Set(block.inherited || []);
     const verified = new Set(Object.keys(block.values).filter(k => !inherited.has(k)));
-    own += cgFactRow(g.label, verified.size ? sfChips(g, block.values, verified) : []);
-    agency += cgFactRow(g.label, inherited.size ? sfChips(g, block.values, inherited) : [],
+    own += cgFactRow(g.label, verified.size ? sfPopupChips(g, block.values, verified) : []);
+    agency += cgFactRow(g.label, inherited.size ? sfPopupChips(g, block.values, inherited) : [],
                         CG_FACT_AGENCY_CHIP_MAX);
   });
   let html = own ? `<div class="cg-facts">${own}</div>` : '';

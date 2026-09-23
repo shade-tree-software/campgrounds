@@ -1040,6 +1040,15 @@ came out of it:
 Both surfaces change together because both call `sfChips`; the manage form's collapsed
 summary is the same run cut to three.
 
+**The popup then drops the "no"s that don't change a plan** (`sfPopupChips`, AWH
+2026-09-23). Popup space is scarce, and *no laundry · no wifi · no Good Sam discount* spends
+it on things nobody plans around. So in the popup (both halves), `showers`, `laundry`,
+`camp_store`, `wifi`, hookups `water`/`sewer`, and every discount get a chip **only when
+true**; no flush toilets *and* no vault toilets fold to one *no toilets* chip (one kind
+missing still reads itemised). A whole group answered none still reads *none*, except
+discounts, which then say nothing. The manage form keeps every value — this is a popup cut,
+not a change to what `sfChips` says. `PopupChipsTest` pins it.
+
 **Surfacing the rating was a fix, not a garnish.** Phase 2 lifted `RV Life 4*/$$` out of
 the note prose on 11,771 entries, and the popup renders the note — so between that pass and
 this one, a published fact about four fifths of the database was visible nowhere but the

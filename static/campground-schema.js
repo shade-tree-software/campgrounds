@@ -322,6 +322,45 @@ function sfChips(group, values, keys) {
   return parts;
 }
 
+// The map popup's cut of sfChips. A popup has room for what a camper plans
+// around, and a "no" is only worth a chip where its absence changes the plan
+// (AWH 2026-09-23): no toilets does; no laundry, no wifi, no Good Sam discount
+// don't. So these fields speak only when true — unknown and "no" both stay
+// silent there — while the manage form keeps every value via plain sfChips.
+const SF_POPUP_YES_ONLY = {
+  hookups: new Set(['water', 'sewer']),
+  facilities: new Set(['showers', 'laundry', 'camp_store', 'wifi']),
+  discounts: null,   // null: every field in the group
+};
+
+function sfPopupChips(group, values, keys) {
+  const whole = sfChips(group, values, keys);
+  // A group recorded as having none of anything: "none" is one chip for a
+  // facilities row, but for discounts it is exactly the "no" to leave out.
+  if (whole.length === 1 && whole[0] === 'none' && sfAllNone(group, values)) {
+    return group.key === 'discounts' ? [] : whole;
+  }
+  const yesOnly = SF_POPUP_YES_ONLY[group.key];
+  if (yesOnly === undefined) return whole;
+  const k = new Set(keys || Object.keys(values));
+  const known = f => k.has(f) && f in values;
+  // (A dry campground never gets here: no electric/water/sewer is the whole
+  // hookups group, answered "none" above.)
+  group.fields.forEach(f => {
+    if ((yesOnly === null || yesOnly.has(f.key)) && values[f.key] !== true) {
+      k.delete(f.key);
+    }
+  });
+  // Neither kind of toilet is one fact, not two.
+  const noToilets = known('flush_toilets') && known('vault_toilets')
+    && values.flush_toilets === false && values.vault_toilets === false;
+  if (noToilets) { k.delete('flush_toilets'); k.delete('vault_toilets'); }
+  const parts = sfChips(group, values, k);
+  // Toilets sit right after showers in the schema's field order.
+  if (noToilets) parts.splice(k.has('showers') && values.showers === true ? 1 : 0, 0, 'no toilets');
+  return parts;
+}
+
 function sfSummary(group, values, limit = 3) {
   const parts = sfChips(group, values);
   if (!parts.length) return null;

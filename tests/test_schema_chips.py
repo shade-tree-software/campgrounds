@@ -310,5 +310,67 @@ class GroupNoneTest(unittest.TestCase):
                          ["no pull-throughs"])
 
 
+@unittest.skipIf(quickjs is None, "quickjs not installed (pip install quickjs)")
+class PopupChipsTest(unittest.TestCase):
+    """The map popup's cut (`sfPopupChips`): only the "no"s that change a
+    camper's plan get a chip (AWH 2026-09-23)."""
+
+    setUpClass = classmethod(GroupNoneTest.setUpClass.__func__)
+    none_of = GroupNoneTest.none_of
+
+    def chips(self, group, values, keys=None):
+        return json.loads(self.ctx.eval(
+            "JSON.stringify(sfPopupChips(g(%s), %s, %s))"
+            % (json.dumps(group), json.dumps(values),
+               "new Set(%s)" % json.dumps(keys) if keys else "undefined")))
+
+    def test_no_flush_and_no_vault_is_no_toilets(self):
+        self.assertEqual(self.chips("facilities", {"showers": True, "flush_toilets": False,
+                                                   "vault_toilets": False, "dump": True}),
+                         ["showers", "no toilets", "dump station"])
+
+    def test_one_kind_of_toilet_keeps_itemised(self):
+        self.assertEqual(self.chips("facilities", {"flush_toilets": False,
+                                                   "vault_toilets": True}),
+                         ["no flush toilets", "vault toilets"])
+
+    def test_comfort_facilities_speak_only_when_yes(self):
+        self.assertEqual(self.chips("facilities", {"showers": False, "laundry": False,
+                                                   "camp_store": True, "wifi": False,
+                                                   "potable_water": False}),
+                         ["no potable water", "camp store"])
+
+    def test_discounts_speak_only_when_yes(self):
+        self.assertEqual(self.chips("discounts", {"good_sam": False, "military": True}),
+                         ["military discount"])
+        self.assertEqual(self.chips("discounts", self.none_of("discounts")), [])
+
+    def test_water_and_sewer_speak_only_when_yes(self):
+        self.assertEqual(self.chips("hookups", {"electric": 30, "water": True,
+                                                "sewer": False}),
+                         ["30A", "water"])
+        self.assertEqual(self.chips("hookups", {"electric": 0, "water": False}),
+                         ["no electric"])
+
+    def test_a_dry_campground_still_says_so(self):
+        """Dropping the false water/sewer first would unfold it to "no electric"."""
+        self.assertEqual(self.chips("hookups", {"electric": 0, "water": False,
+                                                "sewer": False}),
+                         ["none"])
+        self.assertEqual(self.chips("hookups", {"electric": 0, "water": False,
+                                                "sewer": False}, ["water", "sewer",
+                                                                  "electric"]),
+                         ["none"])
+
+    def test_whole_facilities_none_still_reads_none(self):
+        self.assertEqual(self.chips("facilities", self.none_of("facilities")), ["none"])
+
+    def test_restricted_keys_are_respected(self):
+        self.assertEqual(self.chips("facilities", {"showers": True, "flush_toilets": False,
+                                                   "vault_toilets": False},
+                                    ["showers"]),
+                         ["showers"])
+
+
 if __name__ == "__main__":
     unittest.main()
