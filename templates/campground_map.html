@@ -3202,6 +3202,7 @@ function trimmedBounds(coords, frac) {
   });
 
   let editOrigLocation = '';   // to detect a moved pin (→ refetch elevation)
+  let editOrigValues = null;   // form values when the modal opened (→ dirty check)
   let editOrigElevFeet = '';   // the entry's elevation when the modal opened
   let cqElevMeters = null;     // latest fetched elevation (m), or null
   let cqElevForLoc = '';       // the location string cqElevMeters belongs to
@@ -3265,9 +3266,31 @@ function trimmedBounds(coords, frac) {
     editOrigElevFeet = (d.elevation_feet != null && d.elevation_feet !== '') ? d.elevation_feet : '';
     cqElevMeters = null; cqElevForLoc = '';
     setElev(editOrigElevFeet !== '' ? editOrigElevFeet + ' ft' : '—');
+    editOrigValues = cqFormValues();
     backdrop.classList.add('open');
     document.getElementById('cq-name').focus();
   };
+
+  const CQ_FIELD_IDS = ['cq-name', 'cq-location', 'cq-waterfront', 'cq-note',
+                        'cq-phone', 'cq-website'];
+  function cqFormValues() {
+    return CQ_FIELD_IDS.map(fid => document.getElementById(fid).value).join('\u0000');
+  }
+
+  // "More fields →" leaves the page, and it used to leave whatever had been
+  // typed here with it: a note rewritten in the quick editor was gone by the
+  // time the manage form opened. So a dirty form saves first and navigates
+  // only once the save lands; a failed save stays put, edits intact. A clean
+  // form is left to the plain link, so ctrl/middle-click still open a tab.
+  document.getElementById('cq-more').addEventListener('click', e => {
+    if (!editOrigValues || cqFormValues() === editOrigValues) return;
+    e.preventDefault();
+    const href = e.currentTarget.href;
+    const newTab = e.ctrlKey || e.metaKey || e.shiftKey;
+    window.cgSave(() => {
+      if (newTab) window.open(href, '_blank'); else window.location.href = href;
+    });
+  });
 
   window.cgCloseModal = function() {
     backdrop.classList.remove('open');
@@ -3275,7 +3298,8 @@ function trimmedBounds(coords, frac) {
   };
   backdrop.addEventListener('click', e => { if (e.target === backdrop) window.cgCloseModal(); });
 
-  window.cgSave = function() {
+  // `after` runs once the save has landed (used by "More fields →").
+  window.cgSave = function(after) {
     const id = document.getElementById('cq-id').value;
     const rec = cgById.get(parseInt(id, 10));
     if (!rec) return;
@@ -3306,6 +3330,7 @@ function trimmedBounds(coords, frac) {
           if (!ok) { window.toast(j.error || 'Save failed'); return; }
           cgApplyEdit(rec, payload);
           window.cgCloseModal();
+          if (typeof after === 'function') { after(); return; }
           if (elevWarn) {
             window.toast('Saved — but the elevation lookup failed, so elevation was left unchanged.', 'error', { duration: 6000 });
           } else {
