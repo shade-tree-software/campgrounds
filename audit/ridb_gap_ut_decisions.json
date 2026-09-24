@@ -1,0 +1,40 @@
+{
+ "state": "UT",
+ "decided": "2026-09-24",
+ "source": "audit/ridb_gap_2026-09-21.json via audit/ridb_gap_triage.py",
+ "note": "Fourth western state off the federal gap list. 16 likely_rv rows, none already in the database by recreation.gov id. 10 added, 6 excluded, each with the kind of no. Forest Service sites on the Dixie, Fishlake, Manti-La Sal and Uinta-Wasatch-Cache, and BLM sites near Moab, Green River, Beaver and the Paria. One row RIDB files under UT (Echo Park) actually sits in Colorado and is excluded on access regardless.",
+ "added": [
+  {"id": 13223, "facility_id": "232026", "name": "Cedar Canyon Campground (Dixie NF)", "waterfront": "creekside"},
+  {"id": 13224, "facility_id": "16353", "name": "Hanging Rock Campground (Beaver River)", "waterfront": "riverfront",
+   "caveat": "no published site length and no per-site coordinates; a dated review (2024-07) got a 32-ft Class C in, entry 'somewhat tight'"},
+  {"id": 13225, "facility_id": "250039", "name": "Miller Flat Reservoir Campground", "waterfront": "not waterfront"},
+  {"id": 13226, "facility_id": "10169589", "name": "North Klondike Campground (Moab)", "waterfront": "not waterfront"},
+  {"id": 13227, "facility_id": "10007181", "name": "Oak Creek Campground (Boulder Mountain)", "waterfront": "not waterfront"},
+  {"id": 13228, "facility_id": "233148", "name": "Rosebud OHV Campground (Boulder Mountain)", "waterfront": "not waterfront"},
+  {"id": 13229, "facility_id": "232104", "name": "Stateline Campground (Stateline Reservoir)", "waterfront": "lakeview"},
+  {"id": 13230, "facility_id": "10282572", "name": "Swaseys Beach Campground (Green River)", "waterfront": "riverfront"},
+  {"id": 13231, "facility_id": "233992", "name": "Willow Lake Campground (Manti-La Sal NF)", "waterfront": "lakeview",
+   "caveat": "only sites 1-3 permit RVs and trailers (30 ft); the rest are van/pickup-camper/pop-up"},
+  {"id": 13232, "facility_id": "256924", "name": "White House Campground (Paria River)", "waterfront": "not waterfront",
+   "caveat": "no published site length; 2 miles of washboard with two big dips; reviewers: a 21-ft trailer dragged its bumper (2019), a 26-ft RV got in (2020), one reviewer claims an 18-ft trailer maximum. Kept on the 2020 firsthand report; a judgement call"}
+ ],
+ "excluded": [
+  {"facility_id": "10216501", "name": "Westwater Campground (Ranger Station)", "kind_of_no": "size gate",
+   "why": "every one of the 11 catalog sites states Max Vehicle Length 17 ft and permits only cars, vans, pickup campers and tents - no RV or trailer on any site"},
+  {"facility_id": "259557", "name": "Echo Park Campground (Dinosaur NM)", "kind_of_no": "access",
+   "why": "NPS: the Echo Park Road 'is not suitable for RVs'; high clearance and 4WD strongly recommended for the dugway switchbacks, impassable when wet. Also note the campground is in Colorado (Moffat County), not Utah as RIDB files it"},
+  {"facility_id": "232413", "name": "MAPLE CANYON", "kind_of_no": "size gate",
+   "why": "recreation.gov notice: 'RVs and trailers are not recommended'; catalog sites 20 ft save one at 25 ft, narrow dirt canyon road"},
+  {"facility_id": "232404", "name": "WARNER LAKE", "kind_of_no": "size gate",
+   "why": "all 19 catalog sites state 20 ft"},
+  {"facility_id": "231933", "name": "WOLF CREEK (UT)", "kind_of_no": "size gate",
+   "why": "the three single sites state 15 ft; the only longer sites are the two group sites (group-only for a 23-ft rig)"},
+  {"facility_id": "10306533", "name": "Stateline Campground Long Term", "kind_of_no": "duplicate",
+   "why": "three sites of Stateline Campground (added as 13229) sold separately with a 30-night minimum; recorded in that entry's note rather than as a second entry"}
+ ],
+ "method_notes": [
+  "No per-site water flag existed on Cedar Canyon, so its creekside call rests on the z18 imagery, where Crow Creek's channel is legible beside the south row, plus the OSM line 5-13 m from eight pads. Rosebud's single pad at 24 m from Pleasant Creek was NOT promoted: a riparian band stands between and nothing qualifying confirms it. Oak Creek's unnamed OSM stream (23-38 m under canopy, never mentioned by the agency) likewise stays down.",
+  "Two rows without per-site coordinates (Hanging Rock, White House) were placed from the facility pin and read at z18/z19; both pins sit on the campground.",
+  "Overpass's main endpoint 504'd repeatedly; the water measurements went through on retry."
+ ]
+}
