@@ -1,0 +1,40 @@
+{
+ "state": "OK",
+ "decided": "2026-09-24",
+ "source": "audit/ridb_gap_2026-09-21.json via audit/ridb_gap_triage.py",
+ "note": "Fifth western state off the federal gap list, all Corps of Engineers (Tulsa District). 14 likely_rv rows: 1 already in the database by recreation.gov id (Kiamichi Park), 13 judged, 12 added and 1 excluded. One add (Damsite Texas) is on the Texas bank below Denison Dam and is recorded with state TX. Big, established, reservable lake campgrounds that the OK sweep's RV Life detection never listed; October 2026 availability on rec.gov confirmed every added one is taking bookings.",
+ "added": [
+  {"id": 13233, "facility_id": "233423", "name": "Bear Creek Cove (Kaw Lake)", "waterfront": "lakeview"},
+  {"id": 13234, "facility_id": "10041284", "name": "Damsite Texas (Denison Dam, Red River)", "waterfront": "not waterfront", "state": "TX",
+   "caveat": "no published site length and no per-site coordinates; 19 of 20 sites list fifth wheels as permitted"},
+  {"id": 13235, "facility_id": "233502", "name": "Gentry Creek (Eufaula Lake)", "waterfront": "lakefront"},
+  {"id": 13236, "facility_id": "233540", "name": "Little River Park (Pine Creek Lake)", "waterfront": "lakefront"},
+  {"id": 13237, "facility_id": "233543", "name": "Longdale (Canton Lake)", "waterfront": "lakefront"},
+  {"id": 13238, "facility_id": "233546", "name": "Lost Rapids (Pine Creek Lake)", "waterfront": "lakefront",
+   "caveat": "no published site length"},
+  {"id": 13239, "facility_id": "10317377", "name": "Mill Creek (Eufaula Lake)", "waterfront": "lakefront"},
+  {"id": 13240, "facility_id": "233702", "name": "Potato Hills South (Sardis Lake)", "waterfront": "lakefront"},
+  {"id": 13241, "facility_id": "233619", "name": "Sandy Cove (Canton Lake)", "waterfront": "not waterfront"},
+  {"id": 13242, "facility_id": "233622", "name": "Sarge Creek (Kaw Lake)", "waterfront": "lakefront"},
+  {"id": 13243, "facility_id": "233632", "name": "Snake Creek (Tenkiller Ferry Lake)", "waterfront": "lakefront",
+   "caveat": "no published site length; thirteen 50-amp sites"},
+  {"id": 13244, "facility_id": "233668", "name": "Washunga Bay (Kaw Lake)", "waterfront": "not waterfront"}
+ ],
+ "excluded": [
+  {"facility_id": "233480", "name": "DAM SITE (FORT GIBSON LAKE)", "kind_of_no": "closed, and unconfirmable",
+   "why": "primitive campground below Fort Gibson Dam, rebuilt after the 2019 flood; the west side (where the campground is) closed from 2026-05-17 for the dam bridge-deck replacement for 'a minimum of 2 1/2 years', and rec.gov shows every campsite Closed. No site length or permitted-equipment data exists to pass the 23-ft gate. Revisit when it reopens"}
+ ],
+ "already_in_db": [
+  {"facility_id": "233529", "id": 6624, "name": "Kiamichi Park - Hugo Lake (USACE)", "why": "database already cites the same recreation.gov facility id"}
+ ],
+ "recheck": {
+  "why": "Fort Gibson Dam Site reopens after the bridge work (no earlier than late 2028); it becomes an ordinary add if the catalog then shows RV-length sites.",
+  "facility_ids": ["233480"]
+ },
+ "method_notes": [
+  "OSM's reservoir polygons here are drawn at a different pool from the imagery, both ways: Snake Creek's shore pads sit at the waterline in the imagery but 29-46 m from the OSM line, Sarge Creek's site 041 ~27 m from the water in the imagery but 52 m from OSM. Where the imagery was legible it decided; the OSM figure is recorded alongside.",
+  "Bear Creek Cove is the drawdown case going the other way: a sand beach 60-100 m wide separates the west loop from the normal-pool line, so it is lakeview (open view, beyond the ~50 m bound) rather than lakefront.",
+  "The rec.gov availability calendar (October) is the cheap operating check: Fort Gibson Dam Site's campsites all read Closed while its group shelters read Available, which is exactly what the closure notice says.",
+  "Sandy Cove's catalog marks every site 'Water Hookup: Yes', but the rec.gov notice says there are no individual water hookups, only shared hydrants with Y's. water is recorded false on the notice's authority."
+ ]
+}
