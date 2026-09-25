@@ -1,0 +1,47 @@
+{
+ "state": "misc",
+ "decided": "2026-09-24",
+ "source": "audit/ridb_gap_2026-09-21.json via audit/ridb_gap_triage.py",
+ "note": "The 18 scattered likely_rv rows outside CA (WY 4, MO 3, ID 2, MT 2, NM 2, and one each filed under AZ, NV, ND, SD, TX). None already in the database by recreation.gov id. 13 added, 5 excluded. RIDB's state field was wrong on three: Koomer Ridge (filed AZ) is in Kentucky, Indian Creek (filed NV) is in California, and Buck Creek (filed MO) is on the Arkansas side of Bull Shoals Lake; each entry carries its real state.",
+ "added": [
+  {"id": 13252, "facility_id": "10311270", "state": "KY", "name": "Koomer Ridge Campground (Red River Gorge)", "waterfront": "not waterfront",
+   "caveat": "no agency length; 19 of 54 sites take RVs, rigs over 34 ft cannot make the entrance and aprons are paved only 20 ft"},
+  {"id": 13253, "facility_id": "233355", "state": "ID", "name": "Boundary Creek Campground (Middle Fork Salmon)", "waterfront": "not waterfront",
+   "caveat": "25 miles of rough single-lane dirt road; FS says trailers up to 30 ft"},
+  {"id": 13254, "facility_id": "233313", "state": "ID", "name": "Macks Creek Campground (Lucky Peak Lake)", "waterfront": "lakeview"},
+  {"id": 13255, "facility_id": "232535", "state": "AR", "name": "Buck Creek (Bull Shoals Lake)", "waterfront": "not waterfront"},
+  {"id": 13256, "facility_id": "10064579", "state": "MO", "name": "Udall Park (Norfork Lake)", "waterfront": "lakefront"},
+  {"id": 13257, "facility_id": "249999", "state": "MT", "name": "Hellgate Campground (Canyon Ferry Lake)", "waterfront": "lakefront"},
+  {"id": 13258, "facility_id": "233360", "state": "MT", "name": "McGregor Lake Campground (Kootenai NF)", "waterfront": "not waterfront"},
+  {"id": 13259, "facility_id": "251948", "state": "ND", "name": "Wolf Creek Campground (Lake Sakakawea)", "waterfront": "lakeview",
+   "caveat": "held at lakeview on the bluff rule: pads 4-10 m from the OSM line with per-site Lakefront flags, but the shore is an eroding bank whose height the (winter) imagery cannot show; upgrade if the bank is confirmed walk-down"},
+  {"id": 13260, "facility_id": "233327", "state": "NM", "name": "Hopewell Lake Campground (Carson NF)", "waterfront": "not waterfront"},
+  {"id": 13261, "facility_id": "272246", "state": "CA", "name": "Indian Creek Campground (BLM, Markleeville)", "waterfront": "not waterfront",
+   "caveat": "CLOSED since the July 2021 Tamarack Fire destroyed the RV loop; BLM intends to rebuild, no date"},
+  {"id": 13262, "facility_id": "10001432", "state": "SD", "name": "Cottonwood Springs Campground (Hot Springs)", "waterfront": "not waterfront"},
+  {"id": 13263, "facility_id": "10299310", "state": "WY", "name": "Friend Park Campground (Laramie Peak)", "waterfront": "not waterfront"},
+  {"id": 13264, "facility_id": "10244145", "state": "WY", "name": "Sugarloaf Campground (Snowy Range)", "waterfront": "not waterfront",
+   "caveat": "FS lists small trailers up to 22 ft; kept on dated firsthand reports of 25-28 ft trailers and a 38-ft Class A (site 16). A judgement call against the agency figure"}
+ ],
+ "excluded": [
+  {"facility_id": "234703", "name": "ROCKY CREEK PARK (BENBROOK LAKE)", "kind_of_no": "no camping",
+   "why": "rec.gov: 'NO CAMPING ALLOWED. Pedestrian Access Day Use allowed 6AM to 9PM ONLY'; main roads gated to vehicles. The catalog's 11 sites are dead records"},
+  {"facility_id": "273758", "name": "FIELD TRACT CAMPGROUND", "kind_of_no": "size gate",
+   "why": "rec.gov: 'Campsites are suitable for trailers up to 22 feet in length'; also closed until further notice for shelter repairs"},
+  {"facility_id": "232334", "name": "SUNDANCE (Horse Camp)", "kind_of_no": "horse camp",
+   "why": "Black Hills NF 'Sundance Horse Camp': 8 sites built around horse trailers with corrals, feed bunks and a rider loading ramp, next to the equestrian trailhead"},
+  {"facility_id": "10289155", "name": "Big Sandy Campground (Wind River Range)", "kind_of_no": "access",
+   "why": "backpacker trailhead campground at the end of a long dirt road whose final 7 miles are rough and narrow; reviewers: 'not for big rigs', trailers at real risk; no site lengths, no water"},
+  {"facility_id": "10357051", "name": "Snow Creek Campground (Wappapello Lake)", "kind_of_no": "unconfirmable",
+   "why": "9 primitive gravel sites; the catalog lists no RV or trailer as permitted equipment on 8 of them (one allows only pickup campers and pop-ups) and no lengths, and no authoritative source says an RV fits. Revisit if USACE publishes site lengths"}
+ ],
+ "recheck": {
+  "why": "Indian Creek (CA) is closed pending a rebuild after the Tamarack Fire; Field Tract is closed for shelter repairs but fails the size gate regardless.",
+  "facility_ids": ["272246"]
+ },
+ "method_notes": [
+  "Three of 18 rows had the wrong state in RIDB. Read the facility's own description and pin before trusting the state field, especially for rows that look out of place in their state's list.",
+  "Macks Creek's per-site 'Lakefront' flag is on every site, but the RV sites are across Arrowrock Road from the water: a road between is a buffer however the flag reads.",
+  "Wolf Creek's imagery is winter (snow on ice) and the Sakakawea south shore is eroding bank; held at lakeview rather than trusting the flag through a possible bluff."
+ ]
+}
