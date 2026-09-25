@@ -41,3 +41,6 @@ unmeasured** and is the one left worth measuring — 2,511 entries, and its dete
 inherits RV Life's omissions twice over, so it cannot borrow the state answer. The portal
 method does not reach it (counties and towns are on no state platform), so it needs a
 different instrument.
+
+
+**UPDATE 2026-09-25:** the federal gap is fully worked (both lists), and the local face was measured: roughly a third of OSM-visible local campgrounds are missing ([[reference_local_gap_measurement]]). Local is now the priority gap.
