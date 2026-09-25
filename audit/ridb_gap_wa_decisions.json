@@ -1,0 +1,33 @@
+{
+ "state": "WA",
+ "decided": "2026-09-24",
+ "source": "audit/ridb_gap_2026-09-21.json via audit/ridb_gap_triage.py",
+ "note": "Sixth western state off the federal gap list. 9 likely_rv rows, none already in the database by recreation.gov id. 7 added (Forest Service on the Gifford Pinchot and Mt. Baker-Snoqualmie, NPS at Lake Roosevelt), 2 excluded on the size gate. Two of the adds are closed by road damage and carry the closure in their notes.",
+ "added": [
+  {"id": 13245, "facility_id": "275029", "name": "Kamloops Island Campground (Lake Roosevelt)", "waterfront": "lakeview"},
+  {"id": 13246, "facility_id": "232051", "name": "Gold Basin Campground (Mountain Loop Highway)", "waterfront": "not waterfront"},
+  {"id": 13247, "facility_id": "275082", "name": "Haag Cove Campground (Lake Roosevelt)", "waterfront": "lakefront"},
+  {"id": 13248, "facility_id": "232895", "name": "Peterson Prairie Campground (Trout Lake)", "waterfront": "creekside"},
+  {"id": 13249, "facility_id": "233863", "name": "Sulphur Creek Campground (Suiattle River)", "waterfront": "not waterfront",
+   "caveat": "CLOSED 2026: Suiattle River Road washed out by an atmospheric-river flood; only ~7 of 20 sites are 25 ft or more"},
+  {"id": 13250, "facility_id": "232855", "name": "Tower Rock Campground (Cispus River)", "waterfront": "not waterfront"},
+  {"id": 13251, "facility_id": "232315", "name": "Troublesome Creek Campground (North Fork Skykomish)", "waterfront": "creekside",
+   "caveat": "CLOSED: Index-Galena Road repairs and the long-term FR 65 closure west of Jack Pass; no reopening date"}
+ ],
+ "excluded": [
+  {"facility_id": "234086", "name": "Big Creek (Gifford Pinchot National Forest, WA)", "kind_of_no": "size gate",
+   "why": "rec.gov notice: 'maximum vehicle length of 22 feet' and a 'relatively tight turning radius'; every catalog site states 20 ft"},
+  {"facility_id": "234018", "name": "HELLS CROSSING CAMPGROUND", "kind_of_no": "size gate",
+   "why": "rec.gov notice: 'not recommended for RV campers due to its tight turns and the close proximity of trees to the roads', though some pads state 30-40 ft. The agency's access warning outranks the pad lengths (Eagle Creek/House Rock precedent)"}
+ ],
+ "recheck": {
+  "why": "Sulphur Creek (Suiattle River Road washout) and Troublesome Creek (Index-Galena Road / FR 65) are closed by road damage; re-read their FS pages each season and clear the CLOSED sentence from the note when they reopen.",
+  "facility_ids": ["233863", "232315"]
+ },
+ "method_notes": [
+  "Peterson Prairie is the canopy-blind case: nothing resolves under the pine, so the call rests on the per-site 'Riverfront' flags (11 sites) checked against the OSM Coyote Creek line, 17-31 m from the flagged pads. The agency description never mentions the creek, so this is the weakest on-water call of the state.",
+  "Gold Basin's two 'Riverfront' flags are on the host site and a management site, neither of which the public can book, so they cannot earn the designation (the lone-host-site rule applied to water instead of electric).",
+  "Haag Cove's imagery is at drawdown, with the water ~150 m off across open sand; measured to the OSM full-pool line (27-38 m) per the 'measure to the high-water edge' rule.",
+  "recgov_hookups.py --apply silently reverted Sandy Cove's (OK, 13241) hand-corrected water:false, because a derived group is not protected. The correction is now stamped method 'reported', which the tool never overwrites."
+ ]
+}

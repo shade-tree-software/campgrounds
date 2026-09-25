@@ -44,3 +44,5 @@ Per-state decisions go in `audit/ridb_gap_<ST>_decisions.json`, recording added 
 - **Catalogs fill "Proximity to Water: N/A"** on every site (Saddle Lake) and some regions use a "WATERFRONT SITES" attribute instead — sat_look handles both.
 - **The catalog's permitted-equipment list can be the size gate**: Katahdin's Sandbank Stream allows vans, pickup campers and pop-ups only.
 
+
+**Hand-correcting a catalog-derived hookup needs `method: "reported"`** (2026-09-24). `recgov_hookups.py --apply` rewrites any `derived` hookups group from the catalog on every run, so Sandy Cove's (13241) water:false, set from a rec.gov notice that contradicts the catalog, was silently flipped back to true by the NEXT state's apply. Only `manual`/`reported` survive; stamp the correction `reported` with the notice named in `source`.
