@@ -2,7 +2,7 @@
  "state": "MN",
  "decided": "2026-09-25",
  "source": "audit/local_gap_osm.py --state MN (audit/local_gap_2026-09-25.json): 56 OSM local-government campgrounds with no entry within 1.5 km",
- "note": "First local-gap sweep. 24 added as ownership local (13318-13341). Two OSM nodes merged into one entry each (Bear Lake + Barnum City Park; the two Cottingham nodes; the Chippewa node and polygon). Amperage is written only where the operator states it.",
+ "note": "First local-gap sweep. All 56 unmatched OSM candidates judged: 26 added as ownership local (13318-13343), 27 excluded, 3 duplicate nodes merged into adds. Two OSM nodes merged into one entry each (Bear Lake + Barnum City Park; the two Cottingham nodes; the Chippewa node and polygon). Amperage is written only where the operator states it. The exclusions are mostly primitive county camps with no published size, canoe or bike camps, and tent-only sites.",
  "added": [
   {
    "id": 13318,
@@ -123,6 +123,17 @@
    "id": 13341,
    "name": "Sundquist Park (Lake Sarah, Murray County)",
    "waterfront": "lakeview"
+  },
+  {
+   "id": 13342,
+   "name": "J F Jacobson City Park",
+   "waterfront": "not waterfront"
+  },
+  {
+   "id": 13343,
+   "name": "Trollskogen City Park",
+   "waterfront": "not waterfront",
+   "caveat": "thin details"
   }
  ],
  "excluded": [
@@ -179,131 +190,114 @@
    "name": "Canoe Campsite",
    "kind_of_no": "boat-in",
    "why": "canoe campsite"
+  },
+  {
+   "osm": "node/1798199108",
+   "name": "Snake River County Park",
+   "kind_of_no": "unconfirmable",
+   "why": "Aitkin County's Snake River Campground: 12 primitive sites, no size or trailer statement"
+  },
+  {
+   "osm": "node/7130042486",
+   "name": "Tree Farm Landing County Campgrounds",
+   "kind_of_no": "not RV",
+   "why": "Wadena County: 'not recommended for camper or RV usage'; a canoe-trail camp"
+  },
+  {
+   "osm": "node/7130053288",
+   "name": "Hunterville Township Campsite",
+   "kind_of_no": "not public",
+   "why": "now a private outfitter's basecamp, guided-trip participants only"
+  },
+  {
+   "osm": "node/7132369731",
+   "name": "Little White Dog Campground",
+   "kind_of_no": "size gate",
+   "why": "Wadena County: 9 sites 'for tents or smaller camper units only'"
+  },
+  {
+   "osm": "node/7142098002",
+   "name": "Pine Lawn City Park",
+   "kind_of_no": "unconfirmable",
+   "why": "no city page; listings say $10 campers with 20-amp and perhaps one electric hookup"
+  },
+  {
+   "osm": "node/7160201351",
+   "name": "Bruno City Park",
+   "kind_of_no": "unconfirmable",
+   "why": "no operator page or camping detail found"
+  },
+  {
+   "osm": "node/7199337294",
+   "name": "Stanley Eddy Regional Park Reserve South",
+   "kind_of_no": "not RV",
+   "why": "Wright County: backcountry sites by reservation only, no RV campground"
+  },
+  {
+   "osm": "node/7359645811",
+   "name": "Fury’s Island County Park",
+   "kind_of_no": "unconfirmable",
+   "why": "not on Murray County's list of parks with camping; only a tourism listing claims camping"
+  },
+  {
+   "osm": "node/7490927280",
+   "name": "Bright Lake County Park",
+   "kind_of_no": "unconfirmable",
+   "why": "Martin County lists only 'Primitive Camping Sites', no count or size"
+  },
+  {
+   "osm": "node/7494751920",
+   "name": "Mack Lake County Park",
+   "kind_of_no": "too small",
+   "why": "Renville County: 5 rustic campsites"
+  },
+  {
+   "osm": "node/7494751921",
+   "name": "Vicksburg County Park",
+   "kind_of_no": "unconfirmable",
+   "why": "Renville County: 11 rustic sites, no electric, no size"
+  },
+  {
+   "osm": "node/7495776774",
+   "name": "Boyd City Park",
+   "kind_of_no": "unconfirmable",
+   "why": "no camping detail found"
+  },
+  {
+   "osm": "node/7556861233",
+   "name": "Ojiketa Regional Park",
+   "kind_of_no": "not RV",
+   "why": "Chisago City: cabins and tent campsites only"
+  },
+  {
+   "osm": "node/7615826491",
+   "name": "Clear Lake Park",
+   "kind_of_no": "too small",
+   "why": "Le Sueur County: 4 primitive sites"
+  },
+  {
+   "osm": "node/7638968421",
+   "name": "Spring Lake City Park",
+   "kind_of_no": "tent only",
+   "why": "listed as tent sites"
+  },
+  {
+   "osm": "node/7681847384",
+   "name": "Ralph J. Klein City Park",
+   "kind_of_no": "unconfirmable",
+   "why": "no operator page or camping detail found"
+  },
+  {
+   "osm": "way/1298895457",
+   "name": "Wegdahl County Park",
+   "kind_of_no": "too small",
+   "why": "Chippewa County: 2 RV sites with water and electric, plus cabins and rustic tent camping"
+  },
+  {
+   "osm": "way/1290266369",
+   "name": "Sites 7-20",
+   "kind_of_no": "closed",
+   "why": "Rapidan Dam Park (Blue Earth County): closed until further notice, primitive, and RVs not allowed"
   }
- ],
- "not_added_no_recorded_verdict": {
-  "why": "Judged in session before a context reset, but the reasons were not written down. They are NOT confirmed exclusions. Re-judge them before calling the MN local gap closed.",
-  "rows": [
-   {
-    "osm": "node/1798199108",
-    "name": "Snake River County Park",
-    "lat": 46.169425,
-    "lng": -93.258382
-   },
-   {
-    "osm": "node/7130042486",
-    "name": "Tree Farm Landing County Campgrounds",
-    "lat": 46.790567,
-    "lng": -94.873553
-   },
-   {
-    "osm": "node/7130053288",
-    "name": "Hunterville Township Campsite",
-    "lat": 46.767841,
-    "lng": -94.905568
-   },
-   {
-    "osm": "node/7132369731",
-    "name": "Little White Dog Campground",
-    "lat": 46.584746,
-    "lng": -94.818548
-   },
-   {
-    "osm": "node/7142098002",
-    "name": "Pine Lawn City Park",
-    "lat": 43.710784,
-    "lng": -92.539957
-   },
-   {
-    "osm": "node/7160201351",
-    "name": "Bruno City Park",
-    "lat": 46.280609,
-    "lng": -92.663944
-   },
-   {
-    "osm": "node/7199337294",
-    "name": "Stanley Eddy Regional Park Reserve South",
-    "lat": 45.21276,
-    "lng": -94.238034
-   },
-   {
-    "osm": "node/7359645811",
-    "name": "Fury’s Island County Park",
-    "lat": 43.791705,
-    "lng": -95.493809
-   },
-   {
-    "osm": "node/7490927280",
-    "name": "Bright Lake County Park",
-    "lat": 43.550974,
-    "lng": -94.582037
-   },
-   {
-    "osm": "node/7494751920",
-    "name": "Mack Lake County Park",
-    "lat": 44.462361,
-    "lng": -94.789969
-   },
-   {
-    "osm": "node/7494751921",
-    "name": "Vicksburg County Park",
-    "lat": 44.657585,
-    "lng": -95.23266
-   },
-   {
-    "osm": "node/7495776774",
-    "name": "Boyd City Park",
-    "lat": 44.851311,
-    "lng": -95.896322
-   },
-   {
-    "osm": "node/7495776775",
-    "name": "J F Jacobson City Park",
-    "lat": 45.007383,
-    "lng": -96.195361
-   },
-   {
-    "osm": "node/7556861233",
-    "name": "Ojiketa Regional Park",
-    "lat": 45.346001,
-    "lng": -92.887655
-   },
-   {
-    "osm": "node/7600507857",
-    "name": "Trollskogen City Park",
-    "lat": 43.556955,
-    "lng": -91.644128
-   },
-   {
-    "osm": "node/7615826491",
-    "name": "Clear Lake Park",
-    "lat": 44.439657,
-    "lng": -93.701222
-   },
-   {
-    "osm": "node/7638968421",
-    "name": "Spring Lake City Park",
-    "lat": 47.512141,
-    "lng": -95.636977
-   },
-   {
-    "osm": "node/7681847384",
-    "name": "Ralph J. Klein City Park",
-    "lat": 48.302434,
-    "lng": -95.622735
-   },
-   {
-    "osm": "way/1298895457",
-    "name": "Wegdahl County Park",
-    "lat": 44.890479,
-    "lng": -95.647344
-   },
-   {
-    "osm": "way/1290266369",
-    "name": "Sites 7-20",
-    "lat": 44.098667,
-    "lng": -94.116972
-   }
-  ]
- }
+ ]
 }
