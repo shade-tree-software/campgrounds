@@ -32,3 +32,5 @@ Small-town city parks and county parks with 5-40 electric sites dominate in the 
 websites (Minnesota counties publish per-campground pages), watershed/conservancy districts and
 metroparks, and the state tourism directory - not RV Life ([[reference_local_campground_method]]
 was RV-Life-based and is why the gap exists).
+
+**MN swept 2026-09-25** (commits 1102e1b, 48b16cb): all 56 unmatched OSM candidates judged, 26 added (13318-13343), 27 excluded, 3 duplicate nodes. Record: audit/local_gap_mn_decisions.json — the per-state template for the next ones. Yield ~46% of candidates; most no's are primitive county canoe-trail camps with no published size. Write each verdict into the decisions file AS you judge it — a context reset lost 20 verdicts once and they had to be redone.
