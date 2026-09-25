@@ -586,10 +586,12 @@ def status(path=WORKLIST):
     print("  " + "  ".join(f"{k}:{v}" for k, v in
                            Counter(r["state"] for r in todo).most_common()))
     nc = [r for r in rows if r["verdict"] == "no_catalog"]
-    print(f"\n{len(nc)} no_catalog rows need a different method "
+    nc_todo = [r for r in nc if r["facility_id"] not in worked]
+    print(f"\n{len(nc) - len(nc_todo)} of {len(nc)} no_catalog rows worked; "
+          f"{len(nc_todo)} still to sweep by the agency-page method "
           f"(no per-site data: no size gate, no inclusion evidence):")
     print("  " + "  ".join(f"{k}:{v}" for k, v in
-                           Counter(r["agency"] or "?" for r in nc).most_common()))
+                           Counter(r["state"] for r in nc_todo).most_common()))
     drops = Counter(r["verdict"] for r in rows
                     if r["verdict"] in ("no_rv", "thin", "mgmt_only"))
     print(f"\nnot campgrounds to add: " +
