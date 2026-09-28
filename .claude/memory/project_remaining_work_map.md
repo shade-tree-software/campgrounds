@@ -44,3 +44,11 @@ different instrument.
 
 
 **UPDATE 2026-09-25:** the federal gap is fully worked (both lists), and the local face was measured: roughly a third of OSM-visible local campgrounds are missing ([[reference_local_gap_measurement]]). Local is now the priority gap.
+
+## QUEUE AFTER THE LOCAL GAP (AWH 2026-09-28)
+
+AWH's order: **finish the local gap first** (east of the Mississippi done 2026-09-27; west of the river next — [[reference_local_gap_measurement]]), **then** these three, all already surfaced by the local pass:
+
+1. **RIDB 0,0 facilities.** RIDB carries some campgrounds at lat/lng 0,0 (Houchin Ferry, Mammoth Cave, RIDB 258992). The 2026-09-21 gap pull filtered to the lower 48 by coordinate, so these were silently dropped - the federal gap is NOT fully closed. Instrument: re-pull the ~6,000 RIDB activity-9 facilities, list type=Campground rows with zero/missing coordinates, pin each from the agency page, then run them through `audit/ridb_gap_triage.py`'s verdicts. Count unknown.
+2. **State gap.** Bigger than the 2026-09-21 sample (0.9-2.8%) suggested in places: **Tennessee State Parks has ~10 campgrounds closed for renovation at once, none in the DB** (Big Hill Pond, Pickett, Norris Dam E/W, Pickwick main, Frozen Head, Montgomery Bell, Standing Stone, Cove Lake, Nathan Bedford Forrest) plus Meeman-Shelby (open, absent) - RV Life drops closed parks, so add each with a dated closure caveat ([[feedback_add_with_caveat_not_withhold]]). Also NY state thin (DEC Rogers Rock, Luzerne, Forked Lake, Alger Island, Moose River Plains; OPRHP Buttermilk Falls), NH Deer Mountain, VT Maidstone, NJ High Point, IN Glendale FWA, KY/other items in the audit/local_gap_*_decisions.json `state-gap` notes.
+3. **Private gap.** NOT "probably fine" (the section-3 claim above is superseded): the OSM/Good Sam listings show ~100 unmatched private in OH, ~150 ME, ~120 NC, ~250 FL, ~120 TN, ~150 WI, ~150 MI (Steamboat Park, Grand Rapids, 108 full-hookup, among them), ~60 IL. Every per-state decisions file carries a `(private gap)` note with the count. Private adds must pass the live-web-presence rule ([[feedback_require_live_web_presence]]) and the seasonal/membership exclusions.
