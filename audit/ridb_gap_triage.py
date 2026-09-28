@@ -460,7 +460,8 @@ def worked_facilities():
             continue
         st = doc.get("state") or "?"
         for key, how in (("added", "added"), ("excluded", "excluded"),
-                         ("dropped_by_triage", "dropped")):
+                         ("dropped_by_triage", "dropped"),
+                         ("already_in_db", "already_in_db")):
             for item in doc.get(key) or []:
                 fid = str(item.get("facility_id") or "")
                 if fid:
@@ -494,7 +495,14 @@ def build(rows, cache):
             "reservable": fac.get("reservable"),
             "url": row["url"],
         }
-        near = nearest_db(fac.get("lat"), fac.get("lng"), pts)
+        lat, lng = fac.get("lat"), fac.get("lng")
+        if row.get("zero_coord") or not (lat or lng):
+            # RIDB pins some facilities at 0,0 (Houchin Ferry, RIDB 258992);
+            # the campsites' own coordinates are then the only pin there is.
+            lat, lng = (rec.get("site_coord") or (None, None))
+            item["lat"], item["lng"] = lat, lng
+            item["zero_coord"] = True
+        near = nearest_db(lat, lng, pts)
         if near and near["km"] <= 8:
             item["nearest_db"] = near
         if row.get("coord_suspect"):
@@ -607,13 +615,18 @@ def main():
                     help="progress from the committed work list; no cache, "
                          "no network")
     ap.add_argument("--write", metavar="OUT")
+    ap.add_argument("--gap", default=GAP_JSON,
+                    help="gap list to triage (default: the 2026-09-21 pull; "
+                         "audit/ridb_gap_zero_2026-09-28.json is the 0,0 set)")
+    ap.add_argument("--worklist", default=WORKLIST,
+                    help="written work list --status reads")
     args = ap.parse_args()
 
     if args.status:
-        status()
+        status(args.worklist)
         return
 
-    with open(GAP_JSON, encoding="utf-8") as fh:
+    with open(args.gap, encoding="utf-8") as fh:
         rows = json.load(fh)["rows"]
 
     if args.fetch:
@@ -626,7 +639,7 @@ def main():
     if args.write:
         payload = {
             "generated": time.strftime("%Y-%m-%d"),
-            "source": GAP_JSON,
+            "source": args.gap,
             "method": ("RIDB facility record + per-campsite catalog per gap row; "
                        "verdict from the RV-site test of recgov_hookups.rv_sites"),
             "count": len(items),
