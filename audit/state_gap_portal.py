@@ -46,6 +46,7 @@ PORTALS = {
     "oh": ("OH", "https://ohiordr.usedirect.com/Ohiordr"),
     "fl": ("FL", "https://floridardr.usedirect.com/FloridaRDR"),
     "mn": ("MN", "https://mnrdr.usedirect.com/MinnesotaRDR"),
+    "mo": ("MO", "https://msprdr.usedirect.com/MSPRDR"),     # frontend icampmo1.usedirect.com/MSPWeb
 }
 UA = {"User-Agent": "Mozilla/5.0 (campground coverage audit)"}
 STOP = {"state", "park", "campground", "campgrounds", "recreation", "area", "sp",
