@@ -82,4 +82,5 @@
 - [Absent is not zero](feedback_absent_is_not_unknown.md) — the same trap has now bitten four subsystems; omit the key, never cache a failure as a result, never let unknown EXCLUDE a search result
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR carries no information, one run sees ~120 days not 365, FCFS is not derivable, back off in minutes; full walk yields ~14%, a September-heavy batch is verified by the Labor-Day/weekend clustering check, and the accrual is TRACKED at audit/recgov_calendar.json because a rolled-past month can never be re-fetched
 - [EKKO weight](user_ekko_weight.md) — ~9,500 lb empty, 11,000 lb GVWR; a 5-ton bridge limit excludes, 6+ tons passes
+- [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency-stated 4WD requirement is a criteria failure (AWD does not count); RI East Beach excluded on it
 - [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — MDC/KS fishing lakes/NE WMAs: agency-designated campsites qualify (MDC tag "Individual Campsites"/"Designated Camping Sites" is enough; no restroom or count needed), as `state`; skip parking-lot allowances (AWH 2026-09-29)
