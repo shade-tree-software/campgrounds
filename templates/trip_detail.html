@@ -1253,6 +1253,109 @@
     .day-divider { flex-wrap: wrap; row-gap: .3rem; }
     .day-divider .day-facts { padding-left: .35rem; }
   }
+  /* ── Day picker ──────────────────────────────────────────────────────────
+     Sticky under the site and trip headers, spanning the time column too so
+     nothing scrolls visibly past its left edge. Opaque, because the timeline
+     axis and the cards run underneath it once it sticks. */
+  .day-picker {
+    position: sticky;
+    top: calc(var(--site-top-height, 0px) + var(--trip-header-height, 0px));
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: 0 0 .75rem calc(-1 * var(--tl-gutter));
+    padding: .5rem 0 .5rem var(--tl-gutter);
+    background: var(--offwhite);
+  }
+  .day-picker button,
+  .day-picker select {
+    font: inherit;
+    height: 2.75rem;          /* a finger-sized target on every control */
+    cursor: pointer;
+  }
+  .day-picker .dp-all {
+    flex: 0 0 auto;
+    padding: 0 1rem;
+    border: 1px solid var(--border, #d4d4d8);
+    border-radius: 999px;
+    background: var(--white);
+    color: var(--navy);
+    font-size: .88rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .day-picker .dp-all[aria-pressed="true"] {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .day-picker .dp-step {
+    flex: 0 1 auto;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border, #d4d4d8);
+    border-radius: 999px;
+    background: var(--white);
+    overflow: hidden;
+  }
+  /* Outlined in navy while it is the thing deciding what the column shows. */
+  .day-picker .dp-step.active { border-color: var(--navy); box-shadow: inset 0 0 0 1px var(--navy); }
+  .day-picker .dp-prev,
+  .day-picker .dp-next {
+    flex: 0 0 2.75rem;
+    width: 2.75rem;
+    border: none;
+    background: none;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .day-picker .dp-prev:hover:not(:disabled),
+  .day-picker .dp-next:hover:not(:disabled) { background: #eef2fa; }
+  .day-picker .dp-prev:disabled,
+  .day-picker .dp-next:disabled { color: #c3c7cf; cursor: default; }
+  .day-picker .dp-select {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: none;
+    background: none;
+    color: var(--navy);
+    font-size: .9rem;
+    font-weight: 600;
+    text-align: center;
+    text-overflow: ellipsis;
+    padding: 0 .25rem;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .day-picker .dp-select:focus-visible,
+  .day-picker button:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
+  /* The axis starts at the first day's pill, not up behind the picker, where
+     it would show as a stub in the gap between them. 4.5rem is the picker
+     (2.75rem controls + 1rem padding + .75rem margin); the 2rem after it is
+     the same offset the axis always had from the top of the first pill. */
+  .cards-column.has-day-picker::before { top: 6.5rem; }
+  .day-picker + .day-divider,
+  /* One day showing: its divider is the first thing under the picker, so it
+     drops the gap that separates it from the previous day. */
+  .cards-column.dp-single .day-divider { margin-top: 0; }
+  /* Everything outside the day being shown. `!important` because it has to
+     beat the rules that force cards visible — the photo-drag reveals and a
+     folded waypoint run's shown state — or hidden days would reappear
+     mid-drag. */
+  .cards-column .dp-out { display: none !important; }
+  @media (max-width: 700px) {
+    /* The whole width on a phone, time column included: the stepper's label
+       is the widest thing on it and needs every pixel. */
+    .day-picker { padding-left: 0; }
+    .day-picker .dp-step { flex: 1 1 auto; }
+    .day-picker .dp-all { padding: 0 .8rem; }
+  }
+
   /* ── Time column ─────────────────────────────────────────────────────────
      A zero-height block in flow just above its card, with the time hung out
      into the gutter at the card's circle height. `top` is the circle centre
@@ -2548,7 +2651,38 @@
   </div>
 
   <!-- Cards column: timeline of interleaved stays and events -->
-  <div class="cards-column">
+  <div class="cards-column{% if trip_days | length > 1 %} has-day-picker{% endif %}">
+  {#- The day picker: the whole trip, or one day of it. Sticky at the top of
+      the column so it is always to hand on a long trip.
+
+      A stepper rather than a button per day (AWH 2026-09-30): fourteen day
+      buttons don't fit a phone, and the arrows are what reading a trip day
+      by day actually wants. The middle is a native <select>, so jumping from
+      Day 2 to Day 11 is one tap and the list works with every screen reader
+      and keyboard for free. With all days showing it follows the scroll,
+      naming the day you are reading, so an arrow always steps from where you
+      are. Behaviour lives in static/trip-detail/days.js.
+
+      Only on a trip with more than one day: there is nothing to pick on a
+      day trip. -#}
+  {%- if trip_days | length > 1 %}
+  <nav class="day-picker" aria-label="Show the whole trip or one day">
+    <button type="button" class="dp-all" aria-pressed="true">All days</button>
+    <div class="dp-step">
+      <button type="button" class="dp-prev" aria-label="Previous day">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <select class="dp-select" aria-label="Pick a day">
+        {%- for d, info in trip_days.items() %}
+        <option value="{{ d }}">Day {{ info.num }} of {{ trip_day_total }} · {{ (d | daylabel).split(', ')[-1] }}</option>
+        {%- endfor %}
+      </select>
+      <button type="button" class="dp-next" aria-label="Next day">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+  </nav>
+  {%- endif %}
   {#- Day dividers. Every timeline item carries `sort_date` (stay copies get
       their night's date), so a divider is just "the date changed since the
       last card". On a 10-day trip the cards otherwise ran together with no
@@ -2558,13 +2692,6 @@
       could never show one at all. `ns` is a namespace so the loop body can
       mutate it (a plain
       `{% set %}` inside a for-loop doesn't persist between iterations). -#}
-{#- One day divider: the date, what the GPS says it drove, the way in
-    for road photos, and the day's write-up slot. A MACRO because it is
-    emitted from two places — inside the timeline loop whenever the date
-    changes, and once more after it for the day they got home, which
-    carries no card of its own (see below). Duplicating this markup was
-    the alternative, and the write-up slot is the part that must not
-    drift. -#}
 {#- The time column: a card's start time, set in the gutter LEFT of the
     timeline axis (AWH 2026-09-30 — times down the left edge are what make it
     read as a timeline; tucked into the meta line after the name, they were
@@ -2594,6 +2721,13 @@
   </div>
 {%- endmacro %}
 
+{#- One day divider: the date, what the GPS says it drove, the way in
+    for road photos, and the day's write-up slot. A MACRO because it is
+    emitted from two places — inside the timeline loop whenever the date
+    changes, and once more after it for the day they got home, which
+    carries no card of its own (see below). Duplicating this markup was
+    the alternative, and the write-up slot is the part that must not
+    drift. -#}
 {% macro day_divider(day, drive, writeup, can_add_road, no_road_card) %}
     {#- What the GPS says the day drove.
 
@@ -3466,4 +3600,6 @@ window.PHOTO_FAVORITES = {{ 'true' if is_admin else 'false' }};
 <script src="{{ static_v('trip-detail/timeline.js') }}"></script>
 {% endif %}
 <script src="{{ static_v('trip-detail/map.js') }}"></script>
+{#- After map.js, whose focusTripDay() it drives. For every viewer. -#}
+<script src="{{ static_v('trip-detail/days.js') }}"></script>
 {% endblock %}
