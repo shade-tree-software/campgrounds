@@ -10,13 +10,16 @@ Setup (per machine; not a repo dependency):
     python3 -m playwright install chromium   # or edit executable_path to a local Chrome
     export PYTHONPATH=~/.cache/ekko-pw
 
-The scripts launch `/usr/bin/google-chrome`; change `executable_path` if Chrome
-lives elsewhere (or drop it to use Playwright's bundled Chromium).
+The scripts launch `/usr/bin/google-chrome` when it exists, else Playwright's
+bundled Chromium.
 
 - `txt.py URL [--browser] [-l] [-nCHARS] [-wMS]` - page as text (+ links)
 - `cs.py SLUG CHECKIN CHECKOUT` - Campspot park page with live per-site prices
 - `newbook.py URL` - Newbook engine quote for a 23-ft trailer
 - `sat.py LAT LNG HALF_WIDTH_M OUT.jpg` - Esri satellite crop with a crosshair
 - `geo.py "ADDRESS"` - Census geocoder
+- `gm.py "name town ST" ...` - Google Maps place: coords, phone, website, rating + review count
+  (the quality signal for parks RV Life doesn't rate; a lodging-style panel hides the count)
+- `gsr.py ST "name" ...` - Good Sam ratings by name (Algolia; the fetch cache has no ratings)
 - `v.py <state>_private '<json>'` - append a verdict to audit/<state>_private/verdicts.jsonl
 
