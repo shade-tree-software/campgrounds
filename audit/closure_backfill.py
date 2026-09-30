@@ -130,7 +130,8 @@ CLOSED = {
     14093: (None, "Loomis State Forest closed for the Sinlahekin Fire"),
 }
 
-# Past-dated or hedged closures: the note is stale, a person should look.
+# Past-dated or hedged closures: the note was stale, a person should look.
+# All 21 were looked at on 2026-09-30; RECHECKED below is the outcome.
 RECHECK = {
     149: "note: closed throughout 2025 (waterline project)",
     275: "note: expected to reopen June 2026",
@@ -154,6 +155,79 @@ RECHECK = {
     10818: "note: closure order expired end of 2025",
     12231: "note: subject to a forest-order closure",
 }
+
+
+# Outcome of the 2026-09-30 re-check of every RECHECK id: (operating, reopens,
+# status note, sentence appended to the entry's note). Checked against the
+# operator's own page or recreation.gov (notices + the availability calendar),
+# so provenance is `manual`. The appended sentence keeps the stale prose from
+# being the last word in the popup, which does not render an `open` status.
+RECHECKED = {
+    149: ("open", None, "operating; 2026 waterline construction notice",
+          "Rechecked 2026-09-30: open (FL State Parks notes construction during 2026 stays)."),
+    275: ("open", None, "reopened June 1, 2026",
+          "Rechecked 2026-09-30: campground reopened June 1, 2026 (recreation.gov)."),
+    1534: ("open", None,
+           "open for primitive/self-contained camping through Oct 31, 2026; closed for restoration after, full reopening spring 2027",
+           "Rechecked 2026-09-30: open for primitive and self-contained camping through Oct 31, 2026, then closed for restoration; full reopening expected spring 2027."),
+    1545: ("temporarily_closed", None, "campground renovation; no confirmed reopening",
+           "Rechecked 2026-09-30: still listed as closed for renovations; no reopening date found."),
+    1807: ("temporarily_closed", None, "family campsites closed for bathhouse construction",
+           "Rechecked 2026-09-30: family campsites still closed for bathhouse construction; no reopening date."),
+    3269: ("open", None, "2026 road-construction window has passed",
+           "Rechecked 2026-09-30: the Feb-Aug 2026 construction closure has passed with no newer notice."),
+    3270: ("open", None, "2026 road-construction window has passed",
+           "Rechecked 2026-09-30: the Feb-Aug 2026 construction closure has passed with no newer notice."),
+    3385: ("open", None, "open for the 2026 season",
+           "Rechecked 2026-09-30: site says open for the 2026 season."),
+    3606: ("open", None, "reopened; only a trail-closure notice",
+           "Rechecked 2026-09-30: campground open (only a trail closure posted)."),
+    3613: ("open", None, "reopened; no closure notice",
+           "Rechecked 2026-09-30: no closure notice posted; campground open."),
+    3642: ("open", None, "reopened; no closure notice",
+           "Rechecked 2026-09-30: no closure notice posted; campground open."),
+    3645: ("open", None, "reopened; no closure notice",
+           "Rechecked 2026-09-30: no closure notice posted; campground open."),
+    3646: ("temporarily_closed", "2027", "modern campground closed for the rest of the 2026 season",
+           "Rechecked 2026-09-30: modern campground closed for the rest of 2026; reopens next season."),
+    4131: ("open", None, "construction finished; sites booked late Sept 2026",
+           "Rechecked 2026-09-30: open (recreation.gov shows late-September 2026 sites reserved/available)."),
+    5050: ("temporarily_closed", None, "closed since June 9, 2025 for construction",
+           "Rechecked 2026-09-30: closed since June 9, 2025 for construction; no reopening date (NPS)."),
+    5579: ("open", None, "reopened July 2, 2026",
+           "Rechecked 2026-09-30: reopened July 2, 2026 (recreation.gov bookable through Sept 19, then seasonal close)."),
+    7160: ("open", None, "reopened; sites booked late Sept 2026",
+           "Rechecked 2026-09-30: open (recreation.gov shows late-September 2026 sites reserved/available)."),
+    9958: ("open", None, "open; sites booked late Sept 2026",
+           "Rechecked 2026-09-30: open (recreation.gov shows late-September 2026 sites reserved/available)."),
+    10411: ("open", None, "Lower Loop closed Aug 30, 2026-Jan 30, 2027 for restroom construction",
+            "Rechecked 2026-09-30: park open; only the Lower Loop is closed (Aug 30, 2026-Jan 30, 2027) for restroom construction."),
+    10818: ("temporarily_closed", None, "Falls Fire area closure",
+            "Rechecked 2026-09-30: closed under the Falls Fire area closure (recreation.gov)."),
+    12231: ("temporarily_closed", None, "closed by forest order",
+            "Rechecked 2026-09-30: CLOSED BY FOREST ORDER (recreation.gov)."),
+}
+
+
+def apply_rechecked(by_id):
+    changed = 0
+    for i, (operating, reopens, snote, line) in RECHECKED.items():
+        e = by_id[i]
+        new = {"operating": operating, "note": snote}
+        if reopens:
+            new["reopens"] = reopens
+        if e.get("status") == new:
+            continue
+        e["status"] = new
+        e.setdefault("provenance", {})["status"] = {
+            "source": "operator site / recreation.gov", "checked": CHECKED,
+            "method": "manual"}
+        note = (e.get("note") or "").rstrip()
+        if line not in note:
+            e["note"] = f"{note} {line} --Claude".strip()
+        changed += 1
+        print(f"  {i:>6} {e['state']} {e['name'][:44]:<44} {operating:<18} {reopens or '-'}")
+    return changed
 
 
 def main():
@@ -184,8 +258,9 @@ def main():
             "source": "note prose", "checked": CHECKED, "method": "derived"}
         changed += 1
         print(f"  {i:>6} {e['state']} {e['name'][:44]:<44} {reopens or '-':<12} {reason[:50]}")
-    print(f"{changed} entries {'written' if args.apply else 'would change'}; "
-          f"{len(RECHECK)} flagged for a re-check (not written)")
+    assert set(RECHECKED) == set(RECHECK), "every RECHECK id needs an outcome"
+    changed += apply_rechecked(by_id)
+    print(f"{changed} entries {'written' if args.apply else 'would change'}")
     if args.apply and changed:
         out = json.dumps(rows, indent=2, ensure_ascii=False) + "\n"
         tmp = CG + ".tmp"
