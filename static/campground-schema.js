@@ -108,6 +108,12 @@ function sfChip(groupKey, field, value, cur) {
   // Alone this is a date the gates open, not a span: "open May 15" reads as if
   // May 15 were the season. The span form is built in sfChips, where `closes`
   // is in hand.
+  // Raw enum values read as code ("temporarily_closed"); the popup's red line
+  // says the same thing, so the chip is the manage form's reading of it.
+  if (k === 'status.operating') {
+    return {open: 'open', temporarily_closed: 'temporarily closed'}[value] || value;
+  }
+  if (k === 'status.reopens') return 'expected to reopen ' + value;
   if (k === 'season.opens') return 'opens ' + sfDate(value);
   if (k === 'season.closes') return 'closes ' + sfDate(value);
   // Units spelled out. "180d ahead" and "max 14n" are the kind of shorthand

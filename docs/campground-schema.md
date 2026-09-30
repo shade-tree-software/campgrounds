@@ -272,6 +272,12 @@ manage form become unmanageable otherwise.
   // "note": "loop B closes after Labor Day"
 },
 
+"status": {                      // added 2026-09-30 — see §4.5
+  "operating": "temporarily_closed",   // "open" | "temporarily_closed"
+  "reopens": "spring 2027",      // free text, at the precision announced
+  "note": "closed for bathhouse renovation"
+},
+
 "booking": {
   "reservable": true,
   "platform": "recreation.gov",  // recreation.gov | reserveamerica | usedirect |
@@ -431,6 +437,32 @@ Two population notes:
   It belongs in the registry rows for those agencies, not on 3,738 individual entries.
 
 ---
+
+### 4.5 `status` — temporary closures (2026-09-30)
+
+A campground closed for a season — renovation, fire, a washed-out road — stays in the
+database and on the map (AWH: it is still worth seeing when planning a later trip),
+drawn **grey with a dark rim** and hideable from the Filters box ("Show temporarily
+closed", on by default). A permanent closure is not a status: that entry leaves the
+database. Seasonal winter closing is `season`, and a partial closure (one loop, the
+showers, a boat launch) while the campground operates is a `note`, not a status.
+
+- **`operating`** is `open` | `temporarily_closed`. Absent is unknown (§2.1), and so is
+  "we have not looked since the closure note was written" — `open` is only written by
+  someone who checked.
+- **`reopens` is free text on purpose** ("Jan 2027", "~late 2026", "spring 2027"):
+  agencies announce at every precision, and a date type would force a day nobody
+  published.
+- **It is a KNOWN value, so the map may hide it outright** — §2.2 protects unknowns, not
+  measured states. Only `closed: true` (+ `reopens`) rides inline on the marker, and only
+  on closed entries (§8.4's third exception, a few hundred bytes).
+- **Backfill (2026-09-30):** `audit/closure_backfill.py` records 97 closures read by hand
+  from 269 closure-matching notes, provenance `derived` from note prose. Its `RECHECK`
+  list names 21 closures whose stated end date has passed; those were NOT written,
+  because the note is stale either way and a person should look.
+- **Sweeps:** a campground added while closed (curation rule: add with a caveat, don't
+  withhold) carries `status` in its results row; `append_state.py` copies it with
+  provenance `manual`.
 
 ## 5. The registry
 
@@ -875,7 +907,7 @@ at yet. The exception is any field the map's **filter** UI needs to evaluate cli
 that must ride inline, so add it deliberately and keep it small (a boolean or a short enum,
 never a group).
 
-So far the exception is five scalars: `rating.stars` and `rating.price_tier`
+(2026-09-30: a third exception, `closed` + `reopens` from `status`, on the ~100 closed entries only — §4.5.) So far the exception is five scalars: `rating.stars` and `rating.price_tier`
 (`_MAP_RATING_FIELDS`), and since 2026-09-18 the hookup flags `electric` / `water` /
 `sewer` (`_MAP_HOOKUP_FIELDS`, booleans — `electric` is `amps > 0`; the amperage stays in
 the popup). All are flattened onto the marker rather than nested so the client reads

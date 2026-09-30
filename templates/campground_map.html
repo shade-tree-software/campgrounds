@@ -869,6 +869,19 @@ const HOOKUP_LEVELS = {
   full: ['electric', 'water', 'sewer'],
 };
 let hookupMin = STORE.get('hookupMin', '');
+
+// ── Temporary closures (AWH 2026-09-30) ─────────────────────────────────────
+// A campground closed for renovation, fire damage or a washed-out road is still
+// worth seeing when planning a later trip, so by default it stays on the map,
+// drawn grey instead of in its legend color; "Show temporarily closed" in the
+// Filters box takes them off. Unlike the rating/hookup filters this hides a
+// KNOWN value (`status.operating`), so hiding is allowed outright (doc §2.2 only
+// protects unknowns). The marker carries `closed` only when it is true.
+const CLOSED_FILL = '#9e9e9e';
+let showClosed = STORE.get('showClosed', true);
+function markerFill(cg) {
+  return cg.closed ? CLOSED_FILL : (currentMode.colors[colorCat(cg)] || '#888');
+}
 if (!HOOKUP_LEVELS[hookupMin]) hookupMin = '';
 
 function ratingFilterActive() { return ratingMin > 0 || priceMax > 0; }
@@ -1351,6 +1364,9 @@ function cgFactsHtml(d) {
   if (!d.policy) return '';
   let own = '', agency = '';
   CG_SCHEMA.forEach(g => {
+    // Status is already the red "Temporarily closed" line at the top of the
+    // popup, read off the marker; a second row saying it again is noise.
+    if (g.key === 'status') return;
     const block = d.policy[g.key];
     if (!block) return;
     const inherited = new Set(block.inherited || []);
@@ -1385,6 +1401,11 @@ function cgPopupHtml(cg) {
     popup += `<br><span style="color:#888;font-size:.9em;">Not waterfront</span>`;
   } else {
     popup += `<br><span style="color:#1565c0;font-size:.9em;">${wf.charAt(0).toUpperCase() + wf.slice(1)}</span>`;
+  }
+
+  if (cg.closed) {
+    popup += `<br><span style="color:#b71c1c;font-size:.9em;font-weight:600;">Temporarily closed`
+      + (cg.reopens ? ` &middot; expected to reopen ${escapeHtml(cg.reopens)}` : '') + `</span>`;
   }
 
   if (!d) {
@@ -1468,7 +1489,7 @@ function passesNonRatingFilters(cg) {
 }
 
 function markerVisible(cg) {
-  return passesNonRatingFilters(cg) && schemaVisible(cg);
+  return passesNonRatingFilters(cg) && schemaVisible(cg) && (showClosed || !cg.closed);
 }
 
 // Apply the master campground toggle: re-evaluate marker visibility and show or
@@ -1578,12 +1599,15 @@ CAMPGROUNDS.forEach(cg => {
   bounds.push(ll);
   campCoords.push(ll);
 
-  const color = currentMode.colors[colorCat(cg)] || '#888';
+  const color = markerFill(cg);
   const sz = markerSizeForZoom(map.getZoom());
   const marker = L.circleMarker(ll, {
     radius: sz.radius,
     fillColor: color,
-    color: '#fff',
+    // A dark rim as well as the grey fill: grey alone sits close to the paler
+    // legend colors (creekside, lakeview) at a glance. Nothing else restyles the
+    // stroke color, so it survives color-mode switches and zoom tiers.
+    color: cg.closed ? '#555' : '#fff',
     weight: sz.weight,
     opacity: 1,
     fillOpacity: 0.8,
@@ -1952,6 +1976,25 @@ filterControl.onAdd = function() {
   unratedNoteEl.className = 'legend-note';
   rows.appendChild(unratedNoteEl);
 
+  // ── Temporarily closed ──
+  const closedCount = CAMPGROUNDS.filter(c => c.closed).length;
+  if (closedCount) {
+    const closedToggle = document.createElement('label');
+    closedToggle.className = 'legend-toggle';
+    const closedCb = document.createElement('input');
+    closedCb.type = 'checkbox';
+    closedCb.checked = showClosed;
+    closedCb.addEventListener('change', () => {
+      showClosed = closedCb.checked;
+      STORE.set('showClosed', showClosed);
+      applyVisibility();
+    });
+    closedToggle.appendChild(closedCb);
+    closedToggle.appendChild(document.createTextNode(
+      `Show temporarily closed (${closedCount}, grey)`));
+    rows.appendChild(closedToggle);
+  }
+
   // ── Ownership ──
   const ownerHeading = document.createElement('div');
   ownerHeading.className = 'legend-subhead';
@@ -2013,7 +2056,7 @@ document.getElementById('color-mode').value = currentMode.key;
 document.getElementById('color-mode').addEventListener('change', (e) => {
   currentMode = MODES_BY_KEY[e.target.value] || currentMode;
   markers.forEach(({ marker, cg }) => {
-    marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
+    marker.setStyle({ fillColor: markerFill(cg) });
   });
   rebuildLegend();   // re-applies any session-hidden categories for the new mode
   applyVisibility();
@@ -3375,7 +3418,7 @@ function trimmedBounds(coords, frac) {
     }
     const [lat, lng] = cg.location.split(',').map(parseFloat);
     if (!isNaN(lat) && !isNaN(lng)) rec.marker.setLatLng([lat, lng]);
-    rec.marker.setStyle({ fillColor: currentMode.colors[colorCat(cg)] || '#888' });
+    rec.marker.setStyle({ fillColor: markerFill(cg) });
     rec.marker.setPopupContent(() => cgPopupHtml(cg));
     applyVisibility();
   }

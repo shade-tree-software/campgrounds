@@ -20,7 +20,7 @@ week later by accident of the schema project, and anything added after that pass
 would have sat with no rating indefinitely. Populate only -- the note's prose tail
 is left exactly as written, because excision is the conservative half and stays
 extract_rating.py's job (see its module docstring)."""
-import json, sys, os, re, argparse
+import json, sys, os, re, argparse, time
 
 from extract_rating import parse_rating
 
@@ -35,7 +35,7 @@ FAMILY = os.path.join(_REPO, 'trip_data', 'family.json')
 # entries it fills; the projection below skips any key an entry doesn't have.
 FIELD_ORDER = ['id', 'kind', 'name', 'location', 'elevation_meters', 'state',
                'ownership', 'waterfront', 'inclusion_evidence', 'website',
-               'phone', 'note', 'rating']
+               'phone', 'note', 'rating', 'status', 'provenance']
 
 
 def load_results(paths):
@@ -142,6 +142,14 @@ def main():
         rating, _ = parse_rating(e['note'])
         if rating:
             e['rating'] = rating
+        # A campground added while temporarily closed (the curation rule is to add
+        # it with a caveat, not withhold it) carries its closure from the first
+        # commit, so the map greys it at once instead of after a backfill.
+        if r.get('status'):
+            e['status'] = r['status']
+            e['provenance'] = {'status': {'source': 'add-stage research',
+                                          'checked': time.strftime('%Y-%m-%d'),
+                                          'method': 'manual'}}
         e = {k: e[k] for k in FIELD_ORDER if k in e}
         entries.append(e)
         if p:

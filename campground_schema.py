@@ -117,6 +117,17 @@ SCHEMA = {
         "closes": MMDD,
         "note": STR,
     },
+    # Operating status (AWH 2026-09-30). Only a TEMPORARY closure lives here -
+    # a campground closed for good leaves the database instead. Absent is
+    # unknown, as everywhere: `open` is a checked claim, never a default.
+    # `reopens` is free text on purpose ("2027-03", "2027", "spring 2027"):
+    # agencies announce reopenings at every precision, and inventing a day to
+    # fit a date type would state a fact nobody published.
+    "status": {
+        "operating": ENUM("open", "temporarily_closed"),
+        "reopens": STR,
+        "note": STR,
+    },
     "booking": {
         "reservable": BOOL,
         "platform": ENUM("recreation.gov", "reserveamerica", "usedirect",
@@ -620,6 +631,7 @@ GROUP_LABELS = {
     "sites": "Sites",
     "facilities": "Facilities",
     "season": "Season",
+    "status": "Status",
     "booking": "Booking",
     "fees": "Fees",
     "discounts": "Discounts",
@@ -668,6 +680,8 @@ FIELD_LABELS = {
     "applies": "Applies",
     "nights": "Nights",
     "checked": "Checked (YYYY-MM)",
+    "operating": "Operating",
+    "reopens": "Expected to reopen",
 }
 
 

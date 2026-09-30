@@ -2502,6 +2502,10 @@ _MAP_RATING_FIELDS = ("stars", "price_tier")
 # +16.5 KB gzipped on a 345 KB marker payload, the same order as the rating
 # pair. Absent stays absent, exactly as for ratings.
 _MAP_HOOKUP_FIELDS = ("electric", "water", "sewer")
+# The third (2026-09-30): a temporary closure, which the map greys out and can
+# hide. Only `closed: true` (+ the free-text `reopens`) rides inline, and only on
+# the ~100 closed entries, so it costs a few hundred bytes. An entry recorded
+# `open`, or with no status at all, carries nothing: neither changes the dot.
 
 
 def _map_marker_rows(rows):
@@ -2531,6 +2535,11 @@ def _map_marker_rows(rows):
             v = hookups.get(k)
             if v is not None:
                 d[k] = v > 0 if k == "electric" else bool(v)
+        status = r.get("status") or {}
+        if status.get("operating") == "temporarily_closed":
+            d["closed"] = True
+            if status.get("reopens"):
+                d["reopens"] = status["reopens"]
         out.append(d)
     return out
 
