@@ -59,15 +59,6 @@ function scrollToCard(cardId) {
   if (el.classList.contains('wp-collapsed') && !el.classList.contains('wp-shown')) {
     revealWaypointRun(el.dataset.wpRun, true);
   }
-  // Same trap one level up: with one day picked in the timeline, every other
-  // day's cards are hidden, and a marker click on one of them (the faded
-  // markers are still clickable) would scroll nowhere. Switch the picker to
-  // that card's day first — the reader clicked a place on another day, so
-  // that is the day they want. The map is left where it is: they are looking
-  // at it, and reframing it under the cursor would lose the place they chose.
-  if (el.classList.contains('dp-out') && window.tripDays) {
-    window.tripDays.showDayOf(el);
-  }
   const rs = getComputedStyle(document.documentElement);
   const siteTop = parseFloat(rs.getPropertyValue('--site-top-height')) || 0;
   const tripHdr = parseFloat(rs.getPropertyValue('--trip-header-height')) || 0;
@@ -287,10 +278,6 @@ function _loadMapView() {
 // and therefore falls back to fitBounds.
 function _reloadKeepingMapView() {
   try { sessionStorage.setItem(_MAP_VIEW_KEEP_KEY, '1'); } catch (_) {}
-  // The day picker keeps its day across the same reloads, for the same
-  // reason: an admin editing a card on Day 6 of 14 should land back on Day 6,
-  // not on the whole trip. Its own flag, consumed by days.js.
-  try { sessionStorage.setItem('tripDayKeep', '1'); } catch (_) {}
   // NB: `window.location.reload()` (not the bare `location.reload()`) so this
   // line survives any future global rename of the latter.
   window.location.reload();
@@ -1748,60 +1735,6 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     return div;
   };
   fitControl.addTo(map);
-
-  // ── One day at a time (the timeline's day picker) ─────────────────────────
-  // Picking a day in the timeline frames that day on the map and fades every
-  // marker that isn't part of it (AWH 2026-09-30: zoom to the day, keep the
-  // rest visible but quiet). The rest stay on the map rather than vanishing so
-  // the day keeps its context — where it sits in the trip — and so a faded
-  // marker is still there to click, which is also how a reader jumps to a
-  // different day from the map (scrollToCard switches the picker to it).
-  //
-  // A day is what the dashed straight route draws for it: where they woke up,
-  // the day's stops in order, and where they slept, plus any photos taken
-  // from the road. Taking morning and evening from the same helpers the route
-  // uses means a travel day frames the whole drive — last night's campground
-  // to tonight's — not just the stops in between.
-  //
-  // Markers are matched by POSITION rather than by which card made them: a
-  // campground stayed at on several nights, a family house standing over its
-  // driveway, and a home marker that is both the first and last day's anchor
-  // are one marker each but belong to several days. Only markers this code
-  // faded are ever restored, so it can't undo an opacity something else set.
-  const llKey = ll => (+ll[0]).toFixed(5) + ',' + (+ll[1]).toFixed(5);
-  function dayPoints(dateStr) {
-    const pts = [morningLocation(dateStr)];
-    mappedEvents.filter(e => e.date === dateStr).sort(byEventTime)
-      .forEach(e => pts.push([e.lat, e.lng]));
-    pts.push(eveningLocation(dateStr));
-    ROAD_POINTS.filter(p => (p.card || '').slice(5, 15) === dateStr)
-      .forEach(p => pts.push([p.lat, p.lng]));
-    return pts.filter(p => p && p[0] != null && p[1] != null);
-  }
-  const fadedMarkers = new Set();
-  const DAY_FADE_OPACITY = 0.3;
-  function focusTripDay(dateStr, opts) {
-    const fit = !opts || opts.fit !== false;
-    fadedMarkers.forEach(m => m.setOpacity(1));
-    fadedMarkers.clear();
-    if (!dateStr) {
-      if (fit) fitTrip();
-      return;
-    }
-    const pts = dayPoints(dateStr);
-    const keep = new Set(pts.map(llKey));
-    map.eachLayer(layer => {
-      if (!(layer instanceof L.Marker) || layer === window.__currentLocationMarker) return;
-      const ll = layer.getLatLng();
-      if (keep.has(llKey([ll.lat, ll.lng]))) return;
-      layer.setOpacity(DAY_FADE_OPACITY);
-      fadedMarkers.add(layer);
-    });
-    if (fit && pts.length) {
-      map.fitBounds(pts, { padding: [FIT_PAD, FIT_PAD], maxZoom: 13 });
-    }
-  }
-  window.focusTripDay = focusTripDay;
 
   // ── Legend ────────────────────────────────────────────────────────────────
   // Four marker colours with nothing naming them.

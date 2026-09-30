@@ -1141,14 +1141,16 @@
        the date binds to the day it introduces rather than floating between
        the two.
 
-       Indented 1.25rem, NOT 2.25rem: that is where every stay and event
-       circle begins (2rem wide, centred on the 2.25rem axis), so the date
-       pill's left edge lines up with all of them down the page. It also
-       puts the pill across the axis, masking it — which is what the separate
-       dot used to do, so the dot is gone. */
-    margin: 3.5rem 0 .5rem 1.25rem;
+       Flush left, out over the time column (AWH 2026-09-30): the day heading
+       is the one thing on the page wider than a stop, so it starts at the
+       column's own edge, where the eye returns at the start of each day,
+       instead of lining up with the circles. The whole row is opaque, so the
+       axis breaks for it — the gap is part of what marks a new day. */
+    margin: 3.5rem 0 .6rem calc(-1 * var(--tl-gutter));
+    padding: .15rem 0;
+    background: var(--offwhite);
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
   .day-divider:first-child { margin-top: 0; }
   /* Its own row under the divider, indented to 4.25rem like the write-up and
@@ -1183,34 +1185,29 @@
      class the chip simply doesn't match, and `.nb` inherits from `.day-drive`
      the way it always should have. */
   .day-divider .day-num {
-    /* Filled, not tinted. Against a column of shadowed white cards a label has
-       to be an object rather than a colour of text, and navy is already the
-       structural colour here: the stay circles, the header, the nav. */
-    background: var(--navy);
-    color: var(--white);
-    /* Sized against the card titles it shares the page with (1.05rem/600),
-       not against the small print. Uppercase carries more weight per point,
-       so .95rem/700 reads at least as large; with .4rem of vertical padding
-       the pill lands at ~2rem tall, the height of the circles below it. */
-    font-size: .95rem;
+    /* Plain type, not a pill (AWH 2026-09-30). Size does the job the fill
+       used to: well above the 1.05rem card titles, so it still reads as the
+       heading of everything under it rather than one more item in the list. */
+    color: var(--navy);
+    font-size: 1.45rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    padding: .4rem 1rem;
-    border-radius: 999px;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    white-space: nowrap;
   }
   /* The date, second to the day number (AWH 2026-09-30: "Day 3" is how the
-     family names a day; the date qualifies it). Same navy as the pill so the
-     two read as one label, lighter and unfilled so the pill still leads. */
+     family names a day; the date qualifies it). Same navy so the two read as
+     one label, much smaller so the number leads. */
   .day-divider .day-date {
     color: var(--navy);
-    font-size: .9rem;
+    font-size: .95rem;
     font-weight: 600;
     padding: 0 .6rem;
     white-space: nowrap;
   }
   .day-divider::after {
     content: '';
+    align-self: center;
     flex: 1;
     /* 2px and navy-tinted rather than a 1px hairline: it has to hold its own
        against a column of shadowed white cards. Tinted rather than solid
@@ -1251,111 +1248,9 @@
        wrapping drops the facts to their own row under the name rather than
        letting them push the layout wide. */
     .day-divider { flex-wrap: wrap; row-gap: .3rem; }
-    .day-divider .day-facts { padding-left: .35rem; }
+    .day-divider .day-num { font-size: 1.3rem; }
+    .day-divider .day-facts { padding-left: 0; }
   }
-  /* ── Day picker ──────────────────────────────────────────────────────────
-     Sticky under the site and trip headers, spanning the time column too so
-     nothing scrolls visibly past its left edge. Opaque, because the timeline
-     axis and the cards run underneath it once it sticks. */
-  .day-picker {
-    position: sticky;
-    top: calc(var(--site-top-height, 0px) + var(--trip-header-height, 0px));
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    margin: 0 0 .75rem calc(-1 * var(--tl-gutter));
-    padding: .5rem 0 .5rem var(--tl-gutter);
-    background: var(--offwhite);
-  }
-  .day-picker button,
-  .day-picker select {
-    font: inherit;
-    height: 2.75rem;          /* a finger-sized target on every control */
-    cursor: pointer;
-  }
-  .day-picker .dp-all {
-    flex: 0 0 auto;
-    padding: 0 1rem;
-    border: 1px solid var(--border, #d4d4d8);
-    border-radius: 999px;
-    background: var(--white);
-    color: var(--navy);
-    font-size: .88rem;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-  .day-picker .dp-all[aria-pressed="true"] {
-    background: var(--navy);
-    border-color: var(--navy);
-    color: var(--white);
-  }
-  .day-picker .dp-step {
-    flex: 0 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--border, #d4d4d8);
-    border-radius: 999px;
-    background: var(--white);
-    overflow: hidden;
-  }
-  /* Outlined in navy while it is the thing deciding what the column shows. */
-  .day-picker .dp-step.active { border-color: var(--navy); box-shadow: inset 0 0 0 1px var(--navy); }
-  .day-picker .dp-prev,
-  .day-picker .dp-next {
-    flex: 0 0 2.75rem;
-    width: 2.75rem;
-    border: none;
-    background: none;
-    color: var(--navy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-  .day-picker .dp-prev:hover:not(:disabled),
-  .day-picker .dp-next:hover:not(:disabled) { background: #eef2fa; }
-  .day-picker .dp-prev:disabled,
-  .day-picker .dp-next:disabled { color: #c3c7cf; cursor: default; }
-  .day-picker .dp-select {
-    flex: 1 1 auto;
-    min-width: 0;
-    border: none;
-    background: none;
-    color: var(--navy);
-    font-size: .9rem;
-    font-weight: 600;
-    text-align: center;
-    text-overflow: ellipsis;
-    padding: 0 .25rem;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  .day-picker .dp-select:focus-visible,
-  .day-picker button:focus-visible { outline: 2px solid var(--navy); outline-offset: -2px; }
-  /* The axis starts at the first day's pill, not up behind the picker, where
-     it would show as a stub in the gap between them. 4.5rem is the picker
-     (2.75rem controls + 1rem padding + .75rem margin); the 2rem after it is
-     the same offset the axis always had from the top of the first pill. */
-  .cards-column.has-day-picker::before { top: 6.5rem; }
-  .day-picker + .day-divider,
-  /* One day showing: its divider is the first thing under the picker, so it
-     drops the gap that separates it from the previous day. */
-  .cards-column.dp-single .day-divider { margin-top: 0; }
-  /* Everything outside the day being shown. `!important` because it has to
-     beat the rules that force cards visible — the photo-drag reveals and a
-     folded waypoint run's shown state — or hidden days would reappear
-     mid-drag. */
-  .cards-column .dp-out { display: none !important; }
-  @media (max-width: 700px) {
-    /* The whole width on a phone, time column included: the stepper's label
-       is the widest thing on it and needs every pixel. */
-    .day-picker { padding-left: 0; }
-    .day-picker .dp-step { flex: 1 1 auto; }
-    .day-picker .dp-all { padding: 0 .8rem; }
-  }
-
   /* ── Time column ─────────────────────────────────────────────────────────
      A zero-height block in flow just above its card, with the time hung out
      into the gutter at the card's circle height. `top` is the circle centre
@@ -2651,38 +2546,7 @@
   </div>
 
   <!-- Cards column: timeline of interleaved stays and events -->
-  <div class="cards-column{% if trip_days | length > 1 %} has-day-picker{% endif %}">
-  {#- The day picker: the whole trip, or one day of it. Sticky at the top of
-      the column so it is always to hand on a long trip.
-
-      A stepper rather than a button per day (AWH 2026-09-30): fourteen day
-      buttons don't fit a phone, and the arrows are what reading a trip day
-      by day actually wants. The middle is a native <select>, so jumping from
-      Day 2 to Day 11 is one tap and the list works with every screen reader
-      and keyboard for free. With all days showing it follows the scroll,
-      naming the day you are reading, so an arrow always steps from where you
-      are. Behaviour lives in static/trip-detail/days.js.
-
-      Only on a trip with more than one day: there is nothing to pick on a
-      day trip. -#}
-  {%- if trip_days | length > 1 %}
-  <nav class="day-picker" aria-label="Show the whole trip or one day">
-    <button type="button" class="dp-all" aria-pressed="true">All days</button>
-    <div class="dp-step">
-      <button type="button" class="dp-prev" aria-label="Previous day">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
-      </button>
-      <select class="dp-select" aria-label="Pick a day">
-        {%- for d, info in trip_days.items() %}
-        <option value="{{ d }}">Day {{ info.num }} of {{ trip_day_total }} · {{ (d | daylabel).split(', ')[-1] }}</option>
-        {%- endfor %}
-      </select>
-      <button type="button" class="dp-next" aria-label="Next day">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
-      </button>
-    </div>
-  </nav>
-  {%- endif %}
+  <div class="cards-column">
   {#- Day dividers. Every timeline item carries `sort_date` (stay copies get
       their night's date), so a divider is just "the date changed since the
       last card". On a 10-day trip the cards otherwise ran together with no
@@ -3600,6 +3464,4 @@ window.PHOTO_FAVORITES = {{ 'true' if is_admin else 'false' }};
 <script src="{{ static_v('trip-detail/timeline.js') }}"></script>
 {% endif %}
 <script src="{{ static_v('trip-detail/map.js') }}"></script>
-{#- After map.js, whose focusTripDay() it drives. For every viewer. -#}
-<script src="{{ static_v('trip-detail/days.js') }}"></script>
 {% endblock %}

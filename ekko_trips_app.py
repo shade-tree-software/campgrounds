@@ -3998,15 +3998,14 @@ def trip_detail(trip_id):
         _sweep_unresolved_places(trip_id, road_track, road_photos)
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
-    # Day numbers and per-day counts for the dividers and the day picker. Last,
-    # because road cards are spliced in above and their photos count too.
-    trip_days, trip_day_total = _timeline_days(trip, event_photos)
+    # Day numbers and per-day counts for the dividers. Last, because road
+    # cards are spliced in above and their photos count too.
+    trip_days, _ = _timeline_days(trip, event_photos)
 
     return render_template(
         'trip_detail.html',
         trip=trip,
         trip_days=trip_days,
-        trip_day_total=trip_day_total,
         home_tz_abbr=home_tz_abbr,
         home_tz_offset_min=home_tz_offset_min,
         driving_by_day=driving_by_day,
