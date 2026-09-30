@@ -40,7 +40,7 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - The Good Sam fetch cache (`goodsam_parks.json`) carries NO ratings - `gsr.py ST "name"` queries Algolia for them; check the returned name, the top hit is often a different park.
 - Call-for-rates parks were settled by the documented fallback (avg_rate <= $40), not left held.
 - "I am human" interstitials (Rivers Bend, lakegeorgecamp.wordpress.com) are not to be bypassed - hold for AWH.
-- Still held for AWH: Sutter's and Green Valley (pass price+quality, but off-season imagery full of trailers reads mostly seasonal), Val-Du, Lake George, Rivers Bend, Manistee (CampLife), Best Bear. **Next: WV** (audit/wv_private/candidates.json), then PA/VA/OH/NY/NC/NJ.
+- Still held for AWH: Sutter's and Green Valley (pass price+quality, but off-season imagery full of trailers reads mostly seasonal), Val-Du, Lake George, Rivers Bend, Manistee (CampLife), Best Bear. WV DONE same evening: +9 (14248-14256), 37 skips, 3 held (Revelle's Staylist, American Way 4-night min, Yokum's Lower pin). AWH hand-read Lake George ($50, added 14247) and Sutter's (220 sites, ~20 transient -> skipped as mostly seasonal). **Next: PA**, then VA/OH/NY/NC/NJ. Method that worked for WV: gm.py over the whole candidate list first (background), rates.py crawl of operator sites in parallel, then triage; Overpass times out often - pin from satellite instead.
 
 
 **2026-09-30 side work, both AWH-directed:**
