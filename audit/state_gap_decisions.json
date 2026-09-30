@@ -2672,7 +2672,7 @@
   },
   "MT": {
    "checked": "2026-09-29",
-   "status": "DONE - clean via RA",
+   "status": "DONE - RA parks clean; FAS roster worked 2026-09-30 (+71)",
    "source": "montanastateparks.reserveamerica.com directory (24 parks) via ra_dir.py + radiff",
    "excluded": [
     [
@@ -2688,7 +2688,89 @@
      "day use"
     ]
    ],
-   "caveat": "RA lists only MT's reservable state parks; FWP's ~300 fishing access sites (many with camping) are mostly first-come and NOT on RA - a separate FAS roster diff is still owed."
+   "fas": {
+    "checked": "2026-09-30",
+    "source": "fwp-gis.mt.gov/arcgis/rest/services/fwplnd/fwpLands/MapServer/1 (139 FAS with CAMPING=Yes) + each myfwp.mt.gov/fishMT/fas/<LMS_ID> page (Restrictions: trailer length, stay limit; Facilities list). FWP throttles (\"Resource is busy\") - pace 4 s, back off 4 min.",
+    "held_already": [
+     "Valley Garden (6098)",
+     "Ennis (6217)",
+     "Chief Looking Glass (6088)",
+     "Big Pine = Fish Creek SP (6095)"
+    ],
+    "added": "71 entries 14104-14174 - facilities list a Campsite/Primitive Campsite and FWP states no trailer limit under 23 ft (12 state one of 23-38 ft; 59 publish none - accepted on the agency designation, as MDC)",
+    "excluded_size": [
+     "Bearpaw Lake (20 ft)",
+     "Big Rock (20 ft)",
+     "Boulder Forks (20 ft)",
+     "Brown's Lake (20 ft)",
+     "Brownes Bridge (20 ft)",
+     "Forest Grove (20 ft)",
+     "Indian Fort (20 ft)",
+     "Island Lake (20 ft)",
+     "Mid Canon (20 ft)",
+     "Mountain Palace (20 ft)",
+     "Rosebud East (20 ft)",
+     "Rosebud Isle (20 ft)",
+     "Salmon Fly (20 ft)",
+     "Stickney Creek (20 ft)",
+     "Swinging Bridge (20 ft)",
+     "Thibodeau (20 ft)",
+     "Tony Schoonen FAS (20 ft)",
+     "Pishkun Reservoir (campendium: RVs/trailers 20 ft max)"
+    ],
+    "excluded_no_campsite": {
+     "reason": "CAMPING=Yes but the facilities list has no campsite - an overnight allowance at an access lot (wildlife-agency rule)",
+     "sites": [
+      "Alkali Creek",
+      "Angevine",
+      "Angler's Roost",
+      "Bailey Reservoir",
+      "Bearmouth",
+      "Belmont Creek",
+      "Broadview Pond",
+      "Clarks Fork Yellowstone",
+      "Daigles Eddy",
+      "Damselfly",
+      "Echo Lake",
+      "Fireman's Point",
+      "Forest Cooper",
+      "Fort Logan",
+      "Grannis",
+      "Grant Marsh",
+      "Greenwood Bottoms",
+      "Harlowton",
+      "Harper's Bridge",
+      "Holmgren Ranch",
+      "Jeffrey's Landing",
+      "John & Nancy Owen FAS",
+      "Kona Bridge",
+      "Kookoosint",
+      "Lake Helena",
+      "Largent's Bend",
+      "Loch Leven",
+      "Lower Osprey",
+      "McKay Landing",
+      "McWenneger Slough",
+      "Middle Osprey",
+      "Paradise Crossing",
+      "Piedmont Pond",
+      "Ralph's Takeout",
+      "Red Rocks",
+      "Scotty Brown Bridge",
+      "Sheep Flats",
+      "Siskin Island Fishing Access Site",
+      "Six Stall",
+      "Sportsman's Park",
+      "Stipek",
+      "Thibodeau Rapids",
+      "Upper Osprey",
+      "Weigh Station",
+      "Weymiller",
+      "Whitaker Bridge"
+     ]
+    },
+    "radiff_note": "radiff matched 11 of these to unrelated entries on generic tokens (Creek, Memorial, Bridge); verified by hand"
+   }
   },
   "NV": {
    "checked": "2026-09-29",
@@ -3342,7 +3424,7 @@
  "todo": {
   "thin": "see status",
   "portals": "Classic-RA states all diffed. Remaining states are on own systems - see status.",
-  "status": "2026-09-29: diffed = WV OK VA NV TX UT MT(RA only) MD MA AL MS LA IL WI MI TN NY OR MO KS NE ND VT NH NJ NC NM IN CO CA ID AR WY KY CT DE GA RI SC ME AZ IA PA (+ OH FL MN SD measured 2026-09-21). WA DIFFED (parks +4, DNR +30; 10 DNR camps held for size evidence). Still owed: MT FAS roster; (radiff re-run of all RA states DONE 2026-09-29, no new adds.) Probe each agency's roster (park-list nav, as SC/AZ/TN) and diff; the 2026-09-21 measurement says expect ~1-2% misses."
+  "status": "2026-09-29: diffed = WV OK VA NV TX UT MT(RA only) MD MA AL MS LA IL WI MI TN NY OR MO KS NE ND VT NH NJ NC NM IN CO CA ID AR WY KY CT DE GA RI SC ME AZ IA PA (+ OH FL MN SD measured 2026-09-21). WA DIFFED (parks +4, DNR +30; 10 DNR camps held for size evidence). MT FAS roster DONE 2026-09-30 (+71); (radiff re-run of all RA states DONE 2026-09-29, no new adds.) Probe each agency's roster (park-list nav, as SC/AZ/TN) and diff; the 2026-09-21 measurement says expect ~1-2% misses."
  },
  "radiff_rerun_2026-09-29": {
   "why": "radiff matched a park whose name tokens were a subset of any same-state entry name at ANY distance; fixed to require <25 km. All 18 classic-RA directories re-pulled and diffed old-vs-new rule.",
