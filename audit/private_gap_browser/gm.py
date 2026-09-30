@@ -5,7 +5,10 @@ with sync_playwright() as p:
     b=p.chromium.launch(); ctx=b.new_context(locale='en-US',user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36")
     pg=ctx.new_page()
     for q in sys.argv[1:]:
-        pg.goto('https://www.google.com/maps/search/'+q.replace(' ','+')+'?hl=en',timeout=60000); pg.wait_for_timeout(7000)
+        try:
+            pg.goto('https://www.google.com/maps/search/'+q.replace(' ','+')+'?hl=en',timeout=60000); pg.wait_for_timeout(7000)
+        except Exception as e:
+            print(f"{q} | ERR {str(e)[:60]}", flush=True); continue
         h1=pg.eval_on_selector_all('h1','e=>e.map(x=>x.innerText)')
         if not [h for h in h1 if h.strip() and h.strip()!='Results']:
             # a results list: click the first result
