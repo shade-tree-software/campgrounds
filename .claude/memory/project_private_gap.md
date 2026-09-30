@@ -28,3 +28,7 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - **No trip_data/family.json in a cloud checkout** -> `append_state.py` now refuses without `--min-id`; MI used 14201 (14175-14200 skipped on purpose).
 - Good Sam's directory has no operator URLs for most private parks. **Good Sam quality bar = overall (`general`) >= 8.5** (AWH 2026-09-30; calibrated: median GS 8.2 at RV Life 3*, 8.7 at 4*). Oak Knoll (7.7) was added then moved back to a hold; id 14216 is retired. MI net +28.
 - Deploy to PA needs the laptop's SSH keys - not available in the cloud session; pushed to master only.
+
+**2026-09-30 side work, both AWH-directed:**
+- **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) still needs a person. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
+- Ministry-run campgrounds open to the public nightly are keeps (curation doc).
