@@ -119,6 +119,41 @@ class TestTheDaysShape(unittest.TestCase):
                                  ("event", "Concert"), ("stay", None)])
 
 
+class TestRowNotes(unittest.TestCase):
+    """Notes typed on Arrived / Back at rows, keyed per campspot and day."""
+
+    def _run(self, notes=None):
+        trip = _trip(
+            [_stay("2026-07-03", "2026-07-05")],
+            [_card(0, "2026-07-03"), _card(0, "2026-07-04")],
+            [_event("2026-07-03", "21:03", "Fireworks"),
+             _event("2026-07-04", "10:28", "Parade"),
+             _event("2026-07-04", "15:30", "Pool"),
+             _event("2026-07-04", "19:54", "Concert")])
+        A._add_campspot_rows(trip, _visits(
+            ("2026-07-03", "17:53", "2026-07-03", "20:25"),
+            ("2026-07-03", "21:55", "2026-07-04", "10:02"),
+            ("2026-07-04", "14:33", "2026-07-04", "15:00"),
+            ("2026-07-04", "16:00", "2026-07-04", "19:00"),
+            ("2026-07-04", "22:10", "2026-07-05", "11:31")), TZ, notes)
+        return [i for i in trip["timeline"] if i["type"] == "camp"]
+
+    def test_keys_count_rows_per_day(self):
+        rows = self._run()
+        self.assertEqual([(r["camp_kind"], r.get("note_key")) for r in rows], [
+            ("arrived", "2026-07-03#1"),
+            ("back", "2026-07-04#1"),
+            ("back", "2026-07-04#2"),
+            ("departed", None),
+        ])
+        self.assertTrue(all(r.get("note_stay") == 0 for r in rows[:3]))
+
+    def test_note_lands_on_its_row(self):
+        rows = self._run({0: {"2026-07-04#2": "Dinner and showers"}})
+        self.assertEqual([r.get("note") for r in rows[:3]],
+                         ["", "", "Dinner and showers"])
+
+
 class TestWhatCountsAsAnOuting(unittest.TestCase):
     def _run(self, events):
         trip = _trip([_stay("2026-06-26", "2026-06-28")],

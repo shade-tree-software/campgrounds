@@ -34,7 +34,7 @@ from trips import (
                    get_relocated_pings, add_relocated_pings,
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
-                   get_day_notes, set_day_note,
+                   get_day_notes, set_day_note, get_camp_notes, set_camp_note,
                    campground_references, camping_nights, is_day_trip,
                    is_home_stay, visit_runs, TRIPS_JSON,
                    event_time_rank, reference_timezone, tz_abbrev,
@@ -3656,7 +3656,7 @@ CAMP_TIME_SILENCE_S = 30 * 60
 CAMP_OUTING_LEAD_S = 15 * 60
 
 
-def _add_campspot_rows(trip, camp_visits, ref_tz=""):
+def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
     """Put the campspots' comings and goings on the timeline.
 
     The campspot card stays the LAST card of its day (AWH 2026-09-30), and now
@@ -3689,7 +3689,12 @@ def _add_campspot_rows(trip, camp_visits, ref_tz=""):
 
     `camp_visits` is the cached `_campspot_visits` output. Runs after
     `_add_road_cards`, so road legs count as things that happened while away
-    and the road cards are not split at these rows."""
+    and the road cards are not split at these rows.
+
+    `camp_notes` is `trips.get_camp_notes()`: typed notes on the Arrived /
+    Back at rows, stored on the visit's first stay record and keyed
+    `"YYYY-MM-DD#N"` (the Nth such row for that campspot that day). The row
+    carries its key so the page can write one back."""
     timeline = trip.get("timeline")
     stays = trip.get("stays") or []
     if not camp_visits or not timeline:
@@ -3710,6 +3715,7 @@ def _add_campspot_rows(trip, camp_visits, ref_tz=""):
                                       item.get("_tz") or ref_tz or fallback_tz)
         return None
 
+    camp_notes = camp_notes or {}
     rows = []
     for key, rec in camp_visits.items():
         run = runs.get(key)
@@ -3774,6 +3780,8 @@ def _add_campspot_rows(trip, camp_visits, ref_tz=""):
                          + (0.5 if kind == "departed" else -0.5),
             }
 
+        notes = camp_notes.get(run[0]) or {}
+        per_day = {}
         for k, v in enumerate(merged):
             day, clock = _local(v[0])
             sure = _quiet_ok(v[2])
@@ -3790,8 +3798,13 @@ def _add_campspot_rows(trip, camp_visits, ref_tz=""):
             if (sure and _quiet_ok(v[3])
                     and not (k == len(merged) - 1 and show_departure)):
                 duration = _stayed(clock, _local(v[1])[1])
-            rows.append(_row("arrived" if k == 0 else "back", k, day, clock,
-                             sure, duration))
+            row = _row("arrived" if k == 0 else "back", k, day, clock,
+                       sure, duration)
+            per_day[day] = per_day.get(day, 0) + 1
+            row["note_stay"] = run[0]
+            row["note_key"] = f"{day}#{per_day[day]}"
+            row["note"] = notes.get(row["note_key"], "")
+            rows.append(row)
         if show_departure:
             rows.append(_row("departed", len(merged), dep_day, dep_clock, True))
 
@@ -4170,7 +4183,8 @@ def trip_detail(trip_id):
     # Campspot arrival times and the Arrived / Back at / Departed rows. After
     # the road cards, which count as something that happened while away.
     _add_campspot_rows(trip, derived.get("camp_visits"),
-                       reference_timezone(trip.get("events")))
+                       reference_timezone(trip.get("events")),
+                       get_camp_notes(trip_id))
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     # Day numbers and per-day counts for the dividers. Last, because road
@@ -9663,6 +9677,32 @@ def api_set_day_note(trip_id):
         return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "text": result.get(day, ""), "day_notes": result,
                     "writeup": _trip_day_writeups(trip_id).get(day)})
+
+
+@app.route('/api/trips/<int:trip_id>/camp-note', methods=['PUT'])
+def api_set_camp_note(trip_id):
+    """Set or clear the note on one "Arrived at" / "Back at" row. Body:
+    {stay_idx: int, key: 'YYYY-MM-DD#N', text: str}; empty text deletes it.
+
+    The rows are derived from the GPS track on every render, so the note is
+    stored on the stay record they belong to (see trips.get_camp_notes)."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    key = (data.get("key") or "").strip()
+    day, _, n = key.partition("#")
+    try:
+        stay_idx = int(data.get("stay_idx"))
+        date.fromisoformat(day)
+        if int(n) < 1:
+            raise ValueError
+    except (TypeError, ValueError):
+        return jsonify({"error": "stay_idx and key ('YYYY-MM-DD#N') are required"}), 400
+    result = set_camp_note(trip_id, stay_idx, key, data.get("text") or "")
+    if result is None:
+        return jsonify({"error": "trip or campspot not found"}), 404
+    return jsonify({"ok": True, "text": result.get(key, "")})
 
 
 @app.route('/api/trips/<int:trip_id>/tid-choices', methods=['GET'])

@@ -433,6 +433,30 @@
      take the campspot's navy, so a row reads as the same place as the card
      it leads to rather than as one more stop along the road. */
   .event-card.camp-row .event-icon::before { background: var(--navy); }
+  /* A note on an Arrived / Back at row sits under the row, in the name's
+     column (header padding 1.25rem + the 2rem dot slot + the .55rem gap), so
+     the row itself stays one line. */
+  .event-card.camp-row .camp-note { padding: 0 1.25rem 0 3.8rem; }
+  .event-card.camp-row .camp-note:empty { display: none; }
+  .camp-note-text {
+    margin: .05rem 0 .3rem;
+    font-size: .85rem;
+    color: var(--gray);
+    white-space: pre-line;
+  }
+  .camp-note-text[onclick] { cursor: text; }
+  .camp-note textarea {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: .88rem;
+    padding: .4rem .5rem;
+    resize: vertical;
+    width: 100%;
+  }
+  .camp-note .day-writeup-actions { margin-bottom: .4rem; }
+  .event-card.camp-row.editing .card-actions { display: none; }
   .event-card.wp-compact .event-icon svg {
     position: absolute;
     left: 50%;
@@ -3177,7 +3201,20 @@
         <div class="event-meta">{{ item.duration }}</div>
         {%- endif %}
       </div>
+      {%- if is_admin and item.note_key and not item.note %}
+      <span class="card-actions"><button class="edit-btn-dark" onclick="editCampNote('{{ item.dom_id }}')">+ Note</button></span>
+      {%- endif %}
     </div>
+    {#- A typed note on an Arrived / Back at row ("dinner and showers"). The
+        row is regenerated from the track on every load, so the note is stored
+        on the campspot's stay record under `note_key` (`get_camp_notes`). -#}
+    {%- if item.note_key %}
+    <div class="camp-note" data-stay="{{ item.note_stay }}" data-key="{{ item.note_key }}">
+      {%- if item.note %}
+      <p class="camp-note-text"{% if is_admin %} onclick="editCampNote('{{ item.dom_id }}')" title="Click to edit"{% endif %}>{{ item.note }}</p>
+      {%- endif %}
+    </div>
+    {%- endif %}
   </div>
   {% endif %}
 

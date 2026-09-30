@@ -262,6 +262,75 @@ function saveDayNote(date) {
   .catch(() => toast('Could not save that note.'));
 }
 
+// ── Notes on a campspot's Arrived / Back at rows ─────────────────────────
+// The rows come off the GPS track on every render, so the note is stored on
+// the campspot's stay record under the row's key (`get_camp_notes`), carried
+// here as data-stay / data-key on the row's .camp-note slot.
+function editCampNote(domId) {
+  const card = document.getElementById(domId);
+  const slot = card && card.querySelector('.camp-note');
+  if (!slot || slot.querySelector('textarea')) return;
+  const existing = slot.querySelector('.camp-note-text');
+  slot.dataset.prevHtml = slot.innerHTML;
+  card.classList.add('editing');
+  slot.innerHTML = `
+    <textarea rows="2" placeholder="A note about this stop at camp">${escapeHtml(existing ? existing.textContent.trim() : '')}</textarea>
+    <div class="day-writeup-actions">
+      <button class="btn-save" onclick="saveCampNote('${domId}')">Save</button>
+      <button class="btn-cancel" onclick="cancelCampNote('${domId}')">Cancel</button>
+    </div>`;
+  const input = slot.querySelector('textarea');
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function cancelCampNote(domId) {
+  const card = document.getElementById(domId);
+  const slot = card && card.querySelector('.camp-note');
+  if (!slot || slot.dataset.prevHtml === undefined) return;
+  slot.innerHTML = slot.dataset.prevHtml;
+  delete slot.dataset.prevHtml;
+  card.classList.remove('editing');
+}
+
+// Mirrors the note markup in `trip_detail.html`'s camp-row branch — keep the
+// two in step. The "+ Note" button is shown exactly when there is no note.
+function renderCampNote(card, text) {
+  const slot = card.querySelector('.camp-note');
+  slot.innerHTML = text
+    ? `<p class="camp-note-text" onclick="editCampNote('${card.id}')" title="Click to edit">${escapeHtml(text)}</p>`
+    : '';
+  let actions = card.querySelector('.card-actions');
+  if (text && actions) actions.remove();
+  if (!text && !actions) {
+    actions = document.createElement('span');
+    actions.className = 'card-actions';
+    actions.innerHTML = `<button class="edit-btn-dark" onclick="editCampNote('${card.id}')">+ Note</button>`;
+    card.querySelector('.event-header').appendChild(actions);
+  }
+}
+
+function saveCampNote(domId) {
+  const card = document.getElementById(domId);
+  const slot = card && card.querySelector('.camp-note');
+  const input = slot && slot.querySelector('textarea');
+  if (!input) return;
+  fetch(`/api/trips/${TRIP_ID}/camp-note`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ stay_idx: Number(slot.dataset.stay),
+                           key: slot.dataset.key, text: input.value.trim() })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { toast(data.error); return; }
+    delete slot.dataset.prevHtml;
+    card.classList.remove('editing');
+    renderCampNote(card, data.text);
+  })
+  .catch(() => toast('Could not save that note.'));
+}
+
 function editHomeTime(which) {
   const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
   const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;

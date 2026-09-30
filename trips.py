@@ -999,6 +999,51 @@ def set_day_note(trip_id, day, text):
     return None
 
 
+def get_camp_notes(trip_id):
+    """Return {stay_idx: {row_key: text}} for the trip's campspot-row notes.
+
+    Notes on the "Arrived at" / "Back at" rows. The rows themselves are derived
+    from the GPS track on every render, so the note can't live on the row: it
+    lives on the STAY record the row belongs to (the first record of its
+    visit), keyed `"YYYY-MM-DD#N"` — the Nth such row for that campspot on that
+    date. On the stay because stays renumber (an insert, a delete, a date edit
+    re-sorting the list) and a note keyed on a trip-level index would drift
+    onto the neighbouring campspot; the stay dict travels with itself."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return {i: dict(s["camp_notes"])
+                    for i, s in enumerate(t.get("stays", []))
+                    if s.get("camp_notes")}
+    return {}
+
+
+def set_camp_note(trip_id, stay_idx, key, text):
+    """Set or clear one campspot-row note. Returns the stay's resulting dict,
+    or None if the trip or stay is missing. Blank text deletes the key, and
+    the whole `camp_notes` dict once it empties."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            stays = t.get("stays", [])
+            if stay_idx < 0 or stay_idx >= len(stays):
+                return None
+            stay = stays[stay_idx]
+            current = dict(stay.get("camp_notes", {}))
+            cleaned = (text or "").strip()
+            if cleaned:
+                current[key] = cleaned
+            else:
+                current.pop(key, None)
+            if current:
+                stay["camp_notes"] = current
+            else:
+                stay.pop("camp_notes", None)
+            _save_trips(raw)
+            return current
+    return None
+
+
 # ── CSV parsing (legacy) ─────────────────────────────────────────────────
 
 def _parse_date(s):
