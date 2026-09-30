@@ -1,0 +1,192 @@
+{
+ "project": "private gap (queue item 3 of project_remaining_work_map)",
+ "started": "2026-09-30",
+ "gate": "docs/campground-curation.md: private adds need RV Life price_level <= 2 AND star_rating >= 4 (price half lifted only in national-park gateway areas), then per-entry inclusion vetting, live web presence, seasonal/membership exclusions, waterfront defaults down",
+ "method": "Per state: Good Sam directory rows (type not PUBLIC_PARK) + unmatched OSM campsites with no DB entry within 2 km -> look up each on RV Life -> gate -> research INLINE one candidate at a time, writing each verdict here as it is made (project_pre_playbook_private_gap). Also the CA residual check: RV Life commercial rows named lake|reservoir|fairground|expo|harbor|district|county|city with no entry within 2 km.",
+ "needs_network": [
+  "vt01mnvcp5-dsn.algolia.net + llx3tsxl2jaarct3rynyyaci3e.appsync-api.us-east-1.amazonaws.com (Good Sam directory)",
+  "h0lpzk92qj-dsn.algolia.net + campgrounds.rvlife.com (RV Life gate)",
+  "overpass-api.de / overpass.private.coffee (OSM)"
+ ],
+ "estimates_from_local_pass": {
+  "AL": {
+   "estimate": "~70 private RV parks unmatched in OSM, heaviest in Baldwin County (Foley/Gulf Shores/Orange Beach) and around Lake Guntersville/Smith Lake; also Warden Station Horse Camp (USFS, horse)"
+  },
+  "CT": {
+   "estimate": "135 unmatched named OSM campsites read: no local-government RV campground; the rest are youth/Scout/church camps, state backcountry and horse camps, and ~40 private campgrounds (Strawberry Park, Odetah, Hemlock Hill, Witch Meadow...) - private gap outside this pass"
+  },
+  "GA": {
+   "estimate": "~40 private RV parks unmatched"
+  },
+  "IL": {
+   "estimate": "~60 private unmatched (Chain O'Lakes, Rock River, southern IL); IL holds only 34 private entries"
+  },
+  "IN": {
+   "estimate": "~40 private unmatched (Brown County, Shipshewana/Middlebury, northern lakes); IN holds 33 private entries"
+  },
+  "KY": {
+   "estimate": "~30 private unmatched (Red River Gorge, Kentucky River, Cumberland Lake); KY holds only 27 private entries"
+  },
+  "LA": {
+   "estimate": "~90 Good Sam private LA parks unmatched (Lake Charles/Sulphur, Breaux Bridge, Northshore clusters); LA holds 73 private; many are workforce/monthly - filter hard"
+  },
+  "ME": {
+   "estimate": "~150 unmatched named OSM campgrounds in ME are private (Bayley's, Wolfe's Neck, Thomas Point Beach, Sea-Vu, etc.) - private gap is large, outside this pass"
+  },
+  "MI": {
+   "estimate": "Steamboat Park (108 full-hookup, Grand Rapids, family-owned) and ~150 other private campgrounds unmatched; MI holds 112 private entries"
+  },
+  "MO": {
+   "estimate": "~100 Good Sam private MO campgrounds unmatched within 2 km (KOAs, Jellystones, Branson and Lake of the Ozarks RV parks); MO holds 115 private"
+  },
+  "MS": {
+   "estimate": "~15 private unmatched incl. casino RV parks (Tunica, Vicksburg, Biloxi)"
+  },
+  "NC": {
+   "estimate": "~120 private campgrounds unmatched (Outer Banks, mountains, Crystal Coast)"
+  },
+  "NJ": {
+   "estimate": "~60 of NJ's unmatched OSM campsites are private campgrounds (Tip Tam, Wading Pines, Ocean Isle, Avalon, The Depot, Seashore Campsites...); NJ holds only 19 entries in total - private gap is large"
+  },
+  "NY": {
+   "estimate": "~150 of NY's 325 unmatched named OSM campsites are private campgrounds - outside this pass"
+  },
+  "PA": {
+   "estimate": "549 unmatched named OSM campsites: federal Beaver Meadows (ANF) and Ironwood Point (Brookfield utility) are real misses outside this pass; ~200 private"
+  },
+  "SC": {
+   "estimate": "~60 private campgrounds unmatched, many Myrtle Beach and Upstate RV parks (Ocean Lakes, Pirateland, Lakewood, Myrtle Beach Travel Park...)"
+  },
+  "TN": {
+   "estimate": "~120 private campgrounds unmatched (Pigeon Forge/Gatlinburg corridor, Cherokee Lake, Norris Lake, Big South Fork horse camps); TN holds only 57 private entries"
+  },
+  "TX": {
+   "estimate": "TX OSM has ~1,100 unmatched named campsites, overwhelmingly private RV parks (Permian Basin workforce parks dominate); Good Sam also lists hundreds - the private pass must filter hard for workforce/monthly parks"
+  },
+  "VA": {
+   "estimate": "~60 private campgrounds unmatched (Holiday Trav-L-Park, Sun Retreats Gwynn's Island/New Point, Misty Mountain, Twin Rivers, Aquia Pines...)"
+  },
+  "WI": {
+   "estimate": "~150 private unmatched (Dells, Door County, northern lakes); WI holds 78 private entries"
+  },
+  "WV": {
+   "estimate": "~30 private campgrounds unmatched, many New River Gorge area (Chestnut Creek, Ray's, Thayer, Hilltop Sunrise...)"
+  },
+  "OH": {
+   "estimate": "~100 Good Sam private OH campgrounds unmatched (KOAs, Jellystones among them) - see local_gap_oh_decisions.json note"
+  }
+ },
+ "named_leads": [
+  {
+   "state": "AR",
+   "name": "Riverfront RV Resort (Fort Smith) / Belle Pointe / Coler Grove camper parking",
+   "from": "audit/local_gap_ar_decisions.json",
+   "why": "private LLC (private gap); private; nonprofit trailhead camper parking"
+  },
+  {
+   "state": "CA",
+   "name": "PG&E campgrounds (Rocky Point, Cassel, Lake Spaulding, Lodgepole, Philbrook, Lower Blue Lake, Trout Creek, Cool Springs)",
+   "from": "audit/local_gap_ca_decisions.json",
+   "why": "utility = private per the PacifiCorp/Idaho Power precedent - private gap (some CA PG&E sites were added as private in July)"
+  },
+  {
+   "state": "CA",
+   "name": "Lake Amador, Lake Henshaw Resort, Castaic Lake RV Park, Lake Morena RV Park, Pine Mountain Lake, Canyon Lake Happy Camp",
+   "from": "audit/local_gap_ca_decisions.json",
+   "why": "private/HOA - private gap"
+  },
+  {
+   "state": "IA",
+   "name": "Koch's Meadow Lake Campground / Spook Cave / Pipe Dream / Miners Creek / Hildreth RV",
+   "from": "audit/local_gap_ia_decisions.json",
+   "why": "private - private gap"
+  },
+  {
+   "state": "ID",
+   "name": "Sugar City RV Park",
+   "from": "audit/local_gap_id_decisions.json",
+   "why": "private LLC (65 pull-throughs) - private gap"
+  },
+  {
+   "state": "KS",
+   "name": "Holtom/scout/Falley/Rivers Bend/Iola RV/Suncatcher etc",
+   "from": "audit/local_gap_ks_decisions.json",
+   "why": "scout and church camps, private RV parks (private gap)"
+  },
+  {
+   "state": "KY",
+   "name": "Wildcat Creek Recreation Area (Murray)",
+   "from": "audit/local_gap_ky_decisions.json",
+   "why": "family-run private campground despite Good Sam PUBLIC_PARK tag; private gap"
+  },
+  {
+   "state": "KY",
+   "name": "Green County RV Park",
+   "from": "audit/local_gap_ky_decisions.json",
+   "why": "private operator; private gap"
+  },
+  {
+   "state": "MO",
+   "name": "Missouri State Fair campground / Katy Roundhouse / Catfish Pointe / Doc's RV Park / Deer Valley Park / Mutton Creek Marina",
+   "from": "audit/local_gap_mo_decisions.json",
+   "why": "fairground; private (RV Life tagged Catfish Pointe city); monthly-residential; mostly-annual private; COE concession marina (private gap)"
+  },
+  {
+   "state": "ND",
+   "name": "Medora Campground",
+   "from": "audit/local_gap_nd_decisions.json",
+   "why": "150 sites run by the Theodore Roosevelt Medora Foundation (nonprofit) - PRIVATE gap, a big one worth adding in the private pass"
+  },
+  {
+   "state": "NE",
+   "name": "Potter's Pasture (Brady) / Camp A Way (Lincoln) / Linoma / Holiday RV / Victorian Acres / Riverside RV Camp",
+   "from": "audit/local_gap_ne_decisions.json",
+   "why": "private gap (Camp A Way is private on city-leased land)"
+  },
+  {
+   "state": "OR",
+   "name": "Hells Canyon Park (Idaho Power)",
+   "from": "audit/local_gap_or_decisions.json",
+   "why": "Idaho Power = private per the ID-sweep precedent - private gap"
+  },
+  {
+   "state": "OR",
+   "name": "Columbia River Resort and RV Park (Arlington)",
+   "from": "audit/local_gap_or_decisions.json",
+   "why": "private gap"
+  },
+  {
+   "state": "OR",
+   "name": "Keno Recreation Area (PacifiCorp)",
+   "from": "audit/local_gap_or_decisions.json",
+   "why": "utility = private per precedent; private gap"
+  },
+  {
+   "state": "OR",
+   "name": "Indian Lake (CTUIR), Robinson Creek (Warm Springs)",
+   "from": "audit/local_gap_or_decisions.json",
+   "why": "tribal campgrounds - private gap"
+  },
+  {
+   "state": "TX",
+   "name": "Big Creek Resort Marina / Big Mineral Resort Marina",
+   "from": "audit/local_gap_tx_decisions.json",
+   "why": "private concessions on COE lakes (private gap)"
+  },
+  {
+   "state": "WA",
+   "name": "Henley's Silver Lake Resort",
+   "from": "audit/local_gap_wa_decisions.json",
+   "why": "private (for sale listing) - private gap"
+  },
+  {
+   "state": "WA",
+   "name": "Swift Forest Camp (PacifiCorp)",
+   "from": "audit/local_gap_wa_decisions.json",
+   "why": "93-site reservable reservoir campground run by PacifiCorp (investor-owned utility = private, like Cresap Bay 10515) - private gap, a strong one"
+  }
+ ],
+ "done_states": [],
+ "added": [],
+ "excluded": []
+}
