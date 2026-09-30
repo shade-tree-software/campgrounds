@@ -26,5 +26,5 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - **The price gate removed ~1/3 of screen-passers** even at <= $50 published: RV Life's avg_rate lags, so a $43-48 RV Life park often publishes $53-65 (Lakeshore, TeePee, Pine Ridge, Waterways, Alice Springs, Hungry Horse, Goff Lake).
 - **Christian camps that rent their campground to the public nightly are keeps** (Covenant Hills, Winding Creek) - "church-retreat only" is the exclusion, not church-run.
 - **No trip_data/family.json in a cloud checkout** -> `append_state.py` now refuses without `--min-id`; MI used 14201 (14175-14200 skipped on purpose).
-- Good Sam's directory has no operator URLs for most private parks; its triple rating (all >= 7.0, my threshold, unconfirmed by AWH) served as the quality signal for Oak Knoll.
+- Good Sam's directory has no operator URLs for most private parks. **Good Sam quality bar = overall (`general`) >= 8.5** (AWH 2026-09-30; calibrated: median GS 8.2 at RV Life 3*, 8.7 at 4*). Oak Knoll (7.7) was added then moved back to a hold; id 14216 is retired. MI net +28.
 - Deploy to PA needs the laptop's SSH keys - not available in the cloud session; pushed to master only.
