@@ -188,5 +188,19 @@
  ],
  "done_states": [],
  "added": [],
- "excluded": []
+ "excluded": [],
+ "measured_2026-09-30": {
+  "instrument": "audit/private_gap_list.py (RV Life commercial rows + Good Sam private-type rows, not held = no entry within 250 m, nor within 3 km with a matching name)",
+  "lower48_totals": {
+   "rvlife_commercial_not_held_gate_passing": 1776,
+   "rvlife_not_held_4star_but_price_3_or_4": 5199,
+   "rvlife_not_held_unrated": 1717,
+   "goodsam_private_absent_from_rvlife": 833
+  },
+  "gate_passing_after_name_filter": 864,
+  "name_filter": "drops casino/lodge/membership-chain/church/scout/fairground/MHP/retail-lot names and rows with <3 RV Life reviews; a rough cut, not a verdict",
+  "price_only_rates": "median avg_rate $53; 1,878 under $50, 3,534 under $60",
+  "finding": "The ~100-250 per-state 'private gap' counts from the local pass are mostly parks that FAIL the <=$$ price gate (RV Life $$$ starts near $40/night), not misses. MI check: of 45 gate-passing unmatched rows, ~28 are named as deliberate exclusions in the MI sweep commit 2233c5c (membership chains, lodges, casino lots, seasonal, closed). Gate-passing residuals are part genuine misses (ratings that rose since the sweep, parks new to RV Life) and part earlier skips whose reasons were recorded only in commit messages, if at all.",
+  "open_question_for_AWH": "Keep the <=$$ gate (then the gap is the gate-passing residual, a few hundred at most after vetting) or relax it (e.g. avg_rate <= $50-60), which would put thousands of $$$ parks in scope."
+ }
 }
