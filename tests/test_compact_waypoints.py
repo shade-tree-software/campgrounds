@@ -80,17 +80,32 @@ class TestWhatARowShows(unittest.TestCase):
     def setUpClass(cls):
         cls.html = _render()
 
-    def test_a_row_drops_the_date_the_divider_already_gives(self):
-        row = re.search(r'wp-compact[\s\S]{0,900}?<div class="event-meta">\s*([^<]*)',
-                        self.html)
-        self.assertIsNotNone(row)
-        self.assertNotRegex(row.group(1), r"\d{4}-\d{2}-\d{2}")
+    def test_no_card_repeats_the_date_the_divider_already_gives(self):
+        # The day divider names the day, so neither a row nor a full card
+        # spends its meta line on the date any more (2026-09-30: the full
+        # cards dropped it too, when their times moved to the time column).
+        metas = re.findall(r'<div class="event-meta">\s*([^<]*)', self.html)
+        self.assertTrue(metas)
+        for meta in metas:
+            self.assertNotRegex(meta, r"\d{4}-\d{2}-\d{2}")
 
-    def test_a_full_card_still_carries_its_date(self):
-        m = re.search(r'<div class="event-card(?![^"]*wp-compact)[^"]*" id="event-\d+"'
-                      r'[\s\S]{0,1600}?<div class="event-meta">\s*([^<]*)', self.html)
-        self.assertIsNotNone(m)
-        self.assertRegex(m.group(1), r"\d{4}-\d{2}-\d{2}")
+    def test_a_stop_says_how_long_it_stayed_not_when_it_ended(self):
+        metas = re.findall(r'<div class="event-meta">\s*([^<]*)', self.html)
+        # A bare duration — no "Stayed" label (AWH 2026-09-30).
+        self.assertTrue([m for m in metas if re.match(r"(\d+h \d{2}m|\d+m)\s*$", m)])
+        for meta in metas:
+            self.assertNotIn("Stayed", meta)
+            self.assertNotIn("\u2013", meta)   # no "11:10 AM–12:50 PM" range
+
+    def test_every_timed_stop_has_its_time_in_the_time_column(self):
+        # The zero-height `tl-time` block directly ahead of each event card is
+        # what hangs its time out into the gutter; a compact row's is marked so
+        # it can sit level with the row's smaller dot.
+        pairs = re.findall(r'<div class="(tl-time[^"]*)">[\s\S]{0,400}?</div>\s*'
+                           r'<div class="(event-card[^"]*)" id="event-\d+"', self.html)
+        self.assertTrue(pairs)
+        for tl, card in pairs:
+            self.assertEqual("compact" in tl, "wp-compact" in card)
 
     def test_a_row_does_not_say_the_same_place_twice(self):
         # "Point of Rocks · Point of Rocks, MD" spends most of a line saying

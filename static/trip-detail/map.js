@@ -207,7 +207,9 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
     if (e.target.closest('a, button, img, input, textarea, select, label')) return;
     const id = card.id || '';
     const m = id.match(/^stay-(\d+)-\d+$/);
-    const lookupId = m ? 'stay-' + m[1] : id;
+    // A campspot's Arrived / Back at / Departed row names the stay it stands
+    // for, since the row itself has no marker of its own.
+    const lookupId = card.dataset.mapTarget || (m ? 'stay-' + m[1] : id);
     const ll = window.tripCardTargets && window.tripCardTargets[lookupId];
     if (ll && window.tripMap) {
       window.tripMap.setView(ll, 14, { animate: true });
@@ -956,12 +958,20 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     if (manual) return;
     if (autoTst == null) return;
     const hm = formatHM(autoTst);
-    // Home times are in the home zone; on a multi-timezone trip say so, or
-    // the trip's start and end become the only unlabelled times on the page.
-    // The abbreviation is rendered into the span's data attribute server-side
-    // (blank on a single-zone trip), so this doesn't re-derive it.
-    const tz = span.dataset.tzAbbr ? ` ${span.dataset.tzAbbr}` : '';
-    span.textContent = IS_ADMIN ? ` · ${hm}${tz} (auto)` : ` · ${hm}${tz}`;
+    // The span is the home card's slot in the timeline's time column, so it
+    // gets the same markup the template's `tl_time` macro renders: the clock
+    // and AM/PM as separate spans (a phone stacks them), then any zone label
+    // and, for admins, a small "auto" under it. Home times are in the home
+    // zone; on a multi-timezone trip say so, or the trip's start and end
+    // become the only unlabelled times on the page. The abbreviation is
+    // rendered into the span's data attribute server-side (blank on a
+    // single-zone trip), so this doesn't re-derive it.
+    const [clock, ampm] = hm.split(' ');
+    const bits = [`<span class="tl-clock">${escapeHtml(clock)}</span>`];
+    if (ampm) bits.push(` <span class="tl-ampm">${escapeHtml(ampm)}</span>`);
+    if (span.dataset.tzAbbr) bits.push(`<span class="tl-tz">${escapeHtml(span.dataset.tzAbbr)}</span>`);
+    if (IS_ADMIN) bits.push('<span class="tl-auto" title="From the GPS track — Edit to override">auto</span>');
+    span.innerHTML = bits.join('');
     if (which === 'start') window.HOME_START_TIME_AUTO = hm;
     else window.HOME_END_TIME_AUTO = hm;
   }

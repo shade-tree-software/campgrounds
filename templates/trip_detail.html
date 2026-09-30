@@ -429,6 +429,10 @@
     /* Masks the timeline axis line behind the dot, as the day divider does. */
     box-shadow: 0 0 0 4px var(--offwhite);
   }
+  /* A campspot's comings and goings ("Arrived at", "Back at", "Departed")
+     take the campspot's navy, so a row reads as the same place as the card
+     it leads to rather than as one more stop along the road. */
+  .event-card.camp-row .event-icon::before { background: var(--navy); }
   .event-card.wp-compact .event-icon svg {
     position: absolute;
     left: 50%;
@@ -1105,11 +1109,19 @@
      = 2.25rem. Line height runs from the first circle's center to the
      last circle's center (2rem down from top of first card, 2rem up
      from bottom of last card — bare cards are ~4rem tall).  */
-  .cards-column { position: relative; }
+  .cards-column {
+    position: relative;
+    /* The time column (see `tl_time`). Everything else in the column —
+       cards, dividers, write-ups — keeps its geometry and simply starts this
+       much further right, which is why the axis below is the only other rule
+       that had to learn about it. */
+    --tl-gutter: 4.6rem;
+    padding-left: var(--tl-gutter);
+  }
   .cards-column::before {
     content: '';
     position: absolute;
-    left: calc(2.25rem - 1px);
+    left: calc(var(--tl-gutter) + 2.25rem - 1px);
     top: 2rem;
     bottom: 2rem;
     width: 2px;
@@ -1133,14 +1145,16 @@
        the date binds to the day it introduces rather than floating between
        the two.
 
-       Indented 1.25rem, NOT 2.25rem: that is where every stay and event
-       circle begins (2rem wide, centred on the 2.25rem axis), so the date
-       pill's left edge lines up with all of them down the page. It also
-       puts the pill across the axis, masking it — which is what the separate
-       dot used to do, so the dot is gone. */
-    margin: 3.5rem 0 .5rem 1.25rem;
+       Flush left, out over the time column (AWH 2026-09-30): the day heading
+       is the one thing on the page wider than a stop, so it starts at the
+       column's own edge, where the eye returns at the start of each day,
+       instead of lining up with the circles. The whole row is opaque, so the
+       axis breaks for it — the gap is part of what marks a new day. */
+    margin: 3.5rem 0 .6rem calc(-1 * var(--tl-gutter));
+    padding: .15rem 0;
+    background: var(--offwhite);
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
   .day-divider:first-child { margin-top: 0; }
   /* Its own row under the divider, indented to 4.25rem like the write-up and
@@ -1174,25 +1188,30 @@
      there, and anything added here silently leaked into the mileage. With a
      class the chip simply doesn't match, and `.nb` inherits from `.day-drive`
      the way it always should have. */
-  .day-divider .day-date {
-    /* Filled, not tinted. Against a column of shadowed white cards a label has
-       to be an object rather than a colour of text, and navy is already the
-       structural colour here: the stay circles, the header, the nav. */
-    background: var(--navy);
-    color: var(--white);
-    /* Sized against the card titles it shares the page with (1.05rem/600),
-       not against the small print. Uppercase carries more weight per point,
-       so .95rem/700 reads at least as large; with .4rem of vertical padding
-       the pill lands at ~2rem tall, the height of the circles below it. */
-    font-size: .95rem;
+  .day-divider .day-num {
+    /* Plain type, not a pill (AWH 2026-09-30). Size does the job the fill
+       used to: well above the 1.05rem card titles, so it still reads as the
+       heading of everything under it rather than one more item in the list. */
+    color: var(--navy);
+    font-size: 1.45rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    padding: .4rem 1rem;
-    border-radius: 999px;
+    line-height: 1.2;
+    letter-spacing: -.01em;
+    white-space: nowrap;
+  }
+  /* The date, second to the day number (AWH 2026-09-30: "Day 3" is how the
+     family names a day; the date qualifies it). Same navy so the two read as
+     one label, much smaller so the number leads. */
+  .day-divider .day-date {
+    color: var(--navy);
+    font-size: .95rem;
+    font-weight: 600;
+    padding: 0 .6rem;
+    white-space: nowrap;
   }
   .day-divider::after {
     content: '';
+    align-self: center;
     flex: 1;
     /* 2px and navy-tinted rather than a 1px hairline: it has to hold its own
        against a column of shadowed white cards. Tinted rather than solid
@@ -1200,21 +1219,19 @@
     height: 2px;
     background: rgba(0, 40, 104, .16);
     /* The rule is drawn last so it fills whatever the labels leave; `order`
-       lets the driving chip sit after it, pushing the chip to the right
-       edge while the date stays left. */
+       lets the facts sit after it, pushing them to the right edge while the
+       day's name stays left. */
     order: 1;
   }
-  /* Miles + driving time for the day, right-aligned opposite the date.
-     Deliberately lighter than the date: it qualifies the day rather than
-     naming it, and on a long trip these repeat every few cards.
+  /* Stops, photos, miles and driving time for the day, right-aligned opposite
+     its name. Deliberately lighter than the name: it qualifies the day rather
+     than naming it, and on a long trip these repeat every few cards.
 
-     This used to carry a warning about `.day-divider span` (0,1,1) beating a
-     bare `.day-drive` (0,1,0) and silently overriding every property here,
-     `.nb` included. The date now has its own class, so nothing about the
-     chip is fighting the label any more — but keep the chip's own rules
-     scoped to `.day-divider .day-drive` rather than reintroducing element
-     selectors inside this row. */
-  .day-divider .day-drive {
+     Keep these rules scoped to `.day-divider .day-facts` rather than
+     reintroducing element selectors inside this row: a `.day-divider span`
+     rule once beat the chip on specificity and silently overrode every
+     property here, `.nb` included (it rendered "9H 06M DRIVING"). */
+  .day-divider .day-facts {
     order: 2;
     background: var(--offwhite);
     padding: 0 0 0 .6rem;
@@ -1229,13 +1246,60 @@
   }
   /* Each fact is nowrap so a narrow screen breaks BETWEEN them rather than
      through "9h 06m" — same treatment as the stats page's drive list. */
-  .day-divider .day-drive .nb { white-space: nowrap; }
+  .day-divider .day-facts .nb { white-space: nowrap; }
   @media (max-width: 700px) {
-    /* Below ~360px the date, the rule and the chip stop fitting on one line;
-       wrapping drops the chip to its own row under the date rather than
-       letting it push the layout wide. */
-    .day-divider { flex-wrap: wrap; }
-    .day-divider .day-drive { padding-left: .35rem; }
+    /* Below ~360px the name, the rule and the facts stop fitting on one line;
+       wrapping drops the facts to their own row under the name rather than
+       letting them push the layout wide. */
+    .day-divider { flex-wrap: wrap; row-gap: .3rem; }
+    .day-divider .day-num { font-size: 1.3rem; }
+    .day-divider .day-facts { padding-left: 0; }
+  }
+  /* ── Time column ─────────────────────────────────────────────────────────
+     A zero-height block in flow just above its card, with the time hung out
+     into the gutter at the card's circle height. `top` is the circle centre
+     (1rem header padding + half the 2rem circle = 2rem) less half a line, so
+     the clock sits level with the marker it belongs to. */
+  .tl-time {
+    position: relative;
+    height: 0;
+    z-index: 2;
+  }
+  .tl-time .tl-when {
+    position: absolute;
+    right: calc(100% + .6rem);
+    top: 1.55rem;
+    text-align: right;
+    white-space: nowrap;
+    line-height: 1.2;
+    color: #3d3d42;
+    font-size: .8rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .tl-time .tl-ampm { font-size: .7rem; font-weight: 500; }
+  /* The zone (multi-timezone trips only) and the "auto" mark on a GPS-derived
+     home time: small print under the clock, not a second fact beside it. */
+  .tl-time .tl-tz,
+  .tl-time .tl-auto {
+    display: block;
+    color: #8a8a8a;
+    font-size: .66rem;
+    font-weight: 500;
+    letter-spacing: .04em;
+  }
+  /* A compact waypoint row's dot is centred .775rem down (.1rem padding + half
+     its 1.35rem slot), not 2rem, so its time rides that much higher. */
+  .tl-time.compact .tl-when { top: .2rem; }
+  @media (max-width: 700px) {
+    /* A phone can't spare 4.6rem. Stacking AM/PM under the clock narrows the
+       column to the width of "12:50", and every card gets that width back. */
+    .cards-column { --tl-gutter: 3.1rem; }
+    .tl-time .tl-when { right: calc(100% + .45rem); top: 1.2rem; font-size: .76rem; }
+    .tl-time .tl-ampm { display: block; font-size: .64rem; }
+    /* Two-line compact rows centre their dot between the lines, so the stacked
+       time starts a little lower than a one-line row's would. */
+    .tl-time.compact .tl-when { top: .15rem; }
   }
 
   .cards-column .stay-card,
@@ -2496,6 +2560,35 @@
       could never show one at all. `ns` is a namespace so the loop body can
       mutate it (a plain
       `{% set %}` inside a for-loop doesn't persist between iterations). -#}
+{#- The time column: a card's start time, set in the gutter LEFT of the
+    timeline axis (AWH 2026-09-30 — times down the left edge are what make it
+    read as a timeline; tucked into the meta line after the name, they were
+    the last thing on the row). It is a zero-height block emitted just BEFORE
+    its card, with the time absolutely positioned out into the gutter at the
+    card's circle height — a sibling rather than a child because every full
+    card clips its overflow (rounded corners), which would cut off anything
+    hung outside its box. Being in flow directly above the card is what keeps
+    it pinned to that card whatever the card's height.
+
+    Only things that happened at a moment get one: stops, road legs and the
+    two home cards. A campspot has dates but no time, so its slot stays empty
+    rather than borrowing a made-up one.
+
+    `display_id` names the span the map's GPS-derived home time is written
+    into (updateHomeTimeDisplay), so a home card renders the span even while
+    it is empty. `tz` is shown only on a trip that crosses a zone, as before.
+    The AM/PM is its own span so a phone can stack it under the clock and
+    keep the column narrow. -#}
+{% macro tl_time(t, tz='', tz_title='', compact=False, display_id='') %}
+  {%- set parts = (t | to12h).split(' ') if t else [] %}
+  <div class="tl-time{% if compact %} compact{% endif %}">
+    <span class="tl-when"{% if display_id %} id="{{ display_id }}" data-tz-abbr="{{ tz }}"{% endif %}>
+      {%- if parts %}<span class="tl-clock">{{ parts[0] }}</span>{% if parts | length > 1 %} <span class="tl-ampm">{{ parts[1] }}</span>{% endif %}
+      {%- if tz %}<span class="tl-tz"{% if tz_title %} title="{{ tz_title }}"{% endif %}>{{ tz }}</span>{% endif %}{% endif -%}
+    </span>
+  </div>
+{%- endmacro %}
+
 {#- One day divider: the date, what the GPS says it drove, the way in
     for road photos, and the day's write-up slot. A MACRO because it is
     emitted from two places — inside the timeline loop whenever the date
@@ -2522,20 +2615,40 @@
         name what it is counting.
 
         `driving_by_day` omits a day under a mile, so a day parked at camp
-        shows just its date rather than a measured-looking "0 mi". -#}
-    
-    <div class="day-divider">
+        shows just its date rather than a measured-looking "0 mi".
+
+        The day is named by its NUMBER first and its date second (AWH
+        2026-09-30): "Day 3" is how the family talks about a trip, and the
+        number is what the day picker steps through. It is the calendar
+        offset from the trip's first day (`_timeline_days`), so a day with no
+        cards of its own leaves a gap in the numbering rather than shifting
+        every later day down by one.
+
+        Stops and photos sit with the mileage on the right: together they are
+        the day at a glance, and none of them is worth a line of its own. A
+        zero is left out rather than printed — "0 photos" on a driving day is
+        noise, not information. -#}
+    {%- set info = trip_days.get(day) or {} %}
+    <div class="day-divider" id="day-{{ day }}" data-day="{{ day }}"{% if info.num %} data-day-num="{{ info.num }}"{% endif %}>
+      {%- if info.num %}
+      <span class="day-num">Day {{ info.num }}</span>
+      {%- endif %}
       <span class="day-date">{{ day | daylabel }}</span>
-      {%- if drive %}
-      {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
-                     if drive.round_trip
-                     else '{:,}'.format(drive.miles) ~ ' mi from where the day started to where it ended — the same figure the stats page shows'
-                          ~ (', plus ' ~ drive.local_miles ~ ' mi driven locally on either side of it.' if drive.local_miles else '.')) %}
-      <span class="day-drive" title="{{ tip }}"
+      {%- if info.stops or info.photos or drive %}
+      <span class="day-facts"
         >{#- whitespace between these spans is the only place the line may
              break on a narrow screen, so it is kept deliberate and minimal -#}
-        <span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
-        <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
+        {%- if info.stops %}<span class="nb">{{ info.stops }} stop{{ '' if info.stops == 1 else 's' }}</span>{% endif %}
+        {%- if info.photos %}{% if info.stops %} &middot; {% endif %}<span class="nb">{{ info.photos }} photo{{ '' if info.photos == 1 else 's' }}</span>{% endif %}
+        {%- if drive %}
+        {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
+                       if drive.round_trip
+                       else '{:,}'.format(drive.miles) ~ ' mi from where the day started to where it ended — the same figure the stats page shows'
+                            ~ (', plus ' ~ drive.local_miles ~ ' mi driven locally on either side of it.' if drive.local_miles else '.')) %}
+        {%- if info.stops or info.photos %} &middot; {% endif %}<span class="day-drive" title="{{ tip }}"
+          ><span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
+          <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
+        {%- endif %}</span>
       {%- endif %}
     </div>
     {%- if can_add_road and no_road_card %}
@@ -2632,14 +2745,16 @@
       no equivalent — sitting after the loop already places it under the
       last day's divider, which is the day they got back. -#}
   {%- if loop.first %}
+  {{ tl_time(trip.home_start_time, home_tz_abbr, display_id='home-start-time-display') }}
   <div class="event-card bare home-card home-card-start" id="home-card-start">
     <div class="event-header">
       <div class="event-icon home-icon">
         <svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>
       </div>
       <div class="event-info">
+        {#- No meta line: the date is the day divider's and the time is in the
+            time column, which were the only two things it carried. -#}
         <h3>Home<span class="card-where">Reston, VA</span></h3>
-        <div class="event-meta">{% if trip.start %}{{ trip.start }}{% endif %}<span class="home-time-display" id="home-start-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_start_time %} &middot; {{ trip.home_start_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('start')">Edit</button></span>
@@ -2649,6 +2764,10 @@
   {%- endif %}
 
   {% if item.type == "stay" %}
+  {#- When they got back to it for the night, read off the GPS track
+      (`_add_campspot_rows`). Blank when there is no track, or when the phone
+      was quiet long enough that the ping would only be a bound. -#}
+  {{ tl_time(item.arrive_time or '', item.arrive_tz_abbr if trip.multi_timezone else '', item.arrive_tz) }}
   <div class="stay-card" id="stay-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}">
     <div class="stay-header">
       <div class="stay-number">{{ item.idx + 1 }}</div>
@@ -2833,6 +2952,7 @@
     </button>
   </div>
   {%- endif %}
+  {{ tl_time(item.time, item.tz_abbr if trip.multi_timezone else '', item.tz, compact=is_compact) }}
   <div class="event-card{% if item.family_visit %} family-visit{% elif item.waypoint %} waypoint{% endif %}{% if is_bare %} bare{% endif %}{% if is_compact %} wp-compact{% endif %}{% if item.needs_vetting and is_admin %} needs-vetting{% endif %}{% if item.wp_collapsed %} wp-collapsed{% endif %}" id="event-{{ item.idx }}"{% if item.wp_run_id %} data-wp-run="{{ item.wp_run_id }}"{% endif %}>
     <div class="event-header">
       <div class="event-icon">{% if item.family_visit %}<svg width="14" height="14" viewBox="0 0 20 20" fill="#fff"><path d="M10 2 L2 9 L5 9 L5 17 L9 17 L9 12 L11 12 L11 17 L15 17 L15 9 L18 9 Z"/></svg>{% elif item.waypoint %}{# Drawn, not the &#9670; text glyph: that glyph's ink
@@ -2852,21 +2972,19 @@
             nothing. Suppressed only there — a full card has the room, and the
             state is still worth having on it. -#}
         <h3>{{ item.name }}{% if where and not (is_compact and where.lower().startswith(item.name.lower())) %}<span class="card-where">{{ where }}</span>{% endif %}{% if item.needs_vetting and is_admin %}<span class="needs-vetting-badge" title="Auto-detected from GPS track — open Edit and Save to clear this flag.">Needs review</span>{% endif %}</h3>
-        <div class="event-meta">
-          {# The zone label only appears on a trip that spans more than one
-             (trip.multi_timezone). On a single-zone trip every time means the
-             same thing and three extra letters on every card is just noise;
-             on a multi-zone one it is the difference between a stop at 08:47
-             and one at 08:35 that actually happened 44 minutes later. Shown
-             once after the range, not on both ends — a stop does not change
-             zone while you are parked at it. #}
-          {#- The compact row drops the date: it sits under a day divider that
-              already says which day this is, and on one line that string is
-              most of the width. The zone label stays, because on a trip that
-              crosses one it is the difference between two stops an hour
-              apart. -#}
-          {% if not is_compact %}{{ item.date }}{% endif %}{% if item.time %}{% if not is_compact %} {% endif %}{{ item.time | to12h }}{% if item.end_time %}&ndash;{{ item.end_time | to12h }}{% endif %}{% if trip.multi_timezone and item.tz_abbr %}<span class="tz-abbr" title="{{ item.tz }}">{{ item.tz_abbr }}</span>{% endif %}{% endif %}
-        </div>
+        {#- The meta line is how long they stayed, and nothing else. The start
+            time moved to the time column and the date is the day divider's;
+            the end time is replaced by the duration (AWH 2026-09-30), which
+            is the fact a reader was working out from the range anyway. It is
+            printed bare — no "Stayed" label (AWH 2026-09-30): under a start
+            time a bare "1h 40m" can only mean one thing. The zone label went
+            with the start time, into the time column. A stop with no end time
+            has nothing to say here, so the line is left out rather than
+            rendered empty. -#}
+        {%- set stayed = item.time | stayed(item.end_time) %}
+        {%- if stayed %}
+        <div class="event-meta">{{ stayed }}</div>
+        {%- endif %}
         {# Bare waypoint cards hide .event-body, so render description inline here.
            Non-bare cards still render description inside .event-body below. #}
         {% if is_bare and item.waypoint and item.description %}
@@ -3006,6 +3124,10 @@
   {#- `leg` distinguishes several cards sharing one day, the same shape a stay
       split across nights uses (stay-3, stay-3-2). They all upload and reorder
       against the DAY, which is why every grid carries data-road-day. -#}
+  {#- A road leg's time is its first photo's, the same clock it sorts on —
+      but only when some photo actually carries a time: with none, `time` is
+      the sort's noon stand-in, and printing it would invent a moment. -#}
+  {{ tl_time(item.time if item.photos | selectattr('date_taken') | list else '') }}
   <div class="event-card road-card" id="{{ item.dom_id }}">
     <div class="event-header">
       <div class="event-icon road-icon" title="Photographed from the road">
@@ -3013,7 +3135,7 @@
       </div>
       <div class="event-info">
         <h3>On the road{% if item.where_label %}<span class="card-where">{{ item.where_label }}</span>{% endif %}</h3>
-        <div class="event-meta">{{ item.date }}{% if item.photo_count %} &middot; {{ item.photo_count }} photo{% if item.photo_count == 1 %}{% else %}s{% endif %}{% endif %}</div>
+        {% if item.photo_count %}<div class="event-meta">{{ item.photo_count }} photo{% if item.photo_count == 1 %}{% else %}s{% endif %}</div>{% endif %}
       </div>
       {% if is_admin or is_uploader %}
       <div class="card-actions">
@@ -3033,6 +3155,27 @@
         {% if item.photos | length > 6 %}
         <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ item.photos | length }} photos</button>
         {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% elif item.type == "camp" %}
+  {#- A campspot coming or going that isn't the night's card: the first
+      arrival when they went straight back out, each later return, and the
+      final departure (`_add_campspot_rows`). Derived from the GPS track, so
+      there is nothing to edit. Drawn as a compact waypoint row with the
+      campspot's navy dot, so it reads as the same place as the card. A
+      click frames the campspot on the map like any card header
+      (`data-map-target`). -#}
+  {{ tl_time(item.time, item.tz_abbr if trip.multi_timezone else '', item.tz, compact=True) }}
+  <div class="event-card bare wp-compact camp-row camp-{{ item.camp_kind }}" id="{{ item.dom_id }}" data-map-target="stay-{{ item.idx }}">
+    <div class="event-header">
+      <div class="event-icon" aria-hidden="true"></div>
+      <div class="event-info">
+        <h3>{{ {'arrived': 'Arrived at', 'back': 'Back at', 'departed': 'Departed'}[item.camp_kind] }} {{ item.name }}</h3>
+        {%- if item.duration %}
+        <div class="event-meta">{{ item.duration }}</div>
+        {%- endif %}
       </div>
     </div>
   </div>
@@ -3056,6 +3199,7 @@
   {% endif %}
 
   {% if trip.timeline %}
+  {{ tl_time(trip.home_end_time, home_tz_abbr, display_id='home-end-time-display') }}
   <div class="event-card bare home-card home-card-end">
     <div class="event-header">
       <div class="event-icon home-icon">
@@ -3063,7 +3207,6 @@
       </div>
       <div class="event-info">
         <h3>Home<span class="card-where">Reston, VA</span></h3>
-        <div class="event-meta">{% if trip.end %}{{ trip.end }}{% endif %}<span class="home-time-display" id="home-end-time-display" data-tz-abbr="{{ home_tz_abbr }}">{% if trip.home_end_time %} &middot; {{ trip.home_end_time | to12h }}{% if home_tz_abbr %}<span class="tz-abbr">{{ home_tz_abbr }}</span>{% endif %}{% endif %}</span></div>
       </div>
       {% if is_admin %}
       <span class="card-actions"><button class="edit-btn-dark" onclick="editHomeTime('end')">Edit</button></span>
