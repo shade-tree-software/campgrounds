@@ -10,6 +10,6 @@ for pid,p in sorted(json.load(open(path)).items(),key=lambda x:x[1]['name']):
     for e in cg:
         la,lo=map(float,e['location'].split(','))
         d=hv(p['lat'],p['lng'],la,lo) if 'lat' in p else 999
-        if (toks(p['name'])&toks(e['name']) and d<25) or d<1.5 or (toks(p['name']) and toks(p['name'])<=toks(e['name'])):
+        if (toks(p['name'])&toks(e['name']) and d<25) or d<1.5 or (toks(p['name']) and toks(p['name'])<=toks(e['name']) and d<25):
             if best is None or d<best[0]: best=(d,e['id'],e['name'])
     if not best: print('MISS',pid,p['name'],p.get('lat'),p.get('lng'))
