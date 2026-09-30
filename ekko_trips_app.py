@@ -275,6 +275,32 @@ def _daylabel(value):
     return f"{d.strftime('%a')}, {d.strftime('%b')} {d.day}"
 
 
+@app.template_filter('stayed')
+def _stayed(start, end):
+    """How long a stop lasted, as `1h 40m` / `25m`, from two stored 'HH:MM'
+    wall clocks. The timeline shows this instead of the end time: with the
+    start already in the time column, "stayed 1h 40m" is the fact a reader
+    wants, and working it out from 11:10 AM–12:50 PM is arithmetic we can do
+    for them.
+
+    An end earlier than the start ran past midnight (stargazing, 22:40 to
+    00:25), so it wraps a day rather than going negative. Both times are one
+    stop's own clocks, in one zone, so no offset maths is needed. "" when
+    either time is missing or unparseable, or the two are equal — nothing is
+    printed rather than a "0m" that looks measured."""
+    def _mins(v):
+        try:
+            h, m = str(v).split(":")[:2]
+            h, m = int(h), int(m)
+        except (ValueError, TypeError):
+            return None
+        return h * 60 + m if 0 <= h < 24 and 0 <= m < 60 else None
+    a, b = _mins(start), _mins(end)
+    if a is None or b is None or a == b:
+        return ""
+    return _hm(((b - a) % (24 * 60)) * 60)
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
@@ -3686,6 +3712,75 @@ def _collapse_waypoint_runs(timeline, event_photos, is_admin, enabled=None):
     _close(run)
 
 
+def _timeline_days(trip, event_photos):
+    """Number the trip page's days and count what each one holds.
+
+    Returns `(days, total)`: `days` maps each date that gets a day divider to
+    `{"num", "stops", "photos"}`, in timeline order, and `total` is how many
+    calendar days the trip spans.
+
+    A day's number is its CALENDAR offset from the trip's first day, not its
+    position in the list. A three-night stay with nothing on its middle days
+    renders no divider for them, and calling the day they left "Day 2" would
+    tell the reader two days went missing that didn't — so it stays "Day 4",
+    and the picker says "of 4". Day 1 is the earliest of the trip's start and
+    any card, so an event dated before the first campspot still counts from
+    its own day rather than from zero or below.
+
+    The dates are the ones the template emits dividers for: every item's
+    `sort_date`, plus `trip.end` when the loop never reached it (the day they
+    drove home — see the `day_divider` macro's second call site).
+
+    Counts are of what the day's section SHOWS, so the numbers never disagree
+    with the cards under them:
+      - a stop is an event of any kind (event, waypoint, family visit) plus a
+        campspot on the day they ARRIVED. A later night's copy of a split stay
+        is the same campspot, not another stop.
+      - photos are the photos on those cards — a campspot's bucketed per night
+        on a split stay, all on its one card otherwise — plus road photos.
+    """
+    timeline = trip.get("timeline") or []
+    dates = []
+    for item in timeline:
+        d = item.get("sort_date")
+        if d and d not in dates:
+            dates.append(d)
+    if timeline and trip.get("end") and (not dates or trip["end"] > max(dates)):
+        dates.append(trip["end"])
+
+    def _d(s):
+        try:
+            return date.fromisoformat(str(s))
+        except (TypeError, ValueError):
+            return None
+
+    parsed = [p for p in (_d(s) for s in dates + [trip.get("start")]) if p]
+    if not parsed:
+        return {}, 0
+    first, last = min(parsed), max(parsed)
+
+    days = {}
+    for s in dates:
+        p = _d(s)
+        if p:
+            days[s] = {"num": (p - first).days + 1, "stops": 0, "photos": 0}
+    for item in timeline:
+        day = days.get(item.get("sort_date"))
+        if day is None:
+            continue
+        kind = item.get("type")
+        if kind == "event":
+            day["stops"] += 1
+            day["photos"] += len(event_photos.get(item.get("idx"), []))
+        elif kind == "stay":
+            if item.get("copy_num", 1) == 1:
+                day["stops"] += 1
+            day["photos"] += len(item.get("photos") or [])
+        elif kind == "road":
+            day["photos"] += len(item.get("photos") or [])
+    return days, (last - first).days + 1
+
+
 @app.route('/trips/<int:trip_id>')
 def trip_detail(trip_id):
     trips = parse_trips()
@@ -3903,9 +3998,15 @@ def trip_detail(trip_id):
         _sweep_unresolved_places(trip_id, road_track, road_photos)
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
+    # Day numbers and per-day counts for the dividers and the day picker. Last,
+    # because road cards are spliced in above and their photos count too.
+    trip_days, trip_day_total = _timeline_days(trip, event_photos)
+
     return render_template(
         'trip_detail.html',
         trip=trip,
+        trip_days=trip_days,
+        trip_day_total=trip_day_total,
         home_tz_abbr=home_tz_abbr,
         home_tz_offset_min=home_tz_offset_min,
         driving_by_day=driving_by_day,
