@@ -202,5 +202,12 @@
   "price_only_rates": "median avg_rate $53; 1,878 under $50, 3,534 under $60",
   "finding": "The ~100-250 per-state 'private gap' counts from the local pass are mostly parks that FAIL the <=$$ price gate (RV Life $$$ starts near $40/night), not misses. MI check: of 45 gate-passing unmatched rows, ~28 are named as deliberate exclusions in the MI sweep commit 2233c5c (membership chains, lodges, casino lots, seasonal, closed). Gate-passing residuals are part genuine misses (ratings that rose since the sweep, parks new to RV Life) and part earlier skips whose reasons were recorded only in commit messages, if at all.",
   "open_question_for_AWH": "Keep the <=$$ gate (then the gap is the gate-passing residual, a few hundred at most after vetting) or relax it (e.g. avg_rate <= $50-60), which would put thousands of $$$ parks in scope."
+ },
+ "price_check_2026-09-30": {
+  "record": "audit/private_gap_price_check.jsonl (one row per park: RV Life avg_rate/price_level vs the park's published rate; quality official = park site or its own booking engine, aggregator = crowd-reported)",
+  "method": "34 private DB entries matched to RV Life, stratified by $ tier and region. 'base' = cheapest hookup RV site, peak-season weeknight, base occupancy, before tax/fees; 'top' = highest standard tier seen. Booking-engine-only parks (Campspot, KOA) block scripted fetches, so those rows are aggregator-grade.",
+  "result_official_n26": "published base exceeds RV Life avg_rate at 21 of 26; median +$8, median ratio 1.32; 16 of 26 land in the same $ tier; 12 of 26 within $10. $$ parks published $20-40 (tight); $$$ parks at avg_rate $41-44 published $50-75.",
+  "gross_errors": "3-4 of 26 wrong by >2x: Pittsburgh Roaring Run avg_rate $11 vs $45 published, Rusted Rail $20 vs $45, Black Hills Vista $106 vs 'from $45', Smooth Rapids $110 vs $35-55.",
+  "reading": "avg_rate tracks published price in rank order but runs low (looks like it lags current prices) and is occasionally garbage. An avg_rate <= $40 gate corresponds roughly to published base <= ~$50. Using avg_rate alone flips the gate verdict for about 1 in 10 parks."
  }
 }
