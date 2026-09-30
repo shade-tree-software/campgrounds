@@ -29,6 +29,12 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - Good Sam's directory has no operator URLs for most private parks. **Good Sam quality bar = overall (`general`) >= 8.5** (AWH 2026-09-30; calibrated: median GS 8.2 at RV Life 3*, 8.7 at 4*). Oak Knoll (7.7) was added then moved back to a hold; id 14216 is retired. MI net +28.
 - Deploy to PA needs the laptop's SSH keys - not available in the cloud session; pushed to master only.
 
+**Desktop session 2026-09-30 (later): MD +2 (14230-14231), DE 0, MI holds re-read +5 (14232-14236).** Records in audit/{md,de,mi}_private/verdicts.jsonl + private_gap_decisions.json. Next: WV (38 screen / 20 unrated / 3 GS-only), then PA/VA/OH/NY/NC/NJ.
+- **On the desktop, headless Chrome reads what the cloud could not**: ResNexus, Open Campground (no reCAPTCHA), Campspot availability, Newbook, Wix/script sites. Setup: `pip install --target ~/.cache/ekko-pw playwright`, launch with `executable_path='/usr/bin/google-chrome'`, `wait_until='domcontentloaded'` (Wix never fires load). Helpers live in ~/.cache/ekko-pw (txt.py page->text, cs.py Campspot quote, newbook.py, sat.py Esri crop, geo.py Census geocode, v.py append verdict). CampLife still 403s. So the MI "rate unreadable" holds were mostly a cloud artifact - re-read holds on the desktop before asking AWH.
+- Campspot park sitemap is now `campspot.com/c/sitemap/park/sitemap.xml` (old path redirects); fetch it with the browser.
+- Hipcamp listings render in the browser after ~20 s (active listing = live presence; a real 60-site campground booked only via Hipcamp is still `private`, not `hipcamp`).
+- RV Life pins can be on the wrong parcel entirely (Northern Bear Paw 500 m off, on farmland) - a Nominatim search of the street address found the OSM caravan_site node.
+
 **2026-09-30 side work, both AWH-directed:**
 - **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) still needs a person. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
 - Ministry-run campgrounds open to the public nightly are keeps (curation doc).
