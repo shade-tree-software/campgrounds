@@ -35,6 +35,14 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - Hipcamp listings render in the browser after ~20 s (active listing = live presence; a real 60-site campground booked only via Hipcamp is still `private`, not `hipcamp`).
 - RV Life pins can be on the wrong parcel entirely (Northern Bear Paw 500 m off, on farmland) - a Nominatim search of the street address found the OSM caravan_site node.
 
+**Desktop session 2 (2026-09-30 evening): MI holds second pass +10 (14237-14246), 18 skips, 7 held** (commit 4cc5470). Lessons:
+- **Google Maps is the working quality source** for parks RV Life doesn't rate or rates on 1-4 reviews: `audit/private_gap_browser/gm.py` reads rating + review count, coords, phone AND the park's current website from the place panel. It also cured most "no live web presence" holds - Google knew the new domain (wonderwoodsmichigan.com, campnorthernsites.com, ivansmichigan.com, greenvalleycampgrounds.com). Run it before calling a park dead. A lodging-style panel hides the count (Val-Du). Review text is not readable logged-out.
+- The Good Sam fetch cache (`goodsam_parks.json`) carries NO ratings - `gsr.py ST "name"` queries Algolia for them; check the returned name, the top hit is often a different park.
+- Call-for-rates parks were settled by the documented fallback (avg_rate <= $40), not left held.
+- "I am human" interstitials (Rivers Bend, lakegeorgecamp.wordpress.com) are not to be bypassed - hold for AWH.
+- Still held for AWH: Sutter's and Green Valley (pass price+quality, but off-season imagery full of trailers reads mostly seasonal), Val-Du, Lake George, Rivers Bend, Manistee (CampLife), Best Bear. **Next: WV** (audit/wv_private/candidates.json), then PA/VA/OH/NY/NC/NJ.
+
+
 **2026-09-30 side work, both AWH-directed:**
 - **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) still needs a person. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
 - Ministry-run campgrounds open to the public nightly are keeps (curation doc).
