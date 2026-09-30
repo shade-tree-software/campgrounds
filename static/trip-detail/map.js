@@ -207,7 +207,9 @@ document.querySelectorAll('.stay-card, .event-card').forEach(card => {
     if (e.target.closest('a, button, img, input, textarea, select, label')) return;
     const id = card.id || '';
     const m = id.match(/^stay-(\d+)-\d+$/);
-    const lookupId = m ? 'stay-' + m[1] : id;
+    // A campspot's Arrived / Back at / Departed row names the stay it stands
+    // for, since the row itself has no marker of its own.
+    const lookupId = card.dataset.mapTarget || (m ? 'stay-' + m[1] : id);
     const ll = window.tripCardTargets && window.tripCardTargets[lookupId];
     if (ll && window.tripMap) {
       window.tripMap.setView(ll, 14, { animate: true });

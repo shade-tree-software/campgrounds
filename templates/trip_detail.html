@@ -429,6 +429,10 @@
     /* Masks the timeline axis line behind the dot, as the day divider does. */
     box-shadow: 0 0 0 4px var(--offwhite);
   }
+  /* A campspot's comings and goings ("Arrived at", "Back at", "Departed")
+     take the campspot's navy, so a row reads as the same place as the card
+     it leads to rather than as one more stop along the road. */
+  .event-card.camp-row .event-icon::before { background: var(--navy); }
   .event-card.wp-compact .event-icon svg {
     position: absolute;
     left: 50%;
@@ -2760,6 +2764,10 @@
   {%- endif %}
 
   {% if item.type == "stay" %}
+  {#- When they got back to it for the night, read off the GPS track
+      (`_add_campspot_rows`). Blank when there is no track, or when the phone
+      was quiet long enough that the ping would only be a bound. -#}
+  {{ tl_time(item.arrive_time or '', item.arrive_tz_abbr if trip.multi_timezone else '', item.arrive_tz) }}
   <div class="stay-card" id="stay-{{ item.idx }}{% if item.copy_num and item.copy_num > 1 %}-{{ item.copy_num }}{% endif %}">
     <div class="stay-header">
       <div class="stay-number">{{ item.idx + 1 }}</div>
@@ -2967,13 +2975,15 @@
         {#- The meta line is how long they stayed, and nothing else. The start
             time moved to the time column and the date is the day divider's;
             the end time is replaced by the duration (AWH 2026-09-30), which
-            is the fact a reader was working out from the range anyway. The
-            zone label went with the start time, into the time column. A stop
-            with no end time has nothing to say here, so the line is left out
-            rather than rendered empty. -#}
+            is the fact a reader was working out from the range anyway. It is
+            printed bare — no "Stayed" label (AWH 2026-09-30): under a start
+            time a bare "1h 40m" can only mean one thing. The zone label went
+            with the start time, into the time column. A stop with no end time
+            has nothing to say here, so the line is left out rather than
+            rendered empty. -#}
         {%- set stayed = item.time | stayed(item.end_time) %}
         {%- if stayed %}
-        <div class="event-meta">Stayed {{ stayed }}</div>
+        <div class="event-meta">{{ stayed }}</div>
         {%- endif %}
         {# Bare waypoint cards hide .event-body, so render description inline here.
            Non-bare cards still render description inside .event-body below. #}
@@ -3145,6 +3155,27 @@
         {% if item.photos | length > 6 %}
         <button type="button" class="photo-more" onclick="expandPhotoGrid(this)">Show all {{ item.photos | length }} photos</button>
         {% endif %}
+      </div>
+    </div>
+  </div>
+
+  {% elif item.type == "camp" %}
+  {#- A campspot coming or going that isn't the night's card: the first
+      arrival when they went straight back out, each later return, and the
+      final departure (`_add_campspot_rows`). Derived from the GPS track, so
+      there is nothing to edit. Drawn as a compact waypoint row with the
+      campspot's navy dot, so it reads as the same place as the card. A
+      click frames the campspot on the map like any card header
+      (`data-map-target`). -#}
+  {{ tl_time(item.time, item.tz_abbr if trip.multi_timezone else '', item.tz, compact=True) }}
+  <div class="event-card bare wp-compact camp-row camp-{{ item.camp_kind }}" id="{{ item.dom_id }}" data-map-target="stay-{{ item.idx }}">
+    <div class="event-header">
+      <div class="event-icon" aria-hidden="true"></div>
+      <div class="event-info">
+        <h3>{{ {'arrived': 'Arrived at', 'back': 'Back at', 'departed': 'Departed'}[item.camp_kind] }} {{ item.name }}</h3>
+        {%- if item.duration %}
+        <div class="event-meta">{{ item.duration }}</div>
+        {%- endif %}
       </div>
     </div>
   </div>

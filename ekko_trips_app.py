@@ -3630,6 +3630,167 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
     trip["timeline"].sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
 
 
+# How long the phone may have been silent on the far side of a campspot
+# arrival or departure for the ping bounding it to still count as the time.
+# Past this the moment is somewhere inside the silence, and the page leaves
+# the time blank rather than print a bound as if it were the answer. 30 min
+# keeps ~88% of the library's final departures and ~92% of its arrivals;
+# what it drops is mostly whole nights of silence (trip 16's last ping at
+# Blackwoods is 11:03 PM and the next is on the road at 8:33 AM).
+CAMP_TIME_SILENCE_S = 30 * 60
+
+# An outing's first card is often timed a little BEFORE the phone crosses the
+# departure radius: it was typed while setting off, or it began at the water's
+# edge by the site. Trip 91's afternoon hike starts 15:20 and the phone leaves
+# camp at 15:21; its evening paddle starts 18:25 against 18:30. Without this
+# lead those absences read as empty and the return to camp is merged away.
+CAMP_OUTING_LEAD_S = 15 * 60
+
+
+def _add_campspot_rows(trip, camp_visits, ref_tz=""):
+    """Put the campspots' comings and goings on the timeline.
+
+    The campspot card stays the LAST card of its day (AWH 2026-09-30), and now
+    carries the time they got back to it for the night. Every other visit that
+    day becomes a one-line row in its own chronological slot:
+
+      - "Arrived at X": the first time they reached the campspot, when they
+        went out again before settling in (trip 92 reached the Svendsens at
+        5:53 PM, went to the Conshohocken fireworks, then came back).
+      - "Back at X": each later return that isn't the night's.
+      - "Departed X": the moment they left it for good, on the day the stay
+        ends. Only that one. An earlier departure is the start of an outing
+        the card after it already describes, and it is where OwnTracks'
+        overnight silence bites hardest: trip 96's "left camp" would read
+        8:03 PM the previous evening. A morning kayak from camp therefore
+        shows as kayak → "Back at" → "Departed", which is what happened.
+
+    A return is shown only when something on the timeline happened while
+    they were away — an event, a waypoint, a road card. An absence with
+    nothing in it (a 1-3 minute GPS flicker, or forty minutes somewhere
+    inside a campground as big as Big Meadows) would produce a "Back at" row
+    with nothing before it to come back from, so its two visits are merged
+    instead. 72 of the library's 237 absences are like that.
+
+    A time is printed only when the phone reported within
+    `CAMP_TIME_SILENCE_S` on the far side of it; otherwise the row keeps its
+    place and leaves the time column blank, and the duration goes with it.
+    A departure without a trustworthy time is left out entirely, since its
+    position would be a guess too.
+
+    `camp_visits` is the cached `_campspot_visits` output. Runs after
+    `_add_road_cards`, so road legs count as things that happened while away
+    and the road cards are not split at these rows."""
+    timeline = trip.get("timeline")
+    stays = trip.get("stays") or []
+    if not camp_visits or not timeline:
+        return
+    runs = {str(r[0]): r for r in visit_runs(stays)}
+
+    def _instant(item, fallback_tz):
+        kind = item.get("type")
+        if kind == "event":
+            return _trip_local_to_tst(item.get("date"), item.get("time"),
+                                      item.get("tz") or ref_tz or fallback_tz)
+        # A road card's `time` is the sort's noon stand-in unless one of its
+        # photos actually carries a clock — the same test the template uses
+        # before printing it.
+        if kind == "road" and any(p.get("date_taken")
+                                  for p in item.get("photos") or []):
+            return _trip_local_to_tst(item.get("sort_date"), item.get("time"),
+                                      item.get("_tz") or ref_tz or fallback_tz)
+        return None
+
+    rows = []
+    for key, rec in camp_visits.items():
+        run = runs.get(key)
+        visits = [list(v) for v in (rec.get("visits") or [])]
+        if not run or not visits:
+            continue
+        tz_name = rec.get("tz") or ""
+        away = sorted(t for t in (_instant(i, tz_name) for i in timeline)
+                      if t is not None)
+
+        merged = [visits[0]]
+        for v in visits[1:]:
+            prev = merged[-1]
+            # `> prev[0]` keeps an item from counting for two absences: one
+            # timed just before a short visit belongs to the outing before it.
+            lo = prev[1] - CAMP_OUTING_LEAD_S
+            if any(lo <= t <= v[0] and t > prev[0] for t in away):
+                merged.append(v)
+            else:
+                prev[1], prev[3] = v[1], v[3]
+
+        def _local(tst):
+            dt = _local_dt(tst, tz_name)
+            return dt.strftime("%Y-%m-%d"), dt.strftime("%H:%M")
+
+        def _quiet_ok(silence):
+            return silence is not None and silence <= CAMP_TIME_SILENCE_S
+
+        cards = {it["sort_date"]: it for it in timeline
+                 if it.get("type") == "stay" and it.get("idx") in run}
+        # The night's visit on each date is the last one to START that date.
+        night = {}
+        for k, v in enumerate(merged):
+            night[_local(v[0])[0]] = k
+
+        last = merged[-1]
+        dep_day, dep_clock = _local(last[1])
+        show_departure = (_quiet_ok(last[3])
+                          and dep_day == stays[run[-1]].get("end"))
+
+        def _row(kind, n, day, clock, sure, duration=""):
+            # The record covering that day, so a site move points the row at
+            # the right marker; the departure day belongs to the last one.
+            target = next((j for j in run
+                           if (stays[j].get("start") or "") <= day
+                           < (stays[j].get("end") or "")), run[-1])
+            return {
+                "type": "camp", "camp_kind": kind, "idx": target,
+                "name": stays[target].get("place") or "camp",
+                "dom_id": f"camp-{run[0]}-{n}",
+                "sort_date": day, "date": day,
+                "time": clock if sure else "",
+                "tz": tz_name,
+                "tz_abbr": tz_abbrev(day, clock, tz_name) if sure else "",
+                "duration": duration,
+                "_order": 0, "_time": clock,
+                # Half a minute either side of anything sharing the minute:
+                # you arrive, THEN check in ("Check-in at campground" and the
+                # arrival are both 15:26 on trip 17), and you leave after
+                # whatever was last at camp.
+                "_rank": event_time_rank(day, clock, tz_name, ref_tz)
+                         + (0.5 if kind == "departed" else -0.5),
+            }
+
+        for k, v in enumerate(merged):
+            day, clock = _local(v[0])
+            sure = _quiet_ok(v[2])
+            if night.get(day) == k and day in cards:
+                if sure:
+                    card = cards[day]
+                    card["arrive_time"] = clock
+                    card["arrive_tz"] = tz_name
+                    card["arrive_tz_abbr"] = tz_abbrev(day, clock, tz_name)
+                continue
+            # How long they were back, unless the Departed row right after
+            # says it — or either end is a guess.
+            duration = ""
+            if (sure and _quiet_ok(v[3])
+                    and not (k == len(merged) - 1 and show_departure)):
+                duration = _stayed(clock, _local(v[1])[1])
+            rows.append(_row("arrived" if k == 0 else "back", k, day, clock,
+                             sure, duration))
+        if show_departure:
+            rows.append(_row("departed", len(merged), dep_day, dep_clock, True))
+
+    if rows:
+        timeline.extend(rows)
+        timeline.sort(key=lambda x: (x["sort_date"], x["_order"], x["_rank"]))
+
+
 
 # OFF, at AWH's request (2026-09-10). The premise was that nobody reads a trip
 # for the gas station, and as a statement about what is INTERESTING that holds.
@@ -3971,7 +4132,8 @@ def trip_detail(trip_id):
     # Longest Driving Days there is no per-viewer work to skip by gating, and
     # "we drove 520 miles that day" is a good detail for anyone reading the
     # trip rather than a planning tool.
-    driving_by_day = _trip_driving_by_day(trip)
+    derived = _trip_derived_entry(trip)
+    driving_by_day = _trip_driving_by_day(trip, derived)
 
     home_tz_abbr = ""
     if trip.get("multi_timezone") and home:
@@ -3996,6 +4158,10 @@ def trip_detail(trip_id):
         # every render, since it hands the same trip over at most once per
         # process and a restart is exactly when retrying is worth it again.
         _sweep_unresolved_places(trip_id, road_track, road_photos)
+    # Campspot arrival times and the Arrived / Back at / Departed rows. After
+    # the road cards, which count as something that happened while away.
+    _add_campspot_rows(trip, derived.get("camp_visits"),
+                       reference_timezone(trip.get("events")))
     _collapse_waypoint_runs(trip["timeline"], event_photos, is_admin)
 
     # Day numbers and per-day counts for the dividers. Last, because road
@@ -6826,7 +6992,8 @@ TRIP_ROUTE_GAP_FILL_MIN_S = 90 * 60
 #   3: entries also carry per-day driving distance/duration
 #   4: a day's drive is bounded by leaving/reaching a place, not by mileage
 #   5: days also carry moving time (total time minus the stops)
-TRIP_ROUTE_CACHE_VERSION = 8
+#   9: entries also carry each campspot's visits (`camp_visits`)
+TRIP_ROUTE_CACHE_VERSION = 9
 
 # Per-day driving, derived from the same cleaned + windowed track the overview
 # line is (see `_build_trip_derived`), so a day can't be measured off pings the
@@ -7211,7 +7378,7 @@ def _build_trip_derived(trip):
     opens its detail page, which is the right trade for a page that draws
     every trip at once: one cold trip must not turn the landing page into
     92 upstream requests."""
-    empty = {"line": [], "days": [], "day_totals": []}
+    empty = {"line": [], "days": [], "day_totals": [], "camp_visits": {}}
     if not trip.get("start") or not trip.get("end"):
         return empty
     points = _read_track_cache(trip["id"])
@@ -7285,9 +7452,13 @@ def _build_trip_derived(trip):
     # did we drive that day" for every day (the trip page's day dividers).
     # Both ride the same cache entry: they come out of this one pass and go
     # stale on exactly the same events.
+    # `camp_visits` rides here for the same reason: it reads the same kept
+    # pings, so a track the maps refuse to draw gives no campspot times
+    # either, and it goes stale on the same events.
     return {"line": line,
             "days": _drive_days(kept, tz_name),
-            "day_totals": _day_totals(kept, tz_name)}
+            "day_totals": _day_totals(kept, tz_name),
+            "camp_visits": _campspot_visits(trip, kept)}
 
 
 def _trip_route_signature(trip, raw_record):
@@ -7490,7 +7661,18 @@ def _hm(seconds):
     return f"{hours}h {rem // 60:02d}m" if hours else f"{rem // 60}m"
 
 
-def _trip_driving_by_day(trip):
+def _trip_derived_entry(trip):
+    """This trip's entry in the derived cache (`_trip_route_entries`), or {}.
+    The trip page reads it once and hands it to both of its consumers — the
+    day dividers' driving and the campspot rows — rather than reading and
+    signature-checking the cache file twice per render."""
+    try:
+        return _trip_route_entries([trip]).get(trip["id"]) or {}
+    except Exception:
+        return {}
+
+
+def _trip_driving_by_day(trip, entry=None):
     """Per-day driving for the timeline's day dividers, keyed by local date.
 
     Each value is `{"miles", "moving", "local_miles", "round_trip"}`.
@@ -7519,10 +7701,8 @@ def _trip_driving_by_day(trip):
     A day parked at camp logs a few hundred metres of GPS jitter, and "0 mi"
     is a worse answer than saying nothing: a reader takes it as a measured
     zero rather than as "you didn't go anywhere"."""
-    try:
-        entry = _trip_route_entries([trip]).get(trip["id"]) or {}
-    except Exception:
-        return {}
+    if entry is None:
+        entry = _trip_derived_entry(trip)
 
     # Leg rows, keyed by day. Tolerate a row shorter than today's shape rather
     # than raising on a cache written by an older build.
@@ -8303,6 +8483,87 @@ def _pick_visit(visits, reference_tst):
     best = min(visits, key=lambda v: (_gap(v),
                                       -(v["end_tst"] - v["start_tst"])))
     return best, _gap(best)
+
+
+def _campspot_visits(trip, kept):
+    """Every time the track shows the trip at each of its campspots, for the
+    timeline's arrival times and its "Arrived at" / "Back at" / "Departed"
+    rows (`_add_campspot_rows` turns these into what the page shows).
+
+    Keyed by VISIT (`visit_runs`), not by stay record, because the record is
+    one campsite: trip 96 moved from site 38 to site 30 mid-stay, and asking
+    each record separately reports every return twice. Each record's own
+    coordinate is asked (a site move can be a few hundred metres) and the
+    answers are unioned, since both are the one campground to a reader.
+
+    Rivals are the trip's events on the run's dates plus any OTHER campspot
+    overlapping them — the same nearest-card crediting the "Times from GPS"
+    button uses, and it is what ends a visit at the kayak launch 300 m from
+    the site rather than letting camp swallow the paddle.
+
+    Returns `{str(first_stay_idx): {"tz", "visits": [[start_tst, end_tst,
+    silence_before_s, silence_after_s], ...]}}`. The two silences are how
+    long the phone was quiet on the far side of each boundary (None at the
+    track's edge): an arrival or departure is only as precise as the ping
+    that bounds it, and OwnTracks can go quiet for a whole night — trip 96's
+    last ping at Low Water Bridge on its first evening is 8:03 PM and the next
+    is at the kayak launch the following morning. The page decides what a
+    silence that long means; this only records it.
+
+    `trip` must be enrich_trip_locations-ed, which `_select_chosen_track`
+    guarantees for the one caller."""
+    stays = trip.get("stays") or []
+    events = trip.get("events") or []
+    tsts = [p["tst"] for p in kept]
+    out = {}
+    for run in visit_runs(stays):
+        members = [stays[i] for i in run]
+        start_d, end_d = members[0].get("start"), members[-1].get("end")
+        if not start_d or not end_d:
+            continue
+        coords = list(dict.fromkeys(
+            (s["lat"], s["lng"]) for s in members
+            if s.get("lat") is not None and s.get("lng") is not None))
+        if not coords:
+            continue
+        tz_name = _tz_for_coord(coords[0][0], coords[0][1]) or ""
+
+        def _in_run(d):
+            return bool(d) and start_d <= d <= end_d
+
+        rivals = [(e["lat"], e["lng"]) for e in events
+                  if e.get("lat") is not None and e.get("lng") is not None
+                  and _in_run(e.get("date"))]
+        rivals += [(s["lat"], s["lng"]) for j, s in enumerate(stays)
+                   if j not in run
+                   and s.get("lat") is not None and s.get("lng") is not None
+                   and (s.get("start") or "") <= end_d
+                   and (s.get("end") or "") >= start_d]
+        spans = []
+        for lat, lng in coords:
+            own = [a for a in rivals
+                   if _haversine_m(a[0], a[1], lat, lng) > VISIT_SELF_ANCHOR_M]
+            for v in _visit_windows_at(kept, lat, lng, other_anchors=own):
+                day = _local_dt(v["start_tst"], tz_name).strftime("%Y-%m-%d")
+                if _in_run(day):
+                    spans.append([v["start_tst"], v["end_tst"]])
+        spans.sort()
+        merged = []
+        for a, b in spans:
+            if merged and a <= merged[-1][1]:
+                merged[-1][1] = max(merged[-1][1], b)
+            else:
+                merged.append([a, b])
+        visits = []
+        for a, b in merged:
+            i = bisect.bisect_left(tsts, a)
+            j = bisect.bisect_right(tsts, b)
+            visits.append([a, b,
+                           a - tsts[i - 1] if i > 0 else None,
+                           tsts[j] - b if j < len(tsts) else None])
+        if visits:
+            out[str(run[0])] = {"tz": tz_name, "visits": visits}
+    return out
 
 
 def _find_home_boundary_tsts(points, home,
