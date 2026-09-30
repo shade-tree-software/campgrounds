@@ -28,7 +28,7 @@ def run(park,contract='NY',host=H):
         t=re.sub(r'<(script|style)\b.*?</\1>','',t,flags=re.S)
         x=' '.join(html.unescape(re.sub(r'<[^>]+>',' ',t)).split())
         f=lambda k: (re.search(k+r':\s*([^:]*?)\s+(?=[A-Z][A-Za-z ]{2,30}:)',x) or [None,None])[1]
-        loop=re.search(r'Site, Loop:\s*(.*?)\s+Add Site',x)
+        loop=re.search(r'Site, Loop:\s*(.*?)\s+(?:Add Site|Type:)',x)
         res.append(dict(site=loop.group(1) if loop else sid,cat=f('Looking For Category'),access=f('Site Access'),
           maxlen=f('Max Vehicle Length'),drive=f('Driveway Length'),elec=f('Electricity Hookup'),water=f('Water Hookup'),sewer=f('Sewer Hookup'),
           wf=f('Waterfront'),type=f('Type')))
