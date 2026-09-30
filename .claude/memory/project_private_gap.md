@@ -18,3 +18,13 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - Campspot and KOA 403 scripted fetches; headless Chromium (Playwright, `ignoreHTTPSErrors` for the sandbox proxy CA) loads KOA but Campspot search results don't render. Crowd-reported rates are aggregator-grade, never the gate.
 - Cloud sandbox: Overpass main servers are proxy-blocked; maps.mail.ru mirror works.
 - 78 entries use an aggregator (rvlife/dyrt/goodsam/campendium/allstays) as primary `website` - separate cleanup, not done.
+
+**MI first pass DONE 2026-09-30: +29 (ids 14201-14229)**, 24 skips, 43 holds; record `audit/mi_private/`. Unrated RV Life remainder (~25) still open. Lessons:
+- **Holds dominate (43 vs 29 adds), and most are "rate unreadable"**, not "no": ResNexus (Incapsula), Open Campground (reCAPTCHA), CampLife, JS-only sites, call-for-rates. A person with a browser or phone clears these fast - batch them for AWH rather than grinding.
+- **Campspot is the best price source**: `campspot.com/park/<slug>?checkin=YYYY-MM-DD&checkout=...&guests=2,0,0` in headless Chromium (Playwright, `ignoreHTTPSErrors`, retry the proxy's ERR_TOO_MANY_RETRIES) lists every site type with "Starting at $X" - the price FOLLOWS its site description in the page text. Slugs: the park sitemap (`campspot.com/about/documents/park-sitemap.xml`, fetch with a browser); NOT every slug ends in `-<st>` (beaver-trail-campground) and some match other states (lucky-lake-208 is Idaho). Campspot's "N verified reviews" rating is a usable quality signal for unrated parks.
+- **RV Life park pages embed `cg_url`** (operator site) - `audit/private_gap_enrich.py` pulls it + a live probe for every candidate in ~40 s.
+- **The price gate removed ~1/3 of screen-passers** even at <= $50 published: RV Life's avg_rate lags, so a $43-48 RV Life park often publishes $53-65 (Lakeshore, TeePee, Pine Ridge, Waterways, Alice Springs, Hungry Horse, Goff Lake).
+- **Christian camps that rent their campground to the public nightly are keeps** (Covenant Hills, Winding Creek) - "church-retreat only" is the exclusion, not church-run.
+- **No trip_data/family.json in a cloud checkout** -> `append_state.py` now refuses without `--min-id`; MI used 14201 (14175-14200 skipped on purpose).
+- Good Sam's directory has no operator URLs for most private parks; its triple rating (all >= 7.0, my threshold, unconfirmed by AWH) served as the quality signal for Oak Knoll.
+- Deploy to PA needs the laptop's SSH keys - not available in the cloud session; pushed to master only.

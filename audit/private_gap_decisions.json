@@ -209,5 +209,23 @@
   "result_official_n26": "published base exceeds RV Life avg_rate at 21 of 26; median +$8, median ratio 1.32; 16 of 26 land in the same $ tier; 12 of 26 within $10. $$ parks published $20-40 (tight); $$$ parks at avg_rate $41-44 published $50-75.",
   "gross_errors": "3-4 of 26 wrong by >2x: Pittsburgh Roaring Run avg_rate $11 vs $45 published, Rusted Rail $20 vs $45, Black Hills Vista $106 vs 'from $45', Smooth Rapids $110 vs $35-55.",
   "reading": "avg_rate tracks published price in rank order but runs low (looks like it lags current prices) and is occasionally garbage. An avg_rate <= $40 gate corresponds roughly to published base <= ~$50. Using avg_rate alone flips the gate verdict for about 1 in 10 parks."
+ },
+ "states": {
+  "MI": {
+   "status": "first pass done 2026-09-30; unrated remainder open",
+   "added": "29 entries, ids 14201-14229 (ids 14175-14200 deliberately skipped: this checkout had no trip_data/family.json, so append_state.py --min-id cleared any family id issued on the live site since the last sweep)",
+   "records": "audit/mi_private/ - candidates.json (screen list + operator URLs), verdicts.jsonl (every verdict incl. price, source, kind of no), results_mi.json (add records), goodsam_only.json, waterfront_results.json",
+   "counts": {
+    "skip": 24,
+    "add": 29,
+    "hold": 43
+   },
+   "waterfront": "4 on-water: River Valley riverfront (N Br Tobacco River), Trails End pond, Duke Creek creekside (per-site Campspot category, canopy-blind), Nahma Lakeside Landing bayfront (mill slips on Big Bay de Noc)",
+   "open": [
+    "~25 RV-Life-unrated candidates not yet worked (need a quality signal: Campspot/Good Sam/Google >=25 reviews) - see candidates.json bucket 'unrated'",
+    "holds in verdicts.jsonl are re-openable: mostly rate unpublished/unreadable (ResNexus/Incapsula, Open Campground reCAPTCHA, CampLife), dead sites, missing quality signal, one unverifiable pin (Best Bear, Irons)"
+   ],
+   "quality_signal_note": "Good Sam triple used as the quality signal only when every component >= 7.0 (AWH has not set this threshold - flagged)"
+  }
  }
 }

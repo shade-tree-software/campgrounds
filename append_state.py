@@ -66,6 +66,9 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--state', required=True, help='two-letter state/province code, e.g. AZ')
     ap.add_argument('--leads', default=None, help='leads output path (default /tmp/<st>_leads.json)')
+    ap.add_argument('--min-id', type=int, default=0,
+                    help='lowest id to issue; use when trip_data/family.json is not on this '
+                         'machine (a cloud checkout) so ids clear any family entry added since')
     ap.add_argument('results', nargs='+')
     a = ap.parse_args()
     ST = a.state.upper()
@@ -84,8 +87,11 @@ def main():
     try:
         ids += [e['id'] for e in json.load(open(FAMILY)) if 'id' in e]
     except FileNotFoundError:
-        pass
-    next_id = max(ids) + 1
+        if not a.min_id:
+            raise SystemExit(f'{FAMILY} is missing, so the id high-water mark is unknown '
+                             '(family entries share the id space). Pass --min-id above any '
+                             'id the live site could have issued.')
+    next_id = max(max(ids) + 1, a.min_id)
 
     # dedup guard: skip a new entry within ~150 m of an existing same-state entry
     # (RV Life lists some campgrounds twice under different city tags, and agents
