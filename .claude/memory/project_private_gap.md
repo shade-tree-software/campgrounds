@@ -53,3 +53,5 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - **ResNexus starts serving a human check after a few dozen park visits from one IP** - treat its parks as holds, don't retry hard. Holds are listed in decisions.json for AWH (rate engines, two "I am human" sites, Highland/Bodnarosa pins; truck-stop hookups (Love's) are NOT campgrounds (AWH)).
 - Dedupe by NAME as well as by distance: Potter County Family (13104) looked new because the Good Sam pin was 6 km off; Montrose was deliberately removed 2026-09-08.
 - **Next: VA**, then OH/NY/NC/NJ (memory list), plus PA holds when AWH has a few minutes.
+
+**VA first pass DONE 2026-09-30: +10 (ids 14282-14291), 51 skips, 3 holds** (Rockahock, Small Country, Smith Mountain - engines unreadable). About 25 of the 64 candidates were already settled by the 2026-09-07 re-sweep (commit 0f4436c: Elks, Thousand Trails, timeshare/co-op/deeded parks) - read the state's earlier sweep commit FIRST, it saves half the work. Campspot `/book/<slug>/search/<in>/<out>/guests2,0,0/list` reads parks missing from the sitemap. **Next: OH**, then NY/NC/NJ.
