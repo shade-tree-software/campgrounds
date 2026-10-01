@@ -3746,10 +3746,24 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
 
         cards = {it["sort_date"]: it for it in timeline
                  if it.get("type") == "stay" and it.get("idx") in run}
-        # The night's visit on each date is the last one to START that date.
+        # The night's visit on each date is the last one to START that date —
+        # unless something on the timeline happens after it that same day,
+        # which means they went out again and the track never saw them come
+        # back (trip 16, Aug 15: back at Blackwoods 1:55-5:09 PM, then Bar
+        # Harbor and a schooner until 8 PM, and the phone silent till next
+        # evening). Taking the afternoon visit as the night's put a 1:55 PM
+        # arrival on a card that sits after the schooner and hid the "Back at"
+        # row; now that day's card stays blank and the return gets its row.
         night = {}
         for k, v in enumerate(merged):
-            night[_local(v[0])[0]] = k
+            day = _local(v[0])[0]
+            lo = v[1] - CAMP_OUTING_LEAD_S
+            went_out = any(t > lo and t > v[0] and _local(t)[0] == day
+                           for t in away)
+            if went_out:
+                night.pop(day, None)
+            else:
+                night[day] = k
 
         last = merged[-1]
         dep_day, dep_clock = _local(last[1])

@@ -259,6 +259,35 @@ class TestSameMinute(unittest.TestCase):
         self.assertEqual(names[:2], ["arrived", "Check-in"])
 
 
+class TestAnUnseenNightReturn(unittest.TestCase):
+    """Trip 16, Aug 15: back at Blackwoods mid-afternoon, out again to Bar
+    Harbor and a schooner, and the phone never reported the night's return."""
+
+    def setUp(self):
+        self.trip = _trip(
+            [_stay("2023-08-13", "2023-08-17")],
+            [_card(0, "2023-08-14"), _card(0, "2023-08-15"),
+             _card(0, "2023-08-16")],
+            [_event("2023-08-15", "11:43", "Downtown Bar Harbor"),
+             _event("2023-08-15", "17:53", "Schooner"),
+             _event("2023-08-16", "12:00", "Hike")])
+        A._add_campspot_rows(self.trip, _visits(
+            ("2023-08-14", "23:21", "2023-08-15", "09:55"),
+            ("2023-08-15", "13:55", "2023-08-15", "17:09"),
+            ("2023-08-16", "18:19", "2023-08-17", "09:00")), TZ)
+
+    def test_the_afternoon_return_gets_its_row(self):
+        self.assertIn(("back", "2023-08-15", "13:55", "3h 14m"),
+                      _returns(self.trip))
+
+    def test_the_days_card_is_left_blank(self):
+        self.assertIsNone(_card_time(self.trip, "2023-08-15"))
+
+    def test_other_nights_are_untouched(self):
+        self.assertEqual(_card_time(self.trip, "2023-08-14"), "23:21")
+        self.assertEqual(_card_time(self.trip, "2023-08-16"), "18:19")
+
+
 class TestVisitsAreCountedPerVisitNotPerRecord(unittest.TestCase):
     def test_a_site_move_does_not_report_every_return_twice(self):
         # Two records, one campground, sites ~150 m apart (trip 96's move).
