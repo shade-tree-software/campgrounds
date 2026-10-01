@@ -1,8 +1,11 @@
 ---
 name: project_private_gap
-description: Private gap (queue item 3) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json
+description: "Private gap (queue item 3) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 09487be3-2acc-453b-83f0-9f2bf0c5b56e
+  modified: 2026-10-01T16:27:09.820Z
 ---
 
 Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
@@ -19,7 +22,7 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - Many screen-passers were DELIBERATE skips in the original sweeps (MI commit 2233c5c names ~28: membership chains, lodges, casino lots, seasonal, closed). Grep the state's original private-sweep commit message before re-researching; record every verdict in audit/private_gap_decisions.json so it never happens again.
 - Campspot and KOA 403 scripted fetches; headless Chromium (Playwright, `ignoreHTTPSErrors` for the sandbox proxy CA) loads KOA but Campspot search results don't render. Crowd-reported rates are aggregator-grade, never the gate.
 - Cloud sandbox: Overpass main servers are proxy-blocked; maps.mail.ru mirror works.
-- 78 entries use an aggregator (rvlife/dyrt/goodsam/campendium/allstays) as primary `website` - separate cleanup, not done.
+- Aggregator-as-primary-website cleanup WORKED 2026-10-01 (see below).
 
 **MI first pass DONE 2026-09-30: +29 (ids 14201-14229)**, 24 skips, 43 holds; record `audit/mi_private/`. Unrated RV Life remainder (~25) still open. Lessons:
 - **Holds dominate (43 vs 29 adds), and most are "rate unreadable"**, not "no": ResNexus (Incapsula), Open Campground (reCAPTCHA), CampLife, JS-only sites, call-for-rates. A person with a browser or phone clears these fast - batch them for AWH rather than grinding.
@@ -60,4 +63,8 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 
 **OH first pass DONE 2026-10-01: +15 (ids 14292-14306), 104 skips, 27 holds** (decisions.json states.OH lists them). Ohio Turnpike service plazas are skipped under the truck-stop rule. A Campspot July-weeknight quote overrules a lower "from" price on the operator's page (Wolfie's). This machine has no /usr/bin/google-chrome now - the helpers fall back to Playwright's bundled Chromium; scratch crawler rates2.py (follows rate/booking links, prints the booking ENGINE) was the productive tool. **Next: NY**, then NC/NJ.
 
-**Open holds checklist: `audit/private_gap_holds.md` (51 on 2026-10-01: PA 21, VA 3, OH 27)** - AWH works these by hand on the other machine. Regenerate with `python3 audit/private_gap_holds.py` after settling any (append a verdict row with private_gap_browser/v.py; latest row per name wins). OH/VA Google lookups are saved as audit/<st>_private/google.json.
+**Holds CLEARED 2026-10-01**: AWH hand-read the last 10 (adds Big Bear Lake 14318, Ohio Christian University RV Park 14319 - its loop is on the N edge of campus, both pins were wrong; 8 skips: members-only x2, cabins-only, rental campers only, 47 seasonal vs 2 transient, $60, no presence x2).
+
+**Aggregator-URL cleanup (2026-10-01, audit/aggregator_url/)**: 244 entries had an aggregator as first website. 38 now lead with an operator/town/Campspot page (2 renamed: The Barn RV Park 5275, Trailside RV & Bicycle Park 9847); kept as-is: 9 --AWH dispersed sites, ~30 town parks, ~83 bookable RoverPass listings. **86 removal candidates awaiting AWH approval** (removal_candidates.json; 5 closed; none trip-referenced) - nothing deleted yet. Rules settled: docs/campground-curation.md live-presence bullets. Pettibone Lake (3973) flagged: no longer on Newaygo County's parks list.
+
+**Holds checklist: `audit/private_gap_holds.md`** (empty as of 2026-10-01) - AWH works these by hand on the other machine. Regenerate with `python3 audit/private_gap_holds.py` after settling any (append a verdict row with private_gap_browser/v.py; latest row per name wins). OH/VA Google lookups are saved as audit/<st>_private/google.json.
