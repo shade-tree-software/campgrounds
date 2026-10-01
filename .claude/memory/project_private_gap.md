@@ -46,3 +46,10 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 **2026-09-30 side work, both AWH-directed:**
 - **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) still needs a person. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
 - Ministry-run campgrounds open to the public nightly are keeps (curation doc).
+
+**PA first pass DONE 2026-09-30 (desktop): +19 (ids 14263-14281), 77 skips, 22 holds** - records in audit/pa_private/ (verdicts.jsonl, results_private_gap.json) + private_gap_decisions.json states.PA. Lessons:
+- PA family campgrounds publish $55-70: 40 of the screen-passers failed on price even though every one had RV Life avg_rate <= $50. Expect the same in OH/NY/NJ.
+- Electric-only sites count as the cheapest hookup site; a "primitive w/ electric" tent site does not.
+- **ResNexus starts serving a human check after a few dozen park visits from one IP** - treat its parks as holds, don't retry hard. Holds are listed in decisions.json for AWH (rate engines, two "I am human" sites, Love's truck-stop hookup category, Highland/Bodnarosa pins).
+- Dedupe by NAME as well as by distance: Potter County Family (13104) looked new because the Good Sam pin was 6 km off; Montrose was deliberately removed 2026-09-08.
+- **Next: VA**, then OH/NY/NC/NJ (memory list), plus PA holds when AWH has a few minutes.
