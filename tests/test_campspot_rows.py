@@ -216,6 +216,25 @@ class TestDepartures(unittest.TestCase):
             ("2026-07-05", "18:32", "2026-07-05", "21:31")), TZ)
         self.assertNotIn("departed", [r[0] for r in _rows(trip)])
 
+    def test_an_overnight_silence_into_the_last_day_gives_an_untimed_row(self):
+        # Trip 16's Blackwoods: last ping at camp 11:03 PM, next one already
+        # on the road at 8:33 AM on check-out day.
+        trip = self._trip([_event("2026-07-06", "09:04", "First stop")])
+        visits = _visits(("2026-07-05", "18:32", "2026-07-05", "23:03"))
+        visits["0"]["visits"][0][3] = (9 * 60 + 30) * 60
+        A._add_campspot_rows(trip, visits, TZ)
+        self.assertEqual(_rows(trip), [("departed", "2026-07-06", "", "")])
+        day = [i.get("camp_kind") or i.get("name") for i in trip["timeline"]
+               if i["sort_date"] == "2026-07-06"]
+        self.assertEqual(day, ["departed", "First stop"])
+
+    def test_but_not_when_the_silence_runs_past_the_last_day(self):
+        trip = self._trip()
+        visits = _visits(("2026-07-05", "18:32", "2026-07-05", "23:03"))
+        visits["0"]["visits"][0][3] = 40 * 3600     # next ping two days on
+        A._add_campspot_rows(trip, visits, TZ)
+        self.assertEqual(_rows(trip), [])
+
 
 class TestSilence(unittest.TestCase):
     def test_an_arrival_after_a_long_silence_has_no_time(self):

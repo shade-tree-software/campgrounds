@@ -3684,8 +3684,10 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
     A time is printed only when the phone reported within
     `CAMP_TIME_SILENCE_S` on the far side of it; otherwise the row keeps its
     place and leaves the time column blank, and the duration goes with it.
-    A departure without a trustworthy time is left out entirely, since its
-    position would be a guess too.
+    A departure without a trustworthy time is left out, since its position
+    would be a guess too — except when the track last saw them at camp the
+    evening before the stay's last day and next reports them away on that
+    day: then the row goes untimed at the top of that day.
 
     `camp_visits` is the cached `_campspot_visits` output. Runs after
     `_add_road_cards`, so road legs count as things that happened while away
@@ -3767,8 +3769,22 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
 
         last = merged[-1]
         dep_day, dep_clock = _local(last[1])
-        show_departure = (_quiet_ok(last[3])
-                          and dep_day == stays[run[-1]].get("end"))
+        end_day = stays[run[-1]].get("end")
+        show_departure = _quiet_ok(last[3]) and dep_day == end_day
+        # A departure the track can place but not time: last seen at camp the
+        # evening before the stay's last day, and the next ping — already
+        # away — falls on that last day. They left that morning, before the
+        # day's first stop; the row goes at the top of the day with no time.
+        # Trip 16's Blackwoods (last ping 11:03 PM, next 8:33 AM on the road)
+        # and Loraine (a 6:32 AM fix 610 m out near the entrance ends the
+        # visit at 8:53 PM the night before) both land here.
+        untimed_departure = False
+        if not show_departure and end_day and last[3] is not None:
+            seen_day = _local(last[1])[0]
+            next_day = _local(last[1] + last[3])[0]
+            eve = (date.fromisoformat(end_day)
+                   - timedelta(days=1)).isoformat()
+            untimed_departure = seen_day == eve and next_day == end_day
 
         def _row(kind, n, day, clock, sure, duration=""):
             # The record covering that day, so a site move points the row at
@@ -3821,6 +3837,8 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
             rows.append(row)
         if show_departure:
             rows.append(_row("departed", len(merged), dep_day, dep_clock, True))
+        elif untimed_departure:
+            rows.append(_row("departed", len(merged), end_day, "00:00", False))
 
     if rows:
         timeline.extend(rows)
