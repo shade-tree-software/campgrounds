@@ -147,7 +147,9 @@ def held(name, lat, lng, db):
 
 def cheap(p):
     """The AWH 2026-10-01 price gate; see the module docstring."""
-    if p.get("price"):
+    # A $ with no avg_rate is RV Life's default, not a rating (all 144 such
+    # candidates measured 2026-10-01 carry price_level 1): treat it as no tier.
+    if p.get("price") and p.get("rate"):
         return p["price"] <= 2
     return not p.get("rate") or p["rate"] <= NO_TIER_RATE
 
