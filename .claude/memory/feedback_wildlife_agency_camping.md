@@ -12,3 +12,5 @@ For the state gap, a wildlife-agency area (Missouri MDC conservation area, Kansa
 **How to apply:** use the agency's own facility list to filter (MDC area pages list campsites and privies), then confirm fit per area. Related: [[project_remaining_work_map]], [[feedback_add_with_caveat_not_withhold]].
 
 **Update AWH 2026-09-29 (same day): for MDC, the agency's own tag is enough.** An area whose MDC page lists "Individual Campsites" or "Designated Camping Sites" qualifies for an entry; knowing how many sites is nice but not required. MDC's camping-point layer (MSDIS `MO_MDC_Camping_Sites` FeatureServer, services2.arcgis.com/kNS2ppBA4rwAQQZy) supplies the pins. Apply the same spirit to other states' wildlife-agency designations: an agency-designated campsite is the bar, a parking-lot overnight allowance is not.
+
+**Ownership label (AWH 2026-10-01):** `wma` is ONLY for parking-lot camping (no dedicated campsites). A WMA with a genuine campground or marked/designated dispersed sites gets `state` (or `local` if county-run). Edwards Run (14099) is `wma` by AWH's explicit call despite 6 DNR-listed sites. Recorded in docs/campground-curation.md.
