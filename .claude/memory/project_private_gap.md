@@ -7,6 +7,8 @@ metadata:
 
 Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 
+**GATE REVERSED AGAIN (AWH 2026-10-01), for simplicity:** RV Life `$`/`$$` passes price with NO price check; `$$$`+ is a skip unless a special exception (gateway); no tier -> avg_rate <= $40; no tier and no avg -> find a published rate <= $50. All other gates still apply. `audit/private_gap_list.py` screens on it. Retroactive handling of the 69 `$$$` private-gap adds (ids 14201-14306) and 336 legacy `$$$` private entries was put to AWH 2026-10-01 - check the answer before acting. The paragraph below is the superseded 2026-09-30 gate, kept for its measurements.
+
 **The gate changed (AWH 2026-09-30).** RV Life's `price_level <= 2` is no longer the private price gate. The gate is now the park's OWN published base rate <= $50/night (cheapest hookup RV site, peak weeknight, 2 adults, pre-tax/fees), read during vetting and written into `inclusion_evidence` with the year. RV Life `avg_rate <= $50` (or missing) is only the detection screen. Parks with no published rate fall back to avg_rate <= $40. Unrated / not-on-RV-Life parks are eligible with a quality signal elsewhere (Good Sam rating, or Google/Campendium/Dyrt >= 4.0 over ~25+ reviews) plus the firsthand-confirmation rule. Full text: docs/campground-curation.md "Private (commercial) campgrounds".
 
 **Why:** a 34-park check (audit/private_gap_price_check.jsonl) showed avg_rate runs below published prices (median +$8, ratio 1.32), same $ tier only 16/26, >2x wrong at 4/26 (Pittsburgh Roaring Run $11 vs $45, Black Hills Vista $106 vs $45, Smooth Rapids $110 vs $35).

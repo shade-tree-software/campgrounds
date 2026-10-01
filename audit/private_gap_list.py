@@ -12,9 +12,11 @@ Two directories are diffed against campgrounds.json:
 A directory row counts as HELD when an entry sits within 3 km with a matching
 name (goodsam_discounts' own name matcher) or within 250 m whatever its name.
 Everything else is printed with the RV Life columns (stars / $ tier / avg rate
-/ sites). RV Life is only the SCREEN (docs/campground-curation.md, AWH
-2026-09-30): rows with avg_rate <= SCREEN_RATE (or none) pass it; the gate
-itself is the park's own published base rate <= $50, read during vetting.
+/ sites). The price gate is RV Life's own $ tag (docs/campground-curation.md, AWH
+2026-10-01): price_level $ or $$ passes with no price check, $$$+ fails
+(barring a special exception), no tier -> avg_rate <= NO_TIER_RATE, and
+neither -> passes the screen and needs a published base rate <= $50 read
+during vetting.
 Unrated rows and Good-Sam-only parks are eligible too, on a quality signal
 from elsewhere.
 
@@ -49,7 +51,7 @@ RV_ATTRS = ["cg_name", "city_name", "region_abbvr", "park_type", "price_level",
 GS_PRIVATE = {"CAMPGROUND", "RV_PARK", "RV_RESORT", "RV_SPACES", "UNKNOWN"}
 HELD_NAME_M = 3000
 HELD_ANY_M = 250
-SCREEN_RATE = 50
+NO_TIER_RATE = 40
 
 
 def rv_query(params):
@@ -144,7 +146,10 @@ def held(name, lat, lng, db):
 
 
 def cheap(p):
-    return not p.get("rate") or p["rate"] <= SCREEN_RATE
+    """The AWH 2026-10-01 price gate; see the module docstring."""
+    if p.get("price"):
+        return p["price"] <= 2
+    return not p.get("rate") or p["rate"] <= NO_TIER_RATE
 
 
 def gate(p):
@@ -203,8 +208,8 @@ def main():
     price_only = [p for p in rv_miss if (p.get("stars") or 0) >= 4 and not gate(p)]
     unrated = [p for p in rv_miss if not p.get("stars") and cheap(p)]
     print(f"{st}: RV Life {len(rv)} parks, {len(rv_c)} commercial, {len(rv_miss)} not held")
-    print(f"    screen-passing (avg_rate <= ${SCREEN_RATE} or none, >=4*): {len(passing)}")
-    print(f"    >=4* but avg_rate over ${SCREEN_RATE}: {len(price_only)}")
+    print(f"    price-passing ($/$$, or no tier and avg_rate <= ${NO_TIER_RATE} or none; >=4*): {len(passing)}")
+    print(f"    >=4* but $$$+ (or no tier and avg_rate over ${NO_TIER_RATE}): {len(price_only)}")
     print(f"    unrated, screen price ok (need a quality signal elsewhere): {len(unrated)}")
     print(f"  Good Sam private rows not held and absent from RV Life: {len(gs_miss)}")
 
@@ -213,7 +218,7 @@ def main():
                 f"{p['sites'] or '?':>4}s {p['reviews'] or 0:>4}r  {p['name'][:42]:<42} "
                 f"{(p['city'] or '')[:16]:<16} {p['near']}")
 
-    print("\nSCREEN-PASSING (research these; gate on the published rate):")
+    print("\nPRICE-PASSING (research these; a no-tier, no-avg row needs a published rate):")
     for p in sorted(passing, key=lambda p: -(p["stars"] or 0)):
         print(line(p))
     if args.all:
