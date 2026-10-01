@@ -22,4 +22,6 @@ bundled Chromium.
   (the quality signal for parks RV Life doesn't rate; a lodging-style panel hides the count)
 - `gsr.py ST "name" ...` - Good Sam ratings by name (Algolia; the fetch cache has no ratings)
 - `v.py <state>_private '<json>'` - append a verdict to audit/<state>_private/verdicts.jsonl
+- `rates.py URL` - crawl an operator site for rates: follows rate/booking links, prints every `$` line with context and the booking ENGINE / rate-PDF links (run in parallel over a "name url" list)
+- `../private_gap_holds.py` - regenerate `audit/private_gap_holds.md`, the checklist of every candidate still on hold
 
