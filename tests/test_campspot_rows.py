@@ -202,19 +202,33 @@ class TestDepartures(unittest.TestCase):
             ("departed", "2026-07-06", "11:45", ""),
         ])
 
-    def test_a_departure_bounded_by_silence_is_left_out(self):
+    def test_a_departure_bounded_by_silence_has_no_time(self):
         trip = self._trip()
         visits = _visits(("2026-07-05", "18:32", "2026-07-06", "09:20"))
         visits["0"]["visits"][0][3] = 108 * 60     # next ping 108 min later
         A._add_campspot_rows(trip, visits, TZ)
-        self.assertEqual(_rows(trip), [])
+        self.assertEqual(_rows(trip), [("departed", "2026-07-06", "", "")])
 
-    def test_a_departure_on_the_wrong_day_is_left_out(self):
-        # Last ping at camp the night BEFORE check-out (then silence).
+    def test_a_departure_on_the_wrong_day_is_not_timed_there(self):
+        # Last ping at camp the night BEFORE check-out: no timed row that
+        # evening, an untimed one on the day the record says they left.
         trip = self._trip()
         A._add_campspot_rows(trip, _visits(
             ("2026-07-05", "18:32", "2026-07-05", "21:31")), TZ)
-        self.assertNotIn("departed", [r[0] for r in _rows(trip)])
+        self.assertEqual([r for r in _rows(trip) if r[0] == "departed"],
+                         [("departed", "2026-07-06", "", "")])
+
+    def test_a_morning_silence_on_the_last_day_goes_after_the_last_ping(self):
+        # Assateague: at camp until 9:38 AM, next ping on the road 11:02 AM.
+        trip = self._trip([_event("2026-07-06", "08:30", "Beach walk"),
+                           _event("2026-07-06", "11:30", "Lunch")])
+        visits = _visits(("2026-07-05", "18:32", "2026-07-06", "09:38"))
+        visits["0"]["visits"][0][3] = 84 * 60
+        A._add_campspot_rows(trip, visits, TZ)
+        day = [i.get("camp_kind") or i.get("name") for i in trip["timeline"]
+               if i["sort_date"] == "2026-07-06"]
+        self.assertEqual(day, ["Beach walk", "departed", "Lunch"])
+        self.assertEqual(_rows(trip), [("departed", "2026-07-06", "", "")])
 
     def test_an_overnight_silence_into_the_last_day_gives_an_untimed_row(self):
         # Trip 16's Blackwoods: last ping at camp 11:03 PM, next one already

@@ -3685,9 +3685,10 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
     `CAMP_TIME_SILENCE_S` on the far side of it; otherwise the row keeps its
     place and leaves the time column blank, and the duration goes with it.
     A departure without a trustworthy time is left out, since its position
-    would be a guess too — except when the track last saw them at camp the
-    evening before the stay's last day and next reports them away on that
-    day: then the row goes untimed at the top of that day.
+    would be a guess too — except that the stay record already says which
+    day they left, so an untimed row goes on that day: right after the last
+    ping at camp when that ping is on the last day, else at the top of it.
+    Only a track that ends before the last day gets no row.
 
     `camp_visits` is the cached `_campspot_visits` output. Runs after
     `_add_road_cards`, so road legs count as things that happened while away
@@ -3771,20 +3772,22 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
         dep_day, dep_clock = _local(last[1])
         end_day = stays[run[-1]].get("end")
         show_departure = _quiet_ok(last[3]) and dep_day == end_day
-        # A departure the track can place but not time: last seen at camp the
-        # evening before the stay's last day, and the next ping — already
-        # away — falls on that last day. They left that morning, before the
-        # day's first stop; the row goes at the top of the day with no time.
-        # Trip 16's Blackwoods (last ping 11:03 PM, next 8:33 AM on the road)
-        # and Loraine (a 6:32 AM fix 610 m out near the entrance ends the
-        # visit at 8:53 PM the night before) both land here.
-        untimed_departure = False
+        # A departure the track can place but not time. The stay record says
+        # which day they left; the track says where in that day it can go:
+        # right after the last ping at camp when that was on the last day
+        # (a morning at Assateague, 9:38 AM, then nothing until 11:02 AM on
+        # the road), or at the top of the day when the track last saw them at
+        # camp earlier (trip 16's Blackwoods, last ping 11:03 PM; trip 22's
+        # Colonial Pines, never caught back at camp after an evening out).
+        # The row is left out only when the track ends before the last day,
+        # since then nothing shows they ever left.
+        untimed_departure = None
         if not show_departure and end_day and last[3] is not None:
-            seen_day = _local(last[1])[0]
+            seen_day, seen_clock = _local(last[1])
             next_day = _local(last[1] + last[3])[0]
-            eve = (date.fromisoformat(end_day)
-                   - timedelta(days=1)).isoformat()
-            untimed_departure = seen_day == eve and next_day == end_day
+            if seen_day <= end_day and next_day <= end_day:
+                untimed_departure = (seen_clock if seen_day == end_day
+                                     else "00:00")
 
         def _row(kind, n, day, clock, sure, duration=""):
             # The record covering that day, so a site move points the row at
@@ -3838,7 +3841,8 @@ def _add_campspot_rows(trip, camp_visits, ref_tz="", camp_notes=None):
         if show_departure:
             rows.append(_row("departed", len(merged), dep_day, dep_clock, True))
         elif untimed_departure:
-            rows.append(_row("departed", len(merged), end_day, "00:00", False))
+            rows.append(_row("departed", len(merged), end_day,
+                             untimed_departure, False))
 
     if rows:
         timeline.extend(rows)
