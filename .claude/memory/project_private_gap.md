@@ -55,3 +55,5 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - **Next: VA**, then OH/NY/NC/NJ (memory list), plus PA holds when AWH has a few minutes.
 
 **VA first pass DONE 2026-09-30: +10 (ids 14282-14291), 51 skips, 3 holds** (Rockahock, Small Country, Smith Mountain - engines unreadable). About 25 of the 64 candidates were already settled by the 2026-09-07 re-sweep (commit 0f4436c: Elks, Thousand Trails, timeshare/co-op/deeded parks) - read the state's earlier sweep commit FIRST, it saves half the work. Campspot `/book/<slug>/search/<in>/<out>/guests2,0,0/list` reads parks missing from the sitemap. **Next: OH**, then NY/NC/NJ.
+
+**OH first pass DONE 2026-10-01: +15 (ids 14292-14306), 104 skips, 27 holds** (decisions.json states.OH lists them). Ohio Turnpike service plazas are skipped under the truck-stop rule. A Campspot July-weeknight quote overrules a lower "from" price on the operator's page (Wolfie's). This machine has no /usr/bin/google-chrome now - the helpers fall back to Playwright's bundled Chromium; scratch crawler rates2.py (follows rate/booking links, prints the booking ENGINE) was the productive tool. **Next: NY**, then NC/NJ.
