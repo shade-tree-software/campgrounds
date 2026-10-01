@@ -44,7 +44,7 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 
 
 **2026-09-30 side work, both AWH-directed:**
-- **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) still needs a person. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
+- **Temporary closures are structured now**: `status: {operating: "temporarily_closed", reopens, note}` (schema doc §4.5). Map draws them grey with a dark rim, "Show temporarily closed" filter on by default. 97 backfilled by `audit/closure_backfill.py`; its RECHECK list (21 past-dated closures) was worked 2026-09-30 (commit aab0740: 6 still closed, 15 open) - DONE. When a sweep adds a closed campground, put `status` in the results row (append_state.py copies it).
 - Ministry-run campgrounds open to the public nightly are keeps (curation doc).
 
 **PA first pass DONE 2026-09-30 (desktop): +19 (ids 14263-14281), 78 skips, 21 holds** - records in audit/pa_private/ (verdicts.jsonl, results_private_gap.json) + private_gap_decisions.json states.PA. Lessons:
