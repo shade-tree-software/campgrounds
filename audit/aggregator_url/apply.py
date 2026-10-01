@@ -5,7 +5,7 @@
 
 Reads decisions.jsonl (latest row per id wins). `set_site` puts the operator/agency
 URL first in `website`; aggregator URLs after it are dropped, EXCEPT a RoverPass
-listing that is bookable (Instant Book, per probe.json) - that is a booking channel,
+listing that is bookable (Instant Book per probe.json, or Request to Book per rp_request.json) - that is a booking channel,
 not just a directory record. Other non-aggregator URLs already present are kept.
 Rows with any other action (keep / flag / remove_candidate) are reported, never
 written. Dry run by default.
@@ -26,6 +26,8 @@ for line in open(HERE / "decisions.jsonl"):
         r = json.loads(line)
         dec[r["id"]] = r
 bookable = {p["id"] for p in json.load(open(HERE / "probe.json")) if p["instant"] > 0}
+# "Request to Book" listings are claimed and bookable too (approval-gated)
+bookable |= {int(k) for k, v in json.load(open(HERE / "rp_request.json")).items() if v > 0}
 
 path = ROOT / "campgrounds.json"
 data = json.loads(path.read_text())
