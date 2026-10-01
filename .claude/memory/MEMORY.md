@@ -87,3 +87,4 @@
 - [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — MDC/KS fishing lakes/NE WMAs: agency-designated campsites qualify (MDC tag "Individual Campsites"/"Designated Camping Sites" is enough; no restroom or count needed), as `state`; skip parking-lot allowances (AWH 2026-09-29)
 - [Verify image reads rendered](feedback_verify_image_reads.md) — image Reads can silently fail ("media removed: request limit"); never write satellite evidence from a read that returned no pixels (bit 14046-14056, corrected)
 - [Multi-night minimum = not nightly](feedback_minimum_stay.md) — a 4+ night minimum on every stay disqualifies (AWH 2026-09-30); weekend/holiday minimums are fine
+- [Mandatory entry fees count toward price](feedback_mandatory_fees_count.md) — resort day/grounds fees per person are part of the nightly rate for the $50 gate (Avalon skipped, AWH 2026-09-30); retired id 14262 -> next append needs --min-id 14263
