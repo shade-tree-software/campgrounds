@@ -84,7 +84,7 @@
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR carries no information, one run sees ~120 days not 365, FCFS is not derivable, back off in minutes; full walk yields ~14%, a September-heavy batch is verified by the Labor-Day/weekend clustering check, and the accrual is TRACKED at audit/recgov_calendar.json because a rolled-past month can never be re-fetched
 - [EKKO weight](user_ekko_weight.md) — ~9,500 lb empty, 11,000 lb GVWR; a 5-ton bridge limit excludes, 6+ tons passes
 - [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency-stated 4WD requirement is a criteria failure (AWD does not count); RI East Beach excluded on it
-- [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — private ATV/ORV/mud parks are skips, not holds (AWH 2026-10-02); existing ones not removed
+- [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — off-road parks + OHV staging camps of any owner are out, general campgrounds with an OHV side stay (AWH 2026-10-02); 58 removed, list in audit/offroad_scope/
 - [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — MDC/KS fishing lakes/NE WMAs: agency-designated campsites qualify (MDC tag "Individual Campsites"/"Designated Camping Sites" is enough; no restroom or count needed), as `state`; skip parking-lot allowances (AWH 2026-09-29)
 - [Verify image reads rendered](feedback_verify_image_reads.md) — image Reads can silently fail ("media removed: request limit"); never write satellite evidence from a read that returned no pixels (bit 14046-14056, corrected)
 - [Standing minimum = not nightly](feedback_minimum_stay.md) — a standing 2+ night minimum on every stay disqualifies (AWH 2026-10-01, was 4); weekend/holiday minimums are fine
