@@ -1,6 +1,6 @@
 ---
 name: project_private_gap
-description: "Private gap (queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
+description: "Private gap (ID/UT/NV/NM done 2026-10-03, next --min-id 14707; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
 metadata:
   node_type: memory
   type: project
@@ -108,4 +108,13 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - RV Life slugs ending '-closed' and RV Life's 'Permanently Closed' banner are free closed signals (Harrah's Tunica, Moscow, Ajax).
 - ResNexus bot-banned this IP after 2 parks in the final batch.
 - A scratch `bq.py` (one browser, sequential list of key/url/wait) was the efficient rate reader; roverpass park pages read fine with plain curl.
-**Next append --min-id 14678.** Remaining private-gap states: TX, OK, NM, and the West (AZ/NV/UT/ID/OR/WA/CA) plus Canada if wanted.
+**Next append --min-id 14678.** (superseded below)
+
+**ID/UT/NV/NM first pass DONE 2026-10-03: +29 (ids 14678-14706; ID 6, UT 10, NV 5, NM 8), 2 holds** (Pine Creek Cabins UT - ResNexus human check; Dam Site Elephant Butte NM - ThinkReservations shows no rate). decisions.json states.ID..NM; audit/{id,ut,nv,nm}_private/. Lessons:
+- The 2026-07 western sweeps already used the $/$$ + 4* gate, so the pool was small (189) and mostly their named exclusions (Elks, Escapees co-ops, casino lots, MH, oilfield) - carried as _auto. Entries removed 2026-10-01 with AWH approval (Weed Heights, Koosharem, Apache Kid, Copper Penny, Sundial) stay skipped.
+- **Good-Sam-only rows paid off here**: Veyo Pool Resort, Provo River Resort, Beaver Mountain ski-area RV park, Dwell Camp - read the operator page before skipping on 'no rate'.
+- RV Life's `"closed":true` in the park page JSON is the cheap closed flag (14 hits); one 'closed' park had a live site saying re-opened, but deeper on the same page it announced closing in 2025 - read the whole page.
+- Another public miss: Maple Hollow (Fishlake NF FCFS, 14689) - the FCFS-USFS blind spot again.
+- Campspot sort: `select_option('PRICE_ASCENDING')` on the park page (scratch csl.py) gives the cheapest site; the filter's low price is often a TENT site (Look RV: $40 filter, $82 cheapest RV).
+- gm.py ran ~50 s/query on this machine; run it in the background and triage per state as lines land.
+**Next append --min-id 14707.** Remaining private-gap states: TX, OK, and AZ/OR/WA/CA, plus Canada if wanted.
