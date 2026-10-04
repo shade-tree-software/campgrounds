@@ -1,6 +1,6 @@
 ---
 name: project_private_gap
-description: "Private gap (ID/UT/NV/NM done 2026-10-03, next --min-id 14707; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
+description: "Private gap (TX done 2026-10-04, next --min-id 14816; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
 metadata:
   node_type: memory
   type: project
@@ -122,3 +122,11 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 **2026-10-03 rule (AWH, Council Road OK):** a published nightly rate over $50 SKIPS a park even when its RV Life `$`/`$$` tier would pass with no price check - the tier waives the lookup, it doesn't override a rate you've actually read. Holds settled same day: Pine Creek UT added 14707 ($45), Wagon Circle/Lake Cumberland/Shellmound skipped for lack of info, Heavenly Hills skipped (no Campspot availability 2026-27); only Dam Site NM held (booking back ~Oct 6). **OK DONE 2026-10-03: +25 (ids 14708-14732), 0 holds** (AWH: Horseshoe Inn added at $45; HillTop skipped - CampLife only ever offers ONE nightly site; Grand Getaway skipped - no rates/booking) - decisions.json states.OK; audit/ok_private/. Plain-urllib rate crawl (scratch curlrates2.py: home page + rate/book links, grep $ lines) read ~2/3 of operator rates with no browser; the browser was needed only for a dozen. OKC Fair Park RV parks = event-guest only (skip). **Next append --min-id 14733.** Remaining: TX, then AZ/OR/WA/CA.
 
 **TX STARTED 2026-10-04** (audit/tx_private/: list.json, candidates.json with plan/region, verdicts.jsonl, adds_work.json). Pool 794 (237 July-vetted 'passing' + 386 unrated + 171 GS-only); 176 pre-skipped _auto (July commit-named skips whose reason still stands, lodges, Patriot/TT, MH names, truck stops, off-road, RV Life closed). **AWH 2026-10-04: RGV 'Winter Texan' 55+/Encore parks get the FL rule** - re-research the July '55+/seasonal' skips; add when a nightly rate <= $50 is offered (AGE-RESTRICTED note), skip park-model/monthly-only ones. Most RGV resorts publish $55-80 daily (Wilder chain $55, Llano Grande $65, Ranchero $80), so few pass on a read rate; Encore (thousandtrails.com/texas, Newbook) passes on tier per FL. Worked by region r1_south..r5_west; gm.py runs ~25 s/query here.
+
+**TX DONE (first pass) 2026-10-04: +83 (ids 14733-14815; 82 private + Hollywood Bottom Park LCRA = state), 705 skips, 1 hold** (Madera Canyon - Big Bend Ranch SP river-road campground, a state-pass candidate). decisions.json states.TX; audit/tx_private/. Lessons:
+- TX's huge pool (794) worked in 3 chunks by region; gm.py ~25 s/query (5.5 h total in background), plain-urllib crawl first, then ONE rendered-browser pass (scratch bq2.py: page + 3 rate/booking links, ~1 min/park) for ~120 JS sites.
+- Most unrated TX parks fail on Google <25 reviews, publish monthly only (Permian/refinery workforce, DFW long-term), or show no rate -> skip for lack of info.
+- July commit skip lists use varied phrasing ('Skips:' vs 'Skips were') - grep both, or Coldwater-Creek-type re-research happens.
+- Google pins can be far off (1485 E RV Park 77 km via RV Life, Lake Conroe 3.5 km); always check pin_gap and look before trusting either.
+- Removed-2026-09 entries rechecked under the Google rule (4 came back).
+**Next append --min-id 14816.** Remaining private-gap states: AZ/OR/WA/CA (+ Canada if wanted).
