@@ -1,6 +1,6 @@
 ---
 name: project_private_gap
-description: "Private gap (TX done 2026-10-04, next --min-id 14817; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
+description: "Private gap (AZ first pass done 2026-10-04 +50, 7 holds, next --min-id 14867; TX done; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
 metadata:
   node_type: memory
   type: project
@@ -130,3 +130,11 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - Google pins can be far off (1485 E RV Park 77 km via RV Life, Lake Conroe 3.5 km); always check pin_gap and look before trusting either.
 - Removed-2026-09 entries rechecked under the Google rule (4 came back).
 Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp listing; satellite pull-through loop ~40 m). **Next append --min-id 14817.** Remaining private-gap states: AZ/OR/WA/CA (+ Canada if wanted).
+
+**AZ first pass DONE 2026-10-04: +50 (ids 14817-14866; 49 private + Apache Lake Marina = Tonto NF concession as federal), 204 skips, 7 holds** (decisions.json states.AZ; audit/az_private/; holds in audit/private_gap_holds.md). Lessons:
+- The 2026-07 AZ sweep left NO named skip list (commit message only), so all 262 rows were re-judged; pre-skip patterns (Elks, MH names, Escapees/SKP/Ko-Op, Thousand Trails, RV Life closed) took 61.
+- The FL/TX 55+ rule applied without asking (33 of 50 adds AGE-RESTRICTED). Peak = winter: a published Jan/peak daily over $50 skips even when the off-season rate passes. Most Yuma/Quartzsite/Wellton family-run 55+ parks publish $35-50 daily; Cal-Am resorts ($60-104 on reservations.cal-am.com, a Campspot engine), Roots MG ($62-73) and Sun-style MH communities fail.
+- Escapees co-ops publish overnight rates (RoVer's Roost $30) but stay skipped as membership. Colorado River Adventures / Sunrise Adventures 'free 3-day stay' resorts = membership sales, skip.
+- Encore Desert Paradise (14866) is ~120 m from Encore Cactus Gardens: append_state's 150 m guard dropped it; re-appended with a scratch copy of the guard at ~100 m. Distinct address + phone settles neighbour parks.
+- bq2.py reads `inner_text('body')` only, so iframe booking widgets come back empty however long it waits; ResNexus banned this IP again.
+**Next append --min-id 14867.** Remaining private-gap states: OR/WA/CA (+ Canada if wanted).
