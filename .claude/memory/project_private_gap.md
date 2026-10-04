@@ -1,6 +1,6 @@
 ---
 name: project_private_gap
-description: "Private gap (TX done 2026-10-04, next --min-id 14816; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
+description: "Private gap (TX done 2026-10-04, next --min-id 14817; queue item 3; FL done 2026-10-01, +51, 27 holds) started 2026-09-30 - measured, price gate REPLACED with the published-rate rule, work list in audit/private_gap_decisions.json"
 metadata:
   node_type: memory
   type: project
@@ -129,4 +129,4 @@ Queue item 3 of [[project_remaining_work_map]], started 2026-09-30.
 - July commit skip lists use varied phrasing ('Skips:' vs 'Skips were') - grep both, or Coldwater-Creek-type re-research happens.
 - Google pins can be far off (1485 E RV Park 77 km via RV Life, Lake Conroe 3.5 km); always check pin_gap and look before trusting either.
 - Removed-2026-09 entries rechecked under the Google rule (4 came back).
-**Next append --min-id 14816.** Remaining private-gap states: AZ/OR/WA/CA (+ Canada if wanted).
+Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp listing; satellite pull-through loop ~40 m). **Next append --min-id 14817.** Remaining private-gap states: AZ/OR/WA/CA (+ Canada if wanted).
