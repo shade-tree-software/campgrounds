@@ -303,7 +303,7 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                        max_miles=400.0, weekends_only=True,
                        start_date=None, end_date=None,
                        max_precip_in=None, max_precip_chance=None,
-                       waterfront_only=False,
+                       waterfront_only=False, all_days=False,
                        sort="distance",
                        max_results=MAX_RESULTS, forecast_budget=FORECAST_BUDGET,
                        forecast_days=FORECAST_DAYS, progress=None, **fetch_kw):
@@ -328,6 +328,11 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     the provider bills per location, not per day, so a narrower window buys
     nothing upstream, while varying `forecast_days` would key the cache
     differently per window and throw away the sharing the cache exists for.
+
+    `all_days` lists a campground only when EVERY day in that window matches,
+    rather than any one of them — "the whole weekend is good" instead of "some
+    day is". A day the forecast has no answer for (no high, or no home high in
+    a relative mode) was never in the window, so it doesn't count against it.
     """
     if mode not in MODES:
         raise ValueError(f"unknown mode {mode!r}")
@@ -498,6 +503,8 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                 matches.append(entry)
 
         if not matches:
+            continue
+        if all_days and len(matches) < len(days):
             continue
         # Per-cell "best day" figures, which are what the sorts rank on. A
         # campground with six matching days is judged on its best one — sorting

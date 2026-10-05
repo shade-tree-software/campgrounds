@@ -255,7 +255,7 @@
       </div>
     </div>
 
-    {# One row for the three filters, each carrying its own wording — the old
+    {# One row for the filters, each carrying its own wording — the old
        per-checkbox "Days"/"Rain"/"Water" labels repeated what the checkbox
        already said. The rain threshold is always present rather than revealed
        on tick: revealing it changed the row's width mid-use and bumped the
@@ -277,6 +277,7 @@
             </span>
           </span>
           <label class="wx-check"><input type="checkbox" id="wx-waterfront"> Waterfront</label>
+          <label class="wx-check" title="List a campground only when every day in the window matches, not just one of them"><input type="checkbox" id="wx-all-days"> Every day matches</label>
         </div>
       </div>
     </div>
@@ -466,6 +467,7 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
     dry_only: dry,
     max_precip_in: numOf('wx-precip'),
     waterfront_only: document.getElementById('wx-waterfront').checked,
+    all_days: document.getElementById('wx-all-days').checked,
     sort: sortSel.value,
   };
 
@@ -658,11 +660,12 @@ function render(data, mode) {
   statusEl.className = '';
 
   if (!n) {
-    statusEl.textContent = `No matches. Checked ${scope}.`;
+    statusEl.textContent = `No matches${data.all_days ? ' on every day' : ''}. Checked ${scope}.`;
     return;
   }
   statusEl.textContent =
-    `${n} campground${n === 1 ? '' : 's'} match${n === 1 ? 'es' : ''}. Checked ${scope}.`;
+    `${n} campground${n === 1 ? '' : 's'} match${n === 1 ? 'es' : ''}`
+    + (data.all_days ? ' on every day' : '') + `. Checked ${scope}.`;
 
   legendEl.hidden = false;
   resultsEl.innerHTML = data.results.map(r => {
