@@ -304,8 +304,11 @@
   // Nights = checkOut − checkIn. The API wants inclusive nights, so the request
   // sends end = checkOut − 1 day (the last night).
   const today = startOfDay(new Date());
-  let checkIn = addDays(today, 14);    // default: two weeks out, one night
-  let checkOut = addDays(today, 15);
+  // Default: the coming weekend — check in Friday, check out Sunday (two
+  // nights). Today counts when it IS Friday; on Saturday or Sunday that
+  // weekend is already under way, so it rolls to the following Friday.
+  let checkIn = addDays(today, (5 - today.getDay() + 7) % 7);
+  let checkOut = addDays(checkIn, 2);
   let viewMonth = addMonths(checkIn, 0);  // leftmost displayed month
 
   const trigger = document.getElementById('date-trigger');
@@ -503,7 +506,7 @@
   // Pre-fill from ?cg=<name> (link from the campground map popup): search RIDB
   // and auto-select the best name match, else leave the dropdown open to pick.
   // Dates and fit come back from the URL first, so an auto-run prefill uses the
-  // linked range rather than the two-weeks-out default.
+  // linked range rather than the coming-weekend default.
   (function restoreFromUrl() {
     const p = new URLSearchParams(location.search);
     const s0 = p.get('start'), e0 = p.get('end'), fit = p.get('fit');
