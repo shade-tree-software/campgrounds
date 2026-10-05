@@ -9,19 +9,19 @@ Gate reminder (docs/campground-curation.md): published base rate <= $50 for the 
 ## AZ (7)
 
 - [ ] **Camp Land Beyond Zion** - Cane Beds
-  - boutique glampground with powered RV sites, booked only through Hipcamp - RV rate unread; Google 4.8/48
+  - boutique glampground with powered RV sites, booked only through Hipcamp - RV rate unread; Google 4.8/48 | https://www.camplandbeyondzion.com/booking (Hipcamp)
 - [ ] **Colossal Cave Mountain Park** - Vail
-  - Pima County-owned park (concession-run): RV/car camping $15 per vehicle per night at a camping area separate from the cave lot - LOCAL gap; find and look at the camping area (RV Life pin is the cave parking lot)
+  - Pima County-owned park (concession-run): RV/car camping $15 per vehicle per night at a camping area separate from the cave lot - LOCAL gap; find and look at the camping area (RV Life pin is the cave parking lot) | https://colossalcave.com/camp-picnic/
 - [ ] **Fisher's Landing Resort** - Martinez Lake
-  - Martinez Lake marina resort: dry camping $10 per person per day, no reservations; not clear on satellite whether there are defined RV sites or just an open lot; Google 4.5/648
+  - Martinez Lake marina resort: dry camping $10 per person per day, no reservations; not clear on satellite whether there are defined RV sites or just an open lot; Google 4.5/648 | https://www.fisherslandingresort.com/camping/
 - [ ] **Havasu RV Resort** - Lake Havasu City
-  - owner-lot RV resort that also rents to guests; site says 'minimum lengths apply' with no figure - may exclude a 23-ft trailer; RV Life 5*/$$ over 61, Google 4.6/165
+  - owner-lot RV resort that also rents to guests; site says 'minimum lengths apply' with no figure - may exclude a 23-ft trailer; RV Life 5*/$$ over 61, Google 4.6/165 | https://www.havasurvresort.com/
 - [ ] **Highland Grand Canyon** - Grand Canyon
-  - ResNexus booking banned this IP - rate unread; Google 4.9/61 (Good Sam only)
+  - ResNexus booking banned this IP - rate unread; Google 4.9/61 (Good Sam only) | https://www.highlandgrandcanyon.com/ (ResNexus)
 - [ ] **Meadview RV Park & Cozy Cabins** - Meadview
-  - ResNexus booking banned this IP - rate unread; Google 4.7/260 (Good Sam only)
+  - ResNexus booking banned this IP - rate unread; Google 4.7/260 (Good Sam only) | https://www.rv-park.com/ (ResNexus)
 - [ ] **Windy Point Campground** - Kingman
-  - BLM Cerbat Mountains campground ($8/night, FCFS, vault toilet) - a FEDERAL gap the RIDB pass can't see; satellite shows a small loop of pull-ins in pinyon-juniper off a long dirt grade (Big Wash Rd) - confirm a 23-ft trailer is OK
+  - BLM Cerbat Mountains campground ($8/night, FCFS, vault toilet) - a FEDERAL gap the RIDB pass can't see; satellite shows a small loop of pull-ins in pinyon-juniper off a long dirt grade (Big Wash Rd) - confirm a 23-ft trailer is OK | https://www.blm.gov/visit/windy-point-campground
 
 ## NM (1)
 
