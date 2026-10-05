@@ -149,4 +149,4 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 - Utility (Idaho Power Carters Landing/Moonshine Mine) and tribal (CTUIR Indian Lake) campgrounds added as private; PacifiCorp Keno Camp closed to camping after the Klamath dam removal.
 - **Campendium catches closures RV Life/Google miss** (Pioneer Hermiston, Riverview La Pine, Four Seasons Gold Beach) - check it before adding a no-website park.
 - **gsr.py: a bare `OR` in an Algolia filter is the boolean keyword** - state code now quoted. csl.py now launches the local Chrome.
-- Holds (rates unreadable): Imperial River Co., Cougar Lane, b.side, Deschutes River Fly Shop & Camp; Robinson Creek fire-closed. **Next append --min-id 14890.** Remaining private-gap states: WA, CA (+ Canada if wanted).
+- Holds settled same day from AWH rate reads: Cougar Lane 14890 + Deschutes River Fly Shop 14891 added, Robinson Campground 14892 added temporarily_closed; Imperial River ($60) and b.side ($85) skipped. **OR DONE. Next append --min-id 14893.** Remaining private-gap states: WA, CA (+ Canada if wanted).
