@@ -1025,6 +1025,53 @@
     "Hold settled 2026-10-05: Fisher's Landing Resort added 14879 - dispersed-style dry camping on open desert, not a parking lot (AWH read the satellite); pinned on the camping area, not the marina",
     "Hold settled 2026-10-05: Windy Point Campground skipped - 11 mi unpaved Big Wash Rd, high clearance highly recommended, trailers not recommended (BLM; AWH)"
    ]
+  },
+  "OR": {
+   "status": "first pass 2026-10-05 - 5 holds",
+   "added": "7 entries: ids 14883-14888 (OR, private) + 14889 Mitchell's Stateline RV Park (NV - RV Life files it under OR, the park is on the Nevada side)",
+   "counts": {
+    "add": 7,
+    "skip": 88,
+    "hold": 5
+   },
+   "records": "audit/or_private/ (list.json, summary.txt, candidates.json, google.txt, crawl.txt, crawl2.txt, verdicts.jsonl, results_adds.json, results_adds_nv.json, leads.json, leads_nv.json, waterfront_private_gap_results.json)",
+   "holds": [
+    {
+     "name": "Imperial River Co.",
+     "why": "ResNexus listing shows only lodging for 2026-10-07; RV park rate not readable (GS 9.0, Google not matched)",
+     "url": "https://deschutesriver.com/"
+    },
+    {
+     "name": "Cougar Lane Lodge & RV",
+     "why": "ResNexus engine returned nothing; RV rate unpublished (GS 8.3, Google 4.5/127)",
+     "url": "http://www.cougarlane.com/"
+    },
+    {
+     "name": "B. Side Motel & RV",
+     "why": "8 FHU RV spots; RV page lists month-to-month contracts, nightly via Cloudbeds not readable (Google 4.8/448)",
+     "url": "https://www.bsidemotelrv.com/stay/rv-park"
+    },
+    {
+     "name": "Deschutes River Fly Shop and Camp",
+     "why": "36-site RV park, nightly Apr-Oct via Firefly (rate not shown without dates); Google 4.8/102",
+     "url": "http://www.deschutescamp.com/"
+    },
+    {
+     "name": "Robinson Creek",
+     "why": "Warm Springs tribal (Pine Creek Conservation Area) primitive campground: closed until further notice after the July 2026 fires; site count/size unpublished",
+     "url": "https://lands.warmsprings-nsn.gov/?p=742"
+    }
+   ],
+   "notes": [
+    "Pool 99: 55 passing, 28 RV Life unrated, 12 Good-Sam-only, + 4 named leads from the local pass (Keno, Columbia River Resort Arlington, Indian Lake CTUIR, Robinson Creek Warm Springs). The 2026-07 OR sweep left no named skip list; 29 pre-skipped on name (22 Elks lodges, 3 Thousand Trails, Escapees, Cummins coach lot, a horse camp) or as already held (Sumpter RV Park 11179)",
+    "Oregon's private gap is mostly long-term: 12 skips were monthly-only parks (Boa Vida / WGP property-management communities, workforce parks) and 5 more residential; the coast's nightly parks publish $60-85",
+    "Sound Pacific Resorts (Neskowin Creek, Cascade Meadows) are Coast to Coast membership resorts with a request-form booking - skip like Thousand Trails (non-member $78 reported)",
+    "Utility campgrounds = private per the Copperfield precedent: Idaho Power's Carters Landing ($15) and Moonshine Mine (free) added; PacifiCorp's Keno Camp is closed to camping since the Klamath dam removal",
+    "Tribal campgrounds = private: CTUIR Indian Lake added (lakefront); Warm Springs Robinson Creek held (fire-closed July 2026)",
+    "Closures found via Campendium where RV Life/Google still looked live: Pioneer RV Park Hermiston (long-term only since 2025), Riverview La Pine, Four Seasons Gold Beach (sold 2024)",
+    "Algolia filter gotcha: a bare OR in `campground.address.stateCode:OR` is parsed as the boolean keyword - gsr.py now quotes the state code",
+    "csl.py/cs.py now launch the local Chrome like the other helpers (Playwright's bundled headless shell is not installed here)"
+   ]
   }
  }
 }

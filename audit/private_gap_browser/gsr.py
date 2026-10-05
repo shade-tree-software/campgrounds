@@ -9,7 +9,7 @@ key = post("https://llx3tsxl2jaarct3rynyyaci3e.appsync-api.us-east-1.amazonaws.c
 st = sys.argv[1]
 for q in sys.argv[2:]:
     res = post("https://VT01MNVCP5-dsn.algolia.net/1/indexes/gs-ml-cb-assets-prod/query",
-               {"query": q, "filters": f"campground.address.stateCode:{st}", "hitsPerPage": 8},
+               {"query": q, "filters": f'campground.address.stateCode:"{st}"', "hitsPerPage": 8},
                {"X-Algolia-Application-Id": "VT01MNVCP5", "X-Algolia-API-Key": key})
     seen = set()
     for h in res["hits"]:
