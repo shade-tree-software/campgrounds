@@ -156,4 +156,4 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 - **K/M Resorts = membership** (7 parks); Thousand Trails' rvonthego.com campgrounds (Friday Creek) = TT rule.
 - PacifiCorp's Lewis River page listed a second missing campground (Beaver Bay, reopened 2026) - read the operator's full park list when one utility campground is a lead.
 - Adults-only (21+) parks get the 55+ rule (Rainier View, ADULTS ONLY note).
-- Holds settled same day (AWH): Whistlin' Jack's 14909, Dawley's 14910, Mistequa 14911 added; Elk Ridge ($51.76, maybe incl tax), Cape Resort (no rate), Log Cabin (closed, recheck 2027) skipped. **WA DONE. Next append --min-id 14912.** Remaining: CA (+ Canada if wanted).
+- Holds settled same day (AWH): Whistlin' Jack's 14909, Dawley's 14910, Mistequa 14911 added; Elk Ridge ($51.76 pre-tax), Cape Resort (no rate), Log Cabin (closed, recheck 2027) skipped. **WA DONE. Next append --min-id 14912.** Remaining: CA (+ Canada if wanted).
