@@ -150,3 +150,10 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 - **Campendium catches closures RV Life/Google miss** (Pioneer Hermiston, Riverview La Pine, Four Seasons Gold Beach) - check it before adding a no-website park.
 - **gsr.py: a bare `OR` in an Algolia filter is the boolean keyword** - state code now quoted. csl.py now launches the local Chrome.
 - Holds settled same day from AWH rate reads: Cougar Lane 14890 + Deschutes River Fly Shop 14891 added, Robinson Campground 14892 added temporarily_closed; Imperial River ($60) and b.side ($85) skipped. **OR DONE. Next append --min-id 14893.** Remaining private-gap states: WA, CA (+ Canada if wanted).
+
+**WA first pass 2026-10-05: +16 (ids 14893-14908), 108 skips, 6 holds** (decisions.json states.WA; audit/wa_private/). Lessons:
+- **Developed casino RV parks were re-judged in** (Little Creek, Lucky Eagle, Kalispel, 12 Tribes Omak, Quinault Beach) - the July WA sweep had skipped them as "casino lots"; only true overnight lots stay out.
+- **K/M Resorts = membership** (7 parks); Thousand Trails' rvonthego.com campgrounds (Friday Creek) = TT rule.
+- PacifiCorp's Lewis River page listed a second missing campground (Beaver Bay, reopened 2026) - read the operator's full park list when one utility campground is a lead.
+- Adults-only (21+) parks get the 55+ rule (Rainier View, ADULTS ONLY note).
+- Holds (rate/existence unread): Whistlin' Jack's, Dawley's Sol Duc, Elk Ridge, Cape Resort (Makah permit $20/vehicle/yr - does it count?), Log Cabin Resort (Lake Crescent NPS concession = federal), Mistequa casino RV park. **Next append --min-id 14909.** Remaining private-gap state: CA (+ Canada if wanted).
