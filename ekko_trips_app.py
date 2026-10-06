@@ -411,6 +411,11 @@ _ESRI_SAT = [
     "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}",
     "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}",
 ]
+# Terrain basemap: Esri World Topo (shaded relief, contours, public land shaded).
+# Same host and terms as the satellite stack, so sw.js's tile cache already
+# covers it. Online only — the stick has no terrain store, so local mode emits
+# None and the layer control simply doesn't offer it.
+_ESRI_TOPO = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
 
 
 def _local_tiles_active():
@@ -463,6 +468,7 @@ def _tile_config():
             "streetVectorMaxDataZoom": _pmtiles_maxzoom(vec_path) if has_vector else None,
             "street": "/tiles/street/{z}/{x}/{y}.png" if has_raster else None,
             "satellite": ["/tiles/sat/{z}/{x}/{y}.jpg"] if has_sat else _ESRI_SAT,
+            "terrain": None,
             "maxZoom": 19,
             # NAIP tops out at z16; the Esri fallback goes deeper, so only cap
             # native zoom when we are actually serving the baked store.
@@ -480,6 +486,7 @@ def _tile_config():
         # static/vendor/tile-layers.js in step with this.
         "street": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "satellite": _ESRI_SAT,
+        "terrain": _ESRI_TOPO,
         "maxZoom": 19, "maxNativeZoom": 19,
     }
 

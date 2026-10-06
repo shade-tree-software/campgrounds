@@ -19,6 +19,7 @@
         'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',
         'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
       ],
+      terrain: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
       maxZoom: 19, maxNativeZoom: 19,
     };
   }
@@ -142,5 +143,27 @@
           maxZoom: t.maxZoom, maxNativeZoom: t.maxNativeZoom }, rest));
     });
     return layers.length === 1 ? layers[0] : L.layerGroup(layers);
+  };
+
+  // Terrain: Esri World Topo (shaded relief + contours). Online only — the
+  // server sends terrain: null in local mode, and this returns null so callers
+  // can leave it out of the layer control rather than offer a blank basemap.
+  window.ekkoTerrainLayer = function (opts) {
+    var t = cfg();
+    if (!t.terrain) return null;
+    return L.tileLayer(t.terrain, Object.assign(
+      { attribution: '&copy; Esri, HERE, Garmin, USGS, NPS',
+        maxZoom: t.maxZoom, maxNativeZoom: t.maxNativeZoom }, opts || {}));
+  };
+
+  // The base-layer set every interactive map offers, in control order:
+  // Map, Terrain (when available), Satellite. One place so the four maps
+  // can't drift apart on which basemaps they list.
+  window.ekkoBaseLayers = function (streets, satellite) {
+    var layers = { 'Map': streets };
+    var terrain = window.ekkoTerrainLayer();
+    if (terrain) layers['Terrain'] = terrain;
+    layers['Satellite'] = satellite;
+    return layers;
   };
 })();

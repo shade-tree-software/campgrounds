@@ -52,7 +52,7 @@ function createMapPicker(opts) {
     if (window.addMilesScaleBar) map.whenReady(() => window.addMilesScaleBar(map));  // miles scale bar, bottom-right above attribution
     const streets = window.ekkoStreetLayer().addTo(map);
     const satellite = window.ekkoSatelliteLayer();
-    L.control.layers({ 'Map': streets, 'Satellite': satellite }).addTo(map);
+    L.control.layers(window.ekkoBaseLayers(streets, satellite)).addTo(map);
 
     map.on('click', function(e) {
       placeMarker(e.latlng.lat, e.latlng.lng);
