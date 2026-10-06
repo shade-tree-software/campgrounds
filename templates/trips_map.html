@@ -794,7 +794,7 @@ const satellite = window.ekkoSatelliteLayer();
 // control — but the landing view reads cleaner without them, and the GeoJSON
 // is fetched lazily on first display, so leaving them off costs nothing.
 const bordersLayer = window.ekkoBordersLayer();
-const layerControl = L.control.layers({ 'Map': streets, 'Satellite': satellite },
+const layerControl = L.control.layers(window.ekkoBaseLayers(streets, satellite),
                                       { '🗺️ State lines': bordersLayer }).addTo(map);
 
 // Dedicated pane so stay (blue) circleMarkers render above event (gold) ones.

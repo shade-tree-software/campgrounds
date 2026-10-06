@@ -1199,7 +1199,7 @@ const bordersLayer = window.ekkoBordersLayer();
 const overlays = { '🏕️ Campgrounds': campgroundsToggleLayer };
 if (ROADSIDE.length) overlays['🌳 Picnic & rest stops'] = roadsideLayer;
 overlays['🗺️ State lines'] = bordersLayer;
-const layersControl = L.control.layers({ 'Map': streets, 'Satellite': satellite }, overlays).addTo(map);
+const layersControl = L.control.layers(window.ekkoBaseLayers(streets, satellite), overlays).addTo(map);
 
 // Mirror the layer control's expanded/collapsed state onto the body so the
 // phone search box can widen when it's closed (see the .cg-search media query).
