@@ -6,7 +6,7 @@ out=sys.argv[2]; os.makedirs(out,exist_ok=True)
 UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36"
 RX=re.compile(r'rate|price|pricing|reserv|book|rv-?site|stay|camp',re.I); BAD=re.compile(r'facebook|instagram|google|twitter|youtube|\.(jpg|png|pdf)|mailto|tel:',re.I)
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None))
+    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if os.path.exists('/usr/bin/google-chrome') else None), channel=(None if os.path.exists('/usr/bin/google-chrome') else 'chromium'))
     ctx=b.new_context(ignore_https_errors=True,user_agent=UA,locale='en-US')
     for k,u in lst:
         fn=f'{out}/{re.sub(r"[^A-Za-z0-9]+","_",k)}.txt'

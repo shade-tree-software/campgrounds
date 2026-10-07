@@ -2,7 +2,7 @@
 import sys,re
 from playwright.sync_api import sync_playwright
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None)); ctx=b.new_context(locale='en-US',user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36")
+    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None), channel=(None if __import__('os').path.exists('/usr/bin/google-chrome') else 'chromium')); ctx=b.new_context(locale='en-US',user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36")
     pg=ctx.new_page()
     for q in sys.argv[1:]:
         try:

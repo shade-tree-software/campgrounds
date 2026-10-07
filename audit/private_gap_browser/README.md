@@ -11,7 +11,11 @@ Setup (per machine; not a repo dependency):
     export PYTHONPATH=~/.cache/ekko-pw
 
 The scripts launch `/usr/bin/google-chrome` when it exists, else Playwright's
-bundled Chromium.
+bundled Chromium as `channel='chromium'` (the full browser in new-headless mode).
+The default headless *shell* loads Google Maps tiles but never fills the place
+panel, so `gm.py` came back empty under it. On a container that ships Chromium
+(e.g. `/opt/pw-browsers/chromium-1194`), pin the matching package instead of
+downloading a browser: `pip install playwright==1.56.0`.
 
 - `txt.py URL [--browser] [-l] [-nCHARS] [-wMS]` - page as text (+ links)
 - `cs.py SLUG CHECKIN CHECKOUT` - Campspot park page with live per-site prices
