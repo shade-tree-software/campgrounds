@@ -2,6 +2,11 @@
 
 {% block title %}Weather Finder{% endblock %}
 
+{% block head_extra %}
+<link rel="stylesheet" href="{{ static_v('vendor/leaflet/leaflet.css') }}" />
+<script src="{{ static_v('vendor/leaflet/leaflet.js') }}"></script>
+{% endblock %}
+
 {% block style %}
   .wx-page { max-width: 1100px; margin: 1.5rem auto; padding: 0 1.25rem; }
   .wx-page h2 { color: var(--navy); font-size: 1.4rem; margin-bottom: .25rem; }
@@ -159,6 +164,62 @@
 
   .wx-more { font-size: .85rem; color: var(--gray); margin-top: .75rem; }
 
+  /* ── Weather map ─────────────────────────────────────────────────────────
+     Every campground the search checked, shaded by its forecast — the list
+     answers "where matches", the map answers "which way is the weather
+     better". */
+  .wx-map-wrap {
+    background: var(--white); border: 1px solid var(--gray-light); border-radius: 8px;
+    box-shadow: var(--shadow); padding: .75rem; margin: 0 0 1rem;
+  }
+  .wx-map-controls {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.25rem;
+    margin-bottom: .6rem;
+  }
+  .wx-seg { display: inline-flex; border: 1px solid var(--navy); border-radius: 6px; overflow: hidden; }
+  .wx-seg button {
+    border: none; background: var(--white); color: var(--navy); font: inherit;
+    font-size: .85rem; font-weight: 700; padding: .35rem .8rem; cursor: pointer;
+  }
+  .wx-seg button + button { border-left: 1px solid var(--navy); }
+  .wx-seg button[aria-pressed="true"] { background: var(--navy); color: var(--white); }
+  .wx-map-day { display: inline-flex; align-items: center; gap: .4rem; font-size: .85rem;
+                font-weight: 700; color: var(--navy); }
+  .wx-map-day select {
+    padding: .35rem .5rem; border: 1px solid var(--gray-light); border-radius: 6px;
+    font: inherit; font-weight: 400; font-size: .9rem; background: var(--white);
+  }
+  /* z-index 0 contains Leaflet's internal z-indices below the sticky header. */
+  #wx-map { height: 440px; border-radius: 6px; z-index: 0; }
+  .wx-map-legend {
+    display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1.5rem;
+    margin-top: .55rem; font-size: .8rem; color: var(--gray);
+  }
+  .wx-scale { display: inline-flex; flex-direction: column; gap: .15rem; width: 320px; max-width: 100%; }
+  .wx-scale-title { font-weight: 700; color: var(--navy); }
+  .wx-scale-bar { position: relative; height: 10px; border-radius: 3px; border: 1px solid #d6d6d2; }
+  /* Comfort-band edges, marked on the bar so "grey" visibly means "in band". */
+  .wx-scale-band { position: absolute; top: -3px; bottom: -3px; border-left: 2px solid var(--navy);
+                   border-right: 2px solid var(--navy); }
+  .wx-scale-ticks { position: relative; height: 1em; }
+  .wx-scale-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+  .wx-scale-ticks span:first-child { transform: none; }
+  .wx-scale-ticks span:last-child { transform: translateX(-100%); }
+  .wx-key { display: inline-flex; align-items: center; gap: .35rem; }
+  .wx-key i { display: inline-block; border-radius: 50%; background: #c9c9c4; }
+  .wx-key i.hit { width: 12px; height: 12px; border: 1.5px solid #262626; }
+  .wx-key i.miss { width: 7px; height: 7px; border: 1px solid #8a8a86; opacity: .75; }
+  .wx-key i.origin { width: 11px; height: 11px; background: var(--red); border: 2px solid var(--white);
+                     box-shadow: 0 0 0 1px var(--red); }
+  .wx-pop .wx-name { font-size: .95rem; }
+  .wx-pop .wx-meta { margin: .1rem 0 .35rem; }
+  .wx-pop .wx-days { margin-top: .25rem; }
+  .wx-pop .wx-day.shown { outline: 2px solid #1b1b1b; outline-offset: 1px; }
+  .wx-pop .wx-jump { display: inline-block; margin-top: .45rem; font-size: .8rem; }
+  .wx-card.flash { animation: wx-flash 1.6s ease-out; }
+  @keyframes wx-flash { from { box-shadow: 0 0 0 3px var(--navy); } to { box-shadow: var(--shadow); } }
+  @media (prefers-reduced-motion: reduce) { .wx-card.flash { animation: none; outline: 3px solid var(--navy); } }
+
   @media (max-width: 700px) {
     .wx-page { padding: 0 .75rem; margin-top: 1rem; }
     /* Stack the controls: side-by-side fields at phone width squeeze the
@@ -172,6 +233,9 @@
     .wx-filters { gap: .55rem 1.1rem; }
     #wx-place { width: 100%; }
     .wx-actions button { width: 100%; padding: .7rem 1.2rem; }
+    #wx-map { height: 340px; }
+    .wx-map-wrap { padding: .6rem; }
+    .wx-scale { width: 100%; }
   }
 {% endblock %}
 
@@ -299,6 +363,21 @@
   </div>
 
   <div id="wx-status" role="status" aria-live="polite"></div>
+  {# The map shows every campground the search CHECKED, matches and misses
+     alike — the list below is capped and holds only matches. Shown only after
+     a search; the by-name lookup has one point and no use for it. #}
+  <section class="wx-map-wrap" id="wx-map-wrap" hidden aria-label="Forecast map">
+    <div class="wx-map-controls">
+      <div class="wx-seg" role="group" aria-label="Shade by">
+        <button type="button" data-shade="temp" aria-pressed="true">Temperature</button>
+        <button type="button" data-shade="rain" aria-pressed="false">Rain</button>
+      </div>
+      <label class="wx-map-day">Day <select id="wx-map-day"></select></label>
+      <label class="wx-check"><input type="checkbox" id="wx-map-misses" checked> Show non-matching</label>
+    </div>
+    <div id="wx-map"></div>
+    <div class="wx-map-legend" id="wx-map-legend"></div>
+  </section>
   {# Says what a chip's three numbers mean. The overnight low in particular is
      NOT the minimum the forecast files under that date (see _day_rows) — it's
      the night after it, and a hover title alone would leave every phone and
@@ -450,6 +529,7 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
   goBtn.disabled = true;
   resultsEl.innerHTML = '';
   legendEl.hidden = true;
+  mapWrap.hidden = true;
   statusEl.className = '';
   statusEl.innerHTML = '<span class="wx-spinner"></span>Checking the forecast…';
 
@@ -495,6 +575,261 @@ document.getElementById('wx-form').addEventListener('submit', async e => {
   }
 });
 
+
+// ── Weather map ────────────────────────────────────────────────────────────
+// Every campground the search checked, shaded by its forecast. The server
+// sends the weather once per forecast CELL (data.map.cells[i].w, aligned to
+// data.map.dates) and each campground as a short row pointing at its cell,
+// because campgrounds sharing a cell share one forecast.
+const mapWrap = document.getElementById('wx-map-wrap');
+const mapDaySel = document.getElementById('wx-map-day');
+const mapMissesBox = document.getElementById('wx-map-misses');
+const mapLegendEl = document.getElementById('wx-map-legend');
+let wxMap = null, wxLayer = null, wxOriginLayer = null;
+let mapData = null, mapMode = 'range', shade = 'temp', lastFitKey = null;
+
+// Temperature is DIVERGING (polarity: colder / warmer than a reference), so
+// two hues with a neutral grey midpoint; rain is SEQUENTIAL magnitude, one
+// hue light -> dark. Never a rainbow — a rainbow invents bands the forecast
+// doesn't have. Stops are evenly spaced over 0..1.
+const DIVERGING = ['#1c5cab', '#86b6ef', '#f0efec', '#f0a09a', '#b8322f'];
+const SEQUENTIAL = ['#f0efec', '#cde2fb', '#6da7ec', '#256abf', '#0d366b'];
+// Rain scale tops out at an inch a day; heavier is the darkest step. Square-
+// root spaced, because rain is skewed — linear would spend most of the ramp
+// on downpours and paint every "a few hundredths" day the same pale grey.
+const RAIN_MAX_IN = 1.0;
+const rainT = v => Math.sqrt(Math.min(Math.max(v, 0), RAIN_MAX_IN) / RAIN_MAX_IN);
+
+function hexRgb(h) { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; }
+const DIV_RGB = DIVERGING.map(hexRgb), SEQ_RGB = SEQUENTIAL.map(hexRgb);
+function ramp(stops, t) {
+  t = Math.min(1, Math.max(0, t));
+  const x = t * (stops.length - 1), i = Math.min(stops.length - 2, Math.floor(x)), f = x - i;
+  const c = stops[i].map((a, k) => Math.round(a + (stops[i + 1][k] - a) * f));
+  return `rgb(${c[0]},${c[1]},${c[2]})`;
+}
+
+// The temperature scale. Range mode colours the actual high, centred on the
+// middle of the comfort band, so grey reads "comfortable" and the arms read
+// "too cold" / "too hot". The relative modes colour the difference from home,
+// centred on zero. Either way the half-span is fixed per search rather than
+// stretched to the data, so a uniformly mild region doesn't get painted as a
+// dramatic gradient over a 3° spread.
+function tempScale() {
+  const c = mapData.criteria;
+  if (mapMode === 'range') {
+    const mid = (c.min_high + c.max_high) / 2;
+    const half = Math.max(15, (c.max_high - c.min_high) / 2 + 10);
+    return { mid, half, field: 0, unit: '°F high', lo: c.min_high, hi: c.max_high };
+  }
+  return { mid: 0, half: Math.max(10, c.delta_f * 2), field: 3, unit: '°F vs home' };
+}
+
+// One number per cell for the chosen day, or the mean across the window when
+// "whole window" is chosen. Mean, not best: the map is a picture of the
+// weather, not a ranking, and a single good day would colour a wet week fine.
+function cellValue(cell, dayIdx, field) {
+  if (dayIdx >= 0) {
+    const row = cell.w[dayIdx];
+    return row && row[field] !== null ? row[field] : null;
+  }
+  let sum = 0, n = 0;
+  for (const row of cell.w) {
+    if (row && row[field] !== null) { sum += row[field]; n++; }
+  }
+  return n ? sum / n : null;
+}
+function cellMatches(cell, dayIdx) {
+  if (dayIdx < 0) return cell.listed;
+  const row = cell.w[dayIdx];
+  return !!(row && row[4]);
+}
+
+function dayLabel(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString(undefined, { weekday: 'short' }) + ' ' + (d.getMonth() + 1) + '/' + d.getDate();
+}
+
+function ensureMap() {
+  if (wxMap) return;
+  // Touch-primary: one finger scrolls the PAGE, two pinch the map, so a swipe
+  // down a phone screen can't get trapped in a map band. Leaflet's own CSS
+  // gives the container touch-action pan-x pan-y once dragging is off.
+  const touchPrimary = window.matchMedia('(pointer: coarse)').matches;
+  // zoomSnap 0 lets fitBounds land on a fractional zoom — integer snapping
+  // otherwise opens a 300-mile search on half the continent.
+  wxMap = L.map('wx-map', { zoomControl: false, preferCanvas: true, zoomSnap: 0,
+                            dragging: !touchPrimary });
+  const streets = window.ekkoStreetLayer().addTo(wxMap);
+  L.control.layers(window.ekkoBaseLayers(streets, window.ekkoSatelliteLayer()),
+                   { '🗺️ State lines': window.ekkoBordersLayer() }).addTo(wxMap);
+  wxMap.whenReady(() => window.addMilesScaleBar && addMilesScaleBar(wxMap));
+  wxLayer = L.layerGroup().addTo(wxMap);
+  // Resize in place rather than redrawing, so an open popup survives a zoom.
+  wxMap.on('zoomend', () => wxLayer.eachLayer(m => {
+    const sz = markerSize(m.options.wxHit);
+    m.setRadius(sz.radius); m.setStyle({ weight: sz.weight });
+  }));
+  wxOriginLayer = L.layerGroup().addTo(wxMap);
+  wxMap.on('popupopen', e => {
+    const a = e.popup.getElement().querySelector('a[data-card]');
+    if (a) a.addEventListener('click', ev => {
+      ev.preventDefault();
+      const card = document.getElementById(a.dataset.card);
+      if (!card) return;
+      card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      card.classList.remove('flash'); void card.offsetWidth; card.classList.add('flash');
+    });
+  });
+}
+
+function renderMap(data, mode) {
+  mapData = data.map;
+  if (!mapData || !mapData.points.length) { mapWrap.hidden = true; return; }
+  mapData.criteria = data.criteria || {};
+  mapData.origin = data.origin;
+  mapData.originLabel = origin.label;
+  mapMode = mode;
+
+  // Day choices: the window average plus each day searched. Keep the previous
+  // pick when it's still in the window — a re-sort re-runs the search and
+  // shouldn't throw away what you were looking at.
+  const prev = mapDaySel.value;
+  mapDaySel.innerHTML = `<option value="">All ${mapData.dates.length} day${mapData.dates.length === 1 ? '' : 's'} (average)</option>`
+    + mapData.dates.map(d => `<option value="${d}">${dayLabel(d)}</option>`).join('');
+  mapDaySel.value = mapData.dates.includes(prev) ? prev : '';
+
+  mapWrap.hidden = false;
+  ensureMap();
+  wxMap.invalidateSize();
+
+  // Reframe only when the searched area changed; a re-sort or a threshold
+  // tweak over the same area keeps whatever you'd zoomed into.
+  const o = data.origin, c = mapData.criteria;
+  const fitKey = [o.lat, o.lng, c.max_miles].join(',');
+  if (fitKey !== lastFitKey) {
+    const b = L.latLngBounds(mapData.points.map(p => [p[4], p[5]])).extend([o.lat, o.lng]);
+    wxMap.fitBounds(b, { padding: [12, 12], maxZoom: 9 });
+    lastFitKey = fitKey;
+  }
+  drawMap();      // after the fit, so dots are sized for the zoom they'll show at
+}
+
+function drawMap() {
+  if (!mapData || !wxMap) return;
+  wxLayer.clearLayers();
+  wxOriginLayer.clearLayers();
+  const dayIdx = mapDaySel.value ? mapData.dates.indexOf(mapDaySel.value) : -1;
+  const showMisses = mapMissesBox.checked;
+  const ts = tempScale();
+  const field = shade === 'rain' ? 2 : ts.field;
+  const colour = v => v === null ? '#ffffff'
+    : shade === 'rain' ? ramp(SEQ_RGB, rainT(v))
+    : ramp(DIV_RGB, 0.5 + (v - ts.mid) / (2 * ts.half));
+
+  // Misses first, then matches, so on the shared canvas a match always paints
+  // on top of a near-neighbour that didn't make it.
+  const hits = [], misses = [];
+  for (const p of mapData.points) {
+    const cell = mapData.cells[p[0]];
+    (cellMatches(cell, dayIdx) ? hits : misses).push(p);
+  }
+  const draw = (p, hit) => {
+    const cell = mapData.cells[p[0]];
+    const v = cellValue(cell, dayIdx, field);
+    // Match vs miss is carried by SIZE and a dark ring, not by colour, so it
+    // never competes with the weather shading for the same channel.
+    L.circleMarker([p[4], p[5]], Object.assign(markerSize(hit),
+      hit ? { color: '#262626', fillColor: colour(v), fillOpacity: 1 }
+          : { color: '#8a8a86', fillColor: colour(v), fillOpacity: 0.75, opacity: 0.7 },
+      { wxHit: hit }))
+      .bindPopup(() => popupHtml(p, cell, dayIdx), { maxWidth: 360 })
+      .addTo(wxLayer);
+  };
+  if (showMisses) misses.forEach(p => draw(p, false));
+  hits.forEach(p => draw(p, true));
+
+  // The search origin, and the radius that was searched around it.
+  const o = mapData.origin;
+  L.circle([o.lat, o.lng], { radius: mapData.criteria.max_miles * 1609.344, color: '#002868',
+    weight: 1.5, dashArray: '5 6', fill: false, interactive: false }).addTo(wxOriginLayer);
+  L.circleMarker([o.lat, o.lng], { radius: 6, weight: 2, color: '#ffffff', fillColor: '#bf0a30',
+    fillOpacity: 1 }).bindTooltip('Searched from ' + mapData.originLabel).addTo(wxOriginLayer);
+
+  renderMapLegend(ts, dayIdx, hits.length, misses.length);
+}
+
+// Dots grow with zoom. Zoomed out over a 400-mile radius a thousand dots
+// overlap, and full-size ones merge into a mat of outlines that hides the very
+// shading the map is for; zoomed in, small ones are hard to tap.
+function markerSize(hit) {
+  const z = wxMap.getZoom();
+  const k = Math.min(1, Math.max(0, (z - 5) / 4));     // 0 at z5 and out, 1 at z9+
+  return hit ? { radius: 3.5 + 3 * k, weight: 0.75 + 0.75 * k }
+             : { radius: 2.25 + 1.75 * k, weight: 0.5 + 0.25 * k };
+}
+
+function popupHtml(p, cell, dayIdx) {
+  const [, id, name, state, , , dist] = p;
+  // Rebuild the chip objects dayChip() already knows how to draw, so a popup
+  // reads exactly like the result card for the same campground.
+  const chips = mapData.dates.map((d, i) => {
+    const row = cell.w[i];
+    if (!row) return '';
+    const chip = dayChip({ date: d, day: dayLabel(d).split(' ')[0], high: row[0],
+      overnight_low: row[1], precip: row[2], delta: row[3], match: !!row[4] });
+    // Pick out the day the map is showing.
+    return i === dayIdx ? chip.replace('class="wx-day', 'class="wx-day shown') : chip;
+  }).join('');
+  const meta = [state ? esc(state) : null, dist + ' mi'].filter(Boolean)
+    .map(m => `<span>${m}</span>`).join('<span class="sep">·</span>');
+  const cardId = 'wx-card-' + encodeURIComponent(id);
+  const jump = document.getElementById(cardId)
+    ? `<a href="#${cardId}" class="wx-jump" data-card="${cardId}">Show in the list ↓</a>`
+    : (cell.listed ? '<div class="wx-hint wx-jump">Matches, but past the end of the list.</div>' : '');
+  return `<div class="wx-pop">${nameHtml({ id, name })}<div class="wx-meta">${meta}</div>`
+       + `<div class="wx-days">${chips}</div>${jump}</div>`;
+}
+
+function renderMapLegend(ts, dayIdx, nHits, nMisses) {
+  let title, ticks, band = '';
+  const stops = (shade === 'rain' ? SEQUENTIAL : DIVERGING).join(',');
+  const when = dayIdx >= 0 ? dayLabel(mapData.dates[dayIdx]) : 'average over the window';
+  if (shade === 'rain') {
+    title = `Rain, inches a day — ${when}`;
+    ticks = [0, 0.1, 0.25, 0.5, 1].map(v =>
+      `<span style="left:${(rainT(v) * 100).toFixed(1)}%">${v === 0 ? 'dry' : v === 1 ? '1"+' : v + '"'}</span>`).join('');
+  } else {
+    const lo = ts.mid - ts.half, hi = ts.mid + ts.half;
+    const pos = v => ((v - lo) / (hi - lo) * 100).toFixed(1);
+    const fmt = v => (mapMode === 'range' ? '' : (v > 0 ? '+' : '')) + Math.round(v) + '°';
+    title = (mapMode === 'range' ? 'High temperature' : 'High vs. home') + ` — ${when}`;
+    const mids = mapMode === 'range' ? [ts.lo, ts.hi] : [0];
+    ticks = [lo, ...mids, hi].map(v => `<span style="left:${pos(v)}%">${v === lo ? '≤ ' : v === hi ? '≥ ' : ''}${fmt(v)}</span>`).join('');
+    if (mapMode === 'range') {
+      band = `<div class="wx-scale-band" style="left:${pos(ts.lo)}%;right:${(100 - pos(ts.hi)).toFixed(1)}%" title="Your range"></div>`;
+    }
+  }
+  mapLegendEl.innerHTML = `
+    <div class="wx-scale">
+      <span class="wx-scale-title">${title}</span>
+      <div class="wx-scale-bar" style="background:linear-gradient(to right,${stops})">${band}</div>
+      <div class="wx-scale-ticks">${ticks}</div>
+    </div>
+    <span class="wx-key"><i class="hit"></i> Matches (${nHits})</span>
+    <span class="wx-key"><i class="miss"></i> Doesn't match (${nMisses}${mapMissesBox.checked ? '' : ', hidden'})</span>
+    <span class="wx-key"><i class="origin"></i> Searched from, and the radius</span>`;
+}
+
+document.querySelectorAll('.wx-seg button').forEach(b => b.addEventListener('click', () => {
+  shade = b.dataset.shade;
+  document.querySelectorAll('.wx-seg button').forEach(x =>
+    x.setAttribute('aria-pressed', String(x === b)));
+  drawMap();
+}));
+mapDaySel.addEventListener('change', drawMap);
+mapMissesBox.addEventListener('change', drawMap);
+
 // ── By-name lookup ─────────────────────────────────────────────────────────
 const cgInput = document.getElementById('wx-cg');
 const cgResults = document.getElementById('wx-cg-results');
@@ -527,6 +862,7 @@ cgResults.addEventListener('click', async e => {
   cgInput.value = row.textContent.trim();
   resultsEl.innerHTML = '';
   legendEl.hidden = true;
+  mapWrap.hidden = true;
   statusEl.className = '';
   statusEl.innerHTML = '<span class="wx-spinner"></span>Fetching the forecast…';
   try {
@@ -660,6 +996,9 @@ function render(data, mode) {
   }
   scope += dateScope(data);
   statusEl.className = '';
+  // Drawn even when nothing matched: "no matches" plus a map of what the
+  // weather is actually doing is the cue for which way to loosen the search.
+  renderMap(data, mode);
 
   if (!n) {
     statusEl.textContent = `No matches${data.all_days ? ' on every day' : ''}. Checked ${scope}.`;
@@ -679,7 +1018,7 @@ function render(data, mode) {
     if (r.ownership) meta.push(esc(r.ownership));
     if (r.visit_count) meta.push(`visited ${r.visit_count}×`);
     return `
-      <div class="wx-card${water ? ' waterfront' : ''}">
+      <div class="wx-card${water ? ' waterfront' : ''}" id="wx-card-${encodeURIComponent(r.id)}">
         <div class="wx-card-head">
           ${nameHtml(r)}
           ${water ? `<span class="wx-badge water">${esc(r.waterfront)}</span>` : ''}

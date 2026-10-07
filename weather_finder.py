@@ -450,6 +450,7 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     # one forecast, so testing it once and fanning the result out is both the
     # obvious reading and the cheap one.
     results = []
+    map_cells = []
     for cell in selected:
         daily = cell["daily"]
         if daily is None:
@@ -518,9 +519,16 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
             if hit:
                 matches.append(entry)
 
-        if not matches:
-            continue
-        if all_days and len(matches) < len(days):
+        # The map shows every campground whose forecast was checked, not just
+        # the listed ones — shading is only informative with the misses in it
+        # ("it's cooler to the north-west" is a statement about the whole
+        # region). Recorded per CELL, like the forecast, before the listing
+        # test below drops the misses.
+        listed = bool(matches) and not (all_days and len(matches) < len(days))
+        if days:
+            map_cells.append((cell, days, listed))
+
+        if not listed:
             continue
         # Per-cell "best day" figures, which are what the sorts rank on. A
         # campground with six matching days is judged on its best one — sorting
@@ -604,7 +612,38 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
         "end_date": end_date,
         "truncated": total > max_results,
         "results": results[:max_results],
+        "map": _map_payload(map_cells),
     }
+
+
+def _map_payload(map_cells):
+    """Compact form of every checked cell, for the page's weather map.
+
+    The listed results are capped at MAX_RESULTS and carry a dozen fields
+    each; the map wants every checked campground (a 400-mile search is ~1,300)
+    but only where it is and what the weather does there. So the weather rides
+    once per CELL, as rows aligned to one shared `dates` list — [high,
+    overnight_low, precip, delta, match] or null for a date the cell has no
+    answer for — and each campground is a short row pointing at its cell:
+    [cell_index, id, name, state, lat, lng, dist]. Keyed-by-date dicts per cell
+    were ~4x the bytes for the same information.
+    """
+    dates = sorted({d["date"] for _, days, _ in map_cells for d in days})
+    cells, points = [], []
+    for ci, (cell, days, listed) in enumerate(map_cells):
+        by_date = {d["date"]: d for d in days}
+        cells.append({
+            "listed": listed,
+            "w": [None if dt not in by_date else
+                  [by_date[dt]["high"], by_date[dt]["overnight_low"],
+                   by_date[dt]["precip"], by_date[dt]["delta"],
+                   1 if by_date[dt]["match"] else 0]
+                  for dt in dates],
+        })
+        for cg, lat, lng, dist in cell["members"]:
+            points.append([ci, cg.get("id"), cg.get("name"), cg.get("state"),
+                           round(lat, 5), round(lng, 5), round(dist, 1)])
+    return {"dates": dates, "cells": cells, "points": points}
 
 
 def forecast_for_point(lat, lng, home=None, *, forecast_days=FORECAST_DAYS, **fetch_kw):
