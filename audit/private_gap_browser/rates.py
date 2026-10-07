@@ -7,7 +7,7 @@ KW=re.compile(r'rate|pric|camp|site|stay|reserv|book|rv|fee',re.I)
 ENG=re.compile(r'campspot|resnexus|newbook|firefly|camplife|staylist|campgroundmanager|premiercampground|rezexpert|reserveamerica|hipcamp|roverpass|campsitesoftware|astra|bookingsus|innroad|checkfront|webreserv|campable|eyeonrv|reservationsoft|rmsnorthamerica|ezcampreservations|campgroundbooking|newbook',re.I)
 def lines(pg): return [l.strip() for l in pg.inner_text('body').splitlines() if l.strip()]
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None)); ctx=b.new_context(ignore_https_errors=True,user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36")
+    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None), channel=(None if __import__('os').path.exists('/usr/bin/google-chrome') else 'chromium')); ctx=b.new_context(ignore_https_errors=True,user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36")
     pg=ctx.new_page(); url=sys.argv[1]
     try: pg.goto(url,timeout=45000,wait_until='domcontentloaded'); pg.wait_for_timeout(5000)
     except Exception as e: print('ERR',url,str(e)[:100]); sys.exit()

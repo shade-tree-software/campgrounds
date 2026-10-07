@@ -4,7 +4,7 @@ url = sys.argv[1]
 if '--browser' in sys.argv:
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        b = p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None))
+        b = p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None), channel=(None if __import__('os').path.exists('/usr/bin/google-chrome') else 'chromium'))
         pg = b.new_page(ignore_https_errors=True, user_agent=UA)
         pg.goto(url, timeout=60000, wait_until='domcontentloaded'); pg.wait_for_timeout(int(next((a[2:] for a in sys.argv if a.startswith('-w')), 5000)))
         t = pg.inner_text('body'); links = pg.eval_on_selector_all('a', 'els=>els.map(e=>e.href)')

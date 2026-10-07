@@ -2,7 +2,7 @@ import sys, re
 from playwright.sync_api import sync_playwright
 url = sys.argv[1]
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None)); pg=b.new_page()
+    b=p.chromium.launch(executable_path=('/usr/bin/google-chrome' if __import__('os').path.exists('/usr/bin/google-chrome') else None), channel=(None if __import__('os').path.exists('/usr/bin/google-chrome') else 'chromium')); pg=b.new_page()
     pg.goto(url,wait_until='domcontentloaded',timeout=60000); pg.wait_for_timeout(5000)
     opts = pg.eval_on_selector_all('#equipment_type option','els=>els.map(e=>[e.value,e.textContent])')
     pick = next((o for o in opts if re.search(r'trailer.*30|travel trailer', o[1], re.I)), None) or next((o for o in opts if re.search(r'motorhome|class c|rv', o[1], re.I)), opts[-1])
