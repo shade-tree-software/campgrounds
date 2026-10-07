@@ -5366,6 +5366,10 @@ def api_weather_finder_search():
     result["mode"] = mode
     result["all_days"] = bool(data.get("all_days"))
     result["origin"] = {"lat": float(origin_lat), "lng": float(origin_lng)}
+    # Echoed for the map's colour scale, which centres temperature on the
+    # comfort band (range mode) — read off the search that ran, not the form.
+    result["criteria"] = {"min_high": min_high, "max_high": max_high,
+                          "delta_f": delta_f, "max_miles": max_miles}
     return jsonify(result)
 
 
