@@ -5353,6 +5353,7 @@ def api_weather_finder_search():
             start_date=start_date, end_date=end_date,
             max_precip_in=max_precip_in, max_precip_chance=max_precip_chance,
             waterfront_only=bool(data.get("waterfront_only")),
+            public_only=bool(data.get("public_only")),
             all_days=bool(data.get("all_days")),
             sort=sort,
             user_agent=_OUTBOUND_UA)

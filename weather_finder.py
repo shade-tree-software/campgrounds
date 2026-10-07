@@ -89,6 +89,19 @@ def waterfront_rank(value):
     return _WATERFRONT_RANKS.get((value or "not waterfront").strip().lower(), 3)
 
 
+# Ownerships that are a government agency's campground. `provincial` is the
+# Canadian twin of `state`, and `wma` is state-owned land (the map splits it out
+# only so its informal camping can be hidden in one click). Listed rather than
+# derived as "not private" so a new ownership value has to be classified here
+# before it can count as public.
+PUBLIC_OWNERSHIPS = frozenset({"federal", "state", "local", "provincial", "wma"})
+
+
+def is_public(ownership):
+    """True for a campground run by a federal, state/provincial or local agency."""
+    return (ownership or "").strip().lower() in PUBLIC_OWNERSHIPS
+
+
 def is_waterfront(value):
     """True for any water designation at all, view-only tiers included.
 
@@ -303,7 +316,7 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
                        max_miles=400.0, weekends_only=True,
                        start_date=None, end_date=None,
                        max_precip_in=None, max_precip_chance=None,
-                       waterfront_only=False, all_days=False,
+                       waterfront_only=False, public_only=False, all_days=False,
                        sort="distance",
                        max_results=MAX_RESULTS, forecast_budget=FORECAST_BUDGET,
                        forecast_days=FORECAST_DAYS, progress=None, **fetch_kw):
@@ -346,13 +359,16 @@ def find_matching_days(campgrounds, home, *, mode=MODE_RANGE,
     # two reasons: the forecast budget then buys only cells that can actually
     # produce a hit (about 61% of the database is `not waterfront`, so a much
     # wider radius fits), and the MAX_RESULTS cap then yields 200 waterfront
-    # campgrounds rather than the waterfront few out of the 200 nearest.
+    # campgrounds rather than the waterfront few out of the 200 nearest. The
+    # public-only filter sits here for the same reasons.
     eligible = []
     for cg in campgrounds:
         loc = cg.get("location")
         if not loc:
             continue
         if waterfront_only and not is_waterfront(cg.get("waterfront")):
+            continue
+        if public_only and not is_public(cg.get("ownership")):
             continue
         try:
             lat, lng = (float(x) for x in loc.split(","))

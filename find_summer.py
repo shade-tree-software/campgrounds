@@ -32,6 +32,8 @@ parser.add_argument('--max_precip', type=float, default=None,
                     help='Only days with at most this much rain (inches).')
 parser.add_argument('--waterfront_only', action='store_true',
                     help='Only campgrounds with a water designation (views included).')
+parser.add_argument('--public_only', action='store_true',
+                    help='Only federal, state/provincial and local agency campgrounds.')
 parser.add_argument('--sort', choices=wf.SORTS, default='distance',
                     help='Order results by distance, temp, rain, or waterfront.')
 parser.add_argument('--all_days', action='store_true',
@@ -57,6 +59,7 @@ try:
         min_high=args.min_high_temp, max_high=args.max_high_temp, delta_f=args.delta_f,
         max_miles=args.max_miles, weekends_only=not args.all_days,
         max_precip_in=args.max_precip, waterfront_only=args.waterfront_only,
+        public_only=args.public_only,
         sort=args.sort,
         progress=lambda done, total: print(f"  fetched {done}/{total} forecast points"),
     )
