@@ -92,3 +92,4 @@
 - [Mandatory entry fees count toward price](feedback_mandatory_fees_count.md) — resort day/grounds fees per person are part of the nightly rate for the $50 gate (Avalon skipped, AWH 2026-09-30); retired id 14262 -> next append needs --min-id 14263
 - [One headless browser at a time](feedback_limit_headless_browsers.md) — AWH 2026-10-03: parallel gm.py/rates.py Chrome instances ate memory+CPU; run helpers sequentially, batch queries into one gm.py call with -u
 - [Skip Sun Outdoors/Retreats + KOA](feedback_skip_sun_koa_brands.md) — AWH 2026-10-03: never in the price range; pre-skip on brand in private sweeps, no rate research
+- [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block = back off and retry

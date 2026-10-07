@@ -20,6 +20,13 @@ during vetting.
 Unrated rows and Good-Sam-only parks are eligible too, on a quality signal
 from elsewhere.
 
+Canadian provinces: RV Life's avg_rate there is raw CAD and its $ tag is cut
+on that nominal figure, so the tag over-tiers them about one level. For a
+province the tag is ignored and avg_rate is converted at CAD_TO_USD. At or
+under $40 USD (~C$55) it passes like $/$$. $40-50 USD (~C$55-69) passes the
+screen but needs a published rate <= $50 USD (~C$69, pre-tax) read during
+vetting (AWH 2026-10-07). Over that it fails on price.
+
 The output is CANDIDATES, not misses. Membership, condo, MHP and seasonal
 parks come through; judge each by hand and record it in
 audit/private_gap_decisions.json.
@@ -52,6 +59,9 @@ GS_PRIVATE = {"CAMPGROUND", "RV_PARK", "RV_RESORT", "RV_SPACES", "UNKNOWN"}
 HELD_NAME_M = 3000
 HELD_ANY_M = 250
 NO_TIER_RATE = 40
+PUBLISHED_MAX_USD = 50
+PROVINCES = {"ON", "BC", "AB", "SK", "MB", "QC", "NB", "NS", "PE", "NL"}
+CAD_TO_USD = 0.72  # the rate every Canada pass has used (2026-07); avg_rate is CAD
 
 
 def rv_query(params):
@@ -145,8 +155,31 @@ def held(name, lat, lng, db):
     return False, near
 
 
+def is_cad(p):
+    return p.get("state") in PROVINCES
+
+
+def usd(p):
+    """avg_rate in USD (None when RV Life has none)."""
+    r = p.get("rate")
+    if not r:
+        return None
+    return r * CAD_TO_USD if is_cad(p) else r
+
+
+def needs_rate(p):
+    """The screen passed, but only a published rate can settle price."""
+    u = usd(p)
+    if is_cad(p):
+        return u is None or u > NO_TIER_RATE
+    return not p.get("rate")
+
+
 def cheap(p):
     """The AWH 2026-10-01 price gate; see the module docstring."""
+    if is_cad(p):
+        u = usd(p)
+        return u is None or u <= PUBLISHED_MAX_USD
     # A $ with no avg_rate is RV Life's default, not a rating (all 144 such
     # candidates measured 2026-10-01 carry price_level 1): treat it as no tier.
     if p.get("price") and p.get("rate"):
@@ -178,6 +211,8 @@ def main():
     db = entries()
 
     # RV Life commercial rows not held.
+    for p in rv:
+        p["state"] = st
     rv_c = [p for p in rv if p["type"] == "commercial" and p.get("lat")]
     rv_miss = []
     for p in rv_c:
@@ -215,8 +250,14 @@ def main():
     print(f"    unrated, screen price ok (need a quality signal elsewhere): {len(unrated)}")
     print(f"  Good Sam private rows not held and absent from RV Life: {len(gs_miss)}")
 
+    if st in PROVINCES:
+        print(f"    (CAD: avg_rate C$ x {CAD_TO_USD}; 'R' = needs a published rate <= ${PUBLISHED_MAX_USD} USD"
+              f" ~ C${PUBLISHED_MAX_USD / CAD_TO_USD:.0f})")
+
     def line(p):
-        return (f"  {p['stars'] or 0:>3}* {'$' * (p['price'] or 0):<4} ${p['rate'] or '?':<4} "
+        cur = "C$" if is_cad(p) else "$"
+        flag = "R" if needs_rate(p) else " "
+        return (f" {flag}{p['stars'] or 0:>3}* {'$' * (p['price'] or 0):<4} {cur}{p['rate'] or '?':<4} "
                 f"{p['sites'] or '?':>4}s {p['reviews'] or 0:>4}r  {p['name'][:42]:<42} "
                 f"{(p['city'] or '')[:16]:<16} {p['near']}")
 
