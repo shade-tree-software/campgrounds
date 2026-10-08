@@ -34,16 +34,20 @@ url = sys.argv[1]
 date = sys.argv[2] if len(sys.argv) > 2 else ''
 nights = sys.argv[3] if len(sys.argv) > 3 else '1'
 
-call(cmd='goto', url=url, wait='8000')
-svc = call(cmd='eval', js="JSON.stringify([...new Set([...document.querySelectorAll('a.rp-service-action')].map(a=>a.href))])")
-try:
-    services = json.loads(svc)
-except Exception:
-    services = []
-if not services:
-    services = [url]
+SERVICE_PAGE = r'service=|/reservation-en-ligne/[^/]+/[^/.]+/?$'
+if re.search(SERVICE_PAGE, url):
+    services = [url]          # one service page: quote just that type
+else:
+    call(cmd='goto', url=url, wait='8000')
+    svc = call(cmd='eval', js="JSON.stringify([...new Set([...document.querySelectorAll('a.rp-service-action')].map(a=>a.href))])")
+    try:
+        services = json.loads(svc)
+    except Exception:
+        services = []
+    if not services:
+        services = [url]
 for s in services:
-    if not re.search(r'service=|/reservation-en-ligne/[^/]+/[^/]+/?$', s) and s != url:
+    if not re.search(SERVICE_PAGE, s) and s != url:
         continue
     call(cmd='goto', url=s, wait='8000')
     if date:
@@ -59,10 +63,26 @@ for s in services:
     ids = re.findall(r'^\[(\d+)\].*application/json', call(cmd='net', xhr='1', grep='json', last='12'), re.M)
     body = ''
     for i in reversed(ids):
-        b = call(cmd='body', i=i, max='1500')
+        b = call(cmd='body', i=i, max='400000')
         if '"services"' in b:
             body = b
             break
     print('==', s)
     print('   nights offered:', opts)
-    print('   availability:', body[:600] or '(no check-disponibilite_service response captured)')
+    if not body:
+        print('   availability: (no check-disponibilite_service response captured)')
+        continue
+    try:
+        d = json.loads(body)
+    except Exception:
+        print('   availability (raw):', body[:600])
+        continue
+    print('   availability %s -> %s' % (d.get('debut'), d.get('fin')))
+    for k in ('Erreur', 'Message', 'erreur', 'message'):
+        if d.get(k):
+            print('   %s: %s' % (k, str(d[k])[:300]))
+    for v in d.get('services', []):
+        msg = v.get('Erreur') or v.get('Message') or ''
+        print('   - %s | Prix %s | Frais %s | NbrDispo %s | %s %s' % (
+            v.get('Titre'), v.get('Prix'), v.get('Frais'), v.get('NbrDispo'),
+            v.get('BadgeLabel') or v.get('Statut') or '', str(msg)[:200]))
