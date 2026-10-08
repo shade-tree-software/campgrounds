@@ -173,3 +173,4 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 **MB DONE 2026-10-07: +8 (ids 14975-14982); NB Cedar Cove added late as 14983.** curlrates.py output can carry a LINKED park's prices under the wrong name (Netley's $51 showed under Viking) - confirm every rate with rates.py on the park's own page before a verdict. Next --min-id 14984, next SK.
 **SK DONE 2026-10-07: +3 (14984-14986).** Next --min-id 14987, next AB.
 **AB DONE 2026-10-07: +24 (14987-15010).** Next --min-id 15011, next QC.
+**QC DONE 2026-10-08: +44 (15011-15054)**; 71 well-rated QC parks skipped no_rate (rates behind booking widgets; campingquebec.com is Cloudflare-blocked) - a possible follow-up. French rate pages: crawl with plain urllib into audit/<st>_private/txt/ and grep '$' lines. Next --min-id 15055, next BC.
