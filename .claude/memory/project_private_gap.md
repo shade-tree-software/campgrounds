@@ -171,3 +171,4 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 **NB DONE 2026-10-07: +13 (ids 14952-14964), 26 skips, 0 holds.** wordpress.com 'I am human' pages are browser-only - curl reads them. Next --min-id 14965, next NS.
 **NS DONE 2026-10-07: +10 (ids 14965-14974), 0 holds.** Next --min-id 14975, next MB.
 **MB DONE 2026-10-07: +8 (ids 14975-14982); NB Cedar Cove added late as 14983.** curlrates.py output can carry a LINKED park's prices under the wrong name (Netley's $51 showed under Viking) - confirm every rate with rates.py on the park's own page before a verdict. Next --min-id 14984, next SK.
+**SK DONE 2026-10-07: +3 (14984-14986).** Next --min-id 14987, next AB.
