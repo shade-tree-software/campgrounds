@@ -1,6 +1,8 @@
 # usage: curlrates.py LIST (lines: name<TAB>url) - plain urllib: home page + up to 6 rate/booking links, prints $ lines and booking engines
 import re,sys,urllib.request,html
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
+ENGINES=r'campspot|resnexus|firefly|newbook|roverpass|staylist|campgroundmaster|parkwith|reserveamerica|camplife|rjourney|checkfront|lodgify|rvparkreservations|campable|letscamp'
+def base(u): return '.'.join(urlparse(u).netloc.lower().split('.')[-2:])
 UA="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36"
 def get(u):
     try: return urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':UA}),timeout=20).read(800000).decode('utf-8','replace')
@@ -13,7 +15,10 @@ for line in open(sys.argv[1]):
     h=get(u); pages=[(u,h)]; links=set()
     for m in re.finditer(r'href="([^"#]+)"',h):
         l=m.group(1)
-        if re.search(r'rate|price|pricing|reserv|book|rv-?site|rv-park|stay|camp|amenit',l,re.I) and not re.search(r'facebook|instagram|google|twitter|\.(jpg|png|pdf)',l,re.I): links.add(urljoin(u,l))
+        if re.search(r'rate|price|pricing|reserv|book|rv-?site|rv-park|stay|camp|amenit',l,re.I) and not re.search(r'facebook|instagram|google|twitter|\.(jpg|png|pdf)',l,re.I): 
+            L2=urljoin(u,l)
+            # only the park's own site or its booking engine: a link to a sister/partner park printed that park's prices under this name
+            if base(L2)==base(u) or re.search(ENGINES,urlparse(L2).netloc,re.I): links.add(L2)
     for l in sorted(links)[:6]: pages.append((l,get(l)))
     hits=[];eng=set()
     for pu,ph in pages:
