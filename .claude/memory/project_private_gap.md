@@ -169,3 +169,4 @@ Hold settled same day: Madera Canyon added as state 14816 (AWH found a Hipcamp l
 **PE DONE 2026-10-07: +5 (ids 14939-14943), 4 skips, 0 holds** (Green Park = provincial-park campground under lease, a public miss). Next append --min-id 14944. Next province: NL.
 **NL DONE 2026-10-07: +8 (ids 14944-14951), 12 skips, 0 holds.** Facebook-only NL parks: the official newfoundlandlabrador.com listing carries the rate (web search 'newfoundlandlabrador.com <park>'). Avalon trailer parks read seasonal on off-season imagery (Irish Loop, Cabot skipped). Fixed 13048 Jonathan's Pond pin (10 km off). Esri export 500'd - `audit/private_gap_browser/satz.py` stitches tiles. Next append --min-id 14952. Next province: NB.
 **NB DONE 2026-10-07: +13 (ids 14952-14964), 26 skips, 0 holds.** wordpress.com 'I am human' pages are browser-only - curl reads them. Next --min-id 14965, next NS.
+**NS DONE 2026-10-07: +10 (ids 14965-14974), 0 holds.** Next --min-id 14975, next MB.
