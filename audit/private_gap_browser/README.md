@@ -21,6 +21,7 @@ downloading a browser: `pip install playwright==1.56.0`.
 - `cs.py SLUG CHECKIN CHECKOUT` - Campspot park page with live per-site prices
 - `newbook.py URL` - Newbook engine quote for a 23-ft trailer
 - `sat.py LAT LNG HALF_WIDTH_M OUT.jpg` - Esri satellite crop with a crosshair
+- `satz.py LAT LNG ZOOM OUT.jpg` - same from 3x3 stitched tiles (use when the export endpoint 500s; z17 ~ 600 m frame)
 - `geo.py "ADDRESS"` - Census geocoder
 - `gm.py "name town ST" ...` - Google Maps place: coords, phone, website, rating + review count
   (the quality signal for parks RV Life doesn't rate; a lodging-style panel hides the count)
