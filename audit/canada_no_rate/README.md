@@ -36,30 +36,33 @@ kind_of_no values used: price, mostly seasonal, not nightly (2-night minimum),
 no published rate / phone only, no readable web presence, restricted admission (men only),
 no RV sites (pods only), duplicate, no clear rate / phone only, no published rate.
 
-## Status (2026-10-08, paused by AWH)
+## Status (2026-10-08)
 
-- QC: 58 of 72 settled - 30 adds, 28 skips (`info.py QC todo` lists the 14 open: #53
-  Sainte-Madeleine onward; #64 Parc de la Chaudière is a Camping Union park - same grid and
-  Nuitée Express as La Demi-Lieue and du Gouffre; #63 Parc-Estrie is Parkbridge - count its
-  map like Domaine des Érables).
+- QC: DONE. 72 of 72 settled: 39 adds appended as ids 15126-15164, 33 skips.
 - ON (50) and BC (36): not started. ON's original sweep pre-skipped Parkbridge resorts as a
-  "seasonal chain"; Domaine des Érables (QC) showed a Parkbridge park can be ~20% traveller, so
-  any Parkbridge park that is on the no_rate list should be measured, not brand-skipped.
-- Nothing appended to campgrounds.json yet.
+  "seasonal chain"; Domaine des Érables and Parc Estrie (QC) showed a Parkbridge park can be
+  20-28% traveller, so any Parkbridge park on the no_rate list should be measured, not
+  brand-skipped. Next append `--min-id 15165` (check the max id first).
 
-## Next: the QC add batch
+## The add batch (how QC's was built - copy it per province)
 
-For each record in `adds_work.json` (st == QC), following docs/campground-curation.md:
-1. Pin `location` on the campground loops (satellite; several records carry a `pin_hint`;
-   Google's pin is often the reception at the road).
-2. `elevation_meters` from Open-Meteo at the pin.
-3. Waterfront call from satellite + the operator map (`maps`, `water`); evidence string ends
-   with the verdict; default down.
-4. Note (current name, site mix incl. the seasonal share, rate statement with its source and
-   year, booking channel and minimums, season; caveats such as Libby's unconfirmed weekday
-   minimum or Baie du Diable's phone-only 2024 rates) + `--Claude`; RV Life tail only for
-   RV-Life-rated rows; `inclusion_evidence` one line; ownership `private`.
-5. Write `audit/qc_private/results_norate.json` + waterfront results, then
-   `python3 append_state.py --state QC --min-id 15126 audit/qc_private/results_norate.json`
-   (check the max id first) and `python3 audit/apply_waterfront_audit.py <waterfront results>`.
-6. Update `audit/private_gap_decisions.json` states.QC, commit. Then ON, then BC.
+1. For each record in `adds_work.json`: fetch `satz.py LAT LNG 17` at the Google pin (or the
+   record's `pin_hint`), find the loops, and pin them with
+   `../private_gap_browser/satpx.py LAT LNG Z X Y` (pixel in that frame -> lat,lng; the
+   crosshair is not at the frame centre). Zoom to 18 on the water edge and read the operator's
+   per-site map before the waterfront call; evidence string ends with the verdict, default down.
+   Calls go one per line into `qc_wf_calls.jsonl` (`key` = work-list name, `pin`, `waterfront`,
+   `wf`), then elevations from Open-Meteo in one batched call (a shoreline pin can read 0 m on
+   a sea cell - take the nearest land cell).
+2. `build_qc_results.py` holds the hand-written note and inclusion line per add and writes
+   `audit/qc_private/results_norate.json`; it drops Bonjour Québec URLs from `website`.
+3. `python3 append_state.py --state QC --min-id <next> audit/qc_private/results_norate.json`,
+   then `python3 audit/canada_no_rate/build_qc_results.py --wf` (maps the new ids) and
+   `python3 audit/apply_waterfront_audit.py audit/qc_private/waterfront_norate_results.json`.
+4. Update `audit/private_gap_decisions.json` states.<ST> (`no_rate_followup`), the memory
+   files, and commit.
+
+Waterfront judgment used in QC (not AWH-confirmed): judge the sites a traveller can book
+(a seasonal-only shore row doesn't make the park lakefront); a lane, swimming beach or
+car-free road between pads and water = view; canopy hiding a stream -> the per-site plan
+decides; a continuous riparian treeline = not waterfront.

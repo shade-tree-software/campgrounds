@@ -76,6 +76,10 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   nights offered and the `check-disponibilite_service` JSON - `Prix`, `Frais`, `NbrDispo`
   (sites free = traveller inventory), and `Erreur` (minimum nights, "pas encore activé pour
   2027"). Minimums are per type and date (Larochelle: 2-service 2 nights, 3-service 1).
+  Prints one parsed line per type (`Prix | Frais | NbrDispo | status message`). Given a single
+  service page it quotes only that type; given the camp listing it visits every type. Some
+  parks put only part of their inventory online (2 Rivières sells only rustic field sites in
+  the engine, even for July 2027; its serviced sites go by phone at the posted rates).
 - `rms.sh CLIENT_ID ARRIVE DEPART [AGENT]` - RMS Cloud (Parkbridge resorts) Rates page opened
   directly for 2 adults + travel trailer: per site type the tax-INCLUDED "From CAD" and the
   PRE-tax daily grid (weekday/weekend). No picker needed.
@@ -83,6 +87,10 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   (date, source, release) at a point in ~1 min, then stitch 3x3 tiles from a chosen release.
   The off-season imagery test for seasonal parks (see the playbook below). Caches the release
   config at `~/.cache/ekko-waybackconfig.json`.
+- `satpx.py LAT LNG ZOOM X Y [X Y ...]` - lat,lng (and metres from the point) of pixel X,Y in the
+  frame `satz.py`/`wb.py` stitched for LAT LNG at ZOOM. The frame is 3x3 tiles starting one tile
+  left of and above the point's tile, so the crosshair is NOT at the centre - pin from this, not
+  from offsets measured from the middle. Esri z19 is often "Map data not yet available"; use 18.
 - `bqread.py URL` - Bonjour Québec listing (curl-readable): "Prix maximum par nuitée pour
   emplacement de camping", unit count, address/phone/website, CITQ number. Find the URL with
   a web search "bonjourquebec <campground name>".
