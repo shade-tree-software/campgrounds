@@ -18,6 +18,7 @@ for l in open(os.path.join(REPO, 'audit/bc_private/verdicts.jsonl')):
     ver[r['name']] = r
 
 NOTES = {
+ 'Crazy Creek Resort': "Hot-pools resort at 6162 Trans-Canada Hwy, Malakwa, in the Eagle River valley between Sicamous and Revelstoke: 97 RV and tent sites among cabins - 22 forest full-hookup (about 35 ft, up to 50A, full service year-round), 23 premium full-hookup (about 50 ft, 30A), 14 XL pull-throughs (about 60 ft), 16 budget 30A/15A power-and-water sites (about 25 ft) and 22 unserviced small-RV/tent sites; sani-dump, playgrounds, bike track, dog park; three hot pools and a cold plunge (separate admission). Online engine: 15A power-and-water standard site C$39 a night before taxes and fees (trailers to 26 ft, motorhomes to 32 ft). Booked online (WebRez - its search sits behind a human check, so a normal browser is needed). Open 365 days; water May long weekend to Thanksgiving except the forest sites. An active CP rail line runs along the property's south side.",
  'Sunshine Valley RV Resort': "Holiday Trails Resorts park at 14850 Alpine Blvd in Sunshine Valley on Hwy 3, about 20 km east of Hope near Manning Park: 110 fully serviced 50A RV sites (back-ins, pull-throughs and ATV sites), tent camping and 10 cabins; Great Room event hall; open year-round to members and the public. A Tuesday mid-October 2026 night sells online at C$49 for a full-hookup site plus a C$7 reservation fee and tax. Booked online (RezExpert), 7-day cancellation, 19+ to book; Good Sam/BCAA discounts by phone. Caveat (2026-10-08): summer 2027 rates were not yet loaded, so the C$49 quote is a shoulder-season night.",
  "Barney's Lakeside Resort": "Fishing resort on Puntzi Lake at 3556 Puntzi Lake Rd, Chilanko Forks (off Hwy 20 in the Chilcotin, west of Williams Lake): 9 extra-large full-hookup pull-through RV sites, 2 partial (water/power) and 4 dry sites - a row of RV lots along the shore - plus tent spots, cabins and a 7-bedroom lodge; showers, flush toilets, sani-dump (C$20), boat house, fish-cleaning house, boat launch and docks; boat, kayak, canoe and paddleboard rentals. Online rates: full-hookup RV lots from C$50 a night, semi-hookup C$45, dry sites C$40; no minimum on RV lots (2 nights on the luxury cabins only). Booked online.",
  'Baily Bridge Campsites': "Small campground on the Bella Coola River at 2375 Saloompt Road, Hagensborg (Bella Coola Valley, off Hwy 20): 27 numbered campsites, 15A/30A powered and unpowered, in old forest between the river and the road, water fill-up at the main entrance, rustic cabins, a boat launch and a sandy beach; river fishing and hiking nearby. Online engine (October 2026): 30A or 15A powered campsites from C$40 a night, unpowered C$35. Booked online. Caveat (2026-10-09): summer 2027 was not yet loaded; the Hwy 20 'Hill' into the valley has steep gravel grades.",
@@ -31,6 +32,7 @@ NOTES = {
 }
 
 SHARE = {
+ 'Crazy Creek Resort': '97 RV and tent sites priced by the night in the engine, open year-round',
  'Sunshine Valley RV Resort': '110 full-service sites priced by the night in the engine (members and public)',
  "Barney's Lakeside Resort": '15 RV lots priced by the night in the booking widget, no RV minimum',
  'Baily Bridge Campsites': '27 numbered campsites + cabins, powered sites priced by the night in the engine',
@@ -44,6 +46,7 @@ SHARE = {
 }
 
 SOURCE = {
+ 'Crazy Creek Resort': 'operator booking engine quote (WebRez, read by AWH past its human check)',
  'Sunshine Valley RV Resort': 'operator booking engine quote (RezExpert)',
  "Barney's Lakeside Resort": 'operator booking widget (Wix Hotels) with nightly RV-lot rates',
  'Baily Bridge Campsites': 'operator booking engine quote (Wix Hotels)',

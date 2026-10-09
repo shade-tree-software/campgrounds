@@ -53,7 +53,7 @@ no RV sites (pods only), duplicate, no clear rate / phone only, no published rat
   (all private; Barney's and Lake Front lakefront, Bella Coola Valley creekside from its numbered
   map under canopy), 24 skips, 2 holds (Crazy Creek Resort, Cedar Beach; Riverside settled by AWH at C$119 -
   WebRez room search behind a Cloudflare Turnstile check). Build file `build_bc_results.py`,
-  calls `bc_wf_calls.jsonl`, per-image log `bc_wf_log.md`. Next append `--min-id 15182`.
+  calls `bc_wf_calls.jsonl`, per-image log `bc_wf_log.md`. Holds read by AWH 2026-10-09: Riverside C$119 (skip), Crazy Creek C$39 (added 15182), Cedar Beach cabins only (skip) - 0 holds, 25 skips, 11 adds. Next append `--min-id 15183`.
 - Engines met in ON: CampLife (`../private_gap_browser/camplife.py`), Campspot
   (`campspot.py`, or the /book/<slug>/search/<in>/<out>/guests0,2,0/list view for parks not on
   the marketplace), RMS (Killam parks: `rms.sh <hash-id>` works with the hash in the link),
