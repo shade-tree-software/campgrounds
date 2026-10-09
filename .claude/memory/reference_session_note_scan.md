@@ -17,7 +17,7 @@ python3 extract_fields.py --apply-file proposals.json
 
 `--apply-file` runs proposals through the **same** `clean_proposal` validation, `write_deltas` merge, provenance stamping and `note_scan` signature the API path uses; it only tags the model `claude-opus-5/session` (`SESSION_MODEL`) so the two are distinguishable later. Nothing is hand-edited into `campgrounds.json`. Used 2026-09-21 for the last 49 entries, which took the queue to zero.
 
-**Read the `SYSTEM` constant in the script as the spec** — it is the field vocabulary, the allowed enum values, and the worked examples, and it is stricter than it looks (`electric` may only be 0/20/30/50; a stated amperage outside those is OMITTED, never rounded).
+**Read the `SYSTEM` constant in the script as the spec** — it is the field vocabulary, the allowed enum values, and the worked examples, and it is stricter than it looks (`electric` may only be 0/15/20/30/50 - 15 added 2026-10-09; a stated amperage outside those is OMITTED, never rounded).
 
 **Two traps worth knowing before applying:**
 

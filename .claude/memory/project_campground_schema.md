@@ -500,7 +500,8 @@ hand-extracted batches after that are committed locally but **not yet pushed**.
 value against its own note; it flags ~5% and the flags are overwhelmingly benign (the doc and
 the script's own docstring list which). It found exactly one real error in the first 3,675
 numbers — a "15-amp electric only" rounded up to the enum's 20 — now fixed, with the rule
-"never round up to reach an allowed value" in the prompt. The hand pass shows the same flag
+"never round up to reach an allowed value" in the prompt. (15 itself joined the enum on
+2026-10-09, so that note would now store 15.) The hand pass shows the same flag
 profile as the API pass, so the two are interchangeable in quality.
 
 **One judgement call applied uniformly** and worth revisiting if it looks wrong: where a note
@@ -521,9 +522,10 @@ and caught. The ones that come up constantly:
 
 - **Absent is unknown.** Emit a key only when the note says it. Most entries yield two or
   three keys, and `{}` is a fine answer. Never write `false` for "not mentioned".
-- `electric` is one of 0/20/30/50 and **nothing else** — "electric sites" with no amperage
+- `electric` is one of 0/15/20/30/50 and **nothing else** — "electric sites" with no amperage
   OMITS the key; "50/30-amp" is 50; "50 & 60-amp" is 50 (highest ALLOWED value genuinely
-  offered); "15-amp only" omits it (never round up to reach an allowed value).
+  offered); "15-amp only" is 15 (added 2026-10-09, AWH: rare but legitimate pedestals);
+  never round an amperage to reach an allowed value.
 - "full hookup" = water+sewer true, electric only if the amperage is stated.
 - "no hookups" = electric 0, water false, sewer false. "primitive"/"non-electric" = electric 0.
 - **`dump` lives in `facilities`, not `hookups`** (moved 2026-09-23, AWH: "not something you connect to at a campsite"; 3,365 values migrated, provenance copied from hookups where facilities had none). Hookups is electric/water/sewer only; its "None" shortcut covers those three.

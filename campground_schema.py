@@ -44,7 +44,7 @@ def INT(*allowed):
     """Integer field; with args, restricted to those values.
 
     The allowed values stay an ordered tuple rather than a set: the manage form
-    renders them as a dropdown, and "0, 20, 30, 50" is the order an author would
+    renders them as a dropdown, and "0, 15, 20, 30, 50" is the order an author would
     read them in. Membership tests on a handful of values cost nothing.
     """
     return ("int", tuple(allowed) if allowed else None)
@@ -87,7 +87,7 @@ SCHEMA = {
         "note": STR,
     },
     "hookups": {
-        "electric": INT(0, 20, 30, 50),      # HIGHEST amp available at a site
+        "electric": INT(0, 15, 20, 30, 50),  # HIGHEST amp available at a site
         "water": BOOL,                       # at the site, not a communal spigot
         "sewer": BOOL,
         "note": STR,

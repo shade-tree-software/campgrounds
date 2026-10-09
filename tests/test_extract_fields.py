@@ -90,6 +90,12 @@ class TestCleanProposal(unittest.TestCase):
                                 "sites": {"count": 23}})
         self.assertEqual(rejected, [])
 
+    def test_fifteen_amp_service_is_in_the_vocabulary(self):
+        """Rare, but a real pedestal: it must not be dropped as out-of-range."""
+        kept, rejected = ef.clean_proposal({"id": 7, "hookups": {"electric": 15}})
+        self.assertEqual(kept, {"hookups": {"electric": 15}})
+        self.assertEqual(rejected, [])
+
     def test_an_out_of_vocabulary_value_is_dropped_not_fatal(self):
         """One bad field must not cost the other eleven entries in the batch."""
         kept, rejected = ef.clean_proposal(

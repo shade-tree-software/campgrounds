@@ -241,7 +241,7 @@ manage form become unmanageable otherwise.
 },
 
 "hookups": {
-  "electric": 50,                // 0 | 20 | 30 | 50 — the HIGHEST amp available on site
+  "electric": 50,                // 0 | 15 | 20 | 30 | 50 — the HIGHEST amp available on site
   "water": true,                 // at the site, not a communal spigot
   "sewer": true
 },
@@ -767,7 +767,7 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
 
 - Only sites an RV can book count: `STANDARD*`/`RV*` types, minus ones whose equipment list
   names no RV. Group, tent-only, walk-to and MANAGEMENT (host) sites answer a different question.
-- `electric` is the highest amperage, snapped DOWN to 0/20/30/50. `0` only when EVERY RV site
+- `electric` is the highest amperage, snapped DOWN to 0/15/20/30/50. `0` only when EVERY RV site
   is typed NONELECTRIC; an electric site with no amperage writes nothing rather than guess one.
 - `water`/`sewer`: true on any yes; false only when EVERY RV site says an explicit no. Most
   non-electric sites carry no such attribute, and a missing one is silence, not a no.
