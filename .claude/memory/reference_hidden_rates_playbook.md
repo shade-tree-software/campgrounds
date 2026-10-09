@@ -10,7 +10,7 @@ Built 2026-10-08 during [[project-canada-no-rate-followup]]; of 72 Quebec "no_ra
 **Tools (all in audit/private_gap_browser/, one browser only - [[feedback-limit-headless-browsers]]):**
 - `drv_server.py` + `drv.py` - ONE persistent Chromium driven step by step over `~/.cache/ekko-drv.sock`: goto/click/xy/fill/select/shot (Read the PNG)/eval/net+body (read a booking engine's XHR JSON directly).
 - `scan.py URL` - first look at any park: rate/booking/plan links, ENGINE hosts, every `$` line.
-- `rpa.sh` reservationpleinair.ca · `rc1night.sh` reservationcamping.ca · `rpro.py` RéservPro · `rms.sh` RMS Cloud (Parkbridge) · `wb.py` Esri Wayback capture dates + tiles · `bqread.py` Bonjour Quebec listing.
+- `rpa.sh` reservationpleinair.ca · `rc1night.sh` reservationcamping.ca · `rpro.py` RéservPro · `rms.sh` RMS Cloud (Parkbridge, Killam) · `camplife.py` CampLife · `campspot.py` Campspot availability API · `nbq.py` Newbook · `wb.py` Esri Wayback capture dates + tiles · `bqread.py` Bonjour Quebec listing. Hand recipes in the README for RezExpert, WebRez, Wix Hotels, Checkfront, Cloudbeds and SiteMinder/The Booking Button (added 2026-10-09 from BC).
 
 **Non-obvious things that cost time to learn:**
 - Rates hide in hidden tabs/accordions (read `document.body.textContent`, not innerText), in images (Wix "tarifs 2026.jpg"), lazy-loaded sections, separate policy/reservation pages, or only in the engine.
@@ -22,3 +22,5 @@ Built 2026-10-08 during [[project-canada-no-rate-followup]]; of 72 Quebec "no_ra
 - wordpress.com "I am human" pages: curl with a browser UA reads them. campingquebec.com Cloudflare: don't bypass.
 - Seasonal share: operator map legend counts > engine NbrDispo > pre-opening/post-closing Wayback frames (stored trailers on nearly every pad = seasonal). Summer leaf-on imagery can't decide it; Thanksgiving-weekend captures are still in season.
 - 2027 booking was mostly not open in October 2026: use the posted current-season table or any open date.
+- WebRez room searches sit behind a Cloudflare Turnstile frame: never get past it - that is the one hold the Canada no-holds rule keeps (BC: Riverside, Crazy Creek, Cedar Beach).
+- When the live operator site is behind a bot check, its raw Wayback capture (`web.archive.org/web/<ts>id_/<url>`) still names the engine and client id (Killam Paradise Valley -> RMS 11545).

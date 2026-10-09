@@ -107,6 +107,14 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   reasons such as RESERVATION_MIN_RULE or RESORT_CLOSED_RULE - a closed park still shows its
   prices). It falls back to the marketplace `/park/<slug>` page when the slug has no /book/
   engine (Summerhill white-label parks).
+  The park record (`/api/gator-core/v2/parks/slug/<slug>`, in `net` after loading /book/<slug>)
+  carries the operator's own `latitude`/`longitude` - a better pin source than a Google point
+  that sits on the road (Cedar Falls BC).
+- `nbq.py NEWBOOK_URL ARRIVE DEPART` - Newbook (`bookingsus.newbook.cloud/<park>/index.php`,
+  Pinnacle Lifestyles parks) through the driver; `newbook.py` above launches its own browser.
+  Newbook ignores URL dates, so it sets the form fields (dates as "Mon D YYYY", Feet, 23, Travel
+  Trailer) with jQuery change triggers and prints each category's "From $X / night", its
+  availability line and any "7 Night min" rule (White Lake BC: C$77.50).
 - `bqread.py URL` - Bonjour Québec listing (curl-readable): "Prix maximum par nuitée pour
   emplacement de camping", unit count, address/phone/website, CITQ number. Find the URL with
   a web search "bonjourquebec <campground name>".
@@ -134,6 +142,42 @@ Engines worked by hand (no script yet):
   (`bookings.rmscloud.com/Search/Index/<id>/137` on the resort page); the site map is a PDF
   ("Cliquez ici pour télécharger la carte"). Most Quebec Parkbridge resorts are ~7-8% traveller
   (skip), but Domaine des Érables is ~20% (add) - measure each, don't skip on the brand.
+- **RezExpert** (`online.rezexpert.com/book?business_code=<code>`, Holiday Trails Resorts): tick
+  the terms radio `input[name=radPreConditionAccept]`, click `Accept` (`exact=1`); in Check
+  Availability, `Select Dates` opens a calendar of only the bookable months (Oct 2026: Oct-Nov
+  only, 2027 not loaded) - `shot`, then `xy` the check-in and check-out days; `Select Occupants`
+  opens a bubble (`xy` the Adults + twice, then OK); set the rig length on `input.DimensionValue`
+  (`txtLength`, unit `cboMeasureUnit` = Feet) to 23 with input/change/blur events; `click
+  text='Check Availability' nth=1`; the text after "Available" lists each site type and its
+  "$49.00" from-price, pre-tax, plus a per-booking reservation fee (C$7 at Sunshine Valley).
+- **WebRez** (`secure.webrez.com/hotel/<id>/?arrival_date=YYYY-MM-DD&num_nights=1&num_adults=2&num_children=0`):
+  the room search loads in `frame=1` (`Bookings105/activity-edit.html?...roomsearch_version6_perl`)
+  beside a Cloudflare Turnstile frame (`challenges.cloudflare.com/.../turnstile/...`); the booking
+  frame says "Verifying you are human" or "No rooms found that match the selected filters" until
+  a person passes it. **Do not try to get past it** - it is the one case the Canada no-holds rule
+  keeps: record a hold (`kind_of_no` "engine behind a human check") with the exact URL so AWH can
+  read one July weeknight, 2 adults, RV site in a normal browser (BC: Riverside 3538, Crazy Creek
+  2021, Cedar Beach 1144). Read the operator's own pages for a posted rate first.
+- **Wix Hotels** (Wix sites' "Book now" page), two generations: the older widget is an iframe
+  (`hotels.wixapps.net/index.html?...`) - `text frame=1` lists every unit as "RV Lot 1 / Full Hook
+  Up / From C$50" with no dates needed, and minimums sit in each unit's description ("MINIMUM 2
+  NIGHTS" on cabins only at Barney's); the newer engine renders in the page at
+  `/booking-engine#/search`, defaults to tonight + 2 adults and shows "from C$40.00" per type with
+  "Show Rates" and stock notes ("Last 2 rooms available"); its date strip
+  (`button.box.horizontal-strip` / `input.datepicker-desktop-input`) changes the dates.
+- **Checkfront** (`<x>.checkfront.com/reserve/?start_date=YYYY-MM-DD&end_date=YYYY-MM-DD`): the URL
+  dates take, but the category list carries no prices - click a category (`#cf-grid<N>`, "See
+  Listings") for per-site "$89.00 per night" + AVAILABLE/UNAVAILABLE. Category names can carry the
+  stay rule ("1-Night RV Stays Welcome", MTN Fun Basecamp).
+- **Cloudbeds** (`hotels.cloudbeds.com/reservation/<id>?checkin=YYYY-MM-DD&checkout=YYYY-MM-DD&adults=2`):
+  the page text opens with a schema.org JSON block (which carries the property's own `geo`
+  lat/lng); the rate list is the visible text after it, between "Search results"/"Available
+  rooms" and "Property Information" (Lake Front: RV Half Service C$50, Full Service C$65). A
+  motel-and-RV property may list only rooms (Christina Lake: RV sites by contact only).
+- **SiteMinder / The Booking Button**
+  (`app.thebookingbutton.com/properties/<x>?check_in_date=DD-MM-YYYY&check_out_date=DD-MM-YYYY&number_adults=2`)
+  redirects to `direct-book.com/properties/<x>?checkInDate=YYYY-MM-DD&checkOutDate=YYYY-MM-DD&...`;
+  each rate plan prints its name, then a "CAD 44.00" line (Kayanara: Standard RV Campsite Rate).
 
 ### Playbook: where a "no rate" campground's rate actually is
 
@@ -150,6 +194,11 @@ couldn't see it. Look in this order:
 3. **The Wayback Machine** when the page now says "prix à venir": CDX
    `web.archive.org/cdx/search/cdx?url=<page>&output=json&from=2025&fl=timestamp,statuscode`,
    then `web.archive.org/web/<ts>/<url>` (60-90 s timeouts). Last season's operator table.
+   The same route recovers an ENGINE LINK when the live site now sits behind a bot check: fetch
+   the raw capture `web.archive.org/web/<ts>id_/<url>` and grep it for the engine host - Killam's
+   Paradise Valley shows "Confirm you are human" today, but its 2021 copy names RMS client 11545,
+   and `rms.sh 11545 ...` still quotes (C$79, a price skip). archive.org rate-limits too (429):
+   one request at a time.
 4. **Bonjour Québec** (official provincial listing, operator-supplied): its "Prix maximum"
    BOUNDS every site - a maximum <= C$69 passes the price gate outright (Chez Moose C$52,
    Ensoleillé C$54.95); it confirms a stale operator table (Baie du Diable max C$60 = its top
