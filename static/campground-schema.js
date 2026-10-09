@@ -197,8 +197,9 @@ function sfChip(groupKey, field, value, cur) {
       : (value && value.per) === 'vehicle_year' ? 'annual park pass ' : 'park entry ';
     // Parenthesised so the basis doesn't run into the amounts: "$7 resident,
     // $15 non-resident per vehicle/stay" reads as if the $15 alone were per
-    // vehicle. The year case says its basis in the head instead.
-    const tail = (value && value.per) === 'vehicle_year' || !per
+    // vehicle. The year case says its basis in the head instead — unless a
+    // name replaced that head ("Recreation Passport"), when the tail says it.
+    const tail = ((value && value.per) === 'vehicle_year' && !(value && value.name)) || !per
       ? '' : ' (' + per.trim() + ')';
     if (r != null && n != null) {
       return head + (r === n

@@ -242,6 +242,13 @@ class ChipPhrasingTest(unittest.TestCase):
                                              "per": "person_day",
                                              "name": "access permit"}}),
             ["access permit $4 (per person/day)"])
+        # A named annual pass loses the "annual park pass" head, so its basis
+        # moves to the tail rather than disappearing.
+        self.assertEqual(
+            self.chips("fees", {"entrance": {"resident": 15, "nonresident": 40,
+                                             "per": "vehicle_year",
+                                             "name": "Recreation Passport"}}),
+            ["Recreation Passport $15 resident, $40 non-resident (per vehicle/year)"])
 
     # ── Money ───────────────────────────────────────────────────────────────
 
