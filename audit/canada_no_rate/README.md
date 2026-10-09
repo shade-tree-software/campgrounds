@@ -48,7 +48,10 @@ no RV sites (pods only), duplicate, no clear rate / phone only, no published rat
   Leisure Living; its sites answer HTTP 429 - back off and retry; a third-party listing says
   69 overnight sites of ~350 and Killam's Family Paradise sold overnight hydro/water at C$69 in
   RMS but was ~5% traveller). Build file: `build_on_results.py`, calls `on_wf_calls.jsonl`.
-- BC (36): not started. Next append `--min-id 15172` (check the max id first).
+- BC: 36 of 36 settled (2026-10-09): 10 adds in `adds_work.json`, 23 skips, 3 holds (Riverside
+  Resort, Crazy Creek Resort, Cedar Beach - WebRez room search behind a Cloudflare Turnstile
+  check). Add batch paused mid-pinning: `bc_wf_log.md` (00 done, 01 started). Next append
+  `--min-id 15172` (check the max id first).
 - Engines met in ON: CampLife (`../private_gap_browser/camplife.py`), Campspot
   (`campspot.py`, or the /book/<slug>/search/<in>/<out>/guests0,2,0/list view for parks not on
   the marketplace), RMS (Killam parks: `rms.sh <hash-id>` works with the hash in the link),

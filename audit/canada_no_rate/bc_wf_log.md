@@ -1,0 +1,4 @@
+# BC no_rate add batch: pins + waterfront (2026-10-09; every image below rendered when read)
+00 Sunshine Valley | 00.jpg (z17 @ Google 49.27392,-121.23150): Hwy 3 across the top; crosshair on the green-roofed clubhouse + pool; curved RV rows fill the SE quarter, a row of green-roofed cabins along the S edge; a grey braided gravel river channel at the lower right behind a treed strip ~25 m beyond the last rows, no open water visible => not waterfront. Pin = px (640,560) on the RV rows.
+01 Barney's | 01.jpg (z17 @ Google, spring, lake frozen): resort lanes and cabins run down a slope to the Puntzi Lake shore; blue tarps/units on open grass ~15-22 m from the water. NOT YET DECIDED: read the grounds map (Wix image 27a754_c9cabd9e20434245bd616fc46c2553d6~mv2.jpg, 3300x1648) to see which RV lots sit at the shore.
+PAUSED here 2026-10-09. Frames 02-09 fetched in the scratchpad only (re-fetch: satz.py <google_ll> 17).
