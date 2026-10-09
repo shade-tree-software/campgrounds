@@ -407,6 +407,11 @@ overstate a one-night stay and misattribute the charge:
 Both sides are stored so the differential ($8) is derivable rather than baked
 in, and so a resident cost can be shown too.
 
+An optional `name` says what the charge is called where "park entry" would be wrong. Virginia
+WMAs (`wma:VA`) charge a per-person **access permit** for every day on the property, so the row
+stores `{"resident": 4, "nonresident": 4, "per": "person_day", "name": "access permit"}` and the
+chip reads "access permit $4 (per person/day)" (2026-10-09).
+
 The third is the one a flat model cannot express at all: a season pass amortizes fine over a
 week and terribly over one night, so its cost is **a function of trip length**. Which means
 the honest presentation is not a stored tier but **effective cost for this stay**, computed

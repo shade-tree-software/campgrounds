@@ -182,9 +182,12 @@ SCHEMA = {
         # stay, Michigan's Recreation Passport is an annual vehicle pass at $15
         # resident / $40 non-resident, and a day rate can be better or worse
         # than the annual one depending purely on trip length.
+        # `name` is what the charge is called where "park entry" is wrong:
+        # Virginia WMAs charge a per-person-per-day "access permit" (2026-10-09).
         "entrance": OBJ(resident=NUM, nonresident=NUM,
                         per=ENUM("vehicle_day", "vehicle_stay", "vehicle_year",
-                                 "person_day")),
+                                 "person_day"),
+                        name=STR),
         # Per-night add-ons on top of the base rate. Both systems verified so
         # far price the amenities separately, and they are exactly what a search
         # filters on: electric costs $7-8/night extra in NY State and in Suffolk

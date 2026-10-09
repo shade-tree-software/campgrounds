@@ -235,6 +235,14 @@ class ChipPhrasingTest(unittest.TestCase):
         self.assertEqual(self.chips("fees", {"entrance": {"per": "person_day"}}),
                          ["park entry fee (per person/day)"])
 
+    def test_a_named_entrance_charge_uses_its_name(self):
+        """Virginia WMAs: a per-person access permit, not a park gate fee."""
+        self.assertEqual(
+            self.chips("fees", {"entrance": {"resident": 4, "nonresident": 4,
+                                             "per": "person_day",
+                                             "name": "access permit"}}),
+            ["access permit $4 (per person/day)"])
+
     # ── Money ───────────────────────────────────────────────────────────────
 
     def test_nightly_rate_is_a_range_with_its_unit(self):

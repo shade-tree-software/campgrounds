@@ -191,8 +191,10 @@ function sfChip(groupKey, field, value, cur) {
   if (k === 'fees.entrance') {
     const r = value && value.resident, n = value && value.nonresident;
     const per = SF_FEE_PER[value && value.per] || '';
-    const head = (value && value.per) === 'vehicle_year'
-      ? 'annual park pass ' : 'park entry ';
+    // A named charge says its own name: a Virginia WMA's $4 is an "access
+    // permit", and "park entry" there named a park that does not exist.
+    const head = value && value.name ? value.name + ' '
+      : (value && value.per) === 'vehicle_year' ? 'annual park pass ' : 'park entry ';
     // Parenthesised so the basis doesn't run into the amounts: "$7 resident,
     // $15 non-resident per vehicle/stay" reads as if the $15 alone were per
     // vehicle. The year case says its basis in the head instead.
