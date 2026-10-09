@@ -38,7 +38,11 @@ no RV sites (pods only), duplicate, no clear rate / phone only, no published rat
 
 ## Status (2026-10-08)
 
-- QC: DONE. 72 of 72 settled: 39 adds appended as ids 15126-15164, 33 skips.
+- QC: DONE. 72 of 72 settled: 39 adds appended as ids 15126-15164, 33 skips. Re-viewed
+  2026-10-09 (`fix_qc_reverify_20261009.py`, log `qc_reverify_20261009.md`): the images behind
+  the first ~20 adds and the plan/off-season claims were flagged as possibly unseen; every
+  waterfront call stood, St-Paulin's pin moved onto the loops, St-Édouard's traveller count
+  dropped from ~100 to ~45 + ~15, a few distances were tightened.
 - ON: 49 of 50 settled: 7 adds appended as ids 15165-15171 (Lakefield Campground is a
   Township of Selwyn park - added as `local`), 42 skips. Open: #12 Paradise Valley (Killam
   Leisure Living; its sites answer HTTP 429 - back off and retry; a third-party listing says
