@@ -43,11 +43,12 @@ no RV sites (pods only), duplicate, no clear rate / phone only, no published rat
   the first ~20 adds and the plan/off-season claims were flagged as possibly unseen; every
   waterfront call stood, St-Paulin's pin moved onto the loops, St-Édouard's traveller count
   dropped from ~100 to ~45 + ~15, a few distances were tightened.
-- ON: 49 of 50 settled: 7 adds appended as ids 15165-15171 (Lakefield Campground is a
-  Township of Selwyn park - added as `local`), 42 skips. Open: #12 Paradise Valley (Killam
-  Leisure Living; its sites answer HTTP 429 - back off and retry; a third-party listing says
-  69 overnight sites of ~350 and Killam's Family Paradise sold overnight hydro/water at C$69 in
-  RMS but was ~5% traveller). Build file: `build_on_results.py`, calls `on_wf_calls.jsonl`.
+- ON: DONE 2026-10-09. 50 of 50 settled: 7 adds appended as ids 15165-15171 (Lakefield
+  Campground is a Township of Selwyn park - added as `local`), 43 skips. #12 Paradise Valley
+  (Killam) was the last: the live Killam site now shows a "Confirm you are human" check (not
+  clicked), but the RMS link on its page archived in 2021 (client 11545, agent 137) still
+  quotes - Overnight Full Service C$79 + HST a July weeknight, a price skip. Build file:
+  `build_on_results.py`, calls `on_wf_calls.jsonl`.
 - BC: DONE 2026-10-09 except 3 holds. 36 of 36 settled: 10 adds appended as ids 15172-15181
   (all private; Barney's and Lake Front lakefront, Bella Coola Valley creekside from its numbered
   map under canopy), 23 skips, 3 holds (Riverside Resort, Crazy Creek Resort, Cedar Beach -
