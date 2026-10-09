@@ -182,6 +182,9 @@ switch off another default):
 - own `fees` free at both ends (`nightly_high: 0`, `nightly_low` 0 or absent) → drop the
   agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
   A $0 low beside a paid high is a campground with some free sites and keeps them.
+  **This rule needs the fees RECORDED to fire**, and until 2026-10-09 only 10 entries had
+  them: ~300 free federal campgrounds whose note says "Free, FCFS" still showed "America
+  the Beautiful senior/access discount". `audit/free_fees/` fixed that (below, under fees).
 
 The manage form mirrors both in `agencyRowFor()` so its "(agency: …)" hints agree with the
 popup; `tests/test_campground_schema.py` pins them.
@@ -241,7 +244,7 @@ manage form become unmanageable otherwise.
 },
 
 "hookups": {
-  "electric": 50,                // 0 | 20 | 30 | 50 — the HIGHEST amp available on site
+  "electric": 50,                // 0 | 15 | 20 | 30 | 50 — the HIGHEST amp available on site
   "water": true,                 // at the site, not a communal spigot
   "sewer": true
 },
@@ -370,6 +373,18 @@ site with no amenities.** Every other key in `fees` modifies it. Storing the
 non-resident price, or the with-hookups price, makes the field incomparable between
 agencies and double-counts the moment a modifier is applied on top.
 
+**Free camping is a $0 base rate, recorded from the note** (`audit/free_fees/`,
+2026-10-09: 752 entries `0`/`0`, 31 `0`/N). Each was decided by READING the note — the
+regex in `candidates.py` only finds what to read, because "free" in these notes mostly
+means something else ("free WiFi", "barrier-free", "free paddleboats"). The rules:
+camping itself free, donation-only or a free permit → `0`/`0`; a free primitive loop or
+off-season beside a priced one → `0`/that price, or `0` with no high when the price is
+not stated; **skipped**: free for tents only, "first N nights free", free for customers
+only, "no fee listed", and a note that contradicts itself. The chip says **"free"**,
+**"free–$15/night"** or **"some sites free"** — never "$0/night", which for a `0` with no
+high would claim the whole campground is free (`sfChips`, pinned in
+`tests/test_schema_chips.py`). Provenance `note prose / derived`; existing fees untouched.
+
 **Amenities are priced separately, and they are what a search filters on.** Both systems
 verified so far charge per night for exactly the things a traveller specifies: electric is
 +$7 in NY state parks and +$8 in Suffolk County, a waterfront site +$6, oceanfront +$10,
@@ -391,6 +406,11 @@ overstate a one-night stay and misattribute the charge:
 
 Both sides are stored so the differential ($8) is derivable rather than baked
 in, and so a resident cost can be shown too.
+
+An optional `name` says what the charge is called where "park entry" would be wrong. Virginia
+WMAs (`wma:VA`) charge a per-person **access permit** for every day on the property, so the row
+stores `{"resident": 4, "nonresident": 4, "per": "person_day", "name": "access permit"}` and the
+chip reads "access permit $4 (per person/day)" (2026-10-09).
 
 The third is the one a flat model cannot express at all: a season pass amortizes fine over a
 week and terribly over one night, so its cost is **a function of trip length**. Which means
@@ -767,7 +787,7 @@ minutes at a 1.5 s pace), and the derivation re-runs free from it. The rules, ea
 
 - Only sites an RV can book count: `STANDARD*`/`RV*` types, minus ones whose equipment list
   names no RV. Group, tent-only, walk-to and MANAGEMENT (host) sites answer a different question.
-- `electric` is the highest amperage, snapped DOWN to 0/20/30/50. `0` only when EVERY RV site
+- `electric` is the highest amperage, snapped DOWN to 0/15/20/30/50. `0` only when EVERY RV site
   is typed NONELECTRIC; an electric site with no amperage writes nothing rather than guess one.
 - `water`/`sewer`: true on any yes; false only when EVERY RV site says an explicit no. Most
   non-electric sites carry no such attribute, and a missing one is silence, not a no.
@@ -1000,15 +1020,23 @@ it possible and on the same pattern.
   `schemaFaded`, and builds its fixture through `_map_marker_rows` itself, so the tests
   see exactly what rides inline.
 
-### 8.6 The popup draws the two halves separately
+### 8.6 The popup marks inherited chips in place
 
 The map popup fetches the resolved groups along with the rest of its detail (§8.4) and
-renders them as chip runs: the verified half in the page's own voice, the inherited half
-in the manage form's muted tan, italic, under the heading *"Typical for <agency>"* and the
-caveat line *"Not checked for this campground"*. The heading is bold small caps inside a tan
-left rule that runs down the whole block (AWH 2026-09-18): it used to be one plain tan line in
-the rows' own size and weight, which read as the first row's text rather than a title over
-them. Three parts of this are load-bearing rather than decorative.
+renders ONE run of rows, a row per group. In each row the verified chips come first, in the
+page's own voice, then the inherited ones in the manage form's muted tan with an asterisk
+after each; a single footnote under the rows reads *"\* Typical for <agency> — not checked
+for this campground"*. **The asterisk is the part that matters most**: it is the marker that
+isn't colour alone, so it survives a phone in sunlight and a colour-blind reader.
+
+History, so it isn't undone by accident: until 2026-10-09 the inherited values were a
+separate block under a small-caps *"Typical for <agency>"* heading with a tan left rule
+(AWH 2026-09-18 had made the heading look like a heading). AWH 2026-10-09 rolled them into
+the verified rows because the block had a completely different layout from the rows above
+it, and it split one group across two places — "reservable" in the top half and "books 180
+days ahead" in the bottom one. In the same row the related facts read together; the colour,
+the asterisk and the named footnote are what §3 actually needs, not a separate section.
+Three parts of this are load-bearing rather than decorative.
 
 - **`resolve()` names the inherited KEYS, not just each group's scope.** A `mixed` group
   holds both kinds of value at once — Hither Hills' own doubled rate sits beside the
@@ -1020,15 +1048,17 @@ them. Three parts of this are load-bearing rather than decorative.
   entry's own ownership and state ("Indiana state parks", "federal campgrounds" — never
   per-state, since level 3 exists precisely because federal policy is not), and title-cases
   the slug of an explicit `policy_ref`. An unattributed inherited value is exactly the
-  confident falsehood this model exists to prevent, so **no label means no agency block**.
+  confident falsehood this model exists to prevent, so **no label means no inherited chips
+  and no footnote** (an asterisk with nothing to explain it would be that falsehood). The
+  verified chips still render.
 - **Both pages format a value through one shared module**, `static/campground-schema.js`.
   A second copy of the phrasing in the other template would drift the first time a field
   was worded on one side only, and the failure is quiet: both pages keep rendering, and
   disagree. The field metadata still comes from `to_client()`; only the phrasing lives
   there.
 
-The popup is a summary — six chips a group in the verified half, **four in the agency
-half**, then a `+N more` tail. The manage form is where every value is visible and the only
+The popup is a summary — six chips a row, **at most four of them inherited**, verified
+first so the cap always trims the defaults, then a `+N more` tail. The manage form is where every value is visible and the only
 place any of them can be edited.
 
 ### 8.7 A chip is read by someone who has never seen the schema

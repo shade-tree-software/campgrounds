@@ -56,6 +56,8 @@ class TestDerive(unittest.TestCase):
         got = R.derive([site("RV ELECTRIC", elec="40") for _ in range(3)])
         self.assertEqual(got["electric"], 30)
         got = R.derive([site("RV ELECTRIC", elec="15") for _ in range(3)])
+        self.assertEqual(got["electric"], 15, "a 15-amp pedestal is real")
+        got = R.derive([site("RV ELECTRIC", elec="10") for _ in range(3)])
         self.assertNotIn("electric", got)
 
     def test_missing_water_attribute_is_not_a_no(self):

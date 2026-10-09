@@ -284,13 +284,12 @@ def _amps(value):
 
 
 def snap_amps(amps):
-    """RIDB amperage onto the schema's 0 | 20 | 30 | 50.
+    """RIDB amperage onto the schema's 0 | 15 | 20 | 30 | 50.
 
-    Snapped DOWN, never up: a 15-amp outlet is not a 20-amp one, so anything
-    under 20 is not representable and the caller writes nothing rather than
-    promote it.
+    Snapped DOWN, never up: a 15-amp outlet is not a 20-amp one. Anything under
+    15 is not representable and the caller writes nothing rather than promote it.
     """
-    for step in (50, 30, 20):
+    for step in (50, 30, 20, 15):
         if amps >= step:
             return step
     return None

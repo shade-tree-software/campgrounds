@@ -191,8 +191,10 @@ function sfChip(groupKey, field, value, cur) {
   if (k === 'fees.entrance') {
     const r = value && value.resident, n = value && value.nonresident;
     const per = SF_FEE_PER[value && value.per] || '';
-    const head = (value && value.per) === 'vehicle_year'
-      ? 'annual park pass ' : 'park entry ';
+    // A named charge says its own name: a Virginia WMA's $4 is an "access
+    // permit", and "park entry" there named a park that does not exist.
+    const head = value && value.name ? value.name + ' '
+      : (value && value.per) === 'vehicle_year' ? 'annual park pass ' : 'park entry ';
     // Parenthesised so the basis doesn't run into the amounts: "$7 resident,
     // $15 non-resident per vehicle/stay" reads as if the $15 alone were per
     // vehicle. The year case says its basis in the head instead.
@@ -313,6 +315,16 @@ function sfChips(group, values, keys) {
       return;
     }
     let chip = sfChip(group.key, f, values[f.key], cur);
+    // A $0 base rate is free camping, and says so. With no high beside it the
+    // entry has free sites and paid ones of unknown price (a free primitive
+    // loop beside priced hookups), so "$0/night" would claim too much.
+    if (chip && f.key === 'nightly_low' && values.nightly_low === 0) {
+      const hi = values.nightly_high;
+      parts.push(hi === 0 ? 'free'
+        : hi == null ? 'some sites free'
+        : 'free–' + sfMoney(hi, cur) + '/night');
+      return;
+    }
     if (chip && f.key === 'nightly_low') {
       if (values.nightly_high != null && values.nightly_high !== values.nightly_low) {
         chip += '\u2013' + values.nightly_high;

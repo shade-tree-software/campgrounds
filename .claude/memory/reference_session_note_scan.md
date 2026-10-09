@@ -17,7 +17,7 @@ python3 extract_fields.py --apply-file proposals.json
 
 `--apply-file` runs proposals through the **same** `clean_proposal` validation, `write_deltas` merge, provenance stamping and `note_scan` signature the API path uses; it only tags the model `claude-opus-5/session` (`SESSION_MODEL`) so the two are distinguishable later. Nothing is hand-edited into `campgrounds.json`. Used 2026-09-21 for the last 49 entries, which took the queue to zero.
 
-**Read the `SYSTEM` constant in the script as the spec** — it is the field vocabulary, the allowed enum values, and the worked examples, and it is stricter than it looks (`electric` may only be 0/20/30/50; a stated amperage outside those is OMITTED, never rounded).
+**Read the `SYSTEM` constant in the script as the spec** — it is the field vocabulary, the allowed enum values, and the worked examples, and it is stricter than it looks (`electric` may only be 0/15/20/30/50 - 15 added 2026-10-09; a stated amperage outside those is OMITTED, never rounded).
 
 **Two traps worth knowing before applying:**
 
@@ -26,5 +26,5 @@ python3 extract_fields.py --apply-file proposals.json
 
 Related: [[project_campground_schema]], [[feedback_absent_is_not_unknown]], [[reference_ridb_gap_pipeline]].
 
-**2026-10-09 run (in progress):** queue was 1,114 (gap-sweep adds + edited notes); batches 1-13 applied and committed (60 each), **334 left** at the pause - resume with `extract_fields.py --report`, `--dump 60`, read, then `python3 audit/note_scan/apply_absent.py <dump> <proposals>` (it drops groups the entry already has, so a re-queued old entry keeps its rec.gov/agency values; omit `platform` unless the note names one of the enum channels - CampLife/Firefly/ResNexus/Newbook/Staylist are not in it, so those get `reservable: true` only). Conventions used: "30/50-amp" -> 50; FHU -> water+sewer; W/E sites -> water true; "primitive" FWP/DNR camps -> electric 0; "~N sites" -> N unless tent/cabin counts make the total ambiguous; a "pit toilet" counts as vault.
+**2026-10-09 run (done):** queue was 1,114 (gap-sweep adds + edited notes); batches 1-19 applied, **queue back to 0**. Next time something is queued, use `extract_fields.py --report`, `--dump 60`, read, then `python3 audit/note_scan/apply_absent.py <dump> <proposals>` (it drops groups the entry already has, so a re-queued old entry keeps its rec.gov/agency values; omit `platform` unless the note names one of the enum channels - CampLife/Firefly/ResNexus/Newbook/Staylist are not in it, so those get `reservable: true` only). Conventions used: "30/50-amp" -> 50; FHU -> water+sewer; W/E sites -> water true; "primitive" FWP/DNR camps -> electric 0; "~N sites" -> N unless tent/cabin counts make the total ambiguous; a "pit toilet" counts as vault.
 
