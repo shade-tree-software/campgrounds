@@ -6,7 +6,7 @@ import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.dirname(os.path.dirname(HERE))
-adds = json.load(open(os.path.join(HERE, 'adds_work.json')))
+adds = {k: v for k, v in json.load(open(os.path.join(HERE, 'adds_work.json'))).items() if v['st'] == 'QC'}
 calls = {json.loads(l)['key']: json.loads(l) for l in open(os.path.join(HERE, 'qc_wf_calls.jsonl'))}
 ver = {}
 for l in open(os.path.join(REPO, 'audit/qc_private/verdicts.jsonl')):
