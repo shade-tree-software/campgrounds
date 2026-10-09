@@ -1000,15 +1000,23 @@ it possible and on the same pattern.
   `schemaFaded`, and builds its fixture through `_map_marker_rows` itself, so the tests
   see exactly what rides inline.
 
-### 8.6 The popup draws the two halves separately
+### 8.6 The popup marks inherited chips in place
 
 The map popup fetches the resolved groups along with the rest of its detail (§8.4) and
-renders them as chip runs: the verified half in the page's own voice, the inherited half
-in the manage form's muted tan, italic, under the heading *"Typical for <agency>"* and the
-caveat line *"Not checked for this campground"*. The heading is bold small caps inside a tan
-left rule that runs down the whole block (AWH 2026-09-18): it used to be one plain tan line in
-the rows' own size and weight, which read as the first row's text rather than a title over
-them. Three parts of this are load-bearing rather than decorative.
+renders ONE run of rows, a row per group. In each row the verified chips come first, in the
+page's own voice, then the inherited ones in the manage form's muted tan with an asterisk
+after each; a single footnote under the rows reads *"\* Typical for <agency> — not checked
+for this campground"*. **The asterisk is the part that matters most**: it is the marker that
+isn't colour alone, so it survives a phone in sunlight and a colour-blind reader.
+
+History, so it isn't undone by accident: until 2026-10-09 the inherited values were a
+separate block under a small-caps *"Typical for <agency>"* heading with a tan left rule
+(AWH 2026-09-18 had made the heading look like a heading). AWH 2026-10-09 rolled them into
+the verified rows because the block had a completely different layout from the rows above
+it, and it split one group across two places — "reservable" in the top half and "books 180
+days ahead" in the bottom one. In the same row the related facts read together; the colour,
+the asterisk and the named footnote are what §3 actually needs, not a separate section.
+Three parts of this are load-bearing rather than decorative.
 
 - **`resolve()` names the inherited KEYS, not just each group's scope.** A `mixed` group
   holds both kinds of value at once — Hither Hills' own doubled rate sits beside the
@@ -1020,15 +1028,17 @@ them. Three parts of this are load-bearing rather than decorative.
   entry's own ownership and state ("Indiana state parks", "federal campgrounds" — never
   per-state, since level 3 exists precisely because federal policy is not), and title-cases
   the slug of an explicit `policy_ref`. An unattributed inherited value is exactly the
-  confident falsehood this model exists to prevent, so **no label means no agency block**.
+  confident falsehood this model exists to prevent, so **no label means no inherited chips
+  and no footnote** (an asterisk with nothing to explain it would be that falsehood). The
+  verified chips still render.
 - **Both pages format a value through one shared module**, `static/campground-schema.js`.
   A second copy of the phrasing in the other template would drift the first time a field
   was worded on one side only, and the failure is quiet: both pages keep rendering, and
   disagree. The field metadata still comes from `to_client()`; only the phrasing lives
   there.
 
-The popup is a summary — six chips a group in the verified half, **four in the agency
-half**, then a `+N more` tail. The manage form is where every value is visible and the only
+The popup is a summary — six chips a row, **at most four of them inherited**, verified
+first so the cap always trims the defaults, then a `+N more` tail. The manage form is where every value is visible and the only
 place any of them can be edited.
 
 ### 8.7 A chip is read by someone who has never seen the schema

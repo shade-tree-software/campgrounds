@@ -429,26 +429,13 @@
   /* Structured facts (docs/campground-schema.md) inside a campground popup. */
   .cg-facts { margin-top: .35rem; font-size: .85em; line-height: 1.5; }
   .cg-facts b { color: #002868; font-weight: 600; margin-right: .3em; }
-  /* The agency half is deliberately NOT the verified colour — it is the same
-     muted tan the manage form uses for an inherited value, so the two pages
-     agree about what "this came from the agency, not the park" looks like. */
-  .cg-facts-agency, .cg-facts-agency b { color: #8a7a4a; }
-  /* A tan rule down the left groups the agency rows under their heading, so the
-     block reads as a section with a title rather than one more run of text. */
-  .cg-facts-agency {
-    font-style: italic; margin-top: .5rem;
-    border-left: 2px solid #d8cca6; padding-left: .5rem;
-  }
-  /* The heading has to look like a heading: it used to be the same tan, size and
-     weight as the rows under it, so "Typical for Maryland state parks — not
-     checked for this campground" read as the first row's text. Small caps and
-     bold give it a different SHAPE, not just a different shade, and the caveat
-     drops to its own quieter line so the title stays short. */
-  .cg-agency-head {
-    font-style: normal; font-weight: 700; color: #6f6238;
-    font-size: .82em; letter-spacing: .05em; text-transform: uppercase;
-  }
-  .cg-agency-caveat { font-size: .9em; margin-bottom: .15rem; }
+  /* An inherited (agency-default) chip sits in the same row as the verified
+     ones but keeps the muted tan the manage form uses for an inherited value,
+     so the two pages agree about what "this came from the agency, not the park"
+     looks like. The asterisk after it is the non-colour marker; the footnote
+     names the agency (docs/campground-schema.md §8.6). */
+  .cg-typical { color: #8a7a4a; }
+  .cg-typical-note { color: #8a7a4a; font-size: .9em; margin-top: .15rem; }
 
   /* Placeholder shown while a popup's detail (note/website/visits) is fetched. */
   .cg-popup-loading { color: #888; font-size: .9em; font-style: italic; }
@@ -1332,37 +1319,48 @@ function loadCgDetail(cg, onDone) {
     .then(d => { cg._detail = d; cgDetailPending.delete(cg.id); onDone(); });
 }
 
-// The structured fields, as two visually distinct halves (docs/campground-schema.md).
+// The structured fields: one run of rows, each mixing what was verified for
+// THIS campground with what its agency merely supplies (docs/campground-schema.md
+// §8.6).
 //
-// Splitting them is the whole point. `resolve()` merges what was verified for
-// THIS campground with what its agency supplies, and §3 forbids the inherited
-// half from phrasing itself as a fact about the park: 102 New York entries all
-// reading "$5 non-resident fee" would be uniform, authoritative-looking, and
-// wrong exactly at Hither Hills, which charges double. So the agency half keeps
-// its own colour, its own voice ("Typical for ..."), and never appears without
-// naming who it belongs to.
+// `resolve()` merges the two, and §3 forbids the inherited values from phrasing
+// themselves as facts about the park: 102 New York entries all reading "$5
+// non-resident fee" would be uniform, authoritative-looking, and wrong exactly
+// at Hither Hills, which charges double. So an inherited chip keeps the manage
+// form's tan, carries an asterisk (a marker that is not colour alone), and the
+// footnote under the rows names whose default it is. They used to sit in a
+// separate "Typical for ..." block with its own layout (AWH 2026-10-09: rolled
+// into the verified rows), which split one Booking fact across two places.
 //
 // The chips themselves come from the shared formatter the manage page uses, so
 // a value cannot be spoken one way there and another way here.
 const CG_FACT_CHIP_MAX = 6;   // a popup is a summary; the manage form has it all
-// The agency half is capped tighter than the verified one, and the reason is
-// proportion rather than space: spelling the chips out (doc \u00a78.7) took an
-// Indiana Booking row to ~150 characters, which on a phone is four lines of
-// italic tan about what its agency USUALLY does, above one line of what is
-// actually known about this campground. Four chips keeps the emphasis where
-// the reader's question is; the rest is one click away on the manage form.
+// Inherited chips are capped tighter, and the reason is proportion rather than
+// space: spelling them out (doc \u00a78.7) took an Indiana Booking row to ~150
+// characters, which on a phone is four lines about what its agency USUALLY
+// does. Verified chips lead each row, so the cap always trims the defaults.
 const CG_FACT_AGENCY_CHIP_MAX = 4;
 
-function cgFactRow(label, chips, max = CG_FACT_CHIP_MAX) {
-  if (!chips.length) return '';
-  const shown = chips.slice(0, max).map(escapeHtml).join(' \u00b7 ');
-  const extra = chips.length > max ? ` +${chips.length - max} more` : '';
+function cgFactRow(label, ownChips, agencyChips) {
+  const own = ownChips.slice(0, CG_FACT_CHIP_MAX);
+  const room = Math.min(CG_FACT_AGENCY_CHIP_MAX, CG_FACT_CHIP_MAX - own.length);
+  const agency = agencyChips.slice(0, Math.max(0, room));
+  if (!own.length && !agency.length) return '';
+  const hidden = ownChips.length + agencyChips.length - own.length - agency.length;
+  const shown = own.map(escapeHtml).concat(agency.map(c =>
+    `<span class="cg-typical">${escapeHtml(c)}*</span>`)).join(' \u00b7 ');
+  const extra = hidden > 0 ? ` +${hidden} more` : '';
   return `<div><b>${escapeHtml(label)}</b>${shown}${extra}</div>`;
 }
 
 function cgFactsHtml(d) {
   if (!d.policy) return '';
-  let own = '', agency = '';
+  // Without a name for the agency the inherited values cannot be attributed,
+  // and an unattributed inherited value is exactly the confident falsehood
+  // above — an asterisk with no footnote explaining it. So they are shown only
+  // when the server could name where they came from.
+  const attributable = !!d.policy_label;
+  let rows = '', anyTypical = false;
   CG_SCHEMA.forEach(g => {
     // Status is already the red "Temporarily closed" line at the top of the
     // popup, read off the marker; a second row saying it again is noise.
@@ -1371,21 +1369,18 @@ function cgFactsHtml(d) {
     if (!block) return;
     const inherited = new Set(block.inherited || []);
     const verified = new Set(Object.keys(block.values).filter(k => !inherited.has(k)));
-    own += cgFactRow(g.label, verified.size ? sfPopupChips(g, block.values, verified) : []);
-    agency += cgFactRow(g.label, inherited.size ? sfPopupChips(g, block.values, inherited) : [],
-                        CG_FACT_AGENCY_CHIP_MAX);
+    const own = verified.size ? sfPopupChips(g, block.values, verified) : [];
+    const agency = attributable && inherited.size
+      ? sfPopupChips(g, block.values, inherited) : [];
+    const row = cgFactRow(g.label, own, agency);
+    if (row.includes('cg-typical')) anyTypical = true;
+    rows += row;
   });
-  let html = own ? `<div class="cg-facts">${own}</div>` : '';
-  // Without a name for the agency the inherited half cannot be attributed, and
-  // an unattributed inherited value is exactly the confident falsehood above.
-  // So it is shown only when the server could name where it came from.
-  if (agency && d.policy_label) {
-    html += `<div class="cg-facts cg-facts-agency">`
-          + `<div class="cg-agency-head">Typical for ${escapeHtml(d.policy_label)}</div>`
-          + `<div class="cg-agency-caveat">Not checked for this campground</div>`
-          + `${agency}</div>`;
-  }
-  return html;
+  if (!rows) return '';
+  const note = anyTypical
+    ? `<div class="cg-typical-note">* Typical for ${escapeHtml(d.policy_label)}`
+      + ` \u2014 not checked for this campground</div>` : '';
+  return `<div class="cg-facts">${rows}${note}</div>`;
 }
 
 // Popup HTML for one campground. Extracted so an inline edit can regenerate it

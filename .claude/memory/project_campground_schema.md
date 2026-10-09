@@ -18,9 +18,11 @@ out of note prose into `rating` on 11,771 entries (`extract_rating.py`); rec.gov
 derivation (`recgov_calendar.py`); 27 registry rows covering 5,704 entries (44.7%) and 57.2%
 of nights actually slept (`state:WV` added 2026-09-15).
 
-**Map popup surfacing DONE 2026-09-14** (commit `95879c2`): verified and inherited chip
-runs, the agency half attributed ("Typical for Indiana state parks") and withheld when
-`_policy_label()` cannot name the agency; `resolve()` gained a per-group `inherited` key
+**Map popup surfacing DONE 2026-09-14** (commit `95879c2`): verified and inherited chips,
+the inherited ones attributed ("Typical for Indiana state parks") and withheld when
+`_policy_label()` cannot name the agency (since 2026-10-09, AWH: inherited chips sit in the
+SAME rows as verified ones, tan + asterisk + one footnote, instead of a separate section;
+doc §8.6); `resolve()` gained a per-group `inherited` key
 list because group-level scope cannot split a `mixed` group; formatters shared with the
 manage form in `static/campground-schema.js`. **The motivation is worth carrying forward:
 phase 2 had emptied the RV Life rating out of note prose on 11,771 entries and the popup
