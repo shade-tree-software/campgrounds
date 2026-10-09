@@ -23,6 +23,7 @@ NOTES = {
  'Gibbs Camping & RV Resort': "Good Sam Park on Shallow Lake beside Trans-Canada Hwy 11 at Mattice-Val Côté (between Hearst and Kapuskasing): 3-service RV lots and pull-throughs, tent lots, RV rentals, pool, chip stand, fishing; seasonal contracts too. 2027 daily RV-lot rates for 4 people: 3-service C$60 weekdays / C$70 Fri-Sun, pull-through C$80; long weekends may need 3 days. Summer reservations 15 May-15 Sep through the website or phone. Caveat (2026-10-08): the seasonal share was not measured.",
  'Aintree Trailer Park': "Family campground in Kincardine a short walk from the Lake Huron beach: 150 seasonal sites (1-5 year waitlist) and about 21 overnight sites - two-point back-in (30A, water, up to 40 ft), full-service back-in and drive-through, small-trailer/tent sites. 2026 rates including tax: two-point back-in C$71 (C$62.83 before HST), full service C$75 a night; one night to a few months. Booked online, one-day deposit per week. Season 7 May-Thanksgiving Monday.",
  'Green Acres Manitoulin - Family Campground': "Family campground and restaurant on Sheguiandah Bay of Georgian Bay (Hwy 6, Manitoulin Island): 22 numbered beachfront overnight sites on the shared sand beach, a few in-park sites, tent areas and seasonal blocks; water + 30A, washrooms/showers, boat launch, fish-cleaning station. Overnight rates: in-park C$57.99, beachfront C$59.99 a night + HST. Booked online (Let's Camp) or by phone.",
+ 'South Bay Park': "Campground on Dunlop Lake 10 km north of Elliot Lake: about 124 sites, 17 of them nightly RV sites (15A or 30A with water, no sewer, some pull-through, rigs to 35 ft) beside seasonal sites, tent sites and 63 boat docks; canoe, paddleboat, kayak and fishing-boat rentals, canteen, recreation hall. A July 2027 weeknight sells online at C$58 (15A water) or C$60 (30A); unserviced C$53. Booked online (Campspot).",
  'Pine Point Resort': "Fishing resort on Lac des Mille Lacs at Upsala near Trans-Canada Hwy 17 (west of Thunder Bay): about 24 full-hookup and 5 water/electric campsites in two inland rows, tent sites and cottages; docks, boat rentals, bait shop, gas bar, fish-cleaning station, laundromat, groceries. Posted campsite rates per night for 2 adults: full hookup C$56, water/electric C$52, + 13% HST (the operator's 2024 rate sheet, still the posted one in 2026). Reservations by e-mail or phone with a non-refundable deposit.",
 }
 
@@ -33,6 +34,7 @@ SHARE = {
  'Gibbs Camping & RV Resort': 'seasonal share not measured (summer imagery only)',
  'Aintree Trailer Park': '150 seasonal + ~21 overnight sites in the CampLife engine (~12%)',
  'Green Acres Manitoulin - Family Campground': 'site map numbers 22 beachfront overnight sites beside the seasonal blocks',
+ 'South Bay Park': '17 nightly RV sites in the engine of ~124 (~14%)',
  'Pine Point Resort': '~29 full-hookup and water/electric campsites on the map; nightly, weekly and monthly rates',
 }
 
@@ -40,6 +42,7 @@ SOURCE = {
  'Lakefield Campground': 'Township of Selwyn rate page live with nightly rates',
  'Gibbs Camping & RV Resort': 'operator site live with a 2027 daily rate table',
  'Pine Point Resort': 'operator site live with its (2024) nightly rate sheet',
+ 'South Bay Park': 'operator booking engine quote (Campspot)',
 }
 
 

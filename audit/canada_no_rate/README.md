@@ -39,12 +39,12 @@ no RV sites (pods only), duplicate, no clear rate / phone only, no published rat
 ## Status (2026-10-08)
 
 - QC: DONE. 72 of 72 settled: 39 adds appended as ids 15126-15164, 33 skips.
-- ON: 49 of 50 settled: 6 adds appended as ids 15165-15170 (Lakefield Campground is a
-  Township of Selwyn park - added as `local`), 43 skips. Open: #12 Paradise Valley (Killam
+- ON: 49 of 50 settled: 7 adds appended as ids 15165-15171 (Lakefield Campground is a
+  Township of Selwyn park - added as `local`), 42 skips. Open: #12 Paradise Valley (Killam
   Leisure Living; its sites answer HTTP 429 - back off and retry; a third-party listing says
   69 overnight sites of ~350 and Killam's Family Paradise sold overnight hydro/water at C$69 in
   RMS but was ~5% traveller). Build file: `build_on_results.py`, calls `on_wf_calls.jsonl`.
-- BC (36): not started. Next append `--min-id 15171` (check the max id first).
+- BC (36): not started. Next append `--min-id 15172` (check the max id first).
 - Engines met in ON: CampLife (`../private_gap_browser/camplife.py`), Campspot
   (`campspot.py`, or the /book/<slug>/search/<in>/<out>/guests0,2,0/list view for parks not on
   the marketplace), RMS (Killam parks: `rms.sh <hash-id>` works with the hash in the link),

@@ -91,6 +91,22 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   frame `satz.py`/`wb.py` stitched for LAT LNG at ZOOM. The frame is 3x3 tiles starting one tile
   left of and above the point's tile, so the crosshair is NOT at the centre - pin from this, not
   from offsets measured from the middle. Esri z19 is often "Map data not yet available"; use 18.
+- `camplife.py CAMPGROUND_ID ARRIVE DEPART [N]` - CampLife (camplife.com/<id>/reservation/step1,
+  behind many Ontario "Book now" buttons; curl gets 403, the driver's browser loads it). Sets the
+  Duet date pickers through the host element (`value` + a `duetChange` event - typing appends to
+  the old value), opens Select Site, prints the notices ("2 night minimum...", "2027
+  RESERVATIONS OPEN MID NOVEMBER") and the available count, and prices N sites from the
+  `/api/invoice/estimate` XHR (resSubTotal = pre-tax).
+- `campspot.py SLUG ARRIVE DEPART` - Campspot. **Two traps, both met in Ontario:** (1) the
+  `/book/<slug>/search/<in>/<out>/guests.../list` page can say "no sites available" while the
+  park's availability API lists free sites, and (2) the guests segment follows the PARK's guest
+  categories in order ([Children, Adults, Pets] at one park, [Children 0-5, Children 6-17,
+  Adults, Pets] at the next), so `guests0,2,0` is 2 adults at one park and 2 children at
+  another. The script reads the categories from the guests picker, builds the string for 2
+  adults and prints the API answer per site type (price, free/total, longest rig, failure
+  reasons such as RESERVATION_MIN_RULE or RESORT_CLOSED_RULE - a closed park still shows its
+  prices). It falls back to the marketplace `/park/<slug>` page when the slug has no /book/
+  engine (Summerhill white-label parks).
 - `bqread.py URL` - Bonjour Québec listing (curl-readable): "Prix maximum par nuitée pour
   emplacement de camping", unit count, address/phone/website, CITQ number. Find the URL with
   a web search "bonjourquebec <campground name>".

@@ -1,6 +1,6 @@
 ---
 name: project-canada-no-rate-followup
-description: Re-quoting the 158 Canada private-gap no_rate parks via rate pages, booking engines, Wayback and Bonjour Quebec; QC DONE (+39, 15126-15164); ON 49/50 (+6, 15165-15170; Paradise Valley pending on HTTP 429); BC (36) next, --min-id 15171. Workflow + status in audit/canada_no_rate/README.md
+description: Re-quoting the 158 Canada private-gap no_rate parks via rate pages, booking engines, Wayback and Bonjour Quebec; QC DONE (+39, 15126-15164); ON 49/50 (+7, 15165-15171; Paradise Valley pending on HTTP 429); BC (36) next, --min-id 15172. Workflow + status in audit/canada_no_rate/README.md
 metadata:
   type: project
 ---
@@ -9,7 +9,7 @@ The Canada private gap ([[project-private-gap]]) skipped 158 well-rated private 
 
 **AWH 2026-10-08:** "work through the effort"; read each site carefully, work through booking engines and date pickers, go slowly (one browser). A park that posts no rate AND books only by phone is a skip (that hassle signals a long-term-renter focus); a genuine posted rate, or one obtained through the booking engine, is wanted.
 
-**Status (2026-10-08):** QC DONE - 72 settled, 39 adds (ids 15126-15164), 33 skips. ON 49 of 50 - 6 adds (ids 15165-15170, Lakefield Campground as `local`), 43 skips; #12 Paradise Valley (Killam) pending: its site answers HTTP 429 - back off and retry (no-holds rule). Ontario's no_rate list was mostly real skips: Summerhill Campspot quotes C$70-91, rate sheets over C$69, standing 2-night minimums, seasonal or cottage-only resorts. **Next: BC (36 rows)** - `python3 audit/canada_no_rate/info.py BC todo`; next append `--min-id 15171` (check the max id first). Per-province builders: `build_qc_results.py`, `build_on_results.py` (copy for BC).
+**Status (2026-10-08):** QC DONE - 72 settled, 39 adds (ids 15126-15164), 33 skips. ON 49 of 50 - 7 adds (ids 15165-15171, Lakefield Campground as `local`), 42 skips; #12 Paradise Valley (Killam) pending: its site answers HTTP 429 - back off and retry (no-holds rule). Ontario's no_rate list was mostly real skips: Summerhill Campspot quotes C$70-91, rate sheets over C$69, standing 2-night minimums, seasonal or cottage-only resorts. **Next: BC (36 rows)** - `python3 audit/canada_no_rate/info.py BC todo`; next append `--min-id 15172` (check the max id first). Per-province builders: `build_qc_results.py`, `build_on_results.py` (copy for BC).
 
 **Where the knowledge lives (don't re-derive it):**
 - `audit/canada_no_rate/README.md` - files, verdict format (`followup: "no_rate 2026-10-08"`, latest row per name wins), kind_of_no values, status, next steps.
