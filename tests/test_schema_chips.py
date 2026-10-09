@@ -147,6 +147,26 @@ class ChipPhrasingTest(unittest.TestCase):
                                                 "per": "night"}}),
             ["+$5 booking fee", "non-resident +$5/night"])
 
+    # ── Free camping ────────────────────────────────────────────────────────
+
+    def test_zero_rate_reads_free(self):
+        """$0-$0 is free camping, not a price of nothing (2026-10-09)."""
+        self.assertEqual(self.chips("fees", {"nightly_low": 0, "nightly_high": 0}),
+                         ["free"])
+
+    def test_free_tier_beside_a_priced_one(self):
+        self.assertEqual(self.chips("fees", {"nightly_low": 0, "nightly_high": 15,
+                                             "currency": "USD"}),
+                         ["free\u2013$15/night"])
+
+    def test_free_tier_with_the_paid_price_unknown(self):
+        """"$0/night" would claim the whole campground is free."""
+        self.assertEqual(self.chips("fees", {"nightly_low": 0}), ["some sites free"])
+
+    def test_a_paid_rate_is_unchanged(self):
+        self.assertEqual(self.chips("fees", {"nightly_low": 20, "nightly_high": 30}),
+                         ["$20\u201330/night"])
+
     # ── Negatives that a label cannot carry ─────────────────────────────────
 
     def test_not_year_round_is_seasonal(self):

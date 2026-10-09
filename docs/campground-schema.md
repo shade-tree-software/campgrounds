@@ -182,6 +182,9 @@ switch off another default):
 - own `fees` free at both ends (`nightly_high: 0`, `nightly_low` 0 or absent) → drop the
   agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
   A $0 low beside a paid high is a campground with some free sites and keeps them.
+  **This rule needs the fees RECORDED to fire**, and until 2026-10-09 only 10 entries had
+  them: ~300 free federal campgrounds whose note says "Free, FCFS" still showed "America
+  the Beautiful senior/access discount". `audit/free_fees/` fixed that (below, under fees).
 
 The manage form mirrors both in `agencyRowFor()` so its "(agency: …)" hints agree with the
 popup; `tests/test_campground_schema.py` pins them.
@@ -369,6 +372,18 @@ Flattening these into one "surcharge" number loses the cases that matter:
 site with no amenities.** Every other key in `fees` modifies it. Storing the
 non-resident price, or the with-hookups price, makes the field incomparable between
 agencies and double-counts the moment a modifier is applied on top.
+
+**Free camping is a $0 base rate, recorded from the note** (`audit/free_fees/`,
+2026-10-09: 752 entries `0`/`0`, 31 `0`/N). Each was decided by READING the note — the
+regex in `candidates.py` only finds what to read, because "free" in these notes mostly
+means something else ("free WiFi", "barrier-free", "free paddleboats"). The rules:
+camping itself free, donation-only or a free permit → `0`/`0`; a free primitive loop or
+off-season beside a priced one → `0`/that price, or `0` with no high when the price is
+not stated; **skipped**: free for tents only, "first N nights free", free for customers
+only, "no fee listed", and a note that contradicts itself. The chip says **"free"**,
+**"free–$15/night"** or **"some sites free"** — never "$0/night", which for a `0` with no
+high would claim the whole campground is free (`sfChips`, pinned in
+`tests/test_schema_chips.py`). Provenance `note prose / derived`; existing fees untouched.
 
 **Amenities are priced separately, and they are what a search filters on.** Both systems
 verified so far charge per night for exactly the things a traveller specifies: electric is

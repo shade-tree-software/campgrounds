@@ -313,6 +313,16 @@ function sfChips(group, values, keys) {
       return;
     }
     let chip = sfChip(group.key, f, values[f.key], cur);
+    // A $0 base rate is free camping, and says so. With no high beside it the
+    // entry has free sites and paid ones of unknown price (a free primitive
+    // loop beside priced hookups), so "$0/night" would claim too much.
+    if (chip && f.key === 'nightly_low' && values.nightly_low === 0) {
+      const hi = values.nightly_high;
+      parts.push(hi === 0 ? 'free'
+        : hi == null ? 'some sites free'
+        : 'free–' + sfMoney(hi, cur) + '/night');
+      return;
+    }
     if (chip && f.key === 'nightly_low') {
       if (values.nightly_high != null && values.nightly_high !== values.nightly_low) {
         chip += '\u2013' + values.nightly_high;
