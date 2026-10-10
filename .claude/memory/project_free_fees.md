@@ -22,7 +22,7 @@ have a paid tier/season or were skipped on purpose). Chip reads "free" / "freeâ€
    OPEN: WV WMAs 111/112 (no official fee statement), IL Pyramid SRA 1658 (2027 fee change),
    NM 8027, UT 10003, NV 11239/11251, ID 9427, WV 121, NV 11311 tribal permit, and 11 private
    parks (belong to task 2). **VA WMAs RESOLVED 2026-10-09** (AWH called the DWR helpline): $10 camping authorization per party (6 people, 14 nights) + $4 daily Access Permit per person 17+ for EVERY day on site, arrival and departure both (1 night = 2 permits each). `wma:VA` registry row rewritten (no nightly $0 any more) and all 23 VA WMA entry notes carry one standard line. Access Permit and authorization are the same price for non-residents.
-2. Bigger: any entry with no price info (no fees, nothing priced in the note) AND no RV Life
+2. IN PROGRESS - see [[project_price_research]]. Bigger: any entry with no price info (no fees, nothing priced in the note) AND no RV Life
    `price_tier`: 1,553 (596 federal, 452 state, 341 local, 130 private). Needs web research
    per entry; do it as chunked, committed batches ([[feedback_chunked_bulk_passes]]) and
    sequential agents ([[feedback_sequential_sweep_agents]]).

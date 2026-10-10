@@ -15,6 +15,10 @@ night cost us in an RV":
 - **Drive-in RV-usable site types only**: STANDARD / RV, electric or not. Doubles ("-DBL" in
   `name_map`), group, tent-only, walk-to, hike-to, boat-in, cabins, yurts, lookouts,
   equestrian and management sites price something else.
+- **The type's own rate, not per-site overrides**: keys suffixed "u52-00p0-00..." price a few
+  individual sites (often doubles at twice the rate) and count only when no plain key does.
+- A price over twice the facility's median is a multi-unit or long-term rate typed as a
+  standard site and is dropped.
 - A 0 price is kept only when EVERY counted price is 0 (a genuinely free campground);
   otherwise a stray 0 is a placeholder, not a free season.
 - nightly_low / nightly_high = min / max of what survives.
@@ -35,8 +39,12 @@ CACHE = os.path.join(ROOT, "trip_data", "recgov_rates.json")
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/140.0"
 TODAY = date(2026, 10, 9).isoformat()
 KEEP = re.compile(r"^(STANDARD|RV) (NON)?ELECTRIC$|^STANDARD FULL HOOKUP$|^RV FULL HOOKUP$")
-DROP_NAME = re.compile(r"DBL|DOUBLE|GROUP|TENT|WALK|HIKE|BOAT|CABIN|YURT|LOOKOUT|EQUEST|HORSE|MANAGEMENT|SHELTER",
+DROP_NAME = re.compile(r"DBL|DOUBLE|GROUP|TENT|WALK|HIKE|BOAT|CABIN|YURT|LOOKOUT|EQUEST|HORSE|MANAGEMENT|SHELTER|GLAMP|TRIPLE|LONG TERM|MONTHLY|SEASONAL",
                        re.I)
+
+# "PeakSTANDARD ELECTRICu52-00p0-00..." prices a handful of individual sites, often a double
+# pad at twice the rate; the plain "PeakSTANDARD ELECTRIC" key is the campground's own rate.
+OVERRIDE_KEY = re.compile(r"u\d+-\d\dp\d")
 
 
 def facility_id(entry):
@@ -79,17 +87,20 @@ def price_range(rates):
     if not current and seasons:
         last = max((s.get("season_end") or "")[:4] for s in seasons)
         current = [s for s in seasons if (s.get("season_end") or "")[:4] == last]
-    vals = []
+    base, override = [], []
     for s in current:
         for key, price in (s.get("price_map") or {}).items():
             stype = (s.get("site_type_map") or {}).get(key, "")
             name = (s.get("name_map") or {}).get(key, "")
             if KEEP.match(stype) and not DROP_NAME.search(name) and isinstance(price, (int, float)):
-                vals.append(price)
+                (override if OVERRIDE_KEY.search(key) else base).append(price)
+    vals = base or override
     if not vals:
         return None
     if any(v > 0 for v in vals):
-        vals = [v for v in vals if v > 0]
+        vals = sorted(v for v in vals if v > 0)
+        med = vals[len(vals) // 2]
+        vals = [v for v in vals if v <= 2 * med]     # a mislabelled multi-unit or monthly rate
     return min(vals), max(vals)
 
 
