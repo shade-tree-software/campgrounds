@@ -48,3 +48,15 @@ Cedarville SF MD 830 (booking unverified); WV WMAs (AWH handling).
 **MWCD done 2026-10-10:** AWH saved each lake's reserve.mwcd.org calendar (Jul 2027) to ~/Downloads; parsed with the site-row data-* attrs (usetype/electric/water/sewer/maxrv + per-date price). 7 priced (1238, 1228, 13345, 13347, 1240, 13346, 13344). Leesville North Fork 13349 $44-48 from the operator's rate list (AWH saved page). South Fork 13348 (FCFS, MWCD, call Atwood 330-343-6780) left unpriced per AWH 2026-10-10 - do not chase.
 
 **PG&E done 2026-10-10:** all 21 PG&E entries priced from recreation.pge.com site cards (POST the search form; 'Use Fee' is the STAY total, halve a 2-night search). Recipe in audit/price_research/pge/README.md. Reservations need 2+ nights (FAQ) but every PG&E campground has FCFS sites; min_stay 2 recorded on the 14 with reservable sites (fcfs some_sites, note says one-night FCFS stays are possible, kept per AWH); the 7 all-FCFS ones (Fuller Grove, Hawkins, Navy, Oak Flat, Pogie, Ruling, Sunset) set reservable false, fcfs always, no min_stay.
+
+**2026-10-10 (4th pass): site_digest.py sweep, 1,046 -> 652 left.**
+- `audit/price_research/site_digest.py --state XX --ownership local OUT` (or `--ids`) fetches each unpriced entry's website plus up to 3 rate/fee subpages (PDFs via pdftotext) and prints the lines carrying money figures.
+- It is read by hand; findings go to `*_local.json` / `us_private_N.json` and are applied with `apply.py`.
+- Done: all US local buckets (~190 priced) and all 341 US private (~210 priced).
+- Rules used:
+  - Only the operator's own page or its booking channel counts (Campspot/RoverPass/Firefly page of that park).
+  - A dated firsthand Campendium figure is acceptable only when there's no operator page.
+  - Good Sam / The Dyrt "from $N" is never used.
+  - Mandatory per-person passes go in `fees.entrance` (Veyo).
+- What's left: entries whose sites post no figure or need JavaScript, Canada private (209, digest running), MT state 31 (license-only FAS).
+- Flags for AWH are in the session summary (standing minimums, closures, KOA, no-website privates).
