@@ -34,7 +34,8 @@ earlier 1,476/1,553). Biggest buckets: QC private 81, WI state 71 (PARKED - Goin
 until a site is picked), IA local 63, TX private 56, AL private 54, WI local 45, CO federal 41,
 BC/ON private 40 each, NY local 38, CA local 38, AL local 37, KY state 31, MT state 31 (license-only
 FAS, see mt_fas_license_only.txt), WA state 30.
-**Next planned**: KY + WA state parks (one fee schedule each), then CO/FS stragglers (55 unparsed FS
+**2026-10-10: KY DONE** — 31 entries (29 state parks + Horse Park + Nolin) from per-site RA prices (`kentuckystateparks.reserveamerica.com/campsiteDetails.do?...&arvdate=M/D/YYYY&lengthOfStay=1` shows 'Price Breakdown: Camping Fees (1 night)'; no date = no price; scraper recipe in ky_state_parks.json sources). Same trick should work on every classic RA host (MD, MA, TX, UT, MT, OK, NY...). **The 'WA state 30' bucket was a miscount**: all 30 are DNR camps already inheriting $0 + Discover Pass from `state:washington-dnr` — count remaining with registry inheritance resolved, not raw `fees`.
+**Next planned**: CO/FS stragglers (55 unparsed FS
 blocks -> ~30 are pass-only sites: Adventure Pass / Tonto / 3-day pass = an entrance-type fee, not
 nightly; 8 Sawtooth NRA pages only link a fees page; 23 FS pages 404), then local/private one by one.
 **Open singles**: NY Copake Falls, Hamlin Beach, Poke-O-Moonshine; MI Ely Lake; Lake Buffalo WV 121;

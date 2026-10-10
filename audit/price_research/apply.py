@@ -20,7 +20,7 @@ sys.path.insert(0, ROOT)
 import campground_schema as cs  # noqa: E402
 import extract_fields as ef     # noqa: E402
 
-TODAY = "2026-10-09"
+TODAY = "2026-10-10"
 
 
 def main():
