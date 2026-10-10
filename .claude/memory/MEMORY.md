@@ -98,3 +98,4 @@
 - [One headless browser at a time](feedback_limit_headless_browsers.md) — AWH 2026-10-03: parallel gm.py/rates.py Chrome instances ate memory+CPU; run helpers sequentially, batch queries into one gm.py call with -u
 - [Skip Sun Outdoors/Retreats + KOA](feedback_skip_sun_koa_brands.md) — AWH 2026-10-03: never in the price range; pre-skip on brand in private sweeps, no rate research
 - [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block = back off and retry
+- [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
