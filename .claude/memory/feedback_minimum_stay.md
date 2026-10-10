@@ -23,3 +23,5 @@ A campground whose minimum stay applies to EVERY stay is not a nightly campgroun
 - **Canada no_rate follow-up examples (2026-10-08):** same-day single-night products are waivers, not standing minimums - Camping Union's "Nuitée Express" (bought after 16:00, out by 09:00), Lac-aux-Sables "one night accepted same day only", Camping du Parc "one night by phone 48 h ahead". Standing minimums found only by working the engine: Wigwam (every site on a July 2027 Tuesday said "minimum de 2 nuitées" on its reservationcamping.ca site page), Péninsule (engine nights list generated from 2), Coolbreeze ("2 nuits minimum en tout temps" on its rate page). Check per site/type, not the form's first select ([[reference-hidden-rates-playbook]]).
 
 Related: [[feedback_exclude_seasonal_residential]].
+
+**Named exception:** Grouseland Hospitality (671, PA) has a 2-night minimum on every site and is kept anyway (AWH 2026-10-10, a firsthand --AWH entry); the minimum is recorded in booking.min_stay and the note. Don't remove it on this rule.
