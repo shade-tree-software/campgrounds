@@ -101,25 +101,63 @@ def fetch(limit):
     print("cached", len(cache))
 
 
-SINGLE = re.compile(r"(?:Single|Standard|Individual|Family|Campsite|Site)[^|$]{0,40}?:?\s*\$\s?(\d+(?:\.\d\d)?)", re.I)
-NOT_SINGLE = re.compile(r"double|triple|group|multi|equestrian|horse|cabin|extra vehicle|day use|day-use", re.I)
+# A price counts when what LABELS it names a single/standard campsite ("Single Site: $19",
+# "Camping - $22") or what FOLLOWS it does ("$28 fee per site for overnight camping",
+# "$20 for a single site", "$22 a night"). The exclusion is applied to the label and to
+# the following phrase only - never to the whole segment, where "(2 vehicles included
+# per site)" after a real site price used to reject it.
+LABEL = re.compile(r"(single|standard|individual|family|campsite|\bsite|camping|overnight)[^$]{0,40}$", re.I)
+AFTER = re.compile(r"^\$\s?\d+(?:\.\d\d)?\s*(?:nightly\s+)?(?:fee\s+)?(?:per|/|a|for\s+a)\s*"
+                   r"(?:single\s+)?(?:site|night|campsite|camping unit|unit)\b[^.$]{0,30}", re.I)
+NOT_SINGLE = re.compile(r"double|triple|group|multi|equestrian|horse|cabin|walk|vehicle|day use|day-use|"
+                        r"per day|per person|boat|overflow|firewood|parking", re.I)
+ADDON = re.compile(r"holiday|additional|extra|hook-?up fee", re.I)
+EXTRA_VEHICLE = re.compile(r"(extra|additional|second|2nd|third)\s+(\w+\s+)?vehicle", re.I)
+INCLUDED = re.compile(r"includ\w*[^.$]*?vehicles?|vehicles?[^.$]*?included", re.I)
+PRICE = re.compile(r"\$\s?(\d+(?:\.\d\d)?)")
 
 
 def parse(block):
     """(low, high) from a fee block, or None when it needs a human."""
     if not block:
         return None
-    body = block.split("| Pet Information")[0].split("| Current Conditions")[0][:600]
+    body = block.replace("\xa0", " ").split("| Pet Information")[0].split("| Current Conditions")[0]
+    body = body.split("| Getting There")[0].split("| Office Contact")[0][:600]
+    body = re.split(r"discount(?:ed)? fees? (?:are|is)", body, flags=re.I)[0]   # pass-holder prices
     vals = []
-    for seg in re.split(r"\|", body):
-        if NOT_SINGLE.search(seg):
-            continue
-        vals += [float(v) for v in SINGLE.findall(seg)]
+    newer = re.search(r"\b202[6-9]\b", body)
+    for seg in re.split(r"[|;]", body):
+        if newer and re.search(r"\b20(1\d|2[0-5])\b", seg):
+            continue                    # "2024 & 2025 $20 ...; In 2026 fee raises to $25" - last year's
+        for m in PRICE.finditer(seg):
+            label = seg[:m.start()].split(",")[-1].split(". ")[-1]
+            if "$" in label:
+                label = ""              # "$25 ... for single site and $50 per night for double site"
+            if NOT_SINGLE.search(label) or ADDON.search(label):
+                continue                # "Additional Vehicle Fee: $5 per night", "Walk-In Site: $40"
+            # what follows the price, up to the next price or sentence: "$5/Night for extra vehicle";
+            # "..., which includes two vehicles" is not a vehicle fee
+            rest = INCLUDED.sub("", seg[m.start():].split("$")[1].split(". ")[0])
+            if LABEL.search(label):
+                # a labelled site price may be per vehicle ("Single Site: $8 per vehicle per
+                # night"); only an add-on vehicle fee after it disqualifies it
+                if not EXTRA_VEHICLE.search(rest):
+                    vals.append(float(m.group(1)))
+            elif AFTER.match(seg[m.start():]) and not (NOT_SINGLE.search(rest) or ADDON.search(rest)
+                                                       or "max people" in rest):
+                vals.append(float(m.group(1)))
     if vals:
         return min(vals), max(vals)
     if re.search(r"no fees? (are )?required|\bno fees?\b|free of charge", body, re.I) and "$" not in body:
         return 0.0, 0.0
     return None
+
+
+# Read by hand (2026-10-10): the block contradicts itself or quotes a superseded price.
+OVERRIDE = {
+    6266: None,   # Whitetail: "Single site: $7", "$12.00 daily fee per single site" and "$25.00 per night"
+    12216: (20, 20),   # Oak Flat: "Single Site: $5" is stale - "Fee increased to $20 ... on May 1, 2025"
+}
 
 
 def build(out):
@@ -132,7 +170,7 @@ def build(out):
         if c["status"] != 200 or not c["block"]:
             missing += 1
             continue
-        pr = parse(c["block"])
+        pr = OVERRIDE[r["id"]] if r["id"] in OVERRIDE else parse(c["block"])
         if not pr:
             unparsed += 1
             continue
