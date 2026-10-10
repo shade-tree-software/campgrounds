@@ -25,3 +25,5 @@ A campground whose minimum stay applies to EVERY stay is not a nightly campgroun
 Related: [[feedback_exclude_seasonal_residential]].
 
 **Named exceptions (AWH 2026-10-10):** Grouseland Hospitality (671, PA; every site), Tosanak Recreation Area (13500, IA county; RV sites) and ALL NJ state campgrounds (Stokes 1818/1819 confirmed by AWH; the other 13 via regulation N.J.A.C. 7:2-6.7, which sets 2 nights for every non-group NJ state campsite) have standing 2-night minimums and are kept anyway; each has booking.min_stay and a dated note line. Don't remove them on this rule.
+
+**Kept for now (AWH 2026-10-10, "keep for now", may be revisited):** Riverview RV Resort AL (4974, 3-night min), Hidden Valley OH (14298, 2 nights / 3 holidays), Georgia Mountain Fairgrounds GA (13371, 2-night per note), West Arbutus WI (3529, 3 nights on Memorial Day-Labor Day reservations). Don't remove them on this rule without asking.
