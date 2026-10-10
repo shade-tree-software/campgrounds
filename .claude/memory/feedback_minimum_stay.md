@@ -24,4 +24,4 @@ A campground whose minimum stay applies to EVERY stay is not a nightly campgroun
 
 Related: [[feedback_exclude_seasonal_residential]].
 
-**Named exception:** Grouseland Hospitality (671, PA) has a 2-night minimum on every site and is kept anyway (AWH 2026-10-10, a firsthand --AWH entry); the minimum is recorded in booking.min_stay and the note. Don't remove it on this rule.
+**Named exceptions (AWH 2026-10-10):** Grouseland Hospitality (671, PA; every site) and Tosanak Recreation Area (13500, IA county; RV sites) have standing 2-night minimums and are kept anyway; each has booking.min_stay and a dated note line. Don't remove them on this rule.
