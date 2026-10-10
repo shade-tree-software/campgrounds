@@ -13,3 +13,5 @@ Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Su
 **Why:** the gate screens ordinary options; a rare location (family visits, a city with almost no RV camping) outweighs price.
 
 **How to apply:** record the real price, but don't flag these for removal again. When a new over-gate entry is near family or a major city with few alternatives, ask rather than drop. Related: [[feedback_skip_sun_koa_brands]], [[feedback_mandatory_fees_count]].
+
+**Scope of the gate (AWH 2026-10-10, confirmed):** the $50 price gate applies to PRIVATE campgrounds only. Government campgrounds (county/city/water district/fairgrounds/state/federal) have no price limit - don't flag them as over-gate (Santee Lakes $62-111 and Bay RV Stay $85-125 are fine).
