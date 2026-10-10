@@ -42,3 +42,5 @@ blocks -> ~30 are pass-only sites: Adventure Pass / Tonto / 3-day pass = an entr
 nightly; 8 Sawtooth NRA pages only link a fees page; 23 FS pages 404), then local/private one by one.
 **Open singles**: NY Copake Falls, Hamlin Beach, Poke-O-Moonshine; MI Ely Lake; Lake Buffalo WV 121;
 Cedarville SF MD 830 (booking unverified); WV WMAs (AWH handling).
+
+**2026-10-10 AWH checks:** Stokes 1818/1819 priced ($20 res / +$5 non-res; AWH read $25 at NJ Outdoors) and min_stay 2 always recorded - a standing minimum, decision on keep/drop pending with AWH. Deep Lakes 13505 $40 (AWH). REMOVED per AWH: McGowen 3116, Fort Toulouse 4928, Bladon Springs 4861, Little River SF 4873 (no rates, no working booking site). Kansas 5: HOLD per AWH, revisit after 2026-11-01. Challis 13966 $31-47 (AWH). MWCD/PG&E: URLs given to AWH for reading.
