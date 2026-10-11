@@ -409,8 +409,12 @@ in, and so a resident cost can be shown too.
 
 An optional `name` says what the charge is called where "park entry" would be wrong. Virginia
 WMAs (`wma:VA`) charge a per-person **access permit** for every day on the property, so the row
-stores `{"resident": 4, "nonresident": 4, "per": "person_day", "name": "access permit"}` and the
-chip reads "access permit $4 (per person/day)" (2026-10-09).
+stored `{"resident": 4, "nonresident": 4, "per": "person_day", "name": "access permit"}` and the
+chip read "access permit $4 (per person/day)" (2026-10-09). **Since 2026-10-10 the row instead states the
+all-in price for two people for one night as its nightly rate** (AWH: $10 camping authorization + 2 people ×
+2 days × $4 = $26), with the permits spelled out in the row's note and the `entrance` / `prereq_pass` keys
+removed — left beside a nightly figure, those chips read as charges ON TOP of it. A row that folds its
+modifiers into the nightly rate must drop them, or the reader adds them twice.
 
 The third is the one a flat model cannot express at all: a season pass amortizes fine over a
 week and terribly over one night, so its cost is **a function of trip length**. Which means
