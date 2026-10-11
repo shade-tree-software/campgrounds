@@ -76,9 +76,11 @@ def main():
                              f"&arvdate={d}&lengthOfStay=1")
                 el = next((l.split(":", 1)[1].strip() for l in L if l.startswith("Electricity Hookup:")), "")
                 pr = None
-                if "Camping Fees (1 night)" in L:
-                    k = L.index("Camping Fees (1 night)")
-                    pr = next((l for l in L[k + 1:k + 3] if "$" in l), None)
+                # KY prints 'Camping Fees (1 night)' on one line; NY splits 'Use Fees' / '(1 night)'
+                k = next((j for j, l in enumerate(L) if l in ("Camping Fees (1 night)", "Use Fees (1 night)")
+                          or (l in ("Camping Fees", "Use Fees") and j + 1 < len(L) and L[j + 1] == "(1 night)")), None)
+                if k is not None:
+                    pr = next((l for l in L[k + 1:k + 4] if "$" in l), None)
                     rf = next((L[j + 1] for j in range(k, min(k + 12, len(L) - 1))
                                if L[j] == "Reservation Fees"), "")
                     if pr and rf:
