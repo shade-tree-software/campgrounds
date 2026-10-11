@@ -1,6 +1,6 @@
 ---
 name: feedback-minimum-stay
-description: "A standing (every-stay, not weekend-only) minimum of 2+ nights disqualifies a campground; weekend/holiday minimums are fine (AWH 2026-10-01, tightened from 4 nights)"
+description: "Minimum stays: since 2026-10-10 a standing 2-3 night minimum stays if clearly marked (booking.min_stay + dated note line); a 7-night summer minimum was dropped (Nickerson, AWH 2026-10-11); the old 2026-10-01 disqualify rule is kept as history"
 metadata:
   node_type: memory
   type: feedback
@@ -29,3 +29,5 @@ Related: [[feedback_exclude_seasonal_residential]].
 **Named exceptions (AWH 2026-10-10):** Grouseland Hospitality (671, PA; every site), Tosanak Recreation Area (13500, IA county; RV sites) and ALL NJ state campgrounds (Stokes 1818/1819 confirmed by AWH; the other 13 via regulation N.J.A.C. 7:2-6.7, which sets 2 nights for every non-group NJ state campsite) have standing 2-night minimums and are kept anyway; each has booking.min_stay and a dated note line. Don't remove them on this rule.
 
 **Kept for now (AWH 2026-10-10, "keep for now", may be revisited):** Riverview RV Resort AL (4974, 3-night min), Hidden Valley OH (14298, 2 nights / 3 holidays), Georgia Mountain Fairgrounds GA (13371, 2-night per note), West Arbutus WI (3529, 3 nights on Memorial Day-Labor Day reservations). Don't remove them on this rule without asking.
+
+**Dropped (AWH 2026-10-11): Nickerson Beach (1447, Nassau County NY), 7-night minimum Memorial Day - Labor Day** on its 2026 rate card. It had been priced and marked under the 2026-10-10 rule and was raised only because it was longer than any minimum kept so far; AWH said drop and gave no reason. How to apply: raise a week-long minimum over the main season as a likely drop, citing this precedent; still ask about 4-6 nights.
