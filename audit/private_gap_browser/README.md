@@ -220,6 +220,15 @@ Public engines worked 2026-10-11 (the public no-rate leads, `audit/price_researc
   when followed directly. Ask AWH.
 - **Bonfire** (`book.letsbonfire.com/<park>`) carries a reCAPTCHA: don't automate the search
   (same rule as Firefly); ask AWH for a saved page. **bookmysites** links now open a login page.
+- **A page a plain fetch was refused** (403, TLS, bad gzip) almost always renders in the browser;
+  one that fails there too has usually MOVED - search for the agency's new domain (Town of
+  Bainbridge NY .org -> .gov, Chenango County, Tulare County Parks, Shelby County KY, Silverton BC
+  had all moved, leaving our links dead).
+- **A PDF or rate image that answers curl with 403** comes through inside the page: `eval` a
+  `fetch(url)`, return the bytes as base64, decode them locally, then `pdftotext` or Read the image
+  (Clay County FL's fee schedule, Lake Shelby KY's rate sheet JPEG).
+- **CampLinq** pages that say "Claim your listing" are unclaimed directory records, not a booking
+  channel (Crossett Harbor AR).
 - Before the engine, follow the operator's own "Rates" link even when the home page shows no `$`:
   Point Hudson's rate card is a PDF behind `rates-and-fees/`, Sunnyside's rates are a bylaw PDF,
   and Orchard Springs' rate page only points at the district's site (nidwater.com), which lists them.
