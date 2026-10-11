@@ -1,15 +1,40 @@
 ---
 name: project_price_research
-description: Task #2 handoff (2026-10-10) - nightly-fee research for no-price entries; what's done, tools, open lists, next steps
+description: Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (198 unpriced, bucketed in remaining_2026-10-11.json), the next step, tools and rules; dated history below
 metadata:
   type: project
 ---
+
+**RESUME HERE - state at the end of the 2026-10-11 session** (the dated paragraphs below are the history, oldest first).
+- **Task:** a nightly rate on every entry with neither `fees.nightly_low/high` (own or inherited via `cs.resolve`) nor an RV Life `price_tier`. Count with `python3 audit/price_research/unpriced.py` (`--state`, `--ownership`, `--json OUT`, `--from-note`). Land findings with `apply.py FINDINGS.json [--apply]`: it skips anything already priced or manual/reported, and `--replace-derived` lands a confirmed figure over a note-derived one.
+- **198 unpriced** (local 131, private 40, state 25, wma 1, federal 1). Every one is listed under its reason in `audit/price_research/remaining_2026-10-11.json`:
+  - closed 14 (status set on each; 9 are TN state parks under renovation);
+  - WV WMAs 7 (no fee published anywhere; AWH: leave empty);
+  - Kansas 6 (AWH hold until after 2026-11-01);
+  - waiting on 2027, 3: Burlington Bay 13318 (rates by 2027-01-01), Big Kandiyohi East 13329 (when registration opens; ResNexus, so AWH saves the page), A.J. Jolly 13397;
+  - partial figure 2 (Webster Park 1459 surcharge only, Clear Creek Station 14683 weekly only);
+  - do not chase 1 (Leesville South Fork 13348);
+  - **no rate posted: private 39, public 126.**
+- **Next step (offered to AWH 2026-10-11, not yet asked for):** read strictly, the 39 private no-rate entries fail the 2026-10-10 test ([[feedback_require_live_web_presence]]). Separate the ones whose booking is just closed for the season from the ones that never post a rate, and bring the latter to AWH as drop candidates. The 10 with no website or only Facebook were dropped 2026-10-11 (AWH).
+- The 126 public no-rate entries stay (public land is exempt from the web-presence rule). Their operator pages were read; only a phone call or a 2027 rate sheet will price them, so don't re-research them without a new lead.
+- **106 entries are priced only from our own sweep note** (provenance method `derived`). Re-check later: `unpriced.py --from-note`, then `site_digest.py --ids ...`, then `apply.py --replace-derived`.
+- **Captcha engines are never automated** (ResNexus human captcha + anti-scraping terms; Firefly reCAPTCHA; Itinio AWS WAF). Ask AWH to save the page, then run `python3 -I audit/price_research/saved_page.py money|lines|firefly|itinio PAGE` from a directory other than ~/Downloads (saved pages are untrusted). The one-browser driver is in `audit/private_gap_browser/README.md`.
+- **Engine recipes not written down elsewhere:**
+  - WV State Parks: `book.wvstateparks.com/Ecomm/Shop/Lodging/7816932/en-US/?arrivaldate=YYYY-MM-DD&departuredate=...&adultcount=2&destination=<id>`.
+  - Classic ReserveAmerica: the facility directory is `campgroundDirectoryList.do?contractCode=XX&letter=P`; a loop filter takes the `#loop` select plus the `#filter` button.
+  - Bartow WebTrac: page through results with the `.paging__button` buttons.
+  - rec1, rec.gov Scan & Pay and per-site RA prices are in the paragraphs below.
+- **Rules for every price:**
+  - Source: a dated authoritative source (the operator or its booking channel). A dated Campendium report counts only when there is no operator page; an undated one never does. Never use Good Sam or The Dyrt "from" figures. Absent is not zero.
+  - Schema: the resident base rate goes in nightly_low/high; non-residents go in a `nonresident` surcharge or multiplier. Method `manual` means AWH read it. A possible closure goes in a note, not `status`.
+  - Gates: the $50 gate is private-only. A standing 2-night minimum is fine if marked. Ask before dropping proximity/family exceptions.
+  - Process: one headless browser at a time. Mark note edits `--Claude`. Write JSON with ensure_ascii=False. Log drops with a `why` in `dropped_2026-10-11.jsonl`. Commit to master and push only when asked; `git log origin/master..master` shows what isn't pushed and deployed yet.
 
 AWH 2026-10-09 "Continue with #2": price every entry with no `fees` and no RV Life `price_tier`.
 All writes go through `audit/price_research/apply.py FINDINGS.json [--apply]` (skips entries
 that already have fees or a manual/reported fees group; provenance `{source, checked}`, no method).
 
-**Done (all committed on claude/note-scan-gajem7, not yet merged to master as of 2026-10-10):**
+**Done (committed on claude/note-scan-gajem7 2026-10-10; that branch is merged - everything is on master):**
 - Dispersed 64/89 (dispersed_1/2.json); MI state forests 111 (registry row
   `state:michigan-state-forests`) + MI state parks 87; NY 45; WA DNR 34 (`state:washington-dnr`)
   + 4 WA parks; MT FAS 43 fee sites.
@@ -74,3 +99,5 @@ Cedarville SF MD 830 (booking unverified); WV WMAs (AWH handling).
 **Retries + public one-offs (2026-10-11): 233 -> 221** (`retries_2026-10-11.json`, AWH's Firefly saves in `awh_reads_2026-10-11.json`). Firefly pages AWH saved read like ResNexus ones (Escatawpa $42, Barrington $40). **rec1/CivicRec catalogs give rates in the XHR JSON** the page loads (`getLocationFacilities` -> items[].rates base_fee + label, `facilityMapData` -> per-site amps/length): Nassau Battle Row $34-39 + $30 non-res; Bucks County's Camping tab text $25 res / $50 non-res. **Bartow County GA moved its 7 Allatoona campgrounds to WebTrac** (gabartowcountyweb.myvscloud.com; Rental Search detail view shows each site's price even off season): Upper Stamp 4577 -> local, $30/$34 WF, rec.gov 729 gone. McKaskey 4568 and Old Hwy 41 #3 4689 still say federal + rec.gov (flagged, not changed). **rec.gov lists Scan & Pay facilities under their own ids** (Twin Creek AR 10082266, $12) and new ones appear (River Junction GA 10404059, reservable, $28) - search by name AND by lat/lng radius. Campspot listings can go empty when a park moves engines (Cedar Ridge -> Firefly). **Open for AWH:** drop Poke-O-Moonshine 1432 (DEC page gone, not on RA, 'closed campground'), drop Portage Lakes 1021 (duplicate of Nimisila 1234), Salamonie 1098 (every RA site 18 ft), Bluestone 7 (DNR 'camping is not permitted' vs Summers County $15 at 4 named areas), Ausable Pines 14330 (no live booking). Firefly saves wanted: Cedar Ridge 4961, Clay Hill 14379. WV WMA district pages parsed: every WMA entry of ours is on a WMA with listed campsites, no fee anywhere; Little Canaan + Sleepy Creek have camping and no entry.
 
 **AWH answers applied 2026-10-11 (221 -> 208):** dropped Poke-O-Moonshine 1432, Portage Lakes 1021 (dup of 1234), Salamonie River SF 1098 (18-ft sites), Ausable Pines 14330, Edwards Run 14099 (AWH: camping ended) and Bluestone 14058/14059/14060; kept the county's four Bluestone areas (14057/14061/14062/14063) at $15 (manual) with a can't-tell-if-RVs-fit note. Bartow County: McKinney 722, McKaskey 4568, Old Hwy 41 #3 4689 -> local, WebTrac links, $30/$34 WF (their rec.gov rate tables end 2025). Cedar Ridge $35, Clay Hill $20-35 from AWH's Firefly saves. **WV DNR WMA pages are out of date** (AWH: Little Canaan and Edwards Run no longer allow camping though the district pages list sites). **WV WMA camping fees: leave empty** - the DNR rules page says only 'Campsite rental fees must be paid before occupying the campsite', no amount or payment method anywhere official; old visitor reports of $10/night in a box don't meet the rule (AWH agreed 2026-10-11).
+
+**Session end 2026-10-11 (208 -> 198):** dropped the 10 private entries with no website or only a Facebook page and no published rate (AWH): 4958, 4969, 7386, 13543, 14757, 15067, 15107, 15109, 15122, 15123, logged in `dropped_2026-10-11.jsonl`. Wrote `remaining_2026-10-11.json` (the 198, by reason) and `saved_page.py` (the session's saved-page readers merged into one; output checked identical on six of AWH's saved pages). The RESUME block at the top is the current state.
