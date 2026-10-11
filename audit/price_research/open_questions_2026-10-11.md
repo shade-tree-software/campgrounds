@@ -2,6 +2,12 @@
 
 What the 685 -> 405 pass could not settle on its own. Each line names the entry ids.
 
+**AWH answered 2026-10-11:** Colorado SWAs $40, with the details spelled out (`co_swa.json`);
+GW and Monongahela dispersed sites free (`gw_mon_dispersed.json`); every "probably drop" entry
+dropped (`dropped_2026-10-11.jsonl`); accept the note prices (`note_prices.json`, 108 of the 110 -
+1459 gives only a surcharge and 14683 only a weekly rate), kept re-checkable via
+`unpriced.py --from-note`. Montana fishing access sites not yet answered.
+
 ## Decisions (one call settles a group)
 
 - **Montana fishing access sites, 31 entries** (`mt_fas_license_only.txt`): no camping fee; each
