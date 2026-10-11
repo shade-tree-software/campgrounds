@@ -8,6 +8,8 @@ dropped (`dropped_2026-10-11.jsonl`); accept the note prices (`note_prices.json`
 1459 gives only a surcharge and 14683 only a weekly rate), kept re-checkable via
 `unpriced.py --from-note`. Montana fishing access sites $20 for two (`mt_fas_license.json`). AWH's ResNexus reads:
 Birch Coulee $27, Pecan Grove $50 (saved page; then dropped as mostly annual), Big Kandiyohi East no availability (`awh_reads_2026-10-11.json`).
+Nakusp C$42.86. River Forks GA $30 from the county's own Itinio page (saved by AWH): its ResNexus link was the
+Timberline glamping engine, and 736 was a duplicate of 4638 pinned in SC - merged into 736 per AWH.
 
 ## Decisions (one call settles a group)
 
