@@ -18,5 +18,6 @@ metadata:
 - Append a dated line to the note: `CAMPER-REPORTED RATE: $X a night in <Month YYYY> (<site> review); the park has no web page (YYYY-MM-DD). --Claude`. Then re-stamp note_scan with `extract_fields.py --apply-file` and empty proposals.
 - The fees note and the `provenance.fees.source` name the review and its date as well.
 - A price resting on an older report (Wessington Springs 13553, June 2023) was turned back into a note-derived price instead of being kept as sourced.
+- **When the operator has a page but posts no rate, the camper report still goes in the note** (AWH 2026-10-11, Pikeville 1619, Genoa 2802, Freeman 13555): add the CAMPER-REPORTED RATE line with its date, but leave the price on file alone.
 
 Related: [[project_price_research]], [[feedback-missing-rate-is-unresearched]].
