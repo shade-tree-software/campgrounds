@@ -60,3 +60,5 @@ Cedarville SF MD 830 (booking unverified); WV WMAs (AWH handling).
   - Mandatory per-person passes go in `fees.entrance` (Veyo).
 - What's left: entries whose sites post no figure or need JavaScript, Canada private (209, digest running), MT state 31 (license-only FAS).
 - Flags for AWH are in the session summary (standing minimums, closures, KOA, no-website privates).
+
+**5th pass (residue, 2026-10-10):** 507 -> 379 unpriced. Rendered every remaining operator site once in one headless browser (scratchpad bq.py run over all 407; a hung site stalled it 30 min - watch for stalls) + WebSearch for official pages of no-website entries + live Campspot quotes; 126 priced (audit/price_research/residue_1..4.json). Dead ends: Firefly (date picker won't take scripted dates), reserve.tnstateparks.com (403 to headless; no official TN rate sheet - 9 TN state campgrounds stay unpriced), Lehi city site (403), mostateparks fee page. Left: MT FAS (license only), KS fishing lakes (hold), WV WMAs (AWH), no-website/Facebook-only, and sites that post no rate.
