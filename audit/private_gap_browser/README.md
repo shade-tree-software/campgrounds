@@ -258,6 +258,22 @@ Public entries with no website, worked 2026-10-11 (`no_website` in the same lead
 - **Let's Camp** (`letscamp.ca/camps/<slug>`) is the booking channel for Daajing Giids' municipal
   campground; its "starting at" figure is the cheapest site (the walk-in tent rate).
 
+The 57 local entries whose links showed no booking engine, worked 2026-10-11 (`audit/price_research/public_57_2026-10-11.json`):
+- **Checkfront** (`<org>.checkfront.com/reserve/?category_id=N&start_date=YYYY-MM-DD&end_date=...`):
+  the city's Squarespace page only frames it; the `frames` command shows the Checkfront URL,
+  and loading it with dates prints every site with "$28.00 USD From" or "per night".
+- **Hidden tabs keep their text:** Santa Barbara County's fee schedule keeps Jalama's fees in a
+  tab that `innerText` skips; read `document.body.textContent` from the tab title onward.
+- **Rate cards as images:** Nickerson Beach's rates are only a PNG on its rates page. Download
+  it and Read it, checking the pixels rendered before writing anything down.
+- **WordPress booking plugins** (MotoPress at Glasgow MO) print "FROM $35" on each site page.
+- **Stale official sites:** a town camping site whose rate pages carry 2016-17 seasonal terms
+  (Fallsburg NY), or a former operator's rate page from a 2017-19 site (Dauphin Island's Park &
+  Beach Board), is too old to land even though it is official. The current operator page saying
+  "call for rates" wins.
+- **WebFetch is fine for plain municipal pages and PDFs**, and it runs alongside a long browser
+  pass, so the two can work in parallel. Revize-hosted county PDFs redirect to `cms8.revize.com`.
+
 ### Playbook: where a "no rate" campground's rate actually is
 
 Of the first 72 Quebec no_rate parks, most turned out to post a rate; the static crawl just
