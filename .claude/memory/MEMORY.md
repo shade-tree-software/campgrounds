@@ -78,8 +78,9 @@
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
 - [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1/2/3/5, popups, rating + hookups filters done; left: phase 6 registry rows + phase 7
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
-- [Price research #2 handoff](project_price_research.md) — RESUME block at the top: 85 still lack a nightly rate (2026-10-11); all public lists worked; next Kansas after Nov 1; tools, rules, history
+- [Price research #2 handoff](project_price_research.md) — RESUME block at the top: 85 still lack a nightly rate, 59 rest only on our note (2026-10-11); all public lists worked; next Kansas after Nov 1; tools, rules, history
 - [Drop login-required campgrounds](feedback_drop_login_required.md) — AWH 2026-10-11: login needed just to SEE rates/availability = drop (Jetty Park, Red Rock); login only at checkout is fine
+- [Camper-reported rates](feedback_camper_report_rates.md) — AWH 2026-10-11: a dated (2024+) camper report may price an entry only if the operator has NO web page; mark it with a CAMPER-REPORTED RATE note line
 - [15A is a legitimate amperage](feedback_15_amp_is_legitimate.md) — hookups.electric allows 0/15/20/30/50 (AWH 2026-10-09); snap down, never up
 - [Note-scan without an API key](reference_session_note_scan.md) — 2026-10-09 pass finished, queue at 0 (helper: audit/note_scan/apply_absent.py); extract_fields.py --dump / --apply-file lets the session model do the scan through the script's own validation + provenance; watch that `derived` groups are NOT protected (don't let note prose overwrite rec.gov hookups)
 - [Researching an agency policy row](reference_agency_policy_research.md) — scrape ALL of an agency's park pages and count the boilerplate (19 of 23 IS the evidence); the legislative rule beats the website; brochures on the agency's own domain are stale traps

@@ -274,6 +274,34 @@ The 57 local entries whose links showed no booking engine, worked 2026-10-11 (`a
 - **WebFetch is fine for plain municipal pages and PDFs**, and it runs alongside a long browser
   pass, so the two can work in parallel. Revize-hosted county PDFs redirect to `cms8.revize.com`.
 
+The 106 rates that came only from our own sweep notes, re-checked 2026-10-11 (`audit/price_research/note_priced_2026-10-11.json`):
+- **Background the browser pass and research beside it.** One visit per website (`$` lines,
+  status words, booking links, saved after every entry) took about an hour for 106 sites, and
+  WebSearch/WebFetch ran alongside it. A waiting loop written as `pgrep -f quick106.py` matches
+  its own command line and never exits; use `pgrep -f 'quick10[6]'`.
+- **Operator documents in other formats:** a .docx price list (Jack's Landing: unzip it and read
+  `word/document.xml`), a rate-card JPEG named in the page HTML (Big Bear), a scanned town rate
+  sheet (Lisbon NY: `pdftoppm` it and Read the image), a village RV reservation agreement whose
+  fee table is the only rate (Ilion NY).
+- **Engines that show a price without dates:** SteadyStays prints "STARTING AT $50" per site
+  type; Gibbs posts next season's table once the season ends. On RJourney, the park page's
+  "Starting at $4/night" is the storage product, not a campsite.
+- **Campspot quotes include its fees.** Provo River names its site types with the base price
+  ("Back In Site ($30)") and the quote reads $38.90, so it adds about $8 plus 3% a night. Say in
+  the note which figure was recorded.
+- **Moved agency pages:** the Nemaha NRD's pages are now `nemahanrd.org/recreation-areas/<name>`
+  and carry the camping fee; `nrdnet.org` is the statewide association and 404s for them. Lehi
+  relaunched its site and the Willow Park page is gone; reservations sit on its facility-rentals
+  page.
+- **Bot checks are a stop sign, not a puzzle.** Five private sites now answer "Confirm you are
+  human" (one hosting provider's check) and two pages show a Cloudflare check. None was worked
+  around. Burrell Park's rate came from the city page's text in the search index, and its
+  source says so.
+- **A directory link can hide who the operator is.** Maka-Oicu Park was filed under Murray
+  County, but its phone (Worthington) and the 211 directory make it a Nobles County park. First
+  Responders Park's pin is in Alexander, not Watford City, and a 2022 review quotes City Hall
+  saying it closed.
+
 ### Playbook: where a "no rate" campground's rate actually is
 
 Of the first 72 Quebec no_rate parks, most turned out to post a rate; the static crawl just
