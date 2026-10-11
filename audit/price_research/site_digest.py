@@ -4,8 +4,8 @@
     python3 audit/price_research/site_digest.py --state WI --ownership local OUT.txt
     python3 audit/price_research/site_digest.py --ids 123,456 OUT.txt
 
-For each entry still without a price (no fees after registry inheritance, no RV
-Life price_tier) it fetches every URL in `website`, then up to 3 same-site
+For each entry still without a price (no nightly rate after registry inheritance,
+no RV Life price_tier - see unpriced.py) it fetches every URL in `website`, then up to 3 same-site
 links whose text or href says rate/fee/price/camp/reserv/tarif, and prints the
 lines that carry a money figure (with a little context). Read by hand: a
 finding needs the operator's own page, and the digest shows each URL so the
@@ -16,6 +16,8 @@ import argparse, gzip, html, json, os, re, sys, urllib.parse, urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, ROOT)
 import campground_schema as cs  # noqa: E402
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import unpriced  # noqa: E402
 
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/130 Safari/537.36",
       "Accept": "text/html,application/xhtml+xml,*/*;q=0.8", "Accept-Encoding": "gzip",
@@ -122,7 +124,7 @@ def main():
             continue
         if a.state and r.get("state") != a.state or a.ownership and r.get("ownership") != a.ownership:
             continue
-        if (r.get("rating") or {}).get("price_tier") is not None or cs.resolve(r, reg).get("fees"):
+        if unpriced.has_rate(r, reg):     # a fees group alone is not a price
             continue
         todo.append(r)
     with open(a.out, "w") as fh:
