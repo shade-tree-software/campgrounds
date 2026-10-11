@@ -7,7 +7,7 @@ GW and Monongahela dispersed sites free (`gw_mon_dispersed.json`); every "probab
 dropped (`dropped_2026-10-11.jsonl`); accept the note prices (`note_prices.json`, 108 of the 110 -
 1459 gives only a surcharge and 14683 only a weekly rate), kept re-checkable via
 `unpriced.py --from-note`. Montana fishing access sites $20 for two (`mt_fas_license.json`). AWH's ResNexus reads:
-Birch Coulee $27, Pecan Grove $50 (saved page), Big Kandiyohi East no availability (`awh_reads_2026-10-11.json`).
+Birch Coulee $27, Pecan Grove $50 (saved page; then dropped as mostly annual), Big Kandiyohi East no availability (`awh_reads_2026-10-11.json`).
 
 ## Decisions (one call settles a group)
 
