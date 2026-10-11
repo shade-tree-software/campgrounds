@@ -8,7 +8,7 @@ metadata:
   modified: 2026-10-11T16:39:30.729Z
 ---
 
-**CURRENT (2026-10-11): every gap below is closed.** The private gap is COMPLETE for the lower 48 and Canada ([[project_private_gap]], [[project_canada_no_rate_followup]]), and two late reservable-site passes are done too ([[project_pa_sf_reservable_gap]], [[project_fl_wmd_reservable_gap]]). Active work is task #2, a nightly rate on every entry: 161 left, nearly all waiting on a phone call, a 2027 rate sheet or an AWH decision. The RESUME block is in [[project_price_research]]. Still open from section 1: phase 6 registry rows (pick by entry count, since the nights signal is spent) and phase 7, which is verify-as-you-use rather than a pass ([[project_campground_schema]]). Everything below is the history.
+**CURRENT (2026-10-11): every gap below is closed.** The private gap is COMPLETE for the lower 48 and Canada ([[project_private_gap]], [[project_canada_no_rate_followup]]), and two late reservable-site passes are done too ([[project_pa_sf_reservable_gap]], [[project_fl_wmd_reservable_gap]]). Active work is task #2, a nightly rate on every entry: 160 left, nearly all waiting on a phone call, a 2027 rate sheet or an AWH decision. The RESUME block is in [[project_price_research]]. Still open from section 1: phase 6 registry rows (pick by entry count, since the nights signal is spent) and phase 7, which is verify-as-you-use rather than a pass ([[project_campground_schema]]). Everything below is the history.
 
 Measured 2026-09-21, after AR and CO. AWH framed it as three bodies; the third is really a family and was missing a member.
 

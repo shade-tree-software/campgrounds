@@ -1,16 +1,16 @@
 ---
 name: project_price_research
-description: "Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (161 unpriced; the 39 private no-rate entries sorted on AWH's keep test and AWH's calls applied), tools and rules; dated history below"
+description: "Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (160 unpriced; the 39 private no-rate entries sorted on AWH's keep test and AWH's calls applied), tools and rules; dated history below"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
-  modified: 2026-10-11T17:32:47.760Z
+  modified: 2026-10-11T18:08:09.332Z
 ---
 
 **RESUME HERE - state at the end of the 2026-10-11 session** (the dated paragraphs below are the history, oldest first).
 - **Task:** a nightly rate on every entry with neither `fees.nightly_low/high` (own or inherited via `cs.resolve`) nor an RV Life `price_tier`. Count with `python3 audit/price_research/unpriced.py` (`--state`, `--ownership`, `--json OUT`, `--from-note`). Land findings with `apply.py FINDINGS.json [--apply]`: it skips anything already priced or manual/reported, and `--replace-derived` lands a confirmed figure over a note-derived one.
-- **161 unpriced** after the private no-rate pass and AWH's drops (local 131, state 25, private 3, wma 1, federal 1). The private 3 are Gary's 130 and Bath County 255 (kept by AWH without a rate - don't re-chase) and Clear Creek Station 14683 (weekly rate only). The 198-entry snapshot `audit/price_research/remaining_2026-10-11.json` predates that pass; its buckets were:
+- **160 unpriced** after the private no-rate pass and AWH's drops (local 131, state 25, private 2, wma 1, federal 1). The private 2 are Gary's 130 and Bath County 255 (kept by AWH without a rate - don't re-chase). Clear Creek Station 14683 was priced $33-42 from a RoverPass Instant Book quote (2026-10-11; the listing's "starting daily $15" is a placeholder - recipe in the browser README) and its note now says south of Cascade. The 198-entry snapshot `audit/price_research/remaining_2026-10-11.json` predates that pass; its buckets were:
   - closed 14 (status set on each; 9 are TN state parks under renovation);
   - WV WMAs 7 (no fee published anywhere; AWH: leave empty);
   - Kansas 6 (AWH hold until after 2026-11-01);

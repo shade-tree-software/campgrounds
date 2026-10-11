@@ -178,6 +178,13 @@ Engines worked by hand (no script yet):
   (`app.thebookingbutton.com/properties/<x>?check_in_date=DD-MM-YYYY&check_out_date=DD-MM-YYYY&number_adults=2`)
   redirects to `direct-book.com/properties/<x>?checkInDate=YYYY-MM-DD&checkOutDate=YYYY-MM-DD&...`;
   each rate plan prints its name, then a "CAD 44.00" line (Kayanara: Standard RV Campsite Rate).
+- **RoverPass** (`roverpass.com/c/<slug>/booking/search?accommodation=overnight&check_in=YYYY-MM-DD&check_out=YYYY-MM-DD&site_type=type_rv_site`):
+  the URL dates take, no sign-in, and each RV rate prints as "$37.00 USD/ night" with its longest
+  rig. **The listing page's "Starting Daily" column can be a placeholder** - $15 for every hookup
+  site against $30 for a primitive one at Clear Creek Station ID - so quote the engine instead.
+  Rig size is two react-select menus (open with `xy`, then click `[id^=react-select-N-option]`);
+  the cart then shows the subtotal and RoverPass's non-refundable platform fee ($3.95); tax only
+  appears at the checkout details step.
 
 ### Playbook: where a "no rate" campground's rate actually is
 
