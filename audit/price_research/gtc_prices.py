@@ -54,6 +54,7 @@ def main():
     ap.add_argument("--host", required=True)
     ap.add_argument("--entries", required=True)
     ap.add_argument("--dates", default="2027-05-11,2027-06-15")
+    ap.add_argument("--currency", default="USD", choices=["USD", "CAD"])
     ap.add_argument("out")
     a = ap.parse_args()
     dates = a.dates.split(",")
@@ -121,7 +122,7 @@ def main():
             continue
         lo, hi = min(vals), max(vals)
         lo, hi = (int(v) if float(v).is_integer() else round(v, 2) for v in (lo, hi))
-        out.append({"id": e["id"], "fees": {"nightly_low": lo, "nightly_high": hi, "currency": "USD",
+        out.append({"id": e["id"], "fees": {"nightly_low": lo, "nightly_high": hi, "currency": a.currency,
                     "note": f"Base nightly fee (before any nonresident surcharge) for RV-capable sites ({len(sites)} sites, {len(groups)} fee "
                             f"schedules), Tuesday nights {' and '.join(dates)}, from the {a.host} site fee panel."},
                     "source": f"https://{a.host}/api/resource/feeDetails ({park[0]} / {label}; "
