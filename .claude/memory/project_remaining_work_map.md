@@ -1,9 +1,14 @@
 ---
 name: project_remaining_work_map
-description: What is actually left on the campground database, measured 2026-09-21 — one schema body and a gap family with four faces
+description: "What is left on the campground database — CURRENT block at the top (2026-10-11 all gaps closed, price research active, schema phases 6/7 open); below it the 2026-09-21 map and how each gap was worked"
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
+  modified: 2026-10-11T16:39:30.729Z
 ---
+
+**CURRENT (2026-10-11): every gap below is closed.** The private gap is COMPLETE for the lower 48 and Canada ([[project_private_gap]], [[project_canada_no_rate_followup]]), and two late reservable-site passes are done too ([[project_pa_sf_reservable_gap]], [[project_fl_wmd_reservable_gap]]). Active work is task #2, a nightly rate on every entry: 168 left, nearly all waiting on a phone call, a 2027 rate sheet or an AWH decision. The RESUME block is in [[project_price_research]]. Still open from section 1: phase 6 registry rows (pick by entry count, since the nights signal is spent) and phase 7, which is verify-as-you-use rather than a pass ([[project_campground_schema]]). Everything below is the history.
 
 Measured 2026-09-21, after AR and CO. AWH framed it as three bodies; the third is really a family and was missing a member.
 

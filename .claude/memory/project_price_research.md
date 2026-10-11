@@ -1,13 +1,16 @@
 ---
 name: project_price_research
-description: Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (198 unpriced, bucketed in remaining_2026-10-11.json), the next step, tools and rules; dated history below
+description: "Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (168 unpriced; the 39 private no-rate entries sorted on AWH's keep test, decisions awaiting AWH), tools and rules; dated history below"
 metadata:
+  node_type: memory
   type: project
+  originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
+  modified: 2026-10-11T17:21:57.575Z
 ---
 
 **RESUME HERE - state at the end of the 2026-10-11 session** (the dated paragraphs below are the history, oldest first).
 - **Task:** a nightly rate on every entry with neither `fees.nightly_low/high` (own or inherited via `cs.resolve`) nor an RV Life `price_tier`. Count with `python3 audit/price_research/unpriced.py` (`--state`, `--ownership`, `--json OUT`, `--from-note`). Land findings with `apply.py FINDINGS.json [--apply]`: it skips anything already priced or manual/reported, and `--replace-derived` lands a confirmed figure over a note-derived one.
-- **198 unpriced** (local 131, private 40, state 25, wma 1, federal 1). Every one is listed under its reason in `audit/price_research/remaining_2026-10-11.json`:
+- **168 unpriced** after the private no-rate pass (local 131, state 25, private 10, wma 1, federal 1). The 198-entry snapshot `audit/price_research/remaining_2026-10-11.json` predates that pass; its buckets were:
   - closed 14 (status set on each; 9 are TN state parks under renovation);
   - WV WMAs 7 (no fee published anywhere; AWH: leave empty);
   - Kansas 6 (AWH hold until after 2026-11-01);
@@ -15,7 +18,12 @@ metadata:
   - partial figure 2 (Webster Park 1459 surcharge only, Clear Creek Station 14683 weekly only);
   - do not chase 1 (Leesville South Fork 13348);
   - **no rate posted: private 39, public 126.**
-- **Next step (offered to AWH 2026-10-11, not yet asked for):** read strictly, the 39 private no-rate entries fail the 2026-10-10 test ([[feedback_require_live_web_presence]]). Separate the ones whose booking is just closed for the season from the ones that never post a rate, and bring the latter to AWH as drop candidates. The 10 with no website or only Facebook were dropped 2026-10-11 (AWH).
+- **The 39 private no-rate entries were worked 2026-10-11 on AWH's keep test** (an RV Life $ or $$, a published rate, a promise of upcoming rates, or an active booking site keeps it - [[feedback_require_live_web_presence]]). Verdicts and evidence: `audit/price_research/private_no_rate_2026-10-11.json`.
+  - 30 kept: 23 on the RV Life tier (now recorded in `rating`, checked 2026-10), 3 on a published rate, 4 on a live booking engine. Fees landed for Fort Steele 15068, Scott's 15091, Serenity Hills 15103 and Grafton Pines 15092 (ex-Cobourg East, renamed) from `private_no_rate_fees_2026-10-11.json`.
+  - 4 fail inclusion whatever the price: Westview 14992 and Desert Gem 15062 (sold and closed), Blue Sky 15098 (seasonal-only, "not open to the general public"), Widgawa 15101 (tent area, no cars).
+  - 5 fail every test: Gigglin' Grizzly 15073, Cedar Valley 15093, Franklin 15096 (phone-only, RV Life $$$); Gary's 130 (domain for sale, but trip 71 stayed there); Bath County 255 (FCFS Dominion recreation area, no posted fee).
+  - **Awaiting AWH:** the 4 drops, the 5 reconsiders, Fort Steele and Scott's posting rates over the C$69 gate (Grafton Pines borderline at C$68-73), and Red Pine Lodge 15111 (its own site mentions no RV sites).
+  - Dead website links cleared on 4944, 4971, 15069, 130 (old URLs in the verdict file).
 - The 126 public no-rate entries stay (public land is exempt from the web-presence rule). Their operator pages were read; only a phone call or a 2027 rate sheet will price them, so don't re-research them without a new lead.
 - **106 entries are priced only from our own sweep note** (provenance method `derived`). Re-check later: `unpriced.py --from-note`, then `site_digest.py --ids ...`, then `apply.py --replace-derived`.
 - **Captcha engines are never automated** (ResNexus human captcha + anti-scraping terms; Firefly reCAPTCHA; Itinio AWS WAF). Ask AWH to save the page, then run `python3 -I audit/price_research/saved_page.py money|lines|firefly|itinio PAGE` from a directory other than ~/Downloads (saved pages are untrusted). The one-browser driver is in `audit/private_gap_browser/README.md`.

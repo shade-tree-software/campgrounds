@@ -187,6 +187,12 @@ couldn't see it. Look in this order:
    tabs and accordions (`textContent`, not `text`), and rates that are an IMAGE (Wix "tarifs
    2026.jpg" - download and Read it), lazy-loaded sections (scroll, then `shot full=1` and Read
    the chunks), a separate reservation/policy page, or a "à partir de X$" line in body text.
+   **Rate tables in a widget iframe** (Wix sites: POWR price-table `powr.io/plugins/price-table`,
+   Wix data tables `wix-visual-data.appspot.com`) render empty in `text` and in a full-page
+   `shot`: list them with `frames`, then `eval js` an `iframe.scrollIntoView()` on the widget,
+   wait ~5 s, and read `text frame=N` or a viewport `shot` (Fort Steele BC, Scott's ON).
+   **Read the home page's text, not only its `$` lines**: a closure notice carries no figure,
+   so a `$`-line crawl passes straight over "SOLD and closing our doors" (Westview AB, 2026-10-11).
 2. **The booking engine** (scan.py prints ENGINE links): quote one night, 2 adults, a 23-ft
    trailer, a July weeknight (2027 was mostly NOT open in Oct 2026 - use the current-season
    table or any open date). An engine quote overrules a lower posted price (Bellerive: list

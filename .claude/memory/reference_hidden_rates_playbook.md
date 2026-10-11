@@ -1,8 +1,11 @@
 ---
 name: reference-hidden-rates-playbook
-description: How to find a private campground's real nightly rate, minimum stay and seasonal share when the static crawl says "no rate" - browser driver + booking-engine helpers + Wayback imagery + Bonjour Quebec; full recipes in audit/private_gap_browser/README.md
+description: "How to find a private campground's real nightly rate, minimum stay and seasonal share when the static crawl says \"no rate\" - browser driver + booking-engine helpers + Wayback imagery + Bonjour Quebec; full recipes in audit/private_gap_browser/README.md"
 metadata:
+  node_type: memory
   type: reference
+  originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
+  modified: 2026-10-11T17:21:03.410Z
 ---
 
 Built 2026-10-08 during [[project-canada-no-rate-followup]]; of 72 Quebec "no_rate" parks, most turned out to post a rate. Full recipes, commands and examples: `audit/private_gap_browser/README.md` (sections "Interactive driver and booking-engine recipes" and the two playbooks). Setup is the same as the other helpers there (`PYTHONPATH=~/.cache/ekko-pw`, Playwright Chromium).
@@ -14,6 +17,8 @@ Built 2026-10-08 during [[project-canada-no-rate-followup]]; of 72 Quebec "no_ra
 
 **Non-obvious things that cost time to learn:**
 - Rates hide in hidden tabs/accordions (read `document.body.textContent`, not innerText), in images (Wix "tarifs 2026.jpg"), lazy-loaded sections, separate policy/reservation pages, or only in the engine.
+- Wix rate widgets (POWR price-table, Wix data-table) are iframes that stay empty until scrolled into view: `frames`, scrollIntoView, then `text frame=N` or a viewport `shot` (2026-10-11).
+- **RV Life's Canadian avg_rate goes stale and understates**: Fort Steele C$41 avg vs C$70-85 posted, Scott's C$52 vs C$76-96, Grafton Pines C$38 vs a C$68-73 CampLife quote (2026-10-11). Don't read an RV Life tier as evidence a Canadian park is still under the gate.
 - reservationcamping.ca shows the minimum stay ONLY on each site's "Voir ce site" page; the nights select proves nothing. RéservPro minimums are per service type and date; its `check-disponibilite_service` JSON gives Prix and NbrDispo (= traveller sites free).
 - RMS Rates page opens directly by URL (no picker); "From CAD" is tax-included, the daily grid is pre-tax.
 - Wayback CDX recovers last season's rate table when the page now says "prix à venir".
