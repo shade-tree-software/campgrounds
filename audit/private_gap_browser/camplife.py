@@ -7,7 +7,7 @@
 # length (/api/campground/<id>/site/<siteId>) and the /api/invoice/estimate answer
 # (resSubTotal = pre-tax total for the stay; Taxes listed separately). Messages such as
 # "2027 RESERVATIONS OPEN TO BOOK MID NOVEMBER" or "No sites available" print as they come.
-# Needs drv_server.py (one browser).
+# Needs drv_server.py (one browser). Amounts are in the park's own currency (USD in the US).
 import json, os, re, socket, sys
 
 SOCK = os.environ.get('DRV_SOCK') or os.path.expanduser('~/.cache/ekko-drv.sock')
@@ -54,6 +54,12 @@ if not search or search.startswith('ERROR'):
 call(cmd='click', sel=search, wait='1500')
 opts = json.loads(call(cmd='eval', js="JSON.stringify([...document.querySelectorAll('.vs__dropdown-option')].map(e=>e.innerText.replace(/\\s+/g,' ').trim()))"))
 avail = [i for i, o in enumerate(opts) if 'Available' in o]
+# CL_GREP / CL_NOT (regexes on the option text) keep pavilions and cabins out of the picks;
+# CL_LIST=1 prints every available option first (US parks list day-use pavilions too).
+inc, exc = os.environ.get('CL_GREP'), os.environ.get('CL_NOT')
+avail = [i for i in avail if (not inc or re.search(inc, opts[i], re.I)) and not (exc and re.search(exc, opts[i], re.I))]
+if os.environ.get('CL_LIST'):
+    print('  available:', ' | '.join(opts[i] for i in avail))
 print('  sites in the list: %d, available: %d' % (len(opts), len(avail)))
 picks = sorted(set(avail[int(k * (len(avail) - 1) / max(1, n - 1))] for k in range(min(n, len(avail))))) if avail else []
 call(cmd='press', key='Escape')
@@ -70,7 +76,7 @@ for idx in picks:
     if est:
         try:
             e = json.loads(call(cmd='body', i=est[-1], max='20000'))['invoice']
-            quote = 'subtotal C$%s, taxes %s, total %s' % (e.get('resSubTotal'), [x.get('subTotal') for x in e.get('items', [])], e.get('total'))
+            quote = 'subtotal %s, taxes %s, total %s' % (e.get('resSubTotal'), [x.get('subTotal') for x in e.get('items', [])], e.get('total'))
         except Exception as ex:
             quote = 'estimate unreadable: %s' % ex
     print('  - %s || %s || %s' % (opts[idx], desc, quote or 'no estimate'))

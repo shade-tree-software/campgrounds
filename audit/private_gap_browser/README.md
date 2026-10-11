@@ -96,7 +96,14 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   Duet date pickers through the host element (`value` + a `duetChange` event - typing appends to
   the old value), opens Select Site, prints the notices ("2 night minimum...", "2027
   RESERVATIONS OPEN MID NOVEMBER") and the available count, and prices N sites from the
-  `/api/invoice/estimate` XHR (resSubTotal = pre-tax).
+  `/api/invoice/estimate` XHR (resSubTotal = pre-tax). US parks list day-use pavilions among the
+  sites: `CL_NOT='PAV|cabin'` (or `CL_GREP=`) filters the picks and `CL_LIST=1` prints every
+  available option first. Some parks show campsite prices only after a login ("Login required to
+  check availability ... for all sites except pavilions", Jetty Park FL): don't sign up, ask AWH.
+- `pwu.py URL ARRIVE DEPART` - Park With Us (`parkwith.us/camps/<slug>`, city and county
+  parks): picks the dates on its react-day-picker, fills the prerequisites (23-ft rig, 2 adults)
+  and tallies the site list's "$65.00 / night" prices by site row (Noccalula Falls AL, Carl
+  Precht WA).
 - `campspot.py SLUG ARRIVE DEPART` - Campspot. **Two traps, both met in Ontario:** (1) the
   `/book/<slug>/search/<in>/<out>/guests.../list` page can say "no sites available" while the
   park's availability API lists free sites, and (2) the guests segment follows the PARK's guest
@@ -184,7 +191,38 @@ Engines worked by hand (no script yet):
   site against $30 for a primitive one at Clear Creek Station ID - so quote the engine instead.
   Rig size is two react-select menus (open with `xy`, then click `[id^=react-select-N-option]`);
   the cart then shows the subtotal and RoverPass's non-refundable platform fee ($3.95); tax only
-  appears at the checkout details step.
+  appears at the checkout details step. A RoverPass-built site (`rover.domains/preview/<slug>`)
+  uses the same slug (Marion MI).
+
+Public engines worked 2026-10-11 (the public no-rate leads, `audit/price_research/public_engine_leads_2026-10-11.json`):
+- **WebTrac** (`*.myvscloud.com/webtrac/web/search.html?display=detail&module=RN&keyword=<park>&search=yes`):
+  the result rows print "$27.00/$30.00" (resident/non-resident) and "Item Details" names each fee
+  ("Deer Haven Resident (Standard Fee): $27.00"). Some counties show only the default tier on every
+  date ("Weekday Off-Season: $61.00" at Oceano CA) - say so rather than guessing the others.
+- **FareHarbor** (`fareharbor.com/embeds/book/<company>/items/`): click a site's "Select date", then a
+  time slot; the booking form lists night-count options with totals ("- 2 Nights US$55"). Read the
+  nightly rate off the ladder (+$25 a night) - the gap is a per-booking charge (White Mound WI:
+  2 nights $55 = 2 x $25 + $5). No 1-night option = online minimum of 2 nights.
+- **The Flybook** (`go.theflybook.com/book/<id>/ListView/...`): the category tabs ("CAMPSITES & RV
+  SLIPS") print "$25 per night" on each listing without dates.
+- **reservationfriend / camping.com** (`properties.<host>/<Park-Name>/Reservations`, Leisure
+  Interactive): choose Campsite, then unit type, length 23, slide-outs 0, width 8, tick an Amp
+  Service box; `onSearch()` submits (the button click alone didn't). A 1-night search for a
+  2-night-minimum park comes back blank - search 2 nights; the availability grid prints the
+  nightly price in each date cell (Powers OR $23).
+- **ActiveCommunities** (`anc.apm.activecommunities.com/<org>/reservation/search?keyword=<park>`):
+  each facility's "View fee details" lists the per-day fee by customer type and the processing fee.
+- **Camava** (Don Pedro Recreation Agency `reservations.donpedrolake.com/reservation/camping/`,
+  the same family as PG&E's): pick the park, dates and nights; "Use Fee" is the STAY total, so
+  halve a 2-night search. Nights start at 2 there.
+- **MetroParks of Butler County OH** (`reservations.yourmetroparks.net`, plain CGI): the grid and
+  the day view carry no fee; it appears only in the cart, and the reserve link didn't add a site
+  when followed directly. Ask AWH.
+- **Bonfire** (`book.letsbonfire.com/<park>`) carries a reCAPTCHA: don't automate the search
+  (same rule as Firefly); ask AWH for a saved page. **bookmysites** links now open a login page.
+- Before the engine, follow the operator's own "Rates" link even when the home page shows no `$`:
+  Point Hudson's rate card is a PDF behind `rates-and-fees/`, Sunnyside's rates are a bylaw PDF,
+  and Orchard Springs' rate page only points at the district's site (nidwater.com), which lists them.
 
 ### Playbook: where a "no rate" campground's rate actually is
 
