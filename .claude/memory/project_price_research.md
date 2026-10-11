@@ -1,11 +1,11 @@
 ---
 name: project_price_research
-description: "Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (160 unpriced; the 39 private no-rate entries sorted on AWH's keep test and AWH's calls applied), tools and rules; dated history below"
+description: "Task #2 (a nightly rate for every entry) - RESUME block at the top gives the 2026-10-11 end state (160 unpriced; 24 public entries link to booking engines nobody opened; the 39 private no-rate entries sorted on AWH's keep test and AWH's calls applied), tools and rules; dated history below"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
-  modified: 2026-10-11T18:08:09.332Z
+  modified: 2026-10-11T18:17:05.281Z
 ---
 
 **RESUME HERE - state at the end of the 2026-10-11 session** (the dated paragraphs below are the history, oldest first).
@@ -25,7 +25,7 @@ metadata:
   - **AWH decided 2026-10-11, all applied:** dropped 10 - the 4 inclusion failures, the three phone-only Canadian parks (15073, 15093, 15096), Fort Steele 15068 and Scott's 15091 (posted rates over the C$69 gate) and Red Pine Lodge 15111 (no RV sites on its own site); logged in `dropped_2026-10-11.jsonl`. Kept Gary's 130 and Bath County 255 without a rate. Grafton Pines 15092 (CampLife C$68-73, borderline) was flagged and not dropped.
   - Dead website links cleared on 4944, 4971, 15069, 130 (old URLs in the verdict file).
   - **Offered, not taken up yet:** a page-text sweep of the 158 entries admitted on a bare "operator site live" probe (QC 78, ON 34, BC 30 private; ids 14375-15177) for closures, seasonal-only and tent-only parks - the probe let all four inclusion failures above through.
-- The 126 public no-rate entries stay (public land is exempt from the web-presence rule). Their operator pages were read; only a phone call or a 2027 rate sheet will price them, so don't re-research them without a new lead.
+- The 126 public no-rate entries stay (public land is exempt from the web-presence rule). **They are NOT phone-call-only, as this line used to say:** their operator pages had been read for `$` lines and nobody followed the Reserve/Book links. A static link scan (2026-10-11, after AWH observed that missing rates were mostly sweeps that never dug - [[feedback-missing-rate-is-unresearched]]) found a booking-engine link on 24 of the 108 with a website (CampLife 4, Campspot 2, WebTrac 2, parkwith.us 2, then one each of rec1, rec.gov, RoverPass, ResNexus, RezExpert, FareHarbor, ActiveCommunities, Bonfire, FlyBook, bookmysites, reservationfriend, camping.com, Don Pedro, Butler County MetroParks). 27 more refused a non-browser fetch, and 18 have no website. Next: quote each lead in its engine, then render the 27 in the browser. List: `audit/price_research/public_engine_leads_2026-10-11.json`.
 - **106 entries are priced only from our own sweep note** (provenance method `derived`). Re-check later: `unpriced.py --from-note`, then `site_digest.py --ids ...`, then `apply.py --replace-derived`.
 - **Captcha engines are never automated** (ResNexus human captcha + anti-scraping terms; Firefly reCAPTCHA; Itinio AWS WAF). Ask AWH to save the page, then run `python3 -I audit/price_research/saved_page.py money|lines|firefly|itinio PAGE` from a directory other than ~/Downloads (saved pages are untrusted). The one-browser driver is in `audit/private_gap_browser/README.md`.
 - **Engine recipes not written down elsewhere:**
