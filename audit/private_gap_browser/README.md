@@ -233,6 +233,31 @@ Public engines worked 2026-10-11 (the public no-rate leads, `audit/price_researc
   Point Hudson's rate card is a PDF behind `rates-and-fees/`, Sunnyside's rates are a bylaw PDF,
   and Orchard Springs' rate page only points at the district's site (nidwater.com), which lists them.
 
+Public entries with no website, worked 2026-10-11 (`no_website` in the same leads file):
+- **Finding the operator's page:** the search tool mostly returns directories for a small town.
+  `https://html.duckduckgo.com/html/?q=<words>` loaded in the one browser (read `a.result__a`,
+  unwrap the `uddg` redirect parameter) turned up the town, village and county pages it missed:
+  Earl Park IN, Blanchardville WI, Starke County Parks IN, Aberdeen MS and Marathon County's booking site.
+- **State tourism listings link the operator:** the "Visit the website" link on alabama.travel led to
+  the operator's own domains. Both had lapsed: one is for sale, one redirects to casino spam.
+- **Council minutes carry fee votes:** Bloomfield IA's new site dropped its camping-fee page, but the
+  agenda PDFs are indexed; the 2025-03-06 minutes record the vote raising Lake Fisher to $20 a night.
+  Minutes also surfaced the closures and seasonal turnovers that no directory shows: Aberdeen MS
+  closed Morgan's Landing to RVs in 2022, and Hancock WI's 2026 minutes count 11 seasonal sites and
+  2 nightly tent rentals. Many small-town minutes are scanned images with no text layer, so a grep
+  that finds nothing has not ruled anything out.
+- **County fee schedules** often sit in the county's document centre rather than on the park page.
+  Marathon County WI's "Proposed 2026 Facility and Program Fees" PDF prices each campground. It
+  needed the in-page fetch above; curl got an HTML wall.
+- **Unclaimed listings, not booking channels:** a Hipcamp land page reading "Coming soon to Hipcamp /
+  Contact this campground for pricing" (Twin Forks AL, Earl Park IN); CampLinq "Claim your listing";
+  RoverPass "Claim my Campground" (Multipurpose Complex, Canton MS).
+- **RV Life listing ids can be re-pointed:** RV Life listing `multipurpose-complex-rv-park-7946` now
+  redirects to a different park, The Landing at MovieTown. Check the name and address on the page
+  before trusting its reviews.
+- **Let's Camp** (`letscamp.ca/camps/<slug>`) is the booking channel for Daajing Giids' municipal
+  campground; its "starting at" figure is the cheapest site (the walk-in tent rate).
+
 ### Playbook: where a "no rate" campground's rate actually is
 
 Of the first 72 Quebec no_rate parks, most turned out to post a rate; the static crawl just

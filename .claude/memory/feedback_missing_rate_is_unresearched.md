@@ -14,13 +14,14 @@ The data agrees. In price research #2 (2026-10-09..11), about 2,600 entries with
 - 106 from our own sweep note;
 - 65 from pages AWH read.
 
-The residue held the same lesson. The 126 public entries filed as "operator pages read, no rate posted, only a phone call will price them" had been read for `$` lines only. One static fetch found a booking-engine link on 24 of the 108 with a website, and 27 more had refused the earlier non-browser fetch. Leads: `audit/price_research/public_engine_leads_2026-10-11.json`. Working them the same day priced 17 of the 24 ($20-87 a night); the other 7 hit a login, a captcha or a cart-only price, or the engine held no rate for that park. The 27 pages that had refused the plain fetch gave 16 more in the browser, 6 of them from agencies that had moved to a new domain.
+The residue held the same lesson. The 126 public entries filed as "operator pages read, no rate posted, only a phone call will price them" had been read for `$` lines only. One static fetch found a booking-engine link on 24 of the 108 with a website, and 27 more had refused the earlier non-browser fetch. Leads: `audit/price_research/public_engine_leads_2026-10-11.json`. Working them the same day priced 17 of the 24 ($20-87 a night); the other 7 hit a login, a captcha or a cart-only price, or the engine held no rate for that park. The 27 pages that had refused the plain fetch gave 16 more in the browser, 6 of them from agencies that had moved to a new domain. The 18 with no website at all gave 10 more once their town, village or county pages were found. Two of those rates came from places no directory reaches: Bloomfield's council minutes, which record the vote raising Lake Fisher to $20, and Marathon County's fee-schedule PDF. Board minutes and the local paper also showed that three "no rate" entries are possibly closed or mostly seasonal.
 
 **Why:** the sweeps read the operator page for a rate and moved on. Booking engines show prices only after a date (sometimes a rig size) is picked, so a `$`-line read, static or rendered, never sees them. "No rate found" recorded the depth of the look, not a fact about the campground.
 
 **How to apply:**
 - Treat a missing rate as unresearched. Before writing "no rate posted", filing an entry as phone-call-only, or bringing a rate-less entry to AWH as a drop, open every Reserve/Book link on the operator page and quote a date in the engine. `scan.py` lists the engine hosts; recipes are in `audit/private_gap_browser/README.md` ([[reference-hidden-rates-playbook]]).
 - A non-browser fetch that failed has not looked at the page: retry it in the one browser.
+- No website on file means no one has looked yet. Search for the town's own page (DuckDuckGo's HTML endpoint in the browser beats the search tool for small towns), and check its council minutes and fee schedules as well as the park page.
 - Captcha engines (ResNexus, Firefly, Itinio, Bonfire) are still never automated: ask AWH to save the page.
 - At add time, take the rate from the booking channel and record it then.
 

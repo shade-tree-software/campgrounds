@@ -791,3 +791,6 @@ See [[feedback-absent-is-not-unknown]], [[feedback-responsive-all-screens]],
 [[reference-recgov-calendar-limits]] and [[reference-js-testing-without-node]] (how the
 shared JS was verified with no browser — the rating filter's tests lift the predicates
 verbatim out of the template and run them in quickjs against the real file).
+
+
+Index summary as it stood in MEMORY.md before it was shortened (2026-10-11): structured amenity/booking/fee/season fields + agency policy registry; phases 1/2/3/5 + map-popup surfacing + RATING and HOOKUPS map filters ALL DONE; phase 5 (Good Sam discounts, goodsam_discounts.py) shipped 2026-09-20 — 1,784 entries, isGsPark is the flag NOT index presence, subset-name guard is the rule to keep; coverage rating 92.2%/hookups 84.3%/booking 80.4%/sites 78.3%/facilities 63.2%/season 32.7% (phase-4 rec.gov CALENDAR walk first applied at scale 2026-09-21: +323 seasons, 1,943 still no verdict — the rest only closes by accrual); left: phase 6 registry rows (33 agency rows/932 entries) + phase 7; rules in docs/campground-schema.md

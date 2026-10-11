@@ -138,3 +138,6 @@ abandoned phone booth, not the town. See rules 2 and 14 in `SYSTEM`.
   committed `places.tsv.gz`: `python backfill_place_context.py --apply`.
 - A new machine needs its own PA SSH keys ([[reference_pa_ssh_keys]]), a `.env`
   with `GITHUB_PAT`, and `git config core.askPass`.
+
+
+Index summary as it stood in MEMORY.md before it was shortened (2026-10-11): DONE](project_travelogue_capture_gap.md) — short per-day write-ups for ALL 321 days hand-written and deployed 2026-09-11; voice memos + Whisper REMOVED ENTIRELY (don't rebuild on the offline argument); the prompt's rules are each a correction AWH made — length is a ceiling never a floor, no mileage on round-trip days, waypoints absent entirely, no second car. Open item: the waypoint/event split is the quality lever (day-one heading FIXED 2026-09-13). day_rollups.json is gitignored and lives only on hosts
