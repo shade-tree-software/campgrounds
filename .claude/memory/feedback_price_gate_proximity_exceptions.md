@@ -8,6 +8,8 @@ metadata:
 Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Sun brand skip, because their location is unusually useful:
 
 - 14882 Fort Myers / Pine Island KOA Holiday (FL, $104.50+) - near one of the family homes (AWH 2026-10-10).
+- The Fort Myers relaxed-price mini-sweep (2026-10-05, ids 14868-14877 + holds 14880/14881) is the same family-proximity exception; AWH 2026-10-10 confirmed Bonita Lake 14875, Imperial Bonita Estates 14876, Sanctuary 14877 stay.
+- 14435 Twin Palms Resort (FL, Lakeport; RV sites exactly $50) kept (AWH 2026-10-10) - $50 is at the gate, not over.
 - 3363 Liberty Harbor RV Park (NJ, $170/$189 holiday) - "unusual proximity to New York City" (AWH 2026-10-10).
 
 **Why:** the gate screens ordinary options; a rare location (family visits, a city with almost no RV camping) outweighs price.
