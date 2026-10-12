@@ -6,7 +6,7 @@
 Each decided entry gets `; re-check 2026-10-11: <stamp>` appended to its inclusion_evidence. That
 stamp is the progress record: an entry already carrying it is skipped, so this is safe to rerun.
 Optional per-entry edits ride along: `note_line` (appended after two spaces, like the MINIMUM STAY
-lines), `set` + `set_prov` (a whole schema group and its provenance) and `website` (null clears it).
+lines), `set` + `set_prov` (a whole schema group and its provenance) `website` (null clears it) and `phone`.
 A `drop_proposed` or `flag` verdict changes nothing; those wait for AWH. Dry run unless --apply. Prints the
 ids whose note changed, for the note_scan re-stamp (extract_fields.py --apply-file).
 """
@@ -36,6 +36,8 @@ for k, d in sorted(dec.items(), key=lambda kv: int(kv[0])):
     for group, val in (d.get("set") or {}).items():
         e[group] = val
         e.setdefault("provenance", {})[group] = d["set_prov"][group]
+    if d.get("phone"):
+        e["phone"] = d["phone"]
     if "website" in d:  # null clears a dead link; the old URL stays in decisions.json
         if d["website"]:
             e["website"] = d["website"]
