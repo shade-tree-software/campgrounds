@@ -9,8 +9,10 @@ progress record (an entry already carrying it is skipped, so a rerun is safe). O
 `note_line` (appended after two spaces), `set` + `set_prov` (schema groups merged through
 campground_schema.apply_update, so a bad value raises before anything is written; a `fees`
 group replaces the old one), `website` (null clears a dead link; the old URL stays in the
-record) and `phone`. `drop_proposed` and `flag` change nothing: those wait for AWH. Dry run
-unless --apply. Prints the ids whose note changed, for the note-scan re-stamp.
+record) and `phone`. `drop_proposed` and `flag` change nothing: those wait for AWH. A `drop`
+(AWH's yes, with `decided` and `why`) deletes the entry and logs it to dropped.jsonl; a rerun
+finds it gone and does nothing. Dry run unless --apply. Prints the ids whose note changed,
+for the note-scan re-stamp.
 """
 import json, os, sys
 
@@ -24,9 +26,19 @@ dec = json.load(open(os.path.join(HERE, "decisions.json"), encoding="utf-8"))["e
 path = os.path.join(ROOT, "campgrounds.json")
 rows = json.load(open(path, encoding="utf-8"))
 by = {r["id"]: r for r in rows}
-note_ids, n = [], 0
+note_ids, n, dropped = [], 0, []
 for k, d in sorted(dec.items(), key=lambda kv: int(kv[0])):
     e = by.get(int(k))
+    if d["verdict"] == "drop":
+        if e is None:
+            print(k, "already dropped")
+            continue
+        rows.remove(e)
+        dropped.append({"id": e["id"], "name": e["name"], "state": e["state"],
+                        "ownership": e.get("ownership"), "action": "removed",
+                        "why": d["why"], "decided": d["decided"]})
+        print(k, "drop", e["state"], e["name"])
+        continue
     if e is None:
         print(k, "MISSING (dropped?)")
         continue
@@ -52,11 +64,14 @@ for k, d in sorted(dec.items(), key=lambda kv: int(kv[0])):
             e.pop("website", None)
     cs.validate_row(e, label=e["name"])
     print(k, d["verdict"], e["name"][:40], "|", d["stamp"][:90])
-print(n, "entries stamped; note ids:", ",".join(map(str, note_ids)) or "-")
+print(n, "entries stamped;", len(dropped), "dropped; note ids:", ",".join(map(str, note_ids)) or "-")
 if "--apply" in sys.argv:
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8") as fh:
         json.dump(rows, fh, indent=2, ensure_ascii=False)
         fh.write("\n")
     os.replace(tmp, path)
+    with open(os.path.join(HERE, "dropped.jsonl"), "a", encoding="utf-8") as fh:
+        for rec in dropped:
+            fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
     print("written")
