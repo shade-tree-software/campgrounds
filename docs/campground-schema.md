@@ -149,7 +149,12 @@ agency. **Level 3 exists for federal**, whose policy is set per agency and large
 recreation.gov rather than per state — without it a single federal rule would need fifty
 identical `federal:XX` rows, and the 3,738 federal entries would be unreachable in practice.
 Levels compose per field, so a `federal` baseline and a `federal:usfs` override merge
-instead of replacing one another.
+instead of replacing one another. **An explicit ref replaces level 2, though** (AWH
+2026-10-12). Level 2 is itself an agency, the state park system, and the explicit ref names
+the agency the entry actually belongs to, so the two are alternatives. Merged per field, any
+key the second agency's row left unset showed the park system's value under the other
+agency's name: Washington State Parks' 10-night maximum on all 34 Washington DNR entries,
+Michigan's 180-day window on a state forest. Level 3 still composes under an explicit ref.
 
 **`policy_ref: "none"` declines all three, and exists because levels 2 and 3 are DERIVED
 and therefore cannot otherwise be refused.** An entry cannot be `ownership: state` in
@@ -167,19 +172,15 @@ merely has the wrong value — fix the row. **Both sides must agree:** `policy_r
 `campground_schema.py` and `policyRefFor()` in `templates/campground_manage.html`, or the
 manage form keeps offering agency hints the server no longer applies.
 
-**A second agency in the same state gets its own explicit row, and that row must set every
-key the state's row sets.** New York's DEC campgrounds (`state:new-york-dec-campgrounds`,
-2026-10-12) are the worked case: DEC is a separate agency from NY State Parks that books on
-the same ReserveAmerica site and charges one flat fee per campground, not State Parks' $17
-base plus amenity charges. Its entries are still `ownership: state` in NY, so `state:NY`
-stays in their chain, and the merge is per KEY: anything the DEC row left unset would show
-a State Parks value under DEC's name. `tests/test_campground_schema.py` pins it. The older
-explicit rows predate the rule and do let a little through: all 34 `state:washington-dnr`
-entries show Washington State Parks' 10-night maximum, and one Michigan state forest shows
-the state parks' 180-day window. DEC's state-forest camping areas take `policy_ref: none`
-instead, because primitive camping on state land is outside DEC's campground program too
-("stays of more than three days in one place require a permit from the New York State
-Forest Ranger").
+**A second agency in the same state gets its own explicit row.** New York's DEC campgrounds
+(`state:new-york-dec-campgrounds`, 2026-10-12) are the worked case: DEC is a separate agency
+from NY State Parks that books on the same ReserveAmerica site and charges one flat fee per
+campground, not State Parks' $17 base plus amenity charges. Before explicit refs replaced
+level 2, `state:NY` filled every gap in the DEC row, so the row was written to set every key
+`state:NY` sets, and `tests/test_campground_schema.py` still pins that it inherits nothing
+from State Parks. DEC's state-forest camping areas take `policy_ref: none` instead, because
+primitive camping on state land is outside DEC's campground program too ("stays of more than
+three days in one place require a permit from the New York State Forest Ranger").
 
 **A verified entry fact can make an inherited one moot, and then it is dropped**
 (`_moot_agency_keys`, added 2026-09-23). The merge is per KEY, so an entry's own

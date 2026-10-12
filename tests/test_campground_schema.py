@@ -289,8 +289,7 @@ class TestRegistryResolution(unittest.TestCase):
         self.assertEqual(cs.policy_refs(entry), ["federal:VA", "federal"])
         named = {"ownership": "federal", "state": "ID",
                  "policy_ref": "federal:usfs"}
-        self.assertEqual(cs.policy_refs(named),
-                         ["federal:usfs", "federal:ID", "federal"])
+        self.assertEqual(cs.policy_refs(named), ["federal:usfs", "federal"])
 
     def test_policy_ref_none_declines_every_level(self):
         # The derived {ownership}:{state} level cannot be declined any other
@@ -432,6 +431,22 @@ class TestRegistryResolution(unittest.TestCase):
         vals = cs.resolve(entry, reg)["booking"]["values"]
         self.assertEqual(vals, {"platform": "recreation.gov",
                                 "window_opens_days": 365})
+
+    def test_a_second_state_agency_replaces_the_state_parks_row(self):
+        # Level 2 is an agency too. Merged per field, the park system filled
+        # every gap in the other agency's row under that agency's name: all 34
+        # Washington DNR entries read State Parks' 10-night maximum (AWH
+        # 2026-10-12). The level-3 baseline still composes.
+        reg = {"state:WA": {"booking": {"reservable": True, "max_stay_nights": 10}},
+               "state:washington-dnr": {"booking": {"reservable": False}},
+               "state": {"booking": {"platform": "none"}}}
+        entry = {"ownership": "state", "state": "WA",
+                 "policy_ref": "state:washington-dnr"}
+        self.assertEqual(cs.policy_refs(entry), ["state:washington-dnr", "state"])
+        got = cs.resolve(entry, reg)["booking"]
+        self.assertEqual(got["values"], {"reservable": False, "platform": "none"})
+        self.assertEqual(cs.resolve({"ownership": "state", "state": "WA"}, reg)
+                         ["booking"]["values"]["max_stay_nights"], 10)
 
     def test_a_plain_entry_inherits_and_is_marked_agency(self):
         entry = {"ownership": "state", "state": "NY"}
@@ -674,10 +689,11 @@ class TestShippedRegistry(unittest.TestCase):
     def test_dec_campgrounds_take_nothing_from_state_parks(self):
         """New York's DEC campgrounds are a different agency from NY State Parks.
 
-        They are `ownership: state` in NY, so their refs still include state:NY,
-        and the levels merge per KEY: any key the DEC row left unset would show
-        a State Parks value (the flagship note, the $17-plus-add-ons schedule)
-        under DEC's name. AWH 2026-10-12, on Cranberry Lake and Meadowbrook.
+        AWH 2026-10-12, on Cranberry Lake and Meadowbrook. The DEC row was
+        written while explicit refs still merged with state:NY per KEY, so it
+        sets every key state:NY sets; with level 2 replaced, state:NY must not
+        be in their chain at all, and nothing they inherit may differ from
+        the DEC row.
         """
         import json
         import os
@@ -694,6 +710,7 @@ class TestShippedRegistry(unittest.TestCase):
             entries = [e for e in json.load(f) if e.get("policy_ref") == ref]
         self.assertGreaterEqual(len(entries), 43)
         for e in entries:
+            self.assertNotIn("state:NY", cs.policy_refs(e))
             for group, r in cs.resolve(e, self.rows).items():
                 for key in r["inherited"]:
                     with self.subTest(id=e["id"], group=group, key=key):

@@ -475,7 +475,8 @@ def policy_refs(entry):
 
     Three levels, because two kinds of agency are shaped differently:
 
-      1. an explicit `policy_ref` — a county, or a named federal agency
+      1. an explicit `policy_ref` — a county, a named federal agency, or a
+         second agency in a state (Washington DNR, New York DEC)
       2. `{ownership}:{state}` — where the state IS the agency (state parks,
          provincial parks), which is most of the database
       3. `{ownership}` alone — where it is not. Federal camping policy is set
@@ -486,6 +487,14 @@ def policy_refs(entry):
 
     More specific wins per FIELD, not per row, so a `federal` baseline and a
     `federal:usfs` override compose rather than replacing one another.
+
+    An explicit ref REPLACES level 2 rather than layering over it. Level 2 is
+    itself an agency (the state park system), and the explicit ref names the
+    agency the entry actually belongs to, so the two are alternatives: merged
+    per field, every key the second agency's row left unset showed the park
+    system's value under the other agency's name. All 34 Washington DNR entries
+    read Washington State Parks' 10-night maximum that way, and a Michigan state
+    forest the state parks' 180-day window (AWH 2026-10-12).
 
     The sentinel `policy_ref: "none"` returns NO rows at all. Levels 2 and 3 are
     derived from ownership and state, so they cannot otherwise be declined, and
@@ -500,7 +509,7 @@ def policy_refs(entry):
         refs.append(explicit)
     ownership = (entry.get("ownership") or "").strip()
     state = (entry.get("state") or "").strip()
-    if ownership and state:
+    if ownership and state and not explicit:
         refs.append(f"{ownership}:{state}")
     if ownership:
         refs.append(ownership)
