@@ -364,3 +364,23 @@ $8.50 reservation fee (`ne_registry_2026-10-12.py`).
 
 Not priced: Bowman Lake, Champion Lake, Crystal Lake, DLD Wayside, Lake Wanahoo and Long Lake are not on the grid, and
 their pages give no fee.
+
+## North Dakota (2026-10-12)
+
+14 entries from North Dakota Parks and Recreation's booking site, ReserveND (the US eDirect/Tyler engine,
+ndparksrdr.usedirect.com/rdr/rdr/): `rdr_place.py` listed each park's campgrounds and site types with their longest
+vehicle length (`nd_places_2026-10-12.json`), `rdr_rates.py` found sample sites of each type in October
+(`nd_booking_rates_2026-10-12.jsonl`), and `rdr_reprice.py` priced them for Tue 2027-06-15 and Sat 2027-06-19
+(`nd_booking_rates_june_2026-10-12.jsonl`); `nd_build.py` builds `nd_fees_2026-10-12.json`. The prices are the same in
+every park: primitive $15 every night, standard (electric) and modern (electric and water) $25 ($30 on a Saturday),
+premium (full hookups) $30 ($35), which is what the 2026 State Parks Guide's '$25-30' and '$30-35' mean. Base = an
+entry's cheapest primitive site a 23-ft rig fits (a blank length is unknown, not short), else its cheapest hookup site;
+electric and full hookups are add-ons on it, and weekend is the base site's Saturday difference, with the other types'
+Saturday prices in the note. North Dakota has no registry row, so each entry carries the $7 daily vehicle permit ('All
+vehicles entering a state park must have a valid daily or annual vehicle entrance permit. This includes overnight
+stays', the FAQ) and the reservation fee. The fee is the booking engine's: every sampled site carries a $6.00 'Fee',
+the field where Ohio's engine puts its $6.50 reservation fee, while the FAQ still says '$5.80' online and '$9.00' by
+phone, 'charged per campsite'. Cross Ranch's primitive campground note said $17; corrected to $15 and re-scanned.
+
+Not repriced: Pembina Gorge 13958 keeps the guide's $25-30 from 2026-10-10 (the new campground had no sites to sample
+in October). Not priced: Strawberry Lake 5900 (ND Forest Service) has no dated fee.
