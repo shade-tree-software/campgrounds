@@ -104,5 +104,5 @@
 - [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
 - [Price-gate proximity exceptions](feedback_price_gate_proximity_exceptions.md) — Pine Island KOA (family) and Liberty Harbor NJ (NYC) kept despite price/brand; ask before dropping such cases
 - [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 15339-15341; other eastern agencies surveyed, none else qualify; next id 15342
-- [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11: everything the old minimum rule removed/skipped re-read; 17 back (15342-15358) + 2 marked in place, 10 still out, 7 asks for AWH; next id 15359
+- [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359; AWH dropped Goethe, Péninsule, Alcona, Red Gut Bay; 43 existing entries marked/corrected; next id 15360
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains

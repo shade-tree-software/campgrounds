@@ -1,6 +1,6 @@
 ---
 name: project-minimum-stay-reopen
-description: "2026-10-11 re-open of everything the 2026-10-01 standing-minimum rule removed or skipped: 17 added/restored + 2 re-adds marked (ids 15342-15358), 10 still out on other grounds, 7 questions for AWH; next id 15359"
+description: "2026-10-11/12 re-open of everything the old standing-minimum rule removed or skipped (17 back, ids 15342-15358; Lac Libby 15359 after AWH's answers; 4 dropped), plus the 2026-10-12 follow-up that marked or corrected 43 existing entries; next id 15360"
 metadata:
   node_type: memory
   type: project
@@ -35,4 +35,8 @@ Lesson: read what the minimum is attached to (cabins, events, holidays) before c
 - Not answered, so still `ask` rows: the four 10-01 removals that are also over the $50 gate (Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA). They stay out unless AWH says otherwise.
 - Removals are logged in `audit/minimum_stay_reopen/dropped.jsonl`; `apply.py` now has `drop` and `minimum` verdicts. Next id 15360.
 
-**Follow-up not done:** 59 existing entries mention an unscoped minimum in their note but carry no `booking.min_stay`. Many are fine as they are: SC state parks and the Go Camp Tennessee sites waive it by phone, and some minimums apply only to cabins. The rest are worth marking: Bison Ridge IA, Minong WI, Metzler and Armitage OR, Oak Park CA, Chippewa MN, Esofea WI, Jellystone NS, Alcona MI (5 nights in summer, ask), The Landing on Red Gut Bay ON (4 nights, ask). Find them with the regex scan in this session's notes, or grep notes for "night min".
+**Follow-up DONE 2026-10-12** (`minimum` rows in decisions.json; 43 entries edited, each with a dated source read that day). The scan of notes naming a minimum without `booking.min_stay` found 59; it had also skipped about a dozen whose note mentioned an operating season near the minimum, and those were done too.
+- Marked (min_stay + MINIMUM STAY line + booking.note, with any walk-up or waiver path): Silver Thread CO, Bison Ridge IA, Minong, Petenwell, North Bay Shore, Sidie Hollow and Esofea WI, Wabasis and Brower MI, Button Bay VT (waived inside 7 days), Ralph J Andrews NC, nine Go Camp Tennessee parks (2 nights; 'call the campground to request an exception'), Bates Beach BC and Granite Point WA (summer), Onoville NY (3 nights July-August), Jellystone NS, Bunker's WA, Jack Guthrie TX (3), Tolt-MacDonald WA, Fort Camping BC, Honeycomb AL, Scharnberg IA (3, first-come sites), Wilsonville PA, Paradise Shores CA (5 over July 4th, none same-day).
+- Misreads, notes corrected: weekend or holiday rules read as standing (Driftwood IL, Rangeley and Peaks-Kenny ME, Chippewa MN, Nature's Hideaway AB, South Bay ON whose waterfront tier needs 7 nights in summer); booking lead times read as minimums (Metzler OR: book 3 days ahead; Twin Lakes WI: rec.gov 4-day cutoff); none found (Armitage OR); NY state parks reworded to the agency's '1-3 nights by park' with same-day bookings and walk-ins.
+- Left alone: SC state parks (registry row carries the minimum and its waiver), cabin- or rental-only minimums, High Falls SC (waterfront sites only), Sandy Cove OK (event), Niagara Shores NY (busy-time lakeview sites), Zion OH (none).
+- Not confirmed, notes unchanged: Loud Thunder IL (walk-ups exist), Oak Park CA and Otsego Lake MI (Itinio shows a human check), Hidden Valley Ranch NM, Blackhawk Lake WI (CampLife), Hoeft's WI, Elkhorn CO, Omaha Beach NE, Amishville IN.
