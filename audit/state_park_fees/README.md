@@ -241,3 +241,26 @@ where the park records none for that kind (Queen Wilhelmina, Moro Bay). A primit
 Mississippi River State Park's calendar lists Beech Point's and Storm Creek Lake's sites together, so both entries carry
 the park's range. Davidsonville's booking link pointed at a slug that now redirects to the park finder; fixed
 (`ar_link_fixes_*.json`). Senior discounts from the parks' camping policy are in the notes.
+
+## Iowa State Parks and Forests (2026-10-12)
+
+54 entries from the DNR's 'Camping Rates' sheet, updated February 15, 2026 (`ia_rate_sheet_2026-10-12.txt`, fetched in
+the browser because iowadnr.gov answers plain requests with 504s): a peak (May 1 - October 15) and an off-season price
+per park and site type, 'Rates are per night and include sales tax'. Checked on iowastateparks.reserveamerica.com:
+sampled sites priced for Wed 2026-10-14 and Tue 2026-10-20 (`ra_quick.py` → `ia_booking_sample_*.jsonl`; 597 quotes
+match the sheet) and every site of all 53 parks with its type and length (`ra_list.py` → `ia_sites_2026-10-12.json`).
+`ia_build.py`: an entry's base is the non-electric site where the park has one a 23-ft rig fits, else its electric
+site; nightly_low / nightly_high are the base's off-season and peak prices, electric and full hookups the peak
+differences, `weekend: 0`. Off-season, every hookup site is priced as electric (the water is off). The $4.50 reservation
+fee is on every quote; the $4-5 a night holiday-weekend fee (Memorial Day, July 4th, Labor Day) is in the notes. A
+non-electric site with no length posted counts as fitting: the ones read are typed 'RV Site, Tent Site, Trailer Site'
+with 26-100 ft sites (`ia_ne_site_details_2026-10-12.jsonl`); 'Tent Only' and walk-to sites never do. Where the booking
+site charges something else the entry carries it and the note quotes the sheet: Brushy Creek's Beach Campground still
+charges $25 electric / $35 full hookups (sheet $26 / $38), and Beeds Lake, Bellevue and Dolliver sell full-hookup sites
+at electric + $12 that the sheet has no column for (Backbone's two are its camp hosts'). Host and two-family Buddy sites
+are left out, and so is Lake Macbride's primitive south loop.
+
+Not priced: Honey Creek Resort 2905 (not on the sheet; the resort's own site no longer lists RV sites, so it may have
+closed) and Sharon Bluffs 3129 (Appanoose County Conservation, first come, no published fee). Priced but flagged:
+Shimek State Forest's White Oak 2930, whose 11 sites are all typed 'Tent Only' ('Looking For Category: Tent Site', one
+'can accommodate a pop up camper', 35-45 ft gravel pads).
