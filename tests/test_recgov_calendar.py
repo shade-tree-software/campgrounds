@@ -161,6 +161,52 @@ class TestDerivation(unittest.TestCase):
         self.assertEqual(staged["season"], season)
 
 
+class TestFetchWindow(unittest.TestCase):
+    """rec.gov marks the ten days before a fetch and the few after it Not
+    Reservable on every site. The 2026-09-21 walk read that as a closure and
+    wrote "opens 09-24" for Lane Spring, open all summer (and nine others)."""
+
+    def test_the_booking_window_is_not_an_opening(self):
+        e = entry(**{"2026_07": "o" * 31, "2026_08": "o" * 31,
+                     "2026_09": "o" * 9 + "c" * 14 + "o" * 7, "2026_10": "o" * 31})
+        e["checked"] = "2026-09-20"
+        season, reason = rc.derive_season(e)
+        self.assertIsNone(season)
+        self.assertIn("booking window", reason)
+
+    def test_a_closure_running_past_the_window_keeps_its_edge(self):
+        # Brooklyn Lake: open through 09-12, then closed for as far as the
+        # calendar answered. Only a closed run wholly inside the window goes.
+        e = entry(**{"2026_07": "o" * 31, "2026_08": "o" * 31,
+                     "2026_09": "o" * 12 + "c" * 18, "2026_10": "c" * 20 + "?" * 11})
+        e["checked"] = "2026-09-20"
+        self.assertEqual(rc.derive_season(e)[0], {"closes": "09-12"})
+
+    def test_the_run_is_kept_so_no_new_edge_appears(self):
+        # The Narrows (WY) as walked: erasing the window's closed days would
+        # merge the open week after them into the summer and yield "closes
+        # 09-21", an edge nobody checked. Only edges go, so it keeps no verdict.
+        e = entry(**{"2026_07": "o" * 31, "2026_08": "o" * 31,
+                     "2026_09": "ooooooo??cccccoooooooccccccccc",
+                     "2027_05": "?" * 10 + "c" * 11 + "?" * 10})
+        e["checked"] = "2026-09-20"
+        self.assertIsNone(rc.derive_season({"months": e["months"]})[0])
+        self.assertIsNone(rc.derive_season(e)[0])
+
+    def test_a_walk_pins_each_months_fetch_date(self):
+        # `checked` moves on with every walk; the window needs the date each
+        # month was actually read.
+        saved = rc.fetch_availability_month
+        rc.fetch_availability_month = lambda *a, **k: {}
+        try:
+            e = {"checked": "2026-09-21", "months": {"2026-09": "o" * 30}}
+            rc.walk_months("1", [(2026, 9), (2027, 6)], e, pause=0)
+        finally:
+            rc.fetch_availability_month = saved
+        self.assertEqual(e["fetched"]["2026-09"], "2026-09-21")
+        self.assertEqual(e["fetched"]["2027-06"], e["checked"])
+
+
 class TestFacilityIds(unittest.TestCase):
 
     def test_only_campground_urls_are_taken(self):

@@ -117,6 +117,18 @@ MIN_RUN_DAYS = 14
 # Allow a handful of odd days inside a season (a closed loop, a storm) without
 # splitting it into two.
 YEAR_ROUND_CLOSED_TOLERANCE = 0.02
+# rec.gov reports the days just behind the date a month is fetched, and the few
+# days ahead before a campground stops taking bookings, as Not Reservable on
+# every site whatever the season. Measured 2026-10-12 at Lane Spring (MO): the
+# ten days back and the four ahead all read Not Reservable, then Available. The
+# 2026-09-21 walk read that band as a closure and wrote "opens 09-24" and the
+# like for ten campgrounds open all summer (Whitehorse, Camp 9, Greenville ...).
+# So a closed run lying wholly within this many days of its fetch date and
+# followed by an open day yields no edge on either side. Only the edges go: the
+# run itself stays, because erasing it lets the open days around it merge into
+# new edges nobody checked (75 of them on that walk). A closed run reaching past
+# the window either way is still read; the result was the same at 7 days as 14.
+FETCH_WINDOW_DAYS = 14
 
 
 def facility_ids(entries):
@@ -160,8 +172,16 @@ class RateLimited(RuntimeError):
 
 
 def walk_months(fid, months, cache_entry, pause=1.0, backoff=(60, 180, 420)):
-    """Fetch each (year, month) not already cached. Returns how many were hit."""
+    """Fetch each (year, month) not already cached. Returns how many were hit.
+
+    Each month's fetch date goes in `fetched` (see FETCH_WINDOW_DAYS). Entries
+    cached before 2026-10-12 carry only `checked`, which was then the date all
+    their months were fetched, so it is pinned onto them before it moves on.
+    """
     fetched = 0
+    if cache_entry.get("months") and "fetched" not in cache_entry:
+        cache_entry["fetched"] = {key: cache_entry.get("checked")
+                                  for key in cache_entry["months"]}
     for year, month in months:
         key = f"{year:04d}-{month:02d}"
         if key in cache_entry.get("months", {}):
@@ -209,6 +229,7 @@ def walk_months(fid, months, cache_entry, pause=1.0, backoff=(60, 180, 420)):
             else:
                 raise
         cache_entry.setdefault("months", {})[key] = month_string(avail, year, month)
+        cache_entry.setdefault("fetched", {})[key] = datetime.date.today().isoformat()
         cache_entry["sites"] = max(cache_entry.get("sites", 0), len(avail))
         fetched += 1
         time.sleep(pause)
@@ -229,10 +250,63 @@ def day_map(cache_entry):
     return out
 
 
+def _fetch_offsets(cache_entry):
+    """{'MM-DD': days from its month's fetch date to that day}, for the reading
+    day_map keeps (newest wins, as there); None where no fetch date is known."""
+    fetched = cache_entry.get("fetched") or {}
+    out = {}
+    for key in sorted(cache_entry.get("months", {})):
+        year, month = (int(x) for x in key.split("-"))
+        when = fetched.get(key) or cache_entry.get("checked")
+        when = datetime.date.fromisoformat(when) if when else None
+        for i, ch in enumerate(cache_entry["months"][key], start=1):
+            if ch == UNKNOWN:
+                continue
+            out[f"{month:02d}-{i:02d}"] = (
+                (datetime.date(year, month, i) - when).days if when else None)
+    return out
+
+
 def _mmdd_ordinal(key):
     """Day-of-year position for an MM-DD key, on a leap year so 02-29 fits."""
     month, day = (int(x) for x in key.split("-"))
     return datetime.date(2024, month, day).timetuple().tm_yday
+
+
+def _runs(days):
+    """Runs of one value over the observed days in calendar order, as lists of
+    MM-DD keys. A run spanning the new year is one run, not two."""
+    runs = []
+    for key in sorted(days, key=_mmdd_ordinal):
+        if runs and days[runs[-1][-1]] == days[key]:
+            runs[-1].append(key)
+        else:
+            runs.append([key])
+    if len(runs) > 1 and days[runs[0][0]] == days[runs[-1][-1]]:
+        runs[0] = runs.pop() + runs[0]
+    return runs
+
+
+def fetch_window_edges(cache_entry, days):
+    """Edges bordering a closed run of `days` that is only the booking window
+    around its fetch date (see FETCH_WINDOW_DAYS): every day of the run within
+    that many days of its fetch date, and an open day right after it."""
+    offsets = _fetch_offsets(cache_entry)
+    runs = _runs(days)
+    out = set()
+    for i, run in enumerate(runs):
+        if len(runs) < 2 or days[run[0]] != CLOSED:
+            continue
+        if not all(offsets[k] is not None and abs(offsets[k]) <= FETCH_WINDOW_DAYS
+                   for k in run):
+            continue
+        before, after = runs[i - 1], runs[(i + 1) % len(runs)]
+        gap = _mmdd_ordinal(after[0]) - _mmdd_ordinal(run[-1])
+        if gap <= 0:
+            gap += 366
+        if gap <= EDGE_MAX_GAP_DAYS:
+            out |= {("closes", before[-1]), ("opens", after[0])}
+    return out
 
 
 def smooth(days, min_run=MIN_RUN_DAYS):
@@ -243,25 +317,11 @@ def smooth(days, min_run=MIN_RUN_DAYS):
     reading would be the same mistake in the other direction. Unknown is the
     honest result, and it simply yields no edge there.
     """
-    keys = sorted(days, key=_mmdd_ordinal)
-    if not keys:
-        return {}
     out = dict(days)
-    runs, start = [], 0
-    for i in range(1, len(keys) + 1):
-        if i == len(keys) or days[keys[i]] != days[keys[start]]:
-            runs.append((start, i - 1))
-            start = i
-    # A run spanning the new year is one run, not two.
-    if (len(runs) > 1 and days[keys[0]] == days[keys[-1]]):
-        first, last = runs[0], runs[-1]
-        merged_len = (first[1] - first[0] + 1) + (last[1] - last[0] + 1)
-        if merged_len >= min_run:
-            runs = runs[1:-1]
-    for lo, hi in runs:
-        if hi - lo + 1 < min_run:
-            for k in keys[lo:hi + 1]:
-                out.pop(k, None)
+    for run in _runs(days):
+        if len(run) < min_run:
+            for k in run:
+                del out[k]
     return out
 
 
@@ -309,13 +369,16 @@ def derive_season(cache_entry):
     closed = sum(1 for v in days.values() if v == CLOSED)
 
     edges = season_edges(days)
-    opens = [d for kind, d in edges if kind == "opens"]
-    closes = [d for kind, d in edges if kind == "closes"]
 
     # Year-round is a claim about days that were NOT observed, so it needs
     # near-complete coverage AND no transitions anywhere.
     if (len(days) >= MIN_DAYS_FOR_YEAR_ROUND and closed == 0 and not edges):
         return {"year_round": True}, f"{len(days)} days observed, none closed"
+
+    observed = edges
+    edges = [e for e in observed if e not in fetch_window_edges(cache_entry, days)]
+    opens = [d for kind, d in edges if kind == "opens"]
+    closes = [d for kind, d in edges if kind == "closes"]
 
     season = {}
     if len(opens) == 1:
@@ -326,6 +389,9 @@ def derive_season(cache_entry):
         if edges:
             return None, (f"{len(opens)} opening and {len(closes)} closing edges "
                           f"— ambiguous, needs a human")
+        if observed:
+            return None, (f"{len(days)} days observed, the only transition is "
+                          f"the booking window around the fetch date")
         return None, (f"only {len(days)} days observed, no transition seen "
                       f"({closed} closed)")
     return season, (f"{len(days)} days observed, "
