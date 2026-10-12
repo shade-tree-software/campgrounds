@@ -160,3 +160,54 @@ list one serviced site each ('H1' at Thomas Raddall) and no serviced sites on th
 surcharge. New Brunswick's day-use vehicle entry fees are not recorded: no page says whether campers pay them.
 Not priced: Green Park PE 14939 (a leaseholder's campground; its own page lists 2-way $42 / 3-way $46 / 50-amp $50 but
 is undated, Campspot has no 2027 nights yet and Wayback was down).
+
+## Ontario and Louisiana's Sabine River Authority (2026-10-12)
+
+| agency | source | checked against the booking site | entries |
+|---|---|---|---|
+| Ontario Parks | the [2026 camping fees](https://www.ontarioparks.ca/fees/camping/2026) (levels AA / A / B / C, electrical and non-electrical, before 13% HST) and the [reservation fee](https://www.ontarioparks.ca/fees/reservation/2026) ($11.00 online) | reservations.ontarioparks.ca (GoingToCamp): every park's campsite fee schedules with service type and allowed equipment, July 2026 and July 2027 (`gtc_probe.py` → `on_booking_fees_*.json`, `on_build.py`) | 91 |
+| St. Lawrence Parks Commission | its [2026 fees](https://www.stlawrenceparks.com/fees/) (plus HST) and [reservation fee](https://www.stlawrenceparks.com/reservations/) ($13.25) (`slpc_fee_page_*.txt`) | reservations.parks.on.ca (GoingToCamp): every campground's schedules, July and September 2026 (`slpc_booking_fees_*.json`, `slpc_build.py`) | 8 |
+| Fort William Historical Park | its [campground page](https://fwhp.ca/campground/): $25 non-serviced, $40 serviced, plus HST (`fwhp_fees_*.json`) | - | 1 |
+| Sabine River Authority (LA) | its parks fee schedule, effective May 1, 2025 (`la_sra_fee_page_*.txt`, `la_sra_2026-10-12.py`) | - | 4 |
+
+Ontario Parks prices by site: a park's loops sit at different fee levels, so an entry's nightly_low / nightly_high are its
+cheapest and dearest non-electrical sites that take a 23-ft rig ('Trailer or RV up to 25ft' or longer), and the electric
+surcharge is the cheapest such electrical site less the cheapest non-electrical one (none where the electrical site is no
+dearer, as at Restoule). Where every RV-length site has electricity, those sites are the base (Bronte Creek, Oastler Lake,
+Murphys Point, Sharbot Lake, Silver Lake). Algonquin's loops now carry Anishinaabe names (Pog Lake's Pàgwà, Rock Lake's
+Somogneche and Tanakiwin; Raccoon Lake is kept out of Rock Lake). The 2027 nights still answer with the 2026 fees. Not
+priced: Tea Lake 8205, whose 39 campsites take trailers up to 18 ft (a question for AWH: the 23-ft gate). The
+provincial:ON registry row now carries the $11 reservation fee.
+
+The St. Lawrence Parks Commission's eight campgrounds and Fort William Historical Park's RV park are provincial agencies
+apart from Ontario Parks: they get `policy_ref: none` (`on_other_agencies_2026-10-12.py`), and the commission's its own
+booking channel. Base = the cheapest unserviced site that takes a 23-ft trailer (Ivy Lea's $47.32 basic sites take 20 ft,
+so its base is the $55.30 waterfront site); waterfront, premium waterfront, electric and full hookups are the table's
+categories less the base. Not priced: Upper Canada Campground 8343 is a private Campspot park at 13390 County Road 41,
+Morrisburg (pools, camp store), not the commission's as its note says - a question for AWH.
+
+The Sabine River Authority's four Toledo Bend parks (Cypress Bend, Oak Ridge, San Miguel, Pleasure Point) carry the
+standard RV spur as the base and the waterfront / pull-through spur as a premium site; the schedule's standing minimum
+(2 nights on weekend reservations March - September, 3 on holiday and major-event weekends) is marked on each.
+Not priced in Louisiana yet: Indian Creek 6870 (LDAF; rates only on ResNexus).
+
+## Quebec (2026-10-12)
+
+| agency | source | entries |
+|---|---|---|
+| SEPAQ (parcs nationaux, réserves fauniques, Lac-Simon, Voltigeurs) | sepaq.com's booking search, every campsite of each entry's loops on four 2027 nights: Tue June 8 and Tue September 7 (low season), Tue July 13 and Sat July 17 (high season #2) (`qc_sepaq_jobs.py` → `qc_sepaq_search.js` → `qc_sites_*.json`), plus site detail pages for eligible equipment, up to four per loop, type and price (`qc_sepaq_more_reads.py` → `qc_sepaq_details.js` → `qc_site_details_*.json`); `qc_build.py` | 42 |
+| Corporation Nibiischii (Lacs-Albanel-Mistassini-et-Waconichi) | its Lac Albanel and Baie Pénicouane pages: $40 without services, $50 electric / $55 electric and water, plus taxes (`qc_nibiischii_fees_*.json`) | 2 |
+
+SEPAQ prices a site by its type, its campground's rate level and the night (low season, high seasons #1 and #2,
+Sunday-Thursday or Friday-Saturday; the network table on its tent-camping page gives only 'From ... to ...' ranges), so
+each campground was read site by site. 2027 bookings open 2026-11-08, but the search already prices every site. The
+search is a form POST that pages by the Referer (see `qc_sepaq_search.js`); sepaq.com refuses plain fetches, so it
+runs inside the one-browser driver. The base is the cheapest site with no hookups that takes a 23-ft trailer or
+motorhome, else the cheapest hookup site that does; nightly_low / nightly_high are its low-season and high-season
+weeknight prices, the weekend surcharge the Saturday difference, electric and full hookups the high-season differences.
+Equipment limits differ site by site inside a loop (Arthabaska's rustic sites take trailers from 15 to 40 ft), so a loop,
+type and price counts when any site read in it fits. National parks add the daily entry fee, $10.30 an adult (children
+free, taxes included; 'For a stay, the entry fee is in addition to the accommodation fee'); wildlife reserves and the
+two tourist centres charge none. Not priced, all questions for AWH: Lac Dunbar 12495 (its sites take trailers under
+20 ft), Baie aux Rats Musqués 12501 (tent trailers to 15 ft, the rest list no trailer) and Lac Arthur 12523 (its site
+pages list no equipment at all, so the 23-ft fit is unknown).
