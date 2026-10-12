@@ -211,3 +211,18 @@ free, taxes included; 'For a stay, the entry fee is in addition to the accommoda
 two tourist centres charge none. Not priced, all questions for AWH: Lac Dunbar 12495 (its sites take trailers under
 20 ft), Baie aux Rats Musqués 12501 (tent trailers to 15 ft, the rest list no trailer) and Lac Arthur 12523 (its site
 pages list no equipment at all, so the 23-ft fit is unknown).
+
+## Louisiana State Parks (2026-10-12)
+
+21 parks from each park's camping rates on lastateparks.com (`la_park_rates_*.json`; the site refuses plain fetches, so
+read through the one-browser driver) and the booking site's unit records (`la_booking_sites_*.json`: the
+`var sites = [...]` array on each reservations.gooutdoorslouisiana.com FacilityDetails page, with type, max equipment
+length and base price) (`la_build.py`). Every park prices by demand, each type from its base to 1.5 times it (Premium
+$33-49.50, Improved $28-42, Unimproved $18-27, plus tax; 'subject to change depending on availability'), and the booking
+site's base prices are the low ends. So an entry's nightly_low / nightly_high are its base type's range, with no fixed
+weekend add-on, and the add-ons are differences between low ends. Improved is water and electric everywhere; Premium is
+full hookups at some parks and water-and-electric 'prime location' or pull-through sites at others, as each page says.
+Unimproved sites are the base only at Fontainebleau and Tickfaw, where the booking site shows them long enough for a
+23-ft rig. $4.50 reservation fee per booking. The $3 entrance fee is not recorded: the pages don't say campers pay it
+(Lake D'Arbonne's tennis courts are 'available for overnight guests and for day-use visitors with payment of entrance
+fee').
