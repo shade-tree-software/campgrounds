@@ -8,7 +8,8 @@ clearly marked. From 2026-10-01 to 2026-10-10 it did, and this undoes that rule'
 and skips. decisions.json holds one verdict per candidate:
 
   restore   the entry's last record (removed_records.json, taken from git) comes back under
-            a NEW id - ids are never reused - with the edits below;
+            a NEW id - ids are never reused - with the edits below; `removed_how` replaces
+            "under the standing-minimum rule ..." when it was removed some other way;
   add       a park skipped under the old rule; `record` is the whole new entry;
   mark      the campground is already in the database under `id` (a later sweep re-added
             it); only the edits below are applied, so its minimum gets marked;
@@ -137,9 +138,10 @@ def main():
         if d["verdict"] == "restore":
             e = json.loads(json.dumps(removed[d["old_id"]]))
             e["id"] = next_id
+            how = d.get("removed_how", "under the standing-minimum rule AWH lifted 2026-10-10")
             e["inclusion_evidence"] = (e.get("inclusion_evidence") or "").rstrip("; ") + (
-                f"; {stamp(d)}: restored (was id {d['old_id']}, removed {d['removed']} under the "
-                f"standing-minimum rule AWH lifted 2026-10-10): {d['why']}")
+                f"; {stamp(d)}: restored (was id {d['old_id']}, removed {d['removed']} {how}): "
+                f"{d['why']}")
         else:
             rec = dict(d["record"])
             rec["id"] = next_id

@@ -1,6 +1,6 @@
 ---
 name: project-minimum-stay-reopen
-description: "2026-10-11/12 re-open of everything the old standing-minimum rule removed or skipped (17 back, ids 15342-15358; Lac Libby 15359 after AWH's answers; 4 dropped), plus the 2026-10-12 follow-up that marked or corrected 43 existing entries; next id 15360"
+description: "2026-10-11/12 re-open of everything the old standing-minimum rule removed or skipped (17 back, ids 15342-15358; Lac Libby 15359 and Red Gut Bay 15360 after AWH's answers; Goethe, Péninsule, Alcona, South Bay dropped), plus the 2026-10-12 follow-up that marked or corrected 43 existing entries; next id 15361"
 metadata:
   node_type: memory
   type: project
@@ -33,7 +33,13 @@ Lesson: read what the minimum is attached to (cabins, events, holidays) before c
 - American Way WV left out (4-night minimum).
 - Goethe 14396 dropped ($75-80, over the gate) and Péninsule 15355 dropped (mostly seasonal). Netley Creek 15357 kept.
 - Not answered, so still `ask` rows: the four 10-01 removals that are also over the $50 gate (Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA). They stay out unless AWH says otherwise.
-- Removals are logged in `audit/minimum_stay_reopen/dropped.jsonl`; `apply.py` now has `drop` and `minimum` verdicts. Next id 15360.
+- Removals are logged in `audit/minimum_stay_reopen/dropped.jsonl`; `apply.py` now has `drop` and `minimum` verdicts.
+
+**AWH's second round (2026-10-12), two calls left to me:**
+- The Landing on Red Gut Bay came back as 15360 (`restore` row with `removed_how`): the rates page archived 2023-11-30 put its '4 Day minimum charge' under the '2023 Cabin Rates' heading; campsites are C$50 a day.
+- South Bay Resort ON (12704) dropped as mostly seasonal, not for its minimum: its own homepage and reservation page say seasonal-only for 2023 and 2024 (25 seasonal spots, all reserved), and nothing newer exists (Facebook's newest public post 2024-01-08).
+- Paradise Shores CA kept: its 5-night minimum covers only the 4th of July.
+- Next id 15361.
 
 **Follow-up DONE 2026-10-12** (`minimum` rows in decisions.json; 43 entries edited, each with a dated source read that day). The scan of notes naming a minimum without `booking.min_stay` found 59; it had also skipped about a dozen whose note mentioned an operating season near the minimum, and those were done too.
 - Marked (min_stay + MINIMUM STAY line + booking.note, with any walk-up or waiver path): Silver Thread CO, Bison Ridge IA, Minong, Petenwell, North Bay Shore, Sidie Hollow and Esofea WI, Wabasis and Brower MI, Button Bay VT (waived inside 7 days), Ralph J Andrews NC, nine Go Camp Tennessee parks (2 nights; 'call the campground to request an exception'), Bates Beach BC and Granite Point WA (summer), Onoville NY (3 nights July-August), Jellystone NS, Bunker's WA, Jack Guthrie TX (3), Tolt-MacDonald WA, Fort Camping BC, Honeycomb AL, Scharnberg IA (3, first-come sites), Wilsonville PA, Paradise Shores CA (5 over July 4th, none same-day).
