@@ -384,3 +384,34 @@ phone, 'charged per campsite'. Cross Ranch's primitive campground note said $17;
 
 Not repriced: Pembina Gorge 13958 keeps the guide's $25-30 from 2026-10-10 (the new campground had no sites to sample
 in October). Not priced: Strawberry Lake 5900 (ND Forest Service) has no dated fee.
+
+## Saskatchewan (2026-10-12)
+
+41 Sask Parks entries from the 2026-27 Provincial Parks Rates and Fees table (`sk_rates_and_fees_2026-27.txt`, the PDF
+the fees page links; 'Rates are set as of April 1, 2026', 'Fees include all applicable taxes'): Fully Serviced $49,
+Electrical $35, Non-Electrical $20, Economy $18 a night in every park, $4 less from October 1 on electric and
+non-electric sites; reservation fee $12 online or in park, $14 through the call centre, per reservation; vehicle entry
+permit $11 a day ($42 a week, $82 a year), free for Saskatchewan residents 65 and older. The booking site
+(parks.saskatchewan.ca, classic ReserveAmerica, contract SKPP) gives each campground's site types: `ra_list.py` listed
+all 2,574 sites of the 23 parks (`sk_sites_2026-10-12.json`), and the new `ra_rate_card.py` read the posted 'Price
+Rate' of two sites per loop and type (`sk_rate_card_2026-10-12.jsonl`). Classic RA pages print no 'Camping Fees (1
+night)' outside the booking window, but given a date they print that rate line. Every posted rate is the table's except
+Bronson Forest's electric sites, $31 (the $35 less the $4 reduced-services discount; no potable water at Little Fishing
+Lake). Loops named '- NR' are first come, first served: they post no rate (the page points to the fees page), so they
+take the table's price for their type, and an entry with only such sites gets no reservation fee. Base = cheapest type
+a 23-ft rig fits (maximum equipment length; blank = unknown); electric and full service are add-ons; weekend 0.
+`sk_build.py`. Three leased or private campgrounds on provincial land, from their own rates pages (`sk_other_build.py`,
+text in `sk_operator_pages_2026-10-12.json`): Borden Bridge $25 / electric $35 (2026), Michel Point $35 / full hookups
+$45, Nesslin Lake $28 / powered $38 + tax.
+
+Notes corrected from the booking site and re-scanned: Coldwell 9167 has non-electric sites, not electric (10 on the
+booking site's Coldwell - NR loop; Tourism Saskatchewan: 18 first-come sites for small units and tents, non-potable
+water); Matheson Lake 9189 has electric 15/30-amp sites, a few reservable and the rest first come, first served (the
+note's '46 non-electric' was Wikipedia's; Tourism Saskatchewan agrees with the booking site).
+
+Not priced: Amisk Lake Sawmill Bay 9157, Beatty Lake 9160, Cowan River 9168, Devil Lake 9180, Lac la Plonge 9185 and
+Tyrrell Lake 9206 are self-registration campgrounds that are not on the booking site; the table charges an unserviced
+site $18 (economy) or $20 (non-electric), but which applies at each isn't published, and an insurer's blog lists Beaver-
+Cowan River and Lac la Plonge as free. Besant 9290 has only Facebook and a phone number. Reindeer Lake's Norvil Olson
+9202 keeps its note's $0. Makwa Lake's note calls Jumbo Beach tent-only, but the booking site lists its 10 sites as
+non-electric for rigs to 18-40 ft (not changed; the park's price comes from Mewasin's non-electric sites either way).
