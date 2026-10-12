@@ -56,10 +56,17 @@ const SF_FEE_PER = {
   person_day: ' per person/day',
 };
 
-const SF_SURCHARGE_LABELS = {
-  electric: 'electric', water: 'water', sewer: 'sewer', full_hookup: 'full hookup',
-  waterfront: 'waterfront', oceanfront: 'oceanfront', weekend: 'weekend',
-  premium_site: 'premium site', pet: 'pet',
+// An add-on reads as money on top of the base, never as a label with a sum
+// beside it: "electric +$7/night" next to "$33-37/night" left AWH unable to
+// tell whether the $7 was inside the range or extra (2026-10-12).
+const SF_FEES_ORDER = ['nightly_low', 'nightly_high', 'surcharges', 'nonresident',
+                       'reservation_fee', 'prereq_pass', 'entrance'];
+
+const SF_SURCHARGE_PHRASES = {
+  electric: 'for electric', water: 'for water', sewer: 'for sewer',
+  full_hookup: 'for full hookups', waterfront: 'for a waterfront site',
+  oceanfront: 'for an oceanfront site', weekend: 'on weekends',
+  premium_site: 'for a premium site', pet: 'per pet',
 };
 
 // A chip run reads as prose, so "showers · flush toilets" wants lower case —
@@ -129,6 +136,7 @@ function sfChip(groupKey, field, value, cur) {
   // res" sat one chip away from "non-res +$5/night" meaning something entirely
   // different — Virginia prints both. A booking fee is what this is.
   if (k === 'fees.reservation_fee') {
+    if (value === 0) return 'no booking fee';
     return '+' + sfMoney(value, cur) + ' booking fee';
   }
   // Raw enum values are meaningless alone: a Booking section reading "always"
@@ -176,11 +184,20 @@ function sfChip(groupKey, field, value, cur) {
   }
   // The two fee shapes that matter most read as bare labels otherwise.
   if (k === 'fees.nonresident') {
+    // What a multiplier multiplies differs by agency (Suffolk County doubles the
+    // base only; Delaware and Hither Hills scale the whole price), so the chip
+    // says which when the data knows (`applies_to`), and "the resident rate"
+    // when it does not.
     if (value && value.type === 'multiplier') {
-      return 'non-resident rate \u00d7' + value.factor;
+      const by = value.factor === 2 ? 'double' : value.factor + '\u00d7';
+      if (value.applies_to === 'total') return 'non-residents pay ' + by + ', add-ons included';
+      if (value.applies_to === 'base') {
+        return 'non-residents pay ' + by + ' the base rate, add-ons the same';
+      }
+      return 'non-residents pay ' + by + ' the resident rate';
     }
     if (value && value.amount != null) {
-      return 'non-resident +' + sfMoney(value.amount, cur)
+      return 'non-residents +' + sfMoney(value.amount, cur)
              + (value.per === 'night' ? '/night' : '/stay');
     }
     return 'non-resident surcharge';
@@ -294,7 +311,13 @@ function sfChips(group, values, keys) {
       && (has('opens') || has('closes'))) {
     folded.add('year_round');
   }
-  group.fields.forEach(f => {
+  // A fee row reads as a sum: the base, what is added to it, who pays more,
+  // then the one-off booking charges - not in the schema's storage order,
+  // which put "+$7.25 booking fee" between "$33/night base" and its add-ons.
+  const order = group.key === 'fees' ? SF_FEES_ORDER : null;
+  const fields = order ? group.fields.slice().sort((a, b) =>
+    (order.indexOf(a.key) + 1 || 99) - (order.indexOf(b.key) + 1 || 99)) : group.fields;
+  fields.forEach(f => {
     if (folded.has(f.key) || !(f.key in values)) return;
     if (keys && !keys.has(f.key)) return;
     // `closes` is skipped as a chip because it normally folds into `opens`
@@ -314,8 +337,8 @@ function sfChips(group, values, keys) {
         // surcharges replace the registry's whole, it also stops the agency's
         // list showing as "typical". It is not worth a chip of its own.
         if (amt == null || amt === 0) return;
-        parts.push((SF_SURCHARGE_LABELS[sk] || sk.replace(/_/g, ' '))
-                   + ' +' + sfMoney(amt, cur) + '/night');
+        parts.push('+' + sfMoney(amt, cur) + '/night '
+                   + (SF_SURCHARGE_PHRASES[sk] || 'for ' + sk.replace(/_/g, ' ')));
       });
       return;
     }
@@ -335,6 +358,10 @@ function sfChips(group, values, keys) {
         chip += '\u2013' + values.nightly_high;
       }
       chip += '/night';
+      // With add-ons beside it, say the rate is the base they are added to.
+      const extra = values.surcharges && typeof values.surcharges === 'object'
+        && Object.values(values.surcharges).some(a => a != null && a !== 0);
+      if (extra) chip += ' base';
     }
     // A season is one span, not two dates that happen to sit next to each other.
     if (chip && f.key === 'opens' && values.closes) {

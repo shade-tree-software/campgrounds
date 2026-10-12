@@ -167,9 +167,15 @@ SCHEMA = {
         # Three distinct mechanics; flattening them loses the cases that matter.
         # A prerequisite pass is a function of TRIP LENGTH — a season pass
         # amortizes fine over a week and terribly over one night.
+        # `applies_to` says what a multiplier multiplies, because agencies differ
+        # and the popup cannot say "x2" honestly without it: Suffolk County doubles
+        # the BASE rate only and charges residents and non-residents the same
+        # add-ons; Delaware (x1.25) and Hither Hills (x2) scale the whole nightly
+        # price, weekend rate included. Absent is unknown (doc §2.1).
         "nonresident": OBJ(type=ENUM("surcharge", "multiplier"),
                            amount=NUM, factor=NUM,
-                           per=ENUM("stay", "night")),
+                           per=ENUM("stay", "night"),
+                           applies_to=ENUM("base", "total")),
         "prereq_pass": OBJ(name=STR, price=NUM,
                            valid=ENUM("season", "year", "day")),
         # A park ENTRANCE fee is not a camping surcharge, and conflating them
@@ -538,6 +544,14 @@ def _moot_agency_keys(entry):
         # Nor for a non-resident or per-night add-on: NY State Parks' '+$5 a night
         # for non-residents' printed under three free DEC sites (2026-10-12).
         moot["fees"] = set(FREE_MOOT_FEE_KEYS)
+    # A campground's own price makes the agency's add-ons moot: they were
+    # measured against the agency's base, not this price, and beside it the
+    # reader cannot tell what is extra and what is included. Hither Hills'
+    # popup read "$33-37/night · electric +$7* · oceanfront +$10* ..." where
+    # $33-37 is weekday-weekend and the park has no electric or oceanfront
+    # sites (AWH 2026-10-12). An add-on that does apply is recorded on the entry.
+    if "nightly_low" in fees or "nightly_high" in fees:
+        moot.setdefault("fees", set()).add("surcharges")
     return moot
 
 
@@ -663,6 +677,7 @@ FIELD_LABELS = {
     "nightly_high": "Nightly rate (high)",
     "reservation_fee": "Reservation fee",
     "nonresident": "Non-resident charge",
+    "applies_to": "Applies to (base rate / whole price)",
     "prereq_pass": "Required pass",
     "price_tier": "Price tier ($ count)",
     "good_sam": "Good Sam",

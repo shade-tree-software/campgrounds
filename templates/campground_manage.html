@@ -533,6 +533,12 @@ function agencyRowFor(c) {
       ['nonresident', 'surcharges'].forEach(k => delete out.fees[k]);
     }
   }
+  // campground_schema._moot_agency_keys: a campground's own price makes the
+  // agency's add-ons moot (they were measured against the agency's base).
+  if (out.fees && (fees.nightly_low !== undefined || fees.nightly_high !== undefined)) {
+    out.fees = Object.assign({}, out.fees);
+    delete out.fees.surcharges;
+  }
   return out;
 }
 

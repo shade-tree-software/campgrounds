@@ -145,7 +145,7 @@ class ChipPhrasingTest(unittest.TestCase):
             self.chips("fees", {"reservation_fee": 5,
                                 "nonresident": {"type": "surcharge", "amount": 5,
                                                 "per": "night"}}),
-            ["+$5 booking fee", "non-resident +$5/night"])
+            ["non-residents +$5/night", "+$5 booking fee"])
 
     # ── Free camping ────────────────────────────────────────────────────────
 
@@ -221,13 +221,44 @@ class ChipPhrasingTest(unittest.TestCase):
         """The bare label said only that some cost exists."""
         self.assertEqual(
             self.chips("fees", {"surcharges": {"electric": 7, "full_hookup": 13}}),
-            ["electric +$7/night", "full hookup +$13/night"])
+            ["+$7/night for electric", "+$13/night for full hookups"])
 
     def test_a_zero_surcharge_is_no_chip(self):
         """$0 says the agency's usual add-on doesn't apply; '+$0/night' says nothing."""
         self.assertEqual(
             self.chips("fees", {"surcharges": {"weekend": 0, "electric": 7}}),
-            ["electric +$7/night"])
+            ["+$7/night for electric"])
+
+    def test_a_rate_with_add_ons_says_it_is_the_base(self):
+        """Hither Hills (AWH 2026-10-12): is the add-on inside the range or extra?"""
+        self.assertEqual(
+            self.chips("fees", {"nightly_low": 33, "nightly_high": 33, "currency": "USD",
+                                "surcharges": {"weekend": 4}}),
+            ["$33/night base", "+$4/night on weekends"])
+        self.assertEqual(self.chips("fees", {"nightly_low": 36, "nightly_high": 44,
+                                             "currency": "USD"}),
+                         ["$36\u201344/night"])
+
+    def test_a_fee_row_reads_as_a_sum(self):
+        """Base, its add-ons, who pays more, then the booking fee (Hither Hills)."""
+        self.assertEqual(
+            self.chips("fees", {"nightly_low": 33, "nightly_high": 33, "currency": "USD",
+                                "reservation_fee": 7.25,
+                                "nonresident": {"type": "multiplier", "factor": 2,
+                                                "applies_to": "total"},
+                                "surcharges": {"weekend": 4}}),
+            ["$33/night base", "+$4/night on weekends",
+             "non-residents pay double, add-ons included", "+$7.25 booking fee"])
+        self.assertEqual(self.chips("fees", {"reservation_fee": 0}), ["no booking fee"])
+
+    def test_a_multiplier_says_what_it_multiplies(self):
+        """Suffolk doubles the base only; Delaware and Hither Hills the whole price."""
+        nr = lambda **k: self.chips("fees", {"nonresident": dict(type="multiplier", **k)})  # noqa: E731
+        self.assertEqual(nr(factor=2, applies_to="total"), ["non-residents pay double, add-ons included"])
+        self.assertEqual(nr(factor=2, applies_to="base"),
+                         ["non-residents pay double the base rate, add-ons the same"])
+        self.assertEqual(nr(factor=1.25, applies_to="total"), ["non-residents pay 1.25\u00d7, add-ons included"])
+        self.assertEqual(nr(factor=3.2), ["non-residents pay 3.2\u00d7 the resident rate"])
 
     def test_entrance_fee_states_what_it_is_charged_per(self):
         self.assertEqual(

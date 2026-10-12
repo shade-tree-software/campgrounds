@@ -381,6 +381,24 @@ class TestRegistryResolution(unittest.TestCase):
                      "fees": {"nightly_low": 0, "nightly_high": 20}}
         self.assertIn("discounts", cs.resolve(some_free, reg))
 
+    def test_own_price_drops_agency_surcharges(self):
+        # Hither Hills (AWH 2026-10-12): the agency's add-ons were measured against
+        # ITS base, and beside a campground's own price nobody can tell what is
+        # extra. The campground's own add-ons stand; the agency's other keys too.
+        reg = {"state:NY": {"fees": {"currency": "USD",
+                                     "nonresident": {"type": "surcharge", "amount": 5, "per": "night"},
+                                     "surcharges": {"weekend": 4, "electric": 7}}}}
+        own = {"ownership": "state", "state": "NY", "fees": {"nightly_low": 33, "nightly_high": 37}}
+        got = cs.resolve(own, reg)["fees"]
+        self.assertNotIn("surcharges", got["values"])
+        self.assertEqual(got["values"]["nonresident"]["amount"], 5)
+        with_own = {"ownership": "state", "state": "NY",
+                    "fees": {"nightly_low": 33, "surcharges": {"weekend": 4}}}
+        self.assertEqual(cs.resolve(with_own, reg)["fees"]["values"]["surcharges"], {"weekend": 4})
+        unpriced = {"ownership": "state", "state": "NY", "fees": {"reservation_fee": 7.25}}
+        self.assertEqual(cs.resolve(unpriced, reg)["fees"]["values"]["surcharges"],
+                         {"weekend": 4, "electric": 7})
+
     def test_own_free_fees_drop_agency_add_ons(self):
         # NY State Parks' non-resident +$5 and weekend +$4 mean nothing at $0.
         reg = {"state:NY": {"fees": {"currency": "USD", "reservation_fee": 7.25,
@@ -634,7 +652,11 @@ class TestShippedRegistry(unittest.TestCase):
         self.assertEqual(cs.policy_ref(hh), "state:NY")
         fees = cs.resolve(hh, self.rows)["fees"]["values"]
         self.assertEqual(fees["nonresident"],
-                         {"type": "multiplier", "factor": 2.0})
+                         {"type": "multiplier", "factor": 2, "per": "night",
+                          "applies_to": "total"})
+        # ... and borrows none of the statewide add-ons: $33-37 was weekday-weekend
+        # and the park has no electric or oceanfront sites (AWH 2026-10-12).
+        self.assertEqual(fees["surcharges"], {"weekend": 4})
         self.assertEqual(cs.field_scope(hh, "fees", "nonresident", self.rows),
                          "entry")
         ny = self.rows["state:NY"]["fees"]["nonresident"]

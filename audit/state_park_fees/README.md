@@ -103,9 +103,30 @@ ReserveAmerica host, and Cypress Glen and Mutual Mine had no booking link. Not p
 sites are all 'Horse Site' on Reserve Florida ('We are known for our equestrian camping'), a question for AWH. Georgia: Fort Mountain and General Coffee linked other parks' ids (now 530158 and
 530160); 14 entries had no booking link; Georgia Veterans' and Little Ocmulgee's ReserveAmerica links were dead (their
 lodges take the bookings). Not priced: Little Ocmulgee 4536 (its lodge's engine lists every campsite as 'please call
-hotel'). Seven Georgia parks have two entries each, AWH's and a later sweep's, 0.1-2.2 km apart (2/4530, 3/4537,
-695/4538, 173/4521, 195/4520, 693/4545, 731/4542): both carry the same price, merging is AWH's call. Stephen C. Foster
-State Park (4543) is now called Okefenokee State Park. Ohio: Caesar Creek and Paint
+hotel').
+
+## AWH's calls and the fee display (2026-10-12, after the deploy)
+
+`awh_calls_2026-10-12.py`: Shangri-La FL 155 dropped (every bookable site a 'Horse Site'); the seven Georgia parks
+entered twice merged into AWH's originals (2/4530, 3/4537, 695/4538, 173/4521, 195/4520, 693/4545, 731/4542; the
+original keeps its id, name, pin, rating and waterfront call and takes the sweep entry's links, phone, groups,
+evidence and description); Stephen C. Foster 4543 renamed Okefenokee State Park. All logged in `dropped.jsonl`.
+
+AWH, on Hither Hills' popup ('$33–37/night · non-resident rate ×2 · electric +$7/night* · …'): is an add-on inside the
+range or extra, and does ×2 double the base or the total? Fixed four ways:
+- a campground with its own price no longer inherits the agency's add-ons (`campground_schema._moot_agency_keys`);
+  the 54 South Dakota parks whose price is the non-electric figure now carry the statewide `{"electric": 7}`
+  themselves (`sd_electric_2026-10-12.json` via `set_surcharges.py`);
+- the 25 NY State Parks campgrounds priced 2026-10-09 from each park's posted range (which spanned site types and
+  weekends) were re-priced from the booking site like the other 52: base, own add-ons, weekend +$4
+  (`ny25_booking_sample_*.jsonl` → `ny25_build.py` → `ny25_fees_*.json`, landed with `replace_fees.py`, which keeps
+  the old figures under `replaced`);
+- Hither Hills itself: $33 base, +$4 on weekends, non-residents double the whole price, no hookups (park page and
+  23 sampled sites, `ny_hither_hills_sample_*.jsonl`);
+- `fees.nonresident.applies_to` says what a multiplier multiplies: `total` for Delaware, Hither Hills and Bucks
+  County, `base` for Suffolk County (its add-ons cost everyone the same); Massachusetts unknown
+  (`nonresident_scope_2026-10-12.py`). The popup chips now read as a sum: '$33/night base · +$4/night on weekends ·
+  non-residents pay double, add-ons included · +$7.25 booking fee'. Ohio: Caesar Creek and Paint
 Creek linked their marinas' place ids (771, 773: boat slips) and now link 344 and 368; Strouds Run's campground is not
 on ReserveOhio at all (first come, run by the concession Strouds Run Rentals), so its link, booking group and note say so.
 Malabar Farm is priced although ReserveOhio types its sites as equestrian: ODNR says its non-electric sites 'can

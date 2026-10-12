@@ -183,6 +183,16 @@ switch off another default):
   agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
   The agency's `fees.nonresident` and `fees.surcharges` go too (2026-10-12: NY State Parks'
   "+$5 a night for non-residents" printed under three free DEC sites).
+- own `fees.nightly_low` or `nightly_high` (any price of its own) → drop the agency's
+  `fees.surcharges` (2026-10-12). The agency's add-ons were measured against ITS base, and
+  beside a campground's own price the reader cannot tell what is extra and what is already
+  in it: Hither Hills read *"$33–37/night · electric +$7\* · oceanfront +$10\* · premium site
+  +$3\*"*, where $33–37 is weekday–weekend and the park has no electric or oceanfront sites
+  (AWH: is the add-on inside the range or extra?). An add-on that does apply is recorded on
+  the entry: the 54 South Dakota parks whose own price is the non-electric figure carry the
+  statewide `{"electric": 7}` themselves (`audit/state_park_fees/sd_electric_2026-10-12.json`).
+  The agency's `nonresident`, `reservation_fee` and `entrance` still inherit: those are
+  charged on top of any price.
   A $0 low beside a paid high is a campground with some free sites and keeps them.
   **This rule needs the fees RECORDED to fire**, and until 2026-10-09 only 10 entries had
   them: ~300 free federal campgrounds whose note says "Free, FCFS" still showed "America
@@ -402,9 +412,17 @@ campgrounds read *"weekend +$4"* from the State Parks row although DEC charges o
 fee, and Virginia's all-electric parks would have read *"electric +$10"* on top of a price
 that already includes it. `{"weekend": 0}` is true for both and stops the inheritance;
 `static/campground-schema.js` skips $0 amounts. `audit/state_park_fees/set_surcharges.py`
-writes them. Entries priced with their own base but no add-ons still inheriting a row's
-list: South Dakota (61, the row's electric +$7) and 26 NY State Parks entries (the row's
-list is theirs), left as they are.
+writes them. Since the own-price rule (§3, moot keys) an entry with its own price inherits
+no add-ons at all, so the $0 records are now facts rather than a workaround.
+
+**The chips say what is extra and what a multiplier multiplies** (2026-10-12). An add-on
+reads as money on top — *"+$7/night for electric"*, *"+$4/night on weekends"* — and a rate
+with add-ons beside it says it is the *base* (*"$33/night base"*). `nonresident.applies_to`
+records whether a multiplier scales the whole nightly price (`total`: Delaware ×1.25, Hither
+Hills ×2, Bucks County) or only the base, add-ons costing everyone the same (`base`: Suffolk
+County, whose own example is "$36 base + $8 electric + site tier"); the chip says *"non-residents
+pay double, add-ons included"* or *"… double the base rate, add-ons the same"*, and *"… the
+resident rate"* when it is unknown (Massachusetts).
 
 **A park ENTRANCE fee is a fourth mechanic and must not be folded into
 `nonresident`** (2026-09-14). Indiana charges every vehicle to enter — $7 with
@@ -1113,7 +1131,7 @@ came out of it:
   `50A · water · sewer` is one chip (*full hookups (50A)*) and its opposite is *no hookups*;
   a dated season drops the redundant *seasonal*. Against that, `surcharges` rendered as the
   bare label *per-night amenity surcharges* — the existence of a cost, with no cost — and
-  now expands to one chip per add-on (*electric +$7/night*), letting the six-chip cap trim
+  now expands to one chip per add-on (*+$7/night for electric* since 2026-10-12), letting the six-chip cap trim
   the tail instead of the formatter.
 
 Both surfaces change together because both call `sfChips`; the manage form's collapsed
