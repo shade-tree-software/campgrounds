@@ -54,6 +54,7 @@ Rebuild the findings from the committed evidence: `python3 -I pa_build.py pa_sit
 | IN | parks: indianastateparks.reserveamerica.com, sampled sites for Tue 2027-06-15 and Sat 2027-06-19 (`in_booking_sample_*.jsonl`, `in_build.py`); the DNR's [rate page](https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees) gives only statewide ranges. State forests: that page's first-come rate, $12 non-electric / $12.15 primitive (`in_forests_build.py`) | parks: it is the source; the forests take no reservations | 31 + 9 |
 | TN | no published table: every bookable night on reserve.tnstateparks.com's calendar for two weeks from 2026-10-13 and from 2027-06-15 (`vendor_calendar.py` → `tn_parse.py` → `tn_calendar_summary_*.json`, `tn_build.py`); which calendar sites are tent or primitive comes from each park's campground page (`tn_parse.py` SITE_KIND) | it is the source | 31 + Notchy Creek |
 | FL parks | each park's Hours & Fees page (`fl_park_fee_text_*.json`, read through the one-browser driver: floridastateparks.org refuses plain fetches) + Reserve Florida's 'Starting at $N' line per campground loop (`rdr_place.py` → `fl_rdr_rates_*.json`) + the statewide [fee page](https://www.floridastateparks.org/fees) (`fl_parks_build.py`) | every page fee matched its park's rate line; six parks whose page gives no camping fee are priced from the rate line | 52 |
+| OH | no published table: ReserveOhio's rate for sampled sites of each type, from the call its page makes when a site is clicked (`rdr_rates.py` → `oh_booking_rates_*.jsonl`), Tue 2027-06-15 and Sat 2027-06-19 (`oh_build.py`); Strouds Run from its concession's page, Camp Perry from the Guard RV park's page | it is the source | 56 |
 
 Rules that differ by state: Maine charges its $5 reservation fee per NIGHT (recorded in `reservation_fee`, said in the
 note); Delaware's non-resident price is the resident's x 1.25 rounded up (a `multiplier`); New York's State Parks add $4
@@ -70,7 +71,9 @@ entrance fee differs by plates, the registry row's). Florida State Parks charge 
 nightly utility fee on top of the park's campsite fee (tents pay the campsite fee alone), so an entry's nightly price is the
 sum; the $6.70 reservation fee is per reservation, Monroe County stays add $2.50 a night, and Reserve Florida's rate line is the
 campsite fee without the utility fee. `rdr_place.py` sends the page's own search body for an ISO date, which is what fills in the
-rate lines.
+rate lines. Ohio's prices are flat by site type (a Saturday costs the same as a Tuesday); as in Indiana the base is the
+non-electric site where a park has one, with electric and full hookups as surcharges, and the $6.50 reservation fee
+is the state:OH registry row's.
 
 Side fixes, recorded with their evidence: `link_fixes_2026-10-12.json` (nine Vermont booking links on a host that no longer
 resolves, Green Falls' missing parkId), `corrections_2026-10-12.json` (Gilson Pond's five RV sites now have 30-amp
@@ -83,9 +86,14 @@ Agency's) is priced from Campspot (`notchy_campspot_*.jsonl` → `tn_notchy_fees
 is fixed in `link_fixes_2026-10-12.json`. Florida links fixed there too: Shangri-La and Ross Prairie pointed at their
 CityParkIds (#!park/3315, 3311 open nothing; the PlaceIds are 62 and 58), Gilchrist Blue Springs and Santos at the dead
 ReserveAmerica host, and Cypress Glen and Mutual Mine had no booking link. Not priced: FL Shangri-La 155, whose 22
-sites are all 'Horse Site' on Reserve Florida ('We are known for our equestrian camping'), a question for AWH.
+sites are all 'Horse Site' on Reserve Florida ('We are known for our equestrian camping'), a question for AWH. Ohio: Caesar Creek and Paint
+Creek linked their marinas' place ids (771, 773: boat slips) and now link 344 and 368; Strouds Run's campground is not
+on ReserveOhio at all (first come, run by the concession Strouds Run Rentals), so its link, booking group and note say so.
+Malabar Farm is priced although ReserveOhio types its sites as equestrian: ODNR says its non-electric sites 'can
+accommodate equestrian campers', a general campground that also takes horses.
 
 Helpers: `ra_sites.py` (save a state's listings), `ra_type_prices.py` (one price per site type), `ra_sample.py` /
 `ra_quick.py` (sample sites across a park, with hookups; ra_quick skips the full listing), `ra_price.py` also reads the
 newer "Price Breakdown / Residents Pay" layout (Delaware), `vendor_calendar.py` (the reserve.*parks calendar behind SC,
-AL and TN, through the one-browser driver) and `vendor_parse.py` (its text, summed up per park, window and site kind), `rdr_place.py` (Tyler/US eDirect place search: facilities and unit types).
+AL and TN, through the one-browser driver) and `vendor_parse.py` (its text, summed up per park, window and site kind), `rdr_place.py` (Tyler/US eDirect place search: facilities, unit types and each facility's 'Starting at' rate line),
+`rdr_rates.py` (a US eDirect site's nightly rate per site type, from its search/details call).

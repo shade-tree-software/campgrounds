@@ -1,7 +1,7 @@
 """Corrections the state-park price pass turned up: python3 -I corrections.py FILE [--apply]
 
 FILE is a list of {"id", "why", "hookups": {...} + "hookups_source", "status": {...} + "status_source",
-"note_line"}: `hookups` / `status` replace that group (values through campground_schema.apply_update,
+"booking": {...} + "booking_source", "note_line"}: `hookups` / `status` / `booking` replace that group (values through campground_schema.apply_update,
 provenance = its source, checked today); `note_line` is appended to the note with two spaces (a rerun finds it there and skips the
 entry). Prints the ids whose notes changed, for the session note scan. Dry run unless --apply."""
 import datetime, json, os, sys
@@ -17,7 +17,7 @@ for c in json.load(open(sys.argv[1], encoding="utf-8")):
     e = by[c["id"]]
     if c.get("note_line") and c["note_line"] in (e.get("note") or ""):
         continue
-    for g in ("hookups", "status"):
+    for g in ("hookups", "status", "booking"):
         if c.get(g):
             prov = dict(e.get(cs.PROVENANCE) or {})
             prov[g] = {"source": c[g + "_source"], "checked": TODAY}
