@@ -261,9 +261,9 @@ at electric + $12 that the sheet has no column for (Backbone's two are its camp 
 are left out, and so is Lake Macbride's primitive south loop.
 
 Not priced: Honey Creek Resort 2905 (not on the sheet; the resort's own site no longer lists RV sites, so it may have
-closed) and Sharon Bluffs 3129 (Appanoose County Conservation, first come, no published fee). Priced but flagged:
-Shimek State Forest's White Oak 2930, whose 11 sites are all typed 'Tent Only' ('Looking For Category: Tent Site', one
-'can accommodate a pop up camper', 35-45 ft gravel pads).
+closed) and Sharon Bluffs 3129 (Appanoose County Conservation, first come, no published fee). Dropped on AWH's call
+(`awh_calls_2026-10-12c.py`): Shimek State Forest's White Oak 2930, whose 11 sites are all typed 'Tent Only' ('Looking
+For Category: Tent Site', one 'can accommodate a pop up camper', 35-45 ft gravel pads).
 
 ## Manitoba (2026-10-12)
 
@@ -278,9 +278,9 @@ schedules are left out.
 
 Not priced: Beaver Creek, Bell Lake, Singush Lake, Grass River's Iskwasum / Reed Lake / Gyles, Lake St. George,
 Whitefish Lake and Falcon Creek have no campsites on the booking site (first come, self-registration; the page gives no
-per-park fee), Norris Lake and Max Lake are on it with no campsites, and St. Ambroise Beach is run by Surfside Beach, a
+per-park fee), and Norris Lake and Max Lake are on it with no campsites. St. Ambroise Beach, run by Surfside Beach, a
 commercial operator ('may have their own fees'), whose site now offers seasonal lots and day camping and whose Campspot
-listing shows no sites.
+listing shows no sites, was dropped on AWH's call (`awh_calls_2026-10-12c.py`).
 
 ## Minnesota (2026-10-12)
 
@@ -303,8 +303,8 @@ accept self-payment envelopes'). They had inherited the state parks' row (vehicl
 window), which the row itself says does not cover them, so they now carry `policy_ref: none`. Older notes quoting $14
 or envelope payment are superseded by the fees group.
 
-Not priced: Minnesota Valley SRA 5402 - ReserveMN lists only its equestrian campground; the Lawrence Unit's 25 drive-in
-sites the note describes are not on it. Left alone: Grand Portage State Forest's Devilfish, Esther and McFarland lakes
+Dropped on AWH's call (`awh_calls_2026-10-12c.py`): Minnesota Valley SRA 5402 - ReserveMN lists only its equestrian
+campground; the Lawrence Unit's 25 drive-in sites the note described are not on it. Left alone: Grand Portage State Forest's Devilfish, Esther and McFarland lakes
 carry $0 from their notes, and a commented-out notice on the DNR's forest fee page lists them among campgrounds that
 'will' start charging - a question for AWH.
 
