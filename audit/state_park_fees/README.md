@@ -226,3 +226,17 @@ Unimproved sites are the base only at Fontainebleau and Tickfaw, where the booki
 23-ft rig. $4.50 reservation fee per booking. The $3 entrance fee is not recorded: the pages don't say campers pay it
 (Lake D'Arbonne's tennis courts are 'available for overnight guests and for day-use visitors with payment of entrance
 fee').
+
+## Arkansas State Parks (2026-10-12)
+
+30 entries from every RV site's nightly rate on reserve.arkansasstateparks.com's parkwide calendar (the vendor behind
+the SC/AL/TN sites), two weeks from 2026-10-13 and from 2027-06-15 (`ar_calendar.py` → `ar_calendar_*.json`,
+`ar_build.py`). Arkansas publishes no rate table: 'rates are subject to change based on availability and season', and
+'The quoted rate for each night does not include taxes or the reservation fee' (the fee's amount is not shown before
+checkout). So, as for SC/AL/TN, an entry carries the range of its cheapest kind of RV site over every bookable night in
+the two windows, and the note gives each kind's range. Each calendar row carries its site's attributes (rv-tent or
+tent-only, max RV length, water, sewer, amps); RV sites are rv-tent rows of 23 ft or more, or with no length at all
+where the park records none for that kind (Queen Wilhelmina, Moro Bay). A primitive site's amps field reads 'None'.
+Mississippi River State Park's calendar lists Beech Point's and Storm Creek Lake's sites together, so both entries carry
+the park's range. Davidsonville's booking link pointed at a slug that now redirects to the park finder; fixed
+(`ar_link_fixes_*.json`). Senior discounts from the parks' camping policy are in the notes.
