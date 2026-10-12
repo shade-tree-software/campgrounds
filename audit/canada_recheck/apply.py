@@ -7,7 +7,7 @@ Each decided entry gets `; re-check 2026-10-11: <stamp>` appended to its inclusi
 stamp is the progress record: an entry already carrying it is skipped, so this is safe to rerun.
 Optional per-entry edits ride along: `note_line` (appended after two spaces, like the MINIMUM STAY
 lines), `set` + `set_prov` (a whole schema group and its provenance) and `website` (null clears it).
-A `drop_proposed` verdict changes nothing; those wait for AWH. Dry run unless --apply. Prints the
+A `drop_proposed` or `flag` verdict changes nothing; those wait for AWH. Dry run unless --apply. Prints the
 ids whose note changed, for the note_scan re-stamp (extract_fields.py --apply-file).
 """
 import json, os, sys
@@ -26,7 +26,7 @@ for k, d in sorted(dec.items(), key=lambda kv: int(kv[0])):
     if e is None:
         print(k, "MISSING (dropped?)")
         continue
-    if d["verdict"] == "drop_proposed" or MARK in (e.get("inclusion_evidence") or ""):
+    if d["verdict"] in ("drop_proposed", "flag") or MARK in (e.get("inclusion_evidence") or ""):
         continue
     n += 1
     e["inclusion_evidence"] = ((e.get("inclusion_evidence") or "").rstrip("; ") + f"; {MARK} {d['stamp']}").lstrip("; ")
