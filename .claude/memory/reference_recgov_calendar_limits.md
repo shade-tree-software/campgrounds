@@ -44,6 +44,16 @@ keyless sibling of RIDB. Measured 2026-09-14 while building `recgov_calendar.py`
   2026)** and the next four were Saturdays and a Sunday. Real closures fall on holidays and
   weekends; a window artifact would not. Run that check before trusting a September-heavy
   batch.
+- **The days around the fetch date read Not Reservable whatever the season** (measured 2026-10-12 at
+  Lane Spring: the ten days back and four ahead, every site, then Available). The 2026-09-21 walk
+  turned that band into 'opens 09-24'-style seasons at ten campgrounds open all summer; AWH had them
+  cleared (commit 21d120e). `recgov_calendar.py` now drops the edges bordering a closed run lying
+  wholly within 14 days of its month's fetch date (`fetched` per month) when an open day follows.
+  It drops only the EDGES: erasing the run instead merged the open days around it into ~75 new
+  unchecked closing dates. The early-September closes (09-07..09-13) are untouched, but their
+  exact day is only good to about two weeks: the band starts ~11 days before the fetch, so the last
+  'Reserved' night before it (a weekend, Labor Day) becomes the edge. That also weakens the
+  Labor-Day check below as proof of a real closure.
 - **Some facility ids 404.** Ten of the entries' `/camping/campgrounds/<id>` links returned
   HTTP 404 — the calendar is gone, not empty. They stay unwalked and are worth a look as a
   data-quality signal (renamed or retired facility).
