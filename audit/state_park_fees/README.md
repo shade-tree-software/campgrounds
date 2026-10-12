@@ -176,15 +176,16 @@ surcharge is the cheapest such electrical site less the cheapest non-electrical 
 dearer, as at Restoule). Where every RV-length site has electricity, those sites are the base (Bronte Creek, Oastler Lake,
 Murphys Point, Sharbot Lake, Silver Lake). Algonquin's loops now carry Anishinaabe names (Pog Lake's Pàgwà, Rock Lake's
 Somogneche and Tanakiwin; Raccoon Lake is kept out of Rock Lake). The 2027 nights still answer with the 2026 fees. Not
-priced: Tea Lake 8205, whose 39 campsites take trailers up to 18 ft (a question for AWH: the 23-ft gate). The
+priced: Tea Lake 8205, whose 39 campsites take trailers up to 18 ft; dropped on AWH's call (`awh_calls_2026-10-12b.py`). The
 provincial:ON registry row now carries the $11 reservation fee.
 
 The St. Lawrence Parks Commission's eight campgrounds and Fort William Historical Park's RV park are provincial agencies
 apart from Ontario Parks: they get `policy_ref: none` (`on_other_agencies_2026-10-12.py`), and the commission's its own
 booking channel. Base = the cheapest unserviced site that takes a 23-ft trailer (Ivy Lea's $47.32 basic sites take 20 ft,
 so its base is the $55.30 waterfront site); waterfront, premium waterfront, electric and full hookups are the table's
-categories less the base. Not priced: Upper Canada Campground 8343 is a private Campspot park at 13390 County Road 41,
-Morrisburg (pools, camp store), not the commission's as its note says - a question for AWH.
+categories less the base. Upper Canada Campground 8343 turned out to be a private Campspot park at 13390 County Road 41,
+Morrisburg (pools, camp store), not the commission's as its note said: on AWH's call it is now `private`, priced from
+its own 2026 rates (C$48-65 before HST), with its July-August weekend minimum and seasonal share marked.
 
 The Sabine River Authority's four Toledo Bend parks (Cypress Bend, Oak Ridge, San Miguel, Pleasure Point) carry the
 standard RV spur as the base and the waterfront / pull-through spur as a premium site; the schedule's standing minimum
@@ -208,9 +209,9 @@ weeknight prices, the weekend surcharge the Saturday difference, electric and fu
 Equipment limits differ site by site inside a loop (Arthabaska's rustic sites take trailers from 15 to 40 ft), so a loop,
 type and price counts when any site read in it fits. National parks add the daily entry fee, $10.30 an adult (children
 free, taxes included; 'For a stay, the entry fee is in addition to the accommodation fee'); wildlife reserves and the
-two tourist centres charge none. Not priced, all questions for AWH: Lac Dunbar 12495 (its sites take trailers under
-20 ft), Baie aux Rats Musqués 12501 (tent trailers to 15 ft, the rest list no trailer) and Lac Arthur 12523 (its site
-pages list no equipment at all, so the 23-ft fit is unknown).
+two tourist centres charge none. Lac Dunbar 12495 (its sites take trailers under 20 ft) and Baie aux Rats Musqués 12501
+(tent trailers to 15 ft, the rest list no trailer) were dropped on AWH's call as too short. Not priced: Lac Arthur 12523
+(its site pages list no equipment at all, so the 23-ft fit is unknown).
 
 ## Louisiana State Parks (2026-10-12)
 
