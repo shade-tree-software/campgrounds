@@ -73,6 +73,15 @@ class TestPolicyLabel(unittest.TestCase):
                  "policy_ref": "local:suffolk-county-ny"}
         self.assertEqual(A._policy_label(entry, self.REGISTRY), "Suffolk County NY")
 
+    def test_agency_initialisms_stay_in_capitals(self):
+        registry = {"state:washington-dnr": {}, "state:new-york-dec-campgrounds": {}}
+        self.assertEqual(A._policy_label({"ownership": "state", "state": "WA",
+                                          "policy_ref": "state:washington-dnr"}, registry),
+                         "Washington DNR")
+        self.assertEqual(A._policy_label({"ownership": "state", "state": "NY",
+                                          "policy_ref": "state:new-york-dec-campgrounds"}, registry),
+                         "New York DEC Campgrounds")
+
     def test_no_matching_row_means_no_label(self):
         # Most of the database: private and local entries with no agency to
         # inherit from. Nothing is inherited, so there is nothing to attribute.

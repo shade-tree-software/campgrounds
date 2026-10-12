@@ -671,6 +671,34 @@ class TestShippedRegistry(unittest.TestCase):
         self.assertEqual(ii_fees["prereq_pass"]["price"], 50)
         self.assertEqual(ii_fees["prereq_pass"]["valid"], "year")
 
+    def test_dec_campgrounds_take_nothing_from_state_parks(self):
+        """New York's DEC campgrounds are a different agency from NY State Parks.
+
+        They are `ownership: state` in NY, so their refs still include state:NY,
+        and the levels merge per KEY: any key the DEC row left unset would show
+        a State Parks value (the flagship note, the $17-plus-add-ons schedule)
+        under DEC's name. AWH 2026-10-12, on Cranberry Lake and Meadowbrook.
+        """
+        import json
+        import os
+        ref = "state:new-york-dec-campgrounds"
+        dec, ny = self.rows[ref], self.rows["state:NY"]
+        for group, values in ny.items():
+            if group == cs.PROVENANCE:
+                continue
+            with self.subTest(group=group):
+                self.assertFalse(set(values) - set(dec.get(group) or {}))
+        cg = os.path.join(os.path.dirname(__file__), os.pardir,
+                          "campgrounds.json")
+        with open(cg) as f:
+            entries = [e for e in json.load(f) if e.get("policy_ref") == ref]
+        self.assertGreaterEqual(len(entries), 43)
+        for e in entries:
+            for group, r in cs.resolve(e, self.rows).items():
+                for key in r["inherited"]:
+                    with self.subTest(id=e["id"], group=group, key=key):
+                        self.assertEqual(r["values"][key], dec[group][key])
+
     def test_the_federal_row_withholds_what_varies_per_facility(self):
         # The most expensive possible default in the registry: 3,738 entries.
         # FCFS and minimum stay vary campground by campground on federal land,

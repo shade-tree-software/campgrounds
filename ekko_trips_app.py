@@ -4934,6 +4934,10 @@ _POLICY_SYSTEM = {
     "hipcamp": "HipCamp sites",
 }
 
+# Agency initialisms an explicit ref's slug spells in lower case. Title-casing
+# them printed "Washington Dnr"; New York's DEC row would have read "Dec".
+_POLICY_INITIALISMS = {"dec", "dnr"}
+
 
 def _policy_label(row, registry):
     """Human phrase for the agency `row` inherits policy from, or None.
@@ -4954,7 +4958,7 @@ def _policy_label(row, registry):
     if system and ref == f"{ownership}:{state}":
         return f"{STATE_NAMES.get(state, state)} {system}"
     slug = ref.split(":", 1)[-1]
-    return " ".join(w.upper() if len(w) == 2 else w.capitalize()
+    return " ".join(w.upper() if len(w) == 2 or w in _POLICY_INITIALISMS else w.capitalize()
                     for w in slug.split("-"))
 
 

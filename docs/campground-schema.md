@@ -167,6 +167,20 @@ merely has the wrong value — fix the row. **Both sides must agree:** `policy_r
 `campground_schema.py` and `policyRefFor()` in `templates/campground_manage.html`, or the
 manage form keeps offering agency hints the server no longer applies.
 
+**A second agency in the same state gets its own explicit row, and that row must set every
+key the state's row sets.** New York's DEC campgrounds (`state:new-york-dec-campgrounds`,
+2026-10-12) are the worked case: DEC is a separate agency from NY State Parks that books on
+the same ReserveAmerica site and charges one flat fee per campground, not State Parks' $17
+base plus amenity charges. Its entries are still `ownership: state` in NY, so `state:NY`
+stays in their chain, and the merge is per KEY: anything the DEC row left unset would show
+a State Parks value under DEC's name. `tests/test_campground_schema.py` pins it. The older
+explicit rows predate the rule and do let a little through: all 34 `state:washington-dnr`
+entries show Washington State Parks' 10-night maximum, and one Michigan state forest shows
+the state parks' 180-day window. DEC's state-forest camping areas take `policy_ref: none`
+instead, because primitive camping on state land is outside DEC's campground program too
+("stays of more than three days in one place require a permit from the New York State
+Forest Ranger").
+
 **A verified entry fact can make an inherited one moot, and then it is dropped**
 (`_moot_agency_keys`, added 2026-09-23). The merge is per KEY, so an entry's own
 `reservable: false` overrides the agency's `reservable` but used to leave the agency's
@@ -1082,7 +1096,8 @@ Three parts of this are load-bearing rather than decorative.
   (`state:IN`) cannot finish that sentence, so `_policy_label()` spells one out of the
   entry's own ownership and state ("Indiana state parks", "federal campgrounds" — never
   per-state, since level 3 exists precisely because federal policy is not), and title-cases
-  the slug of an explicit `policy_ref`. An unattributed inherited value is exactly the
+  the slug of an explicit `policy_ref`, keeping agency initialisms in capitals
+  (`_POLICY_INITIALISMS`: "Washington DNR", "New York DEC Campgrounds"). An unattributed inherited value is exactly the
   confident falsehood this model exists to prevent, so **no label means no inherited chips
   and no footnote** (an asterisk with nothing to explain it would be that falsehood). The
   verified chips still render.
