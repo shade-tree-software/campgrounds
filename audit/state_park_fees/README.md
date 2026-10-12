@@ -57,6 +57,7 @@ Rebuild the findings from the committed evidence: `python3 -I pa_build.py pa_sit
 | OH | no published table: ReserveOhio's rate for sampled sites of each type, from the call its page makes when a site is clicked (`rdr_rates.py` → `oh_booking_rates_*.jsonl`), Tue 2027-06-15 and Sat 2027-06-19 (`oh_build.py`); Strouds Run from its concession's page, Camp Perry from the Guard RV park's page | it is the source | 56 |
 | VA | DCR's [camping fee table](https://www.dcr.virginia.gov/state-parks/camping-fees) (resident and non-resident price per site type and park, effective 2025-05-12; `va_fee_table_*.json`) + reservevaparks.com's site types per campground (`rdr_place.py` → `va_place_types_*.json`) (`va_build.py`); Breaks Interstate Park from its own page | 20 parks' sampled prices (`va_booking_rates_*.jsonl`) all on the table, Saturday = Tuesday; the host answered 403 after that | 24 + Breaks |
 | NC | northcarolinastateparks.reserveamerica.com, sampled sites for Tue 2027-06-15 and Sat 2027-06-19 (`ra_quick.py` → `nc_booking_sample_*.jsonl`) + every Kerr Lake site's campground and type (`ra_list.py` → `nc_kerr_sites_*.json`) (`nc_build.py`) | it is the source; matches NC's statewide rate page except Umstead (+$3) | 26 |
+| GA | state parks: gastateparks.reserveamerica.com, sampled sites for Tue 2027-06-15 and Sat 2027-06-19 (`ra_quick.py` → `ga_booking_sample_*.jsonl`; entry → park id from the booking directory, `ga_park_ids_*.json`); lodge parks: their concessions' iqwebbook engines, January 2027 (`ga_lodges/`); Wildlife Resources: Go Outdoors Georgia's site lists; Stone Mountain: Campspot (`ga_build.py`) | it is the source | 45 + 7 |
 
 Rules that differ by state: Maine charges its $5 reservation fee per NIGHT (recorded in `reservation_fee`, said in the
 note); Delaware's non-resident price is the resident's x 1.25 rounded up (a `multiplier`); New York's State Parks add $4
@@ -83,7 +84,10 @@ row's electric +$10 / full hookup +$16 do not show as typical over a price that 
 $0 weekend went on 43 NY DEC campgrounds and 3 free NY sites (`set_surcharges.py`, `surcharge_zeros_*.json`), and the
 popup prints no chip for $0. Breaks Interstate Park (the VA-KY commission's, Firefly booking) has `policy_ref: none`. North Carolina's booking site
 shows each site's rate before a $3-a-night reservation fee and its rate page quotes the sum ($30 / $35 / $40 / $45), so
-the entries carry the sum; Jordan Lake's electric loop is walk-up only, priced from that statewide table.
+the entries carry the sum; Jordan Lake's electric loop is walk-up only, priced from that statewide table. Georgia prices site by site (a park's sites differ by a few dollars) and publishes no table,
+so its entries carry the range of the sampled RV sites; the $10 ParkPass is the state:GA row's. The Wildlife Resources
+campgrounds (Charlie Elliott, Rocky Mountain, Evans County) and Stone Mountain Park are outside the state-park system
+and have `policy_ref: none`.
 
 Side fixes, recorded with their evidence: `link_fixes_2026-10-12.json` (nine Vermont booking links on a host that no longer
 resolves, Green Falls' missing parkId), `corrections_2026-10-12.json` (Gilson Pond's five RV sites now have 30-amp
@@ -96,7 +100,12 @@ Agency's) is priced from Campspot (`notchy_campspot_*.jsonl` → `tn_notchy_fees
 is fixed in `link_fixes_2026-10-12.json`. Florida links fixed there too: Shangri-La and Ross Prairie pointed at their
 CityParkIds (#!park/3315, 3311 open nothing; the PlaceIds are 62 and 58), Gilchrist Blue Springs and Santos at the dead
 ReserveAmerica host, and Cypress Glen and Mutual Mine had no booking link. Not priced: FL Shangri-La 155, whose 22
-sites are all 'Horse Site' on Reserve Florida ('We are known for our equestrian camping'), a question for AWH. Ohio: Caesar Creek and Paint
+sites are all 'Horse Site' on Reserve Florida ('We are known for our equestrian camping'), a question for AWH. Georgia: Fort Mountain and General Coffee linked other parks' ids (now 530158 and
+530160); 14 entries had no booking link; Georgia Veterans' and Little Ocmulgee's ReserveAmerica links were dead (their
+lodges take the bookings). Not priced: Little Ocmulgee 4536 (its lodge's engine lists every campsite as 'please call
+hotel'). Seven Georgia parks have two entries each, AWH's and a later sweep's, 0.1-2.2 km apart (2/4530, 3/4537,
+695/4538, 173/4521, 195/4520, 693/4545, 731/4542): both carry the same price, merging is AWH's call. Stephen C. Foster
+State Park (4543) is now called Okefenokee State Park. Ohio: Caesar Creek and Paint
 Creek linked their marinas' place ids (771, 773: boat slips) and now link 344 and 368; Strouds Run's campground is not
 on ReserveOhio at all (first come, run by the concession Strouds Run Rentals), so its link, booking group and note say so.
 Malabar Farm is priced although ReserveOhio types its sites as equestrian: ODNR says its non-electric sites 'can
