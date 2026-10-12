@@ -137,3 +137,26 @@ Helpers: `ra_sites.py` (save a state's listings), `ra_type_prices.py` (one price
 newer "Price Breakdown / Residents Pay" layout (Delaware), `vendor_calendar.py` (the reserve.*parks calendar behind SC,
 AL and TN, through the one-browser driver) and `vendor_parse.py` (its text, summed up per park, window and site kind), `rdr_place.py` (Tyler/US eDirect place search: facilities, unit types and each facility's 'Starting at' rate line),
 `rdr_rates.py` (a US eDirect site's nightly rate per site type, from its search/details call).
+
+## Atlantic Canada (2026-10-12, AWH: "continue pricing the states, eastern states first, then moving westward")
+
+Every eastern US state agency was done, so the pass moved west from the Atlantic provinces. Prices are in CAD.
+
+| province | source | checked against the booking site | entries |
+|---|---|---|---|
+| NL | ParksNL's [reservations page](https://www.parksnl.ca/reservations/): $20.15 unserviced / $30.90 serviced, $7 nightly vehicle pass, $7.00 reservation fee (incl. tax) | www.nlcamping.ca (GoingToCamp), every park's short-stay schedules, July 2027 (`gtc_probe.py` → `nl_booking_fees_*.json`, `nl_build.py`) | 13 |
+| PE | PEI Provincial Parks' [2026 rates](https://www.peiprovincialparks.ca/articles/camping/pei-provincial-parks-fees-and-operating-dates) for every provincial campground: $38 / $45 two-way / $50 three-way, plus 15% HST, $6 + HST reservation fee (`pe_fee_page_*.txt`) | the ReserveAmerica site prices nothing between seasons; each park's sites, service type and length (`ra_list.py` → `pe_sites_*.json`, `pe_build.py`) | 8 |
+| NS | Nova Scotia Parks' [2026 prices](https://parks.novascotia.ca/camping-fees), taxes included: $26.50 unserviced / $35.30 serviced, $8.95 reservation fee (`ns_fee_page_*.txt`) | novascotia.goingtocamp.com, every park, Tue and Sat in July 2027 (`ns_booking_fees_*.json`, `ns_build.py`) | 19 |
+| NB | each park's 'Dates & Rates' tab, 2026 high and low season, before tax (`nb_park_rates_*.json`); $10 reservation fee (about-us policies) | reservations.parcsnbparks.ca (GoingToCamp) still prices 2026 nights, so both seasons were read there with each site type's hookups (`nb_booking_fees_*.json`, `nb_build.py`) | 9 |
+
+Notes. GoingToCamp's feeDetails can answer with several fees for one site: Newfoundland returns the nightly and the
+weekly rate, New Brunswick the nightly and the monthly rate plus, at République and Sugarloaf, a further 4% / 3.5% the
+pages don't name (stated in those notes). `gtc_probe.py` keeps every fee as returned and the build scripts take the
+nightly one; `audit/price_research/gtc_prices.py` sums them and is only right where a site has one fee. A park whose
+unserviced sites are tent, van or 18-ft-trailer sites has the cheapest hookup site as its base (PEI's Cedar Dunes;
+NB's Sugarloaf, New River Beach, The Anchorage and République). NB's surcharges are the high-season differences and
+nightly_low/high the low- and high-season base; the notes give both seasons. Nova Scotia's Laurie and Thomas Raddall
+list one serviced site each ('H1' at Thomas Raddall) and no serviced sites on their park pages, so no electric
+surcharge. New Brunswick's day-use vehicle entry fees are not recorded: no page says whether campers pay them.
+Not priced: Green Park PE 14939 (a leaseholder's campground; its own page lists 2-way $42 / 3-way $46 / 50-amp $50 but
+is undated, Campspot has no 2027 nights yet and Wayback was down).

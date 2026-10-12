@@ -28,9 +28,13 @@ const SF_SUMMARY_SKIP = new Set(['source', 'checked', 'note', 'url', 'platform',
 // "4 set", which on the Rating section is worse than useless: Prophetstown is a
 // 5-star park whose chip said "4 set", and a bare number beside the word Rating
 // reads as a score. The count also answered a question nobody asks.
+function sfAmount(n) {
+  return Number.isInteger(n) ? String(n) : Number(n).toFixed(2);
+}
+
 function sfMoney(n, currency) {
   const sym = currency === 'CAD' ? 'C$' : '$';
-  return sym + (Number.isInteger(n) ? n : Number(n).toFixed(2));
+  return sym + sfAmount(n);
 }
 
 // "05-01" is how a recurring date has to be STORED (no year — doc §4), and it
@@ -355,7 +359,8 @@ function sfChips(group, values, keys) {
     }
     if (chip && f.key === 'nightly_low') {
       if (values.nightly_high != null && values.nightly_high !== values.nightly_low) {
-        chip += '\u2013' + values.nightly_high;
+        // Formatted like the low end: a raw 43.2 beside C$29.71 read as a typo.
+        chip += '\u2013' + sfAmount(values.nightly_high);
       }
       chip += '/night';
       // With add-ons beside it, say the rate is the base they are added to.
