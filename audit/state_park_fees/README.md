@@ -264,3 +264,20 @@ Not priced: Honey Creek Resort 2905 (not on the sheet; the resort's own site no 
 closed) and Sharon Bluffs 3129 (Appanoose County Conservation, first come, no published fee). Priced but flagged:
 Shimek State Forest's White Oak 2930, whose 11 sites are all typed 'Tent Only' ('Looking For Category: Tent Site', one
 'can accommodate a pop up camper', 35-45 ft gravel pads).
+
+## Manitoba (2026-10-12)
+
+41 entries from every campsite fee schedule on manitoba.goingtocamp.com for Tue 2027-07-13 and Sat 2027-07-17
+(`gtc_probe.py` → `mb_booking_fees_2026-10-12.json`, `mb_build.py`), with each schedule's service type and the longest
+unit its sites allow. The prices are the province's 2026 fees ('Basic Services $11.55 to $23.65, Electrical Services
+$17.85 to $29.95, Electrical/Water Services $21.00 to $31.00, Full Service $25.20 to $27.30', GST included), the same
+every night of the week. Base = the cheapest Basic site whose units go to 25 ft or longer, else electric; electric,
+water (electric/water over electric alone) and full service as add-ons; the $10.00 reservation fee and the $9.50 daily
+vehicle permit ('2026 Park Vehicle Permit Fees Includes GST') on each entry. Seasonal, group, backcountry and $0 host
+schedules are left out.
+
+Not priced: Beaver Creek, Bell Lake, Singush Lake, Grass River's Iskwasum / Reed Lake / Gyles, Lake St. George,
+Whitefish Lake and Falcon Creek have no campsites on the booking site (first come, self-registration; the page gives no
+per-park fee), Norris Lake and Max Lake are on it with no campsites, and St. Ambroise Beach is run by Surfside Beach, a
+commercial operator ('may have their own fees'), whose site now offers seasonal lots and day camping and whose Campspot
+listing shows no sites.
