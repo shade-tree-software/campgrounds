@@ -32,7 +32,7 @@ Lesson: read what the minimum is attached to (cabins, events, holidays) before c
 - Domaine du Lac Libby restored as 15359. The engine asks 2 nights on every site opened for June and July 2027 weeknights, so the minimum is marked.
 - American Way WV left out (4-night minimum).
 - Goethe 14396 dropped ($75-80, over the gate) and Péninsule 15355 dropped (mostly seasonal). Netley Creek 15357 kept.
-- Not answered, so still `ask` rows: the four 10-01 removals that are also over the $50 gate (Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA). They stay out unless AWH says otherwise.
+- The four 10-01 removals that are also over the $50 gate (Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA) stay out: AWH 2026-10-12 (their rows are now `skip`).
 - Removals are logged in `audit/minimum_stay_reopen/dropped.jsonl`; `apply.py` now has `drop` and `minimum` verdicts.
 
 **AWH's second round (2026-10-12), two calls left to me:**

@@ -126,7 +126,11 @@ def main():
             print("already written:", had["id"], had["name"])
             continue
         if d["verdict"] in ("mark", "minimum"):
-            e = next(r for r in rows if r["id"] == d["id"])
+            e = next((r for r in rows if r["id"] == d["id"]), None)
+            if e is None:
+                # Dropped since (South Bay Resort, 2026-10-12): nothing left to mark.
+                print("gone (dropped since):", d["id"], d["name"])
+                continue
             if d["verdict"] == "mark":
                 e["inclusion_evidence"] = (e.get("inclusion_evidence") or "").rstrip("; ") + (
                     f"; {stamp(d)}: {d['why']}")

@@ -22,7 +22,10 @@ remain, which also makes it `derived`); when it only removes, what is left is st
 and keeps its "note prose" provenance. `checked` records what was read for the entry. Values go
 through campground_schema.apply_update, so a bad one raises before anything is written. A rerun
 skips entries whose provenance already carries MARK, and finds removals already made.
-Dry run unless --apply.
+
+drops.json lists entries AWH removed on what the re-check found (College Campground is
+tent-only on rec.gov; Sycamore Flat takes rigs to about 18 ft): they are deleted and logged to
+dropped.jsonl, and a rerun finds them gone. Dry run unless --apply.
 """
 import json
 import os
@@ -42,11 +45,24 @@ def main():
     path = os.path.join(ROOT, "campgrounds.json")
     rows = json.load(open(path, encoding="utf-8"))
     by = {r["id"]: r for r in rows}
+    drops = json.load(open(os.path.join(HERE, "drops.json"), encoding="utf-8"))["entries"]
+    dropped = []
+    for d in drops:
+        e = by.pop(d["id"], None)
+        if e is None:
+            print(d["id"], "already dropped:", d["name"])
+            continue
+        rows.remove(e)
+        dropped.append({"id": e["id"], "name": e["name"], "state": e["state"],
+                        "ownership": e.get("ownership"), "action": "removed",
+                        "why": d["why"], "decided": d["decided"]})
+        print(d["id"], "drop", e["state"], e["name"])
     changed = 0
     for k, d in sorted(dec.items(), key=lambda kv: int(kv[0])):
         e = by.get(int(k))
         if e is None:
-            print(k, "MISSING")
+            if not any(x["id"] == int(k) for x in drops):
+                print(k, "MISSING")
             continue
         prov = dict(e.get(cs.PROVENANCE) or {})
         if MARK in ((prov.get("hookups") or {}).get("source") or ""):
@@ -85,13 +101,16 @@ def main():
         cs.validate_row(e, label=e["name"])
         changed += 1
         print(f"{k:>6} {e['state']} {e['name'][:38]:38} {held} -> {new}")
-    print(changed, "entries changed")
+    print(changed, "entries changed;", len(dropped), "dropped")
     if "--apply" in sys.argv:
         tmp = path + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(rows, fh, indent=2, ensure_ascii=False)
             fh.write("\n")
         os.replace(tmp, path)
+        with open(os.path.join(HERE, "dropped.jsonl"), "a", encoding="utf-8") as fh:
+            for rec in dropped:
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
         print("written")
 
 
