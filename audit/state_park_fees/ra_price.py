@@ -11,7 +11,13 @@ def price(host, cc, pid, sid, d, op=None):
     L = [re.sub(r"\s+", " ", l).strip() for l in html.unescape(re.sub(r"<[^>]+>", " ", t)).split("\n") if l.strip()]
     k = next((j for j, l in enumerate(L) if l in ("Camping Fees (1 night)", "Use Fees (1 night)")
               or (l in ("Camping Fees", "Use Fees") and j + 1 < len(L) and L[j + 1] == "(1 night)")), None)
-    if k is None: return None, L
+    if k is None:
+        # Newer hosts (Delaware, 2026) print 'Price Breakdown: / Residents Pay / Non-Residents Pay / $46.00 /
+        # Price Details ... / $58.00 ...'; return the first amount (the resident's) and leave L whole.
+        j = next((j for j, l in enumerate(L) if l.startswith("Price Breakdown")), None)
+        if j is None: return None, L
+        m = next((re.search(r"\$[\d,]+\.\d\d", l) for l in L[j + 1:j + 8] if re.search(r"\$[\d,]+\.\d\d", l)), None)
+        return (m.group(0) + " Per Night (Price Breakdown)" if m else None), L
     return next((l for l in L[k + 1:k + 4] if "$" in l), None), L
 if __name__ == "__main__":
     p, L = price(*sys.argv[1:6]); print(p)
