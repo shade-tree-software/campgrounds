@@ -381,6 +381,19 @@ class TestRegistryResolution(unittest.TestCase):
                      "fees": {"nightly_low": 0, "nightly_high": 20}}
         self.assertIn("discounts", cs.resolve(some_free, reg))
 
+    def test_own_free_fees_drop_agency_add_ons(self):
+        # NY State Parks' non-resident +$5 and weekend +$4 mean nothing at $0.
+        reg = {"state:NY": {"fees": {"currency": "USD", "reservation_fee": 7.25,
+                                     "nonresident": {"type": "surcharge", "amount": 5, "per": "night"},
+                                     "surcharges": {"weekend": 4}}}}
+        free = {"ownership": "state", "state": "NY", "fees": {"nightly_low": 0, "nightly_high": 0}}
+        values = cs.resolve(free, reg)["fees"]["values"]
+        self.assertNotIn("nonresident", values)
+        self.assertNotIn("surcharges", values)
+        self.assertEqual(values["currency"], "USD")
+        paid = {"ownership": "state", "state": "NY", "fees": {"nightly_low": 22, "nightly_high": 22}}
+        self.assertEqual(cs.resolve(paid, reg)["fees"]["values"]["nonresident"]["amount"], 5)
+
     def test_ownership_alone_is_what_makes_federal_reachable(self):
         # Federal policy is set per agency, not per state. Without this level a
         # single federal rule would need fifty identical `federal:XX` rows.

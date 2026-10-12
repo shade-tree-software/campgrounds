@@ -55,6 +55,7 @@ Rebuild the findings from the committed evidence: `python3 -I pa_build.py pa_sit
 | TN | no published table: every bookable night on reserve.tnstateparks.com's calendar for two weeks from 2026-10-13 and from 2027-06-15 (`vendor_calendar.py` → `tn_parse.py` → `tn_calendar_summary_*.json`, `tn_build.py`); which calendar sites are tent or primitive comes from each park's campground page (`tn_parse.py` SITE_KIND) | it is the source | 31 + Notchy Creek |
 | FL parks | each park's Hours & Fees page (`fl_park_fee_text_*.json`, read through the one-browser driver: floridastateparks.org refuses plain fetches) + Reserve Florida's 'Starting at $N' line per campground loop (`rdr_place.py` → `fl_rdr_rates_*.json`) + the statewide [fee page](https://www.floridastateparks.org/fees) (`fl_parks_build.py`) | every page fee matched its park's rate line; six parks whose page gives no camping fee are priced from the rate line | 52 |
 | OH | no published table: ReserveOhio's rate for sampled sites of each type, from the call its page makes when a site is clicked (`rdr_rates.py` → `oh_booking_rates_*.jsonl`), Tue 2027-06-15 and Sat 2027-06-19 (`oh_build.py`); Strouds Run from its concession's page, Camp Perry from the Guard RV park's page | it is the source | 56 |
+| VA | DCR's [camping fee table](https://www.dcr.virginia.gov/state-parks/camping-fees) (resident and non-resident price per site type and park, effective 2025-05-12; `va_fee_table_*.json`) + reservevaparks.com's site types per campground (`rdr_place.py` → `va_place_types_*.json`) (`va_build.py`); Breaks Interstate Park from its own page | 20 parks' sampled prices (`va_booking_rates_*.jsonl`) all on the table, Saturday = Tuesday; the host answered 403 after that | 24 + Breaks |
 
 Rules that differ by state: Maine charges its $5 reservation fee per NIGHT (recorded in `reservation_fee`, said in the
 note); Delaware's non-resident price is the resident's x 1.25 rounded up (a `multiplier`); New York's State Parks add $4
@@ -73,7 +74,13 @@ sum; the $6.70 reservation fee is per reservation, Monroe County stays add $2.50
 campsite fee without the utility fee. `rdr_place.py` sends the page's own search body for an ISO date, which is what fills in the
 rate lines. Ohio's prices are flat by site type (a Saturday costs the same as a Tuesday); as in Indiana the base is the
 non-electric site where a park has one, with electric and full hookups as surcharges, and the $6.50 reservation fee
-is the state:OH registry row's.
+is the state:OH registry row's. Virginia: DCR's 'Standard' row is a tent-only site at several parks
+(the booking site's 'Tent Only-No Hookups'), so the RV base there is the electric site; a no-hookup type whose longest
+site is under 23 ft (Claytor Lake, Staunton River, Bear Creek Lake's waterview sites) is in the note, not the base.
+Entries with no add-ons of their own carry `surcharges: {"weekend": 0}` (true: one price every night) so the state:VA
+row's electric +$10 / full hookup +$16 do not show as typical over a price that already includes them; the same
+$0 weekend went on 43 NY DEC campgrounds and 3 free NY sites (`set_surcharges.py`, `surcharge_zeros_*.json`), and the
+popup prints no chip for $0. Breaks Interstate Park (the VA-KY commission's, Firefly booking) has `policy_ref: none`.
 
 Side fixes, recorded with their evidence: `link_fixes_2026-10-12.json` (nine Vermont booking links on a host that no longer
 resolves, Green Falls' missing parkId), `corrections_2026-10-12.json` (Gilson Pond's five RV sites now have 30-amp

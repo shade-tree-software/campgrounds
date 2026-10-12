@@ -515,6 +515,10 @@ def policy_ref(entry):
 RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until")
 
 
+# Agency fee keys that mean nothing on a campground that is free at both ends.
+FREE_MOOT_FEE_KEYS = ("nonresident", "surcharges")
+
+
 def _moot_agency_keys(entry):
     """Registry keys a verified entry fact makes meaningless, per group.
 
@@ -531,6 +535,9 @@ def _moot_agency_keys(entry):
     # campground with some free sites, and its discounts still matter.
     if fees.get("nightly_high") == 0 and fees.get("nightly_low", 0) == 0:
         moot["discounts"] = None
+        # Nor for a non-resident or per-night add-on: NY State Parks' '+$5 a night
+        # for non-residents' printed under three free DEC sites (2026-10-12).
+        moot["fees"] = set(FREE_MOOT_FEE_KEYS)
     return moot
 
 

@@ -181,6 +181,8 @@ switch off another default):
   binds a first-come site too.
 - own `fees` free at both ends (`nightly_high: 0`, `nightly_low` 0 or absent) → drop the
   agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
+  The agency's `fees.nonresident` and `fees.surcharges` go too (2026-10-12: NY State Parks'
+  "+$5 a night for non-residents" printed under three free DEC sites).
   A $0 low beside a paid high is a campground with some free sites and keeps them.
   **This rule needs the fees RECORDED to fire**, and until 2026-10-09 only 10 entries had
   them: ~300 free federal campgrounds whose note says "Free, FCFS" still showed "America
@@ -392,6 +394,17 @@ full hook-ups +$13–15. A cost estimate that quotes the base rate for a query t
 electric hookups understates the night the traveller actually needs, so `fees.surcharges`
 carries them. Anything with no cross-agency equivalent — Suffolk's Premier/Tier I/Tier II
 site classes — stays in `fees.note`.
+
+**A $0 surcharge is a recorded "does not apply", and it draws no chip** (2026-10-12). An
+entry's `surcharges` replace the registry row's WHOLE, so an entry priced from its own
+agency but carrying no add-ons of its own used to show the row's list as typical: 43 NY DEC
+campgrounds read *"weekend +$4"* from the State Parks row although DEC charges one nightly
+fee, and Virginia's all-electric parks would have read *"electric +$10"* on top of a price
+that already includes it. `{"weekend": 0}` is true for both and stops the inheritance;
+`static/campground-schema.js` skips $0 amounts. `audit/state_park_fees/set_surcharges.py`
+writes them. Entries priced with their own base but no add-ons still inheriting a row's
+list: South Dakota (61, the row's electric +$7) and 26 NY State Parks entries (the row's
+list is theirs), left as they are.
 
 **A park ENTRANCE fee is a fourth mechanic and must not be folded into
 `nonresident`** (2026-09-14). Indiana charges every vehicle to enter — $7 with

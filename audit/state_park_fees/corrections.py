@@ -1,7 +1,7 @@
 """Corrections the state-park price pass turned up: python3 -I corrections.py FILE [--apply]
 
 FILE is a list of {"id", "why", "hookups": {...} + "hookups_source", "status": {...} + "status_source",
-"booking": {...} + "booking_source", "note_line"}: `hookups` / `status` / `booking` replace that group (values through campground_schema.apply_update,
+"booking": {...} + "booking_source", "policy_ref", "note_line"}: `hookups` / `status` / `booking` replace that group (values through campground_schema.apply_update,
 provenance = its source, checked today); `note_line` is appended to the note with two spaces (a rerun finds it there and skips the
 entry). Prints the ids whose notes changed, for the session note scan. Dry run unless --apply."""
 import datetime, json, os, sys
@@ -23,6 +23,9 @@ for c in json.load(open(sys.argv[1], encoding="utf-8")):
             prov[g] = {"source": c[g + "_source"], "checked": TODAY}
             e.pop(g, None)
             cs.apply_update(e, {g: c[g], cs.PROVENANCE: prov})
+    if c.get("policy_ref"):
+        # 'none' when the entry is outside its state's park system (docs/campground-schema.md, policy_ref)
+        e["policy_ref"] = c["policy_ref"]
     if c.get("note_line"):
         e["note"] = ((e.get("note") or "").rstrip() + "  " + c["note_line"]).strip()
     cs.validate_row(e, label=e["name"])

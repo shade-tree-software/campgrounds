@@ -309,7 +309,11 @@ function sfChips(group, values, keys) {
     if (f.key === 'surcharges' && values[f.key] && typeof values[f.key] === 'object') {
       Object.keys(values[f.key]).forEach(sk => {
         const amt = values[f.key][sk];
-        if (amt == null) return;
+        // A $0 add-on is recorded to say an agency's usual one does not apply
+        // here (NY DEC campgrounds have no weekend surcharge); since an entry's
+        // surcharges replace the registry's whole, it also stops the agency's
+        // list showing as "typical". It is not worth a chip of its own.
+        if (amt == null || amt === 0) return;
         parts.push((SF_SURCHARGE_LABELS[sk] || sk.replace(/_/g, ' '))
                    + ' +' + sfMoney(amt, cur) + '/night');
       });

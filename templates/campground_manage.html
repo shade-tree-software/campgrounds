@@ -527,6 +527,11 @@ function agencyRowFor(c) {
   const fees = c.fees || {};
   if (fees.nightly_high === 0 && (fees.nightly_low === undefined || fees.nightly_low === 0)) {
     delete out.discounts;
+    // campground_schema.FREE_MOOT_FEE_KEYS: no non-resident or per-night add-on at $0
+    if (out.fees) {
+      out.fees = Object.assign({}, out.fees);
+      ['nonresident', 'surcharges'].forEach(k => delete out.fees[k]);
+    }
   }
   return out;
 }

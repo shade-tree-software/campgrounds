@@ -8,15 +8,18 @@ is clicked, GET search/details/<UnitId>/startdate/<YYYY-MM-DD>/nights/1/0/0 ({"R
 "RateTypeName": "Standard", ...}). For every campground facility and unit type, up to two units are priced on DATE and
 the first on DATE2. Cabins, group camps, shelters, day-use and other non-campsite types are skipped. One JSON line per
 unit and date."""
-import json, re, sys, time, urllib.request
+import json, os, re, sys, time, urllib.request
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/130 Safari/537.36"
 SKIP = re.compile(r"(?i)cabin|lodge|yurt|cottage|group|shelter|day use|pavilion|boat|slip|dock|horse|equest|rent|teepee|"
                   r"lean|bunk|house|dorm|room|getaway|camper cabin|tent only|walk|hike|backpack|canoe|kayak")
 base, dates, pids = sys.argv[1], sys.argv[2].split(","), sys.argv[3:]
 
 
+PAUSE = float(os.environ.get("RDR_PAUSE", "0.3"))   # Virginia's host answered 403 after ~300 quick calls
+
+
 def call(path, body=None):
-    time.sleep(0.3)
+    time.sleep(PAUSE)
     req = urllib.request.Request(base + path, data=json.dumps(body).encode() if body is not None else None,
                                  headers={"User-Agent": UA, "Content-Type": "application/json", "Accept": "application/json"})
     return json.loads(urllib.request.urlopen(req, timeout=60).read())

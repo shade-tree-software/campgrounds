@@ -223,6 +223,12 @@ class ChipPhrasingTest(unittest.TestCase):
             self.chips("fees", {"surcharges": {"electric": 7, "full_hookup": 13}}),
             ["electric +$7/night", "full hookup +$13/night"])
 
+    def test_a_zero_surcharge_is_no_chip(self):
+        """$0 says the agency's usual add-on doesn't apply; '+$0/night' says nothing."""
+        self.assertEqual(
+            self.chips("fees", {"surcharges": {"weekend": 0, "electric": 7}}),
+            ["electric +$7/night"])
+
     def test_entrance_fee_states_what_it_is_charged_per(self):
         self.assertEqual(
             self.chips("fees", {"entrance": {"resident": 7, "nonresident": 15,
