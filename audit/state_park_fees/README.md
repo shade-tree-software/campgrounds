@@ -281,3 +281,60 @@ Whitefish Lake and Falcon Creek have no campsites on the booking site (first com
 per-park fee), Norris Lake and Max Lake are on it with no campsites, and St. Ambroise Beach is run by Surfside Beach, a
 commercial operator ('may have their own fees'), whose site now offers seasonal lots and day camping and whose Campspot
 listing shows no sites.
+
+## Minnesota (2026-10-12)
+
+90 entries. State parks and recreation areas (64) from ReserveMN (the US eDirect/Tyler engine; API
+`mnrdr.usedirect.com/minnesotardr/rdr/`): `rdr_place.py` → `mn_places_2026-10-12.json` gives each campground's site
+types and their longest vehicle length; `rdr_rates.py` found sampled sites of each type for late-October nights
+(`mn_booking_rates_2026-10-12.jsonl`), and `rdr_reprice.py` priced those same sites for Tue 2027-06-15 / Sat 2027-06-19
+(`mn_booking_rates_june_2026-10-12.jsonl`) - the per-site call answers beyond the 120-day window although the site list
+does not, and October understates a full-hookup site once the water is off (Lake Shetek $42 on Oct 20, $34 on Oct 24).
+`mn_build.py`: base = the cheapest drive-in site without electric that a 23-ft rig fits (else electric), low/high across
+the entry's campgrounds, electric and full hookups as add-ons measured within one campground - everywhere the DNR fee
+page's 'Electric hookup ... add $10/night' and 'Water and sewer hookup ... add $8/night' - and `weekend: 0` (Saturday
+the same). Tax is additional. The state:MN registry row was a `reported` row: re-read from the fee page, it keeps the
+$7 vehicle permit and gains the $8 online reservation fee ('No fee for same-day reservations')
+(`mn_registry_2026-10-12.py`).
+
+State forest campgrounds (26 priced, 31 in all) are a separate system: 'In state forests (taxes are included):
+Drive-in campsites $17/night', paid online or at a state park on the day you arrive ('Beginning in 2026 ... DNR does not
+accept self-payment envelopes'). They had inherited the state parks' row (vehicle permit, reservation-only rule, 120-day
+window), which the row itself says does not cover them, so they now carry `policy_ref: none`. Older notes quoting $14
+or envelope payment are superseded by the fees group.
+
+Not priced: Minnesota Valley SRA 5402 - ReserveMN lists only its equestrian campground; the Lawrence Unit's 25 drive-in
+sites the note describes are not on it. Left alone: Grand Portage State Forest's Devilfish, Esther and McFarland lakes
+carry $0 from their notes, and a commented-out notice on the DNR's forest fee page lists them among campgrounds that
+'will' start charging - a question for AWH.
+
+## Oklahoma (2026-10-12)
+
+45 entries from okstateparks.reserveamerica.com: every site of the 31 parks (`ra_list.py` → `ok_sites_2026-10-12.json`)
+and, for each loop and RV site type, up to two sites priced for Tue 2027-06-15 and one for Sat 2027-06-19 with the site
+page's hookups and length (`ra_loop_types.py` → `ok_booking_rates_2026-10-12.jsonl`). Oklahoma publishes no rate table.
+`ok_build.py`: every Oklahoma RV site has electricity ('Semi Modern' = water and electric, 'Modern' adds sewer), so the
+base is the cheapest non-premium RV site a 23-ft rig fits; full hookups and premium sites are add-ons; the weekend
+add-on is the base site's Saturday difference (+$2 at most parks, +$4 to +$8 at Lake Murray's and McGee Creek's loops,
+where premium sites rise more - the note gives each). Multi-entry parks are split by loop (Lake Murray's seven
+campgrounds, Fort Cobb's west-shore coves, Lake Wister, McGee Creek, Sequoyah Bay inside Sequoyah's listing, Lake
+Eufaula's Dogwood). TravelOK's reservation guidelines: a 3% card service fee, no reservation fee, one vehicle's parking
+pass included with a reservation, seniors 62+ and military 10% off the base rate.
+
+Not priced: Raymond Gary 6611, Little Blue / Disney 6617, Snowdale 6619 (its TravelOK page is gone) and Beaver Dunes'
+Pioneer 6621 and Hackberry Bend 6626 are not on the booking site.
+
+## Texas (2026-10-12)
+
+71 entries from each park's own fee pages on tpwd.texas.gov (`tx_pages.py` → `tx_park_pages_2026-10-12.json`): every
+campsite type with its nightly fee and description, and the park's daily entrance fee per person 13 and older.
+`tx_build.py`: a type counts for an RV unless its name makes it a tent, walk-in, hike-in, equestrian, group, overflow or
+cabin site, its description bars RVs, or it caps them under 23 ft (Garner's water-only loops: '20 feet or less'); a
+water-only or primitive type counts only where its page says RVs, trailers or motor homes may use it (Galveston's 'Dry
+camping for tents, trailers, or motor homes', Seminole Canyon's 'Self-contained pull-through campsites'). Base = the
+cheapest such type with the fewest hookups, low/high across that kind's loops; water, electric and full hookups as
+add-ons; the entrance fee on each entry as `{per: person_day}` (the registry row has the shape with no amount). Cooper
+Lake, Lake Somerville and Ray Roberts are split by unit. Atlanta's entrance-fee page 404s.
+
+Not priced yet: the 18 Texas entries run by other state agencies (LCRA, the river authorities, the Historical
+Commission), which do not publish on tpwd.texas.gov.
