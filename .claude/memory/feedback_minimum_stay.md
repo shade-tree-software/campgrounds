@@ -8,7 +8,7 @@ metadata:
   modified: 2026-10-01T13:18:33.878Z
 ---
 
-**SUPERSEDED 2026-10-10 (AWH): "from now on all campgrounds with a 2-night minimum can stay as long as it is clearly marked as such."** A standing minimum no longer disqualifies; instead mark it: `booking.min_stay` (+ `booking.note`, `provenance.booking` with source/date) and a dated "MINIMUM STAY: N nights ..." line appended to the note. Done for 1622, 14298, 13371, 4974 (3 nights), 3529 (3 nights summer). 3+ night standing minimums were kept the same way (4974); ask if a longer one turns up. The history below explains the old rule.
+**SUPERSEDED 2026-10-10 (AWH): "from now on all campgrounds with a 2-night minimum can stay as long as it is clearly marked as such."** A standing minimum no longer disqualifies; instead mark it: `booking.min_stay` (+ `booking.note`, `provenance.booking` with source/date) and a dated "MINIMUM STAY: N nights ..." line appended to the note. Done for 1622, 14298, 13371, 4974 (3 nights), 3529 (3 nights summer). 3+ night standing minimums were kept the same way (4974); ask if a longer one turns up. docs/campground-curation.md states this rule since 2026-10-11 (AWH asked for the doc update). The history below explains the old rule.
 
 OLD RULE: A campground whose minimum stay applies to EVERY stay is not a nightly campground and is skipped. **AWH 2026-10-01: a standing 2-night minimum disqualifies** ("a campground does not qualify if it has a standing 2-night minimum. Weekend is ok."). This tightened the 2026-09-30 rule, which drew the line at 4 nights (American Way RV Park, Mineral Wells WV: "$50 daily, 4 day minimum").
 
