@@ -336,5 +336,13 @@ cheapest such type with the fewest hookups, low/high across that kind's loops; w
 add-ons; the entrance fee on each entry as `{per: person_day}` (the registry row has the shape with no amount). Cooper
 Lake, Lake Somerville and Ray Roberts are split by unit. Atlanta's entrance-fee page 404s.
 
-Not priced yet: the 18 Texas entries run by other state agencies (LCRA, the river authorities, the Historical
-Commission), which do not publish on tpwd.texas.gov.
+The 18 entries run by other state agencies come from their own pages (`tx_other_build.py`, page text in
+`tx_other_pages_2026-10-12.json`): LCRA's park pages ('Starting at $25' for the six primitive drive-up parks, $35-58 for
+its RV parks; entrance $5 an adult a day, $2 seniors / military / disabled), Campspot for the two Lake Fayette parks Vista
+Recreation runs for LCRA (June 2027 nights; Park Prairie +$3 on a Saturday), the Historical Commission's Fort Griffin
+($15 water and electric, $22 full hookups, plus its entrance fee) and Mission Dolores ($24, first come), the
+Lavaca-Navidad River Authority's Brackenridge and Texana ($40 / $45, $3.50 reservation fee), the Trinity River
+Authority's Wolf Creek ($25, waterfront $35, $5 a person entrance) and the Guadalupe-Blanco River Authority's Lake Wood
+($35, $40 for 50 amp). Those 21 non-TPWD entries (with Hubbard Creek, Rough Creek and Coleto Creek, already priced) had
+inherited TPWD's row - booking site, 150-day window, weekend minimum, per-person entry - so they now carry
+`policy_ref: none` (`tx_other_agencies_2026-10-12.py`).
