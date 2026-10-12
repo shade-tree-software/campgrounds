@@ -23,6 +23,14 @@ UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chr
 CAMPSITE = "Campsite"
 
 
+def is_campsite(name):
+    """'Campsite', or a named variant of it ('Campsite/Monthly Campsite', 'Gulf View Campsite' on
+    reserve.mdwfp.com, 2026-10-12); primitive, group and tent categories are not RV sites."""
+    name = name or ""
+    return name == CAMPSITE or (CAMPSITE.lower() in name.lower()
+                                and not re.search(r"(?i)primitive|group|tent|walk|boat", name))
+
+
 def norm(s):
     return re.sub(r"[^a-z0-9]+", " ", s.lower().replace("'", "")).strip()
 
@@ -55,6 +63,8 @@ def main():
     ap.add_argument("--entries", required=True)
     ap.add_argument("--dates", default="2027-05-11,2027-06-15")
     ap.add_argument("--currency", default="USD", choices=["USD", "CAD"])
+    ap.add_argument("--max-fee", type=float, default=None,
+                    help="drop fees above this: a 'Campsite/Monthly Campsite' site can answer with its monthly rate")
     ap.add_argument("out")
     a = ap.parse_args()
     dates = a.dates.split(",")
@@ -104,7 +114,7 @@ def main():
         else:
             rids = {int(k) for k in res}
             label = "(whole park)"
-        sites = [r for k, r in res.items() if int(k) in rids and cats.get(r.get("resourceCategoryId")) == CAMPSITE
+        sites = [r for k, r in res.items() if int(k) in rids and is_campsite(cats.get(r.get("resourceCategoryId")))
                  and any(x.get("subEquipmentCategoryId") in fits for x in r.get("allowedEquipment") or [])]
         groups = {}
         for r in sites:
@@ -115,7 +125,7 @@ def main():
                 v = g.fee(r["resourceId"], d)
                 if v is not None:
                     fees.setdefault(fs, []).append((d, v, r["localizedValues"][0]["name"]))
-        vals = [v for lst in fees.values() for _, v, _ in lst]
+        vals = [v for lst in fees.values() for _, v, _ in lst if a.max_fee is None or v <= a.max_fee]
         print(e["id"], park[0], "|", label, "|", len(sites), "RV sites,", len(groups), "fee schedules |",
               sorted(set(vals)) if vals else "no fee")
         if not vals:
@@ -126,7 +136,7 @@ def main():
                     "note": f"Base nightly fee (before any nonresident surcharge) for RV-capable sites ({len(sites)} sites, {len(groups)} fee "
                             f"schedules), Tuesday nights {' and '.join(dates)}, from the {a.host} site fee panel."},
                     "source": f"https://{a.host}/api/resource/feeDetails ({park[0]} / {label}; "
-                              f"read 2026-10-10)"})
+                              f"read {__import__('datetime').date.today().isoformat()})"})
     json.dump(out, open(a.out, "w"), ensure_ascii=False, indent=1)
     print(len(out), "findings ->", a.out)
 

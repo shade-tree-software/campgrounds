@@ -46,6 +46,12 @@ Rebuild the findings from the committed evidence: `python3 -I pa_build.py pa_sit
 | NY | State Parks: the [statewide schedule](https://parks.ny.gov/camping/fees-policies) + sampled sites per park (`ra_quick.py` → `ny_booking_sample_*.jsonl`); DEC: its [2026 campground summary](https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf) | State Parks: it is the source; DEC: 5 of 20 matched | 52 |
 | DE | the booking site (Delaware's 2026 rate PDF refuses every fetch): winter, spring, summer weekday and a summer Saturday (`de_booking_sample_*.jsonl`) | it is the source | 5 |
 | IL | IDNR's [2027 schedule](https://dnr.illinois.gov/content/dam/soi/en/web/dnr/parks/2027-camping-changes/fee.pdf) applied to each park's site classes (booking API `rdr_place.py` + IDNR camping pages `il_classes.py`); State Fairgrounds from its own rate table | site classes only | 56 |
+| SC | no published table: every bookable night on reserve.southcarolinaparks.com's calendar for two weeks from 2026-10-13 and from 2027-06-15 (`vendor_calendar.py` → `vendor_parse.py` → `sc_calendar_summary_*.json`, `sc_build.py`) | it is the source | 18 |
+| AL | the same, on reserve.alapark.com with an Alabama zip; Cheaha re-read with a Pennsylvania zip gave the same prices (`al_calendar_summary_*.json`, `al_build.py`) | it is the source | 7 |
+| WI | wisconsin.goingtocamp.com's site fee panel, Tuesday nights 2027-05-11 and 2027-06-15 (`audit/price_research/gtc_prices.py`) | it is the source | 5 |
+| MS | parks: reserve.mdwfp.com's fee panel (a GoingToCamp site, `gtc_prices.py --max-fee 200`); state fishing lakes: the permit rule, [Title 40 Part 3 Rule 2.1](https://www.mdwfp.com/sites/default/files/2024-04/40-miss-admin-code-part-3-rule-21-state-fishing-lakes-rules-and-regulations-rev-04-2023-final.pdf) ($22 a day, $25 at Calling Panther, primitive $17; `ms_lakes_build.py`) | parks: it is the source; the lakes take no reservations | 19 + 13 |
+| FL forests | floridastateforests.reserveamerica.com, a Tuesday and a Saturday in January 2027 (`fl_forest_booking_sample_*.jsonl`, `fl_forests_build.py`) | it is the source | 17 |
+| IN | parks: indianastateparks.reserveamerica.com, sampled sites for Tue 2027-06-15 and Sat 2027-06-19 (`in_booking_sample_*.jsonl`, `in_build.py`); the DNR's [rate page](https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees) gives only statewide ranges. State forests: that page's first-come rate, $12 non-electric / $12.15 primitive (`in_forests_build.py`) | parks: it is the source; the forests take no reservations | 31 + 9 |
 
 Rules that differ by state: Maine charges its $5 reservation fee per NIGHT (recorded in `reservation_fee`, said in the
 note); Delaware's non-resident price is the resident's x 1.25 rounded up (a `multiplier`); New York's State Parks add $4
@@ -53,13 +59,21 @@ on Friday, Saturday and holiday eves, DEC campgrounds don't; where every sampled
 Letchworth, Selkirk Shores, Lakeside, Verona Beach, Delta Lake, every Delaware park but Seashore) the electric site is the
 base and there is no electric surcharge, as in West Virginia. Illinois's base is the cheapest site an RV can use: $11
 where a drive-in non-electric class exists, otherwise the electric price with the tent sites' $11 in the note.
+South Carolina and Alabama price each site and night by demand and publish no table, so an entry carries the range of
+its RV sites over every bookable night in the two windows. `gtc_prices.py --max-fee 200` drops the monthly rate a
+"Campsite/Monthly Campsite" site answers with on reserve.mdwfp.com. Florida's state forests price in odd cents, the
+same on a weekday as on a Saturday, plus a $5.79 reservation fee. Indiana has no out-of-state camping rate (its
+entrance fee differs by plates, the registry row's).
 
 Side fixes, recorded with their evidence: `link_fixes_2026-10-12.json` (nine Vermont booking links on a host that no longer
 resolves, Green Falls' missing parkId), `corrections_2026-10-12.json` (Gilson Pond's five RV sites now have 30-amp
-electric; Horseshoe Lake (Madison) is closed until May 2027). Not priced: Henderson County CA 1805 and Green River SWA
-1806 (no camping information on their IDNR pages).
+electric; Horseshoe Lake (Madison) is closed until May 2027; MS Lake Monroe's campground is closed until further
+notice). Not priced: Henderson County CA 1805 and Green River SWA 1806 (no camping information on their IDNR pages);
+MS Grand Gulf 5003 (its own commission's page lists 42 full-hookup sites, no price), Golden Memorial 5002 and Holmes
+County 5004 (not on reserve.mdwfp.com; both pages carry renovation notices), John W. Starr 13445 (Mississippi State's
+page for it is gone).
 
 Helpers: `ra_sites.py` (save a state's listings), `ra_type_prices.py` (one price per site type), `ra_sample.py` /
 `ra_quick.py` (sample sites across a park, with hookups; ra_quick skips the full listing), `ra_price.py` also reads the
 newer "Price Breakdown / Residents Pay" layout (Delaware), `vendor_calendar.py` (the reserve.*parks calendar behind SC,
-AL and TN, through the one-browser driver), `rdr_place.py` (Tyler/US eDirect place search: facilities and unit types).
+AL and TN, through the one-browser driver) and `vendor_parse.py` (its text, summed up per park, window and site kind), `rdr_place.py` (Tyler/US eDirect place search: facilities and unit types).

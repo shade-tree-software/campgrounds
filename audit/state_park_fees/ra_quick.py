@@ -47,8 +47,12 @@ for url in urls:
     op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
     op.addheaders = [("User-Agent", ra_price.UA)]
     g = lambda u: op.open(u, timeout=60).read().decode("utf-8", "replace")  # noqa: E731
-    g(f"{host}/campgroundDetails.do?contractCode={cc}&parkId={pid}")
-    t = g(f"{host}/campsiteSearch.do?contractCode={cc}&parkId={pid}")
+    try:
+        g(f"{host}/campgroundDetails.do?contractCode={cc}&parkId={pid}")
+        t = g(f"{host}/campsiteSearch.do?contractCode={cc}&parkId={pid}")
+    except Exception as x:  # noqa: BLE001 - a park that refuses (401/404) is reported, the rest go on
+        print(json.dumps({"parkId": pid, "url": url, "error": str(x)}), flush=True)
+        continue
     flat = re.sub(r"[\s\xa0]+", " ", html.unescape(re.sub(r"<[^>]+>", " ", t)))
     m = re.search(r"Search Results[^0-9]{0,40}\d+\s*-\s*\d+\s+of\s+(\d+)", flat) or re.search(r"\d+\s*-\s*\d+\s+of\s+(\d+)", flat)
     total = int(m.group(1)) if m else 25
