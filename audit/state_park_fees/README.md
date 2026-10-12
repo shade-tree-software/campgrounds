@@ -56,6 +56,7 @@ Rebuild the findings from the committed evidence: `python3 -I pa_build.py pa_sit
 | FL parks | each park's Hours & Fees page (`fl_park_fee_text_*.json`, read through the one-browser driver: floridastateparks.org refuses plain fetches) + Reserve Florida's 'Starting at $N' line per campground loop (`rdr_place.py` → `fl_rdr_rates_*.json`) + the statewide [fee page](https://www.floridastateparks.org/fees) (`fl_parks_build.py`) | every page fee matched its park's rate line; six parks whose page gives no camping fee are priced from the rate line | 52 |
 | OH | no published table: ReserveOhio's rate for sampled sites of each type, from the call its page makes when a site is clicked (`rdr_rates.py` → `oh_booking_rates_*.jsonl`), Tue 2027-06-15 and Sat 2027-06-19 (`oh_build.py`); Strouds Run from its concession's page, Camp Perry from the Guard RV park's page | it is the source | 56 |
 | VA | DCR's [camping fee table](https://www.dcr.virginia.gov/state-parks/camping-fees) (resident and non-resident price per site type and park, effective 2025-05-12; `va_fee_table_*.json`) + reservevaparks.com's site types per campground (`rdr_place.py` → `va_place_types_*.json`) (`va_build.py`); Breaks Interstate Park from its own page | 20 parks' sampled prices (`va_booking_rates_*.jsonl`) all on the table, Saturday = Tuesday; the host answered 403 after that | 24 + Breaks |
+| NC | northcarolinastateparks.reserveamerica.com, sampled sites for Tue 2027-06-15 and Sat 2027-06-19 (`ra_quick.py` → `nc_booking_sample_*.jsonl`) + every Kerr Lake site's campground and type (`ra_list.py` → `nc_kerr_sites_*.json`) (`nc_build.py`) | it is the source; matches NC's statewide rate page except Umstead (+$3) | 26 |
 
 Rules that differ by state: Maine charges its $5 reservation fee per NIGHT (recorded in `reservation_fee`, said in the
 note); Delaware's non-resident price is the resident's x 1.25 rounded up (a `multiplier`); New York's State Parks add $4
@@ -80,7 +81,9 @@ site is under 23 ft (Claytor Lake, Staunton River, Bear Creek Lake's waterview s
 Entries with no add-ons of their own carry `surcharges: {"weekend": 0}` (true: one price every night) so the state:VA
 row's electric +$10 / full hookup +$16 do not show as typical over a price that already includes them; the same
 $0 weekend went on 43 NY DEC campgrounds and 3 free NY sites (`set_surcharges.py`, `surcharge_zeros_*.json`), and the
-popup prints no chip for $0. Breaks Interstate Park (the VA-KY commission's, Firefly booking) has `policy_ref: none`.
+popup prints no chip for $0. Breaks Interstate Park (the VA-KY commission's, Firefly booking) has `policy_ref: none`. North Carolina's booking site
+shows each site's rate before a $3-a-night reservation fee and its rate page quotes the sum ($30 / $35 / $40 / $45), so
+the entries carry the sum; Jordan Lake's electric loop is walk-up only, priced from that statewide table.
 
 Side fixes, recorded with their evidence: `link_fixes_2026-10-12.json` (nine Vermont booking links on a host that no longer
 resolves, Green Falls' missing parkId), `corrections_2026-10-12.json` (Gilson Pond's five RV sites now have 30-amp
