@@ -28,11 +28,11 @@ metadata:
 
 Lesson: read what the minimum is attached to (cabins, events, holidays) before calling it standing.
 
-**Waiting on AWH (decisions.json `ask` rows):**
-- Restore Domaine du Lac Libby? AWH dropped it on 10-09, the day before the rule changed.
-- American Way WV has a 4-night minimum.
-- Restore four 10-01 removals that are also over the $50 gate? Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA.
-- Keep Goethe 14396 at $75-80?
-- Borderline seasonal adds he may want to drop: Péninsule (share not counted) and Netley Creek (77 of ~115 sites seasonal).
+**AWH's answers (2026-10-12):**
+- Domaine du Lac Libby restored as 15359. The engine asks 2 nights on every site opened for June and July 2027 weeknights, so the minimum is marked.
+- American Way WV left out (4-night minimum).
+- Goethe 14396 dropped ($75-80, over the gate) and Péninsule 15355 dropped (mostly seasonal). Netley Creek 15357 kept.
+- Not answered, so still `ask` rows: the four 10-01 removals that are also over the $50 gate (Five Branches CO, Davidson's NH, Sentinel Oaks TX, River Rock PA). They stay out unless AWH says otherwise.
+- Removals are logged in `audit/minimum_stay_reopen/dropped.jsonl`; `apply.py` now has `drop` and `minimum` verdicts. Next id 15360.
 
 **Follow-up not done:** 59 existing entries mention an unscoped minimum in their note but carry no `booking.min_stay`. Many are fine as they are: SC state parks and the Go Camp Tennessee sites waive it by phone, and some minimums apply only to cabins. The rest are worth marking: Bison Ridge IA, Minong WI, Metzler and Armitage OR, Oak Park CA, Chippewa MN, Esofea WI, Jellystone NS, Alcona MI (5 nights in summer, ask), The Landing on Red Gut Bay ON (4 nights, ask). Find them with the regex scan in this session's notes, or grep notes for "night min".

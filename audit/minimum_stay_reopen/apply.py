@@ -12,6 +12,11 @@ and skips. decisions.json holds one verdict per candidate:
   add       a park skipped under the old rule; `record` is the whole new entry;
   mark      the campground is already in the database under `id` (a later sweep re-added
             it); only the edits below are applied, so its minimum gets marked;
+  minimum   an entry that was never removed but whose note names a minimum the data didn't
+            carry (the 2026-10-12 follow-up); only the edits below, and `note_line` is how a
+            rerun knows it is done;
+  drop      AWH removed it (2026-10-12): the entry `id` is deleted and logged to dropped.jsonl;
+            a rerun finds it gone and does nothing;
   skip/ask  nothing is written; `why` says what else it failed, or what AWH has to decide.
 
 Edits on restore/add: `note_replace` ([old, new] pairs, each old text must be present),
@@ -19,7 +24,8 @@ Edits on restore/add: `note_replace` ([old, new] pairs, each old text must be pr
 (merged into the group; `min_stay` + `note`) and `fees`, each group with its `source`.
 Values go through campground_schema.apply_update, so a bad one raises before anything is
 written. Progress lives in the data: a written entry's inclusion_evidence carries MARK, and
-a rerun skips any candidate already present. Dry run unless --apply. Prints the new ids,
+a rerun skips any candidate already present (the stamp carries the decision's `decided`
+date, 2026-10-11 when absent). Dry run unless --apply. Prints the new ids,
 whose notes then need the session note scan (extract_fields.py --dump / --apply-file).
 """
 import json
@@ -31,8 +37,9 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, ROOT)
 import campground_schema as cs  # noqa: E402
 
-MARK = "re-opened 2026-10-11"
+MARK = "re-opened"
 CG = os.path.join(ROOT, "campgrounds.json")
+DROPPED = os.path.join(HERE, "dropped.jsonl")
 FAMILY = os.path.join(ROOT, "trip_data", "family.json")
 FIELD_ORDER = ["id", "kind", "name", "location", "elevation_meters", "state", "ownership",
                "waterfront", "waterfront_evidence", "inclusion_evidence", "website", "phone",
@@ -46,9 +53,17 @@ def load(path):
         return []
 
 
+def stamp(d):
+    return f"{MARK} {d.get('decided', '2026-10-11')}"
+
+
 def present(rows, d):
     """The entry this decision already wrote, if any."""
     for r in rows:
+        if d["verdict"] == "minimum":
+            if r["id"] == d["id"] and d["note_line"] in (r.get("note") or ""):
+                return r
+            continue
         ev = r.get("inclusion_evidence") or ""
         if MARK not in ev:
             continue
@@ -90,35 +105,47 @@ def main():
     removed = {r["id"]: r for r in load(os.path.join(HERE, "removed_records.json"))}
     rows = json.load(open(CG, encoding="utf-8"))
     next_id = max(r["id"] for r in rows + load(FAMILY)) + 1
-    new_ids, marked = [], []
+    new_ids, marked, dropped = [], [], []
     for d in dec:
-        if d["verdict"] not in ("restore", "add", "mark"):
+        if d["verdict"] == "drop":
+            e = next((r for r in rows if r["id"] == d["id"]), None)
+            if e is None:
+                print("already dropped:", d["id"], d["name"])
+                continue
+            rows.remove(e)
+            dropped.append({"id": e["id"], "name": e["name"], "state": e["state"],
+                            "ownership": e.get("ownership"), "action": "removed",
+                            "why": d["why"], "decided": d["decided"]})
+            print(e["id"], "drop", e["state"], e["name"])
+            continue
+        if d["verdict"] not in ("restore", "add", "mark", "minimum"):
             continue
         had = present(rows, d)
         if had:
             print("already written:", had["id"], had["name"])
             continue
-        if d["verdict"] == "mark":
+        if d["verdict"] in ("mark", "minimum"):
             e = next(r for r in rows if r["id"] == d["id"])
-            e["inclusion_evidence"] = (e.get("inclusion_evidence") or "").rstrip("; ") + (
-                f"; {MARK}: {d['why']}")
+            if d["verdict"] == "mark":
+                e["inclusion_evidence"] = (e.get("inclusion_evidence") or "").rstrip("; ") + (
+                    f"; {stamp(d)}: {d['why']}")
             edit(e, d)
             cs.validate_row(e, label=e["name"])
             marked.append(e["id"])
-            print(e["id"], "mark", e["state"], e["name"], "|", (e.get("booking") or {}).get("min_stay"))
+            print(e["id"], d["verdict"], e["state"], e["name"], "|", (e.get("booking") or {}).get("min_stay"))
             continue
         if d["verdict"] == "restore":
             e = json.loads(json.dumps(removed[d["old_id"]]))
             e["id"] = next_id
             e["inclusion_evidence"] = (e.get("inclusion_evidence") or "").rstrip("; ") + (
-                f"; {MARK}: restored (was id {d['old_id']}, removed {d['removed']} under the "
+                f"; {stamp(d)}: restored (was id {d['old_id']}, removed {d['removed']} under the "
                 f"standing-minimum rule AWH lifted 2026-10-10): {d['why']}")
         else:
             rec = dict(d["record"])
             rec["id"] = next_id
             rec["kind"] = "campground"
             rec["inclusion_evidence"] = rec["inclusion_evidence"].rstrip("; ") + (
-                f"; {MARK}: skipped {d['skipped']} for the minimum stay alone (AWH lifted that "
+                f"; {stamp(d)}: skipped {d['skipped']} for the minimum stay alone (AWH lifted that "
                 f"rule 2026-10-10)")
             e = {k: rec[k] for k in FIELD_ORDER if k in rec}
         edit(e, d)
@@ -127,9 +154,14 @@ def main():
         new_ids.append(next_id)
         print(next_id, d["verdict"], e["state"], e["name"], "|", (e.get("booking") or {}).get("min_stay"))
         next_id += 1
-    print(len(new_ids), "new", len(marked), "marked", "(written)" if apply else "(dry run)",
+    print(len(new_ids), "new", len(marked), "marked", len(dropped), "dropped",
+          "(written)" if apply else "(dry run)",
           "- ids for the note scan:", ",".join(map(str, new_ids + marked)) or "-")
-    if apply and (new_ids or marked):
+    if apply and dropped:
+        with open(DROPPED, "a", encoding="utf-8") as fh:
+            for x in dropped:
+                fh.write(json.dumps(x, ensure_ascii=False) + "\n")
+    if apply and (new_ids or marked or dropped):
         tmp = CG + ".tmp"
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(rows, fh, indent=2, ensure_ascii=False)

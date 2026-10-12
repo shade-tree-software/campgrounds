@@ -1,5 +1,5 @@
 {
- "about": "2026-10-11 re-open of campgrounds removed or skipped under the 2026-10-01 standing-minimum rule, which AWH lifted 2026-10-10 ('from now on all campgrounds with a 2-night minimum can stay as long as it is clearly marked'). Candidates: the 11 removals in audit/minimum_stay_removals_2026-10-01.json, Eagles Landing (removed 2026-10-03, 817de72), Domaine du Lac Libby (dropped 2026-10-09 at AWH's request, 08bf40e) and every private-gap verdict whose skip names a minimum stay (audit/*_private/verdicts.jsonl). A verdict re-reads the operator's page; parks that also fail on price, size or quality stay out with that reason. apply.py writes restore/add; skip and ask change nothing.",
+ "about": "2026-10-11 re-open of campgrounds removed or skipped under the 2026-10-01 standing-minimum rule, which AWH lifted 2026-10-10 ('from now on all campgrounds with a 2-night minimum can stay as long as it is clearly marked'). Candidates: the 11 removals in audit/minimum_stay_removals_2026-10-01.json, Eagles Landing (removed 2026-10-03, 817de72), Domaine du Lac Libby (dropped 2026-10-09 at AWH's request, 08bf40e) and every private-gap verdict whose skip names a minimum stay (audit/*_private/verdicts.jsonl). A verdict re-reads the operator's page; parks that also fail on price, size or quality stay out with that reason. apply.py writes restore/add; skip and ask change nothing. 2026-10-12, AWH's answers: restore Domaine du Lac Libby, leave American Way out, drop Goethe Trailhead Ranch and Parc de la Péninsule, keep Netley Creek; the four over-gate 10-01 removals were not answered and stay `ask`. The same day, entries whose notes name a minimum the data didn't carry got `minimum` rows (marked in place), and AWH dropped Alcona Park and The Landing on Red Gut Bay for 5- and 4-night minimums (`drop` rows, logged to dropped.jsonl).",
  "entries": [
   {
    "old_id": 1941,
@@ -136,14 +136,13 @@
    ]
   },
   {
-   "verdict": "mark",
+   "verdict": "drop",
    "id": 14396,
    "old_ids": [
     4783
    ],
    "state": "FL",
    "name": "Goethe Trailhead Ranch",
-   "why": "already back as 14396 (re-added 2026-10-01 by the Florida private-gap pass on its RV Life $$ tier, the day 4783 was removed for this minimum); ocalatrailsrvcamping.com/rates.html re-read 2026-10-11: 'Two Night Minimum Stay', 30-amp $75, 50-amp $80 a night plus tax. The minimum is marked; the $75 rate is over the $50 private gate (AWH's rule of 2026-10-03 came two days after it was added), so whether it stays is AWH's call",
    "booking": {
     "reservable": true,
     "min_stay": [
@@ -163,7 +162,9 @@
     "note": "RV sites $75 (30-amp) or $80 (50-amp) per night plus tax, rates for two people."
    },
    "fees_source": "https://ocalatrailsrvcamping.com/rates.html (read 2026-10-11)",
-   "ask": "over the $50 private price gate ($75-80); keep or drop?"
+   "why_marked": "already back as 14396 (re-added 2026-10-01 by the Florida private-gap pass on its RV Life $$ tier, the day 4783 was removed for this minimum); ocalatrailsrvcamping.com/rates.html re-read 2026-10-11: 'Two Night Minimum Stay', 30-amp $75, 50-amp $80 a night plus tax. The minimum is marked; the $75 rate is over the $50 private gate (AWH's rule of 2026-10-03 came two days after it was added), so whether it stays is AWH's call",
+   "decided": "2026-10-12",
+   "why": "AWH 2026-10-12: drop. $75-80 a night plus tax, over the $50 private gate (ocalatrailsrvcamping.com rates, read 2026-10-11); its 2-night minimum had been marked 2026-10-11"
   },
   {
    "old_id": 14240,
@@ -523,7 +524,7 @@
    "fees_source": "https://campingwigwam.com/tarifs-du-camping-wigwam/ (read 2026-10-08)"
   },
   {
-   "verdict": "add",
+   "verdict": "drop",
    "state": "QC",
    "skipped": "2026-10-08 (no_rate follow-up, audit/qc_private/verdicts.jsonl)",
    "record": {
@@ -558,7 +559,11 @@
     "currency": "CAD",
     "note": "High-season traveller sites: 2-service C$60, 3-service 20A C$62, 30A C$65 a night plus tax (2026)."
    },
-   "fees_source": "https://parcdelapeninsule.com/tarifications/ (read 2026-10-08)"
+   "fees_source": "https://parcdelapeninsule.com/tarifications/ (read 2026-10-08)",
+   "id": 15355,
+   "name": "Camping Parc de la Péninsule",
+   "decided": "2026-10-12",
+   "why": "AWH 2026-10-12: drop. Mostly seasonal: October 2024 imagery shows most of its 598 pads holding stored trailers; added 2026-10-11 as 15355 with a 2-night minimum"
   },
   {
    "verdict": "add",
@@ -634,7 +639,8 @@
     "currency": "CAD",
     "note": "Nightly C$51 plus tax; weekly C$300, monthly C$900."
    },
-   "fees_source": "https://netleycreekgolf.com/rv-rates/ (read 2026-10-11)"
+   "fees_source": "https://netleycreekgolf.com/rv-rates/ (read 2026-10-11)",
+   "kept": "AWH 2026-10-12: keep (77 of ~115 sites seasonal; the note's SEASONAL SHARE line says so)"
   },
   {
    "verdict": "add",
@@ -692,19 +698,47 @@
    "why": "no published rate: the operator posts none and its CampLife engine (2-night minimum) had no site free for 13-15 Oct 2026 with 2027 not yet open (30 sites listed); RV Life's C$63 average needs a published rate <= C$69"
   },
   {
-   "verdict": "ask",
+   "verdict": "restore",
+   "old_id": 15135,
    "state": "QC",
    "name": "Domaine du Lac Libby",
-   "old_ids": [
-    15135
+   "removed": "2026-10-09 (08bf40e)",
+   "decided": "2026-10-12",
+   "checked": "2026-10-12",
+   "why": "AWH 2026-10-12: 'keep Lac Libby'. reservationcamping.ca re-read 2026-10-12: one-night searches for Tuesday 8 June and Tuesday 13 July 2027 list 40 and 33 free 3-service sites at C$57, and each of the three sites opened on each date says 'Ce site nécessite un minimum de 2 nuitées pour une réservation'; campinglaclibby.com/tarifs (2026): 2-service C$53, 3-service C$55, Mont des Huards C$68 + tax",
+   "booking": {
+    "reservable": true,
+    "platform": "operator",
+    "min_stay": [
+     {
+      "nights": 2,
+      "applies": "always"
+     }
+    ],
+    "note": "Each site opened in the reservationcamping.ca engine says 'Ce site nécessite un minimum de 2 nuitées' (June and July 2027 weeknights, checked 2026-10-12). Restored with the minimum marked (AWH 2026-10-12)."
+   },
+   "booking_source": "reservationcamping.ca engine for Domaine du Lac Libby (one-night searches for 2027-06-08 and 2027-07-13, read 2026-10-12)",
+   "note_replace": [
+    [
+     " Caveat (2026-10-08): the only date the online engine could be tested (Thanksgiving week) required 2 nights; the operator posts per-night rates and no written minimum, so the weekday single-night policy is unconfirmed. --Claude",
+     " --Claude"
+    ]
    ],
-   "why": "AWH dropped it 2026-10-09 (08bf40e) for a 2-night ask, a day before lifting the rule; it would pass now: C$53-68 + tax, ~90 traveller sites of ~350, Google 4.5 over 366, the minimum seen only for Thanksgiving week. Restore it with the minimum marked?"
+   "note_line": "MINIMUM STAY: 2 nights on every stay (reservationcamping.ca, June and July 2027 weeknights, checked 2026-10-12). --Claude",
+   "fees": {
+    "nightly_low": 53,
+    "nightly_high": 68,
+    "currency": "CAD",
+    "note": "2026: unserviced C$45, 2-service C$53, 3-service C$55, Mont des Huards 3-service C$68 a night plus tax; the engine quotes 3-service C$57 for June-July 2027."
+   },
+   "fees_source": "https://campinglaclibby.com/tarifs (read 2026-10-12)"
   },
   {
-   "verdict": "ask",
+   "verdict": "skip",
    "state": "WV",
    "name": "American Way RV Park",
-   "why": "skipped 2026-09-30 for a 4-night minimum ('$50 daily, 4 day minimum'); AWH's rule keeps marked 2-3 night minimums and asks about anything longer"
+   "why": "AWH 2026-10-12: leave it out. Skipped 2026-09-30 for a 4-night minimum ('$50 daily, 4 day minimum')",
+   "decided": "2026-10-12"
   },
   {
    "verdict": "ask",
@@ -741,6 +775,22 @@
     13117
    ],
    "why": "removed 2026-10-01 for a 2-night minimum; $75-85 a night, over the $50 gate (legacy entry). Restore?"
+  },
+  {
+   "verdict": "drop",
+   "id": 3996,
+   "state": "MI",
+   "name": "Alcona Park",
+   "decided": "2026-10-12",
+   "why": "AWH 2026-10-12: drop. alconapark.org/reservations (read 2026-10-12): 'From June 25th to August 15th we will accept reservations for minimum of five nights in modern, semi modern and full service' - a 5-night summer minimum"
+  },
+  {
+   "verdict": "drop",
+   "id": 8367,
+   "state": "ON",
+   "name": "The Landing on Red Gut Bay",
+   "decided": "2026-10-12",
+   "why": "AWH 2026-10-12: drop for its 4-day minimum. thelandingonredgutbay.com/rates (read 2026-10-12) opens with '4 Day minimum charge, no refunds for early departure or lesser number of people', above the cabin table; the campground rates below are $50 per day, per unit, so the minimum may be the cabins' only"
   }
  ]
 }
