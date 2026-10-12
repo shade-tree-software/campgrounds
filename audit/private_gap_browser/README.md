@@ -57,7 +57,8 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   `shot path= [full=1] [sel=]` (then Read the PNG), `eval js=` (returns JSON/str),
   `frames`, `pages`, `switch idx=`, `back`, `scroll dy=`, `wait wait=ms`,
   `net [grep=] [xhr=1] [last=n]` (recent responses), `body i=` (a captured response body -
-  read booking-engine JSON straight from its XHR), `dialogs`, `quit`.
+  read booking-engine JSON straight from its XHR), `reqbody i=` (the POST body that request sent - for
+  replaying an engine's own search call), `dialogs`, `quit`.
   Hidden tab/accordion text is NOT in `text`; use
   `eval js="document.body.textContent.replace(/\s+/g,' ')..."`.
 - `scan.py URL [n]` - open an operator site, list its rate/booking/plan links and any

@@ -3,7 +3,7 @@
 #   buttons [grep=] [sel=]   click sel=|text=|role=+name= [nth=] [wait=]   fill sel= value=
 #   type sel= value= [clear=1]   press key=   select sel= value=|label=   options sel=
 #   shot path= [sel=] [full=1]   eval js=   frames   pages   switch idx=   back   net [grep=] [xhr=1]
-#   body i=   html sel= [max=]   scroll dy=   xy x= y=   wait wait=ms   dialogs   quit
+#   body i=   reqbody i=   html sel= [max=]   scroll dy=   xy x= y=   wait wait=ms   dialogs   quit
 import json, os, socket, sys
 SOCK = os.environ.get('DRV_SOCK') or os.path.expanduser('~/.cache/ekko-drv.sock')
 req = {'cmd': sys.argv[1]}

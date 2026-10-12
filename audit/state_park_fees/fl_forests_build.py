@@ -17,7 +17,9 @@ P = {101: (1120135, 22.52, "water and 30/50-amp electric"), 165: (1120180, 22.42
      4716: (1120113, 22.32, "water and 30/50-amp electric"), 4717: (1120105, 22.12, "30/50-amp electric, most with water"),
      4718: (1120109, 22.12, "water and 30/50-amp electric"), 4720: (1120104, 22.32, "water and 30/50-amp electric"),
      4721: (1120121, 9.13, "no hookups"), 4722: (1121250, 22.62, "water and 30/50-amp electric"),
-     4726: (1120404, 8.93, "no hookups"), 4727: (1120193, 9.09, "no hookups"), 4728: (1120195, 9.09, "no hookups")}
+     4726: (1120404, 8.93, "no hookups"), 4727: (1120193, 9.09, "no hookups"), 4728: (1120195, 9.09, "no hookups"),
+     # Withlacoochee's Cypress Glen and Mutual Mine, found later in the booking site's park directory
+     587: (1120168, 22.42, "water and 30/50-amp electric"), 170: (1120174, 13.51, "water, no electric")}
 out = []
 for eid, (pid, price, what) in sorted(P.items()):
     out.append({"id": eid, "name": rows[eid]['name'], "fees": {

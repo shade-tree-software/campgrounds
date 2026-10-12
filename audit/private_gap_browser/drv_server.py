@@ -289,6 +289,14 @@ def handle(req, ctx, state):
                 off = int(req.get('off', 0) or 0)
                 return t[off:off + mx]
         return 'not found'
+    if cmd == 'reqbody':
+        # the POST body a captured request sent (2026-10-12: Reserve Florida's place search only fills in its
+        # "Starting at $N" rate lines for the body the page itself sends)
+        i = int(req['i'])
+        for n in NET:
+            if n['i'] == i:
+                return (n['resp'].request.post_data or '')[:mx]
+        return 'not found'
     if cmd == 'dialogs':
         out = '\n'.join(DIALOGS)
         DIALOGS.clear()
