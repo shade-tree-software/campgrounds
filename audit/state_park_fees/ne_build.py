@@ -1,163 +1,122 @@
-"""NH, VT, RI, CT and NJ findings, read 2026-10-12.
+"""Nebraska Game and Parks findings: the statewide camping rates grid (outdoornebraska.gov/parks/park-pricing/ ->
+'2025-Camping-Rates-Grid.pdf', still the one the page links on 2026-10-12; transcribed from its rendered page into GRID
+below, because the dots marking each area's site types are graphics), checked on nebraskastateparks.reserveamerica.com
+(Branched Oak, Lake McConaughy and Lake Ogallala priced for Tue 2027-06-15 and Sat 2027-06-19, ne_booking_check_*.jsonl;
+every price on the grid; $8.50 reservation fee on the quote).
 
-    python3 -I ne_build.py OUTDIR
+    python3 -I ne_build.py OUT
 
-Each state's published table, checked against its booking site (per-site 1-night prices in
-ne_booking_checks_2026-10-12.log; Vermont's sampled sites in vt_booking_sample_2026-10-12.jsonl;
-New Jersey's site list in nj_sites_2026-10-12.json). Writes OUTDIR/<st>_fees_2026-10-12.json."""
+'Nebraska's state parks, state historical parks and state recreation areas offer five levels of camping ... These rates
+are consistent across all parks throughout the state, with the exception of Lake McConaughy State Recreation Area': Full
+Hookup $35, Electric Plus $30 (a 20/30-amp site with its own water hookup, or a 50-amp site), Electric $25, Basic $15,
+Primitive $10 a night; 'Camping rates during the off-season are $5 less per night for all site types, except primitive
+rates that remain $10/night year-round' (modern facilities close mid-October through April); equestrian sites +$5.
+Lake McConaughy and Lake Ogallala: May 21 - September 12 Thursday-Saturday $40 / $35 / $20 / beach $25, Sunday-Wednesday
+$35 / $30 / $15 / beach $20, September 13 - May 20 $30 / $25 / $10 / beach $15 (full / electric plus / basic / beach).
+
+An entry's base is its area's Basic site where it has one (else Primitive, else the cheapest hookup site); nightly_low / nightly_high are the
+off-season and in-season prices; electric (the cheaper of Electric and Electric Plus) and full hookups are in-season
+add-ons. The park entry permit ($7 a day for a Nebraska vehicle, $14 otherwise) and the reservation fee are the state:NE
+registry row's."""
 import json, os, sys
-outdir = sys.argv[1]
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-rows = {e['id']: e for e in json.load(open(os.path.join(ROOT, 'campgrounds.json'), encoding='utf-8'))}
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))
+rows = {e["id"]: e for e in json.load(open(os.path.join(ROOT, "campgrounds.json"), encoding="utf-8"))}
 D = "2026-10-12"
-
-
-def money(x):
-    return f"${x:g}" if x == int(x) else f"${x:.2f}"
-
-
-def finding(eid, low, high, note, source, res_fee=None, nonres=None, surcharges=None):
-    fees = {"nightly_low": low, "nightly_high": high, "currency": "USD"}
-    if res_fee is not None:
-        fees["reservation_fee"] = res_fee
-    if nonres:
-        fees["nonresident"] = {"type": "surcharge", "amount": nonres, "per": "night"}
-    if surcharges:
-        fees["surcharges"] = surcharges
-    fees["checked"] = "2026"
-    fees["note"] = note
-    return {"id": eid, "name": rows[eid]['name'], "fees": fees, "source": source}
-
-
-# --- New Hampshire: statewide table by site type; the booking site charged the same for 2027 nights.
-NH_T = "https://www.nhstateparks.org/fees-reservations/camping-rates-reservations"
-NH_RA = "newhampshirestateparks.reserveamerica.com"
-NH_TAIL = (" $7 reservation fee. The rate covers two adults and up to four children; each extra adult $10 a night, "
-           "each extra child $5. No out-of-state surcharge; New Hampshire residents 65+ get $5 off a night "
-           "(not on holidays{x}). NH State Parks' camping rate table, read {d}; the booking site charged the same for "
-           "{when}.")
-# id: (parkId, base, (surcharge key, amount) or None, what the base is, extra words, booking dates)
-NH = {
-    4103: (270003, 35, None, "a standard campsite", "", "2027 nights"),
-    4113: (270011, 35, None, "a standard campsite", "", "2027 nights"),
-    4107: (270015, 35, None, "a standard campsite", "", "2027 nights"),
-    207: (270021, 60, None, "every RV site (waterfront, full hookups, 30 amp)", "", "2027 nights"),
-    4101: (270027, 35, None, "a standard campsite", "", "2027 nights"),
-    4106: (270044, 35, None, "a standard or platform campsite", "", "2027 nights"),
-    4114: (270045, 35, ("electric", 10), "a standard campsite",
-           " The 20-amp sites with water and electric are $45.", "2027 nights"),
-    4112: (270050, 29, None, "a primitive campsite", "", "2027 nights"),
-    4100: (270051, 35, ("electric", 10), "a standard or platform campsite",
-           " The five RV/Trailer sites, which have 30-amp electric on the booking site, are $45.", "2027 nights"),
-    4109: (270053, 35, None, "a standard campsite", "", "2027 nights"),
-    4102: (270061, 35, None, "a standard campsite", "", "2027 nights"),
-    4104: (270065, 29, None, "a primitive campsite", "", "2027 nights"),
-    4111: (270082, 45, None, "every drive-in site (water and electric, 20/30 amp)",
-           " The remote sites are priced separately.", "2027 nights"),
-    4105: (270097, 35, None, "a standard campsite", "", "2027 nights"),
-    4108: (270121, 50, None, "every site (full hookups, 30 amp)",
-           " Off season, with electric only, the table's rate is $35.", "2027 nights"),
-    4110: (270950, 35, ("full_hookup", 25), "a standard campsite",
-           " The 19 RV sites with full 50-amp hookups are $60.", "2027 nights"),
-    804: (270029, 70, None, "every RV site (full hookups)",
-          " The table's Hampton dry-camping rate is $40.", "October 2026 nights (no 2027 night was open yet)"),
+GRIDPDF = "https://outdoornebraska.gov/wp-content/uploads/2025/01/2025-Camping-Rates-Grid.pdf"
+PRICE = {"F": 35, "EP": 30, "E": 25, "B": 15, "P": 10}
+WORD = {"F": "full hookup", "EP": "electric plus", "E": "electric", "B": "basic", "P": "primitive"}
+# area -> site types ('q' = regular and equestrian sites, equestrian +$5)
+GRID = {
+    "Alexandria": "EP E B", "Bluestem": "B", "Box Butte": "EP B", "Branched Oak": "F EPq E Bq", "Bridgeport": "B",
+    "Buffalo Bill": "EP E B", "Calamus": "EP B", "Chadron": "EP B", "Cheyenne": "EP B", "Conestoga": "EP E B",
+    "Cottonwood": "B", "Danish Alps": "EPq B", "Dead Timber": "E P", "Enders": "EP B P", "Eugene T. Mahoney": "F EP E",
+    "Fort Kearny": "EP E B", "Fort Robinson": "F EP B", "Fremont": "EP E B P", "Gallagher Canyon": "B P",
+    "Indian Cave": "EP E Bq", "Johnson Lake": "EP E B", "Keller Park": "EP B P", "Lake Maloney": "EP B",
+    "Lake Minatare": "EP B P", "Lewis and Clark": "F EP E Bq", "Long Pine": "B", "Louisville": "F EP E B",
+    "Medicine Creek": "EP E B", "Memphis": "EP B P", "Merritt": "EP B", "Mormon Island": "EP E B",
+    "Niobrara": "EP Bq", "North Loup": "P", "Olive Creek": "B", "Pawnee": "EP E Bq", "Pelican Point": "B",
+    "Platte River": "F", "Ponca": "EP E B", "Red Willow": "EP E B", "Riverview Marina": "E B", "Rock Creek Lake": "B",
+    "Rock Creek Station": "E Bq", "Rockford Lake": "EP E B", "Sandy Channel": "B P", "Sherman Reservoir": "EP B P",
+    "Smith Falls": "B", "Stagecoach": "EP E B", "Summit Lake": "EP E B", "Sutherland": "EP B P",
+    "Swanson Lake": "EP B P", "Two Rivers": "F EP E Bq", "Union Pacific": "P", "Verdon Lake": "B",
+    "Victoria Springs": "EP B", "Wagon Train": "EP E B", "Walgren Lake": "P", "War Axe": "P", "Wildcat Hills": "B",
+    "Willow Creek": "EPq E Bq", "Windmill": "EP E B",
 }
-nh = []
-for eid, (pid, base, sur, what, extra, when) in sorted(NH.items()):
-    x = "; Hampton Beach and Ellacoya excluded" if eid in (207, 804) else ""
-    note = f"{money(base)} a night for {what}." + extra + NH_TAIL.format(x=x, d=D, when=when)
-    nh.append(finding(eid, base, base, note,
-                      f"{NH_T} (statewide rates by site type, read {D}) + {NH_RA} parkId {pid} (per-site prices, "
-                      f"{'2026-10-15 and 2026-10-17' if eid == 804 else '2027-06-15 and 2027-06-19'}, read {D})",
-                      res_fee=7, surcharges=dict([sur]) if sur else None))
-
-# --- Vermont: statewide, effective 2025-07-01; every sampled site on the booking site matched.
-VT_T = "https://vtstateparks.com/camping"
-VT_PRIME = {4072, 297, 4070, 4074, 4071, 4075, 4078, 299, 4073, 298, 204, 344, 4081, 362, 360, 4079, 675}
-VT_PID = {4076: 1280011, 300: 1280013, 615: 1280014, 4072: 1280015, 301: 1280016, 297: 1280018, 4069: 1280019,
-          4070: 1280021, 4074: 1280022, 4068: 1280024, 4071: 1280031, 4075: 1280032, 4078: 1280033, 4077: 1280034,
-          299: 1280035, 4073: 1280036, 298: 1280039, 204: 1280042, 344: 1280053, 4082: 1280057, 4080: 1280071,
-          4081: 1280073, 362: 1280075, 360: 1280078, 359: 1280081, 4079: 1280082, 675: 1280085}
-vt = []
-for eid, pid in sorted(VT_PID.items()):
-    prime = eid in VT_PRIME
-    note = ("$20 a night for a Vermont resident, $38 for a non-resident (tent/RV site, up to 4 people; $8 for each "
-            "extra person, 8 at most)" + ("; prime sites $2 more" if prime else "") +
-            ". Pets $3 each a night. $8 non-refundable reservation fee per site. No hookups. Vermont State Parks' "
-            f"camping fees (in effect since 2025-07-01), read {D}; the booking site charged the same for 2027 nights.")
-    s = {"pet": 3}
-    if prime:
-        s["premium_site"] = 2
-    vt.append(finding(eid, 20, 20, note,
-                      f"{VT_T} (Camping Fees: 'Updated prices in effect starting July 1, 2025', read {D}) + "
-                      f"vtstateparks-visit.com parkId {pid} (sampled sites' resident / non-resident prices for "
-                      f"2027-06-15, read {D})", res_fee=8, nonres=18, surcharges=s))
-
-# --- Rhode Island: the fee regulation's three tiers; the booking site's October 2026 prices.
-RI_T = ("https://rules.sos.ri.gov/regulations/Part/250-100-00-8 (250-RICR-100-00-8, 'Camping - Daily Site "
-        "Reservations' tiers, read 2026-10-12)")
-RI_TAIL = (" $8.75 reservation fee. 2027 reservations are on hold while Rhode Island DEM picks a new reservation "
-           f"provider (riparks.ri.gov, {D}). Rhode Island's fee regulation, read {D}; the booking site charged the "
-           "same for October 2026 nights.")
-ri = []
-for eid, pid, extra in [(205, 253123, ""), (206, 252711, ""),
-                        (4170, 252741, " Self-contained RVs only.")]:
-    ri.append(finding(eid, 18, 18, "$18 a night for a Rhode Island resident, $36 for a non-resident (tier 3)." + extra + RI_TAIL,
-                      f"{RI_T} + rhodeislandstateparks.reserveamerica.com parkId {pid} (per-site prices for 2026-10-20 and "
-                      f"2026-10-24, read {D})", res_fee=8.75, nonres=18))
-ri.append(finding(4171, 24, 28,
-                  "Every RV site has hookups: water and electric (30 amp) $24 a night for a Rhode Island resident, $45 "
-                  "for a non-resident (tier 2, area 4); water, electric and sewer $28, non-resident $55 (tier 1, areas 1 "
-                  "and 2)." + RI_TAIL,
-                  f"{RI_T} + rhodeislandstateparks.reserveamerica.com parkId 252611 (15 sampled sites' prices and hookups "
-                  f"for 2026-10-20, read {D})", res_fee=8.75, nonres=21))
-
-# --- Connecticut: DEEP's parking and camping fee table; the booking site charged the same for 2027 nights.
-CT_T = "https://portal.ct.gov/DEEP/State-Parks/Parking-and-Camping-Fees---CT-State-Parks-and-Forests"
-CT_TAIL = (" $9 reservation fee. DEEP's camping fee table (content last updated October 2024), read {d}; the booking "
-           "site charged the same resident rates for 2027 nights.")
-# id: (parkId, base, nonres amount, surcharges, sentence)
-CT = {
-    211: (100102, 17, 10, {"electric": 10}, "$17 a night for a Connecticut resident, $27 for a non-resident; electric sites $27."),
-    212: (100101, 20, 10, {"electric": 15}, "$20 a night for a Connecticut resident, $30 for a non-resident; electric sites $35 ($45 non-resident)."),
-    4051: (100107, 20, 10, None, "$20 a night for a Connecticut resident, $30 for a non-resident."),
-    4052: (100104, 14, 10, None, "$14 a night for a Connecticut resident, $24 for a non-resident."),
-    4053: (100802, 17, 10, None, "$17 a night for a Connecticut resident, $27 for a non-resident."),
-    4054: (100800, 17, 10, None, "$17 a night for a Connecticut resident, $27 for a non-resident."),
-    4055: (100100, 17, 10, {"electric": 10}, "$17 a night for a Connecticut resident, $27 for a non-resident; electric sites $27."),
-    4056: (100128, 33, 12, {"electric": 4, "full_hookup": 7},
-           "$33 a night for a Connecticut resident, $45 for a non-resident; water and electric (30 amp) $37 ($48 "
-           "non-resident); full hookups (50 amp) $40 ($52 non-resident)."),
-    4057: (100110, 17, 10, None, "$17 a night for a Connecticut resident, $27 for a non-resident."),
-    4058: (100105, 14, 10, None, "$14 a night for a Connecticut resident, $24 for a non-resident."),
-    4059: (100108, 17, 10, None, "$17 a night for a Connecticut resident, $27 for a non-resident."),
-    4060: (100106, 14, 10, None, "$14 a night for a Connecticut resident, $24 for a non-resident. The loop's one "
-           "water/electric site (20) is $29."),
-    4061: (100106, 14, 10, None, "$14 a night for a Connecticut resident, $24 for a non-resident."),
-    4062: (100103, 17, 10, None, "$17 a night for a Connecticut resident, $27 for a non-resident."),
+AREA = {
+    2669: "Alexandria", 2673: "Lewis and Clark", 2674: "Bluestem", 2676: "Box Butte", 2677: "Branched Oak",
+    2678: "Bridgeport", 2679: "Buffalo Bill", 2680: "Calamus", 2681: "Calamus", 2683: "Chadron", 2685: "Cheyenne",
+    2686: "Conestoga", 2687: "Cottonwood", 2690: "Danish Alps", 2691: "Dead Timber", 2692: "Enders",
+    2693: "Eugene T. Mahoney", 2694: "Fort Kearny", 2695: "Fort Robinson", 2696: "Fremont", 2697: "Gallagher Canyon",
+    2700: "Indian Cave", 2701: "Johnson Lake", 2702: "Keller Park", 2703: "Lake Maloney", 2704: "Lake Minatare",
+    2707: "Lewis and Clark", 2711: "Long Pine", 2712: "Louisville", 2714: "Medicine Creek", 2715: "Memphis",
+    2716: "Merritt", 2717: "Merritt", 2718: "Mormon Island", 2719: "Niobrara", 2720: "North Loup", 2722: "Olive Creek",
+    2726: "Pawnee", 2727: "Pelican Point", 2728: "Platte River", 2729: "Ponca", 2731: "Red Willow",
+    2732: "Riverview Marina", 2733: "Rock Creek Station", 2734: "Rockford Lake", 2736: "Sandy Channel",
+    2737: "Sherman Reservoir", 2739: "Stagecoach", 2740: "Summit Lake", 2741: "Swanson Lake", 2742: "Swanson Lake",
+    2743: "Two Rivers", 2744: "Union Pacific", 2745: "Verdon Lake", 2746: "Victoria Springs", 2747: "Wagon Train",
+    2748: "Walgren Lake", 2749: "War Axe", 2750: "Lewis and Clark", 2751: "Wildcat Hills", 2752: "Willow Creek",
+    2753: "Windmill",
 }
-ct = []
-for eid, (pid, base, nr, s, text) in sorted(CT.items()):
-    ct.append(finding(eid, base, base, text + CT_TAIL.format(d=D),
-                      f"{CT_T} (this park's camping line, read {D}) + connecticutstateparks.reserveamerica.com parkId {pid} "
-                      f"(per-site prices for 2027-06-15 and 2027-06-19, read {D})", res_fee=9, nonres=nr, surcharges=s))
-
-# --- New Jersey: NJ Outdoors lists every site with its resident / non-resident cost.
-NJ_TAIL = f" Every site's cost as listed on NJ Outdoors, the state's booking site, read {D}."
-NJ = {616: (12, True), 1807: (2, False), 1808: (3, False), 1809: (4, True), 1810: (5, False), 1811: (6, False),
-      1812: (20, False), 1813: (10, False), 1814: (15, False), 1815: (16, False), 1816: (13, False),
-      1817: (8, False), 1820: (19, False)}
-nj = []
-for eid, (loc, we) in sorted(NJ.items()):
-    text = "$20 a night for a New Jersey resident, $25 for a non-resident (tent/trailer site, up to 6 people)"
-    if we:
-        text += "; sites with water and electric hookups $30 ($35 non-resident)"
-    if eid == 1820:
-        text += ". The forest's primitive camping areas are $3 a person ($5 non-resident)"
-    nj.append(finding(eid, 20, 20, text + "." + NJ_TAIL,
-                      f"https://www.njportal.com/DEP/NJOutdoors/Park/Details?locationId={loc} (each site's cost, read {D})",
-                      nonres=5, surcharges={"electric": 10} if we else None))
-
-for st, data in (("nh", nh), ("vt", vt), ("ri", ri), ("ct", ct), ("nj", nj)):
-    json.dump(data, open(os.path.join(outdir, f"{st}_fees_{D}.json"), "w"), indent=1, ensure_ascii=False)
-    print(st, len(data))
+# Lake McConaughy / Ogallala campgrounds: their site types on the booking site (beach = the beach camping areas, not on
+# it); prices (off-season, Sunday-Wednesday, Thursday-Saturday)
+MAC = {"F": (30, 35, 40), "EP": (25, 30, 35), "B": (10, 15, 20), "beach": (15, 20, 25)}
+MAC_ENTRY = {2682: ("Cedar View", "B EP"), 2708: ("Little Thunder", "EP F"), 2709: ("Lone Eagle", "F"),
+             2713: ("Martin Bay", "B F"), 2735: ("Sandy Beach", "B"), 2721: ("North Shore", "beach"),
+             2724: ("Omaha Beach", "beach"), 2725: ("Otter Creek", "beach"), 2738: ("Spring Park", "beach"),
+             2705: ("Lake Ogallala East", "EP")}
+TAIL = (" Plus tax, the $8.50 reservation fee when booked online, and a park entry permit ($7 a day for a Nebraska "
+        "vehicle, $14 otherwise; $35 / $70 a year). Nebraska Game and Parks' camping rates grid ('These rates are "
+        f"consistent across all parks'), matched on its booking site for June 2027 nights, read {D}.")
+out, flags = [], []
+for eid, e in sorted(rows.items()):
+    if e.get("state") != "NE" or e.get("ownership") != "state" or e.get("fees"):
+        continue
+    if eid in MAC_ENTRY:
+        name, kinds = MAC_ENTRY[eid]
+        ks = kinds.split()
+        base = next(k for k in ("beach", "B", "EP", "F") if k in ks)
+        lo, mid, hi = MAC[base]
+        sur = {"weekend": 5}
+        if base in ("B", "beach") and "EP" in ks:
+            sur["electric"] = MAC["EP"][1] - mid
+        if base != "F" and "F" in ks:
+            sur["full_hookup"] = MAC["F"][1] - mid
+        word = {"beach": "beach camping", "B": "basic", "EP": "electric plus", "F": "full hookup"}
+        text = ("Lake McConaughy / Ogallala rates: " + "; ".join(
+            f"{word[k]} ${MAC[k][1]} Sunday-Wednesday, ${MAC[k][2]} Thursday-Saturday (May 21 - September 12), "
+            f"${MAC[k][0]} the rest of the year" for k in ks) + "." + TAIL)
+        out.append({"id": eid, "name": e["name"], "fees": {
+            "nightly_low": lo, "nightly_high": mid, "currency": "USD", "surcharges": sur, "checked": "2026", "note": text},
+            "source": f"{GRIDPDF} (Lake McConaughy and Lake Ogallala seasonal rates) + nebraskastateparks.reserveamerica.com "
+                      f"({name} site types; June 2027 quotes), read {D}"})
+        continue
+    if eid not in AREA:
+        flags.append((eid, e["name"], "not on the camping rates grid")); continue
+    kinds = GRID[AREA[eid]].split()
+    ks = [k.rstrip("q") for k in kinds]
+    base = next(k for k in ("B", "P", "E", "EP", "F") if k in ks)     # basic, else primitive, else the cheapest hookup
+    hi = PRICE[base]
+    lo = hi if base == "P" else hi - 5
+    sur = {"weekend": 0}
+    elec = [PRICE[k] for k in ("E", "EP") if k in ks and k != base]
+    if base in ("B", "P") and elec:
+        sur["electric"] = min(elec) - hi
+    if "F" in ks and base != "F":
+        sur["full_hookup"] = PRICE["F"] - hi
+    parts = [f"{WORD[k]} ${PRICE[k]}" for k in ("B", "E", "EP", "F", "P") if k in ks]
+    text = ("In season: " + ", ".join(parts) + " a night; $5 less mid-October through April" +
+            (" (primitive $10 all year)" if "P" in ks else "") + "." +
+            (" Equestrian sites $5 more." if any(k.endswith("q") for k in kinds) else "") + TAIL)
+    out.append({"id": eid, "name": e["name"], "fees": {
+        "nightly_low": lo, "nightly_high": hi, "currency": "USD", "surcharges": sur, "checked": "2026", "note": text},
+        "source": f"{GRIDPDF} (row '{AREA[eid]}', linked from https://outdoornebraska.gov/parks/park-pricing/) + "
+                  f"nebraskastateparks.reserveamerica.com (June 2027 quotes at Branched Oak and Lake McConaughy match it), "
+                  f"read {D}"})
+json.dump(out, open(sys.argv[1], "w", encoding="utf-8"), indent=1, ensure_ascii=False)
+print(len(out), "NE findings;", len(flags), "flagged")
+for x in out:
+    f = x["fees"]
+    print(x["id"], x["name"][:44], f["nightly_low"], f["nightly_high"], f["surcharges"])
+for fl in flags:
+    print("FLAG", *fl)

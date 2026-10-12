@@ -346,3 +346,21 @@ Authority's Wolf Creek ($25, waterfront $35, $5 a person entrance) and the Guada
 ($35, $40 for 50 amp). Those 21 non-TPWD entries (with Hubbard Creek, Rough Creek and Coleto Creek, already priced) had
 inherited TPWD's row - booking site, 150-day window, weekend minimum, per-person entry - so they now carry
 `policy_ref: none` (`tx_other_agencies_2026-10-12.py`).
+
+## Nebraska (2026-10-12)
+
+72 entries from Game and Parks' statewide camping rates grid (`ne_camping_rates_grid_2025.pdf`, the file
+outdoornebraska.gov/parks/park-pricing/ links; 'These rates are consistent across all parks throughout the state, with
+the exception of Lake McConaughy'): Full Hookup $35, Electric Plus $30, Electric $25, Basic $15, Primitive $10 a night,
+$5 less mid-October through April (primitive $10 all year), equestrian +$5. The grid marks each area's site levels with
+dots that are graphics, so its rows are transcribed into `ne_build.py`'s GRID from the rendered page. Lake McConaughy and
+Lake Ogallala price by season and day (May 21 - September 12: $40 / $35 / $20 / beach $25 Thursday-Saturday, $5 less
+Sunday-Wednesday; $30 / $25 / $10 / $15 the rest of the year), and each McConaughy campground's site levels come from
+the booking site's site list. The booking site matched the grid at Branched Oak, McConaughy and Ogallala for June 2027
+nights (`ne_booking_check_2026-10-12.jsonl`). Base = an area's Basic site, else Primitive, else its cheapest hookup
+site; low/high = off-season / in-season; electric and full hookups as in-season add-ons. The state:NE row, a
+`reported` row with no amounts, now carries the park entry permit ($7 a day Nebraska plates, $14 otherwise) and the
+$8.50 reservation fee (`ne_registry_2026-10-12.py`).
+
+Not priced: Bowman Lake, Champion Lake, Crystal Lake, DLD Wayside, Lake Wanahoo and Long Lake are not on the grid, and
+their pages give no fee.
