@@ -477,3 +477,26 @@ and the park's page counts its sites as primitive. Lower Ridge Road's '~$14/nigh
 but 'Not available online' for June, while the park's page says reservations only: priced at the schedule's $15, no
 reservation fee recorded. Links: Crusher Hole's bare ReserveAmerica link and Manzano's recreation.gov page now point at
 their parks' booking pages.
+
+## Montana (2026-10-12)
+
+23 Montana State Parks entries and Ennis fishing access site (`mt_build.py`; texts in `mt_fee_pages_2026-10-12.txt`).
+The booking site (montanastateparks.reserveamerica.com, classic RA, contract MT) quotes nothing in October: reservations
+run from the third Friday in May to the third Sunday in September within a three-month window, and every date tried
+(Oct 2026 to Jun 2027) prints 'Not available online' with no rate. So the prices are FWP's fee schedule: the '2020
+Montana State Parks Schedule', the scanned PDF its fees page links (pages 3-4 transcribed), whose figures are exactly the
+'CURRENT' column of FWP's 2026-06-24 fee-change justifications (the proposal, no earlier than 2027, would make them $24 /
+$38 and $32 / $46). Peak season: standard site $18 for residents, $28 for non-residents 'includes daily entrance fee'
+(the resident rate with the Nonresident Entrance Pass), electric +$6, backcountry/rustic $12 / $20; off season $4 less
+(rustic the same); accommodation tax included; reservation fee $10. The booking site's listing gives each park's site
+types and lengths (`mt_sites_2026-10-12.json`, `ra_sites.py`) and `ra_rate_card.py` read two sites' details per loop and
+type (`mt_site_details_2026-10-12.jsonl`; 'Looking For Category: Tent Site' marks tent sites). Base = cheapest type a
+23-ft rig fits (a loop of tent sites with no lengths is left out; Finley Point's standard sites are tent sites, so its
+base is electric, as at Beavertail Hill, Black Sandy and Brush Lake); electric +$6 where 3 or more electric sites fit (a
+lone electric site at Big Arm, Thompson Falls, Wayfarers and Whitefish Lake isn't one); non-residents +$10 a night, which
+includes their entrance fee, so no entrance is recorded (residents pay theirs with vehicle registration); off-season
+rates in the note; weekend 0. FWP's pages put campsite fees at '$4-$34', which leaves no room for the schedule's +$5
+premium campsite, and list rustic campsites only at Thompson Chain of Lakes and Makoshika (Makoshika's 2 rustic sites
+are too few to set its base). Ackley Lake, Lost Creek and Medicine Rocks (first come, first served, not on the booking
+site) take the standard rate, as FWP's 2024 notice did for Ackley Lake ('$18/night', non-residents '$28/night'). Ennis
+FAS: the 2026 FAS fee table's $12 with a Montana fishing license, $18 without, which its FishMT page lists.
