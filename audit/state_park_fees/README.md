@@ -500,3 +500,21 @@ premium campsite, and list rustic campsites only at Thompson Chain of Lakes and 
 are too few to set its base). Ackley Lake, Lost Creek and Medicine Rocks (first come, first served, not on the booking
 site) take the standard rate, as FWP's 2024 notice did for Ackley Lake ('$18/night', non-residents '$28/night'). Ennis
 FAS: the 2026 FAS fee table's $12 with a Montana fishing license, $18 without, which its FishMT page lists.
+
+## Arizona (2026-10-12)
+
+15 Arizona State Parks entries (`az_build.py`; texts in `az_fee_pages_2026-10-12.txt`). The fee schedule page
+(azstateparks.com/fee-schedule) lists each park's camping fees, $25-50 a night, plus 'a $3.60 non-refundable reservation
+fee per site' and $15 a night for a second vehicle; there is no resident rate and no weekend rate for camping (Lake
+Havasu's and Patagonia Lake's weekend prices are day-use entrance). Camping includes the park's day use, so no entrance
+is recorded. The booking engine (azstateparks.com/reserve) is behind reCAPTCHA and a bot checker and was not read; each
+park's camping page says which sites take RVs. Base = the cheapest fee for a site a 23-ft rig can use: Dead Horse
+Ranch's and Fool Hollow's $25 non-electric sites are tent-only and Patagonia Lake's two are 22 ft, so those parks start at
+their $50 hookup sites; Lost Dutchman's non-hookup sites ($35, 'for tents or RVs'), Lyman Lake's, Roper Lake's and Alamo
+Lake's ($25) are the base with hookups as add-ons. Homolovi is seasonal: June is non-electric $30 / electric $35 (winter
+$25 / $40). Lake Havasu is $40-50 (an RV site in the cabin loop $40). Weekend two- and three-night minimums at Cattail
+Cove, Lake Havasu and River Island are in the notes.
+
+Not priced: Ben Avery Shooting Facility 11547 (Arizona Game and Fish): its camping pages refuse a plain fetch, and AZGFD
+says the campgrounds are 'available exclusively for competition and recreational shooters' - an inclusion question for
+AWH.
