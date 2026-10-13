@@ -136,6 +136,24 @@ OVERRIDE = {
     7390: {"fee_text": "The park adds 2% of the site charge as a 'CC Processing Fee' ($1.20 on a $60 night)."},
     7489: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.20 on a $40 night)."},
     7520: {"fee_text": "The park adds a 'Booking Fee' of $1.50 a night on a $50 site, 3% of the site charge."},
+    # batch 11. One price everywhere ($50 and $65 on every type a 23-ft rig fits)
+    7543: {"fee_text": "The park adds 3.5% of the site charge as a 'Credit Card Fee' ($1.75 on a $50 night)."},
+    7549: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.95 on a $65 night)."},
+    # $2.61 on two $45 nights: a share, not $1.30 a night
+    7601: {"fee_model": {"Processing Fee": ["pct", {"P": 0.029}]}},
+    # the Saturday sold at $75 on every type; the park's own page lists $45-50, and $70 for football and special events
+    7593: {"skip_dates": ["2026-10-17"],
+           "dates_text": "Saturday, October 17, 2026 sold at $75 on every type; the park's own page lists $70 a night "
+                         "for football and special events.",
+           "mins_text": ""},
+    # a double lot is two sites (and January and June 2027 list it at a $10 placeholder)
+    7714: {"skip": r"^Double Lot"},
+    # both October dates fall in the Round Top Antique Fair, October 15 - November 1, 2026 on the park's page
+    # 3.5%, not the fit's 3.49%: $1.58 on $45 and $1.92 on $55 are 3.5% with half-cents rounded to even
+    7758: {"fee_model": {"Processing fee": ["pct", {"P": 0.035}]},
+           "skip_dates": ["2026-10-17", "2026-10-20"],
+           "dates_text": "October 17 and 20, 2026 fall in the Round Top Antique Fair (October 15 to November 1), when "
+                         "Campspot charged $75-95."},
 }
 
 
