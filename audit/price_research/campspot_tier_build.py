@@ -84,6 +84,16 @@ OVERRIDE = {
     3506: {"fee_model": {"Credit card surcharge 3.5%": ["pct", {"P": 0.035}]}},
     # advance reservations need 2 nights all season, marked in booking.min_stay
     3585: {"mins_text": ""},
+    # batch 4. Card-processing names, 3% wherever read; Big Bend's two-night quote was refused online
+    3905: {"fee_model": {"Processing Fee": ["pct", {"P": 0.03}]}},
+    3915: {"fee_model": {"Credit Card Fee": ["pct", {"P": 0.03}]}},
+    3959: {"fee_model": {"Credit Card Surcharge": ["pct", {"P": 0.03}]}},
+    # the park's own page calls its "Primitive" sites group sites; the two-night quote on them carried each $4 fee
+    # once, and no other type was quoted for two nights
+    3940: {"skip": r"^Primitives In Campgrounds$",
+           "fee_model": {"Booking Fee": ["stay", {"A": 4.0}], "Camp Restoration Fee": ["stay", {"A": 4.0}]}},
+    # a 3-night minimum all season (the township's page), marked in booking.min_stay
+    3981: {"mins_text": ""},
 }
 
 
@@ -217,10 +227,24 @@ def verdict(e, r):
     def rows_of(d):           # every fitting type the park listed that day, quoted or not
         return lists.get(d) or [[q["type"], None, 0, q["fail"]] for q in one if q["date"] == d]
     shut_d = {d for d in dates if all(any("RESORT_CLOSED_RULE" in f for f in x[3]) for x in real(rows_of(d)))}
-    used = [d for d in dates if d not in shut_d] or dates
+    # A date inside the park's own closures is closed though its types answer "no campsites": a type that lists no
+    # sites has none for the closure to name (Scottville MI's three types; Pastime Park OH from November 1)
+    closures = [(c["startDateInParkTimeZone"], c["endDateInParkTimeZone"]) for c in r.get("closed_dates") or []]
+    shut_d |= {d for d in dates if any(a <= d <= b for a, b in closures) and not any(x[2] for x in rows_of(d))}
+    # A date past the park's booking window ("Cannot book more than 180 days in advance" on every type, or that and
+    # "no campsites") lists the rate card, not a night Campspot will sell: River Country MI's January answered so.
+    # Its prices are used only when no open date was read (Ottawa County Fairgrounds MI: closed in October and
+    # January, June not bookable yet), and the note says the month isn't open for booking yet.
+    beyond = lambda x: any("Cannot book more than" in f for f in x[3])
+    far_d = {d for d in dates if d not in shut_d and (rr := real(rows_of(d))) and any(map(beyond, rr))
+             and all(not x[2] and (beyond(x) or any("No campsites available" in f for f in x[3])) for x in rr)}
+    open_d_ = [d for d in dates if d not in shut_d and d not in far_d]
+    used = open_d_ or [d for d in dates if d in far_d] or dates
     shut = not [d for d in dates if d not in shut_d]
     if shut:
         flags.append("CLOSED DATES ONLY")
+    elif not open_d_:
+        flags.append("NOT BOOKABLE YET ONLY")
     if r.get("fallback"):
         flags.append("FALLBACK DATES")
     # the park's own fees
@@ -340,8 +364,13 @@ def verdict(e, r):
             text += f" Campspot shows the park closed in {mname(closed_m)}."
         if empty_m:
             text += f" Campspot offers no sites in {mname(empty_m)}."
+        later = {d[:7] for d in far_d} - set(closed_m) - set(empty_m)
         if not any(d.startswith("2027-06") for d in raw if raw[d]) and "2027-06" not in closed_m + empty_m:
-            text += " June 2027 isn't open for booking yet."
+            later.add("2027-06")
+        if later:
+            text += f" {mname(sorted(later))} {'isn' if len(later) == 1 else 'aren'}'t open for booking yet"
+            listed = sorted(later & used_m)
+            text += f"; the prices above are the rates Campspot lists for {mname(listed)}." if listed else "."
     if left_short:
         text += f" Left out: {', '.join(left_short)} (sites under 23 ft)."
     inc, stays, pcts = [], [], []

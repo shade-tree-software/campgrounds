@@ -15,6 +15,9 @@ group is manual/reported, is left alone.
     --replace-derived   let a finding REPLACE fees whose provenance is `derived`
                         (note prose). That is how a re-check of the prices taken
                         from our own notes lands: unpriced.py --from-note lists them.
+    --replace ID,...    let the findings for these ids REPLACE their fees: a
+                        correction to fees an earlier batch wrote (Pastime Park
+                        OH's note priced dates inside the park's closure).
 
 Dry run unless --apply.
 """
@@ -34,6 +37,8 @@ def main():
     findings = json.load(open(sys.argv[1]))
     apply = "--apply" in sys.argv
     replace = "--replace-derived" in sys.argv
+    redo = ({int(x) for x in sys.argv[sys.argv.index("--replace") + 1].split(",")}
+            if "--replace" in sys.argv else set())
     rows = ef.load_rows()
     by_id = {r.get("id"): r for r in rows}
     wrote, skipped = 0, []
@@ -43,7 +48,7 @@ def main():
             skipped.append(f["id"])
             continue
         derived = ((entry.get(cs.PROVENANCE) or {}).get("fees") or {}).get("method") == "derived"
-        if entry.get("fees") and not (replace and derived):
+        if entry.get("fees") and not (replace and derived) and f["id"] not in redo:
             skipped.append(f["id"])
             continue
         cs.apply_update({}, {"fees": f["fees"]})      # raises on a bad value
