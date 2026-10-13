@@ -637,11 +637,12 @@ and Historic Hat Creek Ranch: the operators' 2026 rates (Hat Creek from its Camp
 heritage entries now carry `policy_ref: none` (`bc_corrections_2026-10-12.json`). Links fixed (`bc_links_2026-10-12.py`):
 Whiteswan's Packrat Point linked Swan Lake Park, and Stone Mountain's Summit Lake linked the other Summit Lake Park.
 
-Not priced, questions for AWH: Riverside (Chilliwack) Recreation Site 8403 (its operator now books it as a group site
-'by phone call only' and the record lists it Closed); Darke Lake 8461 (no fee published; its page says the area 'is
-best suited to truck and camper units as opposed to trailers or motor homes'). Not priced: Kitty Coleman Beach 8448
-('For camping fee rates, contact the park caretaker') and Momich Lakes 8506 (no fee published). Priced but flagged:
-Smelt Bay 8449, whose booking-site sites allow only 'Trailer up to 18ft' and 'Van/Camper'.
+Dropped on AWH's calls of 2026-10-13 (`awh_calls_2026-10-13.py`): Riverside (Chilliwack) Recreation Site 8403, whose
+operator now books it as a group site 'by phone call only' (the record's Closed is a seasonal closure, opening spring
+2027), and Smelt Bay 8449, too short (its booking-site sites allow only 'Trailer up to 18ft' and 'Van/Camper').
+Not priced, a question for AWH: Darke Lake 8461 (no fee published; its page says the area 'is best suited to truck and
+camper units as opposed to trailers or motor homes'). Not priced: Kitty Coleman Beach 8448 ('For camping fee rates,
+contact the park caretaker') and Momich Lakes 8506 (no fee published).
 
 ## California (2026-10-12)
 
@@ -662,6 +663,6 @@ May Fair's 'reservable, $40/night' (the fair says first come, first served).
 
 Not priced: ten campgrounds with no family sites on ReserveCalifornia (first come, fee posted at the park; parks.ca.gov
 gives day-use fees only): Benicia SRA's en route sites, Anza-Borrego's Bow Willow, Butano, Manchester, Navarro River's
-Navarro Beach and Paul M. Dimmick, Picacho, Saddleback Butte, Woodson Bridge and Turlock Lake. Priced but flagged for
-AWH: Tamarisk Grove (the booking site's longest site 21 ft), Emerald Bay's Eagle Point (18 ft) and Malakoff Diggins'
-Chute Hill (19 ft).
+Navarro Beach and Paul M. Dimmick, Picacho, Saddleback Butte, Woodson Bridge and Turlock Lake. Dropped on AWH's call of
+2026-10-13 as too short (`awh_calls_2026-10-13.py`): Tamarisk Grove 11608 (the booking site's longest site 21 ft),
+Emerald Bay's Eagle Point 11635 (18 ft) and Malakoff Diggins' Chute Hill 11662 (19 ft).
