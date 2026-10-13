@@ -449,3 +449,31 @@ the state:CO row's. CPW's reservation fee is not recorded: no current CPW page s
 $10). Lake Pueblo's Northern Plains entry takes the Yucca Flats, Prairie Ridge, Kettle Creek and Eagle View loops and
 Steamboat Lake's Dutch Hill takes Wheeler and Bridge Island, assigned by distance from the pins. The other 18 Colorado
 state entries were priced from CPW's park pages and booking site on 2026-10-10 and are not repriced.
+
+## New Mexico (2026-10-12)
+
+38 entries (`nm_build.py`). New Mexico State Parks' fee schedule (in force since 2025-01-01; the fees page, flier and
+FAQ are in `nm_fee_pages_2026-10-12.txt`) is statewide: camping per vehicle a night, residents $10 primitive / $15
+developed, non-residents $15 / $20; water $5, electric $10, sewer $5 'only at sites with' them ('Sites that share
+utilities would not be charged'); ReserveAmerica's reservation fee '$3.50 per night, $10.00 max. per reservation'. The
+booking site (newmexicostateparks.reserveamerica.com, classic RA, contract NM) lists every site of the 30 parks
+(`nm_sites_2026-10-12.json`, `ra_sites.py`; Manzano Mountains, whose entry linked a recreation.gov info page, by
+`ra_list.py`), and `ra_sample.py` read every one for Tue 2027-06-15 (`nm_booking_rates_2026-10-12.jsonl`) and one per
+loop for Sat 2027-06-19 (`nm_booking_rates_saturday_2026-10-12.jsonl`, all the same as Tuesday). A reservable site
+quotes the resident and non-resident price, the schedule's sums ($15, $20 with water, $25 with electric, $30 with both,
+$35 full hookups); a first-come one prints 'No pricing information available ... Not available online' and pays the
+same schedule. Each entry: base = the cheapest kind of site in its loops a 23-ft rig fits, priced from the quotes (the
+schedule for unquoted sites); water, electric and sewer add-ons where its sites have them; non-residents +$5 a night on
+the base; reservation fee 3.5 (said per night in the note, as for Maine) unless no site is reservable. A kind of site
+counts when it is reservable or there are 3 or more of it (Juniper's 2 first-come hookup sites include the park's one
+accessible site). Sugarite Canyon's Lake Alice hookup sites share water and pay no water fee ($25 electric, $30 full
+hookups). The park-wide 'Primitive Camping' listing ($10, shore camping) is mentioned, not priced. No entrance fee is
+recorded: camping is charged per vehicle and nothing says a camper also pays day use.
+
+Conflicts written into the notes (re-scanned): Eagle Nest Lake's 19 Lakeview sites are listed with 20/30/50-amp
+electric and quoted $25, while the park's page still says 'No hook-ups' (note now gives both; hookups.electric
+removed as unknown); Terrero's note claimed electric, water and sewer, but the booking site lists none and quotes $15,
+and the park's page counts its sites as primitive. Lower Ridge Road's '~$14/night' is gone. Mora's 10 sites are listed
+but 'Not available online' for June, while the park's page says reservations only: priced at the schedule's $15, no
+reservation fee recorded. Links: Crusher Hole's bare ReserveAmerica link and Manzano's recreation.gov page now point at
+their parks' booking pages.
