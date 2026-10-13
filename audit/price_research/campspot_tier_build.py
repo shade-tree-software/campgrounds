@@ -130,6 +130,8 @@ OVERRIDE = {
     # batch 8. One price everywhere ($38, $35), so a share and a flat sum a night give the same cents
     5302: {"fee_text": "The park adds 3% of the site charge as a 'Credit Processing Fee' ($1.14 on a $38 night)."},
     5686: {"fee_text": "The city adds 3% of the site charge as a 'Processing' fee ($1.05 on a $35 night)."},
+    # batch 9. One price everywhere ($45)
+    6672: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.35 on a $45 night)."},
 }
 
 
