@@ -415,3 +415,18 @@ site $18 (economy) or $20 (non-electric), but which applies at each isn't publis
 Cowan River and Lac la Plonge as free. Besant 9290 has only Facebook and a phone number. Reindeer Lake's Norvil Olson
 9202 keeps its note's $0. Makwa Lake's note calls Jumbo Beach tent-only, but the booking site lists its 10 sites as
 non-electric for rigs to 18-40 ft (not changed; the park's price comes from Mewasin's non-electric sites either way).
+
+## Wyoming (2026-10-12)
+
+12 entries (`wy_build.py`). Wyoming's '2026 Wyo Parks Fee Schedule' is statewide: 'The base rate for camping is $10 for
+residents and $18 for non-residents', 'base camping fee + day use fee + sales & lodging tax', 'Electric Site Fee: $10
+per night', day use $7 / $12 a vehicle at parks ($4 / $8 an adult at historic sites). Reservations moved to US eDirect
+(reserve.wyoming.gov, API wyordr.usedirect.com/wyomingrdr/rdr/): `rdr_place.py` gives each park's campgrounds with their
+electric and non-electric sites (`wy_places_2026-10-12.json`), and every sampled site is priced at the $10 base, Tuesday
+and Saturday alike (electric fee, day use and tax are added in the cart). Each entry: $10 resident base, non-residents
++$8, electric +$10 where the campground has electric sites, day use as entrance (not at Connor Battlefield, whose page
+says 'Daily use is free!' and posts the taxed $11.30 / $20.34, and not at Medicine Lodge, whose day-use fee isn't
+stated). The Wyoming State Fair's RV park (state-owned, not State Parks) from its own page: $30 a night, $40 at fair
+time. The old wyomingstateparks.reserveamerica.com no longer resolves: `wy_links_2026-10-12.py` points the 12 entries
+that linked it (and Medicine Lodge) at their park's reserve.wyoming.gov page; Seminoe's note now names the new site and
+Hawk Springs' note lost its '~$18/night' (both re-scanned).
