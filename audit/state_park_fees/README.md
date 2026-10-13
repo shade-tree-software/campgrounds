@@ -642,3 +642,26 @@ Not priced, questions for AWH: Riverside (Chilliwack) Recreation Site 8403 (its 
 best suited to truck and camper units as opposed to trailers or motor homes'). Not priced: Kitty Coleman Beach 8448
 ('For camping fee rates, contact the park caretaker') and Momich Lakes 8506 (no fee published). Priced but flagged:
 Smelt Bay 8449, whose booking-site sites allow only 'Trailer up to 18ft' and 'Van/Camper'.
+
+## California (2026-10-12)
+
+99 entries (`ca_build.py`; page texts in `ca_fee_pages_2026-10-12.txt`). ReserveCalifornia is US eDirect / Tyler RDR
+(`config.json`: `https://california-rdr.prod.cali.rd12.recreation-management.tylerapp.com/rdr/`). Entries were matched to
+parks by `fd/citypark` (name, then distance) and to campground facilities by `search/place`
+(`ca_places_2026-10-12.json`, `ca_facility_map_2026-10-12.json`). The host answers slowly, so `rdr_rates.py` (every unit
+type of every facility of every park) would have taken hours; the new `rdr_units.py` reads only the mapped facilities'
+grids on 2027-04-06 (inside the six-month window) and prices the longest unit of each site type for Tue 2027-06-15 and
+Sat 2027-06-19 through the per-unit call, which answers beyond the window (`ca_units_2026-10-12.jsonl`; every quote adds
+the $8.25 reservation fee already on the state:CA row). A Saturday costs the same everywhere. Base = the cheapest
+no-hookup type whose longest unit takes a 23-ft rig ('Tent Campsite' only where it is a campground's only type; en route
+sites named, not the base), else the cheapest hookup type; hookups as add-ons. CAL FIRE's three demonstration forests
+(Boggs Mountain and Jackson $25, Mountain Home $30 a designated camping area, two vehicles included; 14 CCR § 1401.1,
+operative 2021-04-01) and the Dixon May Fair ($50 a day from 2026, first come) carry `policy_ref: none`
+(`ca_corrections_2026-10-12.json`). Notes edited and re-scanned: Jackson's stale '$20' self-registration, and the Dixon
+May Fair's 'reservable, $40/night' (the fair says first come, first served).
+
+Not priced: ten campgrounds with no family sites on ReserveCalifornia (first come, fee posted at the park; parks.ca.gov
+gives day-use fees only): Benicia SRA's en route sites, Anza-Borrego's Bow Willow, Butano, Manchester, Navarro River's
+Navarro Beach and Paul M. Dimmick, Picacho, Saddleback Butte, Woodson Bridge and Turlock Lake. Priced but flagged for
+AWH: Tamarisk Grove (the booking site's longest site 21 ft), Emerald Bay's Eagle Point (18 ft) and Malakoff Diggins'
+Chute Hill (19 ft).
