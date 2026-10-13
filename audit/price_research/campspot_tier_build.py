@@ -115,6 +115,9 @@ OVERRIDE = {
     4369: {"fee_text": "The park adds 3% of the site charge as a 'Credit Card Fee' and another 3% as a 'Reservation "
                        "System Fee' ($1.47 each on a $49 night)."},
     4505: {"fee_text": "The park adds 3% of the site charge as a 'Convenience Fee' ($1.50 on a $50 night)."},
+    # the Economy types ask for 7 or 30 nights on every date read (campspot_dates.py, October to December 2026) and
+    # the park rents them by the month: only the Deluxe sites are sold by the night
+    4377: {"skip": r"^Economy"},
     # 2 nights on every site, marked in booking.min_stay in this batch (after the build reads the entry)
     4448: {"mins_text": ""},
     4454: {"mins_text": ""},
