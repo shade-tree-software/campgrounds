@@ -430,3 +430,22 @@ stated). The Wyoming State Fair's RV park (state-owned, not State Parks) from it
 time. The old wyomingstateparks.reserveamerica.com no longer resolves: `wy_links_2026-10-12.py` points the 12 entries
 that linked it (and Medicine Lodge) at their park's reserve.wyoming.gov page; Seminoe's note now names the new site and
 Hawk Springs' note lost its '~$18/night' (both re-scanned).
+
+## Colorado (2026-10-12)
+
+54 Colorado Parks and Wildlife entries from its booking site, cpwshop.com (ReserveAmerica's 'CUI' .page platform, not
+the classic .do one). `cui_sites.py` lists every site of a campground from the map its page draws:
+`/ajax/CUIGISMap?event=getGISMap` (GeoJSON: loop, site type, maximum vehicle length, the site page's link), or, for the
+five parks drawn on an SVG map, `/ajax/CUISVGMap?event=getMapIcons` (site and type only) (`co_sites_2026-10-12.jsonl`).
+`cui_rates.py` reads a site page given `&arvdate=MM/DD/YYYY&lengthOfStay=1`, which prints 'Camping Fees (1 Night)' even
+beyond the six-month window: two sites of each loop and type on Tue 2027-06-15 and one on Sat 2027-06-19, every site of
+the SVG parks (`co_booking_rates_2026-10-12.jsonl`). `co_build.py` maps each entry to its park and loops and builds
+`co_fees_2026-10-12.json`. June prices are nearly uniform, the top of the ranges on CPW's camping page: basic $28,
+electric $36, full hookups $41, the same on a Saturday. Exceptions: John Martin Reservoir's Lake Hasty, electric $29
+($31 on a Saturday) and full hookups $36 ($38); Mancos, basic $20-22; Stagecoach's McKindley loop, primitive $18. Base =
+cheapest site type a 23-ft rig fits (maximum vehicle length; blank = unknown, but CPW's 0 is a site with no room for a
+vehicle); electric and full hookups are add-ons, weekend the base site's Saturday difference. The daily vehicle pass is
+the state:CO row's. CPW's reservation fee is not recorded: no current CPW page states it (the old reservation FAQ said
+$10). Lake Pueblo's Northern Plains entry takes the Yucca Flats, Prairie Ridge, Kettle Creek and Eagle View loops and
+Steamboat Lake's Dutch Hill takes Wheeler and Bridge Island, assigned by distance from the pins. The other 18 Colorado
+state entries were priced from CPW's park pages and booking site on 2026-10-10 and are not repriced.
