@@ -704,7 +704,13 @@
     },
     "fees": {
       "currency": "CAD",
-      "note": "Reservation fee '$6 per campsite per night, to a maximum of $18 per site (plus tax)'; phone adds a $5 per-transaction surcharge. Cancelling more than seven days out refunds camping fees but never the transaction fees. No out-of-province rate difference. NOTE on rating.price_tier for Canadian entries: the imported RV Life tier is computed on nominal dollars with no CAD conversion, so Canadian parks sit roughly one level high - see docs/campground-schema.md 4.3."
+      "reservation_fee": 6,
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 20,
+        "per": "stay"
+      },
+      "note": "Reservation fee '$6 per campsite per night, to a maximum of $18 per site (plus tax)'; phone adds a $5 per-transaction surcharge; first-come sites have none. Since May 15, 2026, people who do not live in B.C. pay a $20 non-resident fee 'per party per campground' - reserved or first come, first served - shown at booking or paid in the park without proof of B.C. residency. Fees vary by park and season: peak (summer) June 15 to Labour Day, higher at 59 high-use parks; shoulder; and a winter rate at some. Each campground's fees are on its entry. Cancelling more than seven days out refunds camping fees but never the transaction fees. NOTE on rating.price_tier for Canadian entries: the imported RV Life tier is computed on nominal dollars with no CAD conversion, so Canadian parks sit roughly one level high - see docs/campground-schema.md 4.3."
     },
     "provenance": {
       "booking": {
@@ -713,9 +719,8 @@
         "method": "manual"
       },
       "fees": {
-        "source": "https://bcparks.ca/reservations/frontcountry-camping/ and https://bcparks.ca/reservations/camping-fees/",
-        "checked": "2026-09-14",
-        "method": "manual"
+        "source": "https://bcparks.ca/reservations/camping-fees/ (non-resident fee, seasons) + https://nrs.objectstore.gov.bc.ca/kuwyyf/2026_camping_fees_information_sheet_7eed24d2eb.pdf ('$20 per party per campground') + https://bcparks.ca/reservations/frontcountry-camping/ (reservation fee), read 2026-10-12",
+        "checked": "2026-10-12"
       }
     }
   },

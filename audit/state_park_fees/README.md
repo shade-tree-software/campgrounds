@@ -617,3 +617,28 @@ priced from its own rates page ('Rates last verified 2026-08-05'; $40.29-59.52 b
 priced: Fort Vermilion PRA 9018 (its Alberta Parks page is gone; Mackenzie County leases it, booking through LetsCamp,
 whose page would not load). Four notes quoted prices that differ from the campground pages (Maycroft, North Dyke,
 Sulphur Gates, Machesis Lake); removed and re-scanned.
+
+## British Columbia (2026-10-12)
+
+185 entries (`bc_build.py`; page texts in `bc_fee_pages_2026-10-12.txt`). BC Parks: the recreation user fee schedule
+(`bc_fee_schedule_2026-10-12.txt`) gives every park's frontcountry fee per party per night for the summer (peak) season,
+June 15 to Labour Day, the shoulder and the winter season, by campground where a park has several; the booking site
+(camping.bcparks.ca, GoingToCamp; `gtc_probe.py` -> `bc_booking_fees_2026-10-12.json`, Tue 2027-06-15 and Sat
+2027-06-19) answers the same fee for every schedule, the same on a Saturday, plus the electrical hook-up as its own
+'Service Plus' line ($5-10). Base = the booking site's fee for a non-electric site taking a 'Trailer or RV' over 18 ft in
+the entry's campground (127 entries; every one matches the schedule's peak fee), else its electric site's fee plus the
+hook-up (Porteau Cove, Juniper Beach), else the schedule's peak fee (first-come campgrounds: reservation fee 0). The
+provincial:BC row now carries the 2026 '$20 per party per campground' non-resident fee and the $6 a night reservation
+fee (at most $18; `bc_registry_2026-10-12.py`). Not in the schedule, priced from their pages: Cedar Point ($25), and
+Babine Lake Marine's Smithers Landing and Pendleton Bay and Heather-Dina Lakes (no camping fee). Recreation Sites and
+Trails BC: each site's record from the sitesandtrailsbc.ca API (`bc_rec_sites_2026-10-12.json`) gives its overnight fee
+and dates ($14-20; none listed = free; Fairy Lake's is the 2025 season's). Barkerville's Lowhee and Forest Rose, Kilby
+and Historic Hat Creek Ranch: the operators' 2026 rates (Hat Creek from its Campspot listing). Those 17 rec-site and
+heritage entries now carry `policy_ref: none` (`bc_corrections_2026-10-12.json`). Links fixed (`bc_links_2026-10-12.py`):
+Whiteswan's Packrat Point linked Swan Lake Park, and Stone Mountain's Summit Lake linked the other Summit Lake Park.
+
+Not priced, questions for AWH: Riverside (Chilliwack) Recreation Site 8403 (its operator now books it as a group site
+'by phone call only' and the record lists it Closed); Darke Lake 8461 (no fee published; its page says the area 'is
+best suited to truck and camper units as opposed to trailers or motor homes'). Not priced: Kitty Coleman Beach 8448
+('For camping fee rates, contact the park caretaker') and Momich Lakes 8506 (no fee published). Priced but flagged:
+Smelt Bay 8449, whose booking-site sites allow only 'Trailer up to 18ft' and 'Van/Camper'.
