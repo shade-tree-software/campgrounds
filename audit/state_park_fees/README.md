@@ -518,3 +518,19 @@ Cove, Lake Havasu and River Island are in the notes.
 Not priced: Ben Avery Shooting Facility 11547 (Arizona Game and Fish): its camping pages refuse a plain fetch, and AZGFD
 says the campgrounds are 'available exclusively for competition and recreational shooters' - an inclusion question for
 AWH.
+
+## Nevada (2026-10-12)
+
+21 Nevada State Parks entries (`nv_build.py`; texts in `nv_fee_pages_2026-10-12.txt`). The fees page (parks.nv.gov/fees,
+the same lines on each park's page) gives each park's camping fee 'per vehicle, per night': $15 (non-Nevada vehicles
+$20) at most parks, $20 ($25) at Big Bend of the Colorado and Valley of Fire, '+ $10.00 for sites with utility hook ups'
+where a park has them. Reservations (ReserveNevada, US eDirect, API nevadardr.usedirect.com/NevadaRDR/rdr/, 3 days to 11
+months ahead) carry 'a non-refundable $5.00 transaction fee per reservation'. The booking site's place search
+(`nv_places_2026-10-12.json`, `rdr_place.py`) says which campgrounds have hookup sites; its per-site rate is a flat $10
+at every campsite of every park, hookups or not (group areas $25; `nv_booking_rates_2026-11_2026-10-12.jsonl`,
+`rdr_rates.py` for 2026-11-03 and 2026-11-07), the site part of the per-vehicle fee, so the fee table is the price.
+Each entry: base = the park's fee for a site without hookups where its campground has one a rig can use, else the hookup
+site's (Kershaw-Ryan, Cathedral Gorge and Echo Canyon's RV Campground: $25); +$10 (as `electric`) where it has hookup
+sites; non-Nevada vehicles +$5 a night; reservation fee 5; weekend 0. No entrance recorded (the camping fee is per
+vehicle). Wild Horse's note said 'no hookups', but its Loop 2 is water and electric on the booking site and the fee page
+charges for hookups there: note corrected and re-scanned (hookups.electric removed as unknown amperage).
