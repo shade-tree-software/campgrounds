@@ -165,6 +165,28 @@ OVERRIDE = {
            "mins_text": ""},
     # $40 on every type and date: $3.73 a night and 9.325% give the same cents
     8061: {"fee_text": "The park adds a 'Reservation Fee' of $3.73 a night on a $40 site, 9.325% of the site charge."},
+    # batch 13. One closed-date quote each; two nights from the same date (two_night.py, 2026-10-13) settle the fee:
+    # C$2.82 on two C$47 nights (a share or a sum a night, not once a stay), C$12 and C$5.50 again on two nights
+    8587: {"fee_text": "The park adds a 'Processing Fee' of C$1.41 a night on a C$47 site, 3% of the site charge."},
+    8947: {"fee_model": {"Campground Fee": ["stay", {"A": 12.0}]}},
+    # a double or triple site is two or three sites booked together (C$66, C$99), as 7714's double lot
+    9114: {"fee_model": {"Booking Fee": ["stay", {"A": 5.5}]},
+           "skip": r"^(Double|Triple) RV Site"},
+    # the Hideaway is a group site for up to five trailers (C$200-225; the resort's RV & tenting page). The power and
+    # water sites it hid on the Saturdays and in June were quoted with campspot_api.py --add
+    8692: {"skip": r"^Hideaway$"},
+    # one price everywhere (C$45, C$54), so a share and a flat sum a night give the same cents
+    8698: {"fee_text": "The park adds a 'Processing Fee' of C$4.05 a night on a C$45 site, 9% of the site charge."},
+    9103: {"fee_text": "The park adds a 'General Service Fee' of C$1.08 a night on a C$54 site, 2% of the site "
+                       "charge."},
+    # the park's rates page: "CampSpot per site Reservations fee of $4 for a one day booking or $6 for multiple day
+    # bookings" - two fee names on Campspot, one on the one-night quotes and one on the two-night quote
+    9119: {"fee_text": "Plus the park's reservation fee, once per stay: C$4 for a one-night booking and C$6 for a "
+                       "longer one."},
+    # open May 1 to September 30 (Travel Alberta, and the season field); Campspot sells January nights all the same
+    # (the two-night quote that showed the C$5 'Booking Fee' once a stay is on a skipped January date)
+    9120: {"skip_dates": ["2027-01-26", "2027-01-30"],
+           "fee_model": {"Booking Fee": ["stay", {"A": 5.0}]}},
 }
 
 

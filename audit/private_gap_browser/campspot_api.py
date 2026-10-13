@@ -1,4 +1,5 @@
 # campspot_api.py OUT.jsonl [--extra TUE,SAT ...] ID:SLUG [ID:SLUG ...]
+# campspot_api.py OUT.jsonl --add WHY ID:TYPE:DATE[:NIGHTS] ...   (quotes the pick passed over; see add())
 # Campspot prices read from Campspot's own API through the one driver browser (2026-10-13, written to price the 421
 # tier-only entries that link to Campspot). The site pages campspot_site.py and campspot_market.py read take 10-20 s
 # each; the API calls behind them carry the whole breakdown:
@@ -175,7 +176,38 @@ def priced_types(rec, rows):
     return list(dict.fromkeys(pick))
 
 
+def add(out_path, why, specs):
+    """Quote types the pick passed over and write each park's last record again with those quotes added (the builder
+    reads the last record of a park), WHY and the specs kept in 'supplement'. For a park whose dearest fitting type
+    was a group site the builder skips by name: Knouff Lake's 'Hideaway' (2026-10-13), so the reader had quoted only
+    the cheapest type and the group site on the Saturdays and in June."""
+    recs = {}
+    for line in open(out_path, encoding='utf-8'):
+        r = json.loads(line)
+        recs[r['id']] = r
+    if 'campspot.com' not in call(cmd='url'):
+        call(cmd='goto', url='https://www.campspot.com/', wait='6000')
+    done = {}
+    for spec in specs:
+        p = spec.split(':')
+        eid, tid, d, n = int(p[0]), p[1], p[2], int(p[3]) if len(p) > 3 else 1
+        r = done.setdefault(eid, json.loads(json.dumps(recs[eid])))
+        try:
+            q = quote(r['park_id'], tid, d, n, r['guests'])
+        except Blocked as b:
+            print(eid, tid, d, 'BLOCKED by Campspot (%s) - stopping; nothing written' % b, flush=True)
+            sys.exit(2)
+        r['quotes'].append(q)
+        r.setdefault('supplement', []).append({'read': datetime.date.today().isoformat(), 'why': why, 'quote': spec})
+        print(eid, tid, d, n, q.get('availability'), q.get('base'), q.get('fees'), q.get('fail'), flush=True)
+    with open(out_path, 'a') as out:
+        for r in done.values():
+            out.write(json.dumps(r) + '\n')
+
+
 def main():
+    if len(sys.argv) > 3 and sys.argv[2] == '--add':
+        return add(sys.argv[1], sys.argv[3], sys.argv[4:])
     # --extra TUE,SAT (repeatable): another pair read after PAIRS, for a park whose peak PAIRS misses (a beach resort's
     # July and August); the builder reports every month read
     args, extra = sys.argv[1:], []
