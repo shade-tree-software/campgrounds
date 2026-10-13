@@ -201,6 +201,16 @@ OVERRIDE = {
     9841: {"skip_dates": ["2026-10-17", "2026-10-20", "2027-01-26", "2027-01-30"]},
     # "The season is scheduled for March 22 thru October, and possibly November" (the park's site pages)
     10166: {"skip_dates": ["2027-01-26", "2027-01-30"]},
+    # batch 15. One price everywhere ($40, $35), so a share and a flat sum a night give the same cents
+    11126: {"fee_text": "The park adds a 'Credit Card Processing Fee' of $1.28 a night on a $40 site, 3.2% of the "
+                        "site charge."},
+    11566: {"fee_text": "The park adds a 'Booking Fee less than 30 nights' of $1.40 a night on a $35 site, 4% of "
+                        "the site charge."},
+    # 2 nights on every date read (campspot_dates.py, October 2026 and May to October 2027), marked in booking.min_stay
+    12638: {"mins_text": ""},
+    # 2 nights on every date read, and Saturday-to-Saturday stays from late June to Labour Day 2027, marked in
+    # booking.min_stay
+    12695: {"mins_text": ""},
 }
 
 
