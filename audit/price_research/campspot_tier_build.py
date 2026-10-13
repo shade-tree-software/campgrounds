@@ -32,18 +32,21 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 D = "2026-10-13"
 WINTER = "2027-01-26"       # the January Tuesday campspot_api.py reads; its closure is the coming winter's
 LAST_WINTER = "2026-01-26"  # and the same day a year before, whose closure ended this year's opening
+LATE_WINTER = "2026-02-15"  # or a closure begun in February (BrightSky KY, new on Campspot from 2026-02-01)
+NEXT_WINTER = "2028-01-26"  # the winter after the coming one, set by a few parks already
 DATA = os.path.join(HERE, "campspot_tier_2026-10-13.jsonl")
 # site types that are not a nightly RV site, by name; the reader (campspot_api.py) carries the same list - keep the
 # two in step, or the reader leaves unpriced a type the builder counts
-SKIP = (r"(?i)\bgroup\b|horse|equestrian|\brally\b|\btent\b(?!.*\b(rv|camper|trailer)\b)|cabin|lodge|bunkhouse|"
+SKIP = (r"(?i)\bgroup\b|horse|equestrian|\brally\b|^(?!.*\b(rv|camper|trailer)\b).*\btent\b|cabin|lodge|bunkhouse|"
         r"double site|buddy|pavilion|day use|day pass|^(?!.*\b(rv|camper|trailer)\b).*\b(boat slip|dock|slip)\b|"
         r"storage|glamp|yurt|tipi|teepee|cottage|motel|\broom\b|accessible|\bada\b|handicap|"
         # a long-stay product, unless the name also sells it by the night ('50 Amp Daily, Weekly RV Site', Sullivan
         # County IN)
         r"^(?!.*\b(daily|nightly|night|overnight|transient)\b).*(season|monthly|long[- ]term|\bweekly\b|annual|"
         r"yearly|winter stay)")
-# per park, by hand: "fee_text" for a fee the fit can't settle, "skip" a regex of type names to leave out, "mins_text"
-# to replace the minimum-stay sentence (empty when booking.min_stay carries it)
+# per park, by hand: "fee_text" for a fee the fit can't settle, "fee_model" {name: [model, params]} for one that a
+# further quote settled, "skip" a regex of type names to leave out, "mins_text" to replace the minimum-stay sentence
+# (empty when booking.min_stay carries it)
 OVERRIDE = {
     # $35 a night on every type and date, so a share of the charge and a flat sum per night give the same cents; the
     # name says card processing, which parks charge as a share
@@ -56,6 +59,15 @@ OVERRIDE = {
     # a run of autumn dates, not a standing minimum (campspot_dates.py on four more dates)
     1165: {"mins_text": "Campspot asked for at least 2 nights on every RV type for check-in on October 20, 21 and 27 "
                         "and November 3, 2026, but sold single nights on October 17 and November 10 and 14."},
+    # one quote only (the season is over); campspot_dates.py for two nights from 2026-10-20 averaged $53.50, which
+    # is ($49 x 2 + $9) / 2
+    1518: {"fee_model": {"Booking Fee": ["stay", {"A": 9.0}]}},
+    # one fee per type, each 4% of its rate: $1.16 on $29 and $1.72 on $43 quoted, and the list's prices for the
+    # other types ($35, $37) carry 4% as well
+    1732: {"fee_text": "The park adds 4% of the site charge as a 'Transaction Fee' ($1.16 on a $29 night)."},
+    # $30 on every type and date, so a share and a flat sum per night give the same cents; the name says card
+    # processing, which parks charge as a share
+    1748: {"fee_text": "The park adds 3.2% of the site charge as a 'Processing Fee' ($0.96 on a $30 night)."},
 }
 
 
@@ -199,6 +211,8 @@ def verdict(e, r):
         # two rules that both fit but are recorded differently (no two-night quote, or one price everywhere) can't
         # be told apart from these quotes
         ambiguous = len({TREAT[m] for m, _ in fits}) > 1
+        if nm in ov.get("fee_model", {}):
+            model, ambiguous = tuple(ov["fee_model"][nm]), False
         fees[nm] = {"model": model, "types": None if not (lacking - carriers) and not (lacking & carriers) else carriers,
                     "partial_dates": bool(lacking & carriers), "dates": fee_dates,
                     "amounts": sorted({p[2] for p in pts}), "ambiguous": [m for m, _ in fits] if ambiguous else None}
@@ -427,28 +441,40 @@ def fields(e, r):
     # is its posted "May 1st through October 31st"). The season is read from two of them: the opening from the closure
     # that spanned last January, so it is the opening that happened (Prairie Creek IN opened April 1 in 2025 and 2026
     # as its county posts, while its 2027 closure runs to April 30 for now), and the closing from the one that spans
-    # the January read (Pastime OH's runs to the year 3000 until the park sets 2027). Without both, nothing is written.
-    # A note-made season that disagrees is replaced, as hookups are (AWH: trust the booking channel over sweep notes).
+    # the January read (Pastime OH's runs to the year 3000 until the park sets 2027). Without both, nothing is written,
+    # unless the park has no closure on record last winter and has set the next two alike (Ag Park NE: November 1 to
+    # April 14 in both): then they give the season. A note-made season that disagrees is replaced, as hookups are
+    # (AWH: trust the booking channel over sweep notes).
     def closure(day):
         return next(((datetime.date.fromisoformat(c["startDateInParkTimeZone"]),
                       datetime.date.fromisoformat(c["endDateInParkTimeZone"]))
                      for c in r.get("closed_dates") or []
                      if c["startDateInParkTimeZone"] <= day <= c["endDateInParkTimeZone"]), None)
-    last, nxt = closure(LAST_WINTER), closure(WINTER)
+    # A date a day away is the same date: a closing day is named either as the last night or as the morning after
+    # (Turkey Swamp NJ posts April 1 to November 15, and Campspot closes it from November 15).
+    def off(old, new):
+        day = lambda s: datetime.date.fromisoformat("2024-" + s)
+        return {k for k, v in new.items() if old.get(k) != v and not (
+            k in ("opens", "closes") and old.get(k) and abs((day(old[k]) - day(v)).days) <= 1)}
+    last, nxt, after = closure(LAST_WINTER) or closure(LATE_WINTER), closure(WINTER), closure(NEXT_WINTER)
+    md = lambda c: (c[0].strftime("%m-%d"), c[1].strftime("%m-%d"))
+    said = f"closed {last[0]} to {last[1]} and from {nxt[0]}" if last and nxt else ""
+    if not last and nxt and after and md(nxt) == md(after):
+        last, said = nxt, f"closed {nxt[0]} to {nxt[1]} and {after[0]} to {after[1]}"
     if last and nxt:
         opens, closes = last[1] + datetime.timedelta(1), nxt[0] - datetime.timedelta(1)
         old_s = e.get("season") or {}
         if 2 <= opens.month <= 7 and 8 <= closes.month <= 12:
             sea = {"year_round": False, "opens": opens.strftime("%m-%d"), "closes": closes.strftime("%m-%d")}
-            ssrc = src.replace("park record and site types", f"park record: closed {last[0]} to {last[1]} and from {nxt[0]}")
+            ssrc = src.replace("park record and site types", f"park record: {said}")
             if not old_s:
                 st["season"], pv["season"] = sea, {"source": ssrc, "checked": D}
-            elif made("season") and any(old_s.get(k) != v for k, v in sea.items()):
+            elif made("season") and off(old_s, sea):
                 st["season"] = dict(old_s, **sea)
                 repl = {k: old_s[k] for k in sea if k in old_s and old_s[k] != sea[k]}
                 pv["season"] = {"source": ssrc + ("; replaces the note scan's " + json.dumps(repl) if repl else ""),
                                 "checked": D}
-            elif not made("season") and any(old_s.get(k) not in (None, v) for k, v in sea.items()):
+            elif not made("season") and off(old_s, sea) & set(old_s):
                 print(f"SEASON {e['id']}: the entry's {json.dumps(old_s)} is not from a note; Campspot gives "
                       f"{json.dumps(sea)}")
         else:

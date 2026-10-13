@@ -42,7 +42,7 @@ def fallback_pairs():
 
 
 # not a nightly RV site, by name: the same list as campspot_tier_build.py's SKIP - keep the two in step
-SKIP = (r"(?i)\bgroup\b|horse|equestrian|\brally\b|\btent\b(?!.*\b(rv|camper|trailer)\b)|cabin|lodge|bunkhouse|"
+SKIP = (r"(?i)\bgroup\b|horse|equestrian|\brally\b|^(?!.*\b(rv|camper|trailer)\b).*\btent\b|cabin|lodge|bunkhouse|"
         r"double site|buddy|pavilion|day use|day pass|^(?!.*\b(rv|camper|trailer)\b).*\b(boat slip|dock|slip)\b|"
         r"storage|glamp|yurt|tipi|teepee|cottage|motel|\broom\b|accessible|\bada\b|handicap|"
         # a long-stay product, unless the name also sells it by the night ('50 Amp Daily, Weekly RV Site', Sullivan
