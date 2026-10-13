@@ -534,3 +534,17 @@ site's (Kershaw-Ryan, Cathedral Gorge and Echo Canyon's RV Campground: $25); +$1
 sites; non-Nevada vehicles +$5 a night; reservation fee 5; weekend 0. No entrance recorded (the camping fee is per
 vehicle). Wild Horse's note said 'no hookups', but its Loop 2 is water and electric on the booking site and the fee page
 charges for hookups there: note corrected and re-scanned (hookups.electric removed as unknown amperage).
+
+## Idaho (2026-10-12)
+
+24 Idaho State Parks entries (`id_build.py`; texts in `id_fee_pages_2026-10-12.txt`). Idaho prices campsites by demand
+('Dynamic pricing means that campsite, cabin, and day-use fees may vary based on demand', the reservations page), and
+its booking site (getoutside.idaho.gov) is Itinio behind DataDome, not read. The camping page gives the statewide
+ranges, tax included: basic $14-24, electric $26-32, full hookups $28-40 a night; 'Campsite fees ... do not include
+MVEF', $7 a vehicle a day ($14 for non-residents at Bear Lake, Farragut, Hells Gate, Priest Lake and Round Lake);
+non-residents pay $3 a night more, or double at the 'Tier A' parks (Farragut, Henrys Lake, Ponderosa, Priest Lake,
+Round Lake); $10 transaction fee per reservation, 3% by card. IDAPA 26.01.20 holds only maxima ($34 / $42 / $46; 'The
+board has the authority to set actual fees by board policy'). Each entry carries the ranges of the site types its note
+lists (nightly_low = the cheapest type's bottom, nightly_high = the dearest type's top), the entrance, the
+non-resident rule and the reservation fee; no weekend figure. Eagle Island's note had an unsourced 'premium pricing
+(~$80-160/night)'; removed and re-scanned (the statewide full-hookup range applies until a dated figure says otherwise).
