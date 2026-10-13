@@ -581,3 +581,39 @@ Creek, Fort Worden's Beach and Upper Forest); Steamboat Rock's Banks Lake primit
 Jones Bay entries. The state:WA registry row now carries the fees page's rules (`wa_registry_2026-10-12.py`): camping
 includes the vehicle's Discover Pass parking, $8 reservation fee online, and a $15 fee per reservation for people who
 do not live in Washington. The 32 DNR campgrounds inherit their own row (free with a Discover Pass) and are not repriced.
+
+## Oregon (2026-10-12)
+
+55 entries (`or_build.py`; page texts in `or_fee_pages_2026-10-12.txt`). Oregon State Parks' booking site
+(oregonstateparks.reserveamerica.com, classic ReserveAmerica, contract OR) quotes each site's 'Residents Pay' and
+'Non-Residents Pay' (25% more, rounded) plus 'Reservation Fees $10.00'; one price per park and site type, so up to four
+sites of each loop and type were quoted for Tue 2027-06-15 (`or_booking_rates_2026-10-12.jsonl`) and one per park and
+type for Sat 2027-06-19 (the same). June 2027 resident prices: water and electric ('STANDARD') $53-61, full hookups
+$57-65, tent $31-35, primitive $15-18. Tent and primitive sites are 'Looking For Category: Tent Site', so the base is
+the cheapest water-and-electric or full-hookup site a 23-ft rig fits (Cottonwood Canyon, with only drive-in primitive
+sites, is $15); non-residents ×1.25 on the whole price; the rates page's 'from October 1 to April 30, weekday rates at
+a lower price than weekends' is in each note. Cove Palisades' Crooked River (A and C loops) and Deschutes River (B and E)
+campgrounds are priced separately. Nine first-come parks are not on the booking site and their pages list site types
+only, so they carry the rates page's resident range for their type ('Rates Effective May 1, 2026'): primitive $15-17
+(OPRD's 2025-08-01 notice: 'at least $15' from May 2026) at Bates, Jackson F. Kimball, Minam, Cascara and Succor Creek;
+tent $20-33 at Hilgard Junction, Red Bridge, Ukiah-Dale and Catherine Creek; water and electric $29-55 at Prineville's
+Jasper Point. The four Department of Forestry campgrounds (Gales Creek, Nehalem Falls, Henry Rierson Spruce Run, Jones
+Creek) are ODF's flat $20 drive-in rate, first come, first served. Links fixed: Hilgard Junction and Farewell Bend
+pointed at other parks' pages (`or_links_2026-10-12.json`). Minam's note had a stale '$10/night'; removed and re-scanned.
+
+## Alberta (2026-10-12)
+
+199 Alberta Parks entries (`ab_build.py`; `ab_campground_pages_2026-10-12.json`; the fee guidelines in
+`ab_fee_guidelines_2026-10-12.txt`). Every campground page on albertaparks.ca has a 'Camping' table (site type,
+campsites, amps, '$/Night', reservable dates, '-' where first come, first served) and an 'Updated' date; 73 entries
+linked a park page, followed to the campground page (by link, or by the campground's slug). Base = the cheapest of
+unserviced, power, power/water and full-service sites (walk-in tenting, equestrian and seasonal left out), hookups as
+add-ons; GST included; one price a night. The provincial:AB registry row now carries the guidelines' $12 reservation
+fee (`ab_registry_2026-10-12.py`); first-come-only campgrounds record 0. Kananaskis and Bow Valley campgrounds carry the
+Kananaskis Conservation Pass ($15 a vehicle a day) as their entrance. Five campgrounds run by the Friends of the Eastern
+Slopes Association list 'FOESA Membership' as the rate: 'A nightly fee is not charged; however, campers are encouraged to
+purchase an annual membership' - recorded as free. Mount Kidd RV Park (a concessionaire in Kananaskis Country) is
+priced from its own rates page ('Rates last verified 2026-08-05'; $40.29-59.52 before tax, $14 reservation fee). Not
+priced: Fort Vermilion PRA 9018 (its Alberta Parks page is gone; Mackenzie County leases it, booking through LetsCamp,
+whose page would not load). Four notes quoted prices that differ from the campground pages (Maycroft, North Dyke,
+Sulphur Gates, Machesis Lake); removed and re-scanned.
