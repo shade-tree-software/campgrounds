@@ -132,6 +132,10 @@ OVERRIDE = {
     5686: {"fee_text": "The city adds 3% of the site charge as a 'Processing' fee ($1.05 on a $35 night)."},
     # batch 9. One price everywhere ($45)
     6672: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.35 on a $45 night)."},
+    # batch 10. One price everywhere ($60, $40, $50 on the one RV type a 23-ft rig fits)
+    7390: {"fee_text": "The park adds 2% of the site charge as a 'CC Processing Fee' ($1.20 on a $60 night)."},
+    7489: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.20 on a $40 night)."},
+    7520: {"fee_text": "The park adds a 'Booking Fee' of $1.50 a night on a $50 site, 3% of the site charge."},
 }
 
 
