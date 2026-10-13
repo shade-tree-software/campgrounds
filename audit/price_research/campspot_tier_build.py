@@ -127,6 +127,9 @@ OVERRIDE = {
     # (campspot_dates.py, October 2026 to June 2027). The finding itself is by hand: the reader quoted only the
     # 30-amp type, whose October rate lists no site
     4618: {"skip": r"^30 Water/ Electric RV$"},
+    # batch 8. One price everywhere ($38, $35), so a share and a flat sum a night give the same cents
+    5302: {"fee_text": "The park adds 3% of the site charge as a 'Credit Processing Fee' ($1.14 on a $38 night)."},
+    5686: {"fee_text": "The city adds 3% of the site charge as a 'Processing' fee ($1.05 on a $35 night)."},
 }
 
 

@@ -5,7 +5,7 @@
 # Tuesday in October but not on a Tuesday in November) and to see when a park's season opens.
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from campspot_api import api, call, plus  # noqa: E402
+from campspot_api import adult_index, api, call, plus  # noqa: E402
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
         call(cmd='goto', url='https://www.campspot.com/', wait='6000')
     p = api('/api/gator-core/v2/parks/slug/%s' % slug)['park']
     cats = [c['name'] for c in sorted(p['ageCategories'], key=lambda c: c['parkAgeCategoryIndex'])]
-    adult = next(i for i, c in enumerate(cats) if 'adult' in c.lower())
+    adult = adult_index(cats)
     guests = 'guests' + ','.join(['2' if i == adult else '0' for i in range(len(cats))] + ['0'])
     print(p['id'], p['name'], guests)
     for d in dates:

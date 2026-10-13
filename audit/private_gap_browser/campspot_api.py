@@ -89,6 +89,17 @@ def plus(d, n):
     return (datetime.date.fromisoformat(d) + datetime.timedelta(days=n)).isoformat()
 
 
+def adult_index(cats):
+    """The grown-ups' guest category, None if there isn't one. Some parks name it by age rather than 'Adults':
+    'Guests 13+' (Court Square AR), 'Guests 14+' (Murfreesboro AR)."""
+    for test in (lambda c: c.lower().startswith('adult'), lambda c: 'adult' in c.lower(),
+                 lambda c: re.search(r'\d+\s*\+|\band (?:over|older)\b', c, re.I) and not re.search(r'(?i)child|kid', c)):
+        i = next((i for i, c in enumerate(cats) if test(c)), None)
+        if i is not None:
+            return i
+    return None
+
+
 def reasons(fr):
     return sorted({'%s: %s' % (f.get('errorType'), f.get('reason', '')) for f in fr or []})
 
@@ -189,9 +200,7 @@ def main():
                 p = park['park']
                 cats = [c.get('name') or '' for c in sorted(p.get('ageCategories') or [],
                                                             key=lambda c: c.get('parkAgeCategoryIndex', 0))]
-                adult = next((i for i, c in enumerate(cats) if c.lower().startswith('adult')), None)
-                if adult is None:
-                    adult = next((i for i, c in enumerate(cats) if 'adult' in c.lower()), None)
+                adult = adult_index(cats)
                 rec.update(park_id=p['id'], name=p.get('name'), engine_slug=p.get('slug'),
                            aggregator_slug=p.get('aggregatorSlug'), aggregator=p.get('isAggregatorEnabled'),
                            city=p.get('city'), state=p.get('state'), currency=p.get('currencyUnit'),
