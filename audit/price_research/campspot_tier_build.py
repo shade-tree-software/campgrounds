@@ -30,6 +30,8 @@ import collections, datetime, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
 D = "2026-10-13"
+WINTER = "2027-01-26"       # the January Tuesday campspot_api.py reads; its closure is the coming winter's
+LAST_WINTER = "2026-01-26"  # and the same day a year before, whose closure ended this year's opening
 DATA = os.path.join(HERE, "campspot_tier_2026-10-13.jsonl")
 # site types that are not a nightly RV site, by name; the reader (campspot_api.py) carries the same list - keep the
 # two in step, or the reader leaves unpriced a type the builder counts
@@ -374,8 +376,10 @@ def fields(e, r):
     """Groups the same reads settle. booking: written when absent, or given the platform when a note-made group
     lacks one. hookups: written when absent; a note-made group takes what Campspot's RV site types state where it
     differs or is silent (AWH: trust the booking channel over the sweep notes), and a value Campspot doesn't state is
-    never read as "no". Nothing when Campspot sells no RV site type a 23-ft rig fits (Soaring Eagle PA: lodge rooms
-    only), since then Campspot says nothing about the RV sites."""
+    never read as "no". season: from the park's own closures on Campspot, last winter's and the coming one, written
+    when absent or over a note-made season that disagrees. Nothing when Campspot
+    sells no RV site type a 23-ft rig fits (Soaring Eagle PA: lodge rooms only), since then Campspot says nothing about
+    the RV sites."""
     if r.get("error") or not r.get("types"):
         return {}, {}
     use = [t for t in r["types"].values() if countable(t)]
@@ -419,6 +423,36 @@ def fields(e, r):
         if repl:
             bits.append("replaces the note scan's " + json.dumps(repl))
         pv["hookups"] = {"source": "; ".join(bits), "checked": D}
+    # The park record's closedDates give the first and the last closed day (Tumble Hill NY's 2026-11-01 to 2027-04-30
+    # is its posted "May 1st through October 31st"). The season is read from two of them: the opening from the closure
+    # that spanned last January, so it is the opening that happened (Prairie Creek IN opened April 1 in 2025 and 2026
+    # as its county posts, while its 2027 closure runs to April 30 for now), and the closing from the one that spans
+    # the January read (Pastime OH's runs to the year 3000 until the park sets 2027). Without both, nothing is written.
+    # A note-made season that disagrees is replaced, as hookups are (AWH: trust the booking channel over sweep notes).
+    def closure(day):
+        return next(((datetime.date.fromisoformat(c["startDateInParkTimeZone"]),
+                      datetime.date.fromisoformat(c["endDateInParkTimeZone"]))
+                     for c in r.get("closed_dates") or []
+                     if c["startDateInParkTimeZone"] <= day <= c["endDateInParkTimeZone"]), None)
+    last, nxt = closure(LAST_WINTER), closure(WINTER)
+    if last and nxt:
+        opens, closes = last[1] + datetime.timedelta(1), nxt[0] - datetime.timedelta(1)
+        old_s = e.get("season") or {}
+        if 2 <= opens.month <= 7 and 8 <= closes.month <= 12:
+            sea = {"year_round": False, "opens": opens.strftime("%m-%d"), "closes": closes.strftime("%m-%d")}
+            ssrc = src.replace("park record and site types", f"park record: closed {last[0]} to {last[1]} and from {nxt[0]}")
+            if not old_s:
+                st["season"], pv["season"] = sea, {"source": ssrc, "checked": D}
+            elif made("season") and any(old_s.get(k) != v for k, v in sea.items()):
+                st["season"] = dict(old_s, **sea)
+                repl = {k: old_s[k] for k in sea if k in old_s and old_s[k] != sea[k]}
+                pv["season"] = {"source": ssrc + ("; replaces the note scan's " + json.dumps(repl) if repl else ""),
+                                "checked": D}
+            elif not made("season") and any(old_s.get(k) not in (None, v) for k, v in sea.items()):
+                print(f"SEASON {e['id']}: the entry's {json.dumps(old_s)} is not from a note; Campspot gives "
+                      f"{json.dumps(sea)}")
+        else:
+            print(f"SEASON {e['id']}: Campspot's closures {last} and {nxt} give no plain season")
     return st, pv
 
 
