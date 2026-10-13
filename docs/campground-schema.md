@@ -741,6 +741,16 @@ pass.
 Attribution markers (`--AWH`, `--Claude`) survive intact; keep someone else's marker and
 append your own, per the curation doc.
 
+**Cleaning a note is the other way out (AWH 2026-10-13).** A note that is already being read
+or edited for some other task is rewritten as clean current prose, and it may drop what a
+field already holds — the popup shows those values as chips. Everything above still holds for
+what no field can say. When a dropped fact is what a `note prose` group was read from, that
+group's provenance `source` becomes `note prose (cleaned out of the note YYYY-MM-DD)`: the
+field is now the record, and `audit/note_scan/apply_absent.py` treats only an exact
+`note prose` as re-readable from the note, so a later `--rescan` cannot strip it.
+`audit/note_scan/clean_notes.py` lands cleaned notes and does that re-tag; it refuses a note that
+changed since it was read or that would lose an `--AWH` marker.
+
 ---
 
 ## 7. Population, cheapest first
