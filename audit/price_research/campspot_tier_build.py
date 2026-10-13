@@ -20,7 +20,8 @@ in different ways (on $40 nights alone, 4% of the site charge and $1.60 a night 
 not landed: OVERRIDE says what it is, as campspot_recheck_build.py's SPEC did.
 
 Dates on which every RV type is closed for the season (RESORT_CLOSED_RULE) are set aside whenever another date is
-open - a closed date still shows a price, and not always the season's (Myron WI, 2026-10-13). A Tuesday on which every
+open - a closed date still shows a price, and not always the season's (Myron WI, 2026-10-13). A type that lists no
+campsites and never offers one is left out of that test (see verdict()). A Tuesday on which every
 RV type asks for more than one night is flagged; ../private_gap_browser/campspot_dates.py on more dates tells a standing
 minimum (booking.min_stay, written by hand; .claude/memory/feedback_minimum_stay.md) from a run of dates (OVERRIDE's
 "mins_text").
@@ -34,6 +35,7 @@ WINTER = "2027-01-26"       # the January Tuesday campspot_api.py reads; its clo
 LAST_WINTER = "2026-01-26"  # and the same day a year before, whose closure ended this year's opening
 LATE_WINTER = "2026-02-15"  # or a closure begun in February (BrightSky KY, new on Campspot from 2026-02-01)
 NEXT_WINTER = "2028-01-26"  # the winter after the coming one, set by a few parks already
+PREV_WINTER = "2025-01-26"  # the winter before last, for a park that hasn't set the coming winter yet
 DATA = os.path.join(HERE, "campspot_tier_2026-10-13.jsonl")
 # site types that are not a nightly RV site, by name; the reader (campspot_api.py) carries the same list - keep the
 # two in step, or the reader leaves unpriced a type the builder counts
@@ -68,6 +70,20 @@ OVERRIDE = {
     # $30 on every type and date, so a share and a flat sum per night give the same cents; the name says card
     # processing, which parks charge as a share
     1748: {"fee_text": "The park adds 3.2% of the site charge as a 'Processing Fee' ($0.96 on a $30 night)."},
+    # batch 3. One price everywhere ($44, $35), and the name says card processing:
+    3226: {"fee_text": "The park adds 4% of the site charge as a 'Processing Fee' ($1.76 on a $44 night)."},
+    3581: {"fee_text": "The park adds 3% of the site charge as a 'Processing Fee' ($1.05 on a $35 night)."},
+    # two nights tell them apart to the cent: 3.5% of $90 is $3.15 and of $86 is $3.01, where a flat sum a night would
+    # double the one-night $1.58 and $1.50
+    3383: {"fee_model": {"Credit Card Transaction Fee": ["pct", {"P": 0.035}]}},
+    3568: {"fee_model": {"Credit Card Surcharge": ["pct", {"P": 0.035}]}},
+    # the City of Ashland's other park, Kreher, charges the same-named fee as 3% on types of different prices
+    3454: {"fee_model": {"Convenience Fee": ["pct", {"P": 0.03}]}},
+    # the name gives the share
+    3505: {"fee_model": {"Credit Card Surcharge - 3.5%": ["pct", {"P": 0.035}]}},
+    3506: {"fee_model": {"Credit card surcharge 3.5%": ["pct", {"P": 0.035}]}},
+    # advance reservations need 2 nights all season, marked in booking.min_stay
+    3585: {"mins_text": ""},
 }
 
 
@@ -179,6 +195,16 @@ def verdict(e, r):
     left_short = sorted({nm_(t["name"]) for tid, t in types.items() if t.get("code") == "rv" and tid not in use
                          and t.get("max_len") and t["fit_sites"] * 2 < max(t["sites"], 1)
                          and not re.search(SKIP, t.get("name") or "")})
+    # A type that listed no campsites when first read and offered none on any date (Fairgrounds RV Park WI's "50 Amp
+    # Grass Special Event Site", Fire Lake OH's "30/50 Amp/ Sewer/ Back In") answers "no campsites available" on the
+    # dates every other type answers "closed": it has no site for the closure to name. Counted, it kept those dates
+    # open and put their prices in the note, so it is left out of the closed-date and minimum tests. Its price stays:
+    # "no sites listed" is not "no sites" (Scottville MI's types list none on a closed date and sell 48 in June).
+    raw_lists = {d: rows for d, rows in (r.get("lists") or {}).items() if isinstance(rows, list)}
+    ghost = {tid for tid in use if not types[tid].get("sites")
+             and not any(x[0] == tid and x[2] for rows in raw_lists.values() for x in rows)
+             and not any(q["type"] == tid and q.get("availability") == "AVAILABLE" for q in r.get("quotes") or [])}
+    real = lambda rows: [x for x in rows if x[0] not in ghost] or rows
     qs = [q for q in r.get("quotes") or [] if q["type"] in use and not q.get("error") and q.get("net_avg") is not None]
     flags = []
     if not qs:
@@ -190,7 +216,7 @@ def verdict(e, r):
 
     def rows_of(d):           # every fitting type the park listed that day, quoted or not
         return lists.get(d) or [[q["type"], None, 0, q["fail"]] for q in one if q["date"] == d]
-    shut_d = {d for d in dates if all(any("RESORT_CLOSED_RULE" in f for f in x[3]) for x in rows_of(d))}
+    shut_d = {d for d in dates if all(any("RESORT_CLOSED_RULE" in f for f in x[3]) for x in real(rows_of(d)))}
     used = [d for d in dates if d not in shut_d] or dates
     shut = not [d for d in dates if d not in shut_d]
     if shut:
@@ -249,7 +275,7 @@ def verdict(e, r):
     for d in used:
         if datetime.date.fromisoformat(d).weekday() >= 4:
             continue
-        rd = rows_of(d)
+        rd = real(rows_of(d))
         got = [re.search(r"(\d+) night minimum", " ".join(x[3])) for x in rd]
         if rd and all(got):
             mins[d] = max(int(m.group(1)) for m in got)
@@ -296,7 +322,8 @@ def verdict(e, r):
             f"({tlist}). {seasons}")
     raw = {d: rows for d, rows in (r.get("lists") or {}).items() if isinstance(rows, list)}
     open_d = sorted(d for d, rows in raw.items() if rows)
-    closed_d = {d for d, rows in lists.items() if rows and all(any("RESORT_CLOSED_RULE" in f for f in x[3]) for x in rows)}
+    closed_d = {d for d, rows in lists.items()
+                if rows and all(any("RESORT_CLOSED_RULE" in f for f in x[3]) for x in real(rows))}
     closed_d |= shut_d
     # nothing listed on a date earlier than one that lists sites: no sites sold then (not "not open yet")
     empty_d = {d for d, rows in raw.items() if not rows and open_d and d < open_d[-1]}
@@ -442,9 +469,12 @@ def fields(e, r):
     # that spanned last January, so it is the opening that happened (Prairie Creek IN opened April 1 in 2025 and 2026
     # as its county posts, while its 2027 closure runs to April 30 for now), and the closing from the one that spans
     # the January read (Pastime OH's runs to the year 3000 until the park sets 2027). Without both, nothing is written,
-    # unless the park has no closure on record last winter and has set the next two alike (Ag Park NE: November 1 to
-    # April 14 in both): then they give the season. A note-made season that disagrees is replaced, as hookups are
-    # (AWH: trust the booking channel over sweep notes).
+    # with two exceptions. A park with no closure on record last winter that has set the next two alike (Ag Park NE:
+    # November 1 to April 14 in both) has its season in them. A park that hasn't set the coming winter yet but began
+    # the last two on the same day (McMullen WI: December 1 in 2024 and 2025) closes the day before. Alike is within a
+    # day, as below: Fairgrounds RV Park WI closes from the Monday after the third weekend of October, which was the
+    # 19th in 2026 and is the 18th in 2027. A note-made season that disagrees is replaced, as hookups are (AWH: trust
+    # the booking channel over sweep notes).
     def closure(day):
         return next(((datetime.date.fromisoformat(c["startDateInParkTimeZone"]),
                       datetime.date.fromisoformat(c["endDateInParkTimeZone"]))
@@ -457,10 +487,14 @@ def fields(e, r):
         return {k for k, v in new.items() if old.get(k) != v and not (
             k in ("opens", "closes") and old.get(k) and abs((day(old[k]) - day(v)).days) <= 1)}
     last, nxt, after = closure(LAST_WINTER) or closure(LATE_WINTER), closure(WINTER), closure(NEXT_WINTER)
-    md = lambda c: (c[0].strftime("%m-%d"), c[1].strftime("%m-%d"))
+    prev = closure(PREV_WINTER)
+    near = lambda a, b: abs((datetime.date.fromisoformat(a.strftime("2024-%m-%d"))
+                             - datetime.date.fromisoformat(b.strftime("2024-%m-%d"))).days) <= 1
     said = f"closed {last[0]} to {last[1]} and from {nxt[0]}" if last and nxt else ""
-    if not last and nxt and after and md(nxt) == md(after):
+    if not last and nxt and after and near(nxt[0], after[0]) and near(nxt[1], after[1]):
         last, said = nxt, f"closed {nxt[0]} to {nxt[1]} and {after[0]} to {after[1]}"
+    elif last and not nxt and prev and prev != last and near(prev[0], last[0]):
+        nxt, said = last, f"closed {prev[0]} to {prev[1]} and {last[0]} to {last[1]}; the coming winter not set yet"
     if last and nxt:
         opens, closes = last[1] + datetime.timedelta(1), nxt[0] - datetime.timedelta(1)
         old_s = e.get("season") or {}
