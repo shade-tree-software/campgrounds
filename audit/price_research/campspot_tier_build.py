@@ -154,6 +154,17 @@ OVERRIDE = {
            "skip_dates": ["2026-10-17", "2026-10-20"],
            "dates_text": "October 17 and 20, 2026 fall in the Round Top Antique Fair (October 15 to November 1), when "
                          "Campspot charged $75-95."},
+    # batch 12. The primitive sites are the rustic tent and car-camping field, not RV sites (the park's camping page);
+    # the Saturday falls in the Born Free Texas motorcycle show, October 15-19, 2026 on the park's events page
+    # (and the $2 fee is once a stay: $2 on the two-night primitive quote, which the skip drops from the fit)
+    7928: {"skip": r"^Primitive Camp Site$",
+           "fee_model": {"$2 Transaction Fee": ["stay", {"A": 2.0}]},
+           "skip_dates": ["2026-10-17"],
+           "dates_text": "Saturday, October 17, 2026 falls in the Born Free Texas motorcycle show (October 15 to 19), "
+                         "when Campspot charged $160-280 with a 3-night minimum.",
+           "mins_text": ""},
+    # $40 on every type and date: $3.73 a night and 9.325% give the same cents
+    8061: {"fee_text": "The park adds a 'Reservation Fee' of $3.73 a night on a $40 site, 9.325% of the site charge."},
 }
 
 

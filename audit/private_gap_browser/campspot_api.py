@@ -91,9 +91,10 @@ def plus(d, n):
 
 def adult_index(cats):
     """The grown-ups' guest category, None if there isn't one. Some parks name it by age rather than 'Adults':
-    'Guests 13+' (Court Square AR), 'Guests 14+' (Murfreesboro AR)."""
+    'Guests 13+' (Court Square AR), 'Guests 14+' (Murfreesboro AR), 'Guests Over 15' (Continental Divide NM)."""
     for test in (lambda c: c.lower().startswith('adult'), lambda c: 'adult' in c.lower(),
-                 lambda c: re.search(r'\d+\s*\+|\band (?:over|older)\b', c, re.I) and not re.search(r'(?i)child|kid', c)):
+                 lambda c: re.search(r'\d+\s*\+|\band (?:over|older)\b|\bover\s+\d+', c, re.I)
+                 and not re.search(r'(?i)child|kid', c)):
         i = next((i for i, c in enumerate(cats) if test(c)), None)
         if i is not None:
             return i
