@@ -126,16 +126,35 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   that sits on the road (Cedar Falls BC).
 - `campspot_site.py SLUG GUESTS CHECKIN CHECKOUT CATEGORY_ID [...]` - the price breakdown on a
   Campspot site-type page: "$52.92 x 1 night", each fee line and "Site Total". **The
-  availability API's `averagePricePerNight` (what `campspot.py` prints) is the Site Total**, so
-  it folds the park's own "Campground Fees" into the rate: Bear Run PA's $58.92 is a $52.92 site
-  plus $6.00. Take GUESTS from `campspot.py`'s output and the category ids from the `id` of each
+  availability API's `averagePricePerNight` (what `campspot.py` prints) is the Site Total less
+  tax**, so it folds the park's own "Campground Fees" and Campspot's "Booking Fee" into the rate:
+  Bear Run PA's $58.92 is a $52.92 site plus $6.00, Palmetto Shores SC's $92 is $84 + $5 + $3.
+  `campspot_batch.py OUT TUESDAY SATURDAY ID:SLUG ...` runs both scripts over a list of parks
+  (every RV type a 23-ft rig fits, one night from each date). Take GUESTS from `campspot.py`'s output and the category ids from the `id` of each
   type in its availability answer. Quote two nights before calling a fee per stay: Bear Run,
   Mountain Top, Wheelin, Palmetto Shores and Colonial Pines charge a flat fee once per stay,
   while Stow OH's is 3% of the site charge ($0.66 a night). Campspot's own "Booking Fee" (3%, at
   least $3) shows up only at the parks that pass it on, and is the platform's charge, not the
   park's. **Always give the full guests string, pets included (`guests0,2,0`):** a search URL
   that leaves pets out gets the pet count the browser last used, and a pet-free site then
-  reports MAX_PET_RULE (2026-10-13).
+  reports MAX_PET_RULE (2026-10-13). Three more traps from the 2026-10-13 re-check of 25 parks:
+  a Canadian park prints `CA$47.00 x 1 night` (the line match allows the prefix; before it did,
+  both BC parks read "no breakdown"); **a date the park is closed still shows a price** - Myron
+  WI's 30/50-amp site said $35 in November (RESORT_CLOSED_RULE) and $30 in June, so quote dates
+  inside the season; and a discount is a negative line (Gold Panner BC's "Winter camping"
+  -25% in November). The fees themselves came in every shape: once per stay (most), per night
+  and only in some months (Sun Retreats Estero Bay, $10 a night in November, none in January or
+  June), per stay plus per night (Frank's TN, $5 + $2 - a 3-night quote told those apart), on
+  some site types only (Holden WI, standard sites), and a share of the bill (Myron, $3.50 + 3%).
+- `campspot_market.py OUT TUESDAY SATURDAY [--nights N] [--cats ID,ID] ID:SLUG ...` - the same breakdowns for a
+  park that sells only through the Campspot marketplace (its `/book/<slug>` is "park-not-found",
+  which `campspot_batch.py` writes as an error): it opens `campspot.com/park/<slug>`, takes each
+  site type it links (`campspot.com/<slug>/site/<id>?checkin=...`), skips tent/cabin/group/horse
+  types by name, and reads each site page's "$25.00 x 1 night ... Site Total" block. The page's
+  notes ride along ("Park is closed for your dates", "There is a 2 night minimum"); with
+  `--nights 2` it writes the 2-night lines a per-stay check needs (`--cats` reads only the named site types, one
+  is enough for a fee check, and the marketplace takes ~20 s a type). 10 of the 25 re-checked parks
+  were marketplace-only (Schildberg IA's $27 was a $25 site + $2).
 - `koa.py SLUG CHECKIN CHECKOUT` (dates MM/DD/YYYY) - KOA's own booking form. Plain fetches of
   koa.com get a Cloudflare challenge; the driver's browser does not. Fills step 1 for RV, 2
   adults, no pets, a 23-ft motorhome and prints step 2's site types with their "avg/night"

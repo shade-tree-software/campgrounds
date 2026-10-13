@@ -10,11 +10,12 @@ Shape, as in the other private and local entries priced since 2026-10-11: nightl
 cheapest to the dearest regular (non-holiday) night of an RV site a 23-ft rig fits, at two adults, before tax, across
 the site types and the posted seasons; a per-reservation charge is reservation_fee; the note gives the grid.
 
-Campspot (cs_family.py in the session scratchpad, kept as family_stays_campspot_2026-10-13.jsonl): each park's RV
+Campspot (audit/private_gap_browser/campspot_batch.py, kept as family_stays_campspot_2026-10-13.jsonl): each park's RV
 site types a 23-ft rig fits, then campspot_site.py's price breakdown of every one of them for one night from a Tuesday
 and from a Saturday ('$52.92 x 1 night', 'Campground Fees $6.00', 'Site Total') - June 2027 where the park has it
-loaded and bookable, otherwise the nearest dates that are. The availability API's per-night figure is the Site Total,
-so it folds the park's own fee into the rate; here the site rate and the fee are recorded apart, and a flat
+loaded and bookable, otherwise the nearest dates that are. The availability API's per-night figure is the Site Total
+less tax, so it folds the park's own fee and Campspot's booking fee into the rate; here the site rate and the fee are
+recorded apart, and a flat
 'Campground Fees' line is reservation_fee only after a 2-night quote showed it once per stay (the 'two_night'
 records). Campspot's own 'Booking Fee' (3%, at least $3) is the platform's, not the park's, and goes in the note
 only, as Hipcamp's service fee does. Campspot carries a remembered pet count into any search whose URL leaves pets
