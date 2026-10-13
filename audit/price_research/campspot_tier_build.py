@@ -187,6 +187,20 @@ OVERRIDE = {
     # (the two-night quote that showed the C$5 'Booking Fee' once a stay is on a skipped January date)
     9120: {"skip_dates": ["2027-01-26", "2027-01-30"],
            "fee_model": {"Booking Fee": ["stay", {"A": 5.0}]}},
+    # batch 14. The park's cancellation policy: "a non-refundable $8 reservation fee"
+    9261: {"fee_model": {"Booking Fee": ["stay", {"A": 8.0}]}},
+    # one price everywhere (C$45, $25), so a share and a flat sum a night give the same cents
+    9421: {"fee_text": "The park adds an 'Admin Fee' of C$1.35 a night on a C$45 site, 3% of the site charge."},
+    10182: {"fee_text": "The ranch adds a 'Customer Service Charge' of $1 a night on a $25 site, 4% of the site "
+                        "charge."},
+    # the PUD's campground page: "Reservation Fee – All Sites – $8"
+    10458: {"fee_model": {"Reservation Fee": ["stay", {"A": 8.0}]}},
+    # the secluded tent area's sites, sold by the number of tents, with no length or hookups (the park's facilities page)
+    10521: {"skip": r"^Tent/Camper"},
+    # open May 1 to October 13, 2026 (the park's site banner); Campspot sells the closed dates all the same
+    9841: {"skip_dates": ["2026-10-17", "2026-10-20", "2027-01-26", "2027-01-30"]},
+    # "The season is scheduled for March 22 thru October, and possibly November" (the park's site pages)
+    10166: {"skip_dates": ["2027-01-26", "2027-01-30"]},
 }
 
 
