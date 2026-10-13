@@ -547,3 +547,37 @@ board has the authority to set actual fees by board policy'). Each entry carries
 lists (nightly_low = the cheapest type's bottom, nightly_high = the dearest type's top), the entrance, the
 non-resident rule and the reservation fee; no weekend figure. Eagle Island's note had an unsourced 'premium pricing
 (~$80-160/night)'; removed and re-scanned (the statewide full-hookup range applies until a dated figure says otherwise).
+
+## Utah (2026-10-12)
+
+43 Utah State Parks entries (`ut_build.py`; fee pages in `ut_fee_pages_2026-10-12.txt`). Each park's fee page
+(stateparks.utah.gov/parks/<park>/park-fees/) lists its camping fees by campground and site type, each covering one
+vehicle, so no entrance is recorded; the reservation fee is $8 a reservation (the pages and every booking-site quote).
+The booking site (utahstateparks.reserveamerica.com, classic ReserveAmerica, contract UT; a four-month window) quoted
+every site for Tue 2027-06-15 (`ut_booking_rates_2026-10-12.jsonl`), and one site of each loop, type and price costs the
+same on Sat 2027-06-19; `ut_site_details_2026-10-12.jsonl` marks the tent-only loops (Wasatch Mountain's Oak Hollow,
+whose fee-page row is 'Water/Electricity', is all 'Tent Site' on the booking site). The quotes match the fee pages
+except at three parks, where the page is used and the note gives the quote (`ut_booking_months_2026-10-12.txt`): Bear
+Lake (the page's summer resident rates, non-residents $5 more, the only residency split in the state; the booking site
+quotes one lower price for June-August 2027), East Canyon ($5-10 less on the booking site for its whole 2027 season)
+and Green River ($45 on the page; the booking site quotes $45 for November 2026 and $50 from January 2027). Red Fleet's
+page lists no camping and Utahraptor's only Fossil Flats, so their prices are the booking site's. Otter Creek's
+no-hookup pull-throughs are listed on the booking site with no quote; the page's $40 is the base. Seasonal rates
+(Dead Horse Point peak / off-peak, Steinaker and Starvation summer / winter, Bear Lake summer / regular) are in the
+notes. Goosenecks ($10) and Bear Lake's Cisco Beach are first come, first served. Palisade's note had an unsourced
+'fees from ~$20'; removed and re-scanned.
+
+## Washington (2026-10-12)
+
+68 Washington State Parks entries (`wa_build.py`; the fees page in `wa_fee_pages_2026-10-12.txt`), every park's campsite
+fee schedules on washington.goingtocamp.com for Tue 2027-06-15 and Sat 2027-06-19 (`gtc_probe.py` ->
+`wa_booking_fees_2026-10-12.json`). Each site is priced in one of three tiers: $31 / $37 / $43 standard, $41 / $46 / $51
+with water and electric, $46 / $51 / $56 full hookups (the fees page's peak-season ranges, tax included), the same on a
+Saturday. Base = the cheapest standard site whose units go to 25 ft or longer (primitive drive-in at Joemma Beach, $12),
+else the cheapest hookup site; nightly_high the dearest of that kind; hookups as add-ons over the base. Tent-only
+standard sites (Maryhill, Millersylvania, Lake Chelan) and sites taking nothing over 20 ft (Potholes, Lake Easton,
+Larrabee) leave a hookup site as the base. Entries named for one campground take its map only (Beacon Rock's Woodard
+Creek, Fort Worden's Beach and Upper Forest); Steamboat Rock's Banks Lake primitive sites are the separate Osborn Bay and
+Jones Bay entries. The state:WA registry row now carries the fees page's rules (`wa_registry_2026-10-12.py`): camping
+includes the vehicle's Discover Pass parking, $8 reservation fee online, and a $15 fee per reservation for people who
+do not live in Washington. The 32 DNR campgrounds inherit their own row (free with a Discover Pass) and are not repriced.
