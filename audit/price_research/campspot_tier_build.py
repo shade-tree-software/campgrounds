@@ -94,6 +94,30 @@ OVERRIDE = {
            "fee_model": {"Booking Fee": ["stay", {"A": 4.0}], "Camp Restoration Fee": ["stay", {"A": 4.0}]}},
     # a 3-night minimum all season (the township's page), marked in booking.min_stay
     3981: {"mins_text": ""},
+    # batch 5. Card-processing names, 3% wherever read
+    4027: {"fee_model": {"Processing Fee": ["pct", {"P": 0.03}]}},
+    4249: {"fee_model": {"Credit Card Processing Fee's": ["pct", {"P": 0.03}]}},
+    # closed on the one date read; Delta County's rate page: "a NON-REFUNDABLE $5.00 fee is added to the total"
+    4019: {"fee_model": {"Booking Fee": ["stay", {"A": 5.0}]}},
+    # closed on the date read; campspot_dates.py for one and two nights from 2026-10-20 averaged $35 and $30 on the
+    # Electric Site and $48 and $43 on the full-hookup site: $25 and $38 a night, plus $10 once per stay (the $7
+    # 'Booking Fee' and Campspot's $3 minimum), the township's $25 and $38
+    4029: {"fee_model": {"Booking Fee": ["stay", {"A": 7.0}]}},
+    # one Campspot listing sells Baker River and its sister campground Riverbrook, a mile away (its own entry, were
+    # it in the database); only Baker River's sites price this entry
+    4141: {"skip": r"^RIVERBROOK"},
+    # sold out with a 3-night minimum and priced half again over the Tuesday after: an event weekend, not the
+    # October rate
+    4284: {"skip_dates": ["2026-10-17"],
+           "dates_text": "Saturday, October 17, 2026 is sold out, with a 3-night minimum, at $68.75-156.25."},
+    # batch 6. One price everywhere ($49, $50), so a share and a flat sum a night give the same cents; the names say
+    # card processing, and Broad River's second fee names its share
+    4369: {"fee_text": "The park adds 3% of the site charge as a 'Credit Card Fee' and another 3% as a 'Reservation "
+                       "System Fee' ($1.47 each on a $49 night)."},
+    4505: {"fee_text": "The park adds 3% of the site charge as a 'Convenience Fee' ($1.50 on a $50 night)."},
+    # 2 nights on every site, marked in booking.min_stay in this batch (after the build reads the entry)
+    4448: {"mins_text": ""},
+    4454: {"mins_text": ""},
 }
 
 
@@ -215,7 +239,13 @@ def verdict(e, r):
              and not any(x[0] == tid and x[2] for rows in raw_lists.values() for x in rows)
              and not any(q["type"] == tid and q.get("availability") == "AVAILABLE" for q in r.get("quotes") or [])}
     real = lambda rows: [x for x in rows if x[0] not in ghost] or rows
-    qs = [q for q in r.get("quotes") or [] if q["type"] in use and not q.get("error") and q.get("net_avg") is not None]
+    qs = [q for q in r.get("quotes") or [] if q["type"] in use and not q.get("error") and q.get("net_avg") is not None
+          and q["date"] not in ov.get("skip_dates", ())]
+    # A refundable deposit (Hopeville Hideaway CT's "Gate Key Deposit (refundable)", $50 a stay) is money held, not a
+    # fee: it stays out of the fee fit and reservation_fee, and the note names it
+    is_dep = lambda nm: re.search(r"(?i)refundable", nm) and not re.search(r"(?i)non-?\s?refundable", nm)
+    deposits = {f[0]: f[2] for q in qs for f in q["fees"] if is_dep(f[0])}
+    qs = [dict(q, fees=[f for f in q["fees"] if not is_dep(f[0])]) for q in qs]
     flags = []
     if not qs:
         rep["flag"] = ["NO QUOTES (%d types, %d rv)" % (len(types), sum(t.get("code") == "rv" for t in types.values()))]
@@ -344,6 +374,8 @@ def verdict(e, r):
     where = "the Campspot marketplace" if "/park/" in (e.get("website") or "") + " " + str((e.get("booking") or {}).get("url")) else "Campspot"
     text = (f"Read on {where}: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits "
             f"({tlist}). {seasons}")
+    if ov.get("dates_text"):
+        text += " " + ov["dates_text"]
     raw = {d: rows for d, rows in (r.get("lists") or {}).items() if isinstance(rows, list)}
     open_d = sorted(d for d, rows in raw.items() if rows)
     closed_d = {d for d, rows in lists.items()
@@ -372,11 +404,14 @@ def verdict(e, r):
             listed = sorted(later & used_m)
             text += f"; the prices above are the rates Campspot lists for {mname(listed)}." if listed else "."
     if left_short:
-        text += f" Left out: {', '.join(left_short)} (sites under 23 ft)."
+        # a short type named like a counted one (Crooked Lake MI's two "Electric Site" types) is "the other" one
+        counted = {nm_(types[t]["name"]) for t in use}
+        text += f" Left out: {', '.join(f'the other {n} type' if n in counted else n for n in left_short)} " \
+                f"(sites under 23 ft)."
     inc, stays, pcts = [], [], []
     for nm, f in fees.items():
         label = ("campground fee" if nm.lower() in ("campground fee", "campground fees")
-                 else f"'{nm}'" if re.search(r"(?i)\b(fee|fees|charge|surcharge|tax)$", nm) else f"'{nm}' fee")
+                 else f"'{nm}'" if re.search(r"(?i)\b(fee|fees|fee's|charge|surcharge|tax)$", nm) else f"'{nm}' fee")
         only = ""
         if f["types"] is not None:
             on = sorted({nm_(types[t]["name"]) for t in f["types"]})
@@ -408,6 +443,8 @@ def verdict(e, r):
     feebits += pcts
     if ov.get("fee_text"):
         feebits.append(ov["fee_text"])
+    for nm, a in deposits.items():
+        feebits.append(f"Campspot also collects the park's {cash(a, cur)} '{nm}'.")
     text += (" " + " ".join(feebits)) if feebits else ""
     disc = collections.Counter()
     for q in one:
@@ -417,10 +454,13 @@ def verdict(e, r):
     for (dn, month), _ in sorted(disc.items()):
         mm = f"{datetime.date.fromisoformat(month + '-01'):%B %Y}"
         text += f" The {mm} prices are after the park's automatic {' / '.join(dn)}."
+    # a standing minimum booking.min_stay already records needs no sentence: the popup's chip says it, and
+    # booking.note has the detail (Go Camp Tennessee's TVA campgrounds, marked 2026-10-12)
+    marked = {m.get("nights") for m in (e.get("booking") or {}).get("min_stay") or [] if m.get("applies") == "always"}
     if "mins_text" in ov:
         text += (" " + ov["mins_text"]) if ov["mins_text"] else ""
     elif mins:
-        for n in sorted(set(mins.values())):
+        for n in sorted(set(mins.values()) - marked):
             ds = [datetime.date.fromisoformat(d) for d in sorted(mins) if mins[d] == n]
             when = " and ".join(f"{d:%A, %B} {d.day}, {d.year}" for d in ds)
             text += f" Every RV type asks for at least {n} nights from {when}."
@@ -452,7 +492,7 @@ def fields(e, r):
     the RV sites."""
     if r.get("error") or not r.get("types"):
         return {}, {}
-    use = [t for t in r["types"].values() if countable(t)]
+    use = [t for t in r["types"].values() if countable(t, OVERRIDE.get(e["id"], {}).get("skip"))]
     if not use:
         return {}, {}
     link = next((u for u in re.findall(r"https?://(?:www\.)?campspot\.com/\S+", e.get("website") or "")), None)
