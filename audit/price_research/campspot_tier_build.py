@@ -211,6 +211,22 @@ OVERRIDE = {
     # 2 nights on every date read, and Saturday-to-Saturday stays from late June to Labour Day 2027, marked in
     # booking.min_stay
     12695: {"mins_text": ""},
+    # batch 16. One C$5 fee a booking, named by the stay's year (a two-night October quote charged it once); a fee
+    # that changes name with the year reads as carried on some dates only, so the text is by hand
+    12743: {"fee_model": {"Booking Fee 2026": ["stay", {"A": 5.0}], "Booking Fee 2027": ["stay", {"A": 5.0}]},
+            "fee_text": "Plus the park's C$5 booking fee, once per stay ('Booking Fee 2026' or 'Booking Fee 2027', "
+                        "by the year of the stay)."},
+    # 2 nights on every date read (October 2026, January and June 2027), already marked in booking.min_stay
+    12760: {"mins_text": ""},
+    # 3 nights on every date read (campspot_dates.py, October 2026 to April 2027, and June 2027), marked in
+    # booking.min_stay
+    12768: {"mins_text": ""},
+    # open May 1 to October 31 (the season field, from the resort's pages); Campspot sells January nights all the same
+    12775: {"skip_dates": ["2027-01-26", "2027-01-30"]},
+    # the campground's rate table runs May to September; Campspot sells October and January nights at the May rates
+    # (the two-night quote that showed the C$5 'Booking Fee' once a stay is on a skipped October date)
+    12805: {"skip_dates": ["2026-10-17", "2026-10-20", "2027-01-26", "2027-01-30"],
+            "fee_model": {"Booking Fee": ["stay", {"A": 5.0}]}},
 }
 
 
@@ -546,7 +562,10 @@ def verdict(e, r):
                   f"{q['date'][:7]}")] += 1
     for (dn, month), _ in sorted(disc.items()):
         mm = f"{datetime.date.fromisoformat(month + '-01'):%B %Y}"
-        text += f" The {mm} prices are after the park's automatic {' / '.join(dn)}."
+        # quoted and called a discount, or a name like 'Fall 2026 (No Water)' reads as a broken sentence (batch 16)
+        named = and_list([f"'{x}'" for x in dn]) if dn != ("a discount",) else ""
+        text += (f" The {mm} prices are after the park's automatic {named} discount." if named else
+                 f" The {mm} prices are after an automatic discount.")
     # a standing minimum booking.min_stay already records needs no sentence: the popup's chip says it, and
     # booking.note has the detail (Go Camp Tennessee's TVA campgrounds, marked 2026-10-12)
     marked = {m.get("nights") for m in (e.get("booking") or {}).get("min_stay") or [] if m.get("applies") == "always"}
