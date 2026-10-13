@@ -121,6 +121,12 @@ OVERRIDE = {
     # 2 nights on every site, marked in booking.min_stay in this batch (after the build reads the entry)
     4448: {"mins_text": ""},
     4454: {"mins_text": ""},
+    # batch 7. One price everywhere ($30), so a share and a flat sum a night give the same cents, as at Smoker Holler
+    4831: {"fee_text": "The county adds 3% of the site charge as a 'Convenience Fee' ($0.90 on a $30 night)."},
+    # one site at $432-453 a night on every date read, eight times the full-hookup sites beside it: not a nightly rate
+    # (campspot_dates.py, October 2026 to June 2027). The finding itself is by hand: the reader quoted only the
+    # 30-amp type, whose October rate lists no site
+    4618: {"skip": r"^30 Water/ Electric RV$"},
 }
 
 
