@@ -515,9 +515,8 @@ Lake's ($25) are the base with hookups as add-ons. Homolovi is seasonal: June is
 $25 / $40). Lake Havasu is $40-50 (an RV site in the cabin loop $40). Weekend two- and three-night minimums at Cattail
 Cove, Lake Havasu and River Island are in the notes.
 
-Not priced: Ben Avery Shooting Facility 11547 (Arizona Game and Fish): its camping pages refuse a plain fetch, and AZGFD
-says the campgrounds are 'available exclusively for competition and recreational shooters' - an inclusion question for
-AWH.
+Dropped on AWH's call (`awh_calls_2026-10-12e.py`): Ben Avery Shooting Facility 11547 (Arizona Game and Fish), whose
+campgrounds AZGFD says are 'available exclusively for competition and recreational shooters'.
 
 ## Nevada (2026-10-12)
 
