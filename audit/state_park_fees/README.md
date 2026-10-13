@@ -640,9 +640,9 @@ Whiteswan's Packrat Point linked Swan Lake Park, and Stone Mountain's Summit Lak
 Dropped on AWH's calls of 2026-10-13 (`awh_calls_2026-10-13.py`): Riverside (Chilliwack) Recreation Site 8403, whose
 operator now books it as a group site 'by phone call only' (the record's Closed is a seasonal closure, opening spring
 2027), and Smelt Bay 8449, too short (its booking-site sites allow only 'Trailer up to 18ft' and 'Van/Camper').
-Not priced, a question for AWH: Darke Lake 8461 (no fee published; its page says the area 'is best suited to truck and
-camper units as opposed to trailers or motor homes'). Not priced: Kitty Coleman Beach 8448 ('For camping fee rates,
-contact the park caretaker') and Momich Lakes 8506 (no fee published).
+Darke Lake 8461 was dropped on AWH's later call that day (`awh_calls_2026-10-13b.py`): no fee published, and its page
+says the area 'is best suited to truck and camper units as opposed to trailers or motor homes'. Not priced: Kitty
+Coleman Beach 8448 ('For camping fee rates, contact the park caretaker') and Momich Lakes 8506 (no fee published).
 
 ## California (2026-10-12)
 
