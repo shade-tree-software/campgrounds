@@ -101,6 +101,12 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   sites: `CL_NOT='PAV|cabin'` (or `CL_GREP=`) filters the picks and `CL_LIST=1` prints every
   available option first. Some parks show campsite prices only after a login ("Login required to
   check availability ... for all sites except pavilions", Jetty Park FL): don't sign up, ask AWH.
+  Since 2026 some parks have a combobox site picker (`button.combobox-trigger` +
+  `[role=option]`) instead of vue-select; the script handles both (Artillery Ridge PA). A park's
+  per-stay charge can sit inside `resSubTotal` with no label: Artillery Ridge's one night is the
+  rate plus $17.50 and two nights twice the rate plus $17.50, untaxed and outside the one-night
+  deposit (`amountDue`). Quote one and two nights on the same sites to separate the two. The
+  page loads slowly at times; "no date pickers" means it hadn't rendered, so run again.
 - `pwu.py URL ARRIVE DEPART` - Park With Us (`parkwith.us/camps/<slug>`, city and county
   parks): picks the dates on its react-day-picker, fills the prerequisites (23-ft rig, 2 adults)
   and tallies the site list's "$65.00 / night" prices by site row (Noccalula Falls AL, Carl
@@ -118,6 +124,25 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   The park record (`/api/gator-core/v2/parks/slug/<slug>`, in `net` after loading /book/<slug>)
   carries the operator's own `latitude`/`longitude` - a better pin source than a Google point
   that sits on the road (Cedar Falls BC).
+- `campspot_site.py SLUG GUESTS CHECKIN CHECKOUT CATEGORY_ID [...]` - the price breakdown on a
+  Campspot site-type page: "$52.92 x 1 night", each fee line and "Site Total". **The
+  availability API's `averagePricePerNight` (what `campspot.py` prints) is the Site Total**, so
+  it folds the park's own "Campground Fees" into the rate: Bear Run PA's $58.92 is a $52.92 site
+  plus $6.00. Take GUESTS from `campspot.py`'s output and the category ids from the `id` of each
+  type in its availability answer. Quote two nights before calling a fee per stay: Bear Run,
+  Mountain Top, Wheelin, Palmetto Shores and Colonial Pines charge a flat fee once per stay,
+  while Stow OH's is 3% of the site charge ($0.66 a night). Campspot's own "Booking Fee" (3%, at
+  least $3) shows up only at the parks that pass it on, and is the platform's charge, not the
+  park's. **Always give the full guests string, pets included (`guests0,2,0`):** a search URL
+  that leaves pets out gets the pet count the browser last used, and a pet-free site then
+  reports MAX_PET_RULE (2026-10-13).
+- `koa.py SLUG CHECKIN CHECKOUT` (dates MM/DD/YYYY) - KOA's own booking form. Plain fetches of
+  koa.com get a Cloudflare challenge; the driver's browser does not. Fills step 1 for RV, 2
+  adults, no pets, a 23-ft motorhome and prints step 2's site types with their "avg/night"
+  price (the site rate before tax; "KOA Select My Site" is +$20 on top). `KOA_DUMP=PATH` saves
+  the page text: read the "buddy" descriptions, because some pairs need two reservations (Grove
+  City PA's patio pair) and others are priced per site ("One RV per site", St. Augustine Beach
+  FL).
 - `nbq.py NEWBOOK_URL ARRIVE DEPART` - Newbook (`bookingsus.newbook.cloud/<park>/index.php`,
   Pinnacle Lifestyles parks) through the driver; `newbook.py` above launches its own browser.
   Newbook ignores URL dates, so it sets the form fields (dates as "Mon D YYYY", Feet, 23, Travel

@@ -48,11 +48,16 @@ for line in txt.split('\n'):
     line = line.strip()
     if re.search(r'Available$|No sites available|RESERVATIONS OPEN|minimum|Minimum|choose dates|Please choose', line):
         print('  ', line[:300])
+# Two site pickers: the older vue-select (input.vs__search + .vs__dropdown-option) and, since 2026, a combobox
+# (button.combobox-trigger + [role=option]; Artillery Ridge PA, 2026-10-13).
 search = call(cmd='eval', js="(()=>{const i=[...document.querySelectorAll('input.vs__search')].pop();return i?('#'+i.id):''})()")
+OPT = '.vs__dropdown-option'
 if not search or search.startswith('ERROR'):
-    sys.exit('no site selector')
+    if call(cmd='eval', js="document.querySelector('button.combobox-trigger')?'yes':''") != 'yes':
+        sys.exit('no site selector')
+    search, OPT = 'button.combobox-trigger', '[role=option]'
 call(cmd='click', sel=search, wait='1500')
-opts = json.loads(call(cmd='eval', js="JSON.stringify([...document.querySelectorAll('.vs__dropdown-option')].map(e=>e.innerText.replace(/\\s+/g,' ').trim()))"))
+opts = json.loads(call(cmd='eval', js="JSON.stringify([...document.querySelectorAll('%s')].map(e=>e.innerText.replace(/\\s+/g,' ').trim()))" % OPT))
 avail = [i for i, o in enumerate(opts) if 'Available' in o]
 # CL_GREP / CL_NOT (regexes on the option text) keep pavilions and cabins out of the picks;
 # CL_LIST=1 prints every available option first (US parks list day-use pavilions too).
@@ -65,7 +70,7 @@ picks = sorted(set(avail[int(k * (len(avail) - 1) / max(1, n - 1))] for k in ran
 call(cmd='press', key='Escape')
 for idx in picks:
     call(cmd='click', sel=search, wait='1200')
-    call(cmd='click', sel='.vs__dropdown-option', nth=str(idx), wait='6000')
+    call(cmd='click', sel=OPT, nth=str(idx), wait='6000')
     net = call(cmd='net', xhr='1', last='10', grep='camplife')
     est = re.findall(r'^\[(\d+)\] 200 POST.*invoice/estimate', net, re.M)
     site = re.findall(r'^\[(\d+)\] 200 GET.*/site/\d+', net, re.M)
