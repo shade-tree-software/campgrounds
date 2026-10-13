@@ -409,11 +409,11 @@ booking site's Coldwell - NR loop; Tourism Saskatchewan: 18 first-come sites for
 water); Matheson Lake 9189 has electric 15/30-amp sites, a few reservable and the rest first come, first served (the
 note's '46 non-electric' was Wikipedia's; Tourism Saskatchewan agrees with the booking site).
 
-Not priced: Amisk Lake Sawmill Bay 9157, Beatty Lake 9160, Cowan River 9168, Devil Lake 9180, Lac la Plonge 9185 and
-Tyrrell Lake 9206 are self-registration campgrounds that are not on the booking site; the table charges an unserviced
-site $18 (economy) or $20 (non-electric), but which applies at each isn't published, and an insurer's blog lists Beaver-
-Cowan River and Lac la Plonge as free. Besant 9290 has only Facebook and a phone number. Reindeer Lake's Norvil Olson
-9202 keeps its note's $0. Makwa Lake's note calls Jumbo Beach tent-only, but the booking site lists its 10 sites as
+AWH's calls the same night (`awh_calls_2026-10-12d.py`): Amisk Lake Sawmill Bay 9157, Beatty Lake 9160, Cowan River
+9168, Devil Lake 9180, Lac la Plonge 9185 and Tyrrell Lake 9206, self-registration campgrounds not on the booking site,
+are priced $18-20 (the table's economy or non-electrical rate; which applies isn't published, and 'it's not worth
+trying to narrow it down for a $2 difference'; `sk_self_registration_fees_2026-10-12.json`). Besant 9290 (Facebook and
+a phone number only) is dropped. Reindeer Lake's Norvil Olson 9202 keeps its note's $0. Makwa Lake's note calls Jumbo Beach tent-only, but the booking site lists its 10 sites as
 non-electric for rigs to 18-40 ft (not changed; the park's price comes from Mewasin's non-electric sites either way).
 
 ## Wyoming (2026-10-12)
