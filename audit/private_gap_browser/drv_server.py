@@ -297,6 +297,14 @@ def handle(req, ctx, state):
             if n['i'] == i:
                 return (n['resp'].request.post_data or '')[:mx]
         return 'not found'
+    if cmd == 'reqheaders':
+        # the headers a captured request sent (2026-10-13: Campspot's API answers a plain fetch with
+        # "Unknown request." and only serves what the page's own calls carry)
+        i = int(req['i'])
+        for n in NET:
+            if n['i'] == i:
+                return json.dumps(n['resp'].request.all_headers(), ensure_ascii=False)[:mx]
+        return 'not found'
     if cmd == 'dialogs':
         out = '\n'.join(DIALOGS)
         DIALOGS.clear()

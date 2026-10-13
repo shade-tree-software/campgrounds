@@ -155,6 +155,22 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   `--nights 2` it writes the 2-night lines a per-stay check needs (`--cats` reads only the named site types, one
   is enough for a fee check, and the marketplace takes ~20 s a type). 10 of the 25 re-checked parks
   were marketplace-only (Schildberg IA's $27 was a $25 site + $2).
+- `campspot_api.py OUT.jsonl [--extra TUE,SAT ...] ID:SLUG ...` - the same prices from Campspot's own
+  JSON API, the calls behind the pages above (2026-10-13, written for the 421 tier-only entries that
+  link to Campspot). It fetches from the driver's campspot.com page: the park record
+  (`/api/gator-core/v2/parks/slug/<slug>`, which resolves a marketplace slug too), the availability
+  list for each date (every type's average with fees folded in, its sites, failure reasons) and one
+  type's `pricing` (the site charge, `feeSummary` naming each park fee, `externalFees` = Campspot's
+  own booking fee, taxes). About 12 calls and under a minute a park, against 10-20 s a type on the
+  pages. **Every call needs the header `x-client-type: CONSUMER`**, or the API answers "Unknown
+  request." (`drv.py reqheaders i=N` shows what a request the page made itself carried). **CloudFront
+  blocks this address for a while after ~450 calls in 5 minutes** ("403 Request blocked"; 590 calls
+  in 6½ minutes did it): the script waits `CS_PAUSE` (3 s) between calls and stops at the first
+  block without writing the park in hand, so the same command resumes. `campspot_dates.py SLUG
+  DATE... [--nights N]` prints each type's list price and failure reasons on any other dates. That
+  probe told Sun Outdoors Ocean City's standing summer minimum (2 nights on every Tuesday read,
+  May-September 2027) from Glendale Valley's run of autumn dates. `audit/price_research/
+  campspot_tier_build.py` turns the lines into fee findings and booking/hookups field sets.
 - `koa.py SLUG CHECKIN CHECKOUT` (dates MM/DD/YYYY) - KOA's own booking form. Plain fetches of
   koa.com get a Cloudflare challenge; the driver's browser does not. Fills step 1 for RV, 2
   adults, no pets, a 23-ft motorhome and prints step 2's site types with their "avg/night"
