@@ -78,7 +78,7 @@
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
 - [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1/2/3/5, popups, rating + hookups filters done; left: phase 6 registry rows + phase 7
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
-- [Price research #2 handoff](project_price_research.md) — 10-12: 60% have only RV Life's $ tier, directory rates rejected; every eastern state agency priced (~720), next AB/BC/CA/ON by size; own price = no inherited add-ons, multipliers say base/total; Kansas after Nov 1
+- [Price research #2 handoff](project_price_research.md) — every state/provincial agency priced east to west (2026-10-12, Kansas after Nov 1); open AWH questions + per-engine recipes inside; own price = no inherited add-ons, multipliers say base/total
 - [Drop login-required campgrounds](feedback_drop_login_required.md) — AWH 2026-10-11: login needed just to SEE rates/availability = drop (Jetty Park, Red Rock); login only at checkout is fine
 - [Camper-reported rates](feedback_camper_report_rates.md) — AWH 2026-10-11: a dated (2024+) camper report may price an entry only if the operator has NO web page; mark it with a CAMPER-REPORTED RATE note line
 - [15A is a legitimate amperage](feedback_15_amp_is_legitimate.md) — hookups.electric allows 0/15/20/30/50 (AWH 2026-10-09); snap down, never up
