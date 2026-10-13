@@ -26,6 +26,7 @@
 - [Deploy to PythonAnywhere](project_deploy_to_pa.md) — ./deploy-to-pa.sh pulls + reloads the live app, with a data-file guard and a post-reload health check
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — skip mostly-seasonal/full-timer, residential/MH-park, and membership/sales-pitch parks even if they take overnighters
 - [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
+- [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 2026-10-13 standing rule: a note I'm already reading/editing gets rewritten as clean current prose (no appended diary lines, no stale facts); --AWH text stays; never a separate pass
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
 - [Waypoints are orientation, not clutter](feedback_waypoints_are_orientation.md) — minor stops (gas, rest areas) are how AWH navigates a trip; don't fold/hide low-content timeline items to reduce density
 - [Summaries should say less](feedback_summaries_say_less.md) — every correction AWH made to generated prose was "cut this"; never set a word floor, never remark on the record or gloss a small distance
