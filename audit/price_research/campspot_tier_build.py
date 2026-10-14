@@ -289,6 +289,11 @@ OVERRIDE = {
     # "Dry Camp/Tent Sites" stay out: the PUD's page calls Area B "Tent Site (single)", one pop-up tent trailer a site
     12789: {"keep": r"^Tent / Unserviced Sites$"},
     3037: {"keep": r"^Water \+ Electric Site or Tent$"},
+    # batch 20, the last entries whose booking.platform said Campspot with no Campspot link. Rockwell's one short site
+    # is sold to 25 ft, but the park's own page says "Pop-Up, Travel Trailer, Truck Camper, Van only — no Fifth-Wheel
+    # or Motorhome"; its 'Booking Fee' is $1.95 on one $65 night and $3.90 on two, the same both ways
+    14708: {"skip": r"Short Site$",
+            "fee_text": "The park adds a 'Booking Fee' of $1.95 a night on a $65 site, 3% of the site charge."},
 }
 
 
