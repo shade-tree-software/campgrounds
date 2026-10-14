@@ -1,6 +1,6 @@
 """assemble.py FINDINGS HAND: fold hand findings into the builder's findings, in place.
 HAND items are whole findings ({id, fees, source}, added or replacing the builder's) or {id, _patch: {...}}:
-note_add appends to fees.note, note_sub [old, new] edits it, source_add appends to source, source_sub [old, new] edits
+note_add appends to fees.note, note_sub [old, new] edits it (note_subs a list of them), source_add appends to source, source_sub [old, new] edits
 source, any other key sets fees[key]."""
 import json, sys
 
@@ -18,6 +18,10 @@ for h in json.load(open(hand_path, encoding="utf-8")):
         elif k == "note_sub":
             assert v[0] in f["fees"]["note"], (h["id"], v[0])
             f["fees"]["note"] = f["fees"]["note"].replace(v[0], v[1])
+        elif k == "note_subs":
+            for a, b in v:
+                assert a in f["fees"]["note"], (h["id"], a)
+                f["fees"]["note"] = f["fees"]["note"].replace(a, b)
         elif k == "source_add":
             f["source"] += v
         elif k == "source_sub":

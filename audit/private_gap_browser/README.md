@@ -2,7 +2,7 @@
 
 Headless-Chrome helpers used to read booking engines the plain `curl` path can't
 (ResNexus, Open Campground, Campspot availability, Newbook, Wix/script sites).
-CampLife still 403s.
+CampLife's WAF refuses plain HTTP too; it loads in the driver's browser.
 
 Setup (per machine; not a repo dependency):
 
@@ -171,6 +171,21 @@ The socket is `~/.cache/ekko-drv.sock` (override with `DRV_SOCK`). Context: en-C
   probe told Sun Outdoors Ocean City's standing summer minimum (2 nights on every Tuesday read,
   May-September 2027) from Glendale Valley's run of autumn dates. `audit/price_research/
   campspot_tier_build.py` turns the lines into fee findings and booking/hookups field sets.
+- `camplife_api.py OUT.jsonl ID:URL ...` (or `--entries ENTRIES.json`) - the same from CampLife's own
+  booking API (2026-10-14, for the 88 tier-only entries that link to CampLife). AWS WAF challenges
+  plain HTTP, so every call is a fetch() made inside a camplife.com page in the driver's browser:
+  the park record, the booking session (site types, every site sold online), availability for each
+  date (a refused date answers with the park's own message, "The park is open April 15th-October
+  15th..."), the site records and the `/api/invoice/estimate` quote (resSubTotal, before tax). One
+  night from each date, then two nights on the cheapest and dearest site that fits: the pair is what
+  exposes a once-a-stay charge hidden in resSubTotal. `audit/price_research/camplife_tier_build.py`
+  turns the lines into findings. **Check the park record's address against the entry**: two links
+  sold a different park of the same name (Timberlake MO's went to Brandon MS, Sunny Sites MO's to
+  Wauseon OH).
+- `rvlife_reviews.py PARKID ...` - RV Life's camper reviews over plain HTTP (`/api/reviews/park/<id>`
+  with `Accept: application/x.rvparkreviews.v3+json`): month and year of stay, price paid a night,
+  site type and hookups. Without a login only the newest page (5 reviews) comes back. The source for
+  a camper-reported rate when a park has no web page of its own.
 - `koa.py SLUG CHECKIN CHECKOUT` (dates MM/DD/YYYY) - KOA's own booking form. Plain fetches of
   koa.com get a Cloudflare challenge; the driver's browser does not. Fills step 1 for RV, 2
   adults, no pets, a 23-ft motorhome and prints step 2's site types with their "avg/night"
