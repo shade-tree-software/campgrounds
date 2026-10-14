@@ -47,8 +47,9 @@ SKIP = (r"(?i)\bgroup\b|horse|equestrian|\brally\b|^(?!.*\b(rv|camper|trailer)\b
         r"^(?!.*\b(daily|nightly|night|overnight|transient)\b).*(season|monthly|long[- ]term|\bweekly\b|annual|"
         r"yearly|winter stay)")
 # per park, by hand: "fee_text" for a fee the fit can't settle, "fee_model" {name: [model, params]} for one that a
-# further quote settled, "skip" a regex of type names to leave out, "mins_text" to replace the minimum-stay sentence
-# (empty when booking.min_stay carries it)
+# further quote settled, "skip" a regex of type names to leave out, "keep" one of type names to count though SKIP
+# leaves them out (the reader passed them over too, so they need campspot_api.py --add quotes), "mins_text" to
+# replace the minimum-stay sentence (empty when booking.min_stay carries it)
 OVERRIDE = {
     # $35 a night on every type and date, so a share of the charge and a flat sum per night give the same cents; the
     # name says card processing, which parks charge as a share
@@ -281,6 +282,13 @@ OVERRIDE = {
                           "Campspot offers no sites in January 2027."},
     # $1.50 on one $50 night and $3 on two, the same both ways
     14437: {"fee_text": "The park adds a 'Processing Fee' of $1.50 a night on a $50 site, 3% of the site charge."},
+    # "tent" in a type's name, with no RV word beside it, isn't enough to leave the type out where its sites take RVs:
+    # Whispering Pines BC's "Tent / Unserviced Sites" admit motorhomes, fifth-wheels and trailers up to 58 ft (14 of
+    # its 15 sites fit a 23-ft rig), sold at the C$65 its own page posts for "Unserviced/Tenting" (batch 19); Dallas
+    # County Fairgrounds IA's "Water + Electric Site or Tent" takes the same rigs to 40 ft. Cowlitz Falls WA's B-Loop
+    # "Dry Camp/Tent Sites" stay out: the PUD's page calls Area B "Tent Site (single)", one pop-up tent trailer a site
+    12789: {"keep": r"^Tent / Unserviced Sites$"},
+    3037: {"keep": r"^Water \+ Electric Site or Tent$"},
 }
 
 
@@ -307,10 +315,11 @@ def load(ids=None):
     return recs
 
 
-def countable(t, extra_skip=None):
+def countable(t, extra_skip=None, keep=None):
     """An RV site type a 23-ft rig fits: most of its sites take 23 ft or give no length."""
     name = t.get("name") or ""
-    if t.get("code") != "rv" or re.search(SKIP, name) or (extra_skip and re.search(extra_skip, name)):
+    skipped = re.search(SKIP, name) and not (keep and re.search(keep, name))
+    if t.get("code") != "rv" or skipped or (extra_skip and re.search(extra_skip, name)):
         return False
     return not t.get("max_len") or t["fit_sites"] * 2 >= max(t["sites"], 1)
 
@@ -388,7 +397,7 @@ def verdict(e, r):
     ov = OVERRIDE.get(e["id"], {})
     cur = "CAD" if (r.get("currency") or "").upper() == "CAD" else "USD"
     types = r.get("types") or {}
-    use = {tid for tid, t in types.items() if countable(t, ov.get("skip"))}
+    use = {tid for tid, t in types.items() if countable(t, ov.get("skip"), ov.get("keep"))}
     left_short = sorted({nm_(t["name"]) for tid, t in types.items() if t.get("code") == "rv" and tid not in use
                          and t.get("max_len") and t["fit_sites"] * 2 < max(t["sites"], 1)
                          and not re.search(SKIP, t.get("name") or "")})
@@ -667,7 +676,8 @@ def fields(e, r):
     the RV sites."""
     if r.get("error") or not r.get("types"):
         return {}, {}
-    use = [t for t in r["types"].values() if countable(t, OVERRIDE.get(e["id"], {}).get("skip"))]
+    ov = OVERRIDE.get(e["id"], {})
+    use = [t for t in r["types"].values() if countable(t, ov.get("skip"), ov.get("keep"))]
     if not use:
         return {}, {}
     link = next((u for u in re.findall(r"https?://(?:www\.)?campspot\.com/\S+", e.get("website") or "")), None)
