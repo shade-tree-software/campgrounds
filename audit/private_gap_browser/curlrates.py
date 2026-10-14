@@ -8,7 +8,7 @@ def get(u):
     try: return urllib.request.urlopen(urllib.request.Request(u,headers={'User-Agent':UA}),timeout=20).read(800000).decode('utf-8','replace')
     except Exception as e: return ''
 def text(h):
-    h=re.sub(r'(?is)<(script|style)[^>]*>.*?</\1>',' ',h); return [l.strip() for l in html.unescape(re.sub(r'<[^>]+>','\n',h)).split('\n') if l.strip()]
+    h=re.sub(r'(?is)<(script|style)[^>]*>.*?</\1>|<!--.*?-->',' ',h); return [l.strip() for l in html.unescape(re.sub(r'<[^>]+>','\n',h)).split('\n') if l.strip()]
 for line in open(sys.argv[1]):
     n,u=line.rstrip('\n').split('\t')
     if not u or 'facebook' in u: print(f"=== {n} | {u} | (no site)"); continue

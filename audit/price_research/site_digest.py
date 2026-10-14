@@ -40,7 +40,7 @@ def fetch(url):
 
 
 def text_of(raw):
-    t = re.sub(r"(?is)<script.*?</script>|<style.*?</style>|<noscript.*?</noscript>", " ", raw)
+    t = re.sub(r"(?is)<script.*?</script>|<style.*?</style>|<noscript.*?</noscript>|<!--.*?-->", " ", raw)
     t = re.sub(r"(?i)<(br|p|li|tr|h\d|div|td|th)[^>]*>", "\n", t)
     t = html.unescape(re.sub(r"<[^>]+>", " ", t))
     return [re.sub(r"\s+", " ", l).strip() for l in t.split("\n") if l.strip()]

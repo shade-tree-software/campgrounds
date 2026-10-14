@@ -12,7 +12,7 @@ if '--browser' in sys.argv:
 else:
     raw = subprocess.run(["curl","-sSL","-A",UA,"--max-time","30",url],capture_output=True,text=True,errors="ignore").stdout
     links = re.findall(r'href="([^"]+)"', raw)
-    raw = re.sub(r'(?is)<(script|style|noscript).*?</\1>', ' ', raw)
+    raw = re.sub(r'(?is)<(script|style|noscript).*?</\1>|<!--.*?-->', ' ', raw)
     t = html.unescape(re.sub(r'<[^>]+>', '\n', raw))
 t = '\n'.join(l.strip() for l in t.splitlines() if l.strip())
 n = int(next((a[2:] for a in sys.argv if a.startswith('-n')), 5000))

@@ -1,5 +1,6 @@
 """fetch1.py OUTFILE URL [URL...]: append each page's text to OUTFILE as '##### URL -> final', fetching exactly the
-URLs given (no link following). Commas in a URL are sent as %2C but kept literal in the header (Josephine County's
+URLs given (no link following). HTML comments are dropped with scripts and styles: an operator can
+comment out an obsolete rate table (Liberty Haven AZ, 2026-10-14), which a bare tag strip reads as live text. Commas in a URL are sent as %2C but kept literal in the header (Josephine County's
 paths contain them, which opfetch.py splits on). Batch 29, 2026-10-14."""
 import gzip, html as H, re, sys, urllib.request, zlib
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0 Safari/537.36",
@@ -10,7 +11,7 @@ def get(u):
     d = gzip.decompress(d) if e == "gzip" else zlib.decompress(d) if e == "deflate" else d
     return r.geturl(), d.decode("utf-8", "replace")
 def text(t):
-    t = H.unescape(re.sub(r"<[^>]+>", "\n", re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>", " ", t)))
+    t = H.unescape(re.sub(r"<[^>]+>", "\n", re.sub(r"(?is)<(script|style|noscript)[^>]*>.*?</\1>|<!--.*?-->", " ", t)))
     return "\n".join(x for x in (re.sub(r"\s+", " ", l).strip() for l in t.splitlines()) if x)
 out = sys.argv[1]
 for u in sys.argv[2:]:
