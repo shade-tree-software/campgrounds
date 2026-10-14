@@ -265,6 +265,22 @@ OVERRIDE = {
     # fees note needn't repeat them
     1990: {"mins_text": ""},
     3903: {"mins_text": ""},
+    # batch 19, the entries whose booking.platform said Campspot but whose website and note named no Campspot link.
+    # $1.50 on one $50 night and $3 on two, and one price everywhere: 3% and $1.50 a night are the same cents
+    6817: {"fee_text": "The park adds a 'Booking Fee' of $1.50 a night on a $50 site, 3% of the site charge."},
+    # $2.25 on one $75 night and $4.50 on two, the same both ways
+    7627: {"fee_text": "The park adds a 'Processing Fee' of $2.25 a night on a $75 site, 3% of the site charge."},
+    # a $25 water-and-dump service for a rig that isn't staying, not a site
+    7656: {"skip": r"^Water & Waste Services$"},
+    # every type answered 'No campsites available' on both January dates with no Campspot closure, and in October
+    # the water-and-electric types were closed, so their October rate wasn't on sale (the two-night quote that
+    # showed the $4 'Transaction Fee' once a stay is on a skipped October date)
+    11179: {"skip_dates": ["2026-10-17", "2026-10-20", "2027-01-26", "2027-01-30"],
+            "fee_model": {"Transaction Fee": ["stay", {"A": 4.0}]},
+            "dates_text": "In October 2026 only the full-hookup sites were open, the 50/30 amp pull-through at $49; "
+                          "Campspot offers no sites in January 2027."},
+    # $1.50 on one $50 night and $3 on two, the same both ways
+    14437: {"fee_text": "The park adds a 'Processing Fee' of $1.50 a night on a $50 site, 3% of the site charge."},
 }
 
 
@@ -595,17 +611,24 @@ def verdict(e, r):
     for nm, a in deposits.items():
         feebits.append(f"Campspot also collects the park's {cash(a, cur)} '{nm}'.")
     text += (" " + " ".join(feebits)) if feebits else ""
-    disc = collections.Counter()
+    disc = collections.defaultdict(set)
     for q in one:
         if q["date"] in used and q["base"] is not None and round(q["base"] - charge(q), 2) > 0:
             disc[(tuple(sorted(str(x.get("name") or x.get("title") or x) for x in q["discounts"])) or ("a discount",),
-                  f"{q['date'][:7]}")] += 1
-    for (dn, month), _ in sorted(disc.items()):
+                  f"{q['date'][:7]}")].add(q["date"])
+    for (dn, month), ds in sorted(disc.items()):
         mm = f"{datetime.date.fromisoformat(month + '-01'):%B %Y}"
-        # quoted and called a discount, or a name like 'Fall 2026 (No Water)' reads as a broken sentence (batch 16)
+        # quoted and called a discount, or a name like 'Fall 2026 (No Water)' reads as a broken sentence (batch 16);
+        # a name that already says so ('Weekday Discount') isn't called a discount twice
         named = and_list([f"'{x}'" for x in dn]) if dn != ("a discount",) else ""
-        text += (f" The {mm} prices are after the park's automatic {named} discount." if named else
-                 f" The {mm} prices are after an automatic discount.")
+        if named and not re.search(r"(?i)discount'$", named):
+            named += " discount"
+        # a discount on some of the month's days only names them (Condit's Ranch IL, batch 19: the Tuesday's 'Weekday
+        # Discount', not the Saturday)
+        days = "" if ds >= {d for d in used if d[:7] == month} else " " + and_list(
+            sorted({f"{datetime.date.fromisoformat(d):%A}" for d in ds}))
+        text += (f" The {mm}{days} prices are after the park's automatic {named}." if named else
+                 f" The {mm}{days} prices are after an automatic discount.")
     # a standing minimum booking.min_stay already records needs no sentence: the popup's chip says it, and
     # booking.note has the detail (Go Camp Tennessee's TVA campgrounds, marked 2026-10-12)
     marked = {m.get("nights") for m in (e.get("booking") or {}).get("min_stay") or [] if m.get("applies") == "always"}
