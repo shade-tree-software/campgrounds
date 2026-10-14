@@ -1,12 +1,14 @@
 ---
 name: project_remaining_work_map
-description: "What is left on the campground database — CURRENT block at the top (2026-10-12: all gaps closed, note-scan queue zero, US re-check, MO registry, calendar-artifact seasons and the unsupported no-hookups all done; price research active, schema phases 6/7 open); below it the 2026-09-21 map"
+description: "What is left on the campground database - CURRENT block at the top (2026-10-13 evening: all gaps closed, note-scan queue zero; price research active - 6,278 tier-only + 83 unpriced after the 421 Campspot entries; schema phases 6/7 open); below it the 2026-09-21 map"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
   modified: 2026-10-11T16:39:30.729Z
 ---
+
+**UPDATE 2026-10-13 (evening):** the 421 Campspot-linked tier-only entries are done: 395 priced, 26 left (held, no rate anywhere, or AWH's call; see [[project_price_research]]). Only batch 1 is pushed; batches 2-17 are local commits. The price gap, measured then: 6,278 entries with only RV Life's $ tier (private 3,564, local 2,144, federal 485, state 65 of which Kansas 30, provincial 16), and 83 with no price at all (`unpriced.py`; 13 of them temporarily closed). Next, by website link among the tier-only: 64 that name Campspot as their platform but carry no Campspot link, then RoverPass 389, CampLife 87, Firefly 54.
 
 **UPDATE 2026-10-13 (later):** the 25 Campspot entries priced 2026-10-10 are re-checked (24 corrected - Campspot's average had folded the park's fees into the rate), their notes cleaned under the new standing rule ([[feedback_clean_up_notes]]), and everything is pushed and deployed. The price gap now: 6,680 entries with only RV Life's $ tier (private 3,844, local 2,254, federal 490, state 72 of which Kansas 30) and 142 with no price at all (17 temporarily closed, 24 WMA sites). Next: the 421 Campspot-linked tier-only entries - [[project_price_research]].
 
