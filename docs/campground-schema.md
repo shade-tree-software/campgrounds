@@ -825,6 +825,10 @@ the model to infer a price from adjectives. What the build settled:
   self-contradiction, not hedging. And `platform` needs the channel actually identified: a
   bare "reservable online" names none, and an early version answered `operator` for it,
   inventing a booking channel out of nothing.
+- **A fit check is not a cap.** The sweep notes say "sites fit a 23-ft rig", our own check
+  that EKKO fits, and the first pass read 28 of them as `max_rig_ft: 23`. AWH had those
+  removed on 2026-10-13, and the prompt now says a fit check gives no `max_rig_ft`. Only a
+  stated cap counts ("max trailer 23 ft", "RVs to ~23 ft").
 - Yield depends on who wrote the note. AWH's own early waterfront notes ("Many sites are
   right on the lake") yield ~19%; the later Claude-written sweep notes yield ~96%. A
   low-yield stretch is the data, not a broken pass.

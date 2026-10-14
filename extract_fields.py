@@ -158,7 +158,10 @@ sites     count:        integer, total campsites. "34 single-family sites" -> 34
                         large RVs)", "RV length cap not published". The test is
                         whether the note contradicts itself, not whether it
                         hedges. A pad dimension ("40x15 pads") is not a rig
-                        limit.
+                        limit, and neither is a fit check: "sites fit a 23-ft
+                        rig" says a 23-ft rig fits (the family's RV is 23 ft),
+                        not that 23 ft is the longest, so it gives no
+                        max_rig_ft. A cap does: "max trailer 23 ft".
           pull_through: bool. "some pull-throughs" -> true.
 
 facilities showers, flush_toilets, vault_toilets, laundry, camp_store, wifi:
