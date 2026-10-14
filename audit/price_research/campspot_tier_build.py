@@ -227,6 +227,20 @@ OVERRIDE = {
     # (the two-night quote that showed the C$5 'Booking Fee' once a stay is on a skipped October date)
     12805: {"skip_dates": ["2026-10-17", "2026-10-20", "2027-01-26", "2027-01-30"],
             "fee_model": {"Booking Fee": ["stay", {"A": 5.0}]}},
+    # batch 17. Every type answered 'No campsites available' on both January dates with no Campspot closure, which
+    # the builder would count as priced
+    14214: {"skip_dates": ["2027-01-26", "2027-01-30"],
+            "dates_text": "Campspot offers no sites in January 2027."},
+    # 2 nights on every 2027 date read (campspot_dates.py, May to October), marked in booking.min_stay
+    14220: {"mins_text": ""},
+    # all but two RV site types are closed in January (RESORT_CLOSED_RULE); their quoted prices aren't on sale
+    14221: {"skip_dates": ["2027-01-26", "2027-01-30"],
+            "dates_text": "In January 2027 Campspot sells only the 30 Amp Site and the 50 Amp Deluxe Site: $39-42 on a "
+                          "Tuesday, $42-47 on a Saturday."},
+    # the water and electric sites are closed in January; of the RV sites only the full-hookup ones are on sale
+    14226: {"skip_dates": ["2027-01-26", "2027-01-30"],
+            "dates_text": "In January 2027 only the Full Hook-Up RV Sites are open: $45 on a Tuesday, $52.50 on a "
+                          "Saturday."},
 }
 
 
