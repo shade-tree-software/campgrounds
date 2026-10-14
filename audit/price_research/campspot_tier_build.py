@@ -30,7 +30,7 @@ clean_notes.py's "set"/"provenance" shape."""
 import collections, datetime, json, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE))
-D = "2026-10-13"
+D = "2026-10-13"          # the first reads; each record carries its own "read" date, which the sources cite
 WINTER = "2027-01-26"       # the January Tuesday campspot_api.py reads; its closure is the coming winter's
 LAST_WINTER = "2026-01-26"  # and the same day a year before, whose closure ended this year's opening
 LATE_WINTER = "2026-02-15"  # or a closure begun in February (BrightSky KY, new on Campspot from 2026-02-01)
@@ -241,6 +241,30 @@ OVERRIDE = {
     14226: {"skip_dates": ["2027-01-26", "2027-01-30"],
             "dates_text": "In January 2027 only the Full Hook-Up RV Sites are open: $45 on a Tuesday, $52.50 on a "
                           "Saturday."},
+    # batch 18, the entries whose note named Campspot but whose website didn't link it. $44 a night on every type and
+    # date, so a share of the charge and a flat sum per night give the same cents; the name says card processing
+    1145: {"fee_text": "The park adds 3.5% of the site charge as a 'Convenience Fee' ($1.54 on a $44 night)."},
+    # $2.06 on one $51.40 night and $4.11 on two: 4% of the charge, not $2.06 a night
+    1361: {"fee_text": "The park adds 4% of the site charge as a 'Credit Card Fee' ($2.06 on a $51.40 night)."},
+    # Campspot lets only pop-ups, tents, truck campers and vans onto the creekside sites
+    1498: {"skip": r"^Creekside"},
+    # one Campspot listing sells both sections of the park; this entry is the West section (the East one, a separate
+    # campground with year-round sites, has no entry)
+    1519: {"skip": r"^EAST\b",
+           "dates_text": "In October 2026 and January 2027 Campspot sold only Riverbend East's year-round sites, at "
+                         "$78 a night."},
+    # $1.58 on one $45 night and $3.16 on two: 3.5% of the charge, and Campspot adds no fee of its own here
+    2074: {"fee_text": "The park adds 3.5% of the site charge as 'Reservation/Booking Fees' ($1.58 on a $45 night)."},
+    # the fee's own name says 3%: $1.05 on one $35 night, $2.10 on two
+    5111: {"fee_text": "The park adds 3% of the site charge as a 'CONVENIENCE FEE 3%' ($1.05 on a $35 night)."},
+    # Campspot lists the water-and-electric sites to 28 ft; the park's own page says "Perfect for RVs up to 20'"
+    # (the 2-night quote, on that type, charged both fees once: $5 and $9.35 on two nights as on one)
+    4753: {"skip": r"^Water \+ Electric RV Site$",
+           "fee_model": {"Reservation Surcharge": ["stay", {"A": 5.0}], "Resort Fee": ["stay", {"A": 9.35}]}},
+    # standing minimums the batch's extra sets record in booking.min_stay (Riviera 2 nights, Kritters 3), so the
+    # fees note needn't repeat them
+    1990: {"mins_text": ""},
+    3903: {"mins_text": ""},
 }
 
 
@@ -453,9 +477,11 @@ def verdict(e, r):
         if datetime.date.fromisoformat(d).weekday() >= 4:
             continue
         rd = real(rows_of(d))
-        got = [re.search(r"(\d+) night minimum", " ".join(x[3])) for x in rd]
+        # every rule a type answers counts: Kritters (2026-10-13) answered one night with both a 2- and a 3-night
+        # minimum, and only 3 nights were sold
+        got = [[int(n) for n in re.findall(r"(\d+) night minimum", " ".join(x[3]))] for x in rd]
         if rd and all(got):
-            mins[d] = max(int(m.group(1)) for m in got)
+            mins[d] = max(max(g) for g in got)
     weekdays = [d for d in used if datetime.date.fromisoformat(d).weekday() < 4]
     if mins and set(mins) == set(weekdays) and len({d[:7] for d in weekdays}) > 1:
         flags.append("STANDING MINIMUM %s" % dict(mins))
@@ -592,7 +618,7 @@ def verdict(e, r):
             text += f" Every RV type asks for at least {n} nights from {when}."
     if any(x[1] == "CAMPSPOT_BOOKING_FEE" and x[2] for q in qs for x in q["external"]):
         text += " Campspot adds its own booking fee at checkout (3%, at least $3)."
-    text += f" Read {D}."
+    text += f" Read {r.get('read') or D}."
     new.update(checked="2026", note=text)
     link = next((u for u in re.findall(r"https?://(?:www\.)?campspot\.com/\S+", (e.get("website") or "") + " "
                                        + str((e.get("booking") or {}).get("url") or "")) if "/park/" in u or "/book/" in u),
@@ -601,7 +627,7 @@ def verdict(e, r):
     finding = {"id": e["id"], "fees": new,
                "source": f"{link} (Campspot's pricing for each RV site type, one night from {dates_read}, 2 adults"
                          + ("; two nights from each Tuesday for the park's fees" if fees else "")
-                         + f"; campspot_tier_2026-10-13.jsonl), read {D}"}
+                         + f"; campspot_tier_2026-10-13.jsonl), read {r.get('read') or D}"}
     rep.update(range=f"{span(vals, cur)}", fees={k: (v["model"], sorted(v["types"]) if v["types"] else None)
                                                   for k, v in fees.items()},
                types=len(use), used=used, flag=flags, mins=dict(mins))
@@ -622,17 +648,17 @@ def fields(e, r):
     if not use:
         return {}, {}
     link = next((u for u in re.findall(r"https?://(?:www\.)?campspot\.com/\S+", e.get("website") or "")), None)
-    src = f"{link or 'https://www.campspot.com/book/' + str(r.get('engine_slug'))} (Campspot park record and site types), read {D}"
+    src = f"{link or 'https://www.campspot.com/book/' + str(r.get('engine_slug'))} (Campspot park record and site types), read {r.get('read') or D}"
     prov = e.get("provenance") or {}
     made = lambda g: str((prov.get(g) or {}).get("source", "")).startswith("note prose")
     st, pv = {}, {}
     ob = e.get("booking") or {}
     if not ob:
         st["booking"] = {"reservable": True, "platform": "campspot"}
-        pv["booking"] = {"source": src, "checked": D}
+        pv["booking"] = {"source": src, "checked": r.get("read") or D}
     elif made("booking") and not ob.get("platform"):
         st["booking"] = dict(ob, platform="campspot")
-        pv["booking"] = {"source": f"{src}; kept from the note: {json.dumps(ob)}", "checked": D}
+        pv["booking"] = {"source": f"{src}; kept from the note: {json.dumps(ob)}", "checked": r.get("read") or D}
     am = {a for t in use for a in t["amenities"]}
     h = {}
     amps = [a for a in (50, 30, 20, 15) if f"{a}-Amp" in am or f"{a} Amp" in am]
@@ -648,7 +674,7 @@ def fields(e, r):
                        + ", ".join(sorted(a for a in am if re.search(r"(?i)amp|water|sewer", a))))
     if h and not old:
         st["hookups"] = h
-        pv["hookups"] = {"source": hsrc, "checked": D}
+        pv["hookups"] = {"source": hsrc, "checked": r.get("read") or D}
     elif h and made("hookups") and any(old.get(k) != v for k, v in h.items()):
         st["hookups"] = dict(old, **h)
         bits = [hsrc]      # provenance holds only source/checked/method, so what came from where is said here
@@ -658,7 +684,7 @@ def fields(e, r):
         repl = {k: old[k] for k, v in h.items() if k in old and old[k] != v}
         if repl:
             bits.append("replaces the note scan's " + json.dumps(repl))
-        pv["hookups"] = {"source": "; ".join(bits), "checked": D}
+        pv["hookups"] = {"source": "; ".join(bits), "checked": r.get("read") or D}
     # The park record's closedDates give the first and the last closed day (Tumble Hill NY's 2026-11-01 to 2027-04-30
     # is its posted "May 1st through October 31st"). The season is read from two of them: the opening from the closure
     # that spanned last January, so it is the opening that happened (Prairie Creek IN opened April 1 in 2025 and 2026
@@ -697,12 +723,12 @@ def fields(e, r):
             sea = {"year_round": False, "opens": opens.strftime("%m-%d"), "closes": closes.strftime("%m-%d")}
             ssrc = src.replace("park record and site types", f"park record: {said}")
             if not old_s:
-                st["season"], pv["season"] = sea, {"source": ssrc, "checked": D}
+                st["season"], pv["season"] = sea, {"source": ssrc, "checked": r.get("read") or D}
             elif made("season") and off(old_s, sea):
                 st["season"] = dict(old_s, **sea)
                 repl = {k: old_s[k] for k in sea if k in old_s and old_s[k] != sea[k]}
                 pv["season"] = {"source": ssrc + ("; replaces the note scan's " + json.dumps(repl) if repl else ""),
-                                "checked": D}
+                                "checked": r.get("read") or D}
             elif not made("season") and off(old_s, sea) & set(old_s):
                 print(f"SEASON {e['id']}: the entry's {json.dumps(old_s)} is not from a note; Campspot gives "
                       f"{json.dumps(sea)}")
