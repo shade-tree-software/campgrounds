@@ -39,3 +39,13 @@ Campspot prices come from Campspot's own private JSON API, called from a campspo
   12. tests;
   13. commit.
 - **QC:** before landing anything, check that every quoted string appears in a saved page. The helpers were session scratch: a whitespace- and case-normalized search over the saved `.txt` pages is all they did.
+
+**Lessons from the last 64 (batches 18-20, 2026-10-14):**
+- Apply website changes before running the builder: it reads the Campspot link (and `/park/` vs `/book/`) from the website field.
+- The builder's type list names every type that fits, including types with no sites or no quote, so a fee sentence like "on every type but X" can claim more than the quotes show. Fix it in the hand file with `assemble.py`'s `note_sub` [old, new] (Shangri-La 14847).
+- A Campspot type's site count is not the park's total, and an old note's count that no operator page states is removed, not kept.
+- A park that has left Campspot (6 of the last 14): `booking.platform` "operator" (or "phone" for call-to-book), a hand finding priced from its own page or booking system ([[reference_small_engine_apis]]), and the new booking link in the website field.
+- A park whose every read date is closed: append a 2-night `--add` quote for the fee; with it in the jsonl the builder prices the park itself (Green Park 14939, C$48-55 plus C$6).
+- The operator's fit notes outrank Campspot's length: Rockwell OK's short site sells to 25 ft but takes "no Fifth-Wheel or Motorhome" (OVERRIDE `skip`). The reverse case, a type named for tents that takes RVs, needs a `keep` override (Whispering Pines 12789).
+- An operator's posted rate can be the Campspot rate plus tax (Humboldt County Fair 11763: 12%), and a dated Wayback capture can stand in for an operator page that is gone (Fort Tuthill 11458).
+- `merge_notes.py` merges group values across field files but keeps only the LAST file's provenance for a group, so a hand provenance must account for every value the group keeps ("kept from the note: {...}" / "replaces the note's {...}").

@@ -1,12 +1,14 @@
 ---
 name: project_remaining_work_map
-description: "What is left on the campground database - CURRENT block at the top (2026-10-13 night: all gaps closed, note-scan queue zero; price research active - 6,262 tier-only + 83 unpriced; the 421 Campspot entries deployed, next the 64 Campspot-platform entries with no link; schema phases 6/7 open); below it the 2026-09-21 map"
+description: "What is left on the campground database - CURRENT block at the top (2026-10-14: all gaps closed, note-scan queue zero; price research active - 6,198 tier-only + 83 unpriced; the 421 Campspot entries deployed and the 64 Campspot-platform entries with no link priced (not pushed); next RoverPass 347, CampLife 88, Firefly 55; schema phases 6/7 open); below it the 2026-09-21 map"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
   modified: 2026-10-11T16:39:30.729Z
 ---
+
+**UPDATE 2026-10-14:** the 64 tier-only entries that name Campspot as their platform but carried no Campspot link are priced too (batches 18-20, committed through 0b8a28b, not yet pushed; [[project_price_research]]). The price gap now: 6,198 entries with only RV Life's $ tier (private 3,499, local 2,130, federal 485, state 65, provincial 15) and 83 with no price. Next, by website link among the tier-only: RoverPass 347, CampLife 88, Firefly 55, then Let's Camp 57 and ReserveAmerica 66. Open for AWH: the batch 18-20 ASKs and #7 (Riverbrook, Cross Creek).
 
 **UPDATE 2026-10-13 (night):** the 421 Campspot-linked tier-only entries are done and, with AWH's calls (18 dropped, 9 waterfront re-audits), pushed and deployed through 3f660e5: 395 priced, 10 still not priced ([[project_price_research]]). The price gap now: 6,262 entries with only RV Life's $ tier (private 3,549, local 2,143, federal 485, state 65 of which Kansas 30, provincial 16) and 83 with no price at all (13 of them temporarily closed). Next, by website link among the tier-only: 64 that name Campspot as their platform but carry no Campspot link, then RoverPass 347, CampLife 88, Firefly 55. Open for AWH: whether to add Riverbrook (Rumney NH) and Cross Creek (Cairo GA).
 
