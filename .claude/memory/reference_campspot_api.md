@@ -23,7 +23,7 @@ Campspot prices come from Campspot's own private JSON API, called from a campspo
   - `mins_text`: the minimum-stay sentence.
 - **Minimums:** when every Tuesday asks for 2+ nights, run `audit/private_gap_browser/campspot_dates.py` on more dates. It separates a standing minimum (`booking.min_stay`, written by hand, [[feedback-minimum-stay]]) from a run of event dates. Summer sold only in Saturday-to-Saturday weeks (Sandbanks 12695) is a 7-night minimum.
 - **Operator page vs Campspot:** when they differ, the range spans both and the note quotes each.
-- **Waterfront:** a Campspot type tagged "Waterfront Site", or named lakefront or waterfront, at a campground audited not waterfront is a lead for a re-audit, not a waterfront call.
+- **Waterfront:** a Campspot type tagged "Waterfront Site", or named lakefront or waterfront, at a campground audited not waterfront is a lead for a re-audit, not a waterfront call. The 2026-10-13 re-audit of 9 such leads changed 5 and kept 4: `campspot_map.py` draws the per-site map, and each type's photos (`images.slideshowImages` in the availability JSON) show the ground the satellite may predate. The name alone decided nothing (Spirit Springs' "WATERFRONT" sites sit across a road behind a tree belt).
 - **Per batch:** the outputs are committed in `audit/price_research/campspot_tier/`; `report_items_2026-10-13.md` there holds what each batch raised. Steps, in order:
   1. reader;
   2. builder `--ids` (+ `--fields`);
