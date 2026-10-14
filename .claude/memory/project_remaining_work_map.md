@@ -8,6 +8,8 @@ metadata:
   modified: 2026-10-11T16:39:30.729Z
 ---
 
+**UPDATE 2026-10-14 (late):** the 88 CampLife-booked tier-only entries are worked (83 priced, batches 25-31 through 5a7f8c2, not pushed; [[project_price_research]]); next Firefly 55, Let's Camp 57, ReserveAmerica 66.
+
 **UPDATE 2026-10-14 (later):** the 55 RoverPass listings that take bookings are worked (52 priced, batches 21-24, committed through 451bac9, not yet pushed; [[project_price_research]]). The price gap now: 6,146 entries with only RV Life's $ tier (private 3,455, local 2,123, federal 485, state 65, provincial 15, hipcamp 2, wma 1) and 83 with no price. Next, by website link among the tier-only: CampLife 88, Firefly 55, then Let's Camp 57 and ReserveAmerica 66. Also open for AWH: the 292 RoverPass listings that take no bookings (285 of them unclaimed), the batch 18-24 ASKs, and #7 (Riverbrook, Cross Creek).
 
 **UPDATE 2026-10-14:** the 64 tier-only entries that name Campspot as their platform but carried no Campspot link are priced too (batches 18-20, committed through 0b8a28b, not yet pushed; [[project_price_research]]). The price gap now: 6,198 entries with only RV Life's $ tier (private 3,499, local 2,130, federal 485, state 65, provincial 15) and 83 with no price. Next, by website link among the tier-only: RoverPass 347, CampLife 88, Firefly 55, then Let's Camp 57 and ReserveAmerica 66. Open for AWH: the batch 18-20 ASKs and #7 (Riverbrook, Cross Creek).
