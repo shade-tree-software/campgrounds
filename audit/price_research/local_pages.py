@@ -1,5 +1,6 @@
 """Read the web pages of unpriced LOCAL entries for posted camping fees (2026-10-15, AWH #10).
     python3 -I local_pages.py ST OUT.jsonl [--limit N] [--ids a,b]
+    python3 -I local_pages.py - OUT.jsonl --idfile IDS.json [--limit N]   (any ownership: the ids listed)
 Resumable (ids in OUT are skipped). For each entry: every website URL except social media, plus up to 4
 same-site links whose href or text mentions camp/rv/rate/fee/reserv; for each page, every '$<digit>' with
 ~200 chars of context. Plain HTTP, one request a second. Nothing is written to campgrounds.json; the
@@ -65,6 +66,10 @@ def main():
     todo = [r for r in db if r.get("kind") == "campground" and r["ownership"] == "local" and r["state"] == st
             and not r.get("fees") and not cs.resolve(r, reg).get("fees") and r["id"] not in done
             and (only is None or r["id"] in only)]
+    if "--idfile" in sys.argv:
+        want = json.load(open(sys.argv[sys.argv.index("--idfile") + 1]))
+        by = {r["id"]: r for r in db}
+        todo = [by[i] for i in want if i in by and i not in done]
     print(len(todo), "to read", flush=True)
     for r in todo[:limit]:
         rec = {"id": r["id"], "name": r["name"], "read": time.strftime("%Y-%m-%d"), "pages": []}

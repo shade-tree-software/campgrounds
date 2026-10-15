@@ -1,0 +1,25 @@
+ROWS = [
+ (7538, 45, 45, None, "https://getawayrvparkstephenville.com/site-fees-1", "Getaway: 30/50-amp full hookups from $45 a night for 2 people, $175 a week."),
+ (7568, 45, 45, None, "https://www.hillsidervpark.net/", "Hillside: day rate $45 all included, $175 a week; 30/50-amp sites."),
+ (7631, 45, 45, None, "https://lg-rv.com/", "LG RV Park: $45 a day, $180 a week."),
+ (7635, 40, 40, None, "https://thelittlervspot.com/rates-%26-amenities", "Little RV Spot: daily rate $40; weekly $155-165 by amperage."),
+ (7642, 35, 35, None, "https://cantonrvranch.com/", "Lone Star RV Ranch: $35 a night, $135 a week, $500 a month."),
+ (7712, 75, 75, None, "https://portarthurrv.com/rates/", "Port Arthur RV Resort: all RV site types $75 a night; weekly $290-350."),
+ (7819, 30, 30, None, "https://spencercanoes.sambrannon.com/shadyrvpark", "Spencer Canoes: full hookups $30 a day for 1-2 people, including utilities and the entrance permit; $150 a week."),
+ (7820, 48, 48, None, "https://springbranchrvpark.com/rooms-2/", "Spring Branch: $48 a night for 1-6 nights, $240 a week."),
+ (7835, 40, 40, None, "https://sunshineoaksrvpark.com/rates/", "Sunshine Oaks: full-hookup pull-throughs $40 a day, $225 a week; back-ins monthly only."),
+ (7918, 39.50, 39.50, None, "https://wildwestrvpark.com/rates", "Wild West: 30/50-amp full hookups $39.50 a day; Good Sam and veterans 10% off."),
+ (8112, 30, 30, None, "https://www.wildwillysrvpark.com/", "Wild Willy's: daily from $30, weekly from $160."),
+ (8144, 50, 50, None, "https://www.angelpeakrv.com/", "Angel Peak: $50 a day ($45 for seniors, military and first responders), $250 a week."),
+ (9559, 15, 15, None, "https://www.silvercreekplunge.com/", "Silver Creek Plunge: tent/RV spots $15 a night, no hookups, first come, first served; pool extra."),
+ (9721, 15, 15, None, "https://www.idahopower.com/recreation/parks-and-campgrounds/locust-park/", "Idaho Power: RV/tent sites $15 a night, paid by card."),
+ (9835, 65, 65, None, "https://yellowstonegolfresort.com/yellowstone-rv-park", "Yellowstone Golf Resort: full hookups $65 a night, $395 a week; tents $25."),
+ (10557, 50, 50, None, "https://valleycamp.org/explore/rvarea/", "Valley Camp: RV sites with utilities $50 a night, $300 a week; dry RV camping $35 (rate sheet says $40)."),
+ (10584, 35, 35, None, "https://tonasketchamber.com/", "Tonasket Chamber RV Park: $35 a day, $185 a week; tents $8."),
+ (11142, 49, 49, None, "https://www.eastlakeresort.com/rv-sites", "East Lake Resort: RV sites $49 a day plus occupancy tax; no hookups, free dump station."),
+]
+CAD = [
+ (9115, 25, 25, None, "https://www.westwardhocampground.ca/", "Westward Ho: overnight camping C$25 a night, C$150 a week."),
+ (9147, 50, 50, None, "https://poplarescapervpark.ca/", "Poplar Escape: C$50 a day year-round, 30-amp included; C$275-300 a week."),
+ (9314, 38, 58, None, "https://www.willowbendcampground.com/rates", "Willowbend: full service, 15-amp C$38, 30-amp C$48, 50-amp C$58 a night; tents C$25."),
+]
