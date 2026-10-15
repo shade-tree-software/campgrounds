@@ -1,0 +1,20 @@
+ROWS = [
+ (14539, 30, 30, None, "https://www.hitchinpostrvpark.net/rates", "Hitchin' Post: $30 a night including electricity, $150 a week."),
+ (14541, 32, 32, None, "https://www.pinehavenrvpark.com/", "Pine Haven Retreat: $32 a night for 1-2 adults including 30 kWh of electric a day; tents $15; card payments add 4%."),
+ (14542, 32, 37, None, "https://www.pinetreervparkks.com/our-rates324a0494", "Pine Tree: $32 a day, $37 for rigs 38 ft and longer."),
+ (14545, 48, 48, None, "https://www.santafelake.com/camping", "Santa Fe Lake: electric-only sites (no water or sewer) $48 a night for one camper and car, including the $10 park entry; $5 more on holidays; primitive $32."),
+ (14547, 40, 40, None, "https://lakefrances.net/camping-rv-sites/", "Lake Frances: RV sites (30/50-amp) $40 a night; tents $25; fishing permits extra."),
+ (14549, 40, 40, None, "http://www.lakesiderec.org/reservations.html", "Lakeside Recreational Park: full hookups (to 50-amp) $40 a night."),
+ (14556, 45, 75, None, "https://www.lakeparadisecampingresort.com/copy-of-reservations", "Lake Paradise: partial hookup $45 a night, full-hookup standard $55, deluxe $65, lakefront $75."),
+ (14559, 30, 30, None, "http://www.halstedshideaway.com/rates.html", "Halsted's Hideaway: full hookups $30 a night for 2 adults and children; electric tent $20, primitive $15."),
+ (14606, 30, 40, None, "https://www.arrowheadacrescampground.com/", "Arrowhead Acres: 30-amp with water $30 a night, 50-amp with water $40; primitive tent $20."),
+ (14611, 50, 100, None, "https://www.cladandcordon.com/on-site-rv-camping", "Clad & Cordon: $50 a night standard ($25 for Harvest Hosts members), $100 on holiday weekends."),
+ (14623, 40, 40, None, "https://hungryjacklodge.com/campground-at-hungry-jack-lodge/", "Hungry Jack Lodge: water and 30-amp sites $40 a night for 2; $8 per extra person."),
+ (14630, 41, 41, None, "https://campsafehaven.com/", "Camp Safe Haven: $41 a night with water and electric, for 2 adults and 2 children; 6% tax."),
+ (14632, 45, 60, None, "https://elkharbor.com/", "Elk Harbor: full hookups $50 a night (30 or 50 amp); weekend rate $45 (30-amp) or $60 (50-amp) with a 2-day minimum."),
+ (14656, 40, 40, None, "https://shearinrv-park.com/rates.html", "Shearin's: $40 a night with full hookups."),
+ (14657, 48, 48, None, "https://campdws.com/rv-sites", "Dogwood Springs: 30/50-amp full hookups $48 a night for 2 people."),
+ (14660, 35, 37, None, "https://williamodarbyrv.com/pricing", "William O. Darby: full hookups $35 a day (30-amp) or $37 (50-amp), plus tax."),
+ (14662, 40, 40, None, "https://backintheozarksrv.wixsite.com/mysite", "Back In The Ozarks: 30- or 50-amp full hookups $40 a day."),
+]
+CAD = []
