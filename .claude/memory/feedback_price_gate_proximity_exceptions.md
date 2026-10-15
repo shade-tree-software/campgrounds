@@ -5,6 +5,8 @@ metadata:
   type: feedback
 ---
 
+**Good Sam discount counts (AWH 2026-10-14):** AWH is a Good Sam member, so at a Good Sam Park (discounts.good_sam true) test the park's posted Good Sam rate, else rate less 10%, against the gate. fees keeps the undiscounted rate. Restored 2227, 4943, 7385, 7860 on it.
+
 Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Sun brand skip, because their location is unusually useful:
 
 - 14882 Fort Myers / Pine Island KOA Holiday (FL, $104.50+) - near one of the family homes (AWH 2026-10-10).
