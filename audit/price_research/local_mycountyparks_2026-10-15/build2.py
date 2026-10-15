@@ -21,6 +21,10 @@ ROWS = [
   "Clayton County: primitive (rough) camping only, $15 a night; reservable online or first come, first served."),
  (3162, 20, 20, "https://www.buchanancounty.iowa.gov/services/conservation/jakway_campground.php",
   "Buchanan County: $20 a night with electricity, $15 without."),
+ (3091, 10, 10, M + "/county/floyd/Park/Colwell-Park",
+  "Floyd County: primitive camping $10 a night (pit toilets, no hookups)."),
+ (3135, 10, 10, M + "/county/floyd/Park/West-Idlewild-Campground",
+  "Floyd County: primitive camping $10 a night, self-registration (pit toilets, no hookups)."),
  (3190, 25, 30, M + "/county/black-hawk/park/black-hawk-park/Activity/Camping",
   "Black Hawk County: electric $25 a night, full hookup $30, non-electric $18; 'fees subject to change'."),
 ]
