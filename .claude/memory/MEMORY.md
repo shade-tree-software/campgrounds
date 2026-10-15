@@ -11,7 +11,7 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [What's actually left](project_remaining_work_map.md) — CURRENT 2026-10-14 eve: AWH's #3-#8f applied; 37768ea+211ab03 NOT pushed; waiting on AWH (long-stay criteria, (a), (b)); then Firefly 55, Let's Camp 57, ReserveAmerica 66; phases 6/7
+- [What's actually left](project_remaining_work_map.md) — CURRENT 2026-10-14 night: 82d7cd8 pushed (not deployed); 765e453, 2cf9144, f4298ca (Firefly 55 done), 0eef68a NOT pushed; next Let's Camp 57, ReserveAmerica 66; phases 6/7
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
 - [Hidden rates playbook](reference_hidden_rates_playbook.md) — find a private campground's real rate/minimum/seasonal share: one-browser driver + engine helpers (reservationpleinair, reservationcamping, RéservPro, RMS) + Wayback imagery + Bonjour Québec; recipes in audit/private_gap_browser/README.md
@@ -34,7 +34,7 @@
 - [Campground vetting discipline](feedback_campground_vetting_discipline.md) — no unconfirmed/boilerplate entries; "reservations required" needs a real booking channel; unrated needs firsthand confirmation
 - [Rate figures need a dated source](feedback_note_rate_sourcing.md) — operator/booking channel is the authority; unclaimed RoverPass tables go stale & falsely corroborate; HipCamp SSR JSON has exact per-site prices; Campendium for dated firsthand rates
 - [A missing rate is unresearched](feedback_missing_rate_is_unresearched.md) — AWH 2026-10-11: rate-less entries were mostly sweeps that never dug; follow the Reserve/Book link (and council minutes / fee PDFs) and quote a date before recording "no rate posted" or proposing a drop
-- [Require a live web presence](feedback_require_live_web_presence.md) — private park needs a website (or a Google listing: open, phone, 25+ reviews) AND a posted rate (or RV Life $/$$), or an active booking site (AWH 2026-10-14)
+- [Require a live web presence](feedback_require_live_web_presence.md) — private parks need a PRICE and a PRESENCE indicator (AWH 2026-10-14): booking page = both; price = posted rate or RV Life $/$$; presence = website+phone or Google open/25+ reviews/phone
 - [Follow the park's published identity](feedback_follow_published_identity.md) — AWH 10-14 #6/#8: its published phone, current name, actual operator; strip dead/unclaimed Hipcamp + RoverPass links; no need to ask
 - [Re-audit contrary waterfront claims](feedback_reaudit_contrary_waterfront_claims.md) — AWH 10-14 #7: an operator/engine water claim that differs from ours triggers the gate, both ways; type-level tags prove nothing
 - [Beware campground content farms](feedback_beware_campground_content_farms.md) — pinecliffresort.net fakes being a parent operator; check a domain's index before trusting it; no entry cites it (2026-10-11)
@@ -81,7 +81,7 @@
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
 - [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1/2/3/5, popups, rating + hookups filters done; left: phase 6 registry rows + phase 7
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
-- [Price research #2 handoff](project_price_research.md) — agencies, visited stays, Campspot, RoverPass (bookable + operator pass), CampLife priced 2026-10-12..14; open AWH asks, per-engine recipes, pricing rules
+- [Price research #2 handoff](project_price_research.md) — agencies, visited stays, Campspot, RoverPass, CampLife, Firefly priced 2026-10-12..14; open AWH asks, per-engine recipes, pricing rules
 - [Campspot pricing recipe](reference_campspot_api.md) — private JSON API via the driver (x-client-type: CONSUMER); pace 3 s (CloudFront blocks ~590 calls/6.5 min); copy slugs, never compose them
 - [Set Your Sites + Let's Camp APIs](reference_small_engine_apis.md) — both answer plain public JSON (no browser): per-site price/length/hookups/walk-up (SYS), open dates, max RV length, "from" price (Let's Camp); campreservations.ca now redirects to Campspot's home page
 - [RoverPass pricing recipe](reference_roverpass_api.md) — plain-HTTP GraphQL, no browser; isBookable = a claimed listing; unclaimed rate tables never count; traps inside
