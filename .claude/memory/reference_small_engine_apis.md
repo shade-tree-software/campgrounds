@@ -14,6 +14,7 @@ Found 2026-10-14 pricing parks that had left Campspot ([[reference_campspot_api]
 - Traps: one `siteLength` on every site, horse stalls included, is a default rather than a measurement (Adams County Fairgrounds 2765: all 60 ft). The calendar's last open day can differ from the page's stated closing (2765: empty from October 17, the page says October 19).
 
 **Let's Camp** (Canadian; park pages at `letscamp.ca/camps/<slug>`; 57 tier-only entries link it as of 2026-10-14):
+- **Send `X-Tenant-Type: camp`** on every API call (since ~2026-10-14; without it every call answers 400 `Invalid tenant type`). Off-season camps answer `status: closed` with no `minimumPrice`; `futureAvailableDates` entries can be dicts.
 - `https://letscamp.ca/api/camps/<slug>?locale=en` gives `camp.minimumPrice` (the page's "Price starting at"), `camp.info.includeTax`, `camp.settings.minNights`/`maxNights`, the refund policies, `camp.siteTypes` (empty for McNab), and `metaData.futureAvailableDates` (the season's open dates) and `metaData.maxRVLength`.
 - `https://letscamp.ca/api/camps/<camp._id>/status?locale=en` gives `status` and `earliestBookingDate` (when bookings reopen).
 - The "from" price matched none of McNab 9254's posted rates (C$20 against C$25-42), so price from the operator's own rate page where there is one.

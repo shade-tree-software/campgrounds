@@ -1,12 +1,14 @@
 ---
 name: project_remaining_work_map
-description: "CURRENT 2026-10-14 night: AWH's long-stay/(a)/(b) answers applied and pushed (82d7cd8, not deployed); 765e453, 2cf9144, f4298ca (Firefly 55 done: 31 priced, 4 dropped) committed NOT pushed; next Let's Camp 57, ReserveAmerica 66 | What is left on the campground database - CURRENT block at the top (2026-10-14 evening: AWH's #3-#8f calls applied, 37768ea + 211ab03 NOT pushed, waiting on AWH for the long-stay criteria and questions (a)/(b); all gaps closed, note-scan queue zero; price research active - 6,146 tier-only + 83 unpriced; the Campspot entries and the 55 bookable RoverPass listings and CampLife 88 priced, all deployed 2026-10-14; next Firefly 55, Let's Camp 57, ReserveAmerica 66; schema phases 6/7 open); below it the 2026-09-21 map"
+description: "CURRENT 2026-10-14 night: AWH's long-stay/(a)/(b) answers applied and pushed (82d7cd8, not deployed); 765e453, 2cf9144, f4298ca (Firefly 55 done: 31 priced, 4 dropped) committed NOT pushed; Let's Camp 57 done; next ReserveAmerica 66 | What is left on the campground database - CURRENT block at the top (2026-10-14 evening: AWH's #3-#8f calls applied, 37768ea + 211ab03 NOT pushed, waiting on AWH for the long-stay criteria and questions (a)/(b); all gaps closed, note-scan queue zero; price research active - 6,146 tier-only + 83 unpriced; the Campspot entries and the 55 bookable RoverPass listings and CampLife 88 priced, all deployed 2026-10-14; next Firefly 55, Let's Camp 57, ReserveAmerica 66; schema phases 6/7 open); below it the 2026-09-21 map"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
   modified: 2026-10-11T16:39:30.729Z
 ---
+
+**UPDATE 2026-10-14 (late night):** Let's Camp 57 DONE (30 priced, 27 kept, 0 dropped; audit/price_research/letscamp_2026-10-14/; the API now needs `X-Tenant-Type: camp`, and `/api/camps` lists the whole directory with slug, coords and startingAtPrice; saskregionalparks.ca is behind a human captcha). Pushed through 77508fa (Good Sam gate). Next ReserveAmerica 66.
 
 **UPDATE 2026-10-14 (night):** AWH answered the long-stay/(a)/(b) questions; applied and PUSHED (not deployed) as 82d7cd8 (78 Google-listing parks restored, 26 dropped, long-stay five tests at a 2-night minimum, older over-limit entries left, RV Life $/$$ or a 25+-review open Google listing with a phone can stand in for a rate or a website). Committed, NOT pushed: 765e453 (5 restored under the Google rule), 2cf9144 (long-stay follow-ups, Cedar Beach ON dropped), f4298ca (Firefly 55: 31 priced, 20 kept, 4 dropped - Sugar Creek Glen, Triple J $52.80 border call, Mountain Valley NH, Sundance Village AZ on test 5; recipe in audit/price_research/firefly_2026-10-14/). Next: Let's Camp 57, ReserveAmerica 66, then Jetty Park 13374 / Red Rock 13594 under #3, Rez parks 5123/13442, spring re-checks, Rutlader 2212 after 11-01, Claybanks 3960. Unvetted leads: Desert Springs AZ, Pisgah View NC.
 
