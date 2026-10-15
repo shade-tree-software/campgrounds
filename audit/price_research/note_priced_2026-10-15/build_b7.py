@@ -1,0 +1,23 @@
+ROWS = [
+ (14394, 50, 50, None, "https://www.woods-n-watertrails.com/rates.html", "Woods-n-Water Trails: $50 nightly, $300 weekly, $900 monthly; most sites are 6-month or annual residencies."),
+ (14427, 60, 60, None, "https://www.sebringgrovervresort.com/rv-living/", "Sebring Grove: RV sites $60 a day including all utilities, $300 a week."),
+ (14439, 45, 45, None, "https://bamacampground.com/accommodations/rv-sites/", "Bama Campground: RV sites from $45 a night."),
+ (14447, 35, 35, 5, "https://lakeeufaulacampground.com/camping", "Lake Eufaula Campground: 30- and 50-amp full hookups $35 a night plus 10% tax; one-time $5 processing fee per reservation."),
+ (14448, 50, 50, None, "https://camelliarvpark.com/rates/", "Camellia: full hookups from $50 a night, $175 a week."),
+ (14449, 45, 45, None, "https://www.djspeanutpatchrvpark.com/", "DJ's Peanut Patch: full-hookup pull-throughs $45 a night plus tax; $250 a week."),
+ (14459, 49.5, 49.5, None, "https://www.ponderosaco.com/camping/", "Ponderosa (Antonito): RV sites $49.50 a day for 2 people."),
+ (14460, 25, 25, None, "https://www.lakecapote.com/campground/", "Lake Capote: RV sites $25 a day for the general public ($150 weekly); tents $18."),
+ (14461, 38, 38, None, "https://www.naturitarvpark.com/", "Naturita RV Park: RV sites from $38 a night; tents from $25."),
+ (14466, 40, 40, None, "https://www.burlingtonrvparks.com/", "Burlington RV Park: $40 a night including taxes."),
+ (14483, 35, 35, None, "https://clermontlionsclub.com/rates/", "Clermont Lions Club: standard back-ins from $35 a night, $245 a week."),
+ (14494, 38, 45, None, "https://lakehilbertcampground.com/rates.htm", "Lake Hilbert: campsites $45 a day Memorial Day through September, $38 off-season, plus 5.5% tax; tents $30."),
+ (14508, 25, 35, None, "https://www.trailheadcnc.com/camping", "Trailhead Cabins and Camping: full hookups $35 a night ($25 for a 30-amp camper)."),
+ (14510, 35, 35, None, "https://desotobendrvresort.com/", "DeSoto Bend: full hookups $35 a night, $220 a week."),
+ (14517, 30, 55, None, "https://www.yorkkampground.com/policies.htm", "York KAMPground: water/electric $30 (30-amp) or $35 (50-amp), full hookups $50 / $55, plus tax, for 2 people."),
+ (14525, 35, 60, None, "https://www.millcreekcampground.com/rates", "Mill Creek: 30-amp water/electric $45, full hookups $50 (30-amp) / $60 (50-amp), electric-only creekside $35."),
+ (14528, 40, 44, None, "https://deergrovervpark.com/rates/", "Deer Grove: 30-amp $40 a night, 50-amp $44."),
+ (14532, 45, 45, None, "https://sundownrvpark.net/", "Sundown: $45 a night including electricity; $250 a week."),
+ (14536, 35, 35, None, "http://www.eaglervparkks.com/Services.html", "Eagle RV Park: $35 a day, paid in advance; $2 per extra adult over 2."),
+ (14538, 35, 35, None, "https://calvinsrvcamping.com/campers/", "Calvin's: full-hookup pull-throughs $35 a night including electric; no-hookup sites $18."),
+]
+CAD = []
