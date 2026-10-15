@@ -29,3 +29,5 @@ Built 2026-10-08 during [[project-canada-no-rate-followup]]; of 72 Quebec "no_ra
 - 2027 booking was mostly not open in October 2026: use the posted current-season table or any open date.
 - WebRez room searches sit behind a Cloudflare Turnstile frame: never get past it - that is the one hold the Canada no-holds rule keeps (BC: Riverside, Crazy Creek, Cedar Beach).
 - When the live operator site is behind a bot check, its raw Wayback capture (`web.archive.org/web/<ts>id_/<url>`) still names the engine and client id (Killam Paradise Valley -> RMS 11545).
+- **Strip HTML comments before reading a page** (3c145a2): Liberty Haven AZ keeps an obsolete rate table inside a comment ("REMOVE ALL OBSOLETE PRICING"), and a reader that dropped only scripts and styles reported it as published.
+- **ParkWithUs (parkwith.us/camps/<slug>)** quotes only through its calendar: in the driver, click `td[data-day="YYYY-MM-DD"] button` for the arrival day and again for the departure day, then Next twice; the cart then shows the site price (RV Park Place, Sonny's RV Park, 2026-10-14).

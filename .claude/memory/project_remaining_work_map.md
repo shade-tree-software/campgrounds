@@ -1,12 +1,14 @@
 ---
 name: project_remaining_work_map
-description: "What is left on the campground database - CURRENT block at the top (2026-10-14: all gaps closed, note-scan queue zero; price research active - 6,146 tier-only + 83 unpriced; the Campspot entries and the 55 bookable RoverPass listings and CampLife 88 priced, all deployed 2026-10-14; next Firefly 55, Let's Camp 57, ReserveAmerica 66; schema phases 6/7 open); below it the 2026-09-21 map"
+description: "What is left on the campground database - CURRENT block at the top (2026-10-14 evening: AWH's #3-#8f calls applied, 37768ea + 211ab03 NOT pushed, waiting on AWH for the long-stay criteria and questions (a)/(b); all gaps closed, note-scan queue zero; price research active - 6,146 tier-only + 83 unpriced; the Campspot entries and the 55 bookable RoverPass listings and CampLife 88 priced, all deployed 2026-10-14; next Firefly 55, Let's Camp 57, ReserveAmerica 66; schema phases 6/7 open); below it the 2026-09-21 map"
 metadata:
   node_type: memory
   type: project
   originSessionId: 697b5c76-5652-4131-bd7c-1761a58eb19c
   modified: 2026-10-11T16:39:30.729Z
 ---
+
+**UPDATE 2026-10-14 (evening):** AWH's answers to the RoverPass/CampLife report are applied ([[project_price_research]]): pushed and deployed through 3409ab6; 37768ea (RoverPass operator pass: 104 priced, 64 dropped, 143 unclaimed links removed) and 211ab03 (78 Google-amendment drops) are committed and NOT pushed. Waiting on AWH: the long-stay criteria (proposed), (a) older over-limit entries, (b) phone-only parks with no posted rate. Then Firefly 55, Let's Camp 57, ReserveAmerica 66.
 
 **UPDATE 2026-10-14 (late):** the 88 CampLife-booked tier-only entries are worked (83 priced, batches 25-31 through 5a7f8c2, pushed and deployed 2026-10-14; [[project_price_research]]); next Firefly 55, Let's Camp 57, ReserveAmerica 66.
 
