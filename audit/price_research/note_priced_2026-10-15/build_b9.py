@@ -1,0 +1,25 @@
+ROWS = [
+ (14672, 45, 45, None, "https://www.paradise-rvpark.com/rates-and-amenities", "Paradise RV Park: $45 a day plus tax for 2 adults; $250 a week."),
+ (14679, 35, 40, None, "https://www.mundohotsprings.com/lodging-and-camping.html", "Mundo Hot Springs: full hookups (30/50-amp) $40 a night, power and water $35; tents $20; campers soak for $5."),
+ (14701, 45, 45, None, "https://www.akers-rv-park.com/", "Akers: $45 a night including electricity and tax (rates effective January 2026); 11% discounts for Good Sam, AARP, military and others."),
+ (14703, 40, 40, None, "https://eaglerockrvpark.com/rv-lots/", "Eagle Rock: full hookups $40 a night (up to 6 nights) plus 8.5625% NM gross receipts tax."),
+ (14714, 50, 50, None, "https://timeoutrvpark.com/rates-a-reservations/", "Time Out: $50 a night; $10 off for military and veterans."),
+ (14720, 40, 40, None, "https://www.rvpmhp.com/our-parks/lake-murray-rv-park/", "Lake Murray RV Park: $40 a day, all bills included; $180 a week."),
+ (14743, 45, 45, None, "https://www.breezelake.com/rv-sites/", "Breeze Lake: $45 a day plus electric; $45 deposit."),
+ (14744, 45, 45, None, "https://www.twinpalmstexas.com/rv-sites/", "Twin Palms: $45 a day plus electric; $45 deposit."),
+ (14804, 40, 50, None, "https://rjourney.com/park/tx/lake-conroe/", "Lake Conroe RV Campground (Rjourney): overnight rates from $40; the booking panel shows from $50 a night; 4 guests included."),
+ (14826, 30, 30, None, "https://suncountryrv.com/rates/", "Sun Country: full hookups from $30 a night; electric and taxes not included."),
+ (14832, 50, 50, None, "https://saddlemountainrv.com/rates", "Saddle Mountain: $50 a day plus tax for 2, electric included; $250 a week."),
+ (14836, 25, 25, None, "https://www.rvresortquailridge.com/rates.html", "Quail Ridge: $25 a night including electric."),
+ (14884, 25, 40, None, "https://cedarbendgolf.com/rv-parking", "Cedar Bend Golf Course: $40 a night, or $25 a night for multi-night stays; electric and non-potable water, no sewer."),
+ (14896, 45, 45, None, "https://peacefulpinesrv.com/rates-1", "Peaceful Pines: full hookups $45 a night plus tax, for up to 4."),
+ (14897, 40, 50, None, "https://www.carltonrvpark.com/", "Carlton: 30-amp full hookups $40 a night, 50-amp $50, tax included."),
+ (14906, 19, 37, None, "https://quinaultbeach.com/rv-parking/", "Quinault Beach Resort: RV spaces $27 Sunday-Thursday and $37 Friday-Saturday; $19 / $29 from Labor Day to Memorial Day."),
+ (14915, 35, 45, None, "https://monovillage.com/camp-sites/", "Annett's Mono Village: hookup sites $45 a day for 2 plus tax, dry sites $35; no reservations."),
+ (14917, 35.70, 37.74, None, "https://www.sunsetharborrvpark.com/rates.html", "Sunset Harbor: 30-amp back-ins $35.70 a night, 30/50-amp pull-throughs $37.74, for 2 people; plus 2% occupancy tax."),
+ (14919, 40, 40, None, "https://americaneaglervpark.com/rates/", "American Eagle: 50-amp full hookups $40 a night; non-hookup and tent $20."),
+]
+CAD = [
+ (14965, 50, 55, None, "https://waysidecampground.com/", "Wayside: 30-amp 2- and 3-way sites C$50, 50-amp 3-way C$55; unserviced tent sites C$45."),
+ (14987, 52, 60, 7, "https://www.glowingembersrvpark.com/pages/acheson-rv-park-camping-storage-pricing", "Glowing Embers: from C$52 (30-amp back-in), C$55 (30-amp pull-through), C$60 (50-amp pull-through), plus 5% GST; C$7 reservation fee."),
+]
