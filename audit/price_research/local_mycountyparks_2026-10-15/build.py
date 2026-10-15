@@ -1,0 +1,128 @@
+"""Findings for apply.py from the mycountyparks.com reads of 2026-10-15 (mcp_fees.jsonl + mcp_sample.jsonl).
+Each row: id, low, high, reservation_fee (the platform's $4 online processing fee, where the county's page states it),
+note. nightly_low/high = the RV (electric/hookup) sites; non-electric/tent prices are in the note.
+python3 -I build.py > findings.json"""
+import json
+SRC = {}
+for l in open("mcp_fees.jsonl"):
+    r = json.loads(l)
+    SRC[r["id"]] = r.get("park_url") or r["src"]
+R = 4  # mycountyparks processing fee per reservation
+ROWS = [
+ (2967, 20, 20, None, "Pottawattamie County: 30- and 50-amp sites $20 a night; 6 non-electric pull-through sites."),
+ (2968, 24, 26, R, "Sioux County: water/electric $24 a night, full hookup $26 walk-up; $29 and $31 when reserved online. Area entrance $5 a vehicle a day or $20 a year.", {"entrance": {"resident": 5, "nonresident": 5, "per": "vehicle_day"}}),
+ (2970, 20, 20, None, "Pottawattamie County: 30/50-amp RV sites $20 a night."),
+ (2973, 15, 15, None, "Cass County: electric sites $15 a night, non-electric $10; self-registration, first come, first served."),
+ (2974, 20, 20, None, "Ida County: water/electric sites $20 a night ($120 a week); primitive $15."),
+ (2975, 14, 14, None, "Carroll County: 30-amp electric sites $14 a night, tent $10; first come, first served."),
+ (2976, 20, 20, R, "O'Brien County: $20 a night plus a $4 fee per reservation."),
+ (2980, 25, 25, None, "Sac County: modern sites $25 a night, primitive $15."),
+ (2981, 18, 18, None, "Carroll County: 30/50-amp electric sites $18 a night, tent $10; first come, first served."),
+ (2988, 27, 35, R, "Adams County: walk-up full service $30, electric-water $27; online, weekends $35 / $32 and Sunday-Thursday $30 / $27. Fri+Sat together, five nights on holidays. October-April every site $20."),
+ (2994, 25, 25, R, "O'Brien County: $25 a night plus a $4 processing fee."),
+ (2998, 17, 17, None, "Crawford County: electric $17 a night, non-electric $12; self-registration only."),
+ (3000, 22, 27, None, "Sioux County: electric $22 a night, full hookup $26, a reservable site $27 online; tent $17. Most sites first come, first served."),
+ (3006, 18, 18, None, "Carroll County: 30/50-amp electric $18 a night, tent $10; first come, first served."),
+ (3008, 25, 25, None, "Harrison County: $25 a night per site, tent-only area $20; first come, first served."),
+ (3009, 25, 30, R, "Clay County: $25-30 a night by site, online or self-registration; Thu-Sat booked together, five nights on holidays."),
+ (3012, 25, 25, R, "Woodbury County: RV sites $25 a night; two-night minimum on holiday weekends; 14-day limit."),
+ (3017, 20, 20, None, "O'Brien County: $20 a night."),
+ (3021, 25, 25, None, "Harrison County: $25 a night per site; first come, first served."),
+ (3023, 20, 20, None, "Crawford County: $20 a night; 14-day limit."),
+ (3024, 12, 12, R, "Jasper County: $12 a night; two-night minimum on weekends; 14-day limit."),
+ (3025, 20, 20, R, "Hamilton County: electric sites $20 a night plus a $4 transaction fee."),
+ (3027, 20, 20, None, "Wayne County: $20 a night; first come, first served."),
+ (3029, 20, 20, None, "Kossuth County: camper sites (Top and Bottom loops) $20 a night, tent sites $10, paid on arrival."),
+ (3033, 20, 20, R, "Hancock County: $20 a night; two-night minimum on weekends, three on holidays; 14-day limit."),
+ (3035, 23, 27, None, "Story County: water/electric $23 a night, full hookup $27; two-night minimum on weekends, three on holidays."),
+ (3038, 20, 20, None, "Boone County: 50/30-amp sites $20 a night."),
+ (3039, 25, 25, R, "Clarke County: $25 a night plus a $4 processing fee per transaction."),
+ (3040, 25, 25, None, "Hancock County: $25 a night."),
+ (3041, 25, 25, None, "Calhoun County: water/electric and full-hookup sites all $25 a night; primitive tent sites $15."),
+ (3042, 20, 20, None, "Humboldt County: $20 a night, mid-April to mid-October; first come, first served."),
+ (3044, 23, 23, None, "Story County: $23 a night; two-night minimum on weekends, three on holidays."),
+ (3048, 20, 25, None, "Humboldt County: $20 a night, full hookup $25."),
+ (3049, 25, 30, R, "Webster County: full-hookup sites $25 a night walk-up, $30 reserved; two-night minimum on weekends."),
+ (3050, 25, 30, None, "Wright County: electric-only $25 a night, water and sewer sites $30; first come, first served."),
+ (3051, 20, 20, None, "Guthrie County: $20 a night per camping unit; first come, first served."),
+ (3052, 20, 20, None, "Cerro Gordo County: $20 a night, registered online before occupying the site; cards only. Early May to early October."),
+ (3053, 20, 20, None, "Decatur County: electric $20 a night, non-electric $15; first come, first served."),
+ (3054, 26, 31, None, "Hamilton County: water/electric sites $26 a night, full hookup $31."),
+ (3057, 25, 30, R, "Marion County: full-hookup 50-amp sites $30 a night (sites 71-76 $25)."),
+ (3059, 20, 20, None, "Guthrie County: $20 a night per camping unit; first come, first served."),
+ (3060, 15, 15, None, "Worth County: four electric-only (110 V) sites, $15 a night."),
+ (3065, 30, 30, R, "Marion County: $30 a night; two-night minimum on weekends, three on holidays, longer on Knoxville Nationals weeks; 14-day limit."),
+ (3066, 30, 30, R, "Marion County: $30 a night; two-night minimum on weekends, three on holidays, longer on Knoxville Nationals weeks; 14-day limit."),
+ (3067, 15, 15, None, "Kossuth County: electric sites $15 a night, primitive $10."),
+ (3068, 20, 20, None, "Decatur County: electric $20 a night, non-electric $15; first come, first served."),
+ (3069, 20, 20, R, "Kossuth County: $20 a night; half the sites reservable in peak season."),
+ (3070, 25, 25, None, "Greene County: $25 a night."),
+ (3074, 20, 20, None, "Union County: electric $20 a night, non-electric $15."),
+ (3078, 20, 20, None, "Cerro Gordo County: $20 a night."),
+ (3081, 20, 20, None, "Floyd County: water/electric sites $20 a night."),
+ (3082, 22, 27, None, "Chickasaw County: $22 a night, some sites $27; two-night minimum on weekends, three on holidays."),
+ (3083, 20, 20, None, "Bremer County: 20/30/50-amp electric $20 a night, non-electric $15; first come, first served."),
+ (3084, 20, 25, None, "Butler County: $20 a night walk-up, $25 for a reservable site."),
+ (3086, 17, 17, None, "Van Buren County: $17 a night, rising to $20 in 2027; Fri+Sat booked together."),
+ (3087, 35, 35, None, "Black Hawk County: $35 a night; two-night minimum (four on holidays), a few sites seven nights."),
+ (3088, 25, 25, R, "Jasper County: Bison Ridge sites $25 a night (Mariposa loop $12); two-night minimum on weekends; 14-day limit."),
+ (3089, 20, 22, None, "Bremer County: electric $20 a night, gravel electric $22, non-electric $15; first come, first served."),
+ (3093, 20, 20, None, "Poweshiek County: electric $20 a night, primitive $10; first come, first served."),
+ (3095, 30, 30, None, "Buchanan County: full hookup $30 a night, up to 5 people (more $5)."),
+ (3098, 20, 20, None, "Grundy County: $20 a night, any site; first come, first served; 14-day limit."),
+ (3101, 30, 35, None, "Black Hawk County: $30-35 a night by site; two-night minimum, four on holiday weekends."),
+ (3108, 20, 20, None, "Iowa County: electric $20 a night May-September ($10 October-April); tent $10 ($7)."),
+ (3109, 20, 20, None, "Winneshiek County: electric $20 a night, non-electric $15; first come, first served."),
+ (3110, 17, 22, None, "Monroe County: electric-only $17 a night, full hookup $22."),
+ (3113, 15, 15, None, "Buchanan County: electric $15 a night, non-electric $10; first come, first served."),
+ (3115, 30, 30, None, "Black Hawk County: $30 a night; two-night minimum, four on holiday weekends."),
+ (3119, 17, 17, None, "Van Buren County: $17 a night, rising to $20 in 2027."),
+ (3120, 20, 20, None, "Bremer County: electric $20 a night, non-electric $15; first come, first served."),
+ (3121, 20, 25, None, "Bremer County: lower electric $20 a night, upper water/electric $25, non-electric $15; first come, first served."),
+ (3131, 20, 20, None, "Chickasaw County: $20 a night."),
+ (3138, 25, 25, None, "Des Moines County: electric $25 a night, non-electric $10; walk-up only."),
+ (3140, 15, 15, None, "Cedar County: electric $15 a night, tent $10."),
+ (3141, 25, 30, None, "Des Moines County: $25-30 a night by site; two-night minimum for a reservation, three on holidays."),
+ (3142, 15, 15, None, "Clayton County: $15 a night; two-night minimum on weekends, three on holidays."),
+ (3144, 30, 30, None, "Linn County: $30 a night; Fri+Sat booked together; non-refundable."),
+ (3145, 22, 30, None, "Jones County: electric $22 a night, water/50-amp $25, full hookup $30; primitive $15."),
+ (3146, 26, 26, R, "Lee County: $26 a night online; some walk-up sites $15. Two-night minimum on weekends."),
+ (3148, 30, 30, None, "Clinton County: $30 a night reserved; pack-in sites $15."),
+ (3149, 20, 20, None, "Johnson County: electric sites $20 a night."),
+ (3150, 30, 30, None, "Dubuque County: $30 a night."),
+ (3155, 15, 15, None, "Clayton County: $15 a night; two-night minimum on weekends, three on holidays."),
+ (3157, 30, 30, None, "Dubuque County: $30 a night."),
+ (3158, 15, 15, None, "Johnson County: electric $15 a night, primitive $10."),
+ (3166, 30, 30, None, "Dubuque County: $30 a night."),
+ (3168, 30, 30, None, "Linn County: $30 a night; Fri+Sat booked together; non-refundable."),
+ (3171, 25, 25, R, "Clayton County: water/electric sites $25 a night, reserved online only (cashless); three-night minimum on holidays."),
+ (3172, 25, 26, R, "Lee County: $26 a night online, walk-up sites $25; two-night minimum on weekends."),
+ (3178, 17, 17, None, "Louisa County: $17 a night."),
+ (3179, 25, 25, None, "Jackson County: $25 a night; 2-week limit. The rail bridge into the park clears 12 ft 8 in."),
+ (3180, 25, 25, None, "Jackson County: $25 a night, every site 20/30/50-amp; first come, first served."),
+ (3182, 17, 17, None, "Louisa County: $17 a night."),
+ (3183, 30, 35, None, "Linn County: $30-35 a night by site; non-refundable."),
+ (3191, 21, 31, None, "Hamilton County: electric $21 a night, full hookup $31."),
+ (3206, 20, 20, None, "Cerro Gordo County: $20 a night."),
+ (3217, 20, 25, None, "Monona County: electric $20 a night, full hookup $25, non-electric $15; first come, first served."),
+ (3229, 18, 18, R, "Boone County: electric sites $18 a night plus a $4 processing fee."),
+ (3246, 30, 30, None, "Dubuque County: $30 a night."),
+ (3248, 30, 30, None, "Linn County: $30 a night; Fri+Sat booked together; non-refundable."),
+ (3250, 25, 25, None, "Clinton County: $25 a night; two-night minimum on weekends, three on holidays."),
+ (3255, 30, 30, None, "Dubuque County: $30 a night."),
+ (3258, 25, 26, R, "Lee County: $26 a night online, walk-up sites $25; two-night minimum on weekends."),
+]
+out = []
+for row in ROWS:
+    i, lo, hi, rf, note = row[:5]
+    fees = {"nightly_low": lo, "nightly_high": hi, "currency": "USD"}
+    if rf:
+        fees["reservation_fee"] = rf
+    if len(row) > 5:
+        fees.update(row[5])
+    fees["checked"] = "2026"
+    fees["note"] = note + " Read 2026-10-15."
+    out.append({"id": i, "fees": fees,
+                "source": SRC[i] + " (the county's Fees text on mycountyparks.com, and its site pages; "
+                          "audit/price_research/local_mycountyparks_2026-10-15/), read 2026-10-15"})
+print(json.dumps(out, ensure_ascii=False, indent=1))
