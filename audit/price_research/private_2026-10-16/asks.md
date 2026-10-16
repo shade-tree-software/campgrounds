@@ -10,3 +10,4 @@
 - DEAD? 5937 The Haven Campground (ND): havencampground.com is a GoDaddy for-sale parked page (2026-10-16).
 - CLEANUP 5101 Haas-Cienda (MS): unclaimed RoverPass rate table only; not used.
 - CHECK 4478 Doe Valley Campground (TN): website is an unfilled theme template (Lorem street, $35.99 placeholder).
+- DEAD? 9416 Prairie Oak Campground (MB): prairieoakcampground.com now serves a gambling spam site (2026-10-16).
