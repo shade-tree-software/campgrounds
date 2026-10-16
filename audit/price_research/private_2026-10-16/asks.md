@@ -25,3 +25,6 @@
 - CHECK 3426 Alana Springs (WI): only an aggregator 'Rates at a glance' page captured; not used. 3401 Broken Bow (WI): site-number price list unclear on which are RV sites; not used.
 - DEAD 1497 Lizzie's Campground (NY): domain for sale. 3857 Dodge City Campground (MI): domain for sale.
 - STALE 11186 Alsea River RV Park (OR): own page shows '2022 Rates' ($40). Not used. CHECK 11161 Holiday RV Park (OR): posted rates already include the club discount; regular rate not posted.
+- STALE 14410 Snowbird South (FL): '2024 Rates' ($75). 4802 Cedars Lake (FL): rates 'Last Updated 11/15/2024' ($35). Not used.
+- CHECK 14419 Lake Letta (FL) and 4765 Lake in the Forest (FL): 14419 is a 55+ community (age rule); 4765 has a 3-night minimum on every stay (marked in min_stay).
+- SKIP Encore 14400/14405/14417 (FL): pages are Thousand Trails membership offers only, no nightly rate.
