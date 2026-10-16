@@ -13,6 +13,7 @@ LINK = re.compile(r"camp|rv|rate|fee|reserv|price|lodging", re.I)
 
 def get(u):
     time.sleep(1)
+    u = urllib.parse.quote(u, safe=":/?&=%#+,;@!$~*'()[]")  # hrefs with raw spaces ("Camping and RV sites.html")
     r = urllib.request.urlopen(urllib.request.Request(u, headers={
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/140 Safari/537.36"}), timeout=30)
     b = r.read(3_000_000)
