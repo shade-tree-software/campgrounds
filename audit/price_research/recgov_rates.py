@@ -37,7 +37,7 @@ from datetime import date
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 CACHE = os.path.join(ROOT, "trip_data", "recgov_rates.json")
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/140.0"
-TODAY = date(2026, 10, 9).isoformat()
+TODAY = date.today().isoformat()
 KEEP = re.compile(r"^(STANDARD|RV) (NON)?ELECTRIC$|^STANDARD FULL HOOKUP$|^RV FULL HOOKUP$")
 DROP_NAME = re.compile(r"DBL|DOUBLE|GROUP|TENT|WALK|HIKE|BOAT|CABIN|YURT|LOOKOUT|EQUEST|HORSE|MANAGEMENT|SHELTER|GLAMP|TRIPLE|LONG TERM|MONTHLY|SEASONAL",
                        re.I)
