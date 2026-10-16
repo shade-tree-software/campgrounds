@@ -28,3 +28,10 @@ Neither the park page, its site pages, nor its /Activity/Camping page posts a ca
 - 3170 Oakland Mills Park - Water Works - https://henrycounty.iowa.gov/conservation/
 - 3181 Turtle Creek Park - https://www.mycountyparks.com/county/Delaware/Park/Turtle-Creek-Park
 - 3236 Bailey's Ford Park - https://www.mycountyparks.com/county/Delaware/Park/Baileys-Ford-Park
+
+## 2026-10-16 follow-up
+
+- Benton County (3085 3100 3102 3118 3128 3136) priced from the county's Camping/Rental Policies page: campsites are first come, first served, not booked online.
+- Hardin County (3034 Daisy Long, 3062 Pine Ridge): rates are on hardincountyia.gov/daisy-long and /pine-ridge, but Cloudflare blocks both urllib and the driver browser. Not priced from search snippets.
+- Henry County (3169 3170): henrycounty.iowa.gov/conservation/ is 404 and henrycountyconservation.com resets the connection.
+- Palo Alto (2992): SiteGround captcha. Dubuque, Delaware, Keokuk: no county fee page found.
