@@ -24,3 +24,4 @@
 - CHECK 5336 THOR Elite RV and Shooting Complex (AR): a shooting range with hookups ($50); is it a campground for us? 5257 Harrington RV Sites (AR): page text is about Florida off-season discounts — check the website.
 - CHECK 3426 Alana Springs (WI): only an aggregator 'Rates at a glance' page captured; not used. 3401 Broken Bow (WI): site-number price list unclear on which are RV sites; not used.
 - DEAD 1497 Lizzie's Campground (NY): domain for sale. 3857 Dodge City Campground (MI): domain for sale.
+- STALE 11186 Alsea River RV Park (OR): own page shows '2022 Rates' ($40). Not used. CHECK 11161 Holiday RV Park (OR): posted rates already include the club discount; regular rate not posted.
