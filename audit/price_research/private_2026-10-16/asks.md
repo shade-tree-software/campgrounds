@@ -16,3 +16,4 @@
 - CHECK 1270 Wood's Tall Timber (OH): page lists $45/$60 sites and $75-95 30/50A rates without saying which are RV sites; left unpriced.
 - MINIMUM? 5538 Highway 250 Campground (MN): standing 3-night minimum mid-April through October (the whole season). Priced, min_stay NOT set; keep?
 - CLEANUP 1606 Green River Stables (KY): website field points at guistcreek.com (a different campground).
+- STALE 4597 Cherokee Campground (GA): own site's rates are 2019 (RV $27); not used.
