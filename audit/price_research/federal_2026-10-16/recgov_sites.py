@@ -21,9 +21,9 @@ RVISH = {"RV", "Trailer", "Caravan/Camper Van", "Pickup Camper", "Fifth Wheel", 
 TODAY = date.today().isoformat()
 
 
-def fetch(path):
+def fetch(path, ids=None):
     here = os.path.dirname(os.path.abspath(__file__))
-    search = json.load(open(here + "/search.json"))
+    search = ids or json.load(open(here + "/search.json"))
     cache = json.load(open(path)) if os.path.exists(path) else {}
     for fid in search:
         if fid in cache:
@@ -72,7 +72,7 @@ def summary(sites):
 
 if __name__ == "__main__":
     if sys.argv[1] == "--fetch":
-        fetch(sys.argv[2])
+        fetch(sys.argv[2], sys.argv[3].split(",") if len(sys.argv) > 3 else None)   # optional id list
     else:
         cache = json.load(open(sys.argv[2]))
         search = json.load(open(os.path.dirname(os.path.abspath(__file__)) + "/search.json"))
