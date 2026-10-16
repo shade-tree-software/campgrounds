@@ -28,3 +28,5 @@
 - STALE 14410 Snowbird South (FL): '2024 Rates' ($75). 4802 Cedars Lake (FL): rates 'Last Updated 11/15/2024' ($35). Not used.
 - CHECK 14419 Lake Letta (FL) and 4765 Lake in the Forest (FL): 14419 is a 55+ community (age rule); 4765 has a 3-night minimum on every stay (marked in min_stay).
 - SKIP Encore 14400/14405/14417 (FL): pages are Thousand Trails membership offers only, no nightly rate.
+- STALE 8093 Bonito Hollow (NM): '2023 Daily Rates'. Not used.
+- CHECK age rules: 8096 Hidden Valley Ranch (NM) rates 'based on ... over 55 years old'; 8125 Scenic Canyon (NM) adults-only, one guest 30+, all 15+. Both priced.
