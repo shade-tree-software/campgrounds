@@ -8,3 +8,4 @@
 - STALE 1735 Camp Hauberg (IL): own site posts only 2014 rates (RV W-E-D $25); not used.
 - CLEANUP 6167 Whitetail Creek (MT), 4364 Swamp Fox (SC): website is an unclaimed RoverPass page (rates 'Last Updated 11/15/2024'); not used.
 - DEAD? 5937 The Haven Campground (ND): havencampground.com is a GoDaddy for-sale parked page (2026-10-16).
+- CLEANUP 5101 Haas-Cienda (MS): unclaimed RoverPass rate table only; not used.
