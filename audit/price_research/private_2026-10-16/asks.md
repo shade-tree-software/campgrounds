@@ -11,3 +11,6 @@
 - CLEANUP 5101 Haas-Cienda (MS): unclaimed RoverPass rate table only; not used.
 - CHECK 4478 Doe Valley Campground (TN): website is an unfilled theme template (Lorem street, $35.99 placeholder).
 - DEAD? 9416 Prairie Oak Campground (MB): prairieoakcampground.com now serves a gambling spam site (2026-10-16).
+- CLEANUP 1261 Enon Beach, 1271 Bay Shore (OH): unclaimed RoverPass rate tables only; not used.
+- CHECK 1297 Nelson Ledges Quarry Park (OH): a swimming-quarry/festival venue charging $25-30 per adult per night; is it a campground for us?
+- CHECK 1270 Wood's Tall Timber (OH): page lists $45/$60 sites and $75-95 30/50A rates without saying which are RV sites; left unpriced.
