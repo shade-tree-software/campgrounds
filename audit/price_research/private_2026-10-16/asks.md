@@ -32,3 +32,5 @@
 - CHECK age rules: 8096 Hidden Valley Ranch (NM) rates 'based on ... over 55 years old'; 8125 Scenic Canyon (NM) adults-only, one guest 30+, all 15+. Both priced.
 - STALE 1965 Red Cedar (MO): rates 'Last Updated 11/15/2024'. 2069 Watsons RV Park (MO): rental policy 'Revised January 01, 2019' and a 410 (Maryland) phone. Check that link points at the right park.
 - CHECK 2043 Powell's Creekside Haven (MO): the captured page is a Dyrt listing for Maryland campgrounds. The website field may be wrong.
+- CHECK 8335 Whitesands (ON): rates are per adult ($45/adult/night), not per site. Not priced.
+- STALE-ish 12661 Happy Hearts (ON): '2025 Camping Rates' - used (2025 counts as current).
