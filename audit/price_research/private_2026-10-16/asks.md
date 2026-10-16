@@ -5,3 +5,4 @@
 - CHECK 14482 Quaker Haven Camp (IN): site is a Quaker youth camp; no public RV rate found.
 - CHECK 1381 Gordon's Camping (IN): site sells seasonal sites ($2,900+); a weekend-camping page with no rate.
 - CHECK 1376 Oakridge Campground (IN): weekly/monthly by application only; no nightly rate.
+- STALE 1735 Camp Hauberg (IL): own site posts only 2014 rates (RV W-E-D $25); not used.
