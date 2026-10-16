@@ -22,3 +22,4 @@
 - CHECK 5843 Midwest Bible Camp (SD): a bible camp & conference centre with 13 RV hookups; is it a campground for us?
 - STALE/RENAMED 5259 Grape Country RV Park (AR): page says rates went to $40 "starting January 2024" and that the park "will now be known as Sunny Ridge RV Park"; not used. 14654 Southgate (AR): rates "effective August 1, 2024" ($44); not used.
 - CHECK 5336 THOR Elite RV and Shooting Complex (AR): a shooting range with hookups ($50); is it a campground for us? 5257 Harrington RV Sites (AR): page text is about Florida off-season discounts — check the website.
+- CHECK 3426 Alana Springs (WI): only an aggregator 'Rates at a glance' page captured; not used. 3401 Broken Bow (WI): site-number price list unclear on which are RV sites; not used.
