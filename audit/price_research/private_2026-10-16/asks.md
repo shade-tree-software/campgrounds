@@ -20,3 +20,5 @@
 - STALE 10571 Lighthouse by the Bay (WA): own page shows "2024-rates" ($42-47); 10581 Gold Mountain (WA): rates "Updated 4/1/2024" ($55). Not used.
 - CLEANUP 5834 River of the Double Bend (SD): only an unclaimed RoverPass-style "Starting Daily" table; not used.
 - CHECK 5843 Midwest Bible Camp (SD): a bible camp & conference centre with 13 RV hookups; is it a campground for us?
+- STALE/RENAMED 5259 Grape Country RV Park (AR): page says rates went to $40 "starting January 2024" and that the park "will now be known as Sunny Ridge RV Park"; not used. 14654 Southgate (AR): rates "effective August 1, 2024" ($44); not used.
+- CHECK 5336 THOR Elite RV and Shooting Complex (AR): a shooting range with hookups ($50); is it a campground for us? 5257 Harrington RV Sites (AR): page text is about Florida off-season discounts — check the website.
