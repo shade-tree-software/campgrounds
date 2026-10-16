@@ -7,6 +7,11 @@ CAD = {"AB","BC","MB","NB","NL","NS","ON","PE","QC","SK"}
 pages = {}
 for l in open(f"{d}/pages_{st}.jsonl"):
     r = json.loads(l); pages[r["id"]] = r["pages"]
+if os.path.exists(f"{d}/browser_{st}.jsonl"):        # browser pass: lines is one newline-joined string
+    for l in open(f"{d}/browser_{st}.jsonl"):
+        r = json.loads(l)
+        pages.setdefault(r["id"], []).extend({"url": x["url"], "lines": [x["lines"].replace("\n", " | ")]}
+                                             for x in r["pages"] if "lines" in x)
 norm = lambda s: re.sub(r"\s*\|\s*(\|\s*)*", " | ", re.sub(r"\s+", " ", s))
 out, bad = [], []
 for ln in open(f"{d}/rows_{st}.txt"):
