@@ -14,3 +14,5 @@
 - CLEANUP 1261 Enon Beach, 1271 Bay Shore (OH): unclaimed RoverPass rate tables only; not used.
 - CHECK 1297 Nelson Ledges Quarry Park (OH): a swimming-quarry/festival venue charging $25-30 per adult per night; is it a campground for us?
 - CHECK 1270 Wood's Tall Timber (OH): page lists $45/$60 sites and $75-95 30/50A rates without saying which are RV sites; left unpriced.
+- MINIMUM? 5538 Highway 250 Campground (MN): standing 3-night minimum mid-April through October (the whole season). Priced, min_stay NOT set; keep?
+- CLEANUP 1606 Green River Stables (KY): website field points at guistcreek.com (a different campground).
