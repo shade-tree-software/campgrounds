@@ -40,3 +40,7 @@
 - TX 7372 Azle RV Park and 7437 Cappy's Cove: rate tables "Last Updated: 11/15/2024"; 7506 East Lucas: "Posted rates are for 2023". Left unpriced as stale.
 - TX 7628 LedgeWater: only "2010 prices"; 7647 Lost Creek RV Park: "Last Updated: 11/15/2024". Left unpriced as stale.
 - TX 7794 Sharktooth RV Ranch: $45 with a standing 3-NIGHT minimum (priced; minimum not recorded — over the 2-night rule, AWH call). 14783 Bedrock RV: only "2024 RV Rates"; left unpriced.
+- OR 11110 Rivers Edge RV Park: website riversedge-rvpark.com is a Georgetown, FLORIDA park — wrong link on an Oregon entry; fix the website.
+- AB 9093 Taber RV Park: website is the Town of Taber camping page ($31.50 Trout Pond / $26.50 KMMSC) — check whether the entry is really the town campground (ownership local?).
+- CA 12377 Rio Del Sol RV Haven: standing two-night minimum on daily stays (priced; minimum recorded).
+- TX 14756 Paradise RV Senior Community Park: name says "senior community" — check it still sells nights to travellers under the long-stay rule (priced at its posted $40 daily). BC 12773 Skands: only a "2025-pricing" page; left unpriced.

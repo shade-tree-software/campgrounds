@@ -15,7 +15,7 @@ for l in open(sys.argv[1]):
     if not any(p.get('lines') for p in r['pages']): ids.append(r['id'])
 json.dump(ids,open(sys.argv[2],'w'))
 PY
-    python3 $T/bcrawl.py $P/bids_$s.json $P/browser_$s.jsonl >> $P/brun.log 2>&1
+    python3 $T/bcrawl.py $P/bids_$s.json $P/browser_$s.jsonl >> $P/brun.log 2>&1 || { echo "BFAIL $s $(date +%T)" >> $P/run.log; exit 1; }
     touch $P/bdone_$s; echo "BDONE $s $(date +%T)" >> $P/run.log
   done
   [ $left = 0 ] && break

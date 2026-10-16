@@ -27,6 +27,8 @@ for i in ids:
         if u in seen: continue
         seen.add(u); n += 1
         g = drv('goto', f'url={u}', 'wait=' + __import__('os').environ.get('WAIT','5000'), 'timeout=40000')
+        if not g.strip():
+            sys.exit('driver not answering; stopping without writing ' + str(i))
         if g.startswith('ERROR'):
             rec['pages'].append({'url': u, 'err': g[:200]}); continue
         t = drv('text', r'grep=\$\s?\d|\d+\.\d\d\s*\$|per night|nightly|/night', 'ctx=1', 'max=5000')
