@@ -11,7 +11,7 @@ for l in open(sys.argv[1]):
             m = x[200:240]
             for mm in re.finditer(r"\$\s?\d[\d,.]*", x[180:260]):
                 pass
-            s = x[90:330]
+            s = x[60:400]
             key = s[100:160]
             if key in seen: continue
             seen.add(key)
