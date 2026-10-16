@@ -30,3 +30,5 @@
 - SKIP Encore 14400/14405/14417 (FL): pages are Thousand Trails membership offers only, no nightly rate.
 - STALE 8093 Bonito Hollow (NM): '2023 Daily Rates'. Not used.
 - CHECK age rules: 8096 Hidden Valley Ranch (NM) rates 'based on ... over 55 years old'; 8125 Scenic Canyon (NM) adults-only, one guest 30+, all 15+. Both priced.
+- STALE 1965 Red Cedar (MO): rates 'Last Updated 11/15/2024'. 2069 Watsons RV Park (MO): rental policy 'Revised January 01, 2019' and a 410 (Maryland) phone. Check that link points at the right park.
+- CHECK 2043 Powell's Creekside Haven (MO): the captured page is a Dyrt listing for Maryland campgrounds. The website field may be wrong.
