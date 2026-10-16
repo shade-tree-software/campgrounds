@@ -37,3 +37,6 @@
 - CHECK 6815 Sandy Point RV Park (OK): its site shows the same text as 6759 Shady Grove ($35, '25 minutes to Tulsa'). One of the two links may be wrong. 6759 priced, 6815 not.
 - AZ 11604 Park Place RV Park: only "RATES for 2025" posted; left unpriced. 14837 Alpine Village: rates "effective January 1, 2023" ($40 + tax); left unpriced as stale.
 - AZ 11505 Quartzsite RV Resort: 7-night minimum until Dec 31 2026 (priced; minimum not recorded — AWH call whether a seasonal 7-night minimum excludes).
+- TX 7372 Azle RV Park and 7437 Cappy's Cove: rate tables "Last Updated: 11/15/2024"; 7506 East Lucas: "Posted rates are for 2023". Left unpriced as stale.
+- TX 7628 LedgeWater: only "2010 prices"; 7647 Lost Creek RV Park: "Last Updated: 11/15/2024". Left unpriced as stale.
+- TX 7794 Sharktooth RV Ranch: $45 with a standing 3-NIGHT minimum (priced; minimum not recorded — over the 2-night rule, AWH call). 14783 Bedrock RV: only "2024 RV Rates"; left unpriced.
