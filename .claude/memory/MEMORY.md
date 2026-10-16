@@ -114,3 +114,4 @@
 - [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359 + Red Gut Bay 15360 (min was the cabins'); dropped Goethe, Péninsule, Alcona, South Bay (seasonal-only); 43 existing entries marked/corrected; next id 15361
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains
 - [US private re-check](project_us_private_recheck.md) — 2026-10-12: 125 US private-gap parks re-read; AWH dropped Harmony Ridge, Dunham's, Lakeview TX; 13 age lines, Lake Joy minimum, dead sites removed
+- [Vet new leads myself](feedback_vet_new_leads_myself.md) — a not-in-DB campground found mid-pass is vetted + added by me under the curation doc, not parked as an 'add?' question (AWH 2026-10-16)
