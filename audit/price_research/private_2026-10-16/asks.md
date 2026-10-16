@@ -17,3 +17,6 @@
 - MINIMUM? 5538 Highway 250 Campground (MN): standing 3-night minimum mid-April through October (the whole season). Priced, min_stay NOT set; keep?
 - CLEANUP 1606 Green River Stables (KY): website field points at guistcreek.com (a different campground).
 - STALE 4597 Cherokee Campground (GA): own site's rates are 2019 (RV $27); not used.
+- STALE 10571 Lighthouse by the Bay (WA): own page shows "2024-rates" ($42-47); 10581 Gold Mountain (WA): rates "Updated 4/1/2024" ($55). Not used.
+- CLEANUP 5834 River of the Double Bend (SD): only an unclaimed RoverPass-style "Starting Daily" table; not used.
+- CHECK 5843 Midwest Bible Camp (SD): a bible camp & conference centre with 13 RV hookups; is it a campground for us?
