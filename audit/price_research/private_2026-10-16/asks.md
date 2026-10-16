@@ -35,3 +35,5 @@
 - CHECK 8335 Whitesands (ON): rates are per adult ($45/adult/night), not per site. Not priced.
 - STALE-ish 12661 Happy Hearts (ON): '2025 Camping Rates' - used (2025 counts as current).
 - CHECK 6815 Sandy Point RV Park (OK): its site shows the same text as 6759 Shady Grove ($35, '25 minutes to Tulsa'). One of the two links may be wrong. 6759 priced, 6815 not.
+- AZ 11604 Park Place RV Park: only "RATES for 2025" posted; left unpriced. 14837 Alpine Village: rates "effective January 1, 2023" ($40 + tax); left unpriced as stale.
+- AZ 11505 Quartzsite RV Resort: 7-night minimum until Dec 31 2026 (priced; minimum not recorded — AWH call whether a seasonal 7-night minimum excludes).
