@@ -34,3 +34,4 @@
 - CHECK 2043 Powell's Creekside Haven (MO): the captured page is a Dyrt listing for Maryland campgrounds. The website field may be wrong.
 - CHECK 8335 Whitesands (ON): rates are per adult ($45/adult/night), not per site. Not priced.
 - STALE-ish 12661 Happy Hearts (ON): '2025 Camping Rates' - used (2025 counts as current).
+- CHECK 6815 Sandy Point RV Park (OK): its site shows the same text as 6759 Shady Grove ($35, '25 minutes to Tulsa'). One of the two links may be wrong. 6759 priced, 6815 not.
