@@ -13,8 +13,7 @@ Held at AWH's request ("keep them for me for later"); not presented yet.
 
 # Follow-ups (mine, not questions)
 
-- **6723 Long Lake Resort (OK)**: its RV page says "every campsite ... overlooking our serene lakes"; ours is
-  `not waterfront`. Contrary claim → waterfront re-audit due (feedback_reaudit_contrary_waterfront_claims).
+- **6723 Long Lake Resort (OK)**: waterfront re-audit DONE 2026-10-17 (stands, tree band; pin moved onto the RV loop).
 - **2068 Unhitched Sterett Creek**: books on NewBook (bookingsus.newbook.cloud/online/sterett_creek) — price
   from the engine, then retire the camper line in the note.
 - **13063 St. Barbe RV Park**: docksidemotel.ca/rv-park/ sits behind a SiteGround bot captcha; read it in the
