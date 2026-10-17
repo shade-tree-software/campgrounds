@@ -1,6 +1,7 @@
 """Read the web pages of unpriced LOCAL entries for posted camping fees (2026-10-15, AWH #10).
     python3 -I local_pages.py ST OUT.jsonl [--limit N] [--ids a,b]
     python3 -I local_pages.py - OUT.jsonl --idfile IDS.json [--limit N]   (any ownership: the ids listed)
+    ... --urls URLS.json   read {id: [url, ...]} instead of each entry's website field
 Resumable (ids in OUT are skipped). For each entry: every website URL except social media, plus up to 4
 same-site links whose href or text mentions camp/rv/rate/fee/reserv; for each page, every '$<digit>' with
 ~200 chars of context. Plain HTTP, one request a second. Nothing is written to campgrounds.json; the
@@ -71,11 +72,16 @@ def main():
         want = json.load(open(sys.argv[sys.argv.index("--idfile") + 1]))
         by = {r["id"]: r for r in db}
         todo = [by[i] for i in want if i in by and i not in done]
+    # --urls FILE: {id: [url, ...]} read INSTEAD of the website field (2026-10-17: operator sites that
+    # Campendium lists but our record lacks)
+    urls = ({int(k): v for k, v in json.load(open(sys.argv[sys.argv.index("--urls") + 1])).items()}
+            if "--urls" in sys.argv else {})
     print(len(todo), "to read", flush=True)
     for r in todo[:limit]:
         rec = {"id": r["id"], "name": r["name"], "read": time.strftime("%Y-%m-%d"), "pages": []}
         seen = set()
-        for u in [x.strip() for x in (r.get("website") or "").split("\n") if x.strip() and not SKIP.search(x)]:
+        src = urls[r["id"]] if r["id"] in urls else (r.get("website") or "").split("\n")
+        for u in [x.strip() for x in src if x.strip() and not SKIP.search(x)]:
             try:
                 p, links = page(u)
             except Exception as e:

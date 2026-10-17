@@ -115,3 +115,4 @@
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains
 - [US private re-check](project_us_private_recheck.md) — 2026-10-12: 125 US private-gap parks re-read; AWH dropped Harmony Ridge, Dunham's, Lakeview TX; 13 age lines, Lake Joy minimum, dead sites removed
 - [Vet new leads myself](feedback_vet_new_leads_myself.md) — a not-in-DB campground found mid-pass is vetted + added by me under the curation doc, not parked as an 'add?' question (AWH 2026-10-16)
+- [Hold asks for later](feedback_hold_asks_offline.md) — AWH 2026-10-17 (weak internet): keep logging questions in asks.md, keep working, present them when AWH is ready
