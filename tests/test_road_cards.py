@@ -414,6 +414,15 @@ class TestOneCardPerLeg(RoadCardBase):
         self.assertEqual([i["type"] for i in trip["timeline"]],
                          ["road", "event", "road"])
 
+    def test_a_departure_in_the_same_minute_comes_first(self):
+        # Trip 98: last ping at Laurel Fork 11:39:44, first road photo
+        # 11:39:50. A Departed row sits half a minute after its own minute; a
+        # road photo is taken while moving, so it must sort after that.
+        departed = A.event_time_rank(self.DAY, "11:39", "", "") + 0.5
+        card = self._cards(["11:39"], [])[0]
+        self.assertGreater(card["_rank"], departed)
+        self.assertLess(card["_rank"], departed + 0.5)  # still before 11:40
+
     def test_later_legs_get_distinct_dom_ids(self):
         # Several cards share one day; without a suffix they would share an id
         # and a marker click could only ever reach the first.

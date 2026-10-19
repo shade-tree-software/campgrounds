@@ -3629,7 +3629,12 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
                 "photos": group,
                 "_tz": zones.get(id(first_photo), day_tz),
                 "_order": 0, "_time": clock,
-                "_rank": rank,
+                # A road photo is taken while MOVING, so a departure sharing
+                # its minute came first. The Departed row sits half a minute
+                # after its own minute (to follow anything else at camp), and
+                # without this the card tied ahead of it: trip 98 left Laurel
+                # Fork at 11:39:44 and the first photo is 11:39:50.
+                "_rank": rank + 0.75,
             })
     # One map marker per PHOTO, not per card: the whole reason a road card
     # exists is that the vehicle was moving, so two photos on one card can be
