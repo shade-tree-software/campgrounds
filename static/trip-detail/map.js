@@ -496,6 +496,7 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
   // its own click handler, which would pop the popup on the two-column layout
   // too, where a click means "scroll to the card".
   function openMarkerPopup(marker, html) {
+    if (typeof html === 'function') html = html();
     if (!html) return;
     // Touch fires the tooltip on this same click (Leaflet binds tooltips to
     // click on touch devices), and it would sit stacked over the popup.
@@ -503,8 +504,9 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     L.popup(POPUP_OPTS).setLatLng(marker.getLatLng()).setContent(html).openOn(map);
   }
 
-  // `html` is a string built at marker-creation time; `cardId` may be null for
-  // markers with no card (proximity family houses).
+  // `html` is a string built at marker-creation time, or a function building
+  // it at click time for content the page can edit (a road card's place);
+  // `cardId` may be null for markers with no card (proximity family houses).
   //
   // `opts.alwaysPopup` overrides the layout rule for a marker that stands for
   // MORE THAN ONE timeline entry (the same campground stayed at twice, a family
@@ -1601,15 +1603,20 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
     const marker = label(
       L.marker(ll, { icon: dot, zIndexOffset: -200 }).addTo(map),
       pt.time ? `Photo, ${pt.time}` : 'Photo from the road');
-    const bits = ['<strong>On the road</strong>'];
-    if (pt.where) bits.push(escapeHtml(pt.where));
-    if (pt.time) bits.push(escapeHtml(pt.time));
-    if (pt.caption) bits.push(`<em>${escapeHtml(pt.caption)}</em>`);
-    if (pt.thumb) {
-      bits.push(`<img src="${escapeHtml(pt.thumb)}" alt="" `
-                + `style="width:100%;max-width:220px;border-radius:6px;margin-top:.35rem">`);
-    }
-    onMarkerClick(marker, bits.join('<br>'), pt.card);
+    // Built at click time: an admin can retype the card's place
+    // (`renderRoadPlace` updates pt.where), and the popup should say so.
+    const popupHtml = () => {
+      const bits = ['<strong>On the road</strong>'];
+      if (pt.where) bits.push(escapeHtml(pt.where));
+      if (pt.time) bits.push(escapeHtml(pt.time));
+      if (pt.caption) bits.push(`<em>${escapeHtml(pt.caption)}</em>`);
+      if (pt.thumb) {
+        bits.push(`<img src="${escapeHtml(pt.thumb)}" alt="" `
+                  + `style="width:100%;max-width:220px;border-radius:6px;margin-top:.35rem">`);
+      }
+      return bits.join('<br>');
+    };
+    onMarkerClick(marker, popupHtml, pt.card);
     // Deliberately NOT registered in cardTargets: several photos share a card,
     // and a card click may only pulse one marker. The map→card direction works;
     // the reverse would have to pick arbitrarily.

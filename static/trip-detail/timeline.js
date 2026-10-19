@@ -331,6 +331,78 @@ function saveCampNote(domId) {
   .catch(() => toast('Could not save that note.'));
 }
 
+// ── The place named on a road card ───────────────────────────────────────
+// The label comes off the GPS track, which can only say "2 miles southeast of
+// somewhere". A typed place replaces it; it is stored against one of the
+// card's photos (data-place-key, see `trips.get_road_places`), and clearing it
+// puts the GPS answer (data-where-auto) back.
+function editRoadPlace(domId) {
+  const card = document.getElementById(domId);
+  const info = card && card.querySelector('.event-info');
+  if (!info || info.querySelector('.road-place-edit')) return;
+  const label = info.querySelector('.card-where');
+  const current = label && !label.classList.contains('empty') ? label.textContent.trim() : '';
+  const row = document.createElement('div');
+  row.className = 'road-place-edit';
+  row.innerHTML = `
+    <input type="text" maxlength="200" value="${escapeHtml(current)}"
+           placeholder="${escapeHtml(card.dataset.whereAuto || 'Where was this?')}">
+    <button class="btn-save" onclick="saveRoadPlace('${domId}')">Save</button>
+    <button class="btn-cancel" onclick="cancelRoadPlace('${domId}')">Cancel</button>`;
+  if (label) label.hidden = true;
+  info.querySelector('h3').after(row);
+  const input = row.querySelector('input');
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); saveRoadPlace(domId); }
+    if (e.key === 'Escape') cancelRoadPlace(domId);
+  });
+  input.focus();
+  input.setSelectionRange(input.value.length, input.value.length);
+}
+
+function cancelRoadPlace(domId) {
+  const card = document.getElementById(domId);
+  const row = card && card.querySelector('.road-place-edit');
+  if (!row) return;
+  row.remove();
+  const label = card.querySelector('.card-where');
+  if (label) label.hidden = false;
+}
+
+// Mirrors the label markup in `trip_detail.html`'s road branch — keep the two
+// in step.
+function renderRoadPlace(card, typed) {
+  const label = card.querySelector('.card-where');
+  if (!label) return;
+  const auto = card.dataset.whereAuto || '';
+  const text = typed || auto;
+  label.textContent = text || '+ place';
+  label.classList.toggle('empty', !text);
+  label.title = (typed ? `Typed${auto ? ` — the GPS says ${auto}` : ''}. ` : '')
+    + 'Click to edit';
+  // The map's photo markers name the card's place too.
+  ROAD_POINTS.forEach(pt => { if (pt.card === card.id) pt.where = text; });
+}
+
+function saveRoadPlace(domId) {
+  const card = document.getElementById(domId);
+  const row = card && card.querySelector('.road-place-edit');
+  if (!row) return;
+  const input = row.querySelector('input');
+  fetch(`/api/trips/${TRIP_ID}/road-place`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ key: card.dataset.placeKey, text: input.value.trim() })
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data.error) { toast(data.error); return; }
+    renderRoadPlace(card, data.text);
+    cancelRoadPlace(domId);
+  })
+  .catch(() => toast('Could not save that place.'));
+}
+
 function editHomeTime(which) {
   const manual = which === 'start' ? HOME_START_TIME : HOME_END_TIME;
   const auto = which === 'start' ? window.HOME_START_TIME_AUTO : window.HOME_END_TIME_AUTO;

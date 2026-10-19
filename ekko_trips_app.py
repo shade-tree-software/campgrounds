@@ -35,6 +35,7 @@ from trips import (
                    remove_relocated_pings,
                    get_tid_overrides, set_tid_override, raw_trip_records,
                    get_day_notes, set_day_note, get_camp_notes, set_camp_note,
+                   get_road_places, set_road_place,
                    campground_references, camping_nights, is_day_trip,
                    is_home_stay, visit_runs, TRIPS_JSON,
                    event_time_rank, reference_timezone, tz_abbrev,
@@ -3568,7 +3569,7 @@ def _photo_rank(day, taken, ref_tz, tz_name=""):
     return clock, event_time_rank(day, clock, tz_name, ref_tz)
 
 
-def _add_road_cards(trip, road_photos, ref_tz="", track=None):
+def _add_road_cards(trip, road_photos, ref_tz="", track=None, places=None):
     """Splice road cards into the timeline — ONE PER LEG, not one per day.
 
     A day's road photos can be hundreds of miles apart. Trip 95's 28 August ran
@@ -3591,7 +3592,13 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
     that several grids now belong to one day, which `saveGridOrder` handles the
     way it already handles a stay split across nights: concatenate across every
     grid carrying the same key.
+
+    `places` is `trips.get_road_places()`: a place an admin typed over the GPS
+    answer, keyed "date/filename" on one of the card's photos. The first photo
+    of a card carrying one wins, so the typed place follows its photos when a
+    new stop re-splits the legs around them.
     """
+    places = places or {}
     cards = []
     for day, photos in road_photos.items():
         # The day's other timeline entries, in the order the reader sees them.
@@ -3618,11 +3625,20 @@ def _add_road_cards(trip, road_photos, ref_tz="", track=None):
             first = first_photo.get("date_taken") if first_photo else ""
             clock, rank = _photo_rank(day, first, ref_tz,
                                       zones.get(id(first_photo), day_tz))
+            auto = _road_card_where(track, group, day_tz)
+            keys = [f"{day}/{p.get('filename', '')}" for p in group]
+            typed = next((k for k in keys if places.get(k)), None)
             cards.append({
                 "type": "road", "idx": day, "sort_date": day, "date": day,
                 "dom_id": f"road-{day}" + (f"-{n + 1}" if n else ""),
                 "time": clock, "photo_count": len(group),
-                "where_label": _road_card_where(track, group, day_tz),
+                "where_label": places[typed] if typed else auto,
+                # What the GPS says, so clearing a typed place can put it back
+                # without a reload, and the key the place is stored under: the
+                # photo already carrying it, else the card's first photo.
+                "where_auto": auto,
+                "where_typed": bool(typed),
+                "place_key": typed or keys[0],
                 # Cards after the first on a day need distinct DOM ids, the
                 # same shape a stay split across nights uses (stay-3, stay-3-2).
                 "leg": n,
@@ -4227,7 +4243,8 @@ def trip_detail(trip_id):
         # rare — an ordinary trip page pays nothing for this.
         road_track = _load_trip_track_for_detection(trip_id)
         _add_road_cards(trip, road_photos,
-                        reference_timezone(trip.get("events")), road_track)
+                        reference_timezone(trip.get("events")), road_track,
+                        get_road_places(trip_id))
         # Straggler sweep, for the same reason any out-of-band job needs one.
         # The upload-time trigger silently does nothing when the worker recycles
         # inside its debounce window — which on a host that recycles often is
@@ -9770,6 +9787,32 @@ def api_set_camp_note(trip_id):
     result = set_camp_note(trip_id, stay_idx, key, data.get("text") or "")
     if result is None:
         return jsonify({"error": "trip or campspot not found"}), 404
+    return jsonify({"ok": True, "text": result.get(key, "")})
+
+
+@app.route('/api/trips/<int:trip_id>/road-place', methods=['PUT'])
+def api_set_road_place(trip_id):
+    """Set or clear the place named on one road card. Body:
+    {key: 'YYYY-MM-DD/filename', text: str}; empty text deletes it and hands
+    the card back to its GPS-derived label.
+
+    The card is grouped from its photos on every render, so the place is
+    stored on the trip record against one of them (see trips.get_road_places).
+    The photo must exist: a key naming nothing would never be read."""
+    denied = _require_admin()
+    if denied:
+        return denied
+    data = request.get_json() or {}
+    key = (data.get("key") or "").strip()
+    day, _, filename = key.partition("/")
+    if not _ISO_DATE_RE.match(day) or not filename or "/" in filename \
+            or filename.startswith(".") or not _allowed_file(filename):
+        return jsonify({"error": "key must be 'YYYY-MM-DD/filename'"}), 400
+    if not os.path.isfile(os.path.join(_road_photo_dir(trip_id, day), filename)):
+        return jsonify({"error": "no such road photo"}), 404
+    result = set_road_place(trip_id, key, data.get("text") or "")
+    if result is None:
+        return jsonify({"error": "trip not found"}), 404
     return jsonify({"ok": True, "text": result.get(key, "")})
 
 

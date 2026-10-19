@@ -434,6 +434,119 @@ class TestOneCardPerLeg(RoadCardBase):
 
 
 
+class TestATypedPlace(RoadCardBase):
+    """The GPS can only say "2 miles southeast of Baughman Settlement"; an
+    admin can type the real place over it.
+
+    A road card has no record, so the place is stored against one of its
+    PHOTOS — which is what lets it stay on the right card when a new stop
+    re-splits the day's legs around it.
+    """
+
+    DAY = "2026-08-28"
+
+    def _cards(self, photos, places, stop_ranks=()):
+        trip = {"events": [], "timeline": [
+            {"type": "event", "sort_date": self.DAY, "_order": 0, "_rank": r}
+            for r in stop_ranks]}
+        photos = [{"filename": f, "date_taken": f"{self.DAY} {t}:00"}
+                  for f, t in photos]
+        A._add_road_cards(trip, {self.DAY: photos}, places=places)
+        return [i for i in trip["timeline"] if i["type"] == "road"]
+
+    def test_a_typed_place_replaces_the_gps_label(self):
+        card = self._cards([("a.jpg", "09:30")],
+                           {f"{self.DAY}/a.jpg": "Seneca Rocks"})[0]
+        self.assertEqual(card["where_label"], "Seneca Rocks")
+        self.assertTrue(card["where_typed"])
+        self.assertEqual(card["place_key"], f"{self.DAY}/a.jpg")
+
+    def test_with_nothing_typed_the_card_offers_its_first_photo(self):
+        card = self._cards([("a.jpg", "09:30"), ("b.jpg", "10:00")], {})[0]
+        self.assertFalse(card["where_typed"])
+        self.assertEqual(card["place_key"], f"{self.DAY}/a.jpg")
+
+    def test_the_place_stays_with_its_photo_when_a_stop_splits_the_leg(self):
+        # Typed on b.jpg while the day was one card; a stop at noon now puts
+        # an earlier leg ahead of it. "date#leg" keys would have moved it.
+        cards = self._cards([("a.jpg", "09:30"), ("b.jpg", "17:00")],
+                            {f"{self.DAY}/b.jpg": "Canaan Valley"},
+                            stop_ranks=[12 * 60])
+        self.assertEqual([c["where_typed"] for c in cards], [False, True])
+        self.assertEqual(cards[1]["where_label"], "Canaan Valley")
+
+    def test_a_photo_added_ahead_of_it_does_not_lose_the_place(self):
+        cards = self._cards([("z.jpg", "09:00"), ("b.jpg", "09:30")],
+                            {f"{self.DAY}/b.jpg": "Canaan Valley"})
+        self.assertEqual(cards[0]["where_label"], "Canaan Valley")
+        self.assertEqual(cards[0]["place_key"], f"{self.DAY}/b.jpg",
+                         "an edit must rewrite the key it was read from")
+
+
+class TestTheRoadPlaceRoute(RoadCardBase):
+    def setUp(self):
+        super().setUp()
+        self._write(95, "2026-08-28", "a.jpg")
+        self.saved = {}
+        p = mock.patch.object(A, "set_road_place",
+                              lambda tid, key, text: self.saved.update(
+                                  {key: text.strip()}) or
+                              {k: v for k, v in self.saved.items() if v})
+        p.start()
+        self.addCleanup(p.stop)
+        p = mock.patch.object(A, "_require_admin", lambda: None)
+        p.start()
+        self.addCleanup(p.stop)
+
+    def _put(self, key, text="Seneca Rocks"):
+        with A.app.test_request_context(json={"key": key, "text": text}):
+            resp = A.api_set_road_place(95)
+        return resp if isinstance(resp, tuple) else (resp, 200)
+
+    def test_a_place_on_a_real_photo_is_saved(self):
+        resp, status = self._put("2026-08-28/a.jpg")
+        self.assertEqual(status, 200)
+        self.assertEqual(resp.get_json()["text"], "Seneca Rocks")
+
+    def test_clearing_answers_with_nothing(self):
+        self._put("2026-08-28/a.jpg")
+        resp, _ = self._put("2026-08-28/a.jpg", "")
+        self.assertEqual(resp.get_json()["text"], "")
+
+    def test_a_key_naming_no_photo_is_refused(self):
+        self.assertEqual(self._put("2026-08-28/nope.jpg")[1], 404)
+
+    def test_a_malformed_key_never_reaches_a_path(self):
+        for key in ("", "nope/a.jpg", "2026-08-28/../a.jpg",
+                    "2026-08-28/.trash", "2026-08-28/a.txt"):
+            self.assertEqual(self._put(key)[1], 400, key)
+        self.assertEqual(self.saved, {})
+
+
+class TestRoadPlaceStorage(unittest.TestCase):
+    def setUp(self):
+        import json
+        import trips
+        self.trips, self.json = trips, json
+        self.tmp = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        p = mock.patch.object(trips, "TRIPS_JSON",
+                              os.path.join(self.tmp, "trips.json"))
+        p.start()
+        self.addCleanup(p.stop)
+        with open(trips.TRIPS_JSON, "w") as f:
+            json.dump([{"id": 1, "stays": [], "events": []}], f)
+
+    def test_a_place_is_stored_on_the_trip_and_clearing_leaves_no_trace(self):
+        t = self.trips
+        t.set_road_place(1, "2026-08-28/a.jpg", "  Seneca   Rocks ")
+        self.assertEqual(t.get_road_places(1),
+                         {"2026-08-28/a.jpg": "Seneca Rocks"})
+        t.set_road_place(1, "2026-08-28/a.jpg", "")
+        with open(t.TRIPS_JSON) as f:
+            self.assertNotIn("road_places", self.json.load(f)[0])
+
+
 class TestReadingAPhotosClock(unittest.TestCase):
     """An EXIF timestamp is wall clock wherever the photo was taken, and that
     place is the thing being looked up.

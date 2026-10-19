@@ -999,6 +999,43 @@ def set_day_note(trip_id, day, text):
     return None
 
 
+def get_road_places(trip_id):
+    """Return the trip's typed road-card places ({"YYYY-MM-DD/file": text}).
+
+    A road card has no record — it is a leg of photos grouped at render time —
+    so a place typed over its GPS-derived label is keyed on one of its PHOTOS:
+    the card's first photo when the place was typed. A photo stays with its leg
+    however the stops around it change, which a key like "date#leg" would not:
+    inserting a stop renumbers the legs after it."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            return dict(t.get("road_places", {}))
+    return {}
+
+
+def set_road_place(trip_id, key, text):
+    """Set or clear one road card's typed place. Returns the resulting dict,
+    None if no trip. Blank text deletes the key (and the whole dict once it
+    empties), which hands the card back to its GPS-derived label."""
+    raw = _load_raw_trips()
+    for t in raw:
+        if t["id"] == trip_id:
+            current = dict(t.get("road_places", {}))
+            cleaned = " ".join((text or "").split())
+            if cleaned:
+                current[key] = cleaned
+            else:
+                current.pop(key, None)
+            if current:
+                t["road_places"] = current
+            else:
+                t.pop("road_places", None)
+            _save_trips(raw)
+            return current
+    return None
+
+
 def get_camp_notes(trip_id):
     """Return {stay_idx: {row_key: text}} for the trip's campspot-row notes.
 
