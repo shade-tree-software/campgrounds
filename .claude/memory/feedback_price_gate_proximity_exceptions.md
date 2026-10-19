@@ -5,6 +5,8 @@ metadata:
   type: feedback
 ---
 
+**STANDING RULE, AWH 2026-10-19: "From now on you may drop any campground that is over the price limit unless it has a specific exception (which includes gateway campgrounds)."** I may drop on my own and just report which ones. Specific exceptions = the named ones below + gateways.py + Good Sam rate test; the gate is still private-only (local/government has no limit — Earl Warren Showgrounds 11749 stays). This supersedes "leave the existing ones for now" for any entry I touch; a sweep of the older over-limit entries is permitted but offer it before running. First drops: Cal-Nev-Ari 11277, Peace Garden 5928 (admission counted), Whitesands 8335 (per-person rate x2), log audit/price_research/dropped_2026-10-19.jsonl.
+
 **Good Sam discount counts (AWH 2026-10-14):** AWH is a Good Sam member, so at a Good Sam Park (discounts.good_sam true) test the park's posted Good Sam rate, else rate less 10%, against the gate. fees keeps the undiscounted rate. Restored 2227, 4943, 7385, 7860 on it.
 
 Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Sun brand skip, because their location is unusually useful:
