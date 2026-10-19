@@ -5,7 +5,7 @@
 Same shape as ../private2_2026-10-19/run_chunk.py, but the rates here come from live booking
 engines (KOA's form, Campspot's API ...) and fresh page reads rather than round 1's saved pages,
 so each row carries its source instead of a quote to look up. rows_NAME.txt (split on ' | '):
-    ID | LOW | HIGH | fees note | source       base rate before tax, CAD for provinces
+    ID | LOW | HIGH | fees note | source       base rate before tax, CAD for provinces; HIGH '-' when unknown
     min ID | SPEC | source                     nights:applies[:season], comma-separated
     set ID | FIELD | VALUE                     identity fix (name / website / phone / note); '-' sets null
     keep / drop / skip ID | reason             as in run_chunk.py
@@ -55,7 +55,8 @@ for ln in open(f"{D}/rows_{name}.txt"):
     if (e.get("fees") or {}).get("nightly_low") is not None:
         print("ALREADY PRICED", i); continue
     cur = "CAD" if e["state"] in CAD else "USD"
-    prices[i] = ({"nightly_low": num(lo), "nightly_high": num(hi), "currency": cur, "checked": "2026", "note": note}, src)
+    f = {"nightly_low": num(lo), "nightly_high": None if hi == "-" else num(hi), "currency": cur, "checked": "2026", "note": note}
+    prices[i] = ({k: v for k, v in f.items() if v is not None}, src)
 
 gate_kept = {}
 for i, (f, src) in prices.items():
