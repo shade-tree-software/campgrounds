@@ -45,3 +45,16 @@
 - CA 12377 Rio Del Sol RV Haven: standing two-night minimum on daily stays (priced; minimum recorded).
 - TX 14756 Paradise RV Senior Community Park: name says "senior community" — check it still sells nights to travellers under the long-stay rule (priced at its posted $40 daily). BC 12773 Skands: its "2025-pricing" page lists bare figures ($24-299) with no site labels the crawl kept; left unpriced (2025 itself would count as current).
 - Leads vetted 2026-10-16 (no AWH input needed, per the 10-16 rule): ADDED Riverbrook RV & Camping Resort 15367 (Rumney NH; 4* RV Life/39, Standard full hookup $49 base on Baker River 4141's Campspot listing, not waterfront behind a treeline). SKIPPED Cross Creek Campground (Cairo GA, Campspot crosscreekcampground, $49 full hookup): RV Life rates it 3.5* over 6 ratings, under the 4* quality half of the private gate (the Good Sam/Google fallback covers only parks RV Life doesn't list or rate).
+
+# Resolved 2026-10-19 (cleanup, no AWH input needed)
+- 11110 Rivers Edge OR: Florida link replaced with its Visit Oregon Coast listing (no site of its own).
+- 1606 Green River Stables KY: now **Quiet Woods Campground** (same phone, same spot; greenriverstables.com is a gambling spam site). Renamed, quietwoodscampground.com, priced $45.
+- 2043 Powell's MO: Dyrt link removed; operator site still says temporarily closed for renovation (status already set).
+- 6815 Sandy Point / 6759 Shady Grove OK: sister parks on one page template, both links right. Sandy Point priced $35; phones added to both.
+- 2069 Watsons MO: watsonsrvpark.com is a Waynesburg PA park. Link removed; phone 417-294-7272 and 17 Stonemount Rd from its RV Life listing (no website of its own).
+- 5257 Harrington AR: aggregator link removed (no site of its own; phone + Google 4.6/13).
+- RoverPass links stripped: 4095 Groton (own domain no longer resolves either), 6167 Whitetail, 4364 Swamp Fox, 5101 Haas-Cienda (-> Facebook), 1261 Enon, 1271 Bay Shore (Facebook kept), 5834 Double Bend (-> campinsouthdakota).
+- Dead domains removed: 5937 Haven ND, 1497 Lizzie's NY (phone -> Google's 607-548-4044), 3857 Dodge City MI (phone -> 989-928-4331, Google + RV Life agree). 9416 Prairie Oak MB has a new site (camp-prairieoak.com) -> C$40 FHU overnight.
+- 4478 Doe Valley TN: site is real now -> $50-70.
+- 9093 Taber AB: the town camping page was another campground's (Trout Pond / KMMSC); taberrv.com dead. Link removed, phone -> Google's.
+- 5259 Grape Country AR: NOT renamed - the owner ADDED Sunny Ridge RV Park (ex Dan's Riverview, 5694 Sunny Ridge Rd, Ozark) in May 2025. Grape Country priced $40 (current page), phone -> 479-667-7967. Sunny Ridge is a lead to vet.

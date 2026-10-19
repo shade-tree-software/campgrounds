@@ -20,3 +20,7 @@ Held at AWH's request ("keep them for me for later"); not presented yet.
   browser for a rate.
 - **1978 Saline Creek** (parkwith.us booking page), **5110 Magic River**, **6959 Sugar Hill**: operator pages
   with no posted rate, so the camper report is in the note only.
+
+# Resolved 2026-10-19
+- 2068 Sterett Creek: NewBook quote "from $31.14 / night" (October weeknight, 23-ft); camper line retired.
+- 13063 St. Barbe: page read in the browser - it posts no rate. Stays unpriced.
