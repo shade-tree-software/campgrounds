@@ -8,6 +8,8 @@ metadata:
   modified: 2026-09-08T13:40:09.426Z
 ---
 
+**HOW OLD A RATE MAY BE (AWH 2026-10-19):** a rate dated 2024 or later on the operator's own page counts; 2023 and older does not. RoverPass's "Last Updated: 11/15/2024" stamp is a platform-wide date on UNCLAIMED listings, not an operator rate date, so those tables still never count. Write the rate's year into fees.note ("2024 rates: ...").
+
 A `$NN/night` figure in a `note` needs the same sourcing discipline as every other claim: it must come from the operator's own rate page or booking channel, and if it can't, the note must say what the source was and when it was current. AWH caught Gooney Creek Campground (VA, id 13085, 2026-09-08) listing "Rates around $20 basic / $25 W+E / $28 full hookup" against a HipCamp listing whose real prices were $38.50 tent / $48.50 E+W / $53.50 creek-side E+W / $63.50 full hookup — roughly 40% of actual, and unattributed.
 
 **Why:** rates are the claim a reader acts on when choosing between parks, and a stale one is worse than none. The private stage of a sweep quotes rates constantly, so the failure mode is systematic rather than one-off — a re-scan of the same sweep found three more entries (13096/13097/13115) whose rates rested on directories alone.
