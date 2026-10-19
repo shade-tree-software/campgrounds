@@ -1,7 +1,7 @@
 """Over-gate sweep (AWH 2026-10-19): private entries whose base nightly rate is over US$50 / C$69.
 
 Screens out the specific exceptions before anything is dropped:
-named keeps (feedback_price_gate_proximity_exceptions), gateways.py (40 km), the Good Sam
+named keeps (feedback_price_gate_proximity_exceptions), any entry carrying an --AWH note, gateways.py (40 km), the Good Sam
 rate test (discounts.good_sam -> rate less 10%), and any entry a trip references.
 Writes candidates.json (to review) and exempt.json (with the reason each one stays).
 """
@@ -29,6 +29,8 @@ for e in d:
     why = None
     if e['id'] in NAMED:
         why = 'named exception'
+    elif 'AWH' in (e.get('note') or ''):
+        why = "AWH's own note (chosen knowing the price)"
     elif row['gs'] and low * 0.9 <= LIMIT[cur]:
         why = 'Good Sam Park: %.2f after 10%%' % (low * 0.9)
     else:
