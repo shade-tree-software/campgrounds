@@ -581,6 +581,25 @@ _EXIF_DATE_CACHE = {}
 _EXIF_DT_CACHE = {}
 
 
+def _exif_timestamp(exif):
+    """The raw "YYYY:MM:DD HH:MM:SS" a photo was taken, or None.
+
+    DateTimeOriginal and DateTimeDigitized live in the Exif sub-IFD, not in
+    the top-level IFD that `getexif()` returns, so a plain `exif.get()` never
+    sees them and only ever found IFD0's DateTime. That happened to work for
+    camera originals, which carry all three, but an edited copy (a Google
+    Photos crop) keeps DateTimeOriginal and drops DateTime: those photos read
+    as undated, sorted last, and a road card filed them at noon. Trip 98 put
+    three photos from 12:25, 14:24 and 15:59 on its 11:49 card that way.
+    """
+    sub = exif.get_ifd(0x8769)
+    for tag in (0x9003, 0x9004):  # DateTimeOriginal, DateTimeDigitized
+        val = sub.get(tag) or exif.get(tag)
+        if val:
+            return val
+    return exif.get(0x0132) or None  # DateTime (last modified)
+
+
 def _photo_date_taken(filepath):
     """Extract when a photo was taken from EXIF data.
 
@@ -597,19 +616,14 @@ def _photo_date_taken(filepath):
     result = ""
     try:
         from PIL import Image
-        from PIL.ExifTags import Base as ExifBase
         img = Image.open(filepath)
-        exif = img.getexif()
-        # Try DateTimeOriginal first, then DateTimeDigitized, then DateTime
-        for tag in (ExifBase.DateTimeOriginal, ExifBase.DateTimeDigitized, ExifBase.DateTime):
-            val = exif.get(tag)
-            if val:
-                # EXIF timestamps are "YYYY:MM:DD HH:MM:SS"
-                date_part, _, time_part = val.partition(" ")
-                date_str = date_part.replace(":", "-")
-                time_part = time_part.strip()
-                result = f"{date_str} {time_part}" if time_part else date_str
-                break
+        val = _exif_timestamp(img.getexif())
+        if val:
+            # EXIF timestamps are "YYYY:MM:DD HH:MM:SS"
+            date_part, _, time_part = val.partition(" ")
+            date_str = date_part.replace(":", "-")
+            time_part = time_part.strip()
+            result = f"{date_str} {time_part}" if time_part else date_str
     except Exception:
         pass
     _EXIF_DATE_CACHE[key] = result
@@ -631,18 +645,13 @@ def _photo_datetime_taken(filepath):
     result = None
     try:
         from PIL import Image
-        from PIL.ExifTags import Base as ExifBase
         img = Image.open(filepath)
-        exif = img.getexif()
-        for tag in (ExifBase.DateTimeOriginal, ExifBase.DateTimeDigitized, ExifBase.DateTime):
-            val = exif.get(tag)
-            if not val:
-                continue
+        val = _exif_timestamp(img.getexif())
+        if val:
             try:
                 result = datetime.strptime(val, "%Y:%m:%d %H:%M:%S")
             except ValueError:
                 result = None
-            break
     except Exception:
         pass
     _EXIF_DT_CACHE[key] = result

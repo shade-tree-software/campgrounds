@@ -115,6 +115,37 @@ class TestPhotoOrder(RoadCardBase):
         self.assertEqual(photo["thumb_url"], f"/thumb/95/road/{DAY}/a.jpg")
 
 
+class TestReadingTheTimeTaken(RoadCardBase):
+    """DateTimeOriginal lives in the Exif sub-IFD, not the top-level IFD."""
+
+    def _jpeg(self, top=None, sub=None):
+        from PIL import Image
+        img = Image.new("RGB", (8, 8))
+        exif = img.getexif()
+        if top:
+            exif[0x0132] = top
+        if sub:
+            exif.get_ifd(0x8769)[0x9003] = sub
+        path = os.path.join(self.root, "p.jpg")
+        img.save(path, exif=exif)
+        return path
+
+    def test_an_edited_copy_keeps_its_time(self):
+        # A Google Photos crop keeps DateTimeOriginal and drops IFD0's
+        # DateTime. Trip 98's three crops read as undated, filed at noon and
+        # landed on an 11:49 card they weren't taken anywhere near.
+        path = self._jpeg(sub="2026:10:17 14:24:16")
+        self.assertEqual(A._photo_date_taken(path), "2026-10-17 14:24:16")
+
+    def test_the_time_taken_beats_the_time_modified(self):
+        path = self._jpeg(top="2026:10:19 08:00:00", sub="2026:10:17 14:24:16")
+        self.assertEqual(A._photo_date_taken(path), "2026-10-17 14:24:16")
+
+    def test_modified_time_is_still_the_last_resort(self):
+        path = self._jpeg(top="2026:10:17 11:49:10")
+        self.assertEqual(A._photo_date_taken(path), "2026-10-17 11:49:10")
+
+
 class TestTimelinePlacement(RoadCardBase):
     def _timeline(self, photos):
         trip = {"timeline": [], "events": []}
