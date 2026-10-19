@@ -28,9 +28,11 @@ NPS API (`nps_glac.json`), Parks Canada / Alberta Parks pages, operator sites.
   sites $65+ even at the Good Sam 10% off); Montana Basecamp, Bigfork Motor Coach, Edgewater (44-56 km, over the gate).
 - Previously dropped by AWH, not re-added: Waterton Springs (closed 2017), Great Canadian Barn Dance (seasonal leases).
 
-## For AWH
-- Rising Sun 6235: NPS API says 21 ft max; RIDB 10363618 shows every site 17-21 ft. The entry's "10 sites to 25 ft" is wrong. Propose drop (no trip refs).
-- KOAs in the gateway: West Glacier KOA (5*, 3.4 km), St. Mary / East Glacier KOA (4*, ~1 km), Whitefish/Kalispell North KOA (4*, 31 km).
-  Brand skip vs gateway rule (Hinton/Jasper KOA 12804 is in).
-- Crandell Mountain has been closed since 2017 with no date; added greyed-out per the add-with-caveat rule. Drop if you'd rather not carry it.
-- Lake Five Resort advertises waterfront "Lake Sites"; satellite couldn't tie RV pads to the shore through the tree band, so it's recorded not waterfront.
+## AWH's calls (2026-10-19)
+- Rising Sun 6235: dropped (every site 17-21 ft). Crandell Mountain 15391: dropped (closed since 2017). Both logged in
+  audit/price_research/dropped_2026-10-19.jsonl.
+- Lake Five Resort 15386: left as is (not waterfront).
+- KOA brand skip retired: KOAs are now treated like any other private campground. Added the three gateway KOAs
+  (ids 15394-15396, results_mt_koa.json), quoted on KOA's booking form for 2027-06-15 (koa_dump_*.txt):
+  West Glacier KOA Resort $145-269, St. Mary / East Glacier KOA Holiday $96-160, Whitefish / Kalispell North KOA Holiday
+  $105-155; all inside the Glacier gateway, so the price gate is lifted.
