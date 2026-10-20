@@ -28,16 +28,16 @@ def _event(idx, day):
 
 class TestStayed(unittest.TestCase):
     def test_hours_and_minutes(self):
-        self.assertEqual(A._stayed("11:10", "12:50"), "1h 40m")
+        self.assertEqual(A._stayed("11:10", "12:50"), "1h 40min")
 
     def test_under_an_hour(self):
-        self.assertEqual(A._stayed("13:40", "13:52"), "12m")
+        self.assertEqual(A._stayed("13:40", "13:52"), "12min")
 
     def test_minutes_are_padded_like_the_drive_chip(self):
-        self.assertEqual(A._stayed("09:00", "10:05"), "1h 05m")
+        self.assertEqual(A._stayed("09:00", "10:05"), "1h 05min")
 
     def test_a_stop_past_midnight_wraps_instead_of_going_negative(self):
-        self.assertEqual(A._stayed("22:40", "00:25"), "1h 45m")
+        self.assertEqual(A._stayed("22:40", "00:25"), "1h 45min")
 
     def test_nothing_rather_than_a_measured_looking_zero(self):
         for start, end in (("10:00", ""), ("", "10:00"), ("10:00", "10:00"),
