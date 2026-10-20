@@ -193,7 +193,8 @@ switch off another default):
 
 - own `booking.reservable: false` → drop the agency's `platform`, `url`,
   `window_opens_days`, `reserve_until`. **`max_stay_nights` stays**: a 14-night limit
-  binds a first-come site too.
+  binds a first-come site too. The agency's `fees.reservation_fee` goes too
+  (2026-10-20: 109 first-come entries were printing a booking fee).
 - own `fees` free at both ends (`nightly_high: 0`, `nightly_low` 0 or absent) → drop the
   agency's whole `discounts` group; there is no fee for a Senior-pass discount to apply to.
   The agency's `fees.nonresident` and `fees.surcharges` go too (2026-10-12: NY State Parks'
