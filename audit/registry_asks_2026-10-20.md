@@ -46,3 +46,11 @@
    "direct access to the dunes", i.e. close to an OHV staging camp, which your 2026-10-02 rule puts out
    of scope; Hackberry Bend (6626) is the lakeside loop of the same city park. Keep both, keep only
    Hackberry Bend, or drop both? (Both are now `local`: the city took the park over from the state.)
+9. **Busiek State Forest and Wildlife Area (13827, MO) may be walk-in tent camping by permit.** Its
+   MDC page (read 2026-10-20) says "Visitors will find eight primitive, walk-in tent campsites.
+   Camping is permitted ONLY with a permit" (Southwest Regional Office, 417-895-6880). The entry was
+   added on the 'Individual Campsites' tag and 2 GIS camping points at drive-in lots. Drop, or keep
+   with a caveat? No season written until you decide.
+10. **Little Indian Creek Conservation Area (13903, MO)** now posts a notice "Camping is allowed by
+   permit only and requested 10 days in advance" (636-441-4554), while the same page's area
+   regulations also say "Camping is prohibited." Keep with a permit caveat, or drop? No season written.
