@@ -129,6 +129,15 @@ YEAR_ROUND_CLOSED_TOLERANCE = 0.02
 # new edges nobody checked (75 of them on that walk). A closed run reaching past
 # the window either way is still read; the result was the same at 7 days as 14.
 FETCH_WINDOW_DAYS = 14
+# rec.gov releases campsites up to six months ahead, and past that some
+# facilities answer Not Reservable on every date rather than NYR. The 2026-10-20
+# walk read June 2027 (fetched 225 days out) as closed for 28 campgrounds whose
+# June 2026 had shown open days, and wrote "opens 07-01" at the month boundary.
+# A closed reading further out than this is no information UNLESS the same
+# fetch showed an open day at least as far ahead, which proves its window
+# reached there: Blue Bend, fetched 2026-09-20, read April 2027 closed and May
+# open, a real opening. An open reading always counts.
+BOOKING_HORIZON_DAYS = 183
 
 
 def facility_ids(entries):
@@ -284,15 +293,46 @@ def walk_months(fid, months, cache_entry, pause=1.0, backoff=(60, 180, 420)):
     return fetched
 
 
-def day_map(cache_entry):
-    """{'MM-DD': 'o'|'c'} across every month ever observed, newest wins."""
-    out = {}
+def _readings(cache_entry):
+    """(MM-DD, char, days from its month's fetch date or None) for every
+    observed day, months in key order."""
+    fetched = cache_entry.get("fetched") or {}
     for key in sorted(cache_entry.get("months", {})):
         year, month = (int(x) for x in key.split("-"))
+        when = fetched.get(key) or cache_entry.get("checked")
+        when = datetime.date.fromisoformat(when) if when else None
         for i, ch in enumerate(cache_entry["months"][key], start=1):
             if ch == UNKNOWN:
                 continue
-            out[f"{month:02d}-{i:02d}"] = ch
+            offset = (datetime.date(year, month, i) - when).days if when else None
+            yield f"{month:02d}-{i:02d}", ch, offset, when
+
+
+def day_map(cache_entry):
+    """{'MM-DD': 'o'|'c'} across every month ever observed.
+
+    A day two years read differently is dropped, not settled by the newer one,
+    and a closed reading past the booking horizon counts only where the same
+    fetch showed an open day at least as far out (see BOOKING_HORIZON_DAYS).
+    Letting the newer reading win, with no horizon, had June 2027 overwrite the
+    open days June 2026 had shown (Clear Lake 2355, open from 06-22). Unknown is
+    the honest reading of a disagreement, and it yields no edge.
+    """
+    readings = list(_readings(cache_entry))
+    reach = {}
+    for _, ch, offset, when in readings:
+        if ch == OPEN and offset is not None:
+            reach[when] = max(reach.get(when, offset), offset)
+    out, conflict = {}, set()
+    for mmdd, ch, offset, when in readings:
+        if (ch == CLOSED and offset is not None and offset > BOOKING_HORIZON_DAYS
+                and offset > reach.get(when, offset - 1)):
+            continue
+        if out.get(mmdd, ch) != ch:
+            conflict.add(mmdd)
+        out[mmdd] = ch
+    for mmdd in conflict:
+        del out[mmdd]
     return out
 
 
@@ -444,6 +484,21 @@ def derive_season(cache_entry):
                     f"edges {'+'.join(k for k, _ in edges)}")
 
 
+def resulting_season(existing, season):
+    """The season group as it should read after a calendar verdict.
+
+    A year-round verdict replaces the group: bookable days all year outrank the
+    dates a note gave (Mather's 03-01 to 11-30 was its reservation window), and
+    merging left "year_round: true" beside an opening date. A seasonal verdict
+    merges, so an edge an earlier walk saw and this one could not reach stays.
+    """
+    if season.get("year_round"):
+        return dict(season)
+    merged = dict(existing or {})
+    merged.update(season)
+    return merged
+
+
 def fcfs_signal(cache_entry):
     """Share of observed days that were open. Advisory only, never written.
 
@@ -466,6 +521,8 @@ def main():
     ap.add_argument("--limit", type=int, default=25,
                     help="how many facilities to WALK this run (cache makes "
                          "re-runs free); 0 = all")
+    ap.add_argument("--show", type=int, default=12,
+                    help="how many proposed changes to list")
     ap.add_argument("--only", type=int, nargs="*",
                     help="campground ids to walk, ignoring --limit")
     ap.add_argument("--months-back", type=int, default=3)
@@ -564,6 +621,13 @@ def main():
             continue
         target = by_id[cid]
         existing = target.get("season")
+        if (existing or {}).get("year_round") is True and not season.get("year_round"):
+            # Not Reservable is also what a first-come off-season looks like
+            # (Koomer Ridge, Putah Canyon: reservable in summer, open all year),
+            # so a calendar closure never overturns a year-round season.
+            stats["kept: year-round (closed may be first-come)"] += 1
+            continue
+        season = resulting_season(existing, season)
         if existing == season:
             stats["already correct"] += 1
             continue
@@ -581,7 +645,7 @@ def main():
     for key, count in stats.most_common():
         print(f"  {key:44} {count:5}")
     print(f"\n  would change: {len(changes)}")
-    for cid, season, reason, existing in changes[:12]:
+    for cid, season, reason, existing in changes[:args.show]:
         was = f"  (was {existing})" if existing else ""
         print(f"    [{cid}] {by_id[cid]['name'][:40]:42} {season}  — {reason}{was}")
 
@@ -605,8 +669,8 @@ def main():
     shutil.copy2(args.file, backup)
     for cid, season, reason, _ in changes:
         target = by_id[cid]
+        target["season"] = season
         campground_schema.apply_update(target, {
-            "season": season,
             "provenance": {"season": {
                 "source": f"recreation.gov availability calendar, facility "
                           f"{facilities[cid]} ({reason})",

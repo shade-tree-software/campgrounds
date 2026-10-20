@@ -162,6 +162,57 @@ class TestDerivation(unittest.TestCase):
         self.assertEqual(staged["season"], season)
 
 
+class TestBookingHorizon(unittest.TestCase):
+    """The 2026-10-20 walk read June 2027, fetched 225 days out, as Not
+    Reservable throughout for 28 campgrounds whose June 2026 had shown open
+    days, and wrote "opens 07-01" off the month boundary (Clear Lake 2355)."""
+
+    def clear_lake(self):
+        return {"months": {"2026-06": "?" * 21 + "o" * 9, "2026-07": "o" * 31,
+                           "2026-08": "o" * 31, "2026-09": "o" * 30,
+                           "2027-06": "c" * 30},
+                "fetched": {"2026-06": "2026-09-20", "2026-07": "2026-09-20",
+                            "2026-08": "2026-09-20", "2026-09": "2026-09-20",
+                            "2027-06": "2026-10-20"}}
+
+    def test_a_closed_reading_past_the_horizon_is_no_information(self):
+        days = rc.day_map(self.clear_lake())
+        self.assertNotIn("06-01", days)
+        self.assertNotEqual(rc.derive_season(self.clear_lake())[0], {"opens": "07-01"})
+
+    def test_an_open_reading_past_the_horizon_still_counts(self):
+        e = self.clear_lake()
+        e["months"]["2027-06"] = "o" * 30
+        self.assertEqual(rc.day_map(e)["06-01"], "o")
+
+    def test_a_far_closure_counts_where_that_fetch_reached_further(self):
+        # Blue Bend, fetched 2026-09-20: April 2027 closed, May open.
+        e = {"months": {"2027-04": "c" * 30, "2027-05": "o" * 31},
+             "fetched": {"2027-04": "2026-09-20", "2027-05": "2026-09-20"}}
+        self.assertEqual(rc.day_map(e)["04-15"], "c")
+        self.assertEqual(rc.derive_season(e)[0], {"opens": "05-01"})
+
+    def test_two_years_that_disagree_leave_the_day_unknown(self):
+        e = entry(**{"2026_06": "?" * 21 + "o" * 9, "2027_06": "c" * 30})
+        days = rc.day_map(e)
+        self.assertNotIn("06-25", days)
+        self.assertEqual(days["06-01"], "c")
+
+
+class TestResultingSeason(unittest.TestCase):
+
+    def test_year_round_replaces_dates(self):
+        # Mather: 03-01 to 11-30 was its reservation window; it is open all year.
+        was = {"year_round": False, "opens": "03-01", "closes": "11-30"}
+        self.assertEqual(rc.resulting_season(was, {"year_round": True}),
+                         {"year_round": True})
+
+    def test_a_seasonal_reading_keeps_an_edge_it_could_not_see(self):
+        was = {"opens": "05-01", "closes": "10-15"}
+        self.assertEqual(rc.resulting_season(was, {"closes": "10-20"}),
+                         {"opens": "05-01", "closes": "10-20"})
+
+
 class TestFetchWindow(unittest.TestCase):
     """rec.gov marks the ten days before a fetch and the few after it Not
     Reservable on every site. The 2026-09-21 walk read that as a closure and
