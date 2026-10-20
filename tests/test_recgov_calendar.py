@@ -18,6 +18,7 @@ The two that would have been most expensive:
     python -m unittest tests.test_recgov_calendar -v
 """
 
+import datetime
 import unittest
 
 import recgov_calendar as rc
@@ -200,11 +201,62 @@ class TestFetchWindow(unittest.TestCase):
         rc.fetch_availability_month = lambda *a, **k: {}
         try:
             e = {"checked": "2026-09-21", "months": {"2026-09": "o" * 30}}
-            rc.walk_months("1", [(2026, 9), (2027, 6)], e, pause=0)
+            rc.walk_months("1", [(2026, 9), (2026, 11)], e, pause=0)
         finally:
             rc.fetch_availability_month = saved
         self.assertEqual(e["fetched"]["2026-09"], "2026-09-21")
-        self.assertEqual(e["fetched"]["2027-06"], e["checked"])
+        self.assertEqual(e["fetched"]["2026-11"], e["checked"])
+
+
+class TestRewalk(unittest.TestCase):
+    """Which months a re-walk asks for again (2026-10-20)."""
+
+    def walk(self, entry, months):
+        asked = []
+        saved = rc.fetch_availability_month
+        rc.fetch_availability_month = lambda fid, y, m, **k: asked.append((y, m)) or {}
+        try:
+            rc.walk_months("1", months, entry, pause=0)
+        finally:
+            rc.fetch_availability_month = saved
+        return asked
+
+    def month(self, offset):
+        d = datetime.date.today().replace(day=1)
+        m = d.month - 1 + offset
+        return d.year + m // 12, m % 12 + 1
+
+    def key(self, ym):
+        return f"{ym[0]:04d}-{ym[1]:02d}"
+
+    def entry(self, months, fetched_days_ago=30):
+        on = (datetime.date.today() - datetime.timedelta(days=fetched_days_ago)).isoformat()
+        return {"checked": on, "months": dict(months), "fetched": {k: on for k in months}}
+
+    def test_an_all_nyr_month_the_window_may_now_reach_is_asked_again(self):
+        now, nxt = self.month(0), self.month(1)
+        e = self.entry({self.key(now): "o" * 28, self.key(nxt): "?" * 28})
+        self.assertEqual(self.walk(e, [now, nxt]), [nxt])
+
+    def test_a_month_with_any_observation_is_kept(self):
+        nxt = self.month(1)
+        e = self.entry({self.key(nxt): "o" * 10 + "?" * 18})
+        self.assertEqual(self.walk(e, [nxt]), [])
+
+    def test_a_past_all_nyr_month_is_not_asked_again(self):
+        past, now = self.month(-1), self.month(0)
+        e = self.entry({self.key(past): "?" * 28, self.key(now): "o" * 28})
+        self.assertEqual(self.walk(e, [past]), [])
+
+    def test_a_month_beyond_the_windows_reach_is_not_asked(self):
+        now, far = self.month(0), self.month(8)
+        e = self.entry({self.key(now): "o" * 10 + "?" * 18}, fetched_days_ago=0)
+        self.assertEqual(self.walk(e, [far]), [])
+
+    def test_a_facility_never_observed_is_walked_as_before(self):
+        nxt, far = self.month(1), self.month(8)
+        e = self.entry({self.key(nxt): "?" * 28})
+        self.assertEqual(self.walk(e, [nxt, far]), [far])
 
 
 class TestFacilityIds(unittest.TestCase):

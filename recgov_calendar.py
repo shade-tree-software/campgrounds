@@ -171,8 +171,37 @@ class RateLimited(RuntimeError):
     """The endpoint is shedding load. Stop; do not record absences."""
 
 
+# Slack past a facility's predicted booking horizon (see window_reach): some
+# windows open a whole month at a time rather than rolling day by day.
+WINDOW_REACH_SLACK_DAYS = 31
+
+
+def window_reach(cache_entry, today=None):
+    """The furthest date this facility's booking window can have reached by now,
+    or None if no day of it was ever observed.
+
+    The last day a month showed anything but NYR was the window's edge on the
+    day that month was fetched; a rolling window has moved on by as long since.
+    """
+    today = today or datetime.date.today()
+    fetched = cache_entry.get("fetched") or {}
+    best = None
+    for key, days in cache_entry.get("months", {}).items():
+        seen = [i for i, c in enumerate(days) if c != UNKNOWN]
+        on = fetched.get(key) or cache_entry.get("checked")
+        if not seen or not on:
+            continue
+        edge = datetime.date(int(key[:4]), int(key[5:7]), seen[-1] + 1)
+        edge += today - datetime.date.fromisoformat(on)
+        best = edge if best is None or edge > best else best
+    if best is None:
+        return None
+    return best + datetime.timedelta(days=WINDOW_REACH_SLACK_DAYS)
+
+
 def walk_months(fid, months, cache_entry, pause=1.0, backoff=(60, 180, 420)):
-    """Fetch each (year, month) not already cached. Returns how many were hit.
+    """Fetch each (year, month) not already cached, or cached as all-NYR and
+    not yet past. Returns how many were hit.
 
     Each month's fetch date goes in `fetched` (see FETCH_WINDOW_DAYS). Entries
     cached before 2026-10-12 carry only `checked`, which was then the date all
@@ -182,9 +211,26 @@ def walk_months(fid, months, cache_entry, pause=1.0, backoff=(60, 180, 420)):
     if cache_entry.get("months") and "fetched" not in cache_entry:
         cache_entry["fetched"] = {key: cache_entry.get("checked")
                                   for key in cache_entry["months"]}
+    this_month = datetime.date.today().strftime("%Y-%m")
+    reach = window_reach(cache_entry)
     for year, month in months:
         key = f"{year:04d}-{month:02d}"
-        if key in cache_entry.get("months", {}):
+        held = cache_entry.get("months", {}).get(key)
+        # A month that read entirely NYR held no information, only the booking
+        # window's edge on the day it was fetched, so it is asked again once the
+        # window may have reached it. Skipping every cached month (until
+        # 2026-10-20) froze the 2026-09 walk's ~13k all-NYR months in place
+        # forever: the spring a later run was meant to fill in could never
+        # arrive. A month with ANY observation stays as it is, and a past month
+        # is not asked again (it can only have left the window).
+        if held is not None and (set(held) != {UNKNOWN} or key < this_month
+                                 or reach is None):
+            continue
+        # Nor is a month the window cannot have reached yet: it would only read
+        # NYR again. That halves a re-walk (13,167 all-NYR months -> 6,863 on
+        # 2026-10-20). A facility never observed at all has no reach and is
+        # walked as before.
+        if reach is not None and datetime.date(year, month, 1) > reach:
             continue
         try:
             avail = fetch_availability_month(fid, year, month, cache=None)
