@@ -29,3 +29,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   note governs unless the Lakeside loop is a separate case; ask AWH if the imagery says so.
 - **1048 Milton Loop (PA)** — stored "riverview" but the --Claude note says woods block any
   view; inconsistent record, re-check.
+- **127 Tobyhanna SP (PA)** — stored "lakeview"; RA tags 21 sites (95-132) "Waterfront" yet each
+  also says "Greater than 300 feet" to the lake. Check pads on satellite.
+- **128 Promised Land SP (PA)** — stored "lakeview"; RA tags Pickerel Point FHU site 136 (drive-in,
+  50 ft) "Waterfront". Check that pad against the shore.
+- **863 Sizerville SP (PA)** — stored "not waterfront"; RA tags all 18 Loop A electric sites
+  "Waterfront" (<300 ft); DCNR calls only the walk-in tent sites streamside.

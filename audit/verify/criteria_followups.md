@@ -11,3 +11,5 @@ me drop and report); each needs the research named before a verdict.
   NXDOMAIN (2026-10-20; real site live on Wayback 2026-06-16); dead URLs removed. Latest
   posted rates are 2024. Live-presence rule (AWH 2026-10-14): needs Google open with 25+
   reviews or a phone that answers to a business listing. Next: Google check, then keep or drop.
+- **1164 Frey's Campground (PA)** — only a Facebook page, no posted rate; stands on RV Life $$.
+  Next: Google Maps check at the pin (open, phone, 25+ reviews); else drop.

@@ -1,0 +1,67 @@
+{
+  "id": 144,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233652",
+    "https://www.recreation.gov/api/camps/campgrounds/233652/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233652&size=1000"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 46,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Standard non-electric sites $24 a night, electric sites $40-46 by site, hike-to tent sites $24, in recreation.gov's 2026, 2027 and 2028 peak-season rate tables."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233652/rates (Peak Season 2026-05-15 to 2026-09-07, 2027 and 2028: STANDARD NONELECTRIC $24, STANDARD/RV ELECTRIC $40 and $46, WALK TO $24), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233652 (80 STANDARD ELECTRIC sites: 70 list 50-amp, 10 list 30-amp, all list Water Hookup Yes, 47 list Sewer Hookup Y), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 103,
+        "max_rig_ft": 68,
+        "pull_through": true,
+        "note": "103 drive-in campsites (80 electric, 23 non-electric) in the Knoll, Cove, Meadow and Bench loops, plus 16 hike-to tent sites; recreation.gov's description says 109 traditional sites. Listed max vehicle length is mostly 42-57 ft (one 26 ft, one 68 ft). Sites 37 and 53 are pull-through, the rest back-in. Up to 3 camping units per site (2 of them tents), 7 people."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233652 (site types, loops, Max Vehicle Length, Driveway Entry) + https://www.recreation.gov/api/camps/campgrounds/233652 (description and notices), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Hot showers, playgrounds, boat ramp with overnight mooring, fish-cleaning station, amphitheater."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233652 (Facilities: 'A boat ramp, drinking water, hot showers, playgrounds and a dump station are also provided'; amenities: Flush Toilets, Dump Station, Fish Cleaning Stations, Amphitheater), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14,
+        "note": "'All reservations must be made on www.recreation.gov or by calling (877) 444-6777 prior to arrival'; changes cannot be made at the campground. Weekend stays need 2 nights and holiday weekends 3 (recreation.gov facility rules, not marked soft). 14 nights in any rolling 30 days. Reservations can be made up to the day of arrival."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233652 (notice; facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 per rolling 30 days, reservationCutOff 0 days prior to arrival), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $24-46 (2026-2028 peak rate tables), 50-amp with water and sewer (47 sewer sites), reservable on rec.gov. Added 103 drive-in sites to 68 ft with 2 pull-throughs, showers/flush toilets/water/dump, reservation-only (fcfs never), 2-night weekend and 3-night holiday minimums, 14-night max. Season not stated (rate-season dates only; the USACE Baltimore District site did not load). rec.gov's militaryDiscount rule flag has no prose; not recorded.",
+  "flags": [
+    "Wrong ownership class: stored 'state', but this is a USACE campground on Cowanesque Lake (recreation.gov org_code USACE; the --AWH note says 'USACE campground'). Should be 'federal'. As 'state' it inherits Pennsylvania state-park booking rules (ReserveAmerica, 11-month window, noon cutoff, fcfs always, Saturday 2-night summer minimum) that are wrong here; this result overrides reservable/platform/fcfs/min_stay/max_stay, but window_opens_days and reserve_until still inherit from state:PA until the ownership is fixed."
+  ]
+}
