@@ -21,3 +21,12 @@
    stopped. (The 2026-10-12 price research read its booking site with that driver; worth knowing.)
    Options: you open the page and paste the reservation/cancellation/stay rules, or give the OK
    to read that one page with the driver, or skip `provincial:QC`.
+
+4. **Drop Golden Memorial State Park (5002, MS)?** MDWFP's own park page now says it "is managed as
+   a day use park only" (questions to Roosevelt SP). The Dyrt and Campendium say the same. Marked
+   `temporarily_closed` with a dated caveat for now; with no overnight camping it fails inclusion.
+
+5. **Drop Holmes County State Park (5004, MS)?** It is gone from MDWFP's list of state parks (its
+   page 404s) and from the reservation site's catalog; eRegulations lists it closed for
+   renovations and MDWFP lists its lakes closed. Campendium says permanently closed. No transfer to
+   the county turned up. Marked `temporarily_closed` with a caveat; drop, or keep and wait?
