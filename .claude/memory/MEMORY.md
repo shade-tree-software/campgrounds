@@ -97,7 +97,7 @@
 - [Trust rec.gov over sweep notes](feedback_trust_recgov_over_sweep_notes.md) — current RIDB/rec.gov outranks auto-generated notes; AWH can't adjudicate conflicts (hasn't been there); --AWH notes and manual checks still win
 - [Lone electric site may be the host's](feedback_lone_electric_site_may_be_host.md) — 1-2 electric sites that the public can't book = unknown electric, never a yes; drop sites named Host
 - [Absent is not zero](feedback_absent_is_not_unknown.md) — the same trap has now bitten four subsystems; omit the key, never cache a failure as a result, never let unknown EXCLUDE a search result
-- [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR is no information, ~120 days per run, FCFS not derivable, the days around a fetch read Not Reservable (guarded 2026-10-12); accrual TRACKED in audit/recgov_calendar.json
+- [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR is no information, ~120 days per run, FCFS not derivable, fetch-window and 6-month-horizon artifacts guarded, year-round never overturned (2026-10-20); accrual TRACKED in audit/recgov_calendar.json
 - [EKKO weight](user_ekko_weight.md) — ~9,500 lb empty, 11,000 lb GVWR; a 5-ton bridge limit excludes, 6+ tons passes
 - [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency-stated 4WD requirement is a criteria failure (AWD does not count); RI East Beach excluded on it
 - [Private-gap sources are enough](feedback_private_sources_standard.md) — AWH 2026-10-02: keep RV Life + Good Sam with the 4*/$$ screens; a private park on neither is a red flag; no OSM third source (OSM-only OK only if active + good Google reviews + phone + published price)

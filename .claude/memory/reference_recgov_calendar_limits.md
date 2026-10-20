@@ -54,6 +54,18 @@ keyless sibling of RIDB. Measured 2026-09-14 while building `recgov_calendar.py`
   exact day is only good to about two weeks: the band starts ~11 days before the fetch, so the last
   'Reserved' night before it (a weekend, Labor Day) becomes the edge. That also weakens the
   Labor-Day check below as proof of a real closure.
+- **Second full walk, 2026-10-20: 2,429 facilities, 30 applied (24 year-round).** The first dry run
+  proposed 120. Three fixes, all now in `recgov_calendar.py` with tests:
+  - **Past ~6 months, some facilities answer Not Reservable instead of NYR.** June 2027, fetched
+    225 days out, read closed throughout for 28 campgrounds, giving "opens 07-01" at the month
+    boundary. A closed reading over 183 days out now counts only if the same fetch showed an
+    open day at least as far ahead (Blue Bend's real 05-01 opening passes that test).
+  - **A day two years read differently is left unknown.** The newer reading no longer wins.
+  - **A year-round verdict REPLACES the season group.** It used to deep-merge, which left
+    `year_round: true` beside the old dates, and **a calendar closure never overturns
+    year-round.** Koomer Ridge, Putah Canyon and Rio Grande (Creede) are reservable in summer
+    and first-come the rest of the year, which is the FCFS trap above. Mather's
+    "03-01 to 11-30" was its reservation window.
 - **Some facility ids 404.** Ten of the entries' `/camping/campgrounds/<id>` links returned
   HTTP 404 — the calendar is gone, not empty. They stay unwalked and are worth a look as a
   data-quality signal (renamed or retired facility).
