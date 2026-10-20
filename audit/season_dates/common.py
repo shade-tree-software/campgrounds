@@ -5,7 +5,17 @@ agency's own pages, and calls run(DECISIONS). Writes go through
 campground_schema.apply_update, which validates before it mutates. An entry whose
 season already came from anywhere but note prose is left alone (a person or the
 rec.gov calendar outranks this pass); a note-derived one is replaced, since the
-agency page is the better authority. Dry run unless --apply.
+agency page is the better authority; so is one this pass wrote earlier the same day
+from the same source, so a decision can be corrected by re-running. Dry run unless
+--apply.
+
+Approximate edges (the convention the state:VA row set): an agency's "mid-April" is
+written 04-15, "early" opens on the 1st and closes on the 7th, "late" opens on the 20th
+and closes on the month's last day, a bare month is its whole month, and a floating
+weekday rule ("second Friday in April") takes its widest span. The note then quotes the
+agency's wording, so the stored day is never mistaken for a published one. Notes do not
+render in the popup, which is why the dates are written at all: a note-only season shows
+the reader nothing but "seasonal".
 """
 import json, os, sys
 
@@ -27,7 +37,8 @@ def run(decisions, extra=None):
     for i, (season, source) in decisions.items():
         e = by[i]
         prov = (e.get("provenance") or {}).get("season") or {}
-        if e.get("season") and prov.get("source") != "note prose":
+        redo = prov.get("checked") == DAY and prov.get("source") == source
+        if e.get("season") and prov.get("source") != "note prose" and not redo:
             print(f"  skip {i} {e['name'][:50]}: season from {prov.get('source', '?')[:50]}")
             skipped += 1
             continue
