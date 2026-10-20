@@ -11,6 +11,6 @@ metadata:
 
 **How to price a KOA:** `audit/private_gap_browser/koa.py SLUG MM/DD/YYYY MM/DD/YYYY` (needs `drv_server.py` running; KOA_DUMP=path saves the page text, which also carries minimum-stay lines). A plain fetch gets Cloudflare's 403. 28 of 30 quoted on 2026-10-19; the misses were calendars already closed for the season. Real quotes run well apart from the brand's reputation: Needles $37, Gros Morne $37, Spring Grove $40, but Glacier-area KOAs $96-269 in June.
 
-**Backlog:** ~400 RV Life 4*+ KOAs (lower 48 + provinces) are not in the DB because earlier sweeps pre-skipped them; RV Life avg_rate puts ~56 at or under $50. Offered to AWH 2026-10-19, not started.
+**Backlog: DONE 2026-10-19** (audit/koa_backlog_2026-10-19/, followups.md there is the state). 400 RV Life 4*+ KOAs quoted on koa.com: +134 added (ids 15397-15530, 7 commits), 243 skipped over the gate (verdicts.json), 0 drops. Most "no quote" rows were calendars ending before May 2027 - the page says "the latest date you can make a reservation for is X"; retry.py re-quotes inside the window, and an off-season quote is only a lower bound (over = firm skip; a pass needs margin or the park's peak season). Left for spring 2027: dodge-city KS, cave-junction OR, beaver UT (at the gate off-season) and ~10 closed calendars; 5 RV Life rows whose koa.com reserve page 404s.
 
 **Named exception (AWH 2026-10-10):** Fort Myers / Pine Island KOA Holiday (14882, FL; $104.50+/night) stays despite price, because it is near one of the family homes.
