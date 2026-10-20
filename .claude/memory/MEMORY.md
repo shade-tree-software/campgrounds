@@ -11,7 +11,7 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [What's actually left](project_remaining_work_map.md) — CURRENT 2026-10-19 night: high-tier pass done (48 priced, 9 dropped); 75 seasonal parks wait for 2027 calendars; private round 2 done; KOA backlog +134 done; commits through 7ceca985 NOT pushed; next id 15531
+- [What's actually left](project_remaining_work_map.md) — CURRENT 2026-10-20: KOA fees, Good Sam, note-scan, registry rows (all but QC) done; 35+ commits past d34ce1d8 NOT pushed; asks in audit/registry_asks_2026-10-20.md; next id 15531
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
 - [Hidden rates playbook](reference_hidden_rates_playbook.md) — find a private campground's real rate/minimum/seasonal share: one-browser driver + engine helpers (reservationpleinair, reservationcamping, RéservPro, RMS) + Wayback imagery + Bonjour Québec; recipes in audit/private_gap_browser/README.md
@@ -79,7 +79,7 @@
 - [Never open a rollup with "Away"](feedback_dont_open_with_away.md) — the drafter's tic (84 of 327 entries); AWH drops the departure and lets the direction be the verb, or names the drive ("an evening drive after work")
 - [Time for short drives, miles for long](feedback_drive_figures_time_vs_miles.md) — duration under ~130 mi, mileage over ~300; a figure is only worth printing when the distance was the day's achievement
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
-- [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1/2/3/5, popups, rating + hookups filters done; left: phase 6 registry rows + phase 7
+- [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1-6 done (registry: every agency but QC, held for SEPAQ's bot wall); left: phase 7
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
 - [Price research #2 handoff](project_price_research.md) — through 2026-10-19: private round 2 (hand-read of round-1 pages, run_chunk.py + gate) done for every state, ~209 priced, 33 dropped; next levers: booking engines, Wayback, KOA, dead domains; per-engine recipes + pricing rules inside
 - [Campspot pricing recipe](reference_campspot_api.md) — private JSON API via the driver (x-client-type: CONSUMER); pace 3 s (CloudFront blocks ~590 calls/6.5 min); copy slugs, never compose them
@@ -90,6 +90,7 @@
 - [Camper-reported rates](feedback_camper_report_rates.md) — AWH 2026-10-11: a dated (2024+) camper report may price an entry only if the operator has NO web page; mark it with a CAMPER-REPORTED RATE note line
 - [15A is a legitimate amperage](feedback_15_amp_is_legitimate.md) — hookups.electric allows 0/15/20/30/50 (AWH 2026-10-09); snap down, never up
 - [Note-scan without an API key](reference_session_note_scan.md) — queue 0 (2026-10-12); dump/read/--apply-file via audit/note_scan/apply_absent.py (--rescan for edited notes); `derived` groups are NOT protected
+- [Agency booking sources](reference_agency_booking_sources.md) — eDirect grid AllowWebBooking, Camis, RA park-page policy blocks, admin codes on LII/SOS; which agency sites wall bots
 - [Researching an agency policy row](reference_agency_policy_research.md) — scrape ALL of an agency's park pages and count the boilerplate (19 of 23 IS the evidence); the legislative rule beats the website; brochures on the agency's own domain are stale traps
 - [Testing JS with no node](reference_js_testing_without_node.md) — dev box has no JS runtime; pip-install quickjs into ~/.cache/ekko-jslib (scratchpad is noexec) and run the real pure modules (and diff old vs new) against live data
 - [Bulk passes in stoppable chunks](feedback_chunked_bulk_passes.md) — AWH 2026-09-15: small chunks, sequential, stoppable, committable; write each batch to disk, put progress in the DATA not a cursor file, cap each run, free --report

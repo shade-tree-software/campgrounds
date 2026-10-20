@@ -1,12 +1,14 @@
 ---
 name: project-campground-schema
-description: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/3/4/5 + popup surfacing + map rating/hookups filters ALL DONE; phase 5 (Good Sam discounts) shipped 2026-09-20; what's left is phase 6 (registry rows) and phase 7 (use-driven verification)
+description: "CURRENT 2026-10-20: phase 6 registry rows DONE for every agency except provincial:QC (held: sepaq.com 403 + robots clause in its terms; asks file #3); 64 rows / 7,006 entries (48.4%); policy_priority.py now lists only QC | older: Structured campground fields (amenities/booking/fees/season) + agency policy registry — phases 1/2/3/4/5 + popup surfacing + map rating/hookups filters ALL DONE; phase 5 (Good Sam discounts) shipped 2026-09-20; what's left is phase 6 (registry rows) and phase 7 (use-driven verification)"
 metadata: 
   node_type: memory
   type: project
   originSessionId: a9cf38ab-6047-479a-a981-ab7343bcae7a
   modified: 2026-09-20T00:00:00.000Z
 ---
+
+**UPDATE 2026-10-20 (phase 6 done bar Quebec):** registry rows written for every agency `policy_priority.py` lists, one script per row at `audit/<st>_registry/apply.py` (dry run unless --apply; ROW dict validated with `campground_schema.validate_row`). 64 rows, 7,006 of 14,489 entries (48.4%). Only `provincial:QC` is left, HELD: sepaq.com answers 403 and its terms (art. 2) forbid robots, so AWH must paste the rules, OK the browser for that page, or skip it (audit/registry_asks_2026-10-20.md #3). Rules adopted along the way: `reservation_fee` is moot on a non-reservable entry and `min_stay` moot where nothing can be booked; an entry's own booking `note` HIDES the row note, so an override note must carry the whole row note (RI Breachway does). Booking corrections found by reading agency catalogs (MB/NM/MS/KY/ID/NV/NS): derived `platform: operator` values from note prose were mostly wrong and were dropped wherever a row supplies the platform. Bot walls respected, not bypassed: NJ DEP (Incapsula) → read N.J.A.C. on Cornell LII; RI riparks.ri.gov (Cloudflare) → RA page + RICR, RI peak min-stay left unknown (asks #6); lastateparks.com 403 → the reservation site's Policies page. Also this session: Good Sam re-run (616 entries), note-scan queue back to 0, Shavers Fork 13221/13222 audited. Not pushed (35 commits past d34ce1d8 on 2026-10-20).
 
 Structured-field project on `campgrounds.json`, started and largely built 2026-09-14.
 Rules live in **`docs/campground-schema.md`** (read it first); this is only the status
