@@ -31,9 +31,15 @@ def minimum_lines(dump):
     return sorted({l.strip() for l in open(p, encoding='utf-8') if re.search(r'(?i)\bminimum\b|night min', l)})[:4]
 
 
+# retry.py re-quoted the no-quote rows on a night inside each calendar; its try becomes the last one
+RETRY = {}
+if os.path.exists(os.path.join(HERE, 'quotes_retry.jsonl')):
+    RETRY = {json.loads(l)['slug']: json.loads(l) for l in open(os.path.join(HERE, 'quotes_retry.jsonl'))}
 verdicts = []
 for line in open(os.path.join(HERE, 'quotes.jsonl')):
     q = json.loads(line)
+    if q['slug'] in RETRY:
+        q['tries'] += RETRY[q['slug']]['tries']
     r = backlog[q['slug']]
     t = q['tries'][-1]
     hook = [x for x in t['types'] if x['price'] and not NOHOOK.search(x['name'])]

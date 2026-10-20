@@ -15,6 +15,11 @@ V = {v['slug']: v for v in json.load(open(os.path.join(HERE, 'verdicts.json')))}
 Q = {}
 for line in open(os.path.join(HERE, 'quotes.jsonl')):
     q = json.loads(line); Q[q['slug']] = q
+if os.path.exists(os.path.join(HERE, 'quotes_retry.jsonl')):  # retry.py's later night, as gate.py reads it
+    for line in open(os.path.join(HERE, 'quotes_retry.jsonl')):
+        q = json.loads(line)
+        if q['slug'] in Q:
+            Q[q['slug']]['tries'] += q['tries']
 B = {r['slug']: r for r in json.load(open(os.path.join(HERE, 'backlog.json'))) if r['slug']}
 
 
@@ -70,13 +75,16 @@ for d in decisions:
     cad = v['currency'] == 'CAD'
     lo, hi = money(v['base'], cad), money(v['high'], cad)
     rate = lo if lo == hi else '%s-%s' % (lo, hi.replace('C$', '').replace('$', ''))
-    when = 'mid-May 2027' if v['date'].startswith('05') else 'mid-June 2027'
+    mo, dy, yr = (int(x) for x in v['date'].split('/'))
+    when = '%s-%s %d' % ('early' if dy <= 10 else 'mid' if dy <= 20 else 'late',
+                         ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                          'October', 'November', 'December'][mo - 1], yr)
     stars = ('%g' % b['stars']) + '*'
     tier = '$' * (b['price_level'] or 0)
     kind = re.search(r'KOA (Holiday|Journey|Resort)', name)
-    note = ('%s at %s, %s; %s. RV sites %s a night before tax for a %s weeknight on KOA\'s booking form.%s RV Life %s%s. --Claude'
+    note = ('%s at %s, %s; %s. RV sites %s a night before tax for %s weeknight on KOA\'s booking form.%s RV Life %s%s. --Claude'
             % ('KOA ' + kind.group(1) if kind else 'KOA campground', street, town.split(',')[0], summary(d['slug']),
-               rate, when, (' ' + d['extra']) if d.get('extra') else '', stars, (', ' + tier) if tier else ''))
+               rate, ('an ' if when[0] in 'aeiou' else 'a ') + when, (' ' + d['extra']) if d.get('extra') else '', stars, (', ' + tier) if tier else ''))
     ev = ('KOA booking form (koa.com/campgrounds/%s/reserve/) quoted %s, 1 night, 23-ft motorhome: RV site types %s before tax (read 2026-10-19); RV Life %s over %s reviews, %s sites'
           % (d['slug'], '%s-%s-%s' % (v['date'][6:], v['date'][:2], v['date'][3:5]), rate, stars, b['reviews'], b['sites']))
     if v['good_sam']:
