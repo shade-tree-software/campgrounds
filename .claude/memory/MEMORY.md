@@ -26,6 +26,7 @@
 - [Deploy to PythonAnywhere](project_deploy_to_pa.md) — ./deploy-to-pa.sh pulls + reloads the live app, with a data-file guard and a post-reload health check
 - [Exclude seasonal/residential/membership parks](feedback_exclude_seasonal_residential.md) — AWH 2026-10-14 five-test rule for long-stay parks that sell nights (price, nights for sale, min ≤2 nights, ≥1 in 10 nightly, not a home community); membership parks out
 - [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
+- [Trailer limits apply to EKKO](feedback_trailer_length_limits.md) — AWH 2026-10-20: a posted trailer length limit counts for the motorhome too unless the source says otherwise; under ~23 ft = drop
 - [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 2026-10-13 standing rule: a note I'm already reading/editing gets rewritten as clean current prose (no appended diary lines, no stale facts); --AWH text stays; never a separate pass
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
 - [Waypoints are orientation, not clutter](feedback_waypoints_are_orientation.md) — minor stops (gas, rest areas) are how AWH navigates a trip; don't fold/hide low-content timeline items to reduce density
@@ -79,7 +80,7 @@
 - [Never open a rollup with "Away"](feedback_dont_open_with_away.md) — the drafter's tic (84 of 327 entries); AWH drops the departure and lets the direction be the verb, or names the drive ("an evening drive after work")
 - [Time for short drives, miles for long](feedback_drive_figures_time_vs_miles.md) — duration under ~130 mi, mileage over ~300; a figure is only worth printing when the distance was the day's achievement
 - [Travelogue capture gap — DONE](project_travelogue_capture_gap.md) — write-ups for all 321 days done 2026-09-11; voice memos/Whisper removed for good; the prompt rules are AWH corrections
-- [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1-6 done (registry: every agency but QC, held for SEPAQ's bot wall); left: phase 7
+- [Campground schema project](project_campground_schema.md) — amenity/booking/fee/season fields + agency registry; phases 1-6 done (registry: every agency, QC added 2026-10-20 from one approved SEPAQ read); left: phase 7
 - [Free-camping fees pass](project_free_fees.md) — 783 entries got $0 fees from notes (kills discount chips on free sites); dispersed follow-up mostly done
 - [Price research #2 handoff](project_price_research.md) — through 2026-10-19: private round 2 (hand-read of round-1 pages, run_chunk.py + gate) done for every state, ~209 priced, 33 dropped; next levers: booking engines, Wayback, KOA, dead domains; per-engine recipes + pricing rules inside
 - [Campspot pricing recipe](reference_campspot_api.md) — private JSON API via the driver (x-client-type: CONSUMER); pace 3 s (CloudFront blocks ~590 calls/6.5 min); copy slugs, never compose them

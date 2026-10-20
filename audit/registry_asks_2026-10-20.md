@@ -1,4 +1,9 @@
-# Questions from the policy-registry pass (2026-10-20) — not yet put to AWH
+# Questions from the policy-registry pass (2026-10-20) — ANSWERED by AWH 2026-10-20
+
+Answers: 1 a trailer limit applies to a motorhome too unless the source says otherwise (20-ft
+FAS dropped); 2 drop; 3 read the SEPAQ page once (done: `provincial:QC`); 4, 5 drop; 6 wait for
+RIDEM's new reservation provider; 7 drop; 8 keep Hackberry Bend 6626, drop Pioneer 6621; 9, 10
+drop. Removals are logged in audit/drops_2026-10-20/removals.json.
 
 1. **Montana FAS trailer limits.** FishMT's site pages post a "Vehicle Length: Trailer Length
    is N ft" for fishing access sites. Of the 26 pages that loaded (the site is flaky; 49 still
