@@ -176,5 +176,50 @@ class TestMapPageCarriesTheVocabulary(unittest.TestCase):
             self.assertIn(path, A._MAP_ETAG_INPUTS)
 
 
+class TestPopupViewsAreLogged(unittest.TestCase):
+    """Phase 7 ranks its verification queue by what contributors open (doc §7)."""
+
+    def setUp(self):
+        import tempfile
+        self.tmp = tempfile.NamedTemporaryFile(suffix=".jsonl", delete=False).name
+        self.real, A.CAMPGROUND_VIEWS_FILE = A.CAMPGROUND_VIEWS_FILE, self.tmp
+        self.cg = next(r["id"] for r in A._load_campgrounds())
+
+    def tearDown(self):
+        A.CAMPGROUND_VIEWS_FILE = self.real
+        os.unlink(self.tmp)
+
+    def _lines(self):
+        with open(self.tmp, encoding="utf-8") as fh:
+            return [json.loads(line) for line in fh if line.strip()]
+
+    def test_a_contributor_opening_a_popup_is_recorded(self):
+        _client().get(f"/api/campgrounds/{self.cg}/popup")
+        rows = self._lines()
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["id"], self.cg)
+        self.assertTrue(rows[0]["ts"].endswith("+00:00"))
+
+    def test_a_reader_who_is_not_planning_is_not(self):
+        client = A.app.test_client()
+        with open(os.path.join(os.path.dirname(os.path.dirname(
+                os.path.abspath(__file__))), "users.json")) as fh:
+            users = json.load(fh)
+        reader = next((u for u, v in users.items()
+                       if not v.get("is_admin") and not v.get("can_upload")
+                       and v.get("can_view_campgrounds", True)), None)
+        if reader is None:
+            self.skipTest("no non-contributor account in users.json")
+        with client.session_transaction() as sess:
+            sess["_user_id"] = reader
+            sess["_fresh"] = True
+        self.assertEqual(client.get(f"/api/campgrounds/{self.cg}/popup").status_code, 200)
+        self.assertEqual(self._lines(), [])
+
+    def test_a_missing_campground_is_not(self):
+        _client().get("/api/campgrounds/999999999/popup")
+        self.assertEqual(self._lines(), [])
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -369,6 +369,14 @@ ACCESS_LOG_FILE = os.path.join(TRIP_DATA_DIR, "access_log.jsonl")
 # Entries older than this are dropped by _prune_access_log (same spirit as the
 # 7-day photo trash purge: bounded growth without manual maintenance).
 ACCESS_LOG_RETENTION_DAYS = 90
+# Which campgrounds the people who plan trips actually look at: one JSONL line
+# per campground-map popup opened by a contributor (`_log_campground_view`).
+# The access log can't answer it — it records page views, and the popup is an
+# API fetch. It is the use signal phase 7 of docs/campground-schema.md ranks its
+# verification queue by (with stays): a campground being weighed for a trip is
+# where an inherited, never-checked value can mislead a booking. Append-only for
+# the same reason as the access log; never pruned, since a line is ~80 bytes.
+CAMPGROUND_VIEWS_FILE = os.path.join(TRIP_DATA_DIR, "campground_views.jsonl")
 
 os.makedirs(TRIP_DATA_DIR, exist_ok=True)
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -5067,6 +5075,24 @@ def campgrounds_map():
     return resp
 
 
+def _log_campground_view(cg_id):
+    """Append one popup view to CAMPGROUND_VIEWS_FILE. Never raises.
+
+    Contributors only (`_is_contributor`): a relative browsing the map isn't
+    planning a trip, and their clicks would rank the queue by curiosity. The
+    client caches a popup's detail for the life of the page, so this counts at
+    most one view per campground per page load."""
+    try:
+        if not _is_contributor():
+            return
+        rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+               "id": cg_id, "who": getattr(current_user, "id", "")}
+        with open(CAMPGROUND_VIEWS_FILE, "a", encoding="utf-8") as f:
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+    except Exception:
+        pass
+
+
 @app.route('/api/campgrounds/<int:cg_id>/popup')
 def api_campground_popup(cg_id):
     """Popup-only detail for one campground (see `_MAP_POPUP_FIELDS`).
@@ -5091,6 +5117,7 @@ def api_campground_popup(cg_id):
     # THIS campground or inherited from its agency — an inherited value that
     # reads as a fact about the park is the failure this whole model exists to
     # prevent.
+    _log_campground_view(cg_id)
     policies = _load_policies()
     policy = campground_schema.resolve(row, policies)
     if policy:

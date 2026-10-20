@@ -7,7 +7,7 @@
 #   day_rollups — the drafted day write-ups, which exist only on the host
 #   holding the API key and cost money to regenerate,
 #   photo_order, photo_uploaders, photo_favorites, photo_people, share_tokens)
-#   + trip_data/access_log.jsonl
+#   + trip_data/access_log.jsonl, trip_data/campground_views.jsonl
 #   + trip_data/track_cache/.
 #
 # trip_data/family.json is in that list for a privacy reason, not just a
@@ -71,6 +71,7 @@ CANDIDATES=(
   trip_data/photo_people.json
   trip_data/share_tokens.json
   trip_data/access_log.jsonl
+  trip_data/campground_views.jsonl
   trip_data/track_cache
 )
 [[ "$WITH_PHOTOS" -eq 1 ]] && CANDIDATES+=(photo_uploads)
