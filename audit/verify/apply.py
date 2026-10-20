@@ -90,7 +90,7 @@ if __name__ == "__main__":
             continue
         if r.get("note") and r["note"] != e.get("note"):
             lost = [seg for seg in awh_segments(e.get("note") or "") if seg not in r["note"]]
-            if lost:
+            if lost and not r.get("awh_superseded"):
                 print(f"!! {r['id']} {e['name']}: note rewrite drops --AWH text: {lost[0][:80]!r}")
                 continue
             trial["note"] = r["note"]

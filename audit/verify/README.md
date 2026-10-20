@@ -79,6 +79,11 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    stale rate, a wrong length, a closure), propose a corrected note in `note`: the whole
    note as clean current prose, `--AWH` text kept verbatim with its marker, your own text
    signed `--Claude`. Omit `note` otherwise.
+   **Outdated --AWH text** (AWH 2026-10-20): where the campground's or agency's own site clearly
+   publishes something that contradicts it, the note may be rewritten without the outdated part.
+   Propose that rewrite in `note` and list each removed phrase with its source quote in
+   `awh_superseded` (`[{"old": ..., "source": ...}]`); apply.py refuses a rewrite that drops --AWH
+   text without it. Silence or an aggregator never supersedes; conflicting official pages don't either.
 
 ## Result file: `results/<id>.json`
 
