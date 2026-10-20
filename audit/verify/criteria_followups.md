@@ -15,3 +15,8 @@ me drop and report); each needs the research named before a verdict.
   Next: Google Maps check at the pin (open, phone, 25+ reviews); else drop.
 - **1188 Woodhaven Acres (PA)** — one-page site, email only: no phone, rates or booking. Next:
   Google check (open, phone, 25+ reviews) and a dated rate; else drop.
+- **4375 King's RV Park Campground (Belton SC)** — its website was King's Campground in
+  Dillsburg PA (removed 2026-10-20); now no website. Next: find its own site/booking page or
+  Google presence (phone 864-314-1023); else drop.
+- **14267 Harts Content Campground (PA)** — posted rates are titled "2023 Rates" (still
+  displayed); no 2024+ date. Next: ParkWith quote via the browser, else note the rate as undated.

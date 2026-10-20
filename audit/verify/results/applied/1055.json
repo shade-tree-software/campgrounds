@@ -1,0 +1,59 @@
+{
+  "id": 1055,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/251943",
+    "https://www.recreation.gov/api/camps/campgrounds/251943/rates",
+    "recreation.gov campsite catalog for 251943 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 12, "currency": "USD", "checked": "2026",
+                 "note": "Single site $12 a night (includes two vehicles and one camping unit; $5 per extra vehicle); lean-to shelter sites $14; group site $80."},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area ('Single Site: $12 per night', 'Daily group site camping fee: $80.00') + https://www.recreation.gov/api/camps/campgrounds/251943/rates (Peak Season 2026-05-01 to 2026-10-25: STANDARD NONELECTRIC $12, LEAN TO $14, GROUP $80; same 2024-2028), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area ('Hookup - Water: No Hookup - Sewer: No ... Hookups - Electric: No') + recreation.gov catalog for 251943 (every site STANDARD/SHELTER/GROUP NONELECTRIC), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 26, "max_rig_ft": 45,
+                 "note": "26 single sites plus 1 group site; two singles have lean-to shelters. recreation.gov lists max vehicle lengths of 25-45 ft (most 30-40); driveway type not listed."},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area ('No. of Sites: Single: 26 Group: 1') + recreation.gov catalog for 251943 (Max Vehicle Length), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area ('Vault toilet(s)', 'drinking water is available from a hand pump', 'Dump Stations: Yes') + https://www.recreation.gov/api/camps/campgrounds/251943 ('A dump station is located at the exit'), read 2026-10-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "10-26"},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area ('Campground open 05/01 - 10/26'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "always",
+        "min_stay": [{"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "'Reservations are accepted for all campground sites from May 1 to Oct. 26. All campground sites are also available as first come, first served.' Up to 6 months ahead on recreation.gov or 877-444-6777; recreation.gov closes booking 4 days before arrival, the Forest Service page says at least 3 days ahead. 14 nights per rolling 30 days. Fees are paid within 30 minutes of arrival."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/hearts-content-recreation-area (Reservations) + https://www.recreation.gov/api/camps/campgrounds/251943 (facility_rules maxStay 14 per rolling 30 days, minHolidayWeekendStay 3, reservationCutOff 4), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "note": "Allegheny NF campground beside the Hearts Content old-growth area and Hickory Creek Wilderness, run by concessionaire Allegheny Site Management. 26 single sites with RV spurs (listed 25-45 ft) plus a group site; vault toilets, hand-pump water, dump station, no hookups. Open May 1 to Oct 26, reservable on recreation.gov, and every site also first-come. Not on the water. --Claude",
+  "summary": "Confirmed $12 fee, no hookups, 26 sites, dump; added 45-ft max rig, vault toilets/hand-pump water, the May 1-Oct 26 season (Forest Service statement) and full booking rules (recreation.gov, 6 months, 4-day cutoff, all sites also first-come, 3-night holiday minimum, 14 nights). Note corrected: the 'smaller sites -- verify length' caution is contradicted by the 25-45 ft catalog lengths.",
+  "flags": [
+    "Entry phone is empty. recreation.gov gives 814-368-4158 (Allegheny Site Management, campground concessionaire); the Forest Service page gives the Bradford Ranger District office, 814-362-4613.",
+    "Concession-run (Allegheny Site Management, http://www.alleghenysite.com/) but booked on recreation.gov at Forest Service fees, so the inherited federal rows look right; recreation.gov says only 'Interagency passes are accepted at most sites', so the inherited senior/access discount was left unconfirmed."
+  ]
+}

@@ -37,3 +37,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "Waterfront" (<300 ft); DCNR calls only the walk-in tent sites streamside.
 - **1186 Whispering Winds (PA)** — stored "not waterfront"; operator: "a natural creek runs
   through the campground ... creekside RV campsites".
+- **78 Kooser SP (PA)** — stored "not waterfront"; RA tags 42 of 43 sites "Waterfront" (30 <300 ft).
+  Probably Kooser Run (stream), not the lake; run the gate.
