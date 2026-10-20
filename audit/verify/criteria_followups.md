@@ -13,3 +13,5 @@ me drop and report); each needs the research named before a verdict.
   reviews or a phone that answers to a business listing. Next: Google check, then keep or drop.
 - **1164 Frey's Campground (PA)** — only a Facebook page, no posted rate; stands on RV Life $$.
   Next: Google Maps check at the pin (open, phone, 25+ reviews); else drop.
+- **1188 Woodhaven Acres (PA)** — one-page site, email only: no phone, rates or booking. Next:
+  Google check (open, phone, 25+ reviews) and a dated rate; else drop.

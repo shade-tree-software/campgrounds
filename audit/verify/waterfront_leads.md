@@ -35,3 +35,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   50 ft) "Waterfront". Check that pad against the shore.
 - **863 Sizerville SP (PA)** — stored "not waterfront"; RA tags all 18 Loop A electric sites
   "Waterfront" (<300 ft); DCNR calls only the walk-in tent sites streamside.
+- **1186 Whispering Winds (PA)** — stored "not waterfront"; operator: "a natural creek runs
+  through the campground ... creekside RV campsites".
