@@ -30,7 +30,7 @@ NOTE_FIXES = {
     7931: ("first-come, first-served (14-day limit). --Claude", "first-come, first-served. --Claude"),
     7933: ("first-come, first-served; 14-day limit. --Claude", "first-come, first-served. --Claude"),
     7960: ("Electric RV sites are first-come, first-served. --Claude",
-           "All 37 campsites, the electric RV area included, book on ReserveAmerica (read 2026-10-20). --Claude"),
+           "ReserveAmerica lists 37 of the campsites as bookable, the electric RV area included (read 2026-10-20). --Claude"),
 }
 HYDE_RA = "https://newmexicostateparks.reserveamerica.com/camping/hyde-memorial/r/campgroundDetails.do?contractCode=NM&parkId=430013"
 
