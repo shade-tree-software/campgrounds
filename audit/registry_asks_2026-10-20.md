@@ -30,3 +30,10 @@
    page 404s) and from the reservation site's catalog; eRegulations lists it closed for
    renovations and MDWFP lists its lakes closed. Campendium says permanently closed. No transfer to
    the county turned up. Marked `temporarily_closed` with a caveat; drop, or keep and wait?
+
+6. **Rhode Island peak-season minimum stays (state:RI, 4 entries).** The ReserveAmerica park pages
+   say "See full policy for Minimum Stay requirements", and that policy is on riparks.ri.gov, which
+   answers every automated read with a Cloudflare challenge. The row leaves `min_stay` unknown.
+   If you can open riparks.ri.gov/campgrounds/camping-policies and paste the minimum-stay section,
+   I'll add it. (2027 bookings are also on hold while RIDEM changes reservation provider, so this
+   may be worth waiting for the new vendor's terms anyway.)
