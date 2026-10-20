@@ -614,6 +614,9 @@ def _inherited(entry, registry):
     return merged
 
 
+_SEASON_SPAN_KEYS = {"year_round", "opens", "closes"}
+
+
 def resolve(entry, registry=None):
     """Effective structured fields for one entry, with each group's scope.
 
@@ -641,6 +644,13 @@ def resolve(entry, registry=None):
         inherited = row.get(group) or {}
         if not own and not inherited:
             continue
+        if group == "season" and own.keys() & _SEASON_SPAN_KEYS:
+            # A season is one statement. An entry that says when IT is open
+            # (year-round, or its own dates) replaces the agency's span whole:
+            # merging key by key printed "Open year-round" beside the agency's
+            # Mar 1 - Dec 7 at Shenandoah River (phase 7, 2026-10-20).
+            inherited = {k: v for k, v in inherited.items()
+                         if k not in _SEASON_SPAN_KEYS and k != "note"}
         values = dict(inherited)
         values.update(own)
         if own and inherited:

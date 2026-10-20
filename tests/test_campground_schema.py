@@ -840,3 +840,32 @@ class TestElevationFromForm(unittest.TestCase):
     def test_new_entry_and_blank(self):
         self.assertEqual(self.clean(1088.082901554404), 1088.1)
         self.assertEqual(self.clean(""), 0.0)
+
+
+class TestSeasonInheritsWhole(unittest.TestCase):
+    """An entry's own season span replaces the agency's, never merges with it."""
+
+    REG = {"state:VA": {"season": {"opens": "03-01", "closes": "12-07", "note": "statewide"},
+                        "booking": {"window_opens_days": 330}}}
+
+    def _entry(self, season):
+        return {"id": 1, "kind": "campground", "state": "VA", "ownership": "state",
+                "season": season}
+
+    def test_year_round_drops_the_agency_dates(self):
+        r = cs.resolve(self._entry({"year_round": True}), self.REG)
+        self.assertEqual(r["season"]["values"], {"year_round": True})
+        self.assertEqual(r["season"]["scope"], "entry")
+
+    def test_own_dates_drop_the_agency_note(self):
+        r = cs.resolve(self._entry({"opens": "05-01", "closes": "10-31"}), self.REG)
+        self.assertEqual(r["season"]["values"], {"opens": "05-01", "closes": "10-31"})
+
+    def test_a_note_alone_still_inherits_the_span(self):
+        r = cs.resolve(self._entry({"note": "check the park"}), self.REG)
+        self.assertEqual(r["season"]["values"]["opens"], "03-01")
+
+    def test_other_groups_still_merge(self):
+        r = cs.resolve(self._entry({"year_round": True}), self.REG)
+        self.assertEqual(r["booking"]["values"], {"window_opens_days": 330})
+
