@@ -7,3 +7,7 @@ me drop and report); each needs the research named before a verdict.
   non-seasonal sites available"; daily rates "available, call or email", none posted, no
   booking site. Long-stay rule (AWH 2026-10-14) needs a nightly price and nights for sale.
   Next: find a dated rate (RV Life, Good Sam, Campendium) or a booking channel; else drop.
+- **13118 Valleyview Farm & Campground (PA)** — operator domain parked and booking host
+  NXDOMAIN (2026-10-20; real site live on Wayback 2026-06-16); dead URLs removed. Latest
+  posted rates are 2024. Live-presence rule (AWH 2026-10-14): needs Google open with 25+
+  reviews or a phone that answers to a business listing. Next: Google check, then keep or drop.
