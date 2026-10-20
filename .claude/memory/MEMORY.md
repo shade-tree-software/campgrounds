@@ -1,4 +1,4 @@
-- [Trip poster redesign](project_poster_redesign.md) — size selection + full design pass (muted map, routes, mattes/heroes, Playfair+frame+stats, boxless callouts) SHIPPED & print-PDF verified 2026-07-27; per-tile-filter print gotcha + offline-render verification method in file
+- [Trip poster redesign](project_poster_redesign.md) — SHIPPED & print-PDF verified 2026-07-27; print gotchas + offline-render check in file
 - [Weather Finder (was Summer Seeker)](project_weather_finder.md) — standalone app folded into EKKO as an admin page 2026-07-26; cooler/warmer-than-home + rain filter; per-cell forecast cache is load-bearing
 - [Open-Meteo rate limits](reference_open_meteo_limits.md) — free tier meters LOCATIONS not calls: 600/min (measured); batch via comma-separated lat/lng lists
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a privacy leak
@@ -12,7 +12,7 @@
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
 - [Phase 7 verification](project_phase7_verification.md) — STARTED 2026-10-20: verify every campground vs its own pages; order stays → popups → states by visits; credits expire ~11-20, go big; tooling audit/verify/
-- [What's actually left](project_remaining_work_map.md) — CURRENT 2026-10-20 end: all asks answered/applied (QC row, 42 drops); AWH pushing; NEXT = DB-wide trailer-length pass (notes + RIDB catalog); next id 15531
+- [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE (13 drops, asks answered keep-all); phase 7 under way; next id 15531
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
 - [Hidden rates playbook](reference_hidden_rates_playbook.md) — private rate/minimum/seasonal share via one-browser driver + engine helpers; recipes in audit/private_gap_browser/README.md

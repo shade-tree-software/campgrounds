@@ -23,6 +23,9 @@ instead of each launching Chrome:
 
 Keep the locked command short (one page or one batched call) so the others are not starved.
 
+**Scratch files:** verifiers share one scratchpad, so keep yours in a subfolder named for
+your batch (`<scratchpad>/<batch>/`); another verifier overwrote a shared `tools/rg.py`.
+
 ## What to check, per entry
 
 The dossier holds `entry` (the stored record), `resolved` (each group's effective values,

@@ -1,0 +1,71 @@
+{
+  "id": 261,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232009",
+    "https://www.recreation.gov/api/camps/campgrounds/232009/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232009&size=1000",
+    "https://www.fs.usda.gov/r09/monongahela/recreation/lake-sherwood-recreation-area-and-campground",
+    "https://www.fs.usda.gov/r09/monongahela/newsroom/releases/monongahela-increasing-and-adding-fees-several-developed"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "From January 1, 2026: $25 a night for a single site, $50 for a double (West Shore Loop), $35 for the one electric site (#11), $20 for tent-only Cales Knoll, $100 for a group site. Extra vehicles $5. The Forest Service's own recreation page still lists the older $16-20 rates."
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/newsroom/releases/monongahela-increasing-and-adding-fees-several-developed ('Lake Sherwood Campground Single Site Fee: $25 Double Site Fee: $50 Site w/ Electric Fee: $35 Tent Only Fee: $20', effective 2026-01-01) + https://www.recreation.gov/api/camps/campgrounds/232009 (fee description) and /rates (2026-2028: STANDARD NONELECTRIC $25), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "water": false,
+        "sewer": false,
+        "note": "No water or sewer hookups. Electric only at site 11 (amperage not published); running cords from other sites to host sites or restrooms is prohibited."
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/lake-sherwood-recreation-area-and-campground ('No electrical, sewage or water hook-ups are available') + https://www.recreation.gov/api/camps/campgrounds/232009 (notice: 'Electric is only available at campsite #11'), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Summer: restrooms with running water, flush toilets, hot showers and electricity. Spring and fall: vault toilets and a hand-pump well only. Dump station on site; playground, picnic shelters, boat rentals and two swimming beaches."
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/lake-sherwood-recreation-area-and-campground (Camping; 'Potable water is available seasonally at this site'; accessible flush and vault toilets) + https://www.recreation.gov/api/camps/campgrounds/232009 (description; amenities Dump Station, Flush Toilets, Accessible Showers), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "min_stay": [{"nights": 2, "applies": "always"}],
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "note": "Reservations on recreation.gov close 4 days before arrival and carry a 2-night minimum (rec.gov rule, not marked soft). Not a standing minimum: 34 of the standard sites are not reservable, tent-only Cales Knoll is first-come, and in spring and fall only the West Shore Loop is open and its sites are not reservable. 14 nights a month."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232009 (facility_rules minConsecutiveStay 2, maxStay 14 nights 'Each Month', reservationCutOff 4 days prior to arrival; fee description: Cales Knoll 'not reservable', West Shore 'not reservable' in spring and fall) + campsite search (34 standard sites reservable false), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 104,
+        "max_rig_ft": 55,
+        "note": "104 individual campsites and 10 group sites in four loops (West Shore 1-26, Pine Run 27-61, Meadow Creek 62-97, tent-only Cales Knoll 98-108). Gravel parking aprons, some up to 20 ft wide; listed lengths mostly 25-40 ft, up to 55 ft (site 62)."
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/lake-sherwood-recreation-area-and-campground ('104 individual campsites and 10 group campsites') + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232009 (Max Vehicle Length), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Changed fees 20-35 -> 25/25: $25 is the 2026 single-site rate; $20 is tent-only Cales Knoll and $35 the one electric site (both in the note). Added no water/sewer hookups (electric at site 11 only), showers/flush/vault/potable water/dump, reservable on rec.gov with a 4-day cutoff and a 2-night reservation minimum (not standing: first-come sites exist), fcfs some_sites, 14 nights a month, 104 sites up to 55 ft. Season left as is (no page states one; the rate-season dates are not a statement). The USFS recreation page's fee table is stale ($16-20).",
+  "flags": [
+    "recreation.gov applies a hard (not 'soft') 2-night minimum to reservations here (minConsecutiveStay 2). It is recorded in booking.min_stay with applies 'always'; it is not a standing minimum because first-come sites are sold by the night, so no MINIMUM STAY note line was proposed. A human may want to confirm the 1-night first-come availability in peak season."
+  ]
+}
