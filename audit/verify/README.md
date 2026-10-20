@@ -41,6 +41,8 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    - `fees`: the BASE rate (resident, plain site a 23-ft rig fits, one night, before tax),
      `nightly_high`, currency, reservation fee, non-resident and amenity surcharges. A rate
      needs a date: 2024 or later from the operator.
+     The base is never a tent-only or primitive site a 23-ft motorhome may not fit (Jekyll
+     Island's $36 primitive sites vs its $51 RV base).
    - `booking`: reservable, platform, url, fcfs, window, min stay, max stay.
    - `season`: opens/closes or year_round. **Only a statement about the CAMPGROUND counts**,
      never park hours or "the park is open year-round".
