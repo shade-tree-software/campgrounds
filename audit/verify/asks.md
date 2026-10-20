@@ -5,7 +5,10 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-(none)
+3. **Red Haw SP IA (2928)** — your note says "76 sites, 61 electric" and "reservable ...
+   until 2-days prior to arrival". ReserveAmerica now lists 52 campsites (41 electric) and
+   takes reservations "until 10:00 pm CST the day of arrival"; the campground recently closed
+   and reopened. Shall I update those two facts in your note (marked as mine), or leave it?
 
 ## Answered (AWH 2026-10-20)
 
