@@ -32,5 +32,8 @@ firm skip, and a pass was added only with margin to spare or where the quoted ni
 ## Still open
 - The five unmatched slugs above all return koa.com's "Highway 404" page on the reserve form (2026-10-19), so
   they may have left the system; check each one's own web presence before treating it as a lead.
-- Higgins Lake Campground and Chain O' Lakes Camping Resort: vet via Campspot.
-- crystal-river FL (pass $49): RV Life pin 28.8991,-82.5698 shows no park; address 2680 N Turkey Oak Dr (OSM road ~28.913, -82.57..-82.61) but Esri imagery shows only forest there -- likely new-build; locate via gm.py when the driver is stopped
+- Higgins Lake Campground and Chain O' Lakes Camping Resort: Campspot (campspot_exkoa.jsonl, 2027-06-08) puts both
+  over the gate - Higgins Lake's cheapest hookup type $55.35 (only its no-hookup sites are $45), Chain O' Lakes
+  $57 + a $6 online fee. Skips.
+- crystal-river FL: DONE - Google Maps puts it at 28.9004,-82.5700, where newer imagery shows a new-built park
+  (decisions_07, added).
