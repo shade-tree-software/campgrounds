@@ -1,31 +1,23 @@
 {
-  "id": 492,
-  "checked": "2026-10-20",
-  "sources": [
-    "https://www.fs.usda.gov/r08/gwj/recreation/wolf-gap-recreation-area",
-    "https://www.recreation.gov/api/camps/campgrounds/10158515",
-    "https://www.recreation.gov/api/camps/campgrounds/10158515/rates"
-  ],
-  "groups": {
-    "booking": {
-      "values": {"reservable": false, "fcfs": "always",
-                 "note": "First-come, first-served only: arrive to claim a site. recreation.gov lists the campground for Scan and Pay on site."},
-      "source": "https://www.recreation.gov/api/camps/campgrounds/10158515 (Overview: 'available on a first-come, first-served basis only. Visitors are required to physically arrive at the campground to purchase and claim a site'), read 2026-10-20",
-      "method": "manual"
-    },
-    "season": {
-      "values": {"year_round": true},
-      "source": "https://www.fs.usda.gov/r08/gwj/recreation/wolf-gap-recreation-area (Seasons of Use: 'Open year round'; last updated 2025-05-02), read 2026-10-20",
-      "method": "manual"
-    },
-    "facilities": {
-      "values": {"vault_toilets": true, "potable_water": false},
-      "source": "https://www.recreation.gov/api/camps/campgrounds/10158515 (amenities: Vault Toilets, Fire Pit, Tent Pads, Paved Parking) + https://www.fs.usda.gov/r08/gwj/recreation/wolf-gap-recreation-area ('Potable water is not available at this site'), read 2026-10-20",
-      "method": "manual"
-    }
-  },
-  "summary": "Confirmed FCFS only (rec.gov). Added year-round season (FS page), vault toilets (rec.gov) and no potable water (FS page). Fees left alone: FS page says 'No Fee' (agreeing with the --AWH note) but recreation.gov carries a 2025 Scan and Pay walk-in rate of $10/$20 (see flags). Not stated: site count, lengths.",
-  "flags": [
-    "Fees conflict, not written: the --AWH note and the FS page (last updated 2025-05-02) say no fee, but recreation.gov facility 10158515 has a 'First-come, First-served Season' 2025-01-01..2025-12-31, effective 2025-07-15, with Scan and Pay rates ScanPay 1 $10 and ScanPay 2 $20 (STANDARD NONELECTRIC). No 2026 rate season is listed. Wolf Gap may now charge $10/night; a human should check (an on-site fee board would settle it)."
-  ]
+ "id": 492,
+ "checked": "2026-10-20",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/10158515/rates"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 10,
+    "nightly_high": 20,
+    "currency": "USD",
+    "checked": "2025",
+    "note": "recreation.gov lists Scan & Pay walk-in fees of $10 and $20 for standard nonelectric sites (season effective 2025-07-15); it does not say what the $20 option covers. Pay on site by phone."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/10158515/rates (Walk In season: WalkInScanPay1 $10, WalkInScanPay2 $20), read 2026-10-20",
+   "method": "manual"
+  }
+ },
+ "note": "Small campground on the VA/WV border.  No fee, first-come-first-served.  Close to trailheads for Big Schloss and Tibbet Knob.  --AWH\nSince July 2025 recreation.gov lists a $10 Scan & Pay fee (a $20 option too), paid on site. --Claude",
+ "summary": "Fees from recreation.gov's Scan & Pay listing ($10/$20), on AWH's say-so (2026-10-20) over the old no-fee note; the note keeps AWH's text with a dated --Claude line.",
+ "flags": []
 }
