@@ -57,3 +57,8 @@ Its neighbor Roza (20-ft driveways) was dropped. Recommended: keep.
   note corrected. Horseshoe CO (2413): rec.gov says "fits RVs up to 25 feet"; note corrected.
 - Many notes give a trailer figure beside a longer motorhome one (White River WA 18/27, Dog
   Lake WA 20/24, Caswell CA 21/24, Tohickon PA 18/25): the source distinguishes, so they stay.
+
+## Answers (AWH 2026-10-20)
+
+All three: **keep all.** The 22-ft class stays (22 is within the "~" of 23), the four
+reviewer-contradicted 20-21 ft limits stay, and Umtanum stays. No data change.
