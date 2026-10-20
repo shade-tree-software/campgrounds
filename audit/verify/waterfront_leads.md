@@ -15,3 +15,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   underneath the tree canopy of the maritime forest ... about a half-mile from Driftwood
   Beach. There are no waterfront campsites." Check whether the ~800 m to the shore is the
   campground's own undeveloped maritime forest or other land use.
+- **860 Fowlers Hollow SP (PA)** — stored "not waterfront" WITH evidence (DCNR map: Fowler
+  Hollow Run along the south edge, separated from the pads by the loop road, picnic/dump area
+  and a riparian treeline). ReserveAmerica tags all 11 RV sites "Waterfront". Re-check the
+  pads against the run; the existing evidence may well stand.

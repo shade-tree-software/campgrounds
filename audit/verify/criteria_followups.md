@@ -1,0 +1,9 @@
+# Criteria follow-ups from phase 7
+
+Entries a verifier found may fail the inclusion criteria. I decide these (standing rules let
+me drop and report); each needs the research named before a verdict.
+
+- **1168 Lake Bonin Campground (PA)** — "With our focus on seasonal sites, we also have
+  non-seasonal sites available"; daily rates "available, call or email", none posted, no
+  booking site. Long-stay rule (AWH 2026-10-14) needs a nightly price and nights for sale.
+  Next: find a dated rate (RV Life, Good Sam, Campendium) or a booking channel; else drop.
