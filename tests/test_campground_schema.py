@@ -325,14 +325,16 @@ class TestRegistryResolution(unittest.TestCase):
     def test_own_not_reservable_drops_agency_reservation_fields(self):
         # Mower Basin: its own "not reservable" overrode the federal row's
         # `reservable`, but the per-key merge still printed "books 180 days
-        # ahead" beside it. A stay limit binds a first-come site too, so it
-        # survives.
+        # ahead" beside it. A minimum stay is a booking-system rule and goes
+        # too; a stay limit binds a first-come site, so it survives.
         reg = {"federal": {"booking": {"reservable": True,
                                        "platform": "recreation.gov",
                                        "url": "https://www.recreation.gov",
                                        "window_opens_days": 180,
                                        "reserve_until": {"relative_to": "arrival",
                                                          "at": "23:00"},
+                                       "min_stay": [{"nights": 3,
+                                                     "applies": "holiday"}],
                                        "max_stay_nights": 14,
                                        "note": "thin"}}}
         entry = {"ownership": "federal", "state": "WV",

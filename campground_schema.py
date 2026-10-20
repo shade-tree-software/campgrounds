@@ -526,8 +526,12 @@ def policy_ref(entry):
 # OWN record says it can't be reserved, inheriting these prints "not reservable"
 # beside "books 180 days ahead" — the per-key merge overrides `reservable` but
 # not the facts that hang off it. `max_stay_nights` is deliberately absent: a
-# 14-night limit binds a first-come site just the same.
-RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until")
+# 14-night limit binds a first-come site just the same. `min_stay` is present:
+# every registry minimum is a rule of the booking system ("the minimum
+# reservation for long weekends is two nights"), and it was printing under 89
+# first-come entries, 48 of them BC's (2026-10-20).
+RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until",
+                         "min_stay")
 # The same, in `fees`: a booking fee printed under a first-come campground (109
 # entries, 39 of them Nebraska walk-up areas under NE's $8.50 fee, 2026-10-20).
 RESERVATION_ONLY_FEE_KEYS = ("reservation_fee",)
