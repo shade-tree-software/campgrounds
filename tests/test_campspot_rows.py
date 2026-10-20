@@ -96,8 +96,8 @@ class TestTheDaysShape(unittest.TestCase):
 
     def test_first_arrival_then_return_then_departure(self):
         self.assertEqual(_rows(self.trip), [
-            ("arrived", "2026-07-03", "17:53", "2h 32 min"),
-            ("back", "2026-07-04", "14:33", "2h 18 min"),
+            ("arrived", "2026-07-03", "17:53", "2 hr 32 min"),
+            ("back", "2026-07-04", "14:33", "2 hr 18 min"),
             ("departed", "2026-07-05", "11:31", ""),
         ])
 
@@ -310,7 +310,7 @@ class TestAnUnseenNightReturn(unittest.TestCase):
             ("2023-08-16", "18:19", "2023-08-17", "09:00")), TZ)
 
     def test_the_afternoon_return_gets_its_row(self):
-        self.assertIn(("back", "2023-08-15", "13:55", "3h 14 min"),
+        self.assertIn(("back", "2023-08-15", "13:55", "3 hr 14 min"),
                       _returns(self.trip))
 
     def test_the_days_card_is_left_blank(self):

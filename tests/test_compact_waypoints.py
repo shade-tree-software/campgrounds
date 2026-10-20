@@ -92,7 +92,7 @@ class TestWhatARowShows(unittest.TestCase):
     def test_a_stop_says_how_long_it_stayed_not_when_it_ended(self):
         metas = re.findall(r'<div class="event-meta">\s*([^<]*)', self.html)
         # A bare duration — no "Stayed" label (AWH 2026-09-30).
-        self.assertTrue([m for m in metas if re.match(r"(\d+h \d{2} min|\d+ min)\s*$", m)])
+        self.assertTrue([m for m in metas if re.match(r"(\d+ hr( \d+ min)?|\d+ min)\s*$", m)])
         for meta in metas:
             self.assertNotIn("Stayed", meta)
             self.assertNotIn("\u2013", meta)   # no "11:10 AM–12:50 PM" range
