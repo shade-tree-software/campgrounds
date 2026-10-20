@@ -13,3 +13,11 @@
    only other Falcon Lake campground) is at the east end of the lake. The pin, 2 km west of
    Falcon Beach Campground, shows a small loop of cabins and trailers. Probably an RV Life
    phantom or a private/organisational camp. Drop it? (Note carries a dated caveat meanwhile.)
+
+3. **Quebec (SEPAQ) row is on hold.** SEPAQ's booking terms (sepaq.com/reservation/modalites/
+   camping.dot) answer 403 to curl and to web fetchers, and article 2 of its site terms forbids
+   "un robot, araignée ou autre dispositif automatique ... afin de contrôler ou copier les pages".
+   The headless-browser driver would get through, but that is exactly what the clause names, so I
+   stopped. (The 2026-10-12 price research read its booking site with that driver; worth knowing.)
+   Options: you open the page and paste the reservation/cancellation/stay rules, or give the OK
+   to read that one page with the driver, or skip `provincial:QC`.
