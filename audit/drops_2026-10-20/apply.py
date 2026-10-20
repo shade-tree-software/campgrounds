@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Entries removed on AWH's answers to audit/registry_asks_2026-10-20.md (2026-10-20).
+"""Entries removed on AWH's answers to audit/registry_asks_2026-10-20.md and the one
+local pricing ask in audit/price_research/local_2026-10-17/asks.md (2026-10-20).
 
     python3 -I audit/drops_2026-10-20/apply.py [--apply]
 
@@ -36,6 +37,8 @@ ASKS = {
             "MDC Busiek State Forest and Wildlife Area page, read 2026-10-20: 'eight primitive, walk-in tent campsites. Camping is permitted ONLY with a permit.'"),
     13903: ("permit-only, and the area regulations prohibit camping (AWH, ask #10)",
             "MDC Little Indian Creek Conservation Area page, read 2026-10-20: 'Camping is allowed by permit only and requested 10 days in advance', while its area regulations say 'Camping is prohibited.'"),
+    11749: ("over the US$50 price gate (AWH, local pricing ask 2026-10-17)",
+            "Earl Warren Showgrounds RV rules (posted Oct 2025): $75 or $80 a night; Santa Barbara is not a listed gateway."),
 }
 
 # id: FishMT facility id, for every FAS whose page reads "Trailer Length is 20ft." (2026-10-20).
