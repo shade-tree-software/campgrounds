@@ -666,3 +666,25 @@ gives day-use fees only): Benicia SRA's en route sites, Anza-Borrego's Bow Willo
 Navarro Beach and Paul M. Dimmick, Picacho, Saddleback Butte, Woodson Bridge and Turlock Lake. Dropped on AWH's call of
 2026-10-13 as too short (`awh_calls_2026-10-13.py`): Tamarisk Grove 11608 (the booking site's longest site 21 ft),
 Emerald Bay's Eagle Point 11635 (18 ft) and Malakoff Diggins' Chute Hill 11662 (19 ft).
+
+## Follow-up of the unpriced state/provincial entries (2026-10-20)
+
+68 state/provincial entries had no price once registry rows are counted (Washington DNR's 32 and Michigan's
+state forests inherit theirs). Nearly every one was tried on 2026-10-12 and its reason is above, so this pass only
+followed leads that pass never had (`followup_2026-10-20.py`, quotes in `followup_evidence_2026-10-20.json`):
+
+- **Priced (3):** Switzer's Halfway 15392 (added after that pass; its Alberta Parks page, $30), Bow Willow 11614
+  (Anza-Borrego's own fee schedule on parks.ca.gov prices its first-come campgrounds: $20, seniors $18), and Raymond
+  Gary 6611, which was "not on the booking site" because it books through its **own ReservationKey page**
+  (v2.reservationkey.com/RGSP/: POST /p/rooms.asp with the page's idaccount/idreservationpage and mm/dd/yyyy dates
+  returns every unit with its nightly price). $25 water/electric, $30 full hookups, the same on a Saturday and in
+  November; the page's own rate text ($22/$25) is older than what the engine charges. Its pay-on-arrival terms and
+  3-night weekend minimum replace the state:OK row's, so `policy_ref: none`.
+- **Corrected:** Beaver Dunes' two campgrounds 6621/6626 are a City of Beaver park (Oklahoma SCR 23 of 2012 approved
+  the transfer): ownership local, names "Beaver Dunes Park", the stale ReserveAmerica claim gone. TravelOK's $25 is
+  undated and not the city's own, so they stay unpriced (the note quotes it as such).
+- **Still not priced, nothing new found:** Snowdale 6619 (no official page left; only directories), Little Blue 6617
+  (TravelOK now lists 30 primitive tent sites and nothing else - asked AWH whether it still qualifies), Horseshoe Lake
+  (Madison) 1672 (closed to May 2027; only a group camp on the booking site), and everything listed above for 10-12.
+  The WV WMAs stay empty (AWH 2026-10-11); Golden Memorial 5002, Holmes County 5004 and Falcon Creek 9363 wait on
+  AWH's drop calls; Lac Arthur 12523 on the SEPAQ question.

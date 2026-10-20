@@ -37,3 +37,12 @@
    If you can open riparks.ri.gov/campgrounds/camping-policies and paste the minimum-stay section,
    I'll add it. (2027 bookings are also on hold while RIDEM changes reservation provider, so this
    may be worth waiting for the new vendor's terms anyway.)
+
+7. **Little Blue / Disney Area at Grand Lake State Park (6617, OK) may now be tent-only.** TravelOK's
+   page (read 2026-10-20) describes "30 primitive tent camping spots" and lists only tent sites; the
+   entry was added for ~18 developed sites including roadside RV spots with electric. Nothing on
+   ReserveAmerica. Drop as tent-only, or keep with a caveat?
+8. **Beaver Dunes Park's Pioneer Campground (6621, OK)** sits beside the OHV dune-riding area with
+   "direct access to the dunes", i.e. close to an OHV staging camp, which your 2026-10-02 rule puts out
+   of scope; Hackberry Bend (6626) is the lakeside loop of the same city park. Keep both, keep only
+   Hackberry Bend, or drop both? (Both are now `local`: the city took the park over from the state.)
