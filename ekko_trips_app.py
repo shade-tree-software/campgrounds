@@ -278,9 +278,9 @@ def _daylabel(value):
 
 @app.template_filter('stayed')
 def _stayed(start, end):
-    """How long a stop lasted, as `1h 40min` / `25min`, from two stored 'HH:MM'
+    """How long a stop lasted, as `1h 40 min` / `25 min`, from two stored 'HH:MM'
     wall clocks. The timeline shows this instead of the end time: with the
-    start already in the time column, "stayed 1h 40min" is the fact a reader
+    start already in the time column, "stayed 1h 40 min" is the fact a reader
     wants, and working it out from 11:10 AM–12:50 PM is arithmetic we can do
     for them.
 
@@ -288,7 +288,7 @@ def _stayed(start, end):
     00:25), so it wraps a day rather than going negative. Both times are one
     stop's own clocks, in one zone, so no offset maths is needed. "" when
     either time is missing or unparseable, or the two are equal — nothing is
-    printed rather than a "0min" that looks measured.
+    printed rather than a "0 min" that looks measured.
 
     Minutes are "min", not the drive chip's "m": a stop under the hour would
     otherwise read "25m", which next to the mileage and distances elsewhere on
@@ -304,7 +304,7 @@ def _stayed(start, end):
     if a is None or b is None or a == b:
         return ""
     hours, mins = divmod((b - a) % (24 * 60), 60)
-    return f"{hours}h {mins:02d}min" if hours else f"{mins}min"
+    return f"{hours}h {mins:02d} min" if hours else f"{mins} min"
 
 
 login_manager = LoginManager()
