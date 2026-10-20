@@ -3,8 +3,8 @@
 Read `docs/campground-schema.md` §2-§4 first (absent means unknown, provenance, the field
 groups). This file is the procedure for checking ONE entry and writing the result.
 
-**Order of work** comes from `queue.py` (AWH 2026-10-20): campgrounds stayed at, then ones a
-contributor opened on the map, then every other campground, state by state in order of how
+**Order of work** comes from `queue.py` (AWH 2026-10-20): campgrounds stayed at, then ones anyone
+in the family opened on the map, then every other campground, state by state in order of how
 much the family camps there.
 
 **The loop:** `queue.py --batch NAME --limit N` writes `batches/NAME.json` (one dossier per

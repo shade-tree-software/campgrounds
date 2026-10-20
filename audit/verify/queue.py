@@ -62,6 +62,12 @@ def ranked(rows, reg, trips):
     state_rank = {s: i for i, (s, _) in enumerate(state_stays.most_common())}
     seen = views()
     pending = {int(f[:-5]) for f in os.listdir(os.path.join(HERE, "results")) if f.endswith(".json")}
+    # Entries handed to a batch whose verifier hasn't finished yet: without this, a new
+    # batch would re-issue work another verifier is in the middle of.
+    bdir = os.path.join(HERE, "batches")
+    for f in os.listdir(bdir):
+        if f.endswith(".json"):
+            pending |= {d["entry"]["id"] for d in json.load(open(os.path.join(bdir, f), encoding="utf-8"))}
     out = []
     for e in rows:
         if e.get("kind") != "campground" or e.get(cs.VERIFY_SCAN) or e["id"] in pending:
