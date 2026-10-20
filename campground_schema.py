@@ -278,6 +278,19 @@ NOTE_SCAN_FIELDS = {
     "model": STR,      # which model read it, so a re-read can be targeted
 }
 
+# The record that someone checked this entry's structured fields against the
+# campground's own pages (schema phase 7, doc §7) — kept whether or not anything
+# changed, for the reason NOTE_SCAN is: without it, an entry whose pages said
+# nothing new would come back to the top of the verification queue forever.
+# The per-group `provenance` still records each value actually written; this is
+# the entry-level "looked, on this date, at these pages".
+VERIFY_SCAN = "verify_scan"
+VERIFY_SCAN_FIELDS = {
+    "checked": STR,    # "YYYY-MM-DD"
+    "sources": STR,    # the pages read, space-separated
+    "note": STR,       # what was found that the groups can't hold, or "nothing new"
+}
+
 _TRUE = {"true", "yes", "1", "on", "t"}
 _FALSE = {"false", "no", "0", "off", "f"}
 # What a form sends for "unknown". Both clear the key; neither stores a value.
@@ -407,6 +420,10 @@ def apply_update(target, data):
             staged[group] = (None if incoming in _CLEARS else
                              _coerce(OBJ(**NOTE_SCAN_FIELDS), incoming, NOTE_SCAN))
             continue
+        if group == VERIFY_SCAN:
+            staged[group] = (None if incoming in _CLEARS else
+                             _coerce(OBJ(**VERIFY_SCAN_FIELDS), incoming, VERIFY_SCAN))
+            continue
         if group not in SCHEMA:
             continue                   # not ours — the flat whitelist handles it
         if incoming in _CLEARS:
@@ -434,7 +451,7 @@ def apply_update(target, data):
         if value is None:
             target.pop(group, None)
             continue
-        if group in (POLICY_REF, NOTE_SCAN):
+        if group in (POLICY_REF, NOTE_SCAN, VERIFY_SCAN):
             target[group] = value
             continue
         current = dict(target.get(group) or {})
@@ -581,7 +598,7 @@ def _inherited(entry, registry):
         if not row:
             continue
         for group, values in row.items():
-            if group in (PROVENANCE, NOTE_SCAN) or not isinstance(values, dict):
+            if group in (PROVENANCE, NOTE_SCAN, VERIFY_SCAN) or not isinstance(values, dict):
                 continue
             merged.setdefault(group, {}).update(values)
     for group, keys in _moot_agency_keys(entry).items():
@@ -656,7 +673,7 @@ def validate_row(row, label="row"):
         raise SchemaError(f"{label}: expected an object")
     staged = {}
     apply_update(staged, {k: v for k, v in row.items()
-                         if k not in (POLICY_REF, NOTE_SCAN)})
+                         if k not in (POLICY_REF, NOTE_SCAN, VERIFY_SCAN)})
     return staged
 
 

@@ -577,6 +577,27 @@ class TestProvenance(unittest.TestCase):
         self.assertEqual(entry["provenance"]["season"]["method"], "derived")
 
 
+class TestVerifyScan(unittest.TestCase):
+    """Phase 7's record that an entry was checked against its own pages, even when
+    nothing changed — the same audit-record role `note_scan` plays for extraction."""
+
+    def test_it_is_stored_whole_and_validated(self):
+        entry = {}
+        cs.apply_update(entry, {cs.VERIFY_SCAN: {"checked": "2026-10-20",
+                                                 "sources": "https://a https://b",
+                                                 "note": "nothing new"}})
+        self.assertEqual(entry[cs.VERIFY_SCAN]["note"], "nothing new")
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {cs.VERIFY_SCAN: {"by": "someone"}})
+
+    def test_it_is_not_a_field_group_and_never_resolves(self):
+        entry = {cs.VERIFY_SCAN: {"checked": "2026-10-20"}}
+        self.assertEqual(cs.resolve(entry, {}), {})
+
+    def test_a_registry_row_cannot_carry_one(self):
+        self.assertNotIn(cs.VERIFY_SCAN, cs.validate_row({cs.VERIFY_SCAN: {"checked": "x"}}))
+
+
 if __name__ == "__main__":
     unittest.main()
 

@@ -112,8 +112,9 @@ def _cache_static(resp):
 # payload strips them. Stripping is safe for the same reason it always was:
 # PUT merges from a field whitelist, so a save can't clobber a field the client
 # never received. `note_scan` alone is ~1.9 MB across the database.
+# `verify_scan` is phase 7's record of a check against the campground's pages.
 _AUDIT_EVIDENCE_FIELDS = ("waterfront_evidence", "inclusion_evidence",
-                          "note_scan")
+                          "note_scan", "verify_scan")
 
 # Compress text responses above this size. Below it the CPU cost and the ~20
 # bytes of gzip framing aren't worth it.

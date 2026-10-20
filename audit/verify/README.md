@@ -1,0 +1,79 @@
+# Schema phase 7: verifying a campground against its own pages
+
+Read `docs/campground-schema.md` §2-§4 first (absent means unknown, provenance, the field
+groups). This file is the procedure for checking ONE entry and writing the result.
+
+**Order of work** comes from `queue.py` (AWH 2026-10-20): campgrounds stayed at, then ones a
+contributor opened on the map, then every other campground, state by state in order of how
+much the family camps there.
+
+**The loop:** `queue.py --batch NAME --limit N` writes `batches/NAME.json` (one dossier per
+entry). A verifier works through it and writes one `results/<id>.json` per entry **as soon
+as that entry is done**, so stopping costs at most the entry in flight. `apply.py` validates
+the results and writes them to campgrounds.json (dry run unless `--apply`); commit after each
+batch.
+
+## What to check, per entry
+
+The dossier holds `entry` (the stored record), `resolved` (each group's effective values,
+its `scope` and which keys are `inherited` from the agency row) and `policy_refs`.
+
+1. **Find the campground's own pages.** The operator's or agency's page for THIS campground
+   and its booking page. Federal rec.gov campgrounds: `https://www.recreation.gov/api/camps/campgrounds/<id>`
+   (description, notices, rules) and `/rates`; the per-site catalog is cached in
+   `trip_data/ridb_campsites.json`. Never confirm from an aggregator (Campendium, The Dyrt,
+   campsitephotos, RoverPass tables): those are `reported` at best and only when the
+   operator has no page of its own. Beware content farms (see the curation doc).
+2. **Check each group the page speaks to:**
+   - `fees`: the BASE rate (resident, plain site a 23-ft rig fits, one night, before tax),
+     `nightly_high`, currency, reservation fee, non-resident and amenity surcharges. A rate
+     needs a date: 2024 or later from the operator.
+   - `booking`: reservable, platform, url, fcfs, window, min stay, max stay.
+   - `season`: opens/closes or year_round. **Only a statement about the CAMPGROUND counts**,
+     never park hours or "the park is open year-round".
+   - `hookups` (highest amp at a site, snapped down to 15/20/30/50; water/sewer AT the site),
+     `sites` (count, max_rig_ft, pull_through), `facilities`.
+   - `status`: a temporary closure (with `reopens` as published).
+   - `discounts`: only what the page states.
+3. **Write only what a page says.** Never fill a field with a guess, a typical value or a
+   placeholder. A page that says nothing about a field leaves it alone.
+4. **Inherited values** (`resolved[g].inherited`): if the campground's page states the same
+   value, write it into the entry (it is now verified for this campground). If the page
+   states something different, write the campground's value (it overrides the agency row).
+   If the page is silent, leave it inherited: do not copy the agency's value in.
+5. **Existing entry values** with provenance `method: derived` (read from note prose or an
+   API by a machine): the page wins; write its value, or `null` to clear a derived value the
+   page contradicts and does not replace. A value whose provenance is `manual` or
+   `reported`, or any `--AWH` note text, is NOT overwritten: put the disagreement in `flags`.
+6. **Criteria problems are flags, never edits.** If the pages show the campground is closed
+   for good, tent/cabin/group-only, hike-in, fits nothing 23 ft long (a trailer limit counts
+   for a motorhome too; 22 ft is fine, AWH 2026-10-20), over the US$50 / C$69 base-rate gate
+   with no gateway, behind a login to see rates, or otherwise fails
+   `docs/campground-curation.md`, say so in `flags` with the evidence. A human decides.
+7. **The note.** Do not rewrite it as a matter of course. If a fact in it is now wrong (a
+   stale rate, a wrong length, a closure), propose a corrected note in `note`: the whole
+   note as clean current prose, `--AWH` text kept verbatim with its marker, your own text
+   signed `--Claude`. Omit `note` otherwise.
+
+## Result file: `results/<id>.json`
+
+```json
+{
+  "id": 620,
+  "checked": "2026-10-20",
+  "sources": ["https://www.pa.gov/.../shawnee-state-park/stay", "https://pennsylvaniastateparks.reserveamerica.com/..."],
+  "groups": {
+    "booking": {"values": {"reservable": true, "platform": "reserveamerica", "fcfs": "always"},
+                "source": "https://...", "method": "manual"},
+    "hookups": {"values": {"electric": 50}, "source": "https://...", "method": "manual"}
+  },
+  "note": "optional: the whole corrected note",
+  "summary": "one line: what was confirmed, what changed, what the pages did not say",
+  "flags": ["optional: criteria problems or conflicts with manual/AWH values, with evidence"]
+}
+```
+
+`groups.<g>.values` uses the schema's own field names; a `null` clears that key. `method`
+is `manual` for the operator's or agency's own page, `reported` for anything secondary (and
+the `source` must say what it was). A result with no `groups` is still written: it records
+that the pages were read and said nothing new, which takes the entry off the queue.

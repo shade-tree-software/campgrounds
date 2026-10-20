@@ -32,6 +32,21 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import ekko_trips_app as A  # noqa: E402
 
+_REAL_VIEWS = A.CAMPGROUND_VIEWS_FILE
+
+
+def setUpModule():
+    # Every popup a test opens is a "view" by an admin; none of them may land in
+    # the real trip_data/campground_views.jsonl, which ranks the phase 7 queue.
+    import tempfile
+    A.CAMPGROUND_VIEWS_FILE = tempfile.mktemp(suffix=".jsonl")
+
+
+def tearDownModule():
+    if os.path.exists(A.CAMPGROUND_VIEWS_FILE):
+        os.unlink(A.CAMPGROUND_VIEWS_FILE)
+    A.CAMPGROUND_VIEWS_FILE = _REAL_VIEWS
+
 
 def _client():
     client = A.app.test_client()
