@@ -107,5 +107,161 @@
    14021,
    14022
   ]
+ },
+ "state:FL": {
+  "verdict": "DOES NOT APPLY",
+  "evidence": "Different agencies and different booking systems. The state:FL row is Florida State Parks (DEP), platform 'operator' (floridastateparks.org), with its resident-11-months / non-resident-10-months split, resident same-day-until-1-p.m. and the $6.70 service / $17.75 cancellation fees - none of which is a state-forest rule. (1) 17 entries are Florida Forest Service (FDACS) state forests, booked on FDACS's own ReserveAmerica contract FLFS at floridastateforests.reserveamerica.com; Cary SF's page (https://floridastateforests.reserveamerica.com/camping/cary-state-forest-campground/r/campgroundDetails.do?contractCode=FLFS&parkId=1120135, read 2026-10-20) says 'Reservations can be made for today and can be made up to 11 Month(s) in advance' with no residency distinction, and Krul Campground (Blackwater River SF) 'Reservations are required for entry and are available 2 days in advance'. Florida Rambler notes the 2024 state-park resident-early-access law 'does not apply to state forests ... which have their own rules'. (2) 3 entries are FWC Wildlife Management Areas: Dinner Island Ranch WMA (https://myfwc.com/recreation/lead/dinner-island/camping/) - 'All campers must obtain a free permit/site reservation using the online reservation system', 'Permits may be obtained up to 14 days in advance', max 14 consecutive days in a month; Escribano Point WMA books through FWC's webreserv.com listing (entry website). Recommend policy_ref 'none' for all 20 (or new rows 'flfs:FL' / 'fwc:FL' if wanted; FLFS's 11-month same-day window is uniform across its ReserveAmerica contract).",
+  "keys_that_apply": [],
+  "entry_ids_affected": [
+   101,
+   165,
+   167,
+   168,
+   4712,
+   4713,
+   4715,
+   4716,
+   4717,
+   4718,
+   4719,
+   4720,
+   4721,
+   4722,
+   4726,
+   4727,
+   4728,
+   4724,
+   4729,
+   4730
+  ],
+  "entry_ids_that_are_parks": [],
+  "sub_classes": {
+   "Florida Forest Service state forests": [
+    101,
+    165,
+    167,
+    168,
+    4712,
+    4713,
+    4715,
+    4716,
+    4717,
+    4718,
+    4719,
+    4720,
+    4721,
+    4722,
+    4726,
+    4727,
+    4728
+   ],
+   "FWC WMAs": [
+    4724,
+    4729,
+    4730
+   ]
+  }
+ },
+ "state:IL": {
+  "verdict": "PARTLY",
+  "evidence": "Same agency AND same system: Illinois state forests, state fish & wildlife areas and conservation areas are IDNR park properties listed under dnr.illinois.gov/parks/ beside the state parks, and the reservation page the row was built from (https://dnr.illinois.gov/parks/camp/reservation-information.html) scopes itself to 'All Illinois Department of Natural Resources-hosted camping, cabins, group camps, and shelters' ($5 fee, three-days-ahead rule). The reservable ones in this class are on the same platform (recreation.exploremoreil.com, e.g. Trail of Tears #!park/63, Sand Ridge #!park/56, Jim Edgar Panther Creek #!park/31, Hamilton County #!park/26), so the whole row applies to them. The split is by reservability, not agency: 10 of the 17 are first-come-only (the entries themselves say reservable:false / fcfs:always, from their IDNR camp pages; e.g. Woodford's camp page https://dnr.illinois.gov/parks/camp/park.woodford.html offers 'Sites for tents and trailers' with no reservation path). For those, the entry's own reservable/fcfs override the row, but the still-inherited platform/url/reserve_until/holiday min_stay/$5 reservation_fee describe a booking that doesn't exist there. max_stay_nights 14 and currency are agency-wide and still apply. Sam Dale Lake (1659), Hidden Springs (1667) and Sam Parr (1668) have no booking group but link exploremoreil park pages, so they behave as reservable. Fix suggestion: leave the reservable ones; for the FCFS-only ten, either accept (entry overrides already say no reservations) or have the display suppress booking-mechanics keys when the entry says reservable:false.",
+  "keys_that_apply": [
+   "all keys for reservable entries 1655,1659,1667,1668,1690,1691,1804,14008",
+   "booking.max_stay_nights",
+   "booking.note (FCFS sentence)",
+   "fees.currency"
+  ],
+  "keys_that_do_not_apply": [
+   "for FCFS-only entries 1660,1675,1692,1693,1694,1805,1806,14007,14009: booking.platform, booking.url, booking.reserve_until, booking.min_stay, fees.reservation_fee"
+  ],
+  "entry_ids_affected": [
+   1660,
+   1675,
+   1692,
+   1693,
+   1694,
+   1805,
+   1806,
+   14007,
+   14009
+  ],
+  "entry_ids_apply_fully": [
+   1655,
+   1659,
+   1667,
+   1668,
+   1690,
+   1691,
+   1804,
+   14008
+  ],
+  "entry_ids_that_are_parks": []
+ },
+ "state:WV": {
+  "verdict": "PARTLY",
+  "evidence": "Two sub-classes with opposite answers. STATE FORESTS (Greenbrier, Coopers Rock, Cabwaylingo, Panther, Seneca, Kanawha) - APPLIES: they are WV State Parks properties (wvstateparks.com/parks/<x>-state-forest/), book through the same book.wvstateparks.com engine (the entries' own 2026-10-12 prices were read there), and the row's source set is the 23 WV State Parks camping pages, which include Seneca ('Before occupying any campsite, campers must have a paid reservation and all sites are reservable') and Panther (named among the year-round parks); 58CSR32 is the State Parks rule covering them. WILDLIFE MANAGEMENT AREAS (Beckys Creek and the six WVDNR Wildlife Resources campgrounds) - DOES NOT APPLY: a different division with no reservation system. WVDNR's WMA public-use rules (https://wvdnr.gov/lands-waters/wildlife-management-areas/rules-and-regulations/) say only 'Camping on wildlife management areas is permitted in designated areas only' and 'Campsite rental fees must be paid before occupying the campsite' (pay on site); Lewis Wetzel's entry records first-come, first-served, and WV State Parks' own 2013 announcement lists Plum Orchard Lake WMA among first-come-only areas. Six of the seven WMA entries have NO booking group of their own, so today they inherit the whole State Parks booking row (reservable true, book.wvstateparks.com, 2-night weekend minimum, 14-night max, 60-day refund terms) - wrong on every key. Recommend policy_ref 'none' for the WMAs.",
+  "keys_that_apply": [
+   "all keys, for the state forests 488,630,876,877,878,983"
+  ],
+  "entry_ids_affected": [
+   509,
+   14050,
+   14051,
+   14052,
+   14053,
+   14054,
+   14055
+  ],
+  "entry_ids_apply_fully": [
+   488,
+   630,
+   876,
+   877,
+   878,
+   983
+  ],
+  "entry_ids_that_are_parks": []
+ },
+ "state:MA": {
+  "verdict": "APPLIES",
+  "evidence": "Same agency, same system: Massachusetts state forests are DCR properties and DCR runs one camping program for 'state parks and forests' through massdcrcamping.reserveamerica.com (the entries' own reservation links). The row was in fact built partly FROM state forests: its booking note's firsthand check is Loraine Campground, Harold Parker State Forest; its season note's 2026 schedule names Granville, Otter River, Erving, Willard Brook (all state forests); and the fee table it cites (https://www.mass.gov/info-details/camping-fees) prices every DCR campground, forests included, in the same tiers. Reservation rules (https://www.mass.gov/how-to/reserve-a-campsite) are DCR-wide with no forest carve-out.",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*",
+   "season.*",
+   "discounts.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [],
+  "entry_ids_checked": [
+   208,
+   4147,
+   4149,
+   4151,
+   4152,
+   4155,
+   4156,
+   4157,
+   4158,
+   4159,
+   4161
+  ]
+ },
+ "state:IN": {
+  "verdict": "DOES NOT APPLY",
+  "evidence": "Same department (Indiana DNR) but a different division (Forestry) and a different system. The state:IN row is the State Parks central reservation system (camp.in.gov / USeDirect, 180-day window, '100% reservable until 11pm', weekend 2-night and holiday 3-night minimums, $6 reservation fee, $7/$15 park ENTRANCE fee). DNR's own camping-fee page (https://www.in.gov/dnr/state-parks/rates-and-fees/camping-fees) sets a separate first-come, first-served tariff 'for State Forest properties ... not on Indiana's Central Reservation System' ($12 non-electric, $12.15 primitive, Mon-Sun), and the forest property pages (e.g. https://www.in.gov/dnr/forestry/properties/morgan-monroe-state-forest/) say campers 'must register for camping at the forest office' / self-register - no booking window, no minimum stay, no reservation fee. The forestry pages publish no entrance fee (the $7/$15 is a state-park gate fee). The only overlap: the same fee page lists 'Greene-Sullivan State Forest (some campsites)' among properties on the Central Reservation System, so a subset of 1092's sites are reservable on the parks' system (the entry itself records fcfs-only). All 9 entries already carry reservable:false / fcfs:always and the FCFS fee note, but still inherit platform, url, window_opens_days 180, reserve_until 23:00, both min_stay rules, reservation_fee 6 and the entrance block. max_stay 14 is plausibly DNR-wide (312 IAC 8-2) but was not confirmed for forests. Recommend policy_ref 'none' (or an 'inforestry:IN' row: reservable false, fcfs always, $12/$12.15).",
+  "keys_that_apply": [],
+  "entry_ids_affected": [
+   1090,
+   1091,
+   1092,
+   1093,
+   1094,
+   1095,
+   1096,
+   1097,
+   1099
+  ],
+  "entry_ids_that_are_parks": []
  }
 }
