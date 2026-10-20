@@ -525,6 +525,11 @@ function agencyRowFor(c) {
     out.booking = Object.assign({}, out.booking);
     RESERVATION_ONLY_KEYS.forEach(k => delete out.booking[k]);
   }
+  // campground_schema.RESERVATION_ONLY_FEE_KEYS: no booking fee at a first-come campground
+  if ((c.booking || {}).reservable === false && out.fees) {
+    out.fees = Object.assign({}, out.fees);
+    delete out.fees.reservation_fee;
+  }
   const fees = c.fees || {};
   if (fees.nightly_high === 0 && (fees.nightly_low === undefined || fees.nightly_low === 0)) {
     delete out.discounts;

@@ -528,6 +528,9 @@ def policy_ref(entry):
 # not the facts that hang off it. `max_stay_nights` is deliberately absent: a
 # 14-night limit binds a first-come site just the same.
 RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until")
+# The same, in `fees`: a booking fee printed under a first-come campground (109
+# entries, 39 of them Nebraska walk-up areas under NE's $8.50 fee, 2026-10-20).
+RESERVATION_ONLY_FEE_KEYS = ("reservation_fee",)
 
 
 # Agency fee keys that mean nothing on a campground that is free at both ends.
@@ -544,6 +547,7 @@ def _moot_agency_keys(entry):
     moot = {}
     if (entry.get("booking") or {}).get("reservable") is False:
         moot["booking"] = set(RESERVATION_ONLY_KEYS)
+        moot["fees"] = set(RESERVATION_ONLY_FEE_KEYS)
     fees = entry.get("fees") or {}
     # Free camping: there is no fee for a Senior-pass (or any) discount to
     # apply to. Both ends must say free — a $0 low beside a paid high is a
@@ -552,7 +556,7 @@ def _moot_agency_keys(entry):
         moot["discounts"] = None
         # Nor for a non-resident or per-night add-on: NY State Parks' '+$5 a night
         # for non-residents' printed under three free DEC sites (2026-10-12).
-        moot["fees"] = set(FREE_MOOT_FEE_KEYS)
+        moot.setdefault("fees", set()).update(FREE_MOOT_FEE_KEYS)
     # A campground's own price makes the agency's add-ons moot: they were
     # measured against the agency's base, not this price, and beside it the
     # reader cannot tell what is extra and what is included. Hither Hills'

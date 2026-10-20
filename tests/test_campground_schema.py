@@ -362,6 +362,22 @@ class TestRegistryResolution(unittest.TestCase):
             cs.resolve(silent, reg)["booking"]["values"]["platform"],
             "recreation.gov")
 
+    def test_own_not_reservable_drops_agency_reservation_fee(self):
+        reg = {"state:NE": {"fees": {"currency": "USD", "reservation_fee": 8.5}}}
+        walkup = {"ownership": "state", "state": "NE",
+                  "booking": {"reservable": False}}
+        got = cs.resolve(walkup, reg)["fees"]["values"]
+        self.assertNotIn("reservation_fee", got)
+        self.assertEqual(got["currency"], "USD")
+        # Free AND first-come: both rules' fee keys go, neither replaces the other.
+        reg["state:NE"]["fees"]["nonresident"] = {"type": "surcharge", "amount": 5}
+        walkup["fees"] = {"nightly_low": 0, "nightly_high": 0}
+        got = cs.resolve(walkup, reg)["fees"]["values"]
+        self.assertNotIn("reservation_fee", got)
+        self.assertNotIn("nonresident", got)
+        silent = {"ownership": "state", "state": "NE"}
+        self.assertEqual(cs.resolve(silent, reg)["fees"]["values"]["reservation_fee"], 8.5)
+
     def test_own_free_fees_drop_agency_discounts(self):
         # There is nothing for a Senior-pass discount to apply to at $0.
         reg = {"federal": {"discounts": {"interagency_senior_access": True},
