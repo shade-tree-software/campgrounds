@@ -19,3 +19,13 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Hollow Run along the south edge, separated from the pads by the loop road, picnic/dump area
   and a riparian treeline). ReserveAmerica tags all 11 RV sites "Waterfront". Re-check the
   pads against the run; the existing evidence may well stand.
+- **861 Hyner Run SP (PA)** — stored "not waterfront"; ReserveAmerica tags 8 RV sites
+  "Waterfront" (A 8,10,12,13; B 14,16,18,20). Check pads against Hyner Run.
+- **835 Hills Creek SP (PA)** (weak) — RA "less than 300 feet" on 11 FHU sites (A 18-22,24,25;
+  B 47-50; site 049 at 41.813486,-77.197404). Check against the lake.
+- **862 Lyman Run SP (PA)** (weak) — RA "less than 300 feet" on 17 of 29 electric sites.
+- **619 Keystone SP (PA)** — --AWH note: "set back from the lake"; DCNR says Lakeside
+  Campground "is adjacent to the lake" and RA tags 10 Lakeside sites Waterfront. AWH's
+  note governs unless the Lakeside loop is a separate case; ask AWH if the imagery says so.
+- **1048 Milton Loop (PA)** — stored "riverview" but the --Claude note says woods block any
+  view; inconsistent record, re-check.

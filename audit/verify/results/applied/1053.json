@@ -1,0 +1,80 @@
+{
+  "id": 1053,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/232005",
+    "https://www.recreation.gov/api/camps/campgrounds/232005/rates",
+    "recreation.gov campsite catalog for 232005 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 15,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $16 without hookups, $25 with electric (reservable season); in the first-come season after Labor Day $15 / $21. Group sites $80. Day use $5 a vehicle. The same in recreation.gov's 2026-2028 rate tables."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area (Fee Site and Info: 'Single Site: $16 per night Single Site with electric hook-up: $25 per night') + https://www.recreation.gov/api/camps/campgrounds/232005/rates (STANDARD NONELECTRIC $16 / STANDARD ELECTRIC $25 in the Peak and Non-Peak seasons; Walk In 'First-come, First-served Season' $15 / $21; 2026-2028), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area (RV Camping: 'Hookup - Water: No', 'Hookup - Sewer: No', 'With electric: 20 sites') + recreation.gov catalog for 232005 (all 20 STANDARD ELECTRIC sites list Electricity Hookup 30), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 28,
+        "max_rig_ft": 50,
+        "pull_through": false,
+        "note": "Forest Service: 38 campsites, Lower Loop 20 (all electric, 'will accommodate tents, RV's, or trailers up to 50' long') and Upper Loop 18 ('recommended for tents and small RV's or trailers'), 12 tent-only, 2 group sites. recreation.gov lists 20 electric and 8 non-electric RV sites, 13 tent-only and 2 group sites; it gives the electric sites 50-90 ft and most non-electric sites 20 ft (013 and 014 list 52 and 95). Every family RV site is back-in."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area (No. of Sites; Size Restrictions 'RV's up tp 50 feet') + recreation.gov catalog for 232005 (site types, Max Vehicle Length, Driveway Entry), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "note": "Vault toilets and drinking water in the camping loops; flush toilets and hot showers in the bathhouse at the day-use area. Dump station: the Forest Service page says 'Dump Stations: Yes', but recreation.gov's notice says 'There is no dump station in the campground'."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232005 (Facilities: 'Vault toilets and drinking water are provided in the camping loops while the Day Use area supports the bathhouse with flush toilets, hot showers'; dump-station notice) + the Forest Service page, read 2026-10-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "10-10"
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area (Seasons of Use: 'Campground open 04/01 - 10/10'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "some_sites",
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14,
+        "note": "'Reservations are accepted for some sites between April 1 and September 4' on recreation.gov or 1-877-444-6777, up to 6 months ahead; after that recreation.gov runs a first-come, first-served season to mid-October. recreation.gov closes booking 4 days before arrival; the Forest Service page says at least 3 days ahead. recreation.gov's 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 nights in any rolling 30. Group sites must be reserved."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/loleta-recreation-area (Reservations) + https://www.recreation.gov/api/camps/campgrounds/232005 (facility_rules maxStay 14 per rolling 30 days, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4) + /rates (Walk In season), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed 30-amp electric, $15-25 (USFS $16/$25, FCFS season $15/$21), reservable on rec.gov (inherited platform and 6-month window now stated for this campground). Added no water/sewer, season Apr 1 - Oct 10, 4-day cutoff, weekend/holiday minimums, 14-night max, 28 back-in RV sites (USFS: RVs to 50 ft), showers/flush/vault toilets/water. Dump station left unset: USFS says yes, rec.gov says none. rec.gov has no 2026 first-come season, consistent with the post-Labor Day 2026 water-upgrade closure in inclusion_evidence; 2027 seasons are listed.",
+  "flags": [
+    "Entry has no phone; recreation.gov and the Forest Service page give 814-927-6628 (Marienville Ranger District).",
+    "Dump station conflict between the two official pages (USFS 'Dump Stations: Yes'; recreation.gov notice 'There is no dump station in the campground')."
+  ]
+}
