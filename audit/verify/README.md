@@ -54,6 +54,9 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
      `recgov_calendar.py`); a rule rec.gov marks `soft` is not a rule, so it goes in
      `booking.note`, never in `min_stay`/`max_stay_nights`; and a catalog length that is
      plainly a typo (140 ft) is left out of `max_rig_ft`, not believed.
+   - `booking.platform`: a state's own branded booking site (Reserve Florida, ReserveVAParks)
+     keeps the label its agency row uses (`operator` or `usedirect`); don't relabel one as
+     the other, it is the same site either way.
    - `discounts`: only what the page states.
 3. **Write only what a page says.** Never fill a field with a guess, a typical value or a
    placeholder. A page that says nothing about a field leaves it alone.

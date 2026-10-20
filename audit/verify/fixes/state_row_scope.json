@@ -164,7 +164,7 @@
  },
  "state:IL": {
   "verdict": "PARTLY",
-  "evidence": "Same agency AND same system: Illinois state forests, state fish & wildlife areas and conservation areas are IDNR park properties listed under dnr.illinois.gov/parks/ beside the state parks, and the reservation page the row was built from (https://dnr.illinois.gov/parks/camp/reservation-information.html) scopes itself to 'All Illinois Department of Natural Resources-hosted camping, cabins, group camps, and shelters' ($5 fee, three-days-ahead rule). The reservable ones in this class are on the same platform (recreation.exploremoreil.com, e.g. Trail of Tears #!park/63, Sand Ridge #!park/56, Jim Edgar Panther Creek #!park/31, Hamilton County #!park/26), so the whole row applies to them. The split is by reservability, not agency: 10 of the 17 are first-come-only (the entries themselves say reservable:false / fcfs:always, from their IDNR camp pages; e.g. Woodford's camp page https://dnr.illinois.gov/parks/camp/park.woodford.html offers 'Sites for tents and trailers' with no reservation path). For those, the entry's own reservable/fcfs override the row, but the still-inherited platform/url/reserve_until/holiday min_stay/$5 reservation_fee describe a booking that doesn't exist there. max_stay_nights 14 and currency are agency-wide and still apply. Sam Dale Lake (1659), Hidden Springs (1667) and Sam Parr (1668) have no booking group but link exploremoreil park pages, so they behave as reservable. Fix suggestion: leave the reservable ones; for the FCFS-only ten, either accept (entry overrides already say no reservations) or have the display suppress booking-mechanics keys when the entry says reservable:false.",
+  "evidence": "Same agency AND same system: Illinois state forests, state fish & wildlife areas and conservation areas are IDNR park properties listed under dnr.illinois.gov/parks/ beside the state parks, and the reservation page the row was built from (https://dnr.illinois.gov/parks/camp/reservation-information.html) scopes itself to 'All Illinois Department of Natural Resources-hosted camping, cabins, group camps, and shelters' ($5 fee, three-days-ahead rule). The reservable ones in this class are on the same platform (recreation.exploremoreil.com, e.g. Trail of Tears #!park/63, Sand Ridge #!park/56, Jim Edgar Panther Creek #!park/31, Hamilton County #!park/26), so the whole row applies to them. The split is by reservability, not agency: 9 of the 17 are first-come-only (the entries themselves say reservable:false / fcfs:always, from their IDNR camp pages; e.g. Woodford's camp page https://dnr.illinois.gov/parks/camp/park.woodford.html offers 'Sites for tents and trailers' with no reservation path). For those, the entry's own reservable/fcfs override the row, but the still-inherited platform/url/reserve_until/holiday min_stay/$5 reservation_fee describe a booking that doesn't exist there. max_stay_nights 14 and currency are agency-wide and still apply. Sam Dale Lake (1659), Hidden Springs (1667) and Sam Parr (1668) have no booking group but link exploremoreil park pages, so they behave as reservable. Fix suggestion: leave the reservable ones; for the FCFS-only nine, either accept (entry overrides already say no reservations) or have the display suppress booking-mechanics keys when the entry says reservable:false.",
   "keys_that_apply": [
    "all keys for reservable entries 1655,1659,1667,1668,1690,1691,1804,14008",
    "booking.max_stay_nights",
@@ -263,5 +263,151 @@
    1099
   ],
   "entry_ids_that_are_parks": []
+ },
+ "state:NJ": {
+  "verdict": "APPLIES",
+  "evidence": "Same agency and system: New Jersey's state forests are run by the State Park Service within DEP's Division of Parks and Forestry - each entry's own page is under dep.nj.gov/parksandforests/state-park/<x>-state-forest/ - and book on the same NJ Outdoors portal. The row's source is the regulation itself, N.J.A.C. 7:2 (State Park Service Code), whose camping rules (7:2-6.7, 6.8, 17.2) govern all lands administered by the Division, forests included, with no forest-specific booking terms. (Wharton SF - Atsion is on the Atsion Recreation Area page, same system.)",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [],
+  "entry_ids_checked": [
+   1808,
+   1809,
+   1810,
+   1812,
+   1817,
+   1818,
+   1819,
+   1820
+  ]
+ },
+ "state:CO": {
+  "verdict": "PARTLY",
+  "evidence": "The class is mostly a state park the regex caught by name. STATE FOREST STATE PARK (2279 Bockman, 2280 North Michigan, 2281 Ranger Lakes, 14476 North Park) is a CPW state park (https://cpw.state.co.us/state-parks/state-forest-state-park), booked through cpwshop like every park; the row even cites its vehicle-pass range ('State Forest $12-$17') - the row APPLIES and these keep it. CLEAR CREEK RESERVOIR SWA (2267) - DOES NOT APPLY: a State Wildlife Area, same agency (CPW) but not the parks system. Its page (https://cpw.state.co.us/state-wildlife-areas/clear-creek-reservoir-swa) says 'Camping allowed in designated areas only' and 'A valid hunting or fishing license OR SWA pass is required for everyone 16 or older accessing this state wildlife area' - no reservation, no cpwshop booking, no daily vehicle pass; the row's 'All parks are reservation only' / fcfs never / 180-day window / $10-$15 vehicle pass describe the opposite. SWA camping limits are set per area (e.g. Mount Evans SWA: 5 days in any 45). The entry already overrides reservable/fcfs, but inherits platform, url, window and the vehicle-pass entrance block. Recommend policy_ref 'none' for 2267.",
+  "keys_that_apply": [
+   "all keys for the State Forest State Park entries"
+  ],
+  "entry_ids_affected": [
+   2267
+  ],
+  "entry_ids_that_are_parks": [
+   2279,
+   2280,
+   2281,
+   14476
+  ]
+ },
+ "state:NE": {
+  "verdict": "DOES NOT APPLY",
+  "evidence": "Same agency (Nebraska Game and Parks Commission) but WMAs are outside the state-park reservation and permit system. The row is the parks' ReserveAmerica booking (180-day window, $8.50 reservation fee) plus the Motor Vehicle Park Entry Permit, which outdoornebraska.gov states is required 'on all licensed vehicles entering any state park, state recreation area or state historical park' - WMAs are not in that list. Nebraska's WMA rule (Title 163 NAC; text surfaced by search from NE SOS rule proposals and the NW Nebraska tourism guide, NOT read directly - the SOS link now redirects to rules.nebraska.gov) permits camping 'for a maximum of fourteen consecutive days within any thirty day period unless otherwise posted', and the WMA guide says 'Access to these areas is free, and no entry permit is necessary' (quoted secondhand; outdoornebraska.gov returns 403 to automated fetches). All 4 entries record free, first-come, no reservations. They already override reservable/fcfs and price $0, but still inherit platform reserveamerica, window_opens_days 180, reservation_fee 8.5 and the $7/$14 park-permit entrance block. FLAG: entries 2670 (Ballards Marsh) and 2730 (Pressey) say 'State park entry permit required' in their notes, which contradicts the WMA rule - worth a check on the area's own page before deciding whether an entrance key belongs on them. Recommend policy_ref 'none' (or a 'ngpc-wma:NE' row: reservable false, fcfs always, max_stay 14, no entry permit).",
+  "keys_that_apply": [],
+  "entry_ids_affected": [
+   2670,
+   2672,
+   2698,
+   2730
+  ],
+  "entry_ids_that_are_parks": []
+ },
+ "state:CT": {
+  "verdict": "APPLIES",
+  "evidence": "Same agency and system: Connecticut DEEP's State Parks and Forests division runs forest and park campgrounds alike on connecticutstateparks.reserveamerica.com (contract CT) - Green Falls parkId 100802, Mount Misery 100800, American Legion SF Hawes 100103 (entry websites). The row's source (https://ctparks.com/camping) covers both and names these campgrounds itself: walk-ins are taken 'except at Devil's Hopyard, Pachaug's Mount Misery and Green Falls, Mashamoquet Brook ... and Macedonia Brook' - consistent with the two Pachaug entries' fcfs 'never'.",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [],
+  "entry_ids_checked": [
+   4053,
+   4054,
+   4062
+  ]
+ },
+ "state:OH": {
+  "verdict": "DOES NOT APPLY",
+  "evidence": "Same department, different division (ODNR Division of Forestry, not Parks & Watercraft) and different system. The row is ReserveOhio (reserveohio.com, 180-day window, 'no longer offer walk-in campsites', weekend/holiday minimums, $6.50 reservation fee). ODNR's state forest pages say camping at Harrison SF is free with self-registration at Ronsheim, and at Fernwood SF's Hidden Hollow 'campers self-register by filling out a card' - free, first-come. ODNR's announcement of reservations at Hocking and Mohican-Memorial SFs (https://ohiodnr.gov/discover-and-learn/safety-conservation/about-ODNR/news/camping-system-forests) states 'The campsites located in Fernwood, Harrison, Shawnee, Tar Hollow, Vinton Furnace, and Zaleski state forests will continue to operate under the first come, first served system.' (Note: the two property URLs in the entries' website fields now return 404.) Both entries override reservable/fcfs already but inherit the ReserveOhio platform/url/window/min_stay and the $6.50 fee. Recommend policy_ref 'none'. If Hocking/Mohican-Memorial SF campgrounds are ever added they would need their own (reservable) treatment too.",
+  "keys_that_apply": [],
+  "entry_ids_affected": [
+   1036,
+   1037
+  ],
+  "entry_ids_that_are_parks": []
+ },
+ "state:IA": {
+  "verdict": "APPLIES",
+  "evidence": "Same agency and system: Iowa DNR's state forest campgrounds book on the state parks' ReserveAmerica contract (iowastateparks.reserveamerica.com, contractCode=IA: Stephens Forest Campground parkId 610147, Yellow River State Forest 610130). Both forest pages say the campgrounds are '100% reservable and a reservation is required' (https://www.iowadnr.gov/places-go/state-forests/yellow-river-state-forest, https://www.iowadnr.gov/places-go/state-forests/stephens-state-forest) - only backpack/canoe sites are first-come - and the governing rule is one chapter for both, 571 IAC ch. 61 'State parks, recreation areas, and state forest camping'. The row's own unresolved-cutoff caveat applies equally.",
+  "keys_that_apply": [
+   "booking.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [],
+  "entry_ids_checked": [
+   2932,
+   2942
+  ]
+ },
+ "state:RI": {
+  "verdict": "APPLIES",
+  "evidence": "George Washington Management Area's campground is a RIDEM Division of Parks & Recreation state campground (https://riparks.ri.gov/parks/george-washington-management-area) on the same ReserveAmerica contract the row was read from (rhodeislandstateparks.reserveamerica.com, contractCode=RI, parkId 253123), under the same RIDEM parks rule (250-RICR-100-00-1/-8).",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [
+   205
+  ]
+ },
+ "state:MD": {
+  "verdict": "APPLIES",
+  "evidence": "Cedarville State Forest's campground books on Maryland's own park reservation system (parkreservations.maryland.gov, contractCode=MD, parkId 380104 - entry website), the same one the state parks use, and the row's source (https://dnr.maryland.gov/Publiclands/Pages/campinginfo.aspx) explicitly covers forests: 'Walk-in guests at parks and forests can request any non-reserved sites', naming Green Ridge State Forest.",
+  "keys_that_apply": [
+   "booking.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [],
+  "entry_ids_checked": [
+   830
+  ]
+ },
+ "state:TX": {
+  "verdict": "APPLIES",
+  "evidence": "Lost Maples State Natural Area is a Texas State Parks (TPWD) unit (https://tpwd.texas.gov/state-parks/lost-maples) booked on texasstateparks.reserveamerica.com like every park - caught by the regex only for 'Natural Area'.",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [
+   7063
+  ]
+ },
+ "state:WA": {
+  "verdict": "APPLIES",
+  "evidence": "Fort Worden Historical State Park's Upper Forest Campground is a Washington State Parks campground (parks.wa.gov/find-parks/state-parks/fort-worden-historical-state-park) - caught by the regex only for 'Forest Campground'.",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [
+   10409
+  ]
+ },
+ "state:OR": {
+  "verdict": "APPLIES",
+  "evidence": "Succor Creek State Natural Area is an Oregon Parks and Recreation Department unit (https://stateparks.oregon.gov/index.cfm?do=park.profile&parkId=9) - caught by the regex only for 'Natural Area'. (Whether this primitive first-come campground takes reservations is an entry-level question; the agency is the row's.)",
+  "keys_that_apply": [
+   "booking.*",
+   "fees.*"
+  ],
+  "entry_ids_affected": [],
+  "entry_ids_that_are_parks": [
+   10635
+  ]
  }
 }

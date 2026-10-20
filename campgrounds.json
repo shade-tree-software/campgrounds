@@ -3865,23 +3865,96 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232432 (notice: 'There are no RV hook-ups but there is a dump station with potable water available.')",
+        "checked": "2026-10-20",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232432/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232432 (fee description; notice 'There is a $30 fee per vehicle to enter the park. The pass issued is valid for one week.') + /rates (2026 Peak Season Apr 29 - Nov 1: STANDARD NONELECTRIC 30)",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232432 ('$15.00 per night/per site with an Access (disability/golden age) or Senior Pass')",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232432 (Facilities: 'flush toilets, drinking water and one dump station ... There are no showers in this campground'; notice 'There are no showers available at this campground or the closest wayside')",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/shen/planyourvisit/hours.htm (Campgrounds table: Mathews Arm 2026 opening April 29, closing November 1; last updated 2026-09-22)",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/shen/planyourvisit/campground-reservations.htm + https://www.nps.gov/shen/planyourvisit/hours.htm ('Campsites by reservation and first-come, first-served')",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 232432 (fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/232432 description",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "entrance": {
+        "resident": 30,
+        "nonresident": 30,
+        "per": "vehicle_stay"
+      },
+      "checked": "2026",
+      "note": "$30 a night per site (group sites $75), plus recreation.gov's administrative fee when reserved. $15 a night with a Senior or Access pass. Shenandoah charges $30 per vehicle to enter, valid one week."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "facilities": {
+      "showers": false,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "No showers at the campground or the nearest wayside. Camping supplies, food and firewood at Elkwallow Wayside, 2 miles south."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-29",
+      "closes": "11-01",
+      "note": "2026 dates (April 29 to November 1) from NPS's campground table; dates are set each year."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "window_opens_days": 180,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -48
+      },
+      "note": "Campsites by reservation and first-come, first-served. Reservable sites release in waves: 50% six months before arrival, 25% two weeks before, the remaining 25% four days before. 'No reservations can be made for Mathews Arm Campground 48 hours before your selected date.' First-come sites are claimed on site; check in at the registration office."
+    },
+    "sites": {
+      "count": 164,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "164 sites in the recreation.gov catalog (161 standard, 112 of them reservable and 49 walk-up, plus 3 group sites) and 2 management sites; the description says 'nearly 166'. Reservable sites list vehicle lengths up to 50 ft, most 28-46; 19 pull-throughs."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232432 https://www.recreation.gov/api/camps/campgrounds/232432/rates https://www.nps.gov/shen/planyourvisit/hours.htm https://www.nps.gov/shen/planyourvisit/campground-reservations.htm RIDB campsite catalog for facility 232432 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $30 base and no electric. Added water/sewer false, Senior/Access $15, $30/week park entrance, 2026 season Apr 29-Nov 1, reservation plus first-come with release waves and the 48-hour reservation cutoff, flush toilets/water/dump, showers false, 164 sites up to 50 ft with pull-throughs. Not stated: max stay."
     }
   },
   {
@@ -12225,7 +12298,31 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "Camping on a Virginia WMA needs a written camping authorization ($10, up to six people) from Go Outdoors Virginia or a license agent, which sets the trip's start and end dates; 14 nights at most. Only in previously cleared spots, not within 300 ft of any lake or facility. DWR: 'WMA roads are not suitable for long vehicles or trailers ... Some WMAs may not allow travel trailers or RVs'; Thompson's ridge-top tract is reached on the unimproved Fire Trail."
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('Camping is primitive, temporary and dispersed. There are no established campsites and no amenities (electric, potable water, dump stations, restrooms, convenience stations).'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('no amenities (electric, potable water, dump stations, restrooms, convenience stations)'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ + https://dwr.virginia.gov/wma/thompson/ (Maps & Directions), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://dwr.virginia.gov/wma/thompson/ https://dwr.virginia.gov/camping-on-wmas/ https://dwr.virginia.gov/wp-content/uploads/media/Thompson-WMA-Map.pdf",
+      "note": "Confirmed no hookups and no water/dump/restrooms (DWR: no amenities), and the 14-night limit with the $10 camping authorization. Thompson's own page says nothing about camping beyond linking DWR's statewide rules; it lists 11 designated parking areas and an unimproved Fire Trail to the ridge-top tract. Not stated on DWR pages: season, the $4 access-permit price (left to the inherited all-in rate and the AWH-confirmed note), any Thompson-specific RV restriction. Existing groups without provenance"
     }
   },
   {
@@ -20218,6 +20315,43 @@
       "sig": "4b3996f982f960d4",
       "checked": "2026-10-09",
       "model": "claude-opus-5/session"
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('Camping is primitive, temporary and dispersed. There are no established campsites and no amenities (electric, potable water, dump stations, restrooms, convenience stations).'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('no amenities (electric, potable water, dump stations, restrooms, convenience stations)'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/, read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      }
+    },
+    "facilities": {
+      "potable_water": false,
+      "dump": false,
+      "flush_toilets": false,
+      "vault_toilets": false
+    },
+    "booking": {
+      "max_stay_nights": 14,
+      "note": "Camping on a Virginia WMA needs a written camping authorization ($10, up to six people) from Go Outdoors Virginia or a license agent, which sets the trip's start and end dates; 14 nights at most. Only in previously cleared spots, and 'unlawful to camp within 300 feet of any lake or facility'. DWR: 'WMA roads are not suitable for long vehicles or trailers ... Some WMAs may not allow travel trailers or RVs.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://dwr.virginia.gov/wma/thompson/ https://dwr.virginia.gov/camping-on-wmas/ https://dwr.virginia.gov/wp-content/uploads/media/Thompson-WMA-Map.pdf",
+      "note": "Confirmed (from DWR's statewide WMA camping page; Thompson's own page only links it) no hookups, no water/dump/restrooms, and the 14-night limit with the $10 camping authorization. Not stated: season, the $4 access-permit price (inherited all-in rate and AWH-confirmed note left as they are), anything specific to the Lower Ted Lake parking area. OSM maps no water within 600 m of the pin, consistent with the AWH note 'not on the lake' and the 300-ft lake setback."
     }
   },
   {
@@ -20675,17 +20809,34 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "'Little Fort is a first-come-first-serve minimally developed recreation area'; 'There are 9 sites available with no reservations required.'"
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground, read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground ('Fee Site and Info | No Fee ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground ('Fee Site and Info: No Fee'; 'OHV Special Recreation Permits apply to users of OHV/ATV Trail'; page last updated 2025-12-11), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground ('Seasons of Use: Open year round'; status 'Site Open'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground (OHV Camping Info: 'There are 9 sites available with no reservations required.'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground ('Potable water is not available at this site.'; 'Restroom information is not available for this site.'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -20695,7 +20846,24 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "No fee. OHV Special Recreation Permits apply only to riders on the OHV trails."
+    },
+    "season": {
+      "year_round": true
+    },
+    "sites": {
+      "count": 9
+    },
+    "facilities": {
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/little-fort-campground",
+      "note": "Confirmed no fee, first-come with no reservations (booking was derived from the note, now from USFS), and year-round season with the site open. Added 9 sites and no potable water. Not stated: restrooms ('information is not available'), hookups, site lengths."
     }
   },
   {
@@ -25136,19 +25304,69 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB campsite catalog for facility 233563 (fetched 2026-10-20): 117 bookable sites list 50-amp and 13 list 30-amp electric; 131 bookable sites list a water hookup. rec.gov amenities: Electric Hookups, Water Hookups",
+        "checked": "2026-10-20",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233563/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233563/rates (2026 Peak Season: STANDARD NONELECTRIC 24, STANDARD ELECTRIC 34; First-come, First-served Season: 20) + campground notices",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233563 (notice: 'Golden Age/Access and America the Beautiful Interagency Senior and Access Passes are accepted at this campground and cardholders receive a 50% discount on camping fees')",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233563 (Facilities description: 'hot showers, flush toilets and a dump station'; amenities: Drinking Water, Dump Station, Showers (Seasonal), Flush Toilets (Seasonal))",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233563 (notice: 'Maximum stay is 14-days within any 30 day period'; facility_rules maxStay 14 nights rolling 30 days) + /rates season names",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 233563 (fetched 2026-10-20)",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 20,
       "nightly_high": 34,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 peak season (Apr 1 - Oct 31): $24 non-electric, $34 electric (one double electric site $68); outside it the walk-in rate is $20 for any site. 50% off with a Senior or Access pass. Day-use fee of $7 is waived for campers holding a reservation."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Hot showers and flush toilets (listed as seasonal), dump station, drinking water. Each camping area has its own swim beach. Gas, groceries and firewood within 2 miles."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Maximum stay 14 days within any 30-day period. recreation.gov's rate table runs a peak (reservable) season April 1 - October 31 and a 'First-come, First-served Season' in winter (2026: from November 9). Check-in 4 pm; checking in after the gatehouse closes is prohibited."
+    },
+    "sites": {
+      "count": 233,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "233 bookable sites in the recreation.gov catalog (131 electric, 101 non-electric, plus group areas), and 13 management sites. Listed max vehicle lengths run to 50 ft, most 30-45; 14 pull-throughs."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233563 https://www.recreation.gov/api/camps/campgrounds/233563/rates RIDB campsite catalog for facility 233563 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $20-34 fees (2026 rate table: $24 non-electric/$34 electric peak, $20 walk-in off-season), 50-amp electric and water at sites, Senior/Access 50% discount. Added 14-night max stay, facilities (showers, flush toilets, dump, water), 233 sites up to 50 ft with pull-throughs. Not stated: sewer, booking window beyond the agency default, season dates in prose (only rate-season names), fcfs as a policy statement. rec.gov facility_rules also carries a 'militaryDiscount' flag with no prose; not"
     }
   },
   {
@@ -27137,13 +27355,33 @@
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.dcr.virginia.gov/state-parks/pocahontas (Camping: 'Camping is available year-round.'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.dcr.virginia.gov/state-parks/camping-fees (Pocahontas State Park, effective 5/12/2025, read 2026-10-12) + reservevaparks.com PlaceId 25 (site types per campground; sampled prices for 2027-06-15 and 2027-06-19 where its host answered, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://www.dcr.virginia.gov/state-parks/pocahontas ('All campsites have electric and water hookups (no sewer)'; 'All sites accept 20 and 30-amp current; sites 66 through 129 accept 50-amp.'), read 2026-10-20; reservevaparks.com site details: 53 sites list 50-amp",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.dcr.virginia.gov/state-parks/pocahontas (Camping; Laundry: 'A 24-hour facility with three washers and dryers ... is located in the campground by the camp store'; Camp Store hours), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.dcr.virginia.gov/state-parks/pocahontas ('Total sites of each type: E/W, 111; Buddy, 5') + reservevaparks.com search/details per site (Vehicle Length, Pull in Type), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.dcr.virginia.gov/state-parks/pocahontas + reservevaparks.com search/details ('MaxStay': 14 on all 110 sites), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -27165,6 +27403,33 @@
       },
       "checked": "2026",
       "note": "$37 a night for a site with electric and water (Virginia residents); non-residents $43. The same price every night of the week. Plus tax and a $5 transaction fee. DCR's fee table (effective 2025-05-12), read 2026-10-12."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": false
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true,
+      "note": "Centrally located restrooms with hot showers. A 24-hour laundry (three washers and dryers) by the camp store in the campground. Firewood sold in the campground or at the park office."
+    },
+    "sites": {
+      "count": 116,
+      "max_rig_ft": 65,
+      "pull_through": true,
+      "note": "111 electric/water sites and 5 buddy (group) sites, plus yurts and camping cabins. DCR's page says electric/water sites take 'RVs up to 40 feet' and buddy sites up to 50; the booking site's per-site vehicle lengths run 20 to 65 ft (18 sites at 65, one at 80), with 25 pull-throughs, many in the 66-77 loop."
+    },
+    "booking": {
+      "reservable": true,
+      "max_stay_nights": 14,
+      "note": "Reservable online by site; the booking site gives a 14-night maximum on each campsite. Check-in 4 p.m. (site not guaranteed ready before then), check-out 1 p.m."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.dcr.virginia.gov/state-parks/pocahontas https://www.reservevaparks.com/Web/#!park/25 (US eDirect API prod-va-rdr.recreation-management.tylerapp.com: search/grid for facility 123 Pocahontas Campground and search/details for each of its 110 RV sites, read 2026-10-20)",
+      "note": "Confirmed year-round camping (now on the park's own page, was derived from the AWH note) and the $37 electric/water rate on the booking site (fees left as human-checked 2026-10-12). Added 50-amp electric (sites 66-129; others 20/30), water, sewer false, showers/laundry/camp store, 116 sites with pull-throughs up to 65 ft on the booking site, reservable with a 14-night max. Not stated: dump station, flush toilets in so many words, booking window or cutoff for this park, first-come policy. Note: t"
     }
   },
   {
@@ -28997,7 +29262,27 @@
         "checked": "2026-10-12"
       },
       "season": {
-        "source": "https://www.dcr.virginia.gov/state-parks/camping (\"Full-service campgrounds (with bathhouses) are open from the first Friday in March through the first Monday in December with the exception of Douthat, Hungry Mother, Pocahontas and Shenandoah River state parks which have full-service campgrounds open year-round.\"), read 2026-10-20",
+        "source": "https://www.dcr.virginia.gov/state-parks/occoneechee ('Camping is available from the first Friday in March until the first Monday of December'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "reservevaparks.com site details (search/details per unit, read 2026-10-20): all 37 electric/water sites list 'Electricity Hookup (Amp): 30' and 'Water Hookup'; https://www.dcr.virginia.gov/state-parks/occoneechee: 'Iron Bow Campground (Campground B) sites all have electric and water hookups. Atlatl Campground (Campground C) has both sites with electric and water hookups and sites without.'",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.dcr.virginia.gov/state-parks/occoneechee ('Total campsites: 46'; 'Iron Bow Campground (Campground B) sites allow equipment up to 35' long and Atlatl Campground (Campground C) sites allow equipment up to 30' long') + reservevaparks.com grid and site details, read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.dcr.virginia.gov/state-parks/occoneechee ('Both campgrounds have bathhouses with hot showers and flush toilets'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.dcr.virginia.gov/state-parks/occoneechee (Camping) + reservevaparks.com search/details ('MaxStay': 14 on Iron Bow and Atlatl sites), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
       }
@@ -29007,6 +29292,31 @@
       "opens": "03-01",
       "closes": "12-07",
       "note": "First Friday in March through the first Monday in December."
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true
+    },
+    "sites": {
+      "count": 46,
+      "max_rig_ft": 35,
+      "pull_through": true,
+      "note": "46 campsites: Iron Bow (B) 13 electric/water sites up to 35 ft; Atlatl (C) 33 sites up to 30 ft (24 electric/water, 9 without hookups; 12 of them waterview), plus 3 yurts and a camping lodge. One pull-through. A separate equestrian campground has 11 pull-through 50-amp horse sites. DCR's page also says 45 and 48 campsites in other paragraphs."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "note": "Both campgrounds have bathhouses with hot showers and flush toilets. Firewood is sold at the office and near the camp host site (35)."
+    },
+    "booking": {
+      "reservable": true,
+      "max_stay_nights": 14,
+      "note": "'All sites are reserved by a specific site.' The booking site gives a 14-night maximum stay on each campsite. Check-in 4 p.m., check-out 1 p.m.; campers go straight to their site, where the welcome packet is posted."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.dcr.virginia.gov/state-parks/occoneechee https://www.reservevaparks.com/Web/#!park/24 (US eDirect API prod-va-rdr.recreation-management.tylerapp.com: search/grid for facilities 116 Iron Bow and 117 Atlatl, and search/details for each of their 46 RV-capable sites, read 2026-10-20)",
+      "note": "Confirmed season (first Friday in March to first Monday in December, on the park's own page) and the booking site's prices matching the recorded fees ($27 no hookups, $37 electric/water, $32/$43 waterview; fees left as human-checked 2026-10-12). Added 30-amp electric and water at sites, 46 campsites up to 35 ft (Iron Bow 35, Atlatl 30) with one pull-through, showers and flush toilets, reservable by specific site with a 14-night maximum. Not stated: sewer, dump station, booking window or cutoff f"
     }
   },
   {
@@ -29812,7 +30122,53 @@
       "fees": {
         "source": "https://www.floridastateparks.org/Anastasia/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 2 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/anastasia-state-park/experiences-amenities ('All sites have electricity and water') + Reserve Florida site details (107 sites list 30-amp and 13 list 50-amp electric; every site lists a water hookup), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/anastasia-state-park/experiences-amenities (Laundry / Restroom Facilities: 'The campground contains four bathhouses complete with showers, hot water, and washers and dryers'; RV: 'A communal dump station is free for park campers'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/anastasia-state-park/experiences-amenities ('The campground has 139 sites for both RVs and tents'; 'Maximum RV length = 38 feet') + Reserve Florida search/details (Maximum Vehicle Length; all 120 listed sites 'Back In'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/anastasia-state-park/experiences-amenities + Reserve Florida search/details ('MaxStay': 14 on all 120 sites), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "dump": true,
+      "note": "Four bathhouses in the campground with hot showers and washers and dryers. A communal dump station, free for park campers. Food and a beach shop at the Island Beach Shop and Grill at the end of the main park drive."
+    },
+    "sites": {
+      "count": 139,
+      "max_rig_ft": 38,
+      "pull_through": false,
+      "note": "139 sites for RVs and tents in seven loops in the maritime hammock (Reserve Florida lists 120 of them online, 84 'RV or Tent' and 36 tent-only). 'Maximum RV length = 38 feet'; the booking site's longest site lists 38 ft and every site is back-in. Some sites are paved."
+    },
+    "booking": {
+      "reservable": true,
+      "max_stay_nights": 14,
+      "note": "Reservations on the Florida State Parks reservations website or 800-326-3521. The booking site gives a 14-night maximum on every campsite."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/anastasia-state-park/experiences-amenities (403 to plain HTTP; read in the shared headless browser 2026-10-20) https://www.floridastateparks.org/parks-and-trails/anastasia-state-park (headless browser, 2026-10-20) https://reserve.floridastateparks.org/Web/#!park/2 (US eDirect API floridardr.usedirect.com/FloridaRDR/rdr: search/place for PlaceId 2, search/grid for loops 4-10, search/details for each of the 120 web-listed sites, read 2026-10-20)",
+      "note": "Confirmed the $28 campsite rate on Reserve Florida for every loop (fees left as human-checked 2026-10-12, $35 with the $7 RV utility fee). Added 50-amp electric (most sites 30) and water at all sites, four bathhouses with showers and laundry, free dump station, 139 sites up to 38 ft, all back-in, reservable with a 14-night max. Not stated: sewer, season, booking window or same-day rule for this park, first-come policy. The park's pages refuse plain HTTP (403); read once each in the locked headle"
     }
   },
   {
@@ -30356,6 +30712,26 @@
         "source": "https://dnr.maryland.gov/publiclands/Pages/western/gambrill.aspx, read 2026-10-20 + https://dnr.maryland.gov/publiclands/Pages/oc.aspx ('Camping Seasons and Service Charges For Maryland State Parks and Forests'), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "parkreservations.maryland.gov site details for sites 012, 013, 020 and 022 ('Electrical Service (amp): 30'), read 2026-10-20; DNR: 'six sites with electrical hookup'",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://dnr.maryland.gov/publiclands/Pages/western/gambrill.aspx ('A dump station is available for sewage and potable water. A bathhouse is located at the center of the campground, with hot showers and flush-toilets.'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://dnr.maryland.gov/publiclands/Pages/western/gambrill.aspx (Rock Run Area Campground) + https://parkreservations.maryland.gov/camping/gambrill-state-park/r/campgroundDetails.do?contractCode=MD&parkId=380110 (Booking Window), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://parkreservations.maryland.gov/camping/gambrill-state-park/r/campgroundDetails.do?contractCode=MD&parkId=380110 (site type counts) + each campsiteDetails page (Max Vehicle Length, Driveway Entry), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "season": {
@@ -30363,6 +30739,34 @@
       "opens": "04-03",
       "closes": "10-25",
       "note": "First weekend in April to the last weekend in October (2026: April 3 to October 25), so the edges move a few days each year."
+    },
+    "hookups": {
+      "electric": 30
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "note": "A bathhouse at the center of the campground with hot showers and flush toilets; check-in and permits at the bathhouse, which also sells firewood ($5). A dump station with potable water."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 365,
+      "fcfs": "never",
+      "note": "DNR: 'Reservations are now required through the entire season.' The booking page: campsites 'can be made for today and can be made up to 365 Day(s) in advance.'"
+    },
+    "sites": {
+      "count": 23,
+      "max_rig_ft": 30,
+      "pull_through": true,
+      "note": "The booking site lists 23 campsites: 4 electric (vehicle length 30 ft) and 19 non-electric, of which 12 take vehicles up to 20 ft and 7 are tent-only; one 20-ft site is pull-through. Plus 4 mini cabins. DNR's page says 13 basic, nine tent-only and six electric sites. Only the electric sites fit a 23-ft rig."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://dnr.maryland.gov/publiclands/Pages/western/gambrill.aspx https://parkreservations.maryland.gov/camping/gambrill-state-park/r/campgroundDetails.do?contractCode=MD&parkId=380110 https://parkreservations.maryland.gov/campsiteDetails.do?contractCode=MD&parkId=380110 (all 31 site detail pages, read 2026-10-20)",
+      "note": "Confirmed season (first weekend in April to last weekend in October; booking site 'Open through Sat Oct 24 2026'), reservable on ReserveAmerica with a 365-day window, fees left as human-checked 2026-10-12. Added 30-amp electric, showers/flush toilets/dump/water, reservations required all season (fcfs never, over the inherited 'always'), 23 sites. Only the 4 electric sites (30 ft) fit EKKO; the other RV sites cap at 20 ft. Not stated: water/sewer at sites, minimum stay for this park, same-day cut"
     }
   },
   {
@@ -30616,10 +31020,54 @@
         "source": "https://dnr.maryland.gov/publiclands/Pages/western/cunningham.aspx, read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "parkreservations.maryland.gov site details for Manor sites M006, M009, M010, M018 ('Electrical Service (amp): 30'), read 2026-10-20; DNR: Manor Area '20 basic sites, 7 electric sites'",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://dnr.maryland.gov/publiclands/Pages/western/cunningham.aspx (Manor Area Campground: 'Centrally located bathhouse with flushing toilets and hot showers (only available April-October)'; 'Free access to the William Houck Area dump station'; During Winter), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://dnr.maryland.gov/publiclands/Pages/western/cunningham.aspx + https://parkreservations.maryland.gov/camping/cunningham-falls-state-park/r/campgroundDetails.do?contractCode=MD&parkId=380105 (Booking Window: 'There are 7/20 site(s) in this category with different booking windows' listing M001-M031), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://dnr.maryland.gov/publiclands/Pages/western/cunningham.aspx ('20 basic sites, 7 electric sites, no cabins') + parkreservations.maryland.gov campsiteDetails for M001-M031 (Max Vehicle Length, Driveway Entry), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "season": {
       "year_round": true
+    },
+    "hookups": {
+      "electric": 30
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "note": "The Manor bathhouse (flush toilets, hot showers) is open only from the beginning of April to the last weekend in October; in winter only portable restrooms. Manor campers have free use of the William Houck Area dump station, April-October. Firewood for sale in season (exact cash)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "note": "DNR: 'All Manor Area Campground reservations should be made using the park reservation website. Reservations should be made online in advance so that you can receive important alerts and be granted access into the campground ... Those without reservations will not be guaranteed access to the campground. Without a reservation, access will not be granted when park entrance gates are closed.' Phone reservations Monday-Friday 9-5. The booking site gives the Manor sites their own booking window, which it does not print."
+    },
+    "sites": {
+      "count": 27,
+      "max_rig_ft": 30,
+      "pull_through": true,
+      "note": "Manor Area: 20 basic sites (vehicle length 30 ft) and 7 electric sites (28 ft), no cabins; site pads list 24 x 24 ft. M009 is pull-through."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://dnr.maryland.gov/publiclands/Pages/western/cunningham.aspx https://parkreservations.maryland.gov/camping/cunningham-falls-state-park/r/campgroundDetails.do?contractCode=MD&parkId=380105 https://parkreservations.maryland.gov/campsiteDetails.do?contractCode=MD&parkId=380105 (site detail pages for the 27 Manor Camping Area sites, read 2026-10-20)",
+      "note": "Confirmed year-round Manor campground and fees as recorded (human-checked 2026-10-12). Added 30-amp electric, seasonal bathhouse with showers and flush toilets (April-October; portable toilets in winter), dump use at the Houck Area (not recorded as on-site), reservations through ReserveAmerica, 27 sites up to 30 ft with one pull-through. Not stated: water/sewer at sites, the Manor sites' booking window, minimum stay for this park, a clear first-come rule (walk-ups are 'not guaranteed access')."
     }
   },
   {
@@ -31247,23 +31695,93 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "water": false
+      "water": false,
+      "electric": 0,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232433 (notice: 'There are no RV hook-ups but there is a dump station with potable water available')",
+        "checked": "2026-10-20",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232433/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232433 (fee description; notice 'There is a $30 fee per vehicle to enter the park. The pass issued is valid for one week') + /rates (2026 Peak Season Apr 29 - Nov 1: STANDARD NONELECTRIC 30)",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232433 ('$15.00 per night/per site with an Access (disability/golden age) or Senior Pass')",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232433 (Facilities: 'flush toilets and water and dump stations ... Pay showers are nearby at the campstore') + https://www.nps.gov/shen/planyourvisit/hours.htm (Loft Mountain Campstore, mile 79.5)",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/shen/planyourvisit/hours.htm (Campgrounds table: Loft Mountain 2026 opening April 29, closing November 1; last updated 2026-09-22)",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/shen/planyourvisit/campground-reservations.htm + https://www.nps.gov/shen/planyourvisit/hours.htm ('Campsites by reservation and first-come, first-served') + rec.gov walk-up notice",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 232433 (fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/232433 description",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "entrance": {
+        "resident": 30,
+        "nonresident": 30,
+        "per": "vehicle_stay"
+      },
+      "checked": "2026",
+      "note": "$30 a night per site (group sites $75), plus recreation.gov's administrative fee when reserved. $15 a night with a Senior or Access pass. Shenandoah charges $30 per vehicle to enter, valid one week."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "showers": true,
+      "camp_store": true,
+      "note": "Pay showers at the Loft Mountain Campstore (2026: open April 29 - November 1; food, gifts, camping supplies). Firewood may not be on sale after 5 p.m."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-29",
+      "closes": "11-01",
+      "note": "2026 dates (April 29 to November 1) from NPS's campground table; dates are set each year."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "window_opens_days": 180,
+      "note": "Campsites by reservation and first-come, first-served. Reservable sites release in waves: 50% six months before arrival, 25% two weeks before, the remaining 25% four days before. Walk-up sites are claimed in person at the ranger station and typically sell out on weekends ('seldom any available by Saturday'); text SHENCAMP to 888777 for availability alerts."
+    },
+    "sites": {
+      "count": 202,
+      "max_rig_ft": 55,
+      "pull_through": true,
+      "note": "202 sites in the recreation.gov catalog (155 standard, 44 tent-only, 3 group), 145 reservable and 57 walk-up, plus 11 management sites; the description says 207. Most standard sites are pull-throughs listing 30-40 ft; the longest lists 55."
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232433 https://www.recreation.gov/api/camps/campgrounds/232433/rates https://www.nps.gov/shen/planyourvisit/hours.htm https://www.nps.gov/shen/planyourvisit/campground-reservations.htm RIDB campsite catalog for facility 232433 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $30 base and water false. Added no hookups (electric 0, sewer false), Senior/Access $15, $30/week park entrance, 2026 season Apr 29-Nov 1, reservation plus first-come (some_sites) with the 6-month/2-week/4-day release waves, flush toilets/water/dump/pay showers/campstore, 202 sites up to 55 ft with pull-throughs. Not stated in prose: max stay (rec.gov rule field says 30 nights a year, not written), laundry."
     }
   },
   {
@@ -32069,6 +32587,26 @@
         "source": "https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-parks/find-a-park/pymatuning-state-park/stay, read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "ReserveAmerica site details for parkId 880226, read 2026-10-20: of 495 bookable campsites, 290 list 50-amp and 75 list 30-amp electric, 159 list a water hookup and 138 a sewer hookup (Tuttle mostly full-hookup, some in Jamestown); DCNR stay page: 'Some sites have full service hook up, which includes sewer, water, and electricity'",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://pennsylvaniastateparks.reserveamerica.com/camping/pymatuning-state-park/r/campgroundDetails.do?contractCode=PA&parkId=880226 (site type counts) + every campsiteDetails page (Max Vehicle Length, Driveway Entry), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-parks/find-a-park/pymatuning-state-park/stay (Camping, and each campground's section) + ReserveAmerica site details ('Distance to Drinking Water: Less than 300 feet'), read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://pennsylvaniastateparks.reserveamerica.com/camping/pymatuning-state-park/r/campgroundDetails.do?contractCode=PA&parkId=880226 (Booking Window) + https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-parks/find-a-park/pymatuning-state-park/stay, read 2026-10-20",
+        "checked": "2026-10-20",
+        "method": "manual"
       }
     },
     "season": {
@@ -32076,6 +32614,38 @@
       "opens": "04-15",
       "closes": "10-15",
       "note": "Approximate: DCNR says mid-April through mid-October. All three camping areas."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 495,
+      "max_rig_ft": 60,
+      "pull_through": true,
+      "note": "495 bookable campsites across three campgrounds: Jamestown 308, Tuttle 107, Linesville 80 (137 full-hookup, 227 modern electric, 130 modern non-electric, one 3-unit Great Gathering site), plus 25 modern cabins, group tenting and glamping. Listed max vehicle lengths run 15 to 60 ft, most 30-45; 13 sites are pull-through."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "laundry": true,
+      "camp_store": true,
+      "note": "All three campgrounds have showers, flush toilets and a sanitary dump station. The camp store and laundry (washers and dryers) are a concession at Jamestown Campground, generally open Memorial Day through Labor Day."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 330,
+      "max_stay_nights": 14,
+      "note": "Pymatuning's booking page: campsites (full-hookup, modern electric, modern non-electric) 'can be made for today and can be made up to 11 Month(s) in advance.' DCNR's park page: 'The maximum stay in all camping areas is 14 days during the summer season and 21 days during the off-season.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-20",
+      "sources": "https://www.pa.gov/agencies/dcnr/recreation/where-to-go/state-parks/find-a-park/pymatuning-state-park/stay https://pennsylvaniastateparks.reserveamerica.com/camping/pymatuning-state-park/r/campgroundDetails.do?contractCode=PA&parkId=880226 https://pennsylvaniastateparks.reserveamerica.com/campsiteDetails.do?contractCode=PA&parkId=880226 (all 541 site detail pages, read 2026-10-20)",
+      "note": "Confirmed season (mid-April to mid-October, all three campgrounds), reservable on ReserveAmerica with the 11-month window and the 14-night summer maximum. Added 50-amp electric with water and sewer at some sites, 495 campsites up to 60 ft with 13 pull-throughs, showers/flush toilets/dump/drinking water, Jamestown camp store and laundry. Fees left as recorded (human-checked 2026-10-12; park pages give no prices). Not stated for this park: same-day cutoff time, minimum stay, first-come policy. RA'"
     }
   },
   {
