@@ -43,7 +43,14 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
      never park hours or "the park is open year-round".
    - `hookups` (highest amp at a site, snapped down to 15/20/30/50; water/sewer AT the site),
      `sites` (count, max_rig_ft, pull_through), `facilities`.
-   - `status`: a temporary closure (with `reopens` as published).
+   - `status`: a temporary closure (with `reopens` as published). When two official pages
+     give different reopening dates, record both in `reopens` and `note` rather than
+     picking one (Rocky Gap: DNR says 2028, ReserveAmerica 2029).
+   - **recreation.gov rule fields and rate tables** (lessons from the pilot): a rate
+     season's date range is NOT a campground season (seasons come from a statement, or from
+     `recgov_calendar.py`); a rule rec.gov marks `soft` is not a rule, so it goes in
+     `booking.note`, never in `min_stay`/`max_stay_nights`; and a catalog length that is
+     plainly a typo (140 ft) is left out of `max_rig_ft`, not believed.
    - `discounts`: only what the page states.
 3. **Write only what a page says.** Never fill a field with a guess, a typical value or a
    placeholder. A page that says nothing about a field leaves it alone.

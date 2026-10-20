@@ -2,7 +2,7 @@
 """Schema phase 7: which campgrounds to verify next, and the batch files the verifier reads.
 
     python3 -I audit/verify/queue.py [--limit N] [--state XX] [--report]
-    python3 -I audit/verify/queue.py --batch NAME --limit N   # write batches/NAME.json
+    python3 -I audit/verify/queue.py --batch NAME --limit N [--offset K]   # write batches/NAME.json
 
 Order (AWH 2026-10-20: "popups and stays count", then work through everything, states most
 heavily visited first):
@@ -91,6 +91,8 @@ def dossier(e, reg):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=20)
+    ap.add_argument("--offset", type=int, default=0,
+                    help="skip this many from the top, so parallel batches don't overlap")
     ap.add_argument("--state")
     ap.add_argument("--batch")
     ap.add_argument("--report", action="store_true")
@@ -104,7 +106,7 @@ if __name__ == "__main__":
         print(f"verified {done}; queued {len(q)}:", dict(Counter(t for t, _ in q)))
         print("by state (top 15):", Counter(e["state"] for _, e in q).most_common(15))
         sys.exit()
-    q = q[:a.limit]
+    q = q[a.offset:a.offset + a.limit]
     if a.batch:
         path = os.path.join(HERE, "batches", a.batch + ".json")
         json.dump([dossier(e, reg) for _, e in q], open(path, "w", encoding="utf-8"),

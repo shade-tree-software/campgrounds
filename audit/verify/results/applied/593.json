@@ -1,0 +1,80 @@
+{
+ "id": 593,
+ "checked": "2026-10-20",
+ "sources": [
+  "https://www.recreation.gov/api/camps/campgrounds/233626",
+  "https://www.recreation.gov/api/camps/campgrounds/233626/rates",
+  "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233626&size=1000"
+ ],
+ "groups": {
+  "fees": {
+   "values": {
+    "nightly_low": 35,
+    "nightly_high": 46,
+    "currency": "USD",
+    "checked": "2026",
+    "note": "Bookable RV sites are all electric: $35 standard, $40 water view, $46 waterfront (2026 and 2027 seasons); tent-only $28, group camp $200. The 8 'unimproved' $30 sites are not bookable. 50% off with a Senior or Access pass, presented at check-in."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233626/rates (Peak Season 2026-04-03 to 2026-10-25 and 2027-04-02 to 2027-10-24) + per-site price_range from https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233626",
+   "method": "manual"
+  },
+  "discounts": {
+   "values": {
+    "interagency_senior_access": true
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233626 (notice CAMPING DISCOUNTS: ATB Senior and Access passes give a 50% camping fee discount for the primary occupant's site; Annual, Military and other ATB passes do not)",
+   "method": "manual"
+  },
+  "hookups": {
+   "values": {
+    "electric": 50,
+    "water": false,
+    "sewer": false
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233626 (description: 'nearly all offer electric hookups', 'no direct hose hookups at campsites'; notice: grey water 'must be disposed of at the Seven Points Dump Station') + campsite catalog (170 bookable sites list 50-amp electric)",
+   "method": "manual"
+  },
+  "facilities": {
+   "values": {
+    "showers": true,
+    "flush_toilets": true,
+    "potable_water": true,
+    "dump": true,
+    "laundry": true,
+    "note": "Most loops have flush restrooms with hot showers; Bay and Valley loop campers use the showers at Seven Points Beach. Water hydrants in the loops are for filling jugs only (no hoses). Groceries, bait and gas at Seven Points Bait & Grocery, about a mile up the road."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233626 (description, notices WATER FILL-UP & DISPOSAL, amenities list incl. Laundry Facilities)",
+   "method": "manual"
+  },
+  "booking": {
+   "values": {
+    "reservable": true,
+    "platform": "recreation.gov",
+    "fcfs": "never",
+    "max_stay_nights": 14,
+    "min_stay": [
+     {
+      "nights": 3,
+      "applies": "holiday"
+     }
+    ],
+    "note": "All sites by advance reservation; 'There are NO first come first serve walk in sites.' Stay limit 14 days in any 30. recreation.gov also lists a 2-night weekend minimum marked 'soft' (not always enforced), so it is not recorded as a rule; the 3-night holiday minimum is."
+   },
+   "source": "https://www.recreation.gov/api/camps/campgrounds/233626 (fee description; notice STAY LIMITS; facility_rules minWeekendStay 2 'soft', minHolidayWeekendStay 3, maxStay 14 per rolling 30 days)",
+   "method": "manual"
+  },
+  "sites": {
+   "values": {
+    "count": 267,
+    "pull_through": true,
+    "note": "267 sites in the recreation.gov catalog across six loops (the campground says 'over 260'), 11 of them not bookable online; 3 pull-throughs. Most RV sites list 25-60 ft."
+   },
+   "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233626 (267 campsites) + campground description",
+   "method": "manual"
+  }
+ },
+ "summary": "Confirmed 50-amp electric, $35 base, Senior/Access 50% discount, reservation-only. Changed fees nightly_high 40 -> 46 (waterfront sites $46; water view $40). Added water/sewer false, facilities, fcfs never, 14-night max, 3-night holiday minimum (the 2-night weekend one is 'soft', note only), site count and pull-throughs. USACE Raystown page refused automated fetch (403), so nothing from it. Not stated: booking window, a credible max rig length. Season not written: rec.gov's only source is its rate-season dates, which are not a statement about the campground.",
+ "flags": [
+  "sites.max_rig_ft left unset: the rec.gov catalog's top Max Vehicle Length is 140 ft (site 228), then 80 and 75, which look like data-entry errors; most RV sites list 25-60 ft, so EKKO fits regardless."
+ ]
+}
