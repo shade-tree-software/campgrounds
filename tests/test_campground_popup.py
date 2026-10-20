@@ -192,7 +192,7 @@ class TestMapPageCarriesTheVocabulary(unittest.TestCase):
 
 
 class TestPopupViewsAreLogged(unittest.TestCase):
-    """Phase 7 ranks its verification queue by what contributors open (doc §7)."""
+    """Phase 7 ranks its verification queue by what the family opens (doc §7)."""
 
     def setUp(self):
         import tempfile
@@ -208,14 +208,14 @@ class TestPopupViewsAreLogged(unittest.TestCase):
         with open(self.tmp, encoding="utf-8") as fh:
             return [json.loads(line) for line in fh if line.strip()]
 
-    def test_a_contributor_opening_a_popup_is_recorded(self):
+    def test_opening_a_popup_is_recorded(self):
         _client().get(f"/api/campgrounds/{self.cg}/popup")
         rows = self._lines()
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["id"], self.cg)
         self.assertTrue(rows[0]["ts"].endswith("+00:00"))
 
-    def test_a_reader_who_is_not_planning_is_not(self):
+    def test_a_family_reader_who_does_not_plan_trips_counts_too(self):
         client = A.app.test_client()
         with open(os.path.join(os.path.dirname(os.path.dirname(
                 os.path.abspath(__file__))), "users.json")) as fh:
@@ -229,7 +229,7 @@ class TestPopupViewsAreLogged(unittest.TestCase):
             sess["_user_id"] = reader
             sess["_fresh"] = True
         self.assertEqual(client.get(f"/api/campgrounds/{self.cg}/popup").status_code, 200)
-        self.assertEqual(self._lines(), [])
+        self.assertEqual([r["who"] for r in self._lines()], [reader])
 
     def test_a_missing_campground_is_not(self):
         _client().get("/api/campgrounds/999999999/popup")

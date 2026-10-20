@@ -8,7 +8,7 @@ Order (AWH 2026-10-20: "popups and stays count", then work through everything, s
 heavily visited first):
   1. campgrounds stayed at that carry an inherited value   (the 67)
   2. the other campgrounds stayed at
-  3. campgrounds a contributor opened on the map in the last 60 days
+  3. campgrounds anyone in the family opened on the map in the last 60 days
      (trip_data/campground_views.jsonl), most-opened first
   4. everything else, by state in order of stays there, then RV Life stars, then name
 An entry whose verify_scan is present is done and drops out; results already on disk in

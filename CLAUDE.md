@@ -16,7 +16,7 @@ Net effect: clone/pull + start Claude wires memory automatically; new memories C
 
 - **Backend:** Flask (Python) on port 5001, Flask-Login for auth, Pillow for EXIF
 - **Frontend:** Server-side Jinja2 templates, Leaflet.js maps, vanilla JS (no framework)
-- **Storage:** JSON files (no database) — `trip_data/trips.json`, `trip_data/captions.json`, `trip_data/photo_order.json`, `trip_data/photo_uploaders.json`, `trip_data/photo_favorites.json`, `trip_data/photo_people.json`, `trip_data/share_tokens.json`, `trip_data/access_log.jsonl`, `trip_data/campground_views.jsonl` (one line per campground-map popup a contributor opens — the use signal for schema phase 7)
+- **Storage:** JSON files (no database) — `trip_data/trips.json`, `trip_data/captions.json`, `trip_data/photo_order.json`, `trip_data/photo_uploaders.json`, `trip_data/photo_favorites.json`, `trip_data/photo_people.json`, `trip_data/share_tokens.json`, `trip_data/access_log.jsonl`, `trip_data/campground_views.jsonl` (one line per campground-map popup any logged-in viewer opens — the use signal for schema phase 7)
 - **Photos:** Saved to `photo_uploads/{trip_id}/{stay_idx}/` (campspots) and `photo_uploads/{trip_id}/events/{event_idx}/` (events) — a **sibling of `static/`, deliberately not inside it**. Served only through the login-gated `/photo/` and `/thumb/` routes (see "Photo System").
 - **External APIs:** Open-Meteo (forecast + elevation), Nominatim (geocoding), Overpass (POI lookup), OSRM (driving routes, browser-side), RIDB + recreation.gov (federal availability), Textbelt (SMS)
 - **Virtualenv:** `ekko_trips_venv/` (activate before running)

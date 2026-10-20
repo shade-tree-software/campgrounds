@@ -370,8 +370,8 @@ ACCESS_LOG_FILE = os.path.join(TRIP_DATA_DIR, "access_log.jsonl")
 # Entries older than this are dropped by _prune_access_log (same spirit as the
 # 7-day photo trash purge: bounded growth without manual maintenance).
 ACCESS_LOG_RETENTION_DAYS = 90
-# Which campgrounds the people who plan trips actually look at: one JSONL line
-# per campground-map popup opened by a contributor (`_log_campground_view`).
+# Which campgrounds the family actually looks at: one JSONL line per
+# campground-map popup opened by any logged-in viewer (`_log_campground_view`).
 # The access log can't answer it — it records page views, and the popup is an
 # API fetch. It is the use signal phase 7 of docs/campground-schema.md ranks its
 # verification queue by (with stays): a campground being weighed for a trip is
@@ -5079,15 +5079,18 @@ def campgrounds_map():
 def _log_campground_view(cg_id):
     """Append one popup view to CAMPGROUND_VIEWS_FILE. Never raises.
 
-    Contributors only (`_is_contributor`): a relative browsing the map isn't
-    planning a trip, and their clicks would rank the queue by curiosity. The
-    client caches a popup's detail for the life of the page, so this counts at
-    most one view per campground per page load."""
+    Every logged-in viewer counts, share-link guests included (AWH 2026-10-20:
+    "you can count popups from other family members too" — the app is
+    family-only, so a relative's interest in a campground is a real signal).
+    `kind`/`who` come from `_access_identity`, so a share guest is recorded by
+    its label, never its token. The client caches a popup's detail for the life
+    of the page, so this counts at most one view per campground per page load."""
     try:
-        if not _is_contributor():
+        kind, who = _access_identity()
+        if kind == "anon":
             return
         rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-               "id": cg_id, "who": getattr(current_user, "id", "")}
+               "id": cg_id, "kind": kind, "who": who}
         with open(CAMPGROUND_VIEWS_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
     except Exception:

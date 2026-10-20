@@ -13,6 +13,16 @@ as that entry is done**, so stopping costs at most the entry in flight. `apply.p
 the results and writes them to campgrounds.json (dry run unless `--apply`); commit after each
 batch.
 
+**Parallel verifiers, one browser** (AWH 2026-10-20: 4-6 verifiers at once, still one
+headless browser at a time). Plain HTTP (curl, WebFetch, the rec.gov API) needs no
+coordination. Anything that starts a headless browser (the `audit/private_gap_browser/`
+driver, gm.py, rates.py, koa.py) must run under the shared lock, so verifiers queue for it
+instead of each launching Chrome:
+
+    flock /tmp/ekko-headless-browser.lock <command>
+
+Keep the locked command short (one page or one batched call) so the others are not starved.
+
 ## What to check, per entry
 
 The dossier holds `entry` (the stored record), `resolved` (each group's effective values,
