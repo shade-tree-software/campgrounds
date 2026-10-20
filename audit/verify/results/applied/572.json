@@ -1,0 +1,65 @@
+{
+  "id": 572,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://northpointervresort.com/",
+    "https://northpointervresort.com/rv-site-rates/",
+    "https://northpointervresort.com/amenities/",
+    "https://northpointervresort.com/park-policies/",
+    "https://www.campspot.com/book/northpointervresort (availability read 2026-10-13, audit/price_research/family_stays_campspot_2026-10-13.jsonl)"
+  ],
+  "groups": {
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://northpointervresort.com/ ('Open Year-Round'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "campspot",
+        "url": "https://www.campspot.com/book/northpointervresort",
+        "window_opens_days": 180,
+        "fcfs": "always",
+        "note": "Online on Campspot or by phone; 'No Reservations Required (subject to availability)', with after-hours check-in. Paid in full when booked; no cancellations or refunds, camp credit only. Check-in after 1 pm, check-out 11 am. Weekly and monthly rates too; Campspot refused dates more than 180 days out."
+      },
+      "source": "https://northpointervresort.com/ ('No Reservations Required (subject to availability)', 'After-Hours Check-in Available', check-in/out) + https://northpointervresort.com/park-policies/ ('No Cancellation/No refund. Camp Credit only') + https://northpointervresort.com/rv-site-rates/ ('All reservations are paid in full at the time the reservation is made'), read 2026-10-20; Campspot 'Cannot book more than 180 days in advance', read 2026-10-13",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://northpointervresort.com/amenities/ ('Full hookup with water, electric, and sewer', 'Economy Water + Electric only sites', '50/30 Amp Service') + rv-site-rates (Premium XL 'FHU 50A'), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "max_rig_ft": 100,
+        "pull_through": true,
+        "note": "Pull-through sites 55-100 ft (economy water-and-electric 60-90 ft, economy full-hookup 55-80 and 65 ft, premium 70-90 ft, Premium XL 100 ft) plus back-in sites, some of them in the long-term section. No tents."
+      },
+      "source": "https://northpointervresort.com/rv-site-rates/ (site lengths per type) + https://northpointervresort.com/amenities/ ('Big-rig friendly sites up to 100' long') + park-policies ('No tents permitted'), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "laundry": true,
+        "dump": true,
+        "camp_store": true,
+        "note": "Two bath houses with showers (private bath suites), two laundries, dump station, RV wash, propane filling, camp store, saltwater pool May - October, catch-and-release pond."
+      },
+      "source": "https://northpointervresort.com/amenities/ ('Dump station', 'Propane Filling', '2 Laundry Facilities', '2 Bath Houses with Showers', 'Camp Store', 'Pool open May - October'), read 2026-10-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"military": true, "note": "10% off for active military and veterans on stays under a month."},
+      "source": "https://northpointervresort.com/rv-site-rates/ ('We offer a military discount of 10% to active military and veterans. Applicable to reservations under 1 month'), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Operator site found (northpointervresort.com). Confirmed military 10% (was derived). Added open year-round, Campspot + walk-ups, 180-day window, no-refund policy, 30/50-amp full hookups, pull-throughs to 100 ft, showers/laundry/dump/store. Fees left as recorded ($72-90): the operator's rate table lists the same $72/$77/$85/$90 tiers plus a $75 back-to-back full-hookup pull-through, but says 'Rates include tax' where Campspot's figures were before tax.",
+  "flags": [
+    "Website field lacks the operator's own site: https://northpointervresort.com/ (live, rates, phone 919-965-5923; it links to the Campspot page already stored). Worth adding to `website`.",
+    "Fees tax basis: the operator's rate table says 'Rates include tax' for the $72-90 tiers, while the stored fees note calls the Campspot figures 'site rate before tax'. One of them is wrong about tax; the stored base may be ~7-13% high if the page is right."
+  ]
+}

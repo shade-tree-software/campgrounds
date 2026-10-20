@@ -1,0 +1,88 @@
+{
+  "id": 1054,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/232003",
+    "https://www.recreation.gov/api/camps/campgrounds/232003/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232003&size=1000"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $20 without hookups, $25 with electric; double sites $40 / $50. Day use $5 a vehicle. The same in recreation.gov's 2026, 2027 and 2028 rate tables. Senior and Access pass holders get 50% off their own single site."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area (Fee Site and Info: 'Single Site with no hook-ups: $20 per night Single Site with electric hook-up: $25 per night') + https://www.recreation.gov/api/camps/campgrounds/232003/rates (StandardNonelectric $20, StandardElectric $25, seasons 2026-2028), read 2026-10-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites only'), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area ('There are no water or sewer hookups for RVs, but there is a dump station') + recreation.gov campsite search for 232003 (bookable family sites 7, 27, 29, 31 and 35 list 50-amp electric; others 30), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Drinking water and flush toilets are seasonal (peak season)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232003 (Facilities: 'flush and vault toilets, a pressurized water system, hot showers, a dump station and electric hookups'; amenities 'Drinking Water (peak season)', 'Flush Toilets (Seasonal)', 'Water Spigot'), read 2026-10-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "10-28"
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area (Seasons of Use '5/1 - 10/28'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14,
+        "note": "Reservations on recreation.gov or 1-877-444-6777, up to 6 months ahead. recreation.gov closes booking 4 days before arrival; the Forest Service page says at least 3 days ahead. recreation.gov's 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 nights in any rolling 30. Check-in 2 p.m., check-out noon; fees paid within 30 minutes of arrival."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area ('Reservations can be made up to 6 months in advance of visit. Reservations must be made at least 3 days in advance of visit.') + https://www.recreation.gov/api/camps/campgrounds/232003 (facility_rules maxStay 14 per rolling 30 days, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; check-in notice), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 61,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "Forest Service: 58 single, 2 double and 1 group site; recreation.gov lists 57 family sites (39 electric, 18 nonelectric) plus the group site. Max vehicle lengths mostly 45 ft in the electric loop and 30 ft in the nonelectric BUCK loop; one pull-through (site 7, 40 ft). Watch low branches and power lines at the parking aprons."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/buckaloons-recreation-area (No. of Sites: Single 58, Double 2, Group 1) + recreation.gov campsite search for 232003 (Max Vehicle Length, Driveway Entry) + notice on low branches, read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $20-25, 50-amp electric, showers, dump, reservable on rec.gov with 6-month window, Senior/Access 50% (named on the USFS page). Added no water/sewer hookups, flush+vault toilets and seasonal water, season May 1 - Oct 28 (USFS 'Seasons of Use'), 4-day cutoff, 2-night weekend / 3-night holiday minimums, 14-night max, 61 sites up to 45 ft with one pull-through. USFS says 3-day cutoff vs rec.gov 4; both in the note.",
+  "flags": []
+}
