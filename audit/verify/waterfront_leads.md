@@ -48,3 +48,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1184 Stony Mountain Family Campground (PA)** — stored "lakefront" (possible DOWNGRADE): the
   operator calls site 64 "our only water and electric Tent site on the Lake"; Campspot sells no
   lake RV site type.
+- **14277 Fire Pit Campground (PA)** — stored "not waterfront"; operator: "a creek that runs
+  through the heart of it", two fishing ponds.

@@ -27,3 +27,7 @@ me drop and report); each needs the research named before a verdict.
   undated (Last-Modified 2025-10-08). Presence needs a Google listing with phone + 25+ reviews.
 - **13113 Sunvalley Campground (PA)** — operator site frozen at 2023 (closure notice "Nov 1 2022 -
   May 1 2024"); no 2024+ rate; stands on RV Life $$. Check Google/phone that it still operates.
+- **14277 Fire Pit Campground (PA)** — "mostly Seasonal Campers with the exception of a few
+  weekend RV/tent sites for visitors". Apply the five-test long-stay rule (1 in 10 nightly?).
+- **14312 James Creek RV Resort (PA)** — $50 base rests only on our own note; RJourney blocks
+  plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.

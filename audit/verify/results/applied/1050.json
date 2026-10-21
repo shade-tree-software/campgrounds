@@ -1,0 +1,73 @@
+{
+  "id": 1050,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/232036",
+    "https://www.recreation.gov/api/camps/campgrounds/232036/rates",
+    "recreation.gov campsite catalog for 232036 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $20 a night, premium site $24 (walk-to premium tent sites also $24); group site $40. The same in recreation.gov's 2025-2028 rate tables."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground (Fee Site and Info: 'Single Site: $20 per night', 'Premium Site: $24 per night') + https://www.recreation.gov/api/camps/campgrounds/232036/rates (Peak Season 2026-05-22 to 2026-09-20: STANDARD NON ELECTRIC $20, Premium Site $24, Premium Site- walk to $24, GROUP STANDARD NONELECTRIC $40), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false, "note": "Every public RV site on recreation.gov is STANDARD NONELECTRIC and no electric rate is charged; the Forest Service page's 'Some sites have electric hookups' is not borne out by the booking catalog (only the unbookable MANAGEMENT host sites are left)."},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground ('There are no water or sewer hookups for RVs') + recreation.gov catalog for 232036 (all 59 bookable RV sites typed STANDARD NONELECTRIC) + /rates (no electric site rate), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 59,
+        "max_rig_ft": 50,
+        "pull_through": false,
+        "note": "Forest Service: 74 family campsites (64 single RV, 10 walk-in only) and 1 group site. recreation.gov lists 59 bookable RV-capable sites, max vehicle lengths 20-50 ft (mostly 30-45; five list none), plus 10 walk-to tent-only sites. Every RV site is back-in."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground (Camping: 'Single RV: 64 sites', 'Walk-in Only: 10 sites') + recreation.gov catalog for 232036 (site types, Max Vehicle Length, Driveway Entry), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground ('Flush toilet(s)', 'Potable water is available at this site', 'Dump Stations : Yes', 'Hot Showers') + https://www.recreation.gov/api/camps/campgrounds/232036 ('Flush toilets, drinking water and a dump station are provided'), read 2026-10-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-22", "closes": "09-24"},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground (Seasons of Use: '5/22 - 9/24'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "min_stay": [
+          {"nights": 2, "applies": "weekend"},
+          {"nights": 3, "applies": "holiday"}
+        ],
+        "max_stay_nights": 14,
+        "note": "74 reservable family campsites on recreation.gov; booking closes 4 days before arrival. recreation.gov's 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 nights in any rolling 30. Check-in 2 pm, check-out noon; after-hours arrivals pay at the self-pay station."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground ('Recreation.gov Reservations') + https://www.recreation.gov/api/camps/campgrounds/232036 ('74 reservable family campsites'; facility_rules maxStay 14 per rolling 30 days, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; check-in notice), read 2026-10-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Senior/Access passes take 50% off single campsites only, for the site the pass holder occupies."},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/dewdrop-campground ('Interagency Senior/Access Recreation Passes provide a 50% discount to Single Campsites only'), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $20-24 (single/premium), no hookups, flush toilets, dump, reservable on rec.gov, Senior/Access 50% (inherited, now stated for this campground). Added showers, drinking water, season May 22 - Sep 24, 59 back-in RV sites to 50 ft, 4-day cutoff, weekend/holiday minimums, 14-night max. Not stated: booking window (left inherited), fcfs.",
+  "flags": [
+    "Entry has no phone; the Forest Service page and recreation.gov give 814-362-4613 (Bradford Ranger District).",
+    "Forest Service page says 'Hookups - Electric: Some sites have electric hookups', but recreation.gov types every bookable site STANDARD NONELECTRIC and has no electric rate; electric 0 kept on the booking catalog."
+  ]
+}
