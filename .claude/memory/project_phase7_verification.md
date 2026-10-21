@@ -17,3 +17,13 @@ per-entry procedure, apply.py validates and writes results/<id>.json, then moves
 results/applied/). Entry-level `verify_scan` record (campground_schema.VERIFY_SCAN) takes an entry
 off the queue even when nothing changed. Verifier writes `method: manual` for the operator/agency
 page. Criteria problems are flags for me to decide (I may drop per the standing rules and report).
+
+**Progress / resume (2026-10-21):** 321 verified (batches p2-1..p3-12 applied). Batch
+`batches/p3-13.json` (12 entries, VA) is queued but NOT run: launch one verifier on it. AWH
+(10-20) cut back to ONE verifier at a time (session limit). Loop per batch: review flags → fix
+result files (e.g. never clear a phase-5 good_sam false on private) → `apply.py --apply <ids>` →
+small python for phones/websites/names from flags (check URL 200 first) → log to
+waterfront_leads.md / criteria_followups.md / asks.md → commit → `queue.py --batch p3-N --limit 12`
+→ launch verifier with the standard prompt (copy the p3-12 prompt from the transcript shape:
+README first, economical, privacy line, racat helper at scratchpad p3-4, rules list).
+Still mine to work: criteria_followups.md and waterfront_leads.md (many PA/VA leads). asks.md: none open.
