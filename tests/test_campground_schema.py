@@ -788,13 +788,17 @@ class TestShippedRegistry(unittest.TestCase):
     def test_secondary_sources_are_stamped_as_reported(self):
         """A row read off a search summary must not look hand-verified.
 
-        Florida's site returns 403 to automated fetches, so its figures come
-        from summaries of the page rather than the page. Without the `reported`
-        method that row is indistinguishable from one nobody bothered to stamp.
+        Michigan's row was read off agency guidance rather than its booking
+        page. Without the `reported` method that row is indistinguishable from
+        one nobody bothered to stamp. (Florida was the original case — a 403 to
+        automated fetches — until phase 7 read its page in a browser and the
+        row became `manual`; that move in the other direction is pinned too.)
         """
+        mi = self.rows["state:MI"]["provenance"]["booking"]
+        self.assertEqual(mi.get("method"), "reported")
         fl = self.rows["state:FL"]["provenance"]["booking"]
-        self.assertEqual(fl.get("method"), "reported")
-        self.assertIn("403", fl["source"])
+        self.assertEqual(fl.get("method"), "manual")
+        self.assertIn("floridastateparks.org", fl["source"])
 
     def test_no_row_claims_a_minimum_stay_it_cannot_waive_correctly(self):
         # Indiana's waiver does NOT cover its holiday rule; North Carolina's
