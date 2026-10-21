@@ -80,3 +80,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   sites at Wickham Park"; entry pond (AWH: "Several sites are on small ponds"). Contrary, downward.
 - **14391 RV Village at Lake Panasoffkee** — operator: "Situated on the southern banks of Lake
   Panasoffkee", "FISHING DOCK/BOAT SLIPS ON SITE"; entry not waterfront.
+- **4740 Ocean Pond (USFS)** — rec.gov: "on the north shore of Ocean Pond", "multiple campsites provide
+  lakeside access"; entry not waterfront.
+- **14383 Pine Lake RV Park** — operator: "along the shimmering waters of Pine Lake"; entry not waterfront.
+- **15421 St. Pete / Madeira Beach KOA** — "Kayak Access" sites through the mangroves, "Along Bayou"
+  sites with bayou views; entry not waterfront.
+- **165 Silver Lake (Withlacoochee SF)** — booking page "On the shore of Silver Lake"; entry lakeview
+  (AWH note supports lakeview).
+- **4728 Panther Pond** (weak) — its one RV site, 016, "Type of View: Lake".

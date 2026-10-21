@@ -129,8 +129,21 @@ me drop and report); each needs the research named before a verdict.
   family campground closed for renovation since 2026-04-03 (youth camp only), no reopening date.
 - **4744 The Glades / 4767 The Hideaway** — dropped, but their water leads stood: Glades "along the
   Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
+- **4836 Otter Springs (local)** — ottersprings.com dead (hosting error; empty on 2026-10-15 too), no
+  county/operator page; open/closed unverifiable online. Call 352-463-0800. Not dropped (a local park;
+  a dead website is not a closure).
+- **4728 Panther Pond** — only 1 of 16 sites takes an RV (016, "RV up to 50ft", soil pad, Wildcow
+  Grade limerock road). 4727/4728: FDACS "Keri Tower Road is closed" since 2024-11-22; whether either
+  camp uses it is unstated.
+- **14383 Pine Lake RV Park** — rules: "NO FEMA Campers, RVs without holding tanks ... School buses,
+  Vans are permitted"; "RVs older than 10 years must be inspected". EKKO is a van-chassis Class C:
+  probably fine (the rule reads as camper vans), unconfirmed. Good Sam derived false -> true (operator).
 
 ## Resolved 2026-10-21
+- **p3-45 drops:** 14388 Sun Retreats Crystal River ($67.50, no gateway), 14389 Sun Retreats Homosassa
+  River ($70, 28-night winter minimum). Kept on gateways: 15420 Orlando SW KOA (WDW 19 km), 15421
+  St. Pete KOA (14 km). 4786 St. Johns River at $50.00. 4740 Ocean Pond base $12 -> $20 (the $12
+  loop is tents/pop-ups/vans only).
 - **p3-44 drops:** 14420 Lettuce Lake ($70, no gateway, 55+ selling units), 14423 Moss Landing ($70,
   55+ manufactured-home community), 4810 Lynch's Landing (dead site, aggregators only). Kept: 4800
   Little Flamingo ($55, Tampa 35 km). 4702 Manatee Springs dump station closed since 2026-01-14

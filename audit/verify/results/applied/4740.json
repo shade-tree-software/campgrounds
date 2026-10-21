@@ -1,0 +1,57 @@
+{
+  "id": 4740,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10352022 (description, notices, facility_rules), read 2026-10-21",
+    "https://www.recreation.gov/api/camps/campgrounds/10352022/rates, read 2026-10-21",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 65 public sites (loop, type, permitted equipment, campsite_rules, notices), read 2026-10-21",
+    "https://www.fs.usda.gov/r08/florida/recreation/ocean-pond-campground, read 2026-10-21"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD", "checked": "2026",
+                 "note": "Water Section $20/night, Electric Section (30/50-amp + water) $30, both 2026 and 2027 rate seasons. The $12 Primitive Section is not the base: its sites carry the rec.gov notice 'Only Tents, Pop-up Campers, Truck Campers, and Camper Vans'. Dump station $5 for non-registered guests, free for campers; cash not accepted (pay on Recreation.gov or its app)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022/rates (Electric Section $30, Water Section $20, Primitive Section $12 per night, seasons 2026-01-01 to 2027-12-31) + https://www.fs.usda.gov/r08/florida/recreation/ocean-pond-campground ('Single Site with water hook-up: $20 per night', 'Single Site with electric and water hook-ups: $30 per night') + rec.gov campsite notices on the Primitive loop, read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022 ('Each campsite in the Electric Section includes a potable water spigot and electric hookup (30- and 50-amp). Each campsite in the Water Section includes a potable water spigot.') + RIDB catalog (every site 'Sewer Hookup: No'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 64, "max_rig_ft": 50, "pull_through": false,
+                 "note": "Recreation.gov says 64 campsites (its catalog lists 65 public sites: 23 Electric, 22 Water, 20 Primitive); the Forest Service page says 67 (19 electric/water, 28 water, 20 primitive). Electric and Water sites are paved spurs; the forest gives them a 50-foot capacity, the rec.gov catalog 60 ft; every site is back-in. Primitive sites: tents, pop-ups, truck campers and camper vans only. Two vehicles per site, five people."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022 ('this campground includes 64 campsites', 'one parking slip (large enough for most RVs)') + rec.gov campsite catalog (Driveway Entry: Back-in on every site) + https://www.fs.usda.gov/r08/florida/recreation/ocean-pond-campground ('Water and electric are paved spurs with a 50-foot capacity'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022 ('Electric and Water Section bath houses include flush toilets and hot showers', 'potable water is available near this section's restrooms', 'RV dump station are available for all campers at no extra charge'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022 (notice: 'Ocean Pond Campground is open 24 hours/day, 365 days/year.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "https://www.fs.usda.gov/r08/florida/recreation/ocean-pond-campground ('Site Open'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14,
+                 "note": "All sites book on Recreation.gov; 54 of the 65 also carry Scan & Pay, so an unreserved site can be taken on arrival and paid in the Recreation.gov app. No more than 14 days in any 30 anywhere on Osceola National Forest. No minimum stay on the site rules."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10352022 ('All sites are available at recreation.gov', 'Payments for First-Come, First-Served SCAN & PAY campsites must be made through the Recreation.gov app', maxStay 14 nights rolling 30 days, 'Camping longer than 14 days within a 30-day period anywhere on Osceola National Forest is PROHIBITED') + campsite_rules (scanAndPay on 54 sites), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USFS campground on the north shore of Ocean Pond near Olustee; boat ramp, picnic pavilion and a swim beach that is for campers only.",
+  "summary": "Hookups, facilities, booking confirmed from rec.gov; base rate changed $12 -> $20 (the $12 Primitive loop is tents/pop-ups/truck campers/camper vans only); added year-round season, open status, max 50 ft (FS) / back-in, 14-night limit, Scan & Pay walk-ups; site count kept at rec.gov's 64 with the FS's 67 noted. Note trimmed of fields it restated.",
+  "flags": [
+    "Missing phone: recreation.gov lists facility_phone 386-752-2577 for Ocean Pond Campground.",
+    "Waterfront re-audit lead (entry: not waterfront): recreation.gov says 'This campground is situated on the north shore of Ocean Pond' and 'multiple campsites provide lakeside access for swimming, boating, and fishing'.",
+    "Website: the first link is the forest's recreation index; the campground's own Forest Service page is https://www.fs.usda.gov/r08/florida/recreation/ocean-pond-campground."
+  ]
+}
