@@ -5299,8 +5299,8 @@
     "waterfront": "riverview",
     "inclusion_evidence": "recreation.gov campground 232007 + USFS Stuart Day Use Area and Campground page: 26 campsites (25 single, 1 double) with electric hookups, paved spurs, dump station, reservable; real drive-in RV campground -> keep",
     "waterfront_evidence": "satellite at 38.9187,-79.7729: open grassy camp loop with parked RVs along Shavers Fork bend, river visible ~30-60m W across open grass but a continuous riparian treeline screens the actual bank -> riverview, not riverfront (note's 'Greenbrier River' is wrong; river is Shavers Fork of the Cheat)",
-    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-recreation-area",
-    "note": "USFS campground in the vicinity of the Greenbrier River but sites are not confirmed to be directly on the river.  RV Life 3.5*/$$ (auto 6/2026). First-come, first-served (no reservations). --Claude",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground\nhttps://www.recreation.gov/camping/campgrounds/232007",
+    "note": "USFS campground on a bend of the Shavers Fork River about 6 miles NE of Elkins, built by the CCC; sites are not confirmed to be directly on the river. recreation.gov warns the recreation area may flood. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -5308,18 +5308,51 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": false,
-      "fcfs": "always"
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 330,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "All 26 campsites are reservable on recreation.gov, up to 11 months ahead and until 4 days before arrival; recreation.gov also notes 'This campground has first-come, first-served sites' (presumably unreserved sites taken on arrival). Weekends 2 nights, holiday weekends 3; 14-day limit; check-out 1 p.m. Concession-run (American Land & Leisure)."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232007 (rules: reservationWindow 11 Months, reservationCutOff 4 days prior to arrival, minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3) + https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (every campsite reservable: true, Site-Specific) + https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground ('Maximum length of stay in campground is 14 days. Check-out time is 1:00 p.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground ('Single Site: $33 per night | Double Site: $58 per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground ('Single Site: $33 per night  Double Site: $58 per night  Group Site: $70 per night (up to 40 people)', last updated June 2, 2026) + https://www.recreation.gov/api/camps/campgrounds/232007/rates (2026 Peak Season: STANDARD ELECTRIC 33, double 58), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (all 26 STANDARD ELECTRIC sites: Electricity Hookup 30) + https://www.recreation.gov/api/camps/campgrounds/232007 ('Each site comes with a campfire ring, tent pad, lantern post and electric hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232007 ('The campground has 26 (25 single, 1 double) camping units with electric hookups ... paved spurs', 'a single loop with long spurs') + https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (Max Vehicle Length 45, Driveway Entry Back-In), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232007 ('Drinking water and accessible flush toilets and showers are provided, with a dump station is on-site', 'two single-unit vault toilets, one double-unit vault toilet, and one six-unit flush restroom with four shower units'; notice 'Entrance gates are locked from 9 p.m. to 7 a.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -5331,8 +5364,32 @@
       "nightly_low": 33,
       "nightly_high": 33,
       "currency": "USD",
-      "note": "Double sites $58."
-    }
+      "note": "Single electric site $33, double $58, group site $70 (up to 40), historic cabin $150. Day use $5/vehicle. Two vehicles per single site; a daily fee for extra vehicles. (A second, older list on the FS page still shows $30/$50/$65.)",
+      "checked": "2026"
+    },
+    "hookups": {
+      "electric": 30
+    },
+    "sites": {
+      "count": 26,
+      "max_rig_ft": 45,
+      "pull_through": false,
+      "note": "26 electric sites (25 single, 1 double) on one loop with long paved back-in spurs, 45 ft on the catalog (site 010 lists 99 ft); plus one non-electric group site and a historic cabin."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "One six-unit flush restroom with four showers, plus vault toilets; dump station on site. Entrance gates locked 9 p.m. to 7 a.m."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground https://www.recreation.gov/api/camps/campgrounds/232007 https://www.recreation.gov/api/camps/campgrounds/232007/rates https://www.recreation.gov/api/search/campsites?fq=asset_id:232007",
+      "note": "recreation.gov facility 232007 found: changed booking reservable false -> true (recreation.gov, 11-month window, 4-day cutoff, 2/3-night weekend/holiday minimums, 14-night max) and cleared the derived fcfs 'always'. Confirmed $33 (2026). Added 30-amp electric at all 26 sites, 45-ft back-in spurs, showers/flush+vault toilets/water/dump. Note corrected (river is the Shavers Fork, not the Greenbrier; reservable) and trimmed. Not stated: a campground season (rate season Apr 17-Oct 12 not used)."
+    },
+    "phone": "304-636-5070"
   },
   {
     "id": 84,
@@ -5340,7 +5397,7 @@
     "location": "38.9315,-79.6807",
     "name": "Bear Heaven Campground",
     "elevation_meters": 1110.0,
-    "note": "High-elevation campground.  Not specifically designed for RVs, but online videos suggest that at least a few of the sites should be able to accommodate a camper van. First-come, first-served (no reservations). --Claude",
+    "note": "High-elevation campground.  Not specifically designed for RVs, but online videos suggest that at least a few of the sites should be able to accommodate a camper van. --Claude",
     "state": "WV",
     "ownership": "federal",
     "waterfront": "not waterfront",
@@ -5350,17 +5407,30 @@
     "phone": "304-478-2000",
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "Fees paid at the campground; check-out 1 p.m. Open 24 hours during the open season."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground ('Maximum length of stay is 14 days', 'Check-out time is 1:00 p.m.', 'Fees are payable at the campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground ('Fee Site and Info | Overnight Use: | Single Site: $5 per night | Camping fees are $5/night for each site. Fees are payable at the campground. | Rental Information | No rental items available. | Getting There | Latitude /')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground ('Single Site: $5 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground ('8 available sites are nestled along rock outcroppings'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground ('Restrooms: Vault Toilet'; 'Potable water is not available at this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -5371,7 +5441,22 @@
     "fees": {
       "nightly_low": 5,
       "nightly_high": 5,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "'Camping fees are $5/night for each site. Fees are payable at the campground.'"
+    },
+    "sites": {
+      "count": 8,
+      "note": "8 primitive sites 'nestled along rock outcroppings' on Forest Road 91 near the Otter Creek Wilderness."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/bear-heaven-campground",
+      "note": "FS page read: confirmed $5/night; added 8 primitive sites, vault toilet, no potable water, 14-day limit. FCFS/no-reservation (derived) left: the page implies it (fees paid at the campground) but does not say so. Not stated: season dates, rig length. Note trimmed (FCFS line duplicates booking)."
     }
   },
   {
@@ -7133,14 +7218,14 @@
     "kind": "campground",
     "location": "38.8237,-79.3866",
     "name": "Seneca Shadows Campground",
-    "note": "Large modern campground with dump station, camp host, and some electric sites.  Many sites offer outstanding views of Seneca Rocks.  --AWH",
+    "note": "Large modern campground with camp host.  Many sites offer outstanding views of Seneca Rocks.  --AWH",
     "elevation_meters": 531.0,
     "state": "WV",
     "ownership": "federal",
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov: standard/double RV sites with & without electric + dump station, operating ~Apr 10-Oct 31 -> real RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'not waterfront' per owner: Large modern campground with dump station, camp host, and some electric sites.  Many sites offer outstanding views of Seneca Rocks.",
-    "website": "https://www.recreation.gov/camping/campgrounds/232095",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/seneca-shadows-campground\nhttps://www.recreation.gov/camping/campgrounds/232095",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -7152,18 +7237,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 232095 (all 13 STANDARD ELECTRIC sites list Electricity Hookup 30) + https://www.recreation.gov/api/camps/campgrounds/232095 ('Loop C has electric hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232095 ('two four-toilet vault restrooms, one double-toilet vault restroom, and four multiple-toilet flush restrooms with showers', 'one recreation vehicle dump station', 'drinking water') + https://www.fs.usda.gov/r09/monongahela/recreation/seneca-shadows-campground ('Potable water is available at this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232095/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/seneca-shadows-campground ('Single Site: $22 per night ... Single Site with electric hook-up: $30 per night', last updated June 2, 2026) + https://www.recreation.gov/api/camps/campgrounds/232095/rates (2026 Peak Season: STANDARD NONELECTRIC 22, STANDARD ELECTRIC 30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov campsite catalog for 232095 (site types, Max Vehicle Length, Driveway Entry) + https://www.recreation.gov/api/camps/campgrounds/232095 ('11 standard camping units with electric hookups, 2 double camping units with electric hookups, 23 standard camping units without electric, 2 double camping units without electric, 40 walk-in camp sites and 3 group tent sites ... paved spurs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232095 (Overview: 'The average operation and maintenance season for Seneca Shadows Campground has been from approximately April 10th through Oct 31st. At a minimum, the Forest Service (FS) will expect the permit Holder to fully operate the campground from the second Friday night in April through the last Saturday night in October'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/seneca-shadows-campground ('Reservations must be made 4 days ahead of arrival and can be made up to 6 months in advance for standard sites or 12 months in advance for group sites', 'This campground has first-come, first-served sites') + https://www.recreation.gov/api/camps/campgrounds/232095 (rules: minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4 days, reservationWindow 11 Months) + campsite catalog (13 RV sites not reservable), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -7172,13 +7273,60 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Four flush restrooms with showers and three vault restrooms; one RV dump station beside the host site. Firewood sold on site; an amphitheater."
     },
     "fees": {
       "nightly_low": 22,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single site $22 (Loops A & B), single with electric $30 (Loop C); double sites $35, double electric $52 (FS page also lists Loop C double at $50); walk-to tent $17/$28; group tent $65. Two vehicles per single site; a daily fee for extra vehicles."
+    },
+    "sites": {
+      "count": 38,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "38 RV sites: 13 electric in Loop C (two of them doubles) and 25 non-electric in Loops A and B, besides 40 walk-to tent sites and 3 group tent sites. Non-electric spurs take 25 ft, electric 35-45 ft; two electric sites are pull-through (the catalog lists one, site 038, at 90 ft). Paved spurs."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-10",
+      "closes": "10-31",
+      "note": "The permit holder must operate the campground 'from the second Friday night in April through the last Saturday night in October'; the average season has been 'approximately April 10th through Oct 31st'."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reserve on recreation.gov at least 4 days ahead, up to 6 months ahead for standard sites (12 for group sites, per the Forest Service; recreation.gov's rule record says 11 months). 13 of the RV sites are first-come. Weekends 2 nights, holiday weekends 3. Concession-run (American Land & Leisure)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/seneca-shadows-campground https://www.recreation.gov/api/camps/campgrounds/232095 https://www.recreation.gov/api/camps/campgrounds/232095/rates recreation.gov campsite catalog for 232095 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $22/$30 (2026), 30-amp electric, dump. Added 38 RV sites to 45 ft with pull-throughs, showers/flush+vault toilets/potable water, season ~Apr 10-Oct 31, recreation.gov booking 4 days to 6 months ahead, some first-come sites, 2/3-night weekend/holiday minimums, 14-night max. Note trimmed (dump, electric)."
+    },
+    "phone": "304-567-3082"
   },
   {
     "id": 118,
@@ -7288,7 +7436,7 @@
     "inclusion_evidence": "recreation.gov: RV Electric site + standard electric/nonelectric on parking spurs -> real drive-in RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: USFS campground with sites directly along Anthony Creek at the Blue Bend swimming area.",
     "note": "USFS campground with sites directly along Anthony Creek at the Blue Bend swimming area.  --AWH",
-    "website": "https://www.recreation.gov/camping/campgrounds/232008",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/blue-bend-recreation-area-and-campground\nhttps://www.recreation.gov/camping/campgrounds/232008",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -7305,29 +7453,72 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB catalog for facility 232008 (site 013 'RV ELECTRIC', reservable, Electricity Hookup 50, Water No, Sewer No; site 015 STANDARD ELECTRIC 30 A) + rec.gov rate table ('Campsite 13 Double Electric'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 232008 (223 days observed, edges opens+closes)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/blue-bend-recreation-area-and-campground (Seasons of Use 'Late March - November/Possibly September') + rec.gov rate seasons, read 2026-10-21. The derived 05-01/10-15 was the reservation calendar's edge, not the campground season.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232008/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232008/rates (Peak Season 2026-05-18..10-15 and 2027-05-01..10-15: STANDARD NONELECTRIC 20, STANDARD ELECTRIC 30, STANDARD ELECTRIC-DOUBLE 50; First-come, First-served Seasons 2026-10-16..11-15, 2027-03-15..04-30: No Water price SNE 16, SE 20, DE 40) + https://www.fs.usda.gov/r09/monongahela/recreation/blue-bend-recreation-area-and-campground ('Single Site: $16 per night / Single Site with electric hook-up: $20 per night / Double Site with electric hook-up: $40 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB catalog for facility 232008 (21 STANDARD/RV sites, every one Driveway Entry Back-In, Max Vehicle Length 30-60; 2 GROUP SHELTER) + https://www.recreation.gov/api/camps/campgrounds/232008 ('a selection of single family campsites and 2 picnic shelters'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232008 ('Flush toilets and showers are available in summer, and vault toilets can be used through the spring and fall seasons. Running water is also seasonal, but a hand pump is available through spring and fall.') + Forest Service page (Restrooms 'Flush and Vault Toilets'; Water 'Potable water is not available at this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232008 (facility_email visit@svlandmgt.com; facility_rules minConsecutiveStay 1, reservationCutOff 4, maxStay 14 per rolling 30 days; notice 'Access Road Subject to FLOODING') + RIDB catalog (reservable flags) + rec.gov rate season names + Forest Service page ('Campground maximum length of stay is 14 days', 'Checkout time is 2:00 p.m.') + https://parsonsadvocate.com/?p=73488 (secondary, concession award), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "season": {
-      "opens": "05-01",
-      "closes": "10-15"
+      "year_round": false,
+      "note": "Forest Service: 'Late March - November/Possibly September'. recreation.gov takes reservations in the peak season (May - Oct 15) and lists first-come seasons from mid-March (2027) and to mid- or late November either side of it."
     },
     "fees": {
       "nightly_low": 16,
-      "nightly_high": 40,
-      "currency": "USD"
-    }
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov rate table: Peak Season (May 1 or May 18 - Oct 15) single site $20, single electric $30, double electric $50; the spring and fall first-come seasons ('No Water price') $16 single, $20 electric, $40 double electric. The Forest Service page lists only $16 / $20 / $40."
+    },
+    "sites": {
+      "count": 21,
+      "max_rig_ft": 60,
+      "pull_through": false,
+      "note": "21 single-family sites along Anthony Creek, three with electric (13 and 15 bookable, 2 first-come); all back-in, catalog lengths 30-60 ft. Two group picnic shelters besides."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "showers": true,
+      "note": "Flush toilets and showers in summer only, vault toilets in spring and fall. Drinking water: recreation.gov says running water is seasonal with a hand pump in spring and fall, while the Forest Service page says 'Potable water is not available at this site'."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Run by a concessioner since spring 2026: rec.gov's contact email is visit@svlandmgt.com, and the Parsons Advocate (April 2026) reports the Monongahela's permit for Lake Sherwood, Blue Bend and Pocahontas went to Sunshine Valley Land Management LLC. Only sites 13, 15, 19, 20 and 21 are reservable, in the peak season; the rest are first-come, and the spring and fall seasons are first-come only. Reservations close 4 days before arrival; one-night stays allowed; 14 days in any 30. Checkout 2 p.m. Access road can flood."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232008 https://www.recreation.gov/api/camps/campgrounds/232008/rates trip_data/ridb_campsites.json facility 232008 (RIDB campsite catalog, fetched 2026-10-20) https://www.fs.usda.gov/r09/monongahela/recreation/blue-bend-recreation-area-and-campground (last updated April 29, 2026) https://parsonsadvocate.com/?p=73488 (secondary: April 2026 report of the concession award)",
+      "note": "Hookups 50A confirmed manual (site 13); fees 16-40 -> 16-30 (single-site range; doubles $40-50 in the note); season derived 05-01/10-15 cleared for the Forest Service's 'Late March - November'; added sites (21, back-in, to 60 ft), facilities, booking (5 reservable sites, the rest FCFS, 14 max). Concessioner (Sunshine Valley Land Management) since 2026. AWH note left."
+    },
+    "phone": "304-536-2144"
   },
   {
     "id": 121,
@@ -13641,14 +13832,77 @@
       "nightly_high": 39.99,
       "currency": "USD",
       "checked": "2026",
-      "note": "Electric sites $39.99. Every reservable RV site has electric. WV State Parks booking site (book.wvstateparks.com) for June 2027 weeknights, read 2026-10-12."
+      "note": "Electric/water sites $39.99 a night on weeknights and weekends alike (2026-10-27 and 2027). The 26 non-electric sites ($29.99) are sold as tent-only."
     },
     "provenance": {
       "fees": {
-        "source": "https://book.wvstateparks.com/ nightly prices for 2027-04-20, 2027-06-15 and a 2027-06-18/20 weekend (read 2026-10-12): Tygart Lake State Park Electric Campsites (supplier 11068632)",
-        "checked": "2026-10-12"
+        "source": "https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=11068632 (Tygart Lake State Park Electric Campsites: 10 units at 39.99 for 2026-10-27, 2027-05-04, 2027-06-15 and the 2027-06-18/20 weekend) + supplier 7989238 ('Tygart Lake Tent-Only, Non-electric Campsites' at 29.99), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ ('Ten come with 50-amp electric and water hookups and 26 are standard sites ... Full hookup sites are not available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ ('Tygart Lake State Park's campground has 36 camping sites') + book.wvstateparks.com suppliers 11068632 / 7989238 (unit names and amenity tags), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ ('A dump station is near the beach area', 'Almost all campsites pick up great Wi-Fi, but the signal is weak from sites 28-40'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ ('The campground is open spring through fall, weather permitting') + book.wvstateparks.com supplier 11068632 availability, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ ('Campsites may be reserved anytime online, by phone or at the campground office. Reservations may be made for no less than two consecutive nights on weekends (Friday and Saturday) or one night Sunday through Thursday', 'There is a 14-night maximum stay', 'All campsites are reservable') + book.wvstateparks.com supplier 11068632 (2027-06-15 one night: 10 units; 2027-06-18 and 2027-06-19 one night: 0; 2027-06-18/20: 10), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": false
+    },
+    "sites": {
+      "count": 36,
+      "note": "36 sites: 10 with 50-amp electric and water (the only ones sold for RVs; the booking site tags them with the '20' to 30' RV' length class) and 26 standard sites sold as tent-only. The campground is at the end of the park road, about three miles from the east entrance."
+    },
+    "facilities": {
+      "dump": true,
+      "wifi": true,
+      "note": "Dump station near the beach area. Wi-Fi reaches almost every site, weak at sites 28-40."
+    },
+    "season": {
+      "year_round": false,
+      "note": "'Open spring through fall, weather permitting.' The booking site sold sites for 2026-10-27 and 2027-05-04, none for 2027-04-06."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.wvstateparks.com/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reserve anytime online, by phone or at the campground office; all campsites are reservable. Weekends (Friday and Saturday) two consecutive nights, one night Sunday-Thursday: the booking site sold a Tuesday night but no Friday-only or Saturday-only night in June 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/tygart-lake-state-park/lodging/camping-at-tygart-lake-state-park/ https://wvstateparks.com/parks/tygart-lake-state-park/lodging/ https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=11068632 https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=7989238",
+      "note": "Confirmed the inherited reservable/booking site/2-night weekend minimum/14-night max for this park and $39.99 (electric, weeknight and weekend). Added 50-amp electric with water and no sewer, 36 sites (10 RV, 26 tent-only), dump, wifi, season spring-fall. Not stated: showers/toilets, max rig length in feet, holiday minimum."
+    },
+    "phone": "304-265-6144"
   },
   {
     "id": 217,
@@ -14465,7 +14719,58 @@
       "sig": "ca6f7445f7a12c25",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "sites": {
+      "count": 120,
+      "note": "Four campgrounds, 120 sites in all. Meador: 32 sites for RVs and tents, seven with electric and water, fifteen electric only, central bathhouse, dump station. Old Mill: 33 rustic sites, 'not suggested for larger RVs and campers'. Tent Area: five rustic sites. East Shore: 12 primitive boat-in sites. Old Mill and East Shore are closed during the Bluestone Dam construction 'and will reopen once construction is completed'."
+    },
+    "provenance": {
+      "sites": {
+        "source": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ ('Bluestone is home to four distinct campgrounds, with a combined total of 120 campsites'; Meador, Old Mill, Tent Area and East Shore paragraphs), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ ('Meador Campground has 32 sites ... seven of which offer electric and water hookups. Fifteen sites are electric only.'), read 2026-10-21. Amperage not stated.",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ ('A dump station is available'; Meador and Old Mill each have 'a central bathhouse'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ (Campground Seasons & Dates), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ ('There is a 14-night maximum stay'; 'Current construction on the Bluestone Dam will affect campsite availability') + book.wvstateparks.com (supplier 10988378 'Bluestone State Park Shelters' only), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      }
+    },
+    "hookups": {
+      "water": true
+    },
+    "facilities": {
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "note": "'All Bluestone State Park campgrounds are open spring through fall, weather permitting.' No dates given."
+    },
+    "booking": {
+      "max_stay_nights": 14,
+      "note": "The park's camping page states only the 14-night maximum and says dam construction 'will affect campsite availability. Before arriving, please check with the park office at 304-466-2805.' It omits the reservation and weekend-minimum sentences the other WV park pages carry, and the WV State Parks booking site sells only Bluestone's picnic shelters."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/bluestone-state-park/lodging/camping-at-bluestone-state-park/ https://wvstateparks.com/parks/bluestone-state-park/ book.wvstateparks.com (shop/lodging page lists Bluestone Tent, Old Mill, Meador and East Shore campground filters; supplier scan between Blackwater Falls 11067324 and Cabwaylingo 11067393 electric found no Bluestone campsite supplier with anything for sale, 2026-10-21)",
+      "note": "Added sites (120 in four campgrounds; Meador is the RV one), water at 7 sites, dump, spring-to-fall season and the 14-night max. Old Mill and East Shore closed for dam construction (partial closure, in sites.note). Not priced: no campsites on the booking site and no rate on the park pages. Note left."
+    },
+    "phone": "304-466-2805"
   },
   {
     "id": 233,
@@ -15937,7 +16242,7 @@
     "kind": "campground",
     "location": "39.6803,-79.7806",
     "name": "Chestnut Ridge Regional Park",
-    "note": "campingprepper.com/best-west-virginia-rv-campgrounds\nRidge-top park near Morgantown; no significant water bodies at the campground. --Claude",
+    "note": "Ridge-top park near Morgantown; no significant water bodies at the campground. --Claude",
     "elevation_meters": 675.0,
     "state": "WV",
     "ownership": "local",
@@ -15960,13 +16265,60 @@
       "nightly_high": 40,
       "currency": "USD",
       "checked": "2026",
-      "note": "Monongalia County (Chestnut Ridge): RV sites $40 a night. Read 2026-10-16."
+      "note": "Every RV site (40-43, 46-48, 54-60) $40 a night plus tax on the county's Amilia store; tent sites $25 (double $35). A tent on an RV site costs extra, paid at the office."
     },
     "provenance": {
       "fees": {
-        "source": "https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-16"
+        "source": "https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings (14 'RV Site NN at Chestnut Ridge Park' items, each $40.00/night; tent sites $25.00/night) + /facilitybookings/1117475 ('RV Site 40 (max. length 40') – Area D- $40 (plus tax) per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings/1117475 ('Each RV site at Chestnut Ridge Park is equipped with: 30 amp electric, Water hookup ...'; 'There is no sewage hookup on any of the sites, but you are welcome to use the dump station near RV Area E'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.monongaliacounty.gov/departments/parks_and_recreation/chestnut_ridge_park_and_campground/ ('We offer more than 30 primitive tent sites, 14 RV sites, and seven unique cabins') + Amilia RV Site 40 ('max. length 40'', 'RV Area D is for our guests who have larger RVs', 'All RV pads are gravel, some leveling will be required, and all sites are back in only'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "Amilia RV Site 40 ('the dump station near RV Area E'; 'Firewood is available for purchase at the park store'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "Amilia RV Site 40 ('Please call (304) 594-1773 for more information or to make a reservation over the phone. Our office hours are 9AM-5PM daily.'; 'Camping check-in time is 2:00PM and check out time is before noon'; Book / Reserve form) + county page ('Online Reservations' link), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": false
+    },
+    "sites": {
+      "count": 14,
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "14 RV sites in Areas D and E plus 30-odd primitive tent sites and seven cabins. Area D 'is for our guests who have larger RVs' (site 40: max. length 40 ft). Gravel pads, some leveling needed, all back-in."
+    },
+    "facilities": {
+      "dump": true,
+      "camp_store": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings",
+      "note": "Book each RV site online on the county's Amilia store or by phone, (304) 594-1773, office 9 a.m.-5 p.m. daily. RV sites may not be reserved for tents. Check-in 2 p.m. at the park office (late arrivals check in by 9:30 next morning), checkout before noon."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.monongaliacounty.gov/departments/parks_and_recreation/chestnut_ridge_park_and_campground/ https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings https://app.amilia.com/store/en/monongalia-county-parks--recreation/shop/facilitybookings/1117475 (RV Site 40, read in the browser)",
+      "note": "Fees $40 confirmed (plus tax; Amilia store); added hookups 30A/water/no sewer, 14 back-in RV sites to 40 ft, dump and park store, booking (Amilia online or phone). Season not stated for the campground. Note: dropped a stray campingprepper.com listicle URL."
     }
   },
   {
@@ -26069,8 +26421,8 @@
     "waterfront": "riverview",
     "inclusion_evidence": "operator brooklynheightscamp.com: lists Forest RV spots among site types, open year-round -> has drive-in RV sites",
     "waterfront_evidence": "operator site separates Forest RV spots from its riverfront (tent/shelter-bus) category; satellite at 39.0712,-79.6230: road runs between the camp area and the Dry Fork bank — RV pads across a road from shore is riverview, not riverfront",
-    "note": "Private campground on the Cheat River.  RV sites are basically riverfront but are set back on the other side of a narrow road that likely sees very little traffic. --Claude",
-    "website": "https://www.brooklynheightscamp.com/\nhttps://www.hipcamp.com/en-US/land/west-virginia-brooklyn-heights-riverfront-camp-88lhp1nn",
+    "note": "Private campground on the Dry Fork River near Hendricks, about 4 miles from Parsons.  RV sites are basically riverfront but are set back on the other side of a narrow road that likely sees very little traffic. --Claude",
+    "website": "https://www.brooklynheightscamp.com/\nhttps://book.brooklynheightscamp.com/",
     "phone": "703-328-1840",
     "rating": {
       "stars": 3,
@@ -26085,15 +26437,74 @@
     },
     "fees": {
       "nightly_low": 28,
-      "nightly_high": 36,
+      "nightly_high": 45,
       "currency": "USD",
-      "note": "Riverfront primitive RV sites $28, electric RV sites $36 (host prices; Hipcamp adds a ~18% service fee)."
+      "note": "Primitive riverfront RV sites (RV6-RV10) $28 weeknights, $35 Friday or Saturday; electric/water RV sites (RV1-RV4) $36 weeknights, $45 Friday or Saturday. Base rate includes 4 guests (up to 8); $7.50 per extra guest per night. Booked direct on the operator's site; the old Hipcamp service fee no longer applies.",
+      "checked": "2026"
     },
     "provenance": {
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/west-virginia-brooklyn-heights-riverfront-camp-88lhp1nn (__NEXT_DATA__ sites: RV6-RV10 Riverfront Primitive $28, RV1-RV4 Electric $36, read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.brooklynheightscamp.com/pricing ('Electric/Water RV Sites are $45/night for a Fri. or Sat. & $36/night weekdays', 'Primitive RV Sites are $35/night for a Fri. or Sat. & $28/night weekdays') + https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax ('Rate - $36-45/night'; site map 'updated September 2026'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax ('Each site has 30-amp electricity, a 20-amp GFI outlet, and a seasonal water hookup', 'There are no sewer hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax ('accommodates RVs up to 30 feet') + https://book.brooklynheightscamp.com/rv6-primitive-riverfront-rv-site-orp5b7785ex ('Back-in access accommodates a camper up to 35 feet long plus your tow vehicle') + https://www.brooklynheightscamp.com/good-to-know ('RV's 32 to 35 feet or less recommended (plus tow vehicle)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.brooklynheightscamp.com/good-to-know ('Water is untreated and non-potable; bring drinking water', 'Portable toilets are available at camp', 'No guest showers are available at camp. Showers are planned for 2027', 'Wi-Fi is available near the office cabin and Coffee Pavilion') + https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax ('There are no sewer hookups or operating dump station at the campground. An on-site dump station is planned for 2027'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.brooklynheightscamp.com/ ('Open year-round') + https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax ('The campground and electricity are available year-round. Water is shut off from November 1 through April 15'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.brooklynheightscamp.com/rules-cautions ('All sites must be reserved online. Use Book Now Direct') + https://www.brooklynheightscamp.com/good-to-know ('All campsites, cabin sites, and RV sites are self-check in') + https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax (cancellation policy), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": false
+    },
+    "sites": {
+      "max_rig_ft": 35,
+      "note": "Nine RV sites: RV1-RV4 electric/water (RV1's back-in gravel pad takes RVs to 30 ft) and RV6-RV10 primitive riverfront sites across a narrow dead-end road from the river (RV6 back-in, to 35 ft plus tow vehicle); the operator recommends 'RV's 32 to 35 feet or less'. Plus tent, group, cabin, bus and tipi sites."
+    },
+    "facilities": {
+      "showers": false,
+      "potable_water": false,
+      "dump": false,
+      "wifi": true,
+      "note": "Portable toilets only. Campground water is untreated and non-potable (seasonal spigots off November 1-April 15); bring drinking water. No operating dump station: off-site dumping at Five Rivers Campground in Parsons, $10 honor system. Wi-Fi near the office cabin and coffee pavilion. Showers and an on-site dump station are planned for 2027."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Open year-round; water is shut off November 1 through April 15."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.brooklynheightscamp.com/",
+      "fcfs": "never",
+      "note": "'All sites must be reserved online' on the operator's direct-booking site (OwnerRez); self check-in at the reserved, labeled site. Full refund more than 14 days out, none within 14 days."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.brooklynheightscamp.com/ https://www.brooklynheightscamp.com/pricing https://www.brooklynheightscamp.com/good-to-know https://www.brooklynheightscamp.com/rules-cautions https://book.brooklynheightscamp.com/rv1-electric-rv-site-orp5b7785ax https://book.brooklynheightscamp.com/rv6-primitive-riverfront-rv-site-orp5b7785ex",
+      "note": "Operator site + its OwnerRez booking pages read: base $28 (primitive RV weeknight) to $45 (electric Fri/Sat), 30-amp with seasonal water, no sewer, RVs to 35 ft, open year-round, no showers/dump/potable water (planned 2027), wifi near the office, reserve online only. Note corrected (the river is the Dry Fork, not the Cheat)."
     }
   },
   {
@@ -30286,6 +30697,11 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Monongahela National Forest: dispersed camping is free anywhere outside a designated campground (the Forest's 2023 notice)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation https://www.fs.usda.gov/r09/monongahela/recreation/camping-cabins https://diyoutdoors.wvu.edu/camping/abes-run-dispersed-camping",
+      "note": "No Forest Service page for Abes Run found: the Monongahela NF recreation and camping listings name no Abes Run / FR 51 / East Fork Greenbrier dispersed area, and slug guesses 404. Existing reported values (WVU DIY Outdoors, Campendium) left as they are; nothing confirmed."
     }
   },
   {
@@ -30744,7 +31160,13 @@
       "flush_toilets": false,
       "potable_water": false
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvdnr.gov/lands-waters/wildlife-management-areas/district-3-wildlife-management-areas/ https://wvdnr.gov/wmamapproj/pdf/pdf150/BeckysCreekFinal11x17_150dpi.pdf",
+      "note": "WVDNR's District 3 WMA page and the WMA map read: the DNR says only 'Camping in designated areas only' and never says where; its map (July 26, 2018 edition) has a legend of Gate and Parking only and marks no campsites. Nothing new to record; existing reported/derived values left."
+    },
+    "website": "https://wvdnr.gov/lands-waters/wildlife-management-areas/district-3-wildlife-management-areas/"
   },
   {
     "id": 510,
@@ -31246,13 +31668,57 @@
       "nightly_low": 45,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "Full-hookup RV site $45/night, $270/week, $625/month."
+      "note": "RV site $45/night, $270/week ('one night free included'), $625/month, plus WV 6% sales tax; tent sites $20. The operator's page gives no year for these rates (read 2026-10-10 and 2026-10-21).",
+      "checked": "2026"
     },
     "provenance": {
       "fees": {
-        "source": "https://backridgeshadowsllc.godaddysites.com/ (rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://backridgeshadowsllc.godaddysites.com/ ('RV'S ... Nightly rate per site $45 / Weekly rate per site $270 / Monthly rate per site $625', '*WV 6% sales tax will be added to rate'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://backridgeshadowsllc.godaddysites.com/ ('The RV sites offer full hookups (water, sewer, and electric)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://backridgeshadowsllc.godaddysites.com/ ('offering 6 RV Sites and 9 tent sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://backridgeshadowsllc.godaddysites.com/ ('There is a water spigot on site as well as an outhouse with non-flushable toilets. Limited AT&T service is available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://backridgeshadowsllc.godaddysites.com/ (Contact Us: 304-668-9011), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 15,
+      "note": "6 full-hookup RV sites and 9 tent sites (tent sites have 110-volt electric; one tent per site)."
+    },
+    "facilities": {
+      "flush_toilets": false,
+      "vault_toilets": true,
+      "note": "An outhouse with non-flushable toilets and a water spigot; limited AT&T service."
+    },
+    "booking": {
+      "platform": "phone",
+      "note": "No online booking; the one-page site gives only the phone 304-668-9011 and the address 5851 Sawmill Run Rd, Circleville."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://backridgeshadowsllc.godaddysites.com/",
+      "note": "Operator's GoDaddy one-page site is live with phone 304-668-9011: confirmed $45 RV nightly (plus 6% tax; weekly/monthly also posted), full hookups (amperage not stated), 6 RV + 9 tent sites, outhouse and spigot, phone booking. Not stated: amps, season, rig length."
     }
   },
   {
@@ -33352,7 +33818,7 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Campground on a peninsula in Summersville lake.  Many sites are right on the water.",
     "note": "Campground on a peninsula in Summersville lake.  Many sites are right on the water. --AWH",
     "website": "https://www.recreation.gov/camping/campgrounds/233422",
-    "phone": "",
+    "phone": "304-872-3459",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -33369,19 +33835,71 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('This large waterfront campground offers 110 campsites with electric hookups') + RIDB catalog (all 110 STANDARD ELECTRIC sites Electricity Hookup 30; no water or sewer hookup attribute), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233422/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233422/rates (Peak Season 2026-05-20..09-06 and 2027-05-20..09-06: STANDARD ELECTRIC per_night 40, future_fees per_night 45 effective 2026-11-26; First-come, First-served Season 2027-05-01..05-19 and 2027-09-08..10-12: Walk In STANDARD ELECTRIC 40; TENT ONLY NONELECTRIC 24), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('110 campsites with electric hookups, along with seven primitive walk-to tent sites'; notice 'NO PETS or livestock permitted') + RIDB catalog (117 sites: 110 STANDARD ELECTRIC, 7 TENT ONLY NONELECTRIC; Max Vehicle Length 30-90 ft on RV sites; Driveway Entry Back-In 81), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('Amenities include flush toilets, showers, drinking water, laundry facilities and a dump station. An accessible boat ramp and fishing dock are on-site.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233422 (org USACE, is_commercially_managed false; facility_rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 2, maxStay 14 per rolling 30 days; notices) + /rates (season names), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
-      "nightly_low": 24,
-      "nightly_high": 40,
-      "currency": "USD"
+      "nightly_low": 40,
+      "nightly_high": 45,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov rate table: every RV site is a STANDARD ELECTRIC site at $40 a night; the Peak Season (about May 20 - Sept 6) electric rate carries a future fee of $45 effective 2026-11-26, while the early-May and September-October first-come seasons stay $40. The $24 rate is the seven walk-to TENT ONLY sites."
+    },
+    "sites": {
+      "count": 117,
+      "max_rig_ft": 90,
+      "note": "110 electric RV sites plus seven primitive walk-to tent sites. Catalog driveway lengths run 30-90 ft (most 40-60 ft); 81 marked back-in, none marked pull-through. No pets or livestock permitted in the campground."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "laundry": true,
+      "dump": true,
+      "note": "Accessible boat ramp and fishing dock on site; playground and nature trails."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Run by the Corps of Engineers itself (recreation.gov: USACE, not commercially managed). Reservations in the peak season (about May 20 - Labor Day); the rate table calls early May and September to mid-October 'First-come, First-served' seasons. recreation.gov rules: 2-night weekend minimum, 3 nights on holiday weekends, reservations close 2 days before arrival; rec.gov minimums may be relaxed for a same-day booking. No more than 14 days in any 30 at Summersville Lake. Peak-season check-in station hours 7 a.m. - midnight, off-peak 5-9 p.m."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233422 https://www.recreation.gov/api/camps/campgrounds/233422/rates trip_data/ridb_campsites.json facility 233422 (RIDB campsite catalog, fetched 2026-10-20)",
+      "note": "USACE-operated (Huntington District) Summersville Lake campground. Hookups 30A confirmed manual; fees 24-40 -> 40-45 (the $24 was the walk-to tent sites; peak electric rises to $45 from 2026-11-26); added sites, facilities and booking (2/3-night weekend/holiday minimum, 14 max, FCFS shoulder seasons). Season not stated (rate seasons only); USACE lake page unreachable by plain HTTP."
     }
   },
   {
@@ -45532,22 +46050,81 @@
       "nightly_high": 59.99,
       "currency": "USD",
       "checked": "2026",
-      "note": "Electric sites $44.99–$54.99, full-hookup $49.99–$59.99. Every reservable RV site has electric. WV State Parks booking site (book.wvstateparks.com) for June 2027 weeknights, read 2026-10-12."
+      "note": "Booking site, one night, Oct-Nov 2026 and Apr-Jun 2027, weeknights and a Friday-Saturday stay alike: 30-amp electric sites in Four Coves, Lake View and Moxley Branch $44.99 or $49.99; Moxley Branch's 50-amp electric/water sites $49.99-54.99; Old Orchard's 50-amp full-hookup sites $59.99. Every reservable site is electric."
     },
     "provenance": {
       "fees": {
-        "source": "https://book.wvstateparks.com/ nightly prices for 2027-04-20, 2027-06-15 and a 2027-06-18/20 weekend (read 2026-10-12): Beech Fork State Park Electric Campsites (supplier 11067308)",
-        "checked": "2026-10-12"
+        "source": "book.wvstateparks.com supplier 11067308 (2026-10-27: 178 sites $44.99/$49.99/$59.99; 2027-04-20: 271 sites, 2027-06-15: 270 sites, $44.99/$49.99/$54.99/$59.99; 2027-06-18/20 the same), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "https://wvstateparks.com/parks/beech-fork-state-park/ (Campground Season And Dates: \"The campgrounds are open year-round\"), read 2026-10-20",
-        "checked": "2026-10-20",
+        "source": "https://wvstateparks.com/parks/beech-fork-state-park/ ('The campgrounds are open year-round') + /lodging/ ('The year-round Old Orchard campground'; 'Moxley Branch campground is open mid-April through mid-October'; 'Four Coves campground is open mid-April through October, and Lakeview campground is open year-round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://wvstateparks.com/parks/beech-fork-state-park/lodging/ ('The year-round Old Orchard campground offers ... full hook-ups with 50-amp electric, water and sewer'; Moxley Branch, Four Coves and Lakeview 30-amp) + booking site unit tags (Old Orchard Full Hookup / Water / Sewer / 50 Amp), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://wvstateparks.com/parks/beech-fork-state-park/lodging/ ('Beech Fork offers 275 campsites in four distinct camping areas, of which 99 campsites are lakefront') + booking site unit tags (Pull Thru, RV-length classes), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/beech-fork-state-park/lodging/ ('All of the park's campgrounds have full-service bathhouses and restroom facilities'; Old Orchard 'offers coin-operated laundry'; 'Free Wi-Fi is available at the bathhouse only'; 'Camper's Corner Store'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/beech-fork-state-park/ ('Reservations may be made for no less than two consecutive nights on weekends (Friday and Saturday) or one-night Sunday through Thursday'; 'There is a 14-night maximum stay'; 'Checkout time for all campsites is 12:00 p.m.') + /lodging/ + booking site supplier 11067308 (one night: Tue 2026-10-27 178 sites, Fri 2026-10-30 153, Fri 2026-11-06 84, Fri 2026-11-13 60, Fri 2026-11-20 0, Sat 2026-11-21 0, Fri 2027-01-15 / 03-19 / 05-07 / 06-18 / 09-17 / 10-15 all 0; Tue 2027-04-20 and 06-15 sold), read 2026-10-21",
+        "checked": "2026-10-21",
         "method": "manual"
       }
     },
     "season": {
-      "year_round": true
-    }
+      "year_round": true,
+      "note": "Old Orchard and Lakeview are open year-round; Moxley Branch mid-April to mid-October; Four Coves mid-April through October."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 275,
+      "pull_through": true,
+      "note": "275 campsites in four campgrounds, 99 of them lakefront: Old Orchard (full hookups, the 48 booking-site sites all tagged pull-through), Moxley Branch (30-amp electric or non-electric; some 50-amp electric/water), Four Coves and Lakeview (30-amp electric only). Booking-site RV-length tags are mostly '30-40 ft', two sites to the 40-60 ft classes."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Coin laundry at Old Orchard; free Wi-Fi at the bathhouse only; Camper's Corner Store."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.wvstateparks.com/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "'Campsites may be reserved anytime online, by phone, or at the campground office.' Two nights minimum on Friday+Saturday, one night Sunday-Thursday. The booking site enforces it for arrivals a month or more out (a one-night Friday was refused for Nov 20 2026 and every Friday tested in 2027) but sold one-night Fridays for Oct 30 and Nov 13 2026, 9 and 23 days ahead. The lodging page says Old Orchard and Moxley Branch sites 'are available for reservation from Memorial Day weekend through Labor Day weekend', yet the booking site sells all four campgrounds in October-November and April. Checkout noon."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/beech-fork-state-park/ https://wvstateparks.com/parks/beech-fork-state-park/lodging/ book.wvstateparks.com supplier 11067308 'Beech Fork State Park Electric Campsites' (Ecomm SupplierTile, stays 2026-10-27 to 2027-06-20, read 2026-10-21)",
+      "note": "Fees 44.99-59.99 confirmed (prices unchanged); added hookups 50A full, 275 sites/99 lakefront/pull-through, facilities, per-campground season note, and booking (2-night weekend minimum confirmed on the park page and the booking site, 14 max). AWH note left as is."
+    },
+    "phone": "304-528-5794"
   },
   {
     "id": 716,
@@ -47459,32 +48036,76 @@
   {
     "id": 748,
     "kind": "campground",
-    "name": "Bear Run Farms",
+    "name": "The Oasis at Bear Run Farms",
     "location": "39.2475,-79.2140",
     "elevation_meters": 861.0,
-    "website": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92",
+    "website": "https://www.hipcamp.com/en-US/land/west-virginia-the-oasis-at-bear-run-farms-2ejh6v92",
     "state": "WV",
     "ownership": "hipcamp",
     "waterfront": "creekside",
     "inclusion_evidence": "Hipcamp listing + firsthand --AWH note: creekside RV site (Beaver Dam) confirmed",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: Beaver Dam site for RVs is creekside w/mountain views.  $45+fees.",
-    "note": "Beaver Dam site for RVs is creekside w/mountain views.  $45+fees.  --AWH",
+    "note": "Beaver Dam site for RVs is creekside w/mountain views.  --AWH",
     "note_scan": {
       "sig": "8898330106543153",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 36,
-      "nightly_high": 36,
+      "nightly_low": 45,
+      "nightly_high": 45,
       "currency": "USD",
-      "note": "One RV-usable site (to 32 ft). Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Beaver Dam site (the one RV site) $45/night host base price; Hipcamp showed it at $36 (a discount off the $45 base) on 2026-10-21, and adds its service fee at checkout. The whole-property buyout (RV to 35 ft) is $1,150.",
+      "checked": "2026"
     },
     "provenance": {
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 (listing data, 'Beaver Dam site': pricePerNightBase $45.00, pricePerNight $36.00), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 ('Beaver Dam site' amenities: electricity-hookup ABSENT, water-hookup ABSENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 ('Beaver Dam site': accommodationType rv-tent, rvMaxLength 32 ft, accessType DRIVE_IN, TWO_WHEEL_DRIVE; campsiteCount 11), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 (unit amenities: shower ABSENT on every unit; Beaver Dam site toilet and water PRESENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92 (status LIVE, isBookable true, isInstantBookable true, maxNights 29, bookingsCount 641), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false
+    },
+    "sites": {
+      "max_rig_ft": 32,
+      "note": "One RV site, Beaver Dam (drive-in, 2WD, RVs to 32 ft); the rest of the 11 Hipcamp units are tent sites and cabins."
+    },
+    "facilities": {
+      "showers": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "max_stay_nights": 29,
+      "note": "Instant-bookable on Hipcamp (listing live, 641 bookings); no host website found."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/west-virginia-bear-run-farms-2ejh6v92",
+      "note": "Live, instant-bookable Hipcamp listing (now 'The Oasis at Bear Run Farms'): one RV site (Beaver Dam, to 32 ft, no hookups, toilet and water, no showers) at a $45 base ($36 discounted on 2026-10-21). Changed fees 36 -> 45 (base price; $36 was the discounted price). Note trimmed (price)."
     }
   },
   {
@@ -47499,19 +48120,37 @@
     "waterfront": "creekside",
     "inclusion_evidence": "Hipcamp listing + firsthand --AWH note: 20 dispersed drive-in RV sites on the creek",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: Potomac Highlands retreat with 20 dispersed RV sites, many right on the creek.  $30+fees.",
-    "note": "Potomac Highlands retreat with 20 dispersed RV sites, many right on the creek.  $30+fees.  --AWH",
+    "note": "Potomac Highlands retreat with dispersed RV sites, many right on the creek.  --AWH",
     "sites": {
-      "count": 20
+      "count": 20,
+      "max_rig_ft": 26,
+      "note": "20 drive-in RV/tent sites (2WD access), RVs to 26 ft, many beside the creek; the site number assigned at booking is not the number on the ground - the host picks a site to suit the rig. Plus cabins."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw (campsitesCount 20, rvMaxLength 26 ft, accessType DRIVE_IN, accessVehicleType TWO_WHEEL_DRIVE; 'you will be assigned a number when you reserve a site, but these do not match with the site numbers at the campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw (listing data: site 'Campsite at Abrams Creek Campground' pricePerNight $32.00, accommodationType rv-tent), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw (campsite amenities: electricity-hookup ABSENT, water-hookup ABSENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw ('We have several portapotties near the tent sites, and a showerhouse near the main lodge with hot and cold water', 'Hot showers are included, 24/7!', 'there are no generators'; amenities water PRESENT, toilet PRESENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw (status LIVE, isBookable true, isInstantBookable true, maxNights 29, bookingsCount 336), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -47523,7 +48162,28 @@
       "nightly_low": 32,
       "nightly_high": 32,
       "currency": "USD",
-      "note": "Sites to 26 ft. Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Hipcamp 'Campsite at Abrams Creek Campground' (RV or tent, 20 sites) $32/night host price, base capacity 4; Hipcamp adds its service fee at checkout. Cabins $66-93.",
+      "checked": "2026"
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false
+    },
+    "facilities": {
+      "showers": true,
+      "potable_water": true,
+      "note": "Portable toilets near the sites and a shower house with hot water by the main lodge. No generators allowed."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "max_stay_nights": 29,
+      "note": "Instant-bookable on Hipcamp (listing live, 336 bookings); no host website found."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/west-virginia-abrams-creek-campground-retreat-pw1hj5qw",
+      "note": "Live, instant-bookable Hipcamp listing: $32/night RV-or-tent sites (host price), 20 drive-in sites to 26 ft, no hookups, showers and water, portable toilets, 29-night max. No host website found."
     }
   },
   {
@@ -50843,8 +51503,8 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Some RV sites right on the lake.  Price unknown.  Mixed reviews.",
     "ownership": "private",
     "website": "https://www.mountainlakecampground.com/",
-    "note": "Some RV sites right on the lake.  Price unknown.  Mixed reviews.  --AWH",
-    "phone": "",
+    "note": "Some RV sites right on the lake.  Mixed reviews.  --AWH",
+    "phone": "304-872-6222",
     "rating": {
       "stars": 3.5,
       "price_tier": 3,
@@ -50855,6 +51515,67 @@
       "sig": "63c1a5dff759e814",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 48,
+      "nightly_high": 65,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 'Standard' rates on the operator's NewBook booking page, same Tuesday and Friday (quoted for 2027-06-15 and 2027-06-18, 23-ft Class C): electric/water sites in Areas 1-3 $48/night, Area 4 electric/water $56, full hookup (Area 2) $60, lakefront (Area 4) $65, group electric $68. Rates are for 2 people; additional people 7 and older $5/person/night (group sites $8)."
+    },
+    "provenance": {
+      "fees": {
+        "source": "https://bookingsus.newbook.cloud/online/mountain_lake_campground (availability for 1 night arriving 2027-06-15 and 2027-06-18, read 2026-10-21) + https://www.mountainlakecampground.com/our-campground/map-policies/ ('Campsite rates are for 2 people. Additional people 7 years and older are $5.00 per person per night')",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://bookingsus.newbook.cloud/online/mountain_lake_campground ('Full Hookup Sites: Campsites with 50amp/Water/Sewer picnic table and firepit in area 2') + https://www.mountainlakecampground.com/stay-with-us/campsite-rates/ ('water and electric 20/30 amp sites (with some 50 amp available)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.mountainlakecampground.com/our-campground/faqs/ ('We also have dumping stations, or for a fee you can schedule our Honey Wagon service'; laundry 'coin-operated and are located in the Area #1, #2, and #4 bathhouses') + https://www.mountainlakecampground.com/our-campground/amenities/ (Country Store, Laundry Room), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.mountainlakecampground.com/our-campground/map-policies/ ('Holidays require a 3-night minimum stay for Memorial/Labor Day (Friday-Monday). July 4th is also a 3-night minimum', 'Peak season weekends require a 2-night minimum stay') + https://www.mountainlakecampground.com/our-campground/faqs/ ('We begin taking reservations for the following camping season on Labor Day Weekend') + https://bookingsus.newbook.cloud/online/mountain_lake_campground (Friday 2027-06-18: '2 Night min' on every site type; Tuesday 2027-06-15: '2 Night min' on Lakefront Sites only), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "facilities": {
+      "dump": true,
+      "laundry": true,
+      "camp_store": true,
+      "note": "Tiled bathhouses in every area; coin laundry in Areas 1, 2 and 4; Country Store with snack bar, pizza and groceries; honey-wagon tank service for a fee; pool and beach included in the rate."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://bookingsus.newbook.cloud/online/mountain_lake_campground",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Book on the operator's NewBook page or at 304-872-6222 (same-day arrivals after 5 pm by phone). 'Peak season weekends require a 2-night minimum stay. No Saturday check-ins or check-outs.' Memorial Day, July 4th and Labor Day need 3 nights. The booking page also put a 2-night minimum on the Area 4 lakefront sites for a June Tuesday. Reservations for the next season open Labor Day weekend. No refunds; cancel 14 days out to keep the deposit as credit."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.mountainlakecampground.com/stay-with-us/campsite-rates/ https://www.mountainlakecampground.com/our-campground/map-policies/ https://www.mountainlakecampground.com/our-campground/faqs/ https://www.mountainlakecampground.com/our-campground/amenities/ https://bookingsus.newbook.cloud/online/mountain_lake_campground",
+      "note": "Operator site + NewBook booking page read: base $48 (2027 electric/water, Areas 1-3) to $65 lakefront, 50-amp full hookups in Area 2 (booking page; the FAQ still says no full hookups), dump/laundry/store, reservable online, 2-night peak weekend and 3-night holiday minimums. Not stated: season dates (no online availability on 2026-10-27), site count, max rig length."
     }
   },
   {
@@ -55350,20 +56071,78 @@
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 19.99,
-      "nightly_high": 34.99,
+      "nightly_low": 39.99,
+      "nightly_high": 39.99,
       "currency": "USD",
-      "surcharges": {
-        "electric": 20
-      },
       "checked": "2026",
-      "note": "Non-electric sites $19.99–$34.99 a night, electric $39.99. WV State Parks booking site (book.wvstateparks.com) for June 2027 weeknights, read 2026-10-12."
+      "note": "Booking site, one night, Oct 2026 and Apr-Jun 2027, weeknights and a Friday-Saturday stay alike: Spruce Creek's six 30-amp electric/water sites $39.99, the only sites tagged with an RV length class ('20-30 ft RV'). The 13 non-electric sites (Tick Ridge $19.99, one at $34.99; Spruce Creek $27.99) carry no RV tag and neither page says they take RVs, so they are left out of the base."
     },
     "provenance": {
       "fees": {
-        "source": "https://book.wvstateparks.com/ nightly prices for 2027-04-20, 2027-06-15 and a 2027-06-18/20 weekend (read 2026-10-12): Cabwaylingo State Forest Electric Campsites (supplier 11067393) + Cabwaylingo State Forest Non-electric Campsites (supplier 7988855)",
-        "checked": "2026-10-12"
+        "source": "book.wvstateparks.com supplier 11067393 (Spruce Creek Electric, $39.99 on 2026-10-27, 2027-04-20, 2027-06-15, 2027-06-18/20; tags 30 Amp, Water, 20-30 ft RV, 3 Pull Thru) + supplier 7988855 (Tick Ridge $19.99/$34.99, Spruce Creek $27.99, no RV tags), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "book.wvstateparks.com supplier 11067393 (all six Spruce Creek electric sites tagged 30 Amp and Water, none Sewer), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://wvstateparks.com/parks/cabwaylingo-state-forest/lodging/camping-at-cabwaylingo-state-forest/ ('two campgrounds with twenty-one sites combined and a group camp') + booking site unit names and tags, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/cabwaylingo-state-forest/lodging/camping-at-cabwaylingo-state-forest/ ('Campground store stocked with camping essentials, souvenirs, and firewood'; 'Convenient dumping station located nearby'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://wvstateparks.com/parks/cabwaylingo-state-forest/lodging/camping-at-cabwaylingo-state-forest/ (Campground Seasons & Dates), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/cabwaylingo-state-forest/lodging/camping-at-cabwaylingo-state-forest/ ('Reservations may be made for no less than two consecutive nights on weekends (Friday and Saturday) or one night Sunday through Thursday'; 'There is a 14-night maximum stay') + booking site suppliers 11067393/7988855 (one night 2026-10-27 sold, 2026-10-30 sold, 2027-06-15 sold, 2027-06-18 none), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true
+    },
+    "sites": {
+      "count": 21,
+      "pull_through": true,
+      "note": "Two campgrounds with 21 sites plus a group camp: Spruce Creek (six electric/water sites, three tagged pull-through, RV class 20-30 ft; five non-electric) and Tick Ridge (eight non-electric)."
+    },
+    "facilities": {
+      "camp_store": true,
+      "note": "'Convenient dumping station located nearby'; playground; Crum-Morgan picnic shelter."
+    },
+    "season": {
+      "year_round": false,
+      "note": "'The campgrounds are open spring through fall, weather permitting.' No dates given; the booking site still sold sites for late October 2026."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.wvstateparks.com/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "'Campsites may be reserved anytime online, by phone, or at the campground office.' Two nights minimum on Friday+Saturday, one night Sunday-Thursday: the booking site sold one-night Tuesdays (Oct 2026, Apr and Jun 2027) and refused a one-night Friday in June 2027, though it sold one for Friday Oct 30 2026, nine days out."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/cabwaylingo-state-forest/lodging/camping-at-cabwaylingo-state-forest/ book.wvstateparks.com suppliers 11067393 'Cabwaylingo State Forest Electric Campsites' and 7988855 'Cabwaylingo State Forest Non-electric Campsites' (Ecomm SupplierTile, stays 2026-10-27 to 2027-06-20, read 2026-10-21)",
+      "note": "Fees 19.99-34.99 (+$20 electric) -> 39.99 (the base is now the electric sites, the only ones tagged for RVs; non-electric prices in the note) and the entry's electric surcharge cleared; added hookups 30A/water, 21 sites with pull-throughs, camp store, spring-fall season; booking row confirmed (2-night weekend minimum, 14 max)."
     }
   },
   {
@@ -59436,48 +60215,55 @@
     "inclusion_evidence": "rec.gov campground 10086085: 12-13 standard nonelectric sites 'suitable for RVs, Travel Trailers and tents', currently bookable/operating",
     "waterfront_evidence": "rec.gov campground page: sites atop a hill, 'does not offer a lake view', water 'in hiking distance'; satellite 38.666,-80.678 shows single-row loop on ridge ~400m above Sutton Lake",
     "website": "https://www.recreation.gov/camping/campgrounds/10086085",
-    "phone": "",
-    "note": "USACE (Huntington District) on Sutton Lake. 12 primitive hilltop sites suitable for RVs/trailers/tents; vault toilets, no hookups or potable water. First-come, first-served (no reservations).",
+    "phone": "304-765-2816",
+    "note": "USACE (Huntington District) campground on a hilltop above Sutton Lake, three miles off I-79 (Flatwoods exit); the sites have no lake view. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
       "sewer": false
     },
     "sites": {
-      "count": 12
+      "count": 12,
+      "pull_through": true,
+      "note": "Twelve primitive hilltop sites for RVs, travel trailers and tents; recreation.gov lists them as one 'Sites 1-12' record: drive-in, gravel pull-through driveways 75 ft long, slight grade, two vehicles, up to 8 people."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "note": "Vault toilets, security lighting and a volunteer host; each site has a fire ring, lantern post and picnic table. The adjacent Bee Run Day Use Area has the swimming beach, boat ramp, playground, and the Sutton Lake Marina and Ship Store."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Not reservable: first-come, first-served, paid on site with recreation.gov Scan & Pay. No more than 14 days in any 30 at Sutton Lake; one site per primary occupant. Check-in 6 p.m., check-out 5 p.m. per the site record."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085 (sites 1-12 typed STANDARD NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/10086085 ('twelve primitive campsites suitable for RV's, Travel Trailer's and tents'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 ('The campground features twelve primitive campsites suitable for RV's, Travel Trailer's and tents') + https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085 (site '1-12': Site Access Drive In, Driveway Entry Pull-through, Driveway Surface Gravel, Driveway Length 75), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 ('The campground has a volunteer host, vault toilets and security lighting'; notice on the adjacent Bee Run Day Use Area), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 (rules: reservationCutOff 'Not Reservable', scanAndPay, maxStay 14 'Rolling 30 Days', maxConcurrentStay 1; notice 'No person(s) may camp at one or more campsites for more than 14 days in a 30 day consecutive period') + /rates ('First-come, First-served Season'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10086085/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10086085/rates (2026 'First-come, First-served Season' May 1-Sep 30: 'WalkInNON-ELECTRIC': 18) + https://www.recreation.gov/api/camps/campgrounds/10086085 (rules: scanAndPay; notice on Federal Pass discounts), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -59488,7 +60274,14 @@
     "fees": {
       "nightly_low": 18,
       "nightly_high": 18,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$18/night walk-in non-electric site, paid by recreation.gov Scan & Pay; federal pass discount only if the pass holder is registered and stays every night."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/10086085 https://www.recreation.gov/api/camps/campgrounds/10086085/rates https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085",
+      "note": "recreation.gov read: confirmed $18 (2026), no electric, 12 sites, vault toilets, first-come only (Scan & Pay); added pull-through gravel driveways (75 ft), 14-in-30 limit, volunteer host. Water/sewer/potable-water 'false' (from note prose) left: recreation.gov does not mention water. Note trimmed of what the fields hold."
     }
   },
   {
@@ -69452,7 +70245,7 @@
     "inclusion_evidence": "City of Beckley New River Park campground: 17 paved back-in full-hookup RV sites, reservations, seasonal Apr-Nov; operating per RV Life",
     "waterfront_evidence": "satellite 37.784,-81.196: urban New River Park setting, paved sites, no water body anywhere near",
     "phone": "304-256-1747",
-    "note": "City of Beckley campground in New River Park (run via the Exhibition Coal Mine). 17 paved back-in sites, full hookups (50-amp/water/sewer); self-contained units only (no on-site restrooms/showers). Reservations; open ~Apr 1-Nov 1. Inland city park, not waterfront. --Claude",
+    "note": "City of Beckley campground in New River Park (run via the Exhibition Coal Mine). Self-contained units only. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -69464,7 +70257,8 @@
       "sewer": true
     },
     "sites": {
-      "count": 17
+      "count": 17,
+      "pull_through": false
     },
     "facilities": {
       "showers": false,
@@ -69472,43 +70266,64 @@
       "vault_toilets": false
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "11-01"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "note": "'Reservations available.' Campers register 10 a.m.-5 p.m. at the Exhibition Coal Mine gift shop (304-256-1747) with a valid driver's license; the page also links the city's online registration catalog, https://secure.rec1.com/WV/beckley-wv/catalog."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('50 amp power, water, and sewage'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('The 17 site campground', '17 paved back-in sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('Must be self-contained – No Restroom of Showers Available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('The 17 site campground is open April 1 – November 1'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('Reservations available', 'Registration: From 10:00 am – 5:00 pm, campers register at the Beckley Exhibition Coal Mine Gift Shop. A current/valid driver's license must be presented at registration.', 'Click Here to Register Online' -> secure.rec1.com/WV/beckley-wv/catalog) + contact page (Phone: 304-256-1747), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://beckley.gov/coal-mine/underground-tour/campground/ ('$35.00 per night', '$210.00 per week', '$ 750.00 a month'; page modified 2026-10-18), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "f0879b26adc5052b",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 35,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Also $210 a week and $750 a month."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://beckley.gov/coal-mine/underground-tour/campground/ https://beckley.gov/coal-mine/contact-information-exhibition-coal-mine/",
+      "note": "City page found: every derived value confirmed manual (17 back-in paved sites, 50A/water/sewer, no restrooms/showers, Apr 1 - Nov 1, reservable); added fees $35/night ($210/wk, $750/mo) and season dates; phone 304-256-1747 confirmed. Note trimmed to what no field holds."
+    },
+    "website": "https://beckley.gov/coal-mine/underground-tour/campground/"
   },
   {
     "id": 1192,
@@ -70031,14 +70846,14 @@
     "name": "Beaver Lakes Campground",
     "location": "38.33658,-80.71472",
     "elevation_meters": 684.0,
-    "website": "https://www.facebook.com/100072383379841/\nhttps://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0",
+    "website": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0",
     "state": "WV",
     "ownership": "private",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Hipcamp/Pitchup/RV Life: private campground, 42 full-hookup sites, RV-navigable, currently operating (host John)",
     "waterfront_evidence": "satellite near 38.337,-80.715: rural reclaimed property with scattered ponds; RV loop not clearly resolvable at pin and no pads confirmed at any pond waterline - default down",
-    "phone": "304-619-6654",
-    "note": "Private campground on a ~250-acre reclaimed property near Calvin (Nicholas Co), close to New River Gorge/Summersville Lake. Full-hookup back-in RV sites (15/20/30/50-amp), RVs to ~45 ft; longish gravel access road (in good shape). Has scattered ponds but RV sites not confirmed pond-front. --Claude",
+    "phone": "304-618-7399",
+    "note": "Private campground on a ~250-acre reclaimed property near Calvin (Nicholas Co), close to New River Gorge/Summersville Lake. Longish gravel access road (in good shape). Has scattered ponds but RV sites not confirmed pond-front. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -70051,22 +70866,34 @@
     },
     "sites": {
       "max_rig_ft": 45,
-      "pull_through": false
+      "pull_through": false,
+      "count": 50
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 ('Full RV hookups - Electrical, water, and sewage hookups are available at all sites'; RV amenities Electricity / Water / Sewage Hookup), read 2026-10-21. Amperage not stated there; the derived 50 A is left as it was.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 (campsiteCount 50, rvTentCount 50; site rvMaxLength '45 ft'; access DRIVE_IN), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 (__NEXT_DATA__ sites, read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 (__NEXT_DATA__ site 372575: pricePerNightBase $32.99, pricePerNight $29.69, isPriceDiscount true), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 (core amenities Potable water, Toilets, Showers with that description, Trash, Campfires; site overview 'Has 6 large ponds in campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 (isBookable true, isInstantBookable true, minNights 1, maxNights 29, maxBookingWindowInMonths 6), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -70076,9 +70903,28 @@
     },
     "fees": {
       "nightly_low": 29.69,
-      "nightly_high": 29.69,
+      "nightly_high": 32.99,
       "currency": "USD",
-      "note": "RV/tent sites $29.69 (host prices; Hipcamp adds a service fee)."
+      "note": "Hipcamp lists the one site type (RV or tent, 50 sites) at $32.99 a night, currently shown discounted to $29.69; Hipcamp adds its own service fee at checkout.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "potable_water": true,
+      "showers": true,
+      "note": "Host's listing: 'construction on property continues, currently have my own camper set up for shower and bathroom access'. Six ponds on the property."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "url": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0",
+      "window_opens_days": 180,
+      "max_stay_nights": 29,
+      "note": "Booked through Hipcamp (instant book, one-night minimum, up to 29 nights, booking window six months)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/west-virginia-beaver-lakes-campground-llc-mxvhkyl0 Google Maps place panel 'Beaver Lakes Campground', 73 Columbia Gas Rd, Calvin WV (read 2026-10-21 via gm.py) http://www.beaverlakescampgroundandcabins.com/ (Wix 'ConnectYourDomain Error', 2026-10-21)",
+      "note": "Hipcamp listing is live and bookable (265 bookings, 95% of 167 recommend). Fees 29.69 -> 29.69-32.99 (list $32.99, discounted $29.69); water/sewer and 50 sites / 45 ft confirmed; added booking (Hipcamp, 1-29 nights) and facilities; amperage not stated (derived 50 A left). Note: dropped the hookup/length restatement."
     }
   },
   {
@@ -70094,7 +70940,7 @@
     "inclusion_evidence": "operator site blueheronlandingwv.com: 'Full Hook-Up Camper Lots' + creek-side rustic tent sites + cabins, operating with reservations -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 38.87832,-81.83001: RV pull-through rows set back ~100m+ across open grass from Mill Creek, creek screened by treeline; operator notes creek-side sites are tent sites, not RV",
     "phone": "304-531-9193",
-    "note": "Private RV campground on Mill Creek at Cottageville (Jackson Co). 67 full-hookup lots (30/50-amp), kayak/canoe rental, open to all with reservations. The creek-side sites are the tent sites; RV lots are not confirmed on the water. RV Life 4★, price $$ (2/4). --Claude  Reserve by phone/email only - no online booking system. --Claude",
+    "note": "Private RV campground on Mill Creek at Cottageville (Jackson Co). 67 lots, kayak/canoe rental, open to all with reservations. The creek-side sites are the tent sites; RV lots are not confirmed on the water. Some long-term monthly sites, no residential ones (operator, 2026). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -70111,9 +70957,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.blueheronlandingwv.com/contact-us ('All camper lots are set up for both 30- and 50-amp service'; 'All pricing includes water, electric, sewer, and trash') + home page ('BHL offers Full Hook-Up Camper Lots'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -70126,8 +70972,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.blueheronlandingwv.com/contact-us ('Nightly: $45', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://www.blueheronlandingwv.com/contact-us ('2026 Rates and Amenities'; 'All pricing includes water, electric, sewer, and trash'; 'Monthly: $625 Weekly: $250 Nightly: $45'; '3.75 percent courtesy fee for all credit card charges. We accept cash and check as well.'; 'Tent Camping: $20 per tent, per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.blueheronlandingwv.com/contact-us ('Amenities: Laundry facility (quarter machines), playground, bath house, fishing areas on Millcreek, and a kayak and canoe launch'; 'We do not offer campground wide internet. We do offer Wi-Fi at the office area'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.blueheronlandingwv.com/contact-us ('Open all year!'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -70144,7 +71001,20 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "$45 nightly with water, electric and sewer."
+      "note": "$45 a night, $250 a week, $625 a month, all including water, electric, sewer and trash. A 3.75% courtesy fee applies to card payments (cash and check accepted). Creek-side tent sites $20 a night, no electric."
+    },
+    "facilities": {
+      "laundry": true,
+      "wifi": true,
+      "note": "Bath house, coin laundry, playground, kayak and canoe launch on Mill Creek. Wi-Fi at the office area only, not campground-wide."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.blueheronlandingwv.com/ https://www.blueheronlandingwv.com/contact-us",
+      "note": "Fees $45 confirmed from the 2026 rate page; hookups 50A/water/sewer confirmed manual; added year-round season and facilities (laundry, office Wi-Fi). Booking left (pages give only phone/email, no booking statement). Note: dropped the hookup, RV Life rating and phone-only restatements."
     }
   },
   {
@@ -70238,7 +71108,7 @@
     "inclusion_evidence": "creeksidecampingllc.com operator: 14 camper sites all with new 50/30-amp electric, water, sewer, owners on premises -> real private full-hookup RV campground",
     "waterfront_evidence": "satellite at 40.0352,-80.5592: 14 pads single-file on the narrow creek-hollow floor, canopy hides the channel; firsthand reviews confirm the creek directly fronts nearly every site",
     "phone": "304-547-1469",
-    "note": "Family-owned campground near Triadelphia (Ohio Co, near Wheeling). 14 full-hookup sites (30/50-amp); pool/hot tub. Nearly every site fronts the on-site creek (with a small waterfall) - creekfront RV sites confirmed. --Claude",
+    "note": "Family-owned campground near Triadelphia (Ohio Co, near Wheeling); pool/hot tub. Nearly every site fronts the on-site creek (with a small waterfall) - creekfront RV sites confirmed. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -70254,20 +71124,35 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://creeksidecampingllc.com/ ('Each camper spot offers all new 50amp and 30amp electric. Water, sewage, and trash disposal are also included.'; 'Full hook-ups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://creeksidecampingllc.com/ ('Total of 14 camper sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://creeksidecampingllc.com/contact.html ('For questions or to make reservations, contact us in 3 different ways! Call us! (304)547-1469 or (304)280-1868') + home page ('Owners live on premises to assist with needs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "6d57508f6a356b26",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "'For questions or to make reservations' call (304) 547-1469 or (304) 280-1868, Facebook, or the site's email form. Owners live on the premises."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://creeksidecampingllc.com/ (Last-Modified 2019-03-25) https://creeksidecampingllc.com/contact.html Google Maps place panel 'Creekside Camping, L.L.C.', 191 Gillespie Ln, Triadelphia WV (read 2026-10-21 via gm.py)",
+      "note": "Hookups (50/30A, water, sewer) and 14 sites confirmed manual from the operator's site; added booking (phone/email). No rate anywhere on the site, so fees stay empty. Note: dropped the site-count/hookup restatement."
     }
   },
   {
@@ -859048,7 +859933,7 @@
     "inclusion_evidence": "Operator's own Camping Rates and About pages at brokenwheelcampground.net (fetched live 2026-09-15): $45/night water+30-amp electric campsites and $25/night primitive tent sites, phone reservations opening March 15, open year round, weekend minimum stays -> a real transient drive-in RV campground, not a seasonal or residential park; US Census geocoder matches 2060 Skin Creek Rd to 38.99949,-80.45596 and Esri imagery there shows campers along an interior gravel road beside a store building.",
     "website": "http://www.brokenwheelcampground.net/",
     "phone": "304-269-6097",
-    "note": "Family-owned campground and country store established 1995, open year round, on Skin Creek Rd about 1.5 mi east of I-79 exit 96 in Lewis County. Operator's own Camping Rates page: campsite with water and 30-amp electric $45/night for 4 people, primitive tent site $25/night, additional persons $2, limited monthly sites; no sewer hookups (dump station on site plus a $20 honey-wagon service for extended stays). Phone reservations only for the W/E sites, taken from March 15 for the season, two-night minimum on May 1-Oct 1 weekends and three on holiday weekends; primitive sites are first-come, not reservable. Store carries groceries, firewood, bait and fishing/hunting supplies; stocked catch-and-release fishing pond (no state licence needed), playground, laundry, wifi. Third-party listings report the 30-amp sites take rigs to about 50 ft with some pull-throughs, which the operator does not state. Official site serves over plain http only - its https certificate chain is broken. RV Life 4*/$$ ~$32/night (auto 9/2026). --Claude",
+    "note": "Family-owned campground and country store established 1995, on Skin Creek Rd about 1.5 mi east of I-79 exit 96 in Lewis County. Store carries groceries, firewood, bait and fishing/hunting supplies; stocked catch-and-release fishing pond (no state licence needed), playground, laundry. Third-party listings report the 30-amp sites take rigs to about 50 ft with some pull-throughs, which the operator does not state. Official site serves over plain http only - its https certificate chain is broken. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -859060,51 +859945,62 @@
       "water": true,
       "sewer": false
     },
-    "sites": {
-      "max_rig_ft": 50,
-      "pull_through": true
-    },
     "facilities": {
       "laundry": true,
       "wifi": true,
-      "dump": true
+      "dump": true,
+      "camp_store": true
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend",
+          "season": "May 1 - Oct 1"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations by phone (304-269-6097) for the water/electric sites only, taken from March 15 for the upcoming season; primitive sites first-come. Two-night minimum on weekend reservations May 1 - Oct 1, three nights on holiday weekends. Paid in full on arrival; sites held until 6 p.m.; 48 hours' notice to cancel. Check-in 3 p.m., check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "http://www.brokenwheelcampground.net/aboutbrokenwheel.html ('camp sites with water & electric (30 amp)') + campingrates.html ('Dump station available', 'Honey wagon service available for extended stay....$20.00'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "Operator's pages (home, about, camping rates) read 2026-10-21 state no site length or pull-throughs; the derived 50 ft / pull-through came from third-party listings, as the note itself says.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "http://www.brokenwheelcampground.net/campingrates.html ('Dump station available') + aboutbrokenwheel.html ('WIFI HOTSPOT'; 'GROCERIES / HUNTING SUPPLIES- FISHING SUPPLIES- LIVE BAIT / ... FIREWOOD'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "http://www.brokenwheelcampground.net/ ('CAMPGROUND OPEN YEAR ROUND'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "http://www.brokenwheelcampground.net/aboutbrokenwheel.html ('Reservation may be made in advance for camp sites with water & electric (30 amp). No reservations for primitive sites- first come basis. We begin taking reservations on March 15 for the upcoming season.'; 'Two (2) night minimum on week-end reservations. (May 1 thru Oct.1) Three (3) night minimum on holiday week-end reservations.'; 'Reservations must be paid in full upon arrival.') + campingrates.html ('For reservations contact Broken Wheel Campground @ 1-304-269-6097'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "http://www.brokenwheelcampground.net/campingrates.html (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "http://www.brokenwheelcampground.net/campingrates.html ('Camp site (with water & electric) 4 persons $45.00 per night'; 'Primitive camp site (tent area) 4 persons $25.00 per night'; 'Additional persons $2.00 per night'; 'Limited monthly sites available'; server Last-Modified 2026-02-25), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -859117,7 +860013,12 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Broken Wheel: water and electric sites $45 a night for 4; primitive $25. Read 2026-10-15."
+      "note": "Water and 30-amp electric site $45 a night for 4 people, $2 per extra person (children 6 and under free, 8 per site at most), extra tent $12; primitive tent area $25; limited monthly sites with water, electric and weekly honey-wagon service. 'Fees & terms subject to change without notice.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "http://www.brokenwheelcampground.net/campingrates.html (Last-Modified 2026-02-25) http://www.brokenwheelcampground.net/aboutbrokenwheel.html http://www.brokenwheelcampground.net/",
+      "note": "Fees $45 confirmed (rate page modified 2026-02-25); 30A/water, dump, wifi, store, year-round confirmed manual; booking filled (phone, W/E sites only, primitive FCFS, 2-night May-Oct weekend / 3-night holiday minimum); derived max_rig_ft 50 and pull_through cleared (third-party only). Note: dropped rate, booking, hookup and RV Life restatements."
     }
   },
   {
@@ -859133,7 +860034,7 @@
     "inclusion_evidence": "Operator's own Camping, About and Contact pages at eaglesnestcampgroundwv.com (copyright 2026, fetched 2026-09-15): full hook-up RV sites at a published $50/night nightly rate, open year round, office hours and phone; Good Sam listing corroborates 'from $50/night' -> real nightly-bookable RV campground. Esri imagery shows three long rows of RVs on open grass pads with interior gravel lanes and a restaurant building.",
     "website": "https://eaglesnestcampgroundwv.com/",
     "phone": "304-298-4380",
-    "note": "Family-owned since 2011 on Patterson Creek Village Pike, about 9 mi from Cumberland MD; open year round. Operator's Camping page: full hook-up sites $50/night ($54 on holiday weekends) and tent camping $20 per adult per night, children 12 and under free. Seasonal packages are sold alongside the nightly sites (weekends-only Thu-Sun $450/month, full-time resident $850/month, May 1-Oct 10 season, a whole row $1800), so expect a mixed transient/seasonal park; cabins and a pavilion are separate products. On-site Fireside Inn restaurant and lounge, camp store (ice, firewood, beer, propane), live music Fridays and karaoke Thursdays, playground and yard games, creek swimming and fishing, weekend community float trips. Reservations and late check-in by phone - there is no online booking. RV Life counts 80 sites; the operator does not publish a site count or a max RV length. Note the operator's own warning that GPS mis-routes to the address - they direct drivers to Patterson Creek Village Pike off WV-28. RV Life 4*/$$ ~$40/night (auto 9/2026). --Claude",
+    "note": "Family-owned since 2011 on Patterson Creek Village Pike, about 9 mi from Cumberland MD. Seasonal packages are sold alongside the nightly sites (weekends-only Thu-Sun $450/month, full-time resident $850/month, May 1-Oct 10 season, a whole row $1800), so expect a mixed transient/seasonal park; cabins and a pavilion are separate products. On-site Fireside Inn restaurant and lounge, camp store (ice, firewood, beer, propane), live music Fridays and karaoke Thursdays, playground and yard games, creek swimming and fishing, weekend community float trips. Late check-in by phone. RV Life counts 80 sites; the operator does not publish a site count or a max RV length. Note the operator's own warning that GPS mis-routes to the address - they direct drivers to Patterson Creek Village Pike off WV-28. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -859144,9 +860045,6 @@
       "water": true,
       "sewer": true
     },
-    "sites": {
-      "count": 80
-    },
     "season": {
       "year_round": true
     },
@@ -859156,19 +860054,19 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://eaglesnestcampgroundwv.com/camping ('select a full hook-up site'; 'Full Hook-Up Sites') + /contact ('Open Year Round Full Hook Ups'), read 2026-10-21. Amperage not stated.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "Operator's pages (home, about, camping, contact) read 2026-10-21 publish no site count; the derived 80 was RV Life's figure, as the note says.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://eaglesnestcampgroundwv.com/ ('Campground Open Year Round') + /contact ('Open Year Round Full Hook Ups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -859181,8 +860079,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://eaglesnestcampgroundwv.com/camping (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://eaglesnestcampgroundwv.com/camping ('Full Hook-Up Sites - $50 per night / For Holiday weekends - $54 per night'; 'Tent Camping $20 Per Adult, Per Night'; '*All prices are subject to change. Rates are pre-tax pricing'; page copyright 2026), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -859198,7 +860097,12 @@
       "nightly_high": 54,
       "currency": "USD",
       "checked": "2026",
-      "note": "Eagle's Nest: full hookups $50 a night, $54 on holiday weekends; tents $20 per adult. Read 2026-10-15."
+      "note": "Full hook-up sites $50 a night, $54 on holiday weekends, before tax ('Rates are pre-tax pricing'); tent camping $20 per adult per night, children 12 and under free."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://eaglesnestcampgroundwv.com/camping https://eaglesnestcampgroundwv.com/ https://eaglesnestcampgroundwv.com/about-us https://eaglesnestcampgroundwv.com/contact",
+      "note": "Fees $50-54 confirmed (pre-tax, 2026 page); water/sewer and year-round confirmed manual; derived site count 80 cleared (RV Life only). Booking left as derived (pages give phone/form, no reservation statement). Note: dropped the rate, year-round, phone-booking and RV Life restatements."
     }
   },
   {

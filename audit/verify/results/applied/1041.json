@@ -1,0 +1,47 @@
+{
+  "id": 1041,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10086085",
+    "https://www.recreation.gov/api/camps/campgrounds/10086085/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 18, "nightly_high": 18, "currency": "USD", "checked": "2026",
+                 "note": "$18/night walk-in non-electric site, paid by recreation.gov Scan & Pay; federal pass discount only if the pass holder is registered and stays every night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10086085/rates (2026 'First-come, First-served Season' May 1-Sep 30: 'WalkInNON-ELECTRIC': 18) + https://www.recreation.gov/api/camps/campgrounds/10086085 (rules: scanAndPay; notice on Federal Pass discounts), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085 (sites 1-12 typed STANDARD NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/10086085 ('twelve primitive campsites suitable for RV's, Travel Trailer's and tents'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 12, "pull_through": true,
+                 "note": "Twelve primitive hilltop sites for RVs, travel trailers and tents; recreation.gov lists them as one 'Sites 1-12' record: drive-in, gravel pull-through driveways 75 ft long, slight grade, two vehicles, up to 8 people."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 ('The campground features twelve primitive campsites suitable for RV's, Travel Trailer's and tents') + https://www.recreation.gov/api/search/campsites?fq=asset_id:10086085 (site '1-12': Site Access Drive In, Driveway Entry Pull-through, Driveway Surface Gravel, Driveway Length 75), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true,
+                 "note": "Vault toilets, security lighting and a volunteer host; each site has a fire ring, lantern post and picnic table. The adjacent Bee Run Day Use Area has the swimming beach, boat ramp, playground, and the Sutton Lake Marina and Ship Store."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 ('The campground has a volunteer host, vault toilets and security lighting'; notice on the adjacent Bee Run Day Use Area), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "recreation.gov", "fcfs": "always", "max_stay_nights": 14,
+                 "note": "Not reservable: first-come, first-served, paid on site with recreation.gov Scan & Pay. No more than 14 days in any 30 at Sutton Lake; one site per primary occupant. Check-in 6 p.m., check-out 5 p.m. per the site record."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10086085 (rules: reservationCutOff 'Not Reservable', scanAndPay, maxStay 14 'Rolling 30 Days', maxConcurrentStay 1; notice 'No person(s) may camp at one or more campsites for more than 14 days in a 30 day consecutive period') + /rates ('First-come, First-served Season'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USACE (Huntington District) campground on a hilltop above Sutton Lake, three miles off I-79 (Flatwoods exit); the sites have no lake view. --Claude",
+  "summary": "recreation.gov read: confirmed $18 (2026), no electric, 12 sites, vault toilets, first-come only (Scan & Pay); added pull-through gravel driveways (75 ft), 14-in-30 limit, volunteer host. Water/sewer/potable-water 'false' (from note prose) left: recreation.gov does not mention water. Note trimmed of what the fields hold.",
+  "flags": [
+    "Phone missing: recreation.gov gives 304-765-2816 (Sutton Lake, SuttonLake@usace.army.mil).",
+    "Missing agency website: the USACE Sutton Lake page (https://www.lrh.usace.army.mil/Missions/Civil-Works/Recreation/West-Virginia/Sutton-Lake/) refuses automated fetches (Akamai 'Invalid URL'), so it was not read; the entry's website is the recreation.gov page.",
+    "Season: recreation.gov's only dates are a 2026 'First-come, First-served Season' rate period May 1-Sep 30; a rate season is not a campground season, so nothing was written."
+  ]
+}

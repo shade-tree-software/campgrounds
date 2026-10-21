@@ -1,0 +1,85 @@
+{
+  "id": 83,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/232007",
+    "https://www.recreation.gov/api/camps/campgrounds/232007/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232007"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 33,
+        "nightly_high": 33,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single electric site $33, double $58, group site $70 (up to 40), historic cabin $150. Day use $5/vehicle. Two vehicles per single site; a daily fee for extra vehicles. (A second, older list on the FS page still shows $30/$50/$65.)"
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground ('Single Site: $33 per night  Double Site: $58 per night  Group Site: $70 per night (up to 40 people)', last updated June 2, 2026) + https://www.recreation.gov/api/camps/campgrounds/232007/rates (2026 Peak Season: STANDARD ELECTRIC 33, double 58), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 30
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (all 26 STANDARD ELECTRIC sites: Electricity Hookup 30) + https://www.recreation.gov/api/camps/campgrounds/232007 ('Each site comes with a campfire ring, tent pad, lantern post and electric hookups'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 26,
+        "max_rig_ft": 45,
+        "pull_through": false,
+        "note": "26 electric sites (25 single, 1 double) on one loop with long paved back-in spurs, 45 ft on the catalog (site 010 lists 99 ft); plus one non-electric group site and a historic cabin."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232007 ('The campground has 26 (25 single, 1 double) camping units with electric hookups ... paved spurs', 'a single loop with long spurs') + https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (Max Vehicle Length 45, Driveway Entry Back-In), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "One six-unit flush restroom with four showers, plus vault toilets; dump station on site. Entrance gates locked 9 p.m. to 7 a.m."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232007 ('Drinking water and accessible flush toilets and showers are provided, with a dump station is on-site', 'two single-unit vault toilets, one double-unit vault toilet, and one six-unit flush restroom with four shower units'; notice 'Entrance gates are locked from 9 p.m. to 7 a.m.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 330,
+        "fcfs": null,
+        "reserve_until": {
+          "relative_to": "arrival",
+          "offset_hours": -96
+        },
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14,
+        "note": "All 26 campsites are reservable on recreation.gov, up to 11 months ahead and until 4 days before arrival; recreation.gov also notes 'This campground has first-come, first-served sites' (presumably unreserved sites taken on arrival). Weekends 2 nights, holiday weekends 3; 14-day limit; check-out 1 p.m. Concession-run (American Land & Leisure)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232007 (rules: reservationWindow 11 Months, reservationCutOff 4 days prior to arrival, minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3) + https://www.recreation.gov/api/search/campsites?fq=asset_id:232007 (every campsite reservable: true, Site-Specific) + https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground ('Maximum length of stay in campground is 14 days. Check-out time is 1:00 p.m.'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USFS campground on a bend of the Shavers Fork River about 6 miles NE of Elkins, built by the CCC; sites are not confirmed to be directly on the river. recreation.gov warns the recreation area may flood. --Claude",
+  "summary": "recreation.gov facility 232007 found: changed booking reservable false -> true (recreation.gov, 11-month window, 4-day cutoff, 2/3-night weekend/holiday minimums, 14-night max) and cleared the derived fcfs 'always'. Confirmed $33 (2026). Added 30-amp electric at all 26 sites, 45-ft back-in spurs, showers/flush+vault toilets/water/dump. Note corrected (river is the Shavers Fork, not the Greenbrier; reservable) and trimmed. Not stated: a campground season (rate season Apr 17-Oct 12 not used).",
+  "flags": [
+    "Website is dead (404): https://www.fs.usda.gov/r09/monongahela/recreation/stuart-recreation-area. The FS page is https://www.fs.usda.gov/r09/monongahela/recreation/stuart-day-use-area-and-campground; booking at https://www.recreation.gov/camping/campgrounds/232007.",
+    "Phone missing: recreation.gov 'For facility specific information, please call (304) 567-3082' (facility phone 304-636-5070). Concession-run by American Land & Leisure (rec.gov contact @AmericanLL.com); ownership federal kept.",
+    "Waterfront re-audit lead: entry is 'riverview', but recreation.gov says 'The campground is perched along a bend on the Shavers Fork River' / 'set in a mixed forest along the banks of the Shavers Fork River'. The old note named the wrong river (Greenbrier)."
+  ]
+}

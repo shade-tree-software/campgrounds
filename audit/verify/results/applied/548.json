@@ -1,0 +1,44 @@
+{
+  "id": 548,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233422",
+    "https://www.recreation.gov/api/camps/campgrounds/233422/rates",
+    "trip_data/ridb_campsites.json facility 233422 (RIDB campsite catalog, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 40, "nightly_high": 45, "currency": "USD", "checked": "2026",
+                 "note": "recreation.gov rate table: every RV site is a STANDARD ELECTRIC site at $40 a night; the Peak Season (about May 20 - Sept 6) electric rate carries a future fee of $45 effective 2026-11-26, while the early-May and September-October first-come seasons stay $40. The $24 rate is the seven walk-to TENT ONLY sites."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233422/rates (Peak Season 2026-05-20..09-06 and 2027-05-20..09-06: STANDARD ELECTRIC per_night 40, future_fees per_night 45 effective 2026-11-26; First-come, First-served Season 2027-05-01..05-19 and 2027-09-08..10-12: Walk In STANDARD ELECTRIC 40; TENT ONLY NONELECTRIC 24), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('This large waterfront campground offers 110 campsites with electric hookups') + RIDB catalog (all 110 STANDARD ELECTRIC sites Electricity Hookup 30; no water or sewer hookup attribute), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 117, "max_rig_ft": 90,
+                 "note": "110 electric RV sites plus seven primitive walk-to tent sites. Catalog driveway lengths run 30-90 ft (most 40-60 ft); 81 marked back-in, none marked pull-through. No pets or livestock permitted in the campground."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('110 campsites with electric hookups, along with seven primitive walk-to tent sites'; notice 'NO PETS or livestock permitted') + RIDB catalog (117 sites: 110 STANDARD ELECTRIC, 7 TENT ONLY NONELECTRIC; Max Vehicle Length 30-90 ft on RV sites; Driveway Entry Back-In 81), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "laundry": true, "dump": true,
+                 "note": "Accessible boat ramp and fishing dock on site; playground and nature trails."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233422 ('Amenities include flush toilets, showers, drinking water, laundry facilities and a dump station. An accessible boat ramp and fishing dock are on-site.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov",
+                 "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+                 "max_stay_nights": 14,
+                 "note": "Run by the Corps of Engineers itself (recreation.gov: USACE, not commercially managed). Reservations in the peak season (about May 20 - Labor Day); the rate table calls early May and September to mid-October 'First-come, First-served' seasons. recreation.gov rules: 2-night weekend minimum, 3 nights on holiday weekends, reservations close 2 days before arrival; rec.gov minimums may be relaxed for a same-day booking. No more than 14 days in any 30 at Summersville Lake. Peak-season check-in station hours 7 a.m. - midnight, off-peak 5-9 p.m."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233422 (org USACE, is_commercially_managed false; facility_rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 2, maxStay 14 per rolling 30 days; notices) + /rates (season names), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "USACE-operated (Huntington District) Summersville Lake campground. Hookups 30A confirmed manual; fees 24-40 -> 40-45 (the $24 was the walk-to tent sites; peak electric rises to $45 from 2026-11-26); added sites, facilities and booking (2/3-night weekend/holiday minimum, 14 max, FCFS shoulder seasons). Season not stated (rate seasons only); USACE lake page unreachable by plain HTTP.",
+  "flags": ["Missing phone: recreation.gov gives facility phone 304-872-3459."]
+}

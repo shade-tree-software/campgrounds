@@ -113,3 +113,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **263 Summersville Lake Retreat (WV)**: FAQ "We overlook Summersville Lake and have a fantastic view of the lake but we do not have direct access"; premium sites "stare out on Summersville Lake". Entry is not waterfront, so a view tier may be earned.
 - **498 Army Camp, NPS (WV)**: NPS says the sites are "along the banks of the New River at one of its many horseshoe bends"; entry is not waterfront (--AWH says the sites are not waterfront).
 - **1192 Great Bend (WV)**: the city says it's "Nestled along the Sandy Creek close to where it flows into the Ohio River"; entry riverfront, so the water at the sites may be the creek.
+- **83 Stuart Recreation Area (WV)**: rec.gov says "perched along a bend on the Shavers Fork River" and "along the banks"; entry riverview.
+- **428 Brooklyn Heights Riverfront (WV)**: operator names RV6-RV10 "Primitive Riverfront RV site" (the river is across a narrow dead-end road); RV1 is "about 50 feet from the Dry Fork River"; entry riverview.
+- **232 Bluestone SP (WV)**: camping page calls it "the perfect lakeside retreat camping spot" and the note says "lakeside campsites"; entry not waterfront. Old Mill and East Shore are closed for dam work, and Meador is the RV campground.
+- **13120 Eagle's Nest (WV)**: operator offers "permanent waterfront lodging", "Family Campground Near Water" with swimming and fishing in Patterson Creek; entry not waterfront.
+- **1201 Blue Heron Landing (WV)** (weak): "camp, and kayak right on Mill Creek with direct access on-site", but the rate page puts the tent sites, not the RV lots, along the creek.

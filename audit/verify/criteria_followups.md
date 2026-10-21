@@ -338,3 +338,17 @@ me drop and report); each needs the research named before a verdict.
 - **875 Summersville Lake SP** overrides the state:WV 2-night weekend minimum: the booking site sold one-night Fri/Sat stays and the park page states no minimum.
 - **1197 Kitty Wilson**: rates only on a 2018 page (local, no gate). **1193 Krodel Park**: no official web page found (town park).
 - **14248 Lazy K's / 14252 Lost River / 1226 Lake Stephens**: monthly sites alongside nightly ones; nights are sold to anyone, so the long-stay test passes. Lost River's base is exactly $50.00, at the gate, not over it.
+
+### p3-57 / p3-58 (WV, 2026-10-21)
+- **1199 Beaver Lakes** kept: no operator site (dead Wix domain, Facebook unreadable) and Google has 23 reviews, but a live instant-book Hipcamp listing with a posted rate is its booking page (price + presence). The phone is now Google's 304-618-7399; it was 304-619-6654.
+- **1205 Creekside Camping** kept: working site (2019) with a phone, and Google 4.6 over 58 reviews; no posted rate (RV Life $$ only), and nothing suggests a long-stay park. A call would confirm nightly sales.
+- **13120 Eagle's Nest** kept: $50.00 base, at the gate, not over it. It sells a $850/month "Full Time Resident" product and a weekend season alongside posted nightly sites; nights are for sale, and there are no homes or lots for sale.
+- **232 Bluestone SP**: the inherited state:WV booking row looks wrong. book.wvstateparks.com sells only picnic shelters there, and the camping page drops the reservation/minimum sentences, so it is probably first-come or by phone during the dam work. Call 304-466-2805, then override the row. Not priced.
+- **715 Beech Fork (registry lead)**: the booking site sold one-night Fridays 9 and 23 days out but refused them 30+ days out and on every 2027 Friday, so the 2-night weekend minimum is waived somewhere inside 24-29 days. Confirm at another park before the state:WV row gets a waiver.
+- **876 Cabwaylingo**: the base is $39.99 (electric, the only sites tagged for RVs). If the 13 untagged non-electric sites fit 23 ft, the base would be $19.99.
+- **120 Blue Bend**: a concession since spring 2026 (Sunshine Valley Land Management, secondary evidence); recreation.gov still says not commercially managed.
+- **500 Abes Run** kept (--AWH firsthand): no FS page exists and the FS designates no sites; FR 51 is dirt.
+- **84 Bear Heaven** kept: "a small primitive campground" with no stated vehicle length; the inclusion audit found one site listed at ~30 ft.
+- **817 Mountain Lake**: the FAQ says "we do not offer full hook-up sites", but the booking page sells 50A/water/sewer sites in area 2. The booking page was recorded.
+- **216 Tygart Lake**: the lodging page says "10 full hookups"; the camping page says 50A + water, "Full hookup sites are not available". The camping page was recorded. Only 10 sites take RVs.
+- **117 Seneca Shadows**: the FS says a 6-month window, rec.gov rules say 11; 180 days recorded.
