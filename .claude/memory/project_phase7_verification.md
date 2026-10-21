@@ -18,11 +18,11 @@ results/applied/). Entry-level `verify_scan` record (campground_schema.VERIFY_SC
 off the queue even when nothing changed. Verifier writes `method: manual` for the operator/agency
 page. Criteria problems are flags for me to decide (I may drop per the standing rules and report).
 
-**Progress / resume (2026-10-21, late):** ~420 verified (batches through p3-22 applied, last
-commit 358ebff2; nothing pushed since ccbb5ed3). Batch `batches/p3-23.json` (12 VA: WMA 247,
-Hipcamp 760, Long Run Road #1-6 dispersed, Hone Quarry Ridge, Hurricane, Jamison Mill,
-McClintic Point) has a verifier RUNNING; prompt in the session scratchpad as p323_prompt.txt.
-If the session died, check results/ for its files, else relaunch. AWH (10-20) cut back
+**Progress / resume (2026-10-21, late):** ~445 verified (batches through p3-24 applied, last
+commit c6366573; nothing pushed since ccbb5ed3). Batch `batches/p3-25.json` (last 3 VA + first 9
+MD) has a verifier RUNNING; prompt in the session scratchpad as p325_prompt.txt (has the MD
+source notes). If the session died, check results/ for its files, else relaunch. Dropped on the
+4WD rule 10-21: Long Run Road #1-6 + 521 (DWR FR 72 page). AWH (10-20) cut back
 to ONE verifier at a time (session limit). Loop per batch: review flags → fix result files (e.g.
 never clear a phase-5 good_sam false on private) → `apply.py --apply <ids>` → small python for
 phones/websites/names from flags (check URL 200 first; prepend agency page to website) → presence
