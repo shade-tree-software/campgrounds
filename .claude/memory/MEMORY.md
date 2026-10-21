@@ -39,6 +39,7 @@
 - [Require a live web presence](feedback_require_live_web_presence.md) — private parks need a PRICE and a PRESENCE indicator (AWH 2026-10-14): booking page = both; price = posted rate or RV Life $/$$
 - [Follow the park's published identity](feedback_follow_published_identity.md) — AWH 10-14 #6/#8: its published phone, current name, actual operator; strip dead/unclaimed Hipcamp + RoverPass links; no need to ask
 - [Re-audit contrary waterfront claims](feedback_reaudit_contrary_waterfront_claims.md) — AWH 10-14 #7: an operator/engine water claim that differs from ours triggers the gate, both ways; type-level tags prove nothing
+- [Below the dam is not on the lake](feedback_below_dam_not_lake.md) — AWH 2026-10-21: behind a dam berm / below pool = no lake value; imagery hides berms, compare DEM to pool
 - [Beware campground content farms](feedback_beware_campground_content_farms.md) — pinecliffresort.net fakes being a parent operator; check a domain's index before trusting it; no entry cites it (2026-10-11)
 - [Waterfront evidence in JSON](feedback_waterfront_evidence_in_json.md) — audit proof lives in the campgrounds.json waterfront_evidence field (non-empty=audited, --AWH note also=audited), not just
 - [URLs in website not notes](feedback_urls_in_website_not_notes.md) — reservation/official URLs go in the website field; keep website links out of note prose (negatives & source citations excepted)
