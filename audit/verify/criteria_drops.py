@@ -37,6 +37,8 @@ DROPS = {
             "No operator website (only a login-walled Facebook page and tourism-directory listings); "
             "Google Maps 'Lonesome Pine RV Park & Campground' has a phone but 16 reviews (under 25); "
             "no posted rate, and RV Life's $ rests on a placeholder ~$1 average. Read 2026-10-21."),
+    438: ("2026-10-21", "4WD recommended on the access road (AWH 2026-10-21: drop)", "DWR Rapidan WMA page, read 2026-10-21: roads beyond the state-maintained portion 'are narrow and not maintained to VDOT standards and can be rough. A four-wheel drive vehicle recommended.' EKKO is not 4WD. 438 is reached up the dirt road beyond SR 642 (Taylor Mountain Rd)."),
+    440: ("2026-10-21", "4WD recommended on the access road (AWH 2026-10-21: drop)", "DWR Rapidan WMA page, read 2026-10-21: roads beyond the state-maintained portion 'are narrow and not maintained to VDOT standards and can be rough. A four-wheel drive vehicle recommended.' EKKO is not 4WD."),
 }
 
 if __name__ == "__main__":

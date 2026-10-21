@@ -13,3 +13,5 @@ EKKO does not qualify for roads or camping areas that require four-wheel drive (
 **Why:** AWH ruled on it directly after the state-gap pass flagged East Beach as an open question.
 
 **How to apply:** treat an agency-stated 4WD requirement like a stated size limit under 23 ft, see [[feedback_min_site_length]]. Weight limits are a separate rule, see [[user_ekko_weight]].
+
+**A 4WD RECOMMENDATION excludes too (AWH 2026-10-21).** DWR's Rapidan WMA page says the roads beyond the state-maintained part are "narrow ... can be rough. A four-wheel drive vehicle recommended"; asked whether a recommendation (not a requirement) counted, AWH said drop both sites (438 Taylor Mountain Rd, 440 Cobblestone Row; logged in audit/verify/criteria_drops.py). So an agency recommending 4WD for the access is a drop I may make and report.

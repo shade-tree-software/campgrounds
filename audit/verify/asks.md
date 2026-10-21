@@ -5,13 +5,15 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-7. **Rapidan WMA, 438 (1253 Taylor Mountain Rd) and 440 (300 Cobblestone Row)** — DWR's Rapidan page:
+(none)
+
+## Answered (AWH 2026-10-21)
+
+7. (AWH 2026-10-21: drop both; dropped via criteria_drops.py.) **Rapidan WMA, 438 (1253 Taylor Mountain Rd) and 440 (300 Cobblestone Row)** — DWR's Rapidan page:
    roads beyond the state-maintained part "are narrow and not maintained to VDOT standards and can
    be rough. A four-wheel drive vehicle recommended" (for 438: "Continue up the dirt road to the
    management area"). A recommendation, not the requirement that excluded RI East Beach. Keep both,
    or drop them for EKKO? (The page doesn't say which tract Cobblestone Row serves.)
-
-## Answered (AWH 2026-10-21)
 
 6. (AWH 2026-10-21: has not stayed; the older A18 description was the source, and DCR now lists A18 at a 20-ft pad / 20-ft max vehicle - not suitable for EKKO. Downgraded to not waterfront, A18 sentence replaced.) **Bear Creek Lake SP (252, VA)** — your note: "There is one waterfront RV site (A18)" (stored
    lakefront). DCR's park page now says site 18 "is a tent only water and electrical site"; the
