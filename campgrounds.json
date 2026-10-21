@@ -1918,24 +1918,96 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233324 (notice 'There are no showers. No electric, water, or sewer hook-ups are available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233324/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm ('Rocky Knob Campground Fee ... $30.00', 'Group Camping ... $45.00') + https://www.recreation.gov/api/camps/campgrounds/233324/rates (2026 Peak Season RV NONELECTRIC 30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm ('Friday, May 22, 2026 - Sunday, October 25, 2026', 'Closed for Winter October 26-May 21') read in headless Chromium (the page loads its hours by script), 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233324 ('In addition to the 44 sites available for advanced reservation, 62 campsites are available on a first-come, first-served basis') + recreation.gov campsite catalog (106 public sites; Max Vehicle Length up to 55; 24 Pull-through), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm ('Laundry No', 'Dump Station Yes, Seasonal', 'Potable Water - Seasonal', 'Camp Store No', 'Flush Toilets - seasonal', 'Shower Types None') + https://www.recreation.gov/api/camps/campgrounds/233324 ('flush toilets, dump station, and drinking water', 'There are no showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233324 (description; facility_rules reservationCutOff 1 'day(s) prior to arrival', maxConsecutiveStay 30, maxStay 30 days 'Each Year'; notice 'Some campsites at this facility are available on a first-come, first-served basis') + https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm (kiosk hours), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$30 per site per night; group camping $45 (12-20 people, no pass discount)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "10-25",
+      "note": "2026 season Friday, May 22 - Sunday, October 25 ('Closed for Winter October 26-May 21'). The dates move each year (rec.gov's 2025 season opened June 13)."
+    },
+    "sites": {
+      "count": 106,
+      "max_rig_ft": 55,
+      "pull_through": true,
+      "note": "106 campsites (44 reservable, 62 first-come): 80 RV-capable standard/RV sites, 25 tent-only, one group tent area. Max vehicle lengths mostly 15-25 ft; nine sites take 55 ft and about 24 are pull-through. Most sites allow only one vehicle."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": false,
+      "dump": true,
+      "potable_water": true,
+      "laundry": false,
+      "camp_store": false,
+      "note": "Flush toilets, dump station and drinking water are seasonal. Firewood sold seasonally; only certified heat-treated firewood may be brought in. No cell reception or internet."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 30,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "44 sites reservable on recreation.gov; 62 are first-come, booked in person at the campground kiosk (open 9:30 AM-6 PM), status not shown online. 'The campground almost always has campsites available.' Reservations close 1 day before arrival; 30 days per year."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'Holders of the Interagency Senior, Access, Golden Age, or Golden Access passes are entitled to a 50% discount on the base fee of the site physically occupied by the pass holder.' Not on group sites."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.nps.gov/blri/planyourvisit/rocky-knob-cg.htm https://www.recreation.gov/api/camps/campgrounds/233324 https://www.recreation.gov/api/camps/campgrounds/233324/rates recreation.gov campsite catalog for facility 233324 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $30/night and no hookups (electric 0; water and sewer none too) on NPS and rec.gov. Added 2026 season May 22 - Oct 25, 106 sites to 55 ft with pull-throughs, flush toilets/dump/water, no showers/laundry/store, 44 reservable + 62 FCFS, 1-day cutoff, 30-night max, Senior/Access 50% off. Window left inherited."
+    },
+    "phone": "540-745-9664"
   },
   {
     "id": 39,
@@ -11873,17 +11945,34 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "'This location is only available on a first-come, first-serve basis. Reservations are not accepted.' Pay at the self-service kiosk on arrival."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground ('Fee Site and Info | Overnight Use: | Single Site: $15 per night | Double Site: $30 per night | $15 per single site per night. $30 for the double site per night (maximum 12 people). Fees are paid on site at the self-servi')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground ('Single Site: $15 per night', 'Double Site: $30 per night', 'Fees are paid on site at the self-service kiosk, be prepared to pay cash or check'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground ('Seasons of Use: Mid-March - late-November', 'Open Mid-March to Late November'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground ('Vault toilet(s)', 'Potable water is available at this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -11894,8 +11983,28 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$15 per single site per night; $30 for the double site (maximum 12 people). Paid on site at the self-service kiosk, cash or check."
+    },
+    "season": {
+      "year_round": false,
+      "note": "USFS: 'Open Mid-March to Late November'. Drinking water may be off when average temperatures are near or below freezing."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'The America the Beautiful Senior and Access Pass provides a 50% discount to the base campsite fee. No other America the Beautiful Interagency passes are valid.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/north-creek-campground",
+      "note": "Confirmed on the USFS page: $15/night single site ($30 double), FCFS only with kiosk payment, Senior/Access 50% off. Added season mid-March to late November (no exact dates published), vault toilets and potable water. Not stated: site count, hookups (none listed), rig length."
+    },
+    "phone": "540-291-2188"
   },
   {
     "id": 218,
@@ -12039,24 +12148,88 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234688 (notice 'Electric hook-ups only in River Bend (Loop B) & Meadow Loops (Loop C). No water or sewer hook-ups are available.') + campsite catalog (30 of 31 STANDARD ELECTRIC sites list Electricity Hookup 50), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234688/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/sherando-lake-recreation-area ('Family Campground: $25 per single site per night, plus $7 electric fee (some sites). $40 for the double site') + https://www.recreation.gov/api/camps/campgrounds/234688/rates (2026 Peak: STANDARD NONELECTRIC 25, STANDARD ELECTRIC 32) + https://www.recreation.gov/api/camps/campgrounds/234688 (notice 'Camping units in White Oak Loop (Loop A) are restricted to less than 20 feet in length'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/sherando-lake-recreation-area ('Seasons of Use: Campground open early April through late October'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234688 (Facilities description; Loop A notice) + recreation.gov campsite catalog for 234688 (65 sites, Max Vehicle Length to 40 on electric sites, Driveway Entry Back-in), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234688 ('Showers, flush toilets and drinking water hydrants are located in each loop', 'A trailer dump station is located along the main road', 'A potable water station with threaded hose (to fill RV tanks)'; notice 'Firewood and Ice is not available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234688 (description; notices; facility_rules maxConsecutiveStay 14, minWeekendStay 'soft') + https://www.fs.usda.gov/r08/gwj/recreation/sherando-lake-recreation-area ('RESERVATIONS ARE REQUIRED FOR CAMPING'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/sherando-lake-recreation-area, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
-      "nightly_low": 25,
+      "nightly_low": 32,
       "nightly_high": 32,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$25 per single site plus a $7 electric fee ($32); double site $40 plus $7 electric; group site $50. The $25 non-electric sites are all in White Oak Loop (Loop A), where 'Camping units ... are restricted to less than 20 feet in length due to the access road hill and turn', so a 23-ft motorhome needs a $32 electric site in Loop B or C. Senior/Access pass halves the basic site fee, not the electric fee."
+    },
+    "season": {
+      "year_round": false,
+      "note": "USFS: 'Campground open early April through late October.' Day use April 1 through December. (recreation.gov's 2026 rate season runs April 1 - October 30.)"
+    },
+    "sites": {
+      "count": 65,
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "65 sites: 31 electric in Meadow (C) and River Bend (B) loops, 'suitable for larger camping units and RV's' (catalog lengths to 40 ft, back-in), and 34 non-electric in White Oak Loop (A), restricted to units under 20 ft by the access road. Unlevel mountain ground."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Showers, flush toilets and drinking-water hydrants (not threaded) in each loop; a signed RV fill station with threaded hose and a trailer dump station. No firewood or ice for sale; mandatory food storage lockers (bears). Lakes allow electric motors and hand-carried boats only."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "'All camping requires a reservation prior to arriving ... No first-come, first-serve sites.' recreation.gov or 1-877-444-6777. Gate code arrives in the confirmation email; gate closed 10 pm - 6 am. Check-in 1 pm, check-out 11 am; no refunds; no site switching. recreation.gov lists soft weekend/holiday minimums (not enforced rules)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'The America the Beautiful Interagency Senior (annual and lifetime) and Access Passes provide a 50% discount to the day use fee, and basic campsite fee (not hook ups).'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/sherando-lake-recreation-area https://www.recreation.gov/api/camps/campgrounds/234688 https://www.recreation.gov/api/camps/campgrounds/234688/rates recreation.gov campsite catalog for facility 234688 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Changed fees $25-$32 -> $32/$32: the $25 non-electric sites are all in Loop A, restricted to units under 20 ft. Confirmed 50-amp electric; added no water/sewer hookups, 65 sites to 40 ft (back-in), showers/flush toilets/water/dump, reservation-only (fcfs never), 14-night max, season early April - late October (no exact dates), Senior/Access 50% off base."
+    },
+    "phone": "540-291-2188"
   },
   {
     "id": 220,
@@ -23942,27 +24115,51 @@
       "electric": 30
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "note": "Reserve on recreation.gov in the Peak season; 8 of the 17 public sites are not reservable (first-come), and the whole campground is first-come in its late-April opening weeks. Reservations close 4 days before arrival. Check-in 2 pm, check-out noon. No cell coverage. $10 cancellation fee."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234574 ('five campsites have electric hookups') + campsite catalog (the 5 public STANDARD ELECTRIC sites list Electricity Hookup 30 and Water Hookup Yes; no sewer), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234574 (facility_rules maxConsecutiveStay 14, reservationCutOff 4 'day(s) prior to arrival'; notices 'Check-in is at 2pm and check-out is at 12pm') + https://www.recreation.gov/api/camps/campgrounds/234574/rates ('First-come, First-served Season') + campsite catalog (8 STANDARD NONELECTRIC sites reservable: false) + https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground ('You may stay up to 14 nights'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234574 ('flush toilets, drinking water, paved roads and spurs and a dump station. There are no showers') + https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground ('Flush toilet(s)', 'Potable water is available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234574/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground ('Single Site: $20 per night, Electric hook-up fee: $7 per night') + https://www.recreation.gov/api/camps/campgrounds/234574/rates (2026 Peak Season: STANDARD NONELECTRIC 20, STANDARD ELECTRIC 27), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground ('Seasons of Use: Mid-April through late November') + https://www.recreation.gov/api/camps/campgrounds/234574/rates (rate seasons), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov campsite catalog for 234574 (17 STANDARD sites, all Driveway Entry Back-In, Max Vehicle Length 20-60; 3 MANAGEMENT sites excluded) + https://www.recreation.gov/api/camps/campgrounds/234574 ('Every site accommodates RV or tent camping', 'paved roads and spurs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -23971,13 +24168,38 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "showers": false
     },
     "fees": {
       "nightly_low": 20,
       "nightly_high": 27,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$20 per site per night; electric hook-up +$7 ($27). Senior/Access pass: basic $10, electric $17."
+    },
+    "season": {
+      "year_round": false,
+      "note": "USFS: 'Mid-April through late November.' recreation.gov runs a first-come, first-served season in late April (2026: Apr 16-30) and its Peak (reservable) season from May 1 to about Nov 29."
+    },
+    "sites": {
+      "count": 17,
+      "max_rig_ft": 60,
+      "pull_through": false,
+      "note": "17 public sites (5 electric/water, 12 non-electric) plus 3 host/management sites; all back-in, paved spurs. Max vehicle lengths 20-60 ft, most 25-40."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'The America the Beautiful Senior and Access Passes provide a 50% discount to the base campsite fee (not hook ups).'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/raccoon-branch-campground https://www.recreation.gov/api/camps/campgrounds/234574 https://www.recreation.gov/api/camps/campgrounds/234574/rates recreation.gov campsite catalog for facility 234574 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $20 / $27 electric on the USFS page and rec.gov, 30-amp electric with water at 5 sites, dump, reservable on rec.gov. Added season mid-April to late November, 17 sites to 60 ft (all back-in), flush toilets/water/no showers, 8 FCFS sites, 14-night max, 4-day cutoff, Senior/Access 50% off base. Booking window left inherited (not stated)."
+    },
+    "phone": "276-783-5196"
   },
   {
     "id": 469,
@@ -24189,7 +24411,7 @@
     "inclusion_evidence": "recreation.gov 234575: 'ideal for both RV and tent', electric hookups, paved parking spurs, showers/flush toilets -> real drive-in RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: USFS campground w/camp host.  Stony Fork Creek meanders throughout the campground, and some sites are right on the creek.  Reservable during peak season.",
     "note": "USFS campground w/camp host.  Stony Fork Creek meanders throughout the campground, and some sites are right on the creek.  Reservable during peak season.  --AWH",
-    "website": "https://www.recreation.gov/camping/campgrounds/234575",
+    "website": "https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground\nhttps://www.recreation.gov/camping/campgrounds/234575",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -24197,22 +24419,42 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Reservable on recreation.gov in the Peak season; 29 of the 49 public sites are not reservable ('This facility has first-come, first-served sites'), and the whole campground is first-come in its early-April opening weeks. 14 nights in any rolling 30 days. Check-in 2 pm, check-out noon; gate open 7 a.m. - 10 p.m. recreation.gov lists a reservation cutoff of 4 with no unit."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234575 (facility_rules maxStay 14 nights 'Rolling 30 Days', reservationCutOff 4; notices) + campsite catalog (20 reservable, 29 not) + https://www.recreation.gov/api/camps/campgrounds/234575/rates ('First-come, First-served Season') + https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground (gate hours), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234575 ('Most sites come with electric hookups') + https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground ('Electricity and water hook-up fee') + campsite catalog (34 public STANDARD ELECTRIC sites list Electricity Hookup 30; 11 of them Water Hookup Yes; no sewer), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234575/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground ('Single Site: $20 per night', 'Electricity hook-up fee: $6 per night', 'Electricity and water hook-up fee: $10 per night') + https://www.recreation.gov/api/camps/campgrounds/234575/rates (2026 Peak Season STANDARD NONELECTRIC 20, STANDARD ELECTRIC 26, electric/water variants 30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground ('Seasons of Use: Early April through late November') + https://www.recreation.gov/api/camps/campgrounds/234575/rates (rate seasons), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov campsite catalog for 234575 (49 STANDARD sites, Max Vehicle Length 20-40 plus implausible 100/132, Driveway Entry Back-In except one) + https://www.recreation.gov/api/camps/campgrounds/234575 ('parking spurs are paved'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234575 ('Warm showers and flush toilets are available') + https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground ('Flush toilet(s)', 'Potable water is available', 'Dump station free for campers, $5 for non-campers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -24227,8 +24469,32 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$20 per site per night; electric hook-up +$6 ($26); electric and water +$10 ($30)."
+    },
+    "season": {
+      "year_round": false,
+      "note": "USFS: 'Early April through late November.' recreation.gov runs a first-come season in early April (2026: Apr 1-16) and its Peak (reservable) season to about Nov 29."
+    },
+    "sites": {
+      "count": 49,
+      "max_rig_ft": 40,
+      "note": "49 public sites (34 electric, 11 of them also water; 15 non-electric) plus 4 host/management sites; nearly all back-in on paved spurs ('All vehicles must fit on paved parking spur'). Max vehicle lengths 20-40 ft; the catalog's 100- and 132-ft entries are typos and are left out."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Dump station free for campers, $5 for non-campers."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/stony-fork-campground https://www.recreation.gov/api/camps/campgrounds/234575 https://www.recreation.gov/api/camps/campgrounds/234575/rates recreation.gov campsite catalog for facility 234575 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $20-$30 (base, +$6 electric, +$10 electric/water), 30-amp electric with water at some sites, reservable on rec.gov. Added season early April - late November, 49 sites to 40 ft, showers/flush toilets/water/dump, 29 FCFS sites, 14-night max. Window and cutoff not stated plainly (left inherited / in note)."
+    },
+    "phone": "276-783-5196"
   },
   {
     "id": 474,
@@ -27815,19 +28081,80 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610 ('All electric sites have water hook-ups') + campsite catalog (all 72 public STANDARD ELECTRIC sites list Electricity Hookup 50, Water Hookup Yes; sewer only at a management site), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233610/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610/rates (Peak Season 2026-04-01 to 2026-10-31: STANDARD NONELECTRIC 24, STANDARD ELECTRIC 34, double-unit variants 48 / 68), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610 (Overview: 'Rudd's Creek Campground is open April 1 - October 31'; gate house notice '01 April - 31 October'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov campsite catalog for 233610 (96 STANDARD sites + 3 MANAGEMENT; Max Vehicle Length to 45; 3 Pull-through) + https://www.recreation.gov/api/camps/campgrounds/233610 ('There are 98 sites for tents or RVs', 'All campsites have gravel bases'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610 ('hot showers, flush toilets and a dump station', 'its own boat ramp and courtesty dock for campers only'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610 (facility_rules maxStay 14 nights 'Rolling 30 Days', maxConcurrentStay 1; notices on check-in, gatehouse hours 9 a.m.-9 p.m., alcohol) + campsite catalog (all 96 STANDARD sites reservable), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233610 (notice), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 24,
       "nightly_high": 34,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 Peak Season (Apr 1 - Oct 31): standard non-electric $24, standard electric/water $34; double sites $48 / $68."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31",
+      "note": "'Rudd's Creek Campground is open April 1 - October 31. The Day Use Park, located across Hwy 58, is open year-around.'"
+    },
+    "sites": {
+      "count": 96,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "96 public sites (72 electric/water, 24 non-electric) on gravel pads; RV lengths 20-45 ft, mostly 35-45; three pull-throughs, the rest back-in. Rec.gov's description says 98 sites."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Swimming beach, picnic shelter, and a campers-only boat ramp and courtesy dock."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "All 96 public sites are reservable on recreation.gov. 'Maximum stay is 14-days within any 30 day period.' One campsite held per customer at a time. Check-in 4 pm, check-out 2 pm; no check-in after the gatehouse closes (9 pm). Alcohol and golf carts/off-road vehicles prohibited."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'Golden Age/Access and America the Beautiful Interagency Senior and Access Passes are accepted at this campground and cardholders receive a 50% discount on camping fees.' Cardholder must be present and camp the whole stay."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233610 https://www.recreation.gov/api/camps/campgrounds/233610/rates recreation.gov campsite catalog for facility 233610 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Confirmed $24-$34 (2026), 50-amp electric with water on rec.gov. Added season Apr 1 - Oct 31, 96 sites to 45 ft (3 pull-through), showers/flush toilets/dump, all reservable, 14 nights in 30, Senior/Access 50%. Not stated: booking window (left inherited); rec.gov carries a militaryDiscount rule flag with no description, not recorded."
     }
   },
   {
@@ -44046,7 +44373,7 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "DCR campground map (SP1-50) + reservation data: ~24 standard electric sites (back-in + pull-thru), some to 65 ft, plus tent sites -> real RV state park campground",
     "waterfront_evidence": "DCR Smith Mountain Lake campground map: camping loop (SP1-50) is an inland oval; lake is reached via separate road/trail 'To Boat Ramp, Beach and Picnic Area'; satellite at 37.0881,-79.5944 confirms loop set back in forest -> no sites on lake",
-    "website": "https://www.reservevaparks.com/Web/#!park/30",
+    "website": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake\nhttps://www.reservevaparks.com/Web/#!park/30",
     "note": "",
     "rating": {
       "stars": 4.5,
@@ -44078,6 +44405,26 @@
         "source": "https://www.dcr.virginia.gov/state-parks/camping (\"Full-service campgrounds (with bathhouses) are open from the first Friday in March through the first Monday in December with the exception of Douthat, Hungry Mother, Pocahontas and Shenandoah River state parks which have full-service campgrounds open year-round.\"), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake ('Sites EW 50ft BackIn and EW 50ftPulThru have water and electric hookups. 20 and 30 amp service is available.', 'Sewer hookups are not available.') + reservevaparks.com site details (all 24 Electric/Water units: Electric Hookup 30, Water Hookup Yes), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake ('Fifty sites; all in the woods; no waterfront', 'Total sites of each type : EW 50ft BackIn, 19; EW 50ftPulThru, 5; Tent Std, 26', 'Tent/van/pop-up/camper/RV up to 50 feet') + reservevaparks.com grid (24 Electric/Water units, VehicleLength 35-70; 5 Pull Through), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake ('Full-service bathhouse with hot showers', 'A dump station is available free of charge for campers', 'LAUNDRY: The closest Laundromat is 15 minutes away', 'Generators are prohibited at all times'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake ('All sites are site-specific', 'Reservations are strongly encouraged during prime season', 'When the office is closed guests should follow the late arrival process') + reservevaparks.com search/details ('MaxStay': 14 on all units), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "season": {
@@ -44085,7 +44432,36 @@
       "opens": "03-01",
       "closes": "12-07",
       "note": "First Friday in March through the first Monday in December."
-    }
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": false
+    },
+    "sites": {
+      "count": 50,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "50 sites, all in the woods, none waterfront: 24 water/electric (19 back-in, 5 pull-through) for RVs up to 50 ft, and 26 tents-only sites with a shared parking lot. The booking site lists vehicle lengths of 35-70 ft on the RV sites; DCR's own page says up to 50 ft. Pull-throughs are recommended for large RVs or larger boats."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "laundry": false,
+      "note": "Full-service bathhouse with hot showers. Dump station free for campers in the park. 'The closest Laundromat is 15 minutes away.' Generators prohibited at all times. Firewood sold; do not bring firewood. Boat launching free for overnight guests."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "max_stay_nights": 14,
+      "note": "'All sites are site-specific.' 'Reservations are strongly encouraged during prime season.' Reserve online (ReserveVAParks) or 800-933-PARK. The booking site gives a 14-night maximum on every campsite. Late arrivals follow the posted late-arrival process when the office (weekdays 8-4) is closed."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.dcr.virginia.gov/state-parks/smith-mountain-lake https://www.reservevaparks.com/Web/#!park/30 (US eDirect API prod-va-rdr.recreation-management.tylerapp.com: search/place for PlaceId 30, search/grid + search/details for all 51 units of facility 139 Smith Mountain Lake Campground, start date 2027-05-04, read 2026-10-21)",
+      "note": "Confirmed the $37 electric/water rate (booking site, 2027-05-04) and the season (DCR: first Friday in March to first Monday of December), both already recorded. Added 30-amp with water, no sewer, 50 sites (24 RV, 26 tent-only) to 50 ft with 5 pull-throughs, showers, dump, no laundry, 14-night max. Window/cutoff left inherited (not stated for this park)."
+    },
+    "phone": "540-297-6066"
   },
   {
     "id": 822,
@@ -44098,7 +44474,7 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "DCR Staunton River page + ReserveAmerica (parkId 140184): 48 single-family W/E sites, spurs to 45 ft, dump station -> real RV state park campground",
     "waterfront_evidence": "DCR Staunton River page states 'no waterfront sites available' (some sites a few steps from riverfront trails); satellite at 36.6981,-78.6768 shows loop inland in forest -> not waterfront",
-    "website": "https://www.reservevaparks.com/Web/#!park/33",
+    "website": "https://www.dcr.virginia.gov/state-parks/staunton-river\nhttps://www.reservevaparks.com/Web/#!park/33",
     "note": "",
     "phone": "434-572-4623",
     "rating": {
@@ -44131,6 +44507,21 @@
         "source": "https://www.dcr.virginia.gov/state-parks/camping (\"Full-service campgrounds (with bathhouses) are open from the first Friday in March through the first Monday in December with the exception of Douthat, Hungry Mother, Pocahontas and Shenandoah River state parks which have full-service campgrounds open year-round.\"), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.dcr.virginia.gov/state-parks/staunton-river (main campground: 'Accepts outlets for 20 and 30-amp current', site types 'EW 45-ft - Electric and water hookups', 'There are no sewer hookups, but there is a dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.dcr.virginia.gov/state-parks/staunton-river ('Total sites of each type : EW 45-ft, 4; EW 30-ft, 10; EW pop/tent, 20; Tent Std., 13', 'Total campsites : 48 (including camp host site)', 'Equestrian Camping : ... Sites 1-10 are pull-through ... up to 55 feet', 'All sites have electric pedestals, which have 20, 30 and 50-amp outlets') + reservevaparks.com (facility 145 Staunton River Campground: VehicleLength to 45; facility 142 Horse Campground: 13 'Horse Site' units), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.dcr.virginia.gov/state-parks/staunton-river ('The bathhouse is heated and has hot showers', 'The laundry facility is in the campground bathhouse', 'there is a dump station ... located in front of the bathhouse'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "season": {
@@ -44138,6 +44529,27 @@
       "opens": "03-01",
       "closes": "12-07",
       "note": "First Friday in March through the first Monday in December."
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": false
+    },
+    "sites": {
+      "count": 48,
+      "max_rig_ft": 45,
+      "note": "Main campground: 48 sites including the camp host's: 4 EW 45-ft, 10 EW 30-ft, 20 EW pop-up/tent (units to 20 ft), 13 tents-only; not on the water. A separate equestrian campground has 13 electric/water sites with 20/30/50-amp pedestals (10 paved pull-throughs to 55 ft, 3 gravel back-ins to 45 ft) and 20 covered stalls; it is booked as 'Horse Site' units and stalls go only with an EQ campsite."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "dump": true,
+      "note": "Heated bathhouse with hot showers and a laundry (check off-season availability). Dump station in front of the bathhouse; another at the EQ campground. Dark Sky park: outside lights off 10 p.m. to dawn."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.dcr.virginia.gov/state-parks/staunton-river https://www.reservevaparks.com/Web/#!park/33 (US eDirect API prod-va-rdr.recreation-management.tylerapp.com: search/place for PlaceId 33 and search/grid for each facility, start date 2027-05-04, read 2026-10-21)",
+      "note": "Confirmed the season (first Friday in March to first Monday in December) on the park page; fees left as human-checked 2026-10-12 (the $27 no-hookup sites take units only to 20 ft, as recorded). Added 30-amp with water, no sewer, 48 sites to 45 ft, showers/laundry/dump. 50-amp and 55-ft pull-throughs exist only in the separate equestrian campground (noted, not recorded as the campground's). Booking left inherited."
     }
   },
   {
@@ -57172,35 +57584,51 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": true
     },
     "sites": {
-      "count": 165
+      "count": 165,
+      "note": "165-site campground (144 with electric and water, a limited number also with sewer) plus a separate tents-only section near the river. 'While we don't have paved pull-through sites, a lot of our sites are easy to maneuver into.' One axled camping unit per RV site."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "always",
+      "platform": "operator",
+      "url": "https://vaaugustactyweb.myvscloud.com/webtrac/web/siterentals.html?Location=NCP",
+      "max_stay_nights": 14,
+      "note": "Reserve on Augusta County's WebTrac site, in person or at 540-245-5753; paid in full when booked; reservations cannot be cancelled online. 'Advanced reservations are encouraged but walk-ups are welcomed if space is available.' 14 consecutive nights on RV sites (5 on tent sites), and 21 nights in any 30 days per household. Check-in 2 p.m., check-out noon; late arrivals see the camp hosts on site F1."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping ('96 sites with 30 amp electric hookups, 12 sites with 50 amp electric hookups and 36 sites with both 30 amp and 50 amp', 'There are a limited number of sewer sites', 'Electric, Water and Sewer Sites $45/night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping ('Natural Chimneys has a 165 site family-oriented campground with water and electrical hook-ups', FAQ 'Are there pull through sites?'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping ('Reserve your camping spot online' link to vaaugustactyweb.myvscloud.com WebTrac, FAQs 'How can I make a camping reservation?', 'How long can I camp for?', 'What time is check-in and check-out?'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping ('Two shower-houses featuring hot showers', 'dumping facilities available for campers at no additional charge', 'The Visitor Center does have a small camp store'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping ('2026 Camping Rates, Effective May 1 through November 1': Electric and Water Sites $38/night weekday, $44/night weekend; Electric, Water and Sewer Sites $45/$51; Primitive Sites $25/$30), read 2026-10-21 (page is behind an Akamai block for plain HTTP; read in headless Chromium)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys ('The campground closes at noon on November 1 for the 2026 season') + .../natural-chimneys/camping ('Effective May 1 through November 1', 'Camping is available in season'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -57209,8 +57637,30 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
-    }
+      "dump": true,
+      "showers": true,
+      "camp_store": true,
+      "note": "Two bathhouses with hot showers; dump station free for registered campers only; small camp store and firewood at the Visitor Center. Pool is a separate charge."
+    },
+    "fees": {
+      "nightly_low": 38,
+      "nightly_high": 51,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 rates (May 1 - November 1): electric and water sites $38 Sunday-Thursday, $44 Friday-Saturday; electric, water and sewer sites $45 / $51; tent-only primitive sites $25 / $30. 15% off every night on stays of 7+ consecutive nights. Fees cover eight people from one household and two vehicles. Camper storage on a site $11/night (not Friday/Saturday). Cancellation more than 48 hours out costs $5/night (max $20)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-01",
+      "note": "2026 rates are 'Effective May 1 through November 1' and 'The campground closes at noon on November 1 for the 2026 season.' Camping is available in season only."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys/camping",
+      "note": "Confirmed on Augusta County's own camping page: 165 sites, 50-amp (and 30) electric with water, some sewer sites, showers, dump, reservable with walk-ups welcome. Added 2026 fees $38 (E/W weekday) to $51 (full hookup weekend), season May 1 - Nov 1, 14-night max, camp store, WebTrac booking link. Not stated: rig length (no paved pull-throughs)."
+    },
+    "website": "https://www.co.augusta.va.us/government/departments-and-offices/parks-recreation/parks-ballfields-trails-and-more/natural-chimneys"
   },
   {
     "id": 1144,
@@ -57223,8 +57673,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "cityofchesapeake.net: 72 campsites incl 44 electric, RVs/trailers to 50ft, Firefly online reservations, open Apr/May-Nov -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 36.5841,-76.1567: wooded interior campground loops, Northwest River along the S/W park edge reached by trail; sites not on the water (cityofchesapeake: 44 electric sites, wooded)",
-    "phone": "757-421-7151",
-    "note": "City of Chesapeake park (Parks, Rec & Tourism) on the 763-acre Northwest River park. ~72 family sites (~44 with 30/50-amp electric, shared water, dump station) + group sites and 2 cabins; RVs to ~50 ft. Reservations (Firefly). Wooded inland sites; river access via trail (sites not on the water). --Claude",
+    "phone": "757-382-1380",
+    "note": "City of Chesapeake park (Parks, Recreation & Tourism) on the 763-acre Northwest River park. 72 family sites (20/30/50-amp electric and non-electric, some pull-throughs for rigs 25 ft and longer) plus six group sites, 2 cabins and an equestrian area; hot showers, laundry, fresh water, RV pump-out, camp store. Open March 1 - November 30; reservations online (Firefly) or at the Welcome Center. Wooded inland sites; river access via trail (sites not on the water). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -57235,31 +57685,46 @@
     },
     "sites": {
       "count": 72,
-      "max_rig_ft": 50
+      "pull_through": true,
+      "note": "72 family campsites plus six group sites, 2 cabins and an equestrian area. 'Pull-through campsites are limited to trailers/RVs 25 feet or longer.' One trailer/RV and one tent per site."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Reserve/Property/NorthwestRiverPark",
+      "max_stay_nights": 14,
+      "note": "Reserve online through Firefly or in person at the Welcome Center, paid in full; no phone card payments. 'Reservations for campsites start January 1 for the following camping season.' 14 nights in any 30-day period. A specific site is assigned at check-in (2 p.m.); check-out noon; late check-in by prior arrangement for the gate code. The park map marks campground rentals 'Reservable; then First Come, First Served'."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://app.fireflyreservations.com/Reserve/Property/NorthwestRiverPark (site types '20/30/50amp Electric Pull-Through', '20/30/50amp Electric Site', '20/30amp Electric Site', 'Non-Electric Site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals ('We have 72 sites for family camping and six group sites') + https://www.cityofchesapeake.net/3015/Campground-Rules-and-Regulations ('Pull-through campsites are limited to trailers/RVs 25 feet or longer') + https://app.fireflyreservations.com/Reserve/Property/NorthwestRiverPark ('20/30/50amp Electric Pull-Through'), read 2026-10-21. The 50-ft max_rig_ft (note prose) is stated on none of the city's pages or Firefly, so it is cleared.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals + https://www.cityofchesapeake.net/3015/Campground-Rules-and-Regulations ('All campground reservations are to be made either in person at the Welcome Center ... or online through the Firefly website', 'Campsite and cabin rentals are limited to 14 nights in a 30-day period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals ('Facilities include hot showers, laundry, recreation vehicle (RV) pump out, and fresh water') + https://www.cityofchesapeake.net/499 ('a well-stocked camp store' at the Welcome Center), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals ('Rate: $35 per night for a non-electric site, $40 per night for an electric site, $120 per night for group sites'), read 2026-10-21; Firefly lists 'Non-Electric Site' separately from 'Tent Only Site'",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.cityofchesapeake.net/499 ('Campground and Equestrian Camping: Open March 1 through November 30') + https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals ('normally March 1 to November 30'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -57268,8 +57733,30 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
-    }
+      "dump": true,
+      "showers": true,
+      "laundry": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$35 per night for a non-electric site, $40 for an electric site; group sites (non-electric) $120; cabins $80; equestrian sites $25. Maximum 6 people per site. Late check-out $10. First night's deposit non-refundable."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-30"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.cityofchesapeake.net/499 https://www.cityofchesapeake.net/562/Camping-Cabins-Rentals https://www.cityofchesapeake.net/3015/Campground-Rules-and-Regulations https://app.fireflyreservations.com/Reserve/Property/NorthwestRiverPark",
+      "note": "Confirmed on the city's pages and Firefly: 72 sites, 50-amp electric, dump, reservable. Added $35 non-electric / $40 electric (2026 page), season Mar 1 - Nov 30, pull-throughs, showers/laundry/potable water/store, 14-night max, Firefly link. Cleared the 50-ft max_rig_ft (note prose, stated on no official page). Water at the site not stated."
+    },
+    "website": "https://www.cityofchesapeake.net/499"
   },
   {
     "id": 1145,
@@ -847248,7 +847735,7 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "operator's own site list: the 8 full-hookup RV/horse-trailer sites carry no water description while only the tent area is 'located between two creeks'; Esri tile at 36.64561,-83.43404 predates construction (open pasture) so satellite neither confirms nor denies, and the only water is a small wooded drainage",
     "inclusion_evidence": "Operator site rockbottomhorsecamp.com (8 sites, 50-70 ft, water + 20/30/50 amp, ResNexus online booking, 'RV & Tent Campers Too!') plus its Hipcamp listing with 84 reviews concentrated in 2025-2026 and the host's explicit 'not restricted to just horse people' -> valid, currently-operating drive-in RV campground that is not equestrian-only.",
-    "website": "https://www.rockbottomhorsecamp.com/\nhttps://www.hipcamp.com/en-US/land/virginia-rock-bottom-horse-camp-2ejhrey6",
+    "website": "https://www.rockbottomhorsecamp.com/\nhttps://resnexus.com/resnexus/reservations/book/6B0D04FE-3EFC-4E95-863C-DDD9054868AD",
     "phone": "276-445-6676",
     "note": "Small family-run camp at 375 Cherokee Hills Ln at the east end of Cumberland Gap National Historical Park, within walking distance of the White Rocks / Sand Cave trailhead. Eight drive-in sites take RVs or horse trailers - one 70 ft, four 60 ft, three 50 ft - each with water and 20/30/50 amp electric, picnic table and fire ring; toilet and shower house, dump station, potable water, Wi-Fi/Starlink, firewood for sale. Not an equestrian-only camp: the operator states 'RV & tent campers too' and the host's listing says 'all campers are welcome, this is not restricted to just horse people'; horse stalls and corrals are optional extras. One creek-side tent site takes no RVs or trailers. Reservable online or by phone. Recently established and still expanding, so current satellite imagery predates the loop. RV Life 4.5*/$$ ~$32/night (auto 9/2026). --Claude",
     "rating": {
@@ -847264,7 +847751,8 @@
     },
     "sites": {
       "count": 8,
-      "max_rig_ft": 70
+      "max_rig_ft": 70,
+      "note": "8 horse-trailer/RV sites: one 70 ft (site 1), four 60 ft, three 50 ft; separate tent sites between two creeks; a rental travel trailer."
     },
     "facilities": {
       "showers": true,
@@ -847272,18 +847760,21 @@
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/6B0D04FE-3EFC-4E95-863C-DDD9054868AD",
+      "note": "Book online (ResNexus), by phone 276-445-6676 or reservations@rockbottomhorsecamp.com. One night's deposit; cancellations more than 14 days out refunded less $10. Check-in 2 pm (tell them if arriving after 8 pm), check-out noon. Horses need a current negative Coggins."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.rockbottomhorsecamp.com/ ('All sites have water and 50/30/20 amp electrical connections'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.rockbottomhorsecamp.com/ ('Our campground has 8 sites for your horse trailer or RV', '1 - 70' site ... 4 - 60' sites ... 3 - 50' sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -847291,9 +847782,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://www.rockbottomhorsecamp.com/pricing ('Book online, call us at 276-445-6676 or email', 'Check-In is at 2 pm', 'Check-Out is 12 pm') + https://www.rockbottomhorsecamp.com/policies (deposit and cancellation) + 'Book Online' link on https://www.rockbottomhorsecamp.com/, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -847301,8 +847792,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.rockbottomhorsecamp.com/pricing (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.rockbottomhorsecamp.com/pricing ('RV/Trailers sites w/electric & water - $30', 'RV/Trailers primitive sites - $20', 'Tent sites - $15') + https://www.rockbottomhorsecamp.com/policies ('Each reservation will be charged a $2 Booking Fee'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -847318,7 +847810,13 @@
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Rock Bottom Horse Camp: RV/trailer sites with electric and water $30, primitive $20, tents $15. Read 2026-10-15."
+      "note": "RV/trailer sites with electric and water $30; primitive RV/trailer sites $20; tent sites $15; stalls $20, corrals $15. $2 booking fee per reservation, $2 per pet. Deposit of one night; holidays paid in full within 7 days of arrival. 'Reservation system prices are always current.'",
+      "reservation_fee": 2
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.rockbottomhorsecamp.com/ https://www.rockbottomhorsecamp.com/pricing https://www.rockbottomhorsecamp.com/policies",
+      "note": "Confirmed on the operator's site: $30 electric/water RV site ($2 booking fee added), 8 sites to 70 ft, 50-amp with water, reservable online (ResNexus). Not horse-only: the home page says 'A Campground for Equestrian Campers / RV & Tent Campers Too!' and the policies page 'All Campers Welcome'. Not stated on the operator pages: showers/wifi/dump, season."
     }
   },
   {
@@ -915649,13 +916147,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://riversidecampandmarina.com/camping-sites ('50 Amp full hookup sites', '30 Amp full hookup sites', 'We can accommodate most any size rig with full hookup sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://riversidecampandmarina.com/camping-sites (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://riversidecampandmarina.com/camping-sites ('Camping Price List 2026 Rates': '50 Amp full hookup sites $60 ... Holidays $70 per night', '30 Amp full hookup sites $50 ... Holidays $60 per night', 'Tent Site with 20a electric (one plug) $45'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://riversidecampandmarina.com/camping-sites, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://riversidecampandmarina.com/ ('Ready to serve you with boat rentals, launch ramp, wet and dry storage, and general store'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://riversidecampandmarina.com/ + https://riversidecampandmarina.com/camping-sites (Campspot links, '3 night minimum for holidays', arrival notice), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -915668,7 +916182,32 @@
       "nightly_high": 70,
       "currency": "USD",
       "checked": "2026",
-      "note": "Riverside Camp and Marina 2026: 30-amp full hookup $50, 50-amp $60; holidays $60/$70 with a 3-night minimum. Read 2026-10-15."
+      "note": "2026 rates: 30-amp full hookup $50 (weekly $300, holidays $60), 50-amp full hookup $60 (weekly $360, holidays $70); tent site with 20-amp electric $45. Monthly sites $700 (30-amp) / $750 (50-amp) plus metered electric."
+    },
+    "sites": {
+      "pull_through": false,
+      "note": "'Large waterview back in site' for both 30- and 50-amp full-hookup sites; 'We can accommodate most any size rig'. Monthly sites too (RVs no older than 10 years unless approved)."
+    },
+    "facilities": {
+      "camp_store": true,
+      "note": "Marina with boat rentals, launch ramp, wet and dry storage and a general store."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/riversidecampandmarina",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "'Check Availability' / 'BOOK NOW' go to Campspot. Holidays need 3 nights. Arrivals outside business hours must make arrangements (after hours 804-326-4488); no arrivals after 10 PM without prior arrangement. Avoid Rockahock Rd and Carter Rd in a big rig; use Waterside Dr (627) off US 60."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://riversidecampandmarina.com/ https://riversidecampandmarina.com/camping-sites",
+      "note": "Confirmed on the operator's 2026 price list: $50 (30-amp FHU) to $70 (50-amp holiday), 50-amp full hookups. Added back-in sites, holiday 3-night minimum, Campspot booking link, marina general store. Not stated: site count, max rig length, season, showers."
     }
   },
   {
