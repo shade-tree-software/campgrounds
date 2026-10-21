@@ -43,6 +43,20 @@ me drop and report); each needs the research named before a verdict.
   accommodated", no length; 23-ft fit unconfirmed.
 - **759 Seven Islands (Hipcamp)** — $54 base, over the $50 gate; AWH added it, so kept.
   **761 Private Paradise** is $46.75 only under a 15% discount (list $55).
+- **MD non-resident camping fee** — Elk Neck's DNR camping page: "non-Maryland residents will be
+  charged an additional $1 fee per night" (now `fees.nonresident` on 659). 21 other MD parks'
+  fee notes say "no out-of-state camping surcharge" (the 10-12 pass); no other park page read so
+  far says either way. Check the booking site's price for a non-resident before changing them.
+- **650 Point Lookout** — booking site's reservable dates: Hoffman's/Malone Apr 1 - Oct 31, Tulip
+  to Nov 29 (2026); the manual season says no closing date posted. Booking site lists 71 sites
+  in three loops (Conoy, under restoration, absent): check whether "bayfront" rests on Conoy.
+- **129 Green Ridge SF** — sites near the Potomac / Fifteen Mile Creek (DNR) but the entry is
+  pinned at HQ, not waterfront; a forest-wide entry. Plus asks #12 (4WD).
+- **975 Island Resort** — $85 base, kept on the gateway rule (Ocean City 17 km). Seasonal share
+  unknown: "We have booked all seasonal sites for the 2025 camping season", monthly $1,600.
+- **437 Weston / 235 White Oak Mountain (VA WMA)** — neither pin is at a parking lot (437: DWR's
+  lot is at the end of the WCS access road; 235 has 16 lots). Neither has water/ramp at the pin.
+  437 is now named Weston Wildlife Conservation Site (DWR's name).
 
 ## Resolved 2026-10-21
 - **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
