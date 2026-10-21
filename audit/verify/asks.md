@@ -177,3 +177,6 @@ charge per rig"), beside glamping, tent sites, a wedding/event venue and 65-gues
 rentals. No pets; every reservation non-refundable. The $40 lot keeps it under the price gate on
 paper. Kept for now; I'd lean drop.
 **Answered AWH 2026-10-21: drop.** Done.
+
+## 869 North Bend State Park vs 50 River Run (WV) — overlap
+869 "North Bend State Park" describes both campgrounds (77 sites = River Run 49 + Cokeley 28), while 50 is River Run itself (2.6 km from 869's pin). Narrow 869 to Cokeley Campground (re-pin it there), or keep both as they are? No trips reference either.

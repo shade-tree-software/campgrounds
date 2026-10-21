@@ -1,0 +1,49 @@
+{
+  "id": 50,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/",
+    "https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=7989192 and ?supplierId=11067625 (stays 2026-10-27 to 2027-06-20, unit names, prices and unit-amenity tags, read 2026-10-21 with audit/state_park_fees/wv_tiles.py)",
+    "https://book.wvstateparks.com/Ecomm/Listings/SupplierDetail/7816932/en-US/?supplierid=7989192 (unit-amenity filter list decoding the tags)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24.99, "nightly_high": 24.99, "currency": "USD", "surcharges": {"electric": 20}, "checked": "2026",
+                 "note": "Booking site, Oct 2026 to Jun 2027: River Run's 23 non-electric sites (27-49) $24.99 a night ($29.99 a night on a Friday-Saturday stay); its 26 electric/water sites (1-26) $44.99, weeknights and weekends alike. The booking site tags the non-electric sites as fitting a 20-30 ft RV (most up to the 60-70 ft class), so the base is the non-electric rate."},
+      "source": "book.wvstateparks.com supplier 7989192 'North Bend State Park Non-electric Campsites' (Site 27-49, River Run, $24.99 on 2026-10-27, 2027-05-11, 2027-06-15; $29.99 for 2027-06-18/20; unit tags '20’ to 30’ RV' etc.) + supplier 11067625 'North Bend State Park Electric Campsites' (Site 1-26, River Run, $44.99 on every stay read), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://book.wvstateparks.com/",
+                 "min_stay": [{"nights": 2, "applies": "weekend"}], "max_stay_nights": 14,
+                 "note": "'Campsites may be reserved anytime online, by phone, or at the campground office.' Two nights minimum on Friday+Saturday, one night allowed Sunday-Thursday: the booking site sold one-night Tuesday stays (Oct 2026, May and Jun 2027) and offered nothing for a one-night Friday or a one-night Saturday."},
+      "source": "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/ ('Reservations may be made for no less than two consecutive nights on weekends (Friday and Saturday) or one night Sunday through Thursday.'; 'There is a 14-night maximum stay.') + book.wvstateparks.com suppliers 7989192/11067625 (one night 2026-10-27, 2027-05-11, 2027-06-15: sites offered; one night 2027-06-18 and 2027-06-19: none; 2027-06-18/20: offered), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "'The campgrounds are open spring through fall, weather permitting' (no dates)."},
+      "source": "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/, read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/ ('River Run Campground has 49 sites with Wi-Fi, 26 of which have 30/50 amp electric service and water hookups') + book.wvstateparks.com supplier 11067625 (River Run electric sites tagged 50 Amp and Water Hookup, none Sewage Hookup), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 49, "pull_through": true,
+                 "note": "26 electric/water sites (1-26) and 23 non-electric (27-49). The booking site tags every site with RV-length classes from '20’ to 30’ RV' up (sites 28-39, 43, 47 and pull-through 22 to the '60’ to 70’ RV' class); site 22 is the one pull-through. Sites 15 and 17 are tagged riverfront; ADA sites 6-9."},
+      "source": "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/ (49 sites, 26 electric) + book.wvstateparks.com suppliers 11067625/7989192 (River Run site list and unit-amenity tags: Pull Thru Site, RV-length classes, Riverfront, ADA Accessible Unit), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"wifi": true},
+      "source": "https://wvstateparks.com/parks/north-bend-state-park/lodging/camping-at-north-bend-state-park/ ('River Run Campground has 49 sites with Wi-Fi'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Park page + booking site: fees $24.99 non-electric (+$20 electric) reconfirmed, and the non-electric sites are tagged as fitting RVs; inherited booking rules (2-night weekend minimum, 14-night max) confirmed into the entry, one-night weeknights sell; added 50-amp + water, 49 sites with one pull-through, Wi-Fi, spring-fall season. Note kept (AWH firsthand).",
+  "flags": [
+    "Overlap: entry 869 'North Bend State Park' (39.2177,-81.0796) covers both of the park's campgrounds, River Run included (its sites.count 77 = River Run 49 + Cokeley 28). Either 869 should be narrowed to Cokeley Campground or one of the two entries is a duplicate."
+  ]
+}

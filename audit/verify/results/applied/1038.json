@@ -1,0 +1,39 @@
+{
+  "id": 1038,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233493",
+    "https://www.recreation.gov/api/camps/campgrounds/233493/rates",
+    "recreation.gov campsite catalog for 233493 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 50, "currency": "USD", "checked": "2026", "note": "2026 rate table: standard electric sites $35/night, waterfront sites $50 (the same in the peak and first-come seasons)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233493/rates (2026 Peak Season 2026-05-08..09-07 and First-come, First-served Season 2026-09-08..10-11: 'STANDARD ELECTRIC' 35, 'Waterfront' 50) + https://www.recreation.gov/api/camps/campgrounds/233493 ('Regular campsites: $35 / Waterfront campsites: $50'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233493 ('167 sites with electrical and/or water hookups') + RIDB catalog (public sites list Electricity Hookup 20/30/50, 141 with Water Hookup; no sewer attribute), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 167, "max_rig_ft": 68, "pull_through": true, "note": "rec.gov says 167 sites; the catalog lists 158 public electric RV sites (112 reservable, 46 first-come) and one tent-only electric site, plus 9 management sites. Vehicle lengths 20-68 ft, nearly all back-in; one pull-through (site 149, first-come, 45 ft)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233493 ('The campground offers 167 sites') + RIDB catalog (site types, reservable flag, Max Vehicle Length, Driveway Entry), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233493 ('Amenities include flush and pit toilets, showers, drinking water, and a dump station'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "note": "Run by the Corps itself (not a concession). Reserve on recreation.gov; 46 sites are first-come only, and the 2026 rate table runs a first-come, first-served season from September 8 to October 11. 14 nights in any 30."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233493 (org USACE, is_commercially_managed false; rules maxStay 14 'Rolling 30 Days') + RIDB catalog (46 public sites reservable: false) + https://www.recreation.gov/api/camps/campgrounds/233493/rates ('First-come, First-served Season' 2026-09-08..2026-10-11), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USACE (Huntington District) campground on the East Fork of Twelvepole Creek at East Lynn Lake, with a boat ramp; the 1.5-mile East Fork Trail starts in the campground. --Claude",
+  "summary": "Confirmed $35 standard / $50 waterfront (2026), 50-amp + water, 167 sites, flush toilets/showers/dump, reservable on recreation.gov. Added max rig 68 ft and one pull-through, pit toilets and drinking water, fcfs some_sites (46 first-come sites + a Sept 8-Oct 11 first-come season), 14-night limit. Operator: the Corps itself (not commercially managed). Not stated: booking window, campground season (rate seasons only), min stay (none in rec.gov rules). The Corps' lake page (lrh.usace.army.mil) refused both plain HTTP and the browser (Akamai error).",
+  "flags": []
+}

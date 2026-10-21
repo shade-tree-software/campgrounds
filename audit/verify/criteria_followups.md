@@ -330,3 +330,11 @@ me drop and report); each needs the research named before a verdict.
 - **13087 Amelia Family Campground** kept: the verifier found the operator site stale (newest post
   2020, no rates); Google listing active, 159 reviews, phone 804-561-3011 matches - the same state
   AWH kept it in on 2026-10-14 (own site + phone + RV Life $$).
+
+### p3-55 / p3-56 (WV, 2026-10-21)
+- **13121 Gheny Nook dropped** (long-stay test 2; see criteria_drops.py).
+- **426 Riverside Cabins** kept: the only rate ($40/$45) is on an undated page last modified 2023-08-04, with no booking channel (phone/email/Facebook). It carries an --AWH note and RV Life rates it 4.5. Re-check for a dated rate.
+- **1218 Saylwinds**: the operator says it "has been listed for sale" (2026 season note), but it is still taking reservations. Re-check next season.
+- **875 Summersville Lake SP** overrides the state:WV 2-night weekend minimum: the booking site sold one-night Fri/Sat stays and the park page states no minimum.
+- **1197 Kitty Wilson**: rates only on a 2018 page (local, no gate). **1193 Krodel Park**: no official web page found (town park).
+- **14248 Lazy K's / 14252 Lost River / 1226 Lake Stephens**: monthly sites alongside nightly ones; nights are sold to anyone, so the long-stay test passes. Lost River's base is exactly $50.00, at the gate, not over it.

@@ -1,0 +1,46 @@
+{
+  "id": 506,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.nps.gov/neri/planyourvisit/grandview-sandbar-campground.htm",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (NPS campground data behind that page, 'Grandview Sandbar')"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 0, "currency": "USD", "checked": "2026"},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (Grandview Sandbar fees: cost 0.00, 'There are no fees for camping'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (operatingHours: 'Grandview Sandbar Campground is open year round.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri ('These primitive camping areas have no drinking water or hookups'; electricalHookups 0), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 16, "max_rig_ft": 31, "pull_through": false, "note": "10 wooded drive-in sites for RVs, campers, cars and tents, 6 walk-in tent sites, 2 accessible sites by the river. Only small (under 25 ft) and medium (22-31.5 ft) RVs are recommended because of the tight access road; no pull-throughs. One RV/camper (or 2 tents), 2 vehicles and 8 people per site."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (description, campsites totalSites 16 / tentOnly 6, rvInfo 'There are no pull-through campsites', rvMaxLength 31, regulationsOverview), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": false, "showers": false, "potable_water": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false, "note": "Composting toilets only. No camp host on site."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (amenities: toilets 'Composting Toilets - year round', showers None, potableWater 'No water', dumpStation No, laundry No, campStore No, internetConnectivity No, staffOrVolunteerHostOnsite No), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "note": "Run by the National Park Service itself (no concessioner, no host on site). 'All sites are managed on a first-come, first-served basis and reservations are not accepted.' Campers must occupy their site each night; 14 days in any 28-day period across the park's campgrounds."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=neri (reservationInfo, numberOfSitesReservable 0, regulationsOverview 'Camping limit of no more than a total of 14 days per 28-day period in any park campground'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "NPS campground with waterfront sites on a sandbar in the New River. --AWH",
+  "awh_superseded": [
+    {"old": "no fee, first-come-first-served. --AWH", "source": "redundant: fees.nightly_low/nightly_high (0), booking.reservable false / booking.fcfs always"}
+  ],
+  "summary": "Confirmed free (0/0), first-come only (not reservable), on NPS's own campground data. Added year-round season, no hookups or water, 16 sites (10 drive-in) to 31 ft with no pull-throughs, composting toilets only/no showers/dump/store, 14-day limit per 28 days. Operator: NPS itself. AWH's fee/FCFS words dropped from the note as redundant.",
+  "flags": []
+}

@@ -108,3 +108,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   rec.gov and the FS page say "The river is located 200 feet from campground".
 - **1227 East Fork (WV)** — operator: "waterside" sites, "primitive waterfront sites", a river that
   "runs the length of the campground"; entry riverview.
+- **426 Riverside Cabins & RV Park (WV)**: operator says "RV Sites – On the bank of the Potomac River"; entry is riverview, and the --AWH note says the RV sites are set back from the river.
+- **490 Riverside, Watoga SP (WV)** (weak): the booking site tags ~20 sites "Riverview" and none "Riverfront"; entry is riverfront (--AWH firsthand).
+- **263 Summersville Lake Retreat (WV)**: FAQ "We overlook Summersville Lake and have a fantastic view of the lake but we do not have direct access"; premium sites "stare out on Summersville Lake". Entry is not waterfront, so a view tier may be earned.
+- **498 Army Camp, NPS (WV)**: NPS says the sites are "along the banks of the New River at one of its many horseshoe bends"; entry is not waterfront (--AWH says the sites are not waterfront).
+- **1192 Great Bend (WV)**: the city says it's "Nestled along the Sandy Creek close to where it flows into the Ohio River"; entry riverfront, so the water at the sites may be the creek.
