@@ -28,7 +28,7 @@ import gateways, trips                  # noqa: E402
 name = sys.argv[1]; APPLY = "--apply" in sys.argv
 CAD = {"AB", "BC", "MB", "NB", "NL", "NS", "ON", "PE", "QC", "SK"}
 LIMIT = {"USD": 50, "CAD": 69}
-NAMED = {14435}  # Fort Myers ids and Liberty Harbor 3363 left 2026-10-21: covered by gateways.py (family homes; New York 3 km)
+NAMED = set()  # all retired 2026-10-21: Fort Myers ids + Liberty Harbor 3363 are covered by gateways.py, Twin Palms 14435 is at $50 (not over)
 TODAY = datetime.date.today().isoformat()
 cg = {e["id"]: e for e in json.load(open(f"{ROOT}/campgrounds.json"))}
 norm = lambda s: re.sub(r"\s*\|\s*(\|\s*)*", " | ", re.sub(r"\s+", " ", s)).strip()
