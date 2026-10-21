@@ -1,0 +1,46 @@
+{
+  "id": 388,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/246892",
+    "https://www.recreation.gov/api/camps/campgrounds/246892/rates",
+    "recreation.gov campsite catalog for 246892 (RIDB, trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.nps.gov/bicy/structured_data_bicy.json (NPS campground data for Big Cypress, campgroundID 2442 'Midway Campground')"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov campsite catalog for 246892 (all 26 'RV ELECTRIC' sites: Electricity Hookup 30) + https://www.recreation.gov/api/camps/campgrounds/246892 ('This campground offers electric hookups for RV sites'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 36, "max_rig_ft": 45, "pull_through": false, "note": "26 RV sites with 30-amp electric and a paved pad, all back-in and 45 ft, around the lake; 10 tent-only sites on the grass. Open sites with little or no shade."},
+      "source": "https://www.nps.gov/bicy/structured_data_bicy.json (totalSites 36, rvOnly 26, tentOnly 10, rvMaxLength 45; 'RV sites have a picnic table, paved pad, and electric hookup', 'Tent sites are on the grass') + recreation.gov campsite catalog for 246892 (26 RV ELECTRIC, Max Vehicle Length 45, Driveway Entry Back-In; 10 TENT ONLY NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/246892 ('The RV campsites surround the lake ... Each campsite is open with limited to no shade'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "dump": true, "potable_water": true, "showers": false, "note": "Generators off at 10 p.m. (quiet hours 10 p.m.-6 a.m.). No swimming in the lake. Limited to no cell coverage."},
+      "source": "https://www.nps.gov/bicy/structured_data_bicy.json (amenities: Dump Station, Potable Water, 'Flush Toilets - year round', 'Showers - None') + https://www.recreation.gov/api/camps/campgrounds/246892 ('electric hookups for RV sites, dump station, flush toilets, and water'; notices 'No swimming in the lake', 'All generators must be off at 10:00 pm', 'There is limited to no cell phone coverage at the campground'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.nps.gov/bicy/structured_data_bicy.json (Midway Campground operating hours: 'Open year round', no closure exceptions), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "always", "max_stay_nights": 14, "note": "Reserve on recreation.gov or 877-444-6777; NPS: 'Any sites not reserved in advance are available on a first come first serve basis.' No cash: payment is online only, and with little or no cell coverage at the campground, recreation.gov highly recommends booking ahead."},
+      "source": "https://www.nps.gov/bicy/structured_data_bicy.json (reservationDescription: 'Reservations may be made on recreation.gov or call 877-444-6777 in advance. Any sites not reserved in advance are available on a first come first serve basis.') + https://www.recreation.gov/api/camps/campgrounds/246892 (facility_rules maxConsecutiveStay 14; notice 'Cash payments are not accepted at this campground. Payments must be made online ... advance reservations are highly recommended'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Campsites surround a small lake in Big Cypress National Preserve.  --AWH",
+  "awh_superseded": [
+    {"old": "37 single-family campsites that surround a small lake in Big Cypress National Preserve.  --AWH", "source": "redundant: sites.count (and NPS/recreation.gov give 36: 'totalSites 36', 26 RV ELECTRIC + 10 TENT ONLY NONELECTRIC in the catalog)"}
+  ],
+  "summary": "Confirmed on recreation.gov and NPS's campground data: 30-amp electric at the 26 RV sites, $30 RV / $24 tent (fees left, unchanged), open year-round. Changed sites.count 37 -> 36 and added 45 ft max (all back-in), flush toilets/dump/potable water, no showers, reservable on recreation.gov with unreserved sites first-come, 14-night max. No minimum stay in the rec.gov rules. Window left inherited. AWH's site count dropped from the note (redundant and off by one).",
+  "flags": [
+    "Missing phone: recreation.gov lists (239) 695-1205 for Midway Campground and says 'For facility specific information, please call (239) 631-9988'; NPS gives the preserve's 239-695-4111.",
+    "No agency page: the NPS detail URL https://www.nps.gov/bicy/planyourvisit/midway-campground.htm currently shows 'Page In-Progress', so recreation.gov is the only website."
+  ]
+}

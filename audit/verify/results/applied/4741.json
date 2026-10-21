@@ -1,0 +1,45 @@
+{
+  "id": 4741,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.nps.gov/ever/planyourvisit/camping.htm (its campground data, https://www.nps.gov/ever/structured_data_ever.json, campgroundID 2267)",
+    "https://flamingoeverglades.com/camping/ (the NPS concessioner's page, read in a browser)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.nps.gov/ever/structured_data_ever.json (Long Pine Key: electricHookups 0; fee titles 'tent and non-electric RV'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 108, "max_rig_ft": 35},
+      "source": "https://www.nps.gov/ever/structured_data_ever.json (Long Pine Key: totalSites 108, rvMaxLength 35), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "dump": true, "potable_water": true, "note": "Hot showers, free. Generators 8 a.m.-8 p.m. only. Cell service from AT&T and Verizon (NPS calls reception unreliable). A small convenience selection at the campground kiosk."},
+      "source": "https://www.nps.gov/ever/structured_data_ever.json (amenities: Dump Station, Potable Water, 'Flush Toilets - year round', 'Showers - Free', 'Showers - Hot'; 'Generators may be operated from 8 a.m. to 8 p.m. only') + https://flamingoeverglades.com/camping/ ('Amenities include bath houses, a dump station and a potable water filling station', 'Long Pine Key has both AT&T and Verizon cell phone services'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "11-01", "closes": "04-30"},
+      "source": "https://flamingoeverglades.com/camping/ ('2026-2027 Season: November 1, 2026 – April 30, 2027') + https://www.nps.gov/ever/structured_data_ever.json (operating-hours exception 'Long Pine Key Campground closed season', May 1 - October 31), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://flamingoeverglades.com/book-now", "fcfs": "some_sites", "note": "Booked through the park concessioner (Flamingo Adventures / Everglades Guest Services), online or at 855-708-2207, not recreation.gov. NPS: 'Reservations are available for RV's and tents along with first come first serve sites.' Register by 10 a.m., check-out 12 p.m."},
+      "source": "https://www.nps.gov/ever/structured_data_ever.json (reservationDescription: 'Reservations can be made with Everglades Guest Services by calling 1-855-708-2207'; description: 'Reservations are available for RV’s and tents along with first come first serve sites'; regulations: 'Check-out time is 12 p.m. Register by 10 a.m.') + https://flamingoeverglades.com/camping/ ('BOOK LONG PINE KEY' -> https://flamingoeverglades.com/book-now), read 2026-10-21",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "military": true, "note": "The concessioner gives 10% off (not the usual 50%) to seniors, active and retired military and Access Pass holders."},
+      "source": "https://www.nps.gov/ever/structured_data_ever.json (fee description: 'A 10% discount is offered to seniors, active and retired military, and Access Pass holders') + https://flamingoeverglades.com/camping/ ('We are pleased to offer a 10% discount at Long Pine Key and Flamingo campgrounds for seniors, active & retired military as well as Access Pass holders'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Everglades NP drive-in campground ~7 mi inside the main (Homestead) entrance off the park road. Run by the Flamingo Adventures / Everglades Guest Services concession (NOT recreation.gov).",
+  "summary": "NPS campground data + the concessioner's page: 108 sites, RVs to 35 ft, no electric, flush toilets, free hot showers, dump and potable water, reservable with the concessioner plus first-come sites, $33 Mon-Thu / $38.50 Fri-Sun (fees left, human-checked). Changed season (year_round false) to Nov 1 - Apr 30; discounts are 10% for seniors/military/Access Pass. Water/sewer hookup values left (derived; NPS silent). Note trimmed of what the fields carry and the 'Nov-May' season the pages contradict.",
+  "flags": [
+    "Inherited federal booking row looks wrong here: window_opens_days 180 is the recreation.gov standard, but Long Pine Key books through the NPS concessioner (flamingoeverglades.com / 855-708-2207), whose pages state no window."
+  ]
+}

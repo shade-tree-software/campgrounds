@@ -113,8 +113,15 @@ me drop and report); each needs the research named before a verdict.
 - **4794 Johnston Springs** — $65 (GS $58.50), kept on the Walt Disney World gateway (28 km); rate
   table undated (2022 footer); sells monthly-annual stays and park models (owners background-checked).
 - **370 John Pennekamp** — park: most sites take 40 ft; booking site lists up to 62 ft; max_rig_ft unset.
+- **4820 Lake Stone (Escambia Co.)** — human-checked fees $18-20.25: $20.25 is the non-resident
+  rate, residents a flat $18 -> could be 18/18 + nonresident surcharge $2.25/night (manual, not
+  overwritten). County table "set as of April 1, 2021".
+- **4741 Long Pine Key / 679 Flamingo** — concessioner-booked (flamingoeverglades.com); the inherited
+  federal 180-day window displays but doesn't apply. Consider a policy_ref for the Everglades concession.
+- **388 Midway** — NPS page shows "Page In-Progress"; rec.gov is the only website for now.
 
 ## Resolved 2026-10-21
+- **p3-36 drop:** 4771 Lake Waldena Resort (Campspot $55-60, no gateway; as Countryside).
 - **p3-34 drop:** 4758 Gulf Breeze RV Park ($69, no gateway; nearly full on weekdays, 2-night engine).
 - **p3-33 drop:** 14395 Countryside RV Park ($55 on Campspot, no gateway; 55+ mostly seasonal).
   Clearwater/Lake Tarpon KOA 15415 ($72) kept: Tampa gateway 33 km.
