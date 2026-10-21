@@ -70,3 +70,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront-site rules; entry lakeview.
 - **15417 Naples / Marco Island KOA** — KOA: "surrounded by the beautiful Rookery Bay", sites
   "backed by trees and mangroves", boat ramp, creek fishing; entry not waterfront.
+- **158 Oscar Scherer SP** — Reserve Florida: sites 1-17 and 70-90 "adjacent to a creek"; park page
+  "several campsites along the creek"; entry not waterfront.
+- **153 Rainbow Springs SP** (weak) — campground "located along the Rainbow River", but the swim
+  area/launch is "a substantial walk from campsites".

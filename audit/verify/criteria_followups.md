@@ -121,6 +121,10 @@ me drop and report); each needs the research named before a verdict.
 - **388 Midway** — NPS page shows "Page In-Progress"; rec.gov is the only website for now.
 
 ## Resolved 2026-10-21
+- **p3-38 drop:** 14386 Pellicer Creek ("mainly a long-term park", background checks on all
+  occupants). Rodman 154 fees $19 -> $29 (the $12 base was the tent rate). Rodman / Ross Prairie
+  (Cross Florida Greenway) are on floridastateparks.org + Reserve Florida: state:FL fits.
+  153 Rainbow Springs: a day-use reservation program for all visitors since 2026-04-29.
 - **p3-37 drops:** 14407 Morningside RV Estates ($72.95, no gateway, mostly seasonal 55+), 14418 Oak
   Grove RV Resort (rules admit only rigs 24 ft+; no posted rate). Notes: 151 Gold Head's Turkey Oak
   loop closed for renovation since 2026-03; 4725 Myakka's park-wide drinking-water outage since 2025-10-28.

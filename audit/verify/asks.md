@@ -122,3 +122,8 @@ with eviction rules, and "Owner reserves the right of approval or disapproval of
 personal vehicle is mandatory". But it posts a $40 daily rate "perfect for those passing through"
 and books by phone/form with a card. Kept: the approval clause reads as a blanket park rule, not an
 application for a night (test 2). Say drop if you read it the other way.
+
+## 556 Periwinkle Park (Sanibel, p3-38) — keep or drop?
+$65-70 a night (no gateway; nearest Everglades NP 93 km) — passes the price gate only on your
+--AWH note. But it also sells ~10 lots ($45k-100k) and permanent residences ($9-10k/yr), which is
+long-stay test 5 ("sells homes or lots"). Nightly camping is still sold to travellers. Kept pending you.
