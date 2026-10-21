@@ -5,7 +5,11 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-(none)
+4. **Manny Gordon Recreation Area (134, Pinchot SF)** — your note describes it without a size
+   caveat. ReserveAmerica lists all three sites at "Max Vehicle Length: 16 ... suitable for
+   tents and pop-up trailers" (20-25 ft driveways); DCNR's page says each has "parking for one
+   vehicle with travel trailer". Did EKKO fit (or would it)? If not, it's a drop under the
+   trailer-length rule.
 
 
 ## Answered (AWH 2026-10-20)

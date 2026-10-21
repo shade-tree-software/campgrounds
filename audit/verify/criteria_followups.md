@@ -31,3 +31,5 @@ me drop and report); each needs the research named before a verdict.
   weekend RV/tent sites for visitors". Apply the five-test long-stay rule (1 in 10 nightly?).
 - **14312 James Creek RV Resort (PA)** — $50 base rests only on our own note; RJourney blocks
   plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.
+- **14278 Pine Lane Campground (PA)** — "a 24 acre, 100 site, mostly seasonal campground"; sells
+  nights by phone at $50. Apply the five-test long-stay rule.

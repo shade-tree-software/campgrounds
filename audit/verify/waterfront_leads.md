@@ -50,3 +50,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lake RV site type.
 - **14277 Fire Pit Campground (PA)** — stored "not waterfront"; operator: "a creek that runs
   through the heart of it", two fishing ponds.
+- **14316 Riverbank Campground (PA)** — stored "not waterfront"; operator: "on the banks of the
+  Raystown branch of the Juniata River", sells Riverfront tent sites (camper sites not so described).

@@ -1,0 +1,43 @@
+{
+  "id": 13216,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/159090",
+    "https://www.recreation.gov/api/camps/campgrounds/159090/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A159090&size=100"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026", "note": "Every site is a standard non-electric site at $20 a night (recreation.gov rate tables 2024-2027)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/159090/rates (Peak 2026-05-01 to 2026-10-05 and 2027: STANDARD NONELECTRIC $20), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A159090 (all 30 sites typed STANDARD NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/159090 ('The campground contains 30 sites that are all self-contained'), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "pull_through": false, "note": "30 reservable standard non-electric sites, every one back-in; recreation.gov publishes no max vehicle length for any of them."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A159090 (30 sites, all 'Driveway Entry: Back-In', no permitted-equipment lengths) + https://www.recreation.gov/api/camps/campgrounds/159090 ('The campground contains 30 sites'), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/159090 (Facilities: 'Flush toilets, drinking water and a dump station are available'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "max_stay_nights": 14,
+        "note": "Reserve on recreation.gov or (877) 444-6777; information (814) 395-3242. Holiday weekends must be booked for the whole weekend, Friday through Sunday, with no refund for leaving early. 14 nights in any 30 consecutive days at the project. Maximum two tents, or one tent and one trailer, per site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/159090 (notices: 'Reservations must be made for the entire holiday weekend, Friday through Sunday', 'Reservations can be made online or by calling the (877) 444-6777', 'Maximum of two tents or one tent and one trailer allowed per site'; facility_rules maxStay 14 per rolling 30 days) + campsites search (all 30 sites reservable, Site-Specific), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $20 base (all non-electric), no electric, 30 sites, flush toilets and drinking water, reservable on recreation.gov. Added the dump station, all sites back-in, 14-night limit per 30 days, holiday whole-weekend rule. Not stated: campground season (rate seasons only), booking window, walk-ups, any max vehicle length. rec.gov tags all 30 sites 'Proximity to Water: Lakefront', consistent with the stored lakefront call; a 'militaryDiscount' rule with no wording was left alone.",
+  "flags": []
+}
