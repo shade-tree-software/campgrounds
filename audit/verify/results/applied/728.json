@@ -1,0 +1,71 @@
+{
+  "id": 728,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/232065",
+    "https://www.recreation.gov/api/camps/campgrounds/232065/rates",
+    "recreation.gov campsite catalog for 232065 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 39,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $20 a night, premium single (no hookups) $24, single with electric $25, single with full hookups $39; double site $40. Day use $5 per vehicle. recreation.gov's 2026 rate table agrees ($20 / $24 / $25; its $40 rows are the doubles)."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area ('Single Site: $20 per night ... Single Site with electric hook-up: $25 per night Single Site with full hook-ups: $39 per night') + https://www.recreation.gov/api/camps/campgrounds/232065/rates (Peak Season 2026-05-22 to 2026-09-07), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area ('With electric: 12 sites With electric/water/sewage: 12 sites') + recreation.gov catalog for 232065 (electric sites list 30/50-amp; 6 reservable sites list water and sewer), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 96,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "Forest Service: 96 family campsites, 6 tent and 90 RV (12 with electric, 12 with electric/water/sewer); recreation.gov says about 98 reservable. Catalog max vehicle lengths mostly 25-40 ft, a few 45; 'Some sites are back-in and some are pull-through.'"
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area ('There are 96 family campsites', 'Tent sites: 6 RV Sites: 90') + https://www.recreation.gov/api/camps/campgrounds/232065 ('Some sites are back-in and some are pull-through') + catalog (Max Vehicle Length), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area ('flush toilets', 'Drinking water is available from faucets', 'hot showers', 'trailer dump station'), read 2026-10-20",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "09-04",
+        "note": "Forest Service: 'Campground is open between 04/01 - 09/04. Camping reservations are accepted 04/01 - 09/04.' recreation.gov's 2026 peak rate season ran to Sep 7."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area ('Campground is open between 04/01 - 09/04'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "some_sites",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "note": "'Reservations are accepted for some sites. First come, first served sites are also available.' Up to 6 months ahead on recreation.gov or 877-444-6777; recreation.gov closes booking 4 days before arrival, the Forest Service page says at least 3 days ahead. recreation.gov rules: 2-night weekend and 3-night holiday-weekend minimum on reservations. Walk-up fees paid by 2 pm."
+      },
+      "source": "https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area (Reservations) + https://www.recreation.gov/api/camps/campgrounds/232065 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed 50-amp with water+sewer, $20 base, reservable on recreation.gov (6-month window). Changed fees high 25 -> 39 (full-hookup single site). Added 96 sites to 45 ft with pull-throughs, showers/flush toilets/water/dump, season Apr 1 - Sep 4 (Forest Service statement), 4-day cutoff, some FCFS sites, 2-night weekend / 3-night holiday minimum on reservations. The FS page currently shows 'Site Closed' (consistent with the season ending 09/04), so no status was recorded.",
+  "flags": [
+    "Missing official website: the entry has only recreation.gov; the Forest Service page is https://www.fs.usda.gov/r09/allegheny/recreation/kiasutha-recreation-area",
+    "Phone: the entry lists 814-363-9090, which neither official page gives. recreation.gov gives 814-368-4158 (facility phone) and the Forest Service gives the Bradford Ranger District, 814-362-4613."
+  ]
+}
