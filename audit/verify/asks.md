@@ -145,6 +145,7 @@ a general campground with an OHV side (like Mack Lake ORV) and kept it. Say drop
 - **AWH 2026-10-21: keep.**
 
 ## Fort Myers exception parks closed to short winter stays (14869 Lakes RV, 14877 Sanctuary, 14868 Orange Grove)
+- **AWH 2026-10-21 rule: a peak-season long-stay minimum is OK if it applies only in peak season, lasts no more than 3 months, and the note says so.** Lakes RV (Jan-Mar) kept with a note line; Sanctuary (90-night minimum Nov through at least mid-April) and Orange Grove (sells homes; no Dec-Mar nights) dropped.
 
 ### 14869 Lakes RV — 90-night winter minimum
 Online, every RV rate for a January-March arrival needs 90 nights (four winter dates checked);
