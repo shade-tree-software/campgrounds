@@ -46,3 +46,10 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **New AWH rules:** the peak-season minimum rule (≤3 months, see [[feedback-minimum-stay]]); the Fort Myers exception is price-only (Gulf Waters 26-ft rule, Sanctuary, Orange Grove and Swan Lake were dropped); Big Scrub kept (OHV side).
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
+
+**PAUSED by AWH 2026-10-21 night ("stop the stage 7 work for now").** Last applied batch: p3-52 (fa764ae1). The p3-53 and p3-54 verifiers were stopped mid-run, with their results unapplied in audit/verify/results/:
+- p3-53 wrote 11 of 12; 427 Five River is missing, and 630 Coopers Rock may be partial.
+- p3-54 wrote only 547.
+- To resume: re-check those files, run p3-53/p3-54 for the missing ids, then apply.
+- Open ask: 809 Sullivan's Camp Cacapon.
+- Deployed through 0a6df649; later commits are local.
