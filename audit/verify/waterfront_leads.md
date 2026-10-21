@@ -52,3 +52,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   through the heart of it", two fishing ponds.
 - **14316 Riverbank Campground (PA)** — stored "not waterfront"; operator: "on the banks of the
   Raystown branch of the Juniata River", sells Riverfront tent sites (camper sites not so described).
+- **13088 River Run Campground (VA)** — stored "riverview"; operator: "17 riverfront sites with
+  plenty of other sites with river access", "Tent sites are river front".

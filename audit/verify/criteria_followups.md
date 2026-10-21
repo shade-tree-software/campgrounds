@@ -33,3 +33,9 @@ me drop and report); each needs the research named before a verdict.
   plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.
 - **14278 Pine Lane Campground (PA)** — "a 24 acre, 100 site, mostly seasonal campground"; sells
   nights by phone at $50. Apply the five-test long-stay rule.
+- **1147 Washington County Park (VA)** — seasonal waiting list, winter retention fees, 2026
+  seasonal monthly rates for sites 1-140; nightly share unknown (Firefly behind reCAPTCHA). Five-test rule.
+- **1104 Breaks Interstate (VA)** — stored base $27 is "Primitive Sites"; if tent-only the RV
+  base is $37 (electric/water). Fees human-checked, so confirm before changing.
+- **1136 Cavitts Creek Park (VA)** — no official page found (county site silent); inclusion rests
+  on virginia.org + RoverPass; phone 276-988-7250 unconfirmed. Confirm it still takes RVs.
