@@ -142,3 +142,4 @@ A 46-site Forest Service campground (pull-throughs, drinking water) that rec.gov
 popular with off-road vehicle enthusiasts", with a trailhead inside giving "riders campsite-to-trail
 access" to the 47-mile Ocala Centennial Trail; most of its notices are ORV regulations. I read it as
 a general campground with an OHV side (like Mack Lake ORV) and kept it. Say drop if it's a riders' camp.
+- **AWH 2026-10-21: keep.**

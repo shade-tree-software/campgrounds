@@ -144,7 +144,7 @@ me drop and report); each needs the research named before a verdict.
   36 RV sites vs 8 MH spaces, nothing for sale; markets to snowbirds and annuals.
 - **4731 Big Scrub (USFS Ocala)** — kept as a general campground with an OHV side (46 sites, the
   Mack Lake ORV reading), but rec.gov calls it "perennially popular with off-road vehicle enthusiasts"
-  with a trailhead giving riders campsite-to-trail access to the Ocala Centennial Trail. Asked AWH.
+  with a trailhead giving riders campsite-to-trail access to the Ocala Centennial Trail. AWH 2026-10-21: keep.
 - **4710 Gilchrist Blue Springs** — Reserve Florida sells 36 units with sewer; park page says 23
   campsites, 30 amp. Sewer cleared; call 386-454-1369. Construction banner since 2025-10-29 (no water
   activities, port-o-lets); camping still sold.
