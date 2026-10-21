@@ -41,3 +41,8 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 (AWH 10-21, see [[feedback_minimum_stay]]).
 
 **2026-10-21 late: FL under way (p3-29..p3-40 applied, p3-41 + p3-42 running). HURRICANE ISAIAS is a live Oct 2026 storm** (2026 reuses the 2020 name list; Escambia evacuations 10-21). 197 Topsail Hill and 4720 Coldwater were set temporarily_closed 2026-10-21. Re-check them and lift the statuses once the parks reopen. Panhandle entries verified before 10-21 may also be closed but aren't marked. Followups live in audit/verify/criteria_followups.md. Open asks in audit/verify/asks.md: 4774 Kelly's RV Park, 556 Periwinkle, 4814 Williams Landing.
+
+**2026-10-21 late:** FLORIDA DONE. All 236 FL entries are verified (p3-28..p3-51). Deployed through 0a6df649; 546969a0 (p3-51) is local only. WV started: p3-52 and p3-53 are running.
+- **New AWH rules:** the peak-season minimum rule (≤3 months, see [[feedback-minimum-stay]]); the Fort Myers exception is price-only (Gulf Waters 26-ft rule, Sanctuary, Orange Grove and Swan Lake were dropped); Big Scrub kept (OHV side).
+- **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
+- **Open ask:** 4822 Neals Landing.
