@@ -1,0 +1,39 @@
+{
+  "id": 1109,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/259237",
+    "https://www.recreation.gov/api/camps/campgrounds/259237/rates",
+    "https://www.nps.gov/shen/planyourvisit/campgrounds.htm",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 259237, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "First-come, first-served only: arrive, claim a site and pay by scanning the QR code with the Recreation.gov app (cell service is limited, so install it beforehand). Check-out noon. Text SHENCAMP to 888777 for weekend first-come availability updates."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259237 ('This location is available on a first-come, first-served basis only. Visitors are required to physically arrive at the campground to purchase and claim a site'; rule reservationCutOff 'Not Reservable'; 'Check out time is noon') + https://www.nps.gov/shen/planyourvisit/campgrounds.htm ('Lewis Mountain Campground offers first-come, first-served sites only', 'text SHENCAMP to 888777'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259237 (notice: 'There are no RV hook-ups but there is a dump station with potable water available 7 miles north on Skyline Drive at Big Meadows') + RIDB catalog (all 30 family sites STANDARD NONELECTRIC), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259237 ('This small, seculded campground offers 30 campsites') + RIDB catalog (30 STANDARD NONELECTRIC sites), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "camp_store": true, "note": "Nearest dump station and potable-water fill: Big Meadows, 7 miles north. Limited Wi-Fi and cell reception; no propane in the park. Generators 8-10 a.m. and 4-7 p.m., 60 dB limit."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259237 ('conveniences like flush toilets, showers and a camp store', 'There is limited WIFI and cell phone reception', notices on the Big Meadows dump station, propane and generator hours), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "2026: $30 a night (rec.gov 2026 season rate). The park also charges a $30 per-vehicle entrance fee, a pass valid for one week."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/259237/rates (2026-03-27 to 2026-11-22: 'PeakLewisMountainCampground': 30) + https://www.recreation.gov/api/camps/campgrounds/259237 (notice: 'There is a $30 fee per vehicle to enter the park. The pass issued is valid for one week.'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed first-come only (QR pay via the rec.gov app), no hookups, 30 sites, flush toilets/showers/camp store, $30 (2026). Added the Big Meadows dump note, generator hours, the $30/week park entrance fee. Not stated in plain HTTP: campground opening/closing dates (NPS page loads them by script; 'open seasonally, from early spring until late fall'), max rig length, stay limit.",
+  "flags": []
+}

@@ -5,6 +5,9 @@ me drop and report); each needs the research named before a verdict.
 
 - **14312 James Creek RV Resort (PA)** — $50 base rests only on our own note; RJourney blocks
   plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.
+- **525 Grindstone (VA, USFS)** — closed for 2026 (no reopening date). `booking.reservable: true`
+  came from note prose, but every rec.gov rate season since 2022 is "First-come, First-served"
+  with walk-in prices. Re-check booking when it reopens; the USFS page currently 404s.
 
 ## Resolved 2026-10-21
 
