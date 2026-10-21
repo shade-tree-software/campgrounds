@@ -193,7 +193,14 @@ me drop and report); each needs the research named before a verdict.
 - **14250 Camp Holly** — only 5 RV sites, also sells seasonal sites; weekday $30-45, peak Saturday $55.
 - **514 Camp Run** — "primitive 1950s style camping", no site lengths; 23-ft fit unconfirmed.
 
+- **1206 Elk River Camp and RV (WV)**: the homepage carries an injected block of ~900 spam domains under the park content (read 2026-10-21). Its only rate ("$15.00 to $35.00 Per Night") is undated. The reservation phone is a Colorado number, 303-807-5209 (added).
+- **427 Five River (WV)**: "$30 to $55 per night" is undated (the page itself is current). Bonfire is behind a captcha.
+- **526 Canaan Valley (WV)**: wvstateparks.com says spring through fall, but the resort runs the comfort station year-round (water off October-April) and CampLife sells January nights. Season not written. Concession on CampLife, so policy_ref is now "none" (CampLife sells one Saturday night).
+- **720 Briar Point (WV)**: booked by phone through Stonewall Resort, not book.wvstateparks.com, so policy_ref is now "none" (the 14-night max no longer inherits).
+- **984 Chief Logan (WV)**: "spring through summer", with no closing date published; the 26 sites, 40-ft limit and water/sewer rest on a deleted park page.
+
 ## Resolved 2026-10-21
+- **p3-53 (WV):** drop 1200 Big Earl's (site down, Cloudflare 522, no rate) and 1204 Camp Morning Wood (no website, no rate), both on the presence rule. Phones added (487, 491, 526, 720, 1206) and fixed (874). Aggregator/CampLife links taken out of 491 and 630. 630 Coopers Rock base $31.99 -> $41.99 (the $31.99 Rhododendron sites are tent/hammock only). 526 Canaan Valley fees $63-69 (new).
 - **p3-52 (first WV):** drop 13122 Hidden Hollow (workforce park, approval for short stays) and 1209
   Lakeview (Facebook only). 504 Cranberry is first-come only. 14251 Kick Back low $28 -> $35 (the
   $28 sites suit tents); 878 Seneca low $22.99 (April-August). 809 Sullivan's: asked AWH.
