@@ -5,15 +5,17 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-6. **Bear Creek Lake SP (252, VA)** — your note: "There is one waterfront RV site (A18)" (stored
+(none)
+
+## Answered (AWH 2026-10-21)
+
+6. (AWH 2026-10-21: has not stayed; the older A18 description was the source, and DCR now lists A18 at a 20-ft pad / 20-ft max vehicle - not suitable for EKKO. Downgraded to not waterfront, A18 sentence replaced.) **Bear Creek Lake SP (252, VA)** — your note: "There is one waterfront RV site (A18)" (stored
    lakefront). DCR's park page now says site 18 "is a tent only water and electrical site"; the
    seven Acorn E/W sites (1, 2, 3, 15-18) take equipment "up to 20 feet long" and "offer no view of
    the water"; "The only RV sites are RV 21, 24, 25, 28, 29, 30, 32, 34, 42, 44, and 45" (Black Oak
    and Chestnut loops), and Acorn is "the only campground by the lake". Did EKKO fit A18 when you
    stayed? If DCR has since made it tent-only, the entry comes down to not waterfront and the A18
    sentence goes (your 2026 closure dates are past too).
-
-## Answered (AWH 2026-10-21)
 
 5. (AWH 2026-10-21: the site is gone; downgraded to not waterfront, note updated.) **Black Pearl Farms (757, SC Hipcamp)** — your note: "Waterfront RV site w/canoe $45+fees"
    (stored riverfront). Hipcamp's current listing sells three RV sites named "Farm View" and
