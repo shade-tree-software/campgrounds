@@ -55,3 +55,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
   tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
   Same question as asks #8 for the rest of AWH's beach camping areas.
+- **587 Cypress Glen (Withlacoochee SF)** — FDACS: "several sites having a view of the water"
+  (Silver Lake); entry is not waterfront. Lakeview tier may apply to some sites.

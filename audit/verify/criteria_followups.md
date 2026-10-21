@@ -84,6 +84,13 @@ me drop and report); each needs the research named before a verdict.
   permitted": EKKO qualifies. Open Thu noon - Mon 11 am only.
 
 ## Resolved 2026-10-21
+- **p3-29 drops (Florida):** 14397 Arrow Family ($65, no gateway), 14414 Cross Creek ($71, no
+  gateway, maybe 55+), 14431 Buckhead Ridge (annual leases, no nights for sale), 4766 Buddy's
+  Lakeside (no live presence), 4724 Escribano Point (FWC: "Camping: Prohibited" 2026-27).
+  Kept: 14428 Cypress Isle (Google 4.6/29 + phone meets the presence rule).
+- **FL registry row** confirmed from floridastateparks.org/reservation-information (browser):
+  caveat removed, fcfs always, method manual. Four FFS entries (166, 169, 170, 587) now
+  policy_ref none like the other 17 state-forest/FWC entries.
 - **64 St. John's Rock / 87 Wolf Den Run** — DROPPED under the off-road rule (ORV-trail campsites;
   Maryland's ORV state park). Reported to AWH for a possible reversal.
 - **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
