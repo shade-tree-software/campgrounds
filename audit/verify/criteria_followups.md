@@ -57,6 +57,13 @@ me drop and report); each needs the research named before a verdict.
 - **437 Weston / 235 White Oak Mountain (VA WMA)** — neither pin is at a parking lot (437: DWR's
   lot is at the end of the WCS access road; 235 has 16 lots). Neither has water/ramp at the pin.
   437 is now named Weston Wildlife Conservation Site (DWR's name).
+- **Price gate, p3-26:** 977 Lake Somerset ($60) and 972 Bar Harbor ($85-95) carry --AWH notes
+  (exception); 970 Sun Outdoors Ocean City ($91-328, a Sun brand the sweeps skip) is in Ocean City
+  (gateway). All kept.
+- **63 New Germany** — 24 of 28 RV sites list a 20-ft max; four list 30 ft. The one electric site
+  (#34) is the host's, so electric is unset while the manual fees carry an electric +$9.
+- **825/829 Pocomoke** — booking site's park-wide rates ($19.50 / $25.50) match neither area's
+  DNR figures; the entries keep DNR's.
 
 ## Resolved 2026-10-21
 - **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
