@@ -14,6 +14,14 @@ me drop and report); each needs the research named before a verdict.
   own word (site map / call) before any verdict.
 
 ## Resolved 2026-10-21
+- **13095 Jubilee Park and Horse Show Grounds (VA)** dropped (criteria_drops.py): login-walled
+  Facebook only, no operator rate, Google listing (43 reviews) has no phone.
+- **894 Chincoteague Bay RV Resort** kept: base $59 ($49 + $10 resort fee) is over the gate but it
+  sits 4 km from Chincoteague/Assateague (gateway). Campspot's record still points at a Sun Outdoors
+  URL, which now lands on Sun's Virginia index without it (Sun lists only Jellystone Chincoteague);
+  the operator site is "Blue Water" - a past Sun affiliation, not a current Sun park.
+- **1140 Glen Maury Park** rates ($70 W/E, $55 tent, 2026 page) are high for a city park and rest on
+  one page; earlier city/news pages said $35-40. Kept as posted.
 
 - Dropped (audit/verify/criteria_drops.py, logged in removals.json): **1168 Lake Bonin** (long-stay
   test 2: "focus on seasonal sites", daily rates only by call/email, nothing posted, no booking

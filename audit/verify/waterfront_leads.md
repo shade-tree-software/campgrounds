@@ -10,6 +10,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Google's "Lorraine Park Campground" pin (42.6106,-71.0907) shows no loop either; mass.gov and
   the RA catalog both refuse plain HTTP. Needs the DCR campground map. AWH's call stands meanwhile.
 - **252 Bear Creek Lake SP (VA)** — see asks.md #6 (DCR: A18 is tent-only; RV loops away from the lake).
+- **1140 Glen Maury Park (VA, City of Buena Vista)** — stored riverview. The city's camping page
+  (2026 kiosk map) names lower-campground RV areas "Riverside" (sites 104-115) and "Water's Edge"
+  on the Maury River. Names alone prove nothing; needs the map + satellite for pads at the bank.
 
 ## Resolved 2026-10-21 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 

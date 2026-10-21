@@ -29,6 +29,10 @@ DROPS = {
     1188: ("2026-10-21", "no live presence (private presence rule)",
            "woodhavenacres.com, read 2026-10-21: one page with an email form, no phone, rates or booking; "
            "Google Maps 'Woodhaven Campgrounds' has 5 reviews (under 25)."),
+    13095: ("2026-10-21", "no live presence (private presence rule)",
+            "Ivanhoe Civic League's only page is a login-walled Facebook page; no operator page posts a rate; "
+            "Google Maps 'Ivanhoe Jubilee Park Show Grounds' (4.7 over 43 reviews, open) carries no phone or website - "
+            "the only phone is on Campendium. Horse-only question also unverifiable. Read 2026-10-21."),
 }
 
 if __name__ == "__main__":
