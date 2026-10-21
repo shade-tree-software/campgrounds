@@ -176,3 +176,4 @@ self-contained "boondocking" spot in an unlevel upper parking lot with no amenit
 charge per rig"), beside glamping, tent sites, a wedding/event venue and 65-guest whole-campground
 rentals. No pets; every reservation non-refundable. The $40 lot keeps it under the price gate on
 paper. Kept for now; I'd lean drop.
+**Answered AWH 2026-10-21: drop.** Done.
