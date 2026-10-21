@@ -61,7 +61,7 @@ for p in sorted(glob.glob(os.path.join(HERE, 'results', '*.json'))):
         e['fees'] = r['fees']
         prov['fees'] = {'source': r['fees_source'], 'checked': TODAY, 'method': 'manual'}
     if (r.get('booking') or {}).get('min_stay'):
-        e['booking'] = {'min_stay': r['booking']['min_stay']}
+        e['booking'] = {k: r['booking'][k] for k in ('min_stay', 'note') if r['booking'].get(k)}
         prov['booking'] = {'source': r['booking_source'], 'checked': TODAY, 'method': 'manual'}
     if prov:
         e['provenance'] = prov

@@ -32,7 +32,11 @@ write one result file.
   - **The peak-season exception (AWH 2026-10-21):** a long-stay rule (e.g. monthly-only Dec-Mar) is OK
     only if it applies to peak season alone, lasts no more than 3 months, and the note says so. Longer
     than 3 months fails test 3.
-  - A standing 2-night minimum is fine. Return it in `booking.min_stay`, in the doc §4.1 shape.
+  - A standing 2-night minimum is fine. Return it in `booking.min_stay`, in the doc §4.1 shape
+    (`applies` is only `always` | `weekend` | `holiday` | `summer`), with anything that vocabulary
+    can't hold (dates, a phone waiver) in `booking.note`.
+  - A long minimum that applies only part of the year, or that can be avoided by calling ahead or
+    walking up, is not a drop (AWH 2026-10-19). Record it and flag it.
   - 55+ or adults-only is a note line, not a skip.
 - **The 23-ft fit:** skip if the largest drive-in sites cap under ~23 ft. Skip if the park admits only
   Class A or 5th wheels, or sets a minimum rig length or age rule that a 23-ft Class C fails. A
@@ -54,7 +58,7 @@ write one result file.
 - **Privacy:** never write a distance to a family home, a family name or an address anywhere. The only
   wording allowed is "within 40 km of a family home (gateways.py)". Never put any personal identifier
   in a User-Agent or any request.
-- **Browser:** one headless browser at a time. Run every browser command under
+- **Browser:** the helpers need `PYTHONPATH=~/.cache/ekko-pw` (Playwright lives there). One headless browser at a time. Run every browser command under
   `flock /tmp/ekko-headless-browser.lock <cmd>`, and start `drv_server.py` in the background with
   `flock -o`. Never probe its socket with a bare connect. Quit the driver when done.
 - Edit no repo file except your own result file. Run Python with `-I` on anything downloaded.
