@@ -18,15 +18,19 @@ results/applied/). Entry-level `verify_scan` record (campground_schema.VERIFY_SC
 off the queue even when nothing changed. Verifier writes `method: manual` for the operator/agency
 page. Criteria problems are flags for me to decide (I may drop per the standing rules and report).
 
-**Progress / resume (2026-10-21, later):** ~346 verified (batches p2-1..p3-14 applied, commit
-675d489a). Batch `batches/p3-15.json` (12 VA) has a verifier RUNNING (launched 10-21); if the
-session died, check results/ for its files, else relaunch. AWH (10-20) cut back to ONE verifier
-at a time (session limit). Loop per batch: review flags → fix result files (e.g. never clear a
-phase-5 good_sam false on private) → `apply.py --apply <ids>` → small python for
-phones/websites/names from flags (check URL 200 first; prepend agency page to website) → log to
+**Progress / resume (2026-10-21, evening):** ~382 verified (batches p2-1..p3-17 applied, last
+commit d95de1e3). Batch `batches/p3-18.json` (12 VA) has a verifier RUNNING; if the session died,
+check results/ for its files, else relaunch (prompt saved in the session scratchpad as
+p318_prompt.txt; otherwise copy the latest Agent prompt from the transcript). AWH (10-20) cut back
+to ONE verifier at a time (session limit). Loop per batch: review flags → fix result files (e.g.
+never clear a phase-5 good_sam false on private) → `apply.py --apply <ids>` → small python for
+phones/websites/names from flags (check URL 200 first; prepend agency page to website) → presence
+drops go in audit/verify/criteria_drops.py (DROPS dict, logs removals.json) → log to
 waterfront_leads.md / criteria_followups.md / asks.md → commit → `queue.py --batch p3-N --limit 12`
 → launch verifier with the standard prompt (copy the latest Agent prompt from the transcript:
 README first, economical, privacy line, rules list; tell it `flock -o` for a background driver).
 Over-gate private flags: check `audit/price_research/gateways.py lat,lng` before dropping.
-Waterfront leads: all worked 10-21 except 806 Loraine (pin wrong, needs DCR map); Black Pearl is
-asks.md #5. criteria_followups.md: 14312 James Creek, 525 Grindstone booking (re-check on reopening).
+Open: waterfront leads 806 Loraine (pin wrong, needs DCR map) and 1140 Glen Maury (riverside RV
+areas); asks.md #6 Bear Creek Lake A18; criteria_followups 14312 James Creek, 525 Grindstone,
+940 Tall Pines. Separate from phase 7: the below-the-dam screen ([[feedback_below_dam_not_lake]],
+audit/dam_screen/tiers.md, 75 flagged) is waiting on AWH's decision about hand checks.
