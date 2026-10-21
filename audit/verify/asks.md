@@ -5,7 +5,11 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-(none)
+7. **Rapidan WMA, 438 (1253 Taylor Mountain Rd) and 440 (300 Cobblestone Row)** — DWR's Rapidan page:
+   roads beyond the state-maintained part "are narrow and not maintained to VDOT standards and can
+   be rough. A four-wheel drive vehicle recommended" (for 438: "Continue up the dirt road to the
+   management area"). A recommendation, not the requirement that excluded RI East Beach. Keep both,
+   or drop them for EKKO? (The page doesn't say which tract Cobblestone Row serves.)
 
 ## Answered (AWH 2026-10-21)
 

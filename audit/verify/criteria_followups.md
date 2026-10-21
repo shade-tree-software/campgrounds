@@ -12,6 +12,14 @@ me drop and report); each needs the research named before a verdict.
   only: a 2026-10-10 camper review on koa.com says "the cg is almost all seasonal/fulltime. There
   is one section remaining that is transient." The family has stayed (--AWH). Needs the operator's
   own word (site map / call) before any verdict.
+- **474 Big Bend boondocking sites (VA, GW NF)** — the forest's dispersed rules say "Dispersed
+  camping is not allowed in the vicinity of developed recreation areas such as campgrounds,
+  picnic areas, or trailheads" (fs.usda.gov/r08/gwj/recreation/camping-cabins); the spot is a
+  former picnic area that is now an overlook, and the site details rest on TMBtent/boondocking
+  listings. Needs the ranger district's word (540-432-0187) on overnighting there.
+- **255 Bath County Recreational Campground** — kept by AWH 2026-10-11 as an FCFS utility area with
+  no posted fee; p3-20 found no official site count, size limit or rate either (DWR: "Primitive
+  Camping Only", "a small fee"). Stands on AWH's call.
 
 ## Resolved 2026-10-21
 - **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a
