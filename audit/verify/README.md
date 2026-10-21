@@ -56,8 +56,10 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
      picking one (Rocky Gap: DNR says 2028, ReserveAmerica 2029).
    - **recreation.gov rule fields and rate tables** (lessons from the pilot): a rate
      season's date range is NOT a campground season (seasons come from a statement, or from
-     `recgov_calendar.py`); a rule rec.gov marks `soft` is not a rule, so it goes in
-     `booking.note`, never in `min_stay`/`max_stay_nights`; and a catalog length that is
+     `recgov_calendar.py`); a minimum rec.gov marks `soft` IS a rule (AWH 2026-10-21: at
+     Seven Points the soft weekend minimum is enforced but was relaxed for a same-day Saturday
+     booking): record it in `min_stay` and say in `booking.note` that it may be relaxed for a
+     same-day booking (a soft value of 0 or 1 is no rule at all); and a catalog length that is
      plainly a typo (140 ft) is left out of `max_rig_ft`, not believed.
    - `booking.platform`: a state's own branded booking site (Reserve Florida, ReserveVAParks)
      keeps the label its agency row uses (`operator` or `usedirect`); don't relabel one as
