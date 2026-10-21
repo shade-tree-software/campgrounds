@@ -82,8 +82,19 @@ me drop and report); each needs the research named before a verdict.
   inclusion rests on AWH's firsthand notes. 43: Lostland Run Road closed at Campsite 22 (bridge).
 - **1150 Watkins** — "we do not offer RV camping ... Class B and Class C camper vans are
   permitted": EKKO qualifies. Open Thu noon - Mon 11 am only.
+- **ADD lead: Jonathan Dickinson SP, Pine Grove campground** — 90 sites, full hookups, 40 ft
+  (Reserve Florida loop PG, facility 81); no entry (373 is the River Campground). Vet + add.
+- **586 Gamble Rogers** — beachside loop (half the sites, the basis of the coastal-dunes call)
+  closed since 2026-06-23 for a project, no reopening date; riverside open. In the note.
+- **14432 Grape Hammock / 14424 Lakeport** — long-stay parks kept on the five tests (nightly rate
+  posted with phone; no counts; homes not sold). Grape Hammock's nightly sites are rustic, RV fit
+  unstated. Lakeport $50 base at the line.
+- **4749 Lake Victor** — only link was an unclaimed RoverPass listing (removed); stands on Google
+  (33 reviews, phone) + RV Life $$. Note's hookups/24 sites/pool unconfirmed.
 
 ## Resolved 2026-10-21
+- **p3-30 drops:** 4797 Hammondell (sells mobile homes and lots, primarily 55+), 4751 In The Garden
+  (Facebook only, 10 Google reviews).
 - **p3-29 drops (Florida):** 14397 Arrow Family ($65, no gateway), 14414 Cross Creek ($71, no
   gateway, maybe 55+), 14431 Buckhead Ridge (annual leases, no nights for sale), 4766 Buddy's
   Lakeside (no live presence), 4724 Escribano Point (FWC: "Camping: Prohibited" 2026-27).
