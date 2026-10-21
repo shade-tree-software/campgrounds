@@ -168,3 +168,4 @@ queries). Outside the exception this is the Ridge Manor rule (drop). Kept pendin
 No official page says there is camping: the county lists it only as a boat ramp/landing, USACE's
 Lake Seminole camping list omits it, and aggregators disagree (one review: "closed for a while").
 It was added on satellite evidence. Kept; drop if you'd rather not carry it unconfirmed.
+- **AWH 2026-10-21: drop.** Done.

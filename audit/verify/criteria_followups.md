@@ -170,7 +170,7 @@ me drop and report); each needs the research named before a verdict.
 - **4822 Neals Landing (Jackson Co.)** — no official page says camping exists: the county lists it
   only under boat ramps and landings; USACE's Lake Seminole camping list omits it; aggregators
   split (AllStays 10 sites; a review says "closed for a while"). Inclusion rested on satellite only.
-  Asked AWH; call Jackson County Parks & Rec, 850-557-1564.
+  AWH 2026-10-21: dropped.
 - **4737 Mack Landing** — FS page $3/vehicle vs rec.gov Scan & Pay $10 (2026-10-01..12-31); left $3
   (human read). Hickory Landing 4736 went to $10 on the same evidence - DONE 2026-10-21: 4737 and
   4738 Whitehead Landing set to rec.gov's $10 too (rec.gov is the newer channel), $3 kept in fees.note.
