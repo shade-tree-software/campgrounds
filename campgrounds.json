@@ -9313,7 +9313,51 @@
       "fees": {
         "source": "https://www.floridastateparks.org/parks-and-trails/blue-spring-state-park/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 9 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/blue-spring-state-park/experiences-amenities-0 ('Each site is equipped with a picnic table, water, electricity and a grill') + Reserve Florida unit details (all 47 campsites: Electric Hookup 50, Water Hookup), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/blue-spring-state-park/experiences-amenities-0 ('The campground has 51 campsites (recreational vehicles up to 40 feet long)') + Reserve Florida search/details for facility 24 (VehicleLength, PullInTypeName: all Back In), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/blue-spring-state-park/experiences-amenities-0 ('Two new bathhouses are complete with accessible showers and bathroom stalls'; 'The dump station is located in the campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://reserve.floridastateparks.org/Web/#!park/9 (place description: 'Please make sure you are reserving for the correct Blue Springs State Park'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 51,
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "Park page: 51 campsites for RVs up to 40 ft, concrete pads. Reserve Florida lists 47 bookable campsites, all back-in, vehicle lengths 20-45 ft (two at 45)."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "note": "Reserve Florida warns that this Blue Spring (Volusia County, near Orange City) is not Lafayette Blue Springs State Park near Mayo: check the park before booking."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/blue-spring-state-park/experiences-amenities-0 (read in a browser) https://reserve.floridastateparks.org/Web/#!park/9 (US eDirect API floridardr.usedirect.com: search/place for PlaceId 9, search/grid + search/details for every unit of facility 24 'Camping & Cabin Loop', start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: 51 sites for RVs to 40 ft, all back-in, 50-amp electric and water, bathhouses with showers, dump station in the campground, reservable. Fees left (human-checked 2026-10-12; units still $24 + utility). Window and fcfs left inherited. Sewer not stated."
     }
   },
   {
@@ -21976,7 +22020,7 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "recreation.gov 246890: RV Nonelectric sites 03-10, active reservations -> real NPS RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: 14 spacious campsites surrounding a lake in Big Cypress National Preserve.",
-    "note": "14 spacious campsites surrounding a lake in Big Cypress National Preserve.  --AWH",
+    "note": "Spacious campsites surrounding a lake in Big Cypress National Preserve.  --AWH",
     "elevation_meters": 2.0,
     "state": "FL",
     "ownership": "federal",
@@ -21988,13 +22032,16 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 14
+      "count": 14,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "recreation.gov lists 14 sites: 8 RV non-electric pull-throughs (50 ft) and 6 tent-only. The NPS campground record says 15 designated RV/tent sites."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for facility 246890 (RIDB, 14 sites; RV NONELECTRIC sites 'Max Vehicle Length' 50, 'Driveway Entry' Pull-Through) + https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy ('The campground accommodates 15 designated RV/tent sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -22002,8 +22049,24 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/246890/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (fees: '24.00', 'tent and RV sites are the same cost') + https://www.recreation.gov/api/camps/campgrounds/246890/rates (RV NONELECTRIC $24, season 2026-08-15 to 2026-12-31), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (Burns Lake operatingHours: 'The campground is open August 15 through April 15'; seasonal closure 2027-04-16 to 2027-08-15), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/246890 ('vault toilets ... No fresh water is available') + https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (amenities: Vault Toilets; showers None; potableWater No water; dumpStation No; laundry No; campStore No; internetConnectivity No), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy ('Reservations may be made on recreation.gov or call 877-444-6777 in advance. Any sites not reserved in advance are available on a first come first serve basis') + https://www.recreation.gov/api/camps/campgrounds/246890 (maxConsecutiveStay 14), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -22017,8 +22080,35 @@
     "fees": {
       "nightly_low": 24,
       "nightly_high": 24,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "08-15",
+      "closes": "04-15"
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "showers": false,
+      "potable_water": false,
+      "dump": false,
+      "laundry": false,
+      "camp_store": false,
+      "wifi": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "always",
+      "max_stay_nights": 14
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/246890 (description, notices, rules) and /rates, read 2026-10-21 trip_data/ridb_campsites.json (RIDB campsite catalog for facility 246890, fetched 2026-10-20) https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (NPS's own campground record for Burns Lake, the data behind nps.gov/bicy), read 2026-10-21",
+      "note": "Confirmed on recreation.gov and NPS's campground record: $24 for any site, 14 sites (8 RV pull-throughs to 50 ft), non-electric, vault toilets only, no water/showers/dump; reservable on recreation.gov with unreserved sites first-come; 14-night limit. Added season Aug 15 - Apr 15. Window left inherited."
+    },
+    "phone": "239-695-1205"
   },
   {
     "id": 387,
@@ -22190,7 +22280,7 @@
     "waterfront": "coastal woods",
     "inclusion_evidence": "ReserveFlorida park/6 + flagship FL SP: 75-site drive-in RV/tent campground with W/E hookups -> keep",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'coastal woods' per owner: 75 campsites in a sandy wooded setting within walking distance of Big Lagoon Bay and a mile from the gulf coast.",
-    "note": "75 campsites in a sandy wooded setting within walking distance of Big Lagoon Bay and a mile from the gulf coast.  --AWH",
+    "note": "Campsites in a sandy wooded setting within walking distance of Big Lagoon Bay and a mile from the gulf coast.  --AWH",
     "website": "https://www.floridastateparks.org/BigLagoon\nhttps://reserve.floridastateparks.org/Web/#!park/6",
     "rating": {
       "stars": 4.5,
@@ -22199,17 +22289,35 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 75
+      "count": 75,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "Three loops. Reserve Florida lists 67 bookable units: vehicle lengths 20-40 ft, two pull-throughs (Loop 3). Its site descriptions say the Loop 2 and some Loop 1 sites have 20/30-amp outlets only (no 50 amp), and several sites are sandy, narrow or 'not suitable for MH or 5th wheel'."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park/experiences-amenities-0 ('the campground has 75 sites') + Reserve Florida search/details for facilities 17-19 (VehicleLength, PullInTypeName, site descriptions), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 6 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park/experiences-amenities-0 ('the campground has 75 sites, each equipped with 30/50 amp electric, water, a picnic table and a fire ring/ground grill') + Reserve Florida unit details (Electric Hookup 30/50, Water Hookup on Loops 1 and 3), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park/experiences-amenities-0 ('Three full-service restrooms and a dump station are available'; 'Hot-water enclosed showers are available for registered campers in the campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park ('Make a Reservation' -> https://reserve.floridastateparks.org/Web/#!park/6), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -22224,6 +22332,23 @@
       "reservation_fee": 6.7,
       "checked": "2026",
       "note": "$27 a night for an RV: the $20 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $20), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee. The park's Hours & Fees page and Florida's fee page, read 2026-10-12."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/big-lagoon-state-park/experiences-amenities-0 (read in a browser) https://reserve.floridastateparks.org/Web/#!park/6 (US eDirect API floridardr.usedirect.com: search/place for PlaceId 6, search/grid + search/details for every unit of facilities 17 Loop 1, 18 Loop 2, 19 Loop 3, start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: 75 sites with 30/50-amp electric and water, to 40 ft, 2 pull-throughs, hot showers and a dump station, reservable on Reserve Florida; fees left (human-checked 2026-10-12; every unit still $20 + utility). Window and fcfs left inherited. Sewer not stated."
     }
   },
   {
@@ -295907,7 +296032,7 @@
     "inclusion_evidence": "FLFS ReserveAmerica parkId 1120104: 54 RV/Tent sites (+1 tent, +86 horse stalls), non-horse RVers welcome, RV lengths 30-60 ft -> general RV campground offering equestrian, not equestrian-only",
     "waterfront_evidence": "satellite at 30.8469,-86.9811: equestrian camp with stables/open paddocks, no water in frame; Coldwater Creek not adjacent to pads",
     "website": "https://www.fdacs.gov/Forest-Wildfire/Our-Forests/State-Forests/Blackwater-River-State-Forest/Recreation-Areas-at-Blackwater-River-State-Forest\nhttps://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104",
-    "note": "Florida Forest Service. General drive-in RV campground that also offers equestrian facilities (horses only in corrals/trails, not at sites — non-horse RVers welcome). ~54-55 RV/tent sites + 1 tent-only, all 30/50A electric + water; max lengths 24-60 ft. Reservable via Florida State Forests ReserveAmerica (parkId 1120104).",
+    "note": "Florida Forest Service. General drive-in RV campground that also offers equestrian facilities (horses only in corrals/trails, not at sites — non-horse RVers welcome).",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -295918,31 +296043,51 @@
       "water": true
     },
     "sites": {
-      "max_rig_ft": 60
+      "max_rig_ft": 60,
+      "count": 54,
+      "note": "54 'RV or Tent' sites (A-loop and others) with listed lengths 30-60 ft, one 24-ft tent-only site, and 86 horse stalls booked separately. The total length counts the tow vehicle: 'Vehicle with camper attached must fit completely in the site'."
     },
     "booking": {
       "reservable": true,
-      "platform": "reserveamerica"
+      "platform": "reserveamerica",
+      "url": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104",
+      "window_opens_days": 335,
+      "note": "Florida Forest Service campground on its own ReserveAmerica site (or 1-877-879-3859): 'Reservations can be made for today and can be made up to 11 Month(s) in advance' (window shown Oct 21 2026 to Sep 21 2027). Horse stalls are reserved with the campsite. Campgrounds close, with automatic refunds, when the county is under a tropical storm or hurricane warning."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campsiteDetails.do?contractCode=FLFS&siteId=1080&parkId=1120104 ('Electricity Hookup: 30/50', 'Water Hookup: Y'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104 (141 units: 54 RV or Tent at 30-60 ft, 1 Tent Only at 24 ft, 86 Horse Stall), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104 (Booking Window; 'Horse Stall Reservations: To reserve a stall with your campsite, reserve here') + https://www.fdacs.gov/... ('Camping. For information and reservations, visit FloridaStateForests.ReserveAmerica.com or call 1-877-879-3859'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "floridastateforests.reserveamerica.com parkId 1120104 (sampled sites' 1-night price for 2027-01-12 and 2027-01-16, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "facilities": {
+        "source": "https://www.fdacs.gov/Forest-Wildfire/Our-Forests/State-Forests/Blackwater-River-State-Forest/Recreation-Areas-at-Blackwater-River-State-Forest (Coldwater Recreation Area facilities: 'Restrooms and showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104 ('Status: Open year round.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104 ('The Florida Forest Service offers camping discounts for individuals age 65 and older, active-duty military or honorably discharged veterans, and for individuals 100% disabled at applicable camping facilities'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -295958,7 +296103,22 @@
       "checked": "2026",
       "note": "$22.32 a night, weekday or weekend; the sites have water and 30/50-amp electric. $5.79 reservation fee. The Florida Forest Service's booking site, read 2026-10-12 for January 2027 nights."
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "facilities": {
+      "showers": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "discounts": {
+      "military": true,
+      "note": "The Florida Forest Service offers camping discounts for people 65 and older, active-duty military or honorably discharged veterans, and the 100% disabled 'at applicable camping facilities'; documentation is registered by calling (877) 879-3859."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campgroundDetails.do?contractCode=FLFS&parkId=1120104 (all 141 units listed, read 2026-10-21) https://floridastateforests.reserveamerica.com/camping/coldwater-equestrian-campground-blackwater-river-state-forest/r/campsiteDetails.do?contractCode=FLFS&siteId=1080&parkId=1120104 (site 001) https://www.fdacs.gov/Forest-Wildfire/Our-Forests/State-Forests/Blackwater-River-State-Forest/Recreation-Areas-at-Blackwater-River-State-Forest, read 2026-10-21",
+      "note": "Confirmed on the Florida State Forests ReserveAmerica site and FDACS: 54 RV/tent sites to 60 ft with 30/50-amp electric and water, restrooms and showers, open year-round, reservable same-day to 11 months ahead. Nothing restricts the campground to horse campers (horses are kept in corrals/stalls, not at sites). Fees left (human-read 2026-10-12, $22.32). policy_ref is 'none' as expected. Added the FFS military/veteran camping discount. Note: site/hookup/booking text dropped as structured."
+    }
   },
   {
     "id": 4721,
@@ -296394,40 +296554,52 @@
     "waterfront_evidence": "satellite at 26.49940,-81.13083: open grassy field camp with scattered pads; small farm ponds 150m+ away across field, no shoreline frontage",
     "website": "https://myfwc.com/recreation/lead/dinner-island/camping/",
     "phone": "561-625-5122",
-    "note": "FWC Wildlife Management Area. Hammock Camp: 17 sites under an oak hammock, 10 for tents/campers/small RVs (1 ADA), vault toilet, no other amenities; free permit required (reserve online or by phone, up to 14 days out). Gravel access road off CR 833 (short, washboardy, can get muddy after heavy rain). Best dry season Nov-Apr.",
+    "note": "FWC Wildlife Management Area. Hammock Camp: primitive sites under an oak hammock, 10 for tents/campers/small RVs (1 ADA) and 7 tent-only; no amenities beyond a vault toilet. Gravel access road off CR 833 (short, washboardy, can get muddy after heavy rain). Best dry season Nov-Apr.",
     "rating": {
       "stars": 4.5,
       "source": "rvlife"
     },
     "sites": {
-      "count": 17
+      "count": 17,
+      "note": "Hammock Camp: 17 primitive sites, 7 tent-only and 10 for tents, campers or small RVs (one an ADA RV site). One RV and one tent per RV site, two vehicles per site; no generators at sites 1-6. FWC gives no length limit."
     },
     "facilities": {
       "vault_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://secure.webreserv.com/services/bookingcalendar.do?businessid=dinnerislandranchfl",
+      "fcfs": "never",
+      "window_opens_days": 14,
+      "max_stay_nights": 14,
+      "note": "Every camper needs a free FWC permit/site reservation, made online (WebReserv) or by calling the South Regional Office at 561-625-5122 (Mon-Fri 8-5), up to 14 days ahead; no camping outside the designated camps. 14 consecutive days in a month, then 14 days must pass; a site left empty 48 hours may be cancelled."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://myfwc.com/recreation/lead/dinner-island/camping/ ('Hammock Camp - 17 campsites, including 1 ADA RV site and a vault toilet; 7 of those sites allow for tent camping only and 10 sites allow for tents and/or campers or small RVs'; 'RV sites are limited to one RV and one tent'; 'No generators may be operated in camp sites 1-6') + WebReserv site type description, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://myfwc.com/recreation/lead/dinner-island/camping/ ('Hammock Camp - 17 campsites, including 1 ADA RV site and a vault toilet') + https://myfwc.com/media/1523/hammockcampground.pdf (map legend 'Vault Toilet'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://myfwc.com/recreation/lead/dinner-island/camping/ ('Camping within designated campgrounds is allowed by permit only'; 'Permits may be obtained up to 14 days in advance. Individuals may apply for a maximum of 14 consecutive days within a given month'; 'All campers must obtain a free permit/site reservation using the online reservation system or by calling the South Regional Office at (561) 625-5122'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://myfwc.com/recreation/lead/dinner-island/camping/ ('All campers must obtain a free permit/site reservation'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://myfwc.com/recreation/lead/dinner-island/camping/ ('Camping is available year-round.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -296437,9 +296609,19 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026"
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://myfwc.com/recreation/lead/dinner-island/camping/ (read 2026-10-21) https://secure.webreserv.com/services/bookingcalendar.do?businessid=dinnerislandranchfl (FWC's online reservation system for the WMA's camps, linked from the camping page), read 2026-10-21 https://myfwc.com/media/1523/hammockcampground.pdf (Hammock Camp map)",
+      "note": "Confirmed on FWC's camping page and its WebReserv booking page: camping still allowed, year-round, by free permit/reservation (online or by phone) up to 14 days ahead, 14-night limit; Hammock Camp has 17 sites (10 for tents/campers/small RVs, 1 ADA RV site) and a vault toilet. Not tent-only and not hunt-season-only. policy_ref is 'none' as expected. Note: count/permit/booking text dropped as structured."
+    }
   },
   {
     "id": 4730,
@@ -296725,45 +296907,52 @@
     "inclusion_evidence": "fs.usda camel-lake page: '10-site campground, suitable for RVs or tents', 4 sites RV hookups 30/50a, open year round -> real drive-in RV campground (note's rec.gov id 251904 is wrong; actual is 251904)",
     "waterfront_evidence": "satellite at 30.2771,-84.9867: RV loop overlooks Camel Lake across an open day-use beach + paved parking strip (~120-150m, lake unscreened) - water visible across open ground but developed day-use strip + distance bar on-water",
     "website": "https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area\nhttps://www.recreation.gov/camping/campgrounds/251904",
-    "note": "USFS drive-in campground south of Bristol; 10 sites (5 with electric) on ~20x45 ft aprons, suitable for tents or RVs, bathhouse with warm showers and flush toilets, sandy swim beach at the day-use area. Reservable online.",
+    "note": "USFS drive-in campground south of Bristol; 10 sites (4 with electric) on ~20x45 ft aprons, suitable for tents or RVs; sandy swim beach at the day-use area.",
     "rating": {
       "stars": 4.5,
       "source": "rvlife"
     },
     "sites": {
-      "count": 10
+      "count": 10,
+      "max_rig_ft": 60,
+      "pull_through": false,
+      "note": "10 public sites (4 with 30/50-amp electric and water, 6 non-electric), all back-in, vehicle lengths 20-60 ft on recreation.gov; an eleventh site is the host's."
     },
     "facilities": {
       "flush_toilets": true,
       "showers": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Every site is reservable (no walk-in-only sites), up to the day of arrival; the Forest Service has made Camel Lake a recreation.gov 'Scan & Pay' site, so a site can also be reserved on a phone at the kiosk (cell service may be poor). 14 days within a rolling 30."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area ('the well-shaded, 10-site campground, suitable for RVs or tents') + RIDB catalog for 251904 (10 reservable RV sites, Driveway Entry Back-in, Max Vehicle Length 20-60; one MANAGEMENT site), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251904 ('there is a bathhouse with flush toilets in the campsite and in the day-use area'; amenities 'Bath House', 'Flush Toilets', 'Outdoor Showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251904 (notice 'There are no walk in only sites. All sites at this facility can be reserved'; reservationCutOff 0 days prior to arrival; maxConsecutiveStay 14, maxStay 14 days rolling 30) + https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area ('THIS IS NOW A REC.GOV \"SCAN & PAY\" SITE'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area ('RV hook-ups x 4(30/50 amps)') + RIDB catalog for 251904 (4 reservable RV ELECTRIC sites: Electricity Hookup 50, Water Hookup Y), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251904/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251904/rates (2026-01-01 to 2026-12-31: RV NONELECTRIC 20, RV ELECTRIC 30) + https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area ('Camping Fees - Visit recreation.gov online for the most updated camping fees'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -296778,8 +296967,16 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov rate table for 2026: non-electric RV site $20, electric $30. Day use $5 per vehicle."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/251904 (description, notices, rules, amenities) and /rates, read 2026-10-21 trip_data/ridb_campsites.json (RIDB campsite catalog for facility 251904, fetched 2026-10-20) https://www.fs.usda.gov/r08/florida/recreation/camel-lake-recreation-area, read 2026-10-21",
+      "note": "Confirmed on recreation.gov and the Forest Service page: 10 sites, 4 with 30/50-amp electric + water, all back-in to 60 ft, bathhouse with flush toilets and showers, $20 non-electric / $30 electric (2026), all sites reservable on recreation.gov (also Scan & Pay on site), 14-night limit. Note: '5 with electric' corrected to 4 (the fifth hookup is the host's site). Season: the FS page's 'Open year round' sits with the day-use hours, so season was left unset."
+    },
+    "phone": "850-643-2282"
   },
   {
     "id": 4736,
@@ -300425,7 +300622,7 @@
     "waterfront_evidence": "satellite at 30.4547,-84.4814: RV pads in wooded loop on a Lake Talquin point, set back ~40-70m behind a continuous treeline; only the NW boat ramp/parking touches water, so pads overlook water through trees but are not on an open apron",
     "website": "https://cms.leoncountyfl.gov/Government/Departments/Resource-Stewardship/Parks-Recreation/Park-Index?park-id=14128\nhttps://reservations.leoncountyfl.gov/",
     "phone": "850-606-1470",
-    "note": "Leon County park on Lake Talquin; 20 water/electric sites (no sewer, dump station on site), boat ramp + fishing pier. Reservable online via Leon County's portal. RV Life $$, 4.5 stars. --Claude",
+    "note": "Leon County park on Lake Talquin; boat ramp, docks and fishing pier. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -300433,35 +300630,45 @@
     },
     "hookups": {
       "water": true,
-      "sewer": false
+      "sewer": false,
+      "electric": 50
     },
     "sites": {
-      "count": 20
+      "count": 20,
+      "pull_through": true,
+      "note": "20 RV-or-tent sites on the county's booking site, pads 27x13 to 70x13 ft; three are pull-through and six are marked waterfront."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://flleoncountyweb.myvscloud.com/webtrac/web/search.html?display=detail&module=RN&Primarycode=Coe%20Landing",
+      "note": "Booked by site on Leon County's WebTrac portal, including same-day. Check-in 4 p.m., check-out 2 p.m.; an adult (18+) must be in the campsite."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Leon County WebTrac, every Coe Landing site ('Water and Electricity (50 amp, 30 amp, and 110 receptacles)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Leon County WebTrac ('Showing results 1-20 of 20'; 'Rv and Tent camping'; 'Size: 36x13, Waterfront, Pull Through' etc.), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Leon County WebTrac (sites bookable for arrival 10/21/2026, the day read; 'Check in time is 4 pm on arrival date. Check out time is 2 pm on departure date'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Leon County WebTrac site descriptions ('Restrooms, hot showers, wireless internet, dump station, boat ramps, boat docks, restroom, fishing pier, picnic shelter, and fire ring with grill') + the county park page (Amenities: 'Camping Dump Station', 'Restroom'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "Leon County WebTrac (all 20 sites '$27.00', 10/21/2026-10/22/2026; '7.5% taxes are charged on all campsite reservations. Coe Landing has an additional bed tax of 5%'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -300470,7 +300677,21 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "wifi": true
+    },
+    "fees": {
+      "nightly_low": 27,
+      "nightly_high": 27,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Every site $27.00 for the night of 2026-10-21 on the county's booking site (column 'Price + Tax'); the county adds 7.5% tax plus a 5% bed tax at Coe Landing."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://cms.leoncountyfl.gov/Government/Departments/Resource-Stewardship/Parks-Recreation/Park-Index?park-id=14128 (read in a browser; plain HTTP is refused) https://flleoncountyweb.myvscloud.com/webtrac/web/search.html?display=detail&module=RN&Primarycode=Coe%20Landing (Leon County's WebTrac reservations, reached from reservations.leoncountyfl.gov; all 20 sites for 10/21-10/22/2026, read in a browser 2026-10-21)",
+      "note": "Confirmed on Leon County's park page and WebTrac booking site: 20 RV/tent sites with 50/30-amp electric and water, 3 pull-throughs, hot showers, Wi-Fi, dump station, $27/night (+7.5% tax and 5% bed tax), reservable by site online. Sewer=false left as derived (the county lists water and electricity only). Note: site/hookup/booking/rating text dropped as structured."
     }
   },
   {
@@ -301747,9 +301968,9 @@
     "waterfront": "lakeview",
     "inclusion_evidence": "City of Orlando campground page + firsthand note: 36 RV sites (concrete pads to 45 ft, full/electric hookups), reservable via city portal",
     "waterfront_evidence": "satellite at 28.5078,-81.4793: RV/park loops set back inland behind treeline/marsh fringe along Turkey Lake; open central grounds give partial lake sightline, no shoreline pads",
-    "website": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park\nhttps://www.bookyoursite.com/campgrounds/bill-frederick-park-and-pool-at-turkey-lake",
+    "website": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park\nhttps://florlandoweb.myvscloud.com/webtrac/web/splash.html",
     "phone": "407-246-4486",
-    "note": "City of Orlando (Families, Parks and Recreation) campground at Turkey Lake; 36 RV sites (10 full-hookup + ~25 electric/water), concrete back-in pads 37x10 up to 65x20 ft, max length 45 ft. Reservable online ~11 months out via the city portal. RV Life $$, 4.5 stars. --Claude",
+    "note": "City of Orlando (Families, Parks and Recreation) campground at Turkey Lake; 10 full-hookup and ~25 electric/water sites, concrete back-in pads 37x10 up to 65x20 ft. Booking opens ~11 months out via the city portal. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -301761,33 +301982,53 @@
     },
     "sites": {
       "count": 36,
-      "max_rig_ft": 45
+      "max_rig_ft": 45,
+      "pull_through": false
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://florlandoweb.myvscloud.com/webtrac/web/splash.html",
+      "note": "Booked online through the City of Orlando's WebTrac reservations portal (paid in full at booking) or at 407-246-4486. Guests of the Family Camp Sites may stay up to 45 days in a calendar year in total."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park ('Full hook up' sites) + RV site map PDF ('FULL HOOK UP SITES', 'PARTIAL HOOK UP SITES'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.orlando.gov/files/sharedassets/public/v/1/departments/parks-amp-rec/bfp/rv-map-without-laundry-room.pdf ('*ALL SITES ARE BACK-IN ONLY'; 36 pads drawn, 37x10 to 65x20 ft, one area marked HOST SITE), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park ('Book a reservation' -> florlandoweb.myvscloud.com WebTrac; 'Guests of the Family Camp Sites may stay for up to 45 days in a calendar year'; 'You will need to pay in full to secure your reservation'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park ('Full hook up $25, including tax per site'; 'Partial hook up $20, including tax per site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "0d5550b4bdd560c7",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 20,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "City price list for the Family Camp Sites: partial hook-up $20, full hook-up $25, both including tax, per site per night. The park's entry fee ($5 per car daily) is listed separately; the page does not say whether campers pay it."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake/Make-a-Reservation-in-Bill-Frederick-Park https://www.orlando.gov/Parks-the-Environment/Directory/Bill-Frederick-Park-At-Turkey-Lake https://www.orlando.gov/files/sharedassets/public/v/1/departments/parks-amp-rec/bfp/rv-map-without-laundry-room.pdf (RV site map) https://www.bookyoursite.com/campgrounds/bill-frederick-park-and-pool-at-turkey-lake (now lands on a generic ReserveAmerica page)",
+      "note": "Confirmed on orlando.gov: $20 partial / $25 full hook-up (tax included), water and sewer at the full-hookup sites, all sites back-in, reservable online via the city's WebTrac portal, 45 days per calendar year limit. Not stated by the city: amperage, site count beyond the map's 36 pads, max rig length (45 ft left as derived), facilities, booking window. WebTrac search is behind Cloudflare and returned nothing."
     }
   },
   {
@@ -302015,9 +302256,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "Broward County Parks page offers 'Book a Campsite'; established 83-site FHU RV campground -> real RV campground",
     "waterfront_evidence": "satellite at 26.020,-80.318: NW-shore RV loop pads sit directly on the recreational lake with open grass apron to the waterline, no buffer",
-    "website": "https://www.broward.org/Parks/Pages/park.aspx?park=5",
+    "website": "https://www.broward.org/parks/parklocations?park=c-b-smith-park\nhttps://www.broward.org/parks/thingstodo/Camping",
     "phone": "954-357-5170",
-    "note": "Broward County Parks campground; 83 paved full-hookup RV sites, 30/50-amp, grills + picnic tables. Heated pool, clubhouse. Reserve by phone/email to park office (no online booking); tri-county resident discount. RV Life $$$, 4.5 stars. --Claude",
+    "note": "Broward County Parks campground at C.B. Smith Park in Pembroke Pines; paved sites with picnic tables, 30/50-amp. Heated pool, clubhouse. Tri-county resident discount. --Claude  RVs only: the county allows no tents here, and no cassette toilets or portable waste tanks (sites must connect to the sewer). No charcoal grills at C.B. Smith (county amenity list, 2025-12). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -302033,29 +302274,68 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "max_stay_nights": 180,
+      "note": "Reserve by calling, emailing (CBSmithPark@Broward.org) or visiting the park office, 9 a.m.-5 p.m. daily; stays under 14 days are paid in full when booked. Extended RV stays up to 180 days in a 365-day period. Check-in 3 p.m., check-out 1 p.m."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.broward.org/parks/Fees ('The campgrounds at C.B. Smith and T.Y. are open to RVs with full hookups only that must be connected to the park's sewage system') + https://www.broward.org/parks/thingstodo/Camping ('C.B. Smith Park (...; 83 full hook-up RV sites)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.broward.org/parks/thingstodo/Camping ('The campgrounds at C.B. Smith Park (954-357-5170; CBSmithPark@Broward.org; 83 full hook-up RV sites)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.broward.org/parks/thingstodo/Camping ('Campground reservations must be made by calling or emailing the park office directly'; 'Extended-stay RV campgrounds allow a maximum stay of 180 days within a 365-day period'; check-in/out times) + https://www.broward.org/parks/Fees ('extended stays are allowed for up to 180 days for RV sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.broward.org/parks/Fees (Camping, updated 2025-12-29: 'a. Site Fee Includes park admission fee and use of sanitary dump stations where available. 1. Per Site, Per Night $50'; 'Pet Fee, per pet, per night $5'; 'Veterans Rate (November), per site, per night $30'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.broward.org/parks/thingstodo/Camping (Campground Amenities: 'Restroom complexes with hot showers', 'Sanitary dumpstations', 'Wi-Fi access (check with Park Office for access locations)', 'Laundry rooms (C.B. Smith, Easterlin, and T.Y. park campgrounds only)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.broward.org/parks/thingstodo/Camping ('The campgrounds at C.B. Smith Park ... are open year-round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "9ecef9ab9df1e099",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 50,
+      "nightly_high": 50,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Broward County's fee schedule: $50 per site per night plus tax, including park admission and the dump station; pets $5 per pet per night. A $30 Veterans rate applies in November."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "laundry": true,
+      "wifi": true,
+      "note": "Wi-Fi: 'check with Park Office for access locations'. Restrooms, showers and laundry are for registered campers only."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.broward.org/parks/thingstodo/Camping (read in a browser; accordion sections Campground Amenities updated 2025-12-17, Camping Fees 2026-07-29, Campground Rules 2026-03-09) https://www.broward.org/parks/Fees (read in a browser; Camping section updated 2025-12-29)",
+      "note": "Confirmed on broward.org: 83 full-hookup RV sites (water + sewer), open year-round, $50/site/night + tax (includes admission), showers, laundry, dump, Wi-Fi, reservations by phone/email to the park office, 180-day extended-stay limit. The county pages do not state amperage for this park (only that extended-stay sites 'may include 30- or 50-amp'), so electric 50 was left as derived. Note: dropped 'grills' (the county says no charcoal grills at C.B. Smith) and the restated site/booking/rating text"
     }
   },
   {
@@ -924593,80 +924873,6 @@
     }
   },
   {
-    "id": 14395,
-    "kind": "campground",
-    "name": "Countryside RV Park",
-    "location": "28.7561,-82.1158",
-    "elevation_meters": 17,
-    "state": "FL",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 900 m frame) at 28.7561,-82.1158: small RV rows in a tree island among pastures; no water in frame - not waterfront",
-    "inclusion_evidence": "countrysidervparkfl.com live; RV Life 4.5* $$ over 13 (tier passes); Google 4.6/80; Campspot nightly; re-check 2026-10-12: 55+ stated on the site (note already says so)",
-    "website": "https://countrysidervparkfl.com/\nhttps://www.campspot.com/book/countryside-rv-park-lake-panasoffkee-fl",
-    "phone": "352-793-8103",
-    "note": "AGE-RESTRICTED: 55+.  Park at 741 County Road 489, Lake Panasoffkee, 58 miles from Orlando and 49 from Tampa Bay, with back-in full-hookup sites, a gym, billiards, shuffleboard and cable TV, and activities such as coffee hours and community dinners.  It courts winter seasonal guests and permanent residents (a $425-a-month move-in special in October 2026), and a stay of 6 months or more needs a background and credit check. --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "checked": "2026-10",
-      "source": "rvlife"
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "campspot"
-    },
-    "provenance": {
-      "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-14)",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "hookups": {
-        "source": "https://www.campspot.com/book/countryside-rv-park-lake-panasoffkee-fl (Campspot park record and RV site types' amenities: 20-Amp, 30-Amp, 50-Amp, Sewer Hook-Up, Water Hook-Up), read 2026-10-13",
-        "checked": "2026-10-13"
-      },
-      "facilities": {
-        "source": "https://countrysidervparkfl.com/ ('Our on-site laundry facility is modern, clean, and convenient'; 'Cable TV & WiFI'), read 2026-10-13",
-        "checked": "2026-10-13"
-      },
-      "fees": {
-        "source": "https://www.campspot.com/book/countryside-rv-park-lake-panasoffkee-fl (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://countrysidervparkfl.com/ ('30 AMP FHU Back-In Standard Site Starting at $ 50 Daily'; '50 AMP FHU Back-In Standard Site Starting at $ 50 Daily'; '30 AMP FHU Back-In Standard Site Starting at $ 280 Weekly'; '50 AMP FHU Back-In Standard Site Starting at $ 285 Weekly'), read 2026-10-13",
-        "checked": "2026-10-14"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "098087a07db26e07",
-      "checked": "2026-10-14",
-      "model": "claude-opus-5/session"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "facilities": {
-      "laundry": true,
-      "wifi": true
-    },
-    "fees": {
-      "nightly_low": 50,
-      "nightly_high": 55,
-      "currency": "USD",
-      "reservation_fee": 4,
-      "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30 Amp Standard Full Hookup RV Site, 30/50 Amp Standard Full Hookup RV Site and 50 Amp Standard Full Hookup RV Site). October 2026 and January 2027: $55, Tuesday and Saturday alike. June 2027: $50, Tuesday and Saturday alike. Plus the park's $4 'Reservation Fee', once per stay. Read 2026-10-13. The park's own rates start at $50 a night for a 30- or 50-amp full-hookup site, $280 a week for 30 amps and $285 for 50."
-    },
-    "discounts": {
-      "good_sam": false
-    }
-  },
-  {
     "id": 14398,
     "kind": "campground",
     "name": "Sunny Shores MH & RV Resort",
@@ -979415,7 +979621,7 @@
     "inclusion_evidence": "KOA booking form (koa.com/campgrounds/clearwater-lake/reserve/) quoted 2027-05-18, 1 night, 23-ft motorhome: RV site types $72.43-156.56 before tax (read 2026-10-19); RV Life 4.5* over 153 reviews, 105 sites; within 40 km of a gateway (Tampa (33 km), gateways.py), so the price gate is lifted",
     "website": "https://koa.com/campgrounds/clearwater-lake/",
     "phone": "727-937-8412",
-    "note": "KOA Holiday at 37061 US Hwy 19 N, Palm Harbor; full-hookup RV sites, pull-throughs. RV sites $72.43-156.56 a night before tax for a mid-May 2027 weeknight on KOA's booking form. RV Life 4.5*, $$$$. --Claude",
+    "note": "KOA Holiday at 37061 US Hwy 19 N, Palm Harbor, between Clearwater and Tarpon Springs; landscaped sites, some with patios. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 4,
@@ -979438,19 +979644,29 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/clearwater-lake/ ('Reserve Your Site Online Or call us at (727) 937-8412', 'Planning a longer visit? View our Monthly RV Stay Options'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/clearwater-lake/ ('Full Hookup RV Sites Starting at $69!', 'We offer full hookup RV sites', Campground Amenities '50 Max Amp'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/clearwater-lake/ (Campground Amenities \"65' Max Length\"), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/clearwater-lake/ ('Updated bathrooms and showers', 'Laundry facilities', 'Camp store with camping essentials', 'Fast Wi-Fi throughout the campground', 'Heated pool', 'a free breakfast buffet served every morning', 'Propane ($)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/clearwater-lake/ ('Clearwater / Lake Tarpon KOA Holiday  Open All Year'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -979459,19 +979675,38 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/clearwater-lake/reserve/",
+      "note": "Book on KOA's own reservation form or at 727-937-8412. Monthly RV stays are also offered."
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 65
     },
     "note_scan": {
       "sig": "41ec780b6b736726",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Heated pool, KampK9 dog park and dog wash, free breakfast buffet every morning, propane ($), mini golf."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://koa.com/campgrounds/clearwater-lake/ (read in a browser; plain HTTP gets Cloudflare's challenge)",
+      "note": "Confirmed on KOA's campground page: full hookups to 50 A, 65-ft max length, showers, laundry, camp store, Wi-Fi, open all year, reservable on KOA's form or by phone. Fees left (KOA booking form, human-read 2026-10-19: $72.43-156.56; page now advertises 'Full Hookup RV Sites Starting at $69'). Pull-throughs and discounts left as derived (page silent). Note: rate/RV Life/hookup lines dropped as structured."
     }
   },
   {
@@ -987836,7 +988071,7 @@
     "inclusion_evidence": "KOA booking form (koa.com/campgrounds/crystal-river/reserve/) quoted 2027-05-18, 1 night, 23-ft motorhome: RV site types $49-128.69 before tax (read 2026-10-19); RV Life 4.5* over 70 reviews, 72 sites",
     "website": "https://koa.com/campgrounds/crystal-river/",
     "phone": "727-325-7245",
-    "note": "KOA Journey at 2680 N. Turkey Oak Drive, Crystal River; full-hookup RV sites, pull-throughs. RV sites $49-128.69 a night before tax for a mid-May 2027 weeknight on KOA's booking form. RV Life 4.5*, $$$$. --Claude",
+    "note": "KOA Journey at 2680 N. Turkey Oak Drive, Crystal River, near Kings Bay; newly built park, deluxe patio sites with fire pits. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 4,
@@ -987854,36 +988089,65 @@
         "checked": "2026-10-19"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/crystal-river/ ('Reserve: 1-727-325-7245', reservation form on the page), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/crystal-river/ ('spacious RV sites with full hookups, providing easy access to water, electricity, and sewage disposal', 'deluxe patio back-in 50/30 Amp sites', Campground Amenities '50 Max Amp'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/crystal-river/ (Campground Amenities \"70' Max Length\"; 'Pull-thru sites offer convenience and clear skies'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/crystal-river/ ('easy access to the pool, shower, and laundry facilities', 'Our camp store is stocked with essentials', 'All sites ... offer water and sewer service, electric service, WiFi', 'Our pool is heated'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/crystal-river/ ('Crystal River KOA Journey  Open All Year'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/crystal-river/reserve/",
+      "note": "Book on KOA's own reservation form or at 727-325-7245."
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 70
     },
     "note_scan": {
       "sig": "cbfd94cdda13c96c",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Heated pool, playground, dog park; 'Paw Pen' sites have a small fenced private area."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://koa.com/campgrounds/crystal-river/ (read in a browser; plain HTTP gets Cloudflare's challenge)",
+      "note": "Confirmed on KOA's campground page: full hookups to 50 A, 70-ft max length, pull-throughs, showers, laundry, camp store, Wi-Fi at every site, open all year, reservable on KOA's form or by phone. Fees left (KOA booking form, human-read 2026-10-19: $49-128.69). Note: rate/RV Life/hookup lines dropped as structured."
     }
   }
 ]

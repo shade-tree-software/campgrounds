@@ -91,8 +91,16 @@ me drop and report); each needs the research named before a verdict.
   unstated. Lakeport $50 base at the line.
 - **4749 Lake Victor** — only link was an unclaimed RoverPass listing (removed); stands on Google
   (33 reviews, phone) + RV Life $$. Note's hookups/24 sites/pool unconfirmed.
+- **386 Burns Lake (NPS Big Cypress)** — rec.gov: "primarily used by hunters and off-road vehicle
+  users", has an ORV parking lot/backcountry access, no ORV use in the campground. Kept as a general
+  NPS campground with an OHV side (cf. Wolf Den Run 87, an ORV park, dropped). 14 sites (rec.gov) vs 15 (NPS).
+- **4720 Coldwater Equestrian** — ReserveAmerica still shows a 2020 Hurricane Isaias "closed until
+  further notice" banner beside "Open year round" and bookable sites; probably stale, no status set.
+- **4729 Dinner Island Hammock Camp** — FWC: "campers or small RVs", no length; 23-ft fit unstated.
 
 ## Resolved 2026-10-21
+- **p3-33 drop:** 14395 Countryside RV Park ($55 on Campspot, no gateway; 55+ mostly seasonal).
+  Clearwater/Lake Tarpon KOA 15415 ($72) kept: Tampa gateway 33 km.
 - **p3-32 drops:** 14394 Woods-n-Water Trails (55+ community with a Homes for Sale page),
   14422 Woody's (no posted rate, daily stays "call for details", a Ch. 723 mobile-home community).
   Kept at the $50 line: 4772 Astor Landing (undated rate page). 4819 Wilderness Landing's $0 and

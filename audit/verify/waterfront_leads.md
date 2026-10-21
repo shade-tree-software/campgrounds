@@ -65,3 +65,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   access"; entry not waterfront.
 - **4715 Bear Lake (Blackwater River SF)** — booking site: 11 of 31 RV sites "Proximity to Water:
   Lakefront"; entry not waterfront.
+- **4813 Coe Landing (Leon Co.)** — county booking site marks six sites "Waterfront"; entry lakeview.

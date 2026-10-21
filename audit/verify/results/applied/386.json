@@ -1,0 +1,46 @@
+{
+  "id": 386,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/246890 (description, notices, rules) and /rates, read 2026-10-21",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 246890, fetched 2026-10-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (NPS's own campground record for Burns Lake, the data behind nps.gov/bicy), read 2026-10-21"
+  ],
+  "groups": {
+    "season": {
+      "values": {"year_round": false, "opens": "08-15", "closes": "04-15"},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (Burns Lake operatingHours: 'The campground is open August 15 through April 15'; seasonal closure 2027-04-16 to 2027-08-15), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "showers": false, "potable_water": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/246890 ('vault toilets ... No fresh water is available') + https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (amenities: Vault Toilets; showers None; potableWater No water; dumpStation No; laundry No; campStore No; internetConnectivity No), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 14, "max_rig_ft": 50, "pull_through": true, "note": "recreation.gov lists 14 sites: 8 RV non-electric pull-throughs (50 ft) and 6 tent-only. The NPS campground record says 15 designated RV/tent sites."},
+      "source": "recreation.gov campsite catalog for facility 246890 (RIDB, 14 sites; RV NONELECTRIC sites 'Max Vehicle Length' 50, 'Driveway Entry' Pull-Through) + https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy ('The campground accommodates 15 designated RV/tent sites'), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026"},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (fees: '24.00', 'tent and RV sites are the same cost') + https://www.recreation.gov/api/camps/campgrounds/246890/rates (RV NONELECTRIC $24, season 2026-08-15 to 2026-12-31), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "always", "max_stay_nights": 14},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy ('Reservations may be made on recreation.gov or call 877-444-6777 in advance. Any sites not reserved in advance are available on a first come first serve basis') + https://www.recreation.gov/api/camps/campgrounds/246890 (maxConsecutiveStay 14), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Spacious campsites surrounding a lake in Big Cypress National Preserve.  --AWH",
+  "awh_superseded": [
+    {"old": "14 spacious campsites", "source": "redundant: sites.count (14, recreation.gov catalog)"}
+  ],
+  "summary": "Confirmed on recreation.gov and NPS's campground record: $24 for any site, 14 sites (8 RV pull-throughs to 50 ft), non-electric, vault toilets only, no water/showers/dump; reservable on recreation.gov with unreserved sites first-come; 14-night limit. Added season Aug 15 - Apr 15. Window left inherited.",
+  "flags": [
+    "Criteria check (OHV): recreation.gov says 'This campground is primarily used by hunters and off-road vehicle users' and calls it 'the ideal place for hunters and off-road vehicle enthusiasts', with an off-road vehicle parking lot and backcountry access point (no ORV use inside the campground). AWH's rule puts OHV staging camps out but keeps general campgrounds with an OHV side; a human should decide which this is.",
+    "Phone missing: recreation.gov facility phone 239-695-1205; facility information line (off-road vehicle office) 239-631-9988.",
+    "Site count: recreation.gov's catalog has 14 sites, NPS's campground record says 15."
+  ]
+}
