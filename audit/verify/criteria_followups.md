@@ -93,6 +93,10 @@ me drop and report); each needs the research named before a verdict.
   (33 reviews, phone) + RV Life $$. Note's hookups/24 sites/pool unconfirmed.
 
 ## Resolved 2026-10-21
+- **p3-31 drops:** 4804 Lazy Dazy (no price indicator; stored fees were other parks'), 4806 Masonic
+  ($60), 14425 Oak Haven ($70, 55+ home community), 4811 Scottish Traveler ($85). Kept: 15422
+  Sugarloaf KOA (Key West gateway). 383 renamed Ortona South Campground; 393 renamed to its
+  Shady Pines campground.
 - **p3-30 drops:** 4797 Hammondell (sells mobile homes and lots, primarily 55+), 4751 In The Garden
   (Facebook only, 10 Google reviews).
 - **p3-29 drops (Florida):** 14397 Arrow Family ($65, no gateway), 14414 Cross Creek ($71, no

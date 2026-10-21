@@ -57,3 +57,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Same question as asks #8 for the rest of AWH's beach camping areas.
 - **587 Cypress Glen (Withlacoochee SF)** — FDACS: "several sites having a view of the water"
   (Silver Lake); entry is not waterfront. Lakeview tier may apply to some sites.
+- **170 Mutual Mine (FFS)** — FDACS: sites "in a horseshoe formation next to a ... rain-filled lake
+  that was formerly a mine pit"; ReserveAmerica "Type of View: Lake". Entry not waterfront.
+- **393 St. Joseph Peninsula (Shady Pines)** — coastal dunes rested on AWH's note about two dune
+  campgrounds; only Shady Pines remains (Gulf Breeze gone). Check Shady Pines sits behind the dunes.

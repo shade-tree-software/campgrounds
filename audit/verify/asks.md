@@ -108,3 +108,9 @@ Answered items move to the bottom with the answer.
   the campground's or agency's own site that contradicts older --AWH text may replace it in the
   note. Done: site count 76/61 -> 51/41, cutoff 2-days-prior -> 10 pm day of arrival, FCFS cash
   option removed (DNR: 'a reservation is required'; fcfs -> never). Weekend minimums kept (not contradicted).
+
+## 14409 Ridge Manor Campground (FL, p3-31) — keep or drop?
+55+ RV and mobile-home park; "units for sale", a resident application for stays of 6+ months,
+seasonal/yearly lots. Nights ARE sold (claimed RoverPass, $50-55 for June 2027 — at the gate line),
+but no daily rates on sale for January 2027. Kept for now and marked mostly long-stay: test 5
+(sells homes) depends on whether the park itself sells the units or residents do.
