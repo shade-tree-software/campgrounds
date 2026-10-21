@@ -46,3 +46,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   127 Tobyhanna, 558 Laurel Hill.
 - **924 Cape Charles KOA** (p3-16): KOA's page says "waterfront RV camping"; the --AWH firsthand
   note ("partial bay view, but none are directly on the beach") keeps bayview.
+- **3900 Bond Falls Consolidated (MI)** — dam screen 2026-10-21: the pin sits in the woods just
+  below Bond Falls Main Dam (10 m under the flowage's pool), not at a campground; the camp loops
+  are along the flowage shore somewhere south. Find the loops (UPPCo map) and re-pin before the
+  lakefront call can be re-checked.
+- **3532 Totogatic Park (WI)** — dam screen 2026-10-21: pin is in woods ~250 m from the Minong
+  Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.

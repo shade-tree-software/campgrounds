@@ -28,6 +28,27 @@ Answered items move to the bottom with the answer.
    Lake/Union Springs approach from US 33 is described (by reviewers, not an agency) as easier.
    Drop all three under the Rapidan rule, or keep them because you added them knowing the road?
 
+10. **Dam screen: four downgrades** (audit/dam_screen/decisions_pending.json; your rule of 10-21)
+    - **1900 River Road Park (MO)** lakeview -> **riverview**: below Clearwater Dam on the Black
+      River (rec.gov: "lies below the dam on the Black River"); the lake is behind the embankment
+      9-13 m above the loops; nearest pads ~50 m from the river across a sand bank and ramp lot.
+    - **4444 Pickwick Dam Campground (TN)** lakeview -> **riverview**: below Pickwick Landing Dam
+      on the Tennessee River tailwater, 8 m under Pickwick Lake's pool.
+    - **2530 Mix Lake Campground (CO)** lakeview -> **not waterfront**: loops are 11 m below
+      Platoro Reservoir's pool, downstream of Platoro Dam; Mix Lake is 500 m W and 37 m higher,
+      behind a ridge that reaches ~3100 m.
+    - **14928 Lake McCumber (CA, PG&E)** lakeview -> **not waterfront**: PG&E's sites are south of
+      (below) the dam; the crest stands ~6 m above the lake and the ground falls away behind it.
+    OK to apply all four?
+
+11. **3494 James N. McNally Campground (WI)**: the RV rows sit just downstream of the low
+    Hickerson Roller Mill dam that makes Memory Lake. But there's no berm to speak of: the DEM puts
+    the camp and the lake surface at the same ~270 m, and the eastern rows look across ~60 m of open
+    lawn to the lake. Your rule as written (downstream of the dam = no lake value) would drop the
+    lakeview. I'd keep it, since nothing blocks the view. Keep, or drop to the Wood River
+    channel along its north edge (creek-sized, so `creekside` only if a site is on it, else not
+    waterfront)?
+
 ## Answered (AWH 2026-10-21)
 
 7. (AWH 2026-10-21: drop both; dropped via criteria_drops.py.) **Rapidan WMA, 438 (1253 Taylor Mountain Rd) and 440 (300 Cobblestone Row)** — DWR's Rapidan page:
