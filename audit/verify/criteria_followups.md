@@ -155,8 +155,17 @@ me drop and report); each needs the research named before a verdict.
 - **14436 Blackbird's Hideaway** — rigs over 10 years old need photos emailed for approval; Campspot
   $25/$35 vs the policies page's $45-65 (soft-opening?) - re-check.
 - **633 Little Talbot** — only 4 sites take 23 ft (#013, #014, #016, #021, 30 ft).
+- **4859 Clay County Fairgrounds RV Park** — current county pages present the 48 hookups only for
+  event renters; Hipcamp listing off since 2026-10-10; only the FY26/27 fee schedule (read
+  2026-10-11, now 403) and the old note show nights for travellers. Call 904-284-6378 x2.
+- **13377 Dead River Landing** — CampLife's RV type omits "motorhome" (District page says RVs OK);
+  2.3-mile graded dirt road floods in moderate floods.
+- **4801 Florida Sand Music Ranch** — festival venue + year-round camping on non-festival days; the
+  Visit page's directions are template text for a different place (address 85 Myers Rd, Brooksville).
 
 ## Resolved 2026-10-21
+- **p3-48:** no drops. The four Fort Myers-exception parks (14875, 14872, 14873, 14882) pass the
+  long-stay tests (single nights sold); 369 Gate to the Keys live on Hipcamp, $76, Everglades 8 km.
 - **p3-47:** no drops. 4742 Bear Island temporarily_closed -> open (NPS Open, rec.gov booking Nov
   2026; the Hilux Fire claim was the note's). 4734 Wright Lake and 4731 Big Scrub highs dropped (the
   $30 sites are host/management). 167 renamed Bennett Field Campground. 4796 Avalon kept on the
