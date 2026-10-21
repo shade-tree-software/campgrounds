@@ -23,3 +23,7 @@ me drop and report); each needs the research named before a verdict.
 - **14274 Ledgedale Recreation Area (PA)** — $48/$52 rate page is undated and its holiday dates
   fit 2022; seasonal-site waitlist, no visible nightly booking. Needs a 2024+ rate and proof
   nights are sold (long-stay rule); inclusion_evidence's "$48 (2026)" is unsupported.
+- **1181 Shady Rest Campground (PA)** — operator lists only an email (no phone); rate table
+  undated (Last-Modified 2025-10-08). Presence needs a Google listing with phone + 25+ reviews.
+- **13113 Sunvalley Campground (PA)** — operator site frozen at 2023 (closure notice "Nov 1 2022 -
+  May 1 2024"); no 2024+ rate; stands on RV Life $$. Check Google/phone that it still operates.

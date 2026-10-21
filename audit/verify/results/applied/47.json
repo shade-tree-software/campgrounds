@@ -1,0 +1,62 @@
+{
+  "id": 47,
+  "checked": "2026-10-20",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232088",
+    "https://www.recreation.gov/api/camps/campgrounds/232088/rates",
+    "recreation.gov campsite catalog for 232088 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 40,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Standard non-electric site $20, premium non-electric $24, standard electric $29, full hook-up site $40; walk-to tent sites $20-24, cabins $120-130. The same in recreation.gov's 2024-2028 Peak Season tables. A third vehicle on a site is $5 a day."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232088/rates (Peak Season 2026-04-03 to 2026-10-25: 'Standard nonelectric' $20, 'Premium Site' $24, 'STANDARD ELECTRIC' $29, 'FHU Site' $40; templates named 'junk' ignored) + notices ('2 vehicle limit per site'), read 2026-10-20",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "recreation.gov catalog for 232088 (18 bookable STANDARD ELECTRIC sites list 50-amp; 8 of them, e.g. 015, 018, 021, 036-039, 016A, list water and sewer hookups) + https://www.recreation.gov/api/camps/campgrounds/232088 ('Sites with electricity, water and sewage hookups are also available'), read 2026-10-20",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 48,
+        "max_rig_ft": 60,
+        "pull_through": false,
+        "note": "recreation.gov lists 48 bookable RV/trailer sites (29 standard non-electric, 19 standard electric, 8 of those full hook-up) besides 10 walk-to tent sites and 3 cabins; the description says 65 reservable campsites. Max vehicle lengths run 20-60 ft, mostly 30-45; every site is back-in."
+      },
+      "source": "recreation.gov catalog for 232088 (site types, equipment, Max Vehicle Length, Driveway Entry; MANAGEMENT sites excluded), read 2026-10-20",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232088 (Facilities: 'Hot showers, vault and flush toilets, drinking water, and a dump station are provided'), read 2026-10-20",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "recreation.gov rules: 2-night minimum on weekends, 3 on holiday weekends; 14 consecutive nights, and 14 in any rolling 30 days. Check-in 2 PM, campsite check-out noon; fees are paid by 2 PM to the campground hosts."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232088 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, maxStay 14 per Rolling 30 Days; notices on check-in/out), read 2026-10-20",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Interagency Senior and Access passes are accepted and discount the campsite, not utilities; not valid for cabins. The pass holder must occupy the site."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232088 (notice: 'Interagency Senior and Access passes are accepted at most sites ... The pass only allows a discount on the campsite, not utilities. Pass can not be used for cabins.'), read 2026-10-20",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $20 base, 50-amp with water+sewer (8 full-hookup sites), reservable on rec.gov, Senior/Access discount (campsite only). Changed fees high 39 -> 40 (the $39 template is named 'junk'; the FHU Site rate is $40). Added 48 back-in RV sites to 60 ft, showers/flush+vault toilets/water/dump, weekend 2- and holiday 3-night minimums, 14-night max. Not stated: campground season (rate seasons only), booking window. rec.gov's 'Some sites are waterfront' agrees with the --AWH note and the riverfront call.",
+  "flags": [
+    "Missing phone: rec.gov gives the facility number (814) 362-4613 ('For facility specific information, please call (814) 362-4613'); the entry has none."
+  ]
+}

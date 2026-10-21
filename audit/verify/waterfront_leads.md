@@ -45,3 +45,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   alongside of our clean, babbling brook".
 - **14272 Penn's Creek Campground (PA)** — stored "not waterfront"; operator: "located directly
   on Penns Creek", sites run downstream along the meter line.
+- **1184 Stony Mountain Family Campground (PA)** — stored "lakefront" (possible DOWNGRADE): the
+  operator calls site 64 "our only water and electric Tent site on the Lake"; Campspot sells no
+  lake RV site type.
