@@ -23,6 +23,9 @@ instead of each launching Chrome:
 
 Keep the locked command short (one page or one batched call) so the others are not starved.
 
+**Privacy:** never put AWH's email address or any personal identifier in a User-Agent or any
+request to an outside service (one verifier did, to Nominatim); use a plain browser UA.
+
 **Scratch files:** verifiers share one scratchpad, so keep yours in a subfolder named for
 your batch (`<scratchpad>/<batch>/`); another verifier overwrote a shared `tools/rg.py`.
 
