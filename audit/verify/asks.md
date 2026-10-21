@@ -5,12 +5,14 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
+## Answered (AWH 2026-10-21)
+
 12. **129 Green Ridge State Forest (MD)** — DNR: "Roads leading to campsites are gravel or dirt.
     Four-wheel drive may be required depending on conditions." It names no site reachable
     without 4WD and gives no RV length guidance. Conditional, so neither a plain requirement nor
     a recommendation. Drop under the 4WD rule, or keep with a caution line like Flagpole?
 
-## Answered (AWH 2026-10-21)
+    **Answer (AWH 2026-10-21):** "Keep #12." Kept with a caution line quoting DNR.
 
 10. **Dam screen: four downgrades** (audit/dam_screen/decisions_pending.json; your rule of 10-21)
     - **1900 River Road Park (MO)** lakeview -> **riverview**: below Clearwater Dam on the Black

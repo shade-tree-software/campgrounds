@@ -64,6 +64,18 @@ me drop and report); each needs the research named before a verdict.
   (#34) is the host's, so electric is unset while the manual fees carry an electric +$9.
 - **825/829 Pocomoke** — booking site's park-wide rates ($19.50 / $25.50) match neither area's
   DNR figures; the entries keep DNR's.
+- **MD non-resident fee, more evidence (p3-27):** the booking site's rate tables for Cedarville,
+  Martinak and Hollofield run exactly $1 above DNR's published base ($19.50/$25.50 vs
+  $18.50/$24.50), footnoted "do not reflect ... surcharges (holiday/weekend/residency)";
+  Swallow Falls matches DNR. Still unresolved for the 21 "no out-of-state surcharge" notes.
+- **Seasons (manual, from booking site, p3-27):** 830 Cedarville "Open through Oct 25 2026",
+  Hickory Loop Apr 3 - Oct 31 2026; 424 Martinak Mar 27 - Nov 1 2026, Mar 26 - Oct 31 2027.
+- **828 Swallow Falls** — only ~a dozen of 65 sites take over 20 ft; the electric sites are 20 ft
+  (tent/pop-up only). EKKO's choices: non-electric 25-35 ft, or full hookup 40/42A.
+- **1149 Cosca** — electric outlets under repair (WebTrac notice, 2026-10-21).
+- **Price gate, p3-27:** 974 Bayshore ($80), 981 Roaring Point ($63+ for 30A) carry --AWH notes;
+  15441 DC/Capitol KOA ($78) is 25 km from Baltimore (gateway). All kept. Bayshore may be
+  mostly seasonal (waiting list), no split published.
 
 ## Resolved 2026-10-21
 - **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
