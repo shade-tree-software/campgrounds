@@ -1,0 +1,46 @@
+{
+  "id": 547,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233678",
+    "https://www.recreation.gov/api/camps/campgrounds/233678/rates",
+    "trip_data/ridb_campsites.json facility 233678 (RIDB campsite catalog, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 46, "currency": "USD", "checked": "2026",
+                 "note": "recreation.gov rate table, Peak Season 2026-04-17 to 2026-11-28 and the same for 2027: non-electric sites $28 a night, electric $34, the full-hookup class $46. The non-electric sites' driveways run 37-54 ft. Visitors pay $5 per vehicle."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233678/rates (Peak Season 2026-04-17..2026-11-28 and 2027-04-16..2027-11-27: STANDARD NONELECTRIC $28, STANDARD ELECTRIC $34 / $46) + notice 'There is a $5 charge for visitors (per vehicle)', read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233678 ('113 sites have electric hookups and 37 sites have full hookups') + RIDB catalog (every public electric site 20/30/50; 40 sites with a water hookup, 34 with sewer, all reservable standard sites), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 152, "max_rig_ft": 69, "pull_through": true,
+                 "note": "recreation.gov says 156 campsites; 4 of those are management (host) sites, leaving 152 public: 107 electric, 45 non-electric. Driveways 28-69 ft, nearly all back-in, 8 pull-throughs."},
+      "source": "RIDB campsite catalog for facility 233678 (152 reservable STANDARD sites + 4 MANAGEMENT; Max Vehicle Length 28-69 ft on public sites; 8 Pull-Through) + https://www.recreation.gov/api/camps/campgrounds/233678 ('This large campground offers 156 campsites'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": true, "camp_store": true,
+                 "note": "Two trailer water / dump stations; marina with a snack bar and general store; laundry is in rec.gov's amenity list."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233678 ('Other facilities include hot showers, flush toilets, water fountains, and two trailer water / dump stations'; 'a marina with a snack bar'; amenities 'Laundry Facilities', 'General Store', 'Drinking Water'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov",
+                 "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+                 "max_stay_nights": 14,
+                 "note": "recreation.gov rules: 2-night weekend minimum, 3 nights on holiday weekends; reservations close 2 days before arrival. No more than 14 days in any 30 at Sutton Lake. Rec.gov minimums may be relaxed for a same-day booking."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233678 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 2, maxStay 14 per rolling 30 days; notice 'No person(s) may camp at one or more campsites for more than 14 days in a 30 day consecutive period at Sutton Lake'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "rec.gov page, rates and catalog: fees $28 (non-electric) to $46 (was 28/28); 50-amp/water/sewer confirmed; added 152 public sites to 69 ft with pull-throughs, showers/flush/potable/dump/laundry/store, weekend 2 + holiday 3 minimums, 14-night max. Season not stated as a campground season (rate seasons only); the Corps' Sutton Lake page could not be fetched (broken TLS certificate). Note kept (AWH firsthand).",
+  "flags": [
+    "Missing phone: recreation.gov gives facility phone 304-765-7756 or 304-765-2816, and 'For facility specific information, please call (304) 765-2267' (Sutton Lake office)."
+  ]
+}

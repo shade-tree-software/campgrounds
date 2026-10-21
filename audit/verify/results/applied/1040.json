@@ -1,0 +1,47 @@
+{
+  "id": 1040,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10234906",
+    "https://www.recreation.gov/api/camps/campgrounds/10234906/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/10234906/month (October-November 2026, April-June 2027, read 2026-10-21)",
+    "trip_data/ridb_campsites.json facility 10234906 (RIDB campsite catalog, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 46, "currency": "USD", "checked": "2026",
+                 "note": "recreation.gov rate table, 2026 and 2027 seasons: full-hookup sites $46 a night, the 6 sites without hookups $28, the same in the reservable peak and the walk-in seasons."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906/rates (2026-04-17..2026-05-20 WalkInFullHookup 46 / WalkInNonElectric 28; Peak Season 2026-05-21..2026-09-06 PeakFullHookup 46 / PeakNonElectric 28; 2027 the same), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906 ('54 are full hook-up with 50 amp electric service, water, and sewer and the other 6 have no hook-ups') + RIDB catalog (54 STANDARD ELECTRIC, 20/30/50), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 60, "pull_through": true, "note": "54 full-hookup and 6 primitive sites; 3 pull-throughs. Catalog vehicle lengths run 46-93 ft (two sites list 108 and 118 ft)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906 ('The campground offers 60 campsites') + RIDB catalog (57 Back-in, 3 Pull-through; Max Vehicle Length 46-118), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "laundry": true, "wifi": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906 ('a bathroom that houses a shower facility and laundry facility'; amenities 'Flush Toilets', 'Drinking Water', 'Washer & Dryer', 'Wireless Internet'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Mid-April to the Saturday after Thanksgiving on recreation.gov (2026: April 17 - November 28; 2027 opens April 16; 'Not Available' before that)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906/rates (2026 seasons 04-17..11-28, 2027 from 04-16) + availability calendar (2027-04-01..04-15 'Not Available', from 04-16 'Not Reservable'; November 2026 'Not Reservable' through 11-26), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14,
+                 "note": "Reservable on recreation.gov in the peak season only (2026: May 21 - September 6; 2027: May 27 - September 5); in spring and fall the rate table calls it a 'First-come, First-served Season' and the calendar shows the sites 'Not Reservable'. No weekend minimum (rec.gov's soft minimums are 0). 14 nights in any 30 at Burnsville Lake."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10234906 (facility_rules maxConsecutiveStay 14, maxStay 14 rolling 30 days, minWeekendStay 0 soft; notice 'No person(s) may camp at one or more campsites for more than 14 days in a 30 day consecutive period at Burnsville Lake') + /rates (Peak vs 'First-come, First-served Season') + availability calendar, read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USACE (Huntington District) on Burnsville Lake; boat ramp just before the campground entrance, marina nearby. Walk-in only in spring and fall. --Claude",
+  "summary": "rec.gov page, rates, calendar and catalog: confirmed $28-46, 50-amp full hookups, 60 sites, showers/laundry; added pull-throughs, flush toilets, water, Wi-Fi, 14-night max, season mid-April to Thanksgiving weekend, and that online booking covers only the summer peak (spring/fall FCFS). Note trimmed of field facts and the stale RV Life line; the old 'corrected from FCFS' remark replaced by the seasonal split.",
+  "flags": []
+}

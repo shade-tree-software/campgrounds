@@ -199,7 +199,14 @@ me drop and report); each needs the research named before a verdict.
 - **720 Briar Point (WV)**: booked by phone through Stonewall Resort, not book.wvstateparks.com, so policy_ref is now "none" (the 14-night max no longer inherits).
 - **984 Chief Logan (WV)**: "spring through summer", with no closing date published; the 26 sites, 40-ft limit and water/sewer rest on a deleted park page.
 
+- **425 Just Plane Adventures (WV)**: takes monthly renters (winter $600/month, Nov-Apr, 2-month commitment); on ResNexus for 2026-10-21 only 3 of 34 full-hookup sites were bookable. It sells nights at a posted $40-49, so it was kept, but the monthly share is worth a look.
+- **455 Rifrafters (WV)**: no site lengths published (an old note said the back-in sites suit 22-ft rigs). The Firefly booking form asks for RV length, so a browser check could settle the 23-ft fit.
+- **869 North Bend (WV)**: River Run's 23 non-electric sites are $24.99, but nothing says whether they fit an RV, so the base was left at $44.99.
+- **873 Moncove Lake (WV)**: the park's lodging page gives 304-722-3450 in the November-camping sentence (copied into the manual season.note), while its contact block gives 304-772-3450. The first is probably a typo.
+- **1196 Grand Vue Park (WV)**: a mandatory $10 per RV guest per day for pool and mini-golf (waived at 4+ nights); CampLife quotes $59.75 for a Tuesday. A local park, so no price gate.
+
 ## Resolved 2026-10-21
+- **p3-54 (WV):** 12 verified, no drops. Phones added (547 Sutton Lake office, 425), website added (1196). 455 Rifrafters electric 30 -> 50 and year-round; 14254 River Expeditions season April to mid-October.
 - **p3-53 (WV):** drop 1200 Big Earl's (site down, Cloudflare 522, no rate) and 1204 Camp Morning Wood (no website, no rate), both on the presence rule. Phones added (487, 491, 526, 720, 1206) and fixed (874). Aggregator/CampLife links taken out of 491 and 630. 630 Coopers Rock base $31.99 -> $41.99 (the $31.99 Rhododendron sites are tent/hammock only). 526 Canaan Valley fees $63-69 (new).
 - **p3-52 (first WV):** drop 13122 Hidden Hollow (workforce park, approval for short stays) and 1209
   Lakeview (Facebook only). 504 Cranberry is first-come only. 14251 Kick Back low $28 -> $35 (the
