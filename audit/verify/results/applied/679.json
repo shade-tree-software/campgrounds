@@ -1,0 +1,51 @@
+{
+  "id": 679,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.nps.gov/ever/planyourvisit/camping.htm (its Flamingo Campground block, rendered from the NPS data API: https://developer.nps.gov/api/v1/campgrounds?parkCode=ever, read 2026-10-21)",
+    "https://flamingoeverglades.com/campgrounds/ (Everglades Guest Services, the concessioner; read 2026-10-21 in a browser)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 33, "nightly_high": 60, "currency": "USD", "checked": "2026", "note": "NPS: tent and non-electric RV $33 Mon-Thu / $38.50 Fri-Sun; RV with electric hookup $50 / $60; group site $60. Per site per night; the park entrance fee is extra."},
+      "source": "https://www.nps.gov/ever/planyourvisit/camping.htm (NPS campground fees: 'Flamingo Campground- tent and non-electric RV (Monday - Thursday, per site per night)' 33.00, '(Friday - Sunday ...)' 38.50, 'RV with electric hook-up (Monday - Thursday ...)' 50.00, '(Friday - Sunday ...)' 60.00; 'This camping fee does not include the entrance fee to the Park'), read 2026-10-21",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "military": true, "note": "10% off (not half) for seniors, active and retired military, and Access Pass holders."},
+      "source": "https://www.nps.gov/ever/planyourvisit/camping.htm ('A 10% discount is offered to seniors, active and retired military, and Access Pass holders') + https://flamingoeverglades.com/campgrounds/ ('a 10% discount at Long Pine Key and Flamingo campgrounds for seniors, active & retired military as well as Access Pass holders'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://flamingoeverglades.com/campgrounds/ ('The sites at our T-Loop campground include: Pull-through RV sites; Select number have electrical hookups offering 30A-20A-50A pedestals; T-loop sites do not have: Water or sewer hook-ups') + NPS campground data (electricalHookups 41), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 274, "max_rig_ft": 35, "pull_through": true, "note": "234 individual drive-in sites (55 with a view of Florida Bay) and 40 walk-up sites (9 on the water's edge), plus 3 walk-up group sites. The 65 RV sites are all large pull-throughs in the T-Loop, 41 of them with electric. NPS gives a 35-ft RV maximum. One RV plus one tent (or two tents), 8 people and 2 vehicles per site."},
+      "source": "https://www.nps.gov/ever/planyourvisit/camping.htm (NPS data: 'There are 234 individual drive-in sites (55 with a view of Florida Bay) and 40 walk up sites (9 on waters edge) ... 65 RV sites, all the large pull-through type and 41 sites in the T-Loop with electrical hookups'; totalSites 274; rvMaxLength 35), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": false, "camp_store": true, "wifi": false, "note": "Solar-heated showers; the concessioner says the T-Loop bathhouses have no hot water. Two dump stations. Cell reception unreliable (AT&T sometimes)."},
+      "source": "https://www.nps.gov/ever/planyourvisit/camping.htm (NPS data: 'solar-heated showers, two dump stations'; amenities: Flush Toilets, Showers, Potable Water, Dump Station, Camp Store 'Yes - year round', Laundry 'No', Internet Connectivity 'No') + https://flamingoeverglades.com/campgrounds/ ('Bathhouses do not have hot water' under T-loop), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open year-round, but NPS says portions of the campground close in the summer wet season and reopen around mid-November. The concessioner reports the Bayside loop closed for the 2026 season."},
+      "source": "https://flamingoeverglades.com/campgrounds/ ('Flamingo Campground Open Year-Round'; 'Bayside campground is closed for the 2026 season') + https://www.nps.gov/ever/planyourvisit/camping.htm (NPS data: 'During the warmer wet season of the summer portions of the campgrounds are closed. As weather improves around Mid-November camping options are increased'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://flamingoeverglades.com/book-now", "fcfs": "some_sites", "note": "Booked through the concessioner, Everglades Guest Services (flamingoeverglades.com or 1-855-708-2207), not recreation.gov. NPS: 159 sites reservable, 28 first-come; reservations highly recommended in the busy season (December-April) and not needed June-November. Check-out noon."},
+      "source": "https://www.nps.gov/ever/planyourvisit/camping.htm (NPS data: 'Reservations can be made with Everglades Guest Services at https://flamingoeverglades.com/camping/ or by calling 1-855-708-2207. During the summer/fall slower season (June-November) reservations are not needed'; numberOfSitesReservable 159, numberOfSitesFirstComeFirstServe 28), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed fees $33-$60 (2026 NPS table) and that this is the concessioner-run Flamingo Campground. Changed booking platform recreation.gov (inherited) -> operator (Everglades Guest Services), fcfs some_sites. Added 50-amp electric in the T-Loop with no water/sewer hookups, 274 sites, 35-ft max, pull-throughs, facilities, year-round season with summer loop closures, and the 10% senior/military/Access discount (not the inherited 50%). Note (--AWH) left unchanged. Not stated: booking window.",
+  "flags": [
+    "Missing phone: Flamingo Campground reservations (Everglades Guest Services) 855-708-2207 (NPS campground data and https://flamingoeverglades.com/campgrounds/).",
+    "Inherited federal row: its recreation.gov platform (overridden here) and 180-day booking window do not apply; Flamingo books through the concessioner, whose window is not published on these pages. The inherited window_opens_days 180 will still show unless a human records the concessioner's real window.",
+    "Concession: run by Everglades Guest Services (Guest Services Inc.) under NPS; ownership stays federal, but the senior/Access discount is 10%, not the America the Beautiful half-price discount the federal row describes."
+  ]
+}

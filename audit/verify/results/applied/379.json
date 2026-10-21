@@ -1,0 +1,46 @@
+{
+  "id": 379,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234704",
+    "https://www.recreation.gov/api/camps/campgrounds/234704/rates",
+    "recreation.gov campsite catalog for 234704 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "NPS campground data for Gulf Islands NS (https://developer.nps.gov/api/v1/campgrounds?parkCode=guis, the source of nps.gov's campground pages), read 2026-10-21"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 40, "nightly_high": 40, "currency": "USD", "checked": "2026", "note": "recreation.gov: $40/night for a standard electric site in both peak and non-peak seasons; tent-only non-electric $26. The Fort Pickens area entrance fee is separate (good for seven consecutive days)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234704/rates (Peak and Non-Peak seasons: 'STANDARD ELECTRIC': 40, 'TENT ONLY NONELECTRIC': 26) + https://www.recreation.gov/api/camps/campgrounds/234704 ('Entrance fees are required for the Fort Pickens area and are good for seven consecutive days from purchase'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234704 ('137 family sites with electricity (20, 30 & 50 amp) and water hookups') + recreation.gov campsite catalog (all 156 RV-usable sites: Electricity Hookup 20/30/50, Water Hookup Yes, Sewer Hookup No), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 187, "max_rig_ft": 49, "pull_through": false, "note": "The catalog lists 187 public sites: 143 standard electric, 29 standard non-electric, 14 tent-only and 1 group site (plus 14 management sites); rec.gov's description says 137 electric and 40 non-electric tent sites, NPS says 200 sites. 156 sites take RVs, all back-in, max vehicle length up to 49 ft (NPS gives 42 ft); many sites are limited by low limbs or bushes. One RV, one tent and one vehicle, or two tents and two vehicles, per site; every wheel must fit on the paved pad."},
+      "source": "recreation.gov campsite catalog for 234704 (type, reservable, equipment, Max Vehicle Length, Driveway Entry) + https://www.recreation.gov/api/camps/campgrounds/234704 (description and notices: 'Many of our sites have restrictions from low limbs or bushes', 'ALL campers are limited to ONE RV ... one tent, and one vehicle, or two tents and two vehicles') + NPS data (totalSites 200, rvMaxLength 42), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "laundry": true, "camp_store": false, "wifi": false, "note": "Heated showers; a dump station in each campground loop. Free Wi-Fi only at the Fort Pickens Visitor Center."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234704 ('Amenities include flush toilets, showers, drinking water and a dump station in each campground'; 'There are heated showers and flush toilets') + NPS data (laundry 'Yes - year round', campStore 'No', internetConnectivity 'No', 'Free WIFI is available at the Fort Pickens Visitor Center'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234704 ('This campground is open for reservations year-round') + NPS data ('Available all year round'; 'This campground loop is open year round'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "note": "Reservations only, on recreation.gov or 1-877-444-6777; no wait list (set rec.gov alerts for openings). Up to 6 months ahead. Maximum 14 nights from March 1 through Labor Day and no more than 14 consecutive nights any time; off season a two-night absence is required between stays; 42 nights per calendar year. Check-in after 1-2 p.m. ('straight to your site'), check-out 11 a.m."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234704 ('All Fort Pickens campsites are available for reservations up to 6 months in advance. Fort Pickens does not have a wait list'; notice 'Campers can stay a maximum of 14 nights from March 1 through Labor Day ... no more than 14 consecutive nights at any time of the year ... limited to 42 nights in a calendar year'; rule maxStay 42 nights Each Year) + NPS data ('All reservations must be made by visiting www.recreation.gov'; numberOfSitesFirstComeFirstServe 0; 'Front country camping is allowed by persons who have made a valid reservation'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $40 electric-site rate, 50-amp electric with water and no sewer, year-round season, recreation.gov with a 6-month window (now entry-scoped). Added 187 sites (156 RV-usable, all back-in, to 49 ft), facilities incl. laundry, fcfs never, 14-night max and the 42-nights-a-year limit. No minimum stay on rec.gov. Note (--AWH) left unchanged. Not stated: a Senior/Access pass discount (left inherited).",
+  "flags": [
+    "Missing phone: recreation.gov and NPS give 850-934-2622 for Fort Pickens Campground."
+  ]
+}

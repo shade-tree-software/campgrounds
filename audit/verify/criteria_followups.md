@@ -97,8 +97,20 @@ me drop and report); each needs the research named before a verdict.
 - **4720 Coldwater Equestrian** — ReserveAmerica still shows a 2020 Hurricane Isaias "closed until
   further notice" banner beside "Open year round" and bookable sites; probably stale, no status set.
 - **4729 Dinner Island Hammock Camp** — FWC: "campers or small RVs", no length; 23-ft fit unstated.
+- **4746 Fisheating Creek Outpost** — ownership private -> state (policy_ref none): a Cape Leisure
+  concession in FWC's Fisheating Creek WMA "for" FWC, by analogy with concessions on federal land.
+  So the private $50 gate no longer applies ($43 + a $5/person entry fee). Standing 2-night minimum
+  recorded (engine refuses 1 night on ordinary Tuesdays).
+- **4818 Escambia County Equestrian Center** — 75 RV sites are "part of our event facility", events
+  have priority (24 h vacate notice), marketed as a "horse motel"; no rates posted; whether a
+  no-horse, no-event RVer can book is unstated. Call 850-941-6042.
+- **4730 Dinner Island Kowechobe Camp** — FWC: inundated sites, best Nov-Apr; the note's "may
+  require 4x4 in summer" is not FWC's (no agency 4WD statement), left in the note.
+- **4848 Donald MacDonald** — county calls them "Electric sites"; derived water: true unconfirmed.
+- **679 Flamingo** — concessioner booking; inherited federal 180-day window shows but doesn't apply.
 
 ## Resolved 2026-10-21
+- **p3-34 drop:** 4758 Gulf Breeze RV Park ($69, no gateway; nearly full on weekdays, 2-night engine).
 - **p3-33 drop:** 14395 Countryside RV Park ($55 on Campspot, no gateway; 55+ mostly seasonal).
   Clearwater/Lake Tarpon KOA 15415 ($72) kept: Tampa gateway 33 km.
 - **p3-32 drops:** 14394 Woods-n-Water Trails (55+ community with a Homes for Sale page),
