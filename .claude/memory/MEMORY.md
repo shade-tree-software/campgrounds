@@ -29,6 +29,7 @@
 - [Min site length ~23 ft](feedback_min_site_length.md) — don't add campgrounds whose largest drive-in sites cap at ~20 ft (EKKO is 23 ft), barring a special case
 - [Trailer limits apply to EKKO](feedback_trailer_length_limits.md) — AWH 2026-10-20: a posted trailer length limit counts for the motorhome too unless the source says otherwise; under ~23 ft = drop
 - [Clean up notes you touch](feedback_clean_up_notes.md) — AWH 2026-10-13 standing rule: a note I'm already reading/editing gets rewritten as clean current prose; --AWH text stays
+- [Notes don't repeat the details](feedback_note_not_redundant_with_details.md) — AWH 2026-10-21: drop note text the structured rows already show (FCFS, fees, season, RV Life rating lines); I may trim notes for it
 - [Attribute note edits distinctly](feedback_attribute_note_edits.md) — when editing a campground note already tagged with initials (e.g. --AWH), append your own changes with your own marker, don't fold them into theirs
 - [Waypoints are orientation, not clutter](feedback_waypoints_are_orientation.md) — minor stops (gas, rest areas) are how AWH navigates a trip; don't fold/hide low-content timeline items to reduce density
 - [Summaries should say less](feedback_summaries_say_less.md) — every correction AWH made to generated prose was "cut this"; never set a word floor, never remark on the record or gloss a small distance

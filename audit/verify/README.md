@@ -82,6 +82,11 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    stale rate, a wrong length, a closure), propose a corrected note in `note`: the whole
    note as clean current prose, `--AWH` text kept verbatim with its marker, your own text
    signed `--Claude`. Omit `note` otherwise.
+   **Redundant text** (AWH 2026-10-21): the popup shows the structured fields right under the
+   note, so non-AWH note text that only restates a value the entry carries after your result
+   (booking/FCFS, fees, season, hookups, site counts/lengths, discounts, an "RV Life N*/$ ..."
+   rating line) should go: propose the trimmed note in `note`. Never add such facts to a note
+   yourself. Keep what the fields can't say (which sites are good, caveats, closures' context).
    **Outdated --AWH text** (AWH 2026-10-20): where the campground's or agency's own site clearly
    publishes something that contradicts it, the note may be rewritten without the outdated part.
    Propose that rewrite in `note` and list each removed phrase with its source quote in
