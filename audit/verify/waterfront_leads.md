@@ -54,3 +54,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Raystown branch of the Juniata River", sells Riverfront tent sites (camper sites not so described).
 - **13088 River Run Campground (VA)** — stored "riverview"; operator: "17 riverfront sites with
   plenty of other sites with river access", "Tent sites are river front".
+- **647 Douthat SP (VA)** — stored "not waterfront" with an --AWH note ("set back from the
+  lakeshore in the woods"); DCR's fee table prices a separate "Lakefront Campground (electric
+  and water)" at $43 and the park page says some sites "offer a splendid view of Douthat Lake".
+  AWH's call governs unless the Lakefront loop is a separate case; check it on satellite.

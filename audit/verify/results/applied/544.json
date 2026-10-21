@@ -1,0 +1,50 @@
+{
+  "id": 544,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233687",
+    "https://www.recreation.gov/api/camps/campgrounds/233687/rates",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 233687, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687 ('It offers 63 campsites, 53 of which have electric and water hookups') + RIDB catalog (all 52 STANDARD ELECTRIC sites: Electricity Hookup 50, Water Hookup Yes; no sewer attribute), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 63,
+        "max_rig_ft": 82,
+        "pull_through": true,
+        "note": "63 campsites, 53 with electric and water. Catalog vehicle lengths run 20-82 ft (16 sites are 20 ft, 13 are 35 ft, about 30 take 40 ft or more); 19 pull-throughs (9 electric, all 10 non-electric). rec.gov warns the access and park roads are hilly, winding and narrow for larger RVs. Two vehicles per site ($7/day per extra vehicle)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687 (Facilities; notices 'Access road and park roads are hilly, winding and narrow and may be difficult for larger RVs to navigate', 'Two vehicles are allowed per campsite', 'A fee of $7/day will be charged for extra vehicles') + RIDB catalog (Max Vehicle Length, Driveway Entry per site), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "note": "Beach, boat ramp, dock, fishing pier, picnic shelter, playground and amphitheater. November-March only the boat ramp and a vault toilet stay open, with no drinking water."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687 ('Amenities include flush toilets, showers, drinking water, and a dump station', 'During non-peak season (November-March), the campground and bathhouses are closed. The boat ramp is open and there is a vault toilet. No drinking water is available.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31", "note": "'During non-peak season (November-March), the campground and bathhouses are closed.'"},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687 (Facilities description), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "14 nights in a rolling 30 days (rec.gov stay rule). Park gates closed 10 p.m. to 6 a.m.; alcohol prohibited."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687 (facility_rules maxStay 14 nights, 'Rolling 30 Days'; notices), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 34, "currency": "USD", "checked": "2026", "note": "2026 peak season (April 1 - October 30): non-electric $26, electric/water $34 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233687/rates (2026-04-01 to 2026-10-30 Peak: STANDARD NONELECTRIC 26, STANDARD ELECTRIC 34), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed the $26/$34 2026 peak rates and the derived 50-amp/water hookups (catalog + description). Added 63 sites to 82 ft with pull-throughs, flush toilets/showers/water/dump, season April-October (closed November-March), reservable on rec.gov with a 14-night max. Not stated: sewer, fcfs, booking window. rec.gov's militaryDiscount rule flag has no wording, so discounts left alone.",
+  "flags": [
+    "Missing phone: rec.gov gives facility phone (276) 629-1847 and, under Contact Info, 'For facility specific information, please call (276) 344-8878.'"
+  ]
+}
