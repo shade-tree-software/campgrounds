@@ -124,11 +124,16 @@ me drop and report); each needs the research named before a verdict.
 - **HURRICANE ISAIAS (Oct 2026) storm closures — RE-CHECK SOON.** Set temporarily_closed 2026-10-21:
   197 Topsail Hill (FSP banner "Effective Oct. 21, 2026 ... closed due to Hurricane Isaias") and 4720
   Coldwater. Other panhandle parks verified before 10-21 may also be closed but are not marked;
-  lift both statuses once the parks reopen.
+  lift both statuses once the parks reopen. Also 4855 Easterlin Park temporarily_closed through
+  2026-10-31 for road repaving (not the storm) — re-check after 11-01.
 - **4744 The Glades / 4767 The Hideaway** — dropped, but their water leads stood: Glades "along the
   Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
 
 ## Resolved 2026-10-21
+- **p3-42 drops:** 4809 Floridian (dead site, aggregators only), 4799 Fiddlers Green ($50 + a
+  mandatory $3 utility fee, no gateway), 14408 Florilow Oaks (55+ singles park, lots for sale).
+  Kept: 14416 Fiesta Grove (St. Petersburg gateway 22 km; daily nights on BookMySites; newest
+  rates 2024-25), 4787 Georgetown Marina ($50 incl. tax), 4761 Drifters ($46.77 = $52.62 less 12.5% tax).
 - **p3-41 drops:** 14403 Breezy Oaks ($57.56, no gateway), 4780 Arrowhead (website hijacked by a
   gambling spam page), 4763 Cedar Lakes (Facebook only), 4802 Cedars Lake (dead site, unclaimed
   RoverPass only). Kept at/under the line: 14411 7 Oaks $50, 4784 Chiefland $50, 4793 Cody's $45

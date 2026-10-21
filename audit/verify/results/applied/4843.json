@@ -1,0 +1,52 @@
+{
+  "id": 4843,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://hcfl.gov/locations/eg-simmons-conservation-park",
+    "https://assets.contentstack.io/v3/assets/blteea73b27b731f985/blt5c5200eff5910d11/68ed5e20ca1352659881c9e7/CELM_E_G_Simmons_Campground_Brochure_WEB.pdf (the page's Campground Brochure, updated 2025-10-13)",
+    "https://flhillsboroughweb.myvscloud.com/webtrac/web/splash.html?interfaceparameter=WebTracCELM#camping (the page's 'Online Camping Reservations' button; refuses plain fetches behind Cloudflare)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "https://hcfl.gov/locations/eg-simmons-conservation-park ('110 sites; all of which have electricity, potable water, picnic tables, and fire pits', 'All sites offer 30 amp service', '62 sites offer 50 amp service'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 110,
+        "max_rig_ft": null,
+        "note": "110 RV/trailer/tent sites plus 2 primitive sites with no electricity; site sizes range from 35 to 160 ft in length. Up to two tents or one tent and one RV, eight people and three vehicles per site."
+      },
+      "source": "https://hcfl.gov/locations/eg-simmons-conservation-park ('110 campsites 2 primitive sites (no electricity)', 'site sizes range from 35'-160' in length') + Campground Brochure ('A maximum of two tents or one tent and one RV, eight people, and three registered vehicles are permitted per site'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "dump": true,
+        "potable_water": true,
+        "note": "Public restrooms, hot and cold shower houses and two RV dump stations."
+      },
+      "source": "https://hcfl.gov/locations/eg-simmons-conservation-park ('Campers also have access to the park's public restrooms, hot and cold shower houses, and two RV dump stations'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://flhillsboroughweb.myvscloud.com/webtrac/web/splash.html?interfaceparameter=WebTracCELM#camping",
+        "fcfs": null,
+        "note": "Reserved online through Hillsborough County's WebTrac site ('Online Camping Reservations'). Camper registration 8 a.m. until an hour before the park closes; checkout 11 a.m.; to extend a stay, re-register by 10 a.m."
+      },
+      "source": "https://hcfl.gov/locations/eg-simmons-conservation-park ('Camping Reservations', 'Online Camping Reservations' -> flhillsboroughweb.myvscloud.com WebTrac) + Campground Brochure ('To learn more about camping and make reservations, visit HCFL.gov/Camping', registration and checkout times), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Hillsborough County conservation park on Tampa Bay near Ruskin, 18 miles south of Tampa. 700 ft of Tampa Bay beach, fishing pier, kayak rentals at the entry station; 200-acre mangrove bird sanctuary. --Claude",
+  "summary": "County page + brochure: confirmed $24 base, 30-amp at all sites / 50-amp at 62, water at every site, 110 sites, showers and two dump stations. Changed booking reservable false -> true with the county's WebTrac online reservations, and cleared the derived fcfs 'always' and max_rig_ft 160 (that is the longest SITE length, 35-160 ft). Note dropped its wrong 'FCFS, no advance reservations' line and its hookup/site/rating restatements.",
+  "flags": []
+}
