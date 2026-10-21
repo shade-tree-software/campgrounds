@@ -39,3 +39,5 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 75 flags confirmed and committed (d70ff04f); 3900 Bond Falls / 3532 Totogatic need re-pinning
 (waterfront_leads.md). Canada lakes not screened. rec.gov `soft` minimums are now RULES
 (AWH 10-21, see [[feedback_minimum_stay]]).
+
+**2026-10-21 late: FL under way (p3-29..p3-40 applied, p3-41 + p3-42 running). HURRICANE ISAIAS is a live Oct 2026 storm** (2026 reuses the 2020 name list; Escambia evacuations 10-21). 197 Topsail Hill and 4720 Coldwater were set temporarily_closed 2026-10-21. Re-check them and lift the statuses once the parks reopen. Panhandle entries verified before 10-21 may also be closed but aren't marked. Followups live in audit/verify/criteria_followups.md. Open asks in audit/verify/asks.md: 4774 Kelly's RV Park, 556 Periwinkle, 4814 Williams Landing.
