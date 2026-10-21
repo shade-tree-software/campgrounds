@@ -1,0 +1,45 @@
+{
+  "id": 545,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233616",
+    "https://www.recreation.gov/api/camps/campgrounds/233616/rates",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 233616, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233616 ('44 family sites with electric and water hookups') + RIDB catalog (43 bookable STANDARD ELECTRIC sites, all Water Hookup Yes; 17 list Electricity Hookup 50, 26 list 30; no sewer attribute), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 90,
+        "max_rig_ft": 76,
+        "pull_through": true,
+        "note": "44 family sites with electric and water plus 46 primitive sites without utilities (rec.gov). In the catalog the electric sites are all back-in, 30-76 ft; 11 no-hookup RV sites take 20-35 ft (4 of them pull-through); the rest are tent-only or boat-in. Two vehicles per site, $7/day for an extra vehicle."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233616 (Facilities; notices 'Two vehicles are allowed per campsite', 'A fee of $7/day will be collected for extra vehicles') + RIDB catalog (Max Vehicle Length, Driveway Entry per site), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "note": "Beach, boat ramp, dock, playground, amphitheater and a group picnic shelter."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233616 ('Amenities include flush toilets, showers, drinking water and a dump station. A beach, boat ramp, dock, playground, and amphitheater are also on-site.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "14 nights in a rolling 30 days (rec.gov stay rule). Park gates closed 10 p.m. to 6 a.m.; no alcohol."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233616 (facility_rules maxStay 14 nights, 'Rolling 30 Days'; notices), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 36, "currency": "USD", "checked": "2026", "note": "2026 peak season (April 1 - October 30): no-hookup RV site $26, electric/water $36 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233616/rates (2026-04-01 to 2026-10-30 Peak Season: STANDARD NONELECTRIC 26, STANDARD ELECTRIC 36), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed the $26 base and the derived 50-amp/water hookups; electric rate is now $36 (was $34). Added 90 sites to 76 ft with some pull-throughs, flush toilets/showers/water/dump, reservable on rec.gov with a 14-night max. Not stated: season, sewer, fcfs, booking window. rec.gov's militaryDiscount flag has no wording, so discounts left alone.",
+  "flags": [
+    "Missing phone: rec.gov gives facility phone (540) 365-7005."
+  ]
+}
