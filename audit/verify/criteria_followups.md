@@ -131,6 +131,10 @@ me drop and report); each needs the research named before a verdict.
   Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
 
 ## Resolved 2026-10-21
+- **p3-44 drops:** 14420 Lettuce Lake ($70, no gateway, 55+ selling units), 14423 Moss Landing ($70,
+  55+ manufactured-home community), 4810 Lynch's Landing (dead site, aggregators only). Kept: 4800
+  Little Flamingo ($55, Tampa 35 km). 4702 Manatee Springs dump station closed since 2026-01-14
+  (in its note); 741 Long Point: Scout Island bridge closed (Hurricane Milton). 4854 Markham: no laundry.
 - **p3-43 drops:** 4808 International RV Park ($65-90, no gateway, seasonal 55+), 4795 LeLynn (no
   operator site), 4803 Lake Toho (RV & mobile-home park selling homes and lots, call for rates).
   Renamed: 169 Hog Island Campground, 14391 RV Village at Lake Panasoffkee (no posted rate, RV Life $$).
