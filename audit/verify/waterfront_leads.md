@@ -102,3 +102,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **168 River Junction (Withlacoochee SF)** — ReserveAmerica marks sites 001, 014, 016 "Near Water";
   entry and the --AWH note say not waterfront.
 - **14387 Panhandle RV Resort** (minor) — "Two Fishing Ponds ... right on the property".
+- **14870 Seminole Campground** — "47 creek side campsites" on Pop Ash Creek; entry not waterfront.
+- **14434 Scott's Ferry** (weak) — "Located on the Chipola River with boat launch"; entry not waterfront.

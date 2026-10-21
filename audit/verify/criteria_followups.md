@@ -172,12 +172,22 @@ me drop and report); each needs the research named before a verdict.
   split (AllStays 10 sites; a review says "closed for a while"). Inclusion rested on satellite only.
   Asked AWH; call Jackson County Parks & Rec, 850-557-1564.
 - **4737 Mack Landing** — FS page $3/vehicle vs rec.gov Scan & Pay $10 (2026-10-01..12-31); left $3
-  (human read). Hickory Landing 4736 went to $10 on the same evidence - make them agree.
+  (human read). Hickory Landing 4736 went to $10 on the same evidence - DONE 2026-10-21: 4737 and
+  4738 Whitehead Landing set to rec.gov's $10 too (rec.gov is the newer channel), $3 kept in fees.note.
 - **385 Mitchell Landing (NPS Big Cypress)** — only sites 8 and 10 list a length, 14 ft; 23-ft fit
   unproven.
 - **168 River Junction** — closes when Sumter County is under a tropical storm/hurricane warning.
+- **14870 Seminole Campground (Fort Myers exception)** — winter priced only by the month
+  ($1,500-1,800, "depending on month"); the page names no winter months and a deposit is needed only
+  for stays "of a month or longer", so no clear minimum. Kept; check the winter window against the
+  3-month peak-season rule if it's ever quoted.
+- **14881 Sun Retreats Estero Bay** — Campspot now $103-115 (Nov) / $113-132 (Jan) vs the manual
+  2026-10-13 figures; one nights sell in winter. Fort Myers exception.
 
 ## Resolved 2026-10-21
+- **p3-51:** drop 14880 Swan Lake (sells homes) and 14399 Tall Timbers ($50.41 with mandatory
+  fees). 14435 Twin Palms at exactly $50 kept, operator site added. 15341 KICCO: the District books
+  "Campsite - Town of KICCO (RV/Trailer)", settling the tent-only doubt.
 - **p3-50:** drop 14433 Orange Blossom (park model for sale). 4823 Newport Park now reservable on
   Rec1. 168 name spelling fixed. 14868 Orange Grove and 14877 Sanctuary: asked AWH (sells homes /
   in-season 90-night minimum) - both in the Fort Myers exception.

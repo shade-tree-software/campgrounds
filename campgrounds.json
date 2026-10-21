@@ -300120,8 +300120,9 @@
         "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/florida/recreation/mack-landing ('Fee Site and Info | $3 per vehicle for camping per night. No day use or boat ramp fees. | Facility and Amenity Information | Restrooms | Restroom information is not available for this site. | Water | Potable water is not')",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10391795/rates (2026-10-01 - 2026-12-31, $10) + https://www.fs.usda.gov/r08/florida/recreation/mack-landing ($3)",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.fs.usda.gov/r08/florida/recreation/mack-landing ('Camping is allowed year-round at this venue.', 'Open year round. Quiet hours 10 p.m. to 6 a.m.') + https://www.recreation.gov/api/camps/campgrounds/10391795 (notice 'Open year round'), read 2026-10-21",
@@ -300135,9 +300136,11 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 3,
-      "nightly_high": 3,
-      "currency": "USD"
+      "nightly_low": 10,
+      "nightly_high": 10,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov's rate table (the Scan & Pay channel the forest now uses) charges $10 a night ('Campground (Primitive)', 2026-10-01 to 2026-12-31); the forest's own page still says $3 per vehicle per night."
     },
     "season": {
       "year_round": true
@@ -300160,8 +300163,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "fs.usda whitehead-landing page: drive-in riverside campground w/ sites under trees, picnic tables/grill/fire ring, boat ramp OPEN, FCFS $3 -> primitive drive-in campground (RVs no hookups)",
     "waterfront_evidence": "satellite at 30.1653,-84.6752: dense hardwood canopy over the landing, narrow tree-lined Ochlockonee tributary; pads unresolvable; FS page says sites are 'under the trees' (prose only, no per-site map/rec.gov flag) so no qualifying shoreline-pad confirmation -> default down",
-    "website": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing",
-    "note": "USFS drive-in campground on the Ochlockonee River; ~6 sites with picnic tables, metal fire rings, pit toilets, non-potable water spigots, concrete boat ramp. Suitable for tents or RVs (no hookups). FCFS $3/night year-round - not on recreation.gov. RV Life unrated.",
+    "website": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing\nhttps://www.recreation.gov/camping/campgrounds/10391812",
+    "note": "USFS drive-in campground on a tributary of the Ochlockonee River; ~6 sites under the trees with picnic tables, grills and metal fire rings; concrete boat ramp, whose access road is frequently underwater. Suitable for tents or RVs. Serves as a hunt camp during general gun season. RV Life unrated. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -300172,7 +300175,9 @@
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "showers": false,
+      "note": "The Forest Service page says 'Potable water is not available at this site' (rec.gov: 'Non-Potable water') although its amenity list also says 'Drinking water(natural well)'."
     },
     "season": {
       "year_round": true
@@ -300180,13 +300185,14 @@
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "platform": "none"
+      "platform": "none",
+      "note": "Recreation.gov 'Scan & Pay' site (rule 'S&P Only', facility 10391812, activated 2026-09-15): no advance reservations; pay on site with the Recreation.gov app (download it before you go - cell service may be absent). Campers pick a site under the trees."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('Each campsite has a picnic table, grill and fire ring. No showers or hookups.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -300194,23 +300200,29 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('No showers or hookups', 'Toilets (non-flush)', 'Potable water is not available at this site.') + https://www.recreation.gov/api/camps/campgrounds/10391812 (amenities 'Vault Toilets', 'Non-Potable Water'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('Operational Hours: Open year round.') + recreation.gov notice ('Open year round.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('THIS IS NOW A REC.GOV \"SCAN & PAY\" SITE', 'Download the Rec.gov App to your mobile device BEFORE visiting the Forest', 'Campers can select campsites under the trees') + https://www.recreation.gov/api/camps/campgrounds/10391812 (facility_rules scanAndPay 'S&P Only'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('Fee Site and Info | $3 per vehicle per camping per evening. No day use or boat ramp fees. | Facility and Amenity Information | Restrooms | Restroom information is not available for this site. | Water | Potable water is n')",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10391812/rates (2026-10-01 - 2026-12-31, $10) + https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ($3)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing ('Site Open', 'The campsite is currently OPEN. The boat ramp is OPEN.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -300219,10 +300231,21 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 3,
-      "nightly_high": 3,
-      "currency": "USD"
-    }
+      "nightly_low": 10,
+      "nightly_high": 10,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov's rate table (the Scan & Pay channel the forest now uses) charges $10 a night ('Campground (Primitive)', 2026-10-01 to 2026-12-31); the forest's own page still says $3 per vehicle per night."
+    },
+    "status": {
+      "operating": "open"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/florida/recreation/whitehead-landing https://www.recreation.gov/api/camps/campgrounds/10391812 https://www.recreation.gov/api/camps/campgrounds/10391812/rates",
+      "note": "Forest Service page + rec.gov record: confirmed no hookups, vault toilets, non-potable water, year-round, first-come; added status open, no showers, and that it is now a rec.gov Scan & Pay site (facility 10391812). Note trimmed of the FCFS/fee/season/hookup/toilet facts the fields carry and of 'not on recreation.gov', which is no longer true. Fees left as recorded (manual, $3) - rec.gov now posts $10, see flags."
+    },
+    "phone": "850-926-3561"
   },
   {
     "id": 4739,
@@ -872956,7 +872979,7 @@
     "inclusion_evidence": "Northwest Florida Water Management District (nwfwater.com tom-johns-landing page): four reservable sites at the north end of Porter Lake, two of them for tents, travel trailers and RVs; pavilion, portable toilet, boat ramp; reservation only through the District's online system (CampLife) or 850-539-5999, booked 1-90 days ahead; 7 nights per visit and 30 per property per year; no power, water or sewer hookups. Site length not published",
     "website": "https://nwfwater.com/lands/recreation/area/econfina-creek/tom-johns-landing/",
     "phone": "850-539-5999",
-    "note": "Northwest Florida Water Management District landing at the north end of Porter Lake in the Econfina Creek WMA, about 22 miles south of Chipley. Four reservable sites, two of which take RVs and trailers. No hookups; pavilion, portable toilet, boat ramp. Reserve through the District online or by phone; 7-night limit. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
+    "note": "Northwest Florida Water Management District landing at the north end of Porter Lake in the Econfina Creek WMA, about 22 miles south of Chipley, reached by Porter Pond Road (signed at each major intersection). Pavilion, picnic tables, fire rings, pedestal grills, portable toilet, boat ramp. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -872966,26 +872989,29 @@
       "reservable": true,
       "platform": "operator",
       "fcfs": "never",
-      "max_stay_nights": 7
+      "max_stay_nights": 7,
+      "url": "https://www.camplife.com/381/reservation/step1",
+      "note": "Free permit booked through the District's CampLife reservation system (a free account is needed, and availability shows only once logged in). Up to 7 nights per reservation; no more than two reservations at a time or in a 30-day period."
     },
     "sites": {
-      "count": 4
+      "count": 4,
+      "note": "Four sites: Sites 1-2 tent-only, Sites 3-4 back-in for tents, travel trailers and RVs (CampLife equipment: motorhome, travel trailer, fifth wheel, van, fold-down). CampLife lists every site as 50 ft, which looks like a default rather than a measured length, so no max rig length is recorded."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/tom-johns-landing/ ('While RV camping is allowed at the two sites, power, water, or waste disposal hookups are not available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/tom-johns-landing/ ('Four campsites are available by reservation', 'Reserve' link to camplife.com/381) + https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf ('A reservation can be made for up to seven (7) nights. No more than two (2) reservations can be booked at a time or in a 30 day period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/tom-johns-landing/ ('Four campsites are available by reservation. Two of those sites are for tent-only (no RVs) camping. The other two sites can be used for tents, travel trailers, and RVs.') + CampLife session for campground 381 (Sites 1-2 'Tent', Sites 3-4 'Back-in'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://nwfwater.com/lands/recreation/ (read 2026-10-10: 'Use of District lands is free of charge but we gladly accept donations for lands maintenance and management.'; campsites are booked through the District's camping reservation system)",
@@ -873002,6 +873028,11 @@
       "nightly_high": 0,
       "currency": "USD",
       "note": "Free; campsites must be reserved online through the District's reservation system."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://nwfwater.com/lands/recreation/area/econfina-creek/tom-johns-landing/ https://nwfwater.com/lands/recreation/recreation-site-closures/ https://www.camplife.com/381/reservation/step1 (CampLife booking API: reservation session and site records for campground 381, read 2026-10-21) https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf",
+      "note": "Confirmed on the District page and its CampLife records: 4 reservation-only sites (2 tent-only, 2 back-in RV/trailer sites), no hookups, 7-night limit, free. No storm-closure banner on the page and not on the District's closures list (2026-10-21). Note trimmed of the count/hookup/booking facts the fields carry. Not stated: real max rig length (CampLife's 50 ft looks like a default), season, potable water."
     }
   },
   {
@@ -873017,7 +873048,7 @@
     "inclusion_evidence": "Northwest Florida Water Management District (nwfwater.com white-oak-landing page): three reservable sites at the south end of Porter Lake, RV camping permitted; pavilion, portable toilet, canoe launch; reservation only through the District's online system (CampLife) or 850-539-5999, booked 1-90 days ahead; 7 nights per visit and 30 per property per year; no power, water or sewer hookups. Site length not published",
     "website": "https://nwfwater.com/lands/recreation/area/econfina-creek/white-oak-landing/",
     "phone": "850-539-5999",
-    "note": "Northwest Florida Water Management District landing at the south end of Porter Lake in the Econfina Creek WMA, about 23 miles south of Chipley. Three reservable sites; RV camping permitted, no hookups; pavilion, portable toilet, small boat launch. Reserve through the District online or by phone; 7-night limit. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
+    "note": "Northwest Florida Water Management District landing at the south end of Porter Lake in the Econfina Creek WMA, about 23 miles south of Chipley (4909 Porter Pond Road). Pavilion, picnic tables, pedestal grills, fire rings, portable toilet, small boat launch. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -873027,26 +873058,29 @@
       "reservable": true,
       "platform": "operator",
       "fcfs": "never",
-      "max_stay_nights": 7
+      "max_stay_nights": 7,
+      "url": "https://www.camplife.com/382/reservation/step1",
+      "note": "Free permit booked through the District's CampLife reservation system (a free account is needed, and availability shows only once logged in). Up to 7 nights per reservation; no more than two reservations at a time or in a 30-day period. Up to 8 people per site."
     },
     "sites": {
-      "count": 3
+      "count": 3,
+      "note": "Three back-in sites taking motorhomes, travel trailers, fifth wheels, vans, fold-downs and tents. CampLife lists every site as 50 ft, which looks like a default rather than a measured length, so no max rig length is recorded."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/white-oak-landing/ ('Though RV camping is permitted, no power, water, or waste disposal hookups are available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/white-oak-landing/ ('Three camping sites are available by reservation only. Each site can hold a maximum of eight people per site.', 'Reserve' link to camplife.com/382) + https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf ('A reservation can be made for up to seven (7) nights. No more than two (2) reservations can be booked at a time or in a 30 day period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/econfina-creek/white-oak-landing/ ('Three camping sites') + CampLife session for campground 382 (Sites 1-3 'Back-in', equipment MOTORHOME, TRAVEL TRAILER, 5TH WHEEL, VAN, FOLDDOWN, TENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://nwfwater.com/lands/recreation/ (read 2026-10-10: 'Use of District lands is free of charge but we gladly accept donations for lands maintenance and management.'; campsites are booked through the District's camping reservation system)",
@@ -873063,6 +873097,11 @@
       "nightly_high": 0,
       "currency": "USD",
       "note": "Free; campsites must be reserved online through the District's reservation system."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://nwfwater.com/lands/recreation/area/econfina-creek/white-oak-landing/ https://nwfwater.com/lands/recreation/recreation-site-closures/ https://www.camplife.com/382/reservation/step1 (CampLife booking API: reservation session and site records for campground 382, read 2026-10-21) https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf",
+      "note": "Confirmed on the District page and its CampLife records: 3 reservation-only back-in RV/tent sites, no hookups, 7-night limit, free. No storm-closure banner on the page and not on the District's closures list (2026-10-21). Note trimmed of the count/hookup/booking facts the fields carry. Not stated: real max rig length, season, potable water."
     }
   },
   {
@@ -873154,7 +873193,7 @@
     "inclusion_evidence": "Northwest Florida Water Management District (nwfwater.com williams-lake page): reservation-only campsites (8 people/2 vehicles each), RVs among listed uses; portable toilet, boat launch to the Escambia River; reservation only through the District's online system (CampLife) or 850-539-5999, booked 1-90 days ahead; 7 nights per visit and 30 per property per year; no power, water or sewer hookups. Site length not published",
     "website": "https://nwfwater.com/lands/recreation/area/escambia-river/williams-lake/",
     "phone": "850-539-5999",
-    "note": "Northwest Florida Water Management District recreation area by an Escambia River oxbow near Jay. Reservation-only campsites, RVs allowed, no hookups; portable toilet, pedestal grills, boat launch. Reserve through the District online or by phone; 7-night limit. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
+    "note": "Northwest Florida Water Management District recreation area by an Escambia River oxbow near Jay, about 40 miles northeast of Pensacola. Picnic tables, pedestal grills, fire rings, portable toilet, boat launch with trailer parking. Site length is not published - primitive sites on unpaved access; check the site diagram before bringing a big rig. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -873164,22 +873203,29 @@
       "reservable": true,
       "platform": "operator",
       "fcfs": "never",
-      "max_stay_nights": 7
+      "max_stay_nights": 7,
+      "url": "https://www.camplife.com/394/reservation/step1",
+      "note": "Free permit booked through the District's CampLife reservation system (a free account is needed, and availability shows only once logged in). Up to 7 nights per reservation; no more than two reservations at a time or in a 30-day period. Up to 8 people and 2 vehicles per site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/escambia-river/williams-lake/ ('The campsites do not have power, water or waste disposal hookups.') + CampLife site records for campground 394 ('No Hookup. RV and Tent sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "https://nwfwater.com/lands/recreation/area/escambia-river/williams-lake/ ('reservation-only camping', 'Each campsite can hold a maximum of eight people and two vehicles', 'Reserve' link to camplife.com/394) + https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf ('A reservation can be made for up to seven (7) nights. No more than two (2) reservations can be booked at a time or in a 30 day period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://nwfwater.com/lands/recreation/ (read 2026-10-10: 'Use of District lands is free of charge but we gladly accept donations for lands maintenance and management.'; campsites are booked through the District's camping reservation system)",
         "checked": "2026-10-10"
+      },
+      "sites": {
+        "source": "CampLife session for campground 394 (Sites 1-3 'Back-in', equipment MOTORHOME, 5TH WHEEL, TRUCK CAMPER, VAN, FOLDDOWN, TENT; 'No Hookup. RV and Tent sites with picnic table, fire ring, pedestal grill and a portable toilet.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -873192,6 +873238,15 @@
       "nightly_high": 0,
       "currency": "USD",
       "note": "Free; campsites must be reserved online through the District's reservation system."
+    },
+    "sites": {
+      "count": 3,
+      "note": "Three back-in sites taking motorhomes, fifth wheels, truck campers, vans, fold-downs and tents. CampLife lists every site as 50 ft, which looks like a default rather than a measured length, so no max rig length is recorded."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://nwfwater.com/lands/recreation/area/escambia-river/williams-lake/ https://nwfwater.com/lands/recreation/recreation-site-closures/ https://www.camplife.com/394/reservation/step1 (CampLife booking API: reservation session and site records for campground 394, read 2026-10-21) https://nwfwater.com/wp-content/uploads/2025/06/Step-by-Step-Instructions-on-How-to-Make-A-Camping-Reservation.pdf",
+      "note": "Confirmed on the District page and its CampLife records: reservation-only RV/tent sites with no hookups, 7-night limit, free. Added 3 back-in sites (CampLife). No storm-closure banner on the page and not on the District's closures list (2026-10-21). Note trimmed of the hookup/booking facts the fields carry. Not stated: real max rig length, season, potable water."
     }
   },
   {
@@ -928282,55 +928337,6 @@
     }
   },
   {
-    "id": 14399,
-    "kind": "campground",
-    "name": "Tall Timbers MH & RV Resort",
-    "location": "29.2084,-81.9116",
-    "elevation_meters": 34,
-    "state": "FL",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 900 m frame) at 29.2084,-81.9116: park lanes south of a small lake; the lakeshore homes belong to the section north of the entrance and the RV lanes sit ~150 m south among trees - not waterfront",
-    "inclusion_evidence": "talltimbersrv.com live: nightly 30 Amp $44/day published (unrated row passes the published-rate gate); Google 4.1/167",
-    "website": "https://talltimbersrv.com/",
-    "phone": "352-625-2783",
-    "note": "AGE-RESTRICTED: 55+. 55+ MH & RV resort (listed on RV Life as Pacifica Timbers) on NE 21st St, Silver Springs, east of Ocala toward the national forest. 2026 nightly 30 A $44, 50 A $50; weekly/monthly too; books on Campspot. --Claude",
-    "hookups": {
-      "electric": 50
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "campspot"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://talltimbersrv.com/rates/, read 2026-10-10)",
-        "checked": "2026-10-10"
-      }
-    },
-    "note_scan": {
-      "sig": "24e2e2d6bfe228b1",
-      "checked": "2026-10-09",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 44,
-      "nightly_high": 50,
-      "currency": "USD",
-      "note": "30-amp $44/day, 50-amp $50/day; 55+ resort."
-    }
-  },
-  {
     "id": 14401,
     "kind": "campground",
     "name": "Bee's RV Resort",
@@ -928834,45 +928840,49 @@
     "inclusion_evidence": "scottsferrycamp.com live (phone, hours, store, 'RV sites and rustic cabins') linking online booking at parkwith.us/camps/scotts-ferry-campground; operator site map shows 15 RV sites + dump station; RV site $40/night with 30A + water read from the booking engine by AWH 2026-10-02; Google 4.4 over 127 (quality signal for an RV-Life-unrated park); satellite shows trailer-length rigs parked on the open grass sites",
     "website": "https://scottsferrycamp.com/",
     "phone": "850-237-1156",
-    "note": "Family-owned campground on the Chipola River at the SR-71 bridge south of Blountstown, behind a general store and deli. 15 grass RV sites with 30-amp electric and water ($40/night, 2026), dump station, bathhouse, tent sites and rustic cabins; boat launch, dock, and canoe/kayak rentals. Booked online through Park With Us. --Claude",
+    "note": "Family-owned campground on the Chipola River at the SR-71 bridge south of Blountstown, behind a general store and deli. Grass RV sites, plus a bathhouse, tent sites and rustic cabins; boat launch, dock, and canoe/kayak rentals. --Claude",
     "hookups": {
-      "electric": 30,
+      "electric": 50,
       "water": true
     },
     "sites": {
-      "count": 15
+      "count": 10,
+      "note": "10 RV sites (eight 30-amp, two 50-amp, all water and electric), besides tent sites and cabins. Park With Us lists RV sites 28 to 60 ft long."
     },
     "facilities": {
       "dump": true,
       "camp_store": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://parkwith.us/camps/scotts-ferry-campground"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://scottsferrycamp.com/products ('8 -30 amp sites 2 -50 amp sites Water and Electric'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://scottsferrycamp.com/products ('8 -30 amp sites 2 -50 amp sites') + https://parkwith.us/camps/scotts-ferry-campground (site rows '30A 28ft Water', '30A 60ft Water'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://scottsferrycamp.com/ ('General Store Hours ... camping supplies, glass bottle drinks, bait, beer, ice'; 'Full Deli from 6:30 am - 3 pm'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://scottsferrycamp.com/ ('Book Cabin or RV/Tent Sites Here' -> parkwith.us/camps/scotts-ferry-campground, which sells RV sites by the night), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://scottsferrycamp.com/products (read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://scottsferrycamp.com/products ('RV Sites 8 -30 amp sites 2 -50 amp sites Water and Electric $40 per night') + https://parkwith.us/camps/scotts-ferry-campground (availability 2026-11-10 to 11-11, 23-ft rig: '$40.00 / night' on each 30A water site), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -928884,7 +928894,13 @@
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Water and electric $40/night; tent $30-35."
+      "note": "RV sites with water and electric $40/night (operator's rates page, and Park With Us quoted $40.00/night for every available 30-amp site on 2026-11-10). Tent $30 primitive, $35 with electric/water; cabins $75-99.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://scottsferrycamp.com/ https://scottsferrycamp.com/products https://parkwith.us/camps/scotts-ferry-campground (the 'Book Cabin or RV/Tent Sites Here' link; RV site availability for 2026-11-10, 1 night, 23-ft rig, 2 adults, read in a browser)",
+      "note": "Operator's site and its Park With Us booking page: confirmed $40/night water+electric RV sites (2026-11-10 quote), reservable online, general store. Changed electric 30 -> 50 (two 50-amp sites) and site count 15 -> 10 RV sites. Note trimmed of the price/hookup/booking facts the fields carry. Not stated by the operator: sewer, dump station, showers, season."
     }
   },
   {
@@ -928898,16 +928914,17 @@
     "waterfront": "pond",
     "waterfront_evidence": "satellite (Esri, 220 m frame) at 27.0068,-81.0530: a row of ~10 RV sites backs directly onto the south bank of a ~130x80 m pond, with an open, unused grass apron of ~5-15 m between the pads and the water and no treeline or road between them - pond. The rim canal south of SR-78 is across the highway (not counted)",
     "inclusion_evidence": "Online booking via ResNexus (operator's booking page, linked from its Google listing) and a live, bookable Hipcamp listing (status LIVE, isBookable true, checked 2026-10-02); RV site $50/night, all back-in, 50/30/20A full hookups, read by AWH 2026-10-02 (passes the <=$50 published-rate gate); Google 4.2 over 74 (quality signal for a Good-Sam-only park); Campendium lists max RV 45 ft, open year-round, no age restriction",
-    "website": "https://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B",
+    "website": "https://www.twinpalmsresortfl.com/\nhttps://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B",
     "phone": "863-946-1435",
-    "note": "Older fishing-and-hunting park on SR-78 near Lakeport, about 2 mi from Lake Okeechobee and across the highway from the rim canal. All RV sites are back-in, with 50/30/20-amp full hookups ($50/night, 2026); bar, showers, cabins. Park models and long-stay units fill the south half; the transient row backs onto the pond. Also bookable on Hipcamp. --Claude",
+    "note": "Older fishing-and-hunting park on SR-78 near Lakeport, about 2 mi from Lake Okeechobee and across the highway from the rim canal. Bar and cabins. Park models and long-stay units fill the south half; the transient row backs onto the pond. Also bookable on Hipcamp. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
       "sewer": true
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "laundry": true
     },
     "provenance": {
       "hookups": {
@@ -928916,18 +928933,29 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.twinpalmsresortfl.com/ ('We have a Laundry Room for our guests'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B (live rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B (RV Sites #4-10 and #28: 'Standard Rate $50.00 / night' for 2026-12-08 to 12-09; the same for 2027-06-15 to 06-16), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "sites": {
+        "source": "ResNexus RV site descriptions ('Location is on the Pond side of Twin Palms RV Park - equipped for the following RV's types - Travel Trailer, 5th Wheel, Motorhome or Pop-Up Camper. All sites are Back-in site...') + https://www.twinpalmsresortfl.com/ ('Right behind the 11 full hook-up RV sites is a 1 1/2 acre fishing pond'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.twinpalmsresortfl.com/ ('Book Now' -> ResNexus) + ResNexus availability for 1 night on 2026-12-08 and 2027-06-15 ('RV Sites 7 Available', '... 6 Available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -928939,10 +928967,26 @@
       "nightly_low": 50,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "ResNexus: back-in RV sites $50/night (cabins $140-150)."
+      "note": "ResNexus 'Standard Rate' $50.00/night on every RV site offered for 2026-12-08 and 2027-06-15 (before any tax or checkout fee). Cabins $140-175/night.",
+      "checked": "2026"
     },
     "discounts": {
       "good_sam": false
+    },
+    "sites": {
+      "pull_through": false,
+      "note": "All RV sites are back-in, on the pond side or the park side, for travel trailers, fifth wheels, motorhomes or pop-ups. The operator counts 11 full-hookup RV sites right behind the 1.5-acre fishing pond; ResNexus sells RV Sites numbered #1 to #29."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B",
+      "note": "Booked online through the operator's ResNexus page, which sells single nights (every RV site was occupied for 2026-10-21 and 2026-11-10; 7-8 RV sites open for 2026-12-08 and 2027-06-15)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.twinpalmsresortfl.com/ https://resnexus.com/resnexus/reservations/book/6D5B4D8A-E599-4591-AA7F-178E31975A1B (ResNexus, read in a browser: 1 night from 2026-10-21, 2026-11-10, 2026-12-08 and 2027-06-15, 2 adults)",
+      "note": "Operator site and ResNexus: confirmed $50/night RV sites (Dec 2026 and Jun 2027 quotes), one-night bookings, back-in only; added laundry. Note trimmed of the price/hookup/back-in text the fields carry. Not confirmed: amperage (50/30/20 left as derived), showers (derived, left), site count, season."
     }
   },
   {
@@ -949950,7 +949994,7 @@
     "inclusion_evidence": "Fort Myers relaxed-price mini-sweep (AWH 2026-10-05: nightly up to $150 allowed for this area only, rate stated in the note). Operator reservations page (read 2026-10-05): 'summer rates are $85 a day, $510 a week, $1400 a month'; RV Life owner-managed listing gives nightly $73-$100 (cheapest to premium). RV Life 4*/$$$ (80 reviews); Google 4.5 over 263; Good Sam 9.8. Operating 45 years",
     "website": "http://www.seminolecampground.com/",
     "phone": "239-543-2919",
-    "note": "Wooded RV park on Triplett Rd off SR-31 near I-75 exit 143, North Fort Myers, with Popash Creek running through it. $85/day summer (operator); RV Life's owner-managed page lists nightly rates $73-100 by site type. Full hookups, 30/50 amp. --Claude",
+    "note": "Wooded RV park on Triplett Rd off SR-31 near I-75 exit 143, North Fort Myers, with Popash Creek running through it. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
@@ -949963,13 +950007,29 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.seminolecampground.com/reservations.html, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.seminolecampground.com/reservations.html ('Our summer rates are $85 a day, $510 a week, $1400 a month. Winter rates for new 2025/2026 reservations are $1,800- $1,500 per month ... This includes water, sewer, WIFI, and all taxes. Electricity is additional.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "sites": {
+        "source": "https://www.seminolecampground.com/amenities.html ('129 Sites - on and off the creek', 'Pull through sites available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.seminolecampground.com/amenities.html ('Free WIFI Access', 'Bathhouse - private tiled restrooms w/ hot showers', 'Laundry facilities and on site Post Office', 'General store with RV supplies'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.seminolecampground.com/reservations.html ('Reservation Request', 'Please call for availability', 'We do not offer tent camping'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -949981,11 +950041,34 @@
       "nightly_low": 85,
       "nightly_high": 85,
       "currency": "USD",
-      "note": "Summer rates $85/day, $510/week; winter by the month."
+      "note": "Summer $85/day, $510/week, $1,400/month. Winter (new 2025/2026 reservations) is priced only by the month, $1,500-1,800 depending on month and length of stay, including water, sewer, WiFi and taxes; electricity extra; one month's deposit holds a winter stay of a month or longer.",
+      "checked": "2026"
     },
     "discounts": {
       "good_sam": true,
       "military": true
+    },
+    "sites": {
+      "count": 129,
+      "pull_through": true
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Heated pool, recreation hall, exercise room, dog park, on-site post office."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "note": "Reservation request form on the operator's site ('Please call for availability'); no online availability. No tent camping."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.seminolecampground.com/reservations.html https://www.seminolecampground.com/amenities.html",
+      "note": "Operator's pages: confirmed $85/day summer rate (2025/2026 rate page); added 129 sites with pull-throughs, showers/flush toilets/laundry/store/WiFi, reservable by request form or phone. Winter is priced by the month only. Note trimmed of price/hookup text. Not stated: electric amperage (30/50 left as derived), Good Sam discount (derived left), season."
     }
   },
   {
@@ -950205,19 +950288,36 @@
     "inclusion_evidence": "Fort Myers relaxed-price mini-sweep (AWH 2026-10-05: nightly up to $150 allowed for this area only, rate stated in the note). Operator rates page (read 2026-10-05): daily $120 'winter' Nov 1-May 31, $100 Jun 1-Oct 31 with a 2-night weekend minimum (weekday single nights sold). RV Life 4.5*/$$$$ (24 reviews); Google 4.6 over 107",
     "website": "https://www.sugarsandbeachrvresort.com/",
     "phone": "239-676-3880",
-    "note": "Small (11-site) RV resort at the end of Porpoise Point Rd in Matlacha, on Matlacha Pass. Daily $120 Nov-May, $100 Jun-Oct (2-night minimum on weekends); monthly too. Rates plus 6.5% sales and 5% Lee County tourist tax. --Claude",
+    "note": "Small RV resort at the end of Porpoise Point Rd in Matlacha, on Matlacha Pass. --Claude",
     "sites": {
-      "count": 11
+      "count": 10,
+      "max_rig_ft": 45
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.sugarsandbeachrvresort.com/ammenities-sugarsand ('We are a small Resort with only 10 sites', 'Can Accommodate Rigs up to 45''), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.sugarsandbeachrvresort.com/rates-reservations, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.sugarsandbeachrvresort.com/rates-reservations ('2026/2027 Rates', 'June 1st - Oct 31st Summer Rates Nightly Rate - 2 Night ($200) Minimum on Weekends $100.00', 'Nov 1st - May 31st \"Winter\" Rate Daily Rate $120.00'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.sugarsandbeachrvresort.com/ammenities-sugarsand ('30/50 Amp Electric', 'Sewer (Each Site)', 'Water (Municipal)') + rates page ('All sites include water, sewer, electric'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.sugarsandbeachrvresort.com/ammenities-sugarsand ('Wi-Fi', 'Laundry Facility Included (no coins!)', 'Kayak Launch', 'Large Dock for Boat or Fishing') + rates page ('Free Wi-Fi is available, service is not guaranteed inside your RV'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.sugarsandbeachrvresort.com/rates-reservations ('For reservation availability please Text Message your name, requested dates and RV size/type to: 239-676-3880', 'Nightly Rate - 2 Night ($200) Minimum on Weekends', '1 month or less, 100% due at time of Reservation'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -950229,7 +950329,35 @@
       "nightly_low": 100,
       "nightly_high": 120,
       "currency": "USD",
-      "note": "Daily $120 (Nov-May), $100 summer; 2-night minimum on weekends; plus sales and tourist taxes."
+      "note": "2026/2027 rates: summer (June 1 - Oct 31) $100/night, monthly $1,950; winter (Nov 1 - May 31) $120/day, monthly $2,450 Nov-Dec and $3,600 Jan-Mar. All sites include water, sewer and electric. Plus 6.5% sales tax and 5% Lee County tourism tax. All sales final, no refunds.",
+      "checked": "2026"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "facilities": {
+      "laundry": true,
+      "wifi": true,
+      "note": "Laundry included (no coins). Wi-Fi not guaranteed inside the RV. Sea-walled beach, kayak launch, large dock, community fire pit."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend",
+          "season": "June 1 - October 31"
+        }
+      ],
+      "note": "Text your name, dates and RV size/type to 239-676-3880; they reply if/when a site is free. A specific site can't be guaranteed. Stays of a month or less are paid in full when booked; all sales final. The 2-night weekend minimum is stated for the summer season; the winter rate shows no minimum."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.sugarsandbeachrvresort.com/rates-reservations https://www.sugarsandbeachrvresort.com/ammenities-sugarsand",
+      "note": "Operator's 2026/2027 rate and amenity pages: confirmed $100 summer / $120 winter nightly. Changed site count 11 -> 10 (operator: 'only 10 sites'); added 45-ft rigs, 30/50-amp full hookups, laundry, Wi-Fi, booking by text message, summer 2-night weekend minimum. Note trimmed of the price/minimum/count facts the fields carry."
     }
   },
   {
@@ -950529,56 +950657,6 @@
     }
   },
   {
-    "id": 14880,
-    "kind": "campground",
-    "name": "Swan Lake RV Village",
-    "location": "26.697355,-81.885992",
-    "elevation_meters": 6,
-    "state": "FL",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 300 m frame) at 26.697355,-81.885992: the RV loop is bounded by park models to the north and a power-line corridor and treeline to the south; the nearest pond is in the neighbouring community beyond the treeline - not waterfront",
-    "inclusion_evidence": "Fort Myers relaxed-price mini-sweep (AWH 2026-10-05: nightly up to $150 allowed for this area only, rate stated in the note). Operator rate page (swanlakevillage.com rate-information, read 2026-10-05): daily $77 (RVs to 34 ft) / $88 (35 ft+ and all 50 A), full hookups. AWH 2026-10-05 located a regular campground loop south of the park-model area at 26.697355,-81.885992 (satellite confirms two rows of RVs on a grass loop). RV Life 4.5*/$$$ (14 reviews); Google 4.7 over 113",
-    "website": "http://www.swanlakevillage.com/",
-    "phone": "239-995-3397",
-    "note": "Park-model and RV village on US-41 (N Tamiami Trl), North Fort Myers; the transient RV loop sits south of the park-model streets. Daily $77 for RVs up to 34 ft, $88 for 35 ft+ or 50-amp, full hookups, 1-2 people ($5/day per extra). Weekly and monthly too; season stays book with a deposit by August 1. The park says Sunday and after-dark arrivals are discouraged. --Claude",
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://www.swanlakevillage.com/index.php/rates-directions/rate-information, read 2026-10-10)",
-        "checked": "2026-10-10"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "6b05ba155f9a9e89",
-      "checked": "2026-10-09",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 77,
-      "nightly_high": 88,
-      "currency": "USD",
-      "note": "Daily $77 for RVs up to 34 ft, $88 for 35 ft and larger or 50 amp."
-    },
-    "discounts": {
-      "good_sam": false
-    }
-  },
-  {
     "id": 14881,
     "kind": "campground",
     "name": "Sun Retreats Estero Bay",
@@ -950594,31 +950672,36 @@
     "note": "All-ages Sun Outdoors RV resort on US-41 (S Tamiami Trl) in south Fort Myers, set around two ponds.  Pond-front sites take a 28-night minimum in winter. --Claude",
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
       "pull_through": true,
-      "max_rig_ft": 45
+      "max_rig_ft": 45,
+      "count": 300,
+      "note": "300 RV sites on 30 acres. Standard (grass or crushed-shell pad), Deluxe concrete, paver and lakefront sites are back-in; Premium sites are pull-through. Every RV type 'can accommodate up to 45 feet'. Park-model rentals are for annual guests."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/sun-retreats-estero-bay",
+      "note": "One-night stays sell on Campspot in November and January (Standard, Deluxe and Premium RV types available for 1 night on 2026-11-10 and 2027-01-12; the lakefront type was sold out both nights). Park-model rentals take a 7-night minimum. Stays under 30 nights: cancel 14+ days ahead for a refund."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "Campspot site types for park 960 (every RV type: 'full hookups with 30- or 50-amp electric', amenities '30-Amp', '50-Amp', 'Water Hook-Up', 'Sewer Hook-Up'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "Campspot park 960 description ('our gorgeous all-age resort sits on 30 acres with 300 RV sites with full hook-ups and concrete pads') + site-type descriptions ('can accommodate up to 45 feet', 'These pull-through sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "Campspot availability API for park 960, 2026-11-10 to 11-11 and 2027-01-12 to 01-13 (RV types 'AVAILABLE'; Park Model 'There is a 7 night minimum over the requested period of time') + cancellation policy, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.campspot.com/book/sun-retreats-estero-bay (each RV site type's price breakdown for one night from 2026-11-10, 2026-11-14, 2027-01-12, 2027-01-16, 2027-06-15, 2027-06-19, 2 adults; a 2-night quote for the campground fee; campspot_recheck_2026-10-13.jsonl), read 2026-10-13",
@@ -950628,6 +950711,11 @@
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "Campspot park 960 (park features 'Laundry', 'Internet Access', 'Pool', 'Hot Tub / Sauna', 'Clubhouse'; description 'heated pool', 'hot tub', 'fishing in our two lakes', 'boardwalk and nature trail'; RV site types list 'Wi-Fi'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -950645,6 +950733,16 @@
     "discounts": {
       "good_sam": false,
       "military": true
+    },
+    "facilities": {
+      "laundry": true,
+      "wifi": true,
+      "note": "Heated pool, hot tub, clubhouse, dog park, playground, fishing in the two lakes, boardwalk and nature trail."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.campspot.com/book/sun-retreats-estero-bay (Campspot park record and site-type availability API, park 960, 1 night 2026-11-10 and 2027-01-12, 2 adults; read in a browser) https://www.sunoutdoors.com/florida/sun-retreats-estero-bay (refused plain HTTP: 'You don't have permission to access')",
+      "note": "Campspot park record and 1-night availability: confirmed full hookups, 45-ft max, pull-throughs and Campspot booking; added 50-amp, 300 sites, laundry/Wi-Fi, one-night RV stays sold in Nov and Jan. Fees left as recorded 2026-10-13 (Campspot's current list prices are $103-115 in Nov 2026 and $113-132 in Jan 2027 before fees). Not confirmed: the note's 28-night winter minimum on pond-front sites (the lakefront type showed 'no campsites available', not a minimum rule) - kept."
     }
   },
   {
@@ -978286,7 +978384,7 @@
     "inclusion_evidence": "SFWMD SUL FAQ (2020): RV/travel-trailer camping allowed at 'the Town of KICCO Campsite', no length limit, no hookups; SFWMD camping-area layer (LR_CAMPING) types it RV/TRAVEL TRAILER, ALL ACCESS, SUL REQUIRED. Satellite shows RVs parked in the clearing. Caveat: the current SFWMD KICCO page tags only 'Camping (Tent)' (read 2026-10-10)",
     "website": "https://www.sfwmd.gov/recreation-site/kicco-and-blanket-bay-slough\nhttps://www.sfwmd.gov/community-residents/recreation/sul",
     "phone": "866-433-6312",
-    "note": "Largest of the five primitive campsites in SFWMD's KICCO Wildlife Management Area, on the Kissimmee River off River Ranch Blvd, south of SR-60 between Lake Wales and Yeehaw Junction. Open grass clearing on the old river channel; picnic tables and fire rings, no hookups or water. Free, with a required free Special Use License reserved online (gate combination on the license); 8 nights per visit. Horses are also allowed here. The District's 2020 FAQ lists it for RVs/travel trailers (no length limit) but its current KICCO web page tags only tent camping - confirm when booking. --Claude",
+    "note": "Largest of the five primitive campsites in SFWMD's KICCO Wildlife Management Area, on the Kissimmee River off River Ranch Blvd, south of SR-60 between Lake Wales and Yeehaw Junction. Open grass clearing on the old river channel; picnic tables and fire rings. Horses are also allowed here. --Claude",
     "policy_ref": "none",
     "fees": {
       "nightly_low": 0,
@@ -978298,7 +978396,9 @@
       "reservable": true,
       "platform": "operator",
       "fcfs": "never",
-      "max_stay_nights": 8
+      "max_stay_nights": 8,
+      "url": "https://secure.rzda.net/sfwmd/list.cfm",
+      "note": "Free Special Use License reserved on the District's booking engine (KICCO > RV/Travel Trailer > 'Campsite - Town of KICCO (RV/Trailer)'); the gate combination is printed on the license. Up to 8 consecutive days per permit, departing on the 8th day; 30 days a year District-wide. The District's KICCO web page tags only 'Camping (Tent)', but the booking engine sells an RV/Trailer permit for this site."
     },
     "hookups": {
       "electric": 0,
@@ -978311,8 +978411,9 @@
         "checked": "2026-10-10"
       },
       "booking": {
-        "source": "https://www.sfwmd.gov/sites/default/files/SUL_FAQs_1-30-20.pdf (up to 8 consecutive days per permit)",
-        "checked": "2026-10-10"
+        "source": "https://secure.rzda.net/sfwmd/list.cfm (KICCO, RV/Travel Trailer calendar: 'You are allowed only eight (8) consecutive days per permit and must depart on the 8th day', rows 'Campsite - Town of KICCO' and 'Campsite - Town of KICCO (RV/Trailer)') + SUL FAQ ('There is a limit of 30 days per year, District-wide'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
         "source": "https://www.sfwmd.gov/sites/default/files/SUL_FAQs_1-30-20.pdf ('There are no campsites that have any electric or water hook ups')",
@@ -978331,6 +978432,11 @@
       "sig": "45aa19bc931bdae5",
       "checked": "2026-10-12",
       "model": "claude-opus-5/session"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.sfwmd.gov/recreation-site/kicco-and-blanket-bay-slough https://www.sfwmd.gov/community-residents/recreation/sul https://secure.rzda.net/sfwmd/list.cfm (the District's SUL booking engine; KICCO property, permit type RV/Travel Trailer, calendar from 2026-10-22) https://www.sfwmd.gov/sites/default/files/SUL_FAQs_1-30-20.pdf",
+      "note": "District pages and SUL booking engine: confirmed free SUL reservation, no hookups, 8-day permit limit; the booking engine sells 'Campsite - Town of KICCO (RV/Trailer)', settling the note's tent-only doubt (the FAQ's 'no length limit' for RVs/travel trailers still stands). No storm closure posted for KICCO (the SUL page only says 'Some lands may have campgrounds and interior vehicles access roads that are temporarily closed'). Note trimmed of the fee/limit/hookup facts the fields carry. Not state"
     }
   },
   {
