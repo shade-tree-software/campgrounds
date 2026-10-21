@@ -162,8 +162,17 @@ me drop and report); each needs the research named before a verdict.
   2.3-mile graded dirt road floods in moderate floods.
 - **4801 Florida Sand Music Ranch** — festival venue + year-round camping on non-festival days; the
   Visit page's directions are template text for a different place (address 85 Myers Rd, Brooksville).
+- **4736 Hickory Landing** — rec.gov Scan & Pay $10 (from 2026-10-01) vs the forest page's $3;
+  recorded $10, both in fees.note.
+- **4726 Livingston Creek (Lake Wales Ridge SF)** — hunt-season camp: open September-April,
+  "reservable during scouting and hunting dates"; season recorded, kept.
+- **14869 Lakes RV** — 90-night online minimum for January-March arrivals; asked AWH.
 
 ## Resolved 2026-10-21
+- **p3-49:** drop 14871 Gulf Waters (RVs must be 26 ft or longer; the Fort Myers exception is a price
+  exception). 4821 renamed Hutch Gibson Park & Campground (Hamilton Co., so the Escambia
+  surcharge follow-up stays with 4820 only). 14876 Imperial Bonita: 55+ (second occupant 45+)
+  co-op, nightly rates posted, passes.
 - **p3-48:** no drops. The four Fort Myers-exception parks (14875, 14872, 14873, 14882) pass the
   long-stay tests (single nights sold); 369 Gate to the Keys live on Hipcamp, $76, Everglades 8 km.
 - **p3-47:** no drops. 4742 Bear Island temporarily_closed -> open (NPS Open, rec.gov booking Nov

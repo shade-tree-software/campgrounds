@@ -95,3 +95,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **633 Little Talbot Island SP** — entry coastal woods, but the --AWH note says "campground is not
   waterfront"; park page: sites a half-mile from the beach, "tidal creeks border the western edge",
   several RV sites "can get wet during ... high tides".
+- **4719 Karick Lake South (Blackwater River SF)** — ReserveAmerica marks 7 of 14 sites "Proximity to
+  Water: Lakefront" (siteIds 1202-1214 even); entry lakeview.

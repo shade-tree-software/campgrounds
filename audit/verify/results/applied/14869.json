@@ -1,0 +1,51 @@
+{
+  "id": 14869,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.lakesrv.com/",
+    "https://www.lakesrv.com/rates",
+    "https://www.lakesrv.com/amenities",
+    "https://www.lakesrv.com/about",
+    "https://www.roverpass.com/c/lakes-park-rv-fort-myers-fl/booking/ (the 'Book Now' link on lakesrv.com; RoverPass booking API: park record, rates for 1 night from 2026-11-10, 2026-12-08, 2027-01-26, 2027-01-30, 2027-02-09, 2027-03-09, 2027-04-13, 2027-06-08, 2027-06-12, open sites, 1- and 2-night carts)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 65, "nightly_high": 120, "currency": "USD", "checked": "2026"},
+      "source": "https://www.lakesrv.com/rates ('2026 Season', 30/50 Amp back-in Daily $110 Winter / $75 April / $65 Summer / $75 Nov-Dec; Pull Thru $110/$85/$70/$85; Waterfront $120/$95/$75/$95) + RoverPass booking API (Regular Sites $65 on 2027-06-08, $75 on 2026-11-10; Waterfront $120 in January), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.lakesrv.com/amenities ('Full Hookups: Water, sewer, and electric at every site', '30 / 50 Amp') + RoverPass rate amenities ('amps_50', 'water_hookups', 'sewer_hookups'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"pull_through": true, "max_rig_ft": 80, "note": "'110+ RV Sites': back-in regular sites (32-55 ft), pull-throughs (mostly 60 ft, one 80) and waterfront sites (30-75 ft) on RoverPass. RVs 15 years or older need management's approval from photos sent before booking."},
+      "source": "https://www.lakesrv.com/ ('110+ RV Sites', 'Wide pull-throughs') + RoverPass sitesAvailableDuring for each RV rate on 2026-11-10 (maxLength 30-80 ft) + RoverPass rules ('Any RV 15 years or older, must be approved and have an uploaded photo to be approved by management'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "wifi": true},
+      "source": "https://www.lakesrv.com/amenities ('High-Speed WiFi', 'Showers & Restrooms', 'Laundry Facility: On-site washers and dryers'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "roverpass",
+        "url": "https://www.roverpass.com/c/lakes-park-rv-fort-myers-fl/booking/",
+        "window_opens_days": 365,
+        "min_stay": [{"nights": 90, "applies": "always", "season": "January-March (online booking)"}],
+        "note": "Online booking sells single nights April-December, but every RV rate from January through March requires 90 nights (RoverPass 'minNightsRequired' 90 on 2027-01-26, 01-30, 02-09 and 03-09) although the rate sheet posts winter daily prices; call 239-229-5436 for shorter winter stays. Bookable up to 12 months ahead. No refunds on cancellation (deposits can be applied to a future stay). Check-in 1-10 pm. EV charging $20 a night."
+      },
+      "source": "RoverPass booking API for lakes-park-rv-fort-myers-fl (advancedMonths 12; minNightsRequired 1 on 2026-11-10, 2026-12-08, 2027-04-13, 2027-06-08; 90 on 2027-01-26, 2027-01-30, 2027-02-09, 2027-03-09; cancellation policy 'No refunds upon cancellations'; rule 'Any charging of electric vehicles will be $20 nightly') + https://www.lakesrv.com/ ('Ready to book? Call us direct, no third-party fees. 239-229-5436'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "RV park on US-41 (S Tamiami Trl) beside Lakes Regional Park, Fort Myers, on a lake; the operator calls itself an extended-stay community (travel nurses, trades, snowbirds) and also sells monthly and annual sites. --Claude",
+  "summary": "Operator's site + its RoverPass booking engine: confirmed $65-120 nightly and 30/50-amp. Added full hookups (water/sewer), 80-ft max with pull-throughs, showers/laundry/Wi-Fi, RoverPass booking 12 months out, and a 90-night online minimum for January-March arrivals. Note cleaned of the rate table the fees carry.",
+  "flags": [
+    "Long-stay tests: online, every RV rate for January-March arrivals needs 90 nights (RoverPass minNightsRequired 90 on four winter dates), though lakesrv.com/rates posts winter daily prices; single nights are sold online only April-December. The operator calls the park 'one of Fort Myers' premier extended-stay RV communities' and sells annual sites. Recorded the winter minimum in booking.min_stay; AWH may want to judge whether winter counts as nights for sale.",
+    "Name: RoverPass's slug and RV Life list it as 'Lakes Park RV'; the operator's own name is 'Lakes RV' (matches the entry)."
+  ]
+}
