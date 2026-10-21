@@ -17,6 +17,8 @@ metadata:
 
 **UPDATE 2026-10-20:** non-pricing pass: KOA fees for the 134 adds (6f2c0747), Good Sam discounts re-run, Shavers Fork audited, note-scan queue 0, MT FAS elevations, and policy-registry rows for every agency but Quebec ([[project-campground-schema]]). NOT pushed or deployed (origin/PA at d34ce1d8). `recgov_hookups.py --fetch` was running to rebuild trip_data/ridb_campsites.json; after it: dry run, `--conflicts`, `--apply`. Asks for AWH: audit/registry_asks_2026-10-20.md (MT 20-ft FAS limit, Falcon Creek 9363, SEPAQ, Golden Memorial 5002, Holmes County 5004, RI min stay) plus audit/price_research/local_2026-10-17/asks.md. Season walk on rec.gov calendars waits for spring 2027.
 
+**UPDATE 2026-10-21:** family-home price re-screen DONE, +22 ids 15531-15552 (4 commits through 6f2679cb, NOT pushed). Next id 15553.
+
 **UPDATE 2026-10-19 (late night):** KOA backlog done: 400 RV Life 4*+ KOAs quoted on koa.com, +134 added (ids 15397-15530, 7 commits 9167712a..7ceca985, NOT pushed), 243 over-gate skips, 0 drops. Spring 2027: re-quote the closed-calendar KOAs and the three at the gate (followups.md). Next id 15531.
 
 **UPDATE 2026-10-19 (night):** high-tier pass (RV Life tier 3/4 + KOA + Sun, 188 targets; audit/price_research/hightier_2026-10-19/, apply.py + rows_*.txt) done: 48 priced, 9 dropped over the gate (6 KOAs, Gallagher Lake BC, Rustic Timbers WI, Elkhorn Ridge SD), 8 identity fixes (5 gambling-spam domains). 131 still unpriced: 56 carry an exception (gateway/AWH/trip, can't be dropped anyway), 75 don't - nearly all seasonal parks whose engines (CampLife, ResNexus, RMS) show nothing until 2027 booking opens; retry those in spring. Sunny Ridge lead closed (3.5*, under the gate). Commits c517b858, fa0bacf4 + earlier NOT pushed.

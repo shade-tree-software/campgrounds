@@ -28,4 +28,4 @@ Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Su
 
 **Family homes are gateways (AWH 2026-10-21):** "Add family homes to the list of areas that cause campground price caps to be lifted." `gateways.py` now reads every kind "family" entry from the gitignored trip_data/family.json at import and uses the same 40 km straight-line radius. It reports only "family home", because these labels get copied into tracked evidence. With no family.json (a fresh clone) there are no family points, so run price-gate work where that file exists.
 - **Retro check, same day:** of the 548 price- and verify-dropped ids, only 4 fall within 40 km of a family home with no other gateway: Orange Grove 14868, Gulf Waters 14871, Sanctuary 14877 and Swan Lake 14880. All four were dropped for non-price reasons, so nothing came back.
-- **Not yet re-screened:** private-gap and KOA candidates that were never added because of price.
+- **Re-screen of never-added candidates DONE 2026-10-21** ([[project_family_home_rescreen]]): +22. The question of whether this lifts the Sun brand skip is still open.

@@ -12,7 +12,7 @@
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
 - [Phase 7 verification](project_phase7_verification.md) — under way since 2026-10-20, ~490 verified by 10-21 night (p3-28 + p3-29 running, MD ending, FL started); TWO verifiers allowed (10-21); loop + resume point in file
-- [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way; next id 15531
+- [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way (paused); next id 15553 (2026-10-21)
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
 - [Hidden rates playbook](reference_hidden_rates_playbook.md) — private rate/minimum/seasonal share via one-browser driver + engine helpers; recipes in audit/private_gap_browser/README.md
@@ -114,7 +114,7 @@
 - [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block = back off and retry
 - [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
 - [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (I may, since 10-19; report which) unless within 40 km of a gateway (family homes count since 10-21); GS Parks at 10% off; named exceptions inside
-- [Family-home price re-screen (TODO)](project_family_home_rescreen.md) — AWH 2026-10-21: re-screen price-rejected, never-added parks within 40 km of a family home; 9 PA + 3 KOA + Bermuda Lakes found, method inside
+- [Family-home price re-screen — DONE](project_family_home_rescreen.md) — 2026-10-21: +22 (15531-15552), 12 skips, Cedar Hills held, 3 Sun-brand parks wait on AWH; RV Life price_only buckets were the real backlog
 - [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 15339-15341
 - [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359 + Red Gut Bay 15360 (min was the cabins')
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains
