@@ -78,20 +78,20 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    for a motorhome too; 22 ft is fine, AWH 2026-10-20), over the US$50 / C$69 base-rate gate
    with no gateway, behind a login to see rates, or otherwise fails
    `docs/campground-curation.md`, say so in `flags` with the evidence. A human decides.
-7. **The note.** Do not rewrite it as a matter of course. If a fact in it is now wrong (a
-   stale rate, a wrong length, a closure), propose a corrected note in `note`: the whole
-   note as clean current prose, `--AWH` text kept verbatim with its marker, your own text
-   signed `--Claude`. Omit `note` otherwise.
-   **Redundant text** (AWH 2026-10-21): the popup shows the structured fields right under the
-   note, so non-AWH note text that only restates a value the entry carries after your result
-   (booking/FCFS, fees, season, hookups, site counts/lengths, discounts, an "RV Life N*/$ ..."
-   rating line) should go: propose the trimmed note in `note`. Never add such facts to a note
-   yourself. Keep what the fields can't say (which sites are good, caveats, closures' context).
-   **Outdated --AWH text** (AWH 2026-10-20): where the campground's or agency's own site clearly
-   publishes something that contradicts it, the note may be rewritten without the outdated part.
-   Propose that rewrite in `note` and list each removed phrase with its source quote in
-   `awh_superseded` (`[{"old": ..., "source": ...}]`); apply.py refuses a rewrite that drops --AWH
-   text without it. Silence or an aggregator never supersedes; conflicting official pages don't either.
+7. **The note — clean it on every entry (AWH 2026-10-21).** Whenever your result changes
+   anything, propose a cleaned note in `note` if the current one carries text that is
+   (a) **redundant** — it only restates a structured value the entry will carry after your
+   result (booking/FCFS, fees/prices, season, hookups, site counts/lengths, facilities,
+   discounts, an "RV Life N*/$ ..." or other rating line already in `rating`), or
+   (b) **incorrect** against the pages you read. This applies to `--AWH` text too: AWH said
+   AWH's comments, pricing and ratings included, are to be trimmed when redundant or wrong.
+   List every dropped `--AWH` run in `awh_superseded` (`[{"old": ..., "source": ...}]`), where
+   `source` is the page quote that contradicts it, or `redundant: <group.field>`; apply.py
+   refuses a rewrite that drops --AWH text without it. Keep what no field can say (where the
+   good sites are, setting, caveats with their dates, AWH's firsthand impressions that are
+   still true) in the author's words with their marker; sign your own text once, `--Claude`.
+   Never ADD facts a field holds to a note. Omit `note` when nothing needs to change.
+   Silence or an aggregator never makes text "incorrect"; conflicting official pages don't either.
 
 ## Result file: `results/<id>.json`
 

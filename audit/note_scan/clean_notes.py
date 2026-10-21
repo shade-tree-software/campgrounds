@@ -6,7 +6,9 @@ NOTES is a list of
     {"id": N, "was": <the note being replaced, verbatim>, "note": <the cleaned note>,
      "set": {group: {...}}, "provenance": {group: {...}}}             <- "set"/"provenance" optional
 - "was" must equal the entry's note as it stands, so a note that changed after it was read is refused, not clobbered.
-- Text signed --AWH is AWH's own and must come through: a cleaned note that drops an "--AWH" marker is refused.
+- Text signed --AWH is AWH's own: a cleaned note that drops an "--AWH" marker is refused UNLESS the item lists
+  what it drops in "awh_dropped" ([{"old": ..., "why": ...}]). AWH 2026-10-21: AWH's text may be trimmed when
+  it repeats a data field or is now wrong (pricing and ratings included); "why" names the field or the source.
 - Every group whose provenance source is exactly "note prose" is re-tagged "note prose (cleaned out of the note
   <today>)". The cleaned note no longer repeats what the fields hold, so the field is now the record, and
   apply_absent.py --rescan, which re-reads only an exact "note prose", can't strip it later.
@@ -28,7 +30,7 @@ for item in json.load(open(sys.argv[1], encoding="utf-8")):
     e = by[item["id"]]
     if (e.get("note") or "") != item["was"]:
         print("refused (note changed since it was read):", e["id"], e["name"]); continue
-    if item["was"].count("--AWH") > item["note"].count("--AWH"):
+    if item["was"].count("--AWH") > item["note"].count("--AWH") and not item.get("awh_dropped"):
         print("refused (an --AWH marker would be lost):", e["id"], e["name"]); continue
     prov = dict(e.get(cs.PROVENANCE) or {})
     retagged = []
