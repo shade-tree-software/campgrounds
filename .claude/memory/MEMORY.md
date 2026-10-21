@@ -113,7 +113,8 @@
 - [Skip Sun brands; KOA skip RETIRED](feedback_skip_sun_koa_brands.md) — Sun Outdoors/Retreats still pre-skipped; KOAs vetted like any private park since AWH 2026-10-19 (koa.py quotes them)
 - [Canada private gap: no holds](feedback_canada_no_holds.md) — AWH 2026-10-07: hold only for a permanent human-only captcha; blank/non-loading site = skip; rate-limit block = back off and retry
 - [PA state forest reservable gap — DONE](project_pa_sf_reservable_gap.md) — 2026-10-10: 156 entries ids 15183-15338 (1 km clusters of RA sites); next id 15339; recipe in audit/pa_sf_dispersed/
-- [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (I may, since 10-19; report which) unless within 40 km of a gateway; GS Parks at 10% off; named exceptions inside
+- [Price-gate rule + exceptions](feedback_price_gate_proximity_exceptions.md) — over US$50/C$69 = drop (I may, since 10-19; report which) unless within 40 km of a gateway (family homes count since 10-21); GS Parks at 10% off; named exceptions inside
+- [Family-home price re-screen (TODO)](project_family_home_rescreen.md) — AWH 2026-10-21: re-screen price-rejected, never-added parks within 40 km of a family home; 9 PA + 3 KOA + Bermuda Lakes found, method inside
 - [Eastern reservable designated sites — DONE](project_fl_wmd_reservable_gap.md) — 2026-10-10: +3 (Stoney Pond NY, DuPuis + Town of KICCO SFWMD), ids 15339-15341
 - [Minimum-stay re-open](project_minimum_stay_reopen.md) — 2026-10-11/12: 17 back (15342-15358) + Lac Libby 15359 + Red Gut Bay 15360 (min was the cabins')
 - [Canada private re-check](project_canada_private_recheck.md) — 2026-10-11: 157 site-live-probe parks re-read; AWH dropped 4, kept Plage Bernard (~10% traveller) with a note; probe misses parked/blank/forwarded domains

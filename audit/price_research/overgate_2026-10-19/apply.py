@@ -5,7 +5,6 @@ sys.path.insert(0, os.path.dirname(HERE))
 from edit_entries import edit
 
 KEEP = {  # read from each candidate's fees note: base rate actually at/under the gate, or a family-proximity exception
-    556: 'Fort Myers family exception: 9 km from family (same basis as the named Fort Myers keeps)',
     4761: '$52.62 INCLUDES Florida tax; ~$49 before tax',
     4768: '$60 tax included at a Good Sam Park; before tax less 10% is ~$48-50, too close to call',
     2038: 'posted 20% discount for 2 people: $45',

@@ -8,7 +8,7 @@ metadata:
   modified: 2026-10-01T13:18:33.878Z
 ---
 
-**Peak-season long-stay minimums (AWH 2026-10-21):** a 28/30/90-night minimum is OK only if it applies in peak season alone, lasts **no more than 3 months**, and the note says so ("PEAK-SEASON MINIMUM: ..." line, plus booking.min_stay). Over 3 months means drop, and the Fort Myers family exception does not save it, since that's a price exception. Probe the edges of the window: Sanctuary 14877 looked like Nov-Jan but ran to mid-April, so it was dropped. Lakes RV 14869 (Jan-Mar) was kept. No nights offered at all for over 3 months counts the same (Orange Grove 14868).
+**Peak-season long-stay minimums (AWH 2026-10-21):** a 28/30/90-night minimum is OK only if it applies in peak season alone, lasts **no more than 3 months**, and the note says so ("PEAK-SEASON MINIMUM: ..." line, plus booking.min_stay). Over 3 months means drop, and a family-home gateway does not save it, since that is a price exception. Probe the edges of the window: Sanctuary 14877 looked like Nov-Jan but ran to mid-April, so it was dropped. Lakes RV 14869 (Jan-Mar) was kept. No nights offered at all for over 3 months counts the same (Orange Grove 14868).
 
 **recreation.gov `soft` minimums are rules (AWH 2026-10-21):** at Seven Points the soft 2-night weekend minimum is enforced, but a same-day single Saturday night was bookable (Friday unknown; Iowa state parks allow day-of Saturday but not Friday). With no specific information, record a soft minimum (value 2+) in `min_stay` and say in `booking.note` that it may be relaxed for a same-day booking. Applied to 593, 688, 147, 264 (358ebff2); README rule changed.
 

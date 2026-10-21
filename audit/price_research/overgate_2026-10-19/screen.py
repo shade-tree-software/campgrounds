@@ -12,7 +12,7 @@ sys.path.insert(0, ROOT); sys.path.insert(0, os.path.dirname(HERE))
 import gateways, trips
 
 LIMIT = {'USD': 50, 'CAD': 69}
-NAMED = {14882, 14868, 14869, 14870, 14871, 14872, 14873, 14874, 14875, 14876, 14877, 14880, 14881, 3363, 14435}
+NAMED = {3363, 14435}  # the Fort Myers ids left 2026-10-21: family homes are gateways now (gateways.py)
 d = json.load(open(ROOT + '/campgrounds.json'))
 cand, exempt = [], []
 for e in d:
