@@ -9,6 +9,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   77, 81, 83, 87 (25-40 ft). Still open: the stored pin (42.6056,-71.1003) is in empty woods and
   Google's "Lorraine Park Campground" pin (42.6106,-71.0907) shows no loop either; mass.gov and
   the RA catalog both refuse plain HTTP. Needs the DCR campground map. AWH's call stands meanwhile.
+- **252 Bear Creek Lake SP (VA)** — see asks.md #6 (DCR: A18 is tent-only; RV loops away from the lake).
 
 ## Resolved 2026-10-21 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
@@ -28,3 +29,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   are canopy-hidden with no per-site source, so they stay down).
 - Closed, existing evidence stands: 860 Fowlers Hollow, 835 Hills Creek, 862 Lyman Run,
   127 Tobyhanna, 558 Laurel Hill.
+- **924 Cape Charles KOA** (p3-16): KOA's page says "waterfront RV camping"; the --AWH firsthand
+  note ("partial bay view, but none are directly on the beach") keeps bayview.

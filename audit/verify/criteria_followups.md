@@ -8,6 +8,10 @@ me drop and report); each needs the research named before a verdict.
 - **525 Grindstone (VA, USFS)** — closed for 2026 (no reopening date). `booking.reservable: true`
   came from note prose, but every rec.gov rate season since 2022 is "First-come, First-served"
   with walk-in prices. Re-check booking when it reopens; the USFS page currently 404s.
+- **940 Tall Pines / Chesapeake Bay KOA (VA)** — possibly mostly seasonal, on secondary evidence
+  only: a 2026-10-10 camper review on koa.com says "the cg is almost all seasonal/fulltime. There
+  is one section remaining that is transient." The family has stayed (--AWH). Needs the operator's
+  own word (site map / call) before any verdict.
 
 ## Resolved 2026-10-21
 
@@ -31,4 +35,6 @@ me drop and report); each needs the research named before a verdict.
   inclusion_evidence corrected. Re-check for a current rate when the 2027 season is posted.
 - **1147 Washington County Park** closed: it is a LOCAL park (county park authority), and the
   long-stay five tests apply to private parks only.
-
+- **13087 Amelia Family Campground** kept: the verifier found the operator site stale (newest post
+  2020, no rates); Google listing active, 159 reviews, phone 804-561-3011 matches - the same state
+  AWH kept it in on 2026-10-14 (own site + phone + RV Life $$).
