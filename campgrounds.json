@@ -16318,7 +16318,7 @@
     "location": "38.8897,-79.2388",
     "name": "Big Bend Campground",
     "website": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground\nhttps://www.recreation.gov/camping/campgrounds/232019",
-    "note": "USFS campground along the South Branch of the Potomac River in the Smoke Hole canyon with sites adjacent to the water.  Some sites are reservable.  Open early April to late October.  --AWH",
+    "note": "USFS campground along the South Branch of the Potomac River in the Smoke Hole canyon with sites adjacent to the water.  --AWH  The access road is subject to flash flooding (recreation.gov notice). --Claude",
     "elevation_meters": 380.0,
     "state": "WV",
     "ownership": "federal",
@@ -16332,31 +16332,64 @@
       "source": "rvlife"
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-10",
+      "closes": "10-31",
+      "note": "Approximate: recreation.gov says the season 'has been from approximately April 10th through Oct 31st', and the permit holder must operate at least 'from the second Friday night in April through the last Saturday night in October'."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/232019",
+      "window_opens_days": 330,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "River Loop sites and the double sites are reserved on recreation.gov or at (877) 444-6777; Upper Loop sites 13-30 are first-come, first-served (Forest Service page). recreation.gov books up to 11 months ahead and closes 4 days before arrival; its 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 days at most, 8 people per site. Concession-run by BA Services Inc."
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232019 (Overview: 'The average operation and maintenance season for Big Bend Campground and Jess Judy Group Campground has been from approximately April 10th through Oct 31st. At a minimum, the Forest Service (FS) will expect the permit Holder to fully operate the campgrounds from the second Friday night in April through the last Saturday night in October.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Upper Loop Sites 13-30 are on a first-come, first-serve basis.', 'The River Loop sites and double campsites can be reserved online or by calling (877) 444-6777', 'Maximum length of stay is 14 days and 8 people per site.') + https://www.recreation.gov/api/camps/campgrounds/232019 (facility_rules: reservationWindow 11 Months, reservationCutOff 4 days prior to arrival, minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3, maxConsecutiveStay 14; notice 'This campground has first-come, first-serve sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232019 (notice 'There are no electric site hook-ups at this facility'; '46 standard non-electric camping units'; only the host site has electric, water and sewer), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232019/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Single Site: $29 per night (River Loop); $27 per night (Upper Loop)', 'Double Site: $50 per night (River Loop); $43 per night (Upper Loop)') + https://www.recreation.gov/api/camps/campgrounds/232019/rates (2026 Peak Season: RIVR $29, UPPR $27) + recreation.gov notice 'A fee will be charged for additional vehicles', read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232019 ('46 standard non-electric camping units with fire rings, lantern posts, picnic tables and paved spurs') + RIDB per-site catalog (Max Vehicle Length 30 x34, 25 x12; Driveway Entry Back-In x45, Pull-Through x1), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232019 ('two single-unit vault toilets, two double-unit flush toilets, and a four-unit flush restroom with four showers', 'one recreation vehicle dump station') + https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Flush toilets and showers', 'Potable water is available at this site.', 'Camping trailer: Dumping station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -16370,8 +16403,29 @@
     "fees": {
       "nightly_low": 27,
       "nightly_high": 29,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single site $27 a night in the Upper Loop, $29 in the River Loop; double sites $43 (Upper) and $50 (River). The 2026 recreation.gov rate table (Peak Season 2026-04-10 to 2026-10-31) has the same figures. A fee is charged for additional vehicles."
+    },
+    "sites": {
+      "count": 46,
+      "max_rig_ft": 30,
+      "pull_through": true,
+      "note": "46 standard non-electric sites with paved spurs (recreation.gov catalog: 34 list a 30-ft maximum vehicle length, 12 list 25 ft; one pull-through, the rest back-in). Jess Judy Group Campground nearby has three group sites."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground https://www.recreation.gov/api/camps/campgrounds/232019 https://www.recreation.gov/api/camps/campgrounds/232019/rates trip_data/ridb_campsites.json (RIDB per-site catalog for facility 232019, fetched 2026-10-20)",
+      "note": "Fees $27-29 confirmed on the Forest Service page and the 2026 rec.gov rate table; booking (rec.gov, 11-month window, 4-day cutoff, 2/3-night weekend/holiday minimums, Upper Loop 13-30 first-come, 14-day max), season ~04-10 to 10-31, no electric, 46 sites to 30 ft, showers/flush+vault toilets/water/dump written from rec.gov and the forest page."
+    },
+    "phone": "304-358-3613"
   },
   {
     "id": 268,
@@ -29721,7 +29775,7 @@
   },
   {
     "id": 504,
-    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground\nhttps://www.recreation.gov/camping/poi/239759",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground\nhttps://www.recreation.gov/camping/campgrounds/10351700",
     "kind": "campground",
     "location": "38.3255,-80.4415",
     "name": "Cranberry Campground",
@@ -29746,14 +29800,64 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov's 2026 first-come rate table: single site $15, walk-in $15, double site $30. The Forest Service page still lists single $10 and double $20 (undated)."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.recreation.gov/camping/campgrounds/10351700 (per-campsite rates via /api/search/campsites, RV-usable sites, current season; read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351700/rates (First-come, First-served Season 2026-04-20 to 2026-10-31: WalkIn SingleCampsite 15, Walk-in 15, DoubleCampsite 30) + https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground ('Single Site: $10 per night', 'Double Site: $20 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground ('Sites are not reservable. Sites are on a first come, first serve basis.', 'Maximum length of stay is 14 days.', 'Check-out time is 2:00 p.m.', 'Single site limit is one wheeled camping unit only ... no more than 8 people; no more than 2 vehicles') + https://www.recreation.gov/api/camps/campgrounds/10351700/rates ('First-come, First-served Season' 2026-04-20 to 2026-10-31), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground ('Hookups - Electric: None', 'There is no electricity available but the use of generators is permitted from 6 am until 10 pm') + https://www.recreation.gov/api/camps/campgrounds/10351700 (notice 'No RV hookups are available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground ('Campground features 28 single campsites and two double sites in two loops', 'Walk-in Single (#23 & #24)', 'Size Restrictions: Most sites can accommodate a 40' trailer'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground ('There are two hand-pumps and three accessible vault toilets', 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/10351700 (amenities incl. 'Vault Toilets', 'Drinking Water', 'Dump Station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
-    }
+    },
+    "booking": {
+      "reservable": false,
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "'Sites are not reservable. Sites are on a first come, first serve basis.' Very busy during trout stocking (spring through June, and September-October), when campers often outnumber sites; the Forest Service points overflow to Bishop Knob Campground. Check-out 2 p.m. One wheeled camping unit, 8 people and 2 vehicles per single site. Fees can be paid on recreation.gov (first-come pay page)."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 30,
+      "max_rig_ft": 40,
+      "note": "28 single and 2 double sites in two loops, each with a gravel parking spur; sites 23 and 24 are walk-in. 'Most sites can accommodate a 40' trailer'."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Two hand pumps and accessible vault toilets. The Forest Service page contradicts itself on a dump station ('No dump station is available at campground' vs 'Cranberry Campground has its own dump station that is donation based'); recreation.gov lists one. Private dump stations and water fill in Richwood."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-campground https://www.recreation.gov/api/camps/campgrounds/10351700 https://www.recreation.gov/api/camps/campgrounds/10351700/rates",
+      "note": "Booking corrected: first-come only (own value now overrides the inherited recreation.gov reservable/platform/window), 14-day max. Fees $15-30 confirmed on recreation.gov's 2026 table, with the Forest Service page's older $10/$20 noted. No hookups, 30 sites, most to 40 ft, vault toilets and hand-pump water written. Season not stated (rate season only)."
+    },
+    "phone": "304-846-2695"
   },
   {
     "id": 505,
@@ -30161,7 +30265,7 @@
     "elevation_meters": 500.0,
     "state": "WV",
     "ownership": "federal",
-    "note": "First-come-first-served USFS campground with several sites are right on the creek.  No fee; open year round.  --AWH",
+    "note": "USFS campground with several sites are right on the creek.  --AWH  Primitive '1950s style' camping popular with hunters, on a Shenandoah Mountain drainage in Pendleton County; reached from Bergton, VA on VA 826 (CO Route 31) and FS 526. --Claude",
     "waterfront": "creekside",
     "inclusion_evidence": "USFS GWNF page: 9-site primitive FCFS campground, no fee, open year round; RV Life 5*/$ -> real drive-in forest campground KEEP",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: First-come-first-served USFS campground with several sites are right on the creek.  No fee; open year round.",
@@ -30181,9 +30285,9 @@
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camp-run-campground ('Seasons of Use: Open year-round'; 'Open Season: Year Round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -30191,9 +30295,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camp-run-campground ('No fees are required for this site', 'No fee'; page last updated September 10, 2026), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camp-run-campground ('There are nine sites in total.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camp-run-campground ('Vault toilet(s)', 'Potable water is not available at this site.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -30203,8 +30317,23 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
-    }
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 9
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/camp-run-campground",
+      "note": "Forest Service page confirms no fee, open year-round, 9 sites, vault toilets and no potable water (written manual). It says nothing on reservations, so the derived first-come booking stays; no site lengths or hookups stated."
+    },
+    "phone": "540-432-0187"
   },
   {
     "id": 515,
@@ -49482,7 +49611,7 @@
     "state": "WV",
     "ownership": "private",
     "website": "https://campcacapon.com/",
-    "note": "$85 RV site has view of the river, $40 site short walk to river. --Claude",
+    "note": "The full-hookup RV site is on the hill above the bathrooms with a view of the river; the boondocking lot is a short walk to the river. No pets. --Claude",
     "phone": "240-343-1443",
     "rating": {
       "stars": 5,
@@ -49505,7 +49634,51 @@
       "fees": {
         "source": "https://campcacapon.com/rv-sites/ ('Starting at $85.00 per night', read 2026-10-16)",
         "checked": "2026-10-16"
+      },
+      "hookups": {
+        "source": "https://campcacapon.com/rv-sites/ ('RV Site: Starting at $85.00 per night. Site (18x43) and full 50/30/20 electricity, water and sewer hookups.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://campcacapon.com/rv-sites/ + https://campcacapon.com/hb_accommodation/boondocking/ ('This listing is for those who are fully self-sufficient and want to camp in our upper parking lot. No amenities directly at the upper lot. We can accommodate up to 20 total persons', 'The site is approximately 150' by 75' and can accommodate several smaller rigs (ie class Bs) or a couple large rigs. We do not charge per rig. We only charge per person (above 4).'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://campcacapon.com/hb_accommodation/boondocking/ ('you will still have access to our bathrooms, shower at the riverside pavilion, filtered spring water from the spigot at the pavilion'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://campcacapon.com/book/ + https://campcacapon.com/faq/ ('All reservations are paid in full at booking and are final and non-refundable under all circumstances', 'Changes/cancellations allowed only ≥ 8 days before arrival', '$25 change fee applies', 'Guests self-check-in using emailed Arrival Instructions', 'Late arrivals after 9:00 p.m. are not permitted', 'Checkout time is 11:00 a.m. for all sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "note": "One full-hookup RV site (18x43 ft, on the hill above the bathrooms, extra parking for a tow vehicle, max 6 persons), plus a self-contained 'Boondocking RV Site' in the upper gravel parking lot (about 150 x 75 ft, not perfectly level, levelers needed; 'several smaller rigs (ie class Bs) or a couple large rigs', up to 20 people, charged per person above 4, not per rig). Tent and glamping sites besides."
+    },
+    "facilities": {
+      "showers": true,
+      "potable_water": true,
+      "note": "Bathrooms and a shower at the riverside pavilion; filtered spring water from the spigot at the pavilion."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://campcacapon.com/book/",
+      "note": "Booked on the operator's own site ('Check Availability & Book Today!'). Paid in full at booking and non-refundable; changes only 8+ days ahead for a $25 fee, as a credit for the current season. Self check-in from emailed instructions; no arrivals after 9 p.m.; check-out 11 a.m."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://campcacapon.com/rv-sites/ https://campcacapon.com/hb_accommodation/boondocking/ https://campcacapon.com/faq/ https://campcacapon.com/book/ https://campcacapon.com/",
+      "note": "Operator's pages confirm the single 50-amp full-hookup RV site ($85) and the $40 self-contained boondocking lot (fees as recorded 2026-10-16), showers and spring-water spigot, and own-site booking with a no-refund policy. Season not stated."
     }
   },
   {
@@ -53876,7 +54049,67 @@
         "source": "https://wvstateparks.com/parks/panther-state-forest/ (Campground Season And Dates: \"The campground is open year-round, weather permitting.\"), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/panther-state-forest/lodging/camping-at-panther-state-forest/ ('Campsites can be reserved anytime online, by phone, or at the campground office during operational hours.', 'Reservations may be made for no less than two consecutive nights on weekends (Friday and Saturday) or one night during the week (Sunday-Thursday).', 'Visitors may not book sites for more than 14 consecutive nights.') + book.wvstateparks.com supplier 11067662 (one-night stays 2027-01-12, 2027-03-30, 2027-04-06, 2027-04-20, 2027-05-11, 2027-06-13, 2027-06-15, 2027-08-10: none offered; two nights 2027-01-12, 2027-03-09, 2027-05-11, 2027-06-15, 2027-06-18 (Fri-Sat), 2027-08-10: all 6 sites; one night 2026-11-03 and 2026-11-10: 1-2 sites), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=11067662 (Panther State Forest Electric Campsites, Sites 1-6: $29.99 for 2026-12-08, 2027-01-12, 2027-03-09, 2027-05-11, 2027-06-15, 2027-06-18 and 2027-08-10 stays; $34.99 for 2026-11-03, 2026-11-10 and 2026-11-24), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://wvstateparks.com/parks/panther-state-forest/lodging/ ('Panther has six campsites along Panther Creek with electric hookups, fire rings and picnic tables.') + booking site Sites 1-6, Electric, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://wvstateparks.com/parks/panther-state-forest/lodging/camping-at-panther-state-forest/ ('Each campsite is located along Panther Creek and equipped with: An electrical hookup, Fireplaces, Picnic tables'; 'Water access is available at the park office, roughly 2.5 miles from the campground.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/panther-state-forest/lodging/camping-at-panther-state-forest/ ('Water access is available at the park office, roughly 2.5 miles from the campground.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.wvstateparks.com/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "'Campsites can be reserved anytime online, by phone, or at the campground office during operational hours.' The park page allows one night Sunday-Thursday, but the booking site refused every one-night stay tested for 2027 (weeknights in January, March, April, May, June and August; a Sunday in June) while selling all six sites for two nights on the same dates; only a few November 2026 weeknights sold a single night on one or two sites. Call the forest office (304-938-2252) for a one-night stay."
+    },
+    "fees": {
+      "nightly_low": 29.99,
+      "nightly_high": 34.99,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "All six campsites have electric, so the range is the electric sites' price on the WV State Parks booking site: $29.99 a night for 2027 stays (January to August, weeknights and weekends alike) and $34.99 for November 2026 nights."
+    },
+    "sites": {
+      "count": 6
+    },
+    "hookups": {
+      "water": false
+    },
+    "facilities": {
+      "potable_water": false,
+      "note": "Every site has an electrical hookup (amperage not stated). Water only at the park office, about 2.5 miles from the campground."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/panther-state-forest/lodging/camping-at-panther-state-forest/ https://wvstateparks.com/parks/panther-state-forest/lodging/ https://wvstateparks.com/parks/panther-state-forest/ https://reservations.wvstateparks.com/products/camping/?s_dest_id=772 https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=11067662 (Panther State Forest Electric Campsites; stays from 2026-11-03 to 2027-08-12 read 2026-10-21 with audit/state_park_fees/wv_tiles.py)",
+      "note": "Camping page confirms the inherited booking rules (online/phone/office, 2-night weekend minimum, 14-night maximum) into the entry; fees $29.99-34.99 read from the booking site (all six sites electric); 6 sites, no water at the sites or the campground (office 2.5 miles away). Season (year-round) already verified."
     }
   },
   {
@@ -53900,7 +54133,7 @@
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 29.99,
+      "nightly_low": 22.99,
       "nightly_high": 29.99,
       "currency": "USD",
       "checked": "2026",
@@ -53909,8 +54142,73 @@
     "provenance": {
       "fees": {
         "source": "https://book.wvstateparks.com/ nightly prices for 2027-04-20, 2027-06-15 and a 2027-06-18/20 weekend (read 2026-10-12): Seneca State Forest Non-electric Campsites (supplier 7989212)",
-        "checked": "2026-10-12"
+        "checked": "2026-10-21"
+      },
+      "booking": {
+        "source": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ ('Before occupying any campsite, campers must have a paid reservation and all sites are reservable.', 'Reservations can be for no less than two consecutive nights on weekends (Friday – Saturday) or for one night on Sundays through Thursdays.', 'Reservations may be made online or by calling 833-987-2757.', 'Visitors can book a maximum of 14 consecutive nights.') + book.wvstateparks.com supplier 7989212 (2027-06-19 one night: none; 2027-06-18 two nights and 2027-06-15 one night: all 10 sites), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ ('The campground is open from spring through fall, weather permitting.') + book.wvstateparks.com supplier 7989212 (sites offered 2027-04-01, 04-04, 04-05, 04-06, 2026-11-26, 11-29, 11-30; none 2027-03-31, 03-30, 03-09, 01-12, 01-16, 2026-12-01, 12-08), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ ('Campsites do not have hookups.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ ('Seneca has 10 large and secluded campsites. The maximum recommended length for RVs is 28 feet.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ ('Coin-operated laundry machines and free showers are available at the forest office', 'Firewood is available for sale') + https://wvstateparks.com/parks/seneca-state-forest/lodging/ ('Laundry station', 'Bathhouse available') + https://wvstateparks.com/parks/seneca-state-forest/ ('Cell service is non-existent in the surrounding area. Wi-Fi is available at the forest office.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.wvstateparks.com/",
+      "fcfs": "never",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "'Before occupying any campsite, campers must have a paid reservation and all sites are reservable.' Reserve online, at 833-987-2757 or at the campground office; two nights at least on Friday-Saturday, one night Sunday-Thursday (the booking site refused a lone Saturday, 2027-06-19, and sold the same sites for Friday-Saturday). 14 consecutive nights at most."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "11-30",
+      "note": "'The campground is open from spring through fall, weather permitting.' Dates are the booking site's: the first night it sells is April 1 (none on March 31 or any night from December 1 to March 30) and the last is November 30."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 10,
+      "max_rig_ft": 28,
+      "note": "10 large, secluded sites with level tent and trailer pads. 'The maximum recommended length for RVs is 28 feet. Contact the forest office regarding larger units and adjacent sites.'"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "note": "Free showers and coin-operated laundry are at the forest office, not in the campground; the forest's lodging page also lists a bathhouse. Firewood for sale. No cell service in the area; Wi-Fi at the forest office."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://wvstateparks.com/parks/seneca-state-forest/lodging/camping-at-seneca-state-forest/ https://wvstateparks.com/parks/seneca-state-forest/lodging/ https://wvstateparks.com/parks/seneca-state-forest/ https://book.wvstateparks.com/Ecomm/Listings/SupplierTile/7816932/en-US?supplierId=7989212 (Seneca State Forest Non-electric Campsites; stays from 2026-11-03 to 2027-12-01 read 2026-10-21 with audit/state_park_fees/wv_tiles.py)",
+      "note": "Camping page confirms the inherited booking rules into the entry and adds all-reservable (fcfs never) and the reservation phone; season spring-fall (booking calendar April 1 - November 30), no hookups, 10 sites to 28 ft, showers and laundry at the forest office written. Fees left as recorded (see flag)."
     }
   },
   {
@@ -68355,8 +68653,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "operator site boyerstation.com: '80 full hook-up sites with 50, 30, and 20 amp' plus primitive + cabins, operating with reservations -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 38.4894,-79.80022: campground rows in inland mountain valley, no water body adjacent",
-    "phone": "304-456-4667 / 304-456-4858",
-    "note": "Private campground + motel at Arbovale (Pocahontas Co), near Cass Scenic Railroad/Green Bank. 80 full-hookup sites (20/30/50-amp) plus primitive/tent sites and motel rooms, dump station, showers; open year-round. Inland mountain valley, not waterfront. RV Life 5★, price $$ (2/4). --Claude  Reservations by phone/contact form only (no online booking engine; RoverPass listing unclaimed). Operator's current phone is (304) 456-4667 (record's 304-456-4858 appears outdated). --Claude",
+    "phone": "304-456-4667",
+    "note": "Private campground + motel at Arbovale (Pocahontas Co), near Cass Scenic Railroad/Green Bank: a main and an upper campground, primitive/tent sites, motel rooms and new cabins; Snowshoe is 19 miles away. Inland mountain valley, not waterfront. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -68369,25 +68667,27 @@
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "No online booking: reserve by phone at (304) 456-4667 or through the contact form."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://boyerstation.com/ ('80 full hook-up sites with 50, 30, and 20 amp'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://boyerstation.com/ ('Hot showers with private dressing rooms', 'Flush toilets (with privacy)', 'Dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -68395,15 +68695,28 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://boyerstation.com/contact/ ('Call us today with any questions or to make your cabin reservation at (304) 456-4667, or simply fill in the form below and click Send') + https://boyerstation.com/ ('Make your reservation ... Contact us with any questions you have.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://boyerstation.com/ ('BOYER MAIN CAMPGROUND', 'BOYER UPPER CAMPGROUND', '80 full hook-up sites', 'Primitive camping', 'Picnic tables on each site', 'BOYER PRIMITIVE SITES'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "b03cbc64af15d48d",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "sites": {
+      "note": "80 full-hookup sites with picnic tables and fire pits across a main and an upper campground, plus primitive sites."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://boyerstation.com/ https://boyerstation.com/contact/ https://boyerstation.com/sitemap/",
+      "note": "Operator's site confirms 80 full-hookup sites with 20/30/50-amp, showers, flush toilets, dump station and phone/contact-form booking (written manual). The site posts no rates and says nothing about season, so season (derived year-round) and fees were left alone."
     }
   },
   {
@@ -68565,68 +68878,6 @@
       "nightly_high": 35,
       "currency": "USD",
       "note": "Sites $15-35 a night by location, weekend and holiday."
-    }
-  },
-  {
-    "id": 1209,
-    "kind": "campground",
-    "name": "Lakeview Campground",
-    "location": "39.22889,-81.03482",
-    "elevation_meters": 227.0,
-    "website": "https://www.facebook.com/lakeviewmarketwv/",
-    "state": "WV",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "allstays/RV Life (9.2): 18 RV-only sites with full hookups + 50-amp, big-rig friendly, open May-Sep, Harrisville WV -> real private RV campground",
-    "waterfront_evidence": "satellite at 39.2287,-81.0355: ~18-unit RV rows on gravel/grass behind Lakeview Market; no pond visible on property in a ~1km sweep, river 150m W behind brush — claimed pond view unconfirmed",
-    "phone": "304-643-5400",
-    "note": "Private RV-only campground (~18 sites, full hookups, 50-amp, big-rig friendly) near Harrisville (Ritchie Co); open ~May-Sep. On-site fishing pond; sites overlook the small on-site pond (not North Bend Lake, which is ~2.5 mi away). RV Life 5★, price $$ (2/4). --Claude  Phone-only reservations (304-643-5400); no online booking. Note: lakeviewcampgroundwv.com is a DIFFERENT Lakeview Campground in Bluefield WV (375 Sportsman Dr, 304-952-5034), not this Harrisville site. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 18
-    },
-    "season": {
-      "year_round": false
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "8c28d91332329fd7",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
     }
   },
   {
@@ -69284,6 +69535,11 @@
       "reservation_fee": 6,
       "checked": "2026",
       "note": "Read on CampLife: one night, site rate before tax, every RV site a 23-ft rig fits (Back In, Overflow and Pull Through). October 2026: $50, Tuesday and Saturday alike. The campground is open April 1 to October 31, and CampLife took no 2027 dates when read. Each stay also carries a flat $6, which CampLife's quote includes. Read 2026-10-14. The park's cancellation policy refunds a cancellation more than 30 days out in full, less the reservation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://eastforkcampgrounddurbin.com/ https://eastforkcampgrounddurbin.com/camping/",
+      "note": "Operator's pages re-read: 30-amp full hookups, showers, municipal water, dump station, camp store, CampLife/phone booking and the cancellation policy all match the entry's 2026-10-14 values; the site posts no rates ('For Reservations and Current Rates call 304-456-3101'). Nothing new to write."
     }
   },
   {
@@ -857437,77 +857693,6 @@
     }
   },
   {
-    "id": 13122,
-    "kind": "campground",
-    "name": "Hidden Hollow RV Park",
-    "location": "39.89531,-80.79507",
-    "elevation_meters": 213.0,
-    "state": "WV",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 39.89531,-80.79507: the pads sit in a wooded hollow below the Moundsville Country Club with the golf course fairways and a rail line between them and the Ohio River, which is roughly 450-700 m west and not visible from any pad; the operator's 'borders Ohio River Islands NWR (Captina Island)' is a property-line claim, not shoreline access -> not waterfront.",
-    "inclusion_evidence": "Operator's own home and Registration & Rates pages at hiddenhollowrv.com (fetched 2026-09-15, rate sheet dated 02/03/2026): 15 full-hookup sites with 20/30/50-amp service, daily and weekly payment links, and stays under 30 days taxed 'as like a hotel room' -> a real transient drive-in RV campground rather than a monthly-only or workforce park. Esri imagery at the pinned loop shows roughly 12-16 RVs on spaced individual grass/gravel pads around a private drive below the golf course, with the owners' house and pool at the south end - not packed storage or inventory.",
-    "website": "https://hiddenhollowrv.com/",
-    "phone": "304-280-2656",
-    "note": "Small family-run RV park on a private drive in a wooded hollow below the Moundsville Country Club, five minutes from downtown Moundsville in the northern panhandle; owned and operated by Derek and his father Jerry. Operator's own site: 15 spacious full-hookup sites of over 2,030 sq ft with grassed yards, 20/30/50-amp electric, 4-inch sewer risers and county water at a high +/- 120 psi (a regulator is required), basic complimentary wifi with a Comcast option, weekly garbage service, pet-friendly with breed restrictions, and golf course access next door. Open year round and genuinely transient as well as long-stay: the rate sheet (published 02/03/2026) carries daily and weekly payment links alongside monthly ones, and stays under 30 nights are taxed at the 6% WV sales tax rate 'as like a hotel room would be taxed', with month-to-month arrangements tax-exempt. Full hookups start at $30/night. No maximum RV length is stated and the sites are oversized, so a 23-ft rig is no constraint. Reserve by phone or through the site's payment links; card payments carry a convenience fee. RV Life 5*/$$ ~$30/night (auto 9/2026). --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "checked": "2026-09",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 15
-    },
-    "facilities": {
-      "wifi": true
-    },
-    "season": {
-      "year_round": true
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "fb7023f4082c0f07",
-      "checked": "2026-09-17",
-      "model": "claude-opus-5/session"
-    }
-  },
-  {
     "id": 13123,
     "kind": "campground",
     "name": "Woodlawn Campground",
@@ -921033,7 +921218,7 @@
     "inclusion_evidence": "camphollywv.com riverside-rv-sites + Campspot live quotes (Wed 2026-10-14, Wed 2027-06-16): RV site fits 45 ft $49.35/night -> real transient RV campground; published base $49.35 <= $50; quality: RV Life 5* on 1 review, Google Maps 4.6 over 69 reviews",
     "website": "https://camphollywv.com/\nhttps://www.campspot.com/book/camp-holly",
     "phone": "443-822-7479",
-    "note": "Fishing campground and cabin retreat on 22 wooded acres at Diana, a short drive from Webster Springs, where a creek and a river line two sides of the property.  RV sites #4-10 are on a tree-lined creekside lane; sites are level back-ins on gravel and grass, each with a fire ring, and picnic tables are available on request, first come, first served.  Pete's Pond, three acres and stocked, has daily fishing and monthly tournaments, and there are canoes, kayaks, a paddle boat, swimming holes and a hiking trail.  Riverside tent sites, cabins and glamping are also offered, and a small grocery and a diner are down the street.  Pets are allowed for a fee; generators aren't. --Claude",
+    "note": "Fishing campground and cabin retreat on 22 wooded acres at Diana, a short drive from Webster Springs, where a creek and a river line two sides of the property.  RV sites #4-10 are on a tree-lined creekside lane, each with a fire ring, and picnic tables are available on request, first come, first served.  Pete's Pond, three acres and stocked, has daily fishing and monthly tournaments, and there are canoes, kayaks, a paddle boat, swimming holes and a hiking trail.  Riverside tent sites, cabins and glamping are also offered, and a small grocery and a diner are down the street.  Pets are allowed for a fee; generators aren't. --Claude",
     "rating": {
       "stars": 5.0,
       "price_tier": 3,
@@ -921046,35 +921231,41 @@
       "sewer": true
     },
     "sites": {
-      "max_rig_ft": 45
+      "max_rig_ft": 45,
+      "count": 5,
+      "pull_through": false,
+      "note": "Campspot sells 5 'FHU RV Site' back-ins (max length 45 ft) on the creekside lane the operator numbers #4-10; level gravel and grass. Riverside tent sites, cabins and glamping besides."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/camp-holly",
+      "note": "The operator's 'RESERVE YOUR RV SPOT' button goes to Campspot. Seasonal RV sites are also offered (call)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://camphollywv.com/riverside-rv-sites ('#4-10 Treelined Creekside Full-Hookup RV Lane Each with 30amp power, water, and sewer hookups') + Campspot site type 'FHU RV Site' (30-Amp, Sewer Hook-Up, Water Hook-Up), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://camphollywv.com/riverside-rv-sites ('#4-10 Treelined Creekside Full-Hookup RV Lane', 'Level back in gravel and grass sites') + https://www.campspot.com/book/camp-holly (site type FHU RV Site: 5 sites, max length 45, amenity 'Back-In'; read 2026-10-13), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://camphollywv.com/riverside-rv-sites ('RESERVE YOUR RV SPOT Click HERE' -> https://www.campspot.com/book/camp-holly; 'Seasonal RV sites Available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.campspot.com/book/camp-holly (no closure on the park record; the FHU RV Site was on sale on 2027-01-26 and 2027-01-30; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
         "checked": "2026-10-13"
       },
       "facilities": {
-        "source": "https://camphollywv.com/riverside-rv-sites ('We have a really nice bath house with two full baths.'), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://camphollywv.com/riverside-rv-sites ('We have a really nice bath house with two full baths.') + https://www.campspot.com/book/camp-holly (FHU RV Site amenities include Wi-Fi; read 2026-10-13), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.campspot.com/book/camp-holly (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
@@ -921095,7 +921286,8 @@
       "year_round": true
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "wifi": true
     },
     "fees": {
       "nightly_low": 30,
@@ -921106,6 +921298,11 @@
     },
     "discounts": {
       "good_sam": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://camphollywv.com/riverside-rv-sites https://camphollywv.com/ https://www.campspot.com/book/camp-holly (park record and site types as read 2026-10-13, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Operator's RV page confirms 30-amp full hookups on the creekside lane, back-in gravel/grass sites, a bathhouse and Campspot booking; Campspot's catalog (read 2026-10-13) gives 5 RV sites to 45 ft and Wi-Fi. Fees ($30-55, read 2026-10-13 on Campspot) and season left as recorded; the operator's pages state no season."
     }
   },
   {
@@ -921166,7 +921363,7 @@
       },
       "fees": {
         "source": "https://www.campspot.com/book/kickbackncamp (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://kickbackncamp.com/ways-to-camp/ ('Wooded Primitive Sites $28/night + tax'; 'Wooded Tent Site w/Electric $32/night + tax'; '20 amp / 110 electric in these sites'; 'Wooded RV/Tent Site w/Electric $35/night + tax Accommodates 30-35ft campers or Tents'; 'RV Site w/Water & Electric $40/night + tax'; 'RV Site w/Full Hook Up $45/night + tax'; 'Premium RV Site w/Full Hook Up $50/night + tax Sites are in the woods, are shaded and private! Accommodates 32-37ft campers'), read 2026-10-13; https://kickbackncamp.com/rules/ ('Base pricing includes parking for two (2) vehicles and four (4) guests to a site, each additional overnight guest is $3.'; 'For each additional day visitor, campers shall pay an additional $2 per day per person'), read 2026-10-13",
-        "checked": "2026-10-13"
+        "checked": "2026-10-21"
       }
     },
     "note_scan": {
@@ -921187,12 +921384,17 @@
       "camp_store": true
     },
     "fees": {
-      "nightly_low": 28,
+      "nightly_low": 35,
       "nightly_high": 50,
       "currency": "USD",
       "reservation_fee": 3.5,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Wooded Primitive, Wooded Electric RV, Water & Electric, FHU and Wooded Premium FHU). October 2026: $28-50, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Left out: the other Wooded Primitive type (sites under 23 ft). Plus the park's $3.50 'Reservation Surcharge', once per stay. Read 2026-10-13. The campground's own rates match, plus tax: $28 a night for a wooded primitive site, $32 for a wooded tent site with 20-amp electric, $35 for a wooded RV or tent site with electric (campers of 30-35 ft), $40 for water and electric, $45 for full hookups and $50 for a premium full-hookup site in the woods (campers of 32-37 ft).  The base price covers 4 guests and 2 vehicles, with $3 for each additional overnight guest and $2 a day for each day visitor."
+      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Wooded Primitive, Wooded Electric RV, Water & Electric, FHU and Wooded Premium FHU). October 2026: $28-50, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Left out: the other Wooded Primitive type (sites under 23 ft). Plus the park's $3.50 'Reservation Surcharge', once per stay. Read 2026-10-13. The campground's own rates match, plus tax: $28 a night for a wooded primitive site, $32 for a wooded tent site with 20-amp electric, $35 for a wooded RV or tent site with electric (campers of 30-35 ft), $40 for water and electric, $45 for full hookups and $50 for a premium full-hookup site in the woods (campers of 32-37 ft).  The base price covers 4 guests and 2 vehicles, with $3 for each additional overnight guest and $2 a day for each day visitor. Base is the Wooded RV/Tent Site with Electric ($35 + tax); the $28 Wooded Primitive sites (W1-W6) suit tents. (2026-10-21)"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://kickbackncamp.com/ https://kickbackncamp.com/ways-to-camp/",
+      "note": "Operator's pages re-read: the 2026 season (April 9 - November 1) and the posted rates ($28-50 + tax) match the entry's 2026-10-13 values. Nothing new written."
     }
   },
   {

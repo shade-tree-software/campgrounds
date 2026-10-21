@@ -183,8 +183,20 @@ me drop and report); each needs the research named before a verdict.
   3-month peak-season rule if it's ever quoted.
 - **14881 Sun Retreats Estero Bay** — Campspot now $103-115 (Nov) / $113-132 (Jan) vs the manual
   2026-10-13 figures; one nights sell in winter. Fort Myers exception.
+- **877 Panther SF (WV)** — the park page allows one night Sun-Thu, but book.wvstateparks.com sold
+  no 1-night stay on any 2027 date tested (8 weeknights + a Sunday) while selling 2 nights; only the
+  page's weekend minimum recorded. Call 304-938-2252. Panther is now on the booking site (supplier
+  11067662) - the state:WV registry note and audit/state_park_fees/README.md say it isn't.
+- **504 Cranberry** — rec.gov 2026 $15 single / $30 double vs the FS page's $10/$20 (undated).
+- **1227 East Fork** — $50 base at the line, plus a $6 per-stay reservation fee (kept; booking fees
+  aren't counted, as with Tall Timbers' $3).
+- **14250 Camp Holly** — only 5 RV sites, also sells seasonal sites; weekday $30-45, peak Saturday $55.
+- **514 Camp Run** — "primitive 1950s style camping", no site lengths; 23-ft fit unconfirmed.
 
 ## Resolved 2026-10-21
+- **p3-52 (first WV):** drop 13122 Hidden Hollow (workforce park, approval for short stays) and 1209
+  Lakeview (Facebook only). 504 Cranberry is first-come only. 14251 Kick Back low $28 -> $35 (the
+  $28 sites suit tents); 878 Seneca low $22.99 (April-August). 809 Sullivan's: asked AWH.
 - **p3-51:** drop 14880 Swan Lake (sells homes) and 14399 Tall Timbers ($50.41 with mandatory
   fees). 14435 Twin Palms at exactly $50 kept, operator site added. 15341 KICCO: the District books
   "Campsite - Town of KICCO (RV/Trailer)", settling the tent-only doubt.

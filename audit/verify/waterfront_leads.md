@@ -104,3 +104,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **14387 Panhandle RV Resort** (minor) — "Two Fishing Ponds ... right on the property".
 - **14870 Seminole Campground** — "47 creek side campsites" on Pop Ash Creek; entry not waterfront.
 - **14434 Scott's Ferry** (weak) — "Located on the Chipola River with boat launch"; entry not waterfront.
+- **266 Big Bend (USFS, WV)** — entry riverfront on the --AWH note ("sites adjacent to the water");
+  rec.gov and the FS page say "The river is located 200 feet from campground".
+- **1227 East Fork (WV)** — operator: "waterside" sites, "primitive waterfront sites", a river that
+  "runs the length of the campground"; entry riverview.

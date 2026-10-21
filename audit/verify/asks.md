@@ -169,3 +169,10 @@ No official page says there is camping: the county lists it only as a boat ramp/
 Lake Seminole camping list omits it, and aggregators disagree (one review: "closed for a while").
 It was added on satellite evidence. Kept; drop if you'd rather not carry it unconfirmed.
 - **AWH 2026-10-21: drop.** Done.
+
+## 809 Sullivan's Camp Cacapon (WV, private) — is RV camping an afterthought?
+One full-hookup RV site ($85, over the gate; no gateway within 40 km, Shenandoah 74 km) plus a $40
+self-contained "boondocking" spot in an unlevel upper parking lot with no amenities ("We do not
+charge per rig"), beside glamping, tent sites, a wedding/event venue and 65-guest whole-campground
+rentals. No pets; every reservation non-refundable. The $40 lot keeps it under the price gate on
+paper. Kept for now; I'd lean drop.

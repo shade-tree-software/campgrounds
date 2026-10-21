@@ -1,0 +1,66 @@
+{
+  "id": 266,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/232019",
+    "https://www.recreation.gov/api/camps/campgrounds/232019/rates",
+    "trip_data/ridb_campsites.json (RIDB per-site catalog for facility 232019, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 27, "nightly_high": 29, "currency": "USD", "checked": "2026",
+                 "note": "Single site $27 a night in the Upper Loop, $29 in the River Loop; double sites $43 (Upper) and $50 (River). The 2026 recreation.gov rate table (Peak Season 2026-04-10 to 2026-10-31) has the same figures. A fee is charged for additional vehicles."},
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Single Site: $29 per night (River Loop); $27 per night (Upper Loop)', 'Double Site: $50 per night (River Loop); $43 per night (Upper Loop)') + https://www.recreation.gov/api/camps/campgrounds/232019/rates (2026 Peak Season: RIVR $29, UPPR $27) + recreation.gov notice 'A fee will be charged for additional vehicles', read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232019",
+        "window_opens_days": 330,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "some_sites",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "River Loop sites and the double sites are reserved on recreation.gov or at (877) 444-6777; Upper Loop sites 13-30 are first-come, first-served (Forest Service page). recreation.gov books up to 11 months ahead and closes 4 days before arrival; its 2-night weekend and 3-night holiday-weekend minimums are not marked soft. 14 days at most, 8 people per site. Concession-run by BA Services Inc."
+      },
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Upper Loop Sites 13-30 are on a first-come, first-serve basis.', 'The River Loop sites and double campsites can be reserved online or by calling (877) 444-6777', 'Maximum length of stay is 14 days and 8 people per site.') + https://www.recreation.gov/api/camps/campgrounds/232019 (facility_rules: reservationWindow 11 Months, reservationCutOff 4 days prior to arrival, minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3, maxConsecutiveStay 14; notice 'This campground has first-come, first-serve sites'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-10", "closes": "10-31",
+                 "note": "Approximate: recreation.gov says the season 'has been from approximately April 10th through Oct 31st', and the permit holder must operate at least 'from the second Friday night in April through the last Saturday night in October'."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232019 (Overview: 'The average operation and maintenance season for Big Bend Campground and Jess Judy Group Campground has been from approximately April 10th through Oct 31st. At a minimum, the Forest Service (FS) will expect the permit Holder to fully operate the campgrounds from the second Friday night in April through the last Saturday night in October.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232019 (notice 'There are no electric site hook-ups at this facility'; '46 standard non-electric camping units'; only the host site has electric, water and sewer), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 46, "max_rig_ft": 30, "pull_through": true,
+                 "note": "46 standard non-electric sites with paved spurs (recreation.gov catalog: 34 list a 30-ft maximum vehicle length, 12 list 25 ft; one pull-through, the rest back-in). Jess Judy Group Campground nearby has three group sites."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232019 ('46 standard non-electric camping units with fire rings, lantern posts, picnic tables and paved spurs') + RIDB per-site catalog (Max Vehicle Length 30 x34, 25 x12; Driveway Entry Back-In x45, Pull-Through x1), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232019 ('two single-unit vault toilets, two double-unit flush toilets, and a four-unit flush restroom with four showers', 'one recreation vehicle dump station') + https://www.fs.usda.gov/r09/monongahela/recreation/big-bend-campground ('Flush toilets and showers', 'Potable water is available at this site.', 'Camping trailer: Dumping station'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USFS campground along the South Branch of the Potomac River in the Smoke Hole canyon with sites adjacent to the water.  --AWH  The access road is subject to flash flooding (recreation.gov notice). --Claude",
+  "awh_superseded": [
+    {"old": "Some sites are reservable.", "source": "redundant: booking.fcfs / booking.reservable"},
+    {"old": "Open early April to late October.", "source": "redundant: season.opens / season.closes"}
+  ],
+  "summary": "Fees $27-29 confirmed on the Forest Service page and the 2026 rec.gov rate table; booking (rec.gov, 11-month window, 4-day cutoff, 2/3-night weekend/holiday minimums, Upper Loop 13-30 first-come, 14-day max), season ~04-10 to 10-31, no electric, 46 sites to 30 ft, showers/flush+vault toilets/water/dump written from rec.gov and the forest page.",
+  "flags": [
+    "Entry has no phone. The Forest Service page gives 304-358-3613 (BA Services Inc, the concessionaire) and the Cheat-Potomac District Petersburg office (304) 257-4488; recreation.gov lists 304-358-3253.",
+    "Waterfront re-audit lead: entry is 'riverfront' on AWH's firsthand note ('sites adjacent to the water'), while recreation.gov and the Forest Service page say 'The river is located 200 feet from campground'. AWH text kept; waterfront not changed.",
+    "Concession-run (BA Services Inc) on Forest Service land, booked on recreation.gov at Forest Service fees; ownership 'federal' kept. recreation.gov does not mention the America the Beautiful pass, so the inherited senior/access discount was left unconfirmed."
+  ]
+}
