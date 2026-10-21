@@ -5,12 +5,14 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-5. **Black Pearl Farms (757, SC Hipcamp)** — your note: "Waterfront RV site w/canoe $45+fees"
+(none)
+
+## Answered (AWH 2026-10-21)
+
+5. (AWH 2026-10-21: the site is gone; downgraded to not waterfront, note updated.) **Black Pearl Farms (757, SC Hipcamp)** — your note: "Waterfront RV site w/canoe $45+fees"
    (stored riverfront). Hipcamp's current listing sells three RV sites named "Farm View" and
    "Blue View" (the river "a short, easy walk away"); its riverside sites are tent-only. Is the
    waterfront RV site you booked still sold? If not, riverfront comes down to not waterfront.
-
-## Answered (AWH 2026-10-21)
 
 4. (AWH 2026-10-21: been there, EKKO fits; kept, note says so.) **Manny Gordon Recreation Area (134, Pinchot SF)** — your note describes it without a size
    caveat. ReserveAmerica lists all three sites at "Max Vehicle Length: 16 ... suitable for

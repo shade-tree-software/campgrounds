@@ -9,7 +9,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   77, 81, 83, 87 (25-40 ft). Still open: the stored pin (42.6056,-71.1003) is in empty woods and
   Google's "Lorraine Park Campground" pin (42.6106,-71.0907) shows no loop either; mass.gov and
   the RA catalog both refuse plain HTTP. Needs the DCR campground map. AWH's call stands meanwhile.
-- **757 Black Pearl Farms (SC, Hipcamp)** — moved to asks.md #5 (did AWH's waterfront RV site go away?).
 
 ## Resolved 2026-10-21 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
@@ -18,7 +17,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Creek** not waterfront -> creekside (z19 satellite: pads ~15 m from the bank); **647 Douthat**
   not waterfront -> lakeview (DCR Lakeside site map + satellite: 19 sites across the loop road from
   the north shore; pin moved onto that loop; --AWH note kept, dated --Claude line added).
-- Downgraded: **1184 Stony Mountain** lakefront -> not waterfront (operator: the one lake site is a
+- Downgraded: **757 Black Pearl Farms** riverfront -> not waterfront (AWH: the waterfront RV
+  site is gone; RV sites are Farm View/Blue View, riverside sites tent-only); **1184 Stony Mountain** lakefront -> not waterfront (operator: the one lake site is a
   tent site; transient loops 100+ m back; pin moved onto the loops; low confidence - a site map
   could reverse it); **1048 Milton Loop** riverview -> not waterfront (continuous tree band);
   **590 Jekyll Island** coastal woods -> not waterfront (operator: "There are no waterfront
