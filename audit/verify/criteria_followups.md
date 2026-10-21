@@ -20,3 +20,6 @@ me drop and report); each needs the research named before a verdict.
   Google presence (phone 864-314-1023); else drop.
 - **14267 Harts Content Campground (PA)** — posted rates are titled "2023 Rates" (still
   displayed); no 2024+ date. Next: ParkWith quote via the browser, else note the rate as undated.
+- **14274 Ledgedale Recreation Area (PA)** — $48/$52 rate page is undated and its holiday dates
+  fit 2022; seasonal-site waitlist, no visible nightly booking. Needs a 2024+ rate and proof
+  nights are sold (long-stay rule); inclusion_evidence's "$48 (2026)" is unsupported.

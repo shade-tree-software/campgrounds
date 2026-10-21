@@ -39,3 +39,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   through the campground ... creekside RV campsites".
 - **78 Kooser SP (PA)** — stored "not waterfront"; RA tags 42 of 43 sites "Waterfront" (30 <300 ft).
   Probably Kooser Run (stream), not the lake; run the gate.
+- **558 Laurel Hill SP (PA)** — --AWH "not waterfront"; RA tags sites 172-185 "Waterfront" but
+  also ">300 ft". AWH's call stands unless imagery shows otherwise.
+- **1173 Moyer's Grove (PA)** — stored "not waterfront"; operator: "many [sites] situated right
+  alongside of our clean, babbling brook".
+- **14272 Penn's Creek Campground (PA)** — stored "not waterfront"; operator: "located directly
+  on Penns Creek", sites run downstream along the meter line.
