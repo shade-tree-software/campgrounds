@@ -114,3 +114,4 @@ Answered items move to the bottom with the answer.
 seasonal/yearly lots. Nights ARE sold (claimed RoverPass, $50-55 for June 2027 — at the gate line),
 but no daily rates on sale for January 2027. Kept for now and marked mostly long-stay: test 5
 (sells homes) depends on whether the park itself sells the units or residents do.
+- **AWH 2026-10-21: drop.** Done.
