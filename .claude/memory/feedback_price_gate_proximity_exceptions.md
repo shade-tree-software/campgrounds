@@ -13,7 +13,7 @@ Some campgrounds stay in the DB despite failing the $50 price gate or the KOA/Su
 
 - (The Fort Myers named exception - Pine Island KOA 14882 and the 2026-10-05 Lee County mini-sweep parks - was RETIRED by AWH 2026-10-21: those parks are now covered by the family-home gateway below. Every one still in the DB is 5-30 km from a family home.)
 - 14435 Twin Palms Resort (FL, Lakeport; RV sites exactly $50) kept (AWH 2026-10-10) - $50 is at the gate, not over.
-- 3363 Liberty Harbor RV Park (NJ, $170/$189 holiday) - "unusual proximity to New York City" (AWH 2026-10-10).
+- (3363 Liberty Harbor RV Park, NJ, $170/$189 holiday, was a named exception for its "unusual proximity to New York City" (AWH 2026-10-10). AWH retired it 2026-10-21: the general gateway rule covers it, 3 km from downtown New York.)
 
 **Why:** the gate screens ordinary options; a rare location (family visits, a city with almost no RV camping) outweighs price.
 
