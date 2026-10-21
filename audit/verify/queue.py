@@ -51,6 +51,12 @@ def views():
     return c
 
 
+# PA state-forest roadside sites (audit/pa_sf_dispersed/, 2026-10-10) were built straight
+# from each site's ReserveAmerica page, and batch p3-6 (12 of them) found nothing to change,
+# so they wait until everything else is done rather than spending a verifier each.
+LATE = range(15183, 15339)
+
+
 def ranked(rows, reg, trips):
     by = {e["id"]: e for e in rows}
     stays = Counter(s.get("campground_id") for t in trips for s in t.get("stays", [])
@@ -78,7 +84,7 @@ def ranked(rows, reg, trips):
         elif seen[e["id"]]:
             tier = 3
         else:
-            tier = 4
+            tier = 5 if e["id"] in LATE else 4
         stars = (e.get("rating") or {}).get("stars") or 0
         out.append(((tier, -stays[e["id"]], -seen[e["id"]], state_rank.get(e["state"], 99),
                      -stars, e["name"]), e))
