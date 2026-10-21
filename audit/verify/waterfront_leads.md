@@ -74,3 +74,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "several campsites along the creek"; entry not waterfront.
 - **153 Rainbow Springs SP** (weak) — campground "located along the Rainbow River", but the swim
   area/launch is "a substantial walk from campsites".
+- **4770 Sportsman's Cove (Orange Lake)** — operator sells "Waterside" sites ($50-55) and a
+  "waterfront" cabin; entry not waterfront.

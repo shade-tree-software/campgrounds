@@ -22468,18 +22468,20 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 9
+      "count": 9,
+      "pull_through": false,
+      "note": "Nine RV sites (RV1-RV9), all back-in with 57-75 ft driveways; also tent sites, a group shelter and eight cruiser (boat) sites where boaters must sleep aboard."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for facility 233638 (9 STANDARD ELECTRIC sites, Driveway Entry Back-In, Driveway Length 57-75) + https://www.recreation.gov/api/camps/campgrounds/233638 (notice: 'Boaters in cruiser sites (B1-B8) must sleep on their boat'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233638 (Facilities: 'All RV and cruiser sites have 50 amp electric and water hookups') + campsite catalog (RV1-RV9 Electricity Hookup 50, Water Hookup Yes), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "recreation.gov availability calendar, facility 233638 (345 days observed, none closed)",
@@ -22487,8 +22489,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233638/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233638/rates (2026-01-01 to 2026-12-31 season: STANDARD ELECTRIC 30, MOORING 30, TENT ONLY NONELECTRIC 20), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233638 (amenities 'Accessible Flush Toilets', 'Accessible Showers', 'Dump Station'; 'A trailer dump station is on site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233638 (facility_rules maxStay 14 nights 'Rolling 30 Days', reservationCutOff 0 days; notices on the shared Ortona South limit, gate hours and card-only payment), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -22506,8 +22519,27 @@
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Standard electric RV sites $30 a night (2026 and 2027 seasons); boat moorings $30, tent sites $20, group shelter $35."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Bookable on recreation.gov up to the day of arrival (cutoff 0 days). Maximum 14 nights in any 30 consecutive days, shared with Ortona South Campground (same water resource project). Gate open 6 a.m. to sunset; card payments only."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233638 https://www.recreation.gov/api/camps/campgrounds/233638/rates recreation.gov campsite catalog for facility 233638 (trip_data/ridb_campsites.json)",
+      "note": "recreation.gov confirms $30 standard electric sites (2026/2027), 9 back-in RV sites with 50-amp + water, flush toilets, showers, dump; added the 14-nights-in-30 limit (shared with Ortona South) and same-day booking. Inherited reservable/platform now entry-verified. No minimum stay rule; window not stated in the facility record (left inherited); season left as derived from the calendar. --AWH note kept."
+    },
+    "phone": "772-287-1382"
   },
   {
     "id": 383,
@@ -23263,14 +23295,60 @@
       "currency": "USD",
       "reservation_fee": 6.7,
       "checked": "2026",
-      "note": "$35 a night for an RV: the $28 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $28), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee. The park's Hours & Fees page and Florida's fee page, read 2026-10-12."
+      "note": "$35 a night for an RV: the $28 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $28), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 64 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
-        "checked": "2026-10-12"
+        "source": "Reserve Florida search/details for every unit of facilities 174 and 175 (all 138 units Rate 28.00, Fee 6.70), read 2026-10-21 + https://www.floridastateparks.org/fees ($7 nightly RV utility fee, as read 2026-10-12)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/experiences-amenities-0 ('Each campsite features water, 30- and 50-amp electric, and sewer connections') + Reserve Florida search/details (50-amp, water and sewer on nearly every unit), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/experiences-amenities-0 ('The sites will accommodate camping units ranging from tents to RVs up to 50 feet in length') + Reserve Florida search/grid + search/details, facilities 174 and 175 (unit names, VehicleLength, PullInTypeName), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/experiences-amenities-0 ('There are two bathhouses located in the campground area for registered campers'; 'Laundry facilities are available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/experiences-amenities-0 ('The campground is open for reservations') + https://reserve.floridastateparks.org/Web/#!park/64, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 135,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "Reserve Florida lists 135 'RV or Tent' sites (East Loop 81, West Loop 54) plus 3 tent-only sites; site lengths 21-50 ft (most 25-45), 17 pull-throughs."
+    },
+    "facilities": {
+      "laundry": true,
+      "note": "Two bathhouses in the campground for registered campers; outdoor showers at the day-use parking areas."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park (read in a browser) https://www.floridastateparks.org/parks-and-trails/st-andrews-state-park/experiences-amenities-0 (read in a browser) https://reserve.floridastateparks.org/Web/#!park/64 (US eDirect API floridardr.usedirect.com: search/place PlaceId 64, search/grid + search/details for every unit of facilities 174 East Loop and 175 West Loop, start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: $35 RV ($28 + $7 utility), $6.70 reservation fee, reservable on Reserve Florida. Added 50-amp full hookups at every site, 135 RV sites to 50 ft with pull-throughs, laundry. Not stated for this campground: booking window (the 11-month line is for the youth group camp), FCFS, season, showers ('bathhouses' only). --AWH note kept."
+    },
+    "phone": "850-708-6100"
   },
   {
     "id": 393,
@@ -23368,7 +23446,7 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: Campground on the Indian River Inlet adjacent to the Atlantic Ocean.  Several sites are right on the river, separated only by the driveway.",
     "note": "Campground on the Indian River Inlet adjacent to the Atlantic Ocean.  Several sites are right on the river, separated only by the driveway.  --AWH",
     "website": "https://www.floridastateparks.org/Sebastian-Inlet\nhttps://reserve.floridastateparks.org/Web/#!park/61",
-    "phone": "",
+    "phone": "321-984-4852",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -23386,13 +23464,60 @@
       "currency": "USD",
       "reservation_fee": 6.7,
       "checked": "2026",
-      "note": "$35 a night for an RV: the $28 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $28), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee. The park's Hours & Fees page and Florida's fee page, read 2026-10-12."
+      "note": "$35 a night for an RV: the $28 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $28), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 61 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
-        "checked": "2026-10-12"
+        "source": "Reserve Florida search/details for every unit of facility 166 (all 53 units Rate 28.00, Fee 6.70), read 2026-10-21 + https://www.floridastateparks.org/fees ($7 nightly RV utility fee, as read 2026-10-12)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/experiences-amenities-0 ('All 51 campsites have water and electrical hook-ups') + Reserve Florida search/details, facility 166 (Electric Hookup 30 on 45 units, 50 on 8; no sewer attribute), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/experiences-amenities-0 ('All 51 campsites', 'Maximum RV length is 40 feet') + Reserve Florida search/grid + search/details, facility 166 (VehicleLength, PullInTypeName, unit descriptions), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/experiences-amenities-0 ('two bathhouses with ADA access to toilets and showers in the campground'; 'a dump station, and a Wi-Fi hotspot near the marina'; 'Laundry facilities are available at the campground for use by registered campers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/experiences-amenities-0 ('For reservations, visit the Florida State Parks reservations website or call 800-326-3521'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 51,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "The park says 51 campsites and 'Maximum RV length is 40 feet'; Reserve Florida lists 53 units, lengths 30-40 ft except two 50-ft pull-throughs (#033, #034). Sites 9-14 are waterfront with a view of the inlet. Site #056 is tent or pop-up only."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "laundry": true,
+      "note": "Two bathhouses with toilets and showers in the campground; a Wi-Fi hotspot near the marina rather than in the campground."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "note": "Reserve on the Florida State Parks reservations website (Reserve Florida) or at 800-326-3521."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park (read in a browser) https://www.floridastateparks.org/parks-and-trails/sebastian-inlet-state-park/experiences-amenities-0 (read in a browser) https://reserve.floridastateparks.org/Web/#!park/61 (US eDirect API floridardr.usedirect.com: search/place PlaceId 61, search/grid + search/details for every unit of facility 166 Loop 1, start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: $35 RV ($28 + $7 utility), $6.70 reservation fee, reservable on Reserve Florida (inherited reservable/platform now entry-verified). Added 51 sites with water + electric (50-amp at 8), max RV 40 ft (two 50-ft pull-throughs on the booking site), showers, dump, laundry. Not stated: booking window, FCFS, season. --AWH note kept (nothing in it is a field value or contradicted; the booking site calls sites 9-14 waterfront with an inlet view)."
     }
   },
   {
@@ -43954,7 +44079,7 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: Premium waterfront sites on the Suwannee River w/private deck: $58.  Small waterfront sites: $41-$47.",
     "website": "https://srbrvpark.com/",
     "phone": "352-542-7680",
-    "note": "Premium waterfront sites on the Suwannee River w/private deck: $58.  Small waterfront sites: $41-$47.  --AWH",
+    "note": "Premium waterfront sites on the Suwannee River w/private deck.  --AWH",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -43965,6 +44090,74 @@
       "sig": "6192bc964c119e2c",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 60,
+      "nightly_high": 75,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Plus taxes: back-in and pull-through sites (41-75) $60 a night; waterfront sites 25-40 $65, 1-24 $75. Weekly $275-345, monthly $500-900 plus a $100 electric deposit. 2% charge on credit cards; boats and trailers $10 a day."
+    },
+    "provenance": {
+      "fees": {
+        "source": "https://srbrvpark.com/about-us/ (Rates: 'Sites 1 through 24 – site type – waterfront – pricing 75.00 nightly'; 'Sites 25 through 40 ... 65.00 nightly'; 'Sites 51 through 59 – site type – back in – pricing 60.00 nightly'), page undated (footer Copyright © 2026), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://srbrvpark.com/faq/ ('Yes, all of our sites are full hook and 30/50 amps'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://srbrvpark.com/ ('We feature 77 majestically shaded waterfront lots ... We offer back-in and pull through sites') + https://srbrvpark.com/about-us/ + https://srbrvpark.com/faq/, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://srbrvpark.com/faq/ ('We now have Wifi!!! This upgraded service is free ... We have a bath house, 24-hour laundry, and a clubhouse'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://srbrvpark.com/faq/ ('Do you offer any discounts? Yes we do but only to active military and first responders'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://srbrvpark.com/book-online/ (sr.bookmysites.com check-availability widget) + https://srbrvpark.com/faq/ (reservation/cancellation policy) + https://srbrvpark.com/rules/ ('Management reserves the right to inspect and refuse RV's over 15 years old'; check-in/out), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 77,
+      "pull_through": true,
+      "note": "The home page says 77 shaded waterfront lots; the rate table numbers sites 1-75 (1-40 waterfront, 41-75 pull-through or back-in) and the FAQ describes 50 waterfront lots plus several interior lots. All sites have a cement slab."
+    },
+    "facilities": {
+      "laundry": true,
+      "wifi": true,
+      "note": "Bath house, 24-hour laundry, clubhouse with full kitchen; free Wi-Fi; floating boat docks for a small fee; canal to the Suwannee River, boat ramp about 1/4 mile away."
+    },
+    "discounts": {
+      "military": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://srbrvpark.com/book-online/",
+      "note": "Book online through the park's Book Online page (a Bookmysites widget) or call 352-542-7680. Daily and weekly stays are paid in full when reserved; no-shows are not refunded. Management may inspect and refuse RVs over 15 years old. Check-in 2 pm, check-out 11 am."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://srbrvpark.com/ (read in a browser; plain fetch blocked by a bot check) https://srbrvpark.com/about-us/ (the site's Rates page) https://srbrvpark.com/faq/ https://srbrvpark.com/rules/ https://srbrvpark.com/book-online/ (Bookmysites widget sr.bookmysites.com)",
+      "note": "Operator's rate page now gives $60 (back-in/pull-through) to $75 (waterfront 1-24) nightly plus tax; added 30/50-amp full hookups at all sites, 77 lots with pull-throughs, laundry, free Wi-Fi, military discount, online booking via the park's Bookmysites page. AWH's $58 / $41-47 prices are superseded by the posted rates (prices dropped, description kept)."
     }
   },
   {
@@ -295716,43 +295909,52 @@
     "inclusion_evidence": "FL State Park + ReserveFlorida #!park/69: 45 full-hookup W/E drive-in RV sites, pull-throughs to ~100ft, reservable online",
     "waterfront_evidence": "satellite at 30.3332,-82.7717: RV/camping loops set back several hundred m N of the Suwannee River behind continuous forest; river only reaches frame edge",
     "website": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park\nhttps://reserve.floridastateparks.org/Web/#!park/69",
-    "note": "45 full-hookup sites (W/E), pull-throughs to ~100 ft. Reservable online via ReserveFlorida.",
+    "note": "Oak-shaded sites near the Suwannee River, within walking distance of the Stephen Foster museum and carillon tower. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50
     },
     "sites": {
       "count": 45,
       "max_rig_ft": 100,
-      "pull_through": true
+      "pull_through": true,
+      "note": "The park says 45 sites; Reserve Florida lists 39 'RV or Tent' units across the Canebreak, Gopher and Suwannee loops, 13 of them pull-through, lengths 30-100 ft."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "note": "Reserve on the Florida State Parks reservations website (Reserve Florida) or at 800-326-3521."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/experiences-amenities-0 ('45 oak-shaded sites with electricity, water, picnic table and fire ring') + Reserve Florida search/details (Electric Hookup 30 on 35 units, 50 on 4 Canebreak units; Water Hookup on all; no sewer attribute), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/experiences-amenities-0 ('the campground offers 45 oak-shaded sites'; 'Maximum RV length = 100 feet') + Reserve Florida search/grid + search/details (PullInTypeName, VehicleLength), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/experiences-amenities-0 ('For reservations, visit the Florida State Parks reservations website or call 800-326-3521'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/hours-fees (camping fee, read 2026-10-12) + Reserve Florida PlaceId 69 (each loop's 'Starting at' rate, read 2026-10-12) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
-        "checked": "2026-10-12"
+        "source": "Reserve Florida search/details for every unit of facilities 188, 189, 191 (all 39 'RV or Tent' units Rate 20.00, Fee 6.70), read 2026-10-21 + https://www.floridastateparks.org/fees ($7 nightly RV utility fee, as read 2026-10-12)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/experiences-amenities-0 ('Two ADA accessible restrooms with showers are located within the campground. A dump station is available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -295766,8 +295968,18 @@
       "currency": "USD",
       "reservation_fee": 6.7,
       "checked": "2026",
-      "note": "$27 a night for an RV: the $20 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $20), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee. The park's Hours & Fees page and Florida's fee page, read 2026-10-12."
-    }
+      "note": "$27 a night for an RV: the $20 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $20), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park (read in a browser) https://www.floridastateparks.org/parks-and-trails/stephen-foster-folk-culture-center-state-park/experiences-amenities-0 (read in a browser) https://reserve.floridastateparks.org/Web/#!park/69 (US eDirect API floridardr.usedirect.com: search/place PlaceId 69, search/grid + search/details for every unit of facilities 188 Canebreak, 189 Gopher and 191 Suwannee, start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: $27 RV ($20 + $7 utility), $6.70 reservation fee, 45 sites with water + electric (50-amp at 4), max RV 100 ft, pull-throughs, showers, dump, reservable on Reserve Florida. The note's 'full-hookup' was wrong (water/electric only, no sewer); note reduced to setting. Not stated: booking window, FCFS, season."
+    },
+    "phone": "386-397-4331"
   },
   {
     "id": 4701,
@@ -296540,7 +296752,7 @@
     "inclusion_evidence": "Satellite at 29.10,-82.09: campground loop w/ paved roads + RV pads; note confirms 23 W/E sites, big-rig capable on Cross FL Greenway -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 29.10,-82.09: campground loop in dry uplands, no water body anywhere near",
     "website": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground\nhttps://reserve.floridastateparks.org/Web/#!park/60",
-    "note": "On the Marjorie Harris Carr Cross Florida Greenway (state Office of Greenways & Trails). 23 sites, W/E 30/50A, dump station, showers; big-rig capable. Reservable via ReserveAmerica (parkId 282840).  Books on Reserve Florida (reserve.floridastateparks.org) now; the ReserveAmerica listing is gone (read 2026-10-12). --Claude",
+    "note": "On the Marjorie Harris Carr Cross Florida Greenway (state Office of Greenways & Trails), beside the Santos Trailhead's mountain-bike and equestrian trails. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -296551,40 +296763,52 @@
       "water": true
     },
     "sites": {
-      "count": 23
+      "count": 25,
+      "max_rig_ft": 62,
+      "pull_through": false,
+      "note": "The park's pages disagree on the count: the main page says 23 sites, the Experiences & Amenities page '25-site Santos Campground'; Reserve Florida sells 24 (#001-#025, no #024). Site lengths on the booking site run 33-62 ft, all back-in."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true,
+      "note": "Bathhouse in the campground for registered campers; two picnic pavilions for campers."
     },
     "booking": {
       "reservable": true,
-      "platform": "usedirect"
+      "platform": "operator",
+      "note": "Reserve on the Florida State Parks reservations website (Reserve Florida) or at 800-326-3521."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground ('23 sites equipped with water and electric hookups') + Reserve Florida search/details, facility 165 (every unit Electric Hookup 50, Water Hookup yes; no sewer attribute), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground/experiences-amenities ('The 25-site Santos Campground provides power and water hookups for RVs, trailers and tent campers') + Reserve Florida search/grid + search/details, facility 165 (VehicleLength 33-62, PullInTypeName 'Back In' on all 24 units), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground/experiences-amenities ('There is a bathhouse and dump station available as well'; 'Potable drinking water is available ... within the Santos Campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground ('For reservations, visit the Florida State Parks reservations website or call 800-326-3521'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "Reserve Florida PlaceId 60 (rdr/search/place: the campground's 'Starting at $22.00' rate line, read 2026-10-12; its park page gives no camping fee) + https://www.floridastateparks.org/fees ($7 nightly RV utility fee at all parks)",
-        "checked": "2026-10-12"
+        "source": "Reserve Florida search/details for every unit of facility 165 (all 24 'RV or Tent' units Rate 22.00, Fee 6.70), read 2026-10-21 + https://www.floridastateparks.org/fees ($7 nightly RV utility fee, as read 2026-10-12)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground ('the Santos Campground, available year-round for overnight trips'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -296598,8 +296822,17 @@
       "currency": "USD",
       "reservation_fee": 6.7,
       "checked": "2026",
-      "note": "$29 a night for an RV: the $22 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $22), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee. Reserve Florida's rate line for the campground and Florida's fee page, read 2026-10-12."
-    }
+      "note": "$29 a night for an RV: the $22 campsite fee plus Florida's $7 nightly utility fee for RVs (tent campers pay $22), plus tax and a $6.70 reservation fee per reservation. No out-of-state rate; Florida residents 65 and over get half off the campsite fee."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground (read in a browser) https://www.floridastateparks.org/parks-and-trails/santos-trailhead-campground/experiences-amenities (read in a browser) https://reserve.floridastateparks.org/Web/#!park/60 (US eDirect API floridardr.usedirect.com: search/place PlaceId 60, search/grid + search/details for every unit of facility 165, start date 2027-01-12, read 2026-10-21)",
+      "note": "Confirmed on floridastateparks.org and Reserve Florida: $29 RV ($22 + $7 utility), $6.70 reservation fee, 50-amp + water at every site, dump station, potable water, open year-round, reservable on Reserve Florida. Added max rig 62 ft (all back-in) and season. Site count conflicts between the park's own pages (23 vs 25; 24 on the booking site), recorded 25 with a note. Platform relabelled usedirect -> operator to match the state:FL row (same site). Showers left as derived (page says 'bathhouse' on"
+    },
+    "phone": "352-369-2693"
   },
   {
     "id": 4712,
@@ -299520,61 +299753,6 @@
     }
   },
   {
-    "id": 4755,
-    "kind": "campground",
-    "name": "Sunset Isle RV & Yacht Club",
-    "location": "29.84579,-84.66842",
-    "elevation_meters": 9,
-    "state": "FL",
-    "ownership": "private",
-    "waterfront": "bayfront",
-    "inclusion_evidence": "Operator sunsetislerv.com: mixed RV resort + residential community but explicitly invites overnight guests with booking link -> takes transient RVs",
-    "waterfront_evidence": "satellite at 29.8458,-84.6684: SW fan-loop RV pads back directly onto Apalachicola Bay tidal marsh with open grassy/sandy apron to the water edge, no treeline/road buffer",
-    "website": "https://www.sunsetislerv.com/",
-    "phone": "850-446-6694",
-    "note": "RV & yacht resort on Timber Island, Carrabelle, on Apalachicola Bay/Gulf with free boat slips, pier, pool, clubhouse. Mixed-use community (some RV/home lots for sale) but confirmed to accept transient/nightly travelers. 39 sites, ~27 full hookups, 50-amp, up to 50 ft. Reservation by request form/phone (no online booking).",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 39,
-      "max_rig_ft": 50
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "5c3510b6712870e2",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    }
-  },
-  {
     "id": 4756,
     "kind": "campground",
     "name": "Ingram's Marina",
@@ -300086,70 +300264,6 @@
     }
   },
   {
-    "id": 4768,
-    "kind": "campground",
-    "name": "Strawberry Fields For RV'ers",
-    "location": "29.48903,-82.85588",
-    "elevation_meters": 12,
-    "state": "FL",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "Operator site strawberryfieldsforrvers.com: big-rig full-hookup 30/50amp pull-thru RV sites, nightly, Chiefland -> real RV park",
-    "waterfront_evidence": "satellite at 29.48903,-82.85588: large open RV lot east of road, no water anywhere in frame",
-    "website": "https://strawberryfieldsforrvers.com/",
-    "phone": "352-507-7035",
-    "note": "Transient/nightly RV park in Chiefland near Manatee Springs and Cedar Key; big-rig friendly spacious 30/50-amp full-hookup sites, bathhouse, laundry, community room, pickleball/shuffleboard/bocce. Nightly/weekly/monthly/seasonal rates; Harvest Hosts and Good Sam listed.",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "facilities": {
-      "showers": true,
-      "laundry": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://strawberryfieldsforrvers.com/rates ('Daily: $60', read 2026-10-16)",
-        "checked": "2026-10-16"
-      }
-    },
-    "note_scan": {
-      "sig": "bdf37e4f0df58b32",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": true
-    },
-    "fees": {
-      "nightly_low": 60,
-      "nightly_high": 60,
-      "currency": "USD",
-      "note": "Daily $60 tax included, for 2 adults."
-    }
-  },
-  {
     "id": 4769,
     "kind": "campground",
     "name": "Kelly's Countryside RV Park",
@@ -300261,8 +300375,8 @@
     "inclusion_evidence": "Operator site cove.campground.world: family camping/RV resort on Orange Lake, active booking system + phone -> real RV park",
     "waterfront_evidence": "satellite at 29.44997,-82.21366: MH/RV rows set ~100m+ back from Orange Lake behind a continuous marsh/wetland band; 'waterside' is marketing, RV pads not at shore",
     "website": "http://cove.campground.world/",
-    "phone": "352-591-1435",
-    "note": "On the shore of Orange Lake midway between Ocala and Gainesville. 49 full-hookup sites (30/50 amp) incl. pull-through and waterside sites; all dirt/grass (no concrete pads). Nightly, short-term, seasonal, and annual sites; restrooms, showers, dump, laundry. On-site boat ramp, rental slips, kayak rentals, fishing. RV Life 4.5 stars/$$; Good Sam 8/9.5/7.5.",
+    "phone": "352-484-2114",
+    "note": "On the shore of Orange Lake midway between Ocala and Gainesville, with waterside sites; all dirt/grass (no concrete pads). Nightly, short-term, seasonal and annual sites. On-site boat ramp, rental slips, kayak rentals, fishing. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -300280,23 +300394,26 @@
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "wifi": true,
+      "note": "Recreation building with six private bathrooms (tile shower, porcelain toilet); laundry with four washers and dryers; boat ramp to Orange Lake free for guests, kayak launch and rentals, covered and floating slips."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://cove.campground.world/rates.htm (30 AMP and 50 AMP site rates; 'Our rates include electricity, water, sewer, full-hook-up and free WiFi'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://cove.campground.world/rates.htm ('Pull-Thru' site rates), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://cove.campground.world/amenities.htm ('six individual Bathrooms with tile showers, porcelain toilet'; 'Our Laundry room has four modern washers and dryers'; boat ramp 'There's no charge if stay with us') + http://cove.campground.world/rates.htm ('free WiFi'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -300304,8 +300421,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "http://cove.campground.world/rates.htm ('Daily | $ 44.- | $ 49.-', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "http://cove.campground.world/rates.htm ('Back-in 30 AMP 50 AMP Daily $ 44.- $ 49.-'; 'Waterside ... $ 50.- $ 55,-'; 'Pull-Thru ... $ 50.- $ 55,-'; 'Rates are based on two adults, two kids, one RV and one car'), page carries no year; server Last-Modified 2026-01-25, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "http://cove.campground.world/reserve.htm (Firefly 'Reserve' link; 'Please call us for same day reservations ... 352-484-2114') + http://cove.campground.world/rules.htm (check-in/out), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -300320,7 +300443,19 @@
       "nightly_low": 44,
       "nightly_high": 55,
       "currency": "USD",
-      "note": "Back-in 30A $44, 50A $49; waterside and pull-through $50-55; for 2 adults and 2 kids."
+      "note": "Back-in 30-amp $44, 50-amp $49; waterside and pull-through $50 (30-amp) / $55 (50-amp); weekly $200-275, monthly $530-660. Rates include electricity, water, sewer and Wi-Fi, for two adults, two kids, one RV and one car; extra visitor or car $4 a day.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Reserve/Property/SportsmansCoveResort",
+      "note": "Book online through the park's Firefly Reservations page (linked from its site) or call 352-484-2114 / email cove@campground.world; same-day reservations by phone. Check-in 1 pm, check-out noon."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "http://cove.campground.world/ http://cove.campground.world/rates.htm http://cove.campground.world/amenities.htm http://cove.campground.world/reserve.htm http://cove.campground.world/rules.htm",
+      "note": "Operator's pages confirm $44 (back-in 30-amp) to $55 (waterside / pull-through 50-amp) nightly with full hookups, showers, laundry, Wi-Fi, pull-throughs; added online booking via the park's Firefly page. Rates page is undated (server Last-Modified Jan 2026); the Firefly engine carries a reCAPTCHA so no dated quote was taken. Not stated: site count (49 kept from note), dump station (kept as derived), season. Note trimmed of field facts and ratings."
     }
   },
   {
@@ -303885,7 +304020,7 @@
     "waterfront_evidence": "satellite at 26.682,-80.729: RV pads ring a small interior retention pond behind the Okeechobee levee; Lake Okeechobee/rim canal is far across the levee embankment",
     "website": "https://discover.pbc.gov/parks/pages/camping-southbay.aspx",
     "phone": "561-992-9045",
-    "note": "Palm Beach County Parks campground at the base of the Lake Okeechobee levee in South Bay (100 Levee Rd). 72 paved full-hookup RV sites (water/30-50-amp/sewer), grills, picnic tables. Boat ramp to Lake Okeechobee across the street; Okeechobee Scenic Trail atop the levee. Reservable online and by phone. RV Life $$, 4.5 stars. --Claude",
+    "note": "Palm Beach County Parks campground at the base of the Lake Okeechobee levee in South Bay (100 Levee Rd). Boat ramp to Lake Okeechobee across the street; Okeechobee Scenic Trail atop the levee. RVs must carry an RVIA (or equivalent) seal and current registration. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -303897,32 +304032,53 @@
       "sewer": true
     },
     "sites": {
-      "count": 72
+      "count": 72,
+      "note": "Paved RV sites, each with a grill and picnic table; tents welcome in designated areas (limited to 3 days in 60)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "phone",
+      "window_opens_days": 90,
+      "note": "No online booking: reserve by phone (561-992-9045, toll free 877-992-9915; office 8-4:30 daily) or email SBCamp@pbc.gov. Specific sites not guaranteed. Paid in full up to the first month; cancelling with under 24 hours' notice costs one night. Camping limited to 155 days in any 12 months."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://discover.pbc.gov/parks/CampingSouthBay/Features.aspx ('Full hook-ups with water, electric and sewer at every site (30 and 50 amp. electric service available)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://discover.pbc.gov/parks/CampingSouthBay/Features.aspx ('72 spacious, paved RV sites') + https://discover.pbc.gov/parks/CampingSouthBay/Rules-Regulations.aspx (tents), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://discover.pbc.gov/parks/CampingSouthBay/Reservations-Rates.aspx ('We're sorry that we are unable to provide online registration at this time ... over the telephone') + https://discover.pbc.gov/parks/CampingSouthBay/Rules-Regulations.aspx ('Reservations may be made up to 90 days prior to the arrival date'; 'Camping is limited to 155 days in any 12-month period'; 'We cannot guarantee specific campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://discover.pbc.gov/parks/CampingSouthBay/Features.aspx ('WiFi throughout the campground'; 'Two centrally located Comfort Stations provide coin laundry equipment, restroom, and hot shower facilities'; 'Dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "138c22cb82388c0c",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "dump": true,
+      "wifi": true,
+      "note": "Two comfort stations with coin laundry, restrooms and hot showers; air-conditioned recreation room; gated entrance."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://discover.pbc.gov/parks/pages/camping-southbay.aspx https://discover.pbc.gov/parks/CampingSouthBay/Features.aspx https://discover.pbc.gov/parks/CampingSouthBay/Reservations-Rates.aspx https://discover.pbc.gov/parks/CampingSouthBay/Rules-Regulations.aspx",
+      "note": "Palm Beach County's pages confirm 72 paved full-hookup sites (30/50-amp), showers, coin laundry, dump, Wi-Fi; booking is by phone/email only, up to 90 days ahead (platform phone and window added). Rates are not posted ('Please contact us for the most current rates'), so fees stay unknown. Note's 'Reservable online' was wrong (the county says no online registration) and dropped with the other field facts; RVIA-seal requirement added."
     }
   },
   {
@@ -304086,7 +304242,7 @@
     "waterfront_evidence": "satellite at 27.388,-80.310: RV loop's east sites are separated from the Savannas marsh/lake by a continuous scrub/treeline screen; open water not adjacent or in clear sightline",
     "website": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area",
     "phone": "772-464-7855",
-    "note": "St. Lucie County Parks campground in the 550-acre Savannas Preserve, Fort Pierce. Full-hookup RV sites (water/sewer/electric), hot showers, laundry. Reserve by phone or in person up to a year out (not site-specific, not online). RV Life $$, 4.5 stars. --Claude",
+    "note": "St. Lucie County Parks campground in the 550-acre Savannas Preserve, Fort Pierce. Reservations up to a year out, not site-specific. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -304098,31 +304254,39 @@
     },
     "facilities": {
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "wifi": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Camping registration by phone at 772-464-7855 or in person at the Trading Post (campground office). Tent sites are first-come, first-served. RV campers may stay up to 155 days in a 12-month period."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area ('Full RV Hookup Sites: Water, sewer, and electric connections available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area (Camping Amenities: 'Hot Showers', 'Public Restrooms', 'Laundry Room', 'WiFi for Guests'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area ('Camping registration and pavilion reservations can be made in person at the Trading Post or by calling 772-464-7855'; tent sites 'Designated areas available first-come, first-served') + https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area-camping-rules-and-regulations ('RV campers may stay up to 155 days within a 12-month period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-15"
+        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area (Campsite Rates tables, 'Full Site Nightly $22.32/night' May 1 - October 31, '$25.89/night' November 1 - April 30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area ('The Savannas is open year-round and offers opportunities for camping'; campsite rates published for May-October and November-April), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -304135,7 +304299,15 @@
       "nightly_high": 25.89,
       "currency": "USD",
       "checked": "2026",
-      "note": "St. Lucie County, plus tax: full sites $22.32 a night, $25.89 November 1 - April 30; tent sites $19.64. Read 2026-10-16."
+      "note": "St. Lucie County, plus tax: full-hookup sites $22.32 a night May 1 - October 31, $25.89 November 1 - April 30 (monthly $601.79 / $708.93); tent sites $19.64. Rent is due weekly in advance, paid in person at the Trading Post."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area (read in a browser; plain fetch refused) https://www.stlucieco.gov/departments-and-services/parks-recreation-department/savannas-recreation-area-camping-rules-and-regulations (read in a browser)",
+      "note": "Confirmed on St. Lucie County's own pages: $22.32 (May-Oct) / $25.89 (Nov-Apr) full-hookup nightly plus tax, water/sewer/electric, hot showers, laundry, Wi-Fi, booked by phone or at the Trading Post; added year-round season and the 155-days-a-year RV limit. Not stated: amperage, site count, rig length, booking window. Note trimmed of field facts and the rating line."
     }
   },
   {
@@ -926597,7 +926769,7 @@
     "inclusion_evidence": "sevenspringsrvpark.com live with 2026 daily rate; RV Life 4.5* $$ over 19 (tier passes); Google 4.2/203; re-check 2026-10-12: rates page: daily $60 incl. electricity and Wi-Fi",
     "website": "https://sevenspringsrvpark.com/",
     "phone": "727-376-0000",
-    "note": "RV park on Old County Rd 54 in New Port Richey, near the Gulf coast north of Tampa. 2026 daily $60 incl. electricity and Wi-Fi, weekly $360, monthly and seasonal too. RV Life 4.5*/$$ (auto 10/2026). --Claude",
+    "note": "Gated RV community on Old County Rd 54 in New Port Richey, near the Gulf coast north of Tampa; sites by the day, week, month or season, park models too. No dogs. --Claude  AGE-RESTRICTED: 55+. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -926605,22 +926777,35 @@
       "source": "rvlife"
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "laundry": true,
+      "note": "Three bath houses with laundries; solar-heated pool, clubhouse, fishing ponds; LP gas on site."
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://sevenspringsrvpark.com/ ('We have three bath houses with laundries conveniently located within the park'; sites with 'Wi-Fi'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://sevenspringsrvpark.com/rates/ ('Daily: $60 Electricity and WiFi included', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://sevenspringsrvpark.com/rates/ ('Site Rental Rates 2026-2027 Based on 2 people ... Daily: $60 Electricity and WiFi included'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "hookups": {
+        "source": "https://sevenspringsrvpark.com/ ('Sites are 35’ x 65’ with patio, 30/50 amp service, sewer, water, telephone and Wi-Fi'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://sevenspringsrvpark.com/rates/ ('Reservation Deposit: $300') + https://sevenspringsrvpark.com/ (phone, email, hours), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -926632,10 +926817,26 @@
       "nightly_low": 60,
       "nightly_high": 60,
       "currency": "USD",
-      "note": "2026-27 daily $60 with electricity, for 2."
+      "note": "2026-2027 daily $60 for 2 people, electricity and Wi-Fi included, sales-tax exempt; $3 per extra person a day. Weekly $360; monthly $550-850 by season plus metered electric; 180-day season $3,800 and a 3-month mid-winter package (signed lease). $300 reservation deposit; 3% off for cash.",
+      "checked": "2026"
     },
     "discounts": {
       "good_sam": true
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "No online booking; reserve by phone (727-376-0000) or email with a $300 deposit. Office 9-5 daily."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://sevenspringsrvpark.com/ https://sevenspringsrvpark.com/rates/",
+      "note": "Operator's 2026-27 rate page confirms $60/night for 2 incl. electric and Wi-Fi; added 30/50-amp full hookups, laundry, Wi-Fi, reservations by phone with a $300 deposit. Note trimmed of rates and rating; 55-plus and no-dogs caveats added. Not stated: site count, rig length, season, showers."
     }
   },
   {

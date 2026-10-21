@@ -121,6 +121,11 @@ me drop and report); each needs the research named before a verdict.
 - **388 Midway** — NPS page shows "Page In-Progress"; rec.gov is the only website for now.
 
 ## Resolved 2026-10-21
+- **p3-39 drops:** 4755 Sunset Isle (monthly/long-term only since 2022), 4768 Strawberry Fields ($60,
+  no gateway, primarily 55+). Kept: 727 Suwannee River Bend ($60+tax, no gateway) on its --AWH note;
+  14404 Seven Springs ($60, Tampa gateway 37 km; 55+, marked).
+  Site counts disagree: 4711 Santos 23/25/24, 4700 Stephen Foster 45 vs 39 on Reserve Florida.
+  382 St. Lucie South: rec.gov rule militaryDiscount=1, meaning unclear, not written.
 - **p3-38 drop:** 14386 Pellicer Creek ("mainly a long-term park", background checks on all
   occupants). Rodman 154 fees $19 -> $29 (the $12 base was the tent rate). Rodman / Ross Prairie
   (Cross Florida Greenway) are on floridastateparks.org + Reserve Florida: state:FL fits.
