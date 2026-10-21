@@ -68,3 +68,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **4813 Coe Landing (Leon Co.)** — county booking site marks six sites "Waterfront"; entry lakeview.
 - **4837 John Prince Park (Palm Beach Co.)** — county: "51 sites located on beautiful Lake Osborne",
   lakefront-site rules; entry lakeview.
+- **15417 Naples / Marco Island KOA** — KOA: "surrounded by the beautiful Rookery Bay", sites
+  "backed by trees and mangroves", boat ramp, creek fishing; entry not waterfront.

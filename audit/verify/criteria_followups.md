@@ -121,6 +121,9 @@ me drop and report); each needs the research named before a verdict.
 - **388 Midway** — NPS page shows "Page In-Progress"; rec.gov is the only website for now.
 
 ## Resolved 2026-10-21
+- **p3-37 drops:** 14407 Morningside RV Estates ($72.95, no gateway, mostly seasonal 55+), 14418 Oak
+  Grove RV Resort (rules admit only rigs 24 ft+; no posted rate). Notes: 151 Gold Head's Turkey Oak
+  loop closed for renovation since 2026-03; 4725 Myakka's park-wide drinking-water outage since 2025-10-28.
 - **p3-36 drop:** 4771 Lake Waldena Resort (Campspot $55-60, no gateway; as Countryside).
 - **p3-34 drop:** 4758 Gulf Breeze RV Park ($69, no gateway; nearly full on weekdays, 2-night engine).
 - **p3-33 drop:** 14395 Countryside RV Park ($55 on Campspot, no gateway; 55+ mostly seasonal).

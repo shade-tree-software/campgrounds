@@ -1,0 +1,90 @@
+{
+  "id": 387,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/246894",
+    "https://www.recreation.gov/api/camps/campgrounds/246894/rates",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 246894, fetched 2026-10-20)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (NPS campgrounds API, Monument Lake record)"
+  ],
+  "groups": {
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "08-15",
+        "closes": "04-15",
+        "note": "Closed for the summer, April 15 to August 15 (NPS lists a 'Seasonal Closure' 2027-04-15 to 2027-08-15)."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (Monument Lake operatingHours: 'Open August 15 through April 15'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (Monument Lake: 'NO HOOKUPS for electricity, sewer or water are available at this campground') + RIDB catalog (all 28 RV sites typed RV NONELECTRIC), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 38,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "recreation.gov lists 38 reservable sites (28 RV NONELECTRIC, 10 tent-only); the NPS record says 36 (26 RV, 10 tent). RV sites take 35-45 ft, two of them pull-throughs. The RV sites ring the lake, open with little or no shade; no fire rings or grills at the RV sites."
+      },
+      "source": "trip_data/ridb_campsites.json (facility 246894: Max Vehicle Length, Driveway Entry) + https://www.recreation.gov/api/camps/campgrounds/246894 ('The RV campsites surround the lake offering a view from every site. Each campsite is open with limited to no shade'; notice 'There are no fire rings or grills at the RV sites') + NPS campgrounds API (campsites totalSites 36, rvOnly 26, tentOnly 10), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": false,
+        "laundry": false,
+        "camp_store": false,
+        "note": "Flush toilets and drinking water are seasonal (with the campground). Showers: recreation.gov's amenity list says Showers, the NPS record says none. No cell coverage."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/246894 ('This campground offers flush toilets and drinking water') + NPS campgrounds API (amenities: toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'No', laundry 'No', campStore 'No', showers 'None', cellPhoneReception 'No'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "always",
+        "max_stay_nights": 14,
+        "note": "Reserve on recreation.gov or 877-444-6777; 'Any sites not reserved in advance are available on a first come first serve basis.' No cash: payment must be made online, and there is little or no cell coverage at the campground, so book ahead. 14 consecutive nights maximum."
+      },
+      "source": "NPS campgrounds API (reservationInfo) + https://www.recreation.gov/api/camps/campgrounds/246894 (facility_rules maxConsecutiveStay 14; notice 'Cash payments are not accepted at this campground. Payments must be made online. There is limited to no cell phone coverage at the campground, advance reservations are highly recommended.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "RV site $28 a night, tent site $24 (rec.gov 2026-08-15 to 2026-12-31 and 2027-01-01 to 2027-04-15 seasons)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/246894/rates (RV NONELECTRIC 28, TENT ONLY NONELECTRIC 24 for the 2026-27 seasons) + NPS campgrounds API (fees: 'fee for RV site' 28.00), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Spacious campsites situated around the lake in Big Cypress National Preserve.  --AWH",
+  "awh_superseded": [
+    {
+      "old": "38",
+      "source": "redundant: sites.count"
+    },
+    {
+      "old": "(28 RV and 10 tent only)",
+      "source": "redundant: sites.note (recreation.gov catalog: 28 RV NONELECTRIC, 10 TENT ONLY)"
+    }
+  ],
+  "summary": "Confirmed $28 RV rate (2026-27), no hookups, 38 sites (rec.gov; NPS says 36). Added season Aug 15 - Apr 15, max 45 ft with pull-throughs, flush toilets/water (seasonal), no dump/laundry/store, rec.gov booking with unreserved sites first-come and a 14-night max. Not stated: booking window (left inherited). Showers left unknown (rec.gov and NPS disagree). Note: dropped the site counts from AWH's text.",
+  "flags": [
+    "Missing phone: recreation.gov gives facility phone (239) 695-1205 (and '(239) 631-9988' for facility-specific information); NPS lists 239-695-4111 ext 3."
+  ]
+}
