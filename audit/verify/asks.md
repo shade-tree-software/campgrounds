@@ -5,7 +5,17 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-(none)
+8. **DWR's 300-ft rule vs. your WMA entries** — DWR's statewide camping rule
+   (https://dwr.virginia.gov/camping-on-wmas/): "It is unlawful to camp within 300 feet of any lake
+   or facility (building, boat ramp, etc.)". That collides with four entries:
+   - **123 C.F. Phelps (Kelly's Ford Bridge)** and **124 C.F. Phelps (Rogers Ford)**, both
+     riverfront: DWR's map shows each parking area as the boat-ramp lot, so camping in the lot
+     itself looks unlawful, and a legal spot 300 ft from the ramp is unlikely to be on the river.
+   - **254 Briery Creek** (lakefront: "camping/parking areas at the lakeshore") and **236 Amelia**
+     (lakefront: "one on the lake"): no legal camp spot can be within 300 ft of the lake.
+   Did DWR tell you camping is allowed in those lots when you confirmed the permits on 10-09?
+   If not: 123/124 drop (no legal place to camp at the named spot), and 254/236 come down to
+   lakeview at best (or not waterfront).
 
 ## Answered (AWH 2026-10-21)
 

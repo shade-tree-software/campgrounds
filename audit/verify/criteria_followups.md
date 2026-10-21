@@ -20,6 +20,10 @@ me drop and report); each needs the research named before a verdict.
 - **255 Bath County Recreational Campground** — kept by AWH 2026-10-11 as an FCFS utility area with
   no posted fee; p3-20 found no official site count, size limit or rate either (DWR: "Primitive
   Camping Only", "a small fee"). Stands on AWH's call.
+- **476 Crooked Creek WMA** — one of its two parking areas is "near the old concession building";
+  DWR's 300-ft rule (building/boat ramp) may bar camping there. The East Fork lot is unaffected.
+- **763 Burton Family Farm (Hipcamp)** — kept: sites 1, 3 and 10 are 2WD; Hipcamp marks 6, 8, 9
+  "four-wheel drive recommended" (note says so). Not the access road, so not the Rapidan case.
 
 ## Resolved 2026-10-21
 - **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a
