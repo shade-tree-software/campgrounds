@@ -76,8 +76,16 @@ me drop and report); each needs the research named before a verdict.
 - **Price gate, p3-27:** 974 Bayshore ($80), 981 Roaring Point ($63+ for 30A) carry --AWH notes;
   15441 DC/Capitol KOA ($78) is 25 km from Baltimore (gateway). All kept. Bayshore may be
   mostly seasonal (waiting list), no split published.
+- **827 Susquehanna** — DNR's 2022 camp sheet: "Out-of-State Residents, add $1 /night" (third MD
+  park pointing at the $1 non-resident fee); also a Golden Age Pass discount Sun-Thu.
+- **Potomac-Garrett SF (43, 41, 42, 44)** — DNR says nothing on road condition or unit length;
+  inclusion rests on AWH's firsthand notes. 43: Lostland Run Road closed at Campsite 22 (bridge).
+- **1150 Watkins** — "we do not offer RV camping ... Class B and Class C camper vans are
+  permitted": EKKO qualifies. Open Thu noon - Mon 11 am only.
 
 ## Resolved 2026-10-21
+- **64 St. John's Rock / 87 Wolf Den Run** — DROPPED under the off-road rule (ORV-trail campsites;
+  Maryland's ORV state park). Reported to AWH for a possible reversal.
 - **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
   woods ~250 m east of the lake, nowhere near the ramp; no problem.
 - **Long Run Road #1-#6 (520, 519, 522, 56, 57, 58)** — DROPPED under the 4WD rule: DWR's FR 72
