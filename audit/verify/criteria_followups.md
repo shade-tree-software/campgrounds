@@ -39,6 +39,7 @@ me drop and report); each needs the research named before a verdict.
 ## Resolved 2026-10-21
 - **Long Run Road #1-#6 (520, 519, 522, 56, 57, 58)** — DROPPED under the 4WD rule: DWR's FR 72
   page says the road "is recommended only for 4-wheel drive vehicles with high clearance".
+  **521 Western-Facing Campsite** (0.5 mi up FR 72C off FR 72) dropped on the same page.
 - **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a
   login, Google 16 reviews, no rate (RV Life's $ is a ~$1 placeholder).
 - **15518 Richmond North / Kings Dominion KOA** kept: base $35 (November weeknight); weekends and
