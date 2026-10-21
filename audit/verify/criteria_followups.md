@@ -167,8 +167,20 @@ me drop and report); each needs the research named before a verdict.
 - **4726 Livingston Creek (Lake Wales Ridge SF)** — hunt-season camp: open September-April,
   "reservable during scouting and hunting dates"; season recorded, kept.
 - **14869 Lakes RV** — 90-night online minimum for January-March arrivals; asked AWH.
+- **4822 Neals Landing (Jackson Co.)** — no official page says camping exists: the county lists it
+  only under boat ramps and landings; USACE's Lake Seminole camping list omits it; aggregators
+  split (AllStays 10 sites; a review says "closed for a while"). Inclusion rested on satellite only.
+  Asked AWH; call Jackson County Parks & Rec, 850-557-1564.
+- **4737 Mack Landing** — FS page $3/vehicle vs rec.gov Scan & Pay $10 (2026-10-01..12-31); left $3
+  (human read). Hickory Landing 4736 went to $10 on the same evidence - make them agree.
+- **385 Mitchell Landing (NPS Big Cypress)** — only sites 8 and 10 list a length, 14 ft; 23-ft fit
+  unproven.
+- **168 River Junction** — closes when Sumter County is under a tropical storm/hurricane warning.
 
 ## Resolved 2026-10-21
+- **p3-50:** drop 14433 Orange Blossom (park model for sale). 4823 Newport Park now reservable on
+  Rec1. 168 name spelling fixed. 14868 Orange Grove and 14877 Sanctuary: asked AWH (sells homes /
+  in-season 90-night minimum) - both in the Fort Myers exception.
 - **p3-49:** drop 14871 Gulf Waters (RVs must be 26 ft or longer; the Fort Myers exception is a price
   exception). 4821 renamed Hutch Gibson Park & Campground (Hamilton Co., so the Escambia
   surcharge follow-up stays with 4820 only). 14876 Imperial Bonita: 55+ (second occupant 45+)

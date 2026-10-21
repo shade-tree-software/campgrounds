@@ -97,3 +97,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   several RV sites "can get wet during ... high tides".
 - **4719 Karick Lake South (Blackwater River SF)** — ReserveAmerica marks 7 of 14 sites "Proximity to
   Water: Lakefront" (siteIds 1202-1214 even); entry lakeview.
+- **4823 Newport Park (Wakulla Co.)** — "nestled along the St. Marks River"; entry not waterfront (a
+  "short nature path" to the deck suggests the sites sit back).
+- **168 River Junction (Withlacoochee SF)** — ReserveAmerica marks sites 001, 014, 016 "Near Water";
+  entry and the --AWH note say not waterfront.
+- **14387 Panhandle RV Resort** (minor) — "Two Fishing Ponds ... right on the property".

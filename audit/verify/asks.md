@@ -144,10 +144,26 @@ access" to the 47-mile Ocala Centennial Trail; most of its notices are ORV regul
 a general campground with an OHV side (like Mack Lake ORV) and kept it. Say drop if it's a riders' camp.
 - **AWH 2026-10-21: keep.**
 
-## 14869 Lakes RV (Fort Myers exception) — 90-night winter minimum
+## Fort Myers exception parks closed to short winter stays (14869 Lakes RV, 14877 Sanctuary, 14868 Orange Grove)
+
+### 14869 Lakes RV — 90-night winter minimum
 Online, every RV rate for a January-March arrival needs 90 nights (four winter dates checked);
 single nights sell April-December ($65-120), and lakesrv.com posts winter daily prices anyway.
 It calls itself an extended-stay community and sells annual sites. It's in your Fort Myers
 family-proximity exception, which is a price exception; the standing-minimum rule would drop a
 park whose winter is closed to short stays, but winter is when you'd be visiting. Kept; minimum
 recorded in booking.min_stay. Say drop if winter-only-long-stay should exclude it.
+
+### 14877 Sanctuary RV Resort — 90-night in-season minimum (you confirmed it 2026-10-10)
+November and January arrivals sell only 90-180-night terms ("90 Night min"); single "Summer Daily"
+nights ($55-63, summer/early autumn) only. Kept; minimum recorded.
+
+### 14868 Orange Grove RV Park — sells homes, no winter nights online
+Titled "55+ RV & Manufactured Homes", featured homes at $34,900 and $14,900; Campspot sells
+November and April nights at $74-84 but offers no December-March nights at all (1, 7 and 31-night
+queries). Outside the exception this is the Ridge Manor rule (drop). Kept pending you.
+
+### 4822 Neals Landing (Jackson County, on Lake Seminole)
+No official page says there is camping: the county lists it only as a boat ramp/landing, USACE's
+Lake Seminole camping list omits it, and aggregators disagree (one review: "closed for a while").
+It was added on satellite evidence. Kept; drop if you'd rather not carry it unconfirmed.
