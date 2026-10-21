@@ -18,10 +18,11 @@ results/applied/). Entry-level `verify_scan` record (campground_schema.VERIFY_SC
 off the queue even when nothing changed. Verifier writes `method: manual` for the operator/agency
 page. Criteria problems are flags for me to decide (I may drop per the standing rules and report).
 
-**Progress / resume (2026-10-21, evening):** ~382 verified (batches p2-1..p3-17 applied, last
-commit d95de1e3). Batch `batches/p3-18.json` (12 VA) has a verifier RUNNING; if the session died,
-check results/ for its files, else relaunch (prompt saved in the session scratchpad as
-p318_prompt.txt; otherwise copy the latest Agent prompt from the transcript). AWH (10-20) cut back
+**Progress / resume (2026-10-21, late):** ~420 verified (batches through p3-22 applied, last
+commit 358ebff2; nothing pushed since ccbb5ed3). Batch `batches/p3-23.json` (12 VA: WMA 247,
+Hipcamp 760, Long Run Road #1-6 dispersed, Hone Quarry Ridge, Hurricane, Jamison Mill,
+McClintic Point) has a verifier RUNNING; prompt in the session scratchpad as p323_prompt.txt.
+If the session died, check results/ for its files, else relaunch. AWH (10-20) cut back
 to ONE verifier at a time (session limit). Loop per batch: review flags → fix result files (e.g.
 never clear a phase-5 good_sam false on private) → `apply.py --apply <ids>` → small python for
 phones/websites/names from flags (check URL 200 first; prepend agency page to website) → presence
@@ -30,7 +31,9 @@ waterfront_leads.md / criteria_followups.md / asks.md → commit → `queue.py -
 → launch verifier with the standard prompt (copy the latest Agent prompt from the transcript:
 README first, economical, privacy line, rules list; tell it `flock -o` for a background driver).
 Over-gate private flags: check `audit/price_research/gateways.py lat,lng` before dropping.
-Open: waterfront leads 806 Loraine (pin wrong, needs DCR map) and 1140 Glen Maury (riverside RV
-areas); asks.md #6 Bear Creek Lake A18; criteria_followups 14312 James Creek, 525 Grindstone,
-940 Tall Pines. Separate from phase 7: the below-the-dam screen ([[feedback_below_dam_not_lake]],
-audit/dam_screen/tiers.md, 75 flagged) is waiting on AWH's decision about hand checks.
+Open: asks.md #8 (DWR 300-ft rule vs WMA lot entries 123/124/254/236/482), #9 (Flagpole Knob
+road vs 4WD rule), #10 (four dam-screen downgrades, audit/dam_screen/decisions_pending.json,
+apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). Dam screen: 69 of
+75 flags confirmed and committed (d70ff04f); 3900 Bond Falls / 3532 Totogatic need re-pinning
+(waterfront_leads.md). Canada lakes not screened. rec.gov `soft` minimums are now RULES
+(AWH 10-21, see [[feedback_minimum_stay]]).

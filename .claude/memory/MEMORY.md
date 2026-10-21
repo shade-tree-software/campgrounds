@@ -11,7 +11,7 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [Phase 7 verification](project_phase7_verification.md) — under way since 2026-10-20, ~382 verified by 10-21 eve (p3-18 running); one verifier at a time; loop + resume point in file
+- [Phase 7 verification](project_phase7_verification.md) — under way since 2026-10-20, ~420 verified by 10-21 late (p3-23 running); one verifier at a time; loop + resume point in file
 - [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way; next id 15531
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
@@ -107,7 +107,7 @@
 - [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — off-road parks + OHV staging camps of any owner are out, general campgrounds with an OHV side stay (AWH 2026-10-02)
 - [Wildlife-agency camping: agency-designated sites](feedback_wildlife_agency_camping.md) — MDC/KS fishing lakes/NE WMAs: agency-designated campsites qualify as `state`; parking-lot allowances do not
 - [Verify image reads rendered](feedback_verify_image_reads.md) — image Reads can silently fail ("media removed: request limit"); never write satellite evidence from a read with no pixels
-- [Standing minimums](feedback_minimum_stay.md) — SINCE 2026-10-19 I may DROP any park requiring 3+ nights outside weekends/holidays (report which); a 2-night standing minimum stays if marked
+- [Standing minimums](feedback_minimum_stay.md) — SINCE 2026-10-19 I may DROP any park requiring 3+ nights outside weekends/holidays (report which); a 2-night standing minimum stays if marked; rec.gov "soft" minimums are rules (10-21)
 - [Mandatory entry fees count toward price](feedback_mandatory_fees_count.md) — resort day/grounds fees per person are part of the nightly rate for the $50 gate (Avalon skipped, AWH 2026-09-30)
 - [One headless browser at a time](feedback_limit_headless_browsers.md) — AWH 2026-10-03: parallel gm.py/rates.py Chrome instances ate memory+CPU; run helpers sequentially, batch queries into one gm.py call with -u
 - [Skip Sun brands; KOA skip RETIRED](feedback_skip_sun_koa_brands.md) — Sun Outdoors/Retreats still pre-skipped; KOAs vetted like any private park since AWH 2026-10-19 (koa.py quotes them)
