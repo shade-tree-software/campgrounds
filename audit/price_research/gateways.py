@@ -7,14 +7,17 @@ National Parks, etc.)". Working definition, applied to every over-gate private e
     - the downtown of a metro area of 1 million or more (US MSAs, 2020 census; Canadian CMAs, 2021 census),
     - an entrance or main visitor center of a US national park or a Parks Canada national park
       (Alaska, Hawaii and the territories are out of scope), or
-    - one of a short list of nationally known destinations (ATTRACTIONS).
+    - one of a short list of nationally known destinations (ATTRACTIONS), or
+    - a family home (AWH 2026-10-21): every kind "family" entry in the gitignored trip_data/family.json,
+      read at import so no address lands in this tracked file. Reported as "family home" with no name,
+      because these labels get copied into tracked evidence strings. No family.json = no family points.
 
 Points are approximate (a few km); the radius is generous enough that this doesn't matter. National recreation
 areas, monuments and seashores count only where they are on the attractions list.
 
 python3 -I gateways.py LAT,LNG [...]   prints the gateways within reach of each point.
 """
-import math, sys
+import json, math, os, sys
 
 RADIUS_KM = 40
 
@@ -120,6 +123,20 @@ ATTRACTIONS = {
 }
 
 
+
+def _family_homes():
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "trip_data", "family.json")
+    try:
+        rows = json.load(open(path, encoding="utf-8"))
+    except (OSError, ValueError):
+        return []
+    return [tuple(map(float, e["location"].split(","))) for e in rows
+            if e.get("kind") == "family" and e.get("location")]
+
+
+FAMILY_HOMES = _family_homes()
+
+
 def km(a, b):
     la1, lo1, la2, lo2 = map(math.radians, (a[0], a[1], b[0], b[1]))
     h = math.sin((la2 - la1) / 2) ** 2 + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2
@@ -132,6 +149,7 @@ def gateways(lat, lng, radius=RADIUS_KM):
     out = [(km(p, c), "metro", n) for n, c in METROS.items()]
     out += [(min(km(p, c) for c in cs), "national park", n) for n, cs in NATIONAL_PARKS.items()]
     out += [(km(p, c), "attraction", n) for n, c in ATTRACTIONS.items()]
+    out += [(min(km(p, c) for c in FAMILY_HOMES), "family", "family home")] if FAMILY_HOMES else []
     return sorted(x for x in out if x[0] <= radius)
 
 
@@ -139,7 +157,9 @@ def nearest(lat, lng, n=3):
     """The n nearest gateway points of any kind, for a report line."""
     return sorted([(km((lat, lng), c), "metro", k) for k, c in METROS.items()]
                   + [(min(km((lat, lng), c) for c in cs), "national park", k) for k, cs in NATIONAL_PARKS.items()]
-                  + [(km((lat, lng), c), "attraction", k) for k, c in ATTRACTIONS.items()])[:n]
+                  + [(km((lat, lng), c), "attraction", k) for k, c in ATTRACTIONS.items()]
+                  + ([(min(km((lat, lng), c) for c in FAMILY_HOMES), "family", "family home")]
+                     if FAMILY_HOMES else []))[:n]
 
 
 if __name__ == "__main__":
