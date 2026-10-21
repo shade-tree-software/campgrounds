@@ -13,6 +13,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1140 Glen Maury Park (VA, City of Buena Vista)** — stored riverview. The city's camping page
   (2026 kiosk map) names lower-campground RV areas "Riverside" (sites 104-115) and "Water's Edge"
   on the Maury River. Names alone prove nothing; needs the map + satellite for pads at the bank.
+- **13086 Riverside Campground (VA, Holston)** — stored not waterfront. Operator: "2,000 feet of
+  scenic river frontage along the North Fork Holston River", fishing "right from your campsite",
+  tent/pop-up sites "most situated right on the river". The question is whether any of the 94
+  full-hookup RV sites front the river; needs the site map + satellite.
 
 ## Resolved 2026-10-21 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 

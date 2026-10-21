@@ -33,6 +33,10 @@ DROPS = {
             "Ivanhoe Civic League's only page is a login-walled Facebook page; no operator page posts a rate; "
             "Google Maps 'Ivanhoe Jubilee Park Show Grounds' (4.7 over 43 reviews, open) carries no phone or website - "
             "the only phone is on Campendium. Horse-only question also unverifiable. Read 2026-10-21."),
+    13090: ("2026-10-21", "no live presence (private presence rule)",
+            "No operator website (only a login-walled Facebook page and tourism-directory listings); "
+            "Google Maps 'Lonesome Pine RV Park & Campground' has a phone but 16 reviews (under 25); "
+            "no posted rate, and RV Life's $ rests on a placeholder ~$1 average. Read 2026-10-21."),
 }
 
 if __name__ == "__main__":

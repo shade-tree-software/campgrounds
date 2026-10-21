@@ -14,6 +14,11 @@ me drop and report); each needs the research named before a verdict.
   own word (site map / call) before any verdict.
 
 ## Resolved 2026-10-21
+- **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a
+  login, Google 16 reviews, no rate (RV Life's $ is a ~$1 placeholder).
+- **15518 Richmond North / Kings Dominion KOA** kept: base $35 (November weeknight); weekends and
+  season run $71-150, and it is 34 km from Richmond (gateway).
+- **1131 Parkview RV Park** kept: static 2022 site with no rates, phone; RV Life $$ is the price indicator.
 - **13095 Jubilee Park and Horse Show Grounds (VA)** dropped (criteria_drops.py): login-walled
   Facebook only, no operator rate, Google listing (43 reviews) has no phone.
 - **894 Chincoteague Bay RV Resort** kept: base $59 ($49 + $10 resort fee) is over the gate but it

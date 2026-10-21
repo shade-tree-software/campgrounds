@@ -1,0 +1,47 @@
+{
+  "id": 40,
+  "checked": "2026-10-21",
+  "sources": ["https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm", "https://www.recreation.gov/api/camps/campgrounds/251534", "https://www.recreation.gov/api/camps/campgrounds/251534/rates"],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD"},
+      "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS campground data behind the page, via the NPS data API: 'Otter Creek Campground Fee' 30.00) + https://www.recreation.gov/api/camps/campgrounds/251534/rates (2026 season, RV NONELECTRIC $30), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/251534 notice ('There are no showers. No electric, water, or sewer hook-ups are available.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 68, "max_rig_ft": 45, "pull_through": true, "note": "68 sites: 23 RV, 45 tent-only (NPS). Catalogued RV driveways run 16-66 ft, eight of them pull-through; the NPS says Virginia law limits RVs to 45 ft and trailers to 28.5 ft (65 ft combined)."},
+      "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS campground data: totalSites 68, rvOnly 23, tentOnly 45; rvInfo 'VA state laws limit RVs to 45' in length and trailers to 28.5'') + RIDB campsite catalog for 251534 (trip_data/ridb_campsites.json, fetched 2026-10-20), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": false, "flush_toilets": true, "potable_water": true, "dump": true, "laundry": false, "camp_store": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/251534 ('flush toilets, drinking water and a dump station'; notice 'There are no showers') + https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS amenities: Flush Toilets - seasonal, Showers None, Dump Station Yes - seasonal, Laundry No, Camp Store No), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-22", "closes": "10-25", "note": "2026 season Friday, May 22 - Sunday, October 25 ('Closed for Winter' October 26 - May 21). The dates move each year."},
+      "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (operating hours from the NPS data behind the page: 'Friday, May 22, 2026 - Sunday, October 25, 2026', exception 'Closed for Winter' 2026-10-26 to 2027-05-21), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 30, "reserve_until": {"relative_to": "arrival", "offset_hours": 0}, "note": "recreation.gov: 'Reservation Only basis ... up to and including the day of arrival. If Reservable sites are still not formally reserved upon arrival, they may be reserved at that time on www.recreation.gov or for a one night stay through the on duty attendant.' The NPS page data instead says sites are first-come with some reservable up to six months ahead (29 reservable, 39 first-come); the two official sources disagree. 30 days per year. Kiosk open 9:30 AM-6 PM in season."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/251534 (notice; facility_rules reservationCutOff 0, maxConsecutiveStay 30, maxStay 30 days 'Each Year') + https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS reservationInfo), read 2026-10-21",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS fee description: 'Holders of the Interagency Senior, Access, Golden Age, or Golden Access passes are entitled to a 50% discount on the base fee'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $30/night, no hookups, recreation.gov booking and the Senior/Access 50% discount. Added 2026 season May 22 - Oct 25, 68 sites (23 RV) with pull-throughs, RVs to 45 ft per NPS, flush toilets, water, dump, no showers, 30-night limit, booking to the day of arrival. FCFS left unset: rec.gov says reservation-only (attendant books unreserved sites one night), NPS data says mostly first-come. Window not stated beyond NPS's 'six months' (inherited 180 matches).",
+  "flags": [
+    "Missing phone: Otter Creek campground 434-299-5125 (May-October; rec.gov facility phone and NPS contact).",
+    "Booking conflict between official sources: rec.gov says Reservation Only (all sites reservable), NPS's campground data says 39 of 68 sites first-come. fcfs not written."
+  ]
+}

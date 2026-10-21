@@ -2083,24 +2083,93 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233403 notice ('There are no showers. No electric, water, or sewer hook-ups are available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233403/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (NPS campground data behind the page, via the NPS data API: 'Peaks of Otter Campground Fee' 30.00) + https://www.recreation.gov/api/camps/campgrounds/233403/rates (2026 season, RV NONELECTRIC $30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (NPS campground data: totalSites 139, rvOnly 51, tentOnly 88; rvInfo 'VA state laws limit RVs to 45' in length') + https://www.recreation.gov/api/camps/campgrounds/233403 ('60 sites available for advance reservation, there are 79 first-come, first-served campsites') + RIDB campsite catalog for 233403 (trip_data/ridb_campsites.json, fetched 2026-10-20), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233403 ('flush toilets, drinking water and a dump station'; 'There are no showers'; Sharp Top Country Store 'within walking distance') + https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (NPS amenities: Flush Toilets - seasonal, Showers None, Dump Station, Camp Store Yes - seasonal, Laundry No), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (operating hours from the NPS data behind the page: 'Friday, May 22, 2026 - Sunday, October 25, 2026', exception 'Closed for Winter' 2026-10-26 to 2027-05-21), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233403 (description; facility_rules reservationCutOff 1 'day(s) prior to arrival', maxConsecutiveStay 30, maxStay 30 days 'Each Year'; notice 'Some campsites at this facility are available on a first-come, first-served basis') + https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (NPS reservationInfo 'up to six months in advance', kiosk hours), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm (NPS fee description: 'Holders of the Interagency Senior, Access, Golden Age, or Golden Access passes are entitled to a 50% discount on the base fee'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD"
-    }
+    },
+    "sites": {
+      "count": 139,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "139 sites: 51 RV, 88 tent-only (NPS); 60 reservable, 79 first-come. Catalogued RV driveways run 18-77 ft, 29 pull-through; the NPS says Virginia law limits RVs to 45 ft and trailers to 28.5 ft (65 ft combined)."
+    },
+    "facilities": {
+      "showers": false,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "laundry": false,
+      "camp_store": true,
+      "note": "Camp store is the concession Sharp Top Country Store, within walking distance (camping supplies, firewood, ice); Peaks of Otter Lodge restaurant nearby."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "10-25",
+      "note": "2026 season Friday, May 22 - Sunday, October 25 ('Closed for Winter' October 26 - May 21). The dates move each year."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 30,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "60 sites reservable on recreation.gov (up to six months ahead per NPS); 79 first-come, booked in person at the campground kiosk (9:30 AM-6 PM), status not shown online. 'Peaks of Otter Campground almost always has campsites available.' Reservations close 1 day before arrival; 30 days per year."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.nps.gov/blri/planyourvisit/peaks-otter-cg.htm https://www.recreation.gov/api/camps/campgrounds/233403 https://www.recreation.gov/api/camps/campgrounds/233403/rates",
+      "note": "Confirmed $30/night, no hookups, recreation.gov booking, six-month window and Senior/Access 50% discount. Added 2026 season May 22 - Oct 25, 139 sites (51 RV, 79 first-come), pull-throughs, RVs to 45 ft per NPS, flush toilets, water, dump, camp store, no showers, 30-night limit, booking closes the day before arrival."
+    },
+    "phone": "540-586-7321"
   },
   {
     "id": 40,
@@ -2127,24 +2196,91 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251534 notice ('There are no showers. No electric, water, or sewer hook-ups are available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251534/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS campground data behind the page, via the NPS data API: 'Otter Creek Campground Fee' 30.00) + https://www.recreation.gov/api/camps/campgrounds/251534/rates (2026 season, RV NONELECTRIC $30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS campground data: totalSites 68, rvOnly 23, tentOnly 45; rvInfo 'VA state laws limit RVs to 45' in length and trailers to 28.5'') + RIDB campsite catalog for 251534 (trip_data/ridb_campsites.json, fetched 2026-10-20), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251534 ('flush toilets, drinking water and a dump station'; notice 'There are no showers') + https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS amenities: Flush Toilets - seasonal, Showers None, Dump Station Yes - seasonal, Laundry No, Camp Store No), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (operating hours from the NPS data behind the page: 'Friday, May 22, 2026 - Sunday, October 25, 2026', exception 'Closed for Winter' 2026-10-26 to 2027-05-21), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251534 (notice; facility_rules reservationCutOff 0, maxConsecutiveStay 30, maxStay 30 days 'Each Year') + https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS reservationInfo), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm (NPS fee description: 'Holders of the Interagency Senior, Access, Golden Age, or Golden Access passes are entitled to a 50% discount on the base fee'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD"
-    }
+    },
+    "sites": {
+      "count": 68,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "68 sites: 23 RV, 45 tent-only (NPS). Catalogued RV driveways run 16-66 ft, eight of them pull-through; the NPS says Virginia law limits RVs to 45 ft and trailers to 28.5 ft (65 ft combined)."
+    },
+    "facilities": {
+      "showers": false,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "laundry": false,
+      "camp_store": false
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "10-25",
+      "note": "2026 season Friday, May 22 - Sunday, October 25 ('Closed for Winter' October 26 - May 21). The dates move each year."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 30,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": 0
+      },
+      "note": "recreation.gov: 'Reservation Only basis ... up to and including the day of arrival. If Reservable sites are still not formally reserved upon arrival, they may be reserved at that time on www.recreation.gov or for a one night stay through the on duty attendant.' The NPS page data instead says sites are first-come with some reservable up to six months ahead (29 reservable, 39 first-come); the two official sources disagree. 30 days per year. Kiosk open 9:30 AM-6 PM in season."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.nps.gov/blri/planyourvisit/otter-creek-cg.htm https://www.recreation.gov/api/camps/campgrounds/251534 https://www.recreation.gov/api/camps/campgrounds/251534/rates",
+      "note": "Confirmed $30/night, no hookups, recreation.gov booking and the Senior/Access 50% discount. Added 2026 season May 22 - Oct 25, 68 sites (23 RV) with pull-throughs, RVs to 45 ft per NPS, flush toilets, water, dump, no showers, 30-night limit, booking to the day of arrival. FCFS left unset: rec.gov says reservation-only (attendant books unreserved sites one night), NPS data says mostly first-come. Window not stated beyond NPS's 'six months' (inherited 180 matches)."
+    },
+    "phone": "434-299-5125"
   },
   {
     "id": 41,
@@ -22956,8 +23092,8 @@
   },
   {
     "id": 431,
-    "phone": "703-471-5415",
-    "website": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping\nhttps://fairfax.usedirect.com/FairfaxFCPAWeb/Facilities/SearchViewUnitAvailabity.aspx",
+    "phone": "703-471-5414",
+    "website": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping\nhttps://fairfax.usedirect.com/FairfaxFCPAWeb/#!park/7931/3163",
     "kind": "campground",
     "location": "38.9625,-77.3220",
     "name": "Lake Fairfax Park Campground",
@@ -22984,13 +23120,76 @@
       "nightly_high": 55,
       "currency": "USD",
       "checked": "2026",
-      "note": "Fairfax County Park Authority: 20/30-amp sites $40 weekdays, $44 weekends; 50-amp $50/$55; no electric $32/$37; 9% county occupancy tax from May 1, 2026. Read 2026-10-15."
+      "note": "Fairfax County Park Authority 2026 table: 20/30-amp sites $40 weekdays, $44 weekends/holidays; 20/30/50-amp $50/$55; non-electric sites ($32/$37) are tent-only on the booking site. A 9% county transient occupancy tax is added from May 1, 2026 (the booking site quoted a 20/30-amp site at $43.60 for Tue 2026-11-03). Dump station free for registered campers."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping (audit/price_research/local_va_2026-10-15/va_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping (Camping Fees table, '*Effective May 1, 2026, a 9% Fairfax County transient occupancy tax') + https://fairfaxrdr.usedirect.com/FCPARDR/RDR/search/details (booking-site quote for Mixed Use (Electric) #2, 2026-11-03), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping ('RV electrical hookups (30 and 50 amp)'; 'Fresh water fill-up station (no water on sites)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://fairfaxrdr.usedirect.com/FCPARDR/RDR/search/grid (FacilityId 3163, the Lake Fairfax 'Reserve' link) + unit details pages, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping ('Restrooms and showers'; 'Fresh water fill-up station'; 'Dump station use is complimentary for registered campers') + booking-site unit amenities ('Flushing toilets', 'Hot Showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fairfaxcounty.gov/parks/sites/parks/files/Assets/documents/waterfront/campsite-reservation-guide.pdf ('OPEN YEAR-ROUND: 50 & 30 amp RV, 5th Wheel and Travel Trailer sites'; 'OPEN APRIL-NOVEMBER: Tent, Large and Small Group Camping Sites') + camping page ('Tent and Group camping is open April 1-November 30 only'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://fairfaxrdr.usedirect.com/FCPARDR/RDR/search/grid (Restrictions: FutureBookingEnds 2027-10-21, MaximumStay 14) + https://www.fairfaxcounty.gov/parks/lake-fairfax/camping + reservation guide PDF (Stay Limits), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false
+    },
+    "sites": {
+      "count": 93,
+      "note": "Booking site lists 93 units: 30 RV Only (Full Electric), 10 Mixed Use (Full Electric), 14 Mixed Use (Electric, 20/30 amp), 18 Tent Only (Non-Electric), 21 small/large group sites. Sampled pads: 55 ft (RV Only #1) and 48 ft (Mixed Use Electric #2), both back-in. 'Spacious campsites that are both big-rig and tent friendly.'"
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": true,
+      "note": "RV sites (30 and 50 amp) open year-round; tent and group camping April 1 - November 30 only."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "usedirect",
+      "url": "https://fairfax.usedirect.com/FairfaxFCPAWeb/#!park/7931/3163",
+      "window_opens_days": 365,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booking site restrictions: bookable from today to 12 months ahead, 1-14 nights. Stay limits: 14 consecutive days April-October, 28 December-March (RV only). '2-night minimum stay required on holidays' (Memorial Day, July 4, Labor Day). Changes/cancellations free 60+ days out, $25 fee 14-59 days, first night lost 3-13 days, first two nights lost within 2 days. Check in at the park's main office."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fairfaxcounty.gov/parks/lake-fairfax/camping https://www.fairfaxcounty.gov/parks/sites/parks/files/Assets/documents/waterfront/campsite-reservation-guide.pdf https://fairfax.usedirect.com/FairfaxFCPAWeb/#!park/7931/3163",
+      "note": "Confirmed fees $40-55 (2026 table; $32 non-electric sites are tent-only). Added 50-amp electric with no water at sites, 93 units (54 electric RV-capable, pads 48-55 ft sampled), showers/flush toilets/water fill/dump, RV sites year-round (tents Apr-Nov), USEdirect booking 12 months out, 14-night max (28 Dec-Mar), 2-night holiday minimum. Sewer, pull-throughs and overall max length not stated."
     }
   },
   {
@@ -25193,7 +25392,8 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "Campsites are limited to one RV or two tents, no more than two vehicles and eight people per site."
     },
     "provenance": {
       "sites": {
@@ -25202,13 +25402,29 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground ('This campground operates on a first-come, first-served basis'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground ('Fee Site and Info | Overnight Use: | Single Site: $5 per night | Camping: $5.00 per site per night. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground ('Camping: $5.00 per site per night'; page last updated May 1, 2025), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground ('Seasons of Use: early-March - late-December'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground ('Restrooms: Vault toilet(s)'; 'Potable water is not available at this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground (Passes and Permits), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -25220,7 +25436,25 @@
       "nightly_low": 5,
       "nightly_high": 5,
       "currency": "USD"
-    }
+    },
+    "season": {
+      "year_round": false,
+      "note": "Open early March to late December (no exact dates published)."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'The America the Beautiful Senior and Access Passes provide a 50% discount to the base campsite fee.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/north-river-campground",
+      "note": "Forest Service page (updated May 2025) confirms $5/night, first-come first-served, Senior/Access 50% discount; adds season early March - late December, vault toilets, no potable water. Site count not stated (9 left from AWH's note)."
+    },
+    "phone": "540-432-0187"
   },
   {
     "id": 487,
@@ -27992,7 +28226,7 @@
     "name": "Newport News Park",
     "elevation_meters": 20.0,
     "note": "Park is located on the city reservoir.  Some campsites appear to be waterfront. --AWH",
-    "website": "https://nnparksandrec.org/newportnewspark/",
+    "website": "https://nnparksandrec.org/camping/\nhttps://nnparksandrec.org/newportnewspark/",
     "waterfront": "lakefront",
     "inclusion_evidence": "nnparksandrec.org: 188 year-round campsites, electric/water hookups, concrete pads -> real RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Park is located on the city reservoir.  Some campsites appear to be waterfront.",
@@ -28008,7 +28242,63 @@
       "sig": "b4e7dd028aa9231b",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "hookups": {
+      "water": true
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://nnparksandrec.org/camping/ ('Electrical and water hookups'; site types No Utilities / Electric Only / Electric and Water; amperage not stated), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://nnparksandrec.org/camping/ ('Number of campsites: 188'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://nnparksandrec.org/camping/ ('Heated showers and flush toilets', 'Laundry facilities', 'A camper store for food and supplies', 'Centralized sewage disposal station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://nnparksandrec.org/camping/ ('Campsite Office Hours: 7am to 9pm (April through October) and 7am to 7pm (November through March)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://nnparksandrec.org/camping/ ('To make a camping reservation, call (757) 888-3333 or toll free at (800) 203-8322'; 'Standard Deposit: First Night Stay'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      }
+    },
+    "sites": {
+      "count": 188
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "laundry": true,
+      "camp_store": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": true,
+      "note": "Campsite office open 7am-9pm April-October and 7am-7pm November-March."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://secure.rec1.com/VA/newport-news-va/catalog",
+      "note": "Reserve by phone (757) 888-3333 or toll free (800) 203-8322, or online through the city's Rec1 catalog (the camping page's 'Reserve Now'). Deposit is the first night. Check-in 2 PM, check-out 12 PM."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://nnparksandrec.org/camping/ https://secure.rec1.com/VA/newport-news-va/catalog",
+      "note": "City camping page: 188 sites with electric and water hookups (amperage not stated), heated showers/flush toilets, laundry, camp store, dump station, campsite office open all year, reservations by phone or Rec1. Rates (no utilities $33, electric $39, electric+water $40, seniors 60+ $2 off, excl. tax) are undated on the page, so fees not written."
+    },
+    "phone": "757-888-3333"
   },
   {
     "id": 539,
@@ -33739,24 +34029,86 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('Hook-ups and dump stations are not available at Oak Ridge Campground') + https://www.recreation.gov/api/camps/campgrounds/233379 notices ('RV Hookups. Hookups are not available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233379/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('$26 - per site, per night'; 'A park entrance fee is required in addition to camping fees') + https://www.recreation.gov/api/camps/campgrounds/233379/rates (2026 and 2027 peak seasons, STANDARD NONELECTRIC $26), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm (RV Length Limits) + https://www.recreation.gov/api/camps/campgrounds/233379 ('a 100-site, wooded campground') + RIDB campsite catalog for 233379 (trip_data/ridb_campsites.json, fetched 2026-10-20), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('Each loop has restrooms featuring sinks and flush toilets and the \"B\" loop restroom has showers'; 'Hook-ups and dump stations are not available') + https://www.recreation.gov/api/camps/campgrounds/233379 notices, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('Open: first of March to end of November'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('Reservation Only - first of March to end of November'; 'Reservations must be made at Recreation.gov or by calling 1-877-444-6777') + https://www.recreation.gov/api/camps/campgrounds/233379 (facility_rules maxConsecutiveStay 15, maxStay 30 each year, reservationCutOff 0; 'Reservation Maximum' notice), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm ('$13 - per site, per night - for Senior/Access pass holders'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "note": "$26 per site per night; $13 for Senior/Access pass holders. A park entrance fee is charged in addition to camping fees."
+    },
+    "sites": {
+      "count": 100,
+      "max_rig_ft": 32,
+      "pull_through": false,
+      "note": "Motorhomes up to 32 ft and 12 ft high; trailers and fifth wheels up to 26 ft. 36 of the 99 catalogued sites take RVs, all back-in (catalog max vehicle length 32 ft); the rest are tent-only."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": false,
+      "note": "Showers in the B loop only. A and C loop comfort stations close early November; Loop B stays open until the campground closes. Firewood not sold. Generators prohibited in all C loop sites and during quiet hours."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-30"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 15,
+      "note": "Reservations only (recreation.gov or 1-877-444-6777), bookable up to the day of arrival. Maximum 15 consecutive nights and 30 nights per calendar year (waiver possible at the visitor center). Max three tents and six people per site; no organized groups. Check-out noon."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.nps.gov/prwi/planyourvisit/oakridge.htm https://www.recreation.gov/api/camps/campgrounds/233379 https://www.recreation.gov/api/camps/campgrounds/233379/rates",
+      "note": "Confirmed $26/night, no hookups, recreation.gov booking and Senior/Access half price for this campground. Added reservations-only (fcfs never), 15-night max (30/yr), March 1 - Nov 30 season, 100 sites, motorhomes to 32 ft (trailers 26), all back-in, flush toilets, B-loop showers, no dump. Booking window not stated (inherited 180 left)."
+    },
+    "phone": "703-221-7181"
   },
   {
     "id": 628,
@@ -57466,10 +57818,33 @@
     },
     "provenance": {
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://parkviewrvparkva.com/ (Good Sam banner on the park's own home page: 'Join Good Sam RV Club Today and save 10% on Campground Fees') + Good Sam directory (isGsPark), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://parkviewrvparkva.com/ ('Open Year Round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://parkviewrvparkva.com/, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "'Call For Reservation': office (434) 352-2366, after hours (434) 665-8418. No online booking."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://parkviewrvparkva.com/",
+      "note": "Operator's one-page site (copyright 2022, last modified 2022-10-13): open year-round, big-rig friendly, reservations by phone, Good Sam 10% banner. No rates, hookups, site count or amenities stated; nothing else written."
     }
   },
   {
@@ -58173,25 +58548,26 @@
     },
     "sites": {
       "count": 53,
-      "max_rig_ft": 40,
-      "pull_through": true
+      "pull_through": true,
+      "note": "'Sites are available to accommodate most all sizes of recreational vehicles or tents (some are pull-through).' No length is published; the 40 ft came from note prose with no operator source."
     },
     "season": {
       "year_round": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "note": "'Regular season reservations are accepted with deposit beginning April 1. Guests will need to register at the park headquarters.' Cash, money orders or checks only; no credit cards. Campers must be set up by 9 p.m. Superintendent's Office 540-463-4164."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.rockbridge.va.us/272/Facilities ('All sites have a fire ring, picnic table, water and electricity'; 'Camping Fees include water and electricity hookups'; amperage not stated), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.rockbridge.va.us/272/Facilities ('There are 53 campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -58199,16 +58575,41 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.rockbridge.va.us/272/Facilities, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.co.rockbridge.va.us/272/Facilities ('Comfort stations with individual showers, dressing rooms, and laundry rooms'; 'Disposal dumping station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.co.rockbridge.va.us/272/Facilities ('Golden Age Passport discounts for trailers are $30 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "5c9412dac6bff315",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "dump": true
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "The county page gives a 'Golden Age Passport' (federal senior pass) rate for trailers: $30 against the $40 camper rate."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.co.rockbridge.va.us/270/Lake-A-Willis-Robertson https://www.co.rockbridge.va.us/272/Facilities",
+      "note": "Rockbridge County's own page: 53 sites, all with water and electricity, some pull-throughs, reservations with deposit from April 1, showers/laundry/dump, Golden Age Passport discount. Cleared max_rig_ft 40 (note-derived; county says only 'most all sizes'). Rates ($40 campers, $35 tents, $30 Golden Age) are undated on the page, so fees not written. Amperage, campground season dates (the page lists park hours only) not stated; season left as recorded."
+    },
+    "website": "https://www.co.rockbridge.va.us/270/Lake-A-Willis-Robertson"
   },
   {
     "id": 1142,
@@ -848015,12 +848416,15 @@
       "sewer": true
     },
     "sites": {
-      "count": 94,
-      "pull_through": true
+      "count": 116,
+      "pull_through": true,
+      "note": "94 full-hookup sites (30/50 amp) for overnight and monthly stays plus 22 tent and pop-up sites (20-amp electric and water, most on the river). Seasonal sites are sold too."
     },
     "facilities": {
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "camp_store": true,
+      "note": "In-ground pool, bathhouse, arcade, basketball and volleyball. No outside firewood."
     },
     "season": {
       "year_round": false,
@@ -848029,39 +848433,57 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "'Call to make your reservation' (276) 623-0340. A specific site is not guaranteed. Holiday rentals require a 3-night non-refundable deposit and 7 days' cancellation notice; other stays a 1-night deposit and 3 days' notice. River sites: 6 people, 2 tents, 2 vehicles, no visitors. Check-in 2 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://riversidecampground.org/ ('94 full hook-up sites (30/50 amp access ...)') + https://riversidecampground.org/rates ('Full hookup (30 or 50 amp)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://riversidecampground.org/ ('With 94 full hook-up sites ... and 22 tent and pop-up sites (20 amp electric and water, most situated right on the river)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://riversidecampground.org/ ('Our bathhouse facilities, on-site laundry, and camp store'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://riversidecampground.org/rates ('Our season runs from April 1st through October 31st. Includes storage for the 5 months we are closed.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
+        "source": "https://riversidecampground.org/ + https://riversidecampground.org/reservations, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://riversidecampground.org/rates (page text rendered in the driver browser: 'Riverside Camping Rate 2025'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "a00e7a161a7aa0eb",
       "checked": "2026-09-17",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 43.85,
+      "nightly_high": 43.85,
+      "currency": "USD",
+      "checked": "2025",
+      "note": "'Riverside Camping Rate 2025', single night: full hookup (30 or 50 amp) $43.85 + $6.15 tax = $50.00; pop-up $35.08 ($40 with tax) and tent $30.69 ($35 with tax) on the 20-amp electric/water tent and pop-up sites. Stay 6 nights, 7th free. Monthly $560 (30 amp) / $590 (50 amp) plus tax and metered electric; seasonal $1,650 a year plus electric."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://riversidecampground.org/ https://riversidecampground.org/rates https://riversidecampground.org/reservations",
+      "note": "Operator pages (JS-rendered, read in the driver browser) confirm 50-amp full hookups, Apr 1 - Oct 31 season, phone reservations, laundry and camp store. Added fees $43.85 before tax (2025 rate sheet, $50 with tax) and 116 sites (94 full hookup + 22 tent/pop-up). Pull-throughs and showers not stated on the current pages; left as recorded."
     }
   },
   {
@@ -848321,69 +848743,6 @@
       "checked": "2026-10-20",
       "sources": "http://www.jessielearv.com/",
       "note": "Confirmed on the operator's page: open year round, full hookups at all sites with 30 and 50 amp, pull-throughs, wifi at all sites, laundry, dump station. 'Call regarding rates' - no rate posted, so fees stay empty. Not stated on the operator's page: showers/bathhouse (derived from the town listing, left), site count (39, directory, left), how to book (phone, derived, left)."
-    }
-  },
-  {
-    "id": 13090,
-    "kind": "campground",
-    "name": "Lonesome Pine RV Park",
-    "location": "36.93872,-82.49032",
-    "elevation_meters": 628,
-    "state": "VA",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite at 36.93872,-82.49032: gravel RV rows between Norton-Coeburn Road and a wooded slope with a trailer storage yard east; no lake, pond, river or creek anywhere in a 600m frame",
-    "inclusion_evidence": "Heart of Appalachia and Visit Wise County lodging listings plus the owner's own Hipcamp page: 20 full-hookup sites with 50 and 30/20/15-amp electric and on-site restrooms/showers, overnight stays welcome; satellite at 36.93872,-82.49032 shows about 20 drive-in gravel pull-in pads with a bathhouse building -> real drive-in RV park.",
-    "website": "https://www.facebook.com/people/Lone-some-pine-RV-park-and-campground/100022948140530/\nhttps://heartofappalachia.com/places/lonesome-pine-rv-park/",
-    "phone": "276-393-4437",
-    "note": "Small full-hookup RV park at 11414 Norton-Coeburn Road between Coeburn and Norton, a base for Guest River Gorge, Flag Rock and High Knob. 20 sites with 50-amp and 30/20/15-amp electric, restrooms and showers on site; overnight, long-term and tent campers all accepted. No operator website found - listed by Heart of Appalachia and Visit Wise County tourism and by the owner on Hipcamp (marked 'coming soon', not yet bookable there), so book by phone. RV Life's average nightly rate is a placeholder, not a quoted price. RV Life 4*/$ ~$1/night (auto 9/2026). --Claude",
-    "rating": {
-      "stars": 4,
-      "price_tier": 1,
-      "checked": "2026-09",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 20
-    },
-    "facilities": {
-      "showers": true
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-17",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "ae36a1d2b2e8fc39",
-      "checked": "2026-09-17",
-      "model": "claude-opus-5/session"
     }
   },
   {
@@ -916837,9 +917196,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.rainbowcampground.net/ ('50 amp Full Hookup campsite $48 + tax'; '30 amp Full Hookup campsite $43'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -916847,8 +917206,24 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.rainbowcampground.net/ (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.rainbowcampground.net/ (Rates), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.rainbowcampground.net/ ('Free Wifi (on most sites)'; 'dump station available'; '***Please note that restrooms are closed from October 26, 2026 thru April 1, 2027'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.rainbowcampground.net/ ('Campsite rates may be slightly higher during off season. (Nov.-March)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.rainbowcampground.net/ ('You can reserve ... by CALLING us directly at 276-944-4243 or clicking link below to reserve through Hipcamp'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -916861,7 +917236,27 @@
       "nightly_high": 48,
       "currency": "USD",
       "checked": "2026",
-      "note": "Rainbow: water/electric $40 plus tax, 30-amp full hookup $43, 50-amp $48, for 2 adults. Read 2026-10-15."
+      "note": "Operator's rate list (current for 2026-27: it gives the restroom closure 'October 26, 2026 thru April 1, 2027'): water/electric $40, 30-amp full hookup $43, 50-amp full hookup $48, plus tax, for 2 adults (+$3 per extra person 12+). Tent sites $30 (electric) and $35 (creekside primitive). 'Campsite rates may be slightly higher during off season (Nov.-March).' Pets $2/day; monthly rates by phone."
+    },
+    "facilities": {
+      "dump": true,
+      "wifi": true,
+      "note": "Restrooms closed October 26, 2026 - April 1, 2027. Free Wi-Fi on most sites (individual connection for long-term stays at extra charge); ice, firewood, vending machines."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Sites rent November-March at off-season rates; restrooms closed October 26, 2026 - April 1, 2027."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "url": "https://www.hipcamp.com/en-US/land/virginia-rainbow-campground-mxvhdnyo",
+      "note": "Reserve by phone 276-944-4243; some sites (electric tent sites, the creekside tent site and a 30-amp water/electric site) can also be booked on Hipcamp at extra fees. Deposits non-refundable (reschedule once with 10+ days' notice); holiday weekends need a 2- or 3-night deposit. Check-in 1 pm, check-out 11 am."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.rainbowcampground.net/",
+      "note": "Operator page (current, gives Oct 2026 - Apr 2027 restroom closure) confirms $40-48 and 50-amp full hookups; added dump, Wi-Fi, winter operation with restrooms closed, phone/Hipcamp booking and deposit rules. Site count (37) and showers not stated on the page; left as recorded."
     }
   },
   {
@@ -983362,15 +983757,17 @@
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 50.0,
-      "nightly_high": 115.0,
+      "nightly_low": 35,
+      "nightly_high": 150,
       "currency": "USD",
-      "checked": "2026"
+      "checked": "2026",
+      "note": "KOA's booking form for RV, 2 adults, a 23-ft motorhome, one night, before tax: Tue 2026-11-03 water/electric $35, full hookup $42-86 (Patio site $86); Sat 2026-11-07 water/electric $71, full hookup $79-150; a mid-May 2027 weeknight (read 2026-10-19) $50-115. Prices move with date and demand."
     },
     "provenance": {
       "fees": {
-        "source": "https://koa.com/campgrounds/richmond-north/reserve/ (cheapest hookup site type and dearest site type, one night from 2027-05-18; RV, 2 adults, a 23-ft motorhome), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://koa.com/campgrounds/richmond-north/reserve/ (koa.py through the driver browser: 2026-11-03 and 2026-11-07, one night each), read 2026-10-21; May 2027 figures from the 2026-10-19 read recorded in provenance",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -983378,19 +983775,29 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/richmond-north/ ('Max length of stay: 27 nights. Only 2 vehicles are allowed per site or cabin'; 'Reserve: 1-804-876-3500'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/richmond-north/reserve/ (site types 'Pull Thru, 50/30 Amps, Full Hookups', 'Back In, 50/30 Amps, Water/Electric') + https://koa.com/campgrounds/richmond-north/ ('50 Max Amp'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/richmond-north/ ('Max pull thru: 70 feet'; '70' Max Length') + booking form (Pull Thru site types), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/richmond-north/ (Campground Amenities: Wi-Fi, Cable TV, Pool (5/16 - 9/13), Propane ($), Kamping Kitchen, Firewood ($), Pavilion, Dog Park), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/richmond-north/ ('Open Year Round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -983399,19 +983806,36 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/richmond-north/reserve/",
+      "max_stay_nights": 27,
+      "note": "Online through koa.com or 1-804-876-3500. Max stay 27 nights; two vehicles per site. 'KOA Select My Site' is +$20."
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 70
     },
     "note_scan": {
       "sig": "3e1d1e4802f277d5",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "facilities": {
+      "wifi": true,
+      "note": "Cable TV, pool (May 16 - Sept 13), propane, Kamping Kitchen, firewood, pavilion, dog park; deluxe cabins and tent sites. Next to Kings Dominion and Soak City."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://koa.com/campgrounds/richmond-north/ https://koa.com/campgrounds/richmond-north/reserve/",
+      "note": "KOA's page and booking form: open year-round, 50-amp full hookups and water/electric, pull-throughs to 70 ft, Wi-Fi/cable/pool, 27-night max. Fees widened $50-115 -> $35-150: an off-season weeknight water/electric site quotes $35, a Saturday $71 base and $150 Patio site. Laundry, showers and camp store appear only in camper reviews, not written. Military discount (Good Sam directory) not stated by KOA; left as recorded."
     }
   },
   {
