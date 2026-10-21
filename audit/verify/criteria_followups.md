@@ -125,11 +125,16 @@ me drop and report); each needs the research named before a verdict.
   197 Topsail Hill (FSP banner "Effective Oct. 21, 2026 ... closed due to Hurricane Isaias") and 4720
   Coldwater. Other panhandle parks verified before 10-21 may also be closed but are not marked;
   lift both statuses once the parks reopen. Also 4855 Easterlin Park temporarily_closed through
-  2026-10-31 for road repaving (not the storm) — re-check after 11-01.
+  2026-10-31 for road repaving (not the storm) — re-check after 11-01. And 163 Highlands Hammock:
+  family campground closed for renovation since 2026-04-03 (youth camp only), no reopening date.
 - **4744 The Glades / 4767 The Hideaway** — dropped, but their water leads stood: Glades "along the
   Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
 
 ## Resolved 2026-10-21
+- **p3-43 drops:** 4808 International RV Park ($65-90, no gateway, seasonal 55+), 4795 LeLynn (no
+  operator site), 4803 Lake Toho (RV & mobile-home park selling homes and lots, call for rates).
+  Renamed: 169 Hog Island Campground, 14391 RV Village at Lake Panasoffkee (no posted rate, RV Life $$).
+  169's sites take 25 ft (EKKO fits); 282 Juniper Springs soft minimums recorded.
 - **p3-42 drops:** 4809 Floridian (dead site, aggregators only), 4799 Fiddlers Green ($50 + a
   mandatory $3 utility fee, no gateway), 14408 Florilow Oaks (55+ singles park, lots for sale).
   Kept: 14416 Fiesta Grove (St. Petersburg gateway 22 km; daily nights on BookMySites; newest

@@ -1,0 +1,77 @@
+{
+  "id": 282,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234031",
+    "https://www.recreation.gov/api/camps/campgrounds/234031/rates",
+    "https://www.fs.usda.gov/r08/florida/recreation/juniper-springs-recreation-area",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for facility 234031, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 38,
+        "nightly_high": 38,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "recreation.gov rate table: $38 a night for a standard (nonelectric) or tent site, the same in the 2026, 2027 and 2028 seasons. Extra vehicles beyond 2 per site park in overflow at $9 a night."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234031/rates (Peak Season 2026, 2027, 2028: 'STANDARD NONELECTRIC' 38, 'TENT ONLY NONELECTRIC' 38) + https://www.recreation.gov/api/camps/campgrounds/234031 (notice: 'Maximum 2 vehicles per site ... extra vehicles ... will be charged $9 per vehicle, per night'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234031 ('There are no sites with full hookups.') + RIDB campsite catalog for facility 234031 (every public site typed STANDARD NONELECTRIC or TENT ONLY NONELECTRIC; rates list only nonelectric sites), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 76,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "Three loops near the creek and springs, all shaded: 57 standard sites for RVs, trailers or tents (Max Vehicle Length mostly 25-35 ft, one 40 and one 45; 17 pull-through) and 19 tent-only sites. The USFS counts '79 unique sites', including 2 management sites and the pavilion."
+      },
+      "source": "RIDB campsite catalog for facility 234031 (57 STANDARD NONELECTRIC reservable for RV/tent/trailer, 19 TENT ONLY NONELECTRIC, 2 MANAGEMENT, 1 GROUP PICNIC AREA; Max Vehicle Length 25-45; Driveway Entry Pull-Through at 17 standard sites) + https://www.recreation.gov/api/camps/campgrounds/234031 ('Campsites are arranged into three loops near the creek and springs. All sites are shaded') + https://www.fs.usda.gov/r08/florida/recreation/juniper-springs-recreation-area ('Tent and RV campsites: 79 unique sites'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true,
+        "camp_store": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234031 ('Other amenities include hot showers, flush toilets and dump station.') + https://www.fs.usda.gov/r08/florida/recreation/juniper-springs-recreation-area ('The following services are available: Kayak rentals, shuttle services and general store.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14,
+        "note": "recreation.gov marks the weekend 2-night and holiday-weekend 3-night minimums 'soft': they may be relaxed for a same-day booking. 14 nights in a rolling 30 days. Check-in 2 pm, check-out 11 am, no early check-in; the campground gate is locked 8 pm-8 am (March-Oct) and 6 pm-8 am (Oct-March), so late arrivals check in at the gatehouse next morning. Sites must be occupied the first night. No refunds for weather. Run by the concessioner Naventure."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234031 (facility_rules: reservationWindow 6 Months, minWeekendStay 2 'soft', minHolidayWeekendStay 3 'soft', maxStay 14 nights 'Rolling 30 Days'; notices on check-in/out, gate hours, first-night occupancy, weather refunds) + https://www.fs.usda.gov/r08/florida/recreation/juniper-springs-recreation-area ('Campsites are available for reservation at Recreation.gov.', 'This site is operated by Naventure.'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "recreation.gov and USFS: confirmed $38 (2026-2028 rate tables), nonelectric only (electric 0), reservable on recreation.gov with a 6-month window; added the soft weekend 2 / holiday 3 minimums, 14-in-30 max, 76 public sites (57 RV-capable to 45 ft, 17 pull-through), showers/flush toilets/dump/general store. Not stated: season. Drinking water conflicting (USFS lists 'Non-potable water'), left unset. Note kept.",
+  "flags": [
+    "Phone: the entry's 877-444-6777 is recreation.gov's national line; recreation.gov gives 'For facility specific information, please call (352) 625-3147.' (facility_phone 352-625-3147, https://www.recreation.gov/api/camps/campgrounds/234031).",
+    "Concession: the USFS page says 'This site is operated by Naventure' (concessioner on National Forest land); ownership federal stays correct.",
+    "Drinking water: the USFS page lists 'Non-potable water' and 'Potable water is not available at this site' while recreation.gov is silent; left potable_water unset."
+  ]
+}

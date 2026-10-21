@@ -78,3 +78,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "waterfront" cabin; entry not waterfront.
 - **743 Wickham Park (Brevard Co.)** — county rate rules: "there are no water access or water view
   sites at Wickham Park"; entry pond (AWH: "Several sites are on small ponds"). Contrary, downward.
+- **14391 RV Village at Lake Panasoffkee** — operator: "Situated on the southern banks of Lake
+  Panasoffkee", "FISHING DOCK/BOAT SLIPS ON SITE"; entry not waterfront.
