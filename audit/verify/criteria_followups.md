@@ -93,6 +93,10 @@ me drop and report); each needs the research named before a verdict.
   (33 reviews, phone) + RV Life $$. Note's hookups/24 sites/pool unconfirmed.
 
 ## Resolved 2026-10-21
+- **p3-32 drops:** 14394 Woods-n-Water Trails (55+ community with a Homes for Sale page),
+  14422 Woody's (no posted rate, daily stays "call for details", a Ch. 723 mobile-home community).
+  Kept at the $50 line: 4772 Astor Landing (undated rate page). 4819 Wilderness Landing's $0 and
+  14-night max cleared (camper reports only).
 - **p3-31 drops:** 4804 Lazy Dazy (no price indicator; stored fees were other parks'), 4806 Masonic
   ($60), 14425 Oak Haven ($70, 55+ home community), 4811 Scottish Traveler ($85). Kept: 15422
   Sugarloaf KOA (Key West gateway). 383 renamed Ortona South Campground; 393 renamed to its

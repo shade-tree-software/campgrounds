@@ -61,3 +61,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   that was formerly a mine pit"; ReserveAmerica "Type of View: Lake". Entry not waterfront.
 - **393 St. Joseph Peninsula (Shady Pines)** — coastal dunes rested on AWH's note about two dune
   campgrounds; only Shady Pines remains (Gulf Breeze gone). Check Shady Pines sits behind the dunes.
+- **4841 Turtle Beach (Sarasota Co.)** — county: "premier beachfront campground", "direct beach
+  access"; entry not waterfront.
+- **4715 Bear Lake (Blackwater River SF)** — booking site: 11 of 31 RV sites "Proximity to Water:
+  Lakefront"; entry not waterfront.

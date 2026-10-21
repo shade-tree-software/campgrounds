@@ -1,0 +1,39 @@
+{
+  "id": 384,
+  "checked": "2026-10-21",
+  "sources": ["https://www.recreation.gov/api/camps/campgrounds/233661", "https://www.recreation.gov/api/camps/campgrounds/233661/rates", "trip_data/ridb_campsites.json (RIDB catalog for facility 233661, fetched 2026-10-20)"],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026",
+        "note": "Recreation.gov rate table: standard electric site $30 a night in the 2026, 2027 and 2028 seasons (boat mooring sites $30, group shelter $35)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233661/rates ('PeakSTANDARD ELECTRIC': 30 for 2026-01-01 to 2028-12-31), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233661 (facility description: 'The 29 RV sites and 8 boat sites are equipped with 50 amp electric and water hookups') + RIDB catalog (all 30 STANDARD ELECTRIC sites: Electricity Hookup 50, Water Hookup Yes), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 29, "max_rig_ft": 35, "pull_through": true,
+        "note": "29 RV sites plus 8 boat (mooring) sites where campers sleep aboard. RV sites are back-in to 35 ft except one pull-through."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233661 ('The 29 RV sites and 8 boat sites') + RIDB catalog (STANDARD ELECTRIC: Max Vehicle Length 35, 30 Back-In / 1 Pull-Through), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "note": "Trailer dump station: one RV dump per week of stay (two in 14 days); arriving campers dumping before occupying a site pay $20. Boat ramp and fishing pier."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233661 (amenities 'Showers', 'Dump Station'; description 'A boat ramp, fishing pier and trailer dump station are conveniently onsite'; dump-station notices), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14,
+        "note": "Bookable on recreation.gov up to the day of arrival (cutoff 0 days). 14 nights in any 30 consecutive days. Check-in noon, check-out 11 a.m.; the entrance gate opens at sunrise and closes at sunset."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233661 (facility_rules: maxStay 14 nights 'Rolling 30 Days', reservationCutOff 0 days prior to arrival; notices on check-in/out and gate hours), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Recreation.gov confirms $30 base (2026-28), 50-amp electric + water; added 29 RV sites to 35 ft (one pull-through), showers, dump station, 14-night max in 30 days. Not stated: campground season, sewer, booking window (inherited 180 left); a 'militaryDiscount' rule with no wording left alone.",
+  "flags": [
+    "Phone missing: recreation.gov lists the campground at 239-694-8770."
+  ]
+}
