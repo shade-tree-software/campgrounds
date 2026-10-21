@@ -24,6 +24,12 @@ me drop and report); each needs the research named before a verdict.
   DWR's 300-ft rule (building/boat ramp) may bar camping there. The East Fork lot is unaffected.
 - **763 Burton Family Farm (Hipcamp)** — kept: sites 1, 3 and 10 are 2WD; Hipcamp marks 6, 8, 9
   "four-wheel drive recommended" (note says so). Not the access road, so not the Rapidan case.
+- **478 Hog Camp Gap** — GWJ rules bar dispersed camping "in the vicinity of developed recreation
+  areas such as ... trailheads"; the FS Mount Pleasant trailhead parking is ~0.25 mi past the gap.
+  No FS page bars the clearing by name; widely used. Kept.
+- **8 Fauquier Horse & Campground (Hipcamp)** — listing contradicts itself on hookups (overview:
+  "hookups for water and electricity"; lakeside site text: 4 x 30A + 8 x 50A; amenity flags: no
+  electric, no water). Left as AWH's note had it (no hookups). Host question.
 
 ## Resolved 2026-10-21
 - **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a

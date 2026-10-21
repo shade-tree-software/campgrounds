@@ -13,9 +13,20 @@ Answered items move to the bottom with the answer.
      itself looks unlawful, and a legal spot 300 ft from the ramp is unlikely to be on the river.
    - **254 Briery Creek** (lakefront: "camping/parking areas at the lakeshore") and **236 Amelia**
      (lakefront: "one on the lake"): no legal camp spot can be within 300 ft of the lake.
+   - **482 Hidden Valley** (lakefront: "Two parking/camping areas right on the lakefront"): the
+     only parking DWR's page names is the boat-ramp lot on the north side of the lake.
    Did DWR tell you camping is allowed in those lots when you confirmed the permits on 10-09?
    If not: 123/124 drop (no legal place to camp at the named spot), and 254/236 come down to
-   lakeview at best (or not waterfront).
+   lakeview at best (or not waterfront); 482 the same, or a drop if its two areas are the ramp lot.
+
+9. **Flagpole Knob 403 / 404 / 405 vs the 4WD rule** — DWR's own Flagpole Knob page
+   (https://dwr.virginia.gov/vbwt/sites/flagpole-knob/): "Forest Service Road 85 towards the
+   Flagpole Knob summit is remote, narrow, very steep, deeply rutted, and rocky. Only experienced
+   overlanding/off-roading drivers should attempt this road." Not "4WD" in words, but an agency
+   telling ordinary drivers to stay off it. 404/405 sit at the summit end; 403 is 0.9 mi up the
+   Briery Branch end, the roughest part. The notes already say this, and the longer Switzer
+   Lake/Union Springs approach from US 33 is described (by reviewers, not an agency) as easier.
+   Drop all three under the Rapidan rule, or keep them because you added them knowing the road?
 
 ## Answered (AWH 2026-10-21)
 
