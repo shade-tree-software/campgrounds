@@ -5,30 +5,6 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
-8. **DWR's 300-ft rule vs. your WMA entries** — DWR's statewide camping rule
-   (https://dwr.virginia.gov/camping-on-wmas/): "It is unlawful to camp within 300 feet of any lake
-   or facility (building, boat ramp, etc.)". That collides with four entries:
-   - **123 C.F. Phelps (Kelly's Ford Bridge)** and **124 C.F. Phelps (Rogers Ford)**, both
-     riverfront: DWR's map shows each parking area as the boat-ramp lot, so camping in the lot
-     itself looks unlawful, and a legal spot 300 ft from the ramp is unlikely to be on the river.
-   - **254 Briery Creek** (lakefront: "camping/parking areas at the lakeshore") and **236 Amelia**
-     (lakefront: "one on the lake"): no legal camp spot can be within 300 ft of the lake.
-   - **482 Hidden Valley** (lakefront: "Two parking/camping areas right on the lakefront"): the
-     only parking DWR's page names is the boat-ramp lot on the north side of the lake.
-   Did DWR tell you camping is allowed in those lots when you confirmed the permits on 10-09?
-   If not: 123/124 drop (no legal place to camp at the named spot), and 254/236 come down to
-   lakeview at best (or not waterfront); 482 the same, or a drop if its two areas are the ramp lot.
-
-9. **Flagpole Knob 403 / 404 / 405 vs the 4WD rule** — DWR's own Flagpole Knob page
-   (https://dwr.virginia.gov/vbwt/sites/flagpole-knob/): "Forest Service Road 85 towards the
-   Flagpole Knob summit is remote, narrow, very steep, deeply rutted, and rocky. Only experienced
-   overlanding/off-roading drivers should attempt this road." Not "4WD" in words, but an agency
-   telling ordinary drivers to stay off it. 404/405 sit at the summit end; 403 is 0.9 mi up the
-   Briery Branch end, the roughest part. The notes already say this, and the longer Switzer
-   Lake/Union Springs approach from US 33 is described (by reviewers, not an agency) as easier.
-   Drop all three under the Rapidan rule, or keep them because you added them knowing the road?
-   **55 Hone Quarry Ridge** is on the same road (~0.5 mi up from Briery Branch Gap) and goes with them.
-
 10. **Dam screen: four downgrades** (audit/dam_screen/decisions_pending.json; your rule of 10-21)
     - **1900 River Road Park (MO)** lakeview -> **riverview**: below Clearwater Dam on the Black
       River (rec.gov: "lies below the dam on the Black River"); the lake is behind the embankment
@@ -51,6 +27,41 @@ Answered items move to the bottom with the answer.
     waterfront)?
 
 ## Answered (AWH 2026-10-21)
+
+8. **DWR's 300-ft rule vs. your WMA entries** — DWR's statewide camping rule
+   (https://dwr.virginia.gov/camping-on-wmas/): "It is unlawful to camp within 300 feet of any lake
+   or facility (building, boat ramp, etc.)". That collides with four entries:
+   - **123 C.F. Phelps (Kelly's Ford Bridge)** and **124 C.F. Phelps (Rogers Ford)**, both
+     riverfront: DWR's map shows each parking area as the boat-ramp lot, so camping in the lot
+     itself looks unlawful, and a legal spot 300 ft from the ramp is unlikely to be on the river.
+   - **254 Briery Creek** (lakefront: "camping/parking areas at the lakeshore") and **236 Amelia**
+     (lakefront: "one on the lake"): no legal camp spot can be within 300 ft of the lake.
+   - **482 Hidden Valley** (lakefront: "Two parking/camping areas right on the lakefront"): the
+     only parking DWR's page names is the boat-ramp lot on the north side of the lake.
+   Did DWR tell you camping is allowed in those lots when you confirmed the permits on 10-09?
+   If not: 123/124 drop (no legal place to camp at the named spot), and 254/236 come down to
+   lakeview at best (or not waterfront); 482 the same, or a drop if its two areas are the ramp lot.
+
+
+   **Answer (AWH 2026-10-21):** "You may drop the VA WMA sites where the parking areas are
+   waterfront or near a boat ramp." Dropped 123, 124, 247, 248, 254, 482; Amelia 236 kept (its
+   other lots are inland, pin on inland fields) and downgraded lakefront -> not waterfront.
+9. **Flagpole Knob 403 / 404 / 405 vs the 4WD rule** — DWR's own Flagpole Knob page
+   (https://dwr.virginia.gov/vbwt/sites/flagpole-knob/): "Forest Service Road 85 towards the
+   Flagpole Knob summit is remote, narrow, very steep, deeply rutted, and rocky. Only experienced
+   overlanding/off-roading drivers should attempt this road." Not "4WD" in words, but an agency
+   telling ordinary drivers to stay off it. 404/405 sit at the summit end; 403 is 0.9 mi up the
+   Briery Branch end, the roughest part. The notes already say this, and the longer Switzer
+   Lake/Union Springs approach from US 33 is described (by reviewers, not an agency) as easier.
+   Drop all three under the Rapidan rule, or keep them because you added them knowing the road?
+   **55 Hone Quarry Ridge** is on the same road (~0.5 mi up from Briery Branch Gap) and goes with them.
+
+   **Answer (AWH 2026-10-21):** AWH drove to the three westernmost sites (55, 402, 403) in 2WD:
+   kept with a caution line (road not always maintained or promptly repaired after washouts, may
+   have deteriorated). The rest (406, 404, 405) appear to need 4WD: dropped. Long Run Road: from a
+   video, #4-#6 (56, 57, 58) are 2WD-accessible via Little Dry River Rd: restored with the same
+   caution; #1-#3 and 521 stay dropped (unconfirmed).
+
 
 7. (AWH 2026-10-21: drop both; dropped via criteria_drops.py.) **Rapidan WMA, 438 (1253 Taylor Mountain Rd) and 440 (300 Cobblestone Row)** — DWR's Rapidan page:
    roads beyond the state-maintained part "are narrow and not maintained to VDOT standards and can
