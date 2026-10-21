@@ -5,7 +5,7 @@ metadata:
   type: feedback
 ---
 
-**Sun Outdoors / Sun Retreats / Sun RV Resorts:** still pre-skipped on brand in the private gap and any private sweep, kind_of_no "price (brand)". AWH 2026-10-03: "I've never seen one that fits our price range."
+**Sun Outdoors / Sun Retreats / Sun RV Resorts:** still pre-skipped on brand in the private gap and any private sweep, kind_of_no "price (brand)". AWH 2026-10-03: "I've never seen one that fits our price range." **Gateways don't lift it (AWH 2026-10-21):** a Sun park within 40 km of a family home is still skipped.
 
 **KOA (Journey, Holiday, Resort): the brand skip is retired (AWH 2026-10-19).** "The existing KOA rule was from back when KOA prices were unreadable. Now that you can read them, treat them like any other private campground, subject to the regular rules, exclusions, and exceptions." So a KOA goes through the normal star gate, price gate (US$50 / C$69), gateway exemption ([[feedback_price_gate_proximity_exceptions]]), minimum-stay rule ([[feedback_minimum_stay]]) and presence checks.
 

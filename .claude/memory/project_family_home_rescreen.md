@@ -1,6 +1,6 @@
 ---
 name: project-family-home-rescreen
-description: "DONE 2026-10-21 - re-screened price-rejected, never-added private parks within 40 km of a family home: +22 (ids 15531-15552), 12 skips, 1 held, 3 Sun-brand parks waiting on AWH; method and lessons inside"
+description: "DONE 2026-10-21 - re-screened price-rejected, never-added private parks within 40 km of a family home: +22 (ids 15531-15552); Cedar Hills + 3 Sun-brand parks skipped by AWH; method and lessons inside"
 metadata:
   node_type: memory
   type: project
@@ -22,8 +22,8 @@ metadata:
   - Sparrow Pond PA: a 3-night minimum on every 2027 date, though the operator page says holidays only. A phone call could reverse it.
   - Uncle Johns Elk Creek PA: shut down in 2026.
   - The other skips are recorded in verdicts.jsonl.
-- **1 held:** Cedar Hills WI. It passes every gate but is adults-only and clothing-optional, so it's in verdicts.jsonl as decision "hold" for AWH.
-- **3 Sun-brand parks were never researched:** Sun Outdoors Sarasota FL, Lake San Marino FL and Sun Retreats Lancaster County PA. They wait on AWH deciding whether the family-home gateway lifts the Sun pre-skip ([[feedback_skip_sun_koa_brands]]).
+- **AWH skipped (2026-10-21):** Cedar Hills WI, which passed every gate but is adults-only and clothing-optional. AWH also skipped the 3 Sun-brand parks (Sun Outdoors Sarasota FL, Lake San Marino FL, Sun Retreats Lancaster County PA): **the family-home gateway does NOT lift the Sun brand skip** ([[feedback_skip_sun_koa_brands]]).
+- **AWH approved every judgement call in the report** (waterfront close calls, kept minimums, inferred counts).
 
 **Where it lives:** `audit/family_rescreen_2026-10-21/`. It holds:
 - candidates.json and queue.json;
