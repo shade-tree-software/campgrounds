@@ -47,7 +47,11 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
 
-**RESUMED 2026-10-21 late night by AWH, after the family-home re-screen was pushed and deployed (f37f3ac7). p3-55 and p3-56 (WV) were launched; their prompts are p355_prompt.txt and p356_prompt.txt in the scratchpad. The 22 re-screen adds (15531-15552) carry verify_scan, so the queue skips them.**
+**RESUMED 2026-10-21 late night by AWH**, after the family-home re-screen was pushed and deployed (f37f3ac7). The 22 re-screen adds (15531-15552) carry verify_scan, so the queue skips them.
+- Applied p3-55..p3-58 (03d23b82, d1fab608; local, not pushed). Gheny Nook 13121 dropped (long-stay test 2).
+- p3-59 + p3-60 running. Their prompts are p359_prompt.txt and p360_prompt.txt in the scratchpad; verifiers are launched with "read your brief from <file>" to save tokens.
+- New asks: 869/50 North Bend overlap; 509 Beckys Creek state vs wma.
+- Registry lead: WV one-night Fridays sell inside ~24 days of arrival.
 
 **(Earlier) PAUSED by AWH 2026-10-21 night ("stop the stage 7 work for now").** p3-53 and p3-54 were finished and applied afterwards at AWH's request (c41c6325, 4fdabc4b), so nothing is in flight. The WV dropped entries are 1200 Big Earl's and 1204 Camp Morning Wood (presence rule). 809 Sullivan's was dropped by AWH (0b38912e).
 - To resume: `queue.py --batch p3-55 --limit 12` (WV continues), and derive the prompt from scratchpad p3-53/p3-54's.
