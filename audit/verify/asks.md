@@ -27,6 +27,7 @@ Answered items move to the bottom with the answer.
    Briery Branch end, the roughest part. The notes already say this, and the longer Switzer
    Lake/Union Springs approach from US 33 is described (by reviewers, not an agency) as easier.
    Drop all three under the Rapidan rule, or keep them because you added them knowing the road?
+   **55 Hone Quarry Ridge** is on the same road (~0.5 mi up from Briery Branch Gap) and goes with them.
 
 10. **Dam screen: four downgrades** (audit/dam_screen/decisions_pending.json; your rule of 10-21)
     - **1900 River Road Park (MO)** lakeview -> **riverview**: below Clearwater Dam on the Black

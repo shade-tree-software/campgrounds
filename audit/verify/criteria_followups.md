@@ -30,8 +30,15 @@ me drop and report); each needs the research named before a verdict.
 - **8 Fauquier Horse & Campground (Hipcamp)** — listing contradicts itself on hookups (overview:
   "hookups for water and electricity"; lakeside site text: 4 x 30A + 8 x 50A; amenity flags: no
   electric, no water). Left as AWH's note had it (no hookups). Host question.
+- **447 McClintic Point** — every site listed at 21 ft, and the FS says "All equipment must fit on
+  the space provided"; under the ~23-ft floor. Kept on AWH's own note ("will probably handle a few
+  feet more"). Its two pages disagree on drinking water (rec.gov seasonal; FS none).
+- **1108 Jamison Mill** — ownership federal -> local (Franklin County runs it on Corps land; same
+  as Glen Lyn). Now county-reservable; the old FCFS/USACE claims were wrong.
 
 ## Resolved 2026-10-21
+- **Long Run Road #1-#6 (520, 519, 522, 56, 57, 58)** — DROPPED under the 4WD rule: DWR's FR 72
+  page says the road "is recommended only for 4-wheel drive vehicles with high clearance".
 - **13090 Lonesome Pine RV Park (VA)** dropped (criteria_drops.py): no website, Facebook behind a
   login, Google 16 reviews, no rate (RV Life's $ is a ~$1 placeholder).
 - **15518 Richmond North / Kings Dominion KOA** kept: base $35 (November weeknight); weekends and

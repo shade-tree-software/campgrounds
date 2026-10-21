@@ -52,3 +52,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - **3532 Totogatic Park (WI)** — dam screen 2026-10-21: pin is in woods ~250 m from the Minong
   Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.
+- **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
+  tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
+  Same question as asks #8 for the rest of AWH's beach camping areas.
