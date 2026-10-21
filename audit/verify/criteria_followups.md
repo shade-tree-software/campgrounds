@@ -138,8 +138,16 @@ me drop and report); each needs the research named before a verdict.
 - **14383 Pine Lake RV Park** — rules: "NO FEMA Campers, RVs without holding tanks ... School buses,
   Vans are permitted"; "RVs older than 10 years must be inspected". EKKO is a van-chassis Class C:
   probably fine (the rule reads as camper vans), unconfirmed. Good Sam derived false -> true (operator).
+- **4844 Torry Island (Belle Glade)** — the city's pages were down (CivicPlus outage) on 2026-10-21, so
+  no Isaias check was possible; re-check belleglade.gov/torry.
+- **14398 Sunny Shores** — kept: $50 + tax (at the line), 55+ except travelling nurses/military/police,
+  36 RV sites vs 8 MH spaces, nothing for sale; markets to snowbirds and annuals.
 
 ## Resolved 2026-10-21
+- **p3-46 drops:** 4812 Travel World (Facebook only), 4762 Unhitched Leisure Lakes ($55, no gateway),
+  14421 Villa Margaret (55+ permanent-resident park, call for rates). 4846 Lithia Springs is
+  reservable on WebTrac (the "FCFS, no reservations" note was wrong); 4829 Withlacoochee River Park
+  moved from CivicRec to WebTrac, 50-amp.
 - **p3-45 drops:** 14388 Sun Retreats Crystal River ($67.50, no gateway), 14389 Sun Retreats Homosassa
   River ($70, 28-night winter minimum). Kept on gateways: 15420 Orlando SW KOA (WDW 19 km), 15421
   St. Pete KOA (14 km). 4786 St. Johns River at $50.00. 4740 Ocean Pond base $12 -> $20 (the $12

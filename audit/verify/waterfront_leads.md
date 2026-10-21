@@ -88,3 +88,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **165 Silver Lake (Withlacoochee SF)** — booking page "On the shore of Silver Lake"; entry lakeview
   (AWH note supports lakeview).
 - **4728 Panther Pond** (weak) — its one RV site, 016, "Type of View: Lake".
+- **14398 Sunny Shores MH & RV** — "Our canal opens straight onto 5,000-acre, spring-fed Lake
+  Panasoffkee", fishing dock; entry not waterfront.
+- **14385 Wewa RV Park** — "The back of Wewa RV Park borders pristine Stone Mill Creek"; entry not waterfront.
