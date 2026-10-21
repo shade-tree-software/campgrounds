@@ -66,3 +66,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **4715 Bear Lake (Blackwater River SF)** — booking site: 11 of 31 RV sites "Proximity to Water:
   Lakefront"; entry not waterfront.
 - **4813 Coe Landing (Leon Co.)** — county booking site marks six sites "Waterfront"; entry lakeview.
+- **4837 John Prince Park (Palm Beach Co.)** — county: "51 sites located on beautiful Lake Osborne",
+  lakefront-site rules; entry lakeview.

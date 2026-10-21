@@ -108,6 +108,11 @@ me drop and report); each needs the research named before a verdict.
   require 4x4 in summer" is not FWC's (no agency 4WD statement), left in the note.
 - **4848 Donald MacDonald** — county calls them "Electric sites"; derived water: true unconfirmed.
 - **679 Flamingo** — concessioner booking; inherited federal 180-day window shows but doesn't apply.
+- **4721 High Bluff (Lake Talquin SF)** — ReserveAmerica site details list "30/50" electric + water
+  on 14 of 19 sites, against the campground alert and FDACS ("no electricity or water"); recorded none.
+- **4794 Johnston Springs** — $65 (GS $58.50), kept on the Walt Disney World gateway (28 km); rate
+  table undated (2022 footer); sells monthly-annual stays and park models (owners background-checked).
+- **370 John Pennekamp** — park: most sites take 40 ft; booking site lists up to 62 ft; max_rig_ft unset.
 
 ## Resolved 2026-10-21
 - **p3-34 drop:** 4758 Gulf Breeze RV Park ($69, no gateway; nearly full on weekdays, 2-night engine).

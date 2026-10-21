@@ -115,3 +115,10 @@ seasonal/yearly lots. Nights ARE sold (claimed RoverPass, $50-55 for June 2027 â
 but no daily rates on sale for January 2027. Kept for now and marked mostly long-stay: test 5
 (sells homes) depends on whether the park itself sells the units or residents do.
 - **AWH 2026-10-21: drop.** Done.
+
+## 4774 Kelly's RV Park (FL, p3-35) â€” keep or drop?
+"Kelly's RV/MH Park" under Fla. Stat. 513 and 723: 72 RV sites and 20 mobile homes, monthly RV rent
+with eviction rules, and "Owner reserves the right of approval or disapproval of all renters"; "a
+personal vehicle is mandatory". But it posts a $40 daily rate "perfect for those passing through"
+and books by phone/form with a card. Kept: the approval clause reads as a blanket park rule, not an
+application for a night (test 2). Say drop if you read it the other way.
