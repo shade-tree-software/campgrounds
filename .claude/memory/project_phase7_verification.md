@@ -20,10 +20,9 @@ page. Criteria problems are flags for me to decide (I may drop per the standing 
 
 **Progress / resume (2026-10-21, late):** ~445 verified (batches through p3-24 applied, last
 commit c6366573; nothing pushed since ccbb5ed3). Batch `batches/p3-25.json` (last 3 VA + first 9
-MD) has a verifier RUNNING; prompt in the session scratchpad as p325_prompt.txt (has the MD
-source notes). If the session died, check results/ for its files, else relaunch. Dropped on the
-4WD rule 10-21: Long Run Road #1-6 + 521 (DWR FR 72 page). AWH (10-20) cut back
-to ONE verifier at a time (session limit). Loop per batch: review flags → fix result files (e.g.
+MD) and p3-26 (12 MD) each have a verifier RUNNING; prompts in the session scratchpad as
+p325_prompt.txt / p326_prompt.txt (MD source notes inside). Pushed+deployed 397aa283. If the session died, check results/ for its files, else relaunch. Dropped on the
+4WD rule 10-21: Long Run Road #1-3 + 521, Flagpole 404/405/406 (#4-6 and 55/402/403 kept on AWH 2WD reports). AWH (10-21 late) allows TWO verifiers in the background at once (was one since 10-20). Loop per batch: review flags → fix result files (e.g.
 never clear a phase-5 good_sam false on private) → `apply.py --apply <ids>` → small python for
 phones/websites/names from flags (check URL 200 first; prepend agency page to website) → presence
 drops go in audit/verify/criteria_drops.py (DROPS dict, logs removals.json) → log to
