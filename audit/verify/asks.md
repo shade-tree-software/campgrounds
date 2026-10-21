@@ -5,6 +5,8 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
+## Answered (AWH 2026-10-21)
+
 10. **Dam screen: four downgrades** (audit/dam_screen/decisions_pending.json; your rule of 10-21)
     - **1900 River Road Park (MO)** lakeview -> **riverview**: below Clearwater Dam on the Black
       River (rec.gov: "lies below the dam on the Black River"); the lake is behind the embankment
@@ -26,7 +28,7 @@ Answered items move to the bottom with the answer.
     channel along its north edge (creek-sized, so `creekside` only if a site is on it, else not
     waterfront)?
 
-## Answered (AWH 2026-10-21)
+   **Answer (AWH 2026-10-21):** "Drop #10 keep #11" - the four downgrades applied; McNally keeps lakeview.
 
 8. **DWR's 300-ft rule vs. your WMA entries** — DWR's statewide camping rule
    (https://dwr.virginia.gov/camping-on-wmas/): "It is unlawful to camp within 300 feet of any lake
