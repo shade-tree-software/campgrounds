@@ -94,8 +94,10 @@ me drop and report); each needs the research named before a verdict.
 - **386 Burns Lake (NPS Big Cypress)** — rec.gov: "primarily used by hunters and off-road vehicle
   users", has an ORV parking lot/backcountry access, no ORV use in the campground. Kept as a general
   NPS campground with an OHV side (cf. Wolf Den Run 87, an ORV park, dropped). 14 sites (rec.gov) vs 15 (NPS).
-- **4720 Coldwater Equestrian** — ReserveAmerica still shows a 2020 Hurricane Isaias "closed until
-  further notice" banner beside "Open year round" and bookable sites; probably stale, no status set.
+- **4720 Coldwater Equestrian** — the "closed until further notice due to Hurricane Isaias tree
+  damage" banner is CURRENT, not 2020: Isaias is a live October 2026 storm (2026 reuses the 2020
+  name list; Escambia County declared an emergency, evacuations in effect 2026-10-21). Status set
+  temporarily closed 2026-10-21.
 - **4729 Dinner Island Hammock Camp** — FWC: "campers or small RVs", no length; 23-ft fit unstated.
 - **4746 Fisheating Creek Outpost** — ownership private -> state (policy_ref none): a Cape Leisure
   concession in FWC's Fisheating Creek WMA "for" FWC, by analogy with concessions on federal land.
@@ -119,8 +121,16 @@ me drop and report); each needs the research named before a verdict.
 - **4741 Long Pine Key / 679 Flamingo** — concessioner-booked (flamingoeverglades.com); the inherited
   federal 180-day window displays but doesn't apply. Consider a policy_ref for the Everglades concession.
 - **388 Midway** — NPS page shows "Page In-Progress"; rec.gov is the only website for now.
+- **HURRICANE ISAIAS (Oct 2026) storm closures — RE-CHECK SOON.** Set temporarily_closed 2026-10-21:
+  197 Topsail Hill (FSP banner "Effective Oct. 21, 2026 ... closed due to Hurricane Isaias") and 4720
+  Coldwater. Other panhandle parks verified before 10-21 may also be closed but are not marked;
+  lift both statuses once the parks reopen.
+- **4744 The Glades / 4767 The Hideaway** — dropped, but their water leads stood: Glades "along the
+  Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
 
 ## Resolved 2026-10-21
+- **p3-40 drops:** 4767 The Hideaway ($57, no gateway), 4744 The Glades (annual residents, park
+  models for sale, call for rates), 4789 Tampa South (call for rates, residents/tenants).
 - **p3-39 drops:** 4755 Sunset Isle (monthly/long-term only since 2022), 4768 Strawberry Fields ($60,
   no gateway, primarily 55+). Kept: 727 Suwannee River Bend ($60+tax, no gateway) on its --AWH note;
   14404 Seven Springs ($60, Tampa gateway 37 km; 55+, marked).

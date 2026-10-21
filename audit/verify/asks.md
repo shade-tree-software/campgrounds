@@ -127,3 +127,9 @@ application for a night (test 2). Say drop if you read it the other way.
 $65-70 a night (no gateway; nearest Everglades NP 93 km) — passes the price gate only on your
 --AWH note. But it also sells ~10 lots ($45k-100k) and permanent residences ($9-10k/yr), which is
 long-stay test 5 ("sells homes or lots"). Nightly camping is still sold to travellers. Kept pending you.
+
+## 4814 Williams Landing Campground (Leon Co., Lake Talquin, p3-40) — still a campground?
+Leon County's Park Index lists only a boat ramp, grill, picnic area, restroom and fountain there; its
+WebTrac reservations list campgrounds at Coe Landing and Hall Landing only, and a Williams Landing
+campsite search returned nothing (Coe Landing returned 20). The campsite page still mentions a
+Williams Landing map and bed tax. Kept for now (website now the Park Index); drop if it's gone.

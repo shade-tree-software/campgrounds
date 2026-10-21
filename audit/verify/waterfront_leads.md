@@ -76,3 +76,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   area/launch is "a substantial walk from campsites".
 - **4770 Sportsman's Cove (Orange Lake)** — operator sells "Waterside" sites ($50-55) and a
   "waterfront" cabin; entry not waterfront.
+- **743 Wickham Park (Brevard Co.)** — county rate rules: "there are no water access or water view
+  sites at Wickham Park"; entry pond (AWH: "Several sites are on small ponds"). Contrary, downward.
