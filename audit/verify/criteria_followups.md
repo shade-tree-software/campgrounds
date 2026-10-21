@@ -129,6 +129,10 @@ me drop and report); each needs the research named before a verdict.
   Caloosahatchee River", Hideaway sells "waterfront sites" on a spring-fed pond.
 
 ## Resolved 2026-10-21
+- **p3-41 drops:** 14403 Breezy Oaks ($57.56, no gateway), 4780 Arrowhead (website hijacked by a
+  gambling spam page), 4763 Cedar Lakes (Facebook only), 4802 Cedars Lake (dead site, unclaimed
+  RoverPass only). Kept at/under the line: 14411 7 Oaks $50, 4784 Chiefland $50, 4793 Cody's $45
+  summer ($55 Oct-Mar). 4722 Cash Creek: FFS 65+/military/disabled discounts, no amount stated.
 - **p3-40 drops:** 4767 The Hideaway ($57, no gateway), 4744 The Glades (annual residents, park
   models for sale, call for rates), 4789 Tampa South (call for rates, residents/tenants).
 - **p3-39 drops:** 4755 Sunset Isle (monthly/long-term only since 2022), 4768 Strawberry Fields ($60,
