@@ -1,0 +1,84 @@
+{
+  "id": 1111,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/232161",
+    "https://www.recreation.gov/api/camps/campgrounds/232161/rates"
+  ],
+  "groups": {
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "fcfs": "some_sites",
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "max_stay_nights": 14,
+        "note": "Reserve on recreation.gov up to 6 months ahead (group sites 12 months); the Forest Service page says reservations must be made 2 days before arrival, while recreation.gov's own rule lists no cutoff. Friday and Saturday must be booked together; holiday weekends take 3 nights. Recreation.gov notice: 'The Family Campground has first-come, first-served sites.' $10 cancellation fee."
+      },
+      "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Reservations must be made 2 days ahead of arrival and can be made up to 6 months in advance for standard sites'; 'You may stay up to 14 nights'; 'Two Night Weekend Minimum'; 'Three Night Holiday Weekend Minimum'; '$10 cancellation fee') + https://www.recreation.gov/api/camps/campgrounds/232161 (notice 'The Family Campground has first-come, first-served sites.'; rules maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "note": "Memorial Day weekend to late October."
+      },
+      "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Seasons of Use: Memorial Day Weekend - late-October'), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 18,
+        "nightly_high": 18,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$18 a night for standard and tent sites on recreation.gov's rate table (2026 and 2027 seasons); group sites $65. The Forest Service page instead says '$21 per night for standard sites'."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232161/rates (Peak Season 2026-09-09 to 2026-10-28 and 2027: STANDARD NONELECTRIC 18, GROUP TENT ONLY AREA 65) + https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Fees are $21 per night for standard sites and $65 per night for group sites.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 51,
+        "max_rig_ft": 40,
+        "pull_through": true,
+        "note": "51 standard non-electric RV sites plus 2 tent-only sites and 2 group tent areas; 'Most sites will fit any size RV'. Catalog lengths run 20-40 ft (19 sites at 23 ft, 21 at 30 ft or more); one pull-through, the rest back-in."
+      },
+      "source": "recreation.gov campsite catalog for 232161 (RIDB, trip_data/ridb_campsites.json, fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/232161 ('Family Campground: Most sites will fit any size RV.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "showers": true,
+        "potable_water": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232161 ('Campsite amenities include flush toilets, hot showers, a playground and drinking water.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true
+      },
+      "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('The America the Beautiful Senior and Access Passes provide a 50% discount to the base campsite fee (not hook ups) and day use fees.'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "USFS (Warm Springs/James River district) on a wooded ridge above the south end of Lake Moomaw near Covington; ~0.5 mi from the lakeshore (not on the water - swim beach, fishing pier and boat ramp are a short drive away). --Claude",
+  "summary": "Read the Forest Service page and recreation.gov: confirmed reservable on recreation.gov 6 months out, added some first-come sites, weekend 2 / holiday 3 night minimums, 14-night max, season Memorial Day weekend-late October, 51 RV sites to 40 ft (one pull-through), flush toilets/showers/water, senior-pass discount; kept $18 (rec.gov rate table) with the FS page's $21 in fees.note. Dropped 'reservable online' from the note.",
+  "flags": [
+    "Phone missing: recreation.gov lists the campground at 540-279-4144; the managing James River and Warm Springs Ranger District office is 540-839-2521 (https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground).",
+    "Fee conflict between official pages: recreation.gov's rate table charges $18 for standard sites (2026-2027 seasons) while the Forest Service page says '$21 per night for standard sites'. Recorded $18, the price the booking site charges."
+  ]
+}

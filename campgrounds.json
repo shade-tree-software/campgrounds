@@ -10643,45 +10643,58 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "recreation.gov/RIDB 251949 catalog: 21 'RV ELECTRIC' sites (50-amp, stated lengths 26-55 ft) + 5 tent-only sites, USACE Flannagan Reservoir, reservable -> real RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: Campground southwestern Virginia with multiple RV sites right on the Pound River. Satellite at 37.19647,-82.44015 (merged from duplicate entry 1105, 2026-09-28): angled RV pads along the loop road on the Pound River arm, east-side pads with an open grassy apron to the waterline within ~30-40 m.",
-    "note": "Campground southwestern Virginia with multiple RV sites right on the Pound River.  --AWH  USACE (Flannagan Reservoir); 21 drive-in RV sites with 50-amp electric (26-55 ft) plus 5 tent-only sites; water, restrooms, boat ramp. Reservable online. --Claude",
+    "note": "Campground southwestern Virginia with multiple RV sites right on the Pound River.  --AWH  USACE (Flannagan Reservoir); boat ramp. --Claude",
     "website": "https://www.recreation.gov/camping/campgrounds/251949",
     "hookups": {
       "electric": 50
     },
     "sites": {
-      "count": 26
+      "count": 26,
+      "max_rig_ft": 40,
+      "note": "21 RV electric sites and 5 tent-only sites. RV lengths 18-40 ft: 19 of the 21 take 25 ft or more (sites 005 at 18 ft, slanted pad, and 006 at 21 ft are shorter)."
     },
     "facilities": {
-      "potable_water": true
+      "potable_water": true,
+      "showers": true,
+      "dump": true
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949/campsites (all 21 RV ELECTRIC sites electric_hookup '50'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949/campsites (permitted_equipment RV max_length per site), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949 (amenities: Accessible Drinking Water, Accessible Showers, Dump Station; description: 'bath houses'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949 (facility_rules maxStay 14 nights / Rolling 30 Days; notices 'No more than 2 vehicles per site', 'No person(s) may camp ... for than 14 days in a 30 day consecutive period'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251949/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949/rates (Peak Season 2026-05-22 to 2026-09-07: RV ELECTRIC 26, tent 20), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251949 (facility_rules: militaryDiscount 'Military Discount'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "14 days in any 30-day period. No more than 2 vehicles per site; others use the overflow lots; no parking on the grass."
     },
     "note_scan": {
       "sig": "5f5f811457044a16",
@@ -10691,7 +10704,17 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "RV electric sites $26 a night (2026-2028 rate seasons); tent-only sites $20."
+    },
+    "discounts": {
+      "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/251949 https://www.recreation.gov/api/camps/campgrounds/251949/rates https://www.recreation.gov/api/camps/campgrounds/251949/campsites recreation.gov per-site catalog for 251949 (RIDB, cached trip_data/ridb_campsites.json, fetched 2026-10-20)",
+      "note": "Recreation.gov: confirmed reservable, $26 RV electric (tent $20), 50-amp at all 21 RV sites, 26 sites; added max rig 40 ft, 14 days in 30, showers/water/dump, military discount. Note: dropped the Claude site/amp/length text (redundant, and its '26-55 ft' is contradicted: current lengths 18-40 ft) and 'reservable online'. Not stated: season (rate seasons only), booking window, water/sewer at sites."
     }
   },
   {
@@ -13141,7 +13164,7 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "USFS GWJ NF page: 'well suited for tent camping but also accommodates small recreation vehicles', no fee, open Apr 1-Dec 7 -> drive-in RV-capable",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'not waterfront' per owner: Small no-fee first-come-first-served USFS campground near the Appalachian Trail.",
-    "note": "Small no-fee first-come-first-served USFS campground near the Appalachian Trail.  --AWH  RV Life listed but unrated $ (auto 6/2026). --Claude  FCFS - no-fee, not bookable online. --Claude",
+    "note": "Small no-fee first-come-first-served USFS campground near the Appalachian Trail.  --AWH  Shaded sites clustered around a grassy opening; Dismal Creek (stocked trout) and the Falls of Dismal nearby. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
@@ -13149,18 +13172,29 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none"
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/walnut-flats-campground ('No fees are required for this site'; no reservation information) + recreation.gov search (no Walnut Flats facility), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/walnut-flats-campground ('Fee Site and Info: No fees are required for this site'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/walnut-flats-campground ('Seasons of Use April 1 - December 7'; 'Open April 1 - December 7'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/walnut-flats-campground ('Restrooms Vault toilet(s)'; 'Potable water is not available at this site.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -13171,7 +13205,22 @@
     "fees": {
       "nightly_low": 0,
       "nightly_high": 0
-    }
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "12-07"
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/walnut-flats-campground https://www.recreation.gov/api/search?q=walnut%20flats",
+      "note": "Forest Service page: confirmed free and (no reservation system, not on recreation.gov) first-come; added season April 1 - December 7, vault toilets, no drinking water. Not stated: site count, RV lengths. Note: dropped the RV Life line (in rating) and the Claude FCFS/no-fee sentence (in booking/fees); AWH text kept."
+    },
+    "phone": "540-552-4641"
   },
   {
     "id": 238,
@@ -13180,7 +13229,7 @@
     "name": "Scotchtown Draft dispersed camping area",
     "note": "Sites on the north side of the road have great views, and the site closest to the river has water access.  Indian Draft Road is paved, but quite steep.  Scotchtown Draft Road is a dirt road that’s less steep, but can get pretty rugged in places.  --AWH",
     "elevation_meters": 471.0,
-    "website": "https://tmbtent.com/virginia-free-dispersed-camping/",
+    "website": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins",
     "state": "VA",
     "ownership": "federal",
     "waterfront": "riverfront",
@@ -13201,13 +13250,22 @@
         "checked": "2026-10-09"
       },
       "booking": {
-        "source": "Forest Service dispersed camping is first-come with no reservation system (no fee, no permit: 16 U.S.C. 6802(d)(1)(C),(E)); same check as provenance.fees",
-        "checked": "2026-10-10"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins ('Recreationist can camp anywhere in the National Forest outside a designated campground'; 'Dispersed camping in one location is allowable up to 14 days in any 30-day period'; 'Dispersed camping is not allowed in the vicinity of developed recreation areas such as campgrounds, picnic areas, or trailheads ... Keep your campsite within 150 feet from a roadway'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none",
+      "max_stay_nights": 14,
+      "note": "Forest Service dispersed camping: no reservations. 'Dispersed camping in one location is allowable up to 14 days in any 30-day period.' Not allowed near developed sites (campgrounds, picnic areas, trailheads); keep the campsite within 150 ft of the road."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins",
+      "note": "No Forest Service or DWR page names Scotchtown Draft (and no agency statement about 4WD on Indian Draft or Scotchtown Draft roads was found). Applied the forest's dispersed-camping rules from its camping page: not reservable, first-come, 14 days in any 30. Fees ($0) and the AWH note left as they are."
     }
   },
   {
@@ -13216,7 +13274,7 @@
     "location": "37.7479,-79.2648",
     "name": "Oronoco Campground",
     "elevation_meters": 524.0,
-    "website": "https://tmbtent.com/virginia-free-dispersed-camping/",
+    "website": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins",
     "state": "VA",
     "ownership": "federal",
     "waterfront": "not waterfront",
@@ -13243,13 +13301,22 @@
         "checked": "2026-10-09"
       },
       "booking": {
-        "source": "Forest Service dispersed camping is first-come with no reservation system (no fee, no permit: 16 U.S.C. 6802(d)(1)(C),(E)); same check as provenance.fees",
-        "checked": "2026-10-10"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins ('Recreationist can camp anywhere in the National Forest outside a designated campground'; 'Dispersed camping in one location is allowable up to 14 days in any 30-day period'; 'Dispersed camping is not allowed in the vicinity of developed recreation areas such as campgrounds, picnic areas, or trailheads ... Keep your campsite within 150 feet from a roadway'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none",
+      "max_stay_nights": 14,
+      "note": "Forest Service dispersed camping: no reservations. 'Dispersed camping in one location is allowable up to 14 days in any 30-day period.' Not allowed near developed sites (campgrounds, picnic areas, trailheads); keep the campsite within 150 ft of the road."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/camping-cabins https://moderncampground.com/?p=39932",
+      "note": "No Forest Service page names Oronoco (fs.usda.gov/r08/gwj/recreation/oronoco* all 404; not on recreation.gov). Applied the forest's dispersed-camping rules from its camping page: not reservable, first-come, 14 days in any 30. Fees ($0) and note left as they are."
     }
   },
   {
@@ -23891,6 +23958,43 @@
       "sig": "4b3996f982f960d4",
       "checked": "2026-10-09",
       "model": "claude-opus-5/session"
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "provenance": {
+      "hookups": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('Camping is primitive, temporary and dispersed. There are no established campsites and no amenities (electric, potable water, dump stations, restrooms, convenience stations).'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ ('no amenities (electric, potable water, dump stations, restrooms, convenience stations)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://dwr.virginia.gov/camping-on-wmas/ + https://dwr.virginia.gov/wma/thompson/ (Recreational Opportunities: 'Primitive Camping ( Requirements for Camping on WMAs )'; 'Parking is provided in 11 designated parking areas'; 'Handicapped parking is allowed at the lake and a small, unimproved boat launch is available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      }
+    },
+    "facilities": {
+      "potable_water": false,
+      "dump": false,
+      "flush_toilets": false,
+      "vault_toilets": false
+    },
+    "booking": {
+      "max_stay_nights": 14,
+      "note": "Camping on a Virginia WMA needs a written camping authorization ($10, up to six people) from Go Outdoors Virginia or a license agent, which sets the trip's start and end dates; 14 nights at most. Only in previously cleared spots, and 'unlawful to camp within 300 feet of any lake or facility'. DWR: 'WMA roads are not suitable for long vehicles or trailers ... Some WMAs may not allow travel trailers or RVs.' G. Richard Thompson WMA: 11 designated parking areas; Thompson Lake has handicapped parking and a small unimproved boat launch."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://dwr.virginia.gov/wma/thompson/ https://dwr.virginia.gov/camping-on-wmas/ https://dwr.virginia.gov/wp-content/uploads/media/Thompson-WMA-Map.pdf",
+      "note": "Confirmed on DWR's Thompson WMA page that primitive camping is still allowed (listed among the WMA's recreational opportunities; no designated campsites), and from DWR's statewide camping page: no hookups, no water/dump/restrooms, 14-night limit, $10 camping authorization. Not stated: season, posted hours, which parking areas allow camping. ownership wma stands. Note (with the $10 / $4 Access Permit line) left as is."
     }
   },
   {
@@ -25122,33 +25226,47 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "USFS GWJ rec-area page + recreation.gov #256935: 20 FCFS sites, gravel parking spur/table/grill, RVs up to 25 ft in some sites, open mid-Apr to late-Nov -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 36.8361,-81.0700: camp/picnic clearing sits on a bench north of Cripple Creek with a continuous riparian treeline buffer between sites and the wooded creek channel; USFS/rec.gov page does not flag shoreline sites -> not waterfront (creek screened, no per-site map of bank pads)",
-    "note": "USFS campground in the mountains of southwest VA; no specific water body confirmed at the sites.  RV Life listed but unrated $ (auto 6/2026). --Claude  FCFS - 20 campsites not reservable online (only the day-use picnic shelter is bookable on recreation.gov). --Claude",
+    "note": "USFS campground (Mount Rogers NRA) in the mountains of southwest VA, by Cripple Creek (fishing, wading, tubing at the picnic area); no specific water body confirmed at the sites. Unstaffed. Hurricane Helene damage: the Raven Cliff Furnace Trail (4616) and Raven Cliff Trail (4601) are closed and the bridge to the furnace is gone (recreation.gov notice, 2026-10). --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
       "source": "rvlife"
     },
     "sites": {
-      "count": 20
+      "count": 20,
+      "max_rig_ft": 25,
+      "note": "Each unit has a gravel parking spur, picnic table and fire grill; 'Recreation vehicles up to 25 feet long can be accommodated in some sites.' Some sites have a pad for tents or pop-ups."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "The 20 camping units are first-come, first-served; only the day-use picnic shelter is listed on recreation.gov. Limit 8 people and 2 vehicles per unit."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/256935 ('There are 20 camping units ... Each unit has a gravel parking spur, picnic table and fire grill. Some sites have a pad for tents or pop-up trailers. Recreation vehicles up to 25 feet long can be accommodated in some sites.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/256935 ('There are 20 camping units available on a first-come, first-served basis.'; 'FEE: $5 per unit, per night (limit of 8 people and 2 vehicles per unit)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raven-cliff-recreation-area ('Fee Site and Info | Overnight Use: | Single Site: $5 per night | $5 per site per night. Day use is free. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raven-cliff-recreation-area ('$5 per site per night. Day use is free.') + https://www.recreation.gov/api/camps/campgrounds/256935 ('FEE: $5 per unit, per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/raven-cliff-recreation-area ('Seasons of Use: Mid - April - Late November'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/256935 (notices 'There is no drinking water available, you must bring your own.', 'No flush toilets available, only porta-john toilets. Vault toilets are available at the picnic shelter area.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -25159,8 +25277,24 @@
     "fees": {
       "nightly_low": 5,
       "nightly_high": 5,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "note": "Mid-April to late November."
+    },
+    "facilities": {
+      "flush_toilets": false,
+      "potable_water": false,
+      "note": "Portable toilets and garbage cans in the campground; vault toilets at the picnic shelter. No drinking water: bring your own."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/raven-cliff-recreation-area https://www.recreation.gov/api/camps/campgrounds/256935",
+      "note": "Read the Forest Service page and recreation.gov 256935: confirmed 20 first-come units, $5/night, not reservable; added RVs to 25 ft in some sites, season mid-April to late November, no flush toilets (portable only), no drinking water. Note: dropped the RV Life line (in rating) and the FCFS sentence (in booking), added the Helene trail closures."
+    },
+    "phone": "276-783-5196"
   },
   {
     "id": 468,
@@ -25592,8 +25726,44 @@
       "fees": {
         "source": "https://www.fs.usda.gov/r08/gwj/recreation/pines-campground ('Fee Site and Info | No fees are required for this site ')",
         "checked": "2026-10-09"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/pines-campground ('No fees are required for this site'; no reservation information) + recreation.gov search near 37.605,-80.076 (no matching facility), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/pines-campground ('Seasons of Use April 1 - December 7'; 'Operational Hours Open April 1 - November 1'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/pines-campground ('Restrooms Vault toilet(s)'; 'Potable water is not available at this site.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
-    }
+    },
+    "booking": {
+      "reservable": false,
+      "platform": "none",
+      "fcfs": "always",
+      "note": "Free campground with no reservation system: the Forest Service page lists no fee and no booking link, and recreation.gov has no listing for it (the only 'Pines Campground' there is in New Mexico)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "note": "The Forest Service page gives two closing dates: 'Seasons of Use: April 1 - December 7' and 'Open April 1 - November 1'."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/pines-campground https://www.recreation.gov/api/search?q=pines%20campground&lat=37.605&lng=-80.076&radius=20",
+      "note": "Forest Service page: confirmed free; added first-come/not reservable (the inherited recreation.gov booking row is wrong: no rec.gov listing), season opening April 1 with two published closing dates (Dec 7 / Nov 1) in season.note, vault toilets, no drinking water. Not stated: site count, RV lengths. AWH note left as is."
+    },
+    "phone": "540-552-4641"
   },
   {
     "id": 473,
@@ -43243,7 +43413,7 @@
     "inclusion_evidence": "Hipcamp listing (via search): 'huge shady field for setting up and parking' on James River, appears in Hipcamp James River RV list -> drive-in field parking fits 23-ft rig",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: Riverfront campsites on the James River off of US-15 south of I-64.  $54+fees.",
     "website": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v",
-    "note": "Riverfront campsites on the James River off of US-15 south of I-64.  $54+fees.  --AWH",
+    "note": "Riverfront campsites on the James River off of US-15 south of I-64.  --AWH",
     "note_scan": {
       "sig": "028794b278b2063e",
       "checked": "2026-09-15",
@@ -43253,13 +43423,60 @@
       "nightly_low": 54,
       "nightly_high": 54,
       "currency": "USD",
-      "note": "Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Host's list price is $60 a night, shown 2026-10-21 at $54 after a 10% discount (both sites); Hipcamp adds a service fee at checkout. Firewood $30 a load, delivered.",
+      "checked": "2026"
     },
     "provenance": {
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (Next.js page data, read 2026-10-21: each site pricePerNight $54.00, pricePerNightBase $60.00, isPriceDiscount true; overview 'Firewood available per request and delivered for$30.00 a load')",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (Next.js page data, read 2026-10-21: status LIVE, isBookable true, maxBookingWindowInMonths 6; both sites isInstantBookable true, minNights 1; overview 'Some campers are having navigational problems with their phone's GPS feature')",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (Next.js page data, read 2026-10-21: both sites: electricity-hookup and water-hookup ABSENT)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (Next.js page data, read 2026-10-21: 2 sites (Site 2, Site 3), accommodationType rv-tent, rvMaxLength 34 ft, accessType DRIVE_IN; overview)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v (Next.js page data, read 2026-10-21: both sites: toilet ABSENT, water ABSENT)",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "window_opens_days": 183,
+      "note": "Instant-book on Hipcamp up to 6 months ahead, 1-night minimum. The host warns phone GPS misroutes some campers; turn at the canoe marked HIPCAMP on the orange barrier at the driveway."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false
+    },
+    "sites": {
+      "count": 2,
+      "max_rig_ft": 34,
+      "note": "Two drive-in RV/tent sites at the edge of a mowed riverside field ('We are going with only 2 sites this year. Site 1 is no longer available'); site 2 has a beach when the river is below 5 ft."
+    },
+    "facilities": {
+      "flush_toilets": false,
+      "vault_toilets": false,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/virginia-seven-islands-river-front-campsites-xryhjl5v",
+      "note": "Hipcamp listing LIVE and bookable (instant book, 575 bookings, 99% recommended). Fees $54 confirmed (list $60 less a 10% discount). Added 2 drive-in sites to 34 ft (host dropped site 1 this year), 6-month window, no hookups, no toilets or drinking water. Not stated: season, max stay. Note: dropped AWH's price words."
     }
   },
   {
@@ -43352,19 +43569,37 @@
     "inclusion_evidence": "Hipcamp listing (via search): 'can accommodate multiple RVs and trailers,' 19' travel trailer fits with plenty of room, lots of space -> drive-in RV site",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: 55-acre property off of US-29 SE of Culpeper, 4 sites on river with beach access.  $47+fees.",
     "website": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv",
-    "note": "55-acre property off of US-29 SE of Culpeper, 4 sites on river with beach access.  $47+fees.  --AWH",
+    "note": "55-acre property off of US-29 SE of Culpeper, 4 sites on river with beach access.  --AWH",
     "sites": {
-      "count": 4
+      "count": 4,
+      "max_rig_ft": 35,
+      "note": "Four drive-in RV/tent sites, each listed for RVs up to 35 ft; sites 1 and 3 on the river, site 2 overlooking it."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (Next.js page data, read 2026-10-21: 4 sites, accommodationType rv-tent, rvMaxLength 35 ft, accessType DRIVE_IN; site overviews)",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (Next.js page data, read 2026-10-21: each site pricePerNight $46.75, pricePerNightBase $55.00, isPriceDiscount true)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (Next.js page data, read 2026-10-21: status LIVE, isBookable true, maxBookingWindowInMonths 6; every site isInstantBookable true, minNights 1, advanceNoticeInHours 0)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (Next.js page data, read 2026-10-21: all four sites: electricity-hookup and water-hookup ABSENT)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv (Next.js page data, read 2026-10-21: all four sites: toilet ABSENT, water ABSENT; firepit, picnic table, trash can at each site)",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -43376,7 +43611,28 @@
       "nightly_low": 46.75,
       "nightly_high": 46.75,
       "currency": "USD",
-      "note": "Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Host's list price is $55 a night, shown 2026-10-21 at $46.75 after a 15% discount (all four sites); Hipcamp adds a service fee at checkout.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "window_opens_days": 183,
+      "note": "Instant-book on Hipcamp up to 6 months ahead, 1-night minimum, no advance notice needed."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false
+    },
+    "facilities": {
+      "flush_toilets": false,
+      "vault_toilets": false,
+      "potable_water": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/virginia-private-paradise-on-rivers-bend-dw9hw0dv",
+      "note": "Hipcamp listing LIVE and bookable (instant book, 1,526 bookings, 98% recommended). Fees $46.75 confirmed (list $55 less a 15% discount) and left as recorded. Added 4 drive-in sites to 35 ft, 6-month window, no hookups, no toilets or drinking water. Not stated: season, max stay. Note: dropped AWH's price words."
     }
   },
   {
@@ -43822,19 +44078,38 @@
     "inclusion_evidence": "Hipcamp listing (Hayes VA, via search): level grassy waterfront sites, 2 sites with 30amp electric+water hookups, 'RV amenities' -> drive-in RV-capable",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: 6-acre working waterfront on Severn River with access to Chesapeake Bay.  4 sites, private dock, boat ramp.  $32+fees/night.",
     "website": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor",
-    "note": "6-acre working waterfront on Severn River with access to Chesapeake Bay.  4 sites, private dock, boat ramp.  $32+fees/night.  --AWH",
+    "note": "6-acre working waterfront on Severn River with access to Chesapeake Bay.  Private dock, boat ramp.  --AWH",
     "sites": {
-      "count": 4
+      "count": 5,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "Five drive-in (2WD) waterfront sites: Dockside RV Camp (45 ft, hard-packed gravel/grass, pull-through or back-in), Canal Meadow, Harbor View and Salt Marsh (35 ft), Viking Field (24 ft, for groups with tents)."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (Next.js page data, read 2026-10-21: 5 sites, rvMaxLength 45/35/35/35/24 ft, accessType DRIVE_IN TWO_WHEEL_DRIVE; Dockside 'Easy pull in, pull through, or back in')",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (Next.js page data, read 2026-10-21: pricePerNight $32.00 Harbor View and Salt Marsh primitive sites; $52.00 Dockside RV Camp, Canal Meadow, Viking Field; no discounts)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (Next.js page data, read 2026-10-21: status LIVE, isBookable true, maxBookingWindowInMonths 12; minNights 1 on every site; isInstantBookable true on four sites, false on Viking Field)",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (Next.js page data, read 2026-10-21: overview '2 sites offer 30amp electric and potable water hook ups', '2 sites are unimproved and offer no water, electric, or sewer'; Dockside '30Amp electric, and water hook up are available'; Canal Meadow 'No sewer is available on this site')",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor (Next.js page data, read 2026-10-21: overview 'Pit toilet, potable water, and outdoor shower available on site'; 'A gravel boat ramp is adjacent to this property and is suitable for launching boats up to 28'')",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -43846,7 +44121,30 @@
       "nightly_low": 32,
       "nightly_high": 52,
       "currency": "USD",
-      "note": "$32 primitive, $52 other sites. Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "$32 at the two primitive sites (no hookups), $52 at the three electric/water sites; Hipcamp adds a service fee at checkout.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "window_opens_days": 365,
+      "note": "Booked on Hipcamp up to 12 months ahead, 1-night minimum; four sites are instant-book, Viking Field is by request."
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": false
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "note": "A pit privy, an outdoor shower and a potable water faucet, shared. Private dock; a gravel boat ramp next door takes boats to 28 ft."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/virginia-the-oysterhouse-landing-kk9hywor",
+      "note": "Hipcamp listing LIVE and bookable (266 bookings, 99% recommended). Fees $32 primitive / $52 hookup sites confirmed. Changed sites 4 -> 5; added max rig 45 ft with a pull-through, 30-amp + water (no sewer) at the hookup sites, pit privy, outdoor shower, potable water, 12-month window. Not stated: season, max stay. Note: dropped AWH's site count and price words."
     }
   },
   {
@@ -58666,20 +58964,35 @@
     "inclusion_evidence": "recreation.gov 232161: standard nonelectric drive-in sites, 'most sites will fit any size RV', reservable and operating -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 37.93111,-79.97111: dense canopy on a ridge; USFS/rec.gov: campground sits on a ridge ~0.5mi from the south end of Lake Moomaw, no sites on water",
     "website": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground\nhttps://www.recreation.gov/camping/campgrounds/232161",
-    "note": "USFS (Warm Springs/James River district) on a wooded ridge above the south end of Lake Moomaw near Covington; ~0.5 mi from the lakeshore (not on the water - swim beach, fishing pier and boat ramp are a short drive away). Drive-in family campground, reservable online. --Claude",
+    "note": "USFS (Warm Springs/James River district) on a wooded ridge above the south end of Lake Moomaw near Covington; ~0.5 mi from the lakeshore (not on the water - swim beach, fishing pier and boat ramp are a short drive away). --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reserve on recreation.gov up to 6 months ahead (group sites 12 months); the Forest Service page says reservations must be made 2 days before arrival, while recreation.gov's own rule lists no cutoff. Friday and Saturday must be booked together; holiday weekends take 3 nights. Recreation.gov notice: 'The Family Campground has first-come, first-served sites.' $10 cancellation fee."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Reservations must be made 2 days ahead of arrival and can be made up to 6 months in advance for standard sites'; 'You may stay up to 14 nights'; 'Two Night Weekend Minimum'; 'Three Night Holiday Weekend Minimum'; '$10 cancellation fee') + https://www.recreation.gov/api/camps/campgrounds/232161 (notice 'The Family Campground has first-come, first-served sites.'; rules maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -58687,8 +59000,29 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232161/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232161/rates (Peak Season 2026-09-09 to 2026-10-28 and 2027: STANDARD NONELECTRIC 18, GROUP TENT ONLY AREA 65) + https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Fees are $21 per night for standard sites and $65 per night for group sites.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('Seasons of Use: Memorial Day Weekend - late-October'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "recreation.gov campsite catalog for 232161 (RIDB, trip_data/ridb_campsites.json, fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/232161 ('Family Campground: Most sites will fit any size RV.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232161 ('Campsite amenities include flush toilets, hot showers, a playground and drinking water.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground ('The America the Beautiful Senior and Access Passes provide a 50% discount to the base campsite fee (not hook ups) and day use fees.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -58702,8 +59036,34 @@
     "fees": {
       "nightly_low": 18,
       "nightly_high": 18,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$18 a night for standard and tent sites on recreation.gov's rate table (2026 and 2027 seasons); group sites $65. The Forest Service page instead says '$21 per night for standard sites'."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Memorial Day weekend to late October."
+    },
+    "sites": {
+      "count": 51,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "51 standard non-electric RV sites plus 2 tent-only sites and 2 group tent areas; 'Most sites will fit any size RV'. Catalog lengths run 20-40 ft (19 sites at 23 ft, 21 at 30 ft or more); one pull-through, the rest back-in."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/gwj/recreation/morris-hill-campground https://www.recreation.gov/api/camps/campgrounds/232161 https://www.recreation.gov/api/camps/campgrounds/232161/rates",
+      "note": "Read the Forest Service page and recreation.gov: confirmed reservable on recreation.gov 6 months out, added some first-come sites, weekend 2 / holiday 3 night minimums, 14-night max, season Memorial Day weekend-late October, 51 RV sites to 40 ft (one pull-through), flush toilets/showers/water, senior-pass discount; kept $18 (rec.gov rate table) with the FS page's $21 in fees.note. Dropped 'reservable online' from the note."
+    },
+    "phone": "540-839-2521"
   },
   {
     "id": 1123,

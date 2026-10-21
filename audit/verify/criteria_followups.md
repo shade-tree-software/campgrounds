@@ -35,8 +35,18 @@ me drop and report); each needs the research named before a verdict.
   feet more"). Its two pages disagree on drinking water (rec.gov seasonal; FS none).
 - **1108 Jamison Mill** — ownership federal -> local (Franklin County runs it on Corps land; same
   as Glen Lyn). Now county-reservable; the old FCFS/USACE claims were wrong.
+- **239 Oronoco** — Modern Campground (2023-10-01) reported a GWNF proposal to make it a $14 fee
+  campground with water and marked sites; no official page says whether it was adopted. If it
+  was, the $0 fee and dispersed rules are stale. Inclusion rests on Campendium alone. Call the
+  Glenwood-Pedlar district (540-291-2188).
+- **472 The Pines / 237 Walnut Flats** — FS says only "small recreation vehicles can be
+  accommodated", no length; 23-ft fit unconfirmed.
+- **759 Seven Islands (Hipcamp)** — $54 base, over the $50 gate; AWH added it, so kept.
+  **761 Private Paradise** is $46.75 only under a 15% discount (list $55).
 
 ## Resolved 2026-10-21
+- **436 Thompson Lake Parking Area** — DWR 300-ft rule: satellite 2026-10-21 puts the pin in
+  woods ~250 m east of the lake, nowhere near the ramp; no problem.
 - **Long Run Road #1-#6 (520, 519, 522, 56, 57, 58)** — DROPPED under the 4WD rule: DWR's FR 72
   page says the road "is recommended only for 4-wheel drive vehicles with high clearance".
   **521 Western-Facing Campsite** (0.5 mi up FR 72C off FR 72) dropped on the same page.
