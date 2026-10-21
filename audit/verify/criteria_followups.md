@@ -142,8 +142,25 @@ me drop and report); each needs the research named before a verdict.
   no Isaias check was possible; re-check belleglade.gov/torry.
 - **14398 Sunny Shores** — kept: $50 + tax (at the line), 55+ except travelling nurses/military/police,
   36 RV sites vs 8 MH spaces, nothing for sale; markets to snowbirds and annuals.
+- **4731 Big Scrub (USFS Ocala)** — kept as a general campground with an OHV side (46 sites, the
+  Mack Lake ORV reading), but rec.gov calls it "perennially popular with off-road vehicle enthusiasts"
+  with a trailhead giving riders campsite-to-trail access to the Ocala Centennial Trail. Asked AWH.
+- **4710 Gilchrist Blue Springs** — Reserve Florida sells 36 units with sewer; park page says 23
+  campsites, 30 amp. Sewer cleared; call 386-454-1369. Construction banner since 2025-10-29 (no water
+  activities, port-o-lets); camping still sold.
+- **4856 Pahokee** — city rates page offline 2026-10-21 (host security takedown); re-check the rate.
+- **13382 Blue Spring (Econfina, NWFWMD)** — CampLife needs a free login to see availability; kept
+  under the 2026-10-14 softening (the District publishes the price, free, and a phone). No site
+  lengths published; 23-ft fit unconfirmed.
+- **14436 Blackbird's Hideaway** — rigs over 10 years old need photos emailed for approval; Campspot
+  $25/$35 vs the policies page's $45-65 (soft-opening?) - re-check.
+- **633 Little Talbot** — only 4 sites take 23 ft (#013, #014, #016, #021, 30 ft).
 
 ## Resolved 2026-10-21
+- **p3-47:** no drops. 4742 Bear Island temporarily_closed -> open (NPS Open, rec.gov booking Nov
+  2026; the Hilux Fire claim was the note's). 4734 Wright Lake and 4731 Big Scrub highs dropped (the
+  $30 sites are host/management). 167 renamed Bennett Field Campground. 4796 Avalon kept on the
+  St. Petersburg gateway (20 km; no per-person fee - the skipped Avalon was WV).
 - **p3-46 drops:** 4812 Travel World (Facebook only), 4762 Unhitched Leisure Lakes ($55, no gateway),
   14421 Villa Margaret (55+ permanent-resident park, call for rates). 4846 Lithia Springs is
   reservable on WebTrac (the "FCFS, no reservations" note was wrong); 4829 Withlacoochee River Park

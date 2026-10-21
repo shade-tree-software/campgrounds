@@ -91,3 +91,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **14398 Sunny Shores MH & RV** — "Our canal opens straight onto 5,000-acre, spring-fed Lake
   Panasoffkee", fishing dock; entry not waterfront.
 - **14385 Wewa RV Park** — "The back of Wewa RV Park borders pristine Stone Mill Creek"; entry not waterfront.
+- **4734 Wright Lake (USFS)** — "along one portion of the lakeshore", "views of the lake"; entry not waterfront.
+- **633 Little Talbot Island SP** — entry coastal woods, but the --AWH note says "campground is not
+  waterfront"; park page: sites a half-mile from the beach, "tidal creeks border the western edge",
+  several RV sites "can get wet during ... high tides".

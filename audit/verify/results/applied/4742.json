@@ -1,0 +1,64 @@
+{
+  "id": 4742,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=bicy (Bear Island Campground record) and /api/v1/alerts?parkCode=bicy",
+    "https://www.recreation.gov/api/camps/campgrounds/10214632",
+    "https://www.recreation.gov/api/camps/campgrounds/10214632/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/10214632/month (November 2026)",
+    "recreation.gov campsite catalog for facility 10214632 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "status": {
+      "values": {"operating": "open", "note": null},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('Bear Island Campground Open'; no closure alert in the NPS alerts feed for bicy, only ORV-permit and park-pass notices) + recreation.gov availability for November 2026 (1,048 site-nights Available, 152 Reserved), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 10, "currency": "USD", "checked": "2026",
+                 "note": "$10 a night for RV or tent, $5 with a Senior or Access Pass; cash not accepted, pay online."},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('Tent site $10 per night / $5 with a Senior or Access Pass') + https://www.recreation.gov/api/camps/campgrounds/10214632/rates (2026-2028 StandardNonelectric $10) + NPS API fees ('This is for one night of camping for RV or tent'), read 2026-10-21",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('$5 with a Senior or Access Pass'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false},
+      "source": "NPS API campground record (campsites.electricalHookups '0') + recreation.gov campsite catalog for 10214632 (all 40 STANDARD NONELECTRIC, Water Hookup No), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 40, "max_rig_ft": null,
+                 "note": "40 designated sites with gravel or grass pads; sites 1-12 open year-round, 13-40 August 15 - April 15. RVs allowed; no length is published (NPS: 'Please call for more information 239-695-1205')."},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('Forty designated sites') + https://www.recreation.gov/api/camps/campgrounds/10214632 ('Campsites have gravel or grass pads', 'The campground offers tent and RV camping') + NPS API (rvAllowed 1, rvMaxLength 0, rvInfo 'Please call for more information'), read 2026-10-21. The note-derived 50 ft is stated on none of these pages and is cleared.",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('Primitive campground with no water. Vault toilets available.') + recreation.gov notice ('No fresh water is available.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Sites 1-12 are open year-round; sites 13-40 August 15 - April 15."},
+      "source": "https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('Sites 1-12 are open year-round. Sites 13-40 are open August 15-April 15.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "always", "max_stay_nights": 180,
+                 "note": "All 40 sites reservable on recreation.gov (or 877-444-6777); 'Any sites not reserved in advance are available on a first come first serve basis', but cash is not accepted and cell coverage is limited, so advance reservations are 'highly recommended'. The 180-night limit is the preserve's 180 days in any 12 months."},
+      "source": "NPS API reservationInfo ('Reservations may be made on recreation.gov or call 877-444-6777 in advance. Any sites not reserved in advance are available on a first come first serve basis', numberOfSitesReservable 40) + recreation.gov notice ('Cash payments are not accepted at this campground. Payments must be made online. There is limited to no cell phone coverage at the campground, advance reservations are highly recommended.') + https://www.nps.gov/bicy/planyourvisit/bear-island-campground.htm ('The maximum length of stay for any camping activity within the national preserve is 180 days in a 12-month period'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Big Cypress backcountry-unit campground at the end of ~20 mi of graded crushed-limestone Turner River Rd (passable by a normal vehicle/camper, no 4WD; washboard/dusty when dry). Gravel or grass pads; cash not accepted and little or no cell coverage, so pay online before arriving. ORV trails and hunting nearby (ORV permit required). --Claude",
+  "summary": "Status temporarily_closed (Hilux Fire, note-derived) -> open: the NPS page says Open, no closure alert, and rec.gov is taking November 2026 bookings. Confirmed $10 ($5 Senior/Access), 40 sites, no water/electric, vault toilets. Added season (1-12 year-round, 13-40 Aug 15-Apr 15), FCFS for unreserved sites, 180-day preserve limit. Cleared the note-derived 50-ft max (no page states a length). Note cleaned.",
+  "flags": [
+    "Off-road check: this is a general tent-and-RV campground with ORV trails beside it, not an ORV staging camp by its own pages. rec.gov: 'The campground offers tent and RV camping ... Visitors may enjoy nearby activities such as off-road vehicle trail access, hiking, and hunting'; amenities list 'Off-Road Vehicle Trails'; 'An off-road vehicle (ORV) permit is required for ORV use.' Keep under the OHV-side rule unless a human reads it otherwise.",
+    "Access: NPS lists 'Unpaved Roads - All vehicles OK in good weather' (20-mile secondary gravel road); no 4WD statement.",
+    "Phone: entry 239-631-9988 is the ORV office / facility-information line rec.gov gives; rec.gov facility_phone is 239-695-1117 and NPS gives 239-695-1205 for RV information."
+  ]
+}

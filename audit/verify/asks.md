@@ -136,3 +136,9 @@ WebTrac reservations list campgrounds at Coe Landing and Hall Landing only, and 
 campsite search returned nothing (Coe Landing returned 20). The campsite page still mentions a
 Williams Landing map and bed tax. Kept for now (website now the Park Index); drop if it's gone.
 - **AWH 2026-10-21: drop.** Done.
+
+## 4731 Big Scrub Campground (USFS Ocala NF) — off-road rule
+A 46-site Forest Service campground (pull-throughs, drinking water) that rec.gov calls "perennially
+popular with off-road vehicle enthusiasts", with a trailhead inside giving "riders campsite-to-trail
+access" to the 47-mile Ocala Centennial Trail; most of its notices are ORV regulations. I read it as
+a general campground with an OHV side (like Mack Lake ORV) and kept it. Say drop if it's a riders' camp.
