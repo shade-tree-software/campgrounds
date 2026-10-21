@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+"""Entries dropped on phase-7 criteria follow-ups (criteria_followups.md), under the standing
+rules I may apply and report: the private presence rule (AWH 2026-10-14: a working website with
+a phone, or Google Maps open with 25+ reviews and a phone) and the long-stay rule's test 2
+(nights really for sale: a posted nightly rate + phone, or a booking site).
+
+    python3 -I audit/verify/criteria_drops.py [--apply]
+
+Logged to removals.json beside this script. No trip references any of them (asserted).
+Dry run unless --apply; safe to rerun.
+"""
+import json, os, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(os.path.dirname(HERE))
+CG = os.path.join(ROOT, "campgrounds.json")
+LOG = os.path.join(HERE, "removals.json")
+
+DROPS = {
+    1168: ("2026-10-21", "long-stay park with no nights visibly for sale (long-stay test 2)",
+           "lakebonin.com, read 2026-10-21: 'With our focus on seasonal sites, we also have non-seasonal sites available'; "
+           "'Daily, weekly and seasonal rates are available. Call or email us to book' - no rate posted anywhere on the site, no booking site."),
+    13118: ("2026-10-21", "no live presence (private presence rule)",
+            "Operator domain parked and booking host NXDOMAIN (2026-10-20); Google Maps has no listing at the pin "
+            "(searches by name, address and phone 570-448-2268 find only other businesses), read 2026-10-21."),
+    1164: ("2026-10-21", "no live presence (private presence rule)",
+           "Only a Facebook page; Google Maps listing (286 Firehouse Ln, 4.7 over 32 reviews) carries no phone or website; "
+           "no posted rate. Read 2026-10-21."),
+    1188: ("2026-10-21", "no live presence (private presence rule)",
+           "woodhavenacres.com, read 2026-10-21: one page with an email form, no phone, rates or booking; "
+           "Google Maps 'Woodhaven Campgrounds' has 5 reviews (under 25)."),
+}
+
+if __name__ == "__main__":
+    sys.path.insert(0, ROOT)
+    import trips
+    cg = json.load(open(CG, encoding="utf-8"))
+    by = {e["id"]: e for e in cg}
+    log = json.load(open(LOG, encoding="utf-8")) if os.path.exists(LOG) else []
+    logged = {r["id"] for r in log}
+    gone = []
+    for i, (day, reason, evidence) in DROPS.items():
+        e = by.get(i)
+        if e is None:
+            assert i in logged, i
+            continue
+        assert not trips.campground_references(i), i
+        gone.append(i)
+        log.append({"id": i, "state": e["state"], "name": e["name"], "ownership": e["ownership"],
+                    "location": e["location"], "reason": reason, "evidence": evidence, "checked": day})
+        print(f"  drop {i} {e['state']} {e['name']}: {reason}")
+    print(len(gone), "to drop")
+    if "--apply" in sys.argv and gone:
+        cg = [e for e in cg if e["id"] not in gone]
+        with open(CG, "w", encoding="utf-8") as f:
+            json.dump(cg, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+        with open(LOG, "w", encoding="utf-8") as f:
+            json.dump(log, f, ensure_ascii=False, indent=1)
+            f.write("\n")
+        print("written")
