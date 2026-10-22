@@ -1,6 +1,7 @@
 - [Trip poster redesign](project_poster_redesign.md) — SHIPPED & print-PDF verified 2026-07-27; print gotchas + offline-render check in file
 - [Weather Finder (was Summer Seeker)](project_weather_finder.md) — standalone app folded into EKKO as an admin page 2026-07-26; cooler/warmer-than-home + rain filter; per-cell forecast cache is load-bearing
 - [Open-Meteo rate limits](reference_open_meteo_limits.md) — free tier meters LOCATIONS not calls: 600/min (measured); batch via comma-separated lat/lng lists
+- [Phase 7 Montana (cloud session)](project_phase7_mt.md) — mt-N batches on a claude/ branch beside the main run; conflict rules + held drops inside
 - [App is private, family-only](project_app_is_private_family_only.md) — all accounts/share links go to family & friends; family home locations visible to ALL users is desirable, never a privacy leak
 - [Auth model decisions](project_auth_model_decisions.md) — AWH declined share-link self-registration and self-service password change (2026-07-26); don't re-propose, reasoning inside
 - [UX review 2026-07 — ALL BATCHES DONE](project_ux_review_2026_07.md) — full non-admin UX audit, all 24 items shipped 2026-07-26; per-item gotchas inside; start a fresh review for new work

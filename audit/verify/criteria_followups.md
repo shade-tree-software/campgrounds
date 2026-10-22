@@ -3,6 +3,43 @@
 Entries a verifier found may fail the inclusion criteria. I decide these (standing rules let
 me drop and report); each needs the research named before a verdict.
 
+## Montana (mt-N batches)
+- **6194 Riverside (Canyon Ferry)** (mt-9, 2026-10-22): Reclamation closed it from 2026-09-13 'through Spring 2027' for sidewalk construction (usbr.gov news release 5394); recorded temporarily_closed. Re-check spring 2027.
+- **15387 North American RV Park** (mt-9): undated rate page gives $105.56/night incl. tax; over the $50 gate but the Glacier NP gateway applies. Fees unrecorded (no 2024+ date); the site 403s plain fetches.
+- **6063 Placid Lake SP** (mt-9): phone 406-825-2007 is not on FWP's page; replaced with the year-round main office 406-677-6804 (park line 406-677-3874, May 1 - Sep 30).
+- **6215 Philipsburg Bay** (mt-9): FS says 68 sites, rec.gov 65; both in sites.note.
+- **6162 Seeley Lake Campground** (mt-8, 2026-10-22): the Boy Scout Road bridge is permanently closed (rec.gov notice); reach it from the north entrance off MT-83. Renamed from 'Lolo National Forest, Seeley Lake Campground' to the FS name.
+- **6060 Lonesomehurst** (mt-8): the FS page still carries an old fee line ($20 / $28 electric) beside the current $26 / $35, which matches rec.gov's 2026 table.
+- **6062 Logan SP** (mt-8): phone set to the summer number 406-293-7190 (Apr 15 - Oct 15); winter is 406-751-4590.
+- **6120 Lake Frances City Park** (mt-7, 2026-10-22): the town posts no nightly rate, only $800/month for full-service sites 6 & 7. Fees left unrecorded; nightly camping may be by self-pay with no posted price. Re-check.
+- **6075 Holter Lake** (mt-7): temporarily_closed Oct 12 - Nov 8, 2026. Lift the status after Nov 8.
+- **6119 Hooper Park** (mt-7): the website is the Lincoln Valley Chamber's page and the county has no page for it; values recorded as `reported`.
+- **6165 Gods Country Camping** (mt-7): Hipcamp-only, so ownership was changed to hipcamp. The host warns some spots are on rough, uneven ground (access listed as 2WD drive-in).
+- **6080 Holter Dam** (mt-7): BLM's own page contradicts itself on drinking water; potable_water kept true per rec.gov.
+- **Fee rows with manual provenance that look wrong (MT, mt-6)**: 6197 Bull River nightly_high 150 is the group pavilion's 51+ rate (single site $16); 6134 Chief Joseph Park stored 23/23 is the electric price, non-electric RV spots are $17 (base); 6074 Divide Bridge's $15 may be the separate Divide Campground's fee ('Divide Campground--15$ / night' on the BLM page). Not overwritten (manual); fix by hand.
+- **6078 Carbella (MT, BLM)** and **6189 Emery Bay**: inherited federal booking row overridden / rec.gov 34-60 ft vs FS 32-ft max (kept FS). 6078's season 04-01..11-30 rests only on the BLM fee period.
+- **6170 Downstream (MT, USACE Fort Peck)** (mt-6): no operator website; the USACE Fort Peck camping page (nwo.usace.army.mil/.../Fort-Peck/Camping/) denies the cloud session; add it from a home network.
+- **6160 Walleye (MT, Fresno Reservoir)** (mt-5): no agency or operator page for the campground. Reclamation's Fresno page (usbr.gov/gp/recreation/frrrec.html) lists Campgrounds 0 / Campsites 0; the website is the Walleyes Unlimited webcam page (chapter page needs a login); only Visit Montana describes tent/trailer sites, toilets, no water, 14-day limit. Inclusion needs a real source or a drop.
+- **6123 Yogo RV Park (MT, private)** (mt-5): own domain yogorvpark.com redirects to russellcountry.com/yogo-rv-park.html (park's voice, phone, rates, request form; 429 from the cloud, so not yet in website). Rates $15/night undated. Pitches itself as 'an ideal Workforce Housing solution (short or long term)'; nights are offered, likely passes the long-stay tests. Google 15 reviews.
+- **6154 Antelope Creek, American Prairie (MT)** (mt-5): operator page still describes 2025 (season 05-23..10-26 recorded from it); re-read for 2026/27. No phone published (email/Hipcamp).
+- **6156 Silos, Canyon Ferry (MT)** (mt-4): ownership private -> federal (Reclamation land under a concession). Reclamation is re-bidding the concession (usbr.gov/gp/mtao/canyonferry), so operator, website (thesilosmt.camp) and Campspot booking may change for 2027.
+- **6085 Ruby Creek (MT, BLM)** (mt-4): BLM page now thin; the derived 50-ft max, water, toilets and FCFS can't be confirmed. Not on rec.gov.
+- **6232 Summit, Marias Pass (MT)** (mt-4): Helena-Lewis and Clark NF, not Flathead (website fixed); derived reservable/rec.gov cleared (no listing); FCFS and the 35-ft max unstated.
+- **6127 Lewis & Clark RV Park (MT, private)** (mt-3): for sale ('Due to health issues, we have made the unfortunate decision to sell our RV Park. We will still be opening in March for 2026', operator site Wayback 2026-03-06). The live site refused connections from the cloud on 2026-10-22 (read fine 2026-10-16). Re-check it operates in 2027. $40-45 incl. tax, under the gate.
+- **6234 North Shore (MT, USFS Kootenai)** (mt-3): inherited federal booking row (reservable on rec.gov) looks wrong: not on rec.gov and the FS page offers no reservations; probably FCFS, unstated.
+- **278 Many Glacier (MT, NPS)** (mt-3): fits, but only 13 of 109 sites take up to 35 ft (most driveways 'will not accommodate towed units over 21 feet'); book one of those. NPS 109 sites vs rec.gov catalog 103.
+- **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'The West Side Reservoir Road is narrow with many switchbacks. Not suitable for larger RV's.' Paved; kept for a 23-ft rig.
+- **6227 Grizzly (MT, USFS Lolo)** (mt-2): DROPPED 2026-10-22 (criteria_drops.py). FS page: 'Trailers, motorhomes and tow vehicles not recommended due to the narrow and rough road.'
+- **6226 Grasshopper (MT, USFS)** (mt-2): set temporarily_closed from the FS banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-08-28); the forest's alerts list no closure order, so it may have lifted. Re-check and lift.
+- **6095 Fish Creek State Park (MT)** (mt-2): the campground is really Big Pine Fishing Access Site inside the park (https://myfwp.mt.gov/fishMT/fas/39754101); Forks FAS also in the park, unchecked. 'Primitive Campsite', 23-ft trailer limit, 'Difficult Accessibility'. Name/website/FCFS unresolved.
+- **6096 Horse Prairie (MT, Reclamation)** (mt-2): Reclamation never mentions drive-in sites, length, FCFS or stay limit; inclusion_evidence leans on The Dyrt; website's rec.gov link is the reservoir gateway, not a campground.
+- **6218 Dunn Creek (MT, USACE)** (mt-2): renamed from 'Dunn Creek Flats' to rec.gov's name. Derived year_round unstated (rec.gov rate seasons Apr 1-Nov 30); inclusion_evidence's 'free year-round' is out of date ($10 peak, reservation-only). USACE pages 403 from the cloud session.
+- **6082 Galena Gulch (MT, BLM)** (mt-2): derived year_round unstated; BLM gives only the fee period Apr 1-Nov 30.
+- **6228 Hood Creek (MT, USFS)** (mt-2): concessionaire ExplorUS on rec.gov vs Rocky Mountain Recreation Company on the FS page.
+- **6122 Bolster Dam Campgrounds (MT, City of Plentywood)** (mt-1): no official page at all (plentywood.org is a history page); every fact and the phone 406-765-1700 rest on aggregators; sizes disagree (18 sites vs 10 power/water + 3 dry, 2018 review). Local, so not a presence drop; needs a city source.
+- **6094 Clark Canyon, Lewis & Clark (MT, Reclamation)** (mt-1): the inherited federal booking row (reservable on rec.gov, 180-day window) looks wrong: Reclamation describes a self-pay station and rec.gov gateway 131 is not reservable and lists no Lewis & Clark facility. No official fee, site count or season; the note's ~$30 is reviews only; a 2022 review says the lower tier fits ~22 ft.
+- **6219 Afterbay (MT, NPS Bighorn Canyon)** (mt-1): reservations by phone through Yellowtail Market, contact email crow-nsn.gov (run by/for the Crow Nation?); NPS's park fee program suspended 2018, so the inherited senior/access discount is doubtful.
+
 - **14312 James Creek RV Resort (PA)** — $50 base rests only on our own note; RJourney blocks
   plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.
 - **525 Grindstone (VA, USFS)** — closed for 2026 (no reopening date). `booking.reservable: true`

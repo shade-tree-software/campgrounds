@@ -1,0 +1,43 @@
+{
+  "id": 290,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar section, read in a browser 2026-10-22)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar Campground record) and /alerts?parkCode=glac (only the Going-to-the-Sun Road seasonal closure), read 2026-10-22",
+    "https://www.recreation.gov/api/camps/campgrounds/10171274 (+ /rates and the public per-site search catalog)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "NPS: $30 in summer status, $20 in spring/fall primitive status (no potable water or dump station, comfort stations closed, vault toilets), and free in winter (November 1 - March 31) with a valid park entrance pass. recreation.gov 2026: $30 Peak Season April 19 - September 29, $20 Non-Peak April 13-18 and September 30 - October 31."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar fees: 'Apgar summer status' 30.00, 'Apgar primitive status' 20.00, 'Apgar winter status' 0.00 'Sites are free with a valid entrance pass') + https://www.recreation.gov/api/camps/campgrounds/10171274/rates (2026 seasons), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar: 'Electric Hookups: 0') + recreation.gov catalog (all sites STANDARD NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 194, "max_rig_ft": 40, "note": "194 sites including 5 group sites (9-24 people); '25 sites can accommodate up to a 40 foot RV or truck and trailer combination'. Two tents, eight people and two vehicles per site."},
+      "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar: 'TOTAL SITES: 194', 'Group: 5', 'RV Max Length in Feet - 40') + NPS API fees text, read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "showers": true, "potable_water": true, "dump": true, "laundry": false, "wifi": false, "note": "Flush toilets, free showers, potable water and the dump station are seasonal; in the primitive and winter seasons the comfort stations close and campers use the vault toilets. No cell reception. Food storage lockers year-round; amphitheater with ranger programs."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar amenities: toilets 'Flush Toilets - seasonal', 'Vault Toilets - seasonal'; showers 'Free - Seasonal'; potableWater 'Yes - seasonal'; dumpStation 'Yes - seasonal'; laundry 'No'; internetConnectivity 'No') + recreation.gov ('restroom facilities have flush toilets and sinks with running water'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open all year in three statuses: summer (recreation.gov Peak Season April 19 - September 29 in 2026), primitive in spring and fall (no water or dump, vault toilets), and winter camping November 1 - March 31 (free, no reservation)."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar operating hours: 'In the spring and fall the campground converts to primitive status. From November 1 through March 31, the campground is open for winter camping.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "max_stay_nights": 14, "note": "Reservations are required in spring, summer and fall and not required in winter. 'Most sites have a 6-month booking window with a good handful having a 4-day booking window.' Hiker/bicyclist sites A10, C144 and C146 are paid by recreation.gov Scan and Pay on site. 14-day stay limit. Note: Going-to-the-Sun Road bans vehicles over 21 ft between Sun Point and Avalanche Campground (not on the way to Apgar)."},
+      "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm ('Reservations are required throughout the spring, summer, and fall at Apgar Campground. A reservation is not required during the winter months.') + https://www.recreation.gov/api/camps/campgrounds/10171274 (overview, 'Maximum Stay ... 14 days'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed no electric, recreation.gov booking on a 6-month window, phone 406-888-7800. Changed fees 20/20 -> 20-30 (summer $30, primitive spring/fall $20, winter free). Added 194 sites (5 group), 40-ft max (25 sites), flush/vault toilets, free showers, water and dump (seasonal), no laundry/Wi-Fi, year-round in three statuses, reservations required except in winter, 14-day limit. Not stated: interagency discount (inherited, left). AWH note kept.",
+  "flags": []
+}

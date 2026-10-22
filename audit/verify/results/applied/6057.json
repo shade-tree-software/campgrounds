@@ -1,0 +1,46 @@
+{
+  "id": 6057,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/makoshika",
+    "https://montanastateparks.reserveamerica.com/camping/makoshika-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630711",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630711, read 2026-10-12)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 28,
+        "max_rig_ft": 70,
+        "pull_through": true,
+        "note": "28 sites on ReserveAmerica: 15 in Cains Coulee (35-70 ft, five pull-through at 45-65 ft), 6 in Pine On Rocks (20-25 ft), 3 Upper Campsites, a double, a backcountry site and 2 rustic Valley View sites. No electric sites are sold."
+      },
+      "source": "https://fwp.mt.gov/makoshika ('28 camping sites') + audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630711: loop, type, max vehicle length, driveway entry), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "note": "Water available year round (FWP)."},
+      "source": "https://fwp.mt.gov/makoshika (Amenities: 'Toilets (Flush)', 'Toilets (Vault)', 'Water'; Seasons & Hours: 'Water available year round') + ReserveAmerica amenities ('Toilet, Pit/Vault', 'Water Drinking'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://fwp.mt.gov/makoshika (Seasons & Hours: 'Campground: Open year round') + ReserveAmerica ('Status: Open year round'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "window_opens_days": 90,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -24}
+      },
+      "source": "https://montanastateparks.reserveamerica.com/camping/makoshika-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630711 (Booking Window, Campsite: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance') + https://fwp.mt.gov/makoshika ('Reserve a Campsite'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT State Park (badlands) at Glendive. Developed campground (Cains Coulee) sits near the visitor center just inside the entrance; drive-in back-in/pull-through sites capable of large RVs. Note RVs over 20 ft are restricted to the first ~2 miles and NOT allowed past the switchbacks — the developed campground is within that big-rig-allowed zone. --Claude",
+  "summary": "FWP page + ReserveAmerica: confirmed year-round campground, vault toilets, pull-throughs, reservable on ReserveAmerica (derived values now verified) with the inherited 3-month window and 1-day cutoff; added 28 sites, 70-ft max (Cains Coulee), flush toilets and year-round water. Fees left as recorded (FWP gives only the $4-$34 range). Not stated: dump station (derived none left), fcfs (derived some_sites left), the RV-over-20-ft road restriction, 7-night limit (inherited). Note trimmed of restated values.",
+  "flags": [
+    "Missing phone: Makoshika State Park 406-377-6256 (https://fwp.mt.gov/makoshika)."
+  ]
+}

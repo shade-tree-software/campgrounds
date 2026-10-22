@@ -10,3 +10,5 @@ AWH 2026-10-22: "Drop down to one thread only" — run a single phase-7 verifier
 **Why:** AWH's call (no reason given); supersedes the earlier "TWO verifiers allowed" permission in [[project_phase7_verification]]. Same spirit as [[feedback_sequential_sweep_agents]] and [[feedback_limit_headless_browsers]].
 
 **How to apply:** one background verifier; generate batch N+1 only after applying N. Don't go back to two unless AWH says so.
+
+**Clarified (AWH 2026-10-22):** "one thread" is per session: each concurrent phase-7 session may run its own single verifier (e.g. the Montana cloud session beside the main run).

@@ -4,6 +4,25 @@ A verifier's source (operator page or booking engine) claims water access that d
 the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, both ways; a
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
+## Montana (mt-N batches)
+- **6062 Logan SP** (mt-8, 2026-10-22): ReserveAmerica tags 8 sites (A013-A015, A017, B001-B004) 'Near Water' and the park has 'frontage on the north shore of Middle Thompson Lake'; the entry is lakeview.
+- **6137 Merry Widow** (mt-8): the operator says 'The beautiful Boulder River flows through the campground, and many campsites have River frontage'; the entry is not waterfront.
+- **6162 Seeley Lake Campground** (mt-8): rec.gov lists 'Waterfront Sites' and 'Lake Access'; 'located on the western shore of Seeley Lake'; the entry is not waterfront.
+- **15386 Lake Five Resort** (mt-7, 2026-10-22): the operator sells "Lake Sites" / "waterfront RV sites" on Lake Five; the entry is not waterfront. Re-audit with a satellite look.
+- **6144 Camp Sula (MT, private)** (mt-6): operator 'lies along the beautiful Bitterroot River', 'River access on site'; entry not waterfront.
+- **6189 Emery Bay (MT, USFS)** (mt-6): rec.gov catalog marks 5 sites 'Lakefront'; entry not waterfront.
+- **6150 Parkside (MT, USFS)** (mt-4): FS + rec.gov 'on the banks of the Main Fork of Rock Creek', rec.gov 'Waterfront Sites', 'River Access'; entry riverview.
+- **6216 Rombo (MT, USFS)** (mt-4): 'along the West Fork Bitterroot River' (2025 shoreline stabilization along it); entry not waterfront.
+- **6241 Snowbank (MT, USFS)** (mt-4): 'on the banks of Mill Creek', 'Creek Access'; entry riverview.
+- **6212 Lakeside, Lake Alva (MT, USFS)** (mt-3): rec.gov tags all 5 sites 'Proximity to Water: Lakefront', amenity 'Lake Access'; entry not waterfront.
+- **6201 Langohr (MT, USFS)** (mt-3): rec.gov 'Waterfront Sites', 'Creek Access', 'Most campsites are situated in open meadows along the creek'; entry riverview.
+- **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'lies on the Hungry Horse Reservoir', FS 'on the west shore'; entry lakeview.
+- **6198 Many Pines (MT, USFS)** (mt-3): FS 'The 23 campsites are located along Belt Creek'; entry not waterfront.
+- **6086 Moose Creek Flat (MT, USFS)** (mt-3): FS 'sits next to the Gallatin River', fishing dock 'at the river's edge'; rec.gov 'River Access', 'Beach Access'; entry not waterfront.
+- **6196 Lolo Creek (MT, USFS)** (mt-3, weak): FS 'forested and adjacent to Lolo Creek'; entry not waterfront.
+- **6203 Greenough Lake (MT, USFS)** (mt-2): FS 'along the banks of the Main Fork of Rock Creek'; rec.gov tags 7 of 18 sites Riverfront; entry not waterfront.
+- **6076 Big Arm Unit, Flathead Lake SP (MT)** (mt-1): ReserveAmerica tags most campsites and the group site 'Near Water'; FWP describes camping by a long pebble beach on Big Arm Bay; entry lakeview.
+
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
   77, 81, 83, 87 (25-40 ft). Still open: the stored pin (42.6056,-71.1003) is in empty woods and

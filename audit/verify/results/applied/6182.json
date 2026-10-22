@@ -1,0 +1,60 @@
+{
+  "id": 6182,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.fs.usda.gov/r01/kootenai/recreation/rexford-bench-campground",
+    "https://www.fs.usda.gov/r01/kootenai/alerts/rexford-bench-beach-area-temporary-closure",
+    "https://www.recreation.gov/api/camps/campgrounds/232251",
+    "https://www.recreation.gov/api/camps/campgrounds/232251/rates",
+    "recreation.gov public search API, per-site catalog for facility 232251"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 a single site, $48 a double site; $20 a site at the neighbouring Kamloops Terrace; $5 extra vehicle (after 30 minutes at the site). Extra fee for the dump station."},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/rexford-bench-campground ('Campground: $24.00 daily fee per single site, $48.00 daily fee per double site. Kamloops Terrace: $20.00 daily fee per single site') + https://www.recreation.gov/api/camps/campgrounds/232251 (notices: '$5 extra vehicle fee', 'Additional fees are charged for dump station use') + /rates (Peak Season 2026-05-15 to 2026-09-07: $24 / $48), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/rexford-bench-campground ('50% discount with US Golden Age/Access or Interagency Senior/Access Passes'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232251 ('utility hookups are not available') + recreation.gov catalog (all 54 sites STANDARD NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 54, "max_rig_ft": 50, "note": "recreation.gov catalogue: 52 sites take 40 ft, 2 take 50 ft. Paved roads and spurs; large overflow parking for boat trailers and RVs."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232251 ('Rexford Bench Campground has 54 sites', 'A large overflow parking area is available for boat trailers and RVs', 'Campground roads and campsite spurs are paved') + recreation.gov catalog (max vehicle length 40 ft x52, 50 ft x2), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232251 ('Accessible flush toilets and drinking water are provided', 'Additional fees are charged for dump station use') + https://www.fs.usda.gov/r01/kootenai/alerts/rexford-bench-beach-area-temporary-closure ('Water and dump station services remain available'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "closes": null, "note": "Forest Service 'Seasons of Use: Late April'; no closing date stated. recreation.gov's 2026 walk-in rate season runs to September 21."},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/rexford-bench-campground (Seasons of Use: 'Late April'; page last updated April 30, 2026) + https://www.recreation.gov/api/camps/campgrounds/232251/rates (First-come, First-served Season 2026-09-08 to 2026-09-21), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "max_stay_nights": 16,
+        "note": "24 sites reservable, 30 first-come (the Forest Service page says 19 reservable); every site is first-come in the spring and September shoulder seasons. Booking closes 4 days before arrival. Saving sites is prohibited."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232251 ('54 sites, 30 are first come-first serve and 24 can be reserved'; rules reservationCutOff 4 day(s) prior to arrival, maxConsecutiveStay 16; notice '16 Day Stay Limit'; rate table First-come, First-served Seasons) + Forest Service page ('Nineteen sites are available for reservation on Recreation.gov'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Kootenai NF, on an arm of Lake Koocanusa near Rexford, 7 mi from Eureka; ponderosa pine at ~2,470 ft. High- and low-water boat ramps, fish-cleaning stations, swim beach, interpretive loop and the Hoodoo Trail to sandstone formations. The beach/recreation area above the high-water mark (with its flush restrooms) and the Kamloops overflow parking are closed for water/wastewater system work from July 13 until October 30, 2026; the campground stays open (Forest Service alert, read 2026-10-22). --Claude",
+  "summary": "Forest Service page + alert + recreation.gov (Forest Service, Rexford/Fortine RD; mixed reservable/FCFS): confirmed $24, no hookups, 54 sites, flush toilets, water, recreation.gov with some FCFS; max_rig_ft changed 60 -> 50 (rec.gov catalogue); added dump, 4-day cutoff, 16-night limit, the 50% Senior/Access discount the page states; season close 09-07 (a rate-season edge) cleared (FS gives only 'Late April'). Vault toilets left (pages mention only flush). Partial beach-area construction closure through 2026-10-30 put in the note (the campground itself is open). Note trimmed of restated values.",
+  "flags": [
+    "Missing phone: the Forest Service page and recreation.gov give the Rexford/Fortine Ranger District, (406) 296-2536."
+  ]
+}
