@@ -680,3 +680,10 @@ me drop and report); each needs the research named before a verdict.
 - **4316 Riverside (Belhaven)**: Facebook-only, kept on Google 4.7/52 + RV Life $$.
 - **4269 Riverhouse**: adults-only, weekly/monthly welcome, "inquire about shorter stays" but posts a nightly rate; Asheville gateway 32 km.
 - **4259 Red Gates** $58, Asheville 31 km. **637 Ocracoke** open per NPS; ferry/NC 12 access after the October storm unconfirmed - re-check.
+
+### p3-96 (NC, 2026-10-22)
+- No drops. Unclaimed RoverPass websites stripped from 4270 Wishing Well and 4300 Art's; 14345 Yates' dead website cleared. All three kept on Google (41/61/119 reviews, phones) + RV Life tier. Aggregator-only derived values cleared on 4282/4270/14345/4300 (notes say "Directory listings describe ...").
+- **4257 Spring Hill**: website carries injected spam (replica-watch / "virtual girlfriend" text); no rate, phone only; "Extended Stay Guests" section with monthly lot rent - share unknown, kept. Rigs over 10 years need owner approval.
+- **4300 Art's**: if it proves mostly monthly it fails test 2 (no posted nightly rate).
+- **4306 Almond Boat & RV Park**: private concession under FS special-use permit #5475 (ownership private stays - a concession on federal land; re-check the class convention).
+- **4277 Twin Rivers** $50, at the gate. **15455 Asheville West KOA** $60, Asheville 20 km.

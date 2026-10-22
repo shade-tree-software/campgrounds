@@ -154,3 +154,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **245 Lake Powhatan (NC)**: FS + rec.gov "on the banks of Lake Powhatan", loops "within walking distance of the lake"; entry not waterfront (note says not on the lake).
 - **32 Linville Falls (NC)** (weak): rec.gov "Linville River ... winds beside the campground"; entry not waterfront.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
+- **4306 Almond Boat & RV Park (NC)** (DOWNGRADE): operator says "It is not water front but very close to the lake"; entry lakefront.
