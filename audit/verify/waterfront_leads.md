@@ -122,3 +122,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **456 Glade Creek, NPS (WV)**: the note says "sites directly adjacent to the creek" and NPS says "near the banks of the New River and the Glade Creek Trailhead"; entry not waterfront.
 - **503 Big Rock (WV)**: entry riverfront, but its own --AWH note says "Sites are not waterfront"; rec.gov says "adjacent to the Cranberry River". Re-audit (likely a downgrade).
 - **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
+- **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).

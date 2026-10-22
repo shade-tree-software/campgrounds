@@ -413,3 +413,11 @@ me drop and report); each needs the research named before a verdict.
 - **740 Coneross**: no Corps page states a season (district page CDN-blocked).
 - **91 Hawe Creek**: closed for the season 2026-09-13 (Corps release), no reopening date; 3-night holiday-weekend minimum.
 - **13369 Virginia Point**: rates only by phone (camp host 304-690-5211).
+
+### p3-66 (SC, 2026-10-21)
+- **4353 Briarcliffe** kept: "a membership park that is also open to the public" ($3,500 membership + dues), but guests book nightly by phone ($75-90, gateway: Myrtle Beach 17 km lifts the price half; $8/night electric fee may be extra). Site count 289 (note prose) vs operator "over 146 sites" - left. Good Sam now true.
+- **4352 Turtle Creek** kept: no posted nightly rate (phone booking, "call us for monthly prices"), but RV Life 5*/$$ and Passport America nightly sale satisfy price + presence.
+- **646 Buck Hall**: open only "until the end of shrimp baiting season in November" 2026, then the whole area closes for a major renovation (no contract, no timeline). Set temporarily_closed once it starts.
+- **622 Camp Pedro** (--AWH): no rate readable (innRoad behind Cloudflare Turnstile); RV Life $$$.
+- **4379 Chau Ram**: county fee page $20 res/$30 non-res vs reservations page $25 all-in (res $5 off); fee page kept. experienceoconee.com now behind Cloudflare.
+- **4354 Cherokee**: $49.95 regular (undated, ©2018), just under the gate.
