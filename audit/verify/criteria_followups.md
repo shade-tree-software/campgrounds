@@ -626,3 +626,9 @@ me drop and report); each needs the research named before a verdict.
 - **4235 Simple Times** $50, at the gate (Raleigh 78 km).
 - **4272 Ash Grove**: 4WD "highly recommended" only for towed trailers over 25 ft; motorhomes to 32 ft. Kept.
 - **15454 Asheville East KOA**: reopened Oct 2025 after Helene; some areas incl. the lakes still off limits (Oct 2026).
+
+### p3-91 (NC, 2026-10-22), first five
+- **4281 Bear Hunter** (renamed from "Bearhunter", operator's spelling): $55-75, over the gate but 14 km from the GSMNP gateway; standing 2-night minimum. Website -> operator (was a tourism listing).
+- **4255 Camping World Racing Resort**: $50 non-event, at the gate; units built 2000 or later; race weeks sold separately. Passes the long-stay tests.
+- **4323 Cane Creek Park**: nightly_high $40 is the non-resident full-hookup rate; residents get 25% off ($26.25-30). Non-resident price for EKKO $35-40.
+- **104 Bullocksville**: holiday minimum waived within 14 days (RA), state:NC row says 7 (same as 103). RA tags every site "Near Water - no" (blanket attribute; the entry stays lakefront per AWH).
