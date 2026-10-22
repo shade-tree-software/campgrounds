@@ -352,3 +352,13 @@ me drop and report); each needs the research named before a verdict.
 - **817 Mountain Lake**: the FAQ says "we do not offer full hook-up sites", but the booking page sells 50A/water/sewer sites in area 2. The booking page was recorded.
 - **216 Tygart Lake**: the lodging page says "10 full hookups"; the camping page says 50A + water, "Full hookup sites are not available". The camping page was recorded. Only 10 sites take RVs.
 - **117 Seneca Shadows**: the FS says a 6-month window, rec.gov rules say 11; 180 days recorded.
+
+### p3-60 (WV, 2026-10-21)
+- **746 Fourth Moon Camp** kept: $60 (+ Hipcamp fee) is over the gate, but it carries an --AWH note, which is a specific exception.
+- **502 Cranberry River sites 6-19**: fees $0 -> $10/$20 (rec.gov first-come-season fee). Road: Forest Order 09-21-02-26-05 closes the southern FR 76 approach from Richwood Sept 8-Nov 20, 2026; the sites are reachable from the north via FR 101 / CR 46/2.
+- **118 Day Run**: FR 86 closures shift through Nov 30, 2026 (Forest Order 09-21-02-26-04); reachable from Dyer.
+- **499 Dolly Sods #3**: FR 19 is closed from the Laneville gate to FR 75 from 2026-06-22 (alert runs to 2027-06-15); the site seems to be on the open Jordan Run side.
+- **14062 Cedar Branch**: the WV DNR District 4 page says "On the WMA: Camping is not permitted" for Bluestone Lake WMA, but DNR's own map labels "Cedar Branch Campground" and Summers County sells it at $15. Probably stale boilerplate.
+- **14054 Chief Cornstalk / 14055 Conaway Run / 14062 / 59 Gandy Creek**: no page states a rig size for the primitive sites (14062 was already accepted by AWH 2026-10-11).
+- **402 Flagpole Road**: the phone is not set (the North River RD numbers have been reported down since 12/10/25).
+- **59 Gandy Creek**: the vault toilet has been closed since 2026-08-11.

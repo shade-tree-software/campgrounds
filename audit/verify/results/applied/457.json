@@ -1,0 +1,46 @@
+{
+  "id": 457,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.nps.gov/gari/planyourvisit/gauley-tailwaters-campground.htm",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (NPS campgrounds API record 'Gauley Tailwaters')"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "max_stay_nights": 14, "note": "'All sites are managed on a first-come, first-served basis and reservations are not accepted.' Limit of 14 days within a 28-day period. Two vehicles and two camping units (tent or RV), 8 people at most, per site. Camp only at the designated sites: camping in parking areas is prohibited."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (Gauley Tailwaters: reservationInfo 'managed on a first-come, first-served basis'; operatingHours 'reservations are not accepted'; regulationsOverview 'Limit of 14 days within a 28-day period', 'Two vehicles permitted per site', 'Two camping units (tent or RV) with a maximum of 8 people per site'; description 'RV, camper, or car camping in non-designated sites, walk-in sites, or any parking area is strictly prohibited'), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 0, "currency": "USD", "checked": "2026", "note": "No camping fee."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (fees: cost 0.00; operatingHours 'There are no fees for camping'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (operatingHours: 'There are no fees for camping and the campground is open year round'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 18, "max_rig_ft": 25, "note": "18 drive-in sites for tents and RVs, close together; 'The campground can only accommodate small (less than 25 feet in length) RVs and trailers.'"},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (description 'There are 18 drive-in sites for tents and RVs'; campsites.totalSites 18; accessibility.rvInfo 'can only accommodate small (less than 25 feet in length) RVs and trailers', rvMaxLength 25, trailerMaxLength 25), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari ('There are no hook-ups or running water'; campsites.electricalHookups 0), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "showers": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false, "note": "One pit-toilet restroom with a wheelchair ramp; trash and recycling collection year-round; no host on site."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=gari (amenities: toilets 'Vault Toilets - year round', potableWater 'No water', showers 'None', dumpStation 'No', laundry 'No', campStore 'No', internetConnectivity 'No', trashRecyclingCollection 'Yes - year round', staffOrVolunteerHostOnsite 'No'; accessibility 'There is a pit-toilet restroom'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "NPS primitive campground (Gauley River NRA, run by the Park Service itself; no concessioner, and USACE only owns the dam above it). Confirmed free; changed booking to first-come only, not reservable, 14 days in 28 (overrides the inherited rec.gov row); added year-round season, 18 drive-in sites with RVs under 25 ft, no hookups, vault toilet, no water/showers/dump. No current NPS alerts. Note left as is.",
+  "flags": [
+    "Waterfront re-audit lead (internal, not an operator claim): the entry is 'not waterfront' but its note says 'with sites directly along the river'; NPS says only that the campground is 'located just below Summersville Dam'. One of the two is wrong.",
+    "Criteria (borderline, passes): NPS says the campground 'can only accommodate small (less than 25 feet in length) RVs and trailers' (rvMaxLength 25); EKKO at 23 ft fits, but the sites are 'close together'.",
+    "Inherited federal booking row (reservable via recreation.gov, 180-day window) is wrong here; this result overrides it with first-come only. The second website (https://www.recreation.gov/camping/poi/258782) is only a point-of-interest page, not a booking page."
+  ]
+}

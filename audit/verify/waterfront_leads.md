@@ -118,3 +118,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **232 Bluestone SP (WV)**: camping page calls it "the perfect lakeside retreat camping spot" and the note says "lakeside campsites"; entry not waterfront. Old Mill and East Shore are closed for dam work, and Meador is the RV campground.
 - **13120 Eagle's Nest (WV)**: operator offers "permanent waterfront lodging", "Family Campground Near Water" with swimming and fishing in Patterson Creek; entry not waterfront.
 - **1201 Blue Heron Landing (WV)** (weak): "camp, and kayak right on Mill Creek with direct access on-site", but the rate page puts the tent sites, not the RV lots, along the creek.
+- **457 Gauley Tailwaters (WV, NPS)**: the entry's own note says "with sites directly along the river"; NPS says only "located just below Summersville Dam" (below a dam: river value only, from the river itself). Entry not waterfront.

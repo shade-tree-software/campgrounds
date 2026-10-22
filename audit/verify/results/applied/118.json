@@ -1,0 +1,48 @@
+{
+  "id": 118,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.fs.usda.gov/r09/monongahela/recreation/day-run-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/10344825",
+    "https://www.recreation.gov/api/camps/campgrounds/10344825/rates",
+    "https://www.fs.usda.gov/r09/monongahela/alerts/forest-road-86-be-closed-construction-and-repair",
+    "https://www.fs.usda.gov/r09/monongahela/alerts/national-forest-system-road-86-closure-public-health-and-safety"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "checked": "2026", "note": "$15/night, paid at a self-pay station."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10344825/rates ('First-come, First-served Season' 2026-04-20 to 2026-10-31: WalkInSingle $15) + /campgrounds/10344825 (amenity 'Self Pay Station'), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "max_stay_nights": 14, "note": "First-come, first-served only: recreation.gov lists only a walk-in 'First-come, First-served Season' rate and takes no reservations. 14 nights at most in a rolling 30 days. Limit 2 vehicles per campsite."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10344825 (not reservable; rules maxConsecutiveStay 14, maxStay 14 'Rolling 30 Days'; notice 'Limit 2 vehicles per campsite') + /rates, read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 12, "note": "'There are no hookups for RVs, but small to midsize camping trailers will fit into most of the sites'; 'all sites are suitable for tent or trailer camping'."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10344825 ('The campground consists of twelve individual sites ... small to midsize camping trailers will fit into most of the sites') + https://www.fs.usda.gov/r09/monongahela/recreation/day-run-campground ('Many of the 12 camping sites boarder the upper scenic Williams River ... all sites are suitable for tent or trailer camping'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10344825 ('There are no hookups for RVs'; notice 'No RV hookups are available'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "note": "Two vault toilets, trash service; recreation.gov lists a hand water pump ('Drinking Water (hand pump)', 'peak season') but the Forest Service page says 'Potable water is not available at this site', so drinking water is not recorded."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10344825 ('two vault toilets, trash service, and a hand water pump') + https://www.fs.usda.gov/r09/monongahela/recreation/day-run-campground ('Vault Toilet'; 'Potable water is not available at this site'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "High-elevation campground just off the Highland Scenic Highway; many of its sites border the upper scenic Williams River.  --AWH",
+  "awh_superseded": [{"old": "with 12 sites, many of which border", "source": "redundant: sites.count"}],
+  "summary": "Confirmed $15/night (rec.gov FCFS rate), 12 sites, no hookups, vault toilets. Booking changed to first-come only, not reservable, 14-night max (overrides the inherited rec.gov reservable row). Drinking water left unrecorded: rec.gov lists a hand pump, the FS page says no potable water. Not stated: rig length beyond 'small to midsize camping trailers', season (rec.gov's FCFS season Apr 20 - Oct 31, 2026 is a rate season). Run by the Forest Service's Marlinton-White Sulphur Ranger District (no concessioner named).",
+  "flags": [
+    "Missing agency website: the Forest Service page https://www.fs.usda.gov/r09/monongahela/recreation/day-run-campground (the entry has only the recreation.gov page, which takes no reservations here).",
+    "Missing phone: recreation.gov gives (304) 799-4334 for facility information (Marlinton ranger district).",
+    "Inherited federal booking row (reservable via recreation.gov, 180-day window) is wrong here; this result overrides it with first-come only.",
+    "Criteria (soft): recreation.gov says only 'small to midsize camping trailers will fit into most of the sites'; no length is posted.",
+    "Road caveat: the directions use FR 86 from WV 150 to FR 216; the Forest Service closed FR 86 'from the intersection of FR 216 to the intersection with WV Route 150' from July 20, 2026 for flood repair, and Forest Order 09-21-02-26-04 keeps closures shifting along FR 86 through Nov 30, 2026. The FS says recreation sites stay reachable from Dyer to the west."
+  ]
+}

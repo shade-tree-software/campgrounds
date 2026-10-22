@@ -1,0 +1,47 @@
+{
+  "id": 502,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-river-sites",
+    "https://www.recreation.gov/api/camps/campgrounds/10351773",
+    "https://www.recreation.gov/api/camps/campgrounds/10351773/rates",
+    "https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas",
+    "https://www.fs.usda.gov/r09/monongahela/alerts/nfs-road-76-road-closure-public-health-and-safety",
+    "https://www.fs.usda.gov/r09/monongahela/alerts/forest-road-76-86-be-closed-construction-and-repair"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 20, "currency": "USD", "checked": "2026", "note": "$10/night for a single site, $20 for the double sites (7 and 12); first-come, first-served season rate on recreation.gov."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10351773/rates ('First-come, First-served Season' 2026-04-03 to 2026-11-30: WalkInSingleCampsite $10, WalkInDoubleCampsite $20), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "platform": "none", "fcfs": "always", "note": "First-come, first-served only (recreation.gov lists only a 'First-come, First-served Season' walk-in rate and takes no reservations). A forest order restricts camping in the Cranberry and Williams River areas to designated sites; limit 2 vehicles per campsite."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10351773 (not reservable; notices 'Limit 2 vehicles per campsite') + /rates ('First-come, First-served Season') + https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas (Order 09-21-12-05: 'Restricts camping to designated sites and the number of vehicles at campsites in Cranberry and Williams River areas'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 14, "note": "Fourteen separately numbered sites, 6-19, along a 5-mile stretch of Forest Road 76 between Big Rock and Cranberry campgrounds; 7 and 12 are double sites."},
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-river-sites ('Fourteen primitive and separately numbered campsites dispersed along a 5-mile section of the lower Cranberry River ... Double sites available at sites 7 and 12'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10351773 (notice 'No RV hookups are available'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "One accessible vault toilet across from site 7 and one near sites 15-19 at Aldridge Branch; toilets close November 30. Each site has a picnic table, fire ring and lantern post; trash collection."},
+      "source": "https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-river-sites ('One accesible vault toilet across from site #7 and one near sites #15-19 at Aldridge Branch', 'Potable water is not available at this site', 'Toilets closed as of November 30') + https://www.recreation.gov/api/camps/campgrounds/10351773 ('Each campsite has a picnic table, fire ring, and lantern post'; amenity 'Trash Collection'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "Forest Service designated sites (Gauley Ranger District), not free dispersed camping: changed fees $0 -> $10 single / $20 double (rec.gov FCFS-season rate); booking FCFS only, not reservable (overrides the inherited rec.gov booking row); added 14 sites, no hookups, vault toilets, no potable water. Not stated: rig size, season (the rec.gov FCFS season Apr 3-Nov 30 is a rate season, not recorded). Note left as is.",
+  "flags": [
+    "Fees: the recorded $0 rested on the forest's general dispersed-camping rule (wvdn.com), but these are numbered fee sites: recreation.gov's rate table charges $10 a night for a single site and $20 for a double ('First-come, First-served Season' 2026-04-03 to 2026-11-30). This result replaces the $0.",
+    "Missing website: the Forest Service page https://www.fs.usda.gov/r09/monongahela/recreation/cranberry-river-sites (also https://www.recreation.gov/camping/campgrounds/10351773, 'Cranberry River Campsites').",
+    "Missing phone: Gauley Ranger District, 304-846-2695 (recreation.gov facility phone and the FR 76 closure order).",
+    "Criteria: neither the Forest Service nor recreation.gov says what size rig fits the sites (no lengths in the RIDB catalog cache either).",
+    "Road caveat (not a closure of the sites): Forest Order 09-21-02-26-05 closes segments of FR 76 (Cranberry River Road) during construction, Sept 8 - Nov 20, 2026, section 1 from 38.2622,-80.5191 to 38.2862,-80.5323 (the southern approach from Richwood); the Forest Service says Cranberry and Big Rock campgrounds stay reachable from the north via FR 101 and CR 46/2 near Dyer. Gauley RD (304) 846-2695."
+  ]
+}
