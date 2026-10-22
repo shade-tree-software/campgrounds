@@ -237,3 +237,11 @@ The operator's only camping page now offers just the 2026 Western Michigan Fair 
 ## 3826 Gilmore Car Museum Campground (Hickory Corners, MI) — per-person museum admission each night
 General nightly camping open to the public Apr 1 - Oct 31 with online booking (not event-only). Sites $20 (no electric) to $50 (50 A). But every guest must buy museum admission for EACH night camped: $20 per adult, $25 on car-show days (gilmorecarmuseum.org, read 2026-10-22). One adult on the cheapest site pays $40/night; two adults $60. No gateway within 40 km (Grand Rapids 62 km), no stays. Mandatory per-night fees count toward the US$50 line, so for two adults it is over. Keep, or drop? (My lean: drop — it's over for any family of two, though you do get the museum.)
 **ANSWERED 2026-10-22 (AWH): drop.** Done.
+
+## 3924 Upper Peninsula State Fair Campground (Escanaba, MI; Delta County) — every stay by application
+The fairgrounds sell general nightly camping outside the fair ($40 "General Non-Fair"; 470 sites, 120 full hookup; fair week Aug 15-23 is weekly only at $300), so it is not fair-week-only like the dropped 3984 Mason County. But every reservation goes through a "Non-Fair Special Event Camping Application" that asks which event you're attending ("Other – please specify" allowed) and is confirmed by invoice "upon acceptance" — no instant booking, and no camping season stated (upstatefair.net, read 2026-10-22). Keep, or drop as event camping? (My lean: keep — public nights are sold at a posted rate.)
+**ANSWERED 2026-10-22 (AWH): keep**, with a note that the application process is probably too slow for a last-minute stay. Done.
+
+## 3858 Bird Creek RV Resort (Port Austin, MI) — "Campers must be less than 10 years old"
+Huron County's listing says Bird Creek requires campers under 10 years old (no pop-ups or tents). Is EKKO under 10 years old? Otherwise it passes as an ordinary private park: Google Maps open, 4.4 / 31 reviews, phone 989-370-2366, RV Life $ tier (Facebook only, no posted rate or engine). Its long-stay character is unclear: a county EDC page calls it a "new seasonal RV resort", while a 2023 trade article says most sites are for daily camping. (My lean: keep if EKKO qualifies, drop if not.)
+**ANSWERED 2026-10-22 (AWH): EKKO is a 2023 model year**, so it qualifies: keep, with the rule in the note.

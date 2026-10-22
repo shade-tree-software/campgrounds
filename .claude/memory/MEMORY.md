@@ -125,3 +125,4 @@
 - [Hold asks for later](feedback_hold_asks_offline.md) — AWH 2026-10-17 (weak internet): keep logging questions in asks.md, keep working, present them when AWH is ready
 - [Published info supersedes old --AWH text](feedback_published_info_supersedes_awh.md) — AWH 2026-10-20: operator/agency's own clear statement may replace outdated --AWH note text; not silence/aggregators
 - [One verifier at a time](feedback_one_verifier.md) — AWH 2026-10-22: phase 7 back to a single verifier; next batch only after applying the last
+- [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033

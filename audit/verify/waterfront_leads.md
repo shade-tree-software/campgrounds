@@ -193,3 +193,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4049 Hancock Recreation Area: city's BookMySites sells '50 Amp Waterfront' (52-55, 'view of the water right from your own camper') and '30 Amp Waterfront' (47, 49-51) on Portage Lake; entry not waterfront (p3-111).
 - 3969 John Gurney Park (Hart): operator 'sits along the East Shore of Hart Lake', 'Overlooking Hart Lake', beach + boat launch; entry not waterfront (p3-112).
 - 4016 O.B. Fuller Park (Delta Co): county 'on the shores of Bark River and Lake Michigan', 'a lakeside camping area'; Campspot sells 7 'Lake Front' + 4 'Lake View' sites; entry not waterfront (p3-113).
+- 3956 Sandy Beach County Park (Newaygo): county sells 'Full-hookup, Pull-thru, Water View' sites on Hardy Dam Pond; entry not waterfront (p3-114).
+- 3982 Stafford County Park (Huron Co): county's best RV sites are "Electric Only Lakeview" ("Lake view sites, electric only" on the map); only rustic sites 3-10 sit on the shore; entry lakefront - may be a downgrade (p3-114/115).
+- 407 Silver Lake SP: DNR "sites 1-13 are on Silver Lake", booking site tags 4 sites "Adjacent To: Waterfront"; entry lakeview, which AWH's firsthand note supports (driveway between sites and lake) - likely stays (p3-115).
+- 3808 Sunset Cove Resort (Marble Lake): operator sells "Lakefront" full-hookup nightly sites ($50); entry not waterfront (p3-116).
+- 3912 Wolverine Campground (Genesee Co): county sells "Lakefront" sites ($52/$57) and advertises "lake-front camping"; entry not waterfront (p3-116).
+- 3904 Bay Mills Sunrise RV Park: operator "overlooks the Back Bay of Lake Superior" (Waiska Bay); entry not waterfront (p3-117).
+- 14236 Bay Ridge RV Park: operator "sits on over 400' of waterfront" with boat docking; entry bayview (p3-117).
+- 3895 Big Lake Campground (Curtis): operator "located right on Big Manistique Lake ... beautiful shallow waterfront" (2013 blog); entry lakeview (p3-117).

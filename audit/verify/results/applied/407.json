@@ -1,0 +1,42 @@
+{
+  "id": 407,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/silverlake",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+    "https://midnrreservations.com/ (Silver Lake resources via /api/resourcelocation/resources?resourceLocationId=-2147483360, decoded with /api/attribute/filterable and /api/equipment)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 45, "currency": "USD", "checked": "2026",
+                 "note": "DNR rate table, Silver Lake campground: modern camping with 20/30-amp $45 a night (no 50-amp or full-hookup sites). A Recreation Passport is required for vehicle entry to all state park and forest campgrounds, on top of the camping fee."},
+      "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Silver Lake / Silver Lake campground: Modern camping 20/30 AMP rate $45) + https://www.michigan.gov/recsearch/parks/silverlake ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": false, "sewer": false},
+      "source": "https://www.michigan.gov/recsearch/parks/silverlake ('200 campsites with 20- or 30-amp electrical service') + midnrreservations.com resources (all 203 campsites: 'Electrical Service: 20 Amps, 30 Amps', 'Electric and Water Hookups: Electric Only', 'Sewer Hookup: No'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 200, "max_rig_ft": 50, "pull_through": true,
+                 "note": "DNR lists 200 sites; the booking site has 203 campsites. Allowed rigs: 2 sites to 50 ft, 6 to 45, 16 to 40, 31 to 35, 76 to 30, 46 to 25, 23 only to 20 ft, 3 tents only. 3 pull-throughs; most sites fully shaded. 12 ADA-only sites."},
+      "source": "https://www.michigan.gov/recsearch/parks/silverlake ('Number of sites: 200'; 'Pull-through sites available') + midnrreservations.com resources (allowed equipment 'Trailer or RV up to N'', 'Pull Through: Yes' on 3), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "potable_water": true, "camp_store": true},
+      "source": "https://www.michigan.gov/recsearch/parks/silverlake ('Toilet & shower building', 'Modern campground', 'Concession or store'; 'The park's sanitation station is located on the south side of the modern campground. There is potable water available and two lanes.') + DNR rate page ('Modern campgrounds include flush toilets, showers ...'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true},
+      "source": "https://www.michigan.gov/recsearch/parks/silverlake ('For reservations call 800-447-2757 or reserve online') + midnrreservations.com Silver Lake map, read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $45 (20/30-amp modern) with the Recreation Passport requirement, season Apr 15-Oct 14 (already manual), reservable, phone 231-873-3083. Added 30-amp electric only (no water or sewer at sites), 200 sites (203 on the booking site) to 50 ft with 3 pull-throughs, showers/flush toilets/sanitation station/potable water/store. --AWH note kept as is (the pages do not contradict it).",
+  "flags": [
+    "Waterfront re-audit lead (contrary agency claim): DNR says 'sites 1-13 are on Silver Lake, the park's inland lake' and the booking site tags 4 sites 'Adjacent To: Waterfront' (one also 'Lake'); the entry is 'lakeview'. AWH's firsthand note says no site is right on the lake (sites 1-13 are separated from it by the driveway), which supports the current value."
+  ]
+}
