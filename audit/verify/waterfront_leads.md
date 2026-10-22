@@ -5,6 +5,7 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **14138** (mt-25): FWP lists a hand launch but also says 'No boat access'; re-check the waterfront call.
 - 14121 Eureka Reservoir FAS (mt-22): FWP says the reservoir 'is drawn down for irrigation and water levels fluctuate seasonally'; the lakefront call may not hold late in the season.
 - 6310 Boulder Creek (mt-20): FS says 'The Wise River flows along the western border of this campground area'; entry is riverview.
 - 6315 Chisholm (mt-20): FS says 'next to Hyalite Reservoir', East Fork Hyalite Creek along the north side; rec.gov lists Lake and Beach Access; entry is lakeview.

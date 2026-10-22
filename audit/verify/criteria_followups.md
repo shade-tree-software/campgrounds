@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6346 Lodgepole (Wise River)** (mt-25): FS page banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-09-01), no closure order listed; drinking water currently unavailable. Recorded temporarily_closed; re-check before next season.
+- **6345 Little Therriault Lake** (mt-25): FS page contradicts itself on potable water (description says yes, Water section says not available); derived potable_water: true left.
+- **6344 Lakeview** (mt-25): derived 22-ft max could not be re-confirmed on the current FS page; left in place.
+- **6273** (mt-25): FS page says $18, recreation.gov says $22; concessionaire site (406-752-7924) refused fetches.
+- **6275** (mt-25): inherited booking row looks wrong (campground is not on recreation.gov).
 - 6335 Hick's Park (mt-24): FS Current Conditions 'Closed under Special Order' (page updated 2026-05-01; same since at least Jul 2025, no order on the alerts page, no reason or reopening). Recorded temporarily_closed. Access: 'Travel with a trailer is not recommended south of Hells Canyon' (Hick's Park is south of it); 'Access road not suitable for vehicles longer than 32''. Asked AWH.
 - 13308 Howard Lake (mt-24): FS gives no length; Visit Montana (official tourism site) says 'The maximum recommended trailer length for the area is 20 feet'; no review found of a 23-ft+ rig. Kootenai flood alert (from 2025-12-16, no end) lists washouts on NFS Rd 231 at MP 0.9 and 8.1, the approach road. Asked AWH.
 - 6342 Lake Creek (mt-24): Kootenai flood alert lists 'NFS Road 231 Lake Creek Bridge Washout at milepost 19.3' and a West Fisher Rd washout at MP 25.5 on the access road; may be unreachable. FS page contradicts itself on water.
