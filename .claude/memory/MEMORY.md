@@ -126,4 +126,5 @@
 - [Published info supersedes old --AWH text](feedback_published_info_supersedes_awh.md) — AWH 2026-10-20: operator/agency's own clear statement may replace outdated --AWH note text; not silence/aggregators
 - [One verifier at a time](feedback_one_verifier.md) — AWH 2026-10-22: phase 7 back to a single verifier; next batch only after applying the last
 - [Agency boilerplate is silent](feedback_agency_boilerplate_silent.md) — rig-length rule: wording on most of an agency's pages (MI DNR "tent and small trailer", 99/115) = silent, keep; vague = singled out (AWH 2026-10-22)
+- [Split multi-campground parks](feedback_split_multi_campground_parks.md) — only when phase 7 runs into one, and only campgrounds at separate places (~1 km+, own entrance); no DB-wide hunt (AWH 2026-10-22)
 - [EKKO model year](user_ekko_model_year.md) — 2023 (AWH 2026-10-22); a 10-year rig-age rule passes until 2033

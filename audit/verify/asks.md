@@ -210,9 +210,11 @@ The Forest Service road layer puts the stored pin on FR 227C "Reigle Overlook", 
 
 ## 258 Falls Lake State Recreation Area (NC) — narrow to one campground?
 The entry is the whole SRA and its pin sits on no campground (0.8 km from the Hwy 50 boat ramp; Rolling View 3.1 km, Holly Point 4.0 km). Your note ("Wooded campground with multiple lakefront RV sites") fits either. Rolling View: 115 sites, 80 electric, Loop A year-round. Holly Point: 158 sites, 89 electric, closed for wastewater work until 2026-11-16. B.W. Wells and Shinleaf are hike-in/group only. Narrow this entry to Rolling View (or Holly Point) and re-pin, and add the other as its own entry? Which one did you mean?
+- **AWH 2026-10-22: split** (rule: split a park into its campgrounds that sit at separate places, ~1 km+ apart with their own entrance; only when phase 7 runs into one). Queued as a split job after p3-125.
 
 ## 146 Jordan Lake State Recreation Area (NC) — split into its campgrounds?
 Same shape as 258 Falls Lake: the entry is the whole SRA and the pin (near the Visitor Center) is at none of its three family campgrounds - Crosswinds (182 sites, year-round, 50A in Areas B/C, 1.7 km), Parkers Creek (250, 2.2 km) and Poplar Point (579, the largest, 1.2 km). Your note ("Many lakefront campsites") fits all three. Split into Crosswinds + Poplar Point (+ Parkers Creek), each pinned at its own campground? I'd do all three.
+- **AWH 2026-10-22: split** (rule: split a park into its campgrounds that sit at separate places, ~1 km+ apart with their own entrance; only when phase 7 runs into one). Queued as a split job after p3-125.
 
 ## 4256 Pride RV Resort (Maggie Valley, NC) — membership resort that also sells nights
 Park rules: "new sites and amenities are funded through new membership sales" (no soliciting memberships); rate sheet has member/affiliate rates (Coast to Coast, AOR/RPI/Enjoy America) and "Pride Members" discounts. It also sells public nightly sites ("Open To The Public", $65, phone booking; 3-night holiday/October minimum). The 10-14 rule excludes membership/sales-pitch parks; you kept it earlier as a GSMNP-gateway park (28 km) for price. Keep or drop? (I'd drop it as a membership park, since nightly guests are what the membership sales are pitched at.)
