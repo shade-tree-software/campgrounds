@@ -697,3 +697,12 @@ me drop and report); each needs the research named before a verdict.
 - **34 Julian Price**: Loops C/E/F closed in 2026; rec.gov says reservations only and no shower house in 2026.
 - **4332 Lake Reidsville**: city pamphlet prints full hookup cheaper than W/E; recorded as printed. Non-city $50.
 - **4298 Bannister** $60 (Raleigh 17 km), **4289 Foothills** $50 at the gate.
+
+### p3-98 (NC, 2026-10-22)
+- **DROPPED:** 4310 Magnolia Acres (Facebook-only, Google 15 reviews), 4291 Rock Ridge (workforce/long-term, parked domain, no rate), 4286 Raccoon Holler (seasonal priority, "contact us for rates", no engine).
+- **102 Nutbush Bridge**: closed for the season from 2026-08-01 (all three Nutbush areas) - re-check for 2027.
+- **4305 Lazy J**: website carries hidden spam links; rates undated (pages last modified 2018), $19-30.
+- **4304 Park Place**: website -> operator's parkplacervpark.com (stale: 2015 rates, a for-sale page); kept on Google 3.6/79 + RV Life $$; Asheville 35 km. Is the park for sale?
+- **33 Mortimer**: rec.gov "running water" vs FS "Potable water is not available"; potable_water unset.
+- **4302 New River (Sparta)** $48 (2 people) just under the gate; seasonal close Oct 12 (Google "Temporarily closed" is seasonal).
+- **4290 Rocky Hock** $50 at the gate.
