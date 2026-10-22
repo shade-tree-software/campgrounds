@@ -742,3 +742,11 @@ me drop and report); each needs the research named before a verdict.
 - **4218 Raven Rock**: "no walk-ups permitted" vs the state:NC registry's some-sites FCFS; recorded never.
 - **14351 Silver Creek** $50 at the gate (Asheville 44 km); seasonal stays pitched but all types sell nightly.
 - **4217** renamed "New River State Park (US 221 Access)"; 14355 phone -> division office 919-821-7400 (was the 24-h public-safety line).
+
+### p3-103 (NC done + first MI, 2026-10-22)
+- No drops. **13370 Toe River (Patience Park)** still "Temporarily Closed Due to Hurricane Helene", no reopening date (two seasons lost) - re-check 2027.
+- **4219 Standing Indian**: rec.gov 2026 table $26 single vs FS page (2026-10-15) "$20 per night" - stored $26 kept; FS $20 may be the FCFS fee.
+- **4229 Yates Place / 4225 Sunburst**: see asks.md (possibly tent-only). Yates Place FS point 35.36042,-79.99073 is ~500 m from the pin - re-pin when decided.
+- **756 The Farm at Lowrys**: cheapest 23-ft-capable site $47.09 all-in (no hookups); hookup site $59.14; AWH priced it. Listing's Forest Lake sites say "no electricity" but tick hookups.
+- **14346 Veterans Memorial Park (Mount Airy)**: nonprofit of American Legion Post 123 + VFW Post 2019 (private stands); rates undated (page modified 2023-06-21), RV Life $$.
+- **4223 Van Hook Glade**: FIND Outdoors concession; the old "~24-26 ft" line was wrong (bookable RV sites 20-36 ft).
