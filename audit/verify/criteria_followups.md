@@ -608,7 +608,7 @@ me drop and report); each needs the research named before a verdict.
 - Methods: WebFetch reads dec.ny.gov; NPS campgrounds/alerts JSON at developer.nps.gov/api/v1 with api_key=DEMO_KEY; rgsum.py / cat.py (session scratch p3-88) summarise rec.gov rates and the RIDB catalog.
 
 ### p3-89 (NC, 2026-10-21)
-- **DROPPED (no nightly price / no booking engine):** 4241 Country Woods, 4253 Ho-Hum (both unclaimed RoverPass only), 4244 Goodwin's (monthly workforce), 4240 Jordan Dam ("call for rates").
+- **DROPPED (no nightly price / no booking engine):** 4244 Goodwin's (monthly workforce), 4240 Jordan Dam ("call for rates", long-stay rules). 4241 Country Woods and 4253 Ho-Hum were dropped too and **RESTORED 2026-10-22**: neither is a long-stay park, and the 10-14 rule keeps a private park on Google 25+ reviews with a phone (40 / 48) plus an RV Life $/$$ - long-stay test 2 is only for long-stay parks. Their unclaimed RoverPass websites were stripped; Ho-Hum's phone -> (828) 421-1020 (Google).
 - **4250 Nantahala Ridge**: entry had mixed in Nantahala RV Resort & Campground (Campspot, 1.7 km west, 828-736-1812, nantahalarvresort.com). Website -> nrcamp.com (ResNexus); Campspot fees, booking and the derived Good Sam false removed. **LEAD**: Nantahala RV Resort & Campground has no entry - vet and add.
 - **103 County Line (Kerr Lake)**: RA says holiday minimum drops to 1 night within 14 days; state:NC row says 7 - check the row. Phone added.
 - **4247 Double L Farms**: books on its own Hipcamp listing ($42); shares the farm with a mobile-home community, 12 of 26 sites nightly - passes.
@@ -616,3 +616,13 @@ me drop and report); each needs the research named before a verdict.
 - **4238 Highlands Riverbend**: rate unread (ResNexus captcha); GSMNP 39 km.
 - **4233 Hominy Valley** $50, **4245 JCO** "from $50": at the gate.
 - No Helene closure notices found in western NC.
+
+### p3-90 (NC, 2026-10-22)
+- **DROPPED (presence):** 4234 River Country (Facebook-only; Google 4 reviews, no phone).
+- **4237 The Little Campground** kept: own site + phone, Google 4.8/61, RV Life $$; "Contact us for rates", no booking engine. Not a long-stay park, so test 2 doesn't apply.
+- **4232 Turkey Quarter** kept: new operator site turkeyquartercampground.com (website + phone (248) 383-5043 from it); its rates page is blank, so the Campendium camper-reported $40 no longer qualifies (operator has a page) and fees were cleared; RV Life $$ is the price indicator. Reservation form asks "RV Year & Condition". Re-check when the rates page fills in.
+- **4242 Tumbling Waters**: base fixed $30 (tent) -> $45 (RV class); the page is undated (last modified 2023-08-31).
+- RV age rules: **4249 Peek of the Mountains** (10 years or newer), **4236 Yates** (under 15 years, exceptions by photo). Kept, as Tanager Woods.
+- **4235 Simple Times** $50, at the gate (Raleigh 78 km).
+- **4272 Ash Grove**: 4WD "highly recommended" only for towed trailers over 25 ft; motorhomes to 32 ft. Kept.
+- **15454 Asheville East KOA**: reopened Oct 2025 after Helene; some areas incl. the lakes still off limits (Oct 2026).

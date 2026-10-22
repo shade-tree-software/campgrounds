@@ -1,0 +1,84 @@
+{
+  "id": 623,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/233910",
+    "https://www.recreation.gov/api/camps/campgrounds/233910/rates",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for 233910, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 27,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $20 a night, plus $7 for an electric hookup ($27); double sites $40 / $54. Senior/Access pass halves only the campsite fee on single sites, not the electric fee."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Single Site: $20 per night', 'Double Site: $40 per night', 'Singe Site electric hook-up fee: $7 per night') + https://www.recreation.gov/api/camps/campgrounds/233910/rates (2026 and 2027: STANDARD NONELECTRIC 20, STANDARD ELECTRIC 27), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('Electrical hookups (50-amp, 30-amp or 110-volt outlets) are available at sites 12-45.') + RIDB catalog (17 sites list 50-amp), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 48,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "Forest Service: 48 Tent/RV sites, #46-#49 tent only. recreation.gov's catalog has 49 sites (43 standard, 6 tent-only): max vehicle lengths 12-45 ft, 11 sites at 40 ft and 4 at 45; 4 pull-throughs. Sites 1-11 and 46-50 non-electric, 12-45 electric."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Arrowhead Campground has 48 sites for Tent/RV camping. Sites #46-#49 are tent only.') + RIDB catalog for 233910 (Max Vehicle Length, Driveway Entry) + recreation.gov notice ('Campsites 1 through 11 and 46 through 50 are non-electric sites'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "dump": true,
+        "note": "Dump station across from the pay station; campground host; 0.75-mile paved bike/walking loop."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('The facility also provides hot showers and flush toilets. A dump station is located across from the pay station.') + the Forest Service page (paved path), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('The facility is open year-round'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "note": "Run by the Forest Service's Uwharrie Ranger District (not a concession). Sites 20 and 31 are always first-come, paid on site (cash or check, within 30 minutes of choosing a site). Check-in 4 p.m., check-out 2 p.m."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Reservations can be made at recreation.gov. First come first serve sites are also available for purchase in person on a limited basis.') + https://www.recreation.gov/api/camps/campgrounds/233910 ('Campsites 20 and 31 are always non-reservable for first come/first serve campers', is_commercially_managed false), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true,
+        "note": "Access/Senior pass discount on the campsite fee of single sites only; not on double sites or the electric fee."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233910 (notice: 'For Access or Senior Access Pass card holders, discounts only apply on the campsite fee on single sites ... Electrical hookup surcharges are not discounted'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Lake is nearby but not within campground. --AWH",
+  "summary": "Confirmed $20-27 (single site + $7 electric), 50-amp electric; added 48 sites (rec.gov 49) to 45 ft with pull-throughs, showers/flush toilets/dump, open year-round, recreation.gov booking with 2 first-come sites, Senior/Access pass on single-site camping fees. Operator: Forest Service (Uwharrie RD), not a concession. Note: removed the untagged duplicate of AWH's line. Active alerts: only the Uwharrie alcohol prohibition and prescribed-burn notice; no road or campground closure. Not stated: booking window (left inherited).",
+  "flags": [],
+  "awh_superseded": [
+    {
+      "old": "Lake is nearby but not within campground",
+      "source": "redundant: an untagged duplicate of the line kept, with its --AWH marker, as the whole note"
+    }
+  ]
+}

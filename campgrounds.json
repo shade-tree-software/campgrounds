@@ -43709,7 +43709,7 @@
     "location": "35.4379,-80.0698",
     "name": "Arrowhead Campground, Uwharrie National Forest",
     "elevation_meters": 184.0,
-    "note": "Lake is nearby but not within campground\nLake is nearby but not within campground. --AWH",
+    "note": "Lake is nearby but not within campground. --AWH",
     "state": "NC",
     "ownership": "federal",
     "waterfront": "not waterfront",
@@ -43731,19 +43731,77 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('Electrical hookups (50-amp, 30-amp or 110-volt outlets) are available at sites 12-45.') + RIDB catalog (17 sites list 50-amp), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233910/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Single Site: $20 per night', 'Double Site: $40 per night', 'Singe Site electric hook-up fee: $7 per night') + https://www.recreation.gov/api/camps/campgrounds/233910/rates (2026 and 2027: STANDARD NONELECTRIC 20, STANDARD ELECTRIC 27), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Arrowhead Campground has 48 sites for Tent/RV camping. Sites #46-#49 are tent only.') + RIDB catalog for 233910 (Max Vehicle Length, Driveway Entry) + recreation.gov notice ('Campsites 1 through 11 and 46 through 50 are non-electric sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('The facility also provides hot showers and flush toilets. A dump station is located across from the pay station.') + the Forest Service page (paved path), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233910 ('The facility is open year-round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground ('Reservations can be made at recreation.gov. First come first serve sites are also available for purchase in person on a limited basis.') + https://www.recreation.gov/api/camps/campgrounds/233910 ('Campsites 20 and 31 are always non-reservable for first come/first serve campers', is_commercially_managed false), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233910 (notice: 'For Access or Senior Access Pass card holders, discounts only apply on the campsite fee on single sites ... Electrical hookup surcharges are not discounted'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 20,
       "nightly_high": 27,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single site $20 a night, plus $7 for an electric hookup ($27); double sites $40 / $54. Senior/Access pass halves only the campsite fee on single sites, not the electric fee."
+    },
+    "sites": {
+      "count": 48,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "Forest Service: 48 Tent/RV sites, #46-#49 tent only. recreation.gov's catalog has 49 sites (43 standard, 6 tent-only): max vehicle lengths 12-45 ft, 11 sites at 40 ft and 4 at 45; 4 pull-throughs. Sites 1-11 and 46-50 non-electric, 12-45 electric."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Dump station across from the pay station; campground host; 0.75-mile paved bike/walking loop."
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "note": "Run by the Forest Service's Uwharrie Ranger District (not a concession). Sites 20 and 31 are always first-come, paid on site (cash or check, within 30 minutes of choosing a site). Check-in 4 p.m., check-out 2 p.m."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Access/Senior pass discount on the campsite fee of single sites only; not on double sites or the electric fee."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r08/northcarolina/recreation/arrowhead-campground https://www.recreation.gov/api/camps/campgrounds/233910 https://www.recreation.gov/api/camps/campgrounds/233910/rates trip_data/ridb_campsites.json (RIDB campsite catalog for 233910, fetched 2026-10-20)",
+      "note": "Confirmed $20-27 (single site + $7 electric), 50-amp electric; added 48 sites (rec.gov 49) to 45 ft with pull-throughs, showers/flush toilets/dump, open year-round, recreation.gov booking with 2 first-come sites, Senior/Access pass on single-site camping fees. Operator: Forest Service (Uwharrie RD), not a concession. Note: removed the untagged duplicate of AWH's line. Active alerts: only the Uwharrie alcohol prohibition and prescribed-burn notice; no road or campground closure. Not stated: booki"
     }
   },
   {
@@ -278712,9 +278770,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "operator site + Campendium: level 50-amp full-hookup RV sites, some pull-thrus, boat ramp -> real private RV park",
     "waterfront_evidence": "satellite at 35.2333,-77.2139: two farm ponds but pads set back across open grass/lot from central pond; no RV pad at shoreline",
-    "website": "https://www.facebook.com/TurkeyQuarterCampgroundandRVPark/",
-    "phone": "919-202-3419",
-    "note": "Small rural RV/tent campground ~20 min from New Bern; 19 RV sites, 10 full hookups, 30/50 amp, dump station, showers, laundry. Two small ponds with a boat ramp. Open year-round. Camper-reported rate: $40 a night (Campendium, May 2024). --Claude",
+    "website": "https://turkeyquartercampground.com/\nhttps://www.facebook.com/TurkeyQuarterCampgroundandRVPark/",
+    "phone": "(248) 383-5043",
+    "note": "Small rural RV/tent campground with cabins ~20 min from New Bern; 10 of the RV sites are full hookup. Two small ponds with a boat ramp. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -278757,9 +278815,10 @@
         "checked": "2026-09-15",
         "method": "derived"
       },
-      "fees": {
-        "source": "https://maps.campendium.com/us/cove-city-nc/camping-rv/turkey-quarter-campground-rv-park (camper reports quoted in fees.note; read 2026-10-17)",
-        "checked": "2026-10-17"
+      "booking": {
+        "source": "https://turkeyquartercampground.com/request-a-reservation ('Request A Reservation' form: 'I'm interested in RV Sites, Cabins, Fellowship Hall?', 'Preferred Site & Rv Length', 'RV Year & Condition'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -278767,11 +278826,16 @@
       "checked": "2026-10-17",
       "model": "claude-opus-5-5/session"
     },
-    "fees": {
-      "nightly_low": 40,
-      "nightly_high": 40,
-      "currency": "USD",
-      "note": "A Campendium reviewer paid $40 a night in May 2024."
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://turkeyquartercampground.com/request-a-reservation",
+      "note": "Reservations by request form (arrival/departure, preferred site and RV length, 'RV Year & Condition') or phone; no online booking engine."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://turkeyquartercampground.com/ https://turkeyquartercampground.com/request-a-reservation https://turkeyquartercampground.com/camping-rates-%26-pricing https://www.facebook.com/TurkeyQuarterCampgroundandRVPark/ Google Maps place 'Turkey Quarter Campground & RV Park', 163 Kirby Ln, Cove City (via audit/private_gap_browser/gm.py, 2026-10-22)",
+      "note": "The operator now has its own site (GoDaddy, (c) 2026) with a reservation request form, shaded RV sites, cabins and a pond, but its Rates, Sites, Amenities, Rules and Story pages are blank (in plain HTTP and a rendered browser). Added request-form booking. Nothing else confirmable; the derived hookups/sites/facilities/season and the Campendium camper-reported $40 (May 2024) were left. The Facebook page currently shows 'This page isn't available right now'. Note cleaned of site count, amps, amenit"
     }
   },
   {
@@ -278868,78 +278932,6 @@
     }
   },
   {
-    "id": 4234,
-    "kind": "campground",
-    "name": "River Country Campground & RV Park",
-    "location": "36.5258,-81.3349",
-    "elevation_meters": 770.0,
-    "state": "NC",
-    "ownership": "private",
-    "waterfront": "riverfront",
-    "inclusion_evidence": "TheDyrt/Hipcamp/CampingCarolinas listings: 30+ acre RV park on New River, full & W/E hookup sites w/ pull-throughs, big-rig friendly -> real RV campground",
-    "waterfront_evidence": "satellite at 36.5258,-81.3349: south arc of RV oval loop within ~40-50m of the New River across open unused grass apron, thin riparian fringe only",
-    "website": "https://www.facebook.com/rivercountrycampgroundandrvpark/",
-    "phone": "336-359-8900",
-    "note": "Riverside campground on the New River surrounded by New River State Park; 61 sites (38 full hookup, 13 water/electric), 20/30/50 amp, takes big rigs with pull-throughs, bathhouse, store, canoe/tube/fishing. Seasonal, roughly Apr 15-Nov 1. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 61,
-      "pull_through": true
-    },
-    "facilities": {
-      "camp_store": true,
-      "showers": true
-    },
-    "season": {
-      "year_round": false
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "1e6a2848e40315b3",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": false,
-      "military": true
-    }
-  },
-  {
     "id": 4235,
     "kind": "campground",
     "name": "Simple Times RV Park & Campground",
@@ -278952,7 +278944,7 @@
     "waterfront_evidence": "satellite at 35.9311,-79.4851: linear RV/MH park on hillside, no water adjacent",
     "website": "https://www.simpletimesnc.com/",
     "phone": "336-263-6974",
-    "note": "Family-owned campground on 30+ acres in Snow Camp; spacious gravel-pad sites with full hookups, 30/50 amp, WiFi/cable. ~12 mi from Burlington. --Claude",
+    "note": "Family-owned campground on 30+ acres in the countryside of Snow Camp, ~12 mi from Burlington; level gravel-pad sites with Spectrum cable TV, a fenced dog park and a playground. Generators and tents not allowed. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -278964,22 +278956,42 @@
       "sewer": true
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "showers": true,
+      "dump": true,
+      "laundry": false,
+      "note": "No laundry on site: the operator lists 'Coin Laundry - Liberty, NC - 10 min drive'. Propane refills at the office, fenced dog park, playground, Spectrum cable TV."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.simpletimesnc.com/our-rates ('All campsites have both 30 and 50 amp services, water, sewer, wifi and cable tv.') + Campspot filters (57 sites: 30-Amp 57, 50-Amp 57, Sewer Hook-Up 57, Water Hook-Up 57), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/park/simple-times-rv-park-campground ('Showers', 'Dump Station', 'Wi-Fi 46') + https://www.simpletimesnc.com/our-rates ('Short Drive ... Laundry Facilities ... Coin Laundry - Liberty, NC - 10 min drive', 'Spectrum Community Wifi', 'Propane Tank Refilling Station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.simpletimesnc.com/our-rates ('Nightly Rate $50-55', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.campspot.com/park/simple-times-rv-park-campground (site types 'Starting at $50.00 night' / '$55.00', read 2026-10-22) + https://www.simpletimesnc.com/our-rates ('Nightly Rate $50-55', 'Weekly Rate $325', 'Pet Fees $1 per day') + https://www.simpletimesnc.com/rules-policies ('$5 charge per additional guest'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.campspot.com/park/simple-times-rv-park-campground (RV Sites 57: Valley Loop 26, Hill Top back-in 21, Hill Top pull-through 8, Valley Loop at Greenhouse 2), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.simpletimesnc.com/ ('Family Friendly RV Park Open Year Round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.campspot.com/park/simple-times-rv-park-campground + https://www.simpletimesnc.com/rules-policies (check-in, cancellation and monthly-reservation sections) + https://www.simpletimesnc.com/our-rates ('For monthly site availability and pricing please contact the office'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -278991,7 +279003,26 @@
       "nightly_low": 50,
       "nightly_high": 55,
       "currency": "USD",
-      "note": "$50-55 for 1 unit, 2 adults, 2 children."
+      "note": "Campspot (read 2026-10-22): back-in full-hookup sites (Valley Loop, Hill Top, Greenhouse) 'Starting at $50.00 night', Hill Top pull-through $55. Operator's page: 'Nightly Rate $50-55' for one unit, up to 2 adults, 2 children and 2 vehicles; weekly $325; pets $1 a day; $5 per extra overnight guest beyond four; early check-in $10.",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 57,
+      "pull_through": true
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/park/simple-times-rv-park-campground",
+      "note": "Nightly sites book on the Campspot marketplace; monthly sites by request to the office (first come, first served, 50% non-refundable deposit). Check-in 2 p.m., no arrivals after 9 p.m. without approval. Cancel 7+ days ahead for a refund less one night; holiday weekends non-refundable."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.simpletimesnc.com/ https://www.simpletimesnc.com/our-rates https://www.simpletimesnc.com/rules-policies https://www.campspot.com/park/simple-times-rv-park-campground",
+      "note": "Confirmed $50-55 (Campspot live 'Starting at' prices; the operator's undated page says the same), 30/50-amp full hookups, Wi-Fi; added 57 sites with pull-throughs, showers/dump, no laundry on site, open year-round, Campspot booking. Note cleaned of hookup/Wi-Fi text. Not stated: max rig length."
     }
   },
   {
@@ -279007,7 +279038,7 @@
     "waterfront_evidence": "satellite at 35.2421,-81.8470: RV loop with pool in residential/wooded area, no water adjacent",
     "website": "https://www.campspot.com/park/yates-rv-resort\nhttps://www.yatesrvresortcampground.com",
     "phone": "828-429-1016",
-    "note": "Small RV resort on 22 acres in Forest City, with concrete pads, a fenced dog park and nature trails; the back-in sites are 35 by 50 feet. --Claude",
+    "note": "Small RV park on the owners' 22-acre property in Forest City, opened 2021: gravel pads with cement patios, a fenced dog area, nature trail. Gas, food and a laundromat nearby. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -279020,21 +279051,23 @@
     },
     "sites": {
       "count": 10,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 45,
+      "note": "Back-in sites 35 ft wide with gravel pads 12-15 ft wide and 65 ft deep; the pull-through's pad is 40-45 ft long. Campspot lists back-ins for rigs to 45 ft, the pull-through to 40 ft."
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yatesrvresortcampground.com ('Each site has full hookup with their own dedicated 50A and 30A 20A electrical circuit.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yatesrvresortcampground.com ('Each site 35ft wide, gravel pads 12-15ft wide and 65ft deep. Pull through site gravel pad is slightly smaller 40-45ft long.') + Campspot availability (30/50 Amp Standard Back-In rvLengthMax 45, Pull-Through 40), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -279042,12 +279075,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "https://www.campspot.com/park/yates-rv-resort (Campspot park record and site types), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.yatesrvresortcampground.com/park-rules (reservation, check-in and cancellation lines) + https://www.yatesrvresortcampground.com ('Online Booking' -> https://www.campspot.com/book/yatesrvresort), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/park/yates-rv-resort (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.yatesrvresortcampground.com/park-rules-copy (Pricing: 'Nightly rental $45 nightly all utilities included per park rules', 'Weekly $280', 'Monthly $550 ...') + Campspot availability API for park 2062, 2026-11-10 and 2026-11-14 + https://www.yatesrvresortcampground.com/park-rules (occupancy), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.yatesrvresortcampground.com/park-rules ('Sorry, but we do not have a public dump station, campground laundromat, or bathhouse within the park.', 'Only fully self-contained A, B and C class motor homes, fifth wheels, park models and travel trailers are accepted.') + https://www.yatesrvresortcampground.com ('We offer free WIFI'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279057,7 +279097,9 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/yatesrvresort",
+      "note": "'All sites must be reserved and/or paid online ... in advance' (the site's 'Online Booking' button goes to Campspot), and 'All reservations require contact by phone prior to check in.' Stays over a month by phone. Check-in 1 p.m., check-out 11 a.m. Cancel 14+ days ahead for a refund less $25. Campspot offered nothing for April 2027 dates on 2026-10-22."
     },
     "fees": {
       "nightly_low": 45,
@@ -279065,7 +279107,20 @@
       "currency": "USD",
       "reservation_fee": 2,
       "checked": "2026",
-      "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30/50 Amp Standard Back-In, 30/50 Amp Standard Back-In #174 and 30/50 Amp Standard Pull-Through). October 2026: $45, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $2 'Booking Fee', once per stay. Read 2026-10-13."
+      "note": "'$45 nightly all utilities included'; weekly $280; monthly $550 plus metered power ($0.15/kWh, $75 deposit), 2 people. Campspot, read 2026-10-22, one night 2026-11-10 and 2026-11-14, 2 adults: every hookup site type $47 average, i.e. the $45 site plus the park's $2 booking fee once per stay (2026-10-13 breakdown); a no-hookup 'Boondocking RV site' $42. Daily/weekly rates cover 4 people; $5 a night per extra person, 6 maximum."
+    },
+    "facilities": {
+      "dump": false,
+      "laundry": false,
+      "showers": false,
+      "flush_toilets": false,
+      "wifi": true,
+      "note": "'We do not have a public dump station, campground laundromat, or bathhouse within the park.' Fully self-contained RVs only. Free Wi-Fi and firewood, fenced dog area, nature trail."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.yatesrvresortcampground.com https://www.yatesrvresortcampground.com/park-rules https://www.yatesrvresortcampground.com/park-rules-copy https://www.campspot.com/book/yatesrvresort",
+      "note": "Confirmed $45 a night (operator's pricing page; Campspot $47 = $45 + $2 booking fee) and 50-amp full hookups, Campspot booking; added site dimensions (max 45 ft, pull-through), no dump/laundry/bathhouse (self-contained only), free Wi-Fi. Note: corrected the site size (the operator gives 35 ft wide x 65 ft deep, not 35 x 50). Not stated: site count (10, derived, left), season (year-round, derived, left)."
     }
   },
   {
@@ -279081,7 +279136,7 @@
     "waterfront_evidence": "satellite at 36.1668,-81.9408: development along a road/hollow, no significant water adjacent, creek unconfirmed",
     "website": "https://thelittlecampground.com/",
     "phone": "828-387-1392",
-    "note": "Tiny Blue Ridge campground near Banner Elk at ~3,500 ft; 4 full-hookup RV sites, 30/50 amp, water, sewer, WiFi, laundry. Near Grandfather Mountain and Elk River Falls. --Claude",
+    "note": "Tiny family-run campground by Curtis Creek between Banner Elk and Elk Park at ~3,500 ft, near Grandfather Mountain, Elk River Falls and Tweetsie Railroad; very large sites with concrete patios, plus one efficiency cabin. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -279097,13 +279152,16 @@
     },
     "facilities": {
       "wifi": true,
-      "laundry": true
+      "laundry": true,
+      "showers": false,
+      "flush_toilets": false,
+      "note": "'Full hookups units only due to no bathroom facilities.' Coin laundry, free Wi-Fi and TV."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://thelittlecampground.com/services ('Each site has full hook up with 30 and 50 amp electric, water, sewer, concrete patios, and picnic table.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -279111,15 +279169,20 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://thelittlecampground.com/services ('Free wireless high speed internet, tv, coin laundry..', 'Full hookups units only due to no bathroom facilities.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "3478131c9b869faf",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://thelittlecampground.com/ https://thelittlecampground.com/services https://thelittlecampground.com/about_us Google Maps place 'The Little Campground and Cabin', 564 Curtis Creek Rd, Elk Park (via audit/private_gap_browser/gm.py, 2026-10-22)",
+      "note": "Confirmed 30/50-amp full hookups, Wi-Fi and coin laundry on the operator's site; added no bathhouse (showers/flush toilets false: 'Full hookups units only due to no bathroom facilities'). Note cleaned of hookup/amenity text. Not stated: site count (4, derived, left), season, price ('Contact us for rates'), booking method beyond phone/email."
     }
   },
   {
@@ -279304,6 +279367,83 @@
     }
   },
   {
+    "id": 4241,
+    "kind": "campground",
+    "name": "Country Woods RV Park",
+    "location": "35.1352,-83.3983",
+    "elevation_meters": 656.0,
+    "state": "NC",
+    "ownership": "private",
+    "waterfront": "not waterfront",
+    "inclusion_evidence": "RoverPass reservation listing: RV park near Franklin, open Apr 1-Oct 31, RV sites bookable -> real RV campground",
+    "waterfront_evidence": "satellite at 35.1352,-83.3983: hillside wooded RV/MH rows in US-441 valley, no water near sites",
+    "website": "",
+    "phone": "828-524-4339",
+    "note": "72 full-hookup shaded hillside RV sites (RVs only) near Franklin. Seasonal: Apr 1-Oct 31. Free WiFi, cable, laundry, showers. --Claude",
+    "rating": {
+      "stars": 5,
+      "price_tier": 2,
+      "source": "rvlife"
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 72
+    },
+    "facilities": {
+      "wifi": true,
+      "laundry": true,
+      "showers": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "provenance": {
+      "hookups": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "sites": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "facilities": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "season": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "discounts": {
+        "source": "Good Sam campground directory",
+        "checked": "2026-09-20",
+        "method": "derived"
+      }
+    },
+    "note_scan": {
+      "sig": "d282c1246772f3b1",
+      "checked": "2026-09-15",
+      "model": "claude-opus-5"
+    },
+    "discounts": {
+      "good_sam": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.roverpass.com/c/country-woods-rv-park-franklin-nc/ (RoverPass booking API park record, read 2026-10-22: isBookable false) http://countrywoodsrvpark.com/ (parked: redirects to a '/lander' page, 2026-10-22) Google Maps place 'Country Woods RV Park', 60 Country Woods Dr, Franklin, NC 28734 (gm.py, read 2026-10-22)",
+      "note": "No operator page exists to verify against: the RoverPass listing in website is unclaimed (isBookable false) and the park's old domain countrywoodsrvpark.com is parked; no rate from the operator anywhere. Nothing changed; the note-derived hookups/sites/facilities/season stay (nothing confirms or contradicts them)."
+    }
+  },
+  {
     "id": 4242,
     "kind": "campground",
     "name": "Tumbling Waters Campground",
@@ -279316,7 +279456,7 @@
     "waterfront_evidence": "satellite at 35.3767,-83.6295 canopy-heavy: RV pads in wooded clearings; creek tree-screened, no pad on open bank resolvable, no per-site map -> default down",
     "website": "http://brysoncitycampground.com/",
     "phone": "828-479-3814",
-    "note": "Quiet creek-side campground near Bryson City/Deep Creek; 32 gravel sites, 5 pull-thrus, full hookups, 30-amp, fits big rigs. On-site trout pond. Seasonal: Mar 1-Dec 1. --Claude",
+    "note": "One of the oldest private campgrounds in western NC (80+ years), in a quiet valley at ~2,000 ft beside trout-stocked Panther Creek, which runs into Fontana Lake; on-site trout pond (open to the public), hiking trails from the campground, ~20 min to Bryson City and Deep Creek. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -279338,9 +279478,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://brysoncitycampground.com/campsites/ (RV Camping: 'Water / 30 AMP / Sewer'; Pop Up Camping: 'Water / Electric / Sewer'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -279358,8 +279498,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://brysoncitycampground.com/campsites/ ('Water / 30 AMP / Sewer'; '$45 per night'; 'Water / Electric / Sewer'; '$40 per night'; 'Water / Electric'; '$30 per night'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://brysoncitycampground.com/campsites/ ('RV Camping ... Water / 30 AMP / Sewer $45 per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://brysoncitycampground.com/campsites/ ('Bath House', 'COIN LAUNDRY facilities available', 'Kitchen & Pavilion') + https://brysoncitycampground.com/ (trout pond hours), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://brysoncitycampground.com/campsites/ ('HOLIDAY WEEKEND 3 NIGHT MINIMUM', 'CHECK IN IS 2PM & CHECK OUT IS 1PM') + https://brysoncitycampground.com/ ('CASH & CHECKS ONLY', 'Office Hours Mon - Sat 9am to 6pm'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279371,11 +279522,30 @@
       "good_sam": false
     },
     "fees": {
-      "nightly_low": 30,
+      "nightly_low": 45,
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Water, sewer and 30-amp electric $45 a night, water/electric/sewer $40, water and electric $30; pay for 6 nights and the 7th is free; extra adults $5. The page gives no year. Read 2026-10-14."
+      "note": "RV Camping (water, sewer, 30-amp) $45 a night for 1-2 persons; extra adults $5, children 6-12 $3; pay for 6 nights and the 7th is free. The grassy tent site (water/electric) is $30 and the pop-up class $40. The page gives no year (last modified 2023-08-31)."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "note": "'Our clean bath house with HOT showers are available to all campers'; coin laundry; outdoor kitchen and pavilion; firewood sold; trout pond (closed Sun-Tue)."
+    },
+    "booking": {
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Cash and checks only. Check-in 2 p.m., check-out 1 p.m. Office Mon-Sat 9-6."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://brysoncitycampground.com/ https://brysoncitycampground.com/campsites/ https://brysoncitycampground.com/wp-json/wp/v2/pages (page modified dates) https://www.facebook.com/Tumbling-Waters-Campground-trout-pond-323814346079",
+      "note": "Confirmed 30-amp water/sewer RV sites, bathhouse showers and coin laundry; added the 3-night holiday-weekend minimum and cash/check-only payment. Operating: Facebook post August 11 and an active page (98% recommend, 51 reviews); Google 4.9 over 149 reviews. Note cleaned of hookups, site count/pull-throughs and season. Not stated by the operator: season (Mar 1 - Dec 1, derived, left), site count (32, left), how to reserve."
     }
   },
   {
@@ -279761,7 +279931,7 @@
     "waterfront_evidence": "satellite at 35.5068,-81.9842: RV loop in hillside clearing, no water present",
     "website": "https://www.peekofthemountains.com/\nhttps://www.campspot.com/park/peek-of-the-mountains-campground-rv-park",
     "phone": "828-351-9707",
-    "note": "Small mountain park with about a dozen gravel sites, many of them held by seasonal and full-time campers. --Claude",
+    "note": "Small, secluded hilltop park with private forested gravel sites, a short drive to Lake Lure. RVs must be 10 years old or newer ('especially enforced for stays longer than two weeks'); generators not allowed. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -279773,11 +279943,16 @@
       "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 11,
+      "max_rig_ft": 50,
+      "note": "'11 RV sites and expanding - All smooth Gravel'; pull-throughs 100 x 40 ft, back-ins 75 x 40 ft. Campspot sells 10 of them (4 back-in, 6 pull-through), each listed for rigs to 50 ft."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/peek-of-the-mountains",
+      "note": "Every 'Book Now' button on the operator's site goes to Campspot; both RV site types offered for April 2027 nights to Motorhome, Travel Trailer, Fifth-Wheel, Van and others. Weekly ($225) and monthly ($650, utilities included) rates also posted. Cancel 15+ days ahead for a refund less $15; 7 days or less, no refund."
     },
     "provenance": {
       "hookups": {
@@ -279785,19 +279960,19 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://peekofthemountains.com/sites-amenities/ ('11 RV sites and expanding - All smooth Gravel', 'Pull-Through: 100ft x 40ft', 'Back-In: 75ft x 40ft') + Campspot availability API for park 3210 (30/50 Amp FHU Back in: 4 sites, 30/50 Amp FHU Pull Thru: 6 sites, rvLengthMax 50), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://peekofthemountains.com/ (Book Now -> https://www.campspot.com/book/peek-of-the-mountains) + https://peekofthemountains.com/sites-amenities/ ('Weekly Rate: $225.00', 'Monthly Rate: $650.00', 'monthly sites include utilities') + Campspot park record (cancellation policy) and availability for 2027-04-13 and 2027-04-17, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://peekofthemountains.com/sites-amenities/ ('Full Hookups with on site laundry room'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.campspot.com/park/peek-of-the-mountains-campground-rv-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
@@ -279810,7 +279985,8 @@
       "model": "claude-opus-5/session"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "laundry": true
     },
     "fees": {
       "nightly_low": 45,
@@ -279819,6 +279995,11 @@
       "reservation_fee": 3,
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30/50 Amp FHU Back in and 30/50 Amp FHU Pull Thru). October 2026 and January 2027: $45, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $3 'Booking Fee', once per stay. The park adds 3% of the site charge as a 'Credit Card Processing Fee's'. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://peekofthemountains.com/ https://peekofthemountains.com/sites-amenities/ https://peekofthemountains.com/park-policies/ https://www.campspot.com/book/peek-of-the-mountains",
+      "note": "Confirmed Campspot booking (all 10 Campspot sites bookable nightly in April 2027) and 50-amp full hookups; fees left as recorded ($45 Campspot read 2026-10-13): the April 2027 Campspot average of $52.35 is the same $45 site plus the park's $3 booking fee, 3% card fee and Campspot's $3 fee. Added 11 sites to 50 ft with pull-throughs, laundry. The operator's own page shows an undated 'Daily Rate: $40.00'. Note: dropped the site count and the 'held by seasonal and full-time campers' claim (park rul"
     }
   },
   {
@@ -279980,6 +280161,77 @@
       "checked": "2026-10-21",
       "sources": "https://campspringsevents.com/ https://campspringsevents.com/about https://campspringsevents.com/tickets-and-info https://campspringsevents.com/contact",
       "note": "Operator's 2026 page confirms year-round general RV camping sold by the night ($35 daily; Hipcamp lists $45 W/E, $25 dry), phone/email reservations, 35 power+water sites (15x30A, 16x50A), bathhouse with hot showers, dump, WiFi; festivals are Labor Day weekend. Passes long-stay test 2 (posted nightly rate + phone). Gate n/a."
+    }
+  },
+  {
+    "id": 4253,
+    "kind": "campground",
+    "name": "Ho-Hum Campground",
+    "location": "34.9962,-83.7563",
+    "elevation_meters": 593,
+    "state": "NC",
+    "ownership": "private",
+    "waterfront": "not waterfront",
+    "inclusion_evidence": "northcarolinacampers.com/RV Life: 88 full-hookup RV sites on Lake Chatuge, open Apr 1-Oct 31, phone 828-421-1020",
+    "waterfront_evidence": "satellite at 34.9962,-83.7563: RV sites east of road uphill/inland; Lake Chatuge fingers west of road, separated",
+    "website": "",
+    "phone": "(828) 421-1020",
+    "note": "RV-only park near Hayesville/Lake Chatuge; 87 full-hookup sites 30/50-amp, max RV ~38 ft, water/showers/dump. Seasonal Apr 1-Oct 31; takes short-term stays. --Claude",
+    "rating": {
+      "stars": 5,
+      "price_tier": 1,
+      "source": "rvlife"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 87,
+      "max_rig_ft": 38
+    },
+    "facilities": {
+      "showers": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "provenance": {
+      "hookups": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "sites": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "facilities": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      },
+      "season": {
+        "source": "note prose",
+        "checked": "2026-09-15",
+        "method": "derived"
+      }
+    },
+    "note_scan": {
+      "sig": "fca625f2c9389849",
+      "checked": "2026-09-15",
+      "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.roverpass.com/c/ho-hum-campground-hayesville-nc/ (RoverPass booking API park record, read 2026-10-22: isBookable false) Google Maps place 'Ho-Hum Campground', 47 Ho Hum Loop, Hayesville, NC 28904 (gm.py, read 2026-10-22) web search for an operator site (none found, 2026-10-22)",
+      "note": "No operator page exists to verify against: the RoverPass listing in website is unclaimed (isBookable false), no operator website or booking engine turned up, and no operator rate exists anywhere. Nothing changed; the note-derived hookups/sites/facilities/season stay."
     }
   },
   {
@@ -280782,39 +281034,47 @@
     "waterfront_evidence": "satellite at 35.1446,-82.7081: mountaintop wooded subdivision, no water present",
     "website": "https://www.ash-grove.com/",
     "phone": "828-885-7216",
-    "note": "14 wooded mountaintop acres ~10 min south of Brevard; RV, tent and cabin sites. Shady electric/30-amp RV sites, back-in and pull-through. Limits ~28' trailer / 32' motorhome (fits 23 ft). Showers, laundry, store, wifi. --Claude",
+    "note": "14 wooded mountaintop acres ~10 min south of Brevard; a few shady, graveled RV sites among walk-to tent sites, camping shelters and cabins. Hills and curves on the mountaintop: pull-behind trailers only to 28 ft. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 30
+      "electric": 30,
+      "water": true,
+      "sewer": false
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 32,
+      "note": "'ABSOLUTE MAXIMUM LENGTHS we can accommodate: 32ft. 5th-wheel or motorhome; 28ft. pull-behind trailer', measured hitch to bumper; a per-site length chart is on the page. Three hybrid Techno tent/RV sites plus RV-only pull-through #4 on ResNexus."
     },
     "facilities": {
       "showers": true,
       "laundry": true,
       "camp_store": true,
-      "wifi": true
+      "wifi": true,
+      "flush_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "note": "Heated bathhouse with free hot showers; dump station has no water in winter; Wi-Fi in paved areas and at the bathhouse; coin laundry and dish station; small camp store. No generators."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ash-grove.com/Campsites/RV-and-tent-site-information-and-site-map ('Each site is equipped with 20 & 30amp electric & water hook-ups', 'The sites do NOT have sewer hook-ups.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ash-grove.com/Campsites/RV-and-tent-site-information-and-site-map + ResNexus ('Techno RV-Only Site #4 details: Shady, pull-through, RV site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ash-grove.com/Campsites/RV-and-tent-site-information-and-site-map ('heated bathhouse ... flush toilets, sinks, & hot showers', 'We do have a dump station* & bathhouse. *Dump station does not have water in winter.', 'Free WiFi', 'Coin-op laundry', 'Small camp store', 'The water at Ash Grove is clean and potable.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -280822,8 +281082,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.ash-grove.com/Campsites/Rates-Policies-Brevard-NC-Campground ('Single Sites --1 trailer or RV, maximum of 6 people.  Up to 4 people $45.00/night.', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://reserve2.resnexus.com/resnexus/reservations/lodging/9A81CD1F-DD57-4652-95AE-EF640C7694B7?startdate=4/13/2027&nights=1 (RV sites 'Standard Rate $45.00 / night'), read 2026-10-22 + https://www.ash-grove.com/Campsites/Rates-Policies-Brevard-NC-Campground ('Single Sites --1 trailer or RV, maximum of 6 people. Up to 4 people $45.00/night. For 5th & 6th persons, add $5 per person/ per night.')",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.ash-grove.com/Campsites/Rates-Policies-Brevard-NC-Campground ('Campsites are open year-round.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.ash-grove.com/Reservations-Contact (ResNexus link, 'For same-day reservations ... call 828-885-7216') + https://www.ash-grove.com/Campsites/Rates-Policies-Brevard-NC-Campground (payment, cancellation and check-in policies) + https://www.ash-grove.com/Campsites/RV-and-tent-site-information-and-site-map, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -280838,7 +281109,22 @@
       "nightly_low": 45,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "Single RV/trailer site $45 up to 4 people."
+      "note": "RV/trailer single site $45 a night for up to 4 people, $5 each for a 5th and 6th; before tax. ResNexus quoted every RV site (Techno RV/Tent #1-#3, RV-only pull-through #4) at $45 for Tue 2027-04-13, 2 people. Stay 6 nights, 7th free.",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://reserve2.resnexus.com/resnexus/reservations/lodging/9A81CD1F-DD57-4652-95AE-EF640C7694B7",
+      "note": "Online through the operator's ResNexus page; same-day by phone (828-885-7216). 'Minimum stays may apply during high season & holidays.' 50% deposit; single nights and bookings within 7 days paid in full, non-refundable; cancel 2+ weeks ahead for a 50% refund. Check-in 2-7 p.m. Mar 14-Oct 11 (to 6 p.m. Oct 12-31, 5 p.m. Nov-Mar 13); late arrivals may be turned away or charged $50. 'We do not offer seasonal or permanent sites.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ash-grove.com/Campsites/Rates-Policies-Brevard-NC-Campground https://www.ash-grove.com/Campsites/RV-and-tent-site-information-and-site-map https://www.ash-grove.com/Reservations-Contact https://reserve2.resnexus.com/resnexus/reservations/lodging/9A81CD1F-DD57-4652-95AE-EF640C7694B7?startdate=4/13/2027&nights=1",
+      "note": "Confirmed $45 (ResNexus quote for April 2027) and 30-amp electric; added water/no sewer, max 32 ft for a motorhome with a pull-through, bathhouse/dump/potable water/laundry/store/Wi-Fi, open year-round, ResNexus booking. Note cleaned of amenities and hookups. Not stated: RV site count."
     }
   },
   {
@@ -280995,7 +281281,7 @@
     "waterfront_evidence": "satellite at 35.239,-82.878: RV row along valley beside small North Fork French Broad channel, riparian treeline screen, canopy-limited",
     "website": "https://www.attheridge.com/",
     "phone": "828-877-2267",
-    "note": "Small mountain campground on the North Fork French Broad River along Hwy 215, ~6 mi from the Blue Ridge Parkway. ~14 roomy tent/RV sites (plus 7 cabins), full hookups 30/50 amp; big rigs OK. Pool, wifi; year-round. --Claude",
+    "note": "Small mountain campground on the North Fork of the French Broad River off NC 215 in Pisgah National Forest, ~7 mi from the Blue Ridge Parkway; riverside premium sites, inland regular sites, camping cabins and trout aquaculture runs on site. Big rigs OK; pool. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -281007,40 +281293,72 @@
       "sewer": true
     },
     "sites": {
-      "count": 14
+      "count": 14,
+      "pull_through": true,
+      "note": "'14 roomy tent/RV sites' plus 7 cabins; premium sites on the river, regular sites inland. ResNexus sells 6 campsites online (River #2, #4, #6, Trout Run 1, two tent/pop-up Riverside Escape sites); River #2 is for 'units less than 29''."
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "showers": true,
+      "note": "Two bathhouses. Tent loop has no water or electric."
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.attheridge.com/rv-sites ('Sites are full hookup with water, electric, and sewer servicing 30 & 50 amp.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.attheridge.com/ ('Enjoy 7 cozy cabins, 14 roomy tent/RV sites, and two bathhouses') + https://www.attheridge.com/rv-sites + ResNexus ('Trout Run Campsite 1 Pull thru full hook up site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.attheridge.com/ ('two bathhouses') + https://www.attheridge.com/tent-sites ('There is a bathhouse on the grounds with bathrooms and a shower'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://resnexus.com/resnexus/reservations/book/C061765A-2F4F-4167-88EF-FC61B7C4F3D5?startdate=5/11/2027&nights=1 ('Standard Rate $30.00 / night', '$35.00 / night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.attheridge.com/ (Book Now link) + https://www.attheridge.com/rv-sites ('Max 8 people & 2 Pets') + https://www.attheridge.com/tent-sites (group rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "1041ab2ee211cb33",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 35,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "ResNexus, read 2026-10-22, Tue 2027-05-11, 2 guests: Trout Run pull-through full hookup 30/50-amp $30; River Campsite #2 (tents and units under 29 ft) $30; River Campsites #4 and #6 (riverside, 50-amp full hookup) $35; tent/pop-up Riverside Escape sites with electric $30; camping cabins $45-69. Sat 2027-07-17 showed every unit occupied, so no weekend price was read."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/C061765A-2F4F-4167-88EF-FC61B7C4F3D5",
+      "note": "'Book Now' goes to the operator's ResNexus page; group rates by phone (828-877-2267). Max 8 people and 2 pets per RV site."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.attheridge.com/ https://www.attheridge.com/rv-sites https://www.attheridge.com/tent-sites https://resnexus.com/resnexus/reservations/book/C061765A-2F4F-4167-88EF-FC61B7C4F3D5?startdate=5/11/2027&nights=1",
+      "note": "Confirmed 30/50-amp full hookups and 14 tent/RV sites; added fees $30-35 (ResNexus quote for a May 2027 Tuesday), a pull-through, bathhouse showers, ResNexus booking. Note cleaned of hookups, site count, wifi and season. Not stated: season (year-round, derived, left), Wi-Fi (left), max rig length."
     }
   },
   {
@@ -284101,7 +284419,7 @@
     "waterfront_evidence": "satellite: Tanglewood RV campground set well back from the Yadkin River behind golf course/woods (~1km); no waterfront RV sites",
     "website": "https://rvcampground.tanglewoodpark.org/\nhttps://www.forsyth.cc/Parks/Tanglewood/",
     "phone": "336-703-6494",
-    "note": "Forsyth County-operated RV campground in 1,100-acre Tanglewood Park along the Yadkin River near Clemmons. 44 full-hookup sites (W/S/30-50A, cable, WiFi), RVs to 55 ft. Reservable online or by phone; season Mar 1-Dec 5. --Claude",
+    "note": "Forsyth County-operated RV campground in 1,100-acre Tanglewood Park along the Yadkin River near Clemmons, secluded from the park's sports areas; golf, trails, horseback riding and the Festival of Lights in the park. RVs only: no tents or canopies. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -284117,7 +284435,10 @@
       "max_rig_ft": 55
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "showers": true,
+      "dump": true,
+      "note": "Rules mention 'restrooms and showers' and a 'sewage disposal site'. Picnic shelter (up to 50 people) for campground guests only. No wood-burning campfires; grills allowed."
     },
     "season": {
       "year_round": false,
@@ -284125,37 +284446,43 @@
       "closes": "12-05"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://ncforsythcountyweb.myvscloud.com/webtrac/web/search.html?Module=FR&Location=Tanglewood%20RV%20Campground",
+      "window_opens_days": 365,
+      "max_stay_nights": 14,
+      "note": "Reserve on Forsyth County's WebTrac site ('Reserve Now') or at 336-703-6494; full payment at booking. Up to 14 nights in any 30 days, then 14 days away before returning; 'not a long-term stay facility'. Check-in 1-8 p.m., check-out 11 a.m. Must be 21 to reserve. Cancel within 14 days of arrival: one night's charge."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://rvcampground.tanglewoodpark.org/rates.aspx ('All sites offer Full Hookups with 20/30/50 amp electric.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://rvcampground.tanglewoodpark.org/ ('44 campsites that are newly refurbished with up-to-date amenities'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://rvcampground.tanglewoodpark.org/documents/CampgroundRulesRegulations.pdf ('Please keep our restrooms and showers neat and clean', 'except at sewage disposal site', 'NO WOOD BURNING campfires'), revised 12/11/2023, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://rvcampground.tanglewoodpark.org/ ('The 2026 season for the RV Campground is March 1st – December 5th.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://rvcampground.tanglewoodpark.org/documents/CampgroundRulesRegulations.pdf ('Campground Reservations can be booked up to 365 days in advance', 'The maximum length of stay, cumulatively, is fourteen (14) days per 30-day period', 'Check In Time – No earlier than 1 p.m. to 8 p.m.', 'You must be at least 21 years of age to reserve a campsite') + https://rvcampground.tanglewoodpark.org/rates.aspx (payment and cancellation policy) + the site's 'Reserve Now' link to WebTrac, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://rvcampground.tanglewoodpark.org/rates.aspx (audit/price_research/local_nc_2026-10-15/nc_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://rvcampground.tanglewoodpark.org/rates.aspx ('2026: All sites are $45/night, weekday or weekend.', '2027: All sites are $50/night', 'Processing Fee: A non-refundable service fee of 2.75% will be applied to all card transactions'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284168,7 +284495,12 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Forsyth County (Tanglewood): all sites $45 a night in 2026, $50 in 2027. Read 2026-10-15."
+      "note": "'2026: All sites are $45/night, weekday or weekend. 2027: All sites are $50/night, weekday or weekend.' A non-refundable 2.75% service fee applies to card payments."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://rvcampground.tanglewoodpark.org/ https://rvcampground.tanglewoodpark.org/rates.aspx https://rvcampground.tanglewoodpark.org/documents/CampgroundRulesRegulations.pdf https://ncforsythcountyweb.myvscloud.com/webtrac/web/search.html?Module=FR&Location=Tanglewood%20RV%20Campground",
+      "note": "Confirmed $45 a night in 2026 ($50 in 2027), 44 full-hookup 20/30/50-amp sites, season Mar 1 - Dec 5 (2026); added showers/dump, WebTrac booking 365 days ahead, 14-night max. Note cleaned of hookups/site count/booking/season. Not stated on the county's pages: max rig length (55 ft, derived from the old note, left), pull-throughs, Wi-Fi (left); the WebTrac site list returned no units to a plain search."
     }
   },
   {
@@ -997873,63 +998205,109 @@
     "inclusion_evidence": "KOA booking form (koa.com/campgrounds/asheville-east/reserve/) quoted 2027-05-18, 1 night, 23-ft motorhome: RV site types $40-80 before tax (read 2026-10-19); RV Life 4.5* over 372 reviews, 175 sites",
     "website": "https://koa.com/campgrounds/asheville-east/",
     "phone": "828-686-3121",
-    "note": "KOA Holiday at 2708 Highway 70 East, Swannanoa; full-hookup RV sites, pull-throughs. RV sites $40-80 a night before tax for a mid-May 2027 weeknight on KOA's booking form. Reopened in October 2025 after Hurricane Helene flood damage, front of the property first; the back half is still being rebuilt (2025 reports). RV Life 4.5*, $$$. --Claude",
+    "note": "KOA Holiday at 2708 Highway 70 East, Swannanoa, along the Swannanoa River (riverside sites A1-A10 and B28-B29). Reopened in October 2025 after Hurricane Helene flood damage; in October 2026 KOA still says some areas, including the lakes, are being repaired and are off limits. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 40.0,
-      "nightly_high": 80.0,
+      "nightly_low": 40,
+      "nightly_high": 80,
       "currency": "USD",
-      "checked": "2026"
+      "checked": "2026",
+      "note": "KOA's booking form, read 2026-10-22, 23-ft motorhome, 2 adults, before tax. Tue 2027-04-13: back-in 30/20-amp full hookups $40, back-in 50-amp $45, pull-through $50, KOA Patio pull-through and riverside back-in $70, riverside pull-through $80. Sat 2027-07-17: $50 / $65 / $70 for the three types still open. 'RV Sites as Low as $45!' on the campground page. Optional 'Select My Site' extra."
     },
     "provenance": {
       "fees": {
-        "source": "https://koa.com/campgrounds/asheville-east/reserve/ (cheapest hookup site type and dearest site type, one night from 2027-05-18; RV, 2 adults, a 23-ft motorhome), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://koa.com/campgrounds/asheville-east/reserve/ (site types with '$NN.00 avg/night', 2027-04-13 and 2027-07-17), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/asheville-east/ ('Enjoy an extra 5% off your stay that can be combined with your KOA Rewards discount. A valid military, state or federal service ID is required at check in'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/asheville-east/reserve/ ('Stay requires a 2 Night Minimum for stays between 07/17/2027 and 07/17/2027') + https://koa.com/campgrounds/asheville-east/ ('Call us at 828-686-3121 or fill out our online form'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/asheville-east/reserve/ (every RV type is 'Full Hookups'; 'Pull Thru, 50/30/20 Amps, Full Hookups') + https://koa.com/campgrounds/asheville-east/ ('50 Max Amp'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/asheville-east/ ('70' Max Length') + booking form ('Pull Thru' site types), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/asheville-east/ (Campground Amenities: 'Wi-Fi', 'Pool (5/25 - 9/5)', 'Propane ($)', 'Dog Park'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/asheville-east/ ('Open All Year'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://koa.com/campgrounds/asheville-east/ (banner), read 2026-10-22; booking form taking April and July 2027 stays",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "discounts": {
       "good_sam": false,
-      "military": true
+      "military": true,
+      "koa_value_kard": true,
+      "note": "KOA Rewards members who are military veterans, service members, police, firefighters or first responders get an extra 5% off site fees, combinable with the KOA Rewards discount (KOA Rewards replaced the Value Kard); not on stays of 28+ days."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/asheville-east/reserve/",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend",
+          "season": "July (the only weekend probed: 'Stay requires a 2 Night Minimum' for Sat 2027-07-17)"
+        }
+      ],
+      "note": "Online on koa.com or at 828-686-3121. The booking form required 2 nights for a July 2027 Saturday and none for an April Tuesday; other weekends not probed. Extended stays offered too."
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 70
     },
     "note_scan": {
       "sig": "c89a2b6f34a11ca9",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "facilities": {
+      "wifi": true,
+      "note": "Pool (May 25 - Sept 5), dog park, jump pillow, playground; propane, firewood and bike rentals for a fee."
+    },
+    "season": {
+      "year_round": true
+    },
+    "status": {
+      "operating": "open",
+      "note": "'We are excited to welcome back guests. Please note there are still areas of the campground, including the lakes, that are being repaired after damage sustained during Hurricane Helene. These areas of the campground will be off limits.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://koa.com/campgrounds/asheville-east/ https://koa.com/campgrounds/asheville-east/reserve/ (audit/private_gap_browser/koa.py: RV, 2 adults, 23-ft motorhome; one night from 2027-04-13 and from 2027-07-17)",
+      "note": "Confirmed $40-80 (KOA booking form, April 2027 weeknight) and full hookups; added 50-amp, 70-ft max with pull-throughs, Wi-Fi/pool, open all year, open with Helene repairs still under way, koa.com booking with a 2-night July weekend minimum, military/KOA Rewards discounts. Note cleaned of price, rating and hookup text. good_sam false left (Good Sam directory)."
     }
   },
   {

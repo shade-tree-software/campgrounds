@@ -145,3 +145,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **14320 Pine Ridge (NY)**: sells "Deluxe Waterfront" and "Waterfront - No Hookups" sites on the river through the park; entry riverview.
 - **13728 Luzerne (NY)** (weak): RA "partially surrounds Fourth Lake"; entry not waterfront.
 - **13727 Rogers Rock (NY)** (weak): west shore of Lake George with a sand beach; entry not waterfront.
+- **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
+- **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
