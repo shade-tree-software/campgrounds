@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    14324: ("2026-10-21", "mostly seasonal (long-stay test 4: under 1 site in 10 sold nightly)", "The operator advertises '200 spacious trailer sites'; RoverPass, its booking engine, sells 12 nightly RV sites (about 6%); the rest are seasonal. Read 2026-10-21. No --AWH note, no stays."),
     1421: ("2026-10-21", "no site takes a 23-ft rig (AWH minimum site length)", "ReserveAmerica lists every site with a length at 15 ft (sites 001-009 and 011; site 001: 'Driveway Length: 15', 'Max Vehicle Length: 15'); the rest are tent or hike-in with no length. Read 2026-10-21. No --AWH note, no stays."),
     1455: ("2026-10-21", "not open to the public (residents only)", "The Town of Fallsburg's newest camping fee sheet (fallsburgny.gov/DocumentCenter/View/1567/Morningside-Park-Camping-fees-2023, created 2023-08-16) reads 'RV & Tent sites (Fallsburg residents only) - $40/night'; the town also posts a seasonal rental contract; the entry's 'Open to public' has no source. Read 2026-10-21. No --AWH note, no stays."),
     1502: ("2026-10-21", "over the US$50 price gate, no gateway (AWH 2026-10-19 rule)", "Streamside RV Park (Pulaski) quotes $54 a night for any site for 2027 on ResNexus; no gateway within 40 km (Thousand Islands 110 km); not a Good Sam Park; www.streamsidecg.com no longer resolves (operator now streamsidervpark.com). Read 2026-10-21. No --AWH note, no stays."),

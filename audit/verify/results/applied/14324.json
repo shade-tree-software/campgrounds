@@ -1,0 +1,75 @@
+{
+  "id": 14324,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.tamarackcampgrounds.com/",
+    "https://tamarackcampgrounds.com/rates-2/",
+    "https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 40,
+        "nightly_high": 50,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Nightly RV sites $40 a night (RoverPass cart 1 night $40, 2 nights $80 for June 2027, no park fees); the operator's rates page adds $50 a night on holiday weekends (Memorial Day, July 4th, Labor Day). Tent sites $25. RoverPass adds its own platform and processing fees."
+      },
+      "source": "https://tamarackcampgrounds.com/rates-2/ ('RV sites Nightly Per night $40.00 Holiday Weekends (Mem. Day, July 4th, Labor Day) Per night $50.00') + https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) ('Nightly RV Sites' $40.00), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "roverpass",
+        "url": "https://www.roverpass.com/c/tamarack-campground-springwater-ny/",
+        "window_opens_days": 365,
+        "note": "'BOOK NOW' on the operator's site opens its RoverPass booking page, which takes bookings 12 months ahead. Gated park: the gate code is sent a week before arrival; check in at the store."
+      },
+      "source": "https://www.tamarackcampgrounds.com/ (BOOK NOW link) + https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) (isBookable, advancedMonths 12, check-in procedure), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-02",
+        "closes": "10-19"
+      },
+      "source": "https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) (closeSeasonDates 2026-10-20 to 2027-05-01 and 2027-10-20 to 2028-05-01; 'Campground is closed' on 2026-10-20 and in January 2027)",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": false
+      },
+      "source": "https://www.tamarackcampgrounds.com/ ('200 spacious trailer sites with water & 30/50 amp electric hookups') + https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) (all 12 nightly RV sites: amps_30, amps_50, water_hookups; 'No Black Water Dumping at the site, you will need to dump your black water when leaving the campground at the dumping station')",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "max_rig_ft": 40,
+        "pull_through": false,
+        "note": "About 200 trailer sites; RoverPass sells 12 as nightly RV sites (all back-in, 28-40 ft)."
+      },
+      "source": "https://www.tamarackcampgrounds.com/ ('200 spacious trailer sites') + https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) (Nightly RV Sites: sites 255-258, 263-266, 280-283, back-in, maxLength 28-40)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": true,
+        "laundry": true,
+        "camp_store": true
+      },
+      "source": "https://www.tamarackcampgrounds.com/ ('propane station, laundromat, golf cart rentals & camp store') + https://www.roverpass.com/c/tamarack-campground-springwater-ny/ (RoverPass booking API: park record, rates and carts for 2027-06-08 and 2027-06-12, read 2026-10-21) ('the dumping station'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded campground on Tamarack Ln near Springwater (Livingston Co), south of Hemlock and Canadice Lakes; RV and tent sites, cabins, pool and mini golf. Mostly seasonal: of about 200 trailer sites, 12 are sold by the night. Google 4.2 over 193 reviews. --Claude",
+  "summary": "Confirmed $40 ($50 holiday weekends) from the rates page and a June 2027 RoverPass cart, RoverPass booking (12 months ahead), season May 2-Oct 19 from the engine, 30/50-amp + water but no sewer at the nightly sites, 12 nightly back-in sites of about 200.",
+  "flags": [
+    "Long-stay test 4: the operator advertises '200 spacious trailer sites' and its RoverPass engine sells 12 nightly RV sites (sites 255-258, 263-266, 280-283; 12 available on both June 2027 test dates), about 6% of the park; the rest are not sold nightly online (presumably seasonal). Under 1 site in 10 nightly would fail test 4 if the 200 count is the denominator.",
+    "Phone: the website and entry give 585-669-2252; the RoverPass park record and check-in instructions give the store at (585) 516-5911."
+  ]
+}

@@ -596,3 +596,13 @@ me drop and report); each needs the research named before a verdict.
 - **14320 Pine Ridge**: $30 base is a "Waterfront - No Hookups" site; if tent-only, base $38.
 - **13358 Onoville**: ~2/3 seasonal (sold out to returning campers); transient sites book online at a daily rate - passes.
 - 1433/13727 close 09-05; 1433 only 5 of 24 drive-in sites at 30 ft.
+
+### p3-88 (NY/NC, 2026-10-21) - NY finished
+- **14324 Tamarack DROPPED** (12 nightly of ~200 sites; test 4).
+- **13361 Sheridan Bay (town)**: no posted nightly rate (only aggregators: Campendium $40, Jul 2026); nights by phone through the caretaker beside weekly/seasonal. Long-stay tests are for private parks - kept.
+- **1462 St. Regis Falls**: website is "Town of Waverly (UNOFFICIAL)"; C1-C11 nightly, C12-C29 seasonal; "$34.00" unitless.
+- **638 Cape Point**: temporarily_closed (NPS alert 2026-10-21, post-storm); winter closure from Nov 28 anyway. Inclusion evidence's "25 ft max" is the two-vehicle limit; NPS gives 40 ft.
+- **4243 Cotton Patch Goldmine**: website's camping page is injected with UK van-insurance spam; the only "up to 50 feet" sits inside it, so sites.max_rig_ft removed. Rates undated (Last-Modified 2026-07-22).
+- **241 Black Mountain**: Isaias closure (Oct 9-13) over; selling nights through Oct 30.
+- **23 Balsam Mountain**: 14 RV sites at 24 ft; reservation only.
+- Methods: WebFetch reads dec.ny.gov; NPS campgrounds/alerts JSON at developer.nps.gov/api/v1 with api_key=DEMO_KEY; rgsum.py / cat.py (session scratch p3-88) summarise rec.gov rates and the RIDB catalog.

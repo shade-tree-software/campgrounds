@@ -1502,24 +1502,79 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/273848 ('There are no hookups or showers at the campground') + https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) (electricalHookups 0), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/273848/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/273848/rates (2026 and 2027 peak seasons: STANDARD NONELECTRIC $30) + https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) (Camping Fee 30.00 'per site, per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/273848 (notice 'A reservation is required to stay at Balsam Mountain Campground ... no provisions to make a reservation once you are at the campground'; 'The park stay limit is 14 consecutive days') + https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) ('Campsite reservations are required and may be made up to six months in advance'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) (operatingHours: 'Balsam Mountain Campground closes seasonally'; exception 'Closed' 2026-10-12 to 2027-05-15), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) (totalSites 43, tentOnly 19, rvMaxLength 24, trailerMaxLength 24) + recreation.gov campsite catalog for 273848 (RIDB, fetched 2026-10-20) (Max Vehicle Length 24 at 14 RV/trailer sites, 21 at 3, 20 at 2, 15 at 5, 12 at 2; Driveway Entry Parallel 25, Back-In 1), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/273848 ('flush toilets and drinking water. There are no hookups or showers ... No lights are available in the restrooms') + https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) (toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', showers 'None', dumpStation 'No', campStore 'No'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD"
-    }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "'A reservation is required to stay at Balsam Mountain Campground ... there are no provisions to make a reservation once you are at the campground' (little cell coverage). Reservations up to six months ahead. Park stay limit 14 consecutive days."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-16",
+      "closes": "10-11",
+      "note": "NPS lists the campground closed from 2026-10-12 to 2027-05-15; opening dates vary by year (recreation.gov rate seasons began May 15 in 2026, May 10 in 2024)."
+    },
+    "sites": {
+      "count": 43,
+      "max_rig_ft": 24,
+      "note": "43 sites, 19 of them tent-only per NPS; recreation.gov lists 14 RV/trailer sites at 24 ft, the rest 12-21 ft; mostly parallel (pull-off) driveways."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "potable_water": true,
+      "showers": false,
+      "dump": false,
+      "camp_store": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/273848 https://www.recreation.gov/api/camps/campgrounds/273848/rates https://www.nps.gov/grsm/planyourvisit/balsam-mountain.htm (NPS campground record behind the page, developer.nps.gov/api/v1/campgrounds?parkCode=grsm) recreation.gov campsite catalog for 273848 (RIDB, fetched 2026-10-20) NPS alerts for grsm (developer.nps.gov/api/v1/alerts)",
+      "note": "Confirmed $30, reservation-only on recreation.gov (6 months), no hookups/showers, flush toilets and water; added season (closed Oct 12-May 15 per NPS), 43 sites with 14 RV sites at 24 ft, 14-day limit. NPS lists the access roads as paved, all vehicles OK; the only nearby closure is the one-way Balsam Mountain (Heintooga Round Bottom) Road and Straight Fork, beyond the campground."
+    },
+    "phone": "828-497-9270"
   },
   {
     "id": 24,
@@ -16461,20 +16516,76 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('37 primitive campsites with 3 campsites with electric hookups') + recreation.gov campsite catalog for 273780 (RIDB, fetched 2026-10-20) (reservable STANDARD ELECTRIC site 025 'Electricity Hookup 30'; the water/sewer attributes are only on management sites 013 and 001), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/273780/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('Single Site: $28 per night Double Site: $56 per night') + https://www.recreation.gov/api/camps/campgrounds/273780/rates (2027 season: STANDARD NONELECTRIC 28, STANDARD ELECTRIC 35), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('Visit Recreation.gov or call (877) 444-6777 ... First-come, first-served sites also available'; 'Stay limit is 14 days') + https://www.recreation.gov/api/camps/campgrounds/273780 ('First-come, first-served sites available and sites available for advanced reservation'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('Seasons of Use April - Oct') + recreation.gov availability for October 2026, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('The campground offers 37 primitive campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('Potable water is available'; 'hot showers and restrooms with flush toilets'; 'a small supply store where campers can purchase firewood, ice'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground ('Overnight Use: 50% discount for single site camping with any of these passes: Interagency Senior, Interagency Access, Golden Age, or Golden Access'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 28,
       "nightly_high": 35,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "note": "Single site $28, double site $56; the electric sites are $35 on recreation.gov."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Some sites reservable on recreation.gov, the rest first-come, first-served (the catalog lists 14 standard sites as not reservable)."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Forest Service: 'Seasons of Use April - Oct'. In 2026 recreation.gov sells nights through Oct 30 and shows every site closed Oct 31."
+    },
+    "sites": {
+      "count": 37
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/northcarolina/recreation/black-mountain-campground https://www.recreation.gov/api/camps/campgrounds/273780 https://www.recreation.gov/api/camps/campgrounds/273780/rates recreation.gov campsite catalog for 273780 (RIDB, fetched 2026-10-20) https://www.recreation.gov/api/camps/availability/campground/273780/month?start_date=2026-10-01 https://www.fs.usda.gov/r08/northcarolina/alerts/closures-anticipation-hurricane-isaias",
+      "note": "FS page (run by concessionaire FIND Outdoors) + recreation.gov confirm $28 (electric $35), 37 sites with 3 electric (30A), showers/flush toilets/water/store, reservable plus FCFS sites, 14-day limit, April-Oct season, Senior/Access 50%; open now (the Oct 9-13, 2026 Hurricane Isaias closure of the campground and FSR 472 has ended). Catalog gives driveway lengths (15-50 ft) but no max vehicle length."
+    },
+    "phone": "828-675-5616"
   },
   {
     "id": 242,
@@ -44908,7 +45019,7 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'coastal dunes' per owner: Campsites are close to the beach, but view and access may be blocked by dunes.",
     "state": "NC",
     "ownership": "federal",
-    "website": "https://www.recreation.gov/camping/campgrounds/251945",
+    "website": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm\nhttps://www.recreation.gov/camping/campgrounds/251945",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -44921,24 +45032,97 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251945 ('There are no hook-ups in the campground for RVs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251945/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251945/rates (2026 and 2027 seasons: STANDARD NONELECTRIC $20) + https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) (Camp Site cost 20.00), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "status": {
+        "source": "NPS alert 'Cape Point & Frisco campgrounds and several ORV ramps remain closed' (developer.nps.gov/api/v1/alerts?parkCode=caha, dated 2026-10-21), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251945 (rules reservationWindow 4 Days, maxStay 14 nights; 'Cape Point Campground sites have a shortened reservation window'; 'Camping is limited to a total of 14 days of camping between Easter Day and Thanksgiving Day'; 'Reservations only via Recreation.gov') + https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) ('Campsite reservations are limited to same-day reservations only. Campsites must be booked via recreation.gov'; numberOfSitesFirstComeFirstServe 0), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) (operatingHours exception 'Winter closure' 2026-11-28 to 2027-04-02; 'Open spring-late fall'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) (totalSites 202, tentOnly 49; 'The maximum total vehicle length is 40' at all sites') + https://www.recreation.gov/api/camps/campgrounds/251945 ('Rows D, E, and F are reserved for tent camping only'; 'large RVs over 25 feet may have to park second vehicles in auxiliary parking') + recreation.gov campsite catalog for 251945 (RIDB, fetched 2026-10-20) (Max Vehicle Length 40-50), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251945 ('Four sets of restrooms and outdoor shower facilities'; 'Water spigots providing potable water') + https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) ('unheated showers'; toilets 'Flush Toilets - seasonal'; dumpStation 'Yes - seasonal'; 'A dump and water fill station are located back up Lighthouse Road'; campStore 'No'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251945 ('The Access Pass and both the Senior Annual and Senior Lifetime Pass are the only passes that provide a discount on the fee for the campsite physically occupied by the pass owner'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
       "currency": "USD"
-    }
+    },
+    "status": {
+      "operating": "temporarily_closed",
+      "reopens": "after post-storm assessments; no date announced",
+      "note": "NPS alert 2026-10-21: 'The Cape Point and Frisco campgrounds and several off-road vehicle routes are currently closed. Reopening will begin after conditions improve and post-storm assessments are complete.'"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 4,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Shortened reservation window: recreation.gov opens sites 4 days ahead (NPS: 'Campsite reservations are limited to same-day reservations only'), because the low-lying campground floods and 'Reservations may be canceled with limited notice'. Camping is limited to 14 days in total between Easter and Thanksgiving."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-03",
+      "closes": "11-27",
+      "note": "NPS: 'Open spring-late fall'; winter closure 2026-11-28 to 2027-04-02. Opening dates vary by year (rate seasons began Mar 26 for 2027)."
+    },
+    "sites": {
+      "count": 202,
+      "max_rig_ft": 40,
+      "note": "202 sites, 49 of them tent-only (rows D-F); NPS gives 40 ft total vehicle length at all sites, though the catalog lists pads of 40-50 ft. RVs over 25 ft may have to park a second vehicle in auxiliary parking."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "dump": true,
+      "camp_store": false
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/251945 https://www.recreation.gov/api/camps/campgrounds/251945/rates https://www.nps.gov/caha/planyourvisit/campgrounds.htm (and the NPS campground record behind it, developer.nps.gov/api/v1/campgrounds?parkCode=caha) recreation.gov campsite catalog for 251945 (RIDB, fetched 2026-10-20) NPS alert 'Cape Point & Frisco campgrounds and several ORV ramps remain closed' (developer.nps.gov/api/v1/alerts?parkCode=caha, dated 2026-10-21)",
+      "note": "Currently CLOSED (NPS alert 2026-10-21, post-storm); confirmed $20, recreation.gov only with a 4-day window, no FCFS, 14-day Easter-Thanksgiving limit, no hookups, flush toilets/cold showers/water/dump; added season Apr 3-Nov 27 (2026), 202 sites (49 tent), 40 ft."
+    },
+    "phone": "252-475-9054"
   },
   {
     "id": 639,
@@ -90633,51 +90817,58 @@
     "waterfront_evidence": "DEC taylorpondmap.pdf per-site map: all 25 drive-in sites sit inland of a forested buffer north of Taylor Pond (only boat-access interior sites 1-6 are on the pond); satellite agrees — loop ~150-250ft back behind trees",
     "website": "https://dec.ny.gov/places/taylor-pond-campground-and-day-use-area\nhttps://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537",
     "phone": "518-647-5250",
-    "note": "DEC (Adirondack), Au Sable Forks. 30 sites (25 drive-in + 5 boat), max RV 30 ft, primitive (outhouses, water spigots, no showers); some sites on Taylor Pond. ReserveAmerica. RV Life unrated. --Claude",
+    "note": "DEC (Adirondack), Au Sable Forks, on a dirt road; primitive. Some sites on Taylor Pond; the interior sites are boat access only (rowboats and canoes rented at the campground). RV Life unrated. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 30,
-      "max_rig_ft": 30
+      "count": 31,
+      "max_rig_ft": 30,
+      "pull_through": false,
+      "note": "DEC lists 31 sites; ReserveAmerica sells 30: 24 drive-in (7 listed at 30 ft, 13 at 20 ft, 4 back-in with no length, all back-in) and 6 interior sites reached only by boat."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true,
-      "showers": false
+      "showers": false,
+      "flush_toilets": false
     },
     "booking": {
       "reservable": true,
-      "platform": "reserveamerica"
+      "platform": "reserveamerica",
+      "window_opens_days": 270,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "ReserveAmerica or 1-800-456-2267, up to 9 months ahead; same-day reservations until 5 pm on the day of arrival, and walk-ins are not permitted at DEC campgrounds. One-night reservation minimum. A permit runs at most 14 nights, and from July 1 through Labor Day only 14 cumulative nights are allowed at any campground. Register 2-9 pm on the first night or the site is re-rented."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica site list for parkId 537 (all 30 campsites 'Electric Hookup - no', 'Full Hookup - no'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf ('Taylor Pond 518-647-5250 31') + ReserveAmerica site list for parkId 537 (loop 'Sites 001-025' 24 sites: '30 Back-In' 7, '20 Back-In' 13, 'Back-In' 4; 'Interior Sites' 6; 'Campsite (30)') + https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 ('The interior sites require a boat for access'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 ('There are no flush toilets or other amenities. This is a primitive camping area. There are outhouses and water spigots at various locations'; 'there are no flush toilets or showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 ('can be made up to 9 Month(s) in advance'; 'DEC Campgrounds: Same-day reservations will be allowed until 5pm on day of arrival ... Walk-ins will not be permitted'; LENGTH OF STAY 'maximum of 14 nights. From July 1 through Labor Day only 14 cumulative nights'; CHECK-IN TIME 'From 2:00 p.m. until 9:00 p.m.') + https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf (Taylor Pond RES MIN 1), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf (NYSDEC 2026 Summer Recreation Campground Summary, revised 1/12/26: nightly camping fee for 'Taylor Pond': $16.00; non-residents +$5/night) + DEC's 2026 campground summary lists one nightly fee per campground (no weekend rate), read 2026-10-12; non-resident +$5/night from the summary's footnote '* Non-New York State residents will be charged an additional $5/night for camping at all facilities', read 2026-10-12",
         "checked": "2026-10-12"
       },
       "season": {
-        "source": "https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 (2027 season schedule), read 2026-10-20",
-        "checked": "2026-10-20",
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 (Season Schedule 2027: Core 'Fri May 14 2027', Peak ends 'Sun Sep 05 2027', no later period) + https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf ('Taylor Pond ... May 15 ... Sept 7'), read 2026-10-21",
+        "checked": "2026-10-21",
         "method": "manual"
       }
     },
@@ -90703,7 +90894,13 @@
     "season": {
       "year_round": false,
       "opens": "05-14",
-      "note": "Reservable through Sep 5, 2027 (Labor Day weekend); DEC posts no later date."
+      "note": "Reservable through Sep 5, 2027 (Labor Day weekend); DEC posts no later date.",
+      "closes": "09-05"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://newyorkstateparks.reserveamerica.com/camping/taylor-pond-campground/r/campgroundDetails.do?contractCode=NY&parkId=537 ReserveAmerica site list for parkId 537 (all 30 campsites parsed) https://dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf",
+      "note": "Confirmed $16 + $5 non-resident, 1-night minimum and phone 518-647-5250 (DEC 2026 summary), RA booking (9 months), 2027 season May 14-Sep 5, no hookups, primitive (outhouses, spigots, no showers); sites 30->31 with 24 drive-in (7 at 30 ft)."
     }
   },
   {
@@ -92870,13 +93067,20 @@
     "waterfront_evidence": "townofwaverlyny.org campsite page: full-hookup RV sites C1-C23 \"located beside the river\"; leaf-off satellite at 44.6748,-74.5516 shows camper row at St. Regis River bank crest",
     "website": "https://www.townofwaverlyny.org/campsite",
     "phone": "518-856-9820",
-    "note": "Town of Waverly campground (Franklin County) on the St. Regis River (since 1967). RV, tent, waterfront, lean-to, cabin sites; sites C1-C11 transient, C12-C29 seasonal. Phone reservations May-Sep. RV Life unrated. --Claude",
+    "note": "Town of Waverly campground (Franklin County) on the St. Regis River below the falls (since 1967). RV, tent, waterfront, lean-to, cabin sites. No wading or swimming. RV Life unrated. --Claude",
     "season": {
       "year_round": false
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "note": "Call 518-856-9820 from May 1 to September 27, or 518-856-9482 (Town Supervisor) from December 1 to May 1; half the fee within 7 days by mailed check, the balance by April 1. Sites C1-C11 are not seasonal; C12-C29 are seasonal sites."
     },
     "provenance": {
       "season": {
@@ -92885,13 +93089,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.townofwaverlyny.org/campsite ('There is a 2-day minimum stay on weekends. For reservations, call 518-856-9820 from May 1st through September 27th. For reservations starting December 1st through May 1st please call 518-856-9482.'; 'Sites C1 to C11 are Not Seasonal Sites. Sites C12 to C29 are Seasonal Sites.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.townofwaverlyny.org/campsite (RV & Trailer Site - Short Term, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.townofwaverlyny.org/campsite ('The following sites are $34.00 C1 through C3: includes power and water.'; 'RV & Trailer Site - Short Term $59.00 a day C4 - C29 ... including power, water, and sewer'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.townofwaverlyny.org/campsite (C1-C3 'includes power and water'; C4-C29 'including power, water, and sewer'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -92900,10 +93110,19 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 59,
+      "nightly_low": 34,
       "nightly_high": 59,
       "currency": "USD",
-      "note": "Short-term RV/trailer site $59/day."
+      "note": "Town page: sites C1-C3 (power and water) '$34.00' (no unit given; listed between the seasonal rates and the short-term rate), short-term RV & trailer sites C4-C29 along the river with power, water and sewer '$59.00 a day'. Seasonal sites $850-$1,950 a season plus $200 winter storage. Lean-to $20 a night."
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.townofwaverlyny.org/campsite",
+      "note": "Town page confirms phone booking, power/water at C1-C3 and full hookups at C4-C29, a 2-night weekend minimum and 11 non-seasonal of 29 RV sites; fees widened from $59 to $34-59 ($34 for C1-C3, unit not stated); no season dates or amperage."
     }
   },
   {
@@ -278328,7 +278547,7 @@
     "inclusion_evidence": "operator byrdsbranchcampground.com: 14 RV sites incl big-rig pull-thrus + 4 tent, currently booking -> real private RV park",
     "waterfront_evidence": "satellite at 36.2890,-80.8769: RV loop ~80m from Byrd's Branch behind continuous treeline; pond ~250m N - no site on water",
     "website": "https://byrdsbranchcampground.com/\nhttps://resnexus.com/resnexus/reservations/book/73E327DF-554F-4922-A708-5DA4514876F6",
-    "phone": "336-526-1146",
+    "phone": "336-827-0032",
     "note": "Small family-owned campground in the foothills at Elkin, on the Mountains-to-Sea Trail and near the Yadkin Valley wineries: back-in sites along the creek that runs through it, wide pull-throughs that take big rigs, 4 tent sites, gem mining and a 9-hole disc golf course. --Claude",
     "rating": {
       "stars": 5,
@@ -278347,7 +278566,9 @@
     "facilities": {
       "camp_store": true,
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "wifi": true,
+      "dump": true
     },
     "season": {
       "year_round": true
@@ -278359,14 +278580,14 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://byrdsbranchcampground.com/ ('With 14 RV sites and 4 tent sites'; 'The pull-thru sites are wide and spacious enough to accommodate all big rig sizes') + https://byrdsbranchcampground.com/rates/ (Pull-Thru Sites 8-11 and 13-14), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://byrdsbranchcampground.com/ ('The Country Store/Office has camping supplies, ice, firewood ... with a clean, private bath house and laundry facility'; 'WiFi Available') + https://byrdsbranchcampground.com/rates/ ('Dump station available.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -278374,17 +278595,19 @@
         "method": "derived"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://byrdsbranchcampground.com/rates/ ('Offering 10% Military discount.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://byrdsbranchcampground.com/ ('Book Now' opens the park's ResNexus booking page), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://byrdsbranchcampground.com/rates/ ('All weekends March-December require a 2-night minimum stay. Holiday weekends require a 3-night minimum stay.'; 'A 1-night deposit is required at booking') + https://byrdsbranchcampground.com/ (BOOK NOW -> ResNexus), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://byrdsbranchcampground.com/rates/ (2026 rates), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://byrdsbranchcampground.com/rates/ ('2026 Rates: Water and Electric Sites: 1-4 and 12: $46.00 per night up to 4 people ... (Back-in Sites) 5-7: $56.00 ... (Pull-Thru Sites) 8-11 and 13-14: $48.00'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -278393,18 +278616,36 @@
       "model": "claude-opus-5/session"
     },
     "discounts": {
-      "good_sam": false
+      "good_sam": false,
+      "military": true
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/73E327DF-554F-4922-A708-5DA4514876F6",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Online through the park's ResNexus page ('BOOK NOW'). The 2-night weekend minimum applies March-December; holiday weekends need 3 nights. One night's deposit at booking."
     },
     "fees": {
       "nightly_low": 46,
       "nightly_high": 56,
       "currency": "USD",
       "checked": "2026",
-      "note": "From the park's 2026 rates page (read 2026-10-13): water-and-electric sites are $46 a night, full-hookup pull-throughs $48 and full-hookup back-ins $56, each for up to 4 people, plus $5 for each additional person 6 or older; the park gives a 10% military discount.  Weekends from March to December take 2 nights, and holiday weekends 3.  The park books through ResNexus; it is no longer on Campspot."
+      "note": "2026 rates: water-and-electric sites (1-4, 12) $46 a night, full-hookup pull-throughs (8-11, 13-14) $48, full-hookup back-ins (5-7) $56, each for up to 4 people; $5 per additional person 6 or older. Stay 7 nights, get one free. Tank pumping for non-sewer sites $15 flat."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://byrdsbranchcampground.com/rates/ https://byrdsbranchcampground.com/",
+      "note": "Confirmed 2026 rates $46-56 (base $46 W/E), ResNexus booking, 2-night weekend (Mar-Dec) / 3-night holiday minimums now in booking.min_stay, 10% military, 14 RV + 4 tent sites with pull-throughs, bath house/laundry/store/WiFi/dump; site gives no amperage or season. Gate n/a ($46 < $50)."
     }
   },
   {
@@ -279148,7 +279389,7 @@
     "waterfront_evidence": "satellite at 35.4349,-80.1876: RVs in open gravel/grass lot; panning creek to SW, no pad fronting open water",
     "website": "http://www.cottonpatchgoldmine.com/",
     "phone": "704-463-5797",
-    "note": "Gem/gold-mining-themed campground; 26 full-hookup sites (30/50-amp), RVs up to 50 ft, year-round, on-site store. --Claude",
+    "note": "Gold-mining-themed campground near New London (recreational prospecting closed since 2016; mining seminars still offered); prospector cabins and dry-camping sites as well. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -279160,20 +279401,22 @@
       "sewer": true
     },
     "sites": {
-      "count": 26,
-      "max_rig_ft": 50
+      "count": 26
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "laundry": true,
+      "wifi": true
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cottonpatchgoldmine.com/camping/ ('RV - (FHU) 30 amp service $25.00'; '50 amp service $3.00 a day extra'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -279181,18 +279424,23 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cottonpatchgoldmine.com/camping/ ('We provide a place to shower and do laundry'; 'Free WIFI for our Customers'; 'Our General Store has snacks, gifts and bags of ice ... Open 7 days a week...9-5'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cottonpatchgoldmine.com/camping/ ('Campground - Open Year Round'; 'Our Campground is still operational year round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.cottonpatchgoldmine.com/camping/ ('RV - (FHU) 30 amp service | $25.00', read 2026-10-16)",
         "checked": "2026-10-16"
+      },
+      "booking": {
+        "source": "https://www.cottonpatchgoldmine.com/camping/ ('1st night paid in advance to confirm reservation'; 'Reservations for Race week and Holidays are 2 night minimum, must be paid in full and are Non-Refundable'; 'call first'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279205,6 +279453,22 @@
       "nightly_high": 28,
       "currency": "USD",
       "note": "Full hookup 30A $25 plus tax for 2 adults, 50A $3 more; dry camping $17."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reserve by phone (704-463-5797); the first night is paid in advance and deposits are non-refundable. Race week (Charlotte Motor Speedway) and holidays need 2 nights, paid in full. 'RV's, camping and cabin rentals open 7 days a week but call first.' Long-term lots by phone."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.cottonpatchgoldmine.com/camping/",
+      "note": "Operator page confirms year-round operation, phone booking, full hookups 30A (50A +$3), showers/laundry/WiFi/store, 2-night race-week/holiday minimum; its rate table ($25 FHU, $17 dry) is undated, so fees were left as recorded. Gate n/a."
     }
   },
   {
@@ -279309,7 +279573,7 @@
     "waterfront_evidence": "satellite at 34.9978,-83.4541: grid of RV pads on peninsula at main pond NE shore, pads at the waterline on open ground",
     "website": "https://andystroutfarm.com/cabins-and-camping/",
     "phone": "706-746-2550",
-    "note": "Historic trout farm (est. 1965) on 325 acres; ~10 full-hookup RV spots (30/50-amp) plus cabins. Trout fishing, gem mining, bath house. --Claude",
+    "note": "Historic trout farm (est. 1965) on 325 acres in Otto, 5 miles west of Dillard GA; RV spots plus off-grid cabins. Trout fishing, gem mining. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -279325,18 +279589,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: 'Full Hook-ups available. 30w & 50w spots.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: 'Our campground has 10 available spots.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://andystroutfarm.com/cabins-and-camping/ ('Sites $30 per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: 'Sites $30 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: '2-sided bath house, each with toilet, sink, and shower'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: 'RESERVE TODAY' link to ResNexus), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://andystroutfarm.com/cabins-and-camping/ (page modified 2026-02-09: hours of operation 'March 1 - Memorial Day Friday ... August - November 29 ... Closed for season November 29 - March 1'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279348,7 +279628,29 @@
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD",
-      "note": "Ten full-hookup sites $30 a night."
+      "note": "Campground sites $30 a night (operator's Cabins & Camping page, modified 2026-02-09).",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/41AE6B9C-371A-4187-9443-C53581447C5A/?NewSearch=1",
+      "note": "'RESERVE TODAY' on the operator's page opens its ResNexus booking page; or call."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "03-01",
+      "closes": "11-29",
+      "note": "The farm's hours: open March 1 to November 29, 'Closed for season November 29 - March 1' (stated for the whole business, on the Cabins & Camping page)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://andystroutfarm.com/cabins-and-camping/ https://resnexus.com/resnexus/reservations/book/41AE6B9C-371A-4187-9443-C53581447C5A/?NewSearch=1",
+      "note": "Operator page (modified 2026-02) confirms $30/night, 10 full-hookup 30/50-amp sites, bath house with showers, ResNexus booking and phone; season Mar 1-Nov 29 from the farm's hours. Gate n/a ($30)."
     }
   },
   {
@@ -279570,7 +279872,7 @@
     "waterfront_evidence": "satellite at 36.2891,-79.4799: open-field sites; pond at far SW corner screened by treeline, not pad-adjacent",
     "website": "https://campspringsevents.com/\nhttps://www.hipcamp.com/en-US/land/north-carolina-camp-springs-blue-grass-park-camp-06yh2nvv",
     "phone": "336-213-1944",
-    "note": "Bluegrass festival venue that also takes general RV camping; ~57 power+water sites (30/50-amp) plus dry-camping fields, bathhouse, dump station, fishing pond; rigs under 45 ft. Bookable via Hipcamp. --Claude",
+    "note": "Bluegrass festival venue (Labor Day weekend festival) that sells RV camping year-round; dry-camping fields, shaded areas and sites around a fishing pond (no swimming). A portable RV waste tank is lent if needed. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -279581,36 +279883,44 @@
       "water": true
     },
     "sites": {
-      "max_rig_ft": 45
+      "max_rig_ft": 45,
+      "note": "35 power-and-water sites for year-round camping; 57 hookup sites plus dry-camping fields during festivals."
     },
     "booking": {
       "reservable": true,
-      "platform": "hipcamp"
+      "platform": "phone",
+      "note": "'Call or Email - Cody or Donna Johnson for Reservations 336-213-1944 or 336-343-9979'. The park also has a Hipcamp listing. During music festivals dry camping is first-come, first-served."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campspringsevents.com/about ('35 - Power and Water Hookups'; '15 - 30 amp & 16 - 50 amp sites available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campspringsevents.com/about ('35 - Power and Water Hookups'; 'For our Music Festivals: We have 57 Power and Water Hookups. Remaining camp sites are dry camping'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campspringsevents.com/about ('Call or Email - Cody or Donna Johnson for Reservations'; 'First come, First serve for Dry Camping'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campspringsevents.com/about ('WiFi Available'; 'Dump Station on Site'; 'Clean Men's and Women's Bathhouse'; 'Hot Showers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/north-carolina-camp-springs-blue-grass-park-camp-06yh2nvv (__NEXT_DATA__ sites, read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://campspringsevents.com/about ('Year Round Campground Now Open Daily Rate $ 35.00 Weekend Rate $ 100.00 Weekly Rate $ 200.00 Monthly Rate $ 750.00') + https://www.hipcamp.com/en-US/land/north-carolina-camp-springs-blue-grass-park-camp-06yh2nvv (host prices, read 2026-10-16), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://campspringsevents.com/about ('Year Round Campground Now Open') + https://campspringsevents.com/ ('Come enjoy camping year round at Camp Springs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279619,13 +279929,24 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "wifi": true
     },
     "fees": {
-      "nightly_low": 25,
+      "nightly_low": 35,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "Dry sites $25, water + electric $45 (host prices; Hipcamp adds a service fee)."
+      "note": "Operator's page (c) 2026: daily rate $35, weekend $100, weekly $200, monthly $750 (power-and-water sites). The park's Hipcamp listing (read 2026-10-16) sells water + electric at $45 and dry sites at $25, plus Hipcamp's service fee. Festival camping is sold with festival tickets.",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://campspringsevents.com/ https://campspringsevents.com/about https://campspringsevents.com/tickets-and-info https://campspringsevents.com/contact",
+      "note": "Operator's 2026 page confirms year-round general RV camping sold by the night ($35 daily; Hipcamp lists $45 W/E, $25 dry), phone/email reservations, 35 power+water sites (15x30A, 16x50A), bathhouse with hot showers, dump, WiFi; festivals are Labor Day weekend. Passes long-stay test 2 (posted nightly rate + phone). Gate n/a."
     }
   },
   {
@@ -882711,7 +883032,7 @@
     "inclusion_evidence": "Town of Sheridan (sheridanny.org Sheridan Bay Park): open Memorial Day weekend through Labor Day, reservations for nightly, weekly or seasonal campers, rates/reservations page, caretaker 716-785-8044; Chautauqua County visitors bureau: all sites with water and electric, showers",
     "website": "http://www.sheridanny.org/sheridan-bay-park.html",
     "phone": "716-785-8044",
-    "note": "Town of Sheridan park on the Lake Erie shore east of Dunkirk, off NY-5. Small campground; sites with water and electric, showers and restrooms, small-boat access to the lake. Open Memorial Day to Labor Day; call the caretaker to reserve nightly, weekly or seasonal stays. --Claude",
+    "note": "Town of Sheridan park on the Lake Erie shore east of Dunkirk, off NY-5. Small campground; sites with electric, small-boat access to the lake. Swimming is prohibited at the beach (no lifeguards). --Claude",
     "hookups": {
       "water": true
     },
@@ -882720,13 +883041,14 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reservations through the park caretaker by phone ('leave a message, I will return your call') for nightly, weekly or seasonal stays; taken from March 1 for the current season only. Long-term stays (3 weeks or more) are paid in full by the first Friday."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "http://www.sheridanny.org/uploads/1/4/5/1/145112937/parkrules.pdf (park rules, headed 2018: 'Water is provided at individual sites for the convenience of our campers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -882734,15 +883056,29 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-25",
-        "method": "derived"
+        "source": "http://www.sheridanny.org/sheridan-bay-park.html ('Reservations may be made for nightly, weekly, or even seasonal camping visitors'; caretaker 716-785-8044) + http://www.sheridanny.org/uploads/1/4/5/1/145112937/rates_reservation_and_pavillion_rental_information.pdf ('We start taking reservations on March 1st each year through the Park Manager ... no reservations made in any given year for the following year's season'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "http://www.sheridanny.org/sheridan-bay-park.html ('The Park is open from Memorial Day weekend through Labor Day.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "c45fda31d04863da",
       "checked": "2026-09-25",
       "model": "claude-opus-5/session"
+    },
+    "season": {
+      "year_round": false,
+      "note": "Open Memorial Day weekend through Labor Day."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "http://www.sheridanny.org/sheridan-bay-park.html http://www.sheridanny.org/uploads/1/4/5/1/145112937/rates_reservation_and_pavillion_rental_information.pdf http://www.sheridanny.org/uploads/1/4/5/1/145112937/parkrules.pdf",
+      "note": "Town pages confirm the caretaker phone, phone reservations (nightly/weekly/seasonal, from March 1), Memorial Day-Labor Day season and water at each site; they post no nightly rate and say nothing on electric amperage or showers."
     }
   },
   {
@@ -937281,55 +937617,6 @@
     }
   },
   {
-    "id": 14324,
-    "kind": "campground",
-    "name": "Tamarack Campgrounds",
-    "location": "42.66184,-77.5712",
-    "elevation_meters": 455,
-    "state": "NY",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 600 m frame) at 42.66184,-77.5712: loops of sites in woods on a hillside; no water - not waterfront",
-    "inclusion_evidence": "tamarackcampgrounds.com (read 2026-10-01): RV sites nightly $40, holiday weekends $50; RoverPass booking -> real transient RV campground; Good-Sam-only (no RV Life tier): published base $40 <= $50; Google 4.2 over 193",
-    "website": "https://www.tamarackcampgrounds.com/",
-    "phone": "585-669-2252",
-    "note": "Wooded campground on Tamarack Ln near Springwater (Livingston Co), south of Hemlock and Canadice Lakes; RV sites $40 a night ($50 holiday weekends), tent sites, cabins. RoverPass booking. Google 4.2 over 193 reviews. --Claude",
-    "booking": {
-      "reservable": true,
-      "platform": "roverpass"
-    },
-    "provenance": {
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://tamarackcampgrounds.com/rates-2/, read 2026-10-10)",
-        "checked": "2026-10-10"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "4e5712782bda581b",
-      "checked": "2026-10-09",
-      "model": "claude-opus-5/session"
-    },
-    "fees": {
-      "nightly_low": 40,
-      "nightly_high": 50,
-      "currency": "USD",
-      "note": "RV sites $40 per night ($50 on the second rate line, likely holiday)."
-    },
-    "discounts": {
-      "good_sam": false
-    }
-  },
-  {
     "id": 14325,
     "kind": "campground",
     "name": "Camp Emerald Acres",
@@ -989617,7 +989904,8 @@
     "booking": {
       "reservable": true,
       "platform": "reserveamerica",
-      "note": "Reservation required May 1-Sep 30 (online only, opens April 1); first-come, first-served Oct 1-Apr 30."
+      "note": "Reservation required May 1-Sep 30, online only through ReserveAmerica / NY State Parks ('they will not take the initial reservation over the phone'); DEC says reservations open April 1, ReserveAmerica shows a 180-day window. No cancellations. First-come, first-served Oct 1-Apr 30, when a Forest Ranger permit is needed for 4+ nights. 14 nights per calendar year on any one site or combination of sites.",
+      "max_stay_nights": 14
     },
     "hookups": {
       "electric": 0,
@@ -989634,12 +989922,14 @@
     },
     "provenance": {
       "fees": {
-        "source": "https://dec.ny.gov/places/stoney-pond-state-forest ('Fee: Free'); DEC 2021-04-01 press release (camping free, no reservation fee)",
-        "checked": "2026-10-10"
+        "source": "https://dec.ny.gov/places/stoney-pond-state-forest ('Fee: Free'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://dec.ny.gov/places/stoney-pond-state-forest (permit May 1-Sep 30 via NY State Parks / ReserveAmerica only)",
-        "checked": "2026-10-10"
+        "source": "https://dec.ny.gov/places/stoney-pond-state-forest ('Camping reservations for Stoney Pond must be made through the New York State Parks or Reserve America web pages'; 'Reservations can be made beginning April 1'; 'The maximum length of stay on ANY one site or a combination of sites is 14 nights per calendar year'; Oct 1-Apr 30 'first-come first-served basis; there are no reservations') + https://newyorkstateparks.reserveamerica.com/campgroundDetails.do?contractCode=NY&parkId=2424 ('can be made up to 180 Day(s) in advance'; 'Cancellations are not permitted'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "hookups": {
         "source": "https://dec.ny.gov/places/stoney-pond-state-forest (fire ring per site, no potable water, portable toilets)",
@@ -989654,9 +989944,9 @@
         "checked": "2026-10-10"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://dec.ny.gov/places/stoney-pond-state-forest (designated sites by reservation May 1-Sep 30, 'Campsites are available on a first-come first-served basis' Oct 1-Apr 30), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "season": {
@@ -989666,6 +989956,11 @@
       "sig": "b23d7dba6d0edf8f",
       "checked": "2026-10-12",
       "model": "claude-opus-5/session"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://dec.ny.gov/places/stoney-pond-state-forest https://newyorkstateparks.reserveamerica.com/campgroundDetails.do?contractCode=NY&parkId=2424 ReserveAmerica site list for parkId 2424 (14 of 17 campsites listed)",
+      "note": "DEC page and ReserveAmerica confirm free designated sites, online-only reservation May 1-Sep 30 (FCFS Oct-Apr), 14 nights a year, no hookups; ReserveAmerica's list today shows sites 012, 013, 015 at 30 ft (010 and 014, accessible, not in the list); access is town roads from Nelson (Eireville Rd, Old State Rd, Jones Rd), with no 4WD or clearance warning."
     }
   },
   {
