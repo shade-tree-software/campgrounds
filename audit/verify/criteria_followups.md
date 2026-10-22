@@ -569,3 +569,11 @@ me drop and report); each needs the research named before a verdict.
 - **1459 Webster Park**: county pricing sheet PDF gone; out-of-county +$10 unconfirmed.
 - **1461 St. Johnsville**: phone -> marina 838-289-4506 (also Campspot's).
 - Short listed lengths: 346 Putnam Pond (16 of 61 drive-in at 30 ft), 1411 Stony Brook.
+
+### p3-86 (NY, 2026-10-21)
+- **1455 Morningside Park DROPPED** (2023 town fee sheet: "Fallsburg residents only").
+- **1463 East Sidney Lake Park**: under-documented - eastsidneylake.org stale (2018 season); website -> town page + USACE page, phone -> town 607-829-6433 (USACE/RIDB list 607-829-6006); may be mostly seasonal (2018 site sold monthly/seasonal). Kept with a caveat; worth a call.
+- **1458 Cook Park**: rate sheet leads with seasonal/monthly/weekly; $50 nightly posted; no nightly count.
+- **1436 Blueberry Patch**: "under 24 feet" - EKKO fits at 23 ft.
+- **1426 Beaverkill**: RA name "Beaverkill (John and Patricia Adams Campground at)". 1426/1427/365 close 09-05.
+- Short listed lengths: 1427 Brown Tract Pond (48 of 88 at 20 ft), 365 Buck Pond (73 of 111 at 20 ft).
