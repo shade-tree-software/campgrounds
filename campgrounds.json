@@ -400057,7 +400057,7 @@
     "inclusion_evidence": "MT FWP park page + ReserveAmerica parkId 630317: 17 drive-in tent/RV sites to 60 ft, electric + non-electric -> real RV campground",
     "website": "https://fwp.mt.gov/missouri-headwaters\nhttps://montanastateparks.reserveamerica.com/camping/missouri-headwaters-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630317",
     "phone": "406-285-3610",
-    "note": "MT State Park at the confluence where the Jefferson, Madison and Gallatin form the Missouri, NE of Three Forks. 17 tent+RV sites (mix electric/non-electric, max RV 60 ft), pit toilets, water, river access, plus a tipi. Reservable (~6 FCFS). --Claude",
+    "note": "MT State Park at the confluence where the Jefferson, Madison and Gallatin form the Missouri, NE of Three Forks (3 mi off I-90); small campground plus a rental tipi, river access, Saturday-night speaker series. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -400066,31 +400066,42 @@
     },
     "sites": {
       "count": 17,
-      "max_rig_ft": 60
+      "max_rig_ft": 60,
+      "pull_through": true,
+      "note": "17 campsites plus the 'Many Waters' tipi and a group shelter. ReserveAmerica max vehicle lengths 20-60 ft (sites 005 and 015 take 60 ft); 4 pull-throughs (003, 004, 013, 015)."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "flush_toilets": true,
+      "note": "Pack-in/pack-out; camp host. Potable water is shut off for the winter (shut down for the season by October 2026). Boat ramp."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "reserveamerica",
+      "window_opens_days": 90,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "Campsites and the tipi: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance.' After the reservation period (October 2026) FWP says 'all sites are offered on a first-come, first-served basis', fees year-round."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/missouri-headwaters ('The park provides 17 campsites, tipi rental') + audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list: max vehicle length and driveway entry per site), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/missouri-headwaters (Amenities: 'Toilets (Flush)', 'Toilets (Vault)', 'Water', 'Pack-in/Pack-out', 'Camp Host'; 'Potable water is now shut down for the season') + ReserveAmerica Services & Amenities ('Boat Ramp', 'Comfort Station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://montanastateparks.reserveamerica.com/camping/missouri-headwaters-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630317 (Booking Window, Campsite) + https://fwp.mt.gov/missouri-headwaters (Campsites: 'The reservation period is now over, and all sites are offered on a first-come, first-served basis. Fees are required year-round.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://fwp.mt.gov/binaries/content/assets/fwp/stateparks/fees-and-regulations/fee-schedule-2020-2021-final-.pdf ('2020 Montana State Parks Schedule': campsite fees by season and residency, reservation fee) + https://fwp.mt.gov/binaries/content/assets/fwp/aboutfwp/public-comments/public-use-fees/2026-06-24-fee-schedule-justifications.pdf (the same figures as 'CURRENT') + montanastateparks.reserveamerica.com parkId 630317 (site types and lengths, mt_sites_2026-10-12.json), read 2026-10-12",
@@ -400099,6 +400110,11 @@
       "season": {
         "source": "https://fwp.mt.gov/missouri-headwaters (Seasons & Hours: \"Park Open all year ... Fees are required year-round.\"), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630317: all 17 sites type 'Campsite', every one 'Electric Hookup - no', 'Full Hookup - no'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
@@ -400127,6 +400143,14 @@
     "season": {
       "year_round": true,
       "note": "First-come after the reservation period ends; fees year-round. Potable water is shut off for the winter."
+    },
+    "hookups": {
+      "electric": 0
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://fwp.mt.gov/missouri-headwaters https://montanastateparks.reserveamerica.com/camping/missouri-headwaters-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630317 audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630317, read 2026-10-12)",
+      "note": "FWP page + ReserveAmerica: confirmed 17 sites to 60 ft, vault toilets and water, reservable on ReserveAmerica with the inherited 3-month window and 1-day cutoff; added no electric (every RA site 'Electric Hookup - no'), pull-throughs, flush toilets. Season (year-round) already manual and consistent. Fees left as recorded (FWP gives only the statewide range). fcfs some_sites left derived: FWP says all sites go first-come after the reservation period, not that some are always first-come. Note corr"
     }
   },
   {
@@ -403539,8 +403563,8 @@
     "waterfront_evidence": "conifer canopy + deep-canyon shadow blind at 46.209,-113.002; imagery cannot resolve pads and no per-site map confirms creekside RV sites; default down",
     "inclusion_evidence": "MT FWP Lost Creek page: 25 FCFS drive-in sites, max RV 23 ft, vault toilets, water -> real state-park RV campground (fits a 23-ft rig at the length cap)",
     "website": "https://fwp.mt.gov/stateparks/lost-creek",
-    "phone": "406-287-3541",
-    "note": "502-acre state park in a limestone canyon reached via Lost Creek Rd ~6 mi N of Anaconda. 25 first-come, first-served sites, max RV/trailer 23 ft, no hookups; vault toilets, drinking water. Narrow dirt access road (tight even for small rigs); open ~mid-May to Nov 30. --Claude",
+    "phone": "406-224-0833",
+    "note": "502-acre state park in a limestone canyon reached via Lost Creek Rd ~6 mi N of Anaconda; a short trail leads to 50-ft Lost Creek Falls. Narrow dirt access road (tight even for small rigs). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -403553,11 +403577,13 @@
       "sewer": false
     },
     "sites": {
-      "count": 25
+      "count": 25,
+      "max_rig_ft": 23
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Pack-in/pack-out; camp host Memorial Day to Labor Day; some amenities seasonal."
     },
     "season": {
       "year_round": false,
@@ -403574,14 +403600,14 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/stateparks/lost-creek ('There are 25 campsites that are available on a first come, first served basis. RV/trailer length is limited to 23 feet.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/stateparks/lost-creek (Amenities: 'Toilets (Vault)', 'Water', 'Pack-in/Pack-out', 'Camp Host (Memorial Day to Labor Day)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -403589,9 +403615,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/stateparks/lost-creek ('Camping at Lost Creek is first come, first served', 'Reservations: First come, first served'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://fwp.mt.gov/binaries/content/assets/fwp/stateparks/fees-and-regulations/fee-schedule-2020-2021-final-.pdf + https://fwp.mt.gov/binaries/content/assets/fwp/aboutfwp/public-comments/public-use-fees/2026-06-24-fee-schedule-justifications.pdf + https://fwp.mt.gov/stateparks/fees-and-general-information (rustic campsites only at Thompson Chain of Lakes and Makoshika) + https://fwp.mt.gov/stateparks/lost-creek, read 2026-10-12",
@@ -403618,6 +403644,11 @@
       },
       "checked": "2026",
       "note": "25 campsites, first come, first served; RV/trailer length limited to 23 feet (its page). Peak season (third Friday in May to third Sunday in September): standard $18 a night for Montana residents; non-residents $10 more, which includes their daily entrance fee (the resident rate with the $50 Nonresident Entrance Pass). Off season: standard $14 (non-residents $10 more). Montana accommodation tax included. FWP proposed in June 2026 to raise the standard site to $24 ($38 non-residents) and electric to $32 ($46), no earlier than 2027. FWP's fee schedule (in force since 2020; FWP lists rustic campsites only at Thompson Chain of Lakes and Makoshika), read 2026-10-12."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://fwp.mt.gov/stateparks/lost-creek",
+      "note": "FWP page: confirmed 25 first-come sites, vault toilets and water; added the 23-ft RV/trailer limit (max_rig_ft). Fees left as recorded (page gives only the statewide $4-$34 range). Season left derived: FWP states only the PARK's season ('Open mid to late May through November 30') and that the campground 'Can become inaccessible due to snow in October and November'. Hookups not stated (derived none left). Note trimmed of restated facts."
     }
   },
   {
@@ -404056,8 +404087,8 @@
     "waterfront_evidence": "satellite at 46.962,-111.942 + rec.gov 10005349 ('every campsite in close proximity to the lake'): camp loops on elevated open bench set back NE behind marina/parking, overlook reservoir cove; no pads at waterline",
     "inclusion_evidence": "BLM Log Gulch page + recreation.gov campground 10005349: 70 gravel-pad RV/trailer sites, reservable -> real drive-in RV campground",
     "website": "https://www.blm.gov/visit/log-gulch-campground\nhttps://www.recreation.gov/camping/campgrounds/10005349",
-    "phone": "",
-    "note": "BLM campground on Holter Lake (Missouri River) ~45 mi north of Helena. 70 sites with spacious gravel pads for RVs/trailers, potable water and garbage service, no hookups; $25/night, reservation only via recreation.gov. --Claude",
+    "phone": "406-235-4480",
+    "note": "BLM campground on Holter Lake (Missouri River) ~45 mi north of Helena, 4.5 mi past Holter Lake Campground on Beartooth Road; shade trees, lakeside picnic tables and a large boat launch. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -404070,40 +404101,52 @@
       "sewer": false
     },
     "sites": {
-      "count": 70
+      "count": 70,
+      "note": "70 sites with spacious gravel pads for RVs, camper trailers and tents (including Sardine Row, sites 1-12, by the boat launch); Little Log Gulch is tent-only. Each site takes 1 RV and 1 tent or 2 tents. The catalog gives no usable vehicle lengths."
     },
     "facilities": {
-      "potable_water": true
+      "potable_water": true,
+      "vault_toilets": true,
+      "dump": false,
+      "note": "Potable water to fill containers (bring a white potable hose), seasonal. No black or grey water dump. Concrete boat launch with courtesy dock and first-come day-use and overnight dock slips; garbage dumpsters."
     },
     "booking": {
       "reservable": true,
       "platform": "recreation.gov",
-      "fcfs": "never"
+      "fcfs": "never",
+      "max_stay_nights": 7,
+      "note": "'ALL sites are reservation only to include Sardine Row and Little Log.' Stay limit 7 consecutive days and 14 days in a 28-day period. Check-in 2 p.m., check-out 11 a.m. Managed by the BLM Butte Field Office."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/log-gulch-campground ('There are no hook-ups available') + rec.gov notices ('No hook-ups are available', 'There is no power available on-site for campers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/log-gulch-campground ('a 70-site campground that has spacious and gravel parking pads that accommodate RVs, camper trailers, and tents', 'Sardine Row (sites 1-12)') + rec.gov notice ('Log Gulch can only accommodate 1 RV and 1 tent or 2 tents at each site', 'Little Log Gulch is limited to tents only'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/log-gulch-campground ('There is potable water provided throughout the campground', boat launch and docks) + https://www.recreation.gov/api/camps/campgrounds/10005349 (notices 'There is no black or grey water dump on site', 'Potable water is available throughout the campground to fill containers. Please bring a white potable hose'; amenities 'Vault Toilets', 'Water (Seasonal)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10005349 (notices 'Stay limit is 7 consecutive days and 14 days within a 28-day time period. ALL sites are reservation only', check-in/out; rule maxConsecutiveStay 7) + https://www.blm.gov/visit/log-gulch-campground ('All sites are reservation only', 'This site is managed by Butte Field Office'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10005349/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10005349/rates (2026-05-01 to 2026-09-30 Peak Season: 25 per standard/RV site, PeakGroupRVCampsite 80) + rec.gov notice ('Each RV or tent is considered a camping unit, and each camping unit costs $25') + https://www.blm.gov/visit/log-gulch-campground ('The $8 reservation fee is non-refundable'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10005349 (notice), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -404114,7 +404157,19 @@
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
+      "currency": "USD",
+      "reservation_fee": 8,
+      "checked": "2026",
+      "note": "$25 a night per camping unit (each RV or tent; a site takes 1 RV and 1 tent or 2 tents); group RV site $80 (walk-up group season $170). Day use $5 per vehicle. The $8 reservation fee is non-refundable."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "'Discounts are only available for those carrying a Senior or Access National Park Pass. You must have your pass with you.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.blm.gov/visit/log-gulch-campground https://www.recreation.gov/api/camps/campgrounds/10005349 https://www.recreation.gov/api/camps/campgrounds/10005349/rates recreation.gov public campsite search for 10005349 (catx.py, read 2026-10-22)",
+      "note": "BLM page + rec.gov: confirmed $25 (2026, per camping unit), no hookups, 70 sites, potable water, reservation-only on rec.gov; added $8 reservation fee, vault toilets, no dump, 7-night consecutive limit, Senior/Access discount (stated). Not stated: season (only the May-Sept rate season), max rig length, booking window. The BLM page's 'Temporary closure Sept. 14 to Oct. 11' for site improvements has passed, so no status recorded. Note trimmed."
     }
   },
   {
@@ -405872,7 +405927,7 @@
     "inclusion_evidence": "Operator site riverfrontrvparkmt.com + Good Sam listing: private 30/50A full-hookup pull-through/back-in grass RV sites on the Little Blackfoot River -> real drive-in RV campground",
     "website": "http://riverfrontrvparkmt.com/",
     "phone": "406-560-0248",
-    "note": "Private RV park on the Little Blackfoot River at Garrison, just off I-90/US-12. 30/50-amp full-hookup pull-through and back-in sites on grass with shade trees; hot showers, laundry, dump. River borders the park with fishing on site. --Claude",
+    "note": "Private RV park on the Little Blackfoot River at Garrison, just off I-90/US-12. Grass sites with shade trees on a 20-acre park; the river borders the park, with fishing on site. Chapel with fellowship hall; two camping cabins. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -405885,33 +405940,40 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 50
     },
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "wifi": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://riverfrontrvparkmt.com/Rates.html ('30 amp', '50 amp' site rates) + http://riverfrontrvparkmt.com/Index.html (park sign 'Full Hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://riverfrontrvparkmt.com/About.html ('Bernie and Sharon have limited the number of sites here to 50'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://riverfrontrvparkmt.com/amenities.html ('Laundry facilities', 'Restrooms and showers', 'WiFi') + http://riverfrontrvparkmt.com/Rates.html ('Dump fee: $10 \"off the road\"'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "http://riverfrontrvparkmt.com/amenities.html and Index.html ('Good Sam Park' logo) + Rates.html (unlabelled 'Discount' rates); military discount cleared: it came from the Good Sam directory and the operator's pages do not state one. Read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "http://riverfrontrvparkmt.com/Rates.html (rates image 'Site items/ratesContent.gif', Last-Modified 6 Feb 2024; footer 'Copyrght, 2024 Riverfront RV Park': '30 amp $40.00 + 3.20 tax', '50 amp $43.00 + 3.44 tax', 'Dry Camping $37.00 + 2.96 tax / Includes electricity only', 'Extra adult $2.00ea', 'Dump fee: $10 \"off the road\"'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -405921,7 +405983,19 @@
     },
     "discounts": {
       "good_sam": true,
-      "military": true
+      "note": "Good Sam Park; the rates page lists a 10% 'Discount' rate without saying who qualifies."
+    },
+    "fees": {
+      "nightly_low": 37,
+      "nightly_high": 43,
+      "currency": "USD",
+      "checked": "2024",
+      "note": "Dry camping (electricity only) $37, 30-amp $40, 50-amp $43, each plus tax; a 10% 'Discount' rate is listed for each (the page does not say who qualifies). Extra adult $2 each; no charge for children. Weekly and monthly rates also posted (monthly sites $450, concrete $500). Tenting $27; small/large cabins $35/$45. Dump fee $10 for non-guests."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://riverfrontrvparkmt.com/Rates.html http://riverfrontrvparkmt.com/amenities.html http://riverfrontrvparkmt.com/Index.html http://riverfrontrvparkmt.com/About.html http://riverfrontrvparkmt.com/contact.html",
+      "note": "Operator site (all content in images; rates image dated Feb 2024): set fees $37 (dry camping, electricity only) to $43 (50-amp), plus tax; confirmed 50-amp full hookups, showers, laundry, dump, Good Sam Park; added 50 sites and WiFi; cleared the directory-derived military discount. The pages do not state pull-throughs, a season, booking method or max rig length. Base under the US$50 gate."
     }
   },
   {
@@ -406377,83 +406451,6 @@
     }
   },
   {
-    "id": 6133,
-    "kind": "campground",
-    "name": "Perrys RV Park and Tent Campground",
-    "location": "45.15151,-109.27360",
-    "elevation_meters": 1780,
-    "state": "MT",
-    "ownership": "private",
-    "waterfront": "creekside",
-    "waterfront_evidence": "satellite at 45.1506,-109.2724: multiple drive-in RV pads sit at the gravel edge of Rock Creek within ~20-30m, open access to the braided channel",
-    "inclusion_evidence": "Operator perrysrv.com + Visit Montana: 44 hookup RV sites among trees by Rock Creek -> real drive-in RV campground",
-    "website": "https://perrysrv.com/",
-    "phone": "(406) 446-2722",
-    "note": "Private RV park 2 mi S of Red Lodge on US-212; ~44 RV sites (electric/water hookups) plus 15 tent sites among trees next to Rock Creek; hot showers; seasonal (~late May-Oct 1). Reservable. --Claude",
-    "rating": {
-      "stars": 4,
-      "price_tier": 2,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "water": true
-    },
-    "sites": {
-      "count": 59
-    },
-    "facilities": {
-      "showers": true
-    },
-    "season": {
-      "year_round": false
-    },
-    "booking": {
-      "reservable": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "074f2477e4c9645a",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": false,
-      "military": true
-    }
-  },
-  {
     "id": 6134,
     "kind": "campground",
     "name": "Chief Joseph Park",
@@ -406853,7 +406850,7 @@
     "inclusion_evidence": "Operator lasallervpark.com + Visit Montana: 35 full-hookup RV sites to 70 ft, year-round drive-in on US-2 -> real RV campground",
     "website": "https://lasallervpark.com/",
     "phone": "406-892-4668",
-    "note": "Private RV park on US-2 in the Flathead Valley near Columbia Falls; per operator site 35 full-hookup RV sites (to 70 ft) plus 11 electric-only and a separate tent area, open year-round. --Claude",
+    "note": "Private RV park on US-2 West in the Flathead Valley near Columbia Falls, billed as a Glacier NP base; full-hookup and electric-only RV sites plus a separate tent area, fenced dog run. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -406862,24 +406859,27 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "max_rig_ft": 70
+      "max_rig_ft": 70,
+      "pull_through": true,
+      "note": "35 full-hookup sites plus electric-only sites and tent spaces; 'several pull-through sites that can accommodate large rigs'."
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lasallervpark.com/ ('35 Full hookups (water, sewer, electric)', '30 and 50 amp service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://lasallervpark.com/ ('Spacious pull-through sites', '35 Full hookups', 'Tent spaces') + https://lasallervpark.com/faqs/ ('The park has several pull-through sites that can accommodate large rigs'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -406887,13 +406887,24 @@
         "method": "derived"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://lasallervpark.com/rates-policies/ ('We offer a 10% discount for Military, FMCA, & First Responders'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://lasallervpark.com/rates-policies/ ('FULL HOOKUP | PER NIGHT | TAX NOT INCLUDED $ 75 7TH NIGHT FREE', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://lasallervpark.com/rates-policies/ ('FULL HOOKUP PER NIGHT | TAX NOT INCLUDED $ 75 7TH NIGHT FREE', 'ELECTRIC ONLY ... $ 75', 'TENT SPOTS ... $ 40.00'; page footer '© 2026 LaSalle RV Park'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://lasallervpark.com/ ('Clean restrooms & hot showers', 'On-site laundry', 'Free Wi-Fi', 'Ice, firewood & propane on-site') + https://lasallervpark.com/faqs/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://lasallervpark.com/contact-us/ + https://lasallervpark.com/rates-policies/ (deposit and cancellation policies, check-in/out) + https://lasallervpark.com/rules/ ('No late Check-ins after 8:00 pm, unless approved by management'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -406903,13 +406914,31 @@
     },
     "discounts": {
       "good_sam": false,
-      "military": true
+      "military": true,
+      "note": "10% discount for military, FMCA members and first responders."
     },
     "fees": {
       "nightly_low": 75,
       "nightly_high": 75,
       "currency": "USD",
-      "note": "Full hookup or electric only $75 plus tax, 7th night free; tents $40."
+      "note": "Full hookup or electric only $75 a night plus tax, 7th night free; tent spots $40. Call for full-time rates. Reservation deposit: first night for 1-5 night stays.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "note": "Free Wi-Fi is a shared connection. Propane, ice and firewood sold on site; fenced dog area."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by phone, email or the contact form ('For questions or to make reservations, drop us a line or give us a call'); deposit equal to the nightly rate for 1-5 nights, 48 hours' notice to cancel, cancellations by phone only. Check-in 1:00, check-out 11:00; no check-ins after 8 pm without approval."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://lasallervpark.com/ https://lasallervpark.com/rates-policies/ https://lasallervpark.com/faqs/ https://lasallervpark.com/rules/ https://lasallervpark.com/contact-us/",
+      "note": "Operator site: confirmed $75 (full hookup or electric only, 2026), 30/50-amp full hookups, pull-throughs, military 10% discount; added showers/laundry/Wi-Fi, booking by phone/email with deposit. Over US$50 but within the Glacier NP gateway (25 km, gateways.py), so the gate is lifted. Not stated now: the 70-ft max and year-round season (derived values left), site total. Note trimmed of restated counts/season."
     }
   },
   {
@@ -407371,7 +407400,7 @@
     "inclusion_evidence": "Operator site olddormrvpark.com: 16 gravel full-hookup RV sites (2 tandem pull-through, 6 + 8 back-in), 50/30/20-amp w/ water+sewer, fits most any size RV -> real transient drive-in RV park",
     "website": "https://olddormrvpark.com/",
     "phone": "406-853-0020",
-    "note": "Self-serve private RV park in the town of Jordan off Highway 200 (name refers to a former dorm building, but it is a real transient RV park). 16 level gravel full-hookup sites: 2 tandem pull-through, 6 back-in, 8 large back-in; 50/30/20-amp electric with city water and sewer; accommodates most any size RV. Self-pay station, cash only. --Claude",
+    "note": "Self-serve private RV park in the town of Jordan off Highway 200, in two lots: 242 Montana Street (near the town park and school) and 622 Marguerite Street. The name refers to a former dorm building; it is a real transient RV park. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -407385,22 +407414,33 @@
     },
     "sites": {
       "count": 16,
-      "pull_through": true
+      "pull_through": true,
+      "note": "Two self-serve lots in Jordan: 242 Montana Street (8 large back-in and 2 tandem pull-through sites) and 622 Marguerite Street (6 back-in sites). All gravel and level; 'Can accommodate most any size RV!'"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://olddormrvpark.com/ (both lots: '50, 30 and 20 amp pedestals', 'City water and sewer'; 'full hookup'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://olddormrvpark.com/ ('8 large back-in sites', '2 tandem pull-through sites', '6 back-in sites', 'Can accommodate most any size RV!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://olddormrvpark.com/ ('$35 per night for full hookup', read 2026-10-16)",
         "checked": "2026-10-16"
+      },
+      "season": {
+        "source": "https://olddormrvpark.com/ (242 Montana Street section), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://olddormrvpark.com/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -407413,6 +407453,20 @@
       "nightly_high": 35,
       "currency": "USD",
       "note": "Full hookup $35 at a self-service pay station (no cards)."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Montana Street lot: 'Power and sewer are available year round and water is available dependent on the Eastern Montana winter weather.'"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Self-serve; 'Call or text 406-853-0020 or 406-853-2970 and we will make sure we have a site available for your stay.' Pay at the self-service station."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://olddormrvpark.com/",
+      "note": "Operator site: confirmed 16 sites (10 + 6 in two lots), 50-amp full hookups, pull-throughs, $35 full hookup (fees left as recorded 2026-10-16); added year-round power/sewer (water weather-dependent) and phone/text booking. Not stated: a max rig length. Note trimmed of restated values."
     }
   },
   {
@@ -413757,8 +413811,8 @@
     "waterfront_evidence": "rec.gov 234010: campground directly across MT-1 from Georgetown Lake, no lake access, loops set back E of highway; pin sits at Red Bridge boat launch",
     "inclusion_evidence": "Beaverhead-Deerlodge NF page + recreation.gov (234010): 29 drive-in RV/tent units (19 reservable + 10 FCFS), trailers to ~32 ft -> real RV campground",
     "website": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground\nhttps://www.recreation.gov/camping/campgrounds/234010",
-    "phone": "",
-    "note": "Beaverhead-Deerlodge NF campground on MT-1 across the highway from Georgetown Lake, ~11 mi S of Philipsburg at ~6,400 ft; 29 units (19 reservable, 10 FCFS), trailers recommended to ~32 ft, no hookups or dump on site. Boat/lake access across the road. Open ~mid-May to late Sept. --Claude",
+    "phone": "406-859-3211",
+    "note": "Beaverhead-Deerlodge NF campground on MT-1 across the highway from Georgetown Lake, ~11 mi S of Philipsburg at ~6,400 ft; no direct lake access, but the Red Bridge boat launch and fishing access across the road are free to campers. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -413772,44 +413826,60 @@
     },
     "sites": {
       "count": 29,
-      "max_rig_ft": 32
+      "max_rig_ft": 32,
+      "note": "The official counts disagree: rec.gov's description says 29 units (19 reservable, 10 first-come), its notice 30 (19 and 11), and the Forest Service page '31 reservable sites'. FS: 'We recommend trailer lengths do not exceed 32 feet.' The catalog gives no per-site lengths."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "'Open annually from mid-May through late September, weather dependent.'"
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 16,
+      "note": "19 sites reservable on recreation.gov in summer, the rest first-come (rec.gov runs a first-come season in late September); reservations close 4 days before arrival. 3-night minimum on holiday weekends. 16-day stay limit, 32 nights a year. Check-in 2 p.m., check-out 11 a.m.; a reserved site not occupied by 11 a.m. the next day is released. Run by the Forest Service's Pintler Ranger District, with a campground host."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 234010 (all 19 reservable sites STANDARD NONELECTRIC, electricity 'N/A'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground ('31 reservable sites', 'We recommend trailer lengths do not exceed 32 feet') + https://www.recreation.gov/api/camps/campgrounds/234010 ('29 units available for tent and RV camping. 19 sites can be reserved ... and 10 sites are available on a first-come, first-served basis'; notice 'There are 30 campsites. 19 sites are reservable and 11 sites are available on a first-come, first-served basis'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground (Seasons of Use), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234010 (rules reservationCutOff 4 'day(s) prior to arrival', minHolidayWeekendStay 3, maxConsecutiveStay 16, maxStay 32 'Each Year'; notices on stay limit, check-in/out and holding reserved sites) + https://www.recreation.gov/api/camps/campgrounds/234010/rates ('First-come, First-served Season 2026-09-21 2026-10-01') + https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground ('Reservations available at rec.gov', '16 day stay limit'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground ('Vault toilet(s)', 'Potable water is available at this site', 'garbage services') + https://www.recreation.gov/api/camps/campgrounds/234010 (notice 'No dump station on site; closest facility is in Anaconda'; amenities Drinking Water, Firewood, Vault Toilets), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234010/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground ('Single Site: $17 per night', 'Additional Vehicle: $5 per night'; last updated September 1, 2026) + https://www.recreation.gov/api/camps/campgrounds/234010/rates (2026 Peak Season and First-come, First-served Season: STANDARD NONELECTRIC 17) + rec.gov notice on double occupancy and extra vehicles, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -413818,12 +413888,22 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": false
+      "dump": false,
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "No dump station on site; the closest is in Anaconda. Bear-resistant storage lockers; firewood; garbage service."
     },
     "fees": {
       "nightly_low": 17,
       "nightly_high": 17,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$17 a night per single site; $5 per extra vehicle a night (first two free); double occupancy charged for more than one camping unit on a site. Self-serve fee station takes cash or check only."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/lodgepole-campground https://www.recreation.gov/api/camps/campgrounds/234010 https://www.recreation.gov/api/camps/campgrounds/234010/rates recreation.gov public campsite search for 234010 (catx.py, read 2026-10-22)",
+      "note": "FS page + rec.gov: confirmed $17 (2026), no electric, 32-ft trailer recommendation, reservable with some FCFS sites, no dump. Added season (mid-May to late September, no dates), vault toilets/potable water, 4-day reservation cutoff, 3-night holiday minimum, 16-day limit. Site count left at 29 (official pages say 29, 30 and 31; recorded in sites.note). Water/sewer 'false' left derived (pages silent beyond nonelectric). Note trimmed."
     }
   },
   {
@@ -415163,7 +415243,7 @@
     "inclusion_evidence": "recreation.gov 10285377 + fs.usda.gov Lolo NF page: 39 drive-in tent/RV sites in 2 loops, paved parking pads, RVs to ~64 ft -> real RV campground",
     "website": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground\nhttps://www.recreation.gov/camping/campgrounds/10285377",
     "phone": "406-677-2233",
-    "note": "Lolo National Forest on the north shore of Lake Alva, ~11 mi north of Seeley Lake (larger main campground, distinct from the small Lakeside CG at the north end). 39 sites in 2 loops (Loop 1 reservable Fri-before-Memorial-Day to Tue-after-Labor-Day then FCFS; Loop 2 FCFS year-round); paved spurs, no hookups, potable water. Sites accommodate large RVs (listed up to ~64 ft). --Claude",
+    "note": "Lolo National Forest on the north shore of Lake Alva, ~11 mi north of Seeley Lake off MT-83 (larger main campground, distinct from the small Lakeside CG at the north end). Swimming beach, boat ramp and day-use area; no-wake lake with nesting loons. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -415177,39 +415257,51 @@
     },
     "sites": {
       "count": 39,
-      "max_rig_ft": 64
+      "max_rig_ft": 64,
+      "note": "39 individual RV/tent sites: 19 in Loop 1 (reservable in summer; catalog vehicle lengths 46-64 ft) and 20 first-come sites in Loop 2 (no catalog lengths), plus group sites #42 and #43. Each has a paved parking stall; vehicles that don't fit the spur pay $5 and park in the day-use area."
     },
     "facilities": {
-      "potable_water": true
+      "potable_water": true,
+      "vault_toilets": true,
+      "note": "Drinking water from a hand pump, peak season only (rec.gov amenity 'Drinking Water (peak season)'). Campground hosts on site; swimming beach, concrete boat ramp and day-use area."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "max_stay_nights": 16,
+      "note": "Loop 1's 19 sites are reservable on recreation.gov from the Friday before Memorial Day to the Tuesday after Labor Day and first-come outside those dates; Loop 2's 20 sites are always first-come, paid on site by QR code in the Recreation.gov app. 16 consecutive nights, 32 nights a year. Check-in 3 p.m., check-out 1 p.m. Run by the Forest Service (Seeley Lake Ranger District)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10285377 (notice 'No utility hookups are avaliable'; all 39 catalog sites STANDARD NONELECTRIC), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground ('19 individual RV/tent campsites within Loop 1', '20 campsites within Loop 2', 'a paved parking stall') + recreation.gov campsite catalog for 10285377 (Max Vehicle Length 46-64 ft on the 19 reservable sites), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground ('Accessible vault toilets, drinking water and trash receptacles are available throughout the campground', 'Drinking water is available from a hand pump') + https://www.recreation.gov/api/camps/campgrounds/10285377 (amenities), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground (Reservations, General Information) + https://www.recreation.gov/api/camps/campgrounds/10285377 (rules maxConsecutiveStay 16, maxStay 32 'Each Year'; check-in/out notice), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10285377/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground (Fee Site and Info: 'Single Site: $20 per night (2 vehicles included per site)', 'Additional Vehicle Fee: $5 per night', 'Group Site (#42, #43): $50 per night'; page last updated August 24, 2026) + https://www.recreation.gov/api/camps/campgrounds/10285377/rates (2026-05-22 to 2026-09-07 Peak Season: PeakLakeAlvaStandardNonelectric 20), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground (Seasons of Use: 'Loop 1: OPEN Year-Round : Snow Load Determines Accessibility', 'Loop 2: ... Open dates for this loop are the Friday before Memorial Day through Labor Day', 'Group Sites: CLOSED : Due to Hazardous Conditions') + rec.gov notice 'Access to the campground during winter is determined by snow level; road is not plowed', read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -415220,7 +415312,18 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Peak season (Memorial Day weekend - Labor Day): $20 a night per single site, two vehicles included; $5 a night per extra vehicle; group sites #42 and #43 $50."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Loop 1 open year-round, snow load determining access (the road is not plowed); Loop 2 open only the Friday before Memorial Day through Labor Day; group sites closed 'due to hazardous conditions' (October 2026)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/lolo/recreation/lake-alva-campground https://www.recreation.gov/api/camps/campgrounds/10285377 https://www.recreation.gov/api/camps/campgrounds/10285377/rates recreation.gov public campsite search for 10285377 (catx.py, read 2026-10-22)",
+      "note": "FS page + rec.gov: confirmed $20 (2026), no hookups, 39 sites to 64 ft (catalog), vault toilets and potable water, reservable on rec.gov with some FCFS sites. Added season (Loop 1 year-round, snow permitting; Loop 2 summer only), 16-night consecutive limit, fee note. Not stated: booking window (inherited), pull-throughs. Alerts: only an unrelated Deer Creek Road closure. Note trimmed of restated booking/site facts."
     }
   },
   {
@@ -956904,21 +957007,42 @@
     "inclusion_evidence": "riveredgemt.com/lodging/rv-park read 2026-10-03: full hookup RV sites, online booking. RV Life 4* $$ (avg $40) over 67 reviews - passes on tier; Google 'River Edge Resort & Steakhouse' 4.2 over 809 with phone",
     "website": "https://www.riveredgemt.com/lodging/rv-park/",
     "phone": "406-929-2026",
-    "note": "Full-hookup RV park at River Edge Resort on the Clark Fork in Alberton (I-90 exit 75, 168 Frontage Rd), with a steakhouse, bar, motel and tent sites on the property. --Claude",
+    "note": "RV park at River Edge Resort on the Clark Fork in Alberton (I-90 exit 75, 168 Frontage Rd), with a steakhouse, bar and casino, motel and tent sites on the property. --Claude",
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.riveredgemt.com/faqs/ ('options for full hookup (water, electric and sewer), or water and electric only, or dry camping/tent spots. Guests can choose between 30 or 50 amp electrical service') + ResortForward units (isFullHookUp, is50Amp on RV Park 6, 7, 9-12), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://resortforward.com/reservations/riveredgemt (backend.resortforward.com/units/query?resortAlias=riveredgemt&checkIn=2027-06-15&checkOut=2027-06-16: selectedPrice.daily 35.86 / 68.4 / 75.6 per RV Park unit, applyLodgingTax true) + https://www.riveredgemt.com/faqs/ ('A $20 pet fee applies'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.riveredgemt.com/faqs/ ('Sites are available in a range of sizes from 32 to 65 feet', 'Guests can take advantage of pull-through site options') + ResortForward units (isPullThrough), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.riveredgemt.com/faqs/ ('Laundry: On-site laundry facilities', 'Bathroom & Showers', 'Dump Station: A dump station is provided'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.riveredgemt.com/faqs/ ('How long can I stay?', cancellation policy) + https://www.riveredgemt.com/lodging/rv-park/ (check-in/out) + https://resortforward.com/reservations/riveredgemt, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -956935,6 +957059,35 @@
     "discounts": {
       "good_sam": false,
       "military": true
+    },
+    "fees": {
+      "nightly_low": 35.86,
+      "nightly_high": 75.6,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Operator's ResortForward booking engine, one night 2027-06-15: dry RV sites (RV Park 8, 13, 14, no hookup flags) $35.86; 30-amp pull-through/water-electric sites (RV Park 1, 3, 5) $68.40; 30/50-amp full-hookup sites $75.60; weekly $251.02 / $478.80 / $529.20. Lodging tax applies on top. $20 pet fee."
+    },
+    "sites": {
+      "max_rig_ft": 65,
+      "pull_through": true,
+      "note": "Sites 32 to 65 ft: full hookup, water and electric only, or dry camping/tent spots; pull-throughs available (RV Park 1, 5, 6, 7, 11, 12 on the booking engine)."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "dump": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resortforward.com/reservations/riveredgemt",
+      "max_stay_nights": 14,
+      "note": "Book online (ResortForward) or by phone. 'Guests are welcome to stay for up to two weeks during the peak season'; longer stays may be available October-April. Check-in 4 p.m. at the steakhouse bar, check-out 11 a.m.; call ahead to arrive after 8 p.m. Cancel 24 hours ahead or pay 50%."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.riveredgemt.com/lodging/rv-park/ https://www.riveredgemt.com/faqs/ https://resortforward.com/reservations/riveredgemt (the site's 'Book Now' engine; Sites search for 2027-06-15 to 06-16 rendered in a browser, backend units/query response, read 2026-10-22)",
+      "note": "Operator site + its ResortForward engine: base $35.86 (dry RV site, June 2027 night) to $75.60 full hookup, 30/50-amp full hookups, sites 32-65 ft with pull-throughs, showers/laundry/dump, online booking, 2-week peak-season limit. Not stated: season dates, site count, discounts. Note: 'Full-hookup' qualifier dropped (there are dry and water/electric sites too)."
     }
   },
   {
@@ -1000023,13 +1000176,13 @@
     "location": "48.8469,-113.4069",
     "elevation_meters": 1420.0,
     "state": "MT",
-    "ownership": "private",
+    "ownership": "hipcamp",
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite (Esri, sat.py) at 48.8469,-113.4069 read 2026-10-19: cafe and sites in a forest clearing beside US-89; no water nearby; not waterfront",
     "inclusion_evidence": "Google Maps listing 'Leaning Tree Cafe and Campground' at the pin, open, 4.4 over 172 reviews, phone 406-338-5322 (read 2026-10-19) stands in for the dead website; RV Life 4* (2 reviews), electric RV sites per The Dyrt; camper-reported $55 (Campendium 2025-08-02); Glacier NP gateway (11.4 km from an entrance, gateways.py), so the price gate is lifted",
-    "website": "",
+    "website": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y",
     "phone": "406-338-5322",
-    "note": "Cafe and small campground at Babb on US-89, 5 mi from the Many Glacier road; electric-only RV sites (20/30/50 A), water spigots for tank filling, cabins and tent sites. CAMPER-REPORTED RATE: $55 a night (Campendium, 2025-08-02); its old website domain now serves RoverPass marketing, so there is no operator page. RV Life 4*, $$$. --Claude",
+    "note": "Cafe and small campground at Babb on US-89, 5 mi from the Many Glacier road; RV sites, tent sites and cabins, general store, cafe open all year. Its old website domain now serves RoverPass marketing, so there is no operator page; it books through its Hipcamp listing. --Claude",
     "rating": {
       "stars": 4.0,
       "price_tier": 3,
@@ -1000045,28 +1000198,63 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y (RV-only sites: 'Electrical hookup', 'Water hookup', but the same sites say 'Water is available to fill your tank'; no amperage or sewer stated), read 2026-10-22. The cleared 50-amp/no-water/no-sewer values came from note prose resting on The Dyrt",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y ('Water is available to fill your tank. Showers are available at the shower house for $5.00', 'Visitors have access to restrooms, general store, picnic tables and a clubhouse', 'Potable water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y (RV-only sites RV-1, RV-2, RV-5, RV-6 '$45 / night'; RV/tent sites TS-7 to TS-14 '$28 / night', 'Vehicles under 20 ft'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y ('12 sites · RV, Tent · 3 acres'; RV-6 'Vehicles under 60 ft', RV-2 '30 ft', RV-1 '28 ft', RV-5 '20 ft', TS sites 'Vehicles under 20 ft'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y ('Check availability', per-site prices, reviews of stays to Oct 2026), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
-    "hookups": {
-      "electric": 50,
-      "water": false,
-      "sewer": false
-    },
     "facilities": {
-      "potable_water": true
+      "potable_water": true,
+      "showers": true,
+      "camp_store": true,
+      "note": "Showers $5 at the shower house; water available to fill tanks; general store, clubhouse and an on-site cafe."
     },
     "note_scan": {
       "sig": "536fc993eb1a8a0d",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 45,
+      "nightly_high": 45,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Hipcamp listing (October 2026): the 4 RV-only sites $45 a night; the 8 RV/tent sites $28 but only for vehicles under 20 ft. Showers $5 at the shower house. Camper reports elsewhere ($55, Campendium 2025-08) are not the operator's price."
+    },
+    "sites": {
+      "count": 12,
+      "max_rig_ft": 60,
+      "note": "12 sites: 4 RV-only sites (vehicles under 60, 30, 28 and 20 ft) and 8 RV/tent sites for vehicles under 20 ft, so only three sites take a 23-ft rig. Cabins besides."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "url": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.hipcamp.com/en-US/land/montana-leaning-tree-campground-88lhmq8y (the host's own Hipcamp listing, its only booking channel; rendered in a browser 2026-10-22, reviews to Oct 2026)",
+      "note": "Host's Hipcamp listing (live, reviews to Oct 2026): base $45 for the 4 RV-only sites (TS sites $28 but under 20 ft), 12 sites to 60 ft, showers/potable water/store, reservable on Hipcamp. Cleared the derived 50-amp/no-water/no-sewer hookups (they rested on The Dyrt; the listing says electric and 'water hookup' with no amperage, while also calling water a tank fill). Note: dropped the Campendium $55 and the RV Life line."
     }
   },
   {
@@ -1001036,8 +1001224,8 @@
     "waterfront_evidence": "satellite (Esri, sat.py) at 48.4894,-113.2619 read 2026-10-19: wooded loops west of the Two Medicine River; a continuous band of trees and brush separates the loops from the river; not waterfront",
     "inclusion_evidence": "blackfeetcampgrounds.com live: 'Electric Sites - 30 amp and 50 amp $50.00 / Standard Primitive Sites: $30.00', ResNexus booking (read 2026-10-19); Good Sam listed; Google 4.4 over 83 reviews; RV Life 4* (3 reviews); Glacier NP gateway (31.3 km from an entrance, gateways.py), so the price gate is lifted",
     "website": "https://blackfeetcampgrounds.com/accommodation/red-eagle/",
-    "phone": "844-335-5178",
-    "note": "Blackfeet Nation campground on the Two Medicine Road near East Glacier Park; electric sites (30/50 A) $50, primitive $30 a night, booked on ResNexus. RV Life 4*, $$$. --Claude",
+    "phone": "406-338-2111",
+    "note": "Blackfeet Nation tribal campground on the Two Medicine Road near East Glacier Park, 3.4 mi from Glacier's Two Medicine entrance; swimming and paddling on the lake, tribal fishing permit required; horses allowed if hitched. --Claude",
     "rating": {
       "stars": 4.0,
       "price_tier": 3,
@@ -1001053,26 +1001241,65 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ ('Electricity - 30A, 50A', 'While there is no water available at the sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ ('Book Online', check-in/out, quiet-hours gate, half-marathon closure) + https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202021705, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ ('BLACKFEET TRIBAL CAMPGROUND - 2026 SEASON', 'Electric Sites – 30 amp and 50 amp $50.00', 'Standard Primitive Sites: $30.00', 'Group Sites: Starting at $80.00', additional charges, cancellation policy), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ ('6 electrical sites and 86 primitive campsites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ (Amenities: 'Porta Potties', 'Wifi', 'Kayaking/ Paddle Boards No motorized watercraft allowed'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202021705",
+      "note": "Booked online through the Blackfeet Tribal Campgrounds' page on campgroundreservations.com (Good Sam's reservation system): 'available for online reservations: from January 4 at 10:00 AM MDT to September 30 at 08:00 PM MDT'. Check-in 2 p.m., check-out noon; gate closed 10 p.m.-6 a.m. (walk-in access only). The campground closes to the public for the Glacier Half Marathon in late June (6/25-6/28 in 2026)."
     },
     "note_scan": {
       "sig": "3a71628ed935aa25",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 50,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 season: standard primitive (open) sites $30, electric 30/50-amp sites $50, group sites from $80, tipi $80; day use $5. Rates assume 2 adults, 2 children, 2 pets and 1 vehicle; extra adults or children $5, pets $3, vehicles $10, horses $5 a day. Payment in full at reservation; full payment non-refundable inside 14 days. The page gives no site lengths for the primitive sites."
+    },
+    "sites": {
+      "count": 92,
+      "note": "6 electric sites and 86 primitive campsites, plus group sites and traditional lodges (tipis)."
+    },
+    "facilities": {
+      "wifi": true,
+      "note": "Porta-potties; no water at the sites. Lake for swimming, kayaks and paddle boards (no motorized craft); fishing with a tribal permit."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://blackfeetcampgrounds.com/accommodation/red-eagle/ https://reserve.campgroundreservations.com/search_sites?gs_campground_id=202021705 (the page's 'Book Online' link, rendered in a browser 2026-10-22)",
+      "note": "Tribal campground page (2026 season): confirmed $50 electric (30/50-amp) and $30 primitive; added no water at sites, 92 sites (6 electric + 86 primitive), Wi-Fi, online booking via campgroundreservations.com (Jan 4 - Sep 30 booking period). Note corrected: it no longer books on ResNexus; price and RV Life lines dropped. Not stated: season dates, site lengths, whether primitive sites take a 23-ft rig (base recorded as $30 with that caveat)."
     }
   },
   {

@@ -4,6 +4,12 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **15368 Leaning Tree** (mt-13, 2026-10-22): presence is the host's Hipcamp listing only (plus Google 172 reviews), so ownership -> hipcamp and the listing went in `website`. Only 3 of 12 sites take a 23-ft rig (RV-6 60 ft, RV-2 30 ft, RV-1 28 ft).
+- **15379 Red Eagle** (mt-13): a Blackfeet Nation tribal campground recorded as private (no tribal class). Base $30 'Standard Primitive Sites' assumes they take a 23-ft RV; otherwise the base is the $50 electric site. Phone set to the campground page's 406-338-2111 (ext. 2161); was 844-335-5178.
+- **6093 Lost Creek SP** (mt-13): RV/trailer limit is exactly 23 ft (EKKO fits at the cap). Phone was Lewis & Clark Caverns'; now FWP Butte 406-224-0833.
+- **6151 Old Dorm RV Park** (mt-13): $35 rate undated (footer 2018), fee left as recorded; second phone 406-853-2970.
+- **6142 LaSalle RV Park** (mt-13): rules mention manager approval and permanent rentals, but nightly stays are sold ($75, by phone). Over $50; Glacier gateway 25 km.
+- **6231 Lodgepole** (mt-13): site count 29/30/31 across pages, left as is.
 - **6071 Homestake Pass Dispersed** (mt-12, 2026-10-22): ASK AWH. No FS/BLM page designates dispersed camping there; inclusion rests on aggregators; one Campendium listing says 'Permanently Closed', a Dyrt review (Mar 2026) has it in use with a potholed road; no agency word on whether a non-4WD 23-ft rig can reach it (Butte RD 406-494-2147). Derived values cleared.
 - **6159 Kiwanis Club Campground** (mt-12): ASK AWH. No official page (Kiwanis, city or county); listings say the Kiwanis Club owns and runs it, so `local` may be wrong (private would bring the presence rule); listings disagree on sites (8 vs 20) and address. Derived values cleared.
 - **6117 Fergus County Fairgrounds** (mt-12): $55/night 'Camping-All', over $50 with no gateway, but it is a county (local) entry so the private price gate does not apply. Kept.

@@ -5,6 +5,8 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **14597 River Edge Resort RV Park** (mt-13, 2026-10-22): operator advertises 'Full Hookup RV Sites by the Clark Fork River' with 'unbeatable riverfront scenery'; the entry is riverview.
+- **6126 Riverfront RV Park** (mt-13): operator: 'the Little Blackfoot River bordering the edge of the park', 'Walk along the river'; the entry is not waterfront.
 - **15452 Mountainside KOA Journey** (mt-11, 2026-10-22): KOA says 'Some of the Back-In Sites ... are situated near the creek'; tent sites 'right by Denny Creek'. Entry is not waterfront.
 - **6059 West Shore, Flathead Lake SP** (mt-10, 2026-10-22): ReserveAmerica tags all 12 Loop B electric sites (plus B013-B016) 'Near Water'; B001 'Proximity to Water: Water View'; FWP cites 'an extensive shoreline'. Entry is not waterfront.
 - **15376 Rocky Mountain Hi RV Park** (mt-10): operator rules cover swimming and fishing 'from the shore and dock'; a review mentions 'a real swimming hole'. Entry is not waterfront; probably a pond/creek on the grounds - check imagery.
