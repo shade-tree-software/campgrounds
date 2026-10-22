@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6295 Tom Miner** (mt-30): temporarily closed, hazard-tree order 01-11-03-26-02 (2026-08-21 to 2026-12-31); recheck before the June 2027 season.
+- **14171 Whitebird FAS** (mt-30): FWP 'Site Closure - Partial' since 2025-12-23, walk-in only (vehicle bridge unsafe); recorded temporarily_closed. Recheck after the bridge repair.
+- **6296 Tuchuck** (mt-30): stored 22-ft max (note-derived) no longer on the FS page; reviews unreachable.
+- **6266 Whitetail (Kootenai)** (mt-30): FS page gives three fees ($7, $12, $25) and contradicts itself on water; no rate recorded. max_rig_ft 32 cleared (go-montana only).
+- **6267 Whitetail (Little Belts)** (mt-30): kept on the Google Maps rung (listed as 'Whitetail Camp Campground', 8 reviews, phone 406-236-5100); no FS or official tourism page; website is a local guide (intothelittlebelts.com), which gives White Sulphur Springs RD 406-547-3361.
 - **6297 South Van Houten** (mt-29): FS page says 6,700 ft; entry's 2145 m is ~7,040 ft.
 - **6288 Spar Lake** (mt-29): Kootenai order 01-14-04-26-04 (2026-02-06 to 2028-02-05) closes FS Rd #384 from the Whoopie Creek bridge (~MP 18) to the end; map shows it beyond the campground, call to confirm. FS page contradicts itself on water.
 - **6289 Spillway** (mt-29): FS says 13 sites, rec.gov 12; stored 13 left.
