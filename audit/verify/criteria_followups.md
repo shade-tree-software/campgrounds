@@ -551,3 +551,13 @@ me drop and report); each needs the research named before a verdict.
 - **15466 Lake Placid KOA** $65-102 under the Lake Placid gateway (17 km).
 - **354 Lake Durant** closes 09-05; 38 of 62 sites listed at 20 ft.
 - Missing parks.ny.gov / dec.ny.gov pages on 319, 312, 332, 354 (403 to scripts). rl.sh (session scratch p3-81) runs the site-list parser over a park's loops.
+
+### p3-84 (NY, 2026-10-21)
+- **Suffolk County correction**: the county Campground Rules give non-residents walk-ups ("Check-in for available walk-up sites will begin at 8:00 am", non-resident rates without a Green Key); the Green Key 4-night minimum binds only reservations made with the $50 non-resident key. Reservations are 2 nights minimum, 4 if they take in Thu-Sun May 15 - Oct 15; 7-night max. **Indian Island 1448 RESTORED** (pre-p3-76 entry + its p3-76 result, then the county booking block from 1451). **Smith Point 1446 stays dropped**: its own page says "Reservations are required for all the sites in the campground", so no walk-up. Blydenburgh 1452, Cathedral Pines 1451, Cedar Point 1453 kept with the same block. Site occupancy is one household. The county's reservation system is being replaced ("coming soon").
+- **1453 Cedar Point**: LOW CLEARANCE BRIDGE under 10 ft on Stephen Hands Path - EKKO (~10.5 ft) must take the posted RV route (in the note).
+- **1418 Beaver Pond**: only 7 of 129 sites take 23 ft (D 2/4/6, E 3/4/20, F 3, all 30-ft back-ins); no pets.
+- **1417 Mills Norrie**: only the 6 electric sites are 30 ft (rest 20 ft); phone -> in-season campground 845-889-4909 (office 845-889-4646).
+- **1419** renamed "Piseco Lake Campground (Little Sand Point Loop)" (RA/DEC publish one Piseco Lake Campground with two loops; Point Comfort has the two 40-ft sites).
+- **1440 Montour Falls**: website moved to villageofmontourfalls.gov; daily/weekly/monthly/seasonal, phone/form only.
+- **1452** season: county camping page still says all close Nov 1, 2025; park page Apr 1 - Nov 11 recorded. Phone corrected.
+- Missing dec.ny.gov / parks.ny.gov pages on 355, 348, 364, 338. **355/1419** close 09-05.
