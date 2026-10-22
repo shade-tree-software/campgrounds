@@ -14670,23 +14670,63 @@
         "method": "derived"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 232458 (345 days observed, edges opens+closes)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.nps.gov/slbe/planyourvisit/platterivercamp.htm ('Platte River Campground is open year-round for your camping enjoyment') + rec.gov overview ('This year-round facility'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232458/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232458/rates ('Peak Season 2026-05-01 - 2026-10-31' and 2027: 'PeakSTANDARD NONELECTRIC 26', 'PeakSTANDARD ELECTRIC 31') + https://www.nps.gov/slbe/planyourvisit/platterivercamp.htm ('A park pass is required for all vehicles using the campground, including those who are visiting campers') + https://www.nps.gov/slbe/planyourvisit/fees.htm ('Private Vehicle $25.00 Entrance pass - vehicle 1-7 day') + rec.gov notice ('The Michigan Recreation Passport is not valid for entry'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/slbe/planyourvisit/platterivercamp.htm ('Regular sites may be reserved up to 6 months in advance for May 1 through October 31. Groups sites may be reserved up to a year in advance') + https://www.recreation.gov/api/camps/campgrounds/232458 (rate seasons 'First-come, First-served Season' Nov 1-Apr 30; rules maxConsecutiveStay 14, reservationCutOff 0; permit conditions 1-3, 7, 17), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 232458 (trip_data/ridb_campsites.json, fetched 2026-10-20: site types and 'Max Vehicle Length', 'Driveway Entry' Pull-Through on 11 sites) + rec.gov description ('back-in and pull-through sites with electric hookups for RVs, non-electric sites, walk-to sites, group sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232458 ('Each loop has restrooms with flush toilets and sinks. Hot showers are also available'; permit condition 15 'Containers must be kept under drains and emptied only at the dump station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
-      "opens": "05-01",
-      "closes": "10-31"
+      "year_round": true
     },
     "fees": {
       "nightly_low": 26,
       "nightly_high": 31,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov rate table, 2026 and 2027 peak seasons and the first-come off-seasons alike: standard non-electric $26, standard electric $31; tent-only and walk-to sites $22, group tent sites $50. A Sleeping Bear Dunes entrance pass is required for every vehicle using the campground, separate from the camping fee: private vehicle $25 for 1-7 days, park annual pass $45; America the Beautiful passes are honored for entry. The Michigan Recreation Passport is not valid. $20 no-show fee."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Regular sites are reserved on recreation.gov up to 6 months ahead for May 1 through October 31 (group sites up to a year); November-April the campground is first come, first served at the same rates. Bookable through the day before arrival. 14-night limit, and 14 total days per campground between Memorial Day weekend and Labor Day. Check in at the campground office on arrival; call 231-326-4700 ext. 5029 if arriving more than 24 hours late. Check-in 2 p.m., check-out noon. Generators prohibited."
+    },
+    "sites": {
+      "count": 171,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "171 bookable sites: 90 standard electric (RVs to 20-40 ft, most 30-35 ft), 50 standard non-electric (15-35 ft), 1 RV non-electric, 25 tent-only/walk-to and 5 group tent sites; 11 pull-throughs."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.nps.gov/slbe/planyourvisit/platterivercamp.htm https://www.nps.gov/slbe/planyourvisit/fees.htm https://www.recreation.gov/api/camps/campgrounds/232458 https://www.recreation.gov/api/camps/campgrounds/232458/rates trip_data/ridb_campsites.json (RIDB catalog for facility 232458, fetched 2026-10-20)",
+      "note": "NPS page and recreation.gov (NPS-operated, not a concession): $26 non-electric / $31 electric for 2026 and 2027 (confirmed), entrance pass required for every vehicle ($25/7 days; Recreation Passport not valid) recorded in fees.note; campground is open year-round (season 05-01..10-31 -> year_round; reservations May-Oct up to 6 months ahead, FCFS Nov-Apr); 14-night max; 171 bookable sites to 40 ft with 11 pull-throughs, 30/50-amp electric, no water hookups; showers, flush toilets, dump. Phone 231-"
     }
   },
   {
@@ -254669,7 +254709,7 @@
   {
     "id": 3846,
     "kind": "campground",
-    "name": "Saginaw Chippewa Campground",
+    "name": "The Hill Campground",
     "location": "43.588467,-84.700344",
     "elevation_meters": 229,
     "state": "MI",
@@ -254677,9 +254717,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "sagchip.org links 'The Hill Campground' as an operating tribal facility distinct from Soaring Eagle Hideaway; note: ~46 RV sites 20/30/50-amp, FCFS -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.sagchip.org/",
-    "phone": "989-772-2285",
-    "note": "Tribally owned (Saginaw Chippewa) campground at 7529 E Tomah Rd (locally 'The Hill'), ~46 shaded sites, 20/30/50-amp, pull-throughs to ~65 ft, pool/showers/laundry/dump station; self-check-in, largely FCFS; 24-hr shuttle to Soaring Eagle Casino. RVs/campers only (no tents). Distinct from Soaring Eagle Hideaway. --Claude",
+    "website": "https://www.thehillcampground.com/\nhttps://www.campspot.com/book/hill-at-soaring-eagle",
+    "phone": "989-775-5899",
+    "note": "The Hill Campground (The Hill at Soaring Eagle), run by the Saginaw Chippewa tribe's Migizi EDC at 7525 E Tomah Rd, Mt. Pleasant: rustic, shaded modern and tent sites about a mile from Soaring Eagle Casino and two miles from the Soaring Eagle Waterpark; pool with no lifeguard; 24-hr shuttle to the casino. Distinct from Soaring Eagle Hideaway. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -254687,7 +254727,8 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": true
     },
     "sites": {
       "count": 46,
@@ -254697,16 +254738,21 @@
     "facilities": {
       "showers": true,
       "laundry": true,
-      "dump": true
+      "dump": true,
+      "camp_store": true
     },
     "booking": {
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/hill-at-soaring-eagle",
+      "note": "'Reserve Now' on the operator's site opens its Campspot page (operator: Migizi EDC, a tribal economic development company, d/b/a The Hill at Soaring Eagle). Closed for the season on 2026-10-27; June 2027 not yet on sale (2026-10-22). Tent sites have a 7-day maximum stay."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.thehillcampground.com/rates/ ('RV Sites With Electric and Water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -254714,20 +254760,37 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.thehillcampground.com/rules/ ('Utilize our dump and fill station that is located next to our camp store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.thehillcampground.com/ ('Reserve Now' -> https://www.campspot.com/book/hill-at-soaring-eagle) + Campspot search pages ('Resort is closed during the reservation period you requested'; 'Migizi EDC, a Tribal Economic Development Company d/b/a The Hill at Soaring Eagle'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.thehillcampground.com/rates/ ('2025 Rates', 'RV Sites With Electric and Water: Weekday $ 40 / Daily Weekend $ 47 / Daily ... Concert Nights and Holidays $ 50 / Daily') + https://www.thehillcampground.com/rules/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "724627e369974952",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 40,
+      "nightly_high": 47,
+      "currency": "USD",
+      "checked": "2025",
+      "note": "Operator's '2025 Rates': RV site with electric and water $40 weekday, $47 weekend, $50 on concert nights and holidays; $275 a week, $1,080 a month. Tent site with electric and water $37 (7-day maximum), $270 a week. Visitors $8 per vehicle. Dump and fill station free to campers ($20 for non-campers)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.thehillcampground.com/ (where the Google listing's sagchip.org/parks-rec/info.asp now redirects) https://www.thehillcampground.com/rates/ https://www.thehillcampground.com/rules/ https://www.campspot.com/book/hill-at-soaring-eagle (search pages for 2026-10-27 and 2027-06-08, read 2026-10-22)",
+      "note": "The tribe's campground page now redirects to thehillcampground.com: 2025 rates $40 weekday / $47 weekend RV sites with electric and water ($50 concert nights/holidays; monthly $1,080), tent sites too, dump/fill station by the camp store, booking on Campspot (closed for the season now; 2027 not on sale). Open to the public by the night. Not stated by the operator: amperage (50), site count 46, max rig 65 ft, pull-throughs, showers/laundry, FCFS (all note prose, left). Note: 'RVs/campers only (no"
     }
   },
   {
@@ -256696,7 +256759,7 @@
   {
     "id": 3875,
     "kind": "campground",
-    "name": "River Park Campground",
+    "name": "River Ranch Campground",
     "location": "44.720495,-84.641311",
     "elevation_meters": 362,
     "state": "MI",
@@ -256704,9 +256767,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Satellite at 44.720,-84.641 shows large campground loop packed with rows of parked RVs on the AuSable -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://riverparkcampground.com/",
+    "website": "https://www.facebook.com/profile.php?id=61579571471639\nhttps://outreserve.com/stays/united-states/michigan/grayling/river-ranch-campground",
     "phone": "989-348-9092",
-    "note": "Private campground on the East Branch AuSable River, 2607 Peters Rd, Grayling. 97 sites (24 electric-only, 43 electric+water, 20/30-amp), grassy/shaded; swimming beach, store, rec room. ~Half seasonal lots, half daily/transient. Open mid-May to mid-Oct. --Claude",
+    "note": "Private campground on the East Branch AuSable River, 2607 Peters Rd, Grayling; new owners reopened it as River Ranch Campground in 2026 (petting zoo, camp store). Grassy, shaded sites; swimming beach and rec room. Earlier listings described about half the sites as seasonal lots. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -256714,7 +256777,7 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 30,
+      "electric": 50,
       "water": true
     },
     "sites": {
@@ -256728,9 +256791,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://outreserve.com/stays/united-states/michigan/grayling/river-ranch-campground (82 sites '30 amp · Back-in Site', 12 sites '50 amp · Back-in Site'), read 2026-10-22 - booking marketplace",
+        "checked": "2026-10-22",
+        "method": "reported"
       },
       "sites": {
         "source": "note prose",
@@ -256746,12 +256809,29 @@
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://outreserve.com/stays/united-states/michigan/grayling/river-ranch-campground ('RV Sites 97 sites $45 per night', 'Tent Sites 5 sites $30', per-site rows 'Pet Friendly · 30 amp · Back-in Site $45'), read 2026-10-22 - a booking marketplace, not the operator's own page",
+        "checked": "2026-10-22",
+        "method": "reported"
       }
     },
     "note_scan": {
       "sig": "9de2454727ace210",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 45,
+      "nightly_high": 45,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "OutReserve booking listing for River Ranch Campground (the new name): every RV site $45 a night (30-amp and 50-amp back-ins alike), tent sites $30. The operator has no website of its own to confirm it."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://riverparkcampground.com/ (does not resolve, 2026-10-22; Wayback: hosting 'suspendedpage' July 2024, parked '/lander' redirect March 2025) https://www.google.com/maps/search/River+Park+Campground+2607+Peters+Rd+Grayling+MI (gm.py, 2026-10-22) https://www.graylingchamber.com/events/578283/ https://outreserve.com/stays/united-states/michigan/grayling/river-ranch-campground",
+      "note": "The entry's website is dead (suspended 2024, parked 2025, no DNS now). The park operates under new owners as River Ranch Campground: Grayling chamber ribbon-cutting 2026-07-06 ('100-site RV campground'); Google Maps at 2607 Peter's Rd shows 'River Ranch Campground', 4.5 stars / 58 reviews, phone (989) 348-9092 (matches the entry). OutReserve lists it with live per-site availability: 97 RV sites at $45 (30A and 50A back-ins), 5 tent sites $30. Recorded $45 and 50-amp as reported. Water hookups, s"
     }
   },
   {
@@ -256903,7 +256983,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.paulbunyancamp.com/\nhttps://www.campspot.com/book/paulbunyanfc-mi",
     "phone": "314-719-9691",
-    "note": "Family campground at 2498 E Hubert Rd, Spruce, off US-23 about 15 minutes from Alpena: grassy sites with electric only, water and electric, or full hookups, plus tent sites, a pool and a clubhouse.  Near Lake Huron's BeeBee Beach and across the road from Thunder Bay River State Forest. --Claude",
+    "note": "Family campground at 2498 E Hubert Rd, Spruce, off US-23 about 15 minutes from Alpena: grassy RV and tent sites, a rental cabin, game room, dog park and pavilion; the pool is closed for the 2026 season. New owners since 2025. Weekly, monthly and season rates are offered too. Near Lake Huron's BeeBee Beach and across the road from Thunder Bay River State Forest. --Claude",
     "rating": {
       "stars": 4.5,
       "checked": "2026-06",
@@ -256916,39 +256996,49 @@
     },
     "sites": {
       "count": 36,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 43
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "dump": true
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/paulbunyanfc-mi"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.paulbunyancamp.com/ ('Electric & Water', 'Full Hook-Up') + Campspot site types ('30/20 Electric Only', '30/20 Water & Electric', '30amp FHU'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.paulbunyancamp.com/ ('Large, roomy RV sites that fit up to 43 foot rigs') + Campspot site types ('30/20 Water & Electric Pull Through' 10 sites, '30amp FHU Pull Through' 4 sites), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.paulbunyancamp.com/ ('Newly renovated bathhouse (showers & bathroom)', 'Campground store', 'Dump Station $10'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.paulbunyancamp.com/ ('BOOK NOW' -> https://www.campspot.com/book/paulbunyanfc-mi), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/paulbunyanfc-mi (each RV site type's price breakdown for one night from 2026-10-20, 2026-10-24, 2 adults; campspot_recheck_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.paulbunyancamp.com/ (rates: 'Electric & Water $40 ... Full Hook-Up $45'), read 2026-10-22 + https://www.campspot.com/book/paulbunyanfc-mi ('30/20 Electric Only Back-In' $35, max 27 ft), read 2026-10-13",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.paulbunyancamp.com/ ('Open May 1 - October 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -256961,7 +257051,17 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Campspot, one night for 2 adults from a Tuesday (2026-10-20) and from a Saturday (2026-10-24), site rate before tax: 30/20 Electric Only Back-In and 30/20 Electric Only Pull-Through (Smaller Sites) $35; 30/20 Water & Electric Back-In and 30/20 Water & Electric Pull Through $40; 30amp FHU Back - In and 30amp FHU Pull Through $45. The park is closed for the season by then; Campspot still shows its rates. June 2027 isn't open for booking yet. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+      "note": "Operator's 2026 rate table: electric & water $40 a night, full hook-up $45, tent $25 (weekly $240/$270, monthly $500/$600, season May 1-Oct 15 $1,800/$2,000); dump station $10. Campspot also sells 30/20 electric-only sites (back-in to 27 ft, one pull-through to 30 ft) at $35 (read 2026-10-13) and adds its own booking fee at checkout (3%, at least $3)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-15"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.paulbunyancamp.com/ https://www.campspot.com/book/paulbunyanfc-mi (cached site-type reads 2026-10-13, audit/price_research/campspot_recheck_2026-10-13.jsonl)",
+      "note": "Operator's site (new owners since 2025) confirms 2026 rates E&W $40 / FHU $45 (Campspot's electric-only $35 kept as the base), season May 1-Oct 15, sites to 43 ft, showers, store, $10 dump station, Campspot booking. Phone 314-719-9691 IS the operator's published number (tel: link on paulbunyancamp.com; the owners came from full-time van travel). Added season dates, max rig 43 ft, showers/dump; note: pool closed for 2026, hookup text dropped. Long-stay check: weekly/monthly/season rates offered,"
     }
   },
   {
@@ -258130,7 +258230,7 @@
   {
     "id": 3896,
     "kind": "campground",
-    "name": "Otter Lake Campground and Lodges",
+    "name": "Otter Lake Campground",
     "location": "46.3115,-86.7243",
     "elevation_meters": 271.0,
     "state": "MI",
@@ -258140,7 +258240,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://otterlakemichigan.com/\nhttps://resnexus.com/resnexus/reservations/lodging/6374D369-FE22-4BAD-A950-B8580E343EA7?&tabID=1",
     "phone": "906-387-4648",
-    "note": "Private 92-acre campground on Otter Lake near Hiawatha NF and Pictured Rocks, Munising. 50+ nightly sites: rustic tent, 20/30-amp electric-only, and water/electric; dump, showers, laundry, store. Some pull-throughs, max RV ~45 ft. Cabins also offered. ORV trail access; kayak/canoe/SUP rentals; swimming. Season May 21-Sep 30. Reservable online (ResNexus). --Claude",
+    "note": "Private 92-acre campground on Otter Lake near Hiawatha NF and Pictured Rocks, Munising; 50+ sites plus camping cabins. Direct ORV trail access; kayak/canoe/SUP/rowboat rentals; swimming area with no lifeguard; electric trolling motors only on the lake. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -258163,16 +258263,20 @@
     },
     "season": {
       "opens": "05-21",
-      "closes": "09-30"
+      "closes": "09-30",
+      "year_round": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/lodging/6374D369-FE22-4BAD-A950-B8580E343EA7?&tabID=1",
+      "note": "Book online through the operator's ResNexus page ('Book Now!') or by phone; no regular office hours off-season. 2027 reservations open Monday, January 11, 2027 at 8 a.m. Paid in full at booking. Arrival after 2 p.m., departure by 11 a.m. Eastern."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://otterlakemichigan.com/rates-reservations.html ('20 amp Electric Sites', '30 amp Electric Sites', 'Water & Electric Sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -258180,19 +258284,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://otterlakemichigan.com/ ('Newly modernized bath houses with spacious, walk-in showers', 'Laundry facilities') + https://otterlakemichigan.com/site-map-rules.html ('Boats can be rented at the camp store', 'Firewood is for sale at the camp store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://otterlakemichigan.com/ ('2026 Camping Season – May 21st to September 30th'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://otterlakemichigan.com/ ('Reservations for the 2027 camping season will open on Monday, January 11, 2027 at 8:00 AM', 'Online booking is recommended') + https://otterlakemichigan.com/rates-reservations.html ('At booking, reservations must be paid in full') + site-map-rules.html, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -258200,8 +258304,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://otterlakemichigan.com/rates-reservations.html ('20 amp Electric Sites | Starting at $42.00 per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://otterlakemichigan.com/rates-reservations.html ('20 amp Electric Sites Starting at $42.00 per night', 'Lakeside Site Starting at $55.00 per night'), read 2026-10-22; unchanged in the Wayback capture of 2026-04-13",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -258216,7 +258321,13 @@
       "nightly_low": 42,
       "nightly_high": 55,
       "currency": "USD",
-      "note": "Starting rates: 20A electric $42, 30A $45, water + electric $50, lakeside $55."
+      "note": "Operator's rates page (the same in its April 2026 Wayback capture, during the 2026 season): 'starting at' $42 for a 20-amp electric site, $45 30-amp electric, $50 water and electric, $55 lakeside; rustic tent sites $35; camping cabins $100-125. Visitors $5 per person per day. A 2025 holiday surcharge (+$5 a night) is no longer shown.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://otterlakemichigan.com/ https://otterlakemichigan.com/rates-reservations.html https://otterlakemichigan.com/site-map-rules.html https://web.archive.org/web/20260413141849/https://otterlakemichigan.com/rates-reservations.html https://resnexus.com/resnexus/reservations/lodging/6374D369-FE22-4BAD-A950-B8580E343EA7?&tabID=1 (ResNexus answered a captcha page; not read)",
+      "note": "Operator's site confirms the 2026 season May 21-Sep 30, rates $42 (20A electric) to $55 lakeside (same in the April 2026 Wayback capture, so dated 2026), 20/30-amp electric and water/electric sites, showers, laundry, camp store, online booking via ResNexus (2027 opens Jan 11, 2027); phone (906) 387-4648 matches. ResNexus showed a captcha, so no engine quote. Not stated by the operator: dump station, pull-throughs, max rig 45 ft (all from note prose, left). Note cleaned of the site-type, amenity,"
     }
   },
   {
@@ -258664,9 +258775,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Campspot listing: 57 full-hookup sites incl 14 pull-throughs, fire rings/tables, nightly public booking -> real RV park",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park\nhttps://www.campspot.com/park/ojibwa-casino-rv-park-marquette-mi",
+    "website": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park\nhttps://www.campspot.com/book/ojibwa-casino-rv-park-marquette",
     "phone": "906-249-4200",
-    "note": "RV park at the Keweenaw Bay Indian Community's Ojibwa Casino in Harvey, near Marquette: a dedicated park rather than a casino lot, with fire rings and picnic tables.  14 of the sites are pull-throughs. --Claude",
+    "note": "RV park at the Keweenaw Bay Indian Community's Ojibwa Casino in Harvey, near Marquette: a dedicated park rather than a casino lot, with fire rings and picnic tables. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -258679,36 +258790,41 @@
       "electric": 50
     },
     "sites": {
-      "count": 57,
-      "pull_through": true
+      "count": 55,
+      "pull_through": true,
+      "max_rig_ft": 55,
+      "note": "Campspot sells two RV site types: 42 Back-In Full Hook-Up and 13 Pull-Through Full Hook-Up sites, both to 55 ft and open to every rig type including Class C motorhomes."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "wifi": true
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/ojibwa-casino-rv-park-marquette"
     },
     "provenance": {
       "hookups": {
-        "source": "https://www.campspot.com/park/ojibwa-casino-rv-park-marquette-mi (Campspot park record and RV site types' amenities: 20-Amp, 30-Amp, 50-Amp, Sewer Hook-Up, Water Hook-Up), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park ('Water', 'Sewer', 'Electricity (50, 30, or 20 amps available)') + Campspot site types (20/30/50-Amp, Sewer Hook-Up, Water Hook-Up), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/ojibwa-casino-rv-park-marquette (the casino page's 'Book Here' link; Campspot site types 'Back-In Full Hook-Up RV Site' 42 sites max 55 ft and 'Pull-Through Full Hook-Up RV Site' 13 sites max 55 ft; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park ('Wi-Fi', 'Picnic tables'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park ('Book Here' -> https://www.campspot.com/book/ojibwa-casino-rv-park-marquette), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -258744,6 +258860,11 @@
       "reservation_fee": 5,
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Back-In Full Hook-Up RV Site and Pull-Through Full Hook-Up RV Site). October 2026: $40, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $5 'Booking Fee', once per stay. The park adds 3% of the site charge as a 'Processing Fee'. Read 2026-10-13."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ojibwacasino.com/ojibwa-casino-marquette-rv-park https://www.campspot.com/book/ojibwa-casino-rv-park-marquette (Campspot park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "Casino's RV park page confirms water, sewer, 20/30/50-amp, Wi-Fi, picnic tables, phone (906) 249-4200, booked through Campspot. Campspot (cached read 2026-10-13) sells 42 back-in + 13 pull-through full-hookup sites to 55 ft by the night: sites 57->55, max rig 55 ft added, booking url set to the /book/ link. Fees ($40, $5 booking fee, 3% processing) and season (May 1-Oct 31) left as verified 2026-10-13. Dropped the note's '14 of the sites are pull-throughs' (Campspot: 13). Showers/dump (from note"
     }
   },
   {
@@ -262780,9 +262901,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Newaygo County parks page: campground operating May 1-Oct 12 on Hardy Dam Pond, hookup+rustic sites, marina/boat ramp -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.newaygocountymi.gov/departments/parks/parks-recreation/",
-    "phone": "231-689-7340",
-    "note": "Newaygo County park on Hardy Dam Pond (6926 E 30th St, White Cloud). Full-hookup (incl 50A) pull-thru and rustic sites, cabins, beach, dog park, boat launch/marina, trails. Seasonal sites offered. Open ~May 1 - mid Oct. --Claude",
+    "website": "https://www.newaygocountymi.gov/departments/parks/sandy-beach-park/\nhttps://app.fireflyreservations.com/reserve/property/SBCountyPark",
+    "phone": "(231) 689-1229",
+    "note": "Newaygo County park on Hardy Dam Pond (6926 E 30th St, White Cloud): full-hookup, water/electric, electric and rustic sites plus cabins; beach, dog park, boat launch/marina, trails. Seasonal sites offered. Consumers Energy lowers the pond from November 1 until the Friday before Memorial Day, so the docks and launch open then. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -262797,27 +262918,40 @@
       "pull_through": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-11"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('Campsite Full-hookup (Water/Sewer/Electric)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('Campsite (Full-hookup, Pull-thru, Water View)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/sandy-beach-park/ ('Contact During Camping Season (5/1-10/11)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-15"
+        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('2026 Camping Fees', Sandy Beach County Park table, 'Reservation fee (Applies to all reservations) – $5.00', 'A valid Newaygo County Motor Vehicle Permit is required for each day a vehicle is in the park', 'Daily MVP- $8'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('All campsite and cabin reservations require a 2-night minimum (3 nights on holidays)', 'For 1-night reservations, you must call your Park of choice for a reservation', '2026 Reservations Begin Online January 5th, 2026') + park-reservations/ ('With our online system FireFly Reservations') + sandy-beach-park/ ('Click here to make Park Reservation Online' -> app.fireflyreservations.com/reserve/property/SBCountyPark), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('Non-Camper use of sanitation station- $25'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -262826,12 +262960,38 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 25,
-      "nightly_high": 41,
+      "nightly_low": 28,
+      "nightly_high": 48,
       "currency": "USD",
       "reservation_fee": 5,
       "checked": "2026",
-      "note": "Newaygo County: electric $25 (Mon-Wed) / $30 (Thu-Sun), water and electric $31/$36, full hookup $36/$41; $5 reservation fee; holidays $5 more with a 3-night minimum. Read 2026-10-16."
+      "note": "Newaygo County '2026 Camping Fees' for Sandy Beach (one rate for everyone), Monday-Wednesday non-holiday / Thursday-Sunday: electric $28/$33, water and electric $33/$38, full hookup $46/$48, full-hookup pull-through water-view $43/$48; rustic $15/$20; cabin $74/$79. 21-day and seasonal rates for most site types (full hookup $3,050 a season). A county Motor Vehicle Permit is required for each day a vehicle is in the park: $8 a day, $24 for 3 days, $35 annual. $5 reservation fee; $25 cancellation fee.",
+      "entrance": {
+        "resident": 8,
+        "nonresident": 8,
+        "per": "vehicle_day",
+        "name": "motor vehicle permit"
+      }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/SBCountyPark",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Online through the county's FireFly Reservations page, or by phone (231-689-7340, or the campground in season). Online bookings need 2 nights; a 1-night stay is booked by calling the park, so the 2-night minimum is not recorded as a rule. 2026 reservations opened January 5 at 9 a.m.; paid in full at booking. Holiday bookings are non-refundable."
+    },
+    "facilities": {
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.newaygocountymi.gov/departments/parks/sandy-beach-park/ https://www.newaygocountymi.gov/departments/parks/rates-fees/ https://www.newaygocountymi.gov/departments/parks/park-reservations/ https://www.newaygocountymi.gov/departments/parks/frequently-asked-questions/",
+      "note": "County's park and 2026 rates pages: $28 (electric, Mon-Wed) to $48 (full hookup / water-view pull-through, Thu-Sun) - changed 25-41 -> 28-48; $5 reservation fee; $8/day vehicle permit recorded as entrance; season May 1-Oct 11; FireFly online booking (2-night online minimum, 1-night by phone, 3 nights on holidays); full hookups, pull-throughs, sanitation station. Amperage (50A, note prose) not stated, left. Note cleaned of the hookup and season text the fields hold; pond draw-down caveat added."
     }
   },
   {
@@ -264407,7 +264567,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.baycountymi.gov/recreation/pinconning_park/index.php",
     "phone": "989-879-5050",
-    "note": "Bay County park on Saginaw Bay (3041 E Pinconning Rd). 62 modern/semi-modern campsites with 20/30/50-amp electric (sites 1-42 also have water), 6 rustic log cabins; bathhouses, dump/pumpout station, boat launch, natural protected harbor, fishing docks, nature trails/boardwalks. Year-round park, reservations required (online request + phone). Operated by Bay County. --Claude",
+    "note": "Bay County park on Saginaw Bay (3041 E Pinconning Rd): wooded or sunny sites, 12 with concrete pads; six heated log cabins rented year-round; boat launch and channel, small beach (no lifeguard), fishing dock, observation towers, boardwalks and trails in a 206-acre nature preserve. The shoreline is coastal wetland, and Lake Huron's water level decides how good the swimming and boating are. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -264425,37 +264585,39 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "never"
+      "platform": "phone",
+      "note": "Reserve by phone or by the online request form (a ranger calls back; the form does not guarantee a site), held by credit card or advance payment, for the current calendar year only. Reservations are recommended May-September, when the campground is typically full every weekend; October-April they are not needed. Late arrivals pay at the office door's overnight payment slot before setting up. Long-term sites (1 week to 1 year) are limited to specific sites and currently have a waiting list. Cancel at least 7 days ahead. Renters must be 21. Check-in 3 p.m., check-out 2 p.m."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/index.php ('The sites are equipped with 20 and 30-amp electrical service, while some have 50-amp service. Sites #1 through #42 have direct water hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/index.php ('The campground includes 62 modern/semi-modern campsites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/faq_frequently_asked_questions.php ('It is not necessary to call in advance for a campsite reservation from October to April') + index.php ('The park office is open seven days a week, year-round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/faq_frequently_asked_questions.php ('Campsite Reservation Policy', 'Long-Term Campsite Reservation Policy', 'an overnight payment slot is attached to the front door') + reservation_form.php ('filling out this form DOES NOT guarantee you a reservation') + rules_and_regulations.php, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/index.php ('a water tower, septic station, and a super clean and well-maintained bathhouse with hot showers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.baycountymi.gov/recreation/pinconning_park/index.php (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.baycountymi.gov/recreation/pinconning_park/index.php ('Campsite, modern* Any night of the week $33.00/night', 'Price does not include vehicle permit fees', 'Day-Use Vehicle Permit $4.00/day') + rules_and_regulations.php ('All vehicle permits, park fees, camp and cabin fees shall be paid at the time of check-in'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -264464,14 +264626,26 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true
     },
     "fees": {
       "nightly_low": 33,
       "nightly_high": 33,
       "currency": "USD",
       "checked": "2026",
-      "note": "Bay County: modern campsites $33 a night. Read 2026-10-15."
+      "note": "Bay County: modern campsite $33 any night of the week, one rate for everyone; 'Price does not include vehicle permit fees' (day-use vehicle permit $4, annual $20, senior annual $15; all permits are paid at check-in). Extended stays: week $195, month $575, three months $1,400, five months $2,250. Log cabins $75 a night.",
+      "entrance": {
+        "resident": 4,
+        "nonresident": 4,
+        "per": "vehicle_day",
+        "name": "vehicle permit"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.baycountymi.gov/recreation/pinconning_park/index.php https://www.baycountymi.gov/recreation/pinconning_park/faq_frequently_asked_questions.php https://www.baycountymi.gov/recreation/pinconning_park/rules_and_regulations.php https://www.baycountymi.gov/recreation/pinconning_park/reservation_form.php",
+      "note": "Bay County's park pages confirm $33 any night (plus a $4/day vehicle permit, recorded as entrance), 62 sites with 20/30A and some 50A, water at sites 1-42, showers and septic station, campsites open year-round (reservations not needed Oct-Apr), reservations by phone or online request form. Cleared the derived fcfs 'never' (walk-ups pay at the overnight slot; 'reservations required' in the note was wrong). Note cleaned of the site, hookup, booking and season text the fields hold. Phone (989) 879-"
     }
   },
   {
@@ -266607,9 +266781,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "City of Menominee rec page: 58 paved sites, most full-hookup (city W/S, 20/30A) + pull-through/tent, open mid-May-mid-Oct -> real city RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://parksandrec8.wixsite.com/menomineerecreation/campground\nhttps://www.michiganrvandcampgrounds.org/member-info/city-of-menominee-river-park-campground/",
+    "website": "https://parksandrec8.wixsite.com/menomineerecreation/campground",
     "phone": "906-863-5101",
-    "note": "City of Menominee park on the Menominee River (downtown, behind Jack's Fresh Market). 58 paved sites, most full-hookup (city water/sewer, 20/30A electric), boat launch, fishing decks; open ~mid-May to mid-Oct. Reservable (form/email; $10 reservation fee). NOTE: distinct from Menominee County's River Park (4 primitive sites in Wallace) — this is the city's 58-site downtown park. --Claude",
+    "note": "City of Menominee park on the Menominee River (downtown, behind Jack's Fresh Market); paved sites, boat launch, fishing decks, pavilion. RV groups welcome. NOTE: distinct from Menominee County's River Park (4 primitive sites in Wallace) - this is the city's 58-site downtown park. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -266624,37 +266798,65 @@
       "count": 58
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-15",
+      "note": "Opens May 15; the park phone is staffed May-October."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "note": "Request a site with the online submission form, the printable form (mail or email), or by email to riverparkcampground@menomineemi.gov; a request is not confirmed until staff call back. Reservations recommended. Deposit required (one night paid in full). Off-season phone (906) 863-1737 (January-May). Check-in from 1 p.m. Central."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parksandrec8.wixsite.com/menomineerecreation/campground ('The majority of the sites are full hook-up (City water, sewer and electricity) with 20/30 amp. electrical service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parksandrec8.wixsite.com/menomineerecreation/campground ('River Park Campground features 58 paved sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parksandrec8.wixsite.com/menomineerecreation/campground ('River Park Campground IS SCHEDULED TO OPEN MAY 15') + rates sheet ('RIVER PARK PHONE (906) 863-5101 MAY ~ OCTOBER'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parksandrec8.wixsite.com/menomineerecreation/campground ('To request a reservation online, simply click on our Online Submission Form', 'Requests are not confirmed until a member of our staff contacts you', 'Reservations recommended') + Reservation Request Form PDF ('Off Season Phone: (906) 863-1737 (January-May)') + Guidelines and Policies PDF, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://15a6a5c7-8947-42ee-bfa2-2182aee824b3.filesusr.com/ugd/bb7143_1727ae3787a040f585ccb231fcf990fc.pdf ('Prime Full Hook-up: $45/night', 'Standard Full Hook-up: $40/night') + Guidelines and Policies PDF, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "Guidelines and Policies PDF ('Shower facility $5.00 per person/per day, if not a registered camper'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "b6c16927d0f5afef",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 40,
+      "nightly_high": 45,
+      "currency": "USD",
+      "checked": "2025",
+      "note": "City of Menominee 'Current Rates' sheet (dated May 2025), one rate for everyone: standard full hook-up $40 a night ($240/week, $840/month), prime full hook-up $45 ($270/week, $945/month); power-only sites 55-58; pop-up or truck camper $30; tent $25 (3-night max). Visitors $5 per person per day, overnight guests $5 per person per night. Cash or check only - no cards. $20 cancellation fee; early check-in $10."
+    },
+    "facilities": {
+      "showers": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://parksandrec8.wixsite.com/menomineerecreation/campground (the Menominee Recreation Department site the City of Menominee's own site menominee.us links to, checked 2026-10-22) https://15a6a5c7-8947-42ee-bfa2-2182aee824b3.filesusr.com/ugd/bb7143_1727ae3787a040f585ccb231fcf990fc.pdf (Site Map & Rates, 2025-05-01) https://15a6a5c7-8947-42ee-bfa2-2182aee824b3.filesusr.com/ugd/bb7143_13643de1774c4deb9a88cd2f0b77a5ba.pdf (Guidelines and Policies, 2025-02-07) https://15a6a5c7-8947-42ee-bfa2-2182aee824b3.filesusr.com/ugd/bb7143_4b3e6903b26e4d58846cabcb4e8e01ca.pdf (Reservation Request Form)",
+      "note": "City recreation department's Wix site (linked from menominee.us, so current) and its 2025 rate sheet and policies confirm $40 standard / $45 prime full hook-up (no resident split; cash/check only), 58 paved sites, full hookups with 20/30-amp, showers, opens May 15 (phone staffed May-Oct), reservations by request form/email/phone. Phone (906) 863-5101 matches. The note's '$10 reservation fee' is not on the city's pages (only a $20 cancellation and $10 early check-in fee) - dropped with the other"
     }
   },
   {
@@ -268951,9 +269153,9 @@
     "waterfront": "lakeview",
     "inclusion_evidence": "Ontonagon County ontonagonmi.org camping page: 43 campsites with electric (E) hookups, swim/boat ramp on Lake Gogebic -> real county RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://ontonagonmi.org/explore-ontonagon/camping/",
-    "phone": "906-575-3952",
-    "note": "Ontonagon County-operated park on the west shore of Lake Gogebic, south of Merriweather on M-64 (Bergland area; RV Life mislabels as city). 43 campsites + 15 picnic sites with electric hookups, modern shower house, swimming beach, boat ramp and docks. Reservations via on-site/county manager (906-575-3952 or County Clerk 906-884-4255), not online; ~$20/night. Open ~May 1-Oct 1. Distinct from nearby Bergland Township Park and Lake Gogebic State Park. --Claude",
+    "website": "https://ontonagoncounty.org/county-offices/county-park/",
+    "phone": "(906) 281-0269",
+    "note": "Ontonagon County-operated park on the west shore of Lake Gogebic, south of Merriweather on M-64 (Bergland area; RV Life mislabels as city). Swimming beach (no lifeguard), boat ramp and docks; lake-front 'prime' sites. Up to 20 of its sites are rented for the whole season. Distinct from nearby Bergland Township Park and Lake Gogebic State Park. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -268963,14 +269165,18 @@
       "count": 43
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "dump": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-01"
     },
     "booking": {
-      "reservable": true,
-      "platform": "phone"
+      "reservable": false,
+      "fcfs": "always",
+      "note": "Nightly camping is first come, first served: 'Contact the park personnel for availability. No advance reservations will be accepted', and sites must be paid in advance. Only season-long sites are reserved (county residents in January, then anyone through the last Friday in February, with the County Treasurer), at most 20 a year. Check-in 1 p.m., check-out 11 a.m."
     },
     "provenance": {
       "sites": {
@@ -268979,25 +269185,50 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagoncounty.org/wp-content/uploads/2026/04/Park-Rules.pdf ('Containers must be kept under trailer drains and emptied only in the dump station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagoncounty.org/wp-content/uploads/2026/04/2026-Park-Fees.pdf ('PARK OPENS MAY 1, 2026 - PARK CLOSES OCTOBER 1, 2026'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagoncounty.org/wp-content/uploads/2026/04/2026-Park-Fees.pdf ('CONTACT THE PARK PERSONNEL FOR AVAILABLITY. NO ADVANCE RESERVATIONS WILL BE ACCEPTED') + https://ontonagoncounty.org/wp-content/uploads/2026/04/Park-Rules.pdf ('Reservations will be accepted for specific sites for seasonal camping only', 'No more than 20 seasonal sites will be reserved in any year', 'check out time is 11:00 a.m. and check in time is 1:00 p.m.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://ontonagoncounty.org/wp-content/uploads/2026/04/2026-Park-Fees.pdf ('DAILY - COUNTY RESIDENT** $ 25.00', 'DAILY - NON-RESIDENT 27.00', 'PRIME SITE (LAKE FRONT) ADDITIONAL $1.00 DAILY'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://ontonagoncounty.org/wp-content/uploads/2026/04/Park-Rules.pdf ('Containers must be kept under trailer drains and emptied only in the dump station. No waste lines shall be permitted to drain to the ground surface') + 2026-Park-Fees.pdf ('SEPTIC PUMPING AS SCHEDULED ONLY FOR ALL CAMPERS $15.00 EACH TIME'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "df41137aaf387532",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 27,
+      "nightly_high": 28,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Ontonagon County Park 2026 fee schedule: daily camping $27 non-resident, $25 for a county resident (vehicle registered in Ontonagon County in the camper's name); lake-front 'prime' site $1 more a day. Tent sites (designated areas without electricity) $15 per tent. Monthly $783 / $725 resident; season $3,825 / $3,519. Camping fees include the park use permit and boat launching. Septic pumping $15 each time, as scheduled."
+    },
+    "hookups": {
+      "sewer": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://ontonagoncounty.org/county-offices/county-park/ https://ontonagoncounty.org/wp-content/uploads/2026/04/2026-Park-Fees.pdf https://ontonagoncounty.org/wp-content/uploads/2026/04/Park-Rules.pdf https://ontonagonmi.org/explore-ontonagon/camping/",
+      "note": "County park page and its 2026 fee schedule + park rules: $27 non-resident / $25 county resident, lake-front +$1; open May 1-Oct 1, 2026; no advance reservations for nightly camping (FCFS; only season-long sites are reserved, max 20); dump station, no sewer hookups (scheduled septic pumping). Changed booking reservable true/phone -> false/FCFS always, added fees and season dates. Note cleaned of the stale ~$20 price, season, booking and amenity text. Electric amperage, site count (43, chamber lis"
     }
   },
   {
@@ -269433,7 +269664,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.co.marquette.mi.us/departments/planning/perkins_park/",
     "phone": "906-345-9353",
-    "note": "Marquette County park on the N shore of Lake Independence in Big Bay (Powell Twp), ~22 mi N of Marquette on CR-550. ~73 sites ranging from full hookup (some 50-amp) to electric to primitive lakeside; modern restrooms/showers, swimming beach, boat launch; max RV up to ~60 ft. Reservable online via the county portal; off-season office 906-225-8197. --Claude",
+    "note": "Marquette County park on the N shore of Lake Independence in Big Bay (Powell Twp), ~22 mi N of Marquette on CR-550. Swimming beach and boat launch; sites run from full hookup to rustic lakeside sites, plus rustic yurts. Registered campers may ride ATVs/ORVs on park roads between the campsite and the entrance. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -269449,17 +269680,27 @@
       "max_rig_ft": 60
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "dump": true
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/0F61372D-50C8-4CBF-93B1-EF58C3B01405",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reserve online on the county's ResNexus page ('RESERVE ONLINE!'), paid in full at booking; reservations for the next season open October 1. The three-night holiday minimum covers Memorial Day, Labor Day and Fire on the Bay weekends. A reserved site is held until 1 p.m. the day after the scheduled arrival. Check-in 3 p.m., check-out 11 a.m. Cancellations only by phone or voicemail to the park office."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.marquette.mi.us/departments/planning/perkins_park/rates.php ('Electric & Water $40', 'Full Hook-Up $50'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -269467,18 +269708,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Policies and Fees 2025 PDF ('SHOWER FEE (NON-CAMPERS)- $2', 'Wastewater must be disposed of at the dump station in the parking lot or the service building'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.marquette.mi.us/departments/planning/perkins_park/ ('RESERVE ONLINE!' -> resnexus.com) + Policies and Fees 2025 PDF (rules 3, 7-9, 24 'The maximum length of stay per reservation is two weeks, 14 consecutive nights', 25 'Reservations for the following season can be made beginning October 1', 26 'A minimum three-night stay is required on Memorial Day, Labor Day, and Fire on the Bay weekends', 29d), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.co.marquette.mi.us/departments/planning/perkins_park/rates.php (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-15"
+        "source": "https://www.co.marquette.mi.us/departments/planning/perkins_park/rates.php ('2025 Rates & Fee Schedule', 'Electric Only $30', 'Full Hook-Up $50', 'RESERVATION FEE- $5') + the signed 'Policies and Fees 2025' PDF (adopted 9-17-2024), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -269491,8 +269733,13 @@
       "nightly_high": 50,
       "currency": "USD",
       "reservation_fee": 5,
-      "checked": "2026",
-      "note": "Marquette County (Perkins Park): electric only $30, electric and water $40, full hookup $50; rustic $25; $5 reservation fee. Read 2026-10-16."
+      "checked": "2025",
+      "note": "Marquette County '2025 Rates & Fee Schedule' (still the posted schedule in October 2026; one rate for everyone): electric only $30, electric & water $40, full hook-up $50; rustic site $25, rustic tent $35, rustic yurt $80. $5 non-refundable reservation fee; $5 cancellation fee; early check-in or late check-out $10. Rates exclude service fees."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.co.marquette.mi.us/departments/planning/perkins_park/ https://www.co.marquette.mi.us/departments/planning/perkins_park/rates.php https://www.co.marquette.mi.us/Signed-2025%20PPC%20Policies%20and%20Fees%20-%20Sep%2019%202024%20-%2012-33%20PM%20%283%29.pdf (linked from the park's Policies page)",
+      "note": "County park page, its rate page and the signed 2025 policies PDF confirm $30 electric / $40 E&W / $50 full hookup (2025 schedule, still posted; fees checked 2026->2025), $5 reservation fee, online booking via ResNexus with a 14-night max and a 3-night holiday minimum, next-season booking from Oct 1, showers and dump station. Phones 906-345-9353 (park) / 906-225-8197 (off-season) match. Not stated: amperage (50, note prose), site count 73 and max rig 60 ft (note prose), season dates - left. Note"
     }
   },
   {
@@ -269508,7 +269755,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://ontonagontownshippark.com/",
     "phone": "906-884-2930",
-    "note": "Ontonagon Township park on the Lake Superior shore at the mouth of the Ontonagon River, 972 Lakeshore Dr (local government; RV Life mislabels as commercial). ~80 sites, all with electric (30/50-amp) and water; pump-out service, modern restrooms/showers, sandy beach, playground, disc golf. FCFS — no advance reservations; call the office the day of arrival to hold a site that day only. Lakeside sites ~$30, others ~$23; open spring-fall. --Claude",
+    "note": "Ontonagon Township park on the Lake Superior shore at the mouth of the Ontonagon River, 972 Lakeshore Dr (local government; RV Life mislabels as commercial). Newer premium sites on the beach, a more social main section, and secluded wooded sites across the road; sandy beach, playground, disc golf. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -269519,33 +269766,38 @@
       "water": true
     },
     "sites": {
-      "count": 80
+      "count": 77,
+      "max_rig_ft": 45,
+      "note": "Site pages list sites 1-76 plus 33B, most 40-45 ft; sites 72-76 are only 12-14 ft and 33B and 71 are 24 ft. Three tent-only sites (T1-T3) besides."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
     },
     "season": {
       "year_round": false
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "'We do not accept reservations for campsites.' Call the park office on the day of arrival and it will hold an available site until 8 p.m. that day only; sites are assigned at the office first come, first served, with a daily 11:30 a.m. upgrade list for lake sites. Lake sites are time-limited June 1 through Labor Day (9 consecutive nights; sites 65-70, 16). Check-in 1 p.m., check-out 11 a.m. Eastern."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagontownshippark.com/ ('All sites have electricity and water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagontownshippark.com/map-%26-site-descriptions (site descriptions: 46 sites 'Length: - 45'', sites 72-76 12-14 ft), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagontownshippark.com/amenities ('Our modern shower and bathroom facility', 'Showers are all coin operated', 'a self-service sanitation station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -269553,13 +269805,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ontonagontownshippark.com/rates-and-rules ('We do not accept reservations for campsites', rules 4-8, '9-day consecutive max stay', '16-day consecutive max stay'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://ontonagontownshippark.com/rates-and-rules (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://ontonagontownshippark.com/rates-and-rules ('2026 campground rates', 'All other sites $28/night $23/night for township residents', 'All other lake sites $33/night', 'Lake sites 65 - 70 $43/night') + https://ontonagontownshippark.com/map-%26-site-descriptions (per-site lengths and rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -269572,7 +269825,12 @@
       "nightly_high": 43,
       "currency": "USD",
       "checked": "2026",
-      "note": "Ontonagon Township: sites $28 a night, lake sites $33, lake sites 65-70 $43 ($5 less for township residents); tents $23. Read 2026-10-15."
+      "note": "2026 rates (non-resident; township residents pay $5 less): standard sites $28, lake sites $33, lake sites 65-70 $43. Site 33B (24 ft) $23 and sites 72-76 (12-14 ft) $18; tent sites $23. Monthly $840 (non-lake) / $990 (eligible lake sites). Coin-op showers; dump $5 for non-campers, on-site pump-out $25 (the amenities page says $20)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://ontonagontownshippark.com/ https://ontonagontownshippark.com/rates-and-rules https://ontonagontownshippark.com/amenities https://ontonagontownshippark.com/map-%26-site-descriptions",
+      "note": "Township park's own site confirms 2026 rates $28 standard to $43 (lake sites 65-70; township residents $5 less), no reservations (same-day hold only, FCFS), electricity and water at every site, coin-op showers, flush toilets, dump; site pages give 77 numbered sites to 45 ft (count 80->77, max rig 45 added). Season dates not posted ('closed for the season'). Electric amperage (50, from note prose) is not stated, left. Note cleaned of the price, booking, site and amenity text the fields hold. Phon"
     }
   },
   {

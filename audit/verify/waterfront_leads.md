@@ -185,3 +185,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4049 Hancock Recreation Area: city's BookMySites sells '50 Amp Waterfront' (52-55, 'view of the water right from your own camper') and '30 Amp Waterfront' (47, 49-51) on Portage Lake; entry not waterfront (p3-111).
 - 3969 John Gurney Park (Hart): operator 'sits along the East Shore of Hart Lake', 'Overlooking Hart Lake', beach + boat launch; entry not waterfront (p3-112).
 - 4016 O.B. Fuller Park (Delta Co): county 'on the shores of Bark River and Lake Michigan', 'a lakeside camping area'; Campspot sells 7 'Lake Front' + 4 'Lake View' sites; entry not waterfront (p3-113).
+- 3956 Sandy Beach County Park (Newaygo): county sells 'Full-hookup, Pull-thru, Water View' sites on Hardy Dam Pond; entry not waterfront (p3-114).
