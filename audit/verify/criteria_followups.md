@@ -473,3 +473,12 @@ me drop and report); each needs the research named before a verdict.
 - **1506 Riverside Acres**: rates undated (site build Feb 2025); motor home $40/$45.
 - **1389 Eel Weir**: park says 38 sites, ReserveAmerica sells 27.
 - **1390 Sacandaga / 345 Scaroon Manor**: season closes set 09-05 (DEC 2026 summary + RA 2027).
+
+### p3-74 (NY, 2026-10-21)
+- **1495 Waterfalls Campsite DROPPED** (presence: Squarespace site expired, Google 5 reviews).
+- **1517 Treasure Isle**: "WE ARE AN ALL SEASONAL PARK WITH A LIMITED AMOUNT OF OVERNIGHT SITES"; nightly $50 posted, no count of overnight sites (test 4: no count = pass). Phone corrected.
+- **1476 Top-A-Rise** $50 and **1517** $50: at the gate, not over.
+- **1513 Adirondack Gateway**: no posted rate ("Call for Reservations"); RV Life $$ + site/phone. Actually at Cold Brook (Herkimer Co.).
+- **1504 Black River Bay**: also sells a "Trailer Site, No electric, No water, $15 per night"; base left at $45 (W/E) - unclear whether the dry site takes a motorhome.
+- **1403 Bear Spring Mountain**: DEC 37 sites vs RA description 41 vs RA list 33.
+- p3-72's rap.py misses RA labels with a double space; fixed copy rap2.py (session scratch p3-74). parks.ny.gov unreadable (Cloudflare) - OPRHP entries rest on ReserveAmerica.
