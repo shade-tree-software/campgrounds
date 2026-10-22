@@ -1,0 +1,54 @@
+{
+  "id": 6080,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.blm.gov/visit/holter-dam-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/10180083 and /rates",
+    "recreation.gov public search API campsite catalog for facility 10180083 (catx.py)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 65, "note": "17 campsites for RVs, trailers and tents, gravel parking at each (accessible site 7 on concrete); up to two camping units per site. recreation.gov lists all 17 as standard non-electric, maximum vehicle lengths 40-65 ft (13 sites 60 ft or more; 4 unstated)."},
+      "source": "https://www.blm.gov/visit/holter-dam-campground ('The 17 campsites accommodate RVs, camper trailers, and tents'; 'parking is available at each of the 17 campsites. The parking is on gravel except at accessible campsite 7') + recreation.gov catalog for facility 10180083 (17 STANDARD NONELECTRIC sites; max vehicle length 40, 46, 48, 60 x4, 65 x6, 4 unstated), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10180083 (notices: 'No hook-ups are available. Potable water is available throughout the campground to fill containers.', 'There is no power available on-site for campers.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "note": "Drinking water to fill containers in peak season per recreation.gov ('Drinking Water (peak season)'); the BLM page's accessibility section says 'There is no drinking water at this site' while its overview lists a potable water system. Vault toilets in the day-use area and by site 7; picnic shelters, grills, trash collection, night lighting."},
+      "source": "https://www.blm.gov/visit/holter-dam-campground ('concrete vaulted latrines', 'potable water', 'There is no drinking water at this site') + https://www.recreation.gov/api/camps/campgrounds/10180083 (amenities 'Vault Toilets', 'Drinking Water (peak season)'; notices 'There is no black or grey water dump on site.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/10180083", "max_stay_nights": 14, "note": "BLM Butte Field Office campground (limited staffing, host on site). Reservation-only in peak season ('ALL SITES RESERVATION ONLY'; recreation.gov's Peak Season runs May 1 - Sept 30); its rate table also lists first-come, first-served seasons in April and October-November. Stay limit 14 consecutive days and 14 days in 28. Check-in 2 p.m., check-out 11 a.m."},
+      "source": "https://www.blm.gov/visit/holter-dam-campground ('Reservations are required and must be made in advance ... Reservations can be made online at Recreation.gov') + https://www.recreation.gov/api/camps/campgrounds/10180083 (notices 'ALL SITES RESERVATION ONLY', 'Stay limit is 14 consecutive days and 14 days within a 28-day time period'; rules maxConsecutiveStay 14) and /rates (Peak Season 05-01 to 09-30; First-come, First-served Season 04-01 to 04-30 and 10-01 to 11-30), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026", "note": "$20 per RV, trailer or tent, up to two camping units per site; day use $5 per vehicle."},
+      "source": "https://www.blm.gov/visit/holter-dam-campground ('Each RV/trailer/tent costs $20 with a max of two of any combination per site. Day Use is $5 per vehicle per day') + https://www.recreation.gov/api/camps/campgrounds/10180083/rates (2026 Peak and FCFS seasons, standard non-electric $20), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10180083 (notice: 'Discounts are only available for those carrying a Senior or Access National Park Pass.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"closes": null},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10180083/rates (first-come, first-served seasons 10-01 to 11-30 after the 05-01 to 09-30 peak season), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "BLM campground on the Missouri River just below Holter Dam near Wolf Creek, on a Blue-Ribbon trout stretch; shade shelters over picnic tables, fire pits with grills, two-lane boat ramp and accessible shoreline fishing. Rattlesnakes, ticks and black widows are common here. --Claude",
+  "summary": "BLM page + recreation.gov: confirmed no hookups, vault toilets, drinking water (peak season), $20/night and Senior/Access discount; changed site count 15 -> 17, added max length 65 ft (40-65), reservable on recreation.gov (reservation-only May-Sept, FCFS April and Oct-Nov), 14-night limit, no dump. Cleared the derived season close 09-30 (it is the end of the reservable season; rec.gov sells FCFS nights to Nov 30). No campground season statement found. Note: dropped the wrong '$10/night' and '15-site' and the restated facilities.",
+  "flags": [
+    "Website: the first URL, https://www.blm.gov/visit/holter-lake-campground, is BLM's page for Holter Lake Campground (entry 6075, above the dam); this campground's own BLM page is https://www.blm.gov/visit/holter-dam-campground.",
+    "Missing phone: BLM Butte Field Office (406) 233-1093 (BLM page and recreation.gov).",
+    "Season: derived 'closes 09-30' (from the reservation calendar) cleared; the rate table's FCFS seasons (Apr 1-30, Oct 1-Nov 30) are not a season statement, so no opens/closes recorded.",
+    "Drinking water: BLM's own page conflicts (overview 'potable water system' vs accessibility 'There is no drinking water at this site'); recreation.gov says potable water throughout in peak season. Kept potable_water true."
+  ]
+}

@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6120 Lake Frances City Park** (mt-7, 2026-10-22): the town posts no nightly rate, only $800/month for full-service sites 6 & 7. Fees left unrecorded; nightly camping may be by self-pay with no posted price. Re-check.
+- **6075 Holter Lake** (mt-7): temporarily_closed Oct 12 - Nov 8, 2026. Lift the status after Nov 8.
+- **6119 Hooper Park** (mt-7): the website is the Lincoln Valley Chamber's page and the county has no page for it; values recorded as `reported`.
+- **6165 Gods Country Camping** (mt-7): Hipcamp-only, so ownership was changed to hipcamp. The host warns some spots are on rough, uneven ground (access listed as 2WD drive-in).
+- **6080 Holter Dam** (mt-7): BLM's own page contradicts itself on drinking water; potable_water kept true per rec.gov.
 - **Fee rows with manual provenance that look wrong (MT, mt-6)**: 6197 Bull River nightly_high 150 is the group pavilion's 51+ rate (single site $16); 6134 Chief Joseph Park stored 23/23 is the electric price, non-electric RV spots are $17 (base); 6074 Divide Bridge's $15 may be the separate Divide Campground's fee ('Divide Campground--15$ / night' on the BLM page). Not overwritten (manual); fix by hand.
 - **6078 Carbella (MT, BLM)** and **6189 Emery Bay**: inherited federal booking row overridden / rec.gov 34-60 ft vs FS 32-ft max (kept FS). 6078's season 04-01..11-30 rests only on the BLM fee period.
 - **6170 Downstream (MT, USACE Fort Peck)** (mt-6): no operator website; the USACE Fort Peck camping page (nwo.usace.army.mil/.../Fort-Peck/Camping/) denies the cloud session; add it from a home network.

@@ -5,6 +5,7 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **15386 Lake Five Resort** (mt-7, 2026-10-22): the operator sells "Lake Sites" / "waterfront RV sites" on Lake Five; the entry is not waterfront. Re-audit with a satellite look.
 - **6144 Camp Sula (MT, private)** (mt-6): operator 'lies along the beautiful Bitterroot River', 'River access on site'; entry not waterfront.
 - **6189 Emery Bay (MT, USFS)** (mt-6): rec.gov catalog marks 5 sites 'Lakefront'; entry not waterfront.
 - **6150 Parkside (MT, USFS)** (mt-4): FS + rec.gov 'on the banks of the Main Fork of Rock Creek', rec.gov 'Waterfront Sites', 'River Access'; entry riverview.
