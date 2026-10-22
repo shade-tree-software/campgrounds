@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **Fee rows with manual provenance that look wrong (MT, mt-6)**: 6197 Bull River nightly_high 150 is the group pavilion's 51+ rate (single site $16); 6134 Chief Joseph Park stored 23/23 is the electric price, non-electric RV spots are $17 (base); 6074 Divide Bridge's $15 may be the separate Divide Campground's fee ('Divide Campground--15$ / night' on the BLM page). Not overwritten (manual); fix by hand.
+- **6078 Carbella (MT, BLM)** and **6189 Emery Bay**: inherited federal booking row overridden / rec.gov 34-60 ft vs FS 32-ft max (kept FS). 6078's season 04-01..11-30 rests only on the BLM fee period.
+- **6170 Downstream (MT, USACE Fort Peck)** (mt-6): no operator website; the USACE Fort Peck camping page (nwo.usace.army.mil/.../Fort-Peck/Camping/) denies the cloud session; add it from a home network.
 - **6160 Walleye (MT, Fresno Reservoir)** (mt-5): no agency or operator page for the campground. Reclamation's Fresno page (usbr.gov/gp/recreation/frrrec.html) lists Campgrounds 0 / Campsites 0; the website is the Walleyes Unlimited webcam page (chapter page needs a login); only Visit Montana describes tent/trailer sites, toilets, no water, 14-day limit. Inclusion needs a real source or a drop.
 - **6123 Yogo RV Park (MT, private)** (mt-5): own domain yogorvpark.com redirects to russellcountry.com/yogo-rv-park.html (park's voice, phone, rates, request form; 429 from the cloud, so not yet in website). Rates $15/night undated. Pitches itself as 'an ideal Workforce Housing solution (short or long term)'; nights are offered, likely passes the long-stay tests. Google 15 reviews.
 - **6154 Antelope Creek, American Prairie (MT)** (mt-5): operator page still describes 2025 (season 05-23..10-26 recorded from it); re-read for 2026/27. No phone published (email/Hipcamp).
