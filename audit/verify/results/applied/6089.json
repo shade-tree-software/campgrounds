@@ -1,0 +1,40 @@
+{
+  "id": 6089,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/stateparks/brush-lake",
+    "https://montanastateparks.reserveamerica.com/camping/brush-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630411 (read in a browser)",
+    "https://montanastateparks.reserveamerica.com/camping/brush-lake-state-park/r/campsiteDetails.do?siteId=722&contractCode=MT&parkId=630411 (read in a browser)",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630411, read 2026-10-12)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://montanastateparks.reserveamerica.com/camping/brush-lake-state-park/r/campsiteDetails.do?siteId=722&contractCode=MT&parkId=630411 (site 002, Campsite Electric: 'Electricity Hookup: 50') + FWP ('(10) electric campsites and (2) double campsite with electricity'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 12, "max_rig_ft": 85, "pull_through": true, "note": "10 electric sites and 2 double electric sites (two camping units each). ReserveAmerica max vehicle lengths: 40 ft back-in at 10 sites, 85 ft pull-through at sites 001 and 002 (driveways 90 ft)."},
+      "source": "https://fwp.mt.gov/stateparks/brush-lake ('a 12-site campground which consists of (10) electric campsites and (2) double campsite with electricity') + audit/state_park_fees/mt_sites_2026-10-12.json (lengths, driveway entry) + https://montanastateparks.reserveamerica.com/camping/brush-lake-state-park/r/campsiteDetails.do?siteId=722&contractCode=MT&parkId=630411 ('Driveway Entry: Pull-Through', 'Driveway Length: 90', 'Max Vehicle Length: 85'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Potable water 'depending on the weather'. Boat ramp, dock and day-use area beside the campground."},
+      "source": "https://fwp.mt.gov/stateparks/brush-lake (Amenities 'Water', 'Boat Launch', 'Dock'; 'Potable water Yes - depending on the weather') + ReserveAmerica ('Toilet, Pit/Vault', 'Water Drinking'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "01-01", "note": "FWP: campground 'Open May 1 - January 1 depending on snowfall'. ReserveAmerica's status line reads 'Open year round'."},
+      "source": "https://fwp.mt.gov/stateparks/brush-lake (Seasons & Hours, Campground: 'Open May 1 - January 1 depending on snowfall') + ReserveAmerica ('Status: Open year round.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "offset_hours": -24}},
+      "source": "https://montanastateparks.reserveamerica.com/camping/brush-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630411 (Booking Window, Campsite Electric and Double: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT State Park on mile-long Brush Lake near Dagmar in NE Montana: clear, alkaline water with no fish, sandy beaches; the campground sits on the NE shore beside the day-use area. --Claude",
+  "summary": "FWP + ReserveAmerica: confirmed 12 sites, potable water, reservable on ReserveAmerica with the inherited 3-month window and 1-day cutoff. Changed max_rig_ft 90 -> 85 (RA max vehicle length; 90 is the driveway). Added 50-amp, pull-throughs, vault toilets, season May 1 - Jan 1 (FWP campground statement; RA says open year round, noted). Fees left (human-recorded statewide table; FWP gives only the $4-$34 range). Not stated: 7-night limit, fcfs (inherited, left). Note trimmed of restated values.",
+  "flags": []
+}

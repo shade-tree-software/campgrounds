@@ -1,0 +1,35 @@
+{
+  "id": 6056,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/stateparks/beavertail-hill",
+    "https://montanastateparks.reserveamerica.com/camping/beavertail-hill-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630211 (read in a browser)",
+    "https://montanastateparks.reserveamerica.com/camping/beavertail-hill-state-park/r/campsiteDetails.do?siteId=275&contractCode=MT&parkId=630211 (read in a browser)",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630211, read 2026-10-12)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "sewer": false},
+      "source": "https://montanastateparks.reserveamerica.com/camping/beavertail-hill-state-park/r/campsiteDetails.do?siteId=275&contractCode=MT&parkId=630211 (site 023, Campsite Electric: 'Electricity Hookup: 50') + audit/state_park_fees/mt_sites_2026-10-12.json (every campsite is 'Campsite Electric', each marked 'Full Hookup - no') + FWP ('There are 24 campsites with electricity'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 70, "pull_through": true, "note": "24 electric campsites plus 2 tipis. ReserveAmerica max vehicle lengths run 20-70 ft: 12 back-ins (23-30 ft) and 12 pull-throughs (20-70 ft; sites 023 and 024 take 70 ft). Rigs must fit entirely within the site's parking spur."},
+      "source": "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630211: type, max vehicle length, driveway entry) + https://montanastateparks.reserveamerica.com/camping/beavertail-hill-state-park/r/campsiteDetails.do?siteId=275&contractCode=MT&parkId=630211 ('Driveway Entry: Pull-Through', 'Max Vehicle Length: 70') + https://fwp.mt.gov/stateparks/beavertail-hill ('There are 24 campsites with electricity and 2 tipi rentals'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "note": "Potable water from the Thursday before Memorial Day through October. Firewood for sale."},
+      "source": "https://fwp.mt.gov/stateparks/beavertail-hill (Amenities: 'Toilets (Flush)', 'Toilets (Vault)', 'Water', 'Firewood for Sale'; 'Potable water Available the Thursday before Memorial Day through October') + ReserveAmerica ('Toilet, Pit/Vault', 'Water Drinking'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "offset_hours": -24}},
+      "source": "https://montanastateparks.reserveamerica.com/camping/beavertail-hill-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630211 (Booking Window, Campsite Electric: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance') + FWP page ('Reserve a Campsite'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT State Park off I-90 exit 130, 26 mi SE of Missoula, with half a mile on the Clark Fork River (carry-in boating only); campsites under cottonwoods beside a one-hour nature trail, plus 2 tipi rentals. --Claude",
+  "summary": "FWP page + ReserveAmerica: confirmed 24 electric sites with pull-throughs, 50-amp (RA site 023), no sewer, vault toilets, reservable on ReserveAmerica with the inherited 3-month window and 1-day cutoff. Changed max_rig_ft 28 -> 70 (RA pull-throughs 023/024). Added flush toilets and seasonal potable water. Fees and season left (human-recorded/manual). Not stated: 7-night limit and fcfs (inherited, left); showers false left as derived (FWP lists none). Note: '28 ft' and 'boat launch' corrected (FWP: carry-in boating only), restated values trimmed.",
+  "flags": []
+}

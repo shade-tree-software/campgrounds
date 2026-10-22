@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6161 Cow Bells Campground** (mt-11, 2026-10-22): it is the county's campground at the Musselshell County Fairgrounds (the county spells it Cow Bells and Cow Belles), not Roundup City Park. Check the pin against the fairgrounds. Website and county phone added.
+- **6248 Cherry Creek** (mt-11): FS says 'No restroom available' but its site list mentions restrooms (vault_toilets left unconfirmed); general line says 'Average Parking Spur 20' long' but per-site driveways are 25-70 ft.
+- **6223 Cromwell Dixon** (mt-11): FS gives no site lengths; fit rests on Campendium reviews (25-31 ft rigs). No phone on the FS page (Helena RD).
+- **6249 Colter** (mt-11): no phone on the FS page (Gardiner RD).
+- **6188 Yaak River** (mt-11): rec.gov gives every site a 30-ft max (looks like a default); FS says sites average 32 ft. 30 recorded.
 - **6172 St. Mary (Glacier NP)** (mt-10, 2026-10-22): NPS: 'All sites ... closed to camping from January 1, 2027-June 30, 2027 due to construction.' Recorded open for now; set temporarily_closed (reopens July 2027) on Jan 1, 2027.
 - **6176 Two Medicine** (mt-10): closed for 2026 (construction), reopens 2027 (NPS calendar suggests May 24). Lift the status in spring 2027.
 - **15382 West Glacier RV Park** (mt-10): the note's '$12/night amenities fee' is not on the operator's page or booking widget; check at checkout. Entry phone 406-888-5580 isn't on the operator's pages (they list 844-868-7474).
