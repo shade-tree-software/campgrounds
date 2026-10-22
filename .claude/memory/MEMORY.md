@@ -11,8 +11,8 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [Phase 7 verification](project_phase7_verification.md) — IN PROGRESS 2026-10-21: applied through p3-88 (WV+SC+NY done, NC under way); resume point in file; TWO verifiers allowed; loop + resume point in file
-- [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way (paused); next id 15553 (2026-10-21)
+- [Phase 7 verification](project_phase7_verification.md) — IN PROGRESS 2026-10-22: applied through p3-100 (NC under way, ~36 left), leads pipeline in audit/verify/leads/; resume point in file; TWO verifiers allowed; loop + resume point in file
+- [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way; next id 15555 (2026-10-22)
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
 - [Hidden rates playbook](reference_hidden_rates_playbook.md) — private rate/minimum/seasonal share via one-browser driver + engine helpers; recipes in audit/private_gap_browser/README.md
