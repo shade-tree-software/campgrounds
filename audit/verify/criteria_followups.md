@@ -632,3 +632,12 @@ me drop and report); each needs the research named before a verdict.
 - **4255 Camping World Racing Resort**: $50 non-event, at the gate; units built 2000 or later; race weeks sold separately. Passes the long-stay tests.
 - **4323 Cane Creek Park**: nightly_high $40 is the non-resident full-hookup rate; residents get 25% off ($26.25-30). Non-resident price for EKKO $35-40.
 - **104 Bullocksville**: holiday minimum waived within 14 days (RA), state:NC row says 7 (same as 103). RA tags every site "Near Water - no" (blanket attribute; the entry stays lakefront per AWH).
+
+### p3-92 (WV gap batch, 2026-10-22) - 12 WV entries an earlier --offset skipped
+- Renamed to the agency's names: 489 -> Mill Creek Campground (Kumbrabow State Forest), 111 -> Nathaniel Mountain WMA Campground (DNR-designated campsites, not parking-lot camping), 512 -> Lower Glady Dispersed Camping, 497 -> Mower Tract Dispersed Camping. Phones added to 489/111/121/122/512/508; thedyrt link on 512 replaced.
+- **747 Momma Tried** (Hipcamp): $55 all-in ($50 + flat $5 Hipcamp fee), over the gate, no gateway within 40 km (Seneca Rocks / Dolly Sods are not on gateways.py's list). KEPT because AWH's own note priced it ("$56+fees"). Listing says riverfront access for tent spots while AWH's note says sites are not waterfront.
+- **13367 Kennedy Park & Marina**: concessionaire changed (CEMCO since April 2025); kennedymarinapark.com is the old operator's, last modified 2022, so its $32/$42 fails the 2024+ date rule; phone may be stale. Weekly/monthly + "Working in the area?" pitch. Re-check when CEMCO publishes anything.
+- **497 Mower Tract**: the pin sits on FR 227C (Reigle Overlook), FS maintenance level 2 "high clearance vehicles"; FR 227 itself is level 4. AWH's note reports 22-25 ft trailers fine. See asks.md.
+- **121 Lake Buffalo**: FS designates no named camping area; forest order bans camping within 300 ft of the shore outside developed sites; FR 54 passenger-car gravel.
+- **14061 Mouth of Indian Creek**: DNR District 4 page "On the WMA: Camping is not permitted" vs DNR's Bluestone page + Summers County listing it as a county campsite (same conflict as 14057/14062/14063).
+- **13368 Mountwood**: own pages disagree on count (78/14 FHU vs 87/16).

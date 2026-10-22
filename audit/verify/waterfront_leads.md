@@ -147,3 +147,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **13727 Rogers Rock (NY)** (weak): west shore of Lake George with a sand beach; entry not waterfront.
 - **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
 - **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
+- **13367 Kennedy Park & Marina (WV)**: operator lists "Primitive: Riverfront Sites" on the Ohio; entry riverview (primitive sites may not take a 23-ft rig).
+- **747 Momma Tried (WV)** (weak): Hipcamp tent spots "by the river", "riverfront access"; entry field says riverfront while AWH's note says sites are not waterfront - the two stored statements disagree.
