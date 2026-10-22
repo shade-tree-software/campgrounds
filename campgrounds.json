@@ -28811,32 +28811,80 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm ('No showers, flush toilets, or RV hook ups are available at D.H. Day Campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 259242 (170 days observed, edges closes)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/259242 (Overview: 'open (weather permitting) from April 27 through the 4th Sunday in November. Reservations are required May 15 through October 15'), read 2026-10-22; the calendar-derived close of 10-15 is the end of the reservation season, so it is cleared",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:259242 (per-campsite rates, current seasons, read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/259242/rates (Peak Season 2026-05-15 to 2026-10-15 PeakTentorRV 20; First-come, First-served Season 2026-04-27 to 05-14 and 2026-10-16 to 11-22 WalkInTentorRV 10) + https://www.recreation.gov/api/camps/campgrounds/259242 ('All visitors must have an entrance pass (separate from camping fees)', 'The Michigan Recreation Passport is not valid for entry at Sleeping Bear Dunes National Lakeshore') + https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm ('A park pass is required for all vehicles using the campground, including those who are visiting campers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/259242 ('With 81 beautifully wooded campsites') + RIDB catalog 259242 (Max Vehicle Length 20 x38, 25 x20, 30 x3, 35 x2, 27 x1; Driveway Entry back-in 63, pull-through 1) + https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm ('Generator use is allowed only in campsites 1-31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm ('Potable water and a sanitation (dump) station is available at the entrance. Water spigots are also located throughout the campground', 'No showers, flush toilets, or RV hook ups') + rec.gov ('shared water spigots, and vault toilets', 'Free hot showers are available at Platte River Campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm ('Regular sites may be reserved up to 6 months in advance for May 15 through October 15', 'Camping is limited to 14 TOTAL DAYS per designated campground between Memorial Day Weekend through Labor Day') + rec.gov rates (First-come, First-served Season) and facility record (org NPS, not commercially managed), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
-      "closes": "10-15"
+      "year_round": false,
+      "opens": "04-27",
+      "note": "Open (weather permitting) April 27 through the fourth Sunday in November; reservations May 15-October 15, first-come before and after."
     },
     "fees": {
       "nightly_low": 10,
       "nightly_high": 20,
       "currency": "USD",
-      "note": "$20/night May 15-Oct 15, $10 in the shoulder seasons."
+      "note": "$20 a night May 15-Oct 15 (reservation season), $10 in the first-come shoulder seasons. A Sleeping Bear Dunes entrance pass is also required for every vehicle in the campground, separate from the camping fee (America the Beautiful passes honored; the Michigan Recreation Passport is not valid). No-show: first night plus $20.",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 81,
+      "max_rig_ft": 35,
+      "pull_through": true,
+      "note": "81 wooded sites. In the rec.gov catalog 56 are 'RV nonelectric' (plus walk-to and tent-only sites); RV/trailer lengths are mostly 20 ft (38 sites) or 25 ft (20), with only a few to 27-35 ft and one pull-through, so a 23-ft rig needs a 25-ft-plus site. Generators only in loop 1 (sites 1-31), 9 am-6 pm. Two vehicles per site, only one an RV or trailer."
+    },
+    "facilities": {
+      "showers": false,
+      "flush_toilets": false,
+      "vault_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Water spigots through each loop; potable water and dump station at the entrance. Free hot showers at Platte River Campground, 17 miles south on M-22."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/259242",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Reservations required May 15-October 15, up to 6 months ahead (recreation.gov or 1-877-444-6777); first-come at $10 from April 27 to May 14 and from October 16 to closing. The 14-day limit applies Memorial Day weekend through Labor Day. Check in at the campground office on arrival. Operated by the NPS itself (not a concession)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.nps.gov/slbe/planyourvisit/dhdaycamp.htm https://www.recreation.gov/api/camps/campgrounds/259242 (+ /rates) trip_data/ridb_campsites.json (RIDB catalog for facility 259242, fetched 2026-10-20) https://www.nps.gov/slbe/planyourvisit/conditions.htm",
+      "note": "NPS page + rec.gov: $20 peak / $10 shoulder (confirmed) plus a required park entrance pass per vehicle (in fees.note); no hookups, showers or flush toilets; vault toilets, spigots, dump; 81 sites, mostly 20-25 ft (max 35, one pull-through); open Apr 27 - 4th Sunday in Nov (calendar-derived close 10-15 cleared, opens 04-27 added); reservable May 15-Oct 15 on rec.gov, 6-month window, FCFS in shoulder seasons, 14-day summer limit. NPS-operated. No closure on the park's conditions page. AWH note kep"
     }
   },
   {
@@ -31594,7 +31642,7 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "MI DNR Culhane Lake SFCG, established rustic FCFS drive-in campground -> real drive-in campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Several sites right on the lake.  First come first served.",
-    "note": "Several sites right on the lake.  First come first served.  --AWH",
+    "note": "Several sites right on the lake. --AWH  97-acre Culhane Lake (pike, walleye), 29 miles NE of Newberry via M-123 and County Road 500. --Claude",
     "elevation_meters": 199.0,
     "state": "MI",
     "ownership": "state",
@@ -31607,21 +31655,38 @@
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake ('No reservations. Sites available on a first-come, first-served basis', 'Camping is limited to a 15-day maximum stay'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Culhane Lake State Forest Campground', Luce Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground', 'Recreation Passport required: A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Culhane Lake State Forest Campground, Luce Co.: \"Seasonal closure dates: Nov. 30 – May 1\"), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake ('No electrical available'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake ('There are 15 sites for tent and small trailer use', 'One camping unit and six people are allowed per site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake ('There are vault toilets', 'Potable (drinking) water is available from a hand-pump well', 'A boat launch is located adjacent to the entrance of the campground'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
@@ -31634,13 +31699,32 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": false,
       "opens": "05-01",
       "closes": "11-29"
-    }
+    },
+    "hookups": {
+      "electric": 0
+    },
+    "sites": {
+      "count": 15,
+      "note": "The DNR describes the 15 sites as 'for tent and small trailer use'; no length limit is posted. One camping unit and six people per site."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch next to the campground entrance."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/culhanelake",
+      "note": "DNR page: 15 rustic sites, $20/night at the kiosk + Recreation Passport (in fees.note), no electric, vault toilets, hand-pump water, boat launch; first-come only, 15-day maximum (all confirmed into the entry). Season (Nov 30 - May 1 closure) already manual from the DNR amenity table. No phone on the entry: the DNR page gives 906-492-3415. Kept the AWH lakeside remark; dropped its 'First come first served' (booking.fcfs holds it)."
+    },
+    "phone": "906-492-3415"
   },
   {
     "id": 421,
@@ -42033,7 +42117,7 @@
     "waterfront": "coastal woods",
     "inclusion_evidence": "coverttwp.com park page: 'primitive and developed RV sites' plus cabins, seasonal May 15-Oct 15 -> drive-in RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'coastal woods' per owner: Small campground set back in a wooded area a short walk from the lake.",
-    "note": "Small campground set back in a wooded area a short walk from the lake. --AWH",
+    "note": "Small campground set back in a wooded area a short walk from the lake. --AWH  Township park on 50 acres of Lake Michigan critical dunes; a paved path and a wooded staircase and boardwalk lead to dune overlooks and a quarter mile of beach. No alcohol anywhere in the park. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 3,
@@ -42044,6 +42128,65 @@
       "sig": "e4b5f4e64171a47d",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 50,
+      "nightly_high": 60,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Developed RV site (electric and water) $50 a night, $60 on holidays; primitive tent sites $42-55, group site $110, cabins $80-90. Covert Township residents get 10% off camping. Extra vehicle $10, pets $3 each a day; dump fee on site."
+    },
+    "provenance": {
+      "fees": {
+        "source": "https://covertpark.com/ ('Developed RV Site (Electric & Water) $50', 'Holiday Rates : Developed & RV $60', 'Extra Vehicle $10', 'Daily Pet Fee per pet $3', 'daily beach access for Covert residents is free with proof of id & 10% off discount for camping!'; 'Join us April 17th - 0ctober 15th, 2026!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://covertpark.com/ ('The Developed sites are on the loops and offer electric hook up and water'; 'Our developed sites offer electric & a water spout. Bring your own hose please'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://covertpark.com/ ('two clean and modern bathroom facilities with showers', 'We have a dump station with an on-site dump fee', 'We offer ice & local seasoned firewood at the camp store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://covertpark.com/ ('Join us April 17th - 0ctober 15th, 2026!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://covertpark.com/ ('Click our \"Book Now\" links beginning January 1st, at 12:01am', 'We do have a maximum stay of 14 days for reservations', 'Each campsite on our reservation system lists specifics for amp wattage & size of RV that will fit'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      }
+    },
+    "hookups": {
+      "water": true
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "camp_store": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-17",
+      "closes": "10-15"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://covertpark.client.innroad.com/",
+      "max_stay_nights": 14,
+      "note": "Booked online (innRoad) from January 1 at 12:01 am; 2026 is the park's first year online. Site pages list each RV site's amperage and the rig length it fits. Cabins take a two-night minimum."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://covertpark.com/ https://coverttwp.com/park-beach-campground/ https://covertpark.client.innroad.com/",
+      "note": "Covert Township's park site (2026): developed RV sites (electric + water) $50, holiday $60, residents 10% off; showers, dump (fee), camp store; open Apr 17-Oct 15, 2026; booked online through innRoad from Jan 1, 14-night max. Amperage, site count and max length are only on the per-site booking pages (not read). Kept the --AWH note and added the setting and the no-alcohol rule."
     }
   },
   {
@@ -252884,7 +253027,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.campcranberrylake.com/",
     "phone": "269-646-3336",
-    "note": "Privately-owned quiet family campground on Cranberry Lake near Marcellus, open May 1-Oct 1. ~60-101 sites incl. 42 full-hookup and 18 elec/water, 30/50-amp; swimming beach, boat launch, store. Some sites directly on the water. Takes nightly transient. --Claude",
+    "note": "Family-owned for over 100 years, on Cranberry Lake near Marcellus; ~60-101 sites incl. 42 full-hookup and 18 elec/water; swimming beach, boat launch, boat/pontoon/kayak rentals, seasonal docks. Some sites directly on the water. Takes nightly transient alongside seasonal campers. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -252897,7 +253040,11 @@
       "sewer": true
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "laundry": true
     },
     "season": {
       "year_round": false,
@@ -252906,19 +253053,19 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campcranberrylake.com/rates.html ('2026 Rates ... Electric Only ... Electric/Water ... Full Hook-up'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campcranberrylake.com/ (Amenities Include: 'Store/Game Room', 'Dump station', 'Flush toilets', 'Shower House', 'Laundry Facility'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campcranberrylake.com/contact.html ('Camping season runs from May 1st through October 1st annually'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -252928,6 +253075,11 @@
       "fees": {
         "source": "https://www.campcranberrylake.com/rates.html ('Electric Only | Day $45 | Week $210', read 2026-10-16)",
         "checked": "2026-10-19"
+      },
+      "booking": {
+        "source": "https://www.campcranberrylake.com/ ('Make your reservations well in advance'; 'Reservations' (269) 646-3336) + https://www.campcranberrylake.com/contact.html ('Campground phone is disconnected during the off season but you can send a Facebook message'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -252944,6 +253096,16 @@
       "currency": "USD",
       "checked": "2026",
       "note": "2026: electric only $45, electric and water $49, full hookup $50."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by phone, (269) 646-3336; the line is disconnected off-season, when the campground answers Facebook messages."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.campcranberrylake.com/ https://www.campcranberrylake.com/rates.html https://www.campcranberrylake.com/rules.html https://www.campcranberrylake.com/contact.html https://www.google.com/maps/search/Cranberry+Lake+Campground+10301+Bent+Road+Marcellus+MI",
+      "note": "Operator site: 2026 day rates electric only $45 / electric-water $49 / full hookup $50 (stored fees match; left); water and sewer confirmed (amperage not stated, derived 50 A left); showers, flush toilets, dump, laundry, store; season May 1-Oct 1 confirmed (now manual); reservations by phone. Google Maps: open, 4.3 stars / 217 reviews, phone matches. Seasonal share not published. Dropped season/amps/store from the note (fields hold them)."
     }
   },
   {
@@ -254248,7 +254410,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://cedarspringsrvresort.com/\nhttps://www.campspot.com/book/cedarspringsrvresort",
     "phone": "616-696-1735",
-    "note": "25-acre RV park, formerly Lakeside Camp Park, on a stocked private lake with a sandy swimming beach, kayak and paddleboat rentals, and a clubhouse.  Seasonal areas are mixed with nightly sites, all on back-in pads; no tents. --Claude",
+    "note": "25-acre RV park, formerly Lakeside Camp Park, on a stocked private lake with a sandy swimming beach and off-shore raft, kayak and paddleboat rentals, a clubhouse and rec hall. Seasonal areas are mixed with nightly sites. Close to the highway; reviewers say the traffic noise is minor. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -254261,7 +254423,10 @@
       "sewer": true
     },
     "sites": {
-      "count": 157
+      "count": 157,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "157 RV sites, with designated seasonal areas (full hookup) and sites for daily/weekend camping with full or partial hookups. On Campspot: 10 nightly RV sites (3 full hookup 30/50-amp with pull-through, 5 30-amp electric, 2 30/50-amp electric) and 47 'Seasonal' sites, to 40 ft. No tents."
     },
     "season": {
       "year_round": false,
@@ -254270,36 +254435,42 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/cedarspringsrvresort"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cedarspringsrvresort.com/facilities/ ('Full Hookup Sites (Water, Sewer Hookup, 30 & 50Amp Electric') + https://cedarspringsrvresort.com/rates/ ('Electric & Water $50 / night', 'Full Hookup Sites $55 / night', '50-amp monthly'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cedarspringsrvresort.com/ ('We offer 157 campsites with designated areas for seasonal guests which have full hook-up sites, and for daily or weekend camping with full and partial hook-ups') + https://cedarspringsrvresort.com/rates/ ('Tents are not allowed at Cedar Springs') + Campspot park record (site types with max length 40 ft and 'Pull-Through' on the full-hookup and 30/50-amp electric types; campspot_tier_2026-10-13.jsonl), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://cedarspringsrvresort.com/ ('No Winter Site Available: Our 2026 season is May 1 – October 31'), read 2026-10-13",
         "checked": "2026-10-13"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cedarspringsrvresort.com/ ('Reserve online today!'; Book Now -> campspot.com/book/cedarspringsrvresort), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://cedarspringsrvresort.com/rates/ (no military or other discount named on the operator's rates, home or facilities pages; the value came from the Good Sam directory), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://cedarspringsrvresort.com/rates/ (read 2026-10-13); https://www.campspot.com/book/cedarspringsrvresort (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from 2026-10-20 for the park's fee; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
         "checked": "2026-10-13"
+      },
+      "facilities": {
+        "source": "https://cedarspringsrvresort.com/facilities/ ('on-site store', 'on-site laundry facility', 'Wi-Fi is available', 'We do not have a public dump station available') + https://cedarspringsrvresort.com/rates/ ('Wifi Charges: $5.00 - Daily', 'Outside Camper Dump Station: $30 per dump', 'Honey Wagon Pump outs $10 - Wednesday $30 - Weekends or Emergencies'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254308,8 +254479,7 @@
       "model": "claude-opus-5/session"
     },
     "discounts": {
-      "good_sam": false,
-      "military": true
+      "good_sam": false
     },
     "fees": {
       "nightly_low": 55,
@@ -254317,6 +254487,17 @@
       "currency": "USD",
       "checked": "2026",
       "note": "From the park's rates page (read 2026-10-13): water-and-electric sites are $50 a night and full-hookup sites $55, for 2 adults and up to 3 children, with electricity billed on top at $5 a day for overnight stays; the prices above include it.  Campspot, where the sites are booked, lists the same $50-55 plus the electricity as a $5-a-night 'utility fee' (October 17 and 20, 2026)."
+    },
+    "facilities": {
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Wi-Fi is extra: $5 a day, $15 a week, $30 a month. No public dump station; the rates page charges $30 per dump for an outside camper, and a honey-wagon pump-out is $10 on Wednesdays, $30 on weekends."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://cedarspringsrvresort.com/ https://cedarspringsrvresort.com/rates/ https://cedarspringsrvresort.com/facilities/ https://cedarspringsrvresort.com/park-map/ https://www.campspot.com/book/cedarspringsrvresort (park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13; 2027-06-08 not yet open, checked 2026-10-22)",
+      "note": "Operator pages: $50 W/E and $55 full hookup plus $5/day electric for overnighters (stored $55-60, checked 2026-10-13, matches; left); 50-amp/water/sewer confirmed; 157 sites confirmed, to 40 ft with pull-throughs on Campspot (pull_through added; dropped the note's 'all on back-in pads', which Campspot contradicts); laundry, store, paid Wi-Fi; no public dump; Campspot booking. Military discount cleared (directory-only). Season May 1-Oct 31 already manual and matching. Price gate: $55 all-in excee"
     }
   },
   {
@@ -255943,7 +256124,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.cadillacwoodsmi.com",
     "phone": "231-825-2012",
-    "note": "Private wooded campground on M-115 SE of Cadillac; 37 sites (electric-only and elec/water, 15 pull-thru) plus rustic cabins, pool, mini-golf. Max RV length ~30 ft (fits 23-ft rig). Open May-Oct, transient. --Claude",
+    "note": "Private wooded campground on M-115 in Tustin, SE of Cadillac; RV and rustic tent sites plus rental cabins, clubhouse, pool, mini-golf. Open May-Oct; nightly stays, and a discounted monthly rate by phone. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -255951,26 +256132,29 @@
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50,
+      "sewer": false
     },
     "sites": {
-      "count": 37,
-      "max_rig_ft": 30,
-      "pull_through": true
+      "count": 34,
+      "max_rig_ft": 42,
+      "pull_through": true,
+      "note": "34 RV and tent sites (27 with 30-amp/water or 30/50-amp/water, the rest rustic tent sites) plus 6 cabins. The operator says rigs to 42 ft; Campspot lists the 30-amp/water sites to 34 ft and the rustic sites to 30 ft."
     },
     "season": {
       "year_round": false
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cadillacwoodsmi.com/ ('30 AMP/Water and 30/50 AMP/Water options') + https://www.cadillacwoodsmi.com/policies ('Sites do not include sewer hookups. A dump station is available to all registered guests'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cadillacwoodsmi.com/ ('27 RV locations listed between 30 AMP/Water and 30/50 AMP/Water options', 'Stay options 40 ... 6 Lodging ... 34 RV Sites', 'Rig fit up to 42 feet', 'Back-in and pull-through options') + https://www.cadillacwoodsmi.com/stays ('Fits vehicles up to 42 feet long') + Campspot ('30 AMP/Water RV Site ... max 34 ft'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -255978,8 +256162,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.cadillacwoodsmi.com ('RV Sites | Starts at $45/night on Campspot', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.cadillacwoodsmi.com/policies ('30 AMP/Water and 30/50 AMP/Water RV Sites start at $45.00/night', (c) 2026) + https://www.campspot.com/book/cadillacwoodscampground (30 AMP/Water RV Site '$47.00 x 1 night | Booking Fee $3.00'; 30/50 AMP/Water RV Site $53.00 per night in the availability API, which folds in the $3 fee; 2026-10-27), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.cadillacwoodsmi.com/amenities ('Showers', 'General store / camp store', 'Dump station', 'Coin laundry room') + https://www.cadillacwoodsmi.com/policies ('Cadillac Woods does not have public WiFi that reaches the sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.cadillacwoodsmi.com/ ('Book through Campspot, or call the office'; Book Now -> campspot.com/book/cadillacwoodscampground), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -255989,9 +256184,28 @@
     },
     "fees": {
       "nightly_low": 45,
-      "nightly_high": 45,
+      "nightly_high": 50,
       "currency": "USD",
-      "note": "RV sites from $45 a night on Campspot."
+      "note": "The operator's site: RV sites (30-amp/water and 30/50-amp/water) start at $45 a night, rustic tent sites $25, cabins $75. On Campspot for Tue 2026-10-27: 30-amp/water site $47 a night, 30/50-amp/water $50; Campspot adds a $3 booking fee once per stay. Discounted monthly rate by phone.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": false,
+      "note": "No public Wi-Fi reaches the sites (office Wi-Fi case by case). Portable honey-wagon pump-out for a fee."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/cadillacwoodscampground"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.cadillacwoodsmi.com/ https://www.cadillacwoodsmi.com/stays https://www.cadillacwoodsmi.com/amenities https://www.cadillacwoodsmi.com/policies https://www.campspot.com/book/cadillacwoodscampground (availability API and site-type page, one and two nights from 2026-10-27, 2 adults)",
+      "note": "Operator site (c) 2026 + Campspot: RV sites from $45 (Campspot $47 for 30-amp/water and $50 for 30/50 on 2026-10-27, plus a $3 per-stay booking fee); 50-amp, water, no sewer (confirmed; sewer false added); 34 RV/tent sites + 6 cabins (count 37 -> 34), rigs to 42 ft (max_rig_ft 30 -> 42), pull-throughs; showers, dump, coin laundry, store, no site Wi-Fi; Campspot booking. Season not stated by the operator or Campspot (no closed dates), left. Not seasonal in character (no seasonal sites offered; mo"
     }
   },
   {
@@ -260310,7 +260524,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'pond' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://bellairemichigan.com/craven/\nhttps://app.fireflyreservations.com/reserve/property/CravenParkCampground",
     "phone": "231-533-8213",
-    "note": "Municipal campground owned/operated by the Village of Bellaire on Craven Pond; 35 sites (full-hookup, W/E, and rustic), mix of reservable and FCFS (sites 22-25, 31-35 first-come). Open Apr 1-Oct 31. Reservable online via Firefly. RV Life 4*/2$ (auto 6/2026). --Claude",
+    "note": "Village of Bellaire campground on Craven Pond, a mile east of downtown; full-hookup, water/electric and rustic sites, a walking loop nearby. Google Maps gives wrong directions: the entrance is at the end of E Broad St where it meets S Derenzy (Fairground) Rd. Camp host at site 30. --Claude",
     "rating": {
       "stars": 4,
       "checked": "2026-06",
@@ -260318,7 +260532,8 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 30
     },
     "sites": {
       "count": 35
@@ -260326,17 +260541,22 @@
     "season": {
       "year_round": false,
       "opens": "04-01",
-      "closes": "10-31"
+      "closes": "10-31",
+      "note": "Opening April 1 is weather permitting."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/CravenParkCampground",
+      "max_stay_nights": 14,
+      "note": "Sites 22-25 and 31-35 are first-come only (pay by envelope at the bathhouse); all others are reservation-only, booked online (Firefly) or at the village office, 202 N Bridge St, Mon-Thu 8-4. Same-day campers wanting a reservable site must book it online before setting up. After two weeks campers must leave for a week, except monthly or seasonal stays."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://app.fireflyreservations.com/reserve/property/CravenParkCampground (amenity filters 'Electric Hookup (30 amp)', 'Sewer Hook-Up', 'Water Hook-Up'; classes Full Hook-up, Water/Electric, Rustic/Primitive) + https://bellairemichigan.com/craven/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -260344,18 +260564,24 @@
         "method": "derived"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://bellairemichigan.com/craven/ ('Craven Park Campground is open from April 1st (weather permitting) through October 31st'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://app.fireflyreservations.com/reserve/property/CravenParkCampground ('Sites #22-25 and #31-35 are first-come first-serve only, all others are by reservation only') + https://bellairemichigan.com/craven/ ('Campers may only stay up to two weeks at a time, and must then vacate the campground for one week'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://bellairemichigan.com/craven/ ('Campground Rates effective May 6, 2026', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://bellairemichigan.com/craven/ ('Campground Rates effective May 6, 2026: Full Hook Up (Water/Electric/ Sewer) - $40 per night* Water/Electric - $30 per night* Rustic Sites - $20 per night*', 'Monthly - $755 per month', 'Seasonal - $5,000 per season', 'Non-Camper Dump Fee - $10 per dump'; 'This webpage last updated on May 6, 2026'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://app.fireflyreservations.com/reserve/property/CravenParkCampground ('Coin Operated Showers') + https://bellairemichigan.com/craven/ ('Non-Camper Dump Fee - $10 per dump'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -260364,10 +260590,21 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 20,
+      "nightly_low": 30,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Full hookup $40, water/electric $30, rustic $20 per night; monthly full hookup $755."
+      "note": "Village of Bellaire rates effective May 6, 2026: water/electric $30 a night, full hookup $40; rustic (primitive) sites $20, left out of the base. One rate for everyone (no resident rate stated). Full hookup only for monthly ($755) and seasonal ($5,000) stays. Non-camper dump $10.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "note": "Coin-operated showers in the bathhouse."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://bellairemichigan.com/craven/ https://app.fireflyreservations.com/reserve/property/CravenParkCampground",
+      "note": "Village page (updated May 6, 2026) + Firefly: W/E $30, full hookup $40 (base 20 -> 30: the $20 rustic sites are primitive), 30-amp, water, sewer, coin showers, dump; open Apr 1 (weather permitting)-Oct 31; reservable on Firefly with first-come sites 22-25 and 31-35; 14-night limit then a week out. Site count (35, derived) not stated by the village; left. Monthly/seasonal full-hookup stays exist ($755 / $5,000) but no seasonal count is given. Dropped booking/season/RV Life text from the note; add"
     }
   },
   {
@@ -264072,7 +264309,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/",
     "phone": "231-689-1190",
-    "note": "Newaygo County Parks & Rec campground on Diamond Lake; 60 sites (24 full-hookup W/E/S, 36 electric) plus 4 cabins. Drive-in grass/paved sites, big-rig OK. Season May 1-Oct 11. Reservable online via Firefly Reservations; seasonal sites by waiting list. Swimming beach + boat launch. --Claude",
+    "note": "Newaygo County park on Diamond Lake; drive-in grass/paved sites, big-rig OK. Swimming beach, hiking trails, horseshoes and beach volleyball, nearby boat launch. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -264083,7 +264320,8 @@
       "sewer": true
     },
     "sites": {
-      "count": 60
+      "count": 60,
+      "note": "60 campsites: 24 full hookup, 36 electric (the rate card also prices water/electric and rustic sites); 4 camping cabins. Seasonal campsites by waiting list."
     },
     "season": {
       "year_round": false,
@@ -264091,32 +264329,41 @@
       "closes": "10-11"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/DLCountyPark",
+      "note": "Online (Firefly) or by phone, (231) 689-7340 or the campground in season; 2026 bookings opened January 5 at 9 am. Paid in full at booking."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ ('24 are full hook-up (water, sewer, and electric)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ ('The campground currently offers 4 camping cabins, 60 campsites, 24 are full hook-up (water, sewer, and electric), and the remaining 36 sites are electric', 'Seasonal campsites are available through a waiting list system'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ ('Contact During Camping Season (5/1-10/11)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.newaygocountymi.gov/departments/parks/park-reservations/ ('You can make reservations in the following ways on or after January 5, 2026, at 9 am: Over the phone at (231) 689-7340 or the campground during the season', 'With our online system FireFly Reservations') + https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('payments are due in full at the time the reservation is made'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ (Rates & Fees: Nightly (Th-Su) / Nightly (M-W) Non-Holiday: Full-hookup $41 / $36, Water/Electric $36 / $31, Electric $30 / $25, Rustic $20 / $15) + https://www.newaygocountymi.gov/departments/parks/rates-fees/ ('2026 Rates and Fee', 'Newaygo County Parks Motor Vehicle Permits(MVP) is required for entrance. Daily MVP- $8', 'Annual MVP- $35 (Newaygo County Only)', 'Reservation Fee- $5 per reservation'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ ('two bathroom/shower buildings', 'a sanitation station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -264129,7 +264376,23 @@
       "nightly_high": 41,
       "currency": "USD",
       "checked": "2026",
-      "note": "Newaygo County: electric $25-30, water and electric $31-36, full hookup $36-41 (lower rate Mon-Wed); rustic $15-20. Read 2026-10-15."
+      "note": "2026 Diamond Lake: electric site $25 Mon-Wed (non-holiday) / $30 Thu-Sun, water/electric $31 / $36, full hookup $36 / $41; rustic $15 / $20 (left out of the base); cabins $74-79. 21-day and seasonal rates ($1,850-2,050 a season) too. One rate for everyone; a county Motor Vehicle Permit is required for entrance: $8 a day, $24 for 3 days, $35 a year (Newaygo County residents only). $5 reservation fee per reservation.",
+      "reservation_fee": 5,
+      "entrance": {
+        "resident": 8,
+        "nonresident": 8,
+        "per": "vehicle_day",
+        "name": "Motor Vehicle Permit"
+      }
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.newaygocountymi.gov/departments/parks/diamond-lake-park/ https://www.newaygocountymi.gov/departments/parks/rates-fees/ https://www.newaygocountymi.gov/departments/parks/park-reservations/",
+      "note": "County pages (2026): electric $25-30, W/E $31-36, full hookup $36-41 (stored 25-41 confirmed), plus a $5 reservation fee and a required Motor Vehicle Permit ($8/day; both added); 60 sites (24 FHU, 36 electric) + 4 cabins, seasonal sites by waiting list (count not given); showers, dump; season May 1-Oct 11 confirmed; Firefly or phone booking. Amperage not stated. Phone (231) 689-1190 is the in-season campground line (off-season (231) 689-7340). Dropped site counts, season and booking text from th"
     }
   },
   {
@@ -265997,9 +266260,9 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "cityofaugresmi.com campground page: operating municipal campground w/ river/off-river/full-hookup RV sites, phone-reserved -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'riverfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://cityofaugrescampground.com/\nhttps://cityofaugresmi.com/campground/",
+    "website": "https://augresriverfrontcampground.com/\nhttps://cityofaugresmi.com/campground/",
     "phone": "989-876-8310",
-    "note": "City of Au Gres (municipal) campground, 522 Park St, on the Au Gres River (flows to Saginaw Bay / Lake Huron). 109 sites + 2 rustic cabins: 33 river sites (W/E), 50 off-river (W/E), 26 full-hookup with sewer (sites 84-109); boat launch. Distinct from the separate Arenac County 'Point Au Gres Park'. Season Apr 15-Oct 15. Reservable by phone/mail/PDF form (no online booking). --Claude",
+    "note": "City of Au Gres municipal campground, 522 Park St, on the Au Gres River near Saginaw Bay; city-run since the 1960s. Lighted riverfront walkway with a footbridge into town, kayak rentals at the office, boat launch. Distinct from Arenac County's separate Point Au Gres Park. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -266010,42 +266273,59 @@
       "sewer": true
     },
     "sites": {
-      "count": 109
+      "count": 108,
+      "note": "108 sites: 25 full hookup, 33 riverside and 50 off-river with water and electric; 2 cabins. The city says 28 more lots and more cabins are coming. The reservation form takes rigs from under 20 ft to 40+ ft."
     },
     "season": {
       "year_round": false,
-      "opens": "04-15",
-      "closes": "10-15"
+      "note": "Second weekend of April through the second weekend of October."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://augresriverfrontcampground.com/reservation-request/",
+      "note": "No self-service online booking: send the reservation request form or call (989) 876-8310 and staff assign the site. Bookings for the season open after January 2."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://augresriverfrontcampground.com/ ('108 spacious campsites and two cozy cabins, 25 full hook-up (sewer, water & electric), 33 river site with water and electric and 50 off river sites with water and electric'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://augresriverfrontcampground.com/ (as for hookups; 'Coming soon with additional 28 lots and cabins') + https://augresriverfrontcampground.com/reservation-request/ (Size of Camper: 'Small (up to 20 ft)' ... 'Extra Large (40+ ft)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://augresriverfrontcampground.com/reservation-request/ ('Campsites will be available for reservations after January 2nd for the current year of the 2nd weekend of April though the 2nd weekend of October'), read 2026-10-22; the derived 04-15 / 10-15 fall outside those weekends and are cleared",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://augresriverfrontcampground.com/ ('At this time, we handle all bookings in-house'; 'To book or to contact us today, call (989) 876-8310') + https://augresriverfrontcampground.com/reservation-request/ ('While we don't currently offer self-service online booking, our reservations team personally manages each request'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://augresriverfrontcampground.com/amenities/ ('modern restroom and shower facilities', 'Small store inside park office for ice, drinks, wood, snacks and more!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "ffc5834f4306ded3",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://augresriverfrontcampground.com/ https://augresriverfrontcampground.com/amenities/ https://augresriverfrontcampground.com/reservation-request/ https://cityofaugresmi.com/campground/ https://cityofaugrescampground.com/",
+      "note": "The campground's own site (augresriverfrontcampground.com, (c) 2025): 108 sites (count 109 -> 108: 25 full hookup, 33 river and 50 off-river W/E) + 2 cabins; water/sewer confirmed (amperage not stated); showers, office store; season 2nd weekend of April - 2nd weekend of October (derived 04-15/10-15 cleared, span in season.note); booked by request form or phone, no online booking. No rate published anywhere by the city (fees stay empty)."
     }
   },
   {
@@ -269246,49 +269526,60 @@
       "sewer": true
     },
     "sites": {
-      "count": 44
+      "count": 44,
+      "max_rig_ft": 60,
+      "pull_through": true,
+      "note": "44 shaded sites for RV or tent: 9 full hookup, the rest 30- or 50-amp electric only."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "note": "Showers for registered guests only; water fill station."
     },
     "season": {
       "year_round": false,
-      "opens": "05-20",
-      "closes": "10-10"
+      "opens": "05-19",
+      "closes": "10-10",
+      "note": "2027: tentatively opens Wednesday May 19, closes Sunday October 10."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/curry-park-campground",
+      "note": "Online only: 'There are no in person or phone reservation options.' 2027 reservations open January 5, 2027."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('electric at each site', '9 full hook-up sites', '50 amp electrical (no water at site)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('The 44 sites are shaded and suitable for RV or tent camping', '9 full hook-up sites') + Campspot park record (full-hookup and 20/30/50-amp electric types to 60 ft, 'Pull-Through' amenity; campspot_tier_2026-10-13.jsonl), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('modern restroom/shower facilities', 'Use of showers are for registered guests only', 'a sanitary dump station', 'a water fill station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "https://www.campspot.com/book/curry-park-campground (Campspot park record: closed 2026-01-06 to 2026-05-19 and from 2026-10-11), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('CLOSED FOR THE SEASON'; 'tentatively set to open for the Summer Season on Wednesday, May 19, 2027'; 'will close for the Season on Sunday, October 10, 2027'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('Reservations for Curry Park can be made online', 'There are no in person or phone reservation options', 2027 reservations open January 5, 2027), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/curry-park-campground (Campspot's pricing for each RV site type, one night from 2026-10-20, 2 adults; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://ironwoodmi.gov/curry-park-campground/ (2026 rates), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://ironwoodmi.gov/curry-park-campground/ ('Full Hookup (water, sewer & electric): $45.00', 'Weekly Rates (Full Hookup only): $260.00', '50 amp electrical (no water at site): $40.00', '30 amp electrical (no water at site): $35.00', 'Water fill and dump station costs are included in camping rates'; season dates for 2027), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -269297,11 +269588,16 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 30,
-      "nightly_high": 40,
+      "nightly_low": 35,
+      "nightly_high": 45,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (RV or Tent - Electric Only (20/30AMP), RV and/or Tent - Electric Only (20/30/50AMP) and Full Hookup RV Site). October 2026: $30-40 on a Tuesday. The park is closed for the season on those dates; Campspot still shows its rates. Read 2026-10-13. The City of Ironwood's 2026 rates agree: $30 for 30-amp electric, $35 for 50-amp and $40 for full hookups, or $250 a week with full hookups."
+      "checked": "2027",
+      "note": "City of Ironwood 2027 rates: 30-amp electric (no water at site) $35 a night, 50-amp electric $40, full hookup $45; full hookup $260 a week. One rate for everyone (no resident rate stated). Dump station and water fill included for campers ($15 each for non-guests). Campspot quoted the 2026 rates at $30-40."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://ironwoodmi.gov/curry-park-campground/ (plain HTTP and the browser hit a rate-limit / robot check; read through WebFetch) https://www.campspot.com/book/curry-park-campground (park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "City page (2027 season posted): $35 (30-amp) / $40 (50-amp) / $45 full hookup (fees 30-40 -> 35-45, checked 2027); 44 sites, 9 full hookup, 50-amp, to 60 ft with pull-throughs on Campspot; modern restrooms/showers, dump, water fill; season May 19 (tentative) - Oct 10, 2027 (opens 05-20 -> 05-19); online-only Campspot booking from Jan 5. Campground phone (906) 932-5050 x122 matches the entry. Note unchanged."
     }
   },
   {
@@ -938854,7 +939150,7 @@
     "waterfront": "creekside",
     "waterfront_evidence": "canopy-blind satellite; operator's Campspot per-site category 'RV 30/50 Amp Waterfront Full Hook-Up Site' ('Enjoy the creek right in your backyard! Limited sites on the creek') = per-site reservation data for RV pads on Duke Creek",
     "inclusion_evidence": "dukecreek.com 2026 rates + Campspot booking: nightly W/E RV sites $48 and FHU $50-58 (June 2027 weeknight quote), pull-throughs -> real transient RV campground; published base $48 <= $50",
-    "website": "http://www.dukecreek.com/\nhttps://www.campspot.com/park/duke-creek-campground-cedarsprings-mi",
+    "website": "http://www.dukecreek.com/\nhttps://www.campspot.com/book/duke-creek-campground",
     "phone": "616-696-2115",
     "note": "Campground in natural woods along Duke Creek, an official trout stream (fishing needs a license), 18 miles north of Grand Rapids in Cedar Springs.  Every weekend brings arts and crafts, an activity, a penny dive and a wagon ride, and there are hiking trails and a pool with no lifeguard on duty.  Sites have a fire ring and a picnic table but no grill.  Aggressive dog breeds aren't allowed, nor is outside firewood.  Cabins and park models are also rented. --Claude",
     "rating": {
@@ -938869,26 +939165,38 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 74,
+      "max_rig_ft": 45,
+      "note": "On Campspot: 70 RV sites (18 water + electric to 25 ft, 17 20/30-amp full hookup to 40 ft, 22 30/50-amp deluxe full hookup to 45 ft, 4 waterfront full hookup to 40 ft, 7 pull-throughs to 45 ft and 2 small pull-throughs to 25 ft) and 4 water + electric tent sites, plus cabins and a park model."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/duke-creek-campground",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "note": "Booked on Campspot from the campground's 'Reserve Today!' link; 2026 summer reservations opened January 1 at 9 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.dukecreek.com/faq3fd16167 ('Every site comes with water, electricity, a fire ring and a picnic table', 'Full hook-up sites include a sewer hook-up') + http://www.dukecreek.com/ ('Full Hook-Up 30/50 AMP Nightly - $53.00'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "https://www.campspot.com/park/duke-creek-campground-cedarsprings-mi (site types '30/50 Amp Pull-Through Site', 7 sites, and '30/50 Amp Small Pull-Through Site', 2 sites; Campspot lists 74 RV and tent sites in all; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/book/duke-creek-campground (site types with counts and max lengths; campspot_tier_2026-10-13.jsonl), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "http://www.dukecreek.com/ ('Reserve Today!' -> campspot.com/book/duke-creek-campground; 'RESERVATIONS FOR THE 2026 SUMMER SEASON OPEN UP JANUARY 1ST, 2026 AT 9:00 AM'; '** Two night minimum on weekends'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "http://www.dukecreek.com/ ('Free Wifi Still connected and enjoy free wifi on our grounds'), read 2026-10-13; http://www.dukecreek.com/faq3fd16167 ('Q: Are there any public restrooms/showers? A: Yes, there are showers and restrooms located in the Pool House and at the end of the office.'), read 2026-10-13",
@@ -938914,6 +939222,11 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Water + Electric Site, 20/30 Amp Full Hook-Up Site, 30/50 Amp Deluxe Full Hook-Up Site, 30/50 Amp Pull-Through Site, 30/50 Amp Small Pull-Through Site and 30/50 Amp Waterfront Full Hook-Up Site). October 2026: $48-58, Tuesday and Saturday alike. Campspot offers no sites in January 2027. June 2027 isn't open for booking yet. The park adds 3% of the site charge as a 'Credit Card Fee'. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13. The campground's 2026 rates, for a family of 5, match Campspot: $48 a night for water and electric, $50 for a 20/30-amp full-hookup site, $53 for 30/50 amps, $55 for a pull-through and $58 for a waterfront full-hookup site, or $312-377 a week.  An additional guest costs $3 for a day pass or $5 overnight, and weekends take a 2-night minimum."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://www.dukecreek.com/ (301 to the live site) https://www.dukecreek.com/faq3fd16167 https://www.campspot.com/book/duke-creek-campground (the site's 'Reserve Today!' link; site types in audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "Operator site is live (http 301s through): 2026 rates $48 W/E to $58 waterfront FHU (stored fees match; left), plus a 3% card fee on Campspot; 50-amp/water/sewer confirmed; 74 Campspot sites (70 RV, 4 tent) to 45 ft with pull-throughs (count and max length added); two-night weekend minimum added; booking URL set to the operator's /book/ engine. Not mostly seasonal: 70 RV sites sell nightly on Campspot; the park also offers season-long stays (no count given). Season dates not stated. Price gate:"
     }
   },
   {
@@ -939080,7 +939393,7 @@
     "inclusion_evidence": "covenanthills.org RV Campground pages: public nightly RV sites (standard $50 weekday / $55 weekend), online reservations, RV rules and seasonal section; satellite shows a dense RV campground north of the camp road -> real transient RV campground (camp-operated, not group-only); published base $50 <= $50",
     "website": "https://www.covenanthills.org/rvcamping\nhttps://www.covenanthills.org/e/reservations",
     "phone": "810-631-4531",
-    "note": "Large RV campground (~324 sites) run by Covenant Hills Camp, a Christian youth/family camp near Otisville, open to the public by reservation alongside the camp's own programs; standard and premium sites, seasonal section, RV events calendar, golf-cart rental. Nightly rates (reduced Apr/May/Sep/Oct): standard $50 weekdays, $55 weekends, $65 holiday weeks; premium $85; weekly $235. Ministry-run: expect camp rules and a Christian program on site. RV Life 4*/$ ~$31/night (auto 9/2026). --Claude",
+    "note": "Large RV campground run by Covenant Hills Camp & Retreat, a Christian youth/family camp near Otisville, open to the public by the night alongside the camp's own programs. Beach and lake access, game room, golf-cart rental, weekly activities Memorial Day-Labor Day. Ministry-run: no alcohol, marijuana or drugs anywhere in the campground. Gated entrance; every car needs a pass. --Claude",
     "rating": {
       "stars": 4.0,
       "price_tier": 1,
@@ -939088,30 +939401,52 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 324
+      "count": 321,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "321 full-hookup RV sites in three areas (Hemlock, Oak Ridge, Valley), 55 of them pull-through to 50 ft, plus 12 rustic tent sites and A-frame cabins. Over 100 sites are offered for seasonal lease."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/CovenantHillsCampRetreat",
+      "note": "Nightly, weekend and week-long stays book online (Firefly); monthly and seasonal stays by phone with the Guest Services Manager."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.covenanthills.org/rvcamping ('321 RV Sites with Full Hook-Ups; 55 Pull Through Sites & 12 Rustic Tent Sites') + Firefly portal (unit type 'Pull Through Up to 50ft RV Sites') + https://www.covenanthills.org/seasonalrv ('Our campground has over 100 offered sites for seasonal camping'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.covenanthills.org/e/reservations ('Daily, weekend, & weeklong Sites can be booked online. Long-term RV Camping will need to be booked with our Guest Services Manager') + https://www.covenanthills.org/rvcamping ('Monthly & Seasonal Reservations - Please Call the Office 810-631-4531'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.covenanthills.org/rvcamping (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.covenanthills.org/rvcamping ('Standard Sites: $50.00 Per Night Weekdays', 'Standard Sites: $55.00 Per Night Weekends', 'Premium Sites: $85.00 Per Night', 'Holidays: $65.00 Per Night', '$235.00 Per Week', '$785.00 Per Month', 'Additional car passes may be purchased for $10 each') + https://www.covenanthills.org/seasonalrv (Premium $4,950, Standard $3,950, Economy $3,250), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "hookups": {
+        "source": "https://www.covenanthills.org/rvcamping ('321 full hook up sites (electric, water & sewer- 20, 30 & 50 amp service)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.covenanthills.org/rvcamping ('Shower Facilities', 'Third Party WIFI & Laundry Options Available', 'Wifi - Additional cost with daily, weekly, and monthly rates'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.covenanthills.org/rvcamping ('RV Park is Open from April 1-October 31, closed for the winter months to all camping'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -939121,13 +939456,33 @@
     },
     "fees": {
       "nightly_low": 50,
-      "nightly_high": 55,
+      "nightly_high": 85,
       "currency": "USD",
       "checked": "2026",
-      "note": "Covenant Hills: standard sites $50 a night weekdays, $55 weekends; premium sites and holiday weeks cost more; reduced in April, May, September and October. Read 2026-10-15."
+      "note": "Standard sites $50 a night weekdays, $55 weekends, $65 on holiday weekends and weeks (Memorial Day, the week of July 4, Family Camp week, Labor Day, the first two October weekends); premium sites $85; reduced in April, May, September and October. $235 a week, $785 a month; seasonal packages $3,250-4,950. Two car passes included per site; extra cars $10. A 50% non-refundable deposit at booking."
     },
     "discounts": {
       "good_sam": false
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true,
+      "note": "Wi-Fi is a paid third-party service. The camp lists 'Third Party WIFI & Laundry Options'."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.covenanthills.org/rvcamping https://www.covenanthills.org/e/reservations (Firefly portal app.fireflyreservations.com/reserve/property/CovenantHillsCampRetreat) https://www.covenanthills.org/seasonalrv",
+      "note": "Camp's own pages: standard $50 weekday / $55 weekend / $65 holiday, premium $85 (high 55 -> 85); 321 full-hookup 50-amp sites (count 324 -> 321), 55 pull-throughs to 50 ft, 12 tent sites; showers, paid Wi-Fi; open Apr 1-Oct 31; nightly/weekly online on Firefly, monthly/seasonal by phone. Ordinary public nights confirmed (not retreat/member-only). Seasonal: 'over 100' of 321 sites offered for seasonal lease (roughly a third). Price gate: $50 base, at the line; the family has not stayed. Dropped r"
     }
   },
   {
