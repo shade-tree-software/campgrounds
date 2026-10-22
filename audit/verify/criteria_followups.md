@@ -482,3 +482,12 @@ me drop and report); each needs the research named before a verdict.
 - **1504 Black River Bay**: also sells a "Trailer Site, No electric, No water, $15 per night"; base left at $45 (W/E) - unclear whether the dry site takes a motorhome.
 - **1403 Bear Spring Mountain**: DEC 37 sites vs RA description 41 vs RA list 33.
 - p3-72's rap.py misses RA labels with a double space; fixed copy rap2.py (session scratch p3-74). parks.ny.gov unreadable (Cloudflare) - OPRHP entries rest on ReserveAmerica.
+
+### p3-75 (NY, 2026-10-21)
+- **1485 Creekview DROPPED** (presence: placeholder site, 9 Google reviews, no rate anywhere).
+- **1473 Cayuga Wine Trail**: asks.md (Van vs Motorhome site types decide the gate).
+- **1477 Elkdale**: sells weeks/months/seasons, "We also welcome construction workers for long term camping"; $50 nightly (undated) at the gate; no nightly-vs-seasonal count (test 4 passes on no count).
+- **1475 Country Hills**: daily/weekly/monthly/seasonal + rallies; online nightly booking, no application; rate page headed 2025, $43 + $2.50/night online fee.
+- **1396 Fillmore Glen**: 2027 bridge construction limits sites 27-60 to vehicles of 9 tons or less (EKKO passes).
+- **1438 Chemung**: ReserveAmerica link replaced with the county's working one. **1410 Caroga Lake** closes 09-05.
+- ralist2.py (session scratch p3-75) returns every campsite at parks that also have cabins.
