@@ -450,3 +450,9 @@ me drop and report); each needs the research named before a verdict.
 - **606 Campbell's Lake** (--AWH): scfc.gov states no road or vehicle limit; aerial shows a car on a sand clearing via an unpaved sand track. 23-ft fit rests on AWH.
 - **97 Sedalia**: FS fee box $7/$14 vs its own text + rec.gov 2026-27 $5/$10 ($5 kept). Loop 2 (sites 6-12) opens only for deer (Aug 28-Jan 3) and April turkey seasons.
 - **4350 Elmwood**: site count and 40-ft max cleared (camper report only).
+
+### p3-71 (SC, 2026-10-21)
+- **13978 H. Cooper Black**: policy_ref "none" removed - it is an SC State Parks area booking on their site under the state:SC rules (13-month window, 2-night minimum), not an SCDNR site; open to any RV camper. Max rig 91 ft comes from the reservation site's park filter.
+- **610 Hunter Pond / 611 Lee Pond**: SCFC states no road surface or vehicle length (sites off TT 110 Rd); inclusion rests on "drive-in campsite".
+- **4385 Mill Creek (Sumter County)**: rates ($20/$25) come from an undated 2014 renovation write-up; no 2024+ date. Call 803-436-2248.
+- **4344 Oconee**: winter closures Dec-Mar "contact the park"; year_round cleared. reserve.southcarolinaparks.com's park filter `maxrv` sometimes disagrees with park pages (Poinsett 60 vs 40) - park page wins.

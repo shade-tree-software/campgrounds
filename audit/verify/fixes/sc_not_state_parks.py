@@ -13,7 +13,7 @@ import json, os, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.insert(0, ROOT)
 import campground_schema as cs
-IDS = [606, 607, 608, 609, 610, 611, 612, 13978]
+IDS = [606, 607, 608, 609, 610, 611, 612]  # 13978 H. Cooper Black removed 2026-10-21: it books on SC State Parks under the state:SC rules (p3-71)
 CG = os.path.join(ROOT, "campgrounds.json")
 rows = json.load(open(CG, encoding="utf-8"))
 n = 0
