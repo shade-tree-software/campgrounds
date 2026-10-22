@@ -1952,24 +1952,80 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Electric Hookups: 0', 'The campground has a dump station and potable water, but NO water or electric hookups') + https://www.recreation.gov/api/camps/campgrounds/234036 ('No electric, water or sewer hook-ups are available.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234036/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234036/rates (Peak Season 2026-05-22 to 2026-10-25 and 2027-05-28 to 2027-10-25: RV NONELECTRIC 30, STANDARD NONELECTRIC 30, GROUP TENT ONLY AREA 45), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('CLOSED', 'Due to impacts for Hurricane Helene Linville Falls campground will be closed to all camping in 2026') + https://www.nps.gov/blri/planyourvisit/roadclosures.htm (Linville Falls Spur Road row) + recreation.gov availability, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('TOTAL SITES: 64', 'RV Only: 19', 'Tent Only: 14', 'Group: 2') + https://www.recreation.gov/api/camps/campgrounds/234036 ('In addition to the 39 sites available for advance reservation, 25 campsites are available on a first come, first served basis', 'Most site are limited to only one vehicle') + RIDB catalog (Max Vehicle Length 17-50, Driveway Entry Pull-through 4), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Restrooms with flush toilets, drinking water ... No electric hookups or showers in campground', 'dump station and potable water') + https://www.recreation.gov/api/camps/campgrounds/234036 ('There are no showers', amenities 'Dump Station', 'Flush Toilets', 'Drinking Water', 'Food Storage Locker'; 'Generator use is prohibited from 9:00 pm to 8:00 am'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Campsites are available on a first-come, first-served basis. In addition, advance reservations can be made for some campsites up to six months in advance by visiting www.recreation.gov') + https://www.recreation.gov/api/camps/campgrounds/234036 (description; facility_rules maxConsecutiveStay 30, maxStay 30 days 'Each Year'; is_commercially_managed false; facility_phone '828-765-7818 (MAY-OCTOBER)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov 2026 and 2027 peak season: $30 a standard or RV site, $45 a group tent site."
+    },
+    "status": {
+      "operating": "temporarily_closed",
+      "note": "NPS: 'Due to impacts for Hurricane Helene Linville Falls campground will be closed to all camping in 2026.' No reopening date published; recreation.gov shows every site 'Closed' in October 2026, and May 2027 not yet released. Parkway road status (October 21, 2026): Linville Falls Spur Road open, 'Linville Falls Campground and Picnic Area CLOSED for a Helene related closure.'"
+    },
+    "sites": {
+      "count": 64,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "64 sites (19 RV-only, 14 tent-only, 2 group); 39 reservable and 25 first-come. RIDB max vehicle lengths run 17 to 50 ft and many RV-capable sites are under 25 ft; 4 pull-throughs. Most sites take one vehicle."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": false,
+      "dump": true,
+      "potable_water": true,
+      "note": "Food storage lockers; generators prohibited 9 pm to 8 am."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "max_stay_nights": 30,
+      "note": "Operated by the NPS (not a concession). 39 sites reservable up to six months ahead on recreation.gov or (877) 444-6777; 25 first-come sites are 'booked in person at the campground kiosk' and are not tracked online. recreation.gov allows 30 nights in a row and 30 days a year. Campground phone 828-765-7818 (May - October)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm (read in a browser) https://www.nps.gov/blri/planyourvisit/roadclosures.htm (road status as of October 21, 2026) https://www.recreation.gov/api/camps/campgrounds/234036 https://www.recreation.gov/api/camps/campgrounds/234036/rates https://www.recreation.gov/api/camps/availability/campground/234036/month (October 2026, May 2027) trip_data/ridb_campsites.json (RIDB catalog for 234036, fetched 2026-10-20)",
+      "note": "NPS page and recreation.gov: closed to all camping in 2026 for Hurricane Helene (recorded as temporarily_closed, no reopening date). Confirmed no hookups (now manual, adding water/sewer false) and the $30 fee; added 64 sites (39 reservable + 25 FCFS) to 50 ft with pull-throughs, flush toilets/dump/water, no showers, 6-month window, 30-night max. Not stated: season dates, senior discount (the NPS page's fee section did not render)."
+    },
+    "phone": "828-765-7818"
   },
   {
     "id": 33,
@@ -7437,7 +7493,7 @@
     "id": 106,
     "kind": "campground",
     "location": "36.4328,-78.3732",
-    "name": "J C Cooper Campground",
+    "name": "J.C. Cooper Campground",
     "waterfront": "lakefront",
     "inclusion_evidence": "ncparks.gov Kerr Lake page: JC Cooper has electric RV sites; temporary seasonal renovation closure from Aug 2026 (not permanent)",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Many campsites are located on the lakefront.  Part of Kerr Lake State Recreation Area.",
@@ -7445,7 +7501,7 @@
     "elevation_meters": 108.0,
     "state": "NC",
     "ownership": "state",
-    "website": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
+    "website": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake\nhttps://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -7481,6 +7537,26 @@
         "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area ('Operating Season Schedule 2026' / alerts), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904 (site list filtered to the three 'J.C. Cooper Campground at Satterwhite Point' areas, read 2026-10-22: 36 electric sites 'Electric Hookup available: 50 amp', 24 more plus host sites H1-H3 '30 amp', all with 'Water Hookup'; the 47 non-electric sites also list 'Water Hookup')",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake ('JC Cooper Area 1 - Electric/RV Hookup and Non-electric 65 sites total, 2 campground host sites, 1 double site, Shower house, Bathroom, Playground'; 'Area 2 ... 30 sites total'; 'Area 3 - Non-electric 12 sites total, Shower house') + ReserveAmerica site list for the three J.C. Cooper loops (site type and driveway column), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake (JC Cooper Area 1 and Area 3 'Shower house'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904 (Booking Window for Campsite Electric / Non-Electric; 'Business rules for Holiday Weekends'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
@@ -7491,7 +7567,40 @@
       "operating": "temporarily_closed",
       "reopens": "2027 season",
       "note": "Closed for the season from August 1, 2026 to improve the campground and restrooms; Area 1 is normally open year-round."
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 107,
+      "pull_through": true,
+      "note": "110 sites on the booking site including three campground host sites (H1-H3), so 107 to book: Area 1 has 41 electric and 21 non-electric, Area 2 has 19 electric and 14 non-electric, Area 3 has 12 non-electric (the park page lists Area 2 at 30 sites). Sites 101-103 in Area 1 are electric pull-throughs (108-118 ft); the rest are back-ins with listed driveways of 20 to 90 ft, 41 of them 25 ft. A group camp is separate."
+    },
+    "facilities": {
+      "showers": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 180,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 14
+          }
+        }
+      ],
+      "note": "Booking page: campsites 'can be made for today and can be made up to 6 Month(s) in advance'. Holiday weekends (Memorial Day, July 4th, Labor Day) need 2 nights, cut to 1 night when booking within 14 days of arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
+      "note": "Status (closed for the season from August 1, 2026 for campground and restroom improvements) and season (Area 1 year-round with 24-hour gate access; Area 2 from March 23, Area 3 from May 18) re-read on the park's pages and stand, as do fees ($30 / +$10 electric). Added 50-amp electric (some 30) with water at the site, 107 bookable sites with three pull-throughs, shower houses, 6-month window and the booking site's holiday minimum (waived within 14 days, not the agency row's 7). Not stated: sewer,"
+    },
+    "phone": "(252) 438-7791"
   },
   {
     "id": 107,
@@ -7619,7 +7728,7 @@
     "elevation_meters": 99.0,
     "state": "NC",
     "ownership": "state",
-    "website": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
+    "website": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake\nhttps://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -7650,6 +7759,26 @@
         "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area ('Operating Season Schedule 2026' / alerts), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904 (site list filtered to loops 'Henderson Point Campground - Area 1' and '- Area 2', read 2026-10-22: all 43 Area 2 sites incl. host sites H3-H5 'Electric Hookup available: 50 amp' + 'Water Hookup'; the 31 Area 1 non-electric sites also list 'Water Hookup')",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake ('Henderson Area 1 - Non-electric 32 sites total, 1 group site, 2 campground host sites, 2 double sites, Shower house'; 'Area 2 - Electric/RV Hookups 43 sites total, 3 campground host sites, 3 double sites, Shower house') + ReserveAmerica site list for the two Henderson Point loops (site type and driveway column), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake (Henderson Area 1 and Area 2 each 'Shower house'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904 (Booking Window for Campsite Electric / Non-Electric; 'Business rules for Holiday Weekends'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
@@ -7657,7 +7786,40 @@
       "opens": "03-23",
       "closes": "09-27",
       "note": "2026: March 23 to September 27."
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 69,
+      "pull_through": false,
+      "note": "74 sites on the booking site including five campground host sites (H1-H5), so 69 to book: Area 1 has 29 non-electric sites, Area 2 has 40 electric sites; 5 are double sites. Every site is a back-in; listed driveway lengths run 25 to 123 ft, most 45-65 ft (four 25-ft sites). A group camp is separate."
+    },
+    "facilities": {
+      "showers": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 180,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 14
+          }
+        }
+      ],
+      "note": "Booking page: campsites 'can be made for today and can be made up to 6 Month(s) in advance'. Holiday weekends (Memorial Day, July 4th, Labor Day) need 2 nights, cut to 1 night when booking within 14 days of arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area https://www.ncparks.gov/state-parks/kerr-lake-state-recreation-area/camping-kerr-lake https://northcarolinastateparks.reserveamerica.com/camping/kerr-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552904",
+      "note": "Season (2026 Mar 23-Sep 27 for both Henderson Point areas, re-read on the park's 2026 schedule) and fees ($30 / +$10 electric) already recorded and stand. Added 50-amp electric with water at the site, 69 bookable back-in sites (plus five host sites), shower houses, 6-month window and the booking site's holiday minimum (waived within 14 days, not the agency row's 7). Henderson Point is not among the Kerr Lake campgrounds closed from August 1, 2026. Not stated: sewer, a dump station at this campgr"
+    },
+    "phone": "(252) 438-7791"
   },
   {
     "id": 109,
@@ -10521,7 +10683,7 @@
   },
   {
     "id": 146,
-    "phone": "919-362-0586",
+    "phone": "(919) 372-6000",
     "website": "https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping\nhttps://northcarolinastateparks.reserveamerica.com/camping/jordan-lake-state-rec-area/r/campgroundDetails.do?contractCode=NC&parkId=552903",
     "kind": "campground",
     "location": "35.7326,-79.0172",
@@ -10552,7 +10714,7 @@
         "electric": 10
       },
       "checked": "2026",
-      "note": "$30 a night for a site without hookups; electric and water $40, each including the $3-a-night reservation fee. The electric sites here are walk-up only (not bookable online); their price is NC's statewide rate. The same on a Saturday; no out-of-state rate. NC State Parks' booking site, June 2027 nights, read 2026-10-12."
+      "note": "$30 a night for a site without hookups; electric and water $40, each including the $3-a-night reservation fee. The same on a Saturday; no out-of-state rate. NC State Parks' booking site, June 2027 nights, read 2026-10-12."
     },
     "provenance": {
       "fees": {
@@ -10563,11 +10725,66 @@
         "source": "https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area (Operating Season Schedule 2026: \"Crosswinds Campground ... Camping areas A to C | Jan. 1, 2026 | Dec. 31, 2026\"), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/jordan-lake-state-rec-area/r/campgroundDetails.do?contractCode=NC&parkId=552903 (site list for the Crosswinds, Parkers Creek and Poplar Point loops, read 2026-10-22: 219 electric sites 'Electric Hookup available: 50 amp' (Crosswinds B and C, Poplar Point C and F), 360 at 30 amp, all with 'Water Hookup') + https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping ('134 sites have electric and water hookups' etc.), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "ReserveAmerica site list for the Crosswinds, Parkers Creek and Poplar Point loops (site type, driveway column) + https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping ('Crosswinds offers 182 campsites', 'Parkers Creek offers 250 sites', 'Poplar Point offers 579 sites', 'Vista Point offers 50 campsites for group RV camping', 'New Hope Overlook offers 24 campsites ... from 100 yard to a half mile from the parking lot'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping ('Showers, restrooms, trash containers, and a dump station are conveniently located', for each campground) + park page alert ('Parkers Creek Loop 1 comfort station (these are toilets only) closed indefinitely until repairs are made'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/jordan-lake-state-rec-area/r/campgroundDetails.do?contractCode=NC&parkId=552903 (Booking Window for Campsite Electric / Non-Electric; 'Business rules for Holiday Weekends') + https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping ('Loops 3 and 4 at Parkers Creek and Loop E at Poplar Point are all walk-up campsites that are available on a first-come, first-served basis'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
       "year_round": true,
       "note": "Crosswinds Campground is open all year; the other campgrounds open in March or April and close between September and November."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 961,
+      "pull_through": true,
+      "note": "Three family campgrounds: Crosswinds 141 sites on the booking site (Area A non-electric, B and C 50-amp electric/water), Parkers Creek 247 (30-amp electric/water and non-electric), Poplar Point 573 (30- and 50-amp electric/water and non-electric). The park page gives 182, 250 and 579. 27 pull-throughs (most at Poplar Point); back-in driveways listed from 23 ft, nearly all 40 ft or more. Vista Point's 50 RV sites are group camping only; New Hope Overlook is walk-in backpack camping."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "note": "Showers, restrooms and a dump station at each of Crosswinds, Parkers Creek and Poplar Point. Parkers Creek Loop 1's toilet-only comfort station is closed until repaired (October 2026 alert)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 14
+          }
+        }
+      ],
+      "note": "Booking page: campsites 'can be made for today and can be made up to 6 Month(s) in advance'. Loops 3 and 4 at Parkers Creek and Loop E at Poplar Point are walk-up only, first come first served. Holiday weekends (Memorial Day, July 4th, Labor Day) need 2 nights, cut to 1 night when booking within 14 days of arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area https://www.ncparks.gov/state-parks/jordan-lake-state-recreation-area/camping https://northcarolinastateparks.reserveamerica.com/camping/jordan-lake-state-rec-area/r/campgroundDetails.do?contractCode=NC&parkId=552903",
+      "note": "Whole-SRA entry: season (Crosswinds open all of 2026, others March/April to September-November) and fees ($30 / +$10 electric) stand. Added 50-amp (and 30-amp) electric with water at the site, 961 bookable family sites over Crosswinds, Parkers Creek and Poplar Point with pull-throughs, showers and dump stations, a 6-month window, walk-up loops (fcfs some_sites) and the booking site's holiday minimum (14-day waiver, not the agency row's 7). Not stated: sewer, max rig length, max stay, same-day cu"
     }
   },
   {
@@ -17128,10 +17345,10 @@
     "id": 245,
     "kind": "campground",
     "location": "35.4855,-82.6255",
-    "name": "Lake Powhatan Recreation Area & Campground",
+    "name": "Lake Powhatan Campground",
     "elevation_meters": 688.0,
     "note": "There is a small lake nearby, but the campground is not on the lake. --Claude",
-    "website": "https://www.fs.usda.gov/recarea/nfsnc/recarea/?recid=48176\nhttps://www.recreation.gov/camping/campgrounds/231995",
+    "website": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground\nhttps://www.recreation.gov/camping/campgrounds/231995",
     "state": "NC",
     "ownership": "federal",
     "waterfront": "not waterfront",
@@ -17155,20 +17372,90 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground ('Single Site with electric, sewer, and water hook-ups') + RIDB catalog for 231995 (17 reservable RV ELECTRIC sites with 'Electricity Hookup' 50 or 20/30/50 and Water/Sewer Hookup 'Yes'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/231995/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground (Fee Site and Info: 'Single Site: $37 per night', 'Single Site with electric hook-up: $46 per night', 'Single Site with electric, sewer, and water hook-ups: $52 per night') + https://www.recreation.gov/api/camps/campgrounds/231995/rates (2026 Peak Season 03-21 to 11-15: STANDARD NONELECTRIC 37, STANDARD ELECTRIC 46, RV ELECTRIC 52; Non-Peak 2026-11-16 to 12-31: 35 / 44 / 50) + notice '$5 daily extra vehicle fee', read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground ('Site Open') + the forest's Helene closures list (last updated October 1, 2026; Lake Powhatan not listed) + recreation.gov availability (October 2026 sites Reserved/Available), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground ('This site is open year round', Seasons of Use 'Open year-round', Operational Hours 'Gatehouse is open March-November 8am-8pm, off season 10am-5pm') + recreation.gov availability for January 2027, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB catalog for 231995 (type/reservable counts, Max Vehicle Length, Driveway Entry) + recreation.gov availability (71 sites) + https://www.recreation.gov/api/camps/campgrounds/231995 ('The shaded, private campsites are organized into four loops', '12 glamping tents'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground ('Flush toilets and showers in bath house', 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/231995 (amenities incl. 'Dump Station', 'Showers', 'Flush Toilets', 'Drinking Water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231995 (facility_rules reservationWindow 6 Months, maxStay 14 'Rolling 30 Days'; notices 'This campground is managed by Naventure', 'Winter Gatehouse Hours (Nov. 15-March 24): 10am-5pm'; is_commercially_managed false) + https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground (Contact Name: Naventure, Contact Phone: (828) 577-7278), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground ('Federal Interagency Senior/Access discounts only apply to single standard site rate. Does not apply to any other items or services. Card holder must be present on site to use discount.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 35,
       "nightly_high": 52,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Forest Service page: single site $37, with electric $46, with electric, sewer and water $52. recreation.gov's off-peak season (Nov 16 to mid-March) charges $35 / $44 / $50. Extra vehicle $5 a day; glamping tents $100 weekdays, $130 weekends."
+    },
+    "status": {
+      "operating": "open"
+    },
+    "season": {
+      "year_round": true,
+      "note": "Gatehouse open March-November 8am-8pm, off season 10am-5pm. Some loops close in winter: about a third of the site-nights in January 2027 show 'Closed' on recreation.gov."
+    },
+    "sites": {
+      "count": 71,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "71 bookable sites: 27 standard non-electric, 4 standard electric, 17 RV electric (full hookup) and 23 tent-only, plus 12 glamping tents and 13 staff sites. RV-capable sites list a max vehicle length of 25 to 50 ft (26 at 40 ft); 7 pull-throughs. Four loops."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "note": "Ice and firewood sold at the gatehouse."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Run by the concessionaire Naventure for the Forest Service; campground phone (828) 577-7278. Reservations up to 6 months ahead; 14 nights at most in a rolling 30 days. Check in at the gatehouse (winter hours Nov 15-March 24: 10am-5pm; outside them, pick up a map there)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior/Access discount applies only to the single standard site rate, card holder present."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r08/northcarolina/recreation/lake-powhatan-campground https://www.recreation.gov/api/camps/campgrounds/231995 https://www.recreation.gov/api/camps/campgrounds/231995/rates https://www.recreation.gov/api/camps/availability/campground/231995/month (October 2026, January and April 2027) trip_data/ridb_campsites.json (RIDB catalog for 231995, fetched 2026-10-20) https://www.fs.usda.gov/r08/northcarolina/about-area/helene (closures list, last updated October 1, 2026)",
+      "note": "Forest Service page and recreation.gov: open (not on the Helene closures list; 'Site Open'), year-round, run by concessionaire Naventure. Confirmed fees $35 off-peak / $37 peak to $52 full hookup and 50-amp/water/sewer hookups (now manual); added 71 bookable sites to 50 ft with pull-throughs, showers/flush toilets/water/dump, 6-month window, 14-night max, senior/access discount on the standard rate. Not stated: FCFS/walk-up, a minimum stay."
+    },
+    "phone": "(828) 577-7278"
   },
   {
     "id": 246,
@@ -42578,15 +42865,15 @@
     "id": 600,
     "kind": "campground",
     "location": "33.9111,-78.2972",
-    "name": "Holden Beach Pier Campground",
+    "name": "Holden Beach Campground",
     "elevation_meters": 0.3,
     "state": "NC",
     "ownership": "local",
     "waterfront": "coastal dunes",
     "inclusion_evidence": "Brunswick County tourism camping page: Holden Beach Pier Campground listed as operating with RV sites, pet-friendly, 441 Ocean Blvd W",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'coastal dunes' per owner: Located on the Holden Beach barrier island directly on the Atlantic Ocean. Six RV sites.",
-    "note": "Located on the Holden Beach barrier island directly on the Atlantic Ocean. Six RV sites. --AWH",
-    "website": "https://www.ncbrunswick.com/places-to-stay/camping-rv/\nhttps://hbtownhall.com/parks-%26-recreation",
+    "note": "Located on the Holden Beach barrier island directly on the Atlantic Ocean.  --AWH\nAt the Holden Beach pier, 441 Ocean Blvd W; one vehicle per site, otherwise paid parking in the pier lot. --Claude",
+    "website": "https://hbtownhall.com/parks-%26-recreation",
     "phone": "910-842-6488",
     "rating": {
       "stars": 4.5,
@@ -42599,15 +42886,42 @@
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hbtownhall.com/parks-%26-recreation ('Currently the Town of Holden Beach has six camping sites available'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://img1.wsimg.com/blobby/go/33823a15-c1dd-4855-8231-e746e7f3f203/downloads/Campground%20registration%20form%202024.pdf ('CAMPSITE RENTAL RATE 30 DAYS 1 DAY', 'Maximum 4 people to a site', 'Over 4 people-$5.00 extra per night', 'If paying with Credit Card 3% site fee applies'; the town's 2024 form, still the one linked on hbtownhall.com), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://hbtownhall.com/parks-%26-recreation ('To make reservations for the campground, pleased download the form below and call (910) 842-6488 or email reception@hbtownhall.com, Monday -Friday between 8:00 a.m. and 4:30 p.m.'; 'You must first make sure that there is space available before making payment'; 'We have a no refund policy') + the registration form ('A certain campsite cannot be guaranteed'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "14dc0bfb76170903",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 36,
+      "nightly_high": 90,
+      "currency": "USD",
+      "checked": "2024",
+      "note": "The town's rate changes by month: 1 day $36 in January, $45 Feb/Dec, $54 Mar/Nov, $63 Apr/Oct, $72 May/Sep, $81 Jun/Aug, $90 July; 30 days $800 (January) to $2,000 (July). Up to 4 people a site, $5 a night for each extra person; a card payment adds a 3% site fee; no refunds."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve with the town's registration form by phone (910) 842-6488 or email, Monday-Friday 8:00-4:30; check that space is available before paying. A specific site cannot be guaranteed. Arriving after hours or on a weekend, pay by mail before arrival. No refunds."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://hbtownhall.com/parks-%26-recreation https://img1.wsimg.com/blobby/go/33823a15-c1dd-4855-8231-e746e7f3f203/downloads/Campground%20registration%20form%202024.pdf (Town of Holden Beach 'Campground Registration' form, linked from the town page as 'Campground Registration Form') https://www.ncbrunswick.com/places-to-stay/camping-rv/",
+      "note": "Town of Holden Beach page and its registration form: confirmed 6 sites; added the town's month-by-month rate ($36 January to $90 July a night, 2024 form) and phone/email booking (Mon-Fri, no refunds). Not stated: hookups, facilities, a season statement (the rate table covers every month), max rig length."
     }
   },
   {
@@ -281791,7 +282105,7 @@
     "waterfront_evidence": "satellite at 35.2215,-83.3545: rural roadside RV sites, no water in frame",
     "website": "https://mimountaincampground.com/",
     "phone": "828-524-6155",
-    "note": "Family campground ~2.5 mi from downtown Franklin: large level shady full-hookup sites (30/50 amp), pull-throughs, plus cabins and tent sites; big rigs OK. Bathhouses, pavilion, playground, laundry, cable. Year-round. --Claude",
+    "note": "Family campground in a wooded setting ~2.5 mi from downtown Franklin; also cabins, tent sites, and monthly/long-term sites. Pavilion, playground; cell tower on site (AT&T, Verizon, T-Mobile). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -281802,39 +282116,46 @@
       "water": true,
       "sewer": true
     },
-    "sites": {
-      "pull_through": true
-    },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "showers": true,
+      "wifi": true,
+      "note": "The bathhouse closes 11/15 to 4/1; the restroom at the office stays open year round."
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "RV sites open year round; tent sites, cabins and the bathhouse close 11/15 to 4/1."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mimountaincampground.com/rates ('ELECTRIC, WATER, AND SEWER', 'DAILY 50 AMP ... Includes electric, water, sewer and wifi'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mimountaincampground.com/ and /rates, read 2026-10-22: the operator's pages say nothing about pull-through sites; the note-derived value is cleared",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mimountaincampground.com/ ('Our amenities include free WiFi, a clean bathhouse, laundry facility', 'Tent Sites, Cabins and Bathhouse closed 11/15 - 4/1 for the 2026/2027 season. Restroom at the office open year round.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://mimountaincampground.com/ ('*RVs welcome year round', 'RV sites open year round! Tent Sites, Cabins and Bathhouse closed 11/15 - 4/1 for the 2026/2027 season.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://mimountaincampground.com/rates ('DAILY 30 AMP | $47 + TAX', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://mimountaincampground.com/rates ('CAMPGROUND RATES (effective 1/1/2025)', 'DAILY 30 AMP $47 + TAX', 'DAILY 50 AMP $50 + TAX', 'Includes electric, water, sewer and wifi'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://mimountaincampground.com/ ('RESERVATIONS are REQUIRED!', 'BOOK online NOW' -> Firefly Reservations, nightly 'RV Full Hookup' unit type) + https://mimountaincampground.com/rates (cancellation policy), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -281846,7 +282167,19 @@
       "nightly_low": 47,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Full hookup with wifi, plus tax: 30A $47, 50A $50 (effective 1/1/2025)."
+      "note": "Full hookup with wifi, plus tax: 30-amp $47, 50-amp $50 a night; weekly $296/$315, monthly $725/$795 (rates effective 1/1/2025).",
+      "checked": "2025"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/MiMountainCampground",
+      "note": "Reservations required. Cancel 14+ days out for a full refund less $20; 14 to 7 days, 50% refund; under 7 days, no refund."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://mimountaincampground.com/ https://mimountaincampground.com/rates https://app.fireflyreservations.com/reserve/property/MiMountainCampground (the operator's booking engine, linked 'BOOK online NOW')",
+      "note": "Operator site and its Firefly booking engine: confirmed $47/$50 (+tax, effective 1/1/2025), full hookups to 50 amp, laundry, year-round RV sites; added showers and wifi, the seasonal bathhouse/tent/cabin closure (11/15-4/1), online booking and the cancellation policy. Cleared the note-derived pull-through (the operator never mentions it). Note trimmed of hookups, pull-throughs, 'big rigs OK', cable (the site offers wifi), laundry and year-round."
     }
   },
   {
@@ -282133,67 +282466,6 @@
     }
   },
   {
-    "id": 4278,
-    "kind": "campground",
-    "name": "Hawkins Creek Campground",
-    "location": "34.7072,-77.2248",
-    "elevation_meters": 8,
-    "state": "NC",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "RoverPass operator listing: RV sites $35 + tent sites $20, open all year, Hubert NC | live presence 2026-10-01: no operator website or bookable listing; Google Maps place at 252 Reid Acres Ln (0.04 km), not marked closed, phone 910-526-4705, 4.5 over 215 reviews - passes the amended rule (AWH 2026-10-01)",
-    "waterfront_evidence": "satellite at 34.7072,-77.2248: small amenity pond and wooded creek/wetland; RV pads set back inland behind vegetation",
-    "website": "https://www.roverpass.com/c/hawkins-creek-campground-hubert-nc/",
-    "phone": "910-353-0144",
-    "note": "Family-run campground (since 2005) in Hubert off Hwy 24 between Jacksonville and Swansboro, near Emerald Isle. ~85 sites incl ~58 full-hookups and 8 pull-throughs; big rigs OK. Pool, wifi, on-site pond. --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 85,
-      "pull_through": true
-    },
-    "facilities": {
-      "wifi": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "0945eb3b8b2d1ed7",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": false
-    }
-  },
-  {
     "id": 4279,
     "kind": "campground",
     "name": "Leatherwood Mountains Resort",
@@ -282205,8 +282477,8 @@
     "inclusion_evidence": "Operator site leatherwoodmountains.com/camping: 21 pull-through RV sites 30-amp/water, up to 35-ft rigs, public RV/tent camping welcome year-round",
     "waterfront_evidence": "satellite at 36.119,-81.477: designated RV row on open gravel/grass apron ~25-40m from Elk Creek (crosses under bridge SW), no treeline buffer between SW pads and creek",
     "website": "https://leatherwoodmountains.com/camping/",
-    "phone": "336-973-5044",
-    "note": "Mountain resort campground on the banks of Elk Creek; 21 RV sites along a pull-through gravel road, 30-amp + water (no sewer), showers a short walk. Accommodates 30'+ rigs, trailers to 35 ft. Year-round. Pool, fishing, hiking, store; horse-trail resort that also offers public RV camping. --Claude",
+    "phone": "800-462-6867",
+    "note": "Horse-trail mountain resort on the banks of Elk Creek that also sells RV camping to the public by the night. Pool pass, fishing, hiking and trail rides at the resort. Use the resort's directions, not GPS: its route from Boone (3 miles of gravel) is 'NOT INTENDED TO BE USED DURING INCLEMENT WEATHER ... OR FOR HORSE TRAILERS OR LARGE RIGS'; come in on NC 268 and Elk Creek Road instead. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -282219,39 +282491,50 @@
     },
     "sites": {
       "count": 21,
-      "max_rig_ft": 35
+      "max_rig_ft": 35,
+      "pull_through": true,
+      "note": "21 grass sites along a gravel road that runs through them; the longest rigs can't use the exit ramp and leave by the other end. Booking notes: 'length maximum of 35ft. Please call us to inquire about larger campers.' 5 more hookup sites at the Trail Barn across Elk Creek go with horse stalls (no bathrooms there; bring 100 ft of cord and hose)."
     },
     "facilities": {
       "showers": true,
-      "camp_store": true
+      "camp_store": true,
+      "dump": false,
+      "note": "No bath house in the campground; the showers and bathrooms at the barns are a short walk. Ice and firewood sold on site; dumpster; pool pass for sale."
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "'If it gets cold enough in the winter, you may lose water.'"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://leatherwoodmountains.com/camping/ ('30 AMP power & water hook up camp sites year round', 'No dump station on-site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://leatherwoodmountains.com/camping/ ('21 sites are easily accessed by our pull through gravel road that runs through the sites. We can accommodate large rigs with up to 35 foot box trailers', 'All sites are grass', 'Trail Barn ... 5 hook up camping sites') + FareHarbor booking notes ('We have a length maximum of 35ft'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://leatherwoodmountains.com/camping/ ('The barns and showers & bath rooms are within a short walk. There is no bath house in the camp ground at this time.', 'Showers & bathrooms available', 'No dump station on-site', 'Ice for sale', 'Firewood for sale on-site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://leatherwoodmountains.com/camping/ ('camp sites year round') + FareHarbor item headline '30 AMP power & water hook up campsites available year round' and booking notes, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://leatherwoodmountains.com/camping/ ('$45 per night per site when camping without horses', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://leatherwoodmountains.com/camping/ (Features: '$45 per night per site when camping without horses', '$30 per night per site when you rent stalls'; Deposit Policy) + FareHarbor booking notes for 'Elk Creek Campground' (same two rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://leatherwoodmountains.com/camping/ + FareHarbor item 604136 (cutoff_reached_hours 24; booking notes 'Please check in at our main office when you arrive. Check in is available anytime after 8:30AM', 'Reservations will guarantee you a spot but specific sites can not be reserved'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -282264,7 +282547,22 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "$45 a night per site camping without horses ($30 with a stall rental)."
+      "note": "$45 a night per site camping without horses ($30 with a stall rental). Paid in full when booked; refundable or changeable up to 7 days before arrival less a $25 fee, non-refundable after."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://fareharbor.com/embeds/book/leatherwoodmountains-camping/?full-items=yes&flow=1324525",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "Booked online through the resort's FareHarbor page ('Book Camping Online Now'); a booking guarantees a spot, not a specific site. Online booking closes 24 hours before arrival. Check in at the main office any time after 8:30 AM. Trail Barn sites are reserved through the barn office, 336-973-5044."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://leatherwoodmountains.com/camping/ https://fareharbor.com/embeds/book/leatherwoodmountains-camping/?full-items=yes&flow=1324525 (the page's 'Book Camping Online Now' link; FareHarbor item 604136 'Elk Creek Campground', its booking notes and November 2026 calendar via fareharbor.com/api/v1/companies/leatherwoodmountains-camping/) https://leatherwoodmountains.com/directions/ Google Maps place 'Leatherwood Mountains Cabin Rentals', 512 Meadow Rd, Ferguson, NC 28624 (gm.py, read 2026-10-22)",
+      "note": "Operator's camping page and its FareHarbor booking page: confirmed $45/night without horses (now with the deposit policy), 30-amp + water (no sewer, no dump station), 21 pull-through-road grass sites, max 35 ft, year-round, showers and bathrooms a short walk (no bath house in the campground); added online booking (FareHarbor, 24-hour cutoff, no specific site). Open for 2026 (November dates bookable). Not stated: wifi, laundry."
     }
   },
   {
@@ -284513,6 +284811,11 @@
         "per": "night",
         "applies_to": "base"
       }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.cityofkm.com/189/Moss-Lake https://www.cityofkm.com/190/Brochures-Maps-Rules https://www.cityofkm.com/DocumentCenter/View/3401/Campground-Information https://www.cityofkm.com/DocumentCenter/View/3398/Campground-Map https://www.cityofkm.com/DocumentCenter/View/5011/Campground-Rules https://www.cityofkm.com/DocumentCenter/View/1412/John-H-Moss-Reservoir-Users-Guide",
+      "note": "City of Kings Mountain pages re-read: they confirm what the 2026-10-13 pass recorded (22 RV sites with max camper sizes to 40 ft, sites 5/12/14/15/28 pull-through, 'All campsites are full hookup with water, electric & sewer', Campspot booking, the 14-night / 70-days-a-year limit in the rules and city ordinance §92.22). The campground map shows a bath house. Nothing changed. Not stated by the city: a season or year-round statement, showers or a dump station by name (the note-derived facilities st"
     }
   },
   {
@@ -284868,9 +285171,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Person County site: RV loop + tent loop, all sites water/electric, dump station, $30/night RV -> real RV campground",
     "waterfront_evidence": "satellite at 36.4755,-78.8718: open camping field on a ridge between two Mayo Lake arms, ~100m+ wooded slope buffer to water; no shoreline pads",
-    "website": "https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-and-lake/parks-facilities-and-rentals/rv-sites-tent-camping",
+    "website": "https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-lake",
     "phone": "336-597-7806",
-    "note": "Person County Recreation, Arts & Parks. 120-acre park on Mayo Lake reservoir; RV sites with water + 30-amp electric, single dump station, $30/night. Mostly small/medium rigs, a few to ~40 ft. Reservable by phone. --Claude",
+    "note": "Person County Recreation, Arts & Parks. 120-acre park on Mayo Lake reservoir. Mostly small/medium rigs, a few to ~40 ft. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -284882,7 +285185,9 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "max_stay_nights": 7,
+      "note": "Reserve through the Mayo Lake Park office, 336-597-7806; payment in full at booking; 7 nights at most per reservation; check-in 3 pm, check-out 1 pm; reserving party 18 or older."
     },
     "provenance": {
       "hookups": {
@@ -284891,14 +285196,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-lake ('*For rentals, call Mayo Lake Park Office at 336-597-7806', read in a browser 2026-10-22) + the former RV & tent page as quoted by a web-search index ('Call the office at 336-597-7806 to make your reservation. Payment in full is required at time of reservation.', maximum stay 7 nights per reservation)",
+        "checked": "2026-10-22",
+        "method": "reported"
       },
       "facilities": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "Person County 'RV Sites & Tent Camping' page (https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-and-lake/parks-facilities-and-rentals/rv-sites-tent-camping) as quoted by a web-search index on 2026-10-22 ('New Fees Effective July 1, 2024', '$30.00 per night per site' for on-water RV and tent sites 1-28 with water and electric hookups); the live URL now answers 'Page Not Found'",
+        "checked": "2026-10-22",
+        "method": "reported"
       }
     },
     "note_scan": {
@@ -284908,12 +285218,24 @@
     },
     "facilities": {
       "dump": true
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2024",
+      "note": "County RV & tent page, 'New Fees Effective July 1, 2024': on-water RV/tent sites 1-28 with water and electric $30 a night per site; primitive off-water tent sites $20 ($75 for all ten). Paid in full when booking. Read only through a search index (the page has since been removed); confirm by phone."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-lake (read in a browser; plain HTTP gets an Akamai 403) https://www.personcountync.gov/home/showpublisheddocument/18798/639168578563200000 (Mayo Park map, linked from that page) https://www.personcountync.gov/government/departments-i-z/recreation-arts-parks/mayo-park-and-lake/parks-facilities-and-rentals/rv-sites-tent-camping (the entry's website: 'Page Not Found' in a browser on 2026-10-22; its text read only through a web-search index)",
+      "note": "The county's RV & tent page (the entry's website) has been removed ('Page Not Found'); the current park page confirms RV and tent sites rented through the park office (336-597-7806) and its map shows two loops. Recorded, as reported (read through a search index of the removed page), the $30 fee effective July 1, 2024 and phone booking with a 7-night maximum. Note trimmed of hookups, dump station, price and booking. Not confirmed: hookups (30-amp derived stays), site count, season, rig lengths."
     }
   },
   {
     "id": 4327,
     "kind": "campground",
-    "name": "McDowell Nature Preserve",
+    "name": "McDowell Campground (McDowell Nature Preserve)",
     "location": "35.0944,-81.0239",
     "elevation_meters": 225,
     "state": "NC",
@@ -284922,8 +285244,8 @@
     "inclusion_evidence": "Mecklenburg County/TheDyrt: 56 sites incl 13 RV full/partial-hookup + 33 drive-up, water/electric, bathhouse -> keep",
     "waterfront_evidence": "pin at preserve entrance; campground loops under dense canopy in the preserve interior toward Lake Wylie, unresolvable, per-site map inaccessible - default down",
     "website": "https://parkandrec.mecknc.gov/Places-to-Visit/Nature/mcdowell-nature-center-and-preserve\nhttps://parkandrec.mecknc.gov/Places-to-Visit/Camping",
-    "phone": "980-314-1128",
-    "note": "Mecklenburg County Park & Rec nature preserve on Lake Wylie SW of Charlotte. 56 sites (33 drive-up, 10 primitive, 13 RV); E/W hookups, 30/50-amp, 13 pull-throughs, 38-ft max. Bathhouse w/ showers, laundry. Reservable online. --Claude",
+    "phone": "(980) 314-2267",
+    "note": "Mecklenburg County Park & Rec nature preserve on Lake Wylie SW of Charlotte. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -284931,44 +285253,53 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": true
     },
     "sites": {
       "count": 56,
       "max_rig_ft": 38,
-      "pull_through": true
+      "pull_through": true,
+      "note": "56 sites: 13 RV sites (paved pull-throughs with water and 20/30/50-amp power, posted for rigs of 25 to 38 ft, one of them R12 '25ft or less' with a 20-ft size line; only R5 has sewer), 33 drive-to sites with 26 x 11 ft pads, shared water and 20/30-amp power (offered for 'Conversion Van Camping'), and 10 primitive sites."
     },
     "facilities": {
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "flush_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://anc.apm.activecommunities.com/mecklenburgparks/reservation/landing/search?locale=en-US&keyword=mcdowell%20campground&eventTypeIds=30",
+      "window_opens_days": 182,
+      "max_stay_nights": 14,
+      "note": "Booked online on Mecklenburg County's ActiveNet site up to 182 days ahead and as late as an hour before; 14 nights at most. The full-hookup site R5 needs 2 nights; the other RV sites take 1. Check-in 3 pm, check-out noon. Camping contact (980) 314-2267."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ActiveNet site records, read 2026-10-22: every RV site 'Electricity: 50/30/20amps' with water at the site; R 5 '(35ft or less- Full Hookup)', 'Sewer Hookup: Yes'; the other RV sites '(… No Sewer)'",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkandrec.mecknc.gov/Places-to-Visit/Camping ('a 56-site campground ... 33 drive up sites, 10 primitive sites and 13 RV sites') + ActiveNet site records (names 'R 1 (30ft or less- No Sewer)' to 'R13', 'RV Size Accommodated', 'Site is paved and pull-through'; D3 'Pad: 26ft X 11ft', 'Electricity: 30/20amps', amenity 'Conversion Van Camping'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ActiveNet site records ('McDowell Campground features a centrally located restroom/showerhouse with hot and cold running water, flush toilets, and laundry room'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ActiveNet site records' Reservation Rules ('Minimum reservation time: 1 night' / R5 '2 nights', 'Maximum reservation time: 14 nights', 'Residents can make reservations at least 1 hour(s) in advance but not more than 182 day(s) in advance', same for non-residents, 'fixed check-in time of 3:00 PM and a fixed check-out time of 12:00 PM') + https://parkandrec.mecknc.gov/Places-to-Visit/Camping (contact 980-314-2267), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://parkandrec.mecknc.gov/Places-to-Visit/Camping (audit/price_research/local_nc_2026-10-15/nc_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://parkandrec.mecknc.gov/Places-to-Visit/Camping ('$35 (R) $40 (NR)'), read 2026-10-15; re-read by the phase-7 verifier 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284978,10 +285309,20 @@
     },
     "fees": {
       "nightly_low": 35,
-      "nightly_high": 40,
+      "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "Mecklenburg County: RV sites $35 for county residents, $40 non-residents. Read 2026-10-15."
+      "note": "Mecklenburg County RV sites $35 a night for county residents, $40 for non-residents (\"$35 (R) $40 (NR)\").",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 5,
+        "per": "night"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://parkandrec.mecknc.gov/Places-to-Visit/Camping https://parkandrec.mecknc.gov/Places-to-Visit/Nature/mcdowell-nature-center-and-preserve https://anc.apm.activecommunities.com/mecklenburgparks/reservation/landing/search?locale=en-US&keyword=mcdowell%20campground&eventTypeIds=30 (Mecklenburg County's ActiveNet booking site; site records via its rest/reservation/resource/detail API for RV sites R1-R5, R7-R13 and drive-to site D3)",
+      "note": "County camping page and its ActiveNet booking site: confirmed 56 sites, 13 paved pull-through RV sites to 38 ft with water and 50-amp (one, R5, full hookup), showers/flush toilets/laundry, online booking; added the 182-day window, 14-night max, R5's 2-night minimum (booking note). Fees ($35 resident RV rate) stand. Note trimmed to what no field holds. Not stated: season, dump station."
     }
   },
   {

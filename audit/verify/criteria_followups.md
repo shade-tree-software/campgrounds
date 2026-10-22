@@ -660,3 +660,13 @@ me drop and report); each needs the research named before a verdict.
 - **4265 Cullasaja River** $50 at the gate; daily rate posted beside monthly/seasonal - passes test 2.
 - **4260 Farm Country**: no posted rate, ordinary transient park; presence + RV Life $$ pass.
 - **37 Doughton Park**: come in by the Parkway; rec.gov warns GPS routes onto steep gravel roads.
+
+### p3-94 (NC, 2026-10-22)
+- **DROPPED:** 4278 Hawkins Creek (long-stay: full-time residents/mobile homes, workers; no posted rate, no engine).
+- **106 J.C. Cooper**: closed for the season from 2026-08-01 for improvements (with Nutbush 1/3/4 and Hibernia); re-check for 2027.
+- **32 Linville Falls**: temporarily_closed - NPS closed to all camping in 2026 (Helene). Re-check early 2027.
+- **146 Jordan Lake SRA**: entry spans three family campgrounds, pin at none - see asks.md. Fees note's "electric sites walk-up only" removed (only Parkers Creek 3/4 and Poplar Point E are walk-up).
+- **4327 McDowell**: fees re-based to the resident $35 + $5 non-resident surcharge. **4323 Cane Creek** has the same shape as a 25% resident discount (non-residents ×4/3) - not yet re-based.
+- **4279 Leatherwood**: Boone route via Elk Creek Rd (3 mi gravel) "NOT INTENDED ... FOR ... LARGE RIGS"; use NC 268. In the note.
+- **600 Holden Beach**: renamed to the town's name; 2023 Campendium "permanently closed" is wrong (town takes 2026 reservations).
+- **4273 Mi Mountain** $47 + tax; GSMNP 33 km.
