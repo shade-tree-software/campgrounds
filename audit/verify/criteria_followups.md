@@ -561,3 +561,11 @@ me drop and report); each needs the research named before a verdict.
 - **1440 Montour Falls**: website moved to villageofmontourfalls.gov; daily/weekly/monthly/seasonal, phone/form only.
 - **1452** season: county camping page still says all close Nov 1, 2025; park page Apr 1 - Nov 11 recorded. Phone corrected.
 - Missing dec.ny.gov / parks.ny.gov pages on 355, 348, 364, 338. **355/1419** close 09-05.
+
+### p3-83 (NY, 2026-10-21)
+- **1502 Streamside DROPPED** ($54 any site 2027, no gateway). **1507 Shady Shores DROPPED** (new operator Unhitched RV; no 1-night stay offered, no nightly price).
+- **1472 Wayne County Fairgrounds**: ownership local -> private (run by the Wayne County Fair association, office 315-597-5372); camping stays open through fair week; page warns "this is a fairgrounds and not a recreational camping site" with "no trailer pads" - kept.
+- **1510 Schroon River Escape** $70-90 under the Lake George gateway (14 km); phone corrected (Schroon River RV Resort, LLC).
+- **1459 Webster Park**: county pricing sheet PDF gone; out-of-county +$10 unconfirmed.
+- **1461 St. Johnsville**: phone -> marina 838-289-4506 (also Campspot's).
+- Short listed lengths: 346 Putnam Pond (16 of 61 drive-in at 30 ft), 1411 Stony Brook.
