@@ -2090,14 +2090,100 @@
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$30 a night for every site type (RV, standard, tent)."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.recreation.gov/camping/campgrounds/234037 ('per-campsite rates: STANDARD/RV NONELECTRIC $30', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.nps.gov/blri/planyourvisit/price-cg.htm (Fees: 'Julian Price Campground Fee ... $30.00') + https://www.recreation.gov/api/camps/campgrounds/234037/rates (2026 Peak Season 2026-05-22 to 10-25: RV NONELECTRIC 30, STANDARD NONELECTRIC 30, TENT ONLY 30), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.nps.gov/blri/planyourvisit/price-cg.htm ('Holders of the Interagency Senior, Access, Golden Age, or Golden Access passes are entitled to a 50% discount on the base fee of the site physically occupied by the pass holder'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234037 (notice 'There are no electric, water or sewer hook-ups available') + https://www.nps.gov/blri/planyourvisit/price-cg.htm ('Electric Hookups: 0', 'NO water or electric hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/blri/planyourvisit/price-cg.htm ('TOTAL SITES: 190 Electric Hookups: 0 RV Only: 73 Tent Only: 90 ... Other: 27') + recreation.gov campsite catalog and October 2026 availability for 234037, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/blri/planyourvisit/price-cg.htm (Amenities: 'Cell Phone Reception No', 'Internet Connectivity No', 'Camp Store No', 'Laundry No', 'Dump Station Yes, Seasonal', 'Potable Water - Seasonal'; 'Flush Toilets - seasonal') + https://www.recreation.gov/api/camps/campgrounds/234037 ('Shower house not available in 2026'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/blri/planyourvisit/price-cg.htm (Operating Hours & Seasons: 'Loop A open Friday, May 22, 2026 - Sunday, October 25, 2026', 'Closed for Winter October 26-May 21') + https://www.nps.gov/blri/planyourvisit/camping.htm ('open from May through late October, weather permitting. They are closed in winter'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.recreation.gov/api/camps/availability/campground/234037/month (October 2026: sites in Loops A, B and D Reserved/Available through 10-25; C, E, F 'Closed') + https://www.nps.gov/blri/planyourvisit/roadclosures.htm (MP 294.6-298.5 open with sporadic single-lane closures for a Great American Outdoors Act project; Helene closures listed only for Linville Falls and Crabtree Falls campgrounds), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234037 ('In addition to the 75 sites available for advance reservations, 115 sites are available on a first come, first served basis'; notice 'Reservations only. No first come, first served, camping in 2026'; rules maxConsecutiveStay 30, maxStay 30 days Each Year; is_commercially_managed false) + https://www.nps.gov/blri/planyourvisit/price-cg.htm ('advance reservations can be made for some campsites up to six months in advance'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
-    }
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Interagency Senior, Access, Golden Age and Golden Access holders get 50% off the base fee of the site the pass holder occupies."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 190,
+      "pull_through": true,
+      "note": "NPS: 190 sites, 73 RV-only, 90 tent-only, 27 other; recreation.gov's catalog lists 192 across Loops A-F. The RV loops E (16 sites) and F (46) and tent Loop C were closed throughout October 2026 on recreation.gov; RV and standard sites in Loops A, B and D took bookings. Loop A's RV/standard sites are 15-35 ft except A30, A31 and A34 (64-69 ft); A11 (21 ft) and A25 (23 ft) are back-ins."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": false,
+      "laundry": false,
+      "wifi": false,
+      "note": "Recreation.gov: 'Shower house not available in 2026' (the NPS page still lists seasonal hot showers). No cell reception or internet. Firewood sold and staff on site in season; food storage lockers; amphitheater. Non-campers pay $6 for the dump station."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "10-25",
+      "note": "2026 season Friday May 22 - Sunday October 25; 'Closed for Winter October 26-May 21'. The Parkway's campgrounds open May through late October, weather permitting; exact dates shift each year."
+    },
+    "status": {
+      "operating": "open",
+      "note": "Open in 2026 with Loops C, E and F (including the two big RV loops) closed on recreation.gov through October."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/234037",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "max_stay_nights": 30,
+      "note": "Run by the NPS (not commercially managed). Normally 75 sites are reservable up to six months ahead on recreation.gov or (877) 444-6777 and 115 are first-come, booked in person at the kiosk; but recreation.gov says 'Reservations only. No first come, first served, camping in 2026.' Stay limit 30 consecutive nights and 30 a year. Kiosk open 9:30 am-6 pm in season."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.nps.gov/blri/planyourvisit/price-cg.htm (read in a browser, sections expanded) https://www.nps.gov/blri/planyourvisit/camping.htm https://www.nps.gov/blri/planyourvisit/roadclosures.htm (read in a browser; last updated October 21, 2026) https://www.recreation.gov/api/camps/campgrounds/234037 and /rates https://www.recreation.gov/api/search/campsites?fq=asset_id:234037 (campsite catalog, 192 sites) https://www.recreation.gov/api/camps/availability/campground/234037/month (October 2026)",
+      "note": "Open in 2026 (Loops A, B, D; C, E, F closed; no Helene closure). Confirmed $30 all sites and the senior/access 50% discount; added no hookups, 190 sites with pull-throughs, flush toilets/dump/water (shower house closed in 2026), season May 22-Oct 25, recreation.gov booking with 6-month window and 30-night limit (reservations-only in 2026). AWH note left as is (A11 21 ft, A25 23 ft back-ins in Loop A, which is open)."
+    },
+    "phone": "(828) 963-5911"
   },
   {
     "id": 35,
@@ -20323,19 +20409,78 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB campsite catalog for facility 231993 (30 STANDARD ELECTRIC sites, Electricity Hookup '50' on 27 and '50/30' on 3; no water or sewer hookup attributes), fetched 2026-10-20",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/231993/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231993/rates (2026 Peak Season STANDARD NONELECTRIC 37 / STANDARD ELECTRIC 46; Non-Peak 35 / 44) + https://www.fs.usda.gov/r08/northcarolina/recreation/davidson-river-recreation-area ('Single Site: $37 per night', 'Single Site with electric hook-up: $46 per night', 'Double Site: $74 per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 231993 (fetched 2026-10-20: Max Vehicle Length, Driveway Entry) + https://www.recreation.gov/api/camps/campgrounds/231993 ('Campsites are organized into eight loops'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/davidson-river-recreation-area ('The facility also provides hot showers and restrooms with flush toilets in each loop. Campers can purchase ice and firewood on-site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/davidson-river-recreation-area ('The facility is open year-round', 'Seasons of Use Year-round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.recreation.gov/api/camps/availability/campground/231993/month (November 2026 sites Available/Reserved; no closure notice on the campground or the Forest Service page; the modernization closure noted in inclusion_evidence has ended), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231993 (rules reservationWindow 6 Months, maxStay 14 'Rolling 30 Days'; notices 'A number of first-come, first-serve sites are offered during the winter only', 'This campground is managed by Naventure') + https://www.fs.usda.gov/r08/northcarolina/recreation/davidson-river-recreation-area ('Reservations available year round and required from March 23 to November 15', 'Same day walk up only permitted from November 16, 2023 to March 22'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 35,
       "nightly_high": 46,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Peak season (2026-03-21 to 11-15): standard site $37, electric $46, double $74. Off-peak (Nov 16 to mid-March): standard $35, electric $44, double $70. Extra vehicles $5 each."
+    },
+    "sites": {
+      "count": 132,
+      "max_rig_ft": 67,
+      "pull_through": true,
+      "note": "132 reservable sites (102 standard, 30 electric) in eight loops, plus 12 management sites. Most take 28-40 ft; one lists 67 ft and one 58 ft. 30 pull-throughs. Generators are not allowed on Poplar Loop (sites 99-113)."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "note": "Hot showers and flush toilets in each loop; ice and firewood sold on site."
+    },
+    "season": {
+      "year_round": true
+    },
+    "status": {
+      "operating": "open"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/231993",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Operated by the concessionaire Naventure. Reservations 'required from March 23 to November 15'; a few first-come sites are offered in winter only, with same-day walk-up only from November 16 to March 22. Six-month rolling window; 14 nights in a rolling 30 days. Sites must be occupied the first night or the reservation is cancelled. Check-in 2 pm, check-out noon."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/231993 https://www.recreation.gov/api/camps/campgrounds/231993/rates https://www.recreation.gov/api/camps/availability/campground/231993/month?start_date=2026-11-01 (read 2026-10-22) trip_data/ridb_campsites.json facility 231993 (RIDB catalog fetched 2026-10-20) https://www.fs.usda.gov/r08/northcarolina/recreation/davidson-river-recreation-area",
+      "note": "Open again after the modernization closure (Nov 2026 availability on recreation.gov); confirmed $35-46 rates, 50-amp electric; added 132 sites with pull-throughs, showers/flush toilets, year-round season, recreation.gov booking with a 6-month window, 14-night max and winter-only first-come sites. Operated by concessionaire Naventure (phone 828-885-7557 matches). No min stay. Note unchanged."
     }
   },
   {
@@ -283307,7 +283452,7 @@
     "waterfront_evidence": "satellite at 35.6953,-81.4162: RV loops set back from Henry Fork River by wide wooded buffer + field; on-site pond small/ornamental",
     "website": "http://www.indianspringscampgroundnc.com/",
     "phone": "828-397-5700",
-    "note": "Small gated RV park near Hickory on the Henry Fork River. 30 sites (30 full-hookup, 2 E/W), 7 pull-thrus, 30/50-amp, big rigs to 45 ft. Year-round, cash/check only. On-site fishing pond, river access for kayaking/tubing/fishing. --Claude",
+    "note": "Small gated RV park near Hickory on the Henry River, a mile off I-40 exit 119. GPS may send you to Whitener Road, about 10 miles away: the park is on Whitener Drive, with no entry from Cedar Springs Drive. Call ahead for the gate code; one RV through the gate at a time. Catch-and-release pond, river tubing and kayaking. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -283328,27 +283473,39 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://www.indianspringscampgroundnc.com/ ('30&50 Amp Service with Water, Electric, Sewer') + id56.html ('Sewer is at your site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://www.indianspringscampgroundnc.com/id1.html ('We are a Small Park Only 30 Sites', '30/50Amp Pull Through Sites') + id2.html ('Large Pull-through Sites! ... Room For Big Rigs w/tow'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://www.indianspringscampgroundnc.com/ ('Open Year Round!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "http://www.indianspringscampgroundnc.com/id56.html ('Nightly $45.00 (2 night minimum on weekends for advance reservations only)', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "http://www.indianspringscampgroundnc.com/id56.html ('Nightly $45.00 (2 night minimum on weekends for advance reservations only)', 'Weekly $270.00', 'Monthly $750.00 (Electirc included) if sites are available', 'Price is for 2 Adults & 2 Children Nightly & Weekly Only'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "http://www.indianspringscampgroundnc.com/ (read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "http://www.indianspringscampgroundnc.com/id56.html ('Reservations required, or call ahead for GATE access', '(2 night minimum on weekends for advance reservations only) 1 night if available for road traffic call on the way', 'Cash only for visits less than 2 weeks'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "http://www.indianspringscampgroundnc.com/id56.html ('Military Discount (Nightly and Weekly only,not valid with other specials)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "http://www.indianspringscampgroundnc.com/id1.html ('Sorry At this time we do not allow Tents and no Pop-Ups without a bathroom, We Do Not Have A Bathhouse') + id56.html ('No cable TV and No Bathhouse', 'wi-fi not guaranteed, it is a free service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -283360,7 +283517,8 @@
       "nightly_low": 45,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "Nightly $45 for 2 adults and 2 children; 2-night weekend minimum for advance reservations."
+      "note": "Nightly $45 and weekly $270 for 2 adults and 2 children, $5 per extra person a day; monthly $750 with electric, 1-2 adults only, if sites are available. Dogs $5 each a night (two max, breed limits). A fee for charging electric vehicles. The page gives no year. Read 2026-10-22.",
+      "checked": "2026"
     },
     "booking": {
       "min_stay": [
@@ -283368,7 +283526,24 @@
           "nights": 2,
           "applies": "weekend"
         }
-      ]
+      ],
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reservations by phone, 828-397-5700. The 2-night weekend minimum is for advance reservations only: '1 night if available for road traffic call on the way'. A gate code is needed to enter, so call ahead even without a reservation. Cash only for visits under 2 weeks (no cards). No refunds on deposits. Check-in 1 pm, check-out 11 am."
+    },
+    "discounts": {
+      "military": true,
+      "note": "Military discount on nightly and weekly stays only, not with other specials."
+    },
+    "facilities": {
+      "showers": false,
+      "wifi": true,
+      "note": "No bathhouse, so no tents and no pop-ups without a bathroom. Wi-Fi free but not guaranteed; no cable TV."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://www.indianspringscampgroundnc.com/ http://www.indianspringscampgroundnc.com/id56.html (Rates) http://www.indianspringscampgroundnc.com/id1.html (About Us) http://www.indianspringscampgroundnc.com/id2.html (Facilities & Recreation)",
+      "note": "Confirmed on the operator's site: $45 nightly (2+2), full hookups to 50-amp, 30 sites with pull-throughs, open year-round, 2-night weekend minimum for advance bookings; added military discount, no bathhouse (showers false), free Wi-Fi, phone booking with gate-code access. Max rig 45 ft (note prose) not stated by the operator, left. Note trimmed of field facts."
     }
   },
   {
@@ -283437,7 +283612,7 @@
     "waterfront_evidence": "satellite at 35.2172,-81.8570: oval RV loop in woods; only a tiny on-site pond, no lake/river adjacency",
     "website": "https://www.foothillsfamilycampground.com/",
     "phone": "828-245-4064",
-    "note": "Big-rig and pet friendly; ~70-80 sites with 3 pull-thrus, ~40 full hookups plus E/W (20/30/50 amp), max RV ~50 ft. Year-round. Pool, fishing pond, trails. --Claude",
+    "note": "Family-owned campground near Forest City, pet friendly; roughly 70-80 sites, some with water and electric only. Swimming pool, fishing pond, hiking trails, planned activities and a cabin. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -283457,9 +283632,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.foothillsfamilycampground.com/rates/ ('Full Hook-up ... includes water sewer 30/50 amp') + https://www.foothillsfamilycampground.com/amenities/ ('Full Hook Ups 20/30/50 amp'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -283472,8 +283647,24 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.foothillsfamilycampground.com/rates/ ('Full Hook-up'; '$50/day | $300/week'; 'pricing for 2 adults, 2 children Add $5/person/night for extra'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.foothillsfamilycampground.com/rates/ ('Full Hook-up $50/day | $300/week includes water sewer 30/50 amp pricing for 2 adults, 2 children Add $5/person/night for extra'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.foothillsfamilycampground.com/rates/ ('We honor the following discount plans: Passport America, Recreation USA, FMCA, AAA'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.foothillsfamilycampground.com/amenities/ ('Laundry', 'Swimming Pool', 'Clean Hot Showers', 'Wireless Internet Connections WiFi', 'Camp Store', 'Propane', 'Fishing Pond'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.foothillsfamilycampground.com/guidelines-for-your-comfort/ ('Reservations held with a MC/V/D card or Pre-pay 1 day by cash/check', 'Cancellations within 7 days of Memorial Day Weekend and Labor Day Weekend check-in will be charged for the entire reservation (3 days)', 'Check in/Check out is 2:00 pm'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -283486,7 +283677,28 @@
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Full hook-up sites (30/50 amp) $50 a night for two adults and two children, $5 per extra person; tent sites with power and water also $50. The page gives no year. Read 2026-10-14."
+      "note": "Full hook-up sites (water, sewer, 30/50 amp) $50 a day or $300 a week for 2 adults and 2 children, $5 per extra person a night; tent sites with power and water also $50; cabin $75 plus 13% tax. Monthly and seasonal rates on request. The page gives no year (site footer 2026). Read 2026-10-22."
+    },
+    "discounts": {
+      "passport_america": true,
+      "note": "Also honors Recreation USA, FMCA and AAA discounts ('ASK HOW TO SAVE 50% ON YOUR CAMPSITE!'); with a discount, payment is cash, check or Visa/MasterCard debit only."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "camp_store": true,
+      "note": "Swimming pool (registered guests), fishing pond, hiking trails, propane, ice, firewood delivered to the site."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reservations held with a card or one night prepaid by cash/check; call 828-245-4064. Cancelling within 72 hours forfeits a night. Memorial Day and Labor Day weekend reservations are 3 nights, charged in full if cancelled within 7 days. Check-in and check-out 2 pm; visitors $4-5 each."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.foothillsfamilycampground.com/rates/ https://www.foothillsfamilycampground.com/amenities/ https://www.foothillsfamilycampground.com/guidelines-for-your-comfort/",
+      "note": "Confirmed on the operator's site: $50/night full hook-up (2+2), 30/50-amp full hookups, pull-thrus; added Passport America (plus Recreation USA/FMCA/AAA), showers, laundry, Wi-Fi, camp store, phone reservations. Not stated by the operator: max rig length (50 ft) or season (year-round), both from note prose, left. Note trimmed of field facts."
     }
   },
   {
@@ -283930,7 +284142,7 @@
     "waterfront_evidence": "satellite at 35.6737,-78.4976: RV sites inland; nearby ponds separated by park road/treeline, not frontage",
     "website": "http://www.bannisterrvpark.com/",
     "phone": "919-710-9521",
-    "note": "Clean, well-kept RV park in Clayton minutes from Raleigh; ~25 sites with 50-amp full hookups, paved streets/driveways, level sites with concrete patios. Daily/weekly/monthly; takes nightly transients. --Claude",
+    "note": "Clean, well-kept RV park in Clayton minutes from Raleigh; paved streets and driveways, large patios, shady lots. Daily, weekly and monthly stays. Dogs on leash only; the park bars breeds such as German Shepherd, Pit Bull, Chow and Rottweiler. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -283946,9 +284158,9 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.bannisterrvpark.com/about-us ('All of our campsites at Bannister RV Park feature full hookups and have 50 amp service', 'All hookups are 50 amps, if you use a 30 amp hookup you must bring a reducer'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -283956,8 +284168,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.bannisterrvpark.com/ ('Day - $60.00 | Week - $300.00', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://www.bannisterrvpark.com/about-us ('Campground Rates Day - $60.00 Week - $300.00 Month - $825.00', '***Monthly rates include up to $100 worth of electrical usage. Water, Sewer, and Trash included.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.bannisterrvpark.com/about-us ('Bannister RV Park does not offer free cable TV or WIFI ... Spectrum is available to campers that wish to have TV or high-speed WIFI'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.bannisterrvpark.com/contact-8 ('Please fill out the form below to request a reservation'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -283970,7 +284193,21 @@
       "nightly_high": 60,
       "currency": "USD",
       "checked": "2026",
-      "note": "Day $60."
+      "note": "Day $60, week $300, month $825 (monthly includes up to $100 of electric); water, sewer and trash included. The page gives no year. Read 2026-10-22."
+    },
+    "facilities": {
+      "wifi": false,
+      "note": "No free cable TV or Wi-Fi; campers can contract Spectrum themselves."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "note": "Reservations are requested through a form on the park's site (camper model year and length, party size, pets, and 'Have you ever been convicted of a felony?'); 'Someone from our team will contact you shortly.' Or call 919-710-9521."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.bannisterrvpark.com/ https://www.bannisterrvpark.com/about-us https://www.bannisterrvpark.com/contact https://www.bannisterrvpark.com/contact-8",
+      "note": "Confirmed on the operator's site: Day $60 / Week $300 / Month $825, all sites full hookup with 50-amp; added no free Wi-Fi, reservation by request form. Site count (25, from note prose) not stated by the operator, left. Note trimmed of hookup/site-count text."
     }
   },
   {
@@ -283986,7 +284223,7 @@
     "waterfront_evidence": "satellite at 35.1374,-83.4906: unit rows set back from Cartoogechaye Creek across grass with continuous treeline buffer; no pads on open creek apron",
     "website": "https://www.cartoogechayecreekcampgroundwnc.com/",
     "phone": "828-342-1102",
-    "note": "~50 full-hookup RV sites (30/50-amp) on a 23-acre meadow near Franklin, along Cartoogechaye Creek. Laundry, dump, WiFi, showers. Open Apr 1-Oct 31. --Claude",
+    "note": "Campground in a meadow valley near Franklin along Cartoogechaye Creek, right off the main highway with flat access and no mountain switchbacks. Sells seasonal and monthly stays as well as nights; quiet and hands-off. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -283998,7 +284235,10 @@
       "sewer": true
     },
     "sites": {
-      "count": 50
+      "count": 50,
+      "max_rig_ft": 45,
+      "pull_through": false,
+      "note": "RV sites are back-in gravel pads, 'Max length: 45 ft'."
     },
     "facilities": {
       "laundry": true,
@@ -284013,33 +284253,39 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us ('RV Sites ... 30-amp and 50-amp hookups') + site footer ('Full Hookups & Rentals'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us ('Back-in sites', 'Gravel pads', 'Max length: 45 ft'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/amenities ('Onsite Laundry', 'Bathhouse', 'Dumpster', 'Free Wifi'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/rules ('Season is April 1 to Oct. 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://parkwith.us/camps/cartoogechaye-creek-campground ('Passport America Members: Please call us directly to book'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us ('Daily $40 or week $240 for 30 Amp | Daily $45 or week $270 for 50 Amp', read 2026-10-19)",
-        "checked": "2026-10-19"
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us ('Daily $40 or week $240 for 30 Amp', 'Daily $45 or week $270 for 50 Amp', 'Monthly $650 plus electric', 'Seasonal $2800 plus electric'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us + https://parkwith.us/camps/cartoogechaye-creek-campground ('If you are booking with Passport America or planning a stay longer than 14 days, please give us a call') + https://www.cartoogechayecreekcampgroundwnc.com/rules, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284048,14 +284294,26 @@
       "model": "claude-opus-5"
     },
     "discounts": {
-      "good_sam": false
+      "good_sam": false,
+      "passport_america": true
     },
     "fees": {
       "nightly_low": 40,
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "daily $40 (30A) / $45 (50A) full hookup; weekly $240 / $270"
+      "note": "RV sites $40 a night or $240 a week with 30-amp, $45 / $270 with 50-amp; monthly $650 and seasonal $2,800 plus electric. Tent sites $25 (water only) or $35 (electric and water); park model $90. The page gives no year. Read 2026-10-22."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://parkwith.us/camps/cartoogechaye-creek-campground",
+      "note": "'All reservations are made through our online booking system' (Park With Us); Passport America guests and stays over 14 days book by phone, 828-342-1102. Check-in 12-6 pm, check-out 11 am; no refunds for early departure."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.cartoogechayecreekcampgroundwnc.com/ https://www.cartoogechayecreekcampgroundwnc.com/stay-with-us https://www.cartoogechayecreekcampgroundwnc.com/amenities https://www.cartoogechayecreekcampgroundwnc.com/rules https://parkwith.us/camps/cartoogechaye-creek-campground",
+      "note": "Confirmed on the operator's site and its Park With Us booking page: $40 (30A) / $45 (50A) nightly, full hookups to 50-amp, season Apr 1-Oct 31, laundry and free Wi-Fi; added max length 45 ft (back-in only), online booking, Passport America. Not stated: site count (50, left) or a dump station (the amenities page lists only a dumpster; derived dump left). Note trimmed of field facts. The site is live again (inclusion evidence said the domain had lapsed)."
     }
   },
   {
@@ -284651,7 +284909,7 @@
     "waterfront_evidence": "satellite at 35.8914,-79.2417: RVs in open field; nearest small ponds ~300-400m away, Haw River/creek not adjacent",
     "website": "https://www.collinscreekrvparkstorage.com/",
     "phone": "919-614-0714",
-    "note": "New family-owned 26+ acre countryside RV park near Chapel Hill; 14 full-hookup sites with 30/50-amp. Haw River ~5 min away. --Claude",
+    "note": "New family-owned RV park and storage on a 26+ acre family farm near Chapel Hill; Haw River about 5 minutes away, UNC about 17. No posted rates: call for availability and pricing. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -284667,20 +284925,35 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.collinscreekrvparkstorage.com/ ('Amenities Included: 14 Hook Up on Site, Full Hookup, 30/50 Amp Service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.collinscreekrvparkstorage.com/ ('14 Hook Up on Site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.collinscreekrvparkstorage.com/contact-us, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "65f9574a0bc3c005",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "'Contact us for Availability and Pricing': Larry & Wanda Braxton, 919-614-0714 or 919-306-3269. No online booking."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.collinscreekrvparkstorage.com/ https://www.collinscreekrvparkstorage.com/contact-us",
+      "note": "Operator's Google Sites page confirms 14 full-hookup 30/50-amp sites; added phone booking (call for availability and pricing). No rate, season, facilities or rig length stated. Note trimmed of hookup/site-count text."
     }
   },
   {
@@ -284702,47 +284975,31 @@
       "price_tier": 2,
       "source": "rvlife"
     },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 8,
-      "pull_through": true
-    },
-    "season": {
-      "year_round": true
-    },
-    "booking": {
-      "reservable": true,
-      "fcfs": "never"
-    },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page states it: the note-derived values rest only on RV Life/allstays (inclusion_evidence), and the operator's only page (Facebook, https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/, read 2026-10-22) and the Franklin TDA listing say nothing of hookups, sites, season, booking or facilities; cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page states it: the note-derived values rest only on RV Life/allstays (inclusion_evidence), and the operator's only page (Facebook, https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/, read 2026-10-22) and the Franklin TDA listing say nothing of hookups, sites, season, booking or facilities; cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page states it: the note-derived values rest only on RV Life/allstays (inclusion_evidence), and the operator's only page (Facebook, https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/, read 2026-10-22) and the Franklin TDA listing say nothing of hookups, sites, season, booking or facilities; cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page states it: the note-derived values rest only on RV Life/allstays (inclusion_evidence), and the operator's only page (Facebook, https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/, read 2026-10-22) and the Franklin TDA listing say nothing of hookups, sites, season, booking or facilities; cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page states it: the note-derived values rest only on RV Life/allstays (inclusion_evidence), and the operator's only page (Facebook, https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/, read 2026-10-22) and the Franklin TDA listing say nothing of hookups, sites, season, booking or facilities; cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284750,8 +285007,10 @@
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     },
-    "facilities": {
-      "dump": true
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://experiencefranklinnc.com/place-to-stay/high-country-haven-rv-park-camping-and-cabins/ https://www.facebook.com/people/High-Country-Haven-Camping-and-Cabins/100057347504058/ (read in a browser) https://campgrounds.rvlife.com/regions/north-carolina/franklin/high-country-haven-camping-and-cabins-256400 (no website listed) web search: Expedia/Travelocity/Vrbo cabin listings only",
+      "note": "No operator website exists to verify against: the entry's website is the Franklin TDA tourism listing, whose 'Visit Their Website' link goes to the Facebook page ('Back to nature RV park, cabins and tent camping ... 10 minutes from Downtown Franklin', 175 High Haven Lane, (828) 369-2267, newest visible post 2024-10-26). Cleared the note-derived hookups/sites/season/booking/dump values, which rest only on RV Life/allstays; note left as written."
     }
   },
   {
@@ -284767,37 +285026,36 @@
     "waterfront_evidence": "satellite at 35.0236,-83.6862: RV/cabin sites set back in open loop; Shooting Creek along S/E edge fringed by continuous riparian treeline, pads not on open shore",
     "website": "https://creeksidervnc.weebly.com/",
     "phone": "828-389-8232",
-    "note": "Mountain RV park at 7868 Hwy 64 E, Hayesville, on Shooting Creek near Lake Chatuge. Full-hookup sites with 30/50-amp and Wi-Fi, primitive camping, and units for rent or sale; summer and year-round camping. Its website gives no rates ('Call for great prices!') and takes no bookings; call 828-389-8232. --Claude",
+    "note": "Mountain RV park at 7868 Hwy 64 E, Hayesville, on Shooting Creek near Lake Chatuge; large level areas. Also primitive tent camping, and RV units to rent by the night, week, month or year or to buy. Its website gives no rates ('Call for great prices!'). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50,
       "water": true,
       "sewer": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "https://creeksidervnc.weebly.com/ ('Full hookups and WIFI on camp ground'), read 2026-10-22. The operator gives no amperage; the note-derived 50-amp came from the since-removed unclaimed RoverPass listing and is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "https://creeksidervnc.weebly.com/ ('Full hookups and WIFI on camp ground', 'SOON TO COME Bath house Laundry facilities Covered picnic area'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "https://creeksidervnc.weebly.com/ ('We have Reasonable Summer and Year-round camping'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-14",
-        "method": "derived"
+        "source": "https://creeksidervnc.weebly.com/contact.html ('Contact Dave to reserve your spot') + home page phones, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284806,14 +285064,21 @@
       "model": "claude-opus-5/session"
     },
     "facilities": {
-      "wifi": true
+      "wifi": true,
+      "note": "A bath house, laundry and covered picnic area are listed as 'SOON TO COME' (undated)."
     },
     "season": {
       "year_round": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "'Contact Dave to reserve your spot' by phone (828-389-8232 or 828-389-2242) or the site's contact form; no online booking."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://creeksidervnc.weebly.com/ https://creeksidervnc.weebly.com/about.html https://creeksidervnc.weebly.com/units-for-sale.html https://creeksidervnc.weebly.com/primitive-camping.html https://creeksidervnc.weebly.com/contact.html",
+      "note": "Operator's Weebly site confirms full hookups, Wi-Fi, year-round camping and phone reservations; amperage is not stated, so the derived 50-amp (from the removed RoverPass listing) is cleared. No rate posted. Note trimmed of field facts."
     }
   },
   {
@@ -285405,7 +285670,7 @@
     "inclusion_evidence": "Duplin County park page: offers 'RV camping, tent with electric, standard tent, group tent' -> real RV campground",
     "waterfront_evidence": "satellite at 34.9818,-77.7985: wooded campsites set back 80-120m from Cabin Lake; shore is day-use boat ramp/beach/parking, no open-apron pads",
     "website": "https://www.duplinnc.gov/184/Cabin-Lake",
-    "note": "Duplin County park on a 69-acre lake. ~14 RV sites plus tent and group camping; restrooms/showers, swim beach, boat ramp; ~$25/night. --Claude",
+    "note": "Duplin County park on a 69-acre lake. RV, electric-tent, tent and group camping; swim beach (Memorial Day to Labor Day, Thursday-Sunday), canoe and pedal-boat rentals, fishing pier, 2.3-mile hiking trail; no gasoline motors on the lake, no alcohol. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -285416,16 +285681,76 @@
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.duplinnc.gov/DocumentCenter/View/194/Map-PDF (campground map labels 'Restrooms/Showers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.duplinnc.gov/DocumentCenter/View/193/Cabin-Lake-Brochure-PDF ('RV Sites– DUPLIN RES. & Elec Tent $30.00 per night $27.00 Military/Senior Citizens (62 and older)', 'RV Sites—NON RES & Elec Tent $35.00 per night', 'Tent Sites (Non-Elec) $25.00 per night'; PDF modified 2026-03-02), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.duplinnc.gov/DocumentCenter/View/193/Cabin-Lake-Brochure-PDF ('$27.00 Military/Senior Citizens (62 and older)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://app.fireflyreservations.com/reserve/property/CabinLakeCountyPark (the county's booking page; site amenity filters 'Electric 30amp', 'Electric hookup', 'Water hookup', no sewer), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.duplinnc.gov/DocumentCenter/View/194/Map-PDF (2023), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.duplinnc.gov/184/Cabin-Lake ('Reservations for camping and picnic shelter rentals are highly recommended', 'Make a reservation' link) + https://app.fireflyreservations.com/reserve/property/CabinLakeCountyPark, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "13fccce3133088f6",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
+    },
+    "fees": {
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 5,
+        "per": "night"
+      },
+      "note": "RV site or electric tent site $30 a night for Duplin County residents, $35 for non-county residents; $3 off for military and seniors 62+ ($27 / $32). Non-electric tent sites $25, group camping $5 per person. The non-resident charge is by COUNTY residence. General admission ($3 resident / $4 non-resident per person) is for day use and 'does not include picnic shelter or camping'."
+    },
+    "discounts": {
+      "military": true,
+      "note": "$3 a night off for military and for seniors 62 and older."
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true
+    },
+    "sites": {
+      "note": "The county's campground map numbers 14 sites in the RV area, 10 labelled RV and 3 labelled Tent, with pad lengths marked 34 to 67 ft."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/CabinLakeCountyPark",
+      "note": "The county books nightly sites on Firefly Reservations ('Make a reservation' on the park page); 'Reservations for camping and picnic shelter rentals are highly recommended.' Park office 910-298-3648."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.duplinnc.gov/184/Cabin-Lake https://www.duplinnc.gov/DocumentCenter/View/193/Cabin-Lake-Brochure-PDF (PDF modified 2026-03-02) https://www.duplinnc.gov/DocumentCenter/View/194/Map-PDF (PDF modified 2023-06-29) https://app.fireflyreservations.com/reserve/property/CabinLakeCountyPark",
+      "note": "Priced from the county's 2026 brochure: RV/electric-tent $30 resident, $35 non-county resident, $3 military/senior discount; 30-amp electric and water per the Firefly booking page; showers on the map; reservable on Firefly. Note's '~$25/night' (the non-electric tent rate) dropped. Not stated: season, sewer, max rig length."
+    },
+    "phone": "910-298-3648"
   },
   {
     "id": 4323,
@@ -285528,9 +285853,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "Clay County campgrounds site + Campendium: county-managed Lake Chatuge campground, full-hookup RV sites, reservable via ReserveAmerica; re-check 2026-10-14 (ReserveAmerica pass): priced from https://campgrounds.claync.us/_files/ugd/fe4bcd_866a752a1a9d44148808c1a1f1450fe4.pdf, $30-35 a night",
     "waterfront_evidence": "satellite at 35.0095,-83.7955: multiple RVs/pads on the open red-clay shore of the Lake Chatuge peninsula with walkable aprons to the waterline",
-    "website": "https://campgrounds.claync.us/reserve\nhttps://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/overview",
+    "website": "https://campgrounds.claync.us/rec-park",
     "phone": "828-557-6788",
-    "note": "Clay County-operated campground on Lake Chatuge near Hayesville; ~39 full-hookup sites (E/W/S), gravel pads, fire rings, restrooms, beach. Reservable online. --Claude",
+    "note": "Clay County-operated campground on Lake Chatuge near Hayesville; gravel pads, fire rings, beach, playground, pavilions, and a county boat ramp between it and the county's Gibson Cove campground. Some sites are seasonal, let by an annual lottery. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -285538,33 +285863,51 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "electric": 50
     },
     "sites": {
-      "count": 39
+      "count": 39,
+      "max_rig_ft": 57,
+      "pull_through": true,
+      "note": "ReserveAmerica lists 116 sites for Rec Park and Gibson Cove together (102 Standard Electric, 14 tent). Of the 42 Rec Park electric sites read (20 Lakefront loop, 22 Lakeview loop), 36 are back-in and 6 pull-through, with equipment lengths 23 to 57 ft. Seasonal sites are let by an annual lottery."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/overview",
+      "max_stay_nights": 14,
+      "note": "Stays of up to 14 days book on ReserveAmerica ('Reservations for 14-day camp sites can be made using Reserve America'; for longer, a second reservation on a different site). Seasonal sites are let by an annual lottery (the 2027 drawing is 2026-10-24). Check-in 3-10 pm, check-out 1 pm; the front gate is open 7 am to 11:30 pm. 2026 reservations opened March 1."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/79773/campsite-booking (site RP-003: 'Electricity Hookup 50', 'Water Hookup Y', no sewer hookup listed) + 2027 rules PDF ('Health Department regulations require that all wastewater be collected in suitable containers and disposed of at the dump stations'), read 2026-10-22. The note-derived sewer: true is contradicted by the rule and cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/campsites (read in a browser, 2026-10-22: 'ALL 116 Standard Electric 102 Tent 14'; per-site Equipment Length / Driveway) + https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/overview ('117 Tent, Trailer and RV Campsites')",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/overview ('THERE IS A 14-DAY MAXIMUM STAY ON ALL SITES') + 2027 rules and lottery PDFs on campgrounds.claync.us + https://campgrounds.claync.us/ ('Campground Reservations can be made beginning March 1, 2026'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://campgrounds.claync.us/_files/ugd/fe4bcd_866a752a1a9d44148808c1a1f1450fe4.pdf ('CLAY COUNTY REC. PARK CAMPING RATES 2027 CAMPING SEASON'; 'RV Daily $ 30.00 $ 35.00 (Lake View, Lake Front)'; 'All Tent Sites are $20.00'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://campgrounds.claync.us/_files/ugd/fe4bcd_866a752a1a9d44148808c1a1f1450fe4.pdf ('CLAY COUNTY REC. PARK CAMPING RATES 2027 CAMPING SEASON', 'RV Daily $30.00 [Lake View] $35.00 [Lake Front]', 'Monthly (Seasonal Only) $440.00 $500.00', 'All Tent Sites are $20.00'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "2027 rules PDF https://campgrounds.claync.us/_files/ugd/fe4bcd_5bc2019c9f424a3f87a49dbd76248fab.pdf ('disposed of at the dump stations', 'dumpsters near dump station') + ReserveAmerica site RP-003 ('WiFi Access Y'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/campsites ('SEASON DATES Current Status - Open Through 31 Oct 2026 PEAK 01 Apr 2026 - 31 Oct 2026'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -285577,7 +285920,21 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "2027 season: RV sites $30 a night lake view, $35 lakefront (tent sites $20); stays up to 14 days book on ReserveAmerica, and a separate lottery fills the seasonal sites. Read 2026-10-14."
+      "note": "2027 season, Rec Park and Gibson Cove: RV $30 a night lake view, $35 lakefront ($210 / $245 a week); tent sites $20. Monthly ($440 / $500) is for seasonal lottery sites only. Visitor vehicles staying overnight $2 a day."
+    },
+    "facilities": {
+      "dump": true,
+      "wifi": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://campgrounds.claync.us/ https://campgrounds.claync.us/rec-park https://campgrounds.claync.us/_files/ugd/fe4bcd_866a752a1a9d44148808c1a1f1450fe4.pdf (2027 rates, modified 2026-10-14) https://campgrounds.claync.us/_files/ugd/fe4bcd_5bc2019c9f424a3f87a49dbd76248fab.pdf (2027 rules) https://campgrounds.claync.us/_files/ugd/fe4bcd_7732e24b96a241c6ad2adc5ee6556cfe.pdf (2027 lottery) https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/overview (read in a browser) https://www.reserveamerica.com/explore/clay-county-rec-park/PRCG/1072250/campsites (pages 1-6 in a browser; the 21-40 page did not load) and site RP-003 details",
+      "note": "Confirmed the 2027 county rate sheet ($30 lake view / $35 lakefront) and ReserveAmerica booking; added 50-amp electric and water (sewer cleared: the rules send all wastewater to the dump stations), sites to 57 ft with some pull-throughs, dump and Wi-Fi, Apr 1-Oct 31 season, 14-night maximum. Site count left at 39 (RA lists Rec Park and Gibson Cove together and one page did not load). Note's 'full-hookup (E/W/S)' and field facts dropped."
     }
   },
   {
@@ -286220,9 +286577,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "riseupreidsville.com/lake-reidsville: 46 W/E wooded sites + 28 full-hookup, open year-round, phone reservations -> real RV campground",
     "waterfront_evidence": "satellite at 36.2918,-79.6835: camper sites on an open grassy bank above Lake Reidsville on the SW point, ~30-40m open apron with only a thin tree fringe",
-    "website": "http://www.ci.reidsville.nc.us/government/lake_reidsville/index/index.php\nhttps://www.riseupreidsville.com/lake-reidsville",
+    "website": "https://www.riseupreidsville.com/lake-reidsville",
     "phone": "336-349-4738",
-    "note": "City of Reidsville campground on Lake Reidsville. 46 wooded sites; ~28 full-hookup, rest water/electric. Reservations by phone; ~8 lakefront sites fill fast. Hot showers, fishing piers, no swimming. --Claude",
+    "note": "City of Reidsville campground in a 750-acre lake park; about 8 lakefront sites fill fast. Fishing piers, boat dock, boat storage, disc golf, 3+ miles of trails; no swimming or jet skis (the lake is the city's water supply). Some sites are let monthly. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -286233,41 +286590,77 @@
       "sewer": true
     },
     "sites": {
-      "count": 46
+      "count": 46,
+      "note": "46 wooded sites, all with water and electric; 28 of them full hook-up. 'Camping options for tents, pop-ups, and small to large RVs.'"
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "camp_store": true,
+      "note": "Hot showers and restrooms; camp store open daily 6am-5pm in summer, 8am-2pm in winter (fishing licenses, bait, firewood $5)."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "max_stay_nights": 14,
+      "note": "'Call 336-349-4738 to make reservations.' Daily sites can stay up to 14 days on and 14 days off; monthly sites run 1st to 1st, one month on and one month off."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.riseupreidsville.com/_files/ugd/2463ad_f691f3e18f7641a3be30c58d90949e7e.pdf ('46 wooded sites, all with water and electricity; 28 sites are full hook-up'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.riseupreidsville.com/_files/ugd/2463ad_f691f3e18f7641a3be30c58d90949e7e.pdf + https://www.riseupreidsville.com/lake-reidsville, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.riseupreidsville.com/_files/ugd/2463ad_f691f3e18f7641a3be30c58d90949e7e.pdf ('hot water shower facilities, restrooms, boat dock, fishing piers and nature trails', 'The campground store is open everyday from 6am-5pm in the summer and 8am-2pm in the winter'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.riseupreidsville.com/lake-reidsville ('Call 336-349-4738 to make reservations') + pamphlet ('Daily sites can stay up to 14 days on and 14 days off', 'Monthly sites run from the 1st to 1st of the month and one month on, one month off'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.riseupreidsville.com/_files/ugd/2463ad_f691f3e18f7641a3be30c58d90949e7e.pdf ('Daily Rates: City $40 W&E $35 Full Hookup; Non-City $55 W&E $50 Full Hookup'; 'Monthly Rates: ... City: $600 Full Hookup Non-City: $1200 Full Hookup'; PDF created 2025-10-09), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.riseupreidsville.com/lake-reidsville ('Lake Reidsville is open year round and offers camping options for tents, pop-ups, and small to large RVs') + the pamphlet ('Campground Seasons In season: April 1-October 31 Off-Season: November 1-March 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "5a75b412dc5c1129",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2025",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 15,
+        "per": "night"
+      },
+      "note": "Daily: City residents $35 full hookup, $40 water/electric; non-city $50 full hookup, $55 water/electric (as printed: full hookup is the cheaper of the two). Group tent sites $25 city / $50 non-city, off-season only. Monthly (full hookup, 2 adults, $1 per extra person) $600 city / $1,200 non-city. The non-resident charge is by CITY residence."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Rates distinguish in-season (April 1-October 31) and off-season (November 1-March 31)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.riseupreidsville.com/lake-reidsville (City of Reidsville) https://www.riseupreidsville.com/_files/ugd/2463ad_f691f3e18f7641a3be30c58d90949e7e.pdf (city Lake Reidsville pamphlet, created 2025-10-09; camping panel read as an image)",
+      "note": "Priced from the city's 2025 pamphlet: city residents $35 full hookup / $40 water-electric, non-city $50 / $55; confirmed 46 sites (28 full hookup), hot showers, phone reservations; added camp store, year-round season, 14-night limit. Amperage not stated. Note trimmed of hookup/count/booking text."
     }
   },
   {

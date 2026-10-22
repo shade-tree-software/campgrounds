@@ -687,3 +687,13 @@ me drop and report); each needs the research named before a verdict.
 - **4300 Art's**: if it proves mostly monthly it fails test 2 (no posted nightly rate).
 - **4306 Almond Boat & RV Park**: private concession under FS special-use permit #5475 (ownership private stays - a concession on federal land; re-check the class convention).
 - **4277 Twin Rivers** $50, at the gate. **15455 Asheville West KOA** $60, Asheville 20 km.
+
+### p3-97 (NC, 2026-10-22)
+- **4298 Bannister**: see asks.md (booking request asks about felony convictions and model year).
+- **4312 High Country Haven**: no operator site (website is the Franklin tourism listing -> Facebook); operator offers no RV site/rate anywhere, cabins on Vrbo; aggregator-only values cleared. Kept on Google "High Country Haven RV Park, Camping and Cabins" 4.6/45 with phone + RV Life $$.
+- **4313 Creekside on Shooting Creek**: "Call for great prices", rents for night/week/month/year and sells used RVs kept on site; kept 10-14 on RV Life $$. If it proves mostly long-stay it fails test 2 (and test 5 if the RVs sold stay as homes). Bathhouse "SOON TO COME". Second phone 828-389-2242.
+- **4311 Collins Creek RV Park and Storage**: Google Sites page with phones, "Contact us for Availability and Pricing", no reviews found; passes on site+phone + RV Life $$. Near UNC Hospitals - may be long-stay.
+- **LEAD**: Gibson Cove Campground (Clay County, 3279 Myers Chapel Rd, Hayesville, Lake Chatuge; same RA facility and 2027 rates as 4324; ~40 electric sites; Google 4.6/44) has no entry - vet and add.
+- **34 Julian Price**: Loops C/E/F closed in 2026; rec.gov says reservations only and no shower house in 2026.
+- **4332 Lake Reidsville**: city pamphlet prints full hookup cheaper than W/E; recorded as printed. Non-city $50.
+- **4298 Bannister** $60 (Raleigh 17 km), **4289 Foothills** $50 at the gate.
