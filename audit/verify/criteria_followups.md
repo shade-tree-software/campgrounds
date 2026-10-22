@@ -4,6 +4,44 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6269 Wood Lake** (mt-31): FS page contradicts itself on water ('provides restrooms and drinking water' vs 'Potable water is not available at this site'); derived potable_water cleared. Call Rocky Mountain RD 406-466-5341.
+- **13576 Williamson Park (Shelby)** (mt-31): directory-only site count (25) and showers cleared; city page states neither.
+- **6295 Tom Miner** (mt-30): temporarily closed, hazard-tree order 01-11-03-26-02 (2026-08-21 to 2026-12-31); recheck before the June 2027 season.
+- **14171 Whitebird FAS** (mt-30): FWP 'Site Closure - Partial' since 2025-12-23, walk-in only (vehicle bridge unsafe); recorded temporarily_closed. Recheck after the bridge repair.
+- **6296 Tuchuck** (mt-30): stored 22-ft max (note-derived) no longer on the FS page; reviews unreachable.
+- **6266 Whitetail (Kootenai)** (mt-30): FS page gives three fees ($7, $12, $25) and contradicts itself on water; no rate recorded. max_rig_ft 32 cleared (go-montana only).
+- **6267 Whitetail (Little Belts)** (mt-30): kept on the Google Maps rung (listed as 'Whitetail Camp Campground', 8 reviews, phone 406-236-5100); no FS or official tourism page; website is a local guide (intothelittlebelts.com), which gives White Sulphur Springs RD 406-547-3361.
+- **6297 South Van Houten** (mt-29): FS page says 6,700 ft; entry's 2145 m is ~7,040 ft.
+- **6288 Spar Lake** (mt-29): Kootenai order 01-14-04-26-04 (2026-02-06 to 2028-02-05) closes FS Rd #384 from the Whoopie Creek bridge (~MP 18) to the end; map shows it beyond the campground, call to confirm. FS page contradicts itself on water.
+- **6289 Spillway** (mt-29): FS says 13 sites, rec.gov 12; stored 13 left.
+- **6290 Spire Rock** (mt-29): FS says 17 sites, rec.gov catalog 20; stored 20 left. Concessionaire Rocky Mountain Recreation Co. (661) 702-1420; rec.gov phone field 406-646-1012.
+- **6259 Spring Creek** (mt-29): FS 'maximum trailer length of 35 feet, and is not recommended for campers with large RVs' (23 ft fits, kept); no office named (likely White Sulphur Springs RD 406-547-3361 or Musselshell RD 406-632-4391); water conflict on the page.
+- **6291 Steel Creek** (mt-29): FS page gives both $15 and $12 per night; FS coordinates (45.603415,-113.336572) ~0.7 km east of the entry's.
+- **14164 Stuart Mill Bay FAS** (mt-29): stored year_round: true (manual) contradicted by FWP banner 'Campground closed during winter months. The campground opens the Thursday before Memorial Day.' Fixed 2026-10-22 with AWH's OK: season is now a note (opens the Thursday before Memorial Day, closed in winter).
+- **6265 Sylvan Lake** (mt-29): FS page still says 'THIS CAMPGROUND WILL BE CLOSED IN 2018' (stale); no current alert. No length published.
+- **6292 Thain Creek** (mt-29): no office named (likely Belt Creek RS 406-236-5100); water conflict on the page.
+- **6293 Timberlane** (mt-29): closed all of 2026 (order 01-14-05-26-03); recheck spring 2027. Derived reservable: true reflects only the group shelter; derived max_rig_ft 30 no longer on either page.
+- **14601 Spotted Bear** (mt-29): phone changed 406-387-3800 -> Spotted Bear Ranger Station 406-758-5376 (FS page).
+- **6283 Red Top** (mt-28): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility; free pack-in/pack-out page names no reservations).
+- **13309 Pleasant Valley (Kootenai)** (mt-27): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, page names no reservations).
+- **6280 North Dickey Lake** (mt-27): rec.gov contradicts itself on reservable sites (description says 5, catalog marks 13 of 24); both in booking.note.
+- **6281 Norton** (mt-27): phone changed from the Lolo NF supervisor's office to Missoula Ranger Station 406-329-3814 (the page's district contact).
+- **6279 Mussigbrod** (mt-26): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, FS page names no reservations); likely FCFS only.
+- **6278 Mortimer Gulch** (mt-26): derived max_rig_ft 35 no longer on the FS page; FS 'highly recommends' 4WD for the boat-ramp road only (not the campground approach).
+- **6277 Monture Creek** (mt-26): FS gives no site count/length; Hipcamp says one RV-suitable site. Agency silent on rig, so kept.
+- **6255 Muchwater** (mt-26): FS page is dead; website now the rec.gov POI. Note's 'some pull-offs fit a decent RV' is unsourced.
+- **6346 Lodgepole (Wise River)** (mt-25): FS page banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-09-01), no closure order listed; drinking water currently unavailable. Recorded temporarily_closed; re-check before next season.
+- **6345 Little Therriault Lake** (mt-25): FS page contradicts itself on potable water (description says yes, Water section says not available); derived potable_water: true left.
+- **6344 Lakeview** (mt-25): derived 22-ft max could not be re-confirmed on the current FS page; left in place.
+- **6273** (mt-25): FS page says $18, recreation.gov says $22; concessionaire site (406-752-7924) refused fetches.
+- **6275** (mt-25): inherited booking row looks wrong (campground is not on recreation.gov).
+- 6335 Hick's Park (mt-24): FS Current Conditions 'Closed under Special Order' (page updated 2026-05-01; same since at least Jul 2025, no order on the alerts page, no reason or reopening). Recorded temporarily_closed. Access: 'Travel with a trailer is not recommended south of Hells Canyon' (Hick's Park is south of it); 'Access road not suitable for vehicles longer than 32''. Asked AWH.
+- 13308 Howard Lake (mt-24): FS gives no length; Visit Montana (official tourism site) says 'The maximum recommended trailer length for the area is 20 feet'; no review found of a 23-ft+ rig. Kootenai flood alert (from 2025-12-16, no end) lists washouts on NFS Rd 231 at MP 0.9 and 8.1, the approach road. Asked AWH.
+- 6342 Lake Creek (mt-24): Kootenai flood alert lists 'NFS Road 231 Lake Creek Bridge Washout at milepost 19.3' and a West Fisher Rd washout at MP 25.5 on the access road; may be unreachable. FS page contradicts itself on water.
+- 6336 Hilltop (mt-24): rec.gov link is Scan & Pay, not reservations; FS 16-day limit vs rec.gov 7 consecutive nights.
+- 6337 Holiday Spring (mt-24): FS page contradicts itself on toilets; ~30-ft spur in the note no longer on the page.
+- 6343 Lake Inez (mt-24): FS page says both 'no fees' and '$10/night for the 5 individual sites'; rec.gov says access closed early spring/late fall.
+- 13704 Jo Bonner (mt-24): max_rig_ft 100 cleared (rec.gov pad lengths); rec.gov facility phone (406) 475-3920 vs field office 406-475-3921.
 - 6329 Grasshopper (mt-23): temporarily closed by FS order 0600 Jul 27 - 1800 Nov 1, 2026 (site work, culverts). Re-check after Nov 1.
 - 6330 Graves Bay (mt-23): FS publishes it as 'Graves Creek Campground' ('also known as Graves Bay').
 - 6328 Gold Creek (mt-23): FS page gives two seasons (year round snow dependent vs Memorial Day - Labor Day); season unrecorded.
