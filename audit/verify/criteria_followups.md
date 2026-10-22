@@ -4,6 +4,13 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **RESTORED 6148 Hyde RV Park and 6155 Riverside Cabins and RV Park** (2026-10-22): I had dropped them for 'no posted nightly rate', but test 2 binds only long-stay parks; an ordinary park with a working website + phone passes on an RV Life $/$$ (curation doc, AWH 2026-10-14). Both are $$ with working sites and phones (Hyde also Google 4.6 over 28). Re-checked the other MT drops on Google Maps: 6158 Rivers Bend 9 reviews and 6153 Happy Camper 23 reviews (presence fails, drops stand); 15380 Aspenwood is RV Life $$$ (no price indicator, reason corrected); 14595 Big Sky kept dropped as long-stay in character (test 2); 6168 Sand Springs' Google listing is the store (39 reviews), not the RV park, drop stands.
+- **6155 Riverside** name: operator calls itself 'Riverside Motel-Cabins-RV Park'; not renamed.
+- **6131 Shady Rest RV Park** (mt-14): shadyrestrvparkmt.com is NXDOMAIN; website replaced with the Visit Montana listing. Presence passes on Google (4.4 over 210, phone). Derived 50 A and Apr 1-Oct 31 season rested on the dead site; Visit Montana says 20 of 40 sites are year-round. It also says 'Good Sam Park' vs the directory's false.
+- **6141 Two-Bit Outfit** (mt-14): no posted nightly rate, advertises monthly/extended stays but reads as a traveller park (RV Life $$); derived max_rig_ft 80 not on the operator's pages.
+- **14598 Wagon Wheel** (mt-14): presence on Google only (4.3 over 93, phone); its Visit Montana link is 404, so no website.
+- **6140 Trout Creek Motel and RV Park** (mt-14): base $50, exactly at the gate.
+- **6068 White Sandy** (mt-14): phone 406-533-7600 was on neither official page; set to the BLM/rec.gov local line 406-258-0279.
 - **15368 Leaning Tree** (mt-13, 2026-10-22): presence is the host's Hipcamp listing only (plus Google 172 reviews), so ownership -> hipcamp and the listing went in `website`. Only 3 of 12 sites take a 23-ft rig (RV-6 60 ft, RV-2 30 ft, RV-1 28 ft).
 - **15379 Red Eagle** (mt-13): a Blackfeet Nation tribal campground recorded as private (no tribal class). Base $30 'Standard Primitive Sites' assumes they take a 23-ft RV; otherwise the base is the $50 electric site. Phone set to the campground page's 406-338-2111 (ext. 2161); was 844-335-5178.
 - **6093 Lost Creek SP** (mt-13): RV/trailer limit is exactly 23 ft (EKKO fits at the cap). Phone was Lewis & Clark Caverns'; now FWP Butte 406-224-0833.
