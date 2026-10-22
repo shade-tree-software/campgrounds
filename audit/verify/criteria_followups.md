@@ -464,3 +464,12 @@ me drop and report); each needs the research named before a verdict.
 - **1505 Birch Haven**: mostly seasonal but passes the five tests on what is published (daily $40 + phone, no application/minimum, 8 lease spaces of 80). Rate page Last-Modified 2021, so no fee recorded.
 - **1509 Cherry Hill**: operator page "$52 per night (no hook-ups)" for 2+2 (undated) vs Campspot $40 for 2 adults (Oct 2026, dated) - kept under the gate; Buffalo gateway 41 km (just outside). Re-check when summer 2027 opens.
 - **1478 Camp Elmbois**: sewer cleared (electric + water + dump only); 2-night Jul-Aug weekend / 3-night holiday minimums.
+
+### p3-73 (NY, 2026-10-21)
+- dec.ny.gov and parks.ny.gov answer 403 to plain HTTP; DEC's 2026 campground summary PDF (dec.ny.gov/sites/default/files/2025-04/summerreccampgroundsummary.pdf) gives each DEC campground's sites, minimum, phone and season. ralist.py (session scratch p3-73) parses ReserveAmerica site lists.
+- **291 Hither Hills**: peak season (mid-Jun to mid-Sep) is 7-night reservations only (PEAK-SEASON MINIMUM line; ≤3 months, AWH 10-21 rule).
+- **1454 McCann**: asks.md (mostly seasonal; now dry camping only).
+- **1497 Lizzie's**: lizziescampground.com is a HugeDomains for-sale page; presence on Google Maps (4.3 over 35, phone 607-548-4044); price only RV Life $$ (AAA lists $30-55).
+- **1506 Riverside Acres**: rates undated (site build Feb 2025); motor home $40/$45.
+- **1389 Eel Weir**: park says 38 sites, ReserveAmerica sells 27.
+- **1390 Sacandaga / 345 Scaroon Manor**: season closes set 09-05 (DEC 2026 summary + RA 2027).
