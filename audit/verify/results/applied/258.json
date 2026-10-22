@@ -2,38 +2,86 @@
   "id": 258,
   "checked": "2026-10-22",
   "sources": [
-    "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area",
     "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping",
-    "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/news/campground-closures (last updated 9/15/2026)",
-    "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902"
+    "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area",
+    "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902",
+    "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campsiteDetails.do?contractCode=NC&siteId=5681&parkId=552902",
+    "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campsiteDetails.do?contractCode=NC&siteId=5729&parkId=552902",
+    "https://www.ncparks.gov/about-us/state-parks-reservation-rates-and-activity-fees"
   ],
   "groups": {
     "hookups": {
-      "values": {"electric": 50, "water": true},
-      "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping ('Holly Point offers 158 campsites total, 89 with water and 50/30-amp electric hookups. Rolling View offers 115 campsites total, 80 with water and 50/30-amp electric hookups.'), read 2026-10-22",
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": false
+      },
+      "source": "ReserveAmerica site details for every site (Electricity Hookup '50', Water Hookup 'Y' on all electric sites; e.g. https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campsiteDetails.do?contractCode=NC&siteId=5681&parkId=552902) + the park notes on every site page ('There are no sewer hookups on any campsites. There is a dump station conveniently located near the entrance to the campground'), read 2026-10-22",
       "method": "manual"
     },
     "sites": {
-      "values": {"count": 273, "pull_through": true, "note": "Two drive-in campgrounds: Holly Point 158 sites (89 electric/water) and Rolling View 115 (80 electric/water), plus 46 hike-in tent sites at Shinleaf and tent-only group camps. The booking site lists back-ins and some pull-throughs, driveways mostly 30-100 ft."},
-      "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping (site counts per campground; Shinleaf 46 hike-in; group camping 'tents only') + ReserveAmerica site list (e.g. A-010 '30 Pull-Through', B-002 '45 Pull-Through', A-015 '100 Back-In'), read 2026-10-22",
+      "values": {
+        "count": 147,
+        "pull_through": true,
+        "note": "The booking site lists 147 sites (the park page says 158): 85 with 50-amp electric and water in Loops 1, 2, 3 and 5, and 62 without hookups in Loops 2, 4 and 5. Ten are walk-in tent sites (Loop 2 sites 60-64; Loop 4 sites 117, 120, 124, 128 and 131). Seven pull-throughs; listed driveways run 35-135 ft."
+      },
+      "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping ('Holly Point offers 158 campsites total, 89 with water and 50/30-amp electric hookups') + ReserveAmerica site list and every Holly Point site page (Site Access, Driveway Entry, Driveway Length, Electricity Hookup), read 2026-10-22",
       "method": "manual"
     },
     "facilities": {
-      "values": {"dump": true},
+      "values": {
+        "dump": true
+      },
       "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping ('Both Holly Point and Rolling View have a dump station'; 'Bathhouses are centrally located in each camping loop'), read 2026-10-22",
       "method": "manual"
     },
     "booking": {
-      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 180, "min_stay": [{"nights": 2, "applies": "holiday", "waived_if": {"booking_within_days": 14}}], "note": "Electric and non-electric campsites can be booked for today and up to 6 months ahead. Holiday weekends need 2 nights, cut to 1 night when booking within 14 days of arrival."},
-      "source": "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902 (Booking Window: 'Campsite Electric ... Reservations can be made for today and can be made up to 6 Month(s) in advance'; 'Business Rules for Holiday Weekends': '2 nights Minimum Stay on holiday weekend', '1 night Minimum Stay on holiday weekend if the booking dates within 14 Days before Arrival Date'), read 2026-10-22",
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "window_opens_days": 180,
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "holiday",
+            "waived_if": {
+              "booking_within_days": 14
+            }
+          }
+        ],
+        "note": "Sites can be booked for today and up to 6 months ahead. Holiday weekends need 2 nights, cut to 1 night when booking within 14 days of arrival."
+      },
+      "source": "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902 (Booking Window, Campsite Electric / Non-Electric: 'Reservations can be made for today and can be made up to 6 Month(s) in advance'; Business Rules for Holiday Weekends: '2 nights Minimum Stay on holiday weekend', '1 night Minimum Stay on holiday weekend if the booking dates within 14 Days before Arrival Date'), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 40,
+        "currency": "USD",
+        "surcharges": {
+          "electric": 10
+        },
+        "checked": "2026",
+        "note": "Sites without hookups $30 a night and electric/water sites $40, each including the $3-a-night service fee that the booking site adds to its $27 / $37 camping fee (charged on in-person bookings too). Seniors 62+, veterans and military members get $6 off a night with ID at check-in. No out-of-state rate; federal passes are not accepted. Cancelling costs $15 per reservation."
+      },
+      "source": "https://www.ncparks.gov/about-us/state-parks-reservation-rates-and-activity-fees ('RV with electric and water hookups $40'; 'Tent, trailer, or RV site with no hookups $30'; 'All prices listed on this website page include the $3 service fee'; 'A $3 service fee is charged for all reservations, including those made in-person'; 'Seniors, veterans, and military members are eligible for a $6 discount per night on certain campsite reservations'; 'we do not accept federal passes, such as the America the Beautiful Pass') + ReserveAmerica price breakdowns https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campsiteDetails.do?contractCode=NC&siteId=5729&parkId=552902 (Loop 4 site 110, 2026-11-17: 'Camping Fees (1 night) $27.00 Per Night') and https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campsiteDetails.do?contractCode=NC&siteId=5681&parkId=552902 (Loop 3 site 077, 2026-11-17: '$37.00 Per Night') ('Reservation Fees $3.00 Per Night'), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "military": true,
+        "interagency_senior_access": false
+      },
+      "source": "https://www.ncparks.gov/about-us/state-parks-reservation-rates-and-activity-fees ('Seniors, veterans, and military members are eligible for a $6 discount per night on certain campsite reservations'; 'we do not accept federal passes, such as the America the Beautiful Pass, or passes for other states'), read 2026-10-22",
       "method": "manual"
     }
   },
-  "summary": "Existing fees ($30 / +$10 electric) and season (Rolling View Loop A year-round) stand. Added 50-amp electric + water, 273 drive-in sites across Holly Point and Rolling View with some pull-throughs, dump stations, 6-month window and the booking site's holiday minimum (waived within 14 days, not the agency row's 7). Holly Point is closed for wastewater construction until November 16, 2026 (a partial closure; Rolling View operates). Not stated: showers by name, max stay.",
+  "summary": "Added 50-amp electric and water with no sewer, 147 sites (85 electric) with pull-throughs, dump station, ReserveAmerica booking (6-month window, holiday 2-night minimum waived within 14 days), $30 / $40 rates with the $3 service fee included and the senior/military $6 discount. The construction closure (status, manual) stands. Not set: season, because the 2026 schedule is the construction schedule (Loops 2-4 open November 16 to December 1, Loops 1 and 5 closed); showers not named.",
   "flags": [
-    "Entry covers the whole SRA and the pin (36.0230,-78.6994) sits on no campground: 0.84 km from the Highway 50 Access boat ramp, 3.1 km from Rolling View Campground (ncparks GPS 36.0085,-78.7291) and 4.0 km from Holly Point Campground (36.0100,-78.6575). AWH's note ('Wooded campground with multiple lakefront RV sites') fits either; the season already recorded follows Rolling View's Loop A (open year-round), and Holly Point is closed for construction until 2026-11-16. Suggest narrowing to Rolling View (115 sites, 80 electric, year-round Loop A) and re-pinning, with Holly Point (158 sites, 89 electric) as its own entry if wanted. B.W. Wells and Shinleaf are tent/group or hike-in only.",
-    "Missing phone: Falls Lake SRA visitor center 984-867-8000 (ncparks.gov); reservations 1-877-722-6762.",
-    "Website: only the ReserveAmerica page is listed; the agency page is https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area.",
-    "Registry state:NC min_stay waiver says 7 days; ReserveAmerica's holiday rule for Falls Lake says 14 days (as at Kerr Lake, 103). Recorded 14 here."
+    "Still temporarily closed for wastewater construction (status unchanged): Loops 2, 3 and 4 reopen November 16, 2026; Loops 1 and 5 are 'Closed for Construction' with no date. The 2026 schedule shows Loops 2 and 4 closing again December 1, 2026.",
+    "Site count: ReserveAmerica lists 147 Holly Point sites; ncparks.gov says 158 (89 electric vs 85 on the booking site).",
+    "ReserveAmerica's 'Distance to Body of Water' reads 2500 ft for every Loop 1 site, which the map does not bear out; not used.",
+    "Registry state:NC min_stay waiver says 7 days; ReserveAmerica's holiday rule for Falls Lake and Jordan Lake says 14 days. Recorded 14 on all six."
   ]
 }
