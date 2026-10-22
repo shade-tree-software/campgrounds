@@ -587,3 +587,12 @@ me drop and report); each needs the research named before a verdict.
 - **1444 Greenwood**: all 50 sites sold nightly beside a $1,800 seasonal rate.
 - Short listed lengths: 1420 Newtown Battlefield (6 of 18 take 23 ft), 1425 Sharp Bridge (10 of 39).
 - 1422/20/1425 close 09-05.
+
+### p3-87 (NY, 2026-10-21)
+- **13359 Korn's**: town ownership weakly supported (2016 Senate release on the Town Board buying it; operator site never names the town; RA lists it under its private contract). $75/night for 4; if private it would fail the gate (Newark 90 km). Left local.
+- **1431 Hunts Pond SF**: May-Sep sites need a DEC permit (phone/email, bookable from Apr 1); first-come Oct-Apr; a bare "ANY vehicle is prohibited." line on DEC's page has no context. Phone -> Lands and Forests 607-371-7268.
+- **13729 Moose River Plains**: "Tents or small campers" only, no length stated; Payne Brook bridge failure closes the eastern road segment and sites 1-20 (enter from Inlet). Kept.
+- **14339 Niagara Shores**: $42 dry site; hookup sites $51-65 (no gateway; Niagara Falls 43 km) - base passes on the dry site.
+- **14320 Pine Ridge**: $30 base is a "Waterfront - No Hookups" site; if tent-only, base $38.
+- **13358 Onoville**: ~2/3 seasonal (sold out to returning campers); transient sites book online at a daily rate - passes.
+- 1433/13727 close 09-05; 1433 only 5 of 24 drive-in sites at 30 ft.

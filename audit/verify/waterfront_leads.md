@@ -140,3 +140,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1416 Paradox Lake (NY)**: RA "located on the shore of Dark Bay, which is on Paradox Lake"; note counts ~5 waterfront sites; entry not waterfront.
 - **15466 Lake Placid / Whiteface KOA (NY)** (weak): KOA sells "Riverside" site types "near the beautiful Ausable River"; entry not waterfront - look at the Riverside sites on imagery.
 - **1453 Cedar Point County Park (NY)** (weak): "commanding views of Gardiner's Bay" (park + glamping tents, not the family sites); entry not waterfront.
+- **13359 Korn's (NY)**: "39 acres of wooded land on the Shawangunk Kill River"; entry not waterfront.
+- **14339 Niagara Shores (NY)**: lakeview RV sites "Most ... currently located waters edge with panoramic views of Lake Ontario"; entry lakeview.
+- **14320 Pine Ridge (NY)**: sells "Deluxe Waterfront" and "Waterfront - No Hookups" sites on the river through the park; entry riverview.
+- **13728 Luzerne (NY)** (weak): RA "partially surrounds Fourth Lake"; entry not waterfront.
+- **13727 Rogers Rock (NY)** (weak): west shore of Lake George with a sand beach; entry not waterfront.
