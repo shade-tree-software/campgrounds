@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- 6233 Holland Lake Campground (mt-17): rec.gov says 'on the shores of Holland Lake', lists Lake and Beach Access; entry is lakeview.
+- 6097 Coal Banks Landing (mt-17, weak): BLM says 'situated along the Upper Missouri River'; entry is riverview.
+- 6065 Wayfarers Unit, Flathead Lake SP (mt-17, weak): FWP says 'on the northeast shore of Flathead Lake', ReserveAmerica tags sites 'Near Water'; entry is not waterfront.
 - 6214 Pete Creek Campground (mt-16): FS page lists 'access to the Yaak River'; entry is not waterfront.
 - 6173 Rainbow Point Campground (mt-16): rec.gov says 'on the banks of scenic Hebgen Lake' with Beach and Lake Access; entry is not waterfront.
 - 6245 Beaver Creek Campground, Spotted Bear (mt-16): FS says 'the campsites are less than 100 feet to the river', 'situated next to Spotted Bear River'; entry is riverview.

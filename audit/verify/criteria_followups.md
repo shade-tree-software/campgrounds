@@ -4,6 +4,12 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6210 Cabin City (mt-17): temporarily closed for 2026 (storm damage; closure order May 11, 2026 - May 1, 2027). Re-check spring 2027.
+- 6101 Confederate (mt-17): Reclamation names it 'Confederate Campground' (entry: 'Confederate Recreation Area'); only campground-level source is a 2020 table PDF, big-rig claim aggregator-only.
+- 6092 Sanford Park (mt-17): no agency page names it (only Reclamation's Lake Elwell table); every detail is aggregator-sourced. Lack-of-information candidate, asked AWH.
+- 6064 Cooney SP (mt-17): manual year_round season rests on FWP park hours, not a campground statement.
+- 6112 Drummond City Park (mt-17): town's two pages give 3+7 vs 3+10 sites.
+- 6097 Coal Banks Landing (mt-17): its recreation.gov link is a POI page, not a bookable campground (BLM is FCFS).
 - 6222 McGillivray (mt-16): FS page contradicts itself on restrooms/potable water (narrative + rec.gov say vault toilets and water; amenity box says neither).
 - 6214 Pete Creek (mt-16): FS page no longer states the ~24-ft trailer limit or FCFS the note/inclusion evidence cite.
 - 6252 Blodgett (mt-16): FS page gives two seasons (May 1-Oct 31 vs Memorial Day-Labor Day); both recorded.
