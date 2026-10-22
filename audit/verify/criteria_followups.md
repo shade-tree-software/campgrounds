@@ -371,3 +371,11 @@ me drop and report); each needs the research named before a verdict.
 - **1225 State Fairgrounds**: the $45 rate's page header still reads 2021 (Bonfire booking has a reCAPTCHA). Ownership private (501(c)(3)) confirmed.
 - **1195 Brooke Hills Park**: CampLife lists no sites, says "2 night minimum" to every one-night request and "No sites available" to two-night searches, so it may book by phone only (304-737-1236).
 - **815 Harpers Ferry Campground**: mixed-use outfitter base (zipline, guest boat launch, trains 24/7); monthly leases Nov-Mar with a background check. Tunnel height is an ask.
+
+### p3-61 (WV, 2026-10-21)
+- **14056 Bluestone Old Mill**: still temporarily_closed for the Bluestone Dam work ("will reopen once construction is completed", no date); "not suggested for larger RVs and campers". Re-check later.
+- **462 Buffalo Gap Retreat** kept (--AWH note): only 2 of 24 sites take RVs (creekside, no hookups, under 30 ft; site 30's RV parks in the parking area); $50 from Hipcamp, at the gate, not over it.
+- **513 Gladwin Dispersed** kept (--AWH firsthand): no agency page names it (website is now the Monongahela's general camping page, replacing thedyrt); a 2021 aggregator review says the low-water bridge to the far-side site washed out.
+- **Canaan Loop Road #1-#4, #7, #8**: the FS designates no numbered sites; FS says only "exercise caution, especially when in a low-clearance vehicle" (not a 4WD recommendation). Aggregators say the full loop may need 4x4. The north end is private land. Booking values rest on a newspaper reprint (method reported).
+- **483 Brandywine Lake**: "Not suitable for large RVs" (no length); the North River RD phone was reported down, so it's not set.
+- **1039 Guyandotte**: 21 of 86 sites are long-term (16-night minimum); 65 are normal nightly. The season rests on note prose.

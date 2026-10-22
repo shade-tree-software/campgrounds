@@ -119,3 +119,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **13120 Eagle's Nest (WV)**: operator offers "permanent waterfront lodging", "Family Campground Near Water" with swimming and fishing in Patterson Creek; entry not waterfront.
 - **1201 Blue Heron Landing (WV)** (weak): "camp, and kayak right on Mill Creek with direct access on-site", but the rate page puts the tent sites, not the RV lots, along the creek.
 - **457 Gauley Tailwaters (WV, NPS)**: the entry's own note says "with sites directly along the river"; NPS says only "located just below Summersville Dam" (below a dam: river value only, from the river itself). Entry not waterfront.
+- **456 Glade Creek, NPS (WV)**: the note says "sites directly adjacent to the creek" and NPS says "near the banks of the New River and the Glade Creek Trailhead"; entry not waterfront.
