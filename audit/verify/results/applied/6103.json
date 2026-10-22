@@ -1,0 +1,42 @@
+{
+  "id": 6103,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/stateparks/painted-rocks",
+    "https://montanastateparks.reserveamerica.com/camping/painted-rocks-state-park/r/campgroundDetails.do?parkId=630217&contractCode=MT (read in a browser)",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630217, read 2026-10-12)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 23, "max_rig_ft": 35, "pull_through": true, "note": "FWP: 'There are 11 sites that can fit RV/trailers up to 35 feet in length and 12 sites limited to 25 feet in length.' ReserveAmerica lists 23 campsites, one of them pull-through."},
+      "source": "https://fwp.mt.gov/stateparks/painted-rocks ('The park offers 23 campsites ... There are 11 sites that can fit RV/trailers up to 35 feet in length and 12 sites limited to 25 feet in length.') + audit/state_park_fees/mt_sites_2026-10-12.json (23 'Campsite' rows: 20 Back-In, 1 Pull-Through, 2 unspecified), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630217: all 23 sites 'Electric Hookup - no', 'Full Hookup - no') + https://fwp.mt.gov/stateparks/painted-rocks ('There is no potable water available'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "Pack-in/pack-out; bear-resistant dumpsters for registered campers and food lockers for tent campers without a vehicle. Boat launch, dock and picnic shelter."},
+      "source": "https://fwp.mt.gov/stateparks/painted-rocks (Amenities: 'Toilets (Vault)', 'Pack-in/Pack-out', 'Boat Launch', 'Dock', 'Picnic Shelter'; 'There is no potable water available at this campground.'; 'Bear-resistant dumpsters are available to registered campers', 'Tent campers without a vehicle may use available food lockers'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://montanastateparks.reserveamerica.com/camping/painted-rocks-state-park/r/campgroundDetails.do?parkId=630217&contractCode=MT ('Status: Open year round.') + https://fwp.mt.gov/stateparks/painted-rocks ('Park: Open daily all year'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "url": "https://montanastateparks.reserveamerica.com/camping/painted-rocks-state-park/r/campgroundDetails.do?parkId=630217&contractCode=MT", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "offset_hours": -48}, "fcfs": "some_sites", "note": "Only 6 of the 23 sites are reservable, and only Memorial Day through Labor Day, Thursday-Sunday; the rest are first-come, first-served. ReserveAmerica: 'Reservations must be made 2 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance.'"},
+      "source": "https://fwp.mt.gov/stateparks/painted-rocks ('There are 6 reservable campsites, available for reservation from Memorial Day through Labor Day, Thursday-Sunday only. The rest of the sites are first come, first served.') + ReserveAmerica Booking Window ('Reservations must be made 2 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance.'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Montana State Park on Painted Rocks Reservoir (West Fork Bitterroot River), Bitterroot Mountains SW of Darby, ~4,720 ft, in a remote pine-forest setting. The reservoir is drawn down: FWP, as of October 1, 2026, 'Due to dropping levels in Painted Rocks Reservoir, access to the water from Painted Rocks State Park is unavailable.' --Claude",
+  "summary": "FWP park page + ReserveAmerica: confirmed 35-ft max, no hookups, vault toilets, no potable water, pack-in/pack-out, 6 reservable sites (Memorial Day-Labor Day, Thu-Sun) with the rest FCFS, the 3-month window and year-round status. Changed site count 25 -> 23 (FWP and RA both 23), cutoff 1 day (inherited) -> 2 days (RA), added pull-through and the booking deep link. Fees left as recorded (FWP gives only the statewide $4-$34 range). 7-night limit stays inherited (page silent). Note corrected (it said 2 sites to 35 ft and 23 to 25 ft; FWP says 11 and 12) and trimmed; FWP's Oct 2026 drawdown caveat added.",
+  "flags": [
+    "Missing phone: FWP gives 406-273-4253 ('is located at Travelers' Rest State Park - mention you are referencing Painted Rocks'), https://fwp.mt.gov/stateparks/painted-rocks.",
+    "Waterfront note: FWP alert as of October 1, 2026 says access to the water from the park is unavailable because of dropping reservoir levels (entry is lakeview; no change proposed)."
+  ]
+}

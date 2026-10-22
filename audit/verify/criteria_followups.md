@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **13309 Pleasant Valley (Kootenai)** (mt-27): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, page names no reservations).
+- **6280 North Dickey Lake** (mt-27): rec.gov contradicts itself on reservable sites (description says 5, catalog marks 13 of 24); both in booking.note.
+- **6281 Norton** (mt-27): phone changed from the Lolo NF supervisor's office to Missoula Ranger Station 406-329-3814 (the page's district contact).
 - **6279 Mussigbrod** (mt-26): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, FS page names no reservations); likely FCFS only.
 - **6278 Mortimer Gulch** (mt-26): derived max_rig_ft 35 no longer on the FS page; FS 'highly recommends' 4WD for the boat-ramp road only (not the campground approach).
 - **6277 Monture Creek** (mt-26): FS gives no site count/length; Hipcamp says one RV-suitable site. Agency silent on rig, so kept.
