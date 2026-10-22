@@ -733,3 +733,12 @@ me drop and report); each needs the research named before a verdict.
 - **4216 Goose Creek**: Camp Leach Rd entrance closed for bridge work from Aug 24 (detour); RA page gives the holiday 2-night minimum with no waiver.
 - **13204 Harmon Den lower loop**: rec.gov "tent campers and small trailers"; 30-ft sites, motorhomes not named. Kept.
 - **14343 Holly Bluff**: "Temporary Live-in Monthly Rates" from Aug 2026; nightly posted + bookable; RVs over 10 years old email a photo.
+
+### p3-102 (NC, 2026-10-22)
+- No drops. **768 Potters Marine** (Hipcamp): $58.28 all-in, over the gate, no gateway; KEPT because AWH's note priced it ("$50+fees"). Hipcamp marks sewer absent vs AWH's "Full hookups" (recorded false; AWH may know better). pottersmarine.com dead; no phone.
+- **13205 Oyster Point**: rec.gov opens only double site 08/10 ($20) to RVs; single sites list tent/trailer. Base left $10. If trailer-only means no motorhome, base -> $20 and it is a one-site campground for EKKO.
+- **4224 North Mills River**: only 8 sites take 23 ft; electric/sewer unknown (FS prices Electric $40 / Full $46, rec.gov has one RV ELECTRIC site).
+- **4212 Pilot Mountain**: 15 of 40 bookable sites list a length (25-38 ft). **4213 South Mountains**: nine sites take 23 ft; Wards Gap Rd detour from Oct 5.
+- **4218 Raven Rock**: "no walk-ups permitted" vs the state:NC registry's some-sites FCFS; recorded never.
+- **14351 Silver Creek** $50 at the gate (Asheville 44 km); seasonal stays pitched but all types sell nightly.
+- **4217** renamed "New River State Park (US 221 Access)"; 14355 phone -> division office 919-821-7400 (was the 24-h public-safety line).

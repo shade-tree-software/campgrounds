@@ -157,3 +157,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **4306 Almond Boat & RV Park (NC)** (DOWNGRADE): operator says "It is not water front but very close to the lake"; entry lakefront.
 
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
+- 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
+- 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
