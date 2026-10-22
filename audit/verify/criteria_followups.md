@@ -4,6 +4,8 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **Resolved 2026-10-22 (booking):** with AWH's rule that no recreation.gov listing is evidence of first-come only, 6094 Clark Canyon, 6232 Summit, 6234 North Shore, 6275 Marten Creek, 6279 Mussigbrod, 6283 Red Top, 6331 Bad Medicine, 6342 Lake Creek and 13309 Pleasant Valley now carry booking reservable: false, fcfs: always (recreation.gov search found no campground facility for any; Clark Canyon has only a recarea page). These were every MT entry still inheriting the federal row's reservable: true.
+- **Resolved 2026-10-22 (locations):** 6291 Steel Creek re-pinned to the FS coordinates 45.603415,-113.336572 (elev 1926 -> 2027 m); 6302 Basin re-pinned to FS 45.16108,-109.39183 (rec.gov agrees; was ~4.8 km off; elev 2299 -> 2110 m). 6297 South Van Houten: the pin is ~160 m from the FS coordinates and USGS gives 2144 m there, so the stored 2145 m stands; the FS page's 6,700 ft is its own figure. 6161 Cow Bells: the pin sits ~200 m from 4-H Rd at the Musselshell County Fairgrounds (20 4-H Rd), left as is.
 - **6269 Wood Lake** (mt-31): FS page contradicts itself on water ('provides restrooms and drinking water' vs 'Potable water is not available at this site'); derived potable_water cleared. Call Rocky Mountain RD 406-466-5341.
 - **13576 Williamson Park (Shelby)** (mt-31): directory-only site count (25) and showers cleared; city page states neither.
 - **6295 Tom Miner** (mt-30): temporarily closed, hazard-tree order 01-11-03-26-02 (2026-08-21 to 2026-12-31); recheck before the June 2027 season.

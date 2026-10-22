@@ -61,6 +61,10 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
      booking): record it in `min_stay` and say in `booking.note` that it may be relaxed for a
      same-day booking (a soft value of 0 or 1 is no rule at all); and a catalog length that is
      plainly a typo (140 ft) is left out of `max_rig_ft`, not believed.
+   - **A federal campground with no recreation.gov listing is first-come only** (AWH 2026-10-22):
+     when it would otherwise inherit the federal row's `reservable: true` and a recreation.gov
+     search finds no campground facility for it, write `reservable: false, fcfs: "always"`
+     (source naming the search and this rule). A group site or cabin listed alone doesn't count.
    - `booking.platform`: a state's own branded booking site (Reserve Florida, ReserveVAParks)
      keeps the label its agency row uses (`operator` or `usedirect`); don't relabel one as
      the other, it is the same site either way.
