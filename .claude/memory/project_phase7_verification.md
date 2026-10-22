@@ -47,7 +47,7 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
 
-**RESUMED 2026-10-21 (new session d7b90449):** p3-62 + p3-63 applied (fd13742c, 23f1585d; not pushed). p3-64 (WV) and p3-65 (last WV + first SC) running; briefs in that session's scratchpad as p3-6N_prompt.txt (each built from the previous one by swapping the batch paragraph). If the session died, check results/ for their files, else relaunch. Commit with explicit paths: `git add audit/verify/` swept a running verifier's results file again (fixed by amend).
+**RESUMED 2026-10-21 (new session d7b90449):** WV DONE (p3-62..p3-65); SC p3-65..p3-72 (SC finishes in p3-72, then NY). Applied through p3-70 (439b7d71), NOT pushed. p3-71 (SC) + p3-72 (SC/NY) running; briefs in that session's scratchpad as p3-7N_prompt.txt, each built from the previous by swapping the batch paragraph + the other-verifier line (check that line's scratch path). Dropped this session: 517 Squirrel Gap Road Parking (AWH), 4369 Broad River (approval to stay overnight + gate). If the session died, check results/ for their files, else relaunch. Commit with explicit paths (applied/ + `-u`), never `git add audit/verify/`.
 
 **PAUSED AGAIN by AWH 2026-10-21, very late ("pause when convenient").** Nothing is in flight: p3-55..p3-61 are applied (84 WV entries). Commits after c8f95e89 are NOT pushed; deployed through f37f3ac7. Verified 838.
 - Dropped: Gheny Nook 13121 (long-stay test 2), The Dock 1221 (presence), Sunny Glen 1220 and Triple L 1223 (AWH).
