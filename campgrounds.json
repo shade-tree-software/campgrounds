@@ -6070,20 +6070,77 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB campsite catalog for facility 232645 (66 public STANDARD ELECTRIC sites: 52 at 50 A and 14 at 30 A, Water Hookup Yes on all; no sewer attribute), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232645/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232645/rates (2026 'Peak Season': STANDARD ELECTRIC $32, variants $28 and $26, STANDARD NONELECTRIC $22) + RIDB catalog (site 011 STANDARD NONELECTRIC, RV/trailer, Max Vehicle Length 32, Pull-Through, Water Hookup Yes), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232645 (rules minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days', reservationCutOff 0; notices 'Maximum stay is 14-days within 30 day period', 'Gates open at 7:00am and close at 10:00pm', 'Starting on January, 1, 2025 check out time is 1 p.m. Check in time is 3 p.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.sas.usace.army.mil/Media/News-Releases/Article/4589134/corps-of-engineers-announces-recreation-seasonal-closures-at-thurmond/ (Sept. 2, 2026: 'Campgrounds closing Sept. 13: ... Modoc'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB campsite catalog for facility 232645 (70 sites; Max Vehicle Length 20-48; 41 Pull-Through), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232645 ('There are four bathhouses spread throughout the campground that have flush toilets and showers'; 'there is a dump station and dumpsters located in the campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
-      "nightly_low": 32,
+      "nightly_low": 22,
       "nightly_high": 32,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 rates: $32 a night for a standard electric site, with cheaper electric variants at $26 and $28 (the rate table does not name which sites); the one non-electric site (011, a 32-ft pull-through with water) is $22."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Bookable on recreation.gov up to the arrival day (cutoff 0); 3-night minimum on holiday weekends. 14 days within any 30, across USACE campgrounds. Gate open 7 am - 10 pm (combination issued at check-in); check-in 3 pm, check-out 1 pm."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Seasonal: the Corps closed Modoc for the season on Sept. 13, 2026 (opening date not published on the Corps pages read)."
+    },
+    "sites": {
+      "count": 70,
+      "max_rig_ft": 48,
+      "pull_through": true,
+      "note": "70 sites in the catalog: 66 electric and 1 non-electric open to the public, 3 management sites; 41 pull-throughs; maximum vehicle lengths 20-48 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Four bathhouses with flush toilets and showers; dump station and dumpsters; boat ramp and courtesy dock, playground, hiking trail, staffed gatehouse."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232645 https://www.recreation.gov/api/camps/campgrounds/232645/rates RIDB campsite catalog for facility 232645 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.sas.usace.army.mil/Media/News-Releases/Article/4589134/corps-of-engineers-announces-recreation-seasonal-closures-at-thurmond/",
+      "note": "USACE-operated (Savannah District, Thurmond Lake; rec.gov phone 864-333-2272): fees 32/32 -> $22-32 (the $22 non-electric site is a 32-ft pull-through); booking confirmed recreation.gov with a 3-night holiday minimum and 14-in-30 limit; season seasonal (closed Sept 13, 2026 per Corps release; reopening date unpublished); 50 A + water confirmed; 70 sites to 48 ft, pull-throughs; four bathhouses with showers, dump. FCFS not stated. Note left as is."
+    },
+    "phone": "864-333-2272"
   },
   {
     "id": 94,
@@ -6196,25 +6253,51 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 15
+      "count": 100,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "100 paved sites (72 water/electric, 28 full hookup); 50 take RVs up to 40 ft, the rest up to 35 ft; 8 pull-throughs. The park page calls 23 sites waterfront, the booking site 15. Primitive group area besides."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights'; per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights per site (cumulative up to 42 of 49). Same-day reservations go through the park (Tackle Shop 803-482-6401). Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/lake-wateree/camping ('Standard Sites with Elec. & Water: 72 campsites'; 'Full Hookup Sites ...: 28 campsites'; '50 sites can accommodate RVs up to 40 feet, others up to 35 feet. Eight sites are pull-through, while 23 are waterfront') + https://reserve.southcarolinaparks.com/lake-wateree/campsites ('15 campsites are located on the waterfront'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/lake-wateree/camping ('Camping reservations must be made for a minimum of two nights'; same-day via the park) + https://reserve.southcarolinaparks.com/lake-wateree/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Minimum length of stay is 2 nights', 'Maximum length of stay is 14 nights per site'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/lake-wateree/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/lake-wateree/camping ('Each site is paved and has individual water and electrical hookups'; '28 campsites have 50 amp electrical, water and sewer hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/lake-wateree/camping ('convenient to restroom facilities with hot showers'; 'Dump Station: Yes'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -6228,6 +6311,21 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$35-59 a night for a standard campsite; full-service sites $40-63. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true,
+      "note": "Every site has water and electric; 28 have 50-amp electric, water and sewer."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/lake-wateree/camping https://reserve.southcarolinaparks.com/lake-wateree/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); sites 15 -> 100 (the 15 was read from the AWH note's lakefront count; the park lists 100 sites), RVs to 40 ft, pull-throughs; added 50 A + water + sewer, 14-night max, showers and dump. Fees left as read 2026-10-12. Note kept (the park page says 23 waterfront sites, the booking site 15 as the note does). Not stated: season."
     }
   },
   {
@@ -6399,17 +6497,45 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights'; per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum stay 14 nights (42 of 49 cumulative, shorter at busy parks in peak season). Same-day reservations go through the park. Check-in 2 pm at the Tackle Shop, check-out noon."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/dreher-island/camping ('Camping reservations must be made for a minimum of two nights'; same-day via the park) + https://reserve.southcarolinaparks.com/dreher-island/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Maximum length of stay is 14 nights. Minimum length of stay is 2 nights'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/dreher-island/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/dreher-island/camping ('Each site has water and electrical hook-ups and a picnic table'; 'Standard Sites with Elec. & Water: 97 sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://southcarolinaparks.com/dreher-island/camping ('Two lakefront camping areas ... Ninety-seven paved sites may be used by both RVs and tents, while 15 sites are for tent campers only'; 'Many sites accommodate RVs up to 45 feet, others up to 30 feet'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/dreher-island/camping ('All sites are convenient to hot showers and restrooms'; 'Dump Station: Yes'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -6423,6 +6549,24 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$42-60 a night for a standard campsite; full-service sites $53-65. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "water": true,
+      "note": "Every site has water and electric hookups; the park does not state the amperage."
+    },
+    "sites": {
+      "count": 97,
+      "max_rig_ft": 45,
+      "note": "97 paved RV/tent sites in two lakefront camping areas, plus 15 tent-only sites and a primitive group area. Many sites take RVs up to 45 ft, others up to 30 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/dreher-island/camping https://reserve.southcarolinaparks.com/dreher-island/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); added water at every site (amps not stated), 97 RV/tent sites up to 45 ft, 14-night max, showers and dump. Fees left as read 2026-10-12. Note kept. Not stated: amperage, sewer, season, pull-throughs."
     }
   },
   {
@@ -12223,17 +12367,45 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. The booking site's policy is a 2-night minimum ('Some parks have longer minimum stay requirements during peak season and holidays'); per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights per site (cumulative up to 42 of 49). Same-day reservations go through the park. Check-in 2 pm, check-out noon. Discounted rates may be offered in low-demand seasons."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://reserve.southcarolinaparks.com/huntington-beach/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Minimum length of stay is 2 nights', 'Maximum length of stay is 14 nights per site') + https://southcarolinaparks.com/huntington-beach/camping (same-day via the park; 'Discounted rates may be available for seasons of lower demand'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/huntington-beach/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/huntington-beach/camping ('Each site, excluding the designated tent sites, has water and electrical hookups'; 'Full Hookup Sites with Elec, Water, Sewer: 66 sites') + https://reserve.southcarolinaparks.com/huntington-beach/campsites ('The South Campground also offers sewer hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://southcarolinaparks.com/huntington-beach/camping ('Standard Sites with Elec. & Water: 107 sites'; 'Full Hookup Sites ...: 66 sites'; 'Several sites accommodate RVs up to 40 feet, others up to 30 feet'; '6 rustic tent sites') + https://reserve.southcarolinaparks.com/huntington-beach/campsites ('173, to be exact'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/huntington-beach/camping ('convenient to hot showers and restrooms'; 'Dump Station: Yes'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -12247,6 +12419,25 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$85-95 a night for a standard campsite; full-service sites $100-110. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true,
+      "note": "Every site except the designated tent sites has water and electric; 66 (in the South Campground) also have sewer. The park does not state the amperage."
+    },
+    "sites": {
+      "count": 173,
+      "max_rig_ft": 40,
+      "note": "173 sites in two campgrounds near the shore (107 water/electric, 66 full hookup), plus 6 walk-in rustic tent sites. Several sites take RVs up to 40 ft, others up to 30 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/huntington-beach/camping https://reserve.southcarolinaparks.com/huntington-beach/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (booking-site policy; now on the entry with the AWH phone waiver); added water at every RV site and sewer at 66 (amps not stated), 173 sites up to 40 ft, 14-night max, showers and dump. Fees left as read 2026-10-12. Note kept. Not stated: amperage, season, pull-throughs."
     }
   },
   {
@@ -40652,17 +40843,46 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights' (longer in peak season and on holidays); per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights (cumulative 42 of 49, shorter in peak season). Same-day reservations go through the park."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/little-pee-dee/camping ('Camping reservations must be made for a minimum of two nights'; same-day via the park) + https://reserve.southcarolinaparks.com/little-pee-dee/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Maximum length of stay is 14 nights. Minimum length of stay is 2 nights'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://reserve.southcarolinaparks.com/little-pee-dee/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
-        "checked": "2026-10-12"
+        "source": "https://reserve.southcarolinaparks.com/little-pee-dee/campsites (Calendar View, every site's nightly price; read 2026-10-12 and 2026-10-21) + https://southcarolinaparks.com/little-pee-dee/camping ('18 tent sites include individual water and no electricity'; 'Designated Tent Sites: 18 designated tent sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/little-pee-dee/camping ('11 sites are full service with water, electricity, and septic. 18 sites have water and electrical hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://southcarolinaparks.com/little-pee-dee/camping (site counts; '3 trailside primitive campsites are available a short hike down the Longleaf Pine trail'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/little-pee-dee/camping ('convenient to restroom facilities with hot showers'; 'Dump Station: Yes'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -40671,11 +40891,29 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 19,
+      "nightly_low": 26,
       "nightly_high": 42,
       "currency": "USD",
       "checked": "2026",
-      "note": "$26-42 a night for a standard campsite; sites without electric $19-28; full-service sites $36-50. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+      "note": "$26-42 a night for a water/electric site; full-service sites $36-50. The 18 non-electric sites ($19-28) are the park's tent sites and are not the base. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Calendar read for two weeks from 2026-10-13 and from 2027-06-15 (2026-10-12), rechecked 2026-10-21 ($28-40 water/electric, $40-50 full service, $19-28 non-electric)."
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true,
+      "note": "29 RV sites: 11 full-service (water, electric, sewer) and 18 water/electric; amperage not stated. The 18 tent sites have water but no electric."
+    },
+    "sites": {
+      "count": 29,
+      "note": "29 RV sites (11 full service, 18 water/electric) beside Lake Norton, plus 18 tent sites with water and no electric, 3 hike-in trailside sites and a primitive group area."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/little-pee-dee/camping https://reserve.southcarolinaparks.com/little-pee-dee/campsites",
+      "note": "Fees 19-42 -> 26-42 (the $19 low was the non-electric sites, which the park calls tent sites); confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); added water + sewer (amps not stated), 29 RV sites, 14-night max, showers and dump. Note kept. Not stated: amperage, rig length, season, pull-throughs."
     }
   },
   {
@@ -45899,25 +46137,50 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 75
+      "count": 112,
+      "max_rig_ft": 40,
+      "note": "112 water/electric sites in two campgrounds, one ocean-side behind the dunes and one inland near the salt marsh (Live Oak), plus five walk-in rustic tent sites in Live Oak. Several sites take RVs up to 40 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights'; per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights per site (cumulative up to 42 of 49). Same-day reservations go through the park. Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/edisto-beach/camping ('Standard Sites with Elec. & Water: 112 sites'; 'Several sites accommodate RVs up to 40 feet'; 'These five rustic tent sites are located in the Live Oak Campground') + https://reserve.southcarolinaparks.com/edisto-beach/campsites ('one more inland while the other overlooks the Atlantic Ocean and beach'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/edisto-beach/camping ('Camping reservations must be made for a minimum of two nights'; same-day via the park) + https://reserve.southcarolinaparks.com/edisto-beach/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Minimum length of stay is 2 nights', 'Maximum length of stay is 14 nights per site'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/edisto-beach/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/edisto-beach/camping ('two campgrounds with water and electrical hookups'; '50 Amp Service Sites: All of the standard campsites offer 20/30/50 amp electrical service'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/edisto-beach/camping ('Each campground is convenient to restrooms with hot showers'; 'Dump Station: Yes', 'Dump Station Gate Hours: 6:00 a.m. to 8:00 p.m.'; 'the water has a high salt content ... deemed safe to drink'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -45931,6 +46194,20 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$57-85 a night for a standard campsite. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "note": "The tap water is high in salt but treated and safe to drink. Dump station gate open 6 am - 8 pm."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/edisto-beach/camping https://reserve.southcarolinaparks.com/edisto-beach/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); sites 75 -> 112 (the 75 was read from the AWH note about the ocean-side sites; the park lists 112 water/electric sites in two campgrounds) up to 40 ft; added 50 A + water at every standard site, 14-night max, showers and dump. Fees left as read 2026-10-12. Note kept. Not stated: sewer, season, pull-throughs."
     }
   },
   {
@@ -47216,7 +47493,7 @@
     "inclusion_evidence": "SC State Parks Hamilton Branch: waterfront RV/tent sites on Thurmond Reservoir; firsthand --AWH note -> real RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: State park on J. Strom Thurmond Reservoir.  Multiple waterfront RV sites.  To reserve a single night, call the campground directly within one week of arrival.",
     "website": "https://southcarolinaparks.com/hamilton-branch",
-    "note": "State park on J. Strom Thurmond Reservoir.  Multiple waterfront RV sites.  To reserve a single night, call the campground directly within one week of arrival.  --AWH",
+    "note": "State park on J. Strom Thurmond Reservoir.  Multiple waterfront RV sites.  To reserve a single night, call the campground directly within one week of arrival.  --AWH\nPartly closed while cleanup continues: sites 1-114 and 166-200 reopened July 3, 2026; sites 115-165, The Nest (140/141) and H1-H6 still closed per the booking site on 2026-10-21. --Claude",
     "phone": "864-333-2223",
     "rating": {
       "stars": 4.5,
@@ -47225,17 +47502,45 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights'; per the --AWH note, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights per site (cumulative up to 42 of 49). Same-day reservations go through the park. Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/hamilton-branch/camping ('Camping reservations must be made for a minimum of two nights'; same-day via the park) + https://reserve.southcarolinaparks.com/hamilton-branch/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Minimum length of stay is 2 nights', 'Maximum length of stay is 14 nights per site'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/hamilton-branch/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/hamilton-branch/camping ('Standard Sites with Elec. & Water: 173 sites with water and electricity'; 'Designated Tent Sites: 11 sites are available with water only'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://southcarolinaparks.com/hamilton-branch/camping ('Some sites accommodate RVs up to 40 feet, others up to 35 feet'; site counts) + https://reserve.southcarolinaparks.com/hamilton-branch/campsites ('Campers can reserve one of the 150 lakefront campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/hamilton-branch/camping ('Eight comfort stations which include restroom facilities with hot showers'; 'Two dump stations are available for RVs'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -47249,6 +47554,26 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$25-60 a night for a standard campsite. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "water": true,
+      "note": "173 sites have water and electric (amperage not stated); 11 tent sites have water only."
+    },
+    "sites": {
+      "count": 173,
+      "max_rig_ft": 40,
+      "note": "173 water/electric sites along Lake Thurmond (the booking site calls 150 of the campsites lakefront), plus 11 water-only tent sites. Some sites take RVs up to 40 ft, others up to 35 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Eight comfort stations with restrooms and hot showers; two dump stations."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/hamilton-branch/camping https://reserve.southcarolinaparks.com/hamilton-branch/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); added water at the 173 electric sites (amps not stated), RVs to 40 ft, 14-night max, showers/flush toilets/2 dump stations; added a dated note line for the partial closure (sites 115-165 etc. closed for cleanup). Fees left as read 2026-10-12 (the $25 low is Campsite 81, type not stated). Not stated: amperage, sewer, season, pull-throughs."
     }
   },
   {
@@ -47996,17 +48321,45 @@
       "source": "rvlife"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Minimum length of stay for advance reservations is 2 nights'; per the --AWH note, a single night can be booked by calling the park within a week of arrival. 'Between April 1 and August 31, campers can stay a maximum of 14 nights at Lake Greenwood' and must then leave for 7 consecutive nights; any one reservation is at most 14 nights. Same-day reservations go through the park. Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/lake-greenwood/camping ('Camping reservations must be made for a minimum of two nights'; 'Between April 1 and August 31, campers can stay a maximum of 14 nights'; same-day via the park) + https://reserve.southcarolinaparks.com/lake-greenwood/campsites (policies: 'Reservations may be made up to 13 months in advance. Minimum length of stay for advance reservations is 2 nights'; 'no longer than 14 nights'), read 2026-10-21; single-night waiver from the entry's --AWH note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/lake-greenwood/campsites (Calendar View, every site's price for the two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12)",
         "checked": "2026-10-12"
+      },
+      "hookups": {
+        "source": "https://southcarolinaparks.com/lake-greenwood/camping ('Each site has water and electrical hook-ups'; '50 Amp Service Sites: All 125 of the campsites provide 50 amp service'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://southcarolinaparks.com/lake-greenwood/camping ('125 paved sites may be used by both RVs and tents'; 'Many paved sites accommodate RVs up to 40 feet'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://southcarolinaparks.com/lake-greenwood/camping ('All sites are convenient to hot showers and restrooms'; 'Dump Station: Yes'; 'Wi-Fi is available only at the Drummond Center and the park office area. Wi-Fi service does not extend to any campground locations'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -48020,6 +48373,26 @@
       "currency": "USD",
       "checked": "2026",
       "note": "$29-45 a night for a standard campsite; full-service sites $45-58. The price changes by site and night, higher on weekends and busy dates. No reservation fee and no out-of-state rate. Every bookable night on the park's reservation calendar for two weeks from 2026-10-13 and from 2027-06-15, read 2026-10-12."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 125,
+      "max_rig_ft": 40,
+      "note": "125 paved RV/tent sites along the Lake Greenwood shoreline, plus a primitive group area. Many sites take RVs up to 40 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "wifi": false,
+      "note": "Park Wi-Fi reaches only the Drummond Center and the park office area, not the campgrounds."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/lake-greenwood/camping https://reserve.southcarolinaparks.com/lake-greenwood/campsites",
+      "note": "Confirmed reservable on SC's own site, 13-month window and 2-night minimum (now on the entry with the AWH phone waiver); added 50 A + water at all 125 sites up to 40 ft, 14-night max (Apr-Aug park limit), showers, dump, and no Wi-Fi at the campground. Fees left as read 2026-10-12. Note kept. Not stated: sewer (the 10-12 fee note's 'full-service sites' are not described on the park page), season, pull-throughs."
     }
   },
   {
@@ -280439,54 +280812,36 @@
     "state": "SC",
     "ownership": "private",
     "waterfront": "not waterfront",
-    "inclusion_evidence": "RoverPass listing (roverpass.com): open all year, transient RV park in Lexington SC; RV Life 4.5* -> real RV park",
+    "inclusion_evidence": "RoverPass listing (roverpass.com): open all year, transient RV park in Lexington SC; RV Life 4.5* -> real RV park | 2026-10-21 phase 7: RoverPass listing unclaimed (removed, AWH #8f) and edmundrvpark.com parked; presence passes on Google Maps ('Edmund RV Park', 5910 Edmund Hwy, 4.0 over 139 reviews, phone 803-955-4010, open); price from RV Life $$.",
     "waterfront_evidence": "satellite at 33.8585,-81.2057: RV sites among trees by highway/industrial; clay-pit pond not adjacent",
-    "website": "https://www.roverpass.com/c/edmund-rv-park-lexington-sc/",
+    "website": "",
     "phone": "803-955-4010",
-    "note": "125 sites (100 pull-throughs); 50 full hookups + 75 E/W, 50 amp, RVs to 60 ft. Year-round. Laundry, dump station, WiFi. --Claude",
+    "note": "RV park on Edmund Highway west of Lexington. Per an unclaimed RoverPass directory listing (last updated 2024-11-15): 125 sites (100 pull-throughs), 50 full hookups + 75 water/electric, 50 amp, RVs to 60 ft, year-round, laundry, dump station, WiFi. None of this is confirmed by the operator, which has no website of its own (2026-10-21). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 125,
-      "max_rig_ft": 60,
-      "pull_through": true
-    },
-    "facilities": {
-      "laundry": true,
-      "wifi": true,
-      "dump": true
-    },
-    "season": {
-      "year_round": true
-    },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared: read from the note, which rests only on RoverPass's unclaimed directory listing (https://www.roverpass.com/c/edmund-rv-park-lexington-sc/: 'Claim my Campground', 'Last Updated: 11/15/2024', not bookable); the operator has no website (edmundrvpark.com is a NameBright 'coming soon' parked page), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "reported"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared: read from the note, which rests only on RoverPass's unclaimed directory listing (https://www.roverpass.com/c/edmund-rv-park-lexington-sc/, 'Last Updated: 11/15/2024'); no operator page states it, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "reported"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared: read from the note, which rests only on RoverPass's unclaimed directory listing (https://www.roverpass.com/c/edmund-rv-park-lexington-sc/, 'Last Updated: 11/15/2024'); no operator page states it, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "reported"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared: read from the note, which rests only on RoverPass's unclaimed directory listing (https://www.roverpass.com/c/edmund-rv-park-lexington-sc/, 'Last Updated: 11/15/2024'); no operator page states it, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "reported"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -280502,6 +280857,11 @@
     "discounts": {
       "good_sam": true,
       "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.roverpass.com/c/edmund-rv-park-lexington-sc/ http://edmundrvpark.com/ Google Maps place 'Edmund RV Park', 5910 Edmund Hwy, Lexington, SC (read 2026-10-21)",
+      "note": "No operator website (edmundrvpark.com is parked) and the RoverPass link is an unclaimed, unbookable directory listing; cleared the derived hookups, sites, facilities and season that rested only on it, and reworded the note to say where those figures come from. Presence passes on Google Maps (4.0, 139 reviews, phone 803-955-4010, at the pin). Good Sam Park / military discounts left (Good Sam directory, isGsPark true). No posted rate anywhere."
     }
   },
   {
@@ -281830,9 +282190,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Campspot: RV sites with 20/30/50-amp + water/sewer (paved level lots) + tent sites, York County park -> real RV campground",
     "waterfront_evidence": "satellite at 35.0223,-81.0431: camp loops buffered from Lake Wylie by a large day-use parking lot + swim beach to the N and a treeline plus private lakefront homes to the E; no RV pad at the shore",
-    "website": "https://www.yorkcountygov.com/212/Ebenezer-Park\nhttps://www.campspot.com/park/ebenezer-park",
+    "website": "https://www.yorkcountysc.gov/212/Ebenezer-Park\nhttps://www.campspot.com/book/ebenezer-park-york-county",
     "phone": "803-366-6620",
-    "note": "York County park on Lake Wylie north of Rock Hill, with 79 full-hookup RV sites and 5 tent sites. --Claude",
+    "note": "York County park on Lake Wylie north of Rock Hill. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -281844,7 +282204,8 @@
       "sewer": true
     },
     "sites": {
-      "count": 84
+      "count": 84,
+      "note": "79 full-hookup RV sites on concrete pads and 5 tent sites with water and electric."
     },
     "season": {
       "year_round": true
@@ -281852,32 +282213,40 @@
     "booking": {
       "reservable": true,
       "platform": "campspot",
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "url": "https://www.campspot.com/book/ebenezer-park-york-county",
+      "window_opens_days": 395,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "Reservations up to 13 months ahead on Campspot (linked from the county's park page). 'Same-day reservations are not permitted. Camping reservations must be made 24-hours in advance.' 'Ebenezer Park is NOT a long-term campground. The maximum length of stay is 14 nights on a campsite.' Check-in 2-9 pm, out by noon; the registering camper must be 21+ and present for the stay; RVs and vehicles must fit on the site's concrete pad (others park in the day-use lot)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/639/Camping-Information ('Each RV campsite is equipped with water, sewer, electric (50/30/20 amp)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/639/Camping-Information ('Ebenezer Park has 79 full hook-up RV campsites ... There are 5 tent sites each equipped with water, electric'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/639/Camping-Information ('The park is open year-round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/639/Camping-Information ('camping reservations can be made 13 months in advance'; 'Same-day reservations are not permitted'; 'The maximum length of stay is 14 nights on a campsite') + https://www.yorkcountysc.gov/212/Ebenezer-Park (Make a Reservation link to Campspot), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/park/ebenezer-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.yorkcountysc.gov/639/Camping-Information ('RV CAMPING RATES: (All reservations are subject to a $3.00 reservation fee and applicable taxes). York County Resident $35 / night ... Non-York County Resident $65 / night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -281886,12 +282255,22 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 65,
-      "nightly_high": 65,
+      "nightly_low": 35,
+      "nightly_high": 35,
       "currency": "USD",
       "reservation_fee": 3,
       "checked": "2026",
-      "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Site). October 2026, January 2027 and June 2027: $65, Tuesday and Saturday alike. Plus the park's $3 'Booking Fee', once per stay. Read 2026-10-13."
+      "note": "RV sites $35 a night for York County residents, $65 for non-residents (matching the $65 Campspot read of 2026-10-13); York County seniors 60+, disabled, active military and county employees $31. Tent sites $21 / $40 / $18. Every reservation adds a $3.00 reservation fee plus tax.",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 30,
+        "per": "night"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.yorkcountysc.gov/212/Ebenezer-Park https://www.yorkcountysc.gov/639/Camping-Information",
+      "note": "York County's camping page: fees restructured to the resident base $35 with a +$30/night non-resident surcharge ($65, matching the 10-13 Campspot read) and the $3 reservation fee; Campspot 13 months ahead, no same-day booking (24 h cutoff), 14-night max, year-round, 50/30/20 A + water + sewer, 79 RV + 5 tent sites (all now manual). Note trimmed of the site-count restatement."
     }
   },
   {
@@ -281992,7 +282371,7 @@
     "waterfront_evidence": "satellite at 34.0344,-79.7886: developed core set back ~150m+ from the Lynches River behind a continuous wooded swamp floodplain; river screened, no riverfront RV sites",
     "website": "https://www.lynchesriverpark.com/\nhttps://reservation.florenceco.org/Home/Location?locationId=16",
     "phone": "843-389-0550",
-    "note": "Florence County Parks & Rec park on the Lynches Scenic River between Florence and Lake City. 40 RV/tent sites with water, electric (30/50 amp) and sewer; hot showers, laundry; FCFS (cabins separately reservable). --Claude",
+    "note": "Florence County Parks & Rec park on the Lynches Scenic River between Florence and Lake City. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -282000,46 +282379,68 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true,
-      "sewer": true
+      "water": true
     },
     "sites": {
-      "count": 40
+      "count": 40,
+      "note": "'Each site can accommodate RVs from 60 to 157 feet' (site lengths on the campground map). One RV and one tent, or up to three tents, per site; 6 guests and 2 vehicles."
     },
     "facilities": {
       "showers": true,
-      "laundry": true
+      "laundry": true,
+      "dump": true
     },
     "booking": {
-      "reservable": false,
-      "fcfs": "always"
+      "reservable": true,
+      "fcfs": "never",
+      "platform": "operator",
+      "url": "https://reservation.florenceco.org/",
+      "max_stay_nights": 14,
+      "note": "'Reservations are required', on Florence County's own reservation site (LRCP Family Campground). Check-in 1 pm, check-out 11 am; entry codes are emailed by 10 am on arrival day and guests go straight to their site. 14-night maximum."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lynchesriverpark.com/family-campground ('20, 30, and 50 amp; 110 and 240 outlets are available at each site') + Campground Rules and Regulations PDF ('Please use designated dump station to empty all waste water tanks'; sewer at the site, read from the note, is not stated and the rules send all waste water to the dump station, so it is cleared), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lynchesriverpark.com/family-campground ('Each site can accommodate RVs from 60 to 157 feet (see map below for site specs)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lynchesriverpark.com/_files/ugd/002839_da8b5c5b296342b2837261bfade1b429.pdf (Campground Rules and Regulations: 'the dumpster located at the Dump Station'; 'use designated dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lynchesriverpark.com/family-campground ('Reservations are required'; 'Please visit https://reservation.florenceco.org/ to view availability and book sites'; 'Stays are limited to a 14-night maximum') + Campground Rules and Regulations PDF ('Reservations are required'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.lynchesriverpark.com/family-campground ('All sites are $50 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "13f18bee8fedc4d6",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 50,
+      "nightly_high": 50,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "'All sites are $50 per night.' Campers get discounts on the splash pad, climbing wall and boat rentals."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.lynchesriverpark.com/family-campground https://www.lynchesriverpark.com/_files/ugd/002839_da8b5c5b296342b2837261bfade1b429.pdf https://reservation.florenceco.org/Home/Location?locationId=16",
+      "note": "Park's own campground page: booking FCFS/not reservable -> reservations required on Florence County's reservation site, 14-night max; fees added $50/night flat; 50 A electric confirmed, derived sewer cleared (rules send all waste water to the dump station); dump station added. Note trimmed of the hookup/site/amenity restatement and the wrong FCFS claim. Not stated: site count (40 kept), water at site, showers, laundry, season."
     }
   },
   {
@@ -282054,51 +282455,85 @@
     "inclusion_evidence": "Pickens County parks page: campground reservable via ReserveAmerica (PRCG/1063450), Lake Keowee, tent+RV; RV Life 4.5* -> real county RV campground",
     "waterfront_evidence": "legible satellite at 34.8527,-82.8853: RV pad loops directly above Lake Keowee coves with open grass aprons to the waterline and swim docks; pin was at the entrance ~400m N. Multiple shoreline pad loops confirmed",
     "website": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/index.php",
-    "phone": "864-868-4860",
-    "note": "Pickens County park on Lake Keowee near Six Mile. 69 campsites, all with water and electric; more than two-thirds have direct shoreline access. Three heated bathhouses, boat ramps, 150-ft dock, store. Year-round. --Claude",
+    "phone": "864-868-2196",
+    "note": "Pickens County park on Lake Keowee near Six Mile; more than two-thirds of the campsites have direct shoreline access. Three boat ramps and a 150-ft dock. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "note": "Every site has water and electric (amperage not stated). The rules require all sewage and grey water to go to a dump station."
     },
     "sites": {
-      "count": 69
+      "count": 69,
+      "note": "69 waterfront and interior campsites, plus primitive tent sites, a group camping area and 10 lakefront cabins."
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "dump": true,
+      "note": "Three heated comfort stations with hot showers; two dump stations."
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/amenities.php ('Each of our 69 campsites, whether waterfront of water view, has water and electric hookups') + rules___regulations.php ('All liquid waste, including sewage and grey water, must be collected and disposed of at a designated dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/amenities.php ('Each of our 69 campsites, whether waterfront of water view') + fee_schedule.php, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/amenities.php ('three heated comfort stations, each with restroom facilities, sinks, mirrors and hot-water showers'; 'A sewage dump station is available within the park') + ReserveAmerica overview ('two dump stations are available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/fee_schedule.php ('Camping Fee (per night) Waterfront Sites $25.00 Interior Sites $20.00'; 'Discount for Seniors (65 & Older) & Disabled $3.00') + about.php ('a parking fee of $5 per vehicle per day'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.reserveamerica.com/explore/mile-creek-county-park/PRCG/1063450/overview ('MILE CREEK COUNTY PARK is now taking advanced reservations. Reservations can be made on this website only') + rules___regulations.php ('Maximum stay of 14 days on one site, and maximum of 28 days total'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "aeb3f5b1e53f0151",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 20,
+      "nightly_high": 25,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "County fee schedule (current page, undated): interior sites $20 a night, waterfront sites $25; primitive tent sites $12.50; $3 off for seniors 65+ and disabled. The park charges a $5 per vehicle per day parking fee (annual pass $35), paid at the entrance paybox."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "url": "https://www.reserveamerica.com/explore/mile-creek-county-park/PRCG/1063450/overview",
+      "max_stay_nights": 14,
+      "note": "Booked on ReserveAmerica ('Reservations can be made on this website only'). 'Maximum stay of 14 days on one site, and maximum of 28 days total', then 14 days out of the park. One camper and one tent (or two tents), 2 vehicles and 8 people per site; a camping unit must be set up at check-in."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/fee_schedule.php https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/amenities.php https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/rules___regulations.php https://www.co.pickens.sc.us/departments/parks,_recreation,___tourism/mile_creek_park/about.php https://www.reserveamerica.com/explore/mile-creek-county-park/PRCG/1063450/overview",
+      "note": "County pages: fees added $20 interior / $25 waterfront (senior/disabled $3 off; $5/day parking fee); booking added ReserveAmerica (reservations online only), 14 nights per site / 28 total; confirmed water at all 69 sites (amps not stated), showers and dump. Note trimmed of what the fields say. Not stated: amperage, rig length, season (year_round kept), store."
     }
   },
   {

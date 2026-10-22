@@ -421,3 +421,10 @@ me drop and report); each needs the research named before a verdict.
 - **622 Camp Pedro** (--AWH): no rate readable (innRoad behind Cloudflare Turnstile); RV Life $$$.
 - **4379 Chau Ram**: county fee page $20 res/$30 non-res vs reservations page $25 all-in (res $5 off); fee page kept. experienceoconee.com now behind Cloudflare.
 - **4354 Cherokee**: $49.95 regular (undated, ©2018), just under the gate.
+
+### p3-67 (SC, 2026-10-21)
+- **4357 Edmund RV Park** kept: unclaimed RoverPass link removed (no operator site; edmundrvpark.com parked); presence on Google Maps (4.0 over 139, phone); price only RV Life $$; long-stay mix uncheckable. Derived values that rested on RoverPass cleared.
+- **702 Hamilton Branch**: sites 115-165, The Nest (140/141) and H1-H6 still closed for cleanup (booking site, 2026-10-21) - partial, no status.
+- **93 Modoc**: closed for the season 2026-09-13 (Corps release), no reopening date.
+- **4382 Lynches River**: "Each site can accommodate RVs from 60 to 157 feet" read as site lengths, not a minimum rig length (sites note).
+- **96 Lake Wateree**: lakefront count 23 (park page) vs 15 (booking site, AWH note).
