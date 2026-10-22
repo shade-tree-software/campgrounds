@@ -3,6 +3,11 @@
 Entries a verifier found may fail the inclusion criteria. I decide these (standing rules let
 me drop and report); each needs the research named before a verdict.
 
+## Montana (mt-N batches)
+- **6122 Bolster Dam Campgrounds (MT, City of Plentywood)** (mt-1): no official page at all (plentywood.org is a history page); every fact and the phone 406-765-1700 rest on aggregators; sizes disagree (18 sites vs 10 power/water + 3 dry, 2018 review). Local, so not a presence drop; needs a city source.
+- **6094 Clark Canyon, Lewis & Clark (MT, Reclamation)** (mt-1): the inherited federal booking row (reservable on rec.gov, 180-day window) looks wrong: Reclamation describes a self-pay station and rec.gov gateway 131 is not reservable and lists no Lewis & Clark facility. No official fee, site count or season; the note's ~$30 is reviews only; a 2022 review says the lower tier fits ~22 ft.
+- **6219 Afterbay (MT, NPS Bighorn Canyon)** (mt-1): reservations by phone through Yellowtail Market, contact email crow-nsn.gov (run by/for the Crow Nation?); NPS's park fee program suspended 2018, so the inherited senior/access discount is doubtful.
+
 - **14312 James Creek RV Resort (PA)** — $50 base rests only on our own note; RJourney blocks
   plain HTTP and showed no rates with the park closed. Re-quote when 2027 booking opens.
 - **525 Grindstone (VA, USFS)** — closed for 2026 (no reopening date). `booking.reservable: true`

@@ -1,0 +1,44 @@
+{
+  "id": 6219,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=bica (Afterbay Campground record, the data behind https://www.nps.gov/bica/planyourvisit/afterbay-campground.htm)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=bica",
+    "https://www.nps.gov/bica/planyourvisit/fees.htm"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": null, "water": true, "sewer": null, "note": "NPS: 'All sites have electric and water'; the amperage is not stated. RV dump station across the road."},
+      "source": "NPS campgrounds API, Afterbay Campground (description: 'All sites have electric and water - RV dump station available across the road near the Headquarters building'; campsites.electricalHookups 22 of 22), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 22, "pull_through": false, "note": "22 RV and tent sites on the south shore of the Afterbay, all back-in. The 14 north-shore sites near Grapevine Creek are NPS's separate Grapevine Campground."},
+      "source": "NPS campgrounds API, Afterbay Campground ('22 RV and tent sites are located on the south shore of Afterbay lake', 'All sites are back in (not pull through)'; campsites.totalSites 22) and Grapevine Campground ('14 RV and tent sites are located on the north shore of Afterbay lake'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "camp_store": false, "wifi": false, "note": "Composting vault toilets year-round; drinking water, dump station (across the road at park headquarters), trash and camp host are seasonal. No cell reception listed."},
+      "source": "NPS campgrounds API, Afterbay Campground (amenities: toilets 'Composting Toilets - year round', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', showers 'None', laundry 'No', campStore 'No', internetConnectivity 'No', staffOrVolunteerHostOnsite 'Yes - seasonal'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "NPS lists the campground 'Open All Year' / 'Open year round', but the same record's accessibility notes say 'Season is generally from Memorial Day to Labor Day', and water, dump and trash are seasonal."},
+      "source": "NPS campgrounds API, Afterbay Campground (description '- Open All Year'; operatingHours 'Open year round.'; accessibility.additionalInfo 'Season is generally from Memorial Day to Labor Day. Please check at the Headquarters building for more information or call 307-568-5406.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "phone", "fcfs": "never", "max_stay_nights": 14, "note": "'Please place a reservation for your site by calling 406-666-2333 (Yellowtail Market) during normal operating hours or after hours call 406-679-2435.' NPS counts all 22 sites reservable and none first-come. Stays limited to 14 cumulative days in any 28. Check-out noon; generators 8 am-8 pm."},
+      "source": "NPS campgrounds API, Afterbay Campground (reservationInfo; numberOfSitesReservable 22, numberOfSitesFirstComeFirstServe 0; regulationsOverview 'Campsite occupancy may not exceed 14 cumulative days within a 28-day period', 'Check-out is 12:00 pm', 'Generators permitted from 8 am to 8 pm'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "NPS campground in Bighorn Canyon NRA on the south shore of the Afterbay (Bighorn River) near Fort Smith, on the right of MT-313 just past the NPS headquarters; unpaved roads, 'all vehicles OK in good weather'. Grapevine Creek's north-shore sites are a separate NPS campground. --Claude",
+  "summary": "NPS record now describes Afterbay as 22 back-in south-shore sites, all with electric and water, reserved by phone through Yellowtail Market (0 first-come), open all year. Changed: electric 0 -> cleared (amps not stated), water false -> true, sewer false -> cleared, count 40 -> 22 (the 40 included Grapevine's north-shore sites), fcfs always -> never, reservable false -> true (phone); added pull_through false, potable water/no showers etc., 14-night limit, year-round season (with NPS's conflicting 'generally Memorial Day to Labor Day'). Not stated: fees, amperage, max rig length (35 ft left). Note rewritten (old one said no hookups, FCFS, no reservations).",
+  "flags": [
+    "Missing phone: NPS lists (406) 666-2333 (Yellowtail Market, which takes the reservations; after hours 406-679-2435).",
+    "Operator: NPS land (federal is right), but reservations go through Yellowtail Market and the campground's listed contact email is a crow-nsn.gov (Crow Tribe) address, so it appears to be run by or for the Crow Nation; NPS's fee page says the park's own fee program was suspended in 2018 and names HiddenTreasure Charters only for Horseshoe Bend and Trail Creek. No fee is published for Afterbay, so the inherited America the Beautiful senior/access discount is doubtful here.",
+    "Season conflict within the NPS record: 'Open All Year' vs 'Season is generally from Memorial Day to Labor Day'; recorded year_round with both quoted in season.note.",
+    "max_rig_ft 35 (derived, from the rec.gov POI per inclusion_evidence) is not confirmed: NPS gives rvMaxLength 0 (unstated)."
+  ]
+}

@@ -4,6 +4,9 @@ A verifier's source (operator page or booking engine) claims water access that d
 the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, both ways; a
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
+## Montana (mt-N batches)
+- **6076 Big Arm Unit, Flathead Lake SP (MT)** (mt-1): ReserveAmerica tags most campsites and the group site 'Near Water'; FWP describes camping by a long pebble beach on Big Arm Bay; entry lakeview.
+
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
   77, 81, 83, 87 (25-40 ft). Still open: the stored pin (42.6056,-71.1003) is in empty woods and
