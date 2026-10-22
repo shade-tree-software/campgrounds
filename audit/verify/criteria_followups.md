@@ -4,7 +4,7 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
-- **6227 Grizzly (MT, USFS Lolo)** (mt-2): HELD FOR AWH (drop candidate). FS page: 'Trailers, motorhomes and tow vehicles not recommended due to the narrow and rough road.'
+- **6227 Grizzly (MT, USFS Lolo)** (mt-2): DROPPED 2026-10-22 (criteria_drops.py). FS page: 'Trailers, motorhomes and tow vehicles not recommended due to the narrow and rough road.'
 - **6226 Grasshopper (MT, USFS)** (mt-2): set temporarily_closed from the FS banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-08-28); the forest's alerts list no closure order, so it may have lifted. Re-check and lift.
 - **6095 Fish Creek State Park (MT)** (mt-2): the campground is really Big Pine Fishing Access Site inside the park (https://myfwp.mt.gov/fishMT/fas/39754101); Forks FAS also in the park, unchecked. 'Primitive Campsite', 23-ft trailer limit, 'Difficult Accessibility'. Name/website/FCFS unresolved.
 - **6096 Horse Prairie (MT, Reclamation)** (mt-2): Reclamation never mentions drive-in sites, length, FCFS or stay limit; inclusion_evidence leans on The Dyrt; website's rec.gov link is the reservoir gateway, not a campground.

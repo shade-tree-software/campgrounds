@@ -14,8 +14,9 @@ p3-N) and come from `queue.py --state MT`. One verifier at a time in this sessio
 merges don't collide. removals.json will conflict on merge: keep both sides.
 
 **Cloud-checkout gaps:** trip_data/trips.json is an empty placeholder (gitignored, family data
-not here), so stays can't be checked: hold every DROP for AWH rather than run
-criteria_drops.py (it asserts no trip references). No RIDB key: helper catx.py reads rec.gov's
+not here), but AWH 2026-10-22: "We have never stayed anywhere in Montana", so standing-rule drops
+(presence, 4WD/motorhome-not-recommended, price gate with no gateway) go straight into
+criteria_drops.py (MT block at the TOP of DROPS) and are reported. No RIDB key: helper catx.py reads rec.gov's
 public search API for the per-site catalog. No PA deploy from here.
 
-**Progress:** mt-1 (bed13b0) and mt-2 applied. Held for AWH: 6166 B&L RV Space (Airbnb-only, presence; result unapplied in results/), 6227 Grizzly (FS: motorhomes not recommended). bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.
+**Progress:** mt-1 (bed13b0) and mt-2 applied. Dropped 6166 B&L RV Space (presence) and 6227 Grizzly (FS: motorhomes not recommended). bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.
