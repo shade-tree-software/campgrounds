@@ -240,3 +240,6 @@ General nightly camping open to the public Apr 1 - Oct 31 with online booking (n
 
 ## 3924 Upper Peninsula State Fair Campground (Escanaba, MI; Delta County) — every stay by application
 The fairgrounds sell general nightly camping outside the fair ($40 "General Non-Fair"; 470 sites, 120 full hookup; fair week Aug 15-23 is weekly only at $300), so it is not fair-week-only like the dropped 3984 Mason County. But every reservation goes through a "Non-Fair Special Event Camping Application" that asks which event you're attending ("Other – please specify" allowed) and is confirmed by invoice "upon acceptance" — no instant booking, and no camping season stated (upstatefair.net, read 2026-10-22). Keep, or drop as event camping? (My lean: keep — public nights are sold at a posted rate.)
+
+## 3858 Bird Creek RV Resort (Port Austin, MI) — "Campers must be less than 10 years old"
+Huron County's listing says Bird Creek requires campers under 10 years old (no pop-ups or tents). Is EKKO under 10 years old? Otherwise it passes as an ordinary private park: Google Maps open, 4.4 / 31 reviews, phone 989-370-2366, RV Life $ tier (Facebook only, no posted rate or engine). Its long-stay character is unclear: a county EDC page calls it a "new seasonal RV resort", while a 2023 trade article says most sites are for daily camping. (My lean: keep if EKKO qualifies, drop if not.)
