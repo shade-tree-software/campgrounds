@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    3835: ("2026-10-22", "over the US$50 price gate, no gateway; mostly seasonal", "hilltopcampground.net (Wayback 2026-02-12): daily full hookup $85/night, the only nightly site type; every site also sold seasonally Apr 15-Oct 15 ($2,800-3,000). Site answered 503 on 2026-10-22 (last good capture 2026-06-17). Nearest gateway Detroit 81 km; no stays. Read 2026-10-22. No --AWH note."),
     3899: ("2026-10-22", "no web presence (private presence rule)", "Facebook-only (facebook.com/ClearLakeCamping); Google Maps 18 reviews (under 25), phone 906-635-0201; no operator website, booking engine or posted 2024+ rate; RV Life $$ only. Read 2026-10-22. No --AWH note, no stays."),
     4301: ("2026-10-22", "RV lot-ownership development, not selling nights (long-stay tests 2 and 5)", "stecoahvalleyrv.com: lots sold for $55,000-75,000 (Phases I and II sold out, 4 lots left), 'Owners of the lots can reside 9 months out of the year'; the camping form says 'At this time we have no camping spots available and cannot accept any new camping reservations for the current season'. Read 2026-10-22. No --AWH note, no stays."),
     4310: ("2026-10-22", "no web presence (private presence rule)", "Facebook-only (active, post 2026-08-26); Google Maps has 15 reviews (under 25); no website, booking engine or posted rate; RV Life $$ from 1 review. Read 2026-10-22. No --AWH note, no stays."),

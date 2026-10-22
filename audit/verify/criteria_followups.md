@@ -760,3 +760,11 @@ me drop and report); each needs the research named before a verdict.
 - **4048 Houghton**: nonrefundable deposit not credited to the fee (one night effectively $120); local, no gate.
 - **4015 Fox Park**: Cedarville Township owns/operates it (books via Menominee County's site); local stands.
 - **3838 Chinook**: seasonal lots all full, count unpublished; 76 nightly RV sites on Campspot.
+
+### p3-105 (MI, 2026-10-22)
+- **DROPPED:** 3835 Hilltop (Lake Nepessing): $85 nightly, over the gate with no gateway; mostly seasonal; website 503.
+- **3852** renamed "Hillside Campground" (Google/RV Life name); dead domain removed (Google's website link is a spam domain). See asks.md: seasonal + for sale?
+- **3908 JoeIda**: one-lane primitive road, "campers under 26'"; phone 906-387-1221 added; rate dated 2024 only.
+- **14246 Ivan's**: $42 electric-only base, $52 with water. **3850 Lake Michigan Family** $40/$50 at the line; limited seasonal sites.
+- **4044 L'Anse Township**: no rate posted, Beds24 shows none out of season - re-read in spring.
+- **3943 Groveland Oaks**: nonresident base $43-58, residents $5 less Sun-Thu; Good Sam-directory military discount cleared.
