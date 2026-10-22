@@ -4,6 +4,12 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6329 Grasshopper (mt-23): temporarily closed by FS order 0600 Jul 27 - 1800 Nov 1, 2026 (site work, culverts). Re-check after Nov 1.
+- 6330 Graves Bay (mt-23): FS publishes it as 'Graves Creek Campground' ('also known as Graves Bay').
+- 6328 Gold Creek (mt-23): FS page gives two seasons (year round snow dependent vs Memorial Day - Labor Day); season unrecorded.
+- 6333 Harry's Flat (mt-23): FS amenity block says flush toilets, description says the rebuild added vault toilets; recorded vault.
+- 13257 Hellgate (mt-23): max_rig_ft 120 rests on 5 catalog sites at 100-120 ft; partial campsite closure from a shoreline project (from 2026-03-25) noted.
+- 14600 Heritage Hills Farm (mt-23, hipcamp): Hipcamp-only channel (live, 35 reviews to Oct 2026); Google lists it with phone 406-220-2656, 3 reviews. $32 + Hipcamp fee, under the gate. Max rig unrecorded (listing says under 100 ft, picker shows 30 ft).
 - 6325 Ekalaka Park (mt-22): FS says 'Open parking. Small trailers only.' with no length; the ~30 ft came from Campendium. 23-ft fit unconfirmed (asked AWH). FS page unclear on toilets.
 - 6326 Fishtrap Lake (mt-22): FS gives no rig max; last 2 mi (FR #7593) narrow; ~24 ft only from aggregators (cleared).
 - 6323 Dorr Skeels (mt-22): only 2 of 8 overnight sites are RV sites (5 tent-only, 1 host).
