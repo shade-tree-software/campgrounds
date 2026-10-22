@@ -443,3 +443,10 @@ me drop and report); each needs the research named before a verdict.
 - **4381 High Falls**: county fee page vs reservations page disagree (as Chau Ram / South Cove); 2-night waterfront minimum in booking.note.
 - **592 Lake Aire** $62.30-77 and **15491 Myrtle Beach KOA** $68.94: over the gate, Charleston / Myrtle Beach gateways.
 - **4363 Jolly Acres**: syrrrun.com is its own site; rate undated (© 2013), under the gate.
+
+### p3-70 (SC, 2026-10-21)
+- **4367 Tuck in the Wood**: no posted nightly rate (only "Monthly 'snowbird' rates ... call"); RV Life $$ + website/phone pass price + presence. "NO Reservations Required" but a reservations phone.
+- **4361 The Barnyard**: $65.40, over the gate, Congaree NP gateway (35 km); Good Sam member rate $58.86.
+- **606 Campbell's Lake** (--AWH): scfc.gov states no road or vehicle limit; aerial shows a car on a sand clearing via an unpaved sand track. 23-ft fit rests on AWH.
+- **97 Sedalia**: FS fee box $7/$14 vs its own text + rec.gov 2026-27 $5/$10 ($5 kept). Loop 2 (sites 6-12) opens only for deer (Aug 28-Jan 3) and April turkey seasons.
+- **4350 Elmwood**: site count and 40-ft max cleared (camper report only).
