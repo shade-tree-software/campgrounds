@@ -19,7 +19,7 @@ not here), but AWH 2026-10-22: "We have never stayed anywhere in Montana", so st
 criteria_drops.py (MT block at the TOP of DROPS) and are reported. No RIDB key: helper catx.py reads rec.gov's
 public search API for the per-site catalog. No PA deploy from here.
 
-**Progress:** mt-1..mt-11 applied (mt-12 running). Dropped so far: 6166 B&L (presence), 6227 Grizzly (motorhomes not recommended), 6155 Riverside (no posted RV rate), 6168 Sand Springs (dead site), 6136 50,000 Silver Dollar (casino/truck-stop lot), 6148 Hyde (no posted RV rate), 6158 Rivers Bend (presence), 6135 Canyon RV (dead site), 15380 Aspenwood + 14595 Big Sky RV Park (no posted rate). 6165 Gods Country -> hipcamp. bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.
+**Progress:** mt-1..mt-12 applied (mt-13 running). Dropped so far: 6166 B&L (presence), 6227 Grizzly (motorhomes not recommended), 6155 Riverside (no posted RV rate), 6168 Sand Springs (dead site), 6136 50,000 Silver Dollar (casino/truck-stop lot), 6148 Hyde (no posted RV rate), 6158 Rivers Bend (presence), 6135 Canyon RV (dead site), 15380 Aspenwood + 14595 Big Sky RV Park (no posted rate), 6153 Happy Camper (site was a Texas park). Open asks: 6071 Homestake Pass, 6159 Kiwanis (criteria_followups.md). 6165 Gods Country -> hipcamp. bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.
 
 **Concurrency (AWH 2026-10-22):** this session runs its own single verifier beside the main session's; that is fine ("one thread only" is per session). Apply batch N before launching N+1.
 

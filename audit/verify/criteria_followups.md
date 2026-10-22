@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6071 Homestake Pass Dispersed** (mt-12, 2026-10-22): ASK AWH. No FS/BLM page designates dispersed camping there; inclusion rests on aggregators; one Campendium listing says 'Permanently Closed', a Dyrt review (Mar 2026) has it in use with a potholed road; no agency word on whether a non-4WD 23-ft rig can reach it (Butte RD 406-494-2147). Derived values cleared.
+- **6159 Kiwanis Club Campground** (mt-12): ASK AWH. No official page (Kiwanis, city or county); listings say the Kiwanis Club owns and runs it, so `local` may be wrong (private would bring the presence rule); listings disagree on sites (8 vs 20) and address. Derived values cleared.
+- **6117 Fergus County Fairgrounds** (mt-12): $55/night 'Camping-All', over $50 with no gateway, but it is a county (local) entry so the private price gate does not apply. Kept.
+- **6147 Driftwaters Resort** (mt-12): no dated rate; the hunting page (c. 2021) quotes $30 electric RV sites; Campspot had no sites on the dates tried. Probably under $50; re-check.
+- **6202 Greek Creek** (mt-12): FS names Rocky Mountain Recreation Company, rec.gov ExplorUS (same as 6175/6190).
 - **6161 Cow Bells Campground** (mt-11, 2026-10-22): it is the county's campground at the Musselshell County Fairgrounds (the county spells it Cow Bells and Cow Belles), not Roundup City Park. Check the pin against the fairgrounds. Website and county phone added.
 - **6248 Cherry Creek** (mt-11): FS says 'No restroom available' but its site list mentions restrooms (vault_toilets left unconfirmed); general line says 'Average Parking Spur 20' long' but per-site driveways are 25-70 ft.
 - **6223 Cromwell Dixon** (mt-11): FS gives no site lengths; fit rests on Campendium reviews (25-31 ft rigs). No phone on the FS page (Helena RD).
