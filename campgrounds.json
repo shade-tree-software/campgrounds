@@ -21983,13 +21983,70 @@
         "source": "https://newyorkstateparks.reserveamerica.com/camping/cedar-point-state-park/r/campgroundDetails.do?contractCode=NY&parkId=347 (Season Dates: campsites), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "booking": {
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/cedar-point-state-park/r/campgroundDetails.do?contractCode=NY&parkId=347 (Booking Window: Campsite 'Reservations can be made for today and can be made up to 9 Month(s) in advance'; 'Same-day reservations are allowed until 3 p.m. on day of arrival ... Walk-ins are permitted on campsites only'; 'Looking to reserve a campsite for just 1 night? If you make your reservation within 3 days of your arrival you can book a 1-night stay'; LENGTH OF STAY 'maximum of 14 continuous nights'; 'No tents or pop-up campers without sewer hook-ups will be allowed on full hook-up sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "ReserveAmerica site list for parkId 347 (all pages via campsitePaging.do, 163 campsites parsed) (amenity icons: 'Electric Hookup available: 30 amp' on 84, 'Electric Hookup - no' on 79, 'Full Hookup available' on 39; no 50-amp site), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/cedar-point-state-park/r/campgroundDetails.do?contractCode=NY&parkId=347 ('Campsite (165)') + ReserveAmerica site list for parkId 347 (all pages via campsitePaging.do, 163 campsites parsed) (Equip length/Driveway '20 Back-In' 57, '30 Back-In' 58, '40 Back-In' 37, blank 11), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://newyorkstateparks.reserveamerica.com/camping/cedar-point-state-park/r/campgroundDetails.do?contractCode=NY&parkId=347 (Facilities: 'campsites, dumping stations, a marina with a pump-out station ... and showers'; Services and Amenities: Dump Station, Restroom, Showers), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "season": {
       "year_round": false,
       "opens": "05-07",
       "closes": "10-10"
-    }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 270,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 3
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "ReserveAmerica or 1-800-456-2267, up to 9 months ahead; same-day reservations until 3 pm on the day of arrival, and walk-ins are permitted on campsites. A 1-night campsite stay can be booked within 3 days of arrival. Maximum 14 continuous nights, then 48 hours away before registering again. Check-in after 3 pm; the registering camper must be 18+. Tents and pop-ups without sewer hookups are not allowed on full-hookup sites."
+    },
+    "hookups": {
+      "electric": 30,
+      "water": true,
+      "sewer": true,
+      "note": "84 of the 163 listed campsites have 30-amp electric; 39 of them are full hookup (sites 027-043, 078-082, 138-159). The other 79 have no hookups."
+    },
+    "sites": {
+      "count": 165,
+      "max_rig_ft": 40,
+      "note": "165 campsites on ReserveAmerica (plus a gazebo and a pavilion). Listed equipment lengths: 57 at 20 ft, 58 at 30 ft, 37 at 40 ft (mostly the full-hookup loops), all back-in."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://newyorkstateparks.reserveamerica.com/camping/cedar-point-state-park/r/campgroundDetails.do?contractCode=NY&parkId=347 ReserveAmerica site list for parkId 347 (all pages via campsitePaging.do, 163 campsites parsed)",
+      "note": "Confirmed reservable on ReserveAmerica (state:NY row, now on the entry) with the 9-month window, same-day until 3 pm, walk-ins allowed, 2-night minimum waived within 3 days, 14-night max. Added 30 A electric (84 sites) with water/sewer at 39 full-hookup sites, 165 sites to 40 ft (all back-in), showers, dump. Campground closed for the season (2026 season May 1 - Oct 11; 2027 May 7 - Oct 10, matching the stored season). Fees left as read 2026-10-12. Note kept. Not stated: pull-throughs."
+    },
+    "phone": "315-654-2522"
   },
   {
     "id": 336,
@@ -39852,7 +39909,7 @@
     "name": "Sugarloaf Mountain Recreation Area site# SL 1A",
     "elevation_meters": 83.0,
     "website": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/",
-    "note": "Large waterfront site w/shelter, picnic table, fireplace, trash can.\n$15/night.\nReservations by phone only. --AWH",
+    "note": "Large waterfront site w/shelter, picnic table, fireplace, trash can. --AWH",
     "waterfront": "lakefront",
     "inclusion_evidence": "SCFC Sand Hills SF page: Sugarloaf Mtn Rec Area drive-in sites SL 1A-7, sheltered $15/night, no RV length limit",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Large waterfront site w/shelter, picnic table, fireplace, trash can.\n$15/night.\nReservations by phone only.",
@@ -39861,17 +39918,25 @@
     "phone": "843-498-6478",
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "fcfs": "never",
+      "note": "Reservations are required and are made only by calling the Sand Hills State Forest office, (843) 498-6478, during office hours (Mon-Fri 8 am-12 pm and 12:30-4 pm). Campers must camp in the reserved site."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Campers must obtain a reservation from the Sand Hills State Forest office during office hours'; 'You must call the Sand Hills office during office hours to make camping reservations in order to camp on the property: (843) 498-6478'; 'Campers must camp in the reserved site') + https://www.scfc.gov/state-lands/sand-hills-state-forest/ ('Office hours: Monday-Friday, 8 a.m.-12 p.m. / 12:30-4 p.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters | (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day'; SL 1A '$15 per night'; 'Reservations run from 11 a.m. on day one until 11 a.m. the following day'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ (SL 1A: 'Largest shelter. Fireplace, picnic table, trash can. Across the road from the nature trail and restroom facility.'; 'In Sugarloaf Mountain Recreation Area on Mountain Road'; 'Generators ARE allowed at campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -39883,9 +39948,19 @@
       "nightly_low": 15,
       "nightly_high": 15,
       "currency": "USD",
-      "note": "$15/night (site 1A); family sites with shelters, reservations by phone (SC Forestry Commission)."
+      "note": "Rate for shelter site SL 1A; a reservation runs from 11 am to 11 am the next day.",
+      "checked": "2026"
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "sites": {
+      "count": 1,
+      "note": "The largest shelter (fireplace, picnic table, trash can), on Mountain Road beside SL 1B, looking toward Mountain Pond; across the road from the nature trail and a restroom. Generators are allowed."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ https://www.scfc.gov/state-lands/sand-hills-state-forest/",
+      "note": "SC Forestry Commission (Sand Hills State Forest) Sugarloaf Mountain site SL 1A: confirmed $15/night (now manual, 2026) and phone-only reservations, required, to the forest office during office hours (never first-come); one shelter site on Mountain Road near Mountain Pond with a restroom nearby, generators allowed. No closure or alert on the forest page. Note trimmed of the price and booking facts. Not stated: season, hookups, site length, road surface, restroom type."
+    }
   },
   {
     "id": 608,
@@ -39894,7 +39969,7 @@
     "name": "Sugarloaf Mountain Recreation Area site# SL 1B",
     "elevation_meters": 83.0,
     "website": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/",
-    "note": "Large waterfront site w/shelter, picnic table, fireplace, trash can.\n$15/night.\nReservations by phone only. --AWH",
+    "note": "Large waterfront site w/shelter, picnic table, fireplace, trash can. --AWH",
     "waterfront": "lakefront",
     "inclusion_evidence": "SCFC Sand Hills SF page: Sugarloaf Mtn Rec Area drive-in site SL 1B sheltered $15/night, no RV length limit",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Large waterfront site w/shelter, picnic table, fireplace, trash can.\n$15/night.\nReservations by phone only.",
@@ -39903,17 +39978,25 @@
     "phone": "843-498-6478",
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "fcfs": "never",
+      "note": "Reservations are required and are made only by calling the Sand Hills State Forest office, (843) 498-6478, during office hours (Mon-Fri 8 am-12 pm and 12:30-4 pm). Campers must camp in the reserved site."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Campers must obtain a reservation from the Sand Hills State Forest office during office hours'; 'You must call the Sand Hills office during office hours to make camping reservations in order to camp on the property: (843) 498-6478'; 'Campers must camp in the reserved site') + https://www.scfc.gov/state-lands/sand-hills-state-forest/ ('Office hours: Monday-Friday, 8 a.m.-12 p.m. / 12:30-4 p.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters | (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day'; SL 1B '$15 per night'; 'Reservations run from 11 a.m. on day one until 11 a.m. the following day'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ (SL 1B: 'Smaller shelter. Fireplace, picnic table, trash can. Across the road from the restroom facility.'; 'In Sugarloaf Mountain Recreation Area on Mountain Road'; 'Generators ARE allowed at campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -39925,9 +40008,19 @@
       "nightly_low": 15,
       "nightly_high": 15,
       "currency": "USD",
-      "note": "$15/night (site 1B); family sites with shelters, reservations by phone (SC Forestry Commission)."
+      "note": "Rate for shelter site SL 1B; a reservation runs from 11 am to 11 am the next day.",
+      "checked": "2026"
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "sites": {
+      "count": 1,
+      "note": "A smaller shelter (fireplace, picnic table, trash can), on Mountain Road behind SL 1A, looking toward Mountain Pond; across the road from a restroom. Generators are allowed."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ https://www.scfc.gov/state-lands/sand-hills-state-forest/",
+      "note": "SC Forestry Commission (Sand Hills State Forest) Sugarloaf Mountain site SL 1B: confirmed $15/night (now manual, 2026) and phone-only reservations, required, to the forest office during office hours (never first-come); one shelter site on Mountain Road near Mountain Pond with a restroom nearby, generators allowed. No closure or alert on the forest page. Note trimmed of the price and booking facts. Not stated: season, hookups, site length, road surface, restroom type."
+    }
   },
   {
     "id": 609,
@@ -39936,7 +40029,7 @@
     "name": "Sugarloaf Mountain Recreation Area site# SL 2",
     "elevation_meters": 85.0,
     "website": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/",
-    "note": "Large waterfront site w/shelter, picnic table, fire ring, trash can.  Next to pier.\n$15/night.\nReservations by phone only. --AWH",
+    "note": "Large waterfront site w/shelter, picnic table, fire ring, trash can.  Next to pier. --AWH",
     "waterfront": "lakefront",
     "inclusion_evidence": "SCFC Sand Hills SF page: Sugarloaf Mtn Rec Area drive-in site SL 2 sheltered $15/night, no RV length limit",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Large waterfront site w/shelter, picnic table, fire ring, trash can.  Next to pier.\n$15/night.\nReservations by phone only.",
@@ -39945,17 +40038,25 @@
     "phone": "843-498-6478",
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "fcfs": "never",
+      "note": "Reservations are required and are made only by calling the Sand Hills State Forest office, (843) 498-6478, during office hours (Mon-Fri 8 am-12 pm and 12:30-4 pm). Campers must camp in the reserved site."
     },
     "provenance": {
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Campers must obtain a reservation from the Sand Hills State Forest office during office hours'; 'You must call the Sand Hills office during office hours to make camping reservations in order to camp on the property: (843) 498-6478'; 'Campers must camp in the reserved site') + https://www.scfc.gov/state-lands/sand-hills-state-forest/ ('Office hours: Monday-Friday, 8 a.m.-12 p.m. / 12:30-4 p.m.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters | (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ ('Family camping sites with shelters (1A, 1B, 2, 5, 6, 7 and the shelter at Campbell's Lake) $15/day'; SL 2 '$15 per night'; 'Reservations run from 11 a.m. on day one until 11 a.m. the following day'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ (SL 2: 'Shelter with picnic table, fire ring, trash can. ... Shelter closest to pier on Mountain Pond.'; 'In Sugarloaf Mountain Recreation Area on Mountain Road'; 'Generators ARE allowed at campsites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -39967,9 +40068,19 @@
       "nightly_low": 15,
       "nightly_high": 15,
       "currency": "USD",
-      "note": "$15/night (site 2); family sites with shelters, reservations by phone (SC Forestry Commission)."
+      "note": "Rate for shelter site SL 2; a reservation runs from 11 am to 11 am the next day.",
+      "checked": "2026"
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "sites": {
+      "count": 1,
+      "note": "Shelter with picnic table, fire ring and trash can, the one closest to the pier on Mountain Pond, on Mountain Road. Generators are allowed."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.scfc.gov/state-lands/sand-hills-state-forest/sand-hills-state-forest-campsite-information/ https://www.scfc.gov/state-lands/sand-hills-state-forest/",
+      "note": "SC Forestry Commission (Sand Hills State Forest) Sugarloaf Mountain site SL 2: confirmed $15/night (now manual, 2026) and phone-only reservations, required, to the forest office during office hours (never first-come); one shelter site on Mountain Road near Mountain Pond with a restroom nearby, generators allowed. No closure or alert on the forest page. Note trimmed of the price and booking facts. Not stated: season, hookups, site length, road surface, restroom type."
+    }
   },
   {
     "id": 610,
@@ -51070,17 +51181,35 @@
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Site 2 is a water/electric RV site in the woods, next to the kayak-friendly lake.",
     "note": "Site 2 is a water/electric RV site in the woods, next to the kayak-friendly lake.  --AWH",
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50,
+      "sewer": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (Site 2 overview 'It has water sewer power 50/30/20 amp'; Site 1 overview 'it has full hookups'; RV amenities Electricity / Water / Sewage Hookup), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (page data for 'Site 2' and 'Site 1': pricePerNightBase $30.00, pricePerNight $27.00, isPriceDiscount true, serviceFee $4.79, no other fees), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (rvTentCount 2, tentCount 2; Site 2 'closest camper spot to the water ... pull in back out site. Door/awning side toward the water', rvMaxLength 32 ft; Site 1 'upper lot in the woods ... nice big yard', rvMaxLength 36 ft; accessType DRIVE_IN), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (core amenity Potable water; both RV sites' amenity 'toilet' ABSENT; RV amenity Generators), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (isBookable true, status LIVE, isInstantBookable true, minNights 1, maxNights 29 / 21, maxBookingWindowInMonths 12), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -51090,9 +51219,34 @@
     },
     "fees": {
       "nightly_low": 27,
-      "nightly_high": 27,
+      "nightly_high": 30,
       "currency": "USD",
-      "note": "Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Host's list price for either RV site (Site 1 or Site 2) is $30 a night, currently shown discounted to $27; Hipcamp adds its own service fee at checkout ($4.79 on one $27 night).",
+      "checked": "2026"
+    },
+    "sites": {
+      "count": 2,
+      "max_rig_ft": 36,
+      "note": "Two RV/tent sites (plus a waterfront tent site): Site 2 is the camper spot closest to the water, a pull-in, back-out site with the door/awning side toward the water, rigs to 32 ft; Site 1 is the upper lot in the woods with a big yard, rigs to 36 ft. Both drive-in."
+    },
+    "facilities": {
+      "potable_water": true,
+      "flush_toilets": false,
+      "vault_toilets": false,
+      "note": "No toilet at either RV site; generators allowed."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "url": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5",
+      "window_opens_days": 365,
+      "max_stay_nights": 29,
+      "note": "Booked through Hipcamp (instant book, one-night minimum, up to 29 nights at Site 2 and 21 at Site 1, booking window 12 months)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/south-carolina-twilight-1-ex9hvwr5 (Next.js page data)",
+      "note": "Hipcamp listing live and bookable (53 bookings, 97% of 29 recommend). Fees 27 -> 27-30 (list $30, discounted $27, both RV sites; now manual, 2026); hookups water -> full (50/30/20 A, water, sewer at both RV sites); added 2 RV sites to 36 ft (Site 2 32 ft), potable water, no toilet at the sites, booking via Hipcamp (1-29 nights, 12-month window). Note kept. Not stated: season."
     }
   },
   {
@@ -87683,32 +87837,40 @@
     "waterfront_evidence": "satellite at 42.4605,-79.3390: fairground/racetrack camping lanes; small pond at far west edge well separated from rows",
     "website": "https://www.chautauquacofair.org/campgrounds",
     "phone": "716-366-4752",
-    "note": "Chautauqua County Fairgrounds, Dunkirk. 80+ sites; year-round/non-fair-week public camping via separate application (NOT event-only). Reserve via Fair Office. --Claude",
+    "note": "Chautauqua County Fairgrounds, Dunkirk. 80+ sites; camping is not limited to fair week. --Claude",
     "rating": {
       "stars": 5,
       "source": "rvlife"
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "'Several sites' stay open all year; the rest are for Fair Week."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "note": "Book through the Fair Office, (716) 366-4752, by filling in the fair's camping application/contract: one for Fair Week and one for any other week. Sites are assigned by the fair; one vehicle and one unit per site. Fair-week sites must be paid in full by late June or are forfeited and re-rented."
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.chautauquacofair.org/campgrounds ('We have several sites that are open for campers throughout the year'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.chautauquacofair.org/campgrounds ('We have several sites that are open for campers throughout the year. Whether you want to rent a site during Fair Week or another week, click on the appropriate \"Application\" button'; 'Any questions can be directed to the Fair Office') + https://www.chautauquacofair.org/_files/ugd/429caa_5a8db01004a84314bfc7c60114c28f1b.pdf (NON-FAIR CAMPING CONTRACT 2026: Date In / Date Out, nightly rates, 'You will be assigned a site number', 'Only one vehicle & unit per site') + https://www.chautauquacofair.org/_files/ugd/429caa_5f16ca4bf696406098bddda66dd2e11c.pdf (CAMPING CONTRACT 2026: 'Payment must be made in full by June 27 to secure your site. Any site not paid for by June 26 will be forfeited'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.chautauquacofair.org/_files/ugd/429caa_5a8db01004a84314bfc7c60114c28f1b.pdf (Non-Fair Camping Contract 2026; read 2026-10-11)",
-        "checked": "2026-10-11"
+        "source": "https://www.chautauquacofair.org/_files/ugd/429caa_5a8db01004a84314bfc7c60114c28f1b.pdf ('Elec and water ... $ 30.00', 'Elec. water & Sewer ... $35.00', '20amp-30amp and 50 amp ... with sewer and water ... $ 45.00', 'Central Ave. sites Electric and water ... $25.00', '(plus current cc fees)') + https://www.chautauquacofair.org/_files/ugd/429caa_5f16ca4bf696406098bddda66dd2e11c.pdf (same rates), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.chautauquacofair.org/_files/ugd/429caa_5a8db01004a84314bfc7c60114c28f1b.pdf ('Camp Site Elec and water ... sites1-28, 49-58'; 'Camp Site Elec. water & Sewer ... sites 29-48'; 'Camp Sites #20 & 59-82 have 20amp-30amp and 50 amp. RV receptacles with sewer and water'; 'Central Ave. sites Electric and water') + https://www.chautauquacofair.org/_files/ugd/429caa_5f16ca4bf696406098bddda66dd2e11c.pdf ('Camp Sites #19 & 59-82'; 'Central Ave. Electric 20amp,110-volt, Water'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -87720,7 +87882,19 @@
       "nightly_low": 25,
       "nightly_high": 45,
       "currency": "USD",
-      "note": "Chautauqua County Fair non-fair camping contract 2026: Central Ave. electric and water $25, electric and water $30, electric, water and sewer $35, 50-amp full hookup $45 a night, plus card fees."
+      "note": "Non-fair camping 2026: Central Ave. electric (20 A, 110 V) and water $25, electric and water $30, electric, water and sewer $35, 50-amp full hookup $45 a night, plus card fees. The fair-week contract charges the same nightly rates.",
+      "checked": "2026"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true,
+      "note": "Every site has electric and water: sites 1-28 and 49-58 electric and water, 29-48 add sewer, and sites 20 (19 on the fair-week form) and 59-82 have 20/30/50-amp receptacles with sewer and water; the Central Ave. sites have 20-amp, 110-volt electric and water."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.chautauquacofair.org/campgrounds https://www.chautauquacofair.org/_files/ugd/429caa_5a8db01004a84314bfc7c60114c28f1b.pdf https://www.chautauquacofair.org/_files/ugd/429caa_5f16ca4bf696406098bddda66dd2e11c.pdf",
+      "note": "Fair Association campground: confirmed $25-45/night 2026 (non-fair and fair-week contracts alike), booking by application/contract through the Fair Office (assigned sites), year-round for 'several sites'; added hookups (50 A at sites 20/59-82, water at all, sewer at 29-48 and 59-82). Note trimmed of the booking text. Not stated: site count beyond the numbering (1-82 plus Central Ave.), lengths, showers/dump outside fair week."
     }
   },
   {
@@ -89793,7 +89967,7 @@
     "waterfront_evidence": "satellite at 42.4741,-77.2212: two ponds with open day-use lawn and a pavilion between them; no RV pads at the shore, the few trailers sit up by the road ~80-120m back",
     "website": "https://www.elmbois.com/",
     "phone": "607-522-5200",
-    "note": "Hammondsport, near Keuka Lake wine trail. Small (~8 sites) full/partial-hookup big-rig-friendly campground; private 2-acre lake w/ paddle boats; online + phone, $30-50. ~May-Oct. RV Life $$/5*. --Claude",
+    "note": "Hammondsport, 10 minutes from the village on the west side above Keuka Lake (wine trail). Small (~8 sites) with a private feel; two fishing ponds with complimentary paddle boats. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -89801,13 +89975,17 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "electric": 50
     },
     "sites": {
-      "count": 8
+      "count": 8,
+      "pull_through": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-10",
+      "closes": "10-15",
+      "note": "Weather permitting."
     },
     "booking": {
       "reservable": true,
@@ -89821,31 +89999,40 @@
           "nights": 3,
           "applies": "holiday"
         }
-      ]
+      ],
+      "platform": "operator",
+      "note": "Reserve with the park's online form or by phone, (607) 522-5200 (office 9-8 in season; online form only off-season). $10 non-refundable deposit, applied to the stay; balance at check-in. Weekends in July and August need both Friday and Saturday; holiday weekends 3 nights. Check-in 1 pm, check-out 11 am; one hard-sided unit per RV site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.elmbois.com/Amenities.html ('Large sites with 20/30/50 amp electric service and water hook ups'; 'Dump Station') + https://www.elmbois.com/c_rates.html (site types are electric + water at most; no sewer site listed); the derived sewer=true (from the note's 'full/partial-hookup') is cleared: no page states a sewer hookup, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.elmbois.com/index.html ('We feature pull through sites with 30/50 amp electric service. We also have tent or small unit sites with 20 amp service'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.elmbois.com/reservations.html ('Our camping season starts on May 10th and goes through October 15th, weather permitting'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://www.elmbois.com/",
-        "checked": "2026-10-16"
+        "source": "https://www.elmbois.com/reservations.html ('To make a reservation you can use our secure on-line form or call the camp office durning business hours (9-8) at (607) 522-5200. During the off-season please use the on-line form'; '$10 non-refundable deposit'; 'Check-in is at 1pm and check-out is by 11 am') + https://www.elmbois.com/c_rates.html ('Weekends in July and August require both Friday and Saturday nights in any reservation. Holiday weekends require a 3 night stay'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.elmbois.com/c_rates.html ('Electric 20/30 A & Water | $40 night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.elmbois.com/c_rates.html (Camping Rates table: 'Tent site or No Hook-ups $30 night', 'Electric 20 amp - small pop-up or tent $35 night', 'Electric 20/30 A & Water $40 night', 'Electric 50 A & Water $50 night', '$5 a night for extra people'; server Last-Modified 2026-02-25), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.elmbois.com/Amenities.html ('Shower house with individual shower rooms', 'WiFi', 'Dump Station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -89857,7 +90044,18 @@
       "nightly_low": 40,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Water + 20/30A $40, 50A $50; 20A tent/pop-up $35; July-August weekends need Friday and Saturday, holiday weekends 3 nights."
+      "note": "Water + 20/30 A $40, water + 50 A $50 a night; 20 A small pop-up/tent $35 and tent/no-hookup $30. Up to 4 people per site, $5 a night for each extra person. Weekly and 5-night (Sun-Thu) rates; monthly $675-750 plus electric.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.elmbois.com/ https://www.elmbois.com/c_rates.html https://www.elmbois.com/reservations.html https://www.elmbois.com/Amenities.html",
+      "note": "Operator site (live, phone 607-522-5200): confirmed $40-50 (rates page modified 2026-02-25), the July-August weekend 2-night and holiday 3-night minimums, online-form/phone booking; added season May 10-Oct 15, 50 A + water, pull-throughs, showers/Wi-Fi/dump. Sewer=true (derived) cleared: rates and amenities list electric + water only, with a dump station. Under the US$50 gate (no gateway needed). Note trimmed of field facts and the 'private 2-acre lake' (the park says 2 ponds). Not stated: site"
     }
   },
   {
@@ -90732,7 +90930,7 @@
     "waterfront_evidence": "satellite at 44.221,-76.125: St. Lawrence bay NW; RV rows set back ~150-250m inland behind a treed/cottage shoreline strip, no pads at waterline",
     "website": "http://birchhavencamp.com/",
     "phone": "315-686-5253",
-    "note": "Clayton (Thousand Islands). ~80 sites mostly seasonal but overnight full-hookup welcomed $30/night, 30/50A, rigs to 50 ft. 50% deposit. May 1-Oct 15. RV Life $$/5*. --Claude",
+    "note": "Clayton (Thousand Islands), 2.3 miles west of the village on Route 12E. Mostly seasonal: an 11-acre seasonal campground that also sells days, weeks and months (no count of nightly sites published). 50% deposit. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -90745,7 +90943,8 @@
     },
     "sites": {
       "count": 80,
-      "max_rig_ft": 50
+      "max_rig_ft": 50,
+      "note": "80 sites on an 11-acre seasonal campground, all full hookup; 8 of them are seasonal-lease spaces for a camper or mobile home. One rental cottage."
     },
     "season": {
       "year_round": false,
@@ -90757,30 +90956,44 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://birchhavencamp.com/rentals.html ('All sites are full hook up and include water, sewer and electricity. We have 30 and 50 Amp sites'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://birchhavencamp.com/ ('11 acres Seasonal Campground'; '80 Camp Sites'; 'One Rental Cottage') + http://birchhavencamp.com/rentals.html ('Mobile Home sites 8 spaces available. Seasonal lease. Come and bring your camper or mobile home'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "http://birchhavencamp.com/ ('The park opens May 1st and closes October 15th') + http://birchhavencamp.com/rentals.html ('Park is open May 1st thru October 15th'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "http://birchhavencamp.com/ ('Public Restrooms', 'Showers', 'Washer and Dryers'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "b07500192066013f",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "http://birchhavencamp.com/ http://birchhavencamp.com/rentals.html",
+      "note": "Operator site (working, phone 315-686-5253): confirmed season May 1-Oct 15, full hookups at all sites with 30/50 A, 80 sites, showers, laundry (now manual). Daily rate on the page is $40 (the note's $30 dropped as contradicted) but the page was last modified 2021-01-19, so no fee recorded. Long-stay tests: (2) a daily rate and phone on its own site, no application; (3) no minimum stated; (4) no count of nightly sites anywhere (passes); (5) 8 seasonal mobile-home/camper spaces of 80, no homes or"
     }
   },
   {
@@ -90933,7 +91146,9 @@
       "sewer": false
     },
     "sites": {
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "Mostly tent sites: Campspot lists 7 'RV-No Hook ups' sites (rigs to 40 ft, 5 of them fit a 23-ft rig; back-in and pull-through) beside 26 tent sites, 4 lean-tos and a cabin. 'Most of our campsites are designed for tent camping, not for parking vehicles.'"
     },
     "facilities": {
       "potable_water": true,
@@ -90944,7 +91159,14 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Booked online on Campspot (the site's 'Reserve now' link). Two-night minimum and a $25 surcharge on Darien Lake concert nights (either the night before or after the concert), and a two-night minimum on holidays. Check-in 1 pm (arrange a late check-in after 6 pm; none after 11 pm), check-out noon. $25 cash security deposit at check-in, returned at check-out. Registered camper 21+."
     },
     "provenance": {
       "hookups": {
@@ -90952,18 +91174,18 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/cherryhillcamp (park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13): type 'RV-No Hook ups' sites 7, max length 40, amenities Back-In / Pull-Through; Tent 26, Rustic Lean-To 4, Rustic Cabin 1 + https://cherryhillcamp.com/rates-and-regulations/ ('Most of our campsites are designed for tent camping, not for parking vehicles'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
         "source": "https://cherryhillcamp.com/faqs/ (potable water around the campground, a dump station, flush toilets and free hot showers, a washer and dryer), read 2026-10-13",
         "checked": "2026-10-13"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://cherryhillcamp.com/rates-and-regulations/ ('There is a $25 upcharge & two night minimum stay on on Darien Lake concert nights'; 'Check in time-1 pm, check out time-12 noon'; '$25 CASH security deposit'; 'Reserve now' -> https://reservation.campspot.com/cherryhillcamp) + https://cherryhillcamp.com/faqs/ ('On holidays and Darien Lake concert nights we do require two night minimum reservations. You have the flexibility to choose the day before or the day after the concert'; 'Each site must be registered & occupied by someone aged 21 yrs. or older'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -90999,6 +91221,11 @@
       "reservation_fee": 5,
       "checked": "2026",
       "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (RV-No Hook ups). October 2026: $40, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $5 'Processing Fee', once per stay. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13. The operator's rates page (undated, read 2026-10-13) gives $52 a night for an RV site with no hookups, for 2 adults and 2 children, plus $25 and a 2-night minimum on Darien Lake concert nights."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://cherryhillcamp.com/rates-and-regulations/ https://cherryhillcamp.com/faqs/ https://www.campspot.com/book/cherryhillcamp (park record and site types, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "Operator site and Campspot: confirmed no hookups (dry camping, quiet inverter generators only), potable water/dump/showers/laundry, booking on Campspot (now manual) with the holiday 2-night minimum; sites max 40 ft now manual from Campspot's RV type (7 RV sites, pull-through). Fees left as read on Campspot 2026-10-13 ($40-52); season left as set 2026-10-13 (closes 2026-11-05). Note kept. Not stated: discounts."
     }
   },
   {
@@ -280782,44 +281009,61 @@
     "waterfront_evidence": "SC state-park map: camping loops set back from Pinnacle Lake & Lake Oolenoy; lakeshore fronted by cabins/lodge/day-use; canopy satellite defers to map",
     "website": "https://southcarolinaparks.com/table-rock/camping\nhttps://reserve.southcarolinaparks.com/table-rock/camping",
     "phone": "864-878-9813",
-    "note": "94 standard sites in two areas: 69-site Mountain Laurel campground near the West Gate/Pinnacle Lake (main RV loop, rigs to 40 ft) and a 25-site area near White Oaks. All sites water + electric, no full-hookup; dump station, hot showers, laundry, store. Reservable online (2-night min). Roads narrow/steep. --Claude",
+    "note": "Two camping areas, one near the park entrance and one near the White Oaks picnic area. Roads narrow/steep. --Claude",
     "hookups": {
       "water": true,
-      "sewer": false
+      "sewer": false,
+      "note": "Every standard site has water and electric; the amperage is not published. No full-hookup sites are listed."
     },
     "sites": {
       "count": 94,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "94 standard water/electric sites in two areas: 69 near the park entrance and 25 near the White Oaks picnic area; some take RVs up to 40 ft. Separate walk-in primitive tent area (Pine Point, 880-yard hike) and hike-in group sites."
     },
     "facilities": {
       "showers": true,
       "laundry": true,
       "camp_store": true,
-      "dump": true
+      "dump": true,
+      "wifi": true,
+      "note": "The park page says 'Wifi Available' without saying where."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 395,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always",
+          "waived_if": {
+            "booking_within_days": 7
+          }
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Booked on South Carolina State Parks' own reservation site or 1-866-345-7275, up to 13 months ahead. 'Camping reservations must be made for a minimum of two nights'; per AWH's firsthand report on the agency row, a single night can be booked by calling the park within a week of arrival. Maximum 14 nights. Same-day reservations go through the park. Check in at the Visitor Center on arrival; check-in 2 pm, check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/table-rock/camping ('Each site has individual water and electrical hookups'; only 'Standard Sites with Elec. & Water: 94 sites' listed), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/table-rock/camping ('The park provides a 69-site camping area, located near the park entrance, and a 25-site camping area, located near White Oaks picnic area'; 'Some sites accommodate RVs up to 40 feet'; 'Standard Sites with Elec. & Water: 94 sites'; Pine Point 'Hike to site is 880 yards'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/table-rock/camping ('Both campgrounds are convenient to restrooms with hot showers'; Laundry Facilities: Yes; Dump Station: Yes; 'Wifi Available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://southcarolinaparks.com/table-rock/camping ('Camping reservations must be made for a minimum of two nights'; 'Reservations requested less than one (1) day in advance of check-in must be made directly through the park'; 'check-in at the park Visitor Center') + https://reserve.southcarolinaparks.com/table-rock/campsites (policies: 'Reservations may be made up to 13 months in advance', 'Maximum length of stay is 14 nights. Minimum length of stay is 2 nights', check-in 2:00 p.m.), read 2026-10-21; single-night phone waiver from the state:SC row's AWH firsthand note",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
         "source": "https://reserve.southcarolinaparks.com/table-rock/campsites (Calendar View, read 2026-10-11)",
@@ -280836,6 +281080,11 @@
       "nightly_high": 60,
       "currency": "USD",
       "note": "Per-site nightly prices for standard campsites on the park's reservation calendar, two weeks from 2026-10-11 and from 2027-06-13 (weekday/weekend pricing); tent, equestrian and double sites excluded."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://southcarolinaparks.com/table-rock/camping https://reserve.southcarolinaparks.com/table-rock/campsites",
+      "note": "Confirmed 94 W/E sites (69 + 25), RVs to 40 ft, water at site, showers, laundry, dump; added Wi-Fi (park-level 'Wifi Available'); booking confirmed reservable on SC's own site with the 13-month window, 2-night minimum (AWH phone waiver) and 14-night max, now on the entry. Sewer false and camp store left as derived (no full-hookup row; store not on the camping page). Park advisory closes only the Nature Center and trailhead restrooms (deck/Carrick Creek project), not the campground. Fees left as"
     }
   },
   {
@@ -280851,47 +281100,60 @@
     "waterfront_evidence": "campground occupies a Hartwell peninsula, south/SE RV loops run to the shoreline with an open tan-clay drawdown apron + private docks between pads and the waterline; rec.gov photos confirm lakefront sites; pin moved ~400m N onto the campground",
     "website": "https://www.recreation.gov/camping/campgrounds/232727",
     "phone": "888-893-0678",
-    "note": "USACE (Savannah District) campground on the SC side of Hartwell Lake near Pendleton; 102 sites, all with electric and water (sites 81 & 101 are RV Electric), max RV to ~62 ft. Reservable online. 5 comfort stations w/ showers, 2 dump stations, swim beach. Many sites reported lakefront. --Claude",
+    "note": "USACE (Savannah District) campground on the SC side of Hartwell Lake near Pendleton, five miles from Clemson; swim beach. Many sites reported lakefront. --Claude",
     "hookups": {
       "water": true,
       "electric": 50,
-      "sewer": true
+      "sewer": true,
+      "note": "Every site has water and 50-amp electric; only 4 (sites 041A, 100, 101 and 102) also have sewer."
     },
     "sites": {
       "count": 102,
-      "max_rig_ft": 62
+      "max_rig_ft": 62,
+      "pull_through": true,
+      "note": "102 public sites plus 2 park-attendant sites; 23 pull-through. Listed vehicle lengths 16-62 ft, most 30-45. Northernmost sites are on the steepest terrain. One wheeled camping unit per site, parked on the impact pad; up to 10 campers per site."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "Run by the Corps' Hartwell Project with park attendants. Reservable on recreation.gov up to the day of arrival; one site (041A) is not reservable online. 14 nights in any 30 days. Gate locked 10 pm-7 am, so check in before 10 pm; check-in 3 pm, check-out 2 pm. Very high occupancy all year."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 232727 (trip_data/ridb_campsites.json, fetched 2026-10-20): all 100 catalogued sites Electricity Hookup 50 and Water Hookup Yes; Sewer Hookup Y on 041A, 100, 101, 102 + https://www.recreation.gov/api/camps/campgrounds/232727 (amenity 'Water Hookups'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232727 ('2 Park Attendant campsites, 102 public campsites'; 'the northernmost campsites being located on the steepest terrain'; notices on one wheeled unit and 10 campers) + recreation.gov campsite catalog for 232727 (trip_data/ridb_campsites.json, fetched 2026-10-20) (Max Vehicle Length 16-62; Driveway Entry Pull-through 23), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232727 ('5 comfort stations with showers, 2 dump stations'; amenities Flush Toilets, Showers, Dump Station), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232727 (rules: maxStay 14 'Rolling 30 Days', reservationCutOff 0 days, minConsecutiveStay 1; notices on the gate, check-in/out and the 14-day limit; 'very high occupancy rates throughout the year') + recreation.gov campsite catalog for 232727 (trip_data/ridb_campsites.json, fetched 2026-10-20) (site 041A reservable false), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232727/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232727/rates (2026 Peak Season 2026-01-01 to 2026-12-31: 'PeakRV ELECTRIC' 36, 'PeakSTANDARD ELECTRIC' 38, two unnamed rates 42, coded STANDARD ELECTRIC rates 36, 44, 76), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.sas.usace.army.mil/About/Divisions-and-Offices/Operations-Division/Hartwell-Dam-and-Lake/Plan-A-Visit/Camping/ ('TWIN LAKES  Open Year-round!'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -280902,7 +281164,17 @@
     "fees": {
       "nightly_low": 36,
       "nightly_high": 42,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 Peak Season (all year): $36 for the two 'RV Electric' sites, $38 for a standard water/electric site; the table also carries unnamed site rates of $42 and coded STANDARD ELECTRIC rates of $36, $44 and $76."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232727 https://www.recreation.gov/api/camps/campgrounds/232727/rates recreation.gov campsite catalog for 232727 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.sas.usace.army.mil/About/Divisions-and-Offices/Operations-Division/Hartwell-Dam-and-Lake/Plan-A-Visit/Camping/ (read in a browser 2026-10-21)",
+      "note": "Corps-operated (Hartwell Project). Confirmed $36-42 (2026), 50 A + water at every site, 102 sites to 62 ft, showers/flush toilets/dump, reservable on recreation.gov; sewer now noted as only 4 sites; added year-round season (Corps Hartwell camping page), 23 pull-throughs, 14-night limit, check-in rules. Note trimmed of field facts. Not stated: booking window, senior-pass acceptance (discounts left inherited)."
     }
   },
   {
@@ -280918,52 +281190,60 @@
     "waterfront_evidence": "loop set back in trees east of the Broad River, only a boat-ramp clearing at the water (5 standard + 12 equestrian sites; the standard sites qualify)",
     "website": "https://www.recreation.gov/camping/campgrounds/10145521\nhttps://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area",
     "phone": "803-276-4810",
-    "note": "USFS Sumter NF (Enoree RD) recreation area on the east bank of the Broad River. 17 sites total - 5 standard non-equestrian (11,13,14,15 + double 09) plus 12 equestrian; reservable online, ~$7/night. No hookups or dump station; water spigots, vault toilets. Gravel spurs vary; some fit a standard RV. Drive-in via gravel forest road. --Claude",
+    "note": "USFS Sumter NF (Enoree RD) recreation area on the east bank of the Broad River, about a two-tenths-mile walk from the campground to the picnic area and the river. Gravel campground road; some spurs fit a standard RV. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
       "sewer": false
     },
     "sites": {
-      "count": 17
+      "count": 17,
+      "pull_through": true,
+      "note": "15 single sites, one double and one group site; 12 are equestrian (10 with corrals). The four standard sites are 11, 13, 14 and 15 (driveways 30-45 ft; 11 and 13 list RVs); double site 09 is a 60-ft pull-through. Gravel road and spurs that vary in size and grade: 'Not all sites can accommodate all sizes of campers'."
     },
     "facilities": {
       "potable_water": true,
       "vault_toilets": true,
-      "dump": false
+      "dump": false,
+      "note": "Water spigots throughout the campground (no bathing or dishwashing at them); vault toilets at both ends. Cell coverage is unreliable."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Forest Service (Enoree Ranger District) campground. Every site is reservation-only on recreation.gov or 1-877-444-6777, same-day reservations included; have a reservation before arrival and clip it to the site post. 14 nights in any 30 days (Forest Order FM-19-01)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145521 ('There is “NO WATER OR ELECTRICAL HOOK-UPS” available'; notice 'No Electrical or Water Hookups available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area ('15 single campsites, one double campsite and one group campsite. The campground road is gravel with gravel parking spurs. Campsite parking spurs vary in size and grade. Not all sites can accommodate all sizes of campers and camper vehicles') + https://www.recreation.gov/api/camps/campgrounds/10145521 ('10 campsites have horse corrals') + RIDB campsite catalog for 10145521 (trip_data/ridb_campsites.json) (4 STANDARD NONELECTRIC sites 11/13/14/15, driveways 35/40/30/45; 12 EQUESTRIAN NONELECTRIC + 1 GROUP EQUESTRIAN; Pull-through on 05 and 09), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area ('Vault toilet(s)'; 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/10145521 ('Water spigots are centrally located throughout the campground'; 'Vault toilets are centrally located to both ends of the campground'; notice 'The campground doesn’t provide a dump station' and 'cell coverage is unreliable'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area ('All sites are available by reservation only. Make reservations online at Recreation.gov or by calling 1-877-444-6777'; 'Ensure you have a reservation for your campsite before arrival') + https://www.recreation.gov/api/camps/campgrounds/10145521 (notice 'All sites available with same day reservations'; 'Forest Order No. FM-19-01: Prohibits camping in excess of 14 days within any 30-day time period'; rules maxStay 14 'Rolling 30 Days'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10145521/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145521/rates (2026 and 2027 Peak Season: PeakStandardNightly 7, PeakEquestrianNightly 7, PeakDoublesiteNightly 14, PeakGroupEquestrianNightly 14) + https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area ('Single Site: $7 per night / Group Site: $14 per night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 10145521 (322 days observed, none closed)",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area ('Woods Ferry Campground is open year-round'; Seasons of Use 'Open year-round'; status 'Site Open'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -280974,10 +281254,17 @@
     "fees": {
       "nightly_low": 7,
       "nightly_high": 7,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$7 a night for a single site (standard or equestrian); $14 for the double site and the group site."
     },
     "season": {
       "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/woods-ferry-recreation-area https://www.recreation.gov/api/camps/campgrounds/10145521 https://www.recreation.gov/api/camps/campgrounds/10145521/rates RIDB campsite catalog for 10145521 (trip_data/ridb_campsites.json)",
+      "note": "Forest Service-run (Enoree RD), not a concession. Confirmed $7/night single sites ($14 double/group), reservation-only on recreation.gov incl. same day (never first-come), year-round, no hookups, 17 sites (12 equestrian), vault toilets, spigot water, no dump; added 14-night limit (Forest Order FM-19-01) and pull-through (double site 09). FS alerts (bridge 251H, Litchfield, FSR 301 Worthys Ferry, Clark's Creek Rd, Candy Branch range) name no closure on Park Rd (S-12-574) or Woods Ferry Rd (S-12-4"
     }
   },
   {

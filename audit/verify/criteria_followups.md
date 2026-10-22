@@ -456,3 +456,11 @@ me drop and report); each needs the research named before a verdict.
 - **610 Hunter Pond / 611 Lee Pond**: SCFC states no road surface or vehicle length (sites off TT 110 Rd); inclusion rests on "drive-in campsite".
 - **4385 Mill Creek (Sumter County)**: rates ($20/$25) come from an undated 2014 renovation write-up; no 2024+ date. Call 803-436-2248.
 - **4344 Oconee**: winter closures Dec-Mar "contact the park"; year_round cleared. reserve.southcarolinaparks.com's park filter `maxrv` sometimes disagrees with park pages (Poinsett 60 vs 40) - park page wins.
+
+### p3-72 (SC/NY, 2026-10-21)
+- **607/608/609 Sugarloaf SL 1A/1B/2**: SCFC calls all 20 forest campsites "primitive" and states no road or vehicle limit; 23-ft fit rests on AWH's notes.
+- **751 Twilight** (--AWH, hipcamp): host sets Site 2 (lakeside, full hookups) to FOUR_WHEEL_DRIVE_RECOMMENDED; Site 1 (36 ft, "upper lot in the woods") is 2WD. AWH's note ("Site 2 ... in the woods") may describe Site 1. Not a drop: Site 1 is reachable in 2WD.
+- **1443 Chautauqua Fairgrounds**: only "several sites" year-round; booking by mailed contract/application to the Fair Office (no online/phone path stated). Nightly rates posted ($25-45).
+- **1505 Birch Haven**: mostly seasonal but passes the five tests on what is published (daily $40 + phone, no application/minimum, 8 lease spaces of 80). Rate page Last-Modified 2021, so no fee recorded.
+- **1509 Cherry Hill**: operator page "$52 per night (no hook-ups)" for 2+2 (undated) vs Campspot $40 for 2 adults (Oct 2026, dated) - kept under the gate; Buffalo gateway 41 km (just outside). Re-check when summer 2027 opens.
+- **1478 Camp Elmbois**: sewer cleared (electric + water + dump only); 2-night Jul-Aug weekend / 3-night holiday minimums.
