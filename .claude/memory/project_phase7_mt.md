@@ -18,4 +18,4 @@ not here), so stays can't be checked: hold every DROP for AWH rather than run
 criteria_drops.py (it asserts no trip references). No RIDB key: helper catx.py reads rec.gov's
 public search API for the per-site catalog. No PA deploy from here.
 
-**Progress:** mt-1 applied (bed13b0). Held for AWH: 6166 B&L RV Space (Airbnb-only, presence).
+**Progress:** mt-1 (bed13b0) and mt-2 applied. Held for AWH: 6166 B&L RV Space (Airbnb-only, presence; result unapplied in results/), 6227 Grizzly (FS: motorhomes not recommended). bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.

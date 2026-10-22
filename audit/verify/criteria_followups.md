@@ -4,6 +4,13 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6227 Grizzly (MT, USFS Lolo)** (mt-2): HELD FOR AWH (drop candidate). FS page: 'Trailers, motorhomes and tow vehicles not recommended due to the narrow and rough road.'
+- **6226 Grasshopper (MT, USFS)** (mt-2): set temporarily_closed from the FS banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-08-28); the forest's alerts list no closure order, so it may have lifted. Re-check and lift.
+- **6095 Fish Creek State Park (MT)** (mt-2): the campground is really Big Pine Fishing Access Site inside the park (https://myfwp.mt.gov/fishMT/fas/39754101); Forks FAS also in the park, unchecked. 'Primitive Campsite', 23-ft trailer limit, 'Difficult Accessibility'. Name/website/FCFS unresolved.
+- **6096 Horse Prairie (MT, Reclamation)** (mt-2): Reclamation never mentions drive-in sites, length, FCFS or stay limit; inclusion_evidence leans on The Dyrt; website's rec.gov link is the reservoir gateway, not a campground.
+- **6218 Dunn Creek (MT, USACE)** (mt-2): renamed from 'Dunn Creek Flats' to rec.gov's name. Derived year_round unstated (rec.gov rate seasons Apr 1-Nov 30); inclusion_evidence's 'free year-round' is out of date ($10 peak, reservation-only). USACE pages 403 from the cloud session.
+- **6082 Galena Gulch (MT, BLM)** (mt-2): derived year_round unstated; BLM gives only the fee period Apr 1-Nov 30.
+- **6228 Hood Creek (MT, USFS)** (mt-2): concessionaire ExplorUS on rec.gov vs Rocky Mountain Recreation Company on the FS page.
 - **6122 Bolster Dam Campgrounds (MT, City of Plentywood)** (mt-1): no official page at all (plentywood.org is a history page); every fact and the phone 406-765-1700 rest on aggregators; sizes disagree (18 sites vs 10 power/water + 3 dry, 2018 review). Local, so not a presence drop; needs a city source.
 - **6094 Clark Canyon, Lewis & Clark (MT, Reclamation)** (mt-1): the inherited federal booking row (reservable on rec.gov, 180-day window) looks wrong: Reclamation describes a self-pay station and rec.gov gateway 131 is not reservable and lists no Lewis & Clark facility. No official fee, site count or season; the note's ~$30 is reviews only; a 2022 review says the lower tier fits ~22 ft.
 - **6219 Afterbay (MT, NPS Bighorn Canyon)** (mt-1): reservations by phone through Yellowtail Market, contact email crow-nsn.gov (run by/for the Crow Nation?); NPS's park fee program suspended 2018, so the inherited senior/access discount is doubtful.
