@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    4301: ("2026-10-22", "RV lot-ownership development, not selling nights (long-stay tests 2 and 5)", "stecoahvalleyrv.com: lots sold for $55,000-75,000 (Phases I and II sold out, 4 lots left), 'Owners of the lots can reside 9 months out of the year'; the camping form says 'At this time we have no camping spots available and cannot accept any new camping reservations for the current season'. Read 2026-10-22. No --AWH note, no stays."),
     4310: ("2026-10-22", "no web presence (private presence rule)", "Facebook-only (active, post 2026-08-26); Google Maps has 15 reviews (under 25); no website, booking engine or posted rate; RV Life $$ from 1 review. Read 2026-10-22. No --AWH note, no stays."),
     4291: ("2026-10-22", "long-stay/workforce park with no posted nightly rate (long-stay test 2)", "rockridgecampground.com is parked; RoverPass listing unclaimed (isBookable false); no posted rate or booking engine. Camper reports: 'mostly long-term campers' (Nov 2024), spots go 'only to construction workers and traveling nurses' (Aug 2024), 'a good number of full-time residents' (2022). Google 3.9/115. Read 2026-10-22. No --AWH note, no stays."),
     4286: ("2026-10-22", "seasonal park with no posted nightly rate (long-stay test 2)", "raccoonholler.com: 'monthly and seasonal reservations will take precedence', 'Join the Community for the Entire Season'; 'CONTACT US FOR RATES'; no booking engine. Read 2026-10-22. No --AWH note, no stays."),

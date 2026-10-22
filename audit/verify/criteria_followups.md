@@ -706,3 +706,15 @@ me drop and report); each needs the research named before a verdict.
 - **33 Mortimer**: rec.gov "running water" vs FS "Potable water is not available"; potable_water unset.
 - **4302 New River (Sparta)** $48 (2 people) just under the gate; seasonal close Oct 12 (Google "Temporarily closed" is seasonal).
 - **4290 Rocky Hock** $50 at the gate.
+
+### p3-99 (NC, 2026-10-22)
+- **DROPPED:** 4301 Stecoah Valley (lot-ownership development; no camping reservations accepted).
+- **4288 Sands of Time (Avon)**: temporarily_closed with Hatteras Island (Dare County evacuation, NC 12 closed) - RE-CHECK with 15456. Website 403 on every path; kept on Google 4.2/115.
+- **4314 Whippoorwill**: see asks.md (horse camp?). Website -> Facebook, phone -> 910-915-9854.
+- **4303 Sandy Point**: "a Campground and Mobile Home Park" with year-round mobile-home sites; nightly rates posted; share unknown (test 4/5 by hand).
+- **4297 Rose Creek**: annual leases (all taken, waitlist), ~8 overnight RV sites of 74+ - about a quarter nightly with tents; passes test 4.
+- **30 Curtis Creek**: pin 1.5 km N of rec.gov's point, ~4 km from the FS page's - check on imagery and re-pin. rec.gov vault toilets/pumps vs FS "none".
+- **22 Cataloochee**: NPS "Motorhomes over 29' and trailers over 25' ... not recommended" (access road); EKKO fits.
+- **246 Wilson's Riverfront**: reopened after Helene with no bathhouse/tents; Good Sam 10% from the operator.
+- **4284 Zooland**: cheapest RV type $45 Jan, $55-58 many nights; gate is on the base, kept.
+- **4295 Stony Fork** $50 (c 2023), Asheville 23 km.
