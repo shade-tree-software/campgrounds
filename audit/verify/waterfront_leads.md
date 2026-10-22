@@ -218,3 +218,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14257 Rivers Bend RV Resort (Iron Mountain): operator sells "Riverfront water & electric" sites, Firefly "Waterfront Premium" class, site 99 on the river with a dock; entry riverview (p3-123).
 - 4024 Runkle Lake Park (Crystal Falls): operator "lakeside camping", beach and pier; entry not waterfront (p3-123).
 - 14237 Sunset Bay RV Resort (Ahmeek): operator "Spots along the water go quickly once summer hits"; entry not waterfront on satellite (sites 100-150 m back behind a treeline) (p3-124).
+- 3830 Tyler Creek (Alto): operator "set along a beautiful Pure Michigan trout stream", primitive sites along the Tyler Creek Trout Trail; map draws rustic loop 1-27 beside the creek; entry not waterfront (p3-125).
+- 14225 Vagabond Resort (Little Bay de Noc): operator advertises Bay De Noc sunsets and a fishing dock; entry not waterfront (p3-125).
+- 3963 Vanderbilt County Park: county "located along the Saginaw Bay Shoreline"; entry bayview (p3-125).
+- 3831 Walnut Hills: operator "the Shiawassee River runs right alongside the park", kayak launch from the park; entry pond (p3-125).
