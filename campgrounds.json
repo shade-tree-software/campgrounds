@@ -14517,24 +14517,75 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 20,
-      "nightly_high": 50,
-      "currency": "USD"
+      "nightly_low": 48,
+      "nightly_high": 53,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "Same in all three campgrounds (Beechwood, Cedar, Pines). 2027 on the booking site (2027-05-18, 07-13 and 09-21 alike): 20/30-amp sites $48, 50-amp sites $53 (Beechwood and Pines only; Cedar has no 50-amp). The DNR's 2026 table: $45 / $50; Cedar, open year-round, is $40 semi-modern while its shower building is closed (open April 1 - Oct 31). Cedar's 8 tent-only sites $43 (2027) and the 10 Jackpine hike-in tent sites $20 are left out. A Recreation Passport is required for vehicle entry to all state park campgrounds."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Ludington / Beechwood; Ludington / Cedar; Ludington / Pines",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails per fee schedule ($48 for 117 Beechwood, 74 Pines and 106 Cedar 20/30-amp sites and $53 for 30 Beechwood and 25 Pines 50-amp sites on 2027-05-18 / 07-13 / 09-21; $45 / $50 on 2026-10-27; Cedar tent-only $43, Jackpine $20) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Beechwood $50 / $45; Cedar $45 modern, $40 semi-modern, $20 rustic, shower building April 1 to Oct. 31; Pines $50 / $45) + https://www.michigan.gov/recsearch/parks/ludington, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Ludington / Beechwood: April 22 - November 29; Ludington / Cedar: Year-round - Year-round; Ludington / Pines: May 1 - October 21), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.michigan.gov/recsearch/parks/ludington (Beechwood: 'There is 20/30 amp service available at each site, and some sites offer 50-amp service'; Pines: 'some sites with 50-amp'; Cedar: '20/30-amp service available on each site') + midnrreservations.com site attributes (all modern sites 'Electric and Water Hookups=Electric Only', 'Sewer Hookup=No'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/parks/ludington ('Number of sites: 147' / '99' / '114, including eight tent-only sites'; 'Pull-through sites available' in each; Jackpine 'Number of sites: 10') + midnrreservations.com resources (equipment to 'Trailer or RV up to 40'' in all three), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/ludington ('Toilet & shower building', 'Vault toilet', 'Sanitation station' in each campground; 'The park's sanitation station ... There is potable water available and four lanes'; Cedar 'Concession or store', Dune Grass Concessions at the Cedar entrance) + DNR rates page ('Modern campgrounds include flush toilets, showers, a sanitation station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.michigan.gov/recsearch/parks/ludington (each campground: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
     "season": {
       "year_round": true,
       "note": "Cedar is open year-round; Beechwood Apr 22 - Nov 29; Pines May 1 - Oct 21."
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 360,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "Three drive-in campgrounds: Beechwood 147 sites (back, middle and front loops, generous and shaded, near Hamlin Lake), Pines 99 (two loops, modest and heavily shaded, near Lake Michigan, trailhead to Big Sable Point Lighthouse), Cedar 114 (east and west loops, generous, some sunny; 8 of them tent-only). All allow trailers/RVs to 40 ft. Plus 10 Jackpine walk-in tent sites (~1-mile hike)."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "camp_store": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.michigan.gov/recsearch/parks/ludington https://midnrreservations.com/ (Ludington State Park campsites via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18, 2027-07-13 and 2027-09-21; audit/state_park_fees/gtc_probe.py, read 2026-10-22) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site + DNR rates table: three modern campgrounds (Beechwood 147, Pines 99, Cedar 114 incl. 8 tent-only), 20/30 A everywhere and 50 A at some Beechwood and Pines sites, electric only, pull-throughs, RVs to 40 ft, showers/flush and vault toilets/sanitation station with potable water, store. Fees 20-50 (2026 table, low was the Jackpine hike-in tent rate) -> 48-53 (2027 booking site, same in all three loops; 2026 $45/$50 and Cedar's $40 winter semi-modern rate in the note; Re"
     }
   },
   {
@@ -254111,7 +254162,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.lakeofdreamscampground.com/",
     "phone": "989-643-0403",
-    "note": "Non-membership family RV campground, ~250 modern sites all with water/electric, 2 bathhouses, 2 dump stations. 4-acre dug swim lake with sandy beach, mini-waterpark, putt-putt. Nightly transient (~$40) plus seasonal; open mid-April to early October. --Claude",
+    "note": "Non-membership family campground on 77 acres near Merrill: 4-acre dug swim lake with sandy beach, camper-only mini-waterpark, two catch-and-release fishing ponds, themed weekends. Open mid-April to early October. Mostly seasonal: the 2023 park map marks about 84 of ~250 lots as nightly camping lots, the rest seasonal. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -254119,29 +254170,31 @@
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50
     },
     "sites": {
-      "count": 250
+      "count": 253
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-15"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lakeofdreamscampground.com/ ('253 modern camp sites, each containing water and electric hookup'; 'ALL CAMPSITES INCLUDE WATER AND ELECTRIC HOOKUPS') + the 2023 park map legend ('50 Amp Lots', nine lots), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lakeofdreamscampground.com/ ('77 acres of family fun, including 253 modern camp sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lakeofdreamscampground.com/ ('Opening Day 2026 is April 15th'; no closing date posted, last event Oct 3), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -254149,13 +254202,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lakeofdreamscampground.com/amenities ('two bathhouses ... men's and ladies restrooms and separate shower rooms. Showers are free of charge'; 'CAMP STORE') + home page ('TWO DUMP STATIONS ARE AVAILABLE FOR CAMPERS'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.lakeofdreamscampground.com/ ('NIGHTLY CAMPING | $40.00 per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.lakeofdreamscampground.com/ ('NIGHTLY CAMPING $40.00 per night Includes 1 car pass'; 'ADDITIONAL CAR PASS $6.00'; 'MONTHLY CAMPING $600.00 per month + electric'; 'SEASONAL CAMPING Please call'; 2026 theme-weekend dates and 'Opening Day 2026 is April 15th'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.lakeofdreamscampground.com/ ('Campsite Reservation Required'; cancellation policy; 'Questions? Give us a call or send us an email ... Tel: 989-643-0403'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254167,13 +254226,26 @@
       "good_sam": false
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "camp_store": true
     },
     "fees": {
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Nightly campsites $40 with 1 car pass."
+      "note": "Nightly camping $40 including one car pass (additional car pass $6); monthly $600 plus electric; seasonal by phone. Every site has water and electric. Up to 8 people per site. Waterpark bracelets extra ($6 a session, $10 all day).",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "'Campsite Reservation Required'; no online booking engine on the site: call 989-643-0403 or email. Cancellations 7+ days out earn a refund credit, not a refund."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.lakeofdreamscampground.com/ https://www.lakeofdreamscampground.com/amenities https://www.lakeofdreamscampground.com/rules https://static.wixstatic.com/media/6811b0_262d9083d0e24202ac079c9661bad09d~mv2.jpg (the '2023 LOD Map' on the home page)",
+      "note": "Operator site (2026): $40 a night with one car pass, monthly $600 + electric, seasonal by phone; 253 sites all water/electric (map shows 50-amp lots), 2 bathhouses with free showers, 2 dump stations, camp store; opens April 15, 2026; reservations required, by phone/email (no engine). Confirmed fees; added electric 50, count 250 -> 253, showers/store, opening date, booking by phone. Non-membership stated ('NON-MEMBERSHIP CAMPGROUND!')."
     }
   },
   {
@@ -255943,7 +256015,7 @@
   {
     "id": 3869,
     "kind": "campground",
-    "name": "Kampvilla RV Park & Family Campground",
+    "name": "Bear Lake / Manistee KOA Holiday",
     "location": "44.48379,-86.11503",
     "elevation_meters": 276,
     "state": "MI",
@@ -255951,9 +256023,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Now Bear Lake/Manistee KOA Holiday (koa.com): 'rustic tent to pull through full-service sites', active -> real transient RV campground",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://kampvilla.com",
+    "website": "https://koa.com/campgrounds/bear-lake-manistee/",
     "phone": "231-864-3757",
-    "note": "Private 40-acre family campground on Pleasanton Hwy near Bear Lake; 96 large grassy sites from rustic to full-hookup pull-thru (50-amp), pool, catch-and-release fishing pond. ~5 mi from Lake Michigan shoreline (not on-water). Transient. --Claude",
+    "note": "Now Bear Lake / Manistee KOA Holiday (formerly Kampvilla RV Park & Family Campground), family-owned, on 40 acres on Pleasanton Hwy (US-31) near Bear Lake: large grassy sites, tent sites in the woods, swimming pool, catch-and-release fishing pond. ~5 mi from the Lake Michigan shoreline (not on-water). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -255967,24 +256039,71 @@
     },
     "sites": {
       "count": 96,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 100
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/bear-lake-manistee/ ('50 Max Amp'; 'options with electric only or full hookups') + booking form site types ('Pull Thru, 50/30 Amps, Full Hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/bear-lake-manistee/ ('100' Max Length'; 'Large, grassy sites can accommodate rigs of any size') + booking form ('Pull Thru' site types), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://koa.com/campgrounds/bear-lake-manistee/reserve/ step 2 site types with avg/night price (2027-05-18: 60.65 'Back In, 50/30 Amps, Electric Only', 65.80 'Pull Thru, 50/30 Amps, Electric Only', 66.83 'Back In, 30 Amps, Full Hookups', 65.80 'Pull Thru, 50/30 Amps, Full Hookups'; 2027-07-10: 74.04 / 77.13 / 80.22 / 84.34), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/bear-lake-manistee/ ('Bear Lake / Manistee KOA Holiday Open May 1 to October 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://kampvilla.com (operator's former site, now a notice pointing to the KOA page: 'shower rooms, and restrooms') + https://koa.com/campgrounds/bear-lake-manistee/ amenities ('Wi-Fi', 'Pool (5/22 - 9/7)', 'Propane ($)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://kampvilla.com ('Kampvilla RV Park & Campground is now Bear Lake / Manistee KOA Holiday Book online or call the office') + https://koa.com/campgrounds/bear-lake-manistee/ ('Reserve: 1-231-864-3757'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "222094969cc71de6",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 60.65,
+      "nightly_high": 84.34,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "KOA's booking form, one night for a 23-ft motorhome, before tax: Tue 2027-05-18 back-in 50/30-amp electric only $60.65, pull-through electric only $65.80, back-in 30-amp full hookup $66.83, pull-through 50/30 full hookup $65.80; Sat 2027-07-10 $74.04 / $77.13 / $80.22 / $84.34. Tent sites and two cabins also offered."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-15"
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/bear-lake-manistee/reserve/"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://kampvilla.com https://koa.com/campgrounds/bear-lake-manistee/ https://koa.com/campgrounds/bear-lake-manistee/reserve/ (KOA booking form via audit/private_gap_browser/koa.py: RV, 2 adults, 23-ft motorhome, one night from 2027-05-18 and from 2027-07-10), read 2026-10-22",
+      "note": "Kampvilla is now Bear Lake / Manistee KOA Holiday (kampvilla.com says so and points to koa.com). KOA: open May 1 - Oct 15, 50 A, full hookup and electric-only sites incl. pull-throughs, 100-ft max, Wi-Fi; one night $60.65 (May 2027 weekday, back-in electric only) to $84.34 (July 2027 Saturday). Added fees, season, max length, showers/wifi, booking (KOA); hookups and pull-through now manual. Site count (96, derived) not restated by KOA, left. Note cleaned of hookup/site text and renamed."
     }
   },
   {
@@ -256257,7 +256376,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://kalkaskacampground.com/",
     "phone": "231-258-9863",
-    "note": "Private RV park at 580 M-72 SE on the edge of Kalkaska; ~93-105 sites including full-hookup 30/50-amp pull-throughs (big rigs to 60 ft), pool, laundry, 40 acres of trails. Open Apr-Oct. Not on water. Online reservations. --Claude",
+    "note": "Family-owned private RV park at 580 M-72 SE on the edge of Kalkaska; ~93-105 sites, pool, game room, 40 acres of nature trails, cabins. Not on water. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -256274,19 +256393,27 @@
       "pull_through": true
     },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "showers": true,
+      "dump": true,
+      "wifi": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-20"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://properties.camping.com/Kalkaska-RV-Park-and-Campground/Reservations?vos_id=10&curef_id=11091&return_url=www.kalkaskacampground.com",
+      "note": "Online through camping.com's reservation engine (the site's 'BOOK NOW'), which takes a Class C motorhome by length; or call 231-258-9863."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://kalkaskacampground.com/rates/ ('FULL HOOK-UP RV SITES (Water, Electric & Sewer)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -256294,28 +256421,29 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://kalkaskacampground.com/rates/ (non-camper fees for 'Dump Station Use', 'Hot Showers', 'Laundry use'; bathhouse 'within walking distance') + https://kalkaskacampground.com/ (paid Sky-Web Wi-Fi 'coverage throughout the entire park'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://kalkaskacampground.com/rates/ ('FULL SEASON = MAY 1 TO NOV 20'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://kalkaskacampground.com/ ('BOOK NOW' -> properties.camping.com; 'For reservations, call 231-258-9863') + the engine's search form (Site / Motorhome Class C / unit length), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
+        "source": "https://kalkaskacampground.com/rates/ ('Good Sam Daily Rate ONLY 10% OFF'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://kalkaskacampground.com/rates/ ('FULL SEASON $50.00 Per Night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://kalkaskacampground.com/rates/ ('FULL HOOK-UP RV SITES (Water, Electric & Sewer) FULL SEASON $50.00 Per Night'; 'WATER AND ELECTRIC SITES FULL SEASON $40 Per Night'; 'RUSTIC SITES ... $33 Per Night'; 'Good Sam Daily Rate ONLY 10% OFF'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -256328,10 +256456,15 @@
       "military": true
     },
     "fees": {
-      "nightly_low": 50,
+      "nightly_low": 40,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Full hookup $50 for 2 adults and 3 children (Good Sam daily discount); new 2026 prices pending."
+      "note": "Operator's price list (headed 'Attention campers, new prices will be coming in 2026!', still posted Oct 2026): water/electric $40 a night ($240 week, $600 month plus metered electric), full hookup $50 ($300 week, $725 month); rustic sites $33 (whether RVs use them is not stated). Rates cover 2 adults and 3 children; extra guests $5 per person per night. Honey-wagon pump-out $10 (Mon/Wed/Fri). Good Sam: 10% off the daily rate only ($36 / $45)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://kalkaskacampground.com/ https://kalkaskacampground.com/rates/ https://kalkaskacampground.com/properties/rv-park/ https://properties.camping.com/Kalkaska-RV-Park-and-Campground/Reservations?vos_id=10&curef_id=11091&return_url=www.kalkaskacampground.com",
+      "note": "Operator site: water/electric $40, full hookup $50 (posted with '2026 prices coming', still current), rustic $33, Good Sam 10%, season May 1 - Nov 20, camping.com booking engine. Changed fees 50-50 -> 40-50 (W/E is the base), season -> 05-01..11-20 (note's 'Apr-Oct' was wrong), added showers/dump/wifi, booking platform/url, confirmed Good Sam, water/sewer. Not stated: amperage, max rig length (60 ft derived left), site count. Engine quote not obtained (the date form did not submit)."
     }
   },
   {
@@ -259436,9 +259569,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "michigan.org listing (City of Manton park): 37 full-hookup + 48 electric/water RV sites, dump station, seasonal mid-May to mid-Oct -> real municipal RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.michigan.org/property/lake-billings-rv-park-and-campground",
+    "website": "https://app.fireflyreservations.com/Reserve/Property/LakeBillingsCampground",
     "phone": "231-824-6454",
-    "note": "GOVERNMENT: seasonal public park owned by the City of Manton, on Lake Billings within walking distance of downtown Manton; 37 full-hookup and 48 electric/water sites, swimming, fishing. Open Apr 15-Oct 15, transient. No dedicated official domain found; michigan.org listing used. --Claude",
+    "note": "City of Manton park on Lake Billings (14 acres), within walking distance of downtown Manton: 37 full-hookup and 48 water/electric sites, beach, fishing, playground, tennis courts, pavilions. The city has no web page for it; it books on its Firefly page. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -259447,7 +259580,8 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 30
     },
     "sites": {
       "count": 85
@@ -259459,25 +259593,52 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "City of Manton Parks & Recreation Plan 2024, p.20 ('85 Campsites ... 37 with full hook-ups, 48 with electric and water') + Firefly booking page (every RV site unit labelled '30 AMP'; classes Full Hookup, Water/Electric Only, Water Only, Rustic), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "City of Manton Parks & Recreation Plan 2024, p.20 ('85 Campsites; several of them are handicap accessible'; p.16 'all services used by campers at the 85 sites'), read 2026-10-22. The Firefly page lists 88 RV site units (numbered to 90).",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "City of Manton Parks & Recreation Plan 2024, p.20 ('Dump station for RV waste', 'Restrooms', 'Showers with hot water', 'Washer and dryer') + Firefly amenity filter ('Washer/Dryer available for a fee', 'WiFi'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://app.fireflyreservations.com/Reserve/Property/LakeBillingsCampground (RV Site / Tent Site units; max search date 10-15-2026; 'This unit cannot be reserved this far in the future'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "8fe802a85c1caf6c",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "laundry": true,
+      "wifi": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Reserve/Property/LakeBillingsCampground",
+      "note": "Booked on the city's Firefly page; in late October 2026 it took no dates past Oct 15, 2026 (2027 not yet open)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.mantonmi.org/ (City of Manton site: no campground page) https://www.mantonmi.org/documents/20240129_Manton_PR_Plan_Report_Adopted.pdf (City of Manton Parks & Recreation Plan, adopted 2024-01-29) https://app.fireflyreservations.com/Reserve/Property/LakeBillingsCampground (reached from https://app.fireflyreservations.com/reserveexternal/reserveamerica/3380480d-d7bb-497b-90b2-362d40926c69), read 2026-10-22",
+      "note": "No city web page for the campground; the city's 2024 Parks & Recreation Plan and its Firefly booking page: 85 sites (37 full hookup, 48 water/electric), 30 A, showers, restrooms, dump station, washer/dryer, Wi-Fi. Added electric 30, facilities, booking (Firefly); hookups/sites now manual. No rate posted anywhere official (Firefly shows no prices with 2026 closed and 2027 not open), so fees stay empty. Season (Apr 15 - Oct 15, derived) not stated by the city; left. Note rewritten without the mich"
     }
   },
   {
@@ -263437,8 +263598,8 @@
     "inclusion_evidence": "johngurneypark.com: City of Hart municipal park, rustic/deluxe(W/E)/premium(W/E/S) tiers, online reservations, May 1-Sep 27 -> real drive-in RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.johngurneypark.com/",
-    "phone": "231-873-4959",
-    "note": "City of Hart municipal park on Hart Lake (RV Life mis-tags as commercial; it is local government). Grass sites in three tiers: rustic (no hookup), deluxe (W/E), premium (W/E/S); 50A available. Drive-in RV camping, reservable online via CampLife. Season May 1-Sep 27. Sandy beach, boat launch, connects to Hart-Montague bike trail. --Claude",
+    "phone": "(231) 923-1236",
+    "note": "City of Hart municipal park on the east shore of Hart Lake (RV Life mis-tags it as commercial; it is local government), 17 acres within walking distance of downtown Hart. Sandy beach and wading area, boat launch for kayaks and small boats, and it connects to the Hart-Montague bike trail. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -263452,30 +263613,44 @@
     "season": {
       "year_round": false,
       "opens": "05-01",
-      "closes": "09-27"
+      "closes": "10-31"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.camplife.com/288/reservation/step1",
+      "note": "Booked online through CampLife ('BOOK NOW' on the park site). 'Online reservations will be accepted November 1st for the 2027 season.'"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.johngurneypark.com/ ('50 Amp Hook Ups'; 'Premium (water, electric, sewer)') + CampLife site types (Premium: 30-Amp, 50-Amp, Sewer, Water), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "CampLife availability for 2027 dates ('Our open season is May 1- October 31') + https://www.johngurneypark.com/ ('Campground closes Oct. 31st'), read 2026-10-22. The derived 09-27 close is contradicted.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.johngurneypark.com/ ('BOOK NOW' -> https://www.camplife.com/288/reservation/step1; 'Online reservations will be accepted November 1st for the 2027 season'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.johngurneypark.com/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.johngurneypark.com/ ('Rates Starting at: $40 - Rustic (no hookups) $55 - Deluxe (water & electric) $70 - Premium (water, electric, sewer)'; 'Campground closes Oct. 31st'), read 2026-10-22 + CampLife quotes (one night rustic $43.50, deluxe $58.50, premium $73.50 on 2026-10-17 and 2026-10-20; two nights rustic $83.50, premium $143.50; Site 91 'Rustic Site' equipment incl. MOTORHOME, max 55 ft), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "CampLife reservation session siteMap (58 'Premium', 17 'Deluxe', 12 'Rustic Site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.johngurneypark.com/ amenities ('Bath House', 'Coin Laundry', 'Camp Store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263484,11 +263659,25 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 55,
+      "nightly_low": 40,
       "nightly_high": 70,
       "currency": "USD",
       "checked": "2026",
-      "note": "John Gurney Park (Village of Hart): water and electric $55 a night, full hookup $70, rustic $40. Read 2026-10-15."
+      "note": "City of Hart rates (one rate, no resident/non-resident split): rustic (no hookups) $40, deluxe water/electric $55, premium full hookup $70. Some rustic sites take motorhomes (Site 91: motorhome/trailer, 55 ft); others are tent-only. CampLife adds $3.50 once per stay (one night rustic $43.50, two nights $83.50).",
+      "reservation_fee": 3.5
+    },
+    "sites": {
+      "count": 87,
+      "note": "Sold on CampLife: 58 premium full-hookup, 17 deluxe water/electric and 12 rustic sites; grassy, many with trees."
+    },
+    "facilities": {
+      "laundry": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.johngurneypark.com/ https://www.camplife.com/288/reservation/step1 (CampLife booking API: park record, site types, availability and /api/invoice/estimate quotes for 2026-10-17 and 2026-10-20, one and two nights; read 2026-10-22 with audit/private_gap_browser/camplife_api.py)",
+      "note": "Park site + CampLife: $40 rustic (RV-capable) / $55 water-electric / $70 full hookup plus $3.50 a stay, 50-amp, 87 sites, May 1 - Oct 31, CampLife booking (2027 opens Nov 1). Changed fees 55-70 -> 40-70 (some rustic sites take motorhomes) with a $3.50 reservation fee; season close 09-27 -> 10-31; added sites, laundry, camp store, booking platform/url. Note cleaned of the hookup, booking and season text."
     }
   },
   {
@@ -264823,7 +265012,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://huroncountyparks.com/lighthouse-county-park\nhttps://huroncountyparks.com/lighthouse-park-reservations",
     "phone": "989-428-4749",
-    "note": "Huron County Parks (county government) campground, 7320 Lighthouse Rd, ~6 mi N of Port Hope on Lake Huron, at the historic Pointe aux Barques Lighthouse. 110 sites on 120 acres: ~74 full-hookup (south, many seasonal), ~29 electric (north, lakefront), electric lakeview, 6 rustic cabins; max RV ~37 ft, boat launch, fishing breakwater, free showers. Rocky shore. Season May 1-Oct 15. Reservable online (central res 888-265-2583). --Claude",
+    "note": "Huron County Parks campground on 120 acres at 7320 Lighthouse Rd, ~6 mi N of Port Hope on Lake Huron, at the historic Pointe aux Barques Lighthouse. Full-hookup loops to the south (many seasonal), electric sites to the north, both with lakefront rows; rustic sites in a field; 6 rustic cabins. Boat launch, fishing breakwater. Rocky, stony shore, not ideal for swimming; Wi-Fi unreliable under the trees. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -264834,11 +265023,14 @@
       "sewer": true
     },
     "sites": {
-      "count": 110,
-      "max_rig_ft": 37
+      "count": 112,
+      "max_rig_ft": 37,
+      "note": "Park map (rev. 12/25): 75 full-hookup sites (1-74 plus 34A), some lakefront; 29 electric sites (101-129), some lakefront; 8 rustic sites (201-208); 6 cabins."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true
     },
     "season": {
       "year_round": false,
@@ -264846,37 +265038,41 @@
       "closes": "10-15"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://huroncountyparks.com/lighthouse-park-reservations",
+      "note": "Booked on the county's own page (Checkfront); 'General reservations begin on or around December 1st each year.' Booking assistance 888-265-2583."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/lighthouse-county-park ('Full Hookup $50') + park map legend ('Full Hookup', 'Full Hookup Lakefront', 'Electric', 'Electric Lakefront', 'Rustic'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/wp-content/uploads/LighthouseParkUPDATE.pdf (numbered sites by type), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/lighthouse-county-park FAQ ('Bath houses with free showers and flush toilets are available') + park map ('Dumping Station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/lighthouse-county-park ('Open May 1 - October 15') + https://huroncountyparks.com/lighthouse-park-reservations ('Park Open May 1 - Oct 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/lighthouse-park-reservations ('Book a Site'; '2026 Reservations Open to the General Public on Monday, Dec. 1 at 12pm EST'; engine huroncountyparks.checkfront.com) + park page ('Reservations and Booking Assistance (888) 265-2583'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://huroncountyparks.com/lighthouse-county-park (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://huroncountyparks.com/lighthouse-county-park (Camping Rates: 'Electric or Electric Lakeview $42-$45 per night + $5 Holidays -$5 Off Season Discount'; 'Full Hookup $50'; 'Rustic $31'; 'Seasonal $2,800+ per season'; reservations page headed '2026 Reservations Open to the General Public on Monday, Dec. 1'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -264889,7 +265085,12 @@
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Huron County Parks: electric $42-45 a night, full hookup $50, rustic $31, plus $5 on holidays, $5 off in the off season. Read 2026-10-15."
+      "note": "Huron County Parks (one rate, no resident/non-resident split): electric or electric lakeview $42-45, full hookup $50, rustic $31 (whether RVs use the rustic field sites is not stated), rustic cabin $87; +$5 on holidays, $5 off in the off season. Seasonal $2,800+ (full hookup, full hookup lakeview). Cancellations 30+ days out, $15 fee, refunded as a gift certificate."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://huroncountyparks.com/lighthouse-county-park https://huroncountyparks.com/lighthouse-park-reservations https://huroncountyparks.com/wp-content/uploads/LighthouseParkUPDATE.pdf (park map, rev. 12/25)",
+      "note": "County park page + reservations page + park map (rev. 12/25): electric $42-45, full hookup $50, rustic $31, seasonal $2,800+; May 1 - Oct 15; 112 sites (75 full hookup, 29 electric, 8 rustic); free showers, flush toilets, dump station; online booking on the county page (Checkfront) from Dec 1. Fees and season confirmed (now manual); site count 110 -> 112; added flush toilets, dump, booking platform/url/note. Amperage and max rig length (37 ft, derived) not stated; left. Note cleaned of site coun"
     }
   },
   {
@@ -267301,7 +267502,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://ironriver.org/klint-safford-rv-park/\nhttps://app.fireflyreservations.com/reserve/property/KlintSaffordMemorialRVPark",
     "phone": "906-265-3822",
-    "note": "City of Iron River municipal RV park in downtown Iron River, one block off US-2, beside the Iron River. ~27-32 sites, all level/paved with 30/50A electric, water, sewer; dump station and RV wash. Smallest site ~45 ft (fits a 23-ft rig easily). Open May 1-Oct 31; reservable online (Firefly). Primarily transient nightly/weekly. --Claude",
+    "note": "City of Iron River municipal RV park downtown, one block off US-2 beside the Iron River, with the Iron County Chamber of Commerce on the grounds; shops and restaurants within walking distance. ~27-32 level paved sites, the smallest ~45 ft; RV wash. Primarily transient nightly/weekly. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -267318,13 +267519,16 @@
       "closes": "10-31"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/KlintSaffordMemorialRVPark",
+      "note": "Online through the city's Firefly page, or by phone Monday-Friday 9am-5pm Central (toll free 888-879-4766)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://app.fireflyreservations.com/reserve/property/KlintSaffordMemorialRVPark (unit types 'FULL HOOK UP - 50 AMP', 'FULL HOOK UP', 'BASIC HOOK UP'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -267332,14 +267536,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ironriver.org/klint-safford-rv-park/ ('Reservations accepted Monday through Friday 9am-5pm (CST) Phone: Toll Free 888-879-4766') + the Firefly page, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://app.fireflyreservations.com/reserve/property/KlintSaffordMemorialRVPark (available units for Oct 22, 2026 arrival to Oct 23, 2026 departure: 11 'BASIC HOOK UP' $35.00, 13 'FULL HOOK UP' $40.00, 2 'FULL HOOK UP - 50 AMP' $45.00 avg per night), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -267349,6 +267558,18 @@
     },
     "facilities": {
       "dump": true
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 45,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "City of Iron River's Firefly booking page, one night 2026-10-22 (2 adults): 'Basic Hook Up' sites $35, 'Full Hook Up' $40, 'Full Hook Up - 50 Amp' $45; up to 6 guests per site. A monthly ('Ongoing') option is also offered. No resident/non-resident split shown."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://ironriver.org/klint-safford-rv-park/ https://app.fireflyreservations.com/reserve/property/KlintSaffordMemorialRVPark (search for one night 2026-10-22, 2 adults), read 2026-10-22",
+      "note": "City page + Firefly: $35 basic hookup, $40 full hookup, $45 full hookup 50 A (one night 2026-10-22), reservable online or by phone. Added fees, booking platform/url; hookups now manual (50 A full hookup confirmed). Season, site count, dump station not stated on the city's pages (left as derived). Note cleaned of hookup/season/booking/dump text; its 'all ... water, sewer' was wrong given the basic-hookup sites."
     }
   },
   {
@@ -267653,7 +267874,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.lucecountymi.com/parks-recreation\nhttps://www.facebook.com/LCPMI",
     "phone": "906-293-2999",
-    "note": "Luce County Parks & Rec park on North Manistique Lake at 3266 CR-478, McMillan; 45 back-in sites, all 30/50-amp electric + water, dump station, swimming beach, boat launch. Open ~Memorial Day-mid-Oct. Mix of FCFS ($19) and online-reservable sites (via CampLife) at $34. Accepts big rigs. --Claude",
+    "note": "Luce County Parks & Rec park on North Manistique Lake at 3266 CR-478, McMillan; swimming beach, boat launch. Mix of first-come sites ($19) and online-reservable sites ($34); the county's own page posts no camping rate. Accepts big rigs. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -267668,7 +267889,8 @@
       "pull_through": false
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Open Memorial Day through October, weather permitting (the county gives no closing date)."
     },
     "booking": {
       "reservable": true,
@@ -267676,19 +267898,19 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lucecountymi.com/parks-recreation ('45 back in sites with electricity (30 & 50) and water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lucecountymi.com/parks-recreation ('45 back in sites with electricity (30 & 50) and water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lucecountymi.com/parks-recreation ('OPEN: Memorial Day through October ?- Weather Permitting.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -267696,9 +267918,9 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.lucecountymi.com/parks-recreation ('Dump Station: $10.00'; 'Showers: $5.oo'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -267707,7 +267929,14 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "note": "Showers $5; dump station $10."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.lucecountymi.com/parks-recreation https://www.camplife.com/campground/luce+county+campground (the county's reservation link; no campground found, read 2026-10-22)",
+      "note": "County Parks & Rec page: 45 back-in sites with 30/50-amp electric and water, showers ($5), dump station ($10), open Memorial Day through October weather permitting, online reservations 'www.camplife.com'. Hookups/sites/dump now manual; added showers and the season statement. No camping rate on the county page (the note's $19 / $34 are unsourced; fees stay empty). The county's CampLife link finds no campground and CampLife lists none near Newberry, so the reservation path could not be confirmed ("
     }
   },
   {
@@ -268614,7 +268843,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.gogebicforestryandparks.com/littlegirlspoint",
     "phone": "906-256-2280",
-    "note": "Gogebic County park on Lake Superior (Agate Beach), E1930 Lake Road, Ironwood. 31 sites: 29 electric (30-50 amp), 2 non-electric; several on the bluff overlooking the lake. Potable water by on-site tanker only (no per-site water, no dump station); flush toilets, no showers. Rustic, cell service unreliable; ~$35/night. Reservations online only (open second Monday of January each year). 2026 season ~mid-May-Oct 11. --Claude",
+    "note": "Gogebic County park on Lake Superior (Agate Beach), E1930 Lake Road, Ironwood, established 1920; several sites on the bluff overlooking the lake, with the Porcupine Mountains and Apostle Islands in view. Remote: fill the water tank before arriving; no public Wi-Fi and limited cell service. Boating access at the mouth of Oman's Creek. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -268631,43 +268860,50 @@
       "potable_water": true,
       "flush_toilets": true,
       "showers": false,
-      "dump": false
+      "dump": false,
+      "vault_toilets": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "closes": "10-10",
+      "note": "Camping season runs from mid-May to October 10 (2027)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://bookingsus.newbook.cloud/littlegirlspoint/index.php",
+      "note": "Online only, through the county's NewBook page; reservations open the second Monday in January each year. One reservation per site occupant and date range."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('29 electric (30-50 amp power), and 2 non-electric campsites'; 'There is no direct water to sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('29 electric (30-50 amp power), and 2 non-electric campsites available for nightly or monthly reservations'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('An on site water tanker provides access to potable water to fill containers only'; 'no dump station available at the park'; 'vault restroom facilities'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('Mid-May-October 10, 2027 (During camping season) (906)256-2280'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('Reservations for the Little Girl's Point County Park begin the second Monday in January each year via website only'; 'All reservations must be processed online'; make-a-reservation link to bookingsus.newbook.cloud/littlegirlspoint), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.gogebicforestryandparks.com/littlegirlspoint ('2027 Camping Rates Resident Non-Resident Nightly $35.00 $35.00 Monthly $750.00 $850.00'; 'For Gogebic County resident monthly discounts you must enter the promo code RESIDENT') + regulations PDF (rule 2), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -268679,8 +268915,13 @@
       "nightly_low": 35,
       "nightly_high": 35,
       "currency": "USD",
-      "checked": "2026",
-      "note": "Gogebic County 2026: $35 a night. Read 2026-10-15."
+      "checked": "2027",
+      "note": "Gogebic County 2027 rates: nightly $35 for residents and non-residents alike; monthly $850 non-resident, $750 for Gogebic County residents (promo code RESIDENT, residency verified at check-in). Cancellation more than a day ahead refunds all but one night."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.gogebicforestryandparks.com/littlegirlspoint https://www.gogebicforestryandparks.com/_files/ugd/e6479d_4be5aecc5db641a9a1015c83a18e22e4.pdf (county park regulations)",
+      "note": "County page: 2027 nightly $35 (resident and non-resident; monthly $750/$850), 29 electric 30-50 A + 2 non-electric sites, water tanker only, no dump station, vault restrooms, season mid-May to Oct 10, online-only booking (NewBook) opening the second Monday of January. Fees now 2027 (same $35); added vault toilets, season close 10-10, booking platform/url/note; hookups/sites/water/dump now manual. Flush toilets / no showers (derived) not stated by the page; left. Note cleaned of the site, hookup,"
     }
   },
   {
@@ -934591,7 +934832,7 @@
     "inclusion_evidence": "jackpinelodgeup.com 2025 rates + CampLife online booking: nightly full-hookup RV sites from $49 alongside a seasonal option; satellite z17 shows an RV loop with open pads behind the lodge -> real transient RV campground; published base $49 (2025) <= $50",
     "website": "https://www.jackpinelodgeup.com/\nhttps://www.camplife.com/campground/campgroundDetails?cgId=233",
     "phone": "906-573-2414",
-    "note": "Campground behind the Jack Pine Lodge bar and grill on M-94, about 20 minutes north of Manistique in the Hiawatha National Forest, at the Haywire ORV trailhead: full-hookup and water-and-electric sites (30- and 50-amp), pull-throughs, rustic sites for vans and tents, and cabins.  Shower house with laundry, dump station, camp store, Wi-Fi and gas.  Nightly and seasonal stays. --Claude",
+    "note": "Campground behind the Jack Pine Lodge bar and grill on M-94, about 20 minutes north of Manistique in the Hiawatha National Forest, at the Haywire ORV trailhead; rustic sites are for vans and tents only, and there are cabins. Gas on site. Nightly and seasonal stays. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -934604,7 +934845,9 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 64,
+      "note": "The operator's CampLife description (2026 rates) says 64 sites, most with water and electric, 46 with sewer, 11 pull-throughs; its own home page (headed '2025 Rates') still says 56 sites with 48 sewer. CampLife sells 46 full-hookup, 8 water/electric and 8 rustic sites (the rustic ones 'Tent and Van Only', 25 ft), plus 6 cabins."
     },
     "booking": {
       "reservable": true,
@@ -934612,14 +934855,14 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-14)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.jackpinelodgeup.com/ ('56 sites all with water and electric - 48 sewer'; '30 & 50 amp to accommodate large RVs'), read 2026-10-22 + CampLife park record ('64 sites most with water and electric - 46 sewer'; Full Hook Up site 24494 '50/30/20-Amp Service', amenities Sewer, Water), read 2026-10-14",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-14)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "CampLife park record https://www.camplife.com/campground/campgroundDetails?cgId=233 ('64 sites most with water and electric - 46 sewer'; '11 pull-thru sites'; site list), read 2026-10-14 + https://www.jackpinelodgeup.com/ ('Pull thru sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "https://www.camplife.com/233/reservation/step1 (CampLife booking page and RV sites), read 2026-10-14",
@@ -934653,6 +934896,11 @@
       "reservation_fee": 5,
       "checked": "2026",
       "note": "Read on CampLife (2026-10-14): one night, before tax, is $47 on a water-and-electric site and $53 on a full-hookup site, October 2026 and June 2027 alike, and each stay also carries a flat $5. Rustic sites ($33) take only vans and tents and are left out. Seasonal sites are $2,499 plus electric."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.jackpinelodgeup.com/ https://www.camplife.com/campground/campgroundDetails?cgId=233 (CampLife park record, site types and site records as read 2026-10-14; audit/price_research/camplife_tier_2026-10-14.jsonl)",
+      "note": "Operator site + its CampLife record: 30/50-amp, water and sewer, 64 sites with 11 pull-throughs, seasonal $2,499 plus electric beside 62 sites sold nightly online. Confirmed hookups (now manual), added site count 64. Fees (W&E $47 / full $53 + $5 a stay, read on CampLife 2026-10-14) left as they are; the operator's '2026 rates starting at $49' for full hookup is consistent. Season not stated. Note cleaned of the hookups/facilities text the fields hold."
     }
   },
   {
@@ -1003225,22 +1003473,24 @@
     "inclusion_evidence": "KOA booking form (koa.com/campgrounds/mackinaw-city/reserve/) quoted 2027-05-18, 1 night, 23-ft motorhome: RV site types $50-113 before tax (read 2026-10-19); RV Life 4.5* over 289 reviews, 91 sites",
     "website": "https://koa.com/campgrounds/mackinaw-city/",
     "phone": "231-436-5643",
-    "note": "KOA Journey at 566 Trailsend Road, Mackinaw City; full-hookup and water/electric RV sites, pull-throughs. RV sites $50-113 a night before tax for a mid-May 2027 weeknight on KOA's booking form. RV Life 4.5*, $$$. --Claude",
+    "note": "KOA Journey at 566 Trailsend Road, Mackinaw City, 1 mile south of the Mackinac Bridge beside the North Western State Trail; free shuttle to the Mackinac Island ferries, heated pool, cabins and tent sites. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
       "source": "rvlife"
     },
     "fees": {
-      "nightly_low": 50.0,
-      "nightly_high": 113.0,
+      "nightly_low": 50,
+      "nightly_high": 125,
       "currency": "USD",
-      "checked": "2026"
+      "checked": "2027",
+      "note": "KOA's booking form, one night for a 23-ft motorhome, before tax: Tue 2027-05-18 back-in 30/20-amp water/electric $50, pull-through 50/30 full hookup $69, KOA Patio $88, Deluxe Patio $93, Patio with Paw Pen $113; Sat 2027-07-10 $57 / $73 / $93 / $105 / $125. A back-in 50-amp full-hookup type was not offered on either date."
     },
     "provenance": {
       "fees": {
-        "source": "https://koa.com/campgrounds/mackinaw-city/reserve/ (cheapest hookup site type and dearest site type, one night from 2027-05-18; RV, 2 adults, a 23-ft motorhome), read 2026-10-19",
-        "checked": "2026-10-19"
+        "source": "https://koa.com/campgrounds/mackinaw-city/reserve/ step 2 site types with avg/night price (2027-05-18: 50.00 'Back In, 30/20 Amps, Water/Electric', 69.00 'Pull Thru, 50/30 Amps, Full Hookups', 88.00 / 93.00 / 93.00 / 113.00 KOA Patio types; 2027-07-10: 57.00 / 73.00 / 93.00 / 105.00 / 105.00 / 125.00), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -1003248,19 +1003498,29 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/mackinaw-city/ ('Reserve: 1-231-436-5643') + the KOA booking form, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/mackinaw-city/ ('50 Max Amp'; 'deluxe patios, full hookups, water and electric back ins') + booking form site types ('Pull Thru, 50/30 Amps, Full Hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/mackinaw-city/ ('100' Max Length'; 'Max pull thru: 100 feet') + booking form ('Pull Thru' site types), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/mackinaw-city/ ('Open May 1 to October 17'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/mackinaw-city/ ('5G Wi-Fi available at all sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "discounts": {
@@ -1003268,19 +1003528,35 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/mackinaw-city/reserve/"
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 100
     },
     "note_scan": {
       "sig": "3a16e8addeafd6ff",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-17"
+    },
+    "facilities": {
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://koa.com/campgrounds/mackinaw-city/ https://koa.com/campgrounds/mackinaw-city/reserve/ (KOA booking form via audit/private_gap_browser/koa.py: RV, 2 adults, 23-ft motorhome, one night from 2027-05-18 and from 2027-07-10), read 2026-10-22",
+      "note": "KOA page + booking form: open May 1 - Oct 17, 50 A, full-hookup pull-throughs and water/electric back-ins, 100-ft max, Wi-Fi at all sites; one night $50 (May 2027 weekday, W/E back-in) to $125 (July 2027 Saturday, patio site). Fees 50-113 -> 50-125 (2027); added season, electric 50, max length, Wi-Fi, booking url; hookups/pull-through now manual. Note cleaned of the price, hookup and rating text."
     }
   },
   {

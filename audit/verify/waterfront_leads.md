@@ -164,3 +164,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3881 Chalk Hills: operator "Riverview - not riverfront"; entry not waterfront - a river view value may apply (p3-104).
 - 3983 Caseville County Park: county sells 'Full Hookup Lakefront' sites ($78), seasonal sites 'some are even lake front on Lake Huron'; entry lakeview (p3-109).
 - 4049 Hancock Recreation Area: city's BookMySites sells '50 Amp Waterfront' (52-55, 'view of the water right from your own camper') and '30 Amp Waterfront' (47, 49-51) on Portage Lake; entry not waterfront (p3-111).
+- 3969 John Gurney Park (Hart): operator 'sits along the East Shore of Hart Lake', 'Overlooking Hart Lake', beach + boat launch; entry not waterfront (p3-112).
