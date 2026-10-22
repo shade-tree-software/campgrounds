@@ -379,3 +379,10 @@ me drop and report); each needs the research named before a verdict.
 - **Canaan Loop Road #1-#4, #7, #8**: the FS designates no numbered sites; FS says only "exercise caution, especially when in a low-clearance vehicle" (not a 4WD recommendation). Aggregators say the full loop may need 4x4. The north end is private land. Booking values rest on a newspaper reprint (method reported).
 - **483 Brandywine Lake**: "Not suitable for large RVs" (no length); the North River RD phone was reported down, so it's not set.
 - **1039 Guyandotte**: 21 of 86 sites are long-term (16-night minimum); 65 are normal nightly. The season rests on note prose.
+
+### p3-63 (WV, 2026-10-21)
+- **496 Red Run Falls**: ~1.1 km from Stonecoal 511 on the same FR 209 corridor. If it is one of Stonecoal's numbered sites, AWH's 2026 fee-change photo ($15 single) applies and the recorded $0 (2023 notice) is stale. No FS page says which sites the fee covers.
+- **494 / 496 / 510 / 13221 / 13222 Shavers Fork dispersed**: no FS page designates any of them (the 2023 Greenbrier developed-dispersed list names only Stonecoal); websites set to the Monongahela camping page (496: the FR 209 reopening release). FS road layer rates FR 481/47/49/233/209 at each pin maintenance level 3, "suitable for passenger cars". 494's pin is on FR 481 "Fish for Fun", not FR 27 (AWH's note already hedges); its hookups/sites/facilities still rest on thedyrt (method reported).
+- **112 Short Mountain**: DNR lists 74 primitive tent/trailer campsites, so ownership wma -> state (agency-designated sites) and renamed "Short Mountain WMA Campsites".
+- **501**: renamed "Seneca State Forest Campground (Seven Mile)"; no official page uses "Seven Mile".
+- **14051 / 14053 / 112 / 13221 / 13222**: no page states a rig size. 14063 Shanklin's Ferry: same DNR "Camping is not permitted" boilerplate conflict as Cedar Branch 14062.
