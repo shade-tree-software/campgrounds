@@ -42,14 +42,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **6150 Parkside (MT, USFS)** (mt-4): FS + rec.gov 'on the banks of the Main Fork of Rock Creek', rec.gov 'Waterfront Sites', 'River Access'; entry riverview.
 - **6216 Rombo (MT, USFS)** (mt-4): 'along the West Fork Bitterroot River' (2025 shoreline stabilization along it); entry not waterfront.
 - **6241 Snowbank (MT, USFS)** (mt-4): 'on the banks of Mill Creek', 'Creek Access'; entry riverview.
-- **6212 Lakeside, Lake Alva (MT, USFS)** (mt-3): rec.gov tags all 5 sites 'Proximity to Water: Lakefront', amenity 'Lake Access'; entry not waterfront.
-- **6201 Langohr (MT, USFS)** (mt-3): rec.gov 'Waterfront Sites', 'Creek Access', 'Most campsites are situated in open meadows along the creek'; entry riverview.
-- **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'lies on the Hungry Horse Reservoir', FS 'on the west shore'; entry lakeview.
-- **6198 Many Pines (MT, USFS)** (mt-3): FS 'The 23 campsites are located along Belt Creek'; entry not waterfront.
-- **6086 Moose Creek Flat (MT, USFS)** (mt-3): FS 'sits next to the Gallatin River', fishing dock 'at the river's edge'; rec.gov 'River Access', 'Beach Access'; entry not waterfront.
-- **6196 Lolo Creek (MT, USFS)** (mt-3, weak): FS 'forested and adjacent to Lolo Creek'; entry not waterfront.
-- **6203 Greenough Lake (MT, USFS)** (mt-2): FS 'along the banks of the Main Fork of Rock Creek'; rec.gov tags 7 of 18 sites Riverfront; entry not waterfront.
-- **6076 Big Arm Unit, Flathead Lake SP (MT)** (mt-1): ReserveAmerica tags most campsites and the group site 'Near Water'; FWP describes camping by a long pebble beach on Big Arm Bay; entry lakeview.
 
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
@@ -71,6 +63,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
+
+## Resolved 2026-10-22, Montana wf-mt-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **6076 Big Arm** lakeview -> lakefront (ReserveAmerica per-site "Proximity to Water: Shore" on
+  A004-A016/B001-B016, pads ~25-50 m from the beach's high-water edge in open pines; low confidence, no per-site
+  map exists); **6086 Moose Creek Flat** not waterfront -> riverfront (satellite: pads 05-09 ~15-25 m from the
+  Gallatin across open meadow; 01-04 stay screened); **6201 Langohr** riverview -> creekside (sites 06/07
+  ~10-15 m from Hyalite Creek); **6212 Lake Alva** not waterfront -> lakefront (rec.gov LSS4-LSS6 tagged
+  Lakefront, canopy case; re-pinned west of Hwy 83).
+- Downgraded: **6251 Lid Creek** lakeview -> not waterfront (pads 55-75 m inside continuous forest).
+- Stand: **6203 Greenough Lake** (rec.gov tags 7 Riverfront, but legible conifer stand between pads and Rock
+  Creek; re-pinned off the entrance bridge), **6196 Lolo Creek** (re-pinned onto the loops), **6198 Many Pines**
+  (re-pinned west of US-89).
 
 ## Resolved 2026-10-21 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
