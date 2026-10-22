@@ -491,3 +491,12 @@ me drop and report); each needs the research named before a verdict.
 - **1396 Fillmore Glen**: 2027 bridge construction limits sites 27-60 to vehicles of 9 tons or less (EKKO passes).
 - **1438 Chemung**: ReserveAmerica link replaced with the county's working one. **1410 Caroga Lake** closes 09-05.
 - ralist2.py (session scratch p3-75) returns every campsite at parks that also have cabins.
+
+### p3-76 (NY, 2026-10-21)
+- **1448 Indian Island DROPPED** (non-resident Green Key bookings carry a 4-night minimum; $200 VIP key the only way around). Registry row local:suffolk-county-ny now has no entries; its premium_site 4 is the Flagship Park surcharge (Premier +$22 / Tier I +$11 / Tier II +$5 per the 2026 schedule) - fix if a Suffolk park is ever re-added.
+- **1407 Frontier Town**: RVs not confined to the horse loop (13-site Stagecoach RV/Trailer Loop + Prairie Junction); sites 77; phone changed to DEC's 518-532-9051.
+- **327 Gilbert Lake**: non-electric Deer Run sites (77-79, 90-135) open Jun 11 - Sep 5, 2027; manual season note doesn't say so.
+- **317 Grass Point**: park text says 20 A on all 20 electric sites; RA list labels 8 at 30 A and 4 at 50 A; recorded 20.
+- **328 Glimmerglass**: no park phone found (RA alternate 315-492-1756 only).
+- **1464 Hickories Park**: hookups corrected to 50 A/water/sewer; FCFS, cash or check.
+- rap2.py can hang; wrap it in `timeout`. go.sh (session scratch p3-76) pulls park page + phones + site list.

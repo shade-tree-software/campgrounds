@@ -126,3 +126,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
 - **1505 Birch Haven (NY)**: operator claims "a majestic view of the St. Lawrence shipping channel"; entry not waterfront (a view tier may be earned).
 - **335 Cedar Point SP (NY)** (weak): ReserveAmerica tags 13 sites "Near Water" (003-011, 014, 016, 018, 020) - its generic icon; entry riverview, note says one 20-ft riverfront site.
+- **1407 Frontier Town (NY)** (weak): ReserveAmerica puts the 91-acre facility "on the shores of the Schroon River"; entry not waterfront. Property-level claim.
