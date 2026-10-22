@@ -606,3 +606,13 @@ me drop and report); each needs the research named before a verdict.
 - **241 Black Mountain**: Isaias closure (Oct 9-13) over; selling nights through Oct 30.
 - **23 Balsam Mountain**: 14 RV sites at 24 ft; reservation only.
 - Methods: WebFetch reads dec.ny.gov; NPS campgrounds/alerts JSON at developer.nps.gov/api/v1 with api_key=DEMO_KEY; rgsum.py / cat.py (session scratch p3-88) summarise rec.gov rates and the RIDB catalog.
+
+### p3-89 (NC, 2026-10-21)
+- **DROPPED (no nightly price / no booking engine):** 4241 Country Woods, 4253 Ho-Hum (both unclaimed RoverPass only), 4244 Goodwin's (monthly workforce), 4240 Jordan Dam ("call for rates").
+- **4250 Nantahala Ridge**: entry had mixed in Nantahala RV Resort & Campground (Campspot, 1.7 km west, 828-736-1812, nantahalarvresort.com). Website -> nrcamp.com (ResNexus); Campspot fees, booking and the derived Good Sam false removed. **LEAD**: Nantahala RV Resort & Campground has no entry - vet and add.
+- **103 County Line (Kerr Lake)**: RA says holiday minimum drops to 1 night within 14 days; state:NC row says 7 - check the row. Phone added.
+- **4247 Double L Farms**: books on its own Hipcamp listing ($42); shares the farm with a mobile-home community, 12 of 26 sites nightly - passes.
+- **14344 Farm Pond**: markets monthly/Fort Bragg commuters; $40 nightly posted (copyright 2024); share nightly unknown.
+- **4238 Highlands Riverbend**: rate unread (ResNexus captcha); GSMNP 39 km.
+- **4233 Hominy Valley** $50, **4245 JCO** "from $50": at the gate.
+- No Helene closure notices found in western NC.
