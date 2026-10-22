@@ -362,3 +362,12 @@ me drop and report); each needs the research named before a verdict.
 - **14054 Chief Cornstalk / 14055 Conaway Run / 14062 / 59 Gandy Creek**: no page states a rig size for the primitive sites (14062 was already accepted by AWH 2026-10-11).
 - **402 Flagpole Road**: the phone is not set (the North River RD numbers have been reported down since 12/10/25).
 - **59 Gandy Creek**: the vault toilet has been closed since 2026-08-11.
+
+### p3-59 (WV, 2026-10-21)
+- **1221 The Dock dropped** (presence rule; see criteria_drops.py).
+- **1216 Robert Newlon Airpark**: robertnewlon.com is hijacked (slot-casino spam / redirect chain), so the website is now its Facebook page (from Google Maps). Presence passes on Google (4.4 over 148 reviews). Its hookups/sites/facilities are derived and appear on no operator page (likely RV Life/Campendium); clear them if they turn out to be aggregator-only.
+- **1219 Starry Fields**: workforce-leaning ("Close to local employers"; reviews are 1-2 month work stays), but posted nightly rates and Firefly booking pass test 2.
+- **14249 Smokey Bottom**: $50 base for four, at the gate, not over it. Monthly/seasonal sites sit beside nightly ones.
+- **1225 State Fairgrounds**: the $45 rate's page header still reads 2021 (Bonfire booking has a reCAPTCHA). Ownership private (501(c)(3)) confirmed.
+- **1195 Brooke Hills Park**: CampLife lists no sites, says "2 night minimum" to every one-night request and "No sites available" to two-night searches, so it may book by phone only (304-737-1236).
+- **815 Harpers Ferry Campground**: mixed-use outfitter base (zipline, guest boat launch, trains 24/7); monthly leases Nov-Mar with a background check. Tunnel height is an ask.
