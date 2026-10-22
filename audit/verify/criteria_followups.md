@@ -395,3 +395,13 @@ me drop and report); each needs the research named before a verdict.
 - **14057 Bertha**: same DNR "Camping is not permitted" boilerplate conflict as 14062/14063; no closure for the dam work found.
 - **503 Big Rock / 119 Bishop Knob**: first-come only, overriding the inherited rec.gov reservable row. FR 76 (Richwood side) closed 2026-09-08..11-20; both reachable from Dyer via FR 101.
 - **463 Horseshoe**: no FS page (expected URL 404s); rec.gov only. Note says "along a remote section of the Cheat River" (-AWH) where rec.gov says "along Horseshoe Run" (the run joins the Cheat nearby). Phone set to the district office 304-478-2481 (staffed season: 304-801-3262).
+
+### p3-64 (WV, 2026-10-21)
+- **528 Summit Lake**: fee $10 -> $15 from the Monongahela's Dec 2025 fee release (effective 2026-01-01); the campground page (2026-06-02) still says $10.
+- **62 Spruce Knob Lake**: rec.gov $18/$32/$15 vs FS page $16/$28/$13 (rec.gov recorded); rec.gov lists vault toilets + solar drinking water, FS page says neither (water left unset). Concession: American Land & Leisure.
+- **511 Stonecoal**: no FS page numbers the sites; "15" rests on elkinsrandolphwv.com. Whether Red Run Falls 496 is a Stonecoal site (and so $15) is still open. Discount flags stored false with no source.
+- **116 Tea Creek**: FR 86 construction closure (to 2026-11-30) is a road closure; the campground stays open (reach from Dyer).
+- **60 Swallow Rock**: no agency page uses the name (FS mentions Swallow Rock only as a CR 29 bridge); website now the Gandy Creek dispersed-area alert.
+- **Squirrel Gap 397-401**: GW&J NF Lee RD; FR 344 level 3 gravel, open to vehicles 04/01-01/15. No FS page names the sites; no rig size anywhere.
+- **14050 Teter Creek**: DNR lists 20 tent/trailer sites only; directions corrected (CR 9 from WV 92 at Meadowville).
+- **Monongahela 2026 opening dates** (fs.usda.gov/r09/monongahela/recreation) recorded only as season.note, year_round false.

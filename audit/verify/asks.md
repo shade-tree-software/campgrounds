@@ -192,3 +192,6 @@ River Riders' booking notes warn of a "1 way narrow tunnel with 11' max height i
 
 ## 1220 Sunny Glen Farms / 1223 Triple L (WV, Salem) — no posted nightly rate — ANSWERED 2026-10-21: drop both (done)
 Both have a working site with a phone, Google 4.4-4.5 over 22/46 reviews, and RV Life 4*/$$, but no posted nightly rate. Sunny Glen has only a "Get a Quote" form with "City Utilities Included"; Triple L says "Daily, Weekly, and Monthly rates available!" and leads with "Nurses welcome!" / "Oil & Gas Workers Welcome". Both lean workforce. Keep, or drop on long-stay test 2 (nights not visibly for sale)?
+
+## 517 Squirrel Gap Road Parking (WV, GW NF) — camping in a developed parking lot?
+Your entry: "large paved parking lot just off of US-48". The George Washington & Jefferson NF's general-prohibitions order 08-08-00-23-3 (in force to 2028-08-30) prohibits "Camping in or within 300 feet of any developed parking area or boat ramp", and the forest's dispersed page says no camping "in the vicinity of ... trailheads". No FS page designates the lot; only Campendium/The Dyrt list it. Squirrel Gap campsite #1 (401) is ~190 m up FR 344, outside the 300-ft buffer, and the five FR 344 sites stay. Drop 517? (I'd drop it.)
