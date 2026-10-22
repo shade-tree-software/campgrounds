@@ -4,6 +4,10 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6127 Lewis & Clark RV Park (MT, private)** (mt-3): for sale ('Due to health issues, we have made the unfortunate decision to sell our RV Park. We will still be opening in March for 2026', operator site Wayback 2026-03-06). The live site refused connections from the cloud on 2026-10-22 (read fine 2026-10-16). Re-check it operates in 2027. $40-45 incl. tax, under the gate.
+- **6234 North Shore (MT, USFS Kootenai)** (mt-3): inherited federal booking row (reservable on rec.gov) looks wrong: not on rec.gov and the FS page offers no reservations; probably FCFS, unstated.
+- **278 Many Glacier (MT, NPS)** (mt-3): fits, but only 13 of 109 sites take up to 35 ft (most driveways 'will not accommodate towed units over 21 feet'); book one of those. NPS 109 sites vs rec.gov catalog 103.
+- **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'The West Side Reservoir Road is narrow with many switchbacks. Not suitable for larger RV's.' Paved; kept for a 23-ft rig.
 - **6227 Grizzly (MT, USFS Lolo)** (mt-2): DROPPED 2026-10-22 (criteria_drops.py). FS page: 'Trailers, motorhomes and tow vehicles not recommended due to the narrow and rough road.'
 - **6226 Grasshopper (MT, USFS)** (mt-2): set temporarily_closed from the FS banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-08-28); the forest's alerts list no closure order, so it may have lifted. Re-check and lift.
 - **6095 Fish Creek State Park (MT)** (mt-2): the campground is really Big Pine Fishing Access Site inside the park (https://myfwp.mt.gov/fishMT/fas/39754101); Forks FAS also in the park, unchecked. 'Primitive Campsite', 23-ft trailer limit, 'Difficult Accessibility'. Name/website/FCFS unresolved.

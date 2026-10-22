@@ -5,6 +5,12 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **6212 Lakeside, Lake Alva (MT, USFS)** (mt-3): rec.gov tags all 5 sites 'Proximity to Water: Lakefront', amenity 'Lake Access'; entry not waterfront.
+- **6201 Langohr (MT, USFS)** (mt-3): rec.gov 'Waterfront Sites', 'Creek Access', 'Most campsites are situated in open meadows along the creek'; entry riverview.
+- **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'lies on the Hungry Horse Reservoir', FS 'on the west shore'; entry lakeview.
+- **6198 Many Pines (MT, USFS)** (mt-3): FS 'The 23 campsites are located along Belt Creek'; entry not waterfront.
+- **6086 Moose Creek Flat (MT, USFS)** (mt-3): FS 'sits next to the Gallatin River', fishing dock 'at the river's edge'; rec.gov 'River Access', 'Beach Access'; entry not waterfront.
+- **6196 Lolo Creek (MT, USFS)** (mt-3, weak): FS 'forested and adjacent to Lolo Creek'; entry not waterfront.
 - **6203 Greenough Lake (MT, USFS)** (mt-2): FS 'along the banks of the Main Fork of Rock Creek'; rec.gov tags 7 of 18 sites Riverfront; entry not waterfront.
 - **6076 Big Arm Unit, Flathead Lake SP (MT)** (mt-1): ReserveAmerica tags most campsites and the group site 'Near Water'; FWP describes camping by a long pebble beach on Big Arm Bay; entry lakeview.
 

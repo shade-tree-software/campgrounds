@@ -19064,23 +19064,81 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251869 (notice 'No Hookups . There are no electric, water or sewer hookups at individual campsites.') + NPS campgrounds API ('electricalHookups': '0'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251869/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "NPS campgrounds API, Many Glacier fees ('Many Glacier summer status' $30.00, 'Many Glacier primitive status' $20.00) + https://www.recreation.gov/api/camps/campgrounds/251869/rates (2026 Peak $30, Non-Peak $20) + recreation.gov notice ('The park entrance fee is $35 per vehicle ... valid for seven days'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "NPS campgrounds API, Many Glacier ('totalSites': '109', 'tentOnly': '8', 'group': '1', 'rvInfo': '13 sites will accommodate up to a 35 foot RV or truck and trailer combination.', 'rvMaxLength': '35') + https://www.recreation.gov/api/camps/campgrounds/251869 (notice 'Make Sure You Book the Correct Campsite!') + recreation.gov catalog (Driveway Entry Pull-through on all but two), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "NPS campgrounds API, Many Glacier (amenities: toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', showers 'None', laundry 'No', internetConnectivity 'No', foodStorageLockers 'Yes - seasonal'; fees 'During primitive camping season there is no water available'; accessibility 'A separate building near the Swiftcurrent Motor Inn houses token operated showers') + recreation.gov notice ('One dump station is conveniently located at the entrance to the campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "NPS campgrounds API, Many Glacier operatingHours (description, and exception 'Winter Closure' startDate 2026-10-20, endDate 2027-06-04), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "NPS campgrounds API, Many Glacier reservationInfo ('Campsites become reservable on a rolling basis, 6 months in advance ... A certain number of sites will be reservable up to 4 days before the desired date.') + https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm ('Advanced reservations are required for all sites.') + https://www.recreation.gov/api/camps/campgrounds/251869 ('All sites require a reservation'; notice 'Camping is limited to 14 days between July 1 and Labor Day, and 30 days between Labor Day and June 30.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 20,
-      "nightly_high": 20,
-      "currency": "USD"
+      "nightly_high": 30,
+      "currency": "USD",
+      "note": "$30 in the summer season, $20 in the primitive season (mid-September to mid-October, no water). Up to 8 people and 2 vehicles. Park entrance fee is separate: $35 per vehicle, valid 7 days."
+    },
+    "sites": {
+      "count": 109,
+      "max_rig_ft": 35,
+      "pull_through": true,
+      "note": "109 sites (8 tent-only, 1 group). 'Most campsites and driveways are very small and will not accommodate towed units over 21 feet'; only 13 sites take an RV or truck-and-trailer up to 35 ft. 'Many campsites will not accommodate camper slide-outs' (NPS points slide-out users to St. Mary Campground). Most catalog sites are pull-through."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true,
+      "showers": false,
+      "laundry": false,
+      "wifi": false,
+      "note": "All seasonal: no water during the primitive season (mid-September to mid-October). Coin/token showers, camp store and restaurant at the nearby Swiftcurrent Motor Inn. Bear-resistant food lockers. No cell coverage (nearest in Babb, 12 mi)."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "06-05",
+      "closes": "10-19",
+      "note": "NPS: 'typical summer season is from early June to mid-September. There is a primitive camping season from mid-September to mid-October, weather permitting.' Winter closure 2026-10-20 to 2027-06-04."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "NPS-run. 'Advanced reservations are required for all sites.' Most sites open 6 months ahead on a rolling basis; some only 4 days before arrival. Stays up to 14 days July 1 - Labor Day, 30 days Labor Day - June 30."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Many Glacier Campground record), read 2026-10-22 https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (rendered in a browser) https://www.recreation.gov/api/camps/campgrounds/251869 https://www.recreation.gov/api/camps/campgrounds/251869/rates recreation.gov campsite catalog for 251869 (public search API, 103 sites), read 2026-10-22",
+      "note": "Confirmed no hookups, reservable on recreation.gov with a 6-month window, phone. Changed fees 20/20 -> 20/30 (summer $30, primitive-season $20). Added 109 sites with 13 to 35 ft (most driveways 21 ft or less), flush toilets/water/dump (seasonal), no showers/laundry, season early June - mid October (winter closure 2026-10-20 to 2027-06-04), reservation-only, 14-night summer limit. AWH note kept unchanged."
     }
   },
   {
@@ -396902,8 +396960,8 @@
     "waterfront_evidence": "satellite at 45.355,-111.173: meadow loop sits between Hwy 191 and the Gallatin River, separated from the river by a continuous conifer strip that screens the water; RVs in the meadow, none at the bank",
     "inclusion_evidence": "USFS Custer Gallatin Moose Creek Flat page + recreation.gov 233738: 14 drive-in sites, max length 60 ft, drinking water/vault toilets, all reservable -> real RV campground (USFS, not 'state')",
     "website": "https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground\nhttps://www.recreation.gov/camping/campgrounds/233738",
-    "phone": "",
-    "note": "USFS Custer Gallatin NF (Bozeman RD) campground in Gallatin Canyon along the Gallatin River near Moose Creek, ~32 mi S of Bozeman off Hwy 191. 14 single-family sites in an open meadow, max equipment length 60 ft, drinking water, vault toilets. Fully reservable on recreation.gov. --Claude",
+    "phone": "661-702-1420",
+    "note": "USFS Custer Gallatin NF (Bozeman RD) campground in Gallatin Canyon, in an open meadow next to the Gallatin River near Moose Creek, ~32 mi S of Bozeman off US-191; paved campground roads. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -396911,32 +396969,37 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 14,
-      "max_rig_ft": 60
+      "count": 13,
+      "pull_through": true,
+      "note": "13 overnight single-family sites on the recreation.gov catalog (the Forest Service page says 'Camp Sites: 12'), plus day-use-only group picnic site 14. Gravel spurs averaging 20 x 60 ft; 4 pull-through, 9 back-in. No maximum vehicle length is published."
     },
     "facilities": {
       "potable_water": true,
-      "vault_toilets": true
+      "vault_toilets": true,
+      "dump": false,
+      "showers": false,
+      "note": "Hand-pump drinking water, trash collection and recycling, host on site. Accessible fishing dock at the river's edge."
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "note": "Concession-run: the Forest Service names Rocky Mountain Recreation Company, recreation.gov lists ExplorUS. All 13 overnight sites reservable on recreation.gov until 3 days before arrival."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground ('Camp Sites: 12', 'TRAILER / RV SITES AVERAGE PARKING SPUR: 20' x 60'', 'the parking spurs are gravel') + recreation.gov campsite catalog for 233738 (13 STANDARD NONELECTRIC overnight + 1 GROUP PICNIC AREA day use; Driveway Entry 4 Pull-Through, Max Vehicle Length blank on all), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233738 ('Vault toilets, drinking water and trash collection are provided'; amenities 'Drinking Water (hand pump)', 'Host', 'Recycling'; notices 'No RV Dump Station is located in any of the USFS campgrounds managed by ExplorUS in the Custer-Gallatin National Forest', 'There are NO Shower facilities available at this campground.') + https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground ('An accessible fishing dock is located at the river's edge'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233738 (catalog: all sites reservable; rules reservationCutOff 3; contact goexplorus.com) + https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground ('Information: Rocky Mountain Recreation Company (661) 702-1420'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -396944,8 +397007,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233738/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233738/rates (2026 peak season STANDARD NONELECTRIC $26) + https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground ('Off Season, there is no fee and no amenities available. Peak Season, there is a $26.00 fee which includes 2 driving vehicles. $9.00 each additional vehicle'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground (Seasons of Use '5/15 -9/30 Limited Service 10/1 - 12/1'; 'Off Season, there is no fee and no amenities available'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -396961,7 +397030,19 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Peak season fee covers 2 vehicles; $9 each additional vehicle (interagency passes do not apply to it). Off season: no fee and no amenities."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "12-01",
+      "note": "Forest Service: '5/15 -9/30, Limited Service 10/1 - 12/1.' Off season there is no fee and no amenities."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/custergallatin/recreation/moose-creek-flat-campground (last updated June 5, 2025) https://www.recreation.gov/api/camps/campgrounds/233738 https://www.recreation.gov/api/camps/campgrounds/233738/rates recreation.gov campsite catalog for 233738 (public search API, 14 sites), read 2026-10-22",
+      "note": "Confirmed reservable on recreation.gov, vault toilets and drinking water, no hookups, $26/night (2026 rate table). Changed count 14 -> 13 (the 14th is a day-use picnic site). Cleared derived max_rig_ft 60 (that is the average spur length; no rig length is published). Added 4 pull-throughs, no dump or showers, season 05-15 to 12-01 (limited service from 10/1), 3-day cutoff, concessionaire. Not stated: booking window (left inherited), stay limit, fcfs. Note trimmed."
     }
   },
   {
@@ -399733,7 +399814,7 @@
     "inclusion_evidence": "Operator site lewisandclarkrvpark.com: 60 full-hookup 30/50A pull-through RV sites, large rigs welcome -> real transient RV park",
     "website": "https://lewisandclarkrvpark.com/",
     "phone": "406-434-2710",
-    "note": "Private full-hookup RV park at Shelby (I-15 Exit 364), ~72 mi E of Glacier NP and 34 mi S of the Canadian border. 60 pull-through sites, 30/50A water/sewer, private restrooms/showers, laundry, store, propane; big rigs welcome. --Claude",
+    "note": "Private RV park at Shelby (I-15 Exit 364), ~72 mi E of Glacier NP's east entrance and 34 mi S of the Canadian border; across the street from Lake Shel-Oole and the Roadrunner Recreation Trail, 1.5 mi from downtown. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -399743,32 +399824,36 @@
     "hookups": {
       "electric": 50,
       "water": true,
-      "sewer": true
+      "note": "Pull-through sites with 30/50-amp and water, or 30-amp and water ('Partial Hook Up'); both include free dump-station use. No sewer at the sites is advertised."
     },
     "sites": {
       "count": 60,
-      "pull_through": true
+      "pull_through": true,
+      "note": "All sites pull-through: the 30/50-amp sites up to 100 ft long, the 30-amp sites up to 60 ft."
     },
     "facilities": {
       "showers": true,
       "laundry": true,
-      "camp_store": true
+      "camp_store": true,
+      "dump": true,
+      "wifi": true,
+      "note": "Private restrooms/showers for guests (no coins). Laundry 3 washers/3 dryers. Starlink Wi-Fi at all RV sites. Dump station $10, free for guests. Propane sold. Fenced off-leash dog area."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/ (operator's page, '2026 Summer Season Rates': '30/50 Amp With Water Hook Up Sites ... Pull through sites with 30 /50 Amp with Water. Free Dump Station Use', '30 Amp Partial Hook Up Sites ... Pull through sites with 30 Amp and water, Free Dump Station Use'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/ (operator's page: 'Pull through sites ... Sites up to 100 ft long', 'Pull through sites ... Sites up to 60 ft long'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/ (operator's page, Services: 'Private Restrooms / Showers Available for park guest only', 'Laundry Room is available', 'Our store provides a variety of items', 'High speed Starlink Wifi Available at all RV sites', 'RV Dump Station $10 Free for guests of the park', 'Propane $3.50 per gal.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -399778,6 +399863,16 @@
       "fees": {
         "source": "https://lewisandclarkrvpark.com/ ('30 Amp With Water Hook Up Sites | $40', read 2026-10-16)",
         "checked": "2026-10-16"
+      },
+      "season": {
+        "source": "https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/ (operator's page), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -399794,6 +399889,20 @@
       "nightly_high": 45,
       "currency": "USD",
       "note": "2026 summer, 8% tax included: 30A water $40, 30/50A water pull-throughs $45."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Operator (early 2026): 'WE ARE NOW CLOSED FOR THE 2025 SEASON. FALL HOURS: BY APPOINTMENT ONLY' and 'We will still be opening in March for 2026 seasons.' No closing date posted."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "'For 2026 Reservations use the Contact us link at the bottom of the page or give us a call.' Check-in 2 p.m., check-out 11 a.m.; after-hours check-in available. Stay 6 nights, get the 7th free. Monthly rates for contract workers ('sorry we don't do residential')."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://lewisandclarkrvpark.com/ (operator's site; unreachable from this environment on 2026-10-22 - connection reset - so read from the Wayback Machine capture of 2026-03-06: https://web.archive.org/web/20260306181825/https://lewisandclarkrvpark.com/)",
+      "note": "Read from a 2026-03-06 archive of the operator's site (live site unreachable here). Confirmed 50-amp electric, water, pull-throughs, showers/laundry/store, 2026 rates $40-45 incl. 8% tax (fees left as recorded, human-checked 2026-10-16; under the $50 gate). Cleared derived sewer (sites are power + water 'partial hook up' with free dump use). Added dump, Wi-Fi, seasonal (opens in March, closed by fall), reservations by phone/contact form. Not stated: site count 60 (left). Note trimmed of restated"
     }
   },
   {
@@ -402975,8 +403084,8 @@
     "waterfront_evidence": "satellite at 46.0681,-114.2358: RV loops set back in scattered pine on the bench above the dam; frontage is a day-use swim beach (loops a short walk back)",
     "inclusion_evidence": "FS Bitterroot Lake Como page + rec.gov poi 241802: paved loop, elec/water hookup sites, pull-throughs to 40 ft -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground\nhttps://www.recreation.gov/camping/poi/241802",
-    "phone": "",
-    "note": "Bitterroot NF, Lake Como Recreation Area near Darby. Paved loop, 8 single + 2 double sites with electric and water hookups, pull-throughs to 40 ft; swim beach and boat launch in the rec area. First-come, first-served (not on recreation.gov), $25/night, 7-day limit. --Claude",
+    "phone": "406-821-3913",
+    "note": "Bitterroot NF, Lake Como Recreation Area between Darby and Hamilton. 'Lower Como': a paved loop under mixed pine and fir just below the Lake Como dam; the swim beach, loop trail and motorized boat launch are in the recreation area. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -402984,39 +403093,83 @@
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "note": "Every site has electric and water hookups; the amperage is not published."
     },
     "sites": {
       "count": 10,
-      "max_rig_ft": 40,
-      "pull_through": true
+      "pull_through": true,
+      "note": "8 single and 2 double sites (the Forest Service page also says '12 total sites', presumably counting each double twice), all 125-ft pull-through spurs, plus a host site. Three accessible. No maximum rig length is published."
     },
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "max_stay_nights": 7
+      "max_stay_nights": 7,
+      "note": "Forest Service (Darby Ranger District). 'First come/first serve, no reservations.' Limit 2 vehicles per site (truck + trailer counts as one)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('all sites feature electrical and water hookups', 'Each site has water hookups, with additional faucets located through the campground', '$25 per night per campsite (water/electricity included)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('a single loop with 125' pull through sites for recreational vehicle RVs with spurs that include 8 single sites and 2 double sites. (12 total sites)') + recreation.gov poi 241802 description ('a host site and ten 125' pull through recreational vehicle (RV) sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('First come/first serve, no reservations. Camping is limited to 7 days and is $25 per night.', 'Parking is limited to 2 vehicles per site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('4 accessible vault toilets', 'Potable water is available at this site', 'Water and garbage services are also provided', 'Food Storage Required'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground (Seasons of Use), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('Single Site (Electric + Water): $25 per night', '$25 per night per campsite (water/electricity included). Fee includes 1 pass for day use within the recreation area'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground ('Senior, Annual, and Access Passes are honored at all Lake Como fee sites.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "6cd1a82e37880468",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Garbage service. Food storage order (bear country)."
+    },
+    "season": {
+      "note": "Forest Service: 'Peak Season: Memorial Day - Labor Day. Non-Peak Season: Weather Dependent.' The page carried a 'Site Closed' banner on 2026-10-22."
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 25,
+      "currency": "USD",
+      "note": "Water and electricity included; the fee includes one recreation-area day-use pass (otherwise $5/vehicle/day or $30/season, Memorial Day-Labor Day). Extra vehicles need a pass."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/bitterroot/recreation/lake-como-campground (last updated October 6, 2026) recreation.gov search API record for poi 241802 'Lake Como Campground' (not reservable), read 2026-10-22",
+      "note": "Confirmed FCFS/no reservations, 7-day limit, water hookups (electric too, amperage unpublished), 10 pull-through sites, vault toilets and potable water. Added $25/night fee (2026 page), senior/access pass honored, season (peak Memorial Day-Labor Day). Cleared derived max_rig_ft 40 (no page states it; sites are 125-ft pull-through spurs). Note trimmed."
     }
   },
   {
@@ -404123,8 +404276,8 @@
     "waterfront_evidence": "canopy-blind satellite; USFS page 'forested and adjacent to Lolo Creek' but no per-site creekside detail, forested screen - default down",
     "inclusion_evidence": "fs.usda.gov Lolo NF Lolo Creek page: 17 sites, 30-ft RV parking spurs, FCFS -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area",
-    "phone": "",
-    "note": "Lolo National Forest campground on US-12 ~15 mi west of Lolo, along Lolo Creek at ~3,800 ft. 17 sites, drive-in RV parking spurs to ~30 ft, vault toilets, no hookups. First-come, first-served (not on recreation.gov); $15/night. Open mid-May to early Sept. --Claude",
+    "phone": "406-329-3814",
+    "note": "Lolo National Forest campground and picnic area on US-12 ~15 mi west of Lolo, forested and beside Lolo Creek at ~3,800 ft; interpretive site, Lewis and Clark/Nez Perce trail nearby, Lolo Pass Visitor Center 19 mi west. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -404138,17 +404291,23 @@
     },
     "sites": {
       "count": 17,
-      "max_rig_ft": 30
+      "max_rig_ft": 30,
+      "note": "'RV accessible (30-foot parking spurs) are available.'"
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-08",
+      "note": "Forest Service: 'May 15, 2026- September 8, 2026.' A later current-conditions line said it 'Closes on Monday 9/21' (2026)."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "Forest Service (Missoula Ranger District). 'First come, first served. No reservations taken.'"
     },
     "provenance": {
       "hookups": {
@@ -404157,28 +404316,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area ('RV accessible (30-foot parking spurs) are available.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area (Restrooms 'Vault toilet(s)'; Water 'Potable water is available at this site.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area (Seasons of Use 'May 15, 2026- September 8, 2026.'; Current Conditions 'Closes on Monday 9/21.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area (Reservations 'First come, first served. No reservations taken.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area ('Fee Site and Info | Overnight Use: | Single Site: $15 per night (2 vehicles included per site) | Additional Vehicle Fee: $5 per night ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area ('Single Site: $15 per night (2 vehicles included per site) Additional Vehicle Fee: $5 per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -404189,7 +404349,13 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Two vehicles included; $5/night each additional vehicle."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/lolo/recreation/lolo-creek-campground-and-picnic-area (last updated September 21, 2026) recreation.gov search for 'Lolo Creek' (no campground listing), read 2026-10-22",
+      "note": "Confirmed FCFS/no reservations, 30-ft parking spurs, vault toilets, $15/night. Added potable water, season 05-15 to 09-08 (2026; closed 9/21 in practice). Not stated on the page: site count 17 and no hookups (derived left). Note trimmed of restated values."
     }
   },
   {
@@ -404278,8 +404444,8 @@
     "waterfront_evidence": "satellite at 46.8988,-110.6895: loop set in forest west of US-89; Belt Creek ~30m off with continuous forest between loop and creek, no open apron; no per-site map - default down",
     "inclusion_evidence": "fs.usda.gov Helena-Lewis & Clark NF Many Pines page: 23 drive-in sites, RV parking spurs, FCFS -> real RV campground",
     "website": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground",
-    "phone": "",
-    "note": "Helena-Lewis and Clark National Forest campground on US-89 in the Belt Creek canyon near Neihart, ~5,800 ft. 23 sites along Belt Creek, vault toilets, running water, no hookups. First-come, first-served (all Helena-Lewis & Clark NF campgrounds are FCFS; not reservable). Open late May to Oct. --Claude",
+    "phone": "406-449-5201",
+    "note": "Helena-Lewis and Clark National Forest campground in lodgepole pine directly off US-89 in the Belt Creek canyon near Neihart, ~5,800 ft; sites along Belt Creek (catch-and-release cutthroat). Memorial Falls trailhead ~1 mi north. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -404292,18 +404458,24 @@
       "sewer": false
     },
     "sites": {
-      "count": 23
+      "count": 23,
+      "max_rig_ft": 51
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Potable water in the warmer months only; current conditions (October 2026): 'No potable water available. Fees still required.' Food storage order March 1 - December 1."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "closes": "10-31",
+      "note": "Forest Service: 'The campground is usually open late May through October.' 'Open and close dates can vary depending on snowfall conditions.'"
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 16,
+      "note": "Forest Service-run. 'All campgrounds on the Helena-Lewis and Clark National Forest are first-come, first-served. Reservations are not available.' Self-serve fee station; the camper must be present to hold a site."
     },
     "provenance": {
       "hookups": {
@@ -404312,24 +404484,24 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground ('The 23 campsites are located along Belt Creek', 'The largest slot for a trailer is 51 feet in length. Many Pines Campground is the most convenient for campers with large RVs along the US Highway 89 corridor.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground ('The campgrounds include access to potable water during the warmer months, and all have at least one handicap accessible vault toilet', 'Potable water is available at this site', Current Conditions 'No potable water available. Fees still required.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground ('All campgrounds on the Helena-Lewis and Clark National Forest are first-come, first-served. Reservations are not available. Camping is limited to 16 consecutive days in one location.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground ('Fee Site and Info | Overnight Use: | Single Site: $15 per night | $15 per night for single unit | Getting There | Latitude / Longitude | Latitude: | 46.89805556 | Longitude: | -110.6905556 | Directions | From Great Falls')",
@@ -404345,6 +404517,11 @@
       "nightly_low": 15,
       "nightly_high": 15,
       "currency": "USD"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/many-pines-campground (last updated October 13, 2026)",
+      "note": "Confirmed 23 sites, vault toilets and potable water (warmer months), FCFS/not reservable, $15/night (fees already human-checked). Added max_rig_ft 51, 16-day limit, season late May through October. Not stated: hookups (derived none left). Note trimmed of restated values."
     }
   },
   {
@@ -404505,8 +404682,8 @@
     "waterfront_evidence": "satellite at 45.535,-111.016: open-meadow loop ~30-40m from Hyalite Creek with willow riparian band buffering the bank; rec.gov 'most sites in open meadows along the creek' - view floor met, willow buffer keeps it off-water",
     "inclusion_evidence": "recreation.gov #233745 + fs.usda.gov Custer Gallatin page: drive-in trailer/RV sites to 32 ft -> real RV campground",
     "website": "https://www.recreation.gov/camping/campgrounds/233745\nhttps://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground",
-    "phone": "",
-    "note": "Custer Gallatin National Forest campground in Hyalite Canyon ~12 mi south of Bozeman, along Hyalite Creek. Trailer/RV spurs average 22x60 ft, some sites to 32 ft; vault toilets, drinking water, no hookups or dump. Reservable via recreation.gov, open mid-May to late Sept. --Claude",
+    "phone": "661-702-1420",
+    "note": "Custer Gallatin NF campground in Hyalite Canyon ~12 mi south of Bozeman, mostly in open meadows along Hyalite Creek, some sites under pine and fir; Hyalite Reservoir is 3.5 mi up the paved canyon road. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -404519,49 +404696,60 @@
       "sewer": false
     },
     "sites": {
-      "max_rig_ft": 32
+      "max_rig_ft": 45,
+      "count": 18,
+      "pull_through": true,
+      "note": "18 overnight sites (16 RV/trailer, one tent-only, one for vans/pickup campers/tents; one is a double) plus day-use group picnic site 20; the Forest Service counts '19'. Catalog max vehicle lengths 20-45 ft, ten sites 38 ft or more; 4 pull-through, 2 parallel, the rest back-in. Average RV spur 22 x 60 ft."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true,
-      "dump": false
+      "dump": false,
+      "showers": false,
+      "note": "Hand-pump drinking water, trash collection and recycling, host on site, firewood sold."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-16",
+      "closes": "12-01",
+      "note": "Forest Service: '5/16 - 9/30 Limited Service 10/1 - 12/1.' Hyalite Canyon Road is open 5/16-3/31."
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "max_stay_nights": 16,
+      "note": "Concession-run: the Forest Service names Rocky Mountain Recreation Company, recreation.gov lists ExplorUS. Reservations close 4 days before arrival; 16 consecutive nights. Check-in 2 p.m., check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 233745 (all sites NONELECTRIC, Water Hookup 'No'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground ('Camp sites: 19', 'TRAILER / RV SITES AVERAGE PARKING SPUR: 22' x 60'') + recreation.gov campsite catalog for 233745 (Max Vehicle Length, Driveway Entry, permitted equipment), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233745 ('vault toilets, drinking water and trash collection'; amenities 'Drinking Water (hand pump)', 'Host', 'Recycling'; notices 'No RV Dump Station is located in any of the USFS campgrounds managed by ExplorUS in the Custer-Gallatin National Forest', 'There are NO Shower facilities available at this campground') + https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground (Seasons of Use '5/16 - 9/30 Limited Service 10/1 - 12/1'; Directions 'Hyalite Canyon Rd #62 open 5/16-3/31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233745 (rules maxConsecutiveStay 16, reservationCutOff 4; notice 'Check in - 2:00 PM - Check Out 12:00 PM/Noon'; contact goexplorus.com) + https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground ('Information: Rocky Mountain Recreation Company (661) 702-1420', 'Make Reservations Here'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233745/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233745/rates (2026 peak season: STANDARD NONELECTRIC $26, double $52) + https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground ('$26.00 includes 2 driving vehicles. $9.00 each additional vehicle. Interagency Passes not applicable toward additional vehicle fees.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -404572,7 +404760,13 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Covers 2 vehicles; $9 each additional vehicle (interagency passes do not apply to it). Double site $52."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/custergallatin/recreation/langohr-campground (last updated May 5, 2026) https://www.recreation.gov/api/camps/campgrounds/233745 https://www.recreation.gov/api/camps/campgrounds/233745/rates recreation.gov campsite catalog for 233745 (public search API, 19 sites), read 2026-10-22",
+      "note": "Confirmed reservable on recreation.gov, no hookups, vault toilets/drinking water, no dump, $26/night (2026 rate table). Changed max_rig_ft 32 -> 45 (catalog). Added 18 sites with 4 pull-throughs, no showers, season 05-16 to 12-01 (limited service from 10/1), 16-night limit, 4-day cutoff, concessionaire. Not stated: sewer (derived none left), booking window (left inherited), fcfs. Note trimmed of restated values and the incorrect 'some sites to 32 ft'."
     }
   },
   {
@@ -404756,8 +404950,8 @@
     "waterfront_evidence": "satellite illegible (low-res/canopy) at 45.651,-113.783; small May Creek along west edge per fs.usda, FCFS with no per-site map/reservation data confirming creekside sites; default down",
     "inclusion_evidence": "fs.usda.gov Beaverhead-Deerlodge NF May Creek Campground page: 21 drive-in forest sites, max recommended trailer 30 ft -> fits 23-ft rig, real USFS RV campground",
     "website": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground",
-    "phone": "",
-    "note": "Beaverhead-Deerlodge NF (Wisdom RD), ~17 mi west of Wisdom on Hwy 43. 21 sites in lodgepole pine at ~6,300 ft; vault toilets, picnic tables, no potable water (pack in/out), no hookups. Max recommended trailer length 30 ft. May Creek runs along the west edge. First-come, first-served. --Claude",
+    "phone": "406-689-3243",
+    "note": "Beaverhead-Deerlodge NF (Wisdom RD), ~17 mi west of Wisdom on Hwy 43, on flat ground in dense lodgepole pine at ~6,300 ft. May Creek runs along the west edge. Big Hole National Battlefield nearby. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -404771,15 +404965,19 @@
     },
     "sites": {
       "count": 21,
-      "max_rig_ft": 30
+      "max_rig_ft": 30,
+      "note": "'The maximum recommended trailer length for the area is 30 feet.'"
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "note": "No water or garbage service: pack it in, pack it out."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 16,
+      "note": "Forest Service (Wisdom Ranger District). 'First come-first served.'"
     },
     "provenance": {
       "hookups": {
@@ -404788,23 +404986,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground ('The campground has 21 units. The maximum recommended trailer length for the area is 30 feet.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground ('equipped with ADA-accessible toilets', Restrooms 'Vault toilet(s)', 'Water and garbage services are not available for this site so please pack it in, pack it out.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground (Reservations 'First come-first served.'; Restrictions 'There is a 16-day stay limit.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground ('Fee Site and Info | Overnight Use: | Single Site: $15 per night | There is a $15 per night fee at this campground with an additional $5 fee per extra vehicle. | Office Contact Information | Wisdom Ranger District | Addre')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground ('There is a $15 per night fee at this campground with an additional $5 fee per extra vehicle.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground (Seasons of Use), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -404815,7 +405019,18 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$5 per extra vehicle."
+    },
+    "season": {
+      "year_round": false,
+      "closes": "09-30",
+      "note": "Forest Service: 'Mid-June through September.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/beaverhead-deerlodge/recreation/may-creek-campground (last updated August 31, 2026)",
+      "note": "Confirmed 21 sites, 30-ft recommended trailer max, vault toilets, no potable water, FCFS, $15/night. Added season (mid-June through September), 16-day limit. Not stated: hookups (derived none left). Note trimmed of restated values."
     }
   },
   {
@@ -405390,8 +405605,8 @@
     "waterfront_evidence": "satellite at 47.3060,-113.5757: 3 RV sites sit EAST of Hwy 83 in forest; Lake Alva is west across the highway + treeline; 'lake access' is a walk-across, not frontage",
     "inclusion_evidence": "fs.usda.gov Lolo NF Lakeside page + Recreation.gov #233204: 3 individual RV/tent sites + group site (RVs to 32-48 ft), reservable -> real drive-in RV campground on Lake Alva",
     "website": "https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground\nhttps://www.recreation.gov/camping/campgrounds/233204",
-    "phone": "",
-    "note": "Lolo NF campground on the north end of Lake Alva, ~10 mi N of Seeley Lake on MT-83. 5 sites: 1 group site (RVs to 48 ft), 3 individual RV/tent sites (to ~32 ft), 1 tent site. Vault toilets, no drinking water, no hookups. Reservable via Recreation.gov, ~$10/night, open ~late May-early Sept. --Claude",
+    "phone": "406-677-2233",
+    "note": "Lolo NF campground on Lake Alva, ~10 mi N of Seeley Lake on the west side of MT-83, in shade near the lake. Loons nest on the lake (protected nesting areas May-June); no-wake lake. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -405405,48 +405620,57 @@
     },
     "sites": {
       "count": 5,
-      "max_rig_ft": 48
+      "max_rig_ft": 58,
+      "pull_through": false,
+      "note": "1 group site (up to 25 people, four RVs, six vehicles; 48 ft), 3 individual RV/tent sites (36, 37 and 58 ft, back-in) and 1 tent site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "note": "No trash collection (pack it out). Host on site. No day-use area; the boat launch and swim beach are a mile north at Lake Alva Campground."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "09-08",
+      "note": "Forest Service: 'Open May 22, 2026 - September 8, 2026.' recreation.gov: 'the Friday before Memorial Day through Labor Day, when the campground closes for the season'; access road gated and unplowed in early spring and late fall."
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "max_stay_nights": 7,
+      "note": "Forest Service (Seeley Lake Ranger District). All 5 sites reservable on recreation.gov; 'Reservations cannot exceed 7 nights', 32 nights a year. Check-in 3 p.m., check-out 1 p.m."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 233204 (all 5 sites NONELECTRIC, Water Hookup 'No'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233204 ('1 group camping site, 3 individual RV/tent sites, and 1 tent site') + recreation.gov campsite catalog for 233204 (Max Vehicle Length 36/37/58 on the standard sites, 48 group, 15 tent; Driveway Entry Back-in), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233204 ('Accessible vault toilets are provided, there is no drinking water available at the campground. Trash collection is not available', 'Campground hosts onsite 24 hours a day') + https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground ('Potable water is not available at this site.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground (Seasons of Use) + https://www.recreation.gov/api/camps/campgrounds/233204 (facility description; notice 'Access to the campground in the early spring and late fall is closed, roads are not plowed, gate is closed.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233204 (rules maxConsecutiveStay 7, maxStay 32 each year; notices 'Reservations cannot exceed 7 nights', check-in/out times) + https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground ('Make Reservations Here'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233204/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground ('Single Site: $10 per night (max 10 people)', 'Additional Vehicle Fee: $5 per each additional vehicle, after 2 vehicles') + https://www.recreation.gov/api/camps/campgrounds/233204/rates (2026 and 2027 peak seasons: standard sites $10, group $50), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -405457,7 +405681,13 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$5 per additional vehicle after two. Group site $50."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/lolo/recreation/lakeside-campground (last updated September 15, 2026) https://www.recreation.gov/api/camps/campgrounds/233204 https://www.recreation.gov/api/camps/campgrounds/233204/rates recreation.gov campsite catalog for 233204 (public search API, 5 sites), read 2026-10-22",
+      "note": "Confirmed reservable on recreation.gov, 5 sites, no electric/water, vault toilets with no drinking water, $10/night (2026-27 rate table). Changed max_rig_ft 48 -> 58 (catalog). Added season 05-22 to 09-08, 7-night limit. Not stated: sewer (derived none left), booking window (left inherited), fcfs. Note trimmed of restated values and the incorrect '~32 ft' site lengths."
     }
   },
   {
@@ -406811,8 +407041,8 @@
     "waterfront_evidence": "research default-down (no water adjacent to camping): High forested pass setting off US 89, no lake/river at the loop",
     "inclusion_evidence": "Helena-Lewis & Clark NF Kings Hill page: 18 drive-in FCFS sites, largest trailer slot 35 ft -> real RV campground",
     "website": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/kings-hill-campground",
-    "phone": "",
-    "note": "Helena-Lewis and Clark NF campground near Kings Hill Pass on US 89 in the Little Belt Mountains, the highest developed campground in the range (~7,400-8,000 ft); 18 sites, largest trailer slot ~35 ft, water and vault toilets, no hookups. First-come, first-served (all HLC NF campgrounds). Open June-Sept. --Claude",
+    "phone": "406-449-5201",
+    "note": "Helena-Lewis and Clark NF campground near the top of Kings Hill Pass on US 89 in the Little Belt Mountains, the highest developed campground in the range (~8,000 ft). Porphyry Peak fire lookout nearby. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -406830,10 +407060,13 @@
     },
     "facilities": {
       "potable_water": true,
-      "vault_toilets": true
+      "vault_toilets": true,
+      "note": "Current conditions (October 2026): 'No potable water available. Fees still required.' Mandatory food storage (bears)."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "closes": "09-30",
+      "note": "Forest Service: 'generally opens in mid to late June and is the first to close in the fall around the end of September.' Posted October 2026: 'closed for winter 2026, will reopen around Memorial Day in 2027'."
     },
     "booking": {
       "reservable": false,
@@ -406846,19 +407079,19 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/kings-hill-campground ('The 18 campsites are situated near the top of Kings Hill Pass on US Highway 89', 'The largest slot for a trailer is 35 feet in length.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/kings-hill-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is available at this site.'; Current Conditions 'No potable water available. Fees still required.'; 'Mandatory food storage is required.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/kings-hill-campground ('Kings Hill Campground generally opens in mid to late June and is the first to close in the fall around the end of September.'; banner 'Site Closed: closed for winter 2026, will reopen around Memorial Day in 2027'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -406879,6 +407112,11 @@
       "nightly_low": 15,
       "nightly_high": 15,
       "currency": "USD"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/helena-lewisclark/recreation/kings-hill-campground (last updated October 13, 2026) https://www.fs.usda.gov/r01/helena-lewisclark/alerts recreation.gov search for 'Kings Hill' (only the Kings Hill Cabin rental, facility 234431, is listed; no campground), read 2026-10-22",
+      "note": "Confirmed 18 sites, 35-ft largest trailer slot, vault toilets and potable water, $15/night (fees already human-checked). Added season (opens mid-late June, closes around end of September; closed for winter 2026). Not stated: hookups (derived none left), reservations/FCFS (derived FCFS left; no campground listing on recreation.gov). Note trimmed of restated values."
     }
   },
   {
@@ -407093,7 +407331,7 @@
     "inclusion_evidence": "fs.usda.gov Kootenai NF North Shore page: 16 paved drive-in sites, RVs up to 40 ft, boat launch on Noxon Reservoir -> real RV campground fitting 23 ft",
     "website": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground",
     "phone": "406-827-3533",
-    "note": "Kootenai NF campground on Noxon Reservoir (Clark Fork River), ~4 mi N of Trout Creek off Hwy 200 via North Shore Rd. 16 sites (3 pull-through) with paved spurs, RVs up to 40 ft, vault toilets, potable water, boat launch/dock; $16/night, managed Memorial Day-Labor Day. --Claude",
+    "note": "Kootenai NF campground on Noxon Reservoir (Clark Fork River), ~4 mi N of Trout Creek off Hwy 200 via North Shore Rd. Boat launch with dock; six day-use picnic sites (two covered) by the ramp. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -407101,36 +407339,47 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 16,
+      "count": 15,
       "max_rig_ft": 40,
-      "pull_through": true
+      "pull_through": true,
+      "note": "16 sites including one host site (15 public), 3 of them pull-through; paved roads and parking spurs, RVs up to 40 ft."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Campground host; boat launch with dock and boat parking (open all year, weather permitting). The page says both 'potable water' (amenities) and 'Potable water is not available at this site.'"
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-30",
+      "note": "Forest Service: 'The campground is managed from Memorial Day through Labor Day. Campground gate is closed from December 1 to May 1, but may close earlier if we get a large amount of snow.'"
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground ('The campground has 16 sites (3 pull throughs) including one host site, with tables and fire rings and able to accommodate up to a 40' RV. Campground roads and campsite parking spurs are paved.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground ('Amenities include a campground host, potable water, vault toilets and a fully developed boat launch with dock and boat parking'; Water 'Potable water is not available at this site.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground (Operational Hours), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground ('Fee Site and Info | Overnight Use: | Single Site: $16 per night | $16.00 daily fee per single site 50% discount with US Golden Age/Access or Interagency Senior/Access Passes. | Office Contact Information | Cabinet Ranger')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground ('Single Site: $16 per night', '$16.00 daily fee per single site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground ('50% discount with US Golden Age/Access or Interagency Senior/Access Passes.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -407142,6 +407391,14 @@
       "nightly_low": 16,
       "nightly_high": 16,
       "currency": "USD"
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/kootenai/recreation/north-shore-campground (last updated April 30, 2026) https://www.fs.usda.gov/r01/kootenai/alerts recreation.gov search (no North Shore campground listed on the Kootenai NF), read 2026-10-22",
+      "note": "Confirmed 40-ft RV max, 3 pull-throughs, vault toilets, $16/night, senior/access pass 50% discount, phone. Changed count 16 -> 15 (the 16th is the host site). Added season (gate open May 1 - Nov 30, managed Memorial Day - Labor Day). Left potable water alone (page contradicts itself). Not stated: hookups, reservations/FCFS. Note trimmed of restated values."
     }
   },
   {
@@ -408253,7 +408510,7 @@
     "inclusion_evidence": "recreation.gov 234474 + fs.usda.gov Flathead NF page: 22 drive-in reservoir sites, listed lengths 21-60 ft -> fits a 23-ft rig, real RV campground",
     "website": "https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground\nhttps://www.recreation.gov/camping/campgrounds/234474",
     "phone": "406-752-7924",
-    "note": "Flathead National Forest on the west shore of Hungry Horse Reservoir. 22 sites (13 reservable, 9 walk-up), sites listed 21-60 ft, no drinking water, vault toilets. Access via the narrow, switchbacked West Side Reservoir Road (not suited to very large rigs). Reservable online. --Claude",
+    "note": "Flathead National Forest on the west shore of Hungry Horse Reservoir, 15 mi south of Hungry Horse, in mixed conifers; sites listed 21-60 ft. Access via the narrow, switchbacked West Side Reservoir Road (not suited to very large rigs). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -408261,31 +408518,37 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 22
+      "count": 22,
+      "pull_through": false,
+      "note": "recreation.gov: '22 rentable sites with 13 of them being reservable and 9 for our walk-up visitors'; the Forest Service calls it a '23-site campground' and the catalog lists 23. All back-in; the catalog gives no usable lengths (0 on most sites, 42 and 49 ft on two)."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "note": "No drinking water; the nearest is at Lost Johnny Point Campground about 5 miles north. Host on site. Native (unsurfaced) boat ramp, small craft only."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "max_stay_nights": 16,
+      "note": "Run in summer by the concessionaire Flathead Valley Campgrounds. 13 sites reservable on recreation.gov until 4 days before arrival, 9 walk-up. 16 consecutive nights, 32 a year. Check-in 2 p.m., check-out 11 a.m."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234474 (Overview) + recreation.gov campsite catalog for 234474 (Driveway Entry Back-In on all 23) + https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground ('a 23-site campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground ('picnic tables, vault toilets, & fire grates. There is no water available. There is a native boat ramp- only small watercraft are recommended', 'Water can be found at the Lost Johnny Point Campground, which is located about 5 miles north') + https://www.recreation.gov/api/camps/campgrounds/234474 (amenity 'Host'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234474 (Overview '13 of them being reservable and 9 for our walk-up visitors. The stay limit is 16 consecutive nights'; rules maxConsecutiveStay 16, maxStay 32 each year, reservationCutOff 4) + https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground ('managed by a concessionaire, Flathead Valley Campgrounds, during the summer months'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -408293,8 +408556,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234474/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234474/rates (2026-2028 peak seasons: STANDARD NONELECTRIC $18) + recreation.gov notice ('the first vehicle is included in the site fee and an extra vehicle charge of $5.00/vehicle per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground (Seasons of Use), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -408308,7 +408577,17 @@
     "fees": {
       "nightly_low": 18,
       "nightly_high": 18,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Fee covers one vehicle; a second is $5/night. The Forest Service page (last updated April 2025) still says $16."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Forest Service: 'Mid May - September.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/flathead/recreation/lid-creek-campground (last updated April 11, 2025) https://www.recreation.gov/api/camps/campgrounds/234474 https://www.recreation.gov/api/camps/campgrounds/234474/rates recreation.gov campsite catalog for 234474 (public search API, 23 sites), read 2026-10-22",
+      "note": "Confirmed 22 sites (13 reservable on recreation.gov, 9 walk-up), vault toilets, no drinking water, $18/night (2026 rate table), phone (concessionaire). Added season (mid May - September), 16-night limit, 4-day cutoff, Flathead Valley Campgrounds concession. Not stated: max rig length (catalog lengths mostly 0), booking window (left inherited). Note trimmed of restated values."
     }
   },
   {
