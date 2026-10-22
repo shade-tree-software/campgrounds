@@ -577,3 +577,13 @@ me drop and report); each needs the research named before a verdict.
 - **1436 Blueberry Patch**: "under 24 feet" - EKKO fits at 23 ft.
 - **1426 Beaverkill**: RA name "Beaverkill (John and Patricia Adams Campground at)". 1426/1427/365 close 09-05.
 - Short listed lengths: 1427 Brown Tract Pond (48 of 88 at 20 ft), 365 Buck Pond (73 of 111 at 20 ft).
+
+### p3-85 (NY, 2026-10-21)
+- **1421 Cherry Plain DROPPED** (every site 15 ft).
+- **1435 Camp Gateway (Floyd Bennett Field)**: status temporarily_closed (NPS 2026-09-30 "remain closed at this time"; no rec.gov availability since 2023; migrant shelter 2023-25). Kept with the caveat; may be closed for good - re-check spring 2027. Fees only from rec.gov's 2019/2020 table. Phone -> park line 718-354-4606; NPS page added.
+- **1423 Hearthstone Point**: max_rig 40 -> 30 (RA's longest listed site); DEC page unreadable.
+- **356 Eighth Lake**: opens Jun 28 in 2027 only (infrastructure work).
+- **1450 Southaven**: kept under the Suffolk walk-up rule (no reservation-only statement); phone -> 631-852-1391.
+- **1444 Greenwood**: all 50 sites sold nightly beside a $1,800 seasonal rate.
+- Short listed lengths: 1420 Newtown Battlefield (6 of 18 take 23 ft), 1425 Sharp Bridge (10 of 39).
+- 1422/20/1425 close 09-05.
