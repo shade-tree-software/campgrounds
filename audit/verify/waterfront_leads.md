@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **6150 Parkside (MT, USFS)** (mt-4): FS + rec.gov 'on the banks of the Main Fork of Rock Creek', rec.gov 'Waterfront Sites', 'River Access'; entry riverview.
+- **6216 Rombo (MT, USFS)** (mt-4): 'along the West Fork Bitterroot River' (2025 shoreline stabilization along it); entry not waterfront.
+- **6241 Snowbank (MT, USFS)** (mt-4): 'on the banks of Mill Creek', 'Creek Access'; entry riverview.
 - **6212 Lakeside, Lake Alva (MT, USFS)** (mt-3): rec.gov tags all 5 sites 'Proximity to Water: Lakefront', amenity 'Lake Access'; entry not waterfront.
 - **6201 Langohr (MT, USFS)** (mt-3): rec.gov 'Waterfront Sites', 'Creek Access', 'Most campsites are situated in open meadows along the creek'; entry riverview.
 - **6251 Lid Creek (MT, USFS)** (mt-3): rec.gov 'lies on the Hungry Horse Reservoir', FS 'on the west shore'; entry lakeview.

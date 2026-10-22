@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6156 Silos, Canyon Ferry (MT)** (mt-4): ownership private -> federal (Reclamation land under a concession). Reclamation is re-bidding the concession (usbr.gov/gp/mtao/canyonferry), so operator, website (thesilosmt.camp) and Campspot booking may change for 2027.
+- **6085 Ruby Creek (MT, BLM)** (mt-4): BLM page now thin; the derived 50-ft max, water, toilets and FCFS can't be confirmed. Not on rec.gov.
+- **6232 Summit, Marias Pass (MT)** (mt-4): Helena-Lewis and Clark NF, not Flathead (website fixed); derived reservable/rec.gov cleared (no listing); FCFS and the 35-ft max unstated.
 - **6127 Lewis & Clark RV Park (MT, private)** (mt-3): for sale ('Due to health issues, we have made the unfortunate decision to sell our RV Park. We will still be opening in March for 2026', operator site Wayback 2026-03-06). The live site refused connections from the cloud on 2026-10-22 (read fine 2026-10-16). Re-check it operates in 2027. $40-45 incl. tax, under the gate.
 - **6234 North Shore (MT, USFS Kootenai)** (mt-3): inherited federal booking row (reservable on rec.gov) looks wrong: not on rec.gov and the FS page offers no reservations; probably FCFS, unstated.
 - **278 Many Glacier (MT, NPS)** (mt-3): fits, but only 13 of 109 sites take up to 35 ft (most driveways 'will not accommodate towed units over 21 feet'); book one of those. NPS 109 sites vs rec.gov catalog 103.
