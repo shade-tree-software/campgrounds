@@ -4,6 +4,13 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6335 Hick's Park (mt-24): FS Current Conditions 'Closed under Special Order' (page updated 2026-05-01; same since at least Jul 2025, no order on the alerts page, no reason or reopening). Recorded temporarily_closed. Access: 'Travel with a trailer is not recommended south of Hells Canyon' (Hick's Park is south of it); 'Access road not suitable for vehicles longer than 32''. Asked AWH.
+- 13308 Howard Lake (mt-24): FS gives no length; Visit Montana (official tourism site) says 'The maximum recommended trailer length for the area is 20 feet'; no review found of a 23-ft+ rig. Kootenai flood alert (from 2025-12-16, no end) lists washouts on NFS Rd 231 at MP 0.9 and 8.1, the approach road. Asked AWH.
+- 6342 Lake Creek (mt-24): Kootenai flood alert lists 'NFS Road 231 Lake Creek Bridge Washout at milepost 19.3' and a West Fisher Rd washout at MP 25.5 on the access road; may be unreachable. FS page contradicts itself on water.
+- 6336 Hilltop (mt-24): rec.gov link is Scan & Pay, not reservations; FS 16-day limit vs rec.gov 7 consecutive nights.
+- 6337 Holiday Spring (mt-24): FS page contradicts itself on toilets; ~30-ft spur in the note no longer on the page.
+- 6343 Lake Inez (mt-24): FS page says both 'no fees' and '$10/night for the 5 individual sites'; rec.gov says access closed early spring/late fall.
+- 13704 Jo Bonner (mt-24): max_rig_ft 100 cleared (rec.gov pad lengths); rec.gov facility phone (406) 475-3920 vs field office 406-475-3921.
 - 6329 Grasshopper (mt-23): temporarily closed by FS order 0600 Jul 27 - 1800 Nov 1, 2026 (site work, culverts). Re-check after Nov 1.
 - 6330 Graves Bay (mt-23): FS publishes it as 'Graves Creek Campground' ('also known as Graves Bay').
 - 6328 Gold Creek (mt-23): FS page gives two seasons (year round snow dependent vs Memorial Day - Labor Day); season unrecorded.
