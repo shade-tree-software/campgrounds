@@ -201,3 +201,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3904 Bay Mills Sunrise RV Park: operator "overlooks the Back Bay of Lake Superior" (Waiska Bay); entry not waterfront (p3-117).
 - 14236 Bay Ridge RV Park: operator "sits on over 400' of waterfront" with boat docking; entry bayview (p3-117).
 - 3895 Big Lake Campground (Curtis): operator "located right on Big Manistique Lake ... beautiful shallow waterfront" (2013 blog); entry lakeview (p3-117).
+- 3894 Log Cabin Resort (Curtis): operator "on Big Manistique Lake", beach, marina, slips, "the oldest log cabin on the waterfront"; campsites' relation to shore unstated; entry not waterfront (p3-121).
+- 3862 Loomis Landing: operator "on the Backwaters of Tippy Dam", record walleye "caught right here in front of Loomis Landing"; entry not waterfront (p3-121).
