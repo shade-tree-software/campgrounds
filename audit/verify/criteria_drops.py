@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    517: ("2026-10-21", "camping banned at developed parking areas (AWH 2026-10-21: drop)", "GW&J NF general-prohibitions order 08-08-00-23-3 (https://www.fs.usda.gov/r08/gwj/alerts/general-prohibitions, in force to 2028-08-30): 'Camping in or within 300 feet of any developed parking area or boat ramp' is prohibited. The entry is the paved lot at the foot of FR 344 (Squirrel Gap); no FS page designates it, only Campendium/The Dyrt. The FR 344 sites 397-401 stay."),
     1168: ("2026-10-21", "long-stay park with no nights visibly for sale (long-stay test 2)",
            "lakebonin.com, read 2026-10-21: 'With our focus on seasonal sites, we also have non-seasonal sites available'; "
            "'Daily, weekly and seasonal rates are available. Call or email us to book' - no rate posted anywhere on the site, no booking site."),
