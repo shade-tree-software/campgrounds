@@ -768,3 +768,11 @@ me drop and report); each needs the research named before a verdict.
 - **14246 Ivan's**: $42 electric-only base, $52 with water. **3850 Lake Michigan Family** $40/$50 at the line; limited seasonal sites.
 - **4044 L'Anse Township**: no rate posted, Beds24 shows none out of season - re-read in spring.
 - **3943 Groveland Oaks**: nonresident base $43-58, residents $5 less Sun-Thu; Good Sam-directory military discount cleared.
+
+### p3-107 (MI, 2026-10-22)
+- **DROPPED:** 3845 Soaring Eagle Hideaway: $57.84 with the mandatory resort fee, ~$52 after Good Sam, no gateway.
+- **14205 River Valley** and **14228 Spirit Springs**: base exactly $50 (the cheaper types are tent-only / not offered to motorhomes). Spirit Springs has no operator site (Campspot only).
+- **3866 Shady Oaks**: website 503 "Maintenance" since 2025 - removed; kept on Google 4.6/161 + phone (248) 763-1973; no rate ever posted (RV Life $).
+- **3827 Rockey's**: no posted rate, ResNexus captcha; RV Life $$ + booking engine; seasonal share unpublished.
+- **3964 School Section Lake**: ~50% seasonal (county park), 2-night minimum on all reservations; $10 daily vehicle permit required.
+- **411** renamed "...Rivermouth Rustic Campground" (DNR name); 9 of 35 sites take only 20-ft units, 26 take 25 ft+.
