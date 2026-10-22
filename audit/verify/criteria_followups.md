@@ -525,3 +525,12 @@ me drop and report); each needs the research named before a verdict.
 - **466 Fahnestock**: RA name is "Clarence Fahnestock State Park"; no park phone on RA; 2026 bathhouse closure no longer posted.
 - Missing parks.ny.gov / dec.ny.gov pages on 336, 363, 349, 466 (both sites 403 to scripts; Wayback unreachable from here) - add when readable.
 - Short listed lengths: 1402 Woodland Valley (11 of 67 at 30 ft), 336 Burnham Point (8 of 44 over 20 ft), 1414 Cayuga Lake (158 of 247 at 20 ft), 466 Fahnestock (13 of 66 at 25-30 ft).
+
+### p3-79 (NY, 2026-10-21)
+- **1486 Southern Shores DROPPED** (no live presence: both domains dead, RoverPass unclaimed, no Google listing confirmed as this park).
+- **1522 Stysh's Brown Barn DROPPED** (no posted nightly price or booking engine; camper-reported $25 not usable while the operator has a site).
+- **1401 Taconic Copake Falls**: 17 sites take 25 ft - EKKO fits; 85 sites.
+- **1398 Sugar Hill**: general first-come area (horse stalls at the trailhead, not a horse camp); restroom/water outage noted; phone -> DEC Region 8 Bath office 607-622-8282.
+- **1514 Thornbush Acres**: $40 + metered electric $0.30/kWh - under the gate.
+- **1395 Taughannock**: RA contact gives 607-539-4078; stored 607-387-6739 kept (the park's long-standing number).
+- **1466 Winding Hills**: website moved to orangecountyny.gov (old domain 301s there); FCFS except four holiday weekends by phone.
