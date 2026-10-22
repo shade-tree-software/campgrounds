@@ -1,0 +1,67 @@
+{
+  "id": 33,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10046915",
+    "https://www.recreation.gov/api/camps/campgrounds/10046915/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/10046915/month?start_date=2026-10-01T00:00:00.000Z",
+    "trip_data/ridb_campsites.json (RIDB catalog for 10046915, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r08/northcarolina/recreation/mortimer-campground",
+    "https://www.fs.usda.gov/r08/northcarolina/alerts",
+    "https://www.fs.usda.gov/r08/northcarolina/alerts/closures-anticipation-hurricane-isaias",
+    "https://www.fs.usda.gov/r08/northcarolina/about-area/helene"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026", "note": "$20 per night per site; the group site (12G) is $30."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10046915/rates (Peak Season 2026-03-28 to 2026-11-02: sites 1-11 and 13-17 $20, site 12 $30) + facility fee description '$20.00 per night per campsite. $30.00 for group site (12G).', read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -72},
+        "note": "Forest Service: 'Reservation only campground'. Recreation.gov: 'All sites (1-17) can be reserved at least three days in advance' (reservation cut-off 3 days)."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/mortimer-campground ('Reservation only campground') + https://www.recreation.gov/api/camps/campgrounds/10046915 (notice 'All sites (1-17) can be reserved at least three days in advance'; rule reservationCutOff 3), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10046915 (notice: 'While the standard non-electric sites will support RVs, there are no RV amenities') + RIDB catalog (all 16 single sites typed NONELECTRIC, no hookup attributes), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 17,
+        "max_rig_ft": 35,
+        "pull_through": true,
+        "note": "17 sites including group site 12G. Lower loop: 5 walk-in tent-only sites with a central parking lot. Upper loop: sites that 'can accommodate small RVs up to 35ft'; the catalog lists RV equipment on 10 sites (driveways 18-58 ft, mostly back-in, site 13 a 103-ft pull-through)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10046915 ('the 17-site campground'; 'The lower loop features 5 tent-only walk-in sites... The upper loop includes 14 fully accessible, barrier free sites which can accommodate small RVs up to 35ft') + RIDB catalog (equipment, driveway length and entry per site), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10046915 ('Flush toilets, hot showers, running water, and bear-proof trash and recycling receptacles are provided'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "11-01", "note": "Recreation.gov: 'Campground is open April 1st thru November 1st'; the Forest Service page gives 'Seasons of Use March 31 - October 31'."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10046915 (notice 'Campground is open April 1st thru November 1st') + https://www.fs.usda.gov/r08/northcarolina/recreation/mortimer-campground ('Seasons of Use March 31 - October 31'), read 2026-10-22",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open"},
+      "source": "https://www.recreation.gov/api/camps/availability/campground/10046915/month?start_date=2026-10-01T00:00:00.000Z (October 2026: 280 site-nights reserved, 62 available) + https://www.fs.usda.gov/r08/northcarolina/about-area/helene (Grandfather Ranger District closure list does not include Mortimer; its Caldwell/Avery road closures are Thunderhole Rd FSRD 4071 and Lost Cove Rd FSRD 464A only) + Isaias closure alert of 2026-10-09 (Black Mountain, Briar Bottom, Carolina Hemlocks, Curtis Creek only; ended 2026-10-13), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Forest Service-run (not a concession; rec.gov is_commercially_managed false), reservation-only on recreation.gov with a 3-day cut-off. Confirmed $20 (2026 rate season); added no hookups, 17 sites (small RVs up to 35 ft, one pull-through), flush toilets and hot showers, season Apr 1-Nov 1 (FS says Mar 31-Oct 31), and status open: October 2026 is heavily booked and neither the FS Helene closure list nor the Isaias closures name Mortimer or its access roads (NC 90 / Brown Mountain Beach Rd are state roads; no FS order affects them). Note kept (AWH).",
+  "flags": [
+    "Missing phone: Grandfather Ranger District (828) 652-2144 (recreation.gov and the FS page; the campground is unstaffed).",
+    "Official pages disagree on water: recreation.gov says 'Flush toilets, hot showers, running water', the FS page says 'Potable water is not available at this site.' potable_water left unset."
+  ]
+}

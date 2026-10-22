@@ -202,3 +202,34 @@ The village sells a $4,850 season and $800-865 months beside a $63 daily rate, a
 ## 1473 Cayuga Wine Trail Campground (Ovid, NY, Campspot) — does EKKO book as a "Van"?
 Its Campspot site types: $45 "Tent or Small RV Site" (max 25 ft, shared water, no electric; RV types Pop-Up/Van/Truck Camper/Tent - no Motorhome), $60 Water/Electric (also no Motorhome), and the first type that lists Motorhome is the 30A full hookup at $65 ($68 list). No gateway within 40 km (Rochester 86 km), never stayed. If EKKO (Transit-chassis) books as a Van, the $45 site makes it pass the gate; if it must book as a Motorhome, $65 is over and it drops. Which?
   - Same question at **1518 Rancho Pines** (Chestertown, NY): Campspot's only RV type ($49) accepts Fifth-Wheel/Pop-Up/Travel Trailer/Truck Camper/Van, no Motorhome; no other type lists Motorhome at all, so it may not be bookable online in a motorhome. Kept at $49 for now.
+
+## 497 Mower Tract Dispersed Camping (WV, Monongahela NF) — pin on a high-clearance road?
+The Forest Service road layer puts the stored pin on FR 227C "Reigle Overlook", maintenance level 2 "HIGH CLEARANCE VEHICLES / Road, Not Maintained for Passenger Car"; the main road FR 227 is level 4 (passenger car). Your note says reviews report no problems for 22-25 ft trailers. Re-pin to a site on FR 227, keep as is, or drop under the high-clearance rule? (I'd re-pin if you know which sites sit on FR 227.)
+
+## 258 Falls Lake State Recreation Area (NC) — narrow to one campground?
+The entry is the whole SRA and its pin sits on no campground (0.8 km from the Hwy 50 boat ramp; Rolling View 3.1 km, Holly Point 4.0 km). Your note ("Wooded campground with multiple lakefront RV sites") fits either. Rolling View: 115 sites, 80 electric, Loop A year-round. Holly Point: 158 sites, 89 electric, closed for wastewater work until 2026-11-16. B.W. Wells and Shinleaf are hike-in/group only. Narrow this entry to Rolling View (or Holly Point) and re-pin, and add the other as its own entry? Which one did you mean?
+
+## 146 Jordan Lake State Recreation Area (NC) — split into its campgrounds?
+Same shape as 258 Falls Lake: the entry is the whole SRA and the pin (near the Visitor Center) is at none of its three family campgrounds - Crosswinds (182 sites, year-round, 50A in Areas B/C, 1.7 km), Parkers Creek (250, 2.2 km) and Poplar Point (579, the largest, 1.2 km). Your note ("Many lakefront campsites") fits all three. Split into Crosswinds + Poplar Point (+ Parkers Creek), each pinned at its own campground? I'd do all three.
+
+## 4256 Pride RV Resort (Maggie Valley, NC) — membership resort that also sells nights
+Park rules: "new sites and amenities are funded through new membership sales" (no soliciting memberships); rate sheet has member/affiliate rates (Coast to Coast, AOR/RPI/Enjoy America) and "Pride Members" discounts. It also sells public nightly sites ("Open To The Public", $65, phone booking; 3-night holiday/October minimum). The 10-14 rule excludes membership/sales-pitch parks; you kept it earlier as a GSMNP-gateway park (28 km) for price. Keep or drop? (I'd drop it as a membership park, since nightly guests are what the membership sales are pitched at.)
+
+## 4298 Bannister RV Park (Clayton, NC) — background question on the booking form
+Posts $60 nightly (Raleigh gateway 17 km) alongside weekly/monthly ("Long Term Stays", $825/month incl. electric). The only booking path is a reservation REQUEST form asking "Have you ever been convicted of a felony?" and the camper's model year. Long-stay test 2 forbids a background check, but only for a park that is long-stay in character, and the share of nightly sites isn't published. Keep (nights posted with a phone) or drop (the form is a resident screen)? I lean keep with a note line.
+
+## 4314 Whippoorwill Campground (Beulaville, NC) — horse camp?
+Its Facebook page: "Whippoorwill Campground is your horse trail destination!"; Onslow County tourism: "the Equestrians' home away from home". Only directories call it a general campground (~100 sites with water/sewer). Google 4.6/51, phone 910-915-9854; no website or rate; RV Life $$. Keep as a general campground, or drop as horse-oriented? (I'd keep it unless someone confirms non-horse campers are turned away, since horse-only is the exclusion.)
+
+## 4229 Yates Place Camp and 4225 Sunburst Campground (NC Forest Service) — tent-only now?
+- **4229 Yates Place (Uwharrie NF):** the Forest Service page calls it "an attractive destination for tent camping" and never mentions RVs; only TheDyrt/Hipcamp reviews describe parking an RV at the drive-up sites. Free, primitive, vault toilet, no water.
+- **4225 Sunburst (Pisgah NF, NC-215):** FS "nine primitive campsites" with "tent pads"; rec.gov "Tents must be on the gravel"; the site catalog lists no equipment or length.
+Neither page says "tents only", and both have drive-up gravel sites. Keep both (my lean: keep Sunburst, drop Yates Place unless you know RVs use it), or drop as tent campgrounds?
+
+## 3852 Hillside Campground (Evart, MI; was "Kit's Hillside Camp & Cabins") — seasonal and for sale?
+Its domain is dead and Google's website link is an unrelated spam domain; Google lists "Hillside Campground", 4.9 stars / 55 reviews, phone 231-734-2643 (presence passes, RV Life $$). But Crexi/BizQuest sale listings (undated, $1.4M) describe a 20-acre SEASONAL park with 45 sites and 5 cabins, operating about four months a year, and there is no posted nightly rate or booking engine (RV Life reviews 2019/2024 paid ~$35-40/night). If it is seasonal in character it fails long-stay test 2. Keep, or drop? (My lean: keep on the nightly-paying reviews, unless you'd rather call 231-734-2643.)
+**ANSWERED 2026-10-22 (AWH): keep** — multiple Google reviews describe stays of one night or a weekend, so it sells nights (not long-stay in character).
+
+## 3984 Mason County Fairgrounds Campground (Ludington, MI) — still sold to the public?
+The operator's only camping page now offers just the 2026 Western Michigan Fair week registration ($150/week, exhibitor rules); nothing on masoncountyfairgrounds.com (read 2026-10-22) says public nightly camping is sold outside fair week, though an earlier read said it was open year-round except fair week and a big horse show. RV Life 5*/$$. Run by the fair association, so now `private`. Keep pending a call (231-843-8563), or drop as fair-only?
+**ANSWERED 2026-10-22 (AWH): drop.** Done.

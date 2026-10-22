@@ -1,0 +1,86 @@
+{
+  "id": 4227,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/234718",
+    "https://www.recreation.gov/api/camps/campgrounds/234718/rates",
+    "https://www.recreation.gov/api/camps/campsites/<id> for all 32 reservable sites (campsite_rules)",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for 234718, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "status": {
+      "values": {"operating": "open"},
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground ('Site Open'; the only alert is the Hurricane Florence beach-access closure), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $20, $25 with electric (the $5 electric surcharge is not pass-discounted); double electric site $50. Scan & Pay on first-come sites adds up to $2.25 a day."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground ('There is a fee of $20 per night, as well as an additional $5 if using an electrical hookup') + https://www.recreation.gov/api/camps/campgrounds/234718 (fee description: 'Standard Single Non-Electric Site = $20.00 Standard Single Electric Site = $25.00'; notice: 'all sites can accommodate RVs and tents') + /rates (2026 and 2027: 20 / 25), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234718 ('22 of which offer electrical hookup with 20/30/50 amps'; notice: 'No full RV Sewer hookups at campsites, electrical hookups only') + RIDB catalog (every site 'Water Hookup: No'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 40,
+        "max_rig_ft": 85,
+        "pull_through": true,
+        "note": "Forest Service: 40 sites, 24 with electric, two double sites. recreation.gov: 39 sites, 22 electric (32 reservable, 7 first-come); every site takes RVs or tents. Catalog max vehicle lengths 35-85 ft (most 40-60); two pull-throughs."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground ('each of the 40 campsites', 'Electrical hookups are available at 24 sites') + https://www.recreation.gov/api/camps/campgrounds/234718 ('The campground has 39 sites, 22 of which offer electrical hookup', 'Of the 39 campsites, 7 are considered first come-first served') + RIDB catalog (Max Vehicle Length, Driveway Entry), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Bathhouse with private hot showers; trailer dump station for registered campers. Beach access closed since Hurricane Florence; no boat ramp. Gate closes (unlocked) at 8 p.m."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground ('The campground offers showers, restrooms, drinking water and a trailer dump station for registered campers' use', 'Gate closes at 8:00 p.m but not locked') + recreation.gov 234718 ('a bathhouse with private hot showers', 'Access to the beach has been closed since hurricane Florence', 'No boat ramp available'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Closed ahead of hurricanes (season about June to mid-November); reservations are then cancelled and refunded."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/flanners-beachneuse-river-campground ('Seasons of Use: Year Round', 'This area is subject to closure in advance of hurricanes'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -72},
+        "max_stay_nights": 14,
+        "note": "Run by the Forest Service's Croatan Ranger District (not a concession). Reservations up to 180 days ahead and no later than 3 days before arrival; 7 sites are first-come (see the host before paying). The facility lists 2-night, weekend (soft) and 3-night holiday minimums, but every reservable site overrides the facility's stay rules (only a 14-night limit), so no minimum is recorded. 14 nights in any 30 days. Check-in 1 p.m., check-out 11 a.m."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234718 (fee description: 'Reservations must be made 3 days prior to arrival ... but may be made up to 180 days in advance'; '7 are considered first come-first served'; rules maxStay 14 rolling 30 days, reservationCutOff 3; is_commercially_managed false) + /api/camps/campsites for all 32 reservable sites (campsite_rules: overrideFacilityStayRules 1, maxConsecutiveStay 14), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true,
+        "note": "Senior/Access pass: half off the basic fee on single sites; not on the electric surcharge or double sites."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234718 (fee description: 'America the Beautiful Senior and Access Passes qualify user for half off the Basic Fee for Single Sites. No discount is given for Electric'; notice: 'There is no Interagency Pass discount for double sites'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Croatan NF, Neuse River Recreation Area, on a bluff above the Neuse River estuary, about half a mile off US 70 between New Bern and Morehead City. --Claude",
+  "summary": "Changed season: seasonal -> year-round (FS 'Seasons of Use: Year Round'); max_rig_ft added 85 (catalog 35-85 ft, 2 pull-throughs). Confirmed $20-25, 50-amp electric, no water/sewer, 40 sites (rec.gov 39), showers/dump, first-come sites. Added 3-day cutoff, 180-day window, 14-night max, Senior/Access half-off basic fee, drinking water, status open. Facility minimum-stay rules are overridden at every site, so none recorded. Beach access still closed (Florence). Operator: Forest Service (Croatan RD). Note: dropped the field facts and the wrong 'open seasonally'.",
+  "flags": []
+}

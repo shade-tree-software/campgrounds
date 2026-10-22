@@ -1,0 +1,65 @@
+{
+  "id": 32,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm (read in a browser)",
+    "https://www.nps.gov/blri/planyourvisit/roadclosures.htm (road status as of October 21, 2026)",
+    "https://www.recreation.gov/api/camps/campgrounds/234036",
+    "https://www.recreation.gov/api/camps/campgrounds/234036/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/234036/month (October 2026, May 2027)",
+    "trip_data/ridb_campsites.json (RIDB catalog for 234036, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "status": {
+      "values": {
+        "operating": "temporarily_closed",
+        "note": "NPS: 'Due to impacts for Hurricane Helene Linville Falls campground will be closed to all camping in 2026.' No reopening date published; recreation.gov shows every site 'Closed' in October 2026, and May 2027 not yet released. Parkway road status (October 21, 2026): Linville Falls Spur Road open, 'Linville Falls Campground and Picnic Area CLOSED for a Helene related closure.'"
+      },
+      "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('CLOSED', 'Due to impacts for Hurricane Helene Linville Falls campground will be closed to all camping in 2026') + https://www.nps.gov/blri/planyourvisit/roadclosures.htm (Linville Falls Spur Road row) + recreation.gov availability, read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Electric Hookups: 0', 'The campground has a dump station and potable water, but NO water or electric hookups') + https://www.recreation.gov/api/camps/campgrounds/234036 ('No electric, water or sewer hook-ups are available.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 64,
+        "max_rig_ft": 50,
+        "pull_through": true,
+        "note": "64 sites (19 RV-only, 14 tent-only, 2 group); 39 reservable and 25 first-come. RIDB max vehicle lengths run 17 to 50 ft and many RV-capable sites are under 25 ft; 4 pull-throughs. Most sites take one vehicle."
+      },
+      "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('TOTAL SITES: 64', 'RV Only: 19', 'Tent Only: 14', 'Group: 2') + https://www.recreation.gov/api/camps/campgrounds/234036 ('In addition to the 39 sites available for advance reservation, 25 campsites are available on a first come, first served basis', 'Most site are limited to only one vehicle') + RIDB catalog (Max Vehicle Length 17-50, Driveway Entry Pull-through 4), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": false, "dump": true, "potable_water": true, "note": "Food storage lockers; generators prohibited 9 pm to 8 am."},
+      "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Restrooms with flush toilets, drinking water ... No electric hookups or showers in campground', 'dump station and potable water') + https://www.recreation.gov/api/camps/campgrounds/234036 ('There are no showers', amenities 'Dump Station', 'Flush Toilets', 'Drinking Water', 'Food Storage Locker'; 'Generator use is prohibited from 9:00 pm to 8:00 am'), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "recreation.gov 2026 and 2027 peak season: $30 a standard or RV site, $45 a group tent site."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234036/rates (Peak Season 2026-05-22 to 2026-10-25 and 2027-05-28 to 2027-10-25: RV NONELECTRIC 30, STANDARD NONELECTRIC 30, GROUP TENT ONLY AREA 45), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "fcfs": "some_sites",
+        "max_stay_nights": 30,
+        "note": "Operated by the NPS (not a concession). 39 sites reservable up to six months ahead on recreation.gov or (877) 444-6777; 25 first-come sites are 'booked in person at the campground kiosk' and are not tracked online. recreation.gov allows 30 nights in a row and 30 days a year. Campground phone 828-765-7818 (May - October)."
+      },
+      "source": "https://www.nps.gov/blri/planyourvisit/linville-falls-cg.htm ('Campsites are available on a first-come, first-served basis. In addition, advance reservations can be made for some campsites up to six months in advance by visiting www.recreation.gov') + https://www.recreation.gov/api/camps/campgrounds/234036 (description; facility_rules maxConsecutiveStay 30, maxStay 30 days 'Each Year'; is_commercially_managed false; facility_phone '828-765-7818 (MAY-OCTOBER)'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "NPS page and recreation.gov: closed to all camping in 2026 for Hurricane Helene (recorded as temporarily_closed, no reopening date). Confirmed no hookups (now manual, adding water/sewer false) and the $30 fee; added 64 sites (39 reservable + 25 FCFS) to 50 ft with pull-throughs, flush toilets/dump/water, no showers, 6-month window, 30-night max. Not stated: season dates, senior discount (the NPS page's fee section did not render).",
+  "flags": [
+    "Temporarily closed: NPS says Linville Falls Campground 'will be closed to all camping in 2026' after Hurricane Helene; the Parkway road status (October 21, 2026) lists 'Linville Falls Campground and Picnic Area CLOSED for a Helene related closure'. No reopening date published; re-check early in 2027.",
+    "Missing phone: the campground's seasonal number is 828-765-7818 (May-October, recreation.gov); Blue Ridge Parkway information 828-348-3400.",
+    "Waterfront re-audit lead (weak): the entry is 'not waterfront' and AWH's note says the campground is 'on a ridge near the falls trailhead', but recreation.gov says 'Linville River, which winds beside the campground, is stocked for fishing'. Not changed."
+  ]
+}

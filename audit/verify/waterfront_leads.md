@@ -164,3 +164,20 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **14320 Pine Ridge (NY)**: sells "Deluxe Waterfront" and "Waterfront - No Hookups" sites on the river through the park; entry riverview.
 - **13728 Luzerne (NY)** (weak): RA "partially surrounds Fourth Lake"; entry not waterfront.
 - **13727 Rogers Rock (NY)** (weak): west shore of Lake George with a sand beach; entry not waterfront.
+- **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
+- **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
+- **13367 Kennedy Park & Marina (WV)**: operator lists "Primitive: Riverfront Sites" on the Ohio; entry riverview (primitive sites may not take a 23-ft rig).
+- **747 Momma Tried (WV)** (weak): Hipcamp tent spots "by the river", "riverfront access"; entry field says riverfront while AWH's note says sites are not waterfront - the two stored statements disagree.
+- **4317 Cashie River Treehouses (NC)**: town's Campspot listing tags "Waterfront" and "Beach - Public Access" (on the Cashie River); entry not waterfront.
+- **4326 Mayo Lake Park (NC)** (strong): former county RV page "on-water RV and tent sites" (1-28); county map shows Area 2 lining the shore; entry not waterfront.
+- **245 Lake Powhatan (NC)**: FS + rec.gov "on the banks of Lake Powhatan", loops "within walking distance of the lake"; entry not waterfront (note says not on the lake).
+- **32 Linville Falls (NC)** (weak): rec.gov "Linville River ... winds beside the campground"; entry not waterfront.
+- Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
+- **4306 Almond Boat & RV Park (NC)** (DOWNGRADE): operator says "It is not water front but very close to the lake"; entry lakefront.
+
+- 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
+- 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
+- 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
+- 4002 Beaver Lake Park (Alpena Co): county "On the shores of beautiful Beaver Lake"; Campspot sells "Waterfront RV Site" types; entry not waterfront (p3-103).
+- 3923 Camp Petosega: county "on the shores of Pickerel Lake"; entry not waterfront (p3-104).
+- 3881 Chalk Hills: operator "Riverview - not riverfront"; entry not waterfront - a river view value may apply (p3-104).
