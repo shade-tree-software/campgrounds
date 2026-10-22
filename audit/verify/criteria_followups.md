@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6118 Chester City Park** (mt-15, 2026-10-22): ASK AWH. No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
+- **6114 Zurich Park** (mt-15): fee schedule dated 2023-01-01 ($30/day hookup) recorded with checked 2023; website set to that PDF. Phone 406-357-4261 is on no county page (Commissioners 406-357-3240); left as is.
+- **6111 Lewis and Clark County Fairgrounds** (mt-15): '$35.00 per night' undated, not recorded; the Checkfront booking link is dead ('Account Not Found'), so booking looks phone/office only; facility-rentals page prepended to website.
+- **6225 Eagle Creek** (mt-15): Custer Gallatin order 01-11-03-26-01 (from 2026-07-09) bans open fires on 3.5 mi of Jardine Road, the access road.
+- **6088 Chief Looking Glass FAS** (mt-15): the 25-site count and pull-throughs aren't on FWP's current page; left as is.
 - **AWH 2026-10-22:** 14595 Big Sky RV Park RESTORED ('it sells nights on half of its sites'; half long-term is not a long-stay park). 6071 Homestake Pass Dispersed and 6159 Kiwanis Club Campground DROPPED for lack of information. Big Sky's phone: header 406-560-1561 (kept), FAQ/footer 406-563-2967.
 - **RESTORED 6148 Hyde RV Park and 6155 Riverside Cabins and RV Park** (2026-10-22): I had dropped them for 'no posted nightly rate', but test 2 binds only long-stay parks; an ordinary park with a working website + phone passes on an RV Life $/$$ (curation doc, AWH 2026-10-14). Both are $$ with working sites and phones (Hyde also Google 4.6 over 28). Re-checked the other MT drops on Google Maps: 6158 Rivers Bend 9 reviews and 6153 Happy Camper 23 reviews (presence fails, drops stand); 15380 Aspenwood is RV Life $$$ (no price indicator, reason corrected); 14595 Big Sky kept dropped as long-stay in character (test 2); 6168 Sand Springs' Google listing is the store (39 reviews), not the RV park, drop stands.
 - **6155 Riverside** name: operator calls itself 'Riverside Motel-Cabins-RV Park'; not renamed.

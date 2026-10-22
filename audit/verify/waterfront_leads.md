@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **6211 Big Larch** (mt-15, 2026-10-22): rec.gov/FS: 'located on the east shoreline of Seeley Lake', swimming beach and boat ramp; the entry is not waterfront.
+- **6225 Eagle Creek** (mt-15): FS: 'A campground along the Yellowstone River'; the entry is not waterfront.
+- **6220 Big Beaver** (mt-15): FS: 'Nestled close to the serene Blakely Creek'; the entry is riverfront (Boulder River). Check which water it's on.
 - **14597 River Edge Resort RV Park** (mt-13, 2026-10-22): operator advertises 'Full Hookup RV Sites by the Clark Fork River' with 'unbeatable riverfront scenery'; the entry is riverview.
 - **6126 Riverfront RV Park** (mt-13): operator: 'the Little Blackfoot River bordering the edge of the park', 'Walk along the river'; the entry is not waterfront.
 - **15452 Mountainside KOA Journey** (mt-11, 2026-10-22): KOA says 'Some of the Back-In Sites ... are situated near the creek'; tent sites 'right by Denny Creek'. Entry is not waterfront.
