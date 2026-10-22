@@ -1,0 +1,40 @@
+{
+  "id": 3868,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.campspot.com/book/northernexposureinc",
+    "https://www.campspot.com/api/gator-core/v2/parks/slug/northernexposureinc?useCustomParkData=true (park record: legal name, features, terms and campground rules; read in the browser 2026-10-22)",
+    "audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot park 3198 site types and quotes, read 2026-10-13)",
+    "https://northernexposureinc.com/ (Cloudflare challenge; could not be read 2026-10-22)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": false},
+      "source": "https://www.campspot.com/book/northernexposureinc park terms ('SEWER : Wastewater and grey water must be stored in approved containers and dumped at specific stations (see map for locations). $100 fee for noncompliance.'; 'WATER : Use of a water pressure regulator highly recommended') + Campspot RV site types' amenities (20-, 30-, 50-Amp, Water Hook-Up), read 2026-10-22. The stored sewer value came from note prose and the park's own rules contradict it.",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 60, "pull_through": true,
+                 "note": "Campspot books 91 RV sites online: 34 50-amp back-in, 14 30-amp back-in, 9 paved (concrete pad), 18 pull-through, 7 large 50-amp water sites and 9 waterfront sites (waterfront sites to 40 ft, the rest listed to 57-60 ft); plus cabins."},
+      "source": "Campspot park 3198 site types (audit/price_research/campspot_tier_2026-10-13.jsonl: 'Paved Site' 9 sites max 60, '30-amp Back Site' 14 max 57, '50-amp Back Site' 34 max 60, 'Large 50-amp Water Site' 7 max 60, 'Pull-Thru' 18 max 60 with 'Pull-Through', 'Waterfront Site' 9 max 40), read 2026-10-13",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "dump": true, "camp_store": true},
+      "source": "https://www.campspot.com/api/gator-core/v2/parks/slug/northernexposureinc park features ('Bathrooms', 'Showers', 'Dump Station', 'General Store', 'Restaurant: Pizzeria - Hours Vary'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/northernexposureinc",
+                 "note": "Campspot will not book less than 48 hours ahead (October 2026 quotes); the $5 Reservation Surcharge is non-refundable, and a refund needs a call 7+ days before arrival. Every vehicle needs a $5/day pass, one included with each site."},
+      "source": "https://www.campspot.com/book/northernexposureinc park terms ('There is a $10.00 cancellation fee for all cabins and $5 fee for all other reservations. Reservation Surcharge is non-refundable. To be eligible for a refund you must call 7 days in advance'; 'ALL vehicles entering the park MUST have a vehicle pass ($5.00 per day). 1 pass included per site/cabin reservation') + Campspot quotes ('BOOKING_IN_ADVANCE_LIMITS_RULE: Cannot book less than 48 hours in advance', audit/price_research/campspot_tier_2026-10-13.jsonl), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Operator site behind a Cloudflare challenge (unreadable); used the operator's Campspot booking page and park record (legal name 'Northern Exposure Inc, a Michigan Non-Profit Corporation, d/b/a Northern Exposure Campground'). Sewer true -> false (park rules: grey/black water to dump stations only); max rig 40 -> 60 (Campspot site types; waterfront sites 40); pull-through, showers, dump, general store added; booking url set to the operator's /book/ page. Fees left at the October 2026 $28 Campspot rate (+$5 reservation surcharge per stay): next season isn't open for booking, so no summer rate could be read. 91 RV sites bookable online against the 260 recorded (not stated by the operator; left). No gateway within 40 km (Sleeping Bear Dunes 53 km); the family has not stayed here. Phone (231) 885-1199 matches.",
+  "flags": [
+    "Website: the second link is a misspelled Campspot marketplace slug (https://www.campspot.com/park/norther-exposure-campground); the operator's own booking page is https://www.campspot.com/book/northernexposureinc. northernexposureinc.com sits behind a Cloudflare bot challenge (403 to plain HTTP and to the headless browser, 2026-10-22), so its content could not be checked.",
+    "Price gate: the only 2026 rate read is $28/night in October (Campspot, 2026-10-13); a directory (CamplinQ, 2024) calls fall rates after Labor Day 'from $25'. The summer rate is unknown until next season opens for booking; RV Life $$ tier. No gateway within 40 km.",
+    "Seasonal share not published: Campspot books 91 RV sites online against the 260 sites recorded (from an old note, not the operator); if the 260 is right, roughly a third are sold nightly online. The operator site that might say more is unreadable."
+  ]
+}
