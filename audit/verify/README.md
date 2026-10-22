@@ -80,6 +80,12 @@ its `scope` and which keys are `inherited` from the agency row) and `policy_refs
    for a motorhome too; 22 ft is fine, AWH 2026-10-20), over the US$50 / C$69 base-rate gate
    with no gateway, behind a login to see rates, or otherwise fails
    `docs/campground-curation.md`, say so in `flags` with the evidence. A human decides.
+   **Private presence/price vs long-stay test 2 (corrected 2026-10-22):** an ordinary private
+   park passes on PRESENCE (a working website with a phone, or Google Maps open with 25+
+   reviews and a phone) plus PRICE (a posted rate, a booking engine, or an RV Life $/$$ tier).
+   "No posted nightly rate" is a drop reason only for a park that is long-stay in character
+   (monthly/seasonal/workforce/residents), where test 2 applies and an RV Life tier does not
+   stand in. p3-89 dropped Country Woods and Ho-Hum on test 2 alone; both were restored.
 7. **The note — clean it on every entry (AWH 2026-10-21).** Whenever your result changes
    anything, propose a cleaned note in `note` if the current one carries text that is
    (a) **redundant** — it only restates a structured value the entry will carry after your
