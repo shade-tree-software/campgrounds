@@ -1,0 +1,51 @@
+{
+  "id": 579,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.nps.gov/piro/planyourvisit/camping.htm",
+    "https://www.recreation.gov/api/camps/campgrounds/247603",
+    "https://www.recreation.gov/api/camps/campgrounds/247603/rates",
+    "trip_data/ridb_campsites.json (RIDB catalog for facility 247603, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2026",
+                 "note": "$25 a night for every drive-in site, reservation only; Senior and Access Pass holders get 50% off (pass number entered when booking)."},
+      "source": "https://www.nps.gov/piro/planyourvisit/camping.htm ('Drive-in campsites are $25 per night') + https://www.recreation.gov/api/camps/campgrounds/247603 ('All campsites are $25.00 per day by reservation only. Senior Pass and Access Pass holders receive a 50% discount') + /rates (Peak Season 2026-05-15 to 2026-10-15 and 2027: $25), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/247603 ('Senior Pass and Access Pass holders receive a 50% discount'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14,
+                 "note": "Reservation only, no drop-in camping, but same-day reservations are accepted; a few sites are held back (upper 1 and lower 11 open 2 weeks before arrival, lower 1 and upper 2 four days before). Camping is limited to 14 days per calendar year within the Lakeshore. Generator-free areas in the campground."},
+      "source": "https://www.nps.gov/piro/planyourvisit/camping.htm ('All campsites require a reservation. There is no drop-in camping', 'Reservations can be made beginning 6 months in advance') + https://www.recreation.gov/api/camps/campgrounds/247603 (notices: 'Same-day reservation are accepted', held-site rule, 'Camping is limited to 14 days per calendar year within the Lakeshore'; rules maxStay 14 nights each year), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "10-15"},
+      "source": "https://www.nps.gov/piro/planyourvisit/camping.htm ('Drive-in campgrounds are open from May 15 through October 15. After October 15th, water systems and toilets are shut down'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/247603 ('drive-in campsites are rustic and do not have electric, water, or sewer hookups'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 21, "max_rig_ft": 36, "note": "11 sites in the lower loop near Lake Superior and 10 in the upper loop back in the woods. NPS recommends single vehicles no more than 36 ft and vehicle/trailer combinations no more than 42 ft because the turning radius is limited; the rec.gov catalog gives every site a 24-42 ft vehicle length (17 of 21 at 36 ft), so a 23-ft motorhome fits all of them."},
+      "source": "https://www.nps.gov/piro/planyourvisit/camping.htm ('Eleven campsites are available in the lower campground loop, and ten in the upper loop', 'we recommend single vehicles no more than 36 feet and vehicle/trailer combined length no more than 42 feet') + RIDB catalog for 247603 (21 STANDARD NONELECTRIC sites, Max Vehicle Length 24-42), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/247603 ('The campgrounds have vault toilets and well water') + https://www.nps.gov/piro/planyourvisit/camping.htm ('There are no dump stations at Pictured Rocks'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "NPS-run (not a concession), on Alger County Road H-58 12 miles west of Grand Marais. Confirmed $25 (2026 and 2027 rate seasons) with the 50% Senior/Access discount; reservation-only on recreation.gov, 6 months out, same-day booking OK, no walk-ups, 14 nights per year; season May 15 - Oct 15 (added); no hookups (catalog 0-amp now manual), 21 sites, NPS-recommended 36-ft single vehicle (every site's catalog length is 24 ft or more, so a 23-ft motorhome fits); vault toilets, well water, no dump station. --AWH note kept (the upper loop is 'tucked back in the woods'). The NPS page gives no road warning for Hurricane River (unlike Little Beaver Lake's narrow road); the NPS alerts API was rate-limited (DEMO_KEY) so live alerts were not read.",
+  "flags": []
+}
