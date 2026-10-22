@@ -5,6 +5,8 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- 6310 Boulder Creek (mt-20): FS says 'The Wise River flows along the western border of this campground area'; entry is riverview.
+- 6315 Chisholm (mt-20): FS says 'next to Hyalite Reservoir', East Fork Hyalite Creek along the north side; rec.gov lists Lake and Beach Access; entry is lakeview.
 - 6125 Beaver Creek Park (mt-19): Hill County camping page lists non-reservable campsites 'at Beaver Creek Lake' and group areas with 'Access to Beaver Creek'; entry is not waterfront.
 - 6239 Murray Bay Campground (mt-18): rec.gov/FS say it 'is situated along the massive Hungry Horse Reservoir' (east shore), concrete boat ramp within the campground; entry is not waterfront.
 - 6233 Holland Lake Campground (mt-17): rec.gov says 'on the shores of Holland Lake', lists Lake and Beach Access; entry is lakeview.

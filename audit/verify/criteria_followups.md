@@ -4,6 +4,11 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6310 Boulder Creek (mt-20): temporarily closed per FS fire banner (Sand Creek / Bobcat Lakes fires, page updated 2026-08-28); no matching closure order listed. Re-check spring 2027. FS page contradicts itself on water.
+- 6316 Clark Memorial (mt-20): only rig-size evidence is aggregator text (max ~24 ft, several 20-ft sites); FS gives no count or length. 23-ft fit unconfirmed by the agency.
+- 13666 Blackwell Flats (mt-20): drinking water unconfirmed (rec.gov silent; USACE Libby Dam page refuses fetches).
+- 6312 Cascade (mt-20): rec.gov gives 9+1 group vs 11+1 group sites.
+- 6313 Cave Mountain (mt-20): derived max_rig_ft 35 and FCFS rest on visitmt only.
 - 6302 Basin (mt-19): pin 45.17300,-109.45083 looks ~4.8 km off; FS gives 45.16108,-109.39183, rec.gov 45.1625,-109.3917. Re-pin (and re-fetch elevation). FS names concessionaire RRMA (928) 537-8888 for this campground; entry keeps Beartooth RD 406-446-2103.
 - 6300 Barry's Landing (mt-19): NPS/rec.gov name is 'Barry's Landing & Trail Creek Campground'; summer fee amount unpublished.
 - 6307 Big Therriault Lake (mt-19): FS page contradicts itself on potable water.
