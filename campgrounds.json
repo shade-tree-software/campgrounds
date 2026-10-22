@@ -58366,7 +58366,7 @@
     "inclusion_evidence": "Established MI DNR state park (near Atlanta MI) with 200 modern drive-in campsites; reservable via midnrreservations.com",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakeview' per owner: Several campsites are within sight of the lake but view may be partially obstructed.",
     "note": "Several campsites are within sight of the lake but view may be partially obstructed.  --AWH",
-    "website": "https://midnrreservations.com/",
+    "website": "https://www.michigan.gov/recsearch/parks/clearlake\nhttps://midnrreservations.com/",
     "location": "45.1301,-84.1833",
     "elevation_meters": 266.0,
     "rating": {
@@ -58381,25 +58381,75 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 27,
-      "nightly_high": 37,
-      "currency": "USD"
+      "nightly_low": 34,
+      "nightly_high": 39,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (same on 2027-05-18, 06-15 and 09-21): 20/30-amp sites $34 (135 sites), 50-amp sites $39 (40). The DNR's 2026 table: modern $32 (20/30 A) / $37 (50 A), semi-modern $27 / $32 while the toilet/shower building is closed (outside May 15 - Oct 14); the booking site charged $27 / $32 on 2026-10-27. A Recreation Passport is required for vehicle entry to all state park campgrounds."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Clear Lake / Upper and Lower Campgrounds",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails per fee schedule ($34 for the 20/30-amp sites, $39 for the 50-amp sites on 2027-05-18 / 2027-06-15 / 2027-09-21; $27 / $32 on 2026-10-27) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Clear Lake Upper and Lower Campgrounds: $37 / $32 modern, $32 / $27 semi-modern; shower building May 15 to Oct. 14) + https://www.michigan.gov/recsearch/parks/clearlake ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Clear Lake / Upper and Lower Campgrounds: Year-round - Year-round), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://midnrreservations.com/ site attributes (40 sites 'Electrical Service=20 Amps/30 Amps/50 Amps', 135 sites '20 Amps/30 Amps'; every public site 'Electric and Water Hookups=Electric Only', 'Sewer Hookup=No') + https://www.michigan.gov/recsearch/parks/clearlake ('Some campsites with 50-amp service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/parks/clearlake ('Number of sites: 178'; 'divided into two loops, the upper and lower loops, with several pull-through sites') + midnrreservations.com equipment lists and 'Pull Through=No' per site, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/clearlake (amenities 'Toilet & shower building, Vault toilet, Sanitation station'; 'The park's sanitation station is located just inside the modern campground. There is potable water available and two lanes'; notice 'Clear Lake State Park's sanitation station will temporarily close Oct. 19-Nov. 2 to accommodate wastewater system upgrades'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.michigan.gov/recsearch/parks/clearlake ('Clear Lake Modern Campground: For reservations call 800-447-2757 or reserve online', linking https://www.midnrreservations.com/), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
     "season": {
       "year_round": true,
       "note": "DNR warns 2026 construction may affect reservable dates."
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 178,
+      "max_rig_ft": 40,
+      "note": "178 sites in the Upper and Lower loops (the booking site lists 175 public campsites plus a host site), shaded by oaks and pines; equipment lists run to 'Trailer or RV up to 40''. The DNR page says there are 'several pull-through sites', but the booking site marks none as pull-through."
+    },
+    "facilities": {
+      "showers": true,
+      "vault_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "note": "Sanitation station (two lanes, potable water) just inside the modern campground; closed Oct. 19 - Nov. 2, 2026 for wastewater upgrades (water stays available at park headquarters)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.michigan.gov/recsearch/parks/clearlake https://midnrreservations.com/ (Clear Lake State Park resources via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18, 2027-06-15 and 2027-09-21; audit/state_park_fees/gtc_probe.py, read 2026-10-22) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site: 178 sites, 20/30 A everywhere and 50 A at 40, electric only (no water or sewer at sites), equipment to 40 ft, shower building, vault toilets, sanitation station (closed Oct 19 - Nov 2, 2026), reservable online or by phone. Fees 27-37 (2026 DNR table) -> 34-39 (2027 booking site; 2026 semi-modern $27/$32 in the note). Pull-through not written: the DNR page says 'several', the booking site marks none. Season year-round already manual. --AWH note kept unchanged."
+    },
+    "phone": "989-785-4388"
   },
   {
     "id": 790,
@@ -253013,7 +253063,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://gilmorecarmuseum.org/visit/on-site-camping/",
     "phone": "269-671-5089",
-    "note": "General overnight camping on the museum grounds (Apr 1-Oct 31), not event-only. ~100 sites: 2x 50A, 4x 30A, 8x 20A, plus unlimited non-electric; rustic camping on a level mowed grass field, no water/sewer, no grey/black discharge. Restrooms (no showers). $20-$50/night; museum admission required per night. Open grass field, 23-ft RV fits easily. Reservable online. --Claude",
+    "note": "Rustic camping on a level mowed grass field on the Gilmore Car Museum grounds (a nonprofit museum), open to the public for general overnight camping through the season, not event-only. Car-show campers are asked to arrive the day before the show and stay through. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -253026,10 +253076,12 @@
       "sewer": false
     },
     "sites": {
-      "count": 100
+      "count": 100,
+      "note": "Rustic camping on a grass field: 2 50-amp, 4 30-amp and 8 20-amp sites, the rest non-electric; each site space is 20 ft x 60 ft. No grey or black water discharge, no ground fires or tarps."
     },
     "facilities": {
-      "showers": false
+      "showers": false,
+      "note": "Public restrooms (no showers) at the museum's Shell Station."
     },
     "season": {
       "year_round": false,
@@ -253037,37 +253089,40 @@
       "closes": "10-31"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "note": "Book a site online on the museum's camping page (by site type), then register at the Museum Store on arrival. Check-in 12-5 pm (must arrive before 5), check-out 9-11:30 am. No camper may enter or leave the gate while a car show is running. Full refund only for cancellations e-mailed 14 days ahead. During the Red Barns Spectacular (Aug 1, 2026) only vintage campers (2001 and earlier) are allowed."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('Two 50 AMP-Sites Four 30 AMP-Sites Eight 20 AMP-Sites Unlimited non-electrical Sites'; 'No sewer or water hookups'; 'Please bring at least a 100 FT cord'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('100 campsites include ...'; 'Site space is 20ft x 60ft'; camping rules), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('Public restrooms (no showers) are available at the Shell Station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('Camping available April 1 – October 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('Book online below'; 'Book your site today! 50 AMP Sites 30 AMP Sites 20 AMP Sites Non-Electric Sites'; check-in rules; cancellation policy; Red Barns notice), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://gilmorecarmuseum.org/visit/on-site-camping (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://gilmorecarmuseum.org/visit/on-site-camping/ ('Camping Fees $20/night no electricity $30/night 20 amp $35/night 30 amp $50/night 50 amp'; 'Guests are required to purchase admission based on the number of nights stayed. Tickets must be purchased for the exact dates you will be visiting the museum. Show day pricing may apply.') + https://gilmorecarmuseum.org/visit/hours-admission/ (General Admission and Day of Car Show rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -253076,11 +253131,22 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 30,
+      "nightly_low": 20,
       "nightly_high": 50,
       "currency": "USD",
       "checked": "2026",
-      "note": "Gilmore Car Museum: 20-amp $30 a night, 30-amp $35, 50-amp $50, no electricity $20; no water or sewer; museum admission must be bought for each night. Read 2026-10-15."
+      "note": "Camping: $20 a night no electricity, $30 20-amp, $35 30-amp, $50 50-amp. On top of that every guest must buy museum admission for each night stayed, for those exact dates: adults/seniors $20 ($25 on car-show days), youth 11-17 $12 ($15), children 10 and under free, veterans $18 and active military free (ID, sold on site). Two adults in a non-electric site pay $60 a night all in.",
+      "entrance": {
+        "resident": 20,
+        "nonresident": 20,
+        "per": "person_day",
+        "name": "museum admission (required for each night camped)"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://gilmorecarmuseum.org/visit/on-site-camping/ https://gilmorecarmuseum.org/visit/hours-admission/ Google Maps place 'Gilmore Car Museum' (gm.py, 2026-10-22)",
+      "note": "Museum's camping page (2026): general camping Apr 1 - Oct 31, 100 sites (2 x 50 A, 4 x 30 A, 8 x 20 A, rest non-electric), no water/sewer, restrooms without showers, $20-50 a night plus museum admission for every guest for every night ($20 adult, $25 on show days); booked online; phone (269) 671-5089 matches. Confirmed the derived count/hookups/season/showers; added the admission as a per-person-day entrance, booking rules, site size. Note cleaned of the site/hookup/price/booking text the fields"
     }
   },
   {
@@ -253386,7 +253452,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://sites.google.com/site/chapelinthepinescampground/home",
     "phone": "616-875-8928",
-    "note": "~100 sites — 26 tent, 26 electric-only, 74 electric+water; 'upfront' sites have water/electric, 'back' sites no water. Mix of seasonal campers and nightly weekender bookings (~$44); reservations by phone. On-site small lake with sandy beach for swimming/fishing. Spacious grassy family park; 23-ft fits. Official site is a Google Sites page. --Claude",
+    "note": "Spacious grassy family campground between Grand Rapids and Holland with its own small lake (sandy beach, swimming with no lifeguard, catch-and-release fishing). 'Upfront' sites have electric and water; 'out back' sites have no water. Mix of seasonal campers and nightly stays. The owners' Gospel Music Barn next door holds Sunday services. 23-ft fits. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -253396,34 +253462,47 @@
     "hookups": {
       "water": true
     },
-    "sites": {
-      "count": 100
-    },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reservations by phone with the office (closed Sunday and Monday). Check-in 3 pm, check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sites.google.com/site/chapelinthepinescampground/home ('If you plan to camp upfront we have electric, water, fire pits, and picnic tables at each site. Out back camping is also available but does not include water.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "The operator's pages (home, facilities, rates, rules, map) state no site count, read 2026-10-22. The stored 100 was derived from note prose whose own breakdown (26 tent + 26 electric-only + 74 electric/water = 126) does not add up to it, so it is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sites.google.com/site/chapelinthepinescampground/home ('For questions and reservations, please call the office at 616-875-8928') + https://sites.google.com/site/chapelinthepinescampground/contact (office hours) + .../facilities/rules ('Check In: 3:00 pm Check Out: 12:00 pm'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://sites.google.com/site/chapelinthepinescampground/facilities/rules ('WIFI is available'; 'Please be considerate of others when using the washers and dryers'; 'portable bathrooms in the Outback') + https://sites.google.com/site/chapelinthepinescampground/facilities/services ('There is a $20.00 fee for a pump out. Holding tank pump out is available on Monday thru Saturday'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "cbb036a0927e6d14",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "wifi": true,
+      "laundry": true,
+      "note": "Holding-tank pump-out service ($20, Monday-Saturday) rather than a dump station; portable toilets in the 'Outback' area."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://sites.google.com/site/chapelinthepinescampground/home https://sites.google.com/site/chapelinthepinescampground/facilities/rates https://sites.google.com/site/chapelinthepinescampground/facilities/rules https://sites.google.com/site/chapelinthepinescampground/facilities/services https://sites.google.com/site/chapelinthepinescampground/contact Google Maps place 'Chapel in the Pines Family Campground LLC' (gm.py, 2026-10-22)",
+      "note": "Operator's Google Sites page is current (2026 activities; chapelinthepinesfamilycampground.com redirects to it); phone 616-875-8928 matches the site and Google Maps (4.6 / 115 reviews). Confirmed water at the upfront sites and phone reservations; added wifi, laundry, pump-out service (no dump station named), check-in/out. Cleared the derived site count of 100 (not stated by the operator; the note's own breakdown sums to 126). No rate posted ('Please call ... for rates'), so fees stay empty; ampe"
     }
   },
   {
@@ -255119,8 +255198,8 @@
     "inclusion_evidence": "farmviewresort.com: 2026 season, full-hookup/electric-water/tent nightly sites, pull-throughs all RV sizes",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://farmviewresort.com",
-    "phone": null,
-    "note": "Private campground off US-31 in Free Soil surrounded by farmland; 40 sites (12 full-hookup, 15 elec/water, 13 elec-only), pull-throughs, accepts RVs to 40 ft. Daily/weekly/monthly/seasonal rates offered (transient available). --Claude",
+    "phone": "(231) 757-9447",
+    "note": "Private campground beside a farm off US-31 in Free Soil, 12 miles south of Manistee and a short drive north of Ludington; nightly, weekly, monthly and seasonal stays. The Big White Barn on site rents for events. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -255132,24 +255211,38 @@
       "sewer": true
     },
     "sites": {
-      "count": 40,
-      "max_rig_ft": 40,
       "pull_through": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmviewresort.com/ ('The full hook up sites have electric and sewer service'; 'Electric & Water Site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmviewresort.com/ ('pull-through sites for all RV sizes'; no site count or length given), read 2026-10-22. The stored 40 sites / 40 ft were derived from note prose written from directory listings and are not stated by the operator, so they are cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://farmviewresort.com ('Full Hook-Up Sites | $35 / Night*', read 2026-10-16)",
-        "checked": "2026-10-19"
+        "source": "https://farmviewresort.com/ ('2026 farmview Resort Campsite Rates ... Full Hook-Up Sites $35 / Night* $245 / Week $450 / Month'; 'Electric & Water Site $30 / night*'; '* There is no additional charge for electricty on nightly stays'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://farmviewresort.com/ ('Season 2026 May - October 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://farmviewresort.com/ ('internet is available for a nominal fee'; 'With new bathroom facilities and picnic tables'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://farmviewresort.com/ ('PLAN AHEAD AND reserve your site now! Call Us Now' - (231) 757-9447), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -255162,7 +255255,25 @@
       "nightly_high": 35,
       "currency": "USD",
       "checked": "2026",
-      "note": "2026: water and electric $30, full hookup $35, plus metered electric."
+      "note": "Summer 2026: electric & water $30 a night ($210 week, $400 month, $1,500 season), full hookup $35 ($245 week, $450 month); seasonal full-hookup sites $1,800. Electricity is included on nightly stays; weekly and longer stays pay $0.13/kWh. Tent sites weekly only ($210). Internet for a nominal fee."
+    },
+    "season": {
+      "year_round": false,
+      "closes": "10-31",
+      "note": "Opens in May (no day posted)."
+    },
+    "facilities": {
+      "wifi": true,
+      "note": "Internet for a nominal fee; new bathroom facilities."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://farmviewresort.com/ Google Maps place 'Farm View Resort' (gm.py, 2026-10-22)",
+      "note": "Operator site (2026 rates): $30 electric & water, $35 full hookup a night, electricity included on nightly stays (metered only for weekly and longer); season May - Oct 31; pull-throughs; phone reservations; internet for a fee. Fees unchanged in amount; fees.note corrected ('plus metered electric' applies only to weekly/longer). Added phone booking, season close, wifi. Cleared the derived site count 40 and 40-ft length (not stated by the operator). Note cleaned of site/hookup/rate text the fields"
     }
   },
   {
@@ -256491,7 +256602,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.elkwoodcampground.com/",
     "phone": "231-445-0801",
-    "note": "Private family campground on 73 wooded acres, 65 sites (rustic/tent, W+E 30/50 amp, full-hookup pull-throughs up to 50 amp); mix of nightly/weekly and seasonal (seasonal $1800-2000/yr). Pool, rec room, playground, nature trails. Reserve on the website. --Claude",
+    "note": "Private family campground on wooded acreage near Wolverine with aspen groves, nature trails and ATV trail access; large pool, general store, pavilion. Daily, weekly, monthly and seasonal camping. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -256504,28 +256615,32 @@
       "sewer": true
     },
     "sites": {
-      "count": 65,
-      "pull_through": true
+      "count": 92,
+      "pull_through": true,
+      "max_rig_ft": 60,
+      "note": "The booking engine lists 92 RV/tent sites (34 pull-through, the rest back-in; lengths 20-60 ft), of which 21 are bookable online; the rest are seasonal or call-only. Every full-hookup site is a pull-through. Buddy sites A-22/23, A-24/25, A-42/43. Tents may use any site (A9 and A10 recommended)."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://parkwith.us/camps/elkwood-campground",
+      "note": "Book online on the campground's Park With Us page ('CLICK HERE TO BOOK NOW') or by phone/text; full payment at booking. Check-in 2 pm, check-out 11 am; call if arriving after 4 pm. Seasonal sites by waiting list."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.elkwoodcampground.com/sites-rates ('20/30/50 amp Water + Electric (no sewer)'; 'Full hook-ups include water, sewer and electric'; 'All our sites have electric and water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://parkwith.us/camps/elkwood-campground (embedded site list: kind back-in/pull-through, max_length, is_bookable) + https://www.elkwoodcampground.com/sites-rates ('All of our full hook-up sites are pull throughs'; 'Most our sites are big rig friendly'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.elkwoodcampground.com/sites-rates (reservation and check-in policies; 'BOOK NOW' -> https://parkwith.us/camps/elkwood-campground), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -256533,8 +256648,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.elkwoodcampground.com/sites-rates ('$45 Night + tax / $270 Week + tax', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.elkwoodcampground.com/sites-rates ('20/30/50 amp Water + Electric (no sewer) $45 Night + tax / $270 Week + tax / $1080 Month'; 'Full hook-up 20/30/50 amp $50 Night + tax'; '2026 RATES Annual Rate ...'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.elkwoodcampground.com/campground-map ('OPEN MAY 1ST - NOVEMBER 1ST') + https://parkwith.us/camps/elkwood-campground (season 05-01 to 11-01; 'Might not have water at the sites the last week of Oct, due to pipes freezing!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.elkwoodcampground.com/amenities (general store, bathhouse showers, coin laundry) + https://www.elkwoodcampground.com/sites-rates ('Dump Station: Non campers to use the dump station $10'; 'WE DO NOT HAVE WIFI AT THE CAMPGROUND' - only the rentals have it), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -256549,7 +256675,26 @@
       "nightly_low": 45,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Plus tax: 20/30/50A water + electric $45, full hookup $50."
+      "note": "Plus tax: 20/30/50-amp water + electric $45 a night ($270 week, $1,080 month), full hookup $50 ($300 week, $1,200 month). 2026 seasonal $1,800 (W/E, plus electric) / $2,000 (full hookup). Visitors $5 per person. Website and card fees are not refunded on cancellation.",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-01",
+      "note": "The site's water may be off the last week of October (freezing pipes)."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true,
+      "dump": true,
+      "wifi": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.elkwoodcampground.com/ https://www.elkwoodcampground.com/sites-rates https://www.elkwoodcampground.com/amenities https://www.elkwoodcampground.com/campground-map https://parkwith.us/camps/elkwood-campground Google Maps place 'Elkwood Campground' (gm.py, 2026-10-22)",
+      "note": "Operator site + Park With Us booking page: $45 W/E to $50 full hookup (plus tax), 20/30/50 A, water at every site, sewer at the full-hookup pull-throughs, showers/laundry/store/dump, no campground wifi; phone 231-445-0801 matches (Google Maps 4.8 / 120 reviews). Added season May 1 - Nov 1, engine url. Changed sites count 65 -> 92 (booking engine's site list), max length 60 ft. Note cleaned of hookup/site/price/booking text the fields hold."
     }
   },
   {
@@ -260685,7 +260830,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://eatoncountyfair.com/pageserver/camping",
     "phone": "517-543-3011",
-    "note": "Seasonal transient campground at the Eaton County Fairgrounds in Charlotte, open to the public mid-April to mid-October (closed during the July fair and certain large events) - a real all-season campground, not fair-week-only. Many sites with electric and water hookups, restrooms/showers, dump station; large pull-throughs fit big rigs. ~$25/night cash. Call to arrange camping; pick a site and the manager collects the fee. Owned/run by the nonprofit Eaton County Agricultural Society (not county government), so ownership recorded as private. --Claude",
+    "note": "Transient campground at the Eaton County Fairgrounds in Charlotte, open to the public all season (closed during the July fair and certain large events) - a real all-season campground, not fair-week-only. Pick an open site and the camp hosts collect the fee. Run by the Eaton County Agricultural Society (the member fair board, not county government), so ownership recorded as private. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -260702,17 +260847,19 @@
       "dump": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Open to the public mid-April to mid-October (no exact dates posted)."
     },
     "booking": {
-      "reservable": true,
-      "platform": "phone"
+      "reservable": false,
+      "fcfs": "always",
+      "note": "'All sites with or without water and electric are on a first come first serve basis', paid in advance to the camp hosts (517-543-3011). Up to 14 consecutive days on one site, then move to another. Checkout 3 pm. Short-term tent camping must be paid 3 days ahead and approved; no long-term tent camping. Two adults and their children per unit."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://eatoncountyfair.com/pageserver/camping ('Water hookup, Electric hookup') + 2026 rules ('All sites with or without water and electric'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -260720,19 +260867,19 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://eatoncountyfair.com/pageserver/camping ('Includes: Dump Station, Water hookup, Electric hookup, Restrooms & showers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://eatoncountyfair.com/pageserver/camping ('Campground open to public Mid-April to Mid-October'; 'Our campground is OPEN!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://eatoncountyfair.com/images/site/pageserver/file/Fairbook%202026/2026_Campground_Rules.pdf, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -260740,8 +260887,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://eatoncountyfair.com/pageserver/camping (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://eatoncountyfair.com/images/site/pageserver/file/Fairbook%202026/2026_Campground_Rules.pdf ('$25.00 Per Night – Cash; $26 Per Night – Credit/Debit; Paid in advance') + https://eatoncountyfair.com/pageserver/camping ('Includes: Dump Station, Water hookup, Electric hookup, Restrooms & showers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -260757,7 +260905,12 @@
       "nightly_high": 26,
       "currency": "USD",
       "checked": "2026",
-      "note": "Eaton County Fairgrounds: $25 a day cash, $26 by card. Read 2026-10-15."
+      "note": "2026: $25 a night cash, $26 by credit/debit card, paid in advance; group rates by phone. Water, electric, dump station, restrooms and showers included."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://eatoncountyfair.com/pageserver/camping https://eatoncountyfair.com/images/site/pageserver/file/Fairbook%202026/2026_Campground_Rules.pdf https://eatoncountyfair.com/pageserver/ag-society",
+      "note": "Fair board's camping page and 2026 rules PDF: nightly camping open to the public mid-April to mid-October, $25 cash / $26 card per night (2026), water and electric hookups, dump station, restrooms and showers; phone 517-543-3011 (camp hosts) matches. Changed booking: reservable true/phone -> false, fcfs always (rules: every site first come, first served). Added the 14-consecutive-day move rule, checkout, tent limits. Amperage, site count and rig length not stated (pull-through left as derived)."
     }
   },
   {
@@ -261458,7 +261611,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://muskegoncampground.com/\nhttps://muskegon-mi.gov/parks/fishermans-landing-2/",
     "phone": "231-726-6100",
-    "note": "City of Muskegon-owned 18.6-acre waterfront park on Muskegon Lake; campground long run by the nonprofit Muskegon Sportfishing Assoc. (Fisherman's Landing & Campground, Inc.). ~105-109 sites with 30/50-amp electric + water, pull-throughs, fire rings; accommodates RVs up to 45 ft. Drive-in, gated, modern showers, fish-cleaning station, complimentary dump station. Reservations by phone (231-726-6100); next-year bookings open July 1. Some seasonal campers but accepts transient overnighters. Currently operating; city moving to lease operations to Mart Dock starting 2026. --Claude",
+    "note": "City of Muskegon-owned 18.6-acre waterfront park on the east end of Muskegon Lake, run by Fisherman's Landing & Campground, Inc.; the city's Ports and Parks project leases it to Mart Dock (lease set for March 15, 2026) and plans a port there, keeping the campground open through the 2026 season. Lakeshore Bike Trail at the gate, downtown nearby; Pere Marquette Beach 4 miles. Some seasonal/monthly campers but sells nightly stays. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -261466,44 +261619,62 @@
     },
     "hookups": {
       "electric": 50,
-      "water": true
+      "water": true,
+      "sewer": false
     },
     "sites": {
       "max_rig_ft": 45,
-      "pull_through": true
+      "pull_through": true,
+      "note": "The campground page says 109 campsites; its FAQ and the city's park page say 105. Back-in sites except the pull-through class; grass and patio sites, waterfront sites on Muskegon Lake, electric tent sites. Specific sites are not guaranteed; assigned at check-in."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "laundry": true,
+      "wifi": false,
+      "camp_store": false,
+      "note": "Five private shower stalls; coin washer/dryer. Dump station free to registered campers during office hours. Fish-cleaning station (fee), free campground boat dock, kayak launch; no swimming area. Gated (key or code)."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reserve by phone, (231) 726-6100; dates are guaranteed, specific sites are not. Next year's reservations open September 1. Changes to nights need 14 days' notice. Check-in 1 pm (no early check-in), check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncampground.com/campground/frequently-asked-questions/ ('RV sites include electricity (30 & 50 amp), water, picnic table, and fire ring'; 'No draining of grey water or dumping sewage onto the ground. Use proper containment and empty at the waste station near the office'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncampground.com/campground/ ('features 109 campsites'; 50-amp and pull-through classes 'Can accommodate up to 45 foot RVs') + https://muskegoncampground.com/campground/frequently-asked-questions/ ('All campsites are back-in only, with the exception of a pull-through'; 'We have 105 campsites'; 'We can accommodate up to 45-foot RVs') + https://muskegon-mi.gov/parks/fishermans-landing-2/ ('Campsites (105)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncampground.com/campground/frequently-asked-questions/ ('bathhouse with 5 private shower stalls ... coin operated washer/dryer'; 'we do not offer Wi-Fi'; 'We do not have an onsite camp store'; dump station) + https://muskegoncampground.com/campground/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncampground.com/campground/ ('call us directly at (231) 726-6100 to make your reservation') + https://muskegoncampground.com/campground/frequently-asked-questions/ ('Reservations for the following year start September 1st of the current year'; change/cancellation and check-in policies), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://muskegoncampground.com/campground/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://muskegoncampground.com/campground/ (site types and nightly prices; site footer '2026 ©') + https://muskegoncampground.com/campground/frequently-asked-questions/ ('We have short term and monthly rates'; 'Electrical usage may be charged on seasonal and monthly rentals'), read 2026-10-22 in a headless browser (the site blocks plain HTTP)",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://muskegoncampground.com/ ('Open every year from April 15 (weather permitting) – October 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://muskegoncampground.com/campground/frequently-asked-questions/ ('Do you have ... RV club membership discounts, or military discounts ...? We do not offer any type of discount program.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -261513,10 +261684,26 @@
     },
     "fees": {
       "nightly_low": 38,
-      "nightly_high": 47,
+      "nightly_high": 52,
       "currency": "USD",
       "checked": "2026",
-      "note": "Fisherman's Landing (City of Muskegon): 50-amp RV sites $38 a night, pull-through $44, waterfront $47. Read 2026-10-15."
+      "note": "30-amp RV sites $38 a night, 50-amp $44, pull-through $47, waterfront $52; electric tent sites $33. Extra tent on the same lot costs more. Monthly rates by phone; electricity may be charged on seasonal and monthly rentals. Deposits non-refundable. Boat launch fee is separate."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-15",
+      "closes": "10-15",
+      "note": "Opening is weather permitting."
+    },
+    "discounts": {
+      "good_sam": false,
+      "passport_america": false,
+      "military": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://muskegoncampground.com/ https://muskegoncampground.com/campground/ https://muskegoncampground.com/campground/frequently-asked-questions/ https://muskegon-mi.gov/parks/fishermans-landing-2/ https://engage.zencity.io/muskegon-mi/en/pages/ports-and-parks-project-moves-forward-following-december-city-commission-approvals",
+      "note": "Operator site (Cloudflare; read in a headless browser, footer 2026) + city page: 30A $38 / 50A $44 / pull-through $47 / waterfront $52 a night, 30/50 A with water and no sewer (dump station), up to 45 ft, showers/laundry, no wifi or store, phone reservations (231-726-6100 matches), no discounts of any kind. Changed fees high 47 -> 52 (waterfront class; fees.note relabelled: $38 is the 30-amp rate, not 50-amp). Added season Apr 15 - Oct 15, sewer false, booking details, discounts false. Site coun"
     }
   },
   {
@@ -262178,8 +262365,8 @@
     "inclusion_evidence": "Sanilac County Forester Park page: 200 grass/shaded sites, 30/50A + sewer hookups, operating May-Oct on Lake Huron -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.sanilaccountyparks.com/forester-park/\nhttps://book.letsbonfire.com/foresterpark",
-    "phone": "",
-    "note": "Sanilac County park on Lake Huron, 6 mi N of Port Sanilac on M-25 (2820 N Lakeshore Rd, Carsonville). ~200 sites; electric/water $30, full hookup $35; swimming beach, store, pavilions, trails. Reservable online (LetsBonfire). --Claude",
+    "phone": "(810) 622-8715",
+    "note": "Sanilac County park on Lake Huron, 6 mi N of Port Sanilac on M-25 (2820 N Lakeshore Rd, Carsonville), with a swimming beach, dog beach, pavilions, playground and nature trails. Nightly, weekly, monthly and seasonal sites. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -262187,43 +262374,78 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 200
+      "count": 194,
+      "note": "174 RV sites (51 full-hookup 30-amp, 73 full-hookup 50-amp, 47 water & electric 30-amp, 3 water & electric 50-amp), 7 tent sites with electric and 13 rustic tent sites, plus 5 cabins. Sites are assigned by the manager; no specific site guaranteed. Four adults per site."
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "dump": true,
+      "note": "Dump & water fill $10. Park store sells firewood and park merchandise."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://book.letsbonfire.com/foresterpark",
+      "note": "Book online (Bonfire, the park's 'Book Now'), by phone or in person; paid in full when booked. The season's reservations open at 8 am on the first business day after New Year's. No refunds on holiday or special-event weekends. Check-in 3 pm, check-out 1 pm; registration at the office on arrival."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sanilaccountyparks.com/forester-park/ ('51 Full-Hookup 30-Amp Sites', '73 Full-Hookup 50-Amp Sites', '47 Water & Electric 30-Amp Sites', '3 Water & Electric 50-Amp Sites'; amenities '30 amp hookups 50 amp hookups Sewer hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sanilaccountyparks.com/forester-park/ (site counts) + https://sanilaccountyparks.com/forester-park/forester-park-rules/ ('No specific site can be guaranteed'; 'Maximum of four (4) adults per site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sanilaccountyparks.com/forester-park/ ('Accessible restrooms Accessible showers'; 'Dump station $10 (Dump & Water Fill)'; 'Park Store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://sanilaccountyparks.com/forester-park/forester-park-rules/ ('Reservations ... can be made by phone, in person or online'; 'Reservations for the season begin at 8 am on the first business day after New Years') + https://sanilaccountyparks.com/forester-park/ ('Book Now' -> https://book.letsbonfire.com/foresterpark), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://sanilaccountyparks.com/forester-park/forester-park-rates/ (Nightly/Weekly/Monthly/Seasonal table; page '© 2026 Sanilac County Parks', rates not otherwise dated), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://sanilaccountyparks.com/forester-park/ ('Open May 1 - October 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "99d186f2248c137e",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 40,
+      "nightly_high": 50,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Nightly: 30-amp water & electric $40, 30-amp full hookup $45, 50-amp full hookup $50; tent sites $30 (rustic) and $35 (20-amp electric); rustic cabin $90. Weekly $240-300, monthly $720-900, seasonal $2,400-3,200 for the RV sites. One rate for everyone (no resident split posted). Paid in full when booked."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-31"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://sanilaccountyparks.com/forester-park/ https://sanilaccountyparks.com/forester-park/forester-park-rates/ https://sanilaccountyparks.com/forester-park/forester-park-rules/ https://book.letsbonfire.com/foresterpark Google Maps place 'Sanilac County Forester Campground' (gm.py, 2026-10-22)",
+      "note": "County parks site: 194 campsites (174 RV: 124 full-hookup 30/50 A, 50 water & electric) + 20 tent sites + 5 cabins; $40 W/E to $50 50-A full hookup a night (was $30-35 in the note; undated, site 2026), no resident split; season May 1 - Oct 31; showers, $10 dump, park store; online booking on Bonfire, phone or in person. Added fees, season, electric 50, booking platform/url, count 200 -> 194. Note cleaned: dropped the stale prices and the site/booking text the fields hold."
     }
   },
   {
@@ -262808,8 +263030,8 @@
     "inclusion_evidence": "finnroadpark.com: full-hookup RV pads (30/50A), accepts nightly/transient camping May 1-Oct 31, Hampton Township -> real transient RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://finnroadpark.com/\nhttps://hamptontownshipmi.gov/finn-road-park/",
-    "phone": "989-893-7541",
-    "note": "Hampton Township-owned campground on Saginaw Bay; 57 back-in full-hookup sites (W/S/E, 30/50A) on cement pads, dump station. Drive-in, big-rig friendly. Accepts nightly/transient stays (~$26-27/night) plus seasonal; book via park manager. Season May 1-Oct 31. Boat launch, fishing pier. --Claude",
+    "phone": "989-992-2920",
+    "note": "Hampton Township-owned campground near Saginaw Bay at the township's public boat launch (walleye fishing), Essexville; pavilion, playground and nature trails. Nightly stays plus monthly and seasonal. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -262821,7 +263043,9 @@
       "sewer": true
     },
     "sites": {
-      "count": 57
+      "count": 57,
+      "pull_through": false,
+      "note": "57 back-in sites on cement pads about 16 ft wide; the layout page gives each pad's length (about 13 to 64 ft, most 45-57 ft, plus grass behind). Water spigots are shared between sites: bring 50 ft of hose. No tent camping."
     },
     "season": {
       "year_round": false,
@@ -262830,37 +263054,39 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "phone",
+      "note": "Call or e-mail the manager, Ellen Lutz (989-992-2920, finnroadpark@gmail.com). 'Reservations are not required but are encouraged. Sites are not guaranteed to walk-on's.' Next year's reservations open October 1; the office is closed November - March. Campers staying a month or longer can rebook the same site and dates on departure. Check-in 1-8 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://finnroadpark.com/ ('full-hookup cement padded RV sites with water, sewer, and electric (30 or 50 AMP) hookups') + https://finnroadpark.com/faqs ('Due to the location of the shared water spigots in the park, it is recommended you have 50 ft of water hose or more'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://finnroadpark.com/layout ('Our sites are back in only'; 'Each site's cement pad is about 16 feet wide'; Site 1-57 pad lengths) + https://finnroadpark.com/faqs ('Finn Road Campground does not accommodate tent campers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://finnroadpark.com/ ('open for camping May 1 - October 31') + https://finnroadpark.com/rates-%26-reservations ('Seasonally ... May 1 - October 31'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://finnroadpark.com/rates-%26-reservations + https://finnroadpark.com/when-you-visit + https://finnroadpark.com/faqs, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://finnroadpark.com/faqs ('we have showers available to campers to use free of charge'; Wi-Fi plans) + https://finnroadpark.com/amenities%2Fconveniences ('Dump Station 10 public dump station'; 'modern bathhouse'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://finnroadpark.com/rates-%26-reservations (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://finnroadpark.com/rates-%26-reservations (camping rates table; '$30.00 non-refundable deposit') + https://finnroadpark.com/park-rules ('A $32.00 nonrefundable deposit ... ($30.00 to go towards the camping fee plus a $2.00 reservation fee)') + https://finnroadpark.com/faqs (card fees), read 2026-10-22 (site copyright 2026; the rates are not dated)",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -262869,14 +263095,23 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "wifi": true,
+      "note": "Free showers in the modern bathhouse. Dump station (public, $10). Wi-Fi by Sky Web for a fee (from $2.99/day); free hotspot at the pavilion."
     },
     "fees": {
       "nightly_low": 28,
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Finn Road Park (Hampton Township): 30-amp $28 a night, 50-amp $30. Read 2026-10-15."
+      "note": "30-amp $28 a night ($168 week, $495 month, $2,550 season), 50-amp $30 ($182 week, $525 month, $2,700 season). One rate for everyone (no resident split posted). Reserving takes a $32 non-refundable card deposit: $30 toward the stay plus a $2 reservation fee. Card fees 2.65% (min $3).",
+      "reservation_fee": 2
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://finnroadpark.com/ https://finnroadpark.com/rates-%26-reservations https://finnroadpark.com/layout https://finnroadpark.com/faqs https://finnroadpark.com/amenities%2Fconveniences https://finnroadpark.com/park-rules https://finnroadpark.com/when-you-visit",
+      "note": "Township campground's own site (finnroadpark.com): 30-amp $28 / 50-amp $30 a night (matches; undated, site copyright 2026), $2 reservation fee inside a $32 deposit, no resident split; season May 1 - Oct 31; 57 back-in full-hookup sites on cement pads (shared water spigots), free showers, $10 dump, paid Wi-Fi; phone/e-mail reservations with walk-ins when space allows. Confirmed derived hookups/count/season/dump; added no pull-through, showers, wifi, reservation fee, booking details. Note cleaned:"
     }
   },
   {
@@ -263644,7 +263879,7 @@
     "inclusion_evidence": "Osceola County official page: 9 full-hookup + 10 rustic drive-in sites, reservable via phone/Campspot -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://osceola-county.org/residents/county_departments/parks/\nhttps://www.campspot.com/book/crittenden-park",
-    "phone": "231-832-6130",
+    "phone": "(231) 349-4654",
     "note": "Osceola County park on the east shore of Big Lake near Sears, with swimming and picnicking.  Every camper must back in, and generators aren't allowed. --Claude",
     "rating": {
       "stars": 4.5,
@@ -263657,11 +263892,16 @@
       "electric": 50
     },
     "sites": {
-      "count": 88
+      "count": 88,
+      "max_rig_ft": 40,
+      "note": "Campspot sells 78 RV sites nightly (57 + 2 Standard, 9 Full Hook-Up, 10 Premium waterfront; site lengths to 38-40 ft) and 10 primitive tent sites. County rules: every camper backs in, hitch facing the road; one RV, one small tent and two vehicles per site. Seasonal and monthly sites are also sold (share not stated)."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/crittenden-park",
+      "window_opens_days": 180,
+      "note": "Reserve on Campspot (or call the park); taken up to 6 months ahead and paid in full when booked. Premium sites: 3-night minimum on weekends and holidays, 15 nights maximum per season; other sites 1 month maximum."
     },
     "provenance": {
       "hookups": {
@@ -263669,13 +263909,14 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "https://www.campspot.com/park/crittenden-park (Campspot lists 9 full-hookup, 10 premium and 59 standard RV sites and 10 primitive tent sites), read 2026-10-13; replaces the note scan's 19, from a note that counted only 9 full-hookup and 10 rustic sites",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/book/crittenden-park (Campspot park record: site types and max lengths 38/40 ft, read 2026-10-13) + 2026 rate sheet PDF ('All campers must be backed into the campsite with hitch facing the road'; 'one recreational unit per site, one small tent and two vehicles'; Seasonal/Monthly rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.osceola-county.org/residents/county_departments/parks/ ('Reservations will be taken up to 6 months in advance'; 'Click below for Crittenden Park reservations ... www.campspot.com/book/crittenden-park') + 2026 rate sheet PDF ('All Sites must be paid in full when making a reservation'; '15-night Maximum stay on Premium sites per season'; '3-night minimum stay on premium sites weekends & holidays'; '1-month Maximum stay on Non-Premium sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -263717,6 +263958,11 @@
         "per": "vehicle_day",
         "name": "Osceola County Parks vehicle permit ($30 annual sticker)"
       }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.osceola-county.org/residents/county_departments/parks/ https://osceola-county.org/document_center/Parks/2026/Policy%20-%20Parks%202026%20Fees,%20Seasonal%20Schedule,%20Rates%20and%20Rules%20(BOC%20approved%205-5-26).pdf https://www.campspot.com/book/crittenden-park (Campspot park record, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "County page + 2026 rate sheet (approved 2026-05-05) re-read: season May 1 - Sep 26, 2026, $27 standard / $33 full hookup and premium, $5 booking fee, $8/day vehicle permit all match the entry (no resident/non-resident split posted, so nothing to move). Confirmed Campspot booking; added 6-month window, 40-ft max (Campspot), premium-site minimum/maximum stays in booking.note. Pull-through not written (Campspot tags a Standard type 'Pull-Through', the county requires every camper to back in). Note"
     }
   },
   {
@@ -267315,9 +267561,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "forsythtownship.org/campground: 20 full-hookup RV sites (20/30/50 amp) + electric + tent, Campspot reservations -> real drive-in RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://forsythtownship.org/campground/\nhttps://www.campspot.com/park/farquar-mesta-tourist-park-campground",
+    "website": "https://forsythtownship.org/campground/\nhttps://www.campspot.com/book/farquar-metsa-gwinn-mi",
     "phone": "906-250-1081",
-    "note": "Forsyth Township park on the Escanaba River in Gwinn, with grassy sites, a beach and a pavilion: 20 full-hookup RV sites, 2 with electric only and 13 primitive tent sites. --Claude",
+    "note": "Forsyth Township park on the Escanaba River in Gwinn, with a beach and a pavilion; fishing, swimming and canoeing from the park. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -267330,11 +267576,15 @@
     },
     "sites": {
       "count": 35,
-      "pull_through": false
+      "pull_through": false,
+      "max_rig_ft": 45,
+      "note": "20 full-hookup RV sites, 2 electric-only sites (tent or RV) and 13 primitive tent sites; grassy sites on paved roads. Campspot gives the full-hookup sites lengths to 45 ft and the electric sites 24 ft."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "wifi": true,
+      "note": "Dump station $5 per use."
     },
     "season": {
       "year_round": false,
@@ -267344,32 +267594,34 @@
     "booking": {
       "reservable": true,
       "platform": "campspot",
-      "fcfs": "never"
+      "fcfs": "never",
+      "url": "https://www.campspot.com/book/farquar-metsa-gwinn-mi",
+      "note": "Reservations required: online on Campspot (the township's 'Online Reservations' link) or with the camp host, 906-250-1081. Check-in 3 pm, check-out 1 pm; the park is closed 10 pm - 7 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://forsythtownship.org/campground/ ('20 Full Hookup Sites (RV, water/sewer/electric 20, 30 & 50 amp, no pull-thru)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://forsythtownship.org/campground/ (park description; 'Can accommodate most rigs') + Campspot park record (30/50 Amp Full Hookup RV Site max length 45, Electric Site 24), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://forsythtownship.org/campground/ ('Dump Station / $5', 'Hot Showers / Restrooms', 'Wi-Fi Available'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.campspot.com/park/farquar-mesta-tourist-park-campground (Campspot park record: closed 2025-10-13 to 2026-05-08 and from 2026-10-12), read 2026-10-13",
         "checked": "2026-10-13"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://forsythtownship.org/campground/ ('RESERVATIONS & INFORMATION: 906 250-1081', 'Online Reservations' -> https://www.campspot.com/book/farquar-metsa-gwinn-mi, 'Reservations Required', check-in/out, park closed hours), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "https://forsythtownship.org/campground/ ('Campground Memberships: Passport America'), read 2026-10-13; https://forsythtownship.org/wp-content/uploads/2023/02/Tourist-Park-Rates.pdf (2023: 'Passport America: $19.00 per night (No Weekends: M-TH only, No Holidays)')",
@@ -267395,6 +267647,11 @@
       "reservation_fee": 7,
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Electric Site and 30/50 Amp Full Hookup RV Site). October 2026: $25-38 on a Tuesday. The park is closed for the season on those dates; Campspot still shows its rates. Plus the park's $7 'Booking Fee', once per stay. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13. Forsyth Township's 2023 rate sheet gives the same $25 and $38."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://forsythtownship.org/campground/ https://forsythtownship.org/wp-content/uploads/2023/02/Tourist-Park-Rates.pdf https://forsythtownship.org/wp-content/uploads/2023/05/FARQUAR-METSA-PARK-RULES-FOR-2023.pdf https://www.campspot.com/book/farquar-metsa-gwinn-mi (Campspot park record, audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "Township page + 2023 rate sheet (no resident/non-resident split) + Campspot record: 35 sites (20 full-hookup 20/30/50 A, no pull-throughs; 2 electric-only; 13 primitive tent), showers, $5 dump, wifi, reservations required on Campspot or with the camp host; phone 906-250-1081 matches. Added max length 45 ft (Campspot) and the Campspot engine url; confirmed hookups, count, no pull-through, fcfs never. Fees ($25-38, 2026 Campspot), season and the Passport America discount already manual; left. Note"
     }
   },
   {
@@ -267888,90 +268145,6 @@
       "checked": "2026-10-22",
       "sources": "https://www.saultcity.com/parksrec/page/aune-osborn-campground https://www.saultcity.com/node/3481 https://www.saultcity.com/parksrec/page/campgrounds https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/parksrec/file/15751/Aune%20%26amp%3B%20Sherman%20Campground%202026%20Season%20Announcement%20Email.pdf https://ao.bookmysites.com/reservations/checkout-availability?checkin_date=2027-06-15&checkout_date=2027-06-16",
       "note": "Confirmed on the city's pages: 2026 $42 non-waterfront / $48 premium waterfront, $8 reservation fee, 100 sites (24 waterfront + 76), water + electric (amps not stated), reservable online only via the city's BookMySites system; phone 906-632-3268 matches. Added season May 15 - Oct 15 and the monthly rates/booking-opening note. Note cleaned: dropped the stale $35/$32 prices and text the fields now hold. Facilities (showers/laundry/wifi/dump) not restated on the pages read; left as derived."
-    }
-  },
-  {
-    "id": 4037,
-    "kind": "campground",
-    "name": "Country Village RV Park",
-    "location": "46.50320,-87.67908",
-    "elevation_meters": 426.0,
-    "state": "MI",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "Satellite at 46.503,-87.679 shows classic RV park w/ angled pads, pool, pavilion, parked RVs; transient private (Good Sam listed), website intermittently down -> real transient RV park",
-    "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "http://www.countryvillagerv.com/",
-    "phone": "906-486-0300",
-    "note": "Private transient RV park: 105 RV sites + 4 cabins (1200 Country Lane, Ishpeming). Most full-service (30/50-amp, water, sewer), some water/electric and rustic/tent; pull-throughs available; fits to ~40 ft. Pool, spa, pavilion, playground; walkable to town. Nightly and monthly stays (not membership-only). Reserve by phone/direct. Season ~mid May-early Oct. Own website was intermittently unreachable during research but the park is clearly operating (active Facebook, Good Sam listing). RV Life: ~4.5* (8.7/10) / $$$. --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 3,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 105,
-      "max_rig_ft": 40,
-      "pull_through": true
-    },
-    "season": {
-      "year_round": false
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-09-20",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "http://www.countryvillagerv.com/Pricing---Polices.html ('Full Hook up 50/30 amp | Water / Electric | Rustic / Tent ... $65.00 ... $60.00 ... $45.00', read 2026-10-19)",
-        "checked": "2026-10-19"
-      }
-    },
-    "note_scan": {
-      "sig": "b17f9c39b31cbc55",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "discounts": {
-      "good_sam": false,
-      "military": true
-    },
-    "fees": {
-      "nightly_low": 45,
-      "nightly_high": 65,
-      "currency": "USD",
-      "checked": "2026",
-      "note": "daily: full hookup 50/30A $65, water/electric $60, rustic/tent $45; based on 4 people"
     }
   },
   {
