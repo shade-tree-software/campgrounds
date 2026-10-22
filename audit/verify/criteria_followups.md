@@ -783,3 +783,10 @@ me drop and report); each needs the research named before a verdict.
 - **3975 Merrill-Gorrel**: up to ~half the sites seasonal (county park); $7/day county vehicle permit; 2-night standing minimum.
 - **14232 Northern Bear Paw**: $45/$50 at the line; monthly/seasonal "call for rates", 25 nightly sites online.
 - **790 Otsego Lake SP**: "Sites 34-83 reopened" (construction); $41-56 by site type.
+
+### p3-108 (MI, 2026-10-22)
+- **DROPPED:** 3829 Whispering Waters (7-night standing minimum, seasonal focus, no nightly sites).
+- **3821** renamed "Wildwood Campground" (Google/Pure Michigan); unclaimed RoverPass website -> operator Facebook; phone -> 517-297-5869; kept on Google 4.5/99 + RV Life $$, no 2024+ rate.
+- **3901 Au Train Lake**: FS page still $22/$44, rec.gov $26 for 2026-27 (stored $26); concessionaire phone (906) 767-1111.
+- **3998 Village of Beulah**: $50-125 (local); summer lake-front lots weekly only; 2-night minimum.
+- **14235 The Campground** $50 at the line. **4017 Veterans Memorial (Spalding Twp)** $15 on an undated page.
