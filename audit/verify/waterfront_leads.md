@@ -138,3 +138,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1511 Massena International Kampground (NY)**: 2026 rate sheet sells "WATER, ELEC. & SEWER (WATERFRONT)" sites at $50; entry not waterfront.
 - **1460 North Bay Campground (NY)**: city page "A peaceful lakefront setting" with "waterfront sites"; entry lakeview.
 - **1416 Paradox Lake (NY)**: RA "located on the shore of Dark Bay, which is on Paradox Lake"; note counts ~5 waterfront sites; entry not waterfront.
+- **15466 Lake Placid / Whiteface KOA (NY)** (weak): KOA sells "Riverside" site types "near the beautiful Ausable River"; entry not waterfront - look at the Riverside sites on imagery.

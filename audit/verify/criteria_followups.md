@@ -542,3 +542,12 @@ me drop and report); each needs the research named before a verdict.
 - **15468 Lewiston KOA** $65-73 under the Niagara Falls gateway (15 km).
 - Short listed lengths: 1412 Max V. Shaul (6 of 30 at 25+ ft), 1416 Paradox Lake (13 of 55 at 30+ ft).
 - **350 Nicks Lake**: no dec.ny.gov page on the entry (403 to scripts).
+
+### p3-81 (NY, 2026-10-21)
+- **1503 J & J Campground**: only web page is an undated subpage of vintagebirds.com (a Wanderlodge FMCA chapter site) naming the owners and phone; $28-30 undated. Kept (operator page + phone, far under the gate).
+- **14336 Lake Champlain RV Resort**: "Only 9 Seasonal Spaces Left!" banner; $45 daily posted, no minimum - passes. Footer lists it under Investorade Community Holdings with seven other parks.
+- **1471 Ilion Marina**: 14 sites rent seasonal/monthly/weekly/daily; no seasonal count.
+- **1449 General Clinton**: military + Passport America get $30 instead of $60.
+- **15466 Lake Placid KOA** $65-102 under the Lake Placid gateway (17 km).
+- **354 Lake Durant** closes 09-05; 38 of 62 sites listed at 20 ft.
+- Missing parks.ny.gov / dec.ny.gov pages on 319, 312, 332, 354 (403 to scripts). rl.sh (session scratch p3-81) runs the site-list parser over a park's loops.
