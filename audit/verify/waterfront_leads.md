@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- 6214 Pete Creek Campground (mt-16): FS page lists 'access to the Yaak River'; entry is not waterfront.
+- 6173 Rainbow Point Campground (mt-16): rec.gov says 'on the banks of scenic Hebgen Lake' with Beach and Lake Access; entry is not waterfront.
+- 6245 Beaver Creek Campground, Spotted Bear (mt-16): FS says 'the campsites are less than 100 feet to the river', 'situated next to Spotted Bear River'; entry is riverview.
 - **6211 Big Larch** (mt-15, 2026-10-22): rec.gov/FS: 'located on the east shoreline of Seeley Lake', swimming beach and boat ramp; the entry is not waterfront.
 - **6225 Eagle Creek** (mt-15): FS: 'A campground along the Yellowstone River'; the entry is not waterfront.
 - **6220 Big Beaver** (mt-15): FS: 'Nestled close to the serene Blakely Creek'; the entry is riverfront (Boulder River). Check which water it's on.

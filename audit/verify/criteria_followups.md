@@ -4,6 +4,12 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6222 McGillivray (mt-16): FS page contradicts itself on restrooms/potable water (narrative + rec.gov say vault toilets and water; amenity box says neither).
+- 6214 Pete Creek (mt-16): FS page no longer states the ~24-ft trailer limit or FCFS the note/inclusion evidence cite.
+- 6252 Blodgett (mt-16): FS page gives two seasons (May 1-Oct 31 vs Memorial Day-Labor Day); both recorded.
+- 6199 White Earth (mt-16): Reclamation has no page for it; agency presence rests on the managing office phone.
+- 6113 Tri-County Fairgrounds (mt-16): no website, Powell County fair page Cloudflare-blocked, no official phone; possible $30/night only from Oct 2025 meeting minutes. Lack-of-information candidate, asked AWH.
+- 6193 Barretts Park (mt-16): no Reclamation page or rec.gov facility; website is the generic Montana Area Office home; phone only on aggregators. Lack-of-information candidate, asked AWH.
 - **6118 Chester City Park** (mt-15, 2026-10-22): DROPPED by AWH (lack of information). No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
 - **6114 Zurich Park** (mt-15): fee schedule dated 2023-01-01 ($30/day hookup) recorded with checked 2023; website set to that PDF. Phone 406-357-4261 is on no county page (Commissioners 406-357-3240); left as is.
 - **6111 Lewis and Clark County Fairgrounds** (mt-15): '$35.00 per night' undated, not recorded; the Checkfront booking link is dead ('Account Not Found'), so booking looks phone/office only; facility-rentals page prepended to website.
