@@ -47,10 +47,14 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
 
-**RESUMED 2026-10-21 late night by AWH**, after the family-home re-screen was pushed and deployed (f37f3ac7). The 22 re-screen adds (15531-15552) carry verify_scan, so the queue skips them.
-- Applied p3-55..p3-58 (03d23b82, d1fab608; local, not pushed). Gheny Nook 13121 dropped (long-stay test 2).
-- p3-59 + p3-60 running. Their prompts are p359_prompt.txt and p360_prompt.txt in the scratchpad; verifiers are launched with "read your brief from <file>" to save tokens.
-- New asks: 869/50 North Bend overlap; 509 Beckys Creek state vs wma.
+**PAUSED AGAIN by AWH 2026-10-21, very late ("pause when convenient").** Nothing is in flight: p3-55..p3-61 are applied (84 WV entries; last commit 84ef62c1, NOT pushed, deployed through f37f3ac7). Verified 838.
+- Dropped: Gheny Nook 13121 (long-stay test 2) and The Dock 1221 (presence).
+- AWH answers: 869 narrowed to Cokeley Campground; 509 Beckys Creek -> wma; Dolly Sods 515/516/499 KEPT (AWH has driven past: unpaved driveways to clearings off the road, outside the 300-ft FR 19/75 ban).
+- **Open asks** (audit/verify/asks.md):
+  - 815 Harpers Ferry: the 11-ft tunnel on Bakerton Rd vs EKKO's height.
+  - 1220 Sunny Glen / 1223 Triple L: no posted nightly rate and workforce-leaning.
+- **To resume:** `queue.py --batch p3-62 --limit 12` and `--batch p3-63 --offset 12` (WV continues). Write each prompt from the scratchpad's p361_prompt.txt (swap the batch paragraph) and launch the verifier with "read your brief from <file>".
+- The 22 re-screen adds (15531-15552) carry verify_scan, so the queue skips them.
 - Registry lead: WV one-night Fridays sell inside ~24 days of arrival.
 
 **(Earlier) PAUSED by AWH 2026-10-21 night ("stop the stage 7 work for now").** p3-53 and p3-54 were finished and applied afterwards at AWH's request (c41c6325, 4fdabc4b), so nothing is in flight. The WV dropped entries are 1200 Big Earl's and 1204 Camp Morning Wood (presence rule). 809 Sullivan's was dropped by AWH (0b38912e).
