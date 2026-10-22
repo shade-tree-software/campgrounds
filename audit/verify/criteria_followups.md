@@ -428,3 +428,11 @@ me drop and report); each needs the research named before a verdict.
 - **93 Modoc**: closed for the season 2026-09-13 (Corps release), no reopening date.
 - **4382 Lynches River**: "Each site can accommodate RVs from 60 to 157 feet" read as site lengths, not a minimum rig length (sites note).
 - **96 Lake Wateree**: lakefront count 23 (park page) vs 15 (booking site, AWH note).
+
+### p3-68 (SC, 2026-10-21)
+- **4369 Broad River DROPPED** (criteria_drops.py): approval required to stay overnight (long-stay test 2), workforce marketing, ~$51.94/night with Campspot's per-night % fees, no exception.
+- **4362 Bass Lake**: operator rates page (undated) $55.04-71.40 + tax vs Campspot's live $45.50 quote (2026-10-13); the dated booking-channel quote kept. Re-check next season; over the gate if the operator page is current (no gateway, not GS).
+- **4359 Tanager Woods**: rigs "no more than 15 years old" (also 744 Smalltown); standing 2-night minimum; courts Charleston-area workers with weekly/monthly rates but posts a nightly rate with no application.
+- **733 South Cove**: county fee page vs reservations page disagree (as Chau Ram); county 86 sites vs ReserveAmerica 56 RV + 11 tent.
+- **4366 Aiken RV Park**: aikenrvpark.com redirects to a cabinetry company; Campspot is the only operator channel.
+- **15490 Mount Pleasant KOA**: $84.99+, Charleston gateway (17 km).

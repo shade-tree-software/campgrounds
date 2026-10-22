@@ -1,0 +1,52 @@
+{
+  "id": 733,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://experienceoconee.com/parks/south-cove-park (Cloudflare-protected, 403 to a plain fetch 2026-10-21; text as captured 2026-10-14 in audit/price_research/reserveamerica_2026-10-14/pages.jsonl)",
+    "https://experienceoconee.com/park-fees/south-cove-fees (same capture, 2026-10-14)",
+    "https://experienceoconee.com/reservations (same capture, 2026-10-14)",
+    "https://www.reserveamerica.com/explore/south-cove-county-park/OCSC/920013 (site types, read 2026-10-14, audit/price_research/reserveamerica_2026-10-14/ra.jsonl)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"water": true, "note": "Every campsite has water and electricity; the county does not state the amperage."},
+      "source": "https://experienceoconee.com/parks/south-cove-park ('86 campsites with water and electricity on each site'), captured 2026-10-14",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 86, "note": "The county gives 86 campsites on a 15-acre peninsula; ReserveAmerica sells 56 (30 'Standard Waterfront', 26 'Standard') plus 11 'Tent Only Waterfront'. Up to one camper/RV and one tent, or two tents, per site; six people."},
+      "source": "https://experienceoconee.com/parks/south-cove-park ('Camping is located on a 15 acre peninsula offering 86 campsites') + https://experienceoconee.com/park-fees/south-cove-fees (restrictions), captured 2026-10-14; ReserveAmerica site types (Standard Waterfront 30, Standard 26, Tent Only Waterfront 11), read 2026-10-14",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "note": "Two bath houses serve the campground."},
+      "source": "https://experienceoconee.com/parks/south-cove-park ('Two bath houses serve the campground area and a dump station is located near the entrance of the park'), captured 2026-10-14",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://www.reserveamerica.com/explore/south-cove-county-park/OCSC/920013/overview",
+        "window_opens_days": 330,
+        "min_stay": [{"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 30,
+        "note": "Reserve on ReserveAmerica up to 11 months ahead; county residents up to 12 months in person, and must call the PRT office (864-888-1488) once to set up the resident rate. Waterfront sites need a 2-night minimum; Memorial Day, July 4th and Labor Day need 3 nights at every site. Maximum 30 days March-October, 60 days November-February. Gate closed 10 pm-5 am."
+      },
+      "source": "https://experienceoconee.com/reservations ('Reservations may be made up to 11 months in advance'; 'Maximum length of stay is 30 days March-October and 60 days November-February'; 'Waterfront sites require a 2-night minimum at South Cove and High Falls'; 'Holidays of Memorial Day, July 4th and Labor Day require a 3-night minimum for all sites') + https://experienceoconee.com/parks/south-cove-park ('Gate Closed 10pm-5am'), captured 2026-10-14",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 25, "currency": "USD", "nonresident": {"type": "surcharge", "amount": 10, "per": "night"}, "checked": "2026", "note": "The fee page lists $20 a night for an Oconee County resident ($25 waterfront) and $30 for everyone else ($40 waterfront), with no discounts. The county's reservations page instead says 'Camping rates are $25/night for standard sites and $30/night waterfront sites all taxes included', residents $5 off."},
+      "source": "https://experienceoconee.com/park-fees/south-cove-fees ('Oconee County Residents (Per Night) $20.00 - Normal Site $25.00 - Waterfront Site Non-Residents (Per Night) $30.00 - Normal Site $40.00 - Waterfront Site'; 'No discounts will be offered with this schedule') + https://experienceoconee.com/reservations, captured 2026-10-14",
+      "method": "manual"
+    }
+  },
+  "summary": "County pages (2026-10-14 capture; the site is now behind Cloudflare) confirm 86 water+electric sites (amps not stated), dump station, ReserveAmerica booking, $20-25 resident / $30-40 non-resident. Added 11-month window, 30-night max (60 in winter), holiday 3-night minimum (waterfront sites 2 nights, in the note). AWH note kept. Not stated: season, amperage, showers explicitly, max rig length.",
+  "flags": [
+    "Missing phone: the park's number is 864-882-5250 (https://experienceoconee.com/parks/south-cove-park, 'Phone: 864-882-5250').",
+    "The county's two official pages disagree on price: the South Cove fee page says $20/$25 resident and $30/$40 non-resident; the reservations page says $25 standard / $30 waterfront all taxes included, residents $5 off. Fees kept from the fee page with both in the note.",
+    "Site count: the county says 86 campsites (46 waterfront); ReserveAmerica sells 56 RV-capable sites plus 11 tent-only waterfront ones. Count kept at the county's 86.",
+    "experienceoconee.com now answers 403 (Cloudflare) to a plain fetch, so the county text was taken from the 2026-10-14 capture."
+  ]
+}
