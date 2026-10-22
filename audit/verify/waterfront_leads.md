@@ -160,3 +160,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
 - 4002 Beaver Lake Park (Alpena Co): county "On the shores of beautiful Beaver Lake"; Campspot sells "Waterfront RV Site" types; entry not waterfront (p3-103).
+- 3923 Camp Petosega: county "on the shores of Pickerel Lake"; entry not waterfront (p3-104).
+- 3881 Chalk Hills: operator "Riverview - not riverfront"; entry not waterfront - a river view value may apply (p3-104).

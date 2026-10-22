@@ -750,3 +750,13 @@ me drop and report); each needs the research named before a verdict.
 - **756 The Farm at Lowrys**: cheapest 23-ft-capable site $47.09 all-in (no hookups); hookup site $59.14; AWH priced it. Listing's Forest Lake sites say "no electricity" but tick hookups.
 - **14346 Veterans Memorial Park (Mount Airy)**: nonprofit of American Legion Post 123 + VFW Post 2019 (private stands); rates undated (page modified 2023-06-21), RV Life $$.
 - **4223 Van Hook Glade**: FIND Outdoors concession; the old "~24-26 ft" line was wrong (bookable RV sites 20-36 ft).
+
+### p3-104 (MI, 2026-10-22)
+- **DROPPED:** 3899 Clear Lake (Facebook-only, Google 18 reviews).
+- **3857 Dodge City**: dodgecitycampground.com expired/for sale; kept on Google 4.6/62 + phone and RV Life $; no website.
+- **3902** renamed "Catchin' Crickets Campground & Cabins", phone -> operator's new 906-202-4710; no posted rate (RV Life $$).
+- **3923 Camp Petosega**: 2-night minimum on every site, every night (standing 2-night is allowed).
+- **3847 Cran-Hill Ranch**: public ResNexus booking, no enrolment; Jun 20-Aug 21 cheapest W/E $55 (base passes). Site still shows a 2020 COVID banner.
+- **4048 Houghton**: nonrefundable deposit not credited to the fee (one night effectively $120); local, no gate.
+- **4015 Fox Park**: Cedarville Township owns/operates it (books via Menominee County's site); local stands.
+- **3838 Chinook**: seasonal lots all full, count unpublished; 76 nightly RV sites on Campspot.
