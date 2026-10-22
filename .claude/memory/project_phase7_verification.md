@@ -47,13 +47,12 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
 
-**PAUSED AGAIN by AWH 2026-10-21, very late ("pause when convenient").** Nothing is in flight: p3-55..p3-61 are applied (84 WV entries; last commit 84ef62c1, NOT pushed, deployed through f37f3ac7). Verified 838.
-- Dropped: Gheny Nook 13121 (long-stay test 2) and The Dock 1221 (presence).
+**PAUSED AGAIN by AWH 2026-10-21, very late ("pause when convenient").** Nothing is in flight: p3-55..p3-61 are applied (84 WV entries). Commits after c8f95e89 are NOT pushed; deployed through f37f3ac7. Verified 838.
+- Dropped: Gheny Nook 13121 (long-stay test 2), The Dock 1221 (presence), Sunny Glen 1220 and Triple L 1223 (AWH).
 - AWH answers: 869 narrowed to Cokeley Campground; 509 Beckys Creek -> wma; Dolly Sods 515/516/499 KEPT (AWH has driven past: unpaved driveways to clearings off the road, outside the 300-ft FR 19/75 ban).
-- **Open asks** (audit/verify/asks.md):
-  - 815 Harpers Ferry: the 11-ft tunnel on Bakerton Rd vs EKKO's height.
-  - 1220 Sunny Glen / 1223 Triple L: no posted nightly rate and workforce-leaning.
-- **To resume:** `queue.py --batch p3-62 --limit 12` and `--batch p3-63 --offset 12` (WV continues). Write each prompt from the scratchpad's p361_prompt.txt (swap the batch paragraph) and launch the verifier with "read your brief from <file>".
+- **Later AWH answers (same night):** 815 Harpers Ferry kept, since EKKO is under 10.5 ft and the tunnel is 11 ft ([[user-ekko-height]]); 1220 Sunny Glen and 1223 Triple L DROPPED (no posted nightly rate, workforce-leaning). No asks are open.
+- AWH: "we'll continue with phase 7 in a new session."
+- **To resume:** `queue.py --batch p3-62 --limit 12` and `--batch p3-63 --offset 12` (WV continues). Write each brief from **audit/verify/prompt_template_wv.txt** (p3-61's; swap the batch paragraph, update the scratch/helper paths to the new session's scratchpad) and launch the verifier with "read your brief from <file>". The old session's helpers are in **audit/verify/helpers_wv/** (README inside), since scratch dirs don't outlive a session; tell verifiers to copy helpers from there.
 - The 22 re-screen adds (15531-15552) carry verify_scan, so the queue skips them.
 - Registry lead: WV one-night Fridays sell inside ~24 days of arrival.
 

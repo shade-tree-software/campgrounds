@@ -11,7 +11,7 @@
 - [Local gap MEASURED: ~1/3 missing](reference_local_gap_measurement.md) — 2026-09-25 via OSM; local pass COMPLETE for the lower 48 (2026-09-28); CA lesson and the RV Life name-regex check in file
 - [State gap MEASURED: ~1-2%](reference_state_gap_measurement.md) — OH/FL/MN via each agency's US eDirect portal: 2 misses in 230; match FACILITY not park; misses sit in secondary categories
 - [Working the federal gap list](reference_ridb_gap_pipeline.md) — triage with RIDB's campsite catalog (5 verdicts, one is a drop; it decides 23-ft fit, open/closed, inclusion_evidence), then per-site coords on satellite
-- [Phase 7 verification](project_phase7_verification.md) — under way since 2026-10-20, ~490 verified by 10-21 night (p3-28 + p3-29 running, MD ending, FL started); TWO verifiers allowed (10-21); loop + resume point in file
+- [Phase 7 verification](project_phase7_verification.md) — PAUSED 2026-10-21 after p3-61 (838 verified, WV in progress); resume with p3-62 in a NEW session; TWO verifiers allowed; loop + resume point in file
 - [What's actually left](project_remaining_work_map.md) — 2026-10-20: trailer-length pass DONE; phase 7 under way (paused); next id 15553 (2026-10-21)
 - [Private gap](project_private_gap.md) — LOWER 48 + CANADA COMPLETE (Canada +187, 2026-10-08), 0 holds; no_rate follow-up QC +39 / ON +7 / BC +11 (15126-15182); next --min-id 15183; gate rules, per-state lessons inside
 - [Canada no_rate follow-up](project_canada_no_rate_followup.md) — QC +39 DONE (imagery re-viewed 2026-10-09), ON +7 DONE, BC +11 DONE (15172-15182, 0 holds); next --min-id 15183; origin at d9a52fb, BC batch local
@@ -102,6 +102,7 @@
 - [Absent is not zero](feedback_absent_is_not_unknown.md) — the same trap has now bitten four subsystems; omit the key, never cache a failure as a result, never let unknown EXCLUDE a search result
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR is no information, ~120 days per run, FCFS not derivable, fetch-window and 6-month-horizon artifacts guarded, year-round never
 - [EKKO weight](user_ekko_weight.md) — ~9,500 lb empty, 11,000 lb GVWR; a 5-ton bridge limit excludes, 6+ tons passes
+- [EKKO height](user_ekko_height.md) — under 10.5 ft (AWH 2026-10-21); an 11-ft+ clearance passes (Harpers Ferry 815 kept)
 - [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency 4WD requirement OR recommendation drops a site unless AWH confirms 2WD access (Flagpole, Long Run, 10-21); AWD does not count
 - [Private-gap sources are enough](feedback_private_sources_standard.md) — AWH 2026-10-02: keep RV Life + Good Sam with the 4*/$$ screens; a private park on neither is a red flag
 - [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — off-road parks + OHV staging camps of any owner are out, general campgrounds with an OHV side stay (AWH 2026-10-02)
