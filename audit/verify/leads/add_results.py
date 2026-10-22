@@ -7,7 +7,7 @@ refused. Skips go to verdicts.jsonl. Dry run by default; --apply writes.
 """
 import glob, json, math, os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, '..', '..'))
+ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 CG = os.path.join(ROOT, 'campgrounds.json')
 FAM = os.path.join(ROOT, 'trip_data', 'family.json')
 TODAY = __import__('datetime').date.today().isoformat()
