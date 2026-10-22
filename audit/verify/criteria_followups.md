@@ -4,6 +4,12 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6238 Pine Grove (mt-18): temporarily closed all of 2026 (Custer Gallatin order 01-11-82-26-04, hazard trees/Ips beetle); no reopening stated. Re-check spring 2027; may become long-term. No Beartooth RD phone on the page.
+- 14104 Arod Lake FAS (mt-18): FWP now says 'Limited access for trailers and RV's' and 'Difficult Accessibility'; unconfirmed whether a 23-ft motorhome can reach the site. No phone (FWP Region 4).
+- 6331 Bad Medicine (mt-18): inherits reservable/recreation.gov/180-day from the federal row, but it is not on rec.gov and the FS page has no reservation link; probably FCFS, unstated.
+- 6087 Hell Creek (mt-18): inherited 180-day window (federal row) doesn't fit a tribally run Campspot park; Campspot still links the old FWP page as its marketing site.
+- 6124 Canoe Launch (mt-18): the 2026-10-15 fee read came from the fair's other campground page (same rate table).
+- 6224 Crystal Lake (mt-18): removed the rec.gov 250004 link from website (it is the separate group campsite; individual sites are FCFS).
 - 6210 Cabin City (mt-17): temporarily closed for 2026 (storm damage; closure order May 11, 2026 - May 1, 2027). Re-check spring 2027.
 - 6101 Confederate (mt-17): Reclamation names it 'Confederate Campground' (entry: 'Confederate Recreation Area'); only campground-level source is a 2020 table PDF, big-rig claim aggregator-only.
 - 6092 Sanford Park (mt-17): no agency page names it (only Reclamation's Lake Elwell table); every detail is aggregator-sourced. Lack-of-information candidate, asked AWH.
