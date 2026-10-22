@@ -517,3 +517,11 @@ me drop and report); each needs the research named before a verdict.
 - **310 Robert Moses / 143 Sampson**: no parks.ny.gov page on the entry (Cloudflare kept the path unread).
 - **21 North-South Lake**: 126 of 203 sites listed at 20 ft.
 - pdfget.py (session scratch p3-78) fetches a Cloudflare-blocked PDF from inside a browser page.
+
+### p3-80 (NY, 2026-10-21)
+- **1481 Brookside Beach**: no nightly rate posted anywhere; banner pushes 2026 seasonal sites; says it offers "overnight and seasonal sites". Presence via site + RV Life $$. Confirm a transient rate by phone (716-326-3096) if it matters.
+- **1474 Camp Bell**: $45 base is the 20-amp class ("designed for Tents and Small RVs"), which Staylist offers to a 23-ft Class C; 30-amp is $58 (over). Kept at $45, as Sodus Point KOA. No sewer at sites.
+- **1524 Cedar Creek**: sewer false -> true; $35/$40 (2024-03); seasonals $1,250 beside nightly - passes.
+- **466 Fahnestock**: RA name is "Clarence Fahnestock State Park"; no park phone on RA; 2026 bathhouse closure no longer posted.
+- Missing parks.ny.gov / dec.ny.gov pages on 336, 363, 349, 466 (both sites 403 to scripts; Wayback unreachable from here) - add when readable.
+- Short listed lengths: 1402 Woodland Valley (11 of 67 at 30 ft), 336 Burnham Point (8 of 44 over 20 ft), 1414 Cayuga Lake (158 of 247 at 20 ft), 466 Fahnestock (13 of 66 at 25-30 ft).

@@ -133,3 +133,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1518 Rancho Pines (NY)**: Campspot feature "Waterfront"; along the Schroon River with a canoe launch; entry not waterfront.
 - **1516 Royal Mountain (NY)** (weak): site 16 "by the pond" (stocked fishing pond).
 - **21 North-South Lake (NY)** (weak, contrary): RA marks all 203 sites "Near Water - no"; entry lakefront, --AWH "Some campsites are on the lake" supports it.
+- **1481 Brookside Beach (NY)** (contrary operator claim): "A peaceful campground located directly on Lake Erie", "sunsets right from your campsite"; entry lakeview, note says the beach is across Rt 5.
