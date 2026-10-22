@@ -648,5 +648,5 @@ me drop and report); each needs the research named before a verdict.
 - **480 Crabtree Falls**: NPS closed to all camping in 2026 (Helene); reopens cleared (none published). Re-check early 2027.
 - **15457 Cherokee KOA** $50 base; GSMNP 3 km. Indoor pool closed for remodeling.
 - **4333 Contentnea Creekside**: website -> Town of Grifton page, phone 252-560-7828; town posts no rate (Campendium $30, 2023).
-- **601 Carolina Beach**: holiday minimum waived within 14 days (RA) vs state:NC row's 7 - the row now disagrees with every NC park checked (103/104/105/107/601); fix the row.
+- **601 Carolina Beach**: holiday minimum waived within 14 days (RA) vs state:NC row's 7, which quotes ncparks.gov verbatim - two official pages disagree; every NC park checked (103/104/105/107/601) records RA's 14 as its own value. Row left as is.
 - Verifier note: `pkill -f drv_server.py` kills every verifier's browser driver - stop only your own PID.
