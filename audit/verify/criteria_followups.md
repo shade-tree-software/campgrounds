@@ -507,3 +507,13 @@ me drop and report); each needs the research named before a verdict.
 - **214 Letchworth**: phased loop closures summer 2026 - spring 2027 for new shower buildings (loops 100/200 open); dated note, no status.
 - **1405 Long Point**: only 5 of 74 sites "Near Water" - note's "most sites on/near the water" dropped.
 - **1409 Limekiln Lake** closes 09-05. ralist4.py (session scratch p3-77) handles site labels with spaces.
+
+### p3-78 (NY, 2026-10-21)
+- **1446 Smith Point DROPPED** (Suffolk non-resident Green Key 4-night minimum, as 1448).
+- **15469 Sodus Point KOA**: $49 Fisherman's Row "perfect for a small Class B Motor Home, Pop-Up, or Small Travel Trailer" - KOA's form offered it for a 23-ft motorhome; if not, base $70 over the gate (Rochester 50 km).
+- **15467 Niagara Falls KOA**: $60 under the Niagara Falls gateway (11 km).
+- **1516 Royal Mountain**: ~30 of ~50 seasonal; ResNexus sells 11 RV sites nightly - passes. Rates page "2025".
+- **1518 Rancho Pines**: operator page still 2023; Campspot $49 kept (motorhome question in asks.md).
+- **310 Robert Moses / 143 Sampson**: no parks.ny.gov page on the entry (Cloudflare kept the path unread).
+- **21 North-South Lake**: 126 of 203 sites listed at 20 ft.
+- pdfget.py (session scratch p3-78) fetches a Cloudflare-blocked PDF from inside a browser page.

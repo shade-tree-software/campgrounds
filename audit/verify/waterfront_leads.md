@@ -129,3 +129,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1407 Frontier Town (NY)** (weak): ReserveAmerica puts the 91-acre facility "on the shores of the Schroon River"; entry not waterfront. Property-level claim.
 - **1442 Myers Park (NY)**: on Cayuga Lake ("extensive Cayuga Lake frontage", Campspot "Waterfront") but entry says `riverfront` - type looks wrong.
 - **1409 Limekiln Lake (NY)** (weak, contrary): ReserveAmerica tags all 263 sites "Near Water - no"; entry lakefront. DEC pages 403.
+- **334 Oneida Shores (NY)** (contrary operator claim): county page "over 50 shaded lake view campsites" and "Basic & Waterfront Site" (tents only); entry not waterfront.
+- **1518 Rancho Pines (NY)**: Campspot feature "Waterfront"; along the Schroon River with a canoe launch; entry not waterfront.
+- **1516 Royal Mountain (NY)** (weak): site 16 "by the pond" (stocked fishing pond).
+- **21 North-South Lake (NY)** (weak, contrary): RA marks all 203 sites "Near Water - no"; entry lakefront, --AWH "Some campsites are on the lake" supports it.

@@ -201,3 +201,4 @@ The village sells a $4,850 season and $800-865 months beside a $63 daily rate, a
 
 ## 1473 Cayuga Wine Trail Campground (Ovid, NY, Campspot) — does EKKO book as a "Van"?
 Its Campspot site types: $45 "Tent or Small RV Site" (max 25 ft, shared water, no electric; RV types Pop-Up/Van/Truck Camper/Tent - no Motorhome), $60 Water/Electric (also no Motorhome), and the first type that lists Motorhome is the 30A full hookup at $65 ($68 list). No gateway within 40 km (Rochester 86 km), never stayed. If EKKO (Transit-chassis) books as a Van, the $45 site makes it pass the gate; if it must book as a Motorhome, $65 is over and it drops. Which?
+  - Same question at **1518 Rancho Pines** (Chestertown, NY): Campspot's only RV type ($49) accepts Fifth-Wheel/Pop-Up/Travel Trailer/Truck Camper/Van, no Motorhome; no other type lists Motorhome at all, so it may not be bookable online in a motorhome. Kept at $49 for now.
