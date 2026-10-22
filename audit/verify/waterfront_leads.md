@@ -221,3 +221,13 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3904 Bay Mills Sunrise RV Park: operator "overlooks the Back Bay of Lake Superior" (Waiska Bay); entry not waterfront (p3-117).
 - 14236 Bay Ridge RV Park: operator "sits on over 400' of waterfront" with boat docking; entry bayview (p3-117).
 - 3895 Big Lake Campground (Curtis): operator "located right on Big Manistique Lake ... beautiful shallow waterfront" (2013 blog); entry lakeview (p3-117).
+- 3894 Log Cabin Resort (Curtis): operator "on Big Manistique Lake", beach, marina, slips, "the oldest log cabin on the waterfront"; campsites' relation to shore unstated; entry not waterfront (p3-121).
+- 3862 Loomis Landing: operator "on the Backwaters of Tippy Dam", record walleye "caught right here in front of Loomis Landing"; entry not waterfront (p3-121).
+- 3813 Potawatomie Campground (Union City): operator "We are located on Fox Lake", sandy beach, fishing dock; entry not waterfront (p3-123).
+- 14257 Rivers Bend RV Resort (Iron Mountain): operator sells "Riverfront water & electric" sites, Firefly "Waterfront Premium" class, site 99 on the river with a dock; entry riverview (p3-123).
+- 4024 Runkle Lake Park (Crystal Falls): operator "lakeside camping", beach and pier; entry not waterfront (p3-123).
+- 14237 Sunset Bay RV Resort (Ahmeek): operator "Spots along the water go quickly once summer hits"; entry not waterfront on satellite (sites 100-150 m back behind a treeline) (p3-124).
+- 3830 Tyler Creek (Alto): operator "set along a beautiful Pure Michigan trout stream", primitive sites along the Tyler Creek Trout Trail; map draws rustic loop 1-27 beside the creek; entry not waterfront (p3-125).
+- 14225 Vagabond Resort (Little Bay de Noc): operator advertises Bay De Noc sunsets and a fishing dock; entry not waterfront (p3-125).
+- 3963 Vanderbilt County Park: county "located along the Saginaw Bay Shoreline"; entry bayview (p3-125).
+- 3831 Walnut Hills: operator "the Shiawassee River runs right alongside the park", kayak launch from the park; entry pond (p3-125).

@@ -205,12 +205,16 @@ Its Campspot site types: $45 "Tent or Small RV Site" (max 25 ft, shared water, n
 
 ## 497 Mower Tract Dispersed Camping (WV, Monongahela NF) — pin on a high-clearance road?
 The Forest Service road layer puts the stored pin on FR 227C "Reigle Overlook", maintenance level 2 "HIGH CLEARANCE VEHICLES / Road, Not Maintained for Passenger Car"; the main road FR 227 is level 4 (passenger car). Your note says reviews report no problems for 22-25 ft trailers. Re-pin to a site on FR 227, keep as is, or drop under the high-clearance rule? (I'd re-pin if you know which sites sit on FR 227.)
+- **Narrowed by the 2026-10-22 rig-length rule:** the Forest Service's own road layer calls FR 227C a high-clearance road, so "keep as is" on the strength of reviews is out. That leaves re-pin to a site on FR 227, or drop.
+- **AWH 2026-10-22: re-pin to FR 227 near the FR 227C junction.** Done: 38.5705,-79.9331 (on 227C, 7 m from the junction) -> 38.56995,-79.93386, on FR 227 (level 4, passenger car) 49 m south-west of the junction, per the USFS EDW road layer.
 
 ## 258 Falls Lake State Recreation Area (NC) — narrow to one campground?
 The entry is the whole SRA and its pin sits on no campground (0.8 km from the Hwy 50 boat ramp; Rolling View 3.1 km, Holly Point 4.0 km). Your note ("Wooded campground with multiple lakefront RV sites") fits either. Rolling View: 115 sites, 80 electric, Loop A year-round. Holly Point: 158 sites, 89 electric, closed for wastewater work until 2026-11-16. B.W. Wells and Shinleaf are hike-in/group only. Narrow this entry to Rolling View (or Holly Point) and re-pin, and add the other as its own entry? Which one did you mean?
+- **AWH 2026-10-22: split** (rule: split a park into its campgrounds that sit at separate places, ~1 km+ apart with their own entrance; only when phase 7 runs into one). Queued as a split job after p3-125.
 
 ## 146 Jordan Lake State Recreation Area (NC) — split into its campgrounds?
 Same shape as 258 Falls Lake: the entry is the whole SRA and the pin (near the Visitor Center) is at none of its three family campgrounds - Crosswinds (182 sites, year-round, 50A in Areas B/C, 1.7 km), Parkers Creek (250, 2.2 km) and Poplar Point (579, the largest, 1.2 km). Your note ("Many lakefront campsites") fits all three. Split into Crosswinds + Poplar Point (+ Parkers Creek), each pinned at its own campground? I'd do all three.
+- **AWH 2026-10-22: split** (rule: split a park into its campgrounds that sit at separate places, ~1 km+ apart with their own entrance; only when phase 7 runs into one). Queued as a split job after p3-125.
 
 ## 4256 Pride RV Resort (Maggie Valley, NC) — membership resort that also sells nights
 Park rules: "new sites and amenities are funded through new membership sales" (no soliciting memberships); rate sheet has member/affiliate rates (Coast to Coast, AOR/RPI/Enjoy America) and "Pride Members" discounts. It also sells public nightly sites ("Open To The Public", $65, phone booking; 3-night holiday/October minimum). The 10-14 rule excludes membership/sales-pitch parks; you kept it earlier as a GSMNP-gateway park (28 km) for price. Keep or drop? (I'd drop it as a membership park, since nightly guests are what the membership sales are pitched at.)
@@ -225,6 +229,7 @@ Its Facebook page: "Whippoorwill Campground is your horse trail destination!"; O
 - **4229 Yates Place (Uwharrie NF):** the Forest Service page calls it "an attractive destination for tent camping" and never mentions RVs; only TheDyrt/Hipcamp reviews describe parking an RV at the drive-up sites. Free, primitive, vault toilet, no water.
 - **4225 Sunburst (Pisgah NF, NC-215):** FS "nine primitive campsites" with "tent pads"; rec.gov "Tents must be on the gravel"; the site catalog lists no equipment or length.
 Neither page says "tents only", and both have drive-up gravel sites. Keep both (my lean: keep Sunburst, drop Yates Place unless you know RVs use it), or drop as tent campgrounds?
+- **Settled by the 2026-10-22 rig-length rule (docs/campground-curation.md): keep both.** Neither agency gives a length or says tents only, so the agency is silent. A dated review caveat goes in each note if a review from the last 3 years reports the reviewer's own 23-ft+ rig fitting.
 
 ## 3852 Hillside Campground (Evart, MI; was "Kit's Hillside Camp & Cabins") — seasonal and for sale?
 Its domain is dead and Google's website link is an unrelated spam domain; Google lists "Hillside Campground", 4.9 stars / 55 reviews, phone 231-734-2643 (presence passes, RV Life $$). But Crexi/BizQuest sale listings (undated, $1.4M) describe a 20-acre SEASONAL park with 45 sites and 5 cabins, operating about four months a year, and there is no posted nightly rate or booking engine (RV Life reviews 2019/2024 paid ~$35-40/night). If it is seasonal in character it fails long-stay test 2. Keep, or drop? (My lean: keep on the nightly-paying reviews, unless you'd rather call 231-734-2643.)
@@ -245,3 +250,8 @@ The fairgrounds sell general nightly camping outside the fair ($40 "General Non-
 ## 3858 Bird Creek RV Resort (Port Austin, MI) — "Campers must be less than 10 years old"
 Huron County's listing says Bird Creek requires campers under 10 years old (no pop-ups or tents). Is EKKO under 10 years old? Otherwise it passes as an ordinary private park: Google Maps open, 4.4 / 31 reviews, phone 989-370-2366, RV Life $ tier (Facebook only, no posted rate or engine). Its long-stay character is unclear: a county EDC page calls it a "new seasonal RV resort", while a 2023 trade article says most sites are for daily camping. (My lean: keep if EKKO qualifies, drop if not.)
 **ANSWERED 2026-10-22 (AWH): EKKO is a 2023 model year**, so it qualifies: keep, with the rule in the note.
+
+## 420 Culhane Lake State Forest Campground (Luce County, MI) — "tent and small trailer use"
+- **AWH 2026-10-22 (after the rig-length rule): agency boilerplate is silent, not vague** - 99 of 115 MI DNR state forest pages carry the same phrase. Kept; no qualifying review was found anyway (ParkAdvisor's 30-ft TT review is from 2020).
+The DNR describes the 15 sites as "for tent and small trailer use", posts no length limit, and says nothing about County Road 500's surface (29 mi from Newberry via M-123 and CR-500). Your note ("Several sites right on the lake") is kept; no stays recorded. Does EKKO fit, or did you note it without seeing it? (My lean: keep — "small trailer" with no stated limit isn't a cap under 23 ft — unless you know the sites are short.)
+**ANSWERED 2026-10-22 (AWH): keep while it has a phone (DNR 906-492-3415), with a note to call about fit.** Done.
