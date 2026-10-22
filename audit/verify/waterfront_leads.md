@@ -127,3 +127,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **1505 Birch Haven (NY)**: operator claims "a majestic view of the St. Lawrence shipping channel"; entry not waterfront (a view tier may be earned).
 - **335 Cedar Point SP (NY)** (weak): ReserveAmerica tags 13 sites "Near Water" (003-011, 014, 016, 018, 020) - its generic icon; entry riverview, note says one 20-ft riverfront site.
 - **1407 Frontier Town (NY)** (weak): ReserveAmerica puts the 91-acre facility "on the shores of the Schroon River"; entry not waterfront. Property-level claim.
+- **1442 Myers Park (NY)**: on Cayuga Lake ("extensive Cayuga Lake frontage", Campspot "Waterfront") but entry says `riverfront` - type looks wrong.
+- **1409 Limekiln Lake (NY)** (weak, contrary): ReserveAmerica tags all 263 sites "Near Water - no"; entry lakefront. DEC pages 403.

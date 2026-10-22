@@ -500,3 +500,10 @@ me drop and report); each needs the research named before a verdict.
 - **328 Glimmerglass**: no park phone found (RA alternate 315-492-1756 only).
 - **1464 Hickories Park**: hookups corrected to 50 A/water/sewer; FCFS, cash or check.
 - rap2.py can hang; wrap it in `timeout`. go.sh (session scratch p3-76) pulls park page + phones + site list.
+
+### p3-77 (NY, 2026-10-21)
+- **1468 Lake Placid VFD Campground**: ownership local -> private (run by Lake Placid Volunteer Fire Department, Inc., a nonprofit, not a government). No operator page (lakeplacidfd.com never mentions it); presence rests on Campendium/RV Life/The Dyrt listings + Aug 2026 camper reviews; camper-reported $40. Reviews call it "a small RV parking lot" with hookups, no fire pits/tables - kept as an RV park.
+- **1520 Jellybeans** $50 at the gate; **15465 Lake George KOA** $80-90 under the Lake George gateway (14 km).
+- **214 Letchworth**: phased loop closures summer 2026 - spring 2027 for new shower buildings (loops 100/200 open); dated note, no status.
+- **1405 Long Point**: only 5 of 74 sites "Near Water" - note's "most sites on/near the water" dropped.
+- **1409 Limekiln Lake** closes 09-05. ralist4.py (session scratch p3-77) handles site labels with spaces.
