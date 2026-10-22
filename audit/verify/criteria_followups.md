@@ -10,7 +10,7 @@ me drop and report); each needs the research named before a verdict.
 - **6290 Spire Rock** (mt-29): FS says 17 sites, rec.gov catalog 20; stored 20 left. Concessionaire Rocky Mountain Recreation Co. (661) 702-1420; rec.gov phone field 406-646-1012.
 - **6259 Spring Creek** (mt-29): FS 'maximum trailer length of 35 feet, and is not recommended for campers with large RVs' (23 ft fits, kept); no office named (likely White Sulphur Springs RD 406-547-3361 or Musselshell RD 406-632-4391); water conflict on the page.
 - **6291 Steel Creek** (mt-29): FS page gives both $15 and $12 per night; FS coordinates (45.603415,-113.336572) ~0.7 km east of the entry's.
-- **14164 Stuart Mill Bay FAS** (mt-29): stored year_round: true (manual) contradicted by FWP banner 'Campground closed during winter months. The campground opens the Thursday before Memorial Day.' Needs a manual fix.
+- **14164 Stuart Mill Bay FAS** (mt-29): stored year_round: true (manual) contradicted by FWP banner 'Campground closed during winter months. The campground opens the Thursday before Memorial Day.' Fixed 2026-10-22 with AWH's OK: season is now a note (opens the Thursday before Memorial Day, closed in winter).
 - **6265 Sylvan Lake** (mt-29): FS page still says 'THIS CAMPGROUND WILL BE CLOSED IN 2018' (stale); no current alert. No length published.
 - **6292 Thain Creek** (mt-29): no office named (likely Belt Creek RS 406-236-5100); water conflict on the page.
 - **6293 Timberlane** (mt-29): closed all of 2026 (order 01-14-05-26-03); recheck spring 2027. Derived reservable: true reflects only the group shelter; derived max_rig_ft 30 no longer on either page.
