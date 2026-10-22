@@ -236,3 +236,4 @@ The operator's only camping page now offers just the 2026 Western Michigan Fair 
 
 ## 3826 Gilmore Car Museum Campground (Hickory Corners, MI) — per-person museum admission each night
 General nightly camping open to the public Apr 1 - Oct 31 with online booking (not event-only). Sites $20 (no electric) to $50 (50 A). But every guest must buy museum admission for EACH night camped: $20 per adult, $25 on car-show days (gilmorecarmuseum.org, read 2026-10-22). One adult on the cheapest site pays $40/night; two adults $60. No gateway within 40 km (Grand Rapids 62 km), no stays. Mandatory per-night fees count toward the US$50 line, so for two adults it is over. Keep, or drop? (My lean: drop — it's over for any family of two, though you do get the museum.)
+**ANSWERED 2026-10-22 (AWH): drop.** Done.
