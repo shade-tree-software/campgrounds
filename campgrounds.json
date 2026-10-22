@@ -21362,16 +21362,39 @@
     "fees": {
       "nightly_low": 41,
       "nightly_high": 56,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "DNR rate table, Orchard Beach campground: $41 with 20/30-amp, $46 with 50-amp, $56 full hook-up. Mini cabin $80, camper cabin $120. A Recreation Passport is required for vehicle entry into all state park and forest campgrounds, on top of the camping fee."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Orchard Beach / Campground",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Orchard Beach / Campground: full-hookup $56, 50 AMP $46, 20/30 AMP $41; reservation season April 22 - October 21) + https://www.michigan.gov/recsearch/parks/orchardbeach ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Orchard Beach / Campground: April 22 - October 21), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.michigan.gov/recsearch/parks/orchardbeach ('There is 30- or 50-amp service available'; tags 'Full-hookup sites', 'Some campsites with 50-amp service') + midnrreservations.com resources (11 sites Water Hookup Yes and Sewer Hookup Yes), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/parks/orchardbeach (Modern Campground 'Number of sites: 166', 'Pull-through sites available'; Walk-in Tent Campsites 'Number of sites: 6') + midnrreservations.com resources (Pull Through Yes 5, Site Length 35-95), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/orchardbeach ('Toilet & shower building', 'Accessible modern restrooms', 'Vault toilet', 'The park's sanitation station is in the campground. There is potable water available and two lanes', 'A fish-cleaning station is adjacent to the campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.michigan.gov/recsearch/parks/orchardbeach (Modern Campground: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
@@ -21379,6 +21402,34 @@
       "year_round": false,
       "opens": "04-22",
       "closes": "10-21"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true,
+      "sewer": true
+    },
+    "sites": {
+      "count": 166,
+      "pull_through": true,
+      "note": "166 modern sites on the bluff (11 full hook-up, 5 pull-throughs on the booking site; pad lengths 35-95 ft) plus 6 walk-in tent sites and camper/mini cabins."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "potable_water": true,
+      "note": "Sanitation station in the campground with potable water and two lanes; fish-cleaning station beside the campground."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://midnrreservations.com/"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.michigan.gov/recsearch/parks/orchardbeach https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates https://midnrreservations.com/ (Orchard Beach State Park, resourceLocationId -2147483539: /api/resourcelocation/resources + /api/attribute/filterable)",
+      "note": "Confirmed on the DNR pages: $41 (20/30-amp) to $56 (full hook-up) for 2026 with the Recreation Passport in fees.note, season Apr 22 - Oct 21 (manual, unchanged), phone 231-723-7422, and the --AWH note (100-ft bluff; 'Due to erosion, the beach is no longer accessible from the park'). Added 50-amp/water/sewer (11 full-hookup sites), 166 sites with pull-throughs, modern facilities with dump, reservable on midnrreservations.com. Note unchanged. Not stated: booking window/max stay for this park (left"
     }
   },
   {
@@ -254694,7 +254745,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'riverview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.maplerivercampground.com/",
     "phone": "989-981-6792",
-    "note": "~63-site private campground on the banks of the Maple River, surrounded by ~3,500 acres of state land; tree-canopied riverfront sites plus primitive sites. Electric+water sites with 20/30/50-amp service, dump station, bath house, fishing/kayaking/canoeing. Nightly transient plus weekly/monthly/seasonal rates ($10 deposit, book direct). Open ~May 1-Nov 1. --Claude",
+    "note": "Private campground on the banks of the Maple River opposite public state land; large riverfront transient sites plus rustic and primitive sites, a boat launch and live bait for fishing. Most numbered sites away from the river are seasonal (operator's site map). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -254702,48 +254753,57 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50,
-      "water": true
+      "electric": 50
     },
     "sites": {
-      "count": 63
+      "note": "The operator's site map numbers about 65 sites: about 26 transient sites (green) mostly along the river and about 39 seasonal sites (red, numbers 12-50 away from the river)."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "11-01"
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "phone",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reserve with the office (summer phone hours 10am-5pm); sites are not guaranteed and may be reassigned. Check-in 2pm, check-out noon; Friday check-in until 8pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.maplerivercampground.com/ ('20/30/ 50 Amp Service'; lists a honeywagon and dumping station but no water hookups) + Rates.html (rates by amp service only), read 2026-10-22. The stored water: true was derived from note prose the operator's pages do not support, so it is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.maplerivercampground.com/Sitemap.html (site map image: 'Campsites in GREEN, Seasonal sites in RED'), read 2026-10-22. The stored count of 63 came from note prose and no operator page states a count, so it is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.maplerivercampground.com/Rates.html ('We are open from May 1st to November 1st'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.maplerivercampground.com/Reservations.html ('3 day minimum for Holiday Weekends', 'Office Hours Summer-10am to 5pm for phone service', 'Check in 2pm check out noon', 'Friday open until 8pm for check ins') + home page ('we can not guarantee assigned sites and may have to re-assign sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.maplerivercampground.com/ ('WI-FI available thru pay portal', 'Shower House (Handicapped accessible)', 'Honeywagon', 'Dumping Station', 'LP Fill Station') + Reservations.html ('$5.00 dumping fee $10.00 dumping fee (off road)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.maplerivercampground.com/Rates.html ('50 amp service $40.00 a night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.maplerivercampground.com/Rates.html ('2026 Rates ... 50 amp service $40.00 a night 30/20 amp service $35.00 a night Rustic sites- no hook ups $30.00 a night Guest fee $5.00 per adult extra'; 'Seasonal $2,100.00 a year plus utilities') + https://www.maplerivercampground.com/Reservations.html ('Deposit of $ 20.00 per day for your stay', '7 day cancellation notice'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254752,13 +254812,22 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "wifi": true,
+      "note": "Wi-Fi through a pay portal. Handicapped-accessible shower house; honeywagon; LP fill; firewood and ice; live bait. Dump fee $5 ($10 for off-site rigs)."
     },
     "fees": {
       "nightly_low": 35,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "30/20A $35, 50A $40; rustic $30 (May 1-Nov 1)."
+      "note": "2026 rates for 2 adults and children under 16 per camping unit: 20/30-amp $35, 50-amp $40; rustic sites (no hookups) $30; $5 per extra adult. Seasonal $2,100 a year plus utilities. Deposit $20 per day of the stay; 7-day cancellation notice.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.maplerivercampground.com/ https://www.maplerivercampground.com/Rates.html https://www.maplerivercampground.com/Reservations.html https://www.maplerivercampground.com/Sitemap.html (site map image images/sitemap_small.jpg)",
+      "note": "Confirmed on the operator's own site: 2026 $35 (20/30-amp) to $40 (50-amp), rustic $30, open May 1 - Nov 1, 50-amp, showers/dump, reserve with the office, phone 989-981-6792. Added wifi (pay portal), 3-night holiday minimum, booking platform phone, fee notes (deposit is $20/day, not the note's $10). Cleared derived water hookups and the 63-site count (operator states neither). Note trimmed. Not stated: max rig length, pull-throughs, discounts."
     }
   },
   {
@@ -257805,7 +257874,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://miopineacres.com/",
     "phone": "989-826-5590",
-    "note": "Family-run private campground at 1215 W 8th St, ~1 mi west of Mio on M-72. 75 sites (35 electric-only, 40 electric+water, 20/30/50-amp), 12 pull-throughs, big rigs to 45 ft; dump, laundry, store, mini-golf. ~1 mi from AuSable River (not on it). Open May-Nov; honors Passport America discount (not a membership-only park). --Claude",
+    "note": "Family-run campground and cabins at 1215 W 8th St (M-72), about a mile west of Mio and a mile from the Au Sable River (not on it); mini-golf, rental bikes, pizza, an ORV staging area with trail access. No UTVs, ATVs or golf carts may be ridden in the park. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -257817,44 +257886,85 @@
       "water": true
     },
     "sites": {
-      "count": 75,
-      "max_rig_ft": 45,
-      "pull_through": true
+      "pull_through": true,
+      "note": "The operator's 2024 site map numbers RV and tent sites 1-100 (a few numbers unused) plus cabins and an ORV staging/parking area."
     },
     "facilities": {
       "laundry": true,
       "camp_store": true,
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true,
+      "wifi": true,
+      "note": "Modern bath house with complimentary hot showers; snack bar and store (LP gas, RV supplies, groceries, firewood); dump station ($15 for non-registered guests); free Wi-Fi."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-15",
+      "closes": "11-01",
+      "note": "Cabins rent year-round."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.miopineacrescampground.com/rates.php ('Rv Campers 50 amp - Water and Electric $41'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.miopineacrescampground.com/index.php ('Pull-Thru's') + https://www.miopineacrescampground.com/sitemap.php (images/sitemap_2024.png), read 2026-10-22. The stored 75 sites and 45-ft maximum came from note prose that no operator page supports (the map numbers sites to 100), so both are cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.miopineacrescampground.com/index.php ('FREE WI-FI', 'Clean, Modern Bath House (w/complimentary hot showers for our guests)', 'Laundry Room', 'Snack Bar / Store') + contactus.php (facility icons 'Flush Toilets', 'Showers', 'Laundry', 'Store') + rates.php ('Dump Station (non-registered guest) $15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.miopineacrescampground.com/index.php ('OPEN: 4/15 thru 11/1 (tents/campers) Year Round for Cabin rentals'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.miopineacrescampground.com/rates.php ('CAMPING 2026'; 'Rv Campers 30 amp - Electric Only $34', '30 amp - Water and Electric $37', '50 amp - Electric Only $38', '50 amp - Water and Electric $41', 'Tent $32', 'Extra Adults $5 Per Day, maximum of 4 adults per site', 'Yearly Site (12 months) ... $1,350'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.miopineacrescampground.com/policies.php (cancellation policy, 'Check out time is noon for sites') + contactus.php ('PHONES: 989-826-5590 , 800-289-2845'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.miopineacrescampground.com/contactus.php ('DISCOUNTS:' Passport America icon linking to passport-america.com), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "bdbb8cfbcfd9c6a5",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 34,
+      "nightly_high": 41,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 nightly for 2 adults and minor children: 30-amp electric only $34, 30-amp water and electric $37, 50-amp electric only $38, 50-amp water and electric $41; tent $32. Weekly and some monthly rates; extra adults $5 a day (4 adults at most). Yearly seasonal site $1,350 (camping May 1 - October 15, metered electric)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve with the office (989-826-5590 or 800-289-2845). Cancellations 31+ days out are refunded less $10; within 30 days the deposit is lost; no refunds on holiday weekends. Check-out noon."
+    },
+    "discounts": {
+      "passport_america": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://miopineacres.com/ (redirects to https://www.miopineacrescampground.com/index.php) https://www.miopineacrescampground.com/rates.php https://www.miopineacrescampground.com/policies.php https://www.miopineacrescampground.com/contactus.php https://www.miopineacrescampground.com/sitemap.php (images/sitemap_2024.png)",
+      "note": "Confirmed on the operator's site (miopineacres.com now redirects to miopineacrescampground.com): 2026 $34 (30-amp electric only) to $41 (50-amp W/E), open Apr 15 - Nov 1, 50-amp with water, pull-throughs, laundry/store/dump, Passport America, phone 989-826-5590. Changed season (was open/close unknown) to 04-15/11-01; added fees, showers, flush toilets, wifi, phone booking and policies. Cleared derived 75-site count and 45-ft max (map numbers sites to 100; no length stated). Note trimmed of field"
     }
   },
   {
@@ -258855,9 +258965,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Satellite at 46.098,-88.324: campground loops/cleared sites in wooded bend above Paint River in Crystal Falls; note 23 RV sites, phone reservations (official site HTTP-only) -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "http://www.prhcamp.com",
+    "website": "https://www.prhcamp.com/",
     "phone": "906-875-4977",
-    "note": "Private campground on 24-32 acres on bluffs above the Paint River in downtown Crystal Falls. 23 RV sites (10 pull-through, 4 full-hookup; 30/50-amp, dump station), 9 tent sites, 5 cabins; max RV ~65 ft. Showers, WiFi, ATV/state-trail access. Open May 15-Nov 30. Reserve by phone; reported cash-only. Official site is HTTP-only. --Claude",
+    "note": "Private campground on 24 acres of bluffs above the Paint River in downtown Crystal Falls (use '220 Railway St.' for directions), with direct access to the state and county ATV trails. A half-mile hiking loop runs along the river past calcite outcrops and old cedars, with tree markers in Ojibwa; no boat access to the river from the campground. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -258870,54 +258980,63 @@
       "sewer": true
     },
     "sites": {
-      "count": 32,
-      "max_rig_ft": 65,
-      "pull_through": true
+      "count": 28,
+      "pull_through": true,
+      "note": "10 pull-through sites (4 of them full hookup, across the road from the service building; 6 behind it) and 18 RV/tent sites; 5 insulated sleeping cabins. No tents on pull-through or full-hookup sites. 'Big rig friendly'."
     },
     "facilities": {
       "showers": true,
       "wifi": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true
     },
     "season": {
       "year_round": false,
       "opens": "05-15",
-      "closes": "11-30"
+      "closes": "10-23",
+      "note": "The operator announced Friday October 23 as the 2026 season's last day; no opening date is posted (the stored May 15 opening is from note prose)."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "operator",
+      "url": "https://apps.gracesoft.com/PMS/EasyWebRez/roomdetails/4679",
+      "note": "Book online (GraceSoft EasyWebRez) or by phone; all reservations require advance payment. Register at the office on arrival; check-in 2-7:30pm (call ahead if later), check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.prhcamp.com/fhu-sites.html ('The full hookup sites ... All four of them have 50 amp electric service. Water pressure is high so we recommend a pressure reduction valve'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.prhcamp.com/ ('5 fully insulated sleeping cabins, 10 pull through sites (4 FHU), and 18 RV/tent sites with Wi-Fi access'; 'We are big rig friendly!') + pull-through-sites.html ('There are 6 pull through sites located behind the service building'), read 2026-10-22. The stored 32 sites and 65-ft maximum came from note prose; the operator gives 28 sites and no length, so the length is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.prhcamp.com/ ('a clean modern shower building', 'Our service building features clean restrooms with in-floor heat', 'RV/tent sites with Wi-Fi access') + pull-through-sites.html ('The dump station and dumpster are located on the right as you exit the campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.prhcamp.com/ ('Our last day of business for the 2026 season will be Friday October 23'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.prhcamp.com/ ('Click Here to Book Online' -> apps.gracesoft.com/PMS/EasyWebRez/roomdetails/4679; 'All reservations require advance payment'; 'Check In is between 2:00 PM & 7:30 PM') + GraceSoft page (room types BACK IN, FHU SITES, PULL THROUGH SITES, TENT, CABIN), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-09-20",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://www.prhcamp.com/back-in-and-tent-sites.html ('Back in sites are $35 per unit/per day', 'Tent sites are $25 per tent/per day') + pull-through-sites.html ('Pull through site occupancy rates are $35 per unit per day') + fhu-sites.html ('Full hookup site occupancy rates are $40 per unit per day'; 'Cancelled reservations will forefit the cost associated with one (1) night') + home page ('Our last day of business for the 2026 season will be Friday October 23'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -258927,6 +259046,18 @@
     },
     "discounts": {
       "good_sam": false
+    },
+    "fees": {
+      "nightly_low": 35,
+      "nightly_high": 40,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Back-in and pull-through sites $35 per unit per day, full-hookup sites $40 (4 people per site at most); tent sites $25 per tent. Cancelling forfeits one night. Rates from the operator's current site, which announces the 2026 season's last day."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://www.prhcamp.com (redirects to https://www.prhcamp.com/) https://www.prhcamp.com/fhu-sites.html https://www.prhcamp.com/pull-through-sites.html https://www.prhcamp.com/back-in-and-tent-sites.html https://apps.gracesoft.com/PMS/EasyWebRez/roomdetails/4679 (the site's 'Click Here to Book Online'; read in a browser)",
+      "note": "Operator site is live and current (http now redirects to https; 2026 season notice). Confirmed 50-amp full hookups, pull-throughs, showers/Wi-Fi/dump, phone 906-875-4977. Added fees $35 (back-in/pull-through) to $40 (full hookup), online booking on GraceSoft, flush toilets. Changed season close 11-30 -> 10-23 (operator's 2026 last day) and sites 32 -> 28; cleared derived 65-ft max (operator says only 'big rig friendly'). Note rewritten: the old 'reserve by phone; reported cash-only' and 'HTTP-on"
     }
   },
   {
@@ -259418,7 +259549,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'riverfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.northlandoutfittersup.com/\nhttps://www.northlandoutfittersup.com/map-of-campground",
     "phone": "906-586-9801",
-    "note": "Private RV/tent campground & canoe/kayak livery on the Manistique River (M-77), Germfask; est. 1972. ~18 sites: 1-4 water/electric, 5-10 electric with potable water (site 5 the only pull-through), 11-14 no-hookup/tent; 4 cabins. No sewer; dump on site. Max RV 75 ft. Showers, store, boat launch. Transient (nightly ~$44). Season May 1-Oct 15. Reservable online. --Claude",
+    "note": "Private campground and canoe/kayak livery on the Manistique River at Germfask (M-77), 2 miles from the Seney refuge visitor center; est. 1972. The river sites (5-9) sit on the bank; boat ramp, paddle trips on the Manistique and Fox Rivers. Thomas Dambo's troll sculpture Benny the Beardfisher stands on the property (tickets at the camp store). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -259430,8 +259561,8 @@
       "sewer": false
     },
     "sites": {
-      "max_rig_ft": 75,
-      "pull_through": true
+      "count": 9,
+      "note": "Nine RV/tent sites: 1-4 water and electric near the highway, 5-9 electric with potable water along the Manistique River; cabins (River 1-2, Pond 1-5, a deluxe cabin) besides."
     },
     "facilities": {
       "showers": true,
@@ -259444,23 +259575,26 @@
       "closes": "10-15"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/1E063122-315A-49C2-8784-64F0B7981A64",
+      "note": "Booked online through the operator's ResNexus page ('BOOK NOW') or by phone."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.northlandoutfittersup.com/ ('Sites 1-4 Water & Electric', 'Sites 5-9 Electric w/ Potable Water'; no sewer sites offered; the campground map shows a dump station), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.northlandoutfittersup.com/ (sites 1-9) + https://www.northlandoutfittersup.com/map-of-campground (map shows sites 1-4 by M-77 and 5-9 on the river), read 2026-10-22. The stored 75-ft maximum and pull-through came from note prose that the operator's pages do not support, so they are cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.northlandoutfittersup.com/map-of-campground (map: two 'Bath House' buildings, 'Store & Office', 'Water', 'Dump Station', 'Boat Ramp'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -259468,9 +259602,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.northlandoutfittersup.com/ ('BOOK NOW' -> resnexus.com/resnexus/reservations/book/1E063122-...; 'Call us now at 906-586-9801'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -259478,8 +259612,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.northlandoutfittersup.com/ ('Sites $44/night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.northlandoutfittersup.com/ ('RV/TENT SITES Sites $44/night Riverfront RV Sites Available Sites 1-4 Water & Electric Sites 5-9 Electric w/ Potable Water'; page (c) 2026), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -259494,7 +259629,13 @@
       "nightly_low": 44,
       "nightly_high": 44,
       "currency": "USD",
-      "note": "RV/tent sites $44, riverfront RV sites available."
+      "note": "RV/tent sites $44 a night (operator's home page, (c) 2026); riverfront RV sites available.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.northlandoutfittersup.com/ https://www.northlandoutfittersup.com/map-of-campground (map image 'Map 2023') https://resnexus.com/resnexus/reservations/book/1E063122-315A-49C2-8784-64F0B7981A64 (the site's 'BOOK NOW' link; ResNexus showed a bot captcha, read 2026-10-22)",
+      "note": "Confirmed on the operator's site: $44/night RV/tent sites (2026 page), water/electric (1-4) and electric with potable water (5-9), no sewer, phone 906-586-9801, online booking via ResNexus. Added 9 sites, the ResNexus link, showers/store/water/dump from the operator's map. Cleared derived 75-ft max and pull-through (operator silent). Note rewritten: the old one described ~18 sites with tent sites 11-14, which the operator's current map does not show. Not stated: amperage, season (derived May 1 -"
     }
   },
   {
@@ -260267,35 +260408,34 @@
       "water": true,
       "sewer": true
     },
-    "sites": {
-      "count": 12
-    },
     "facilities": {
       "wifi": true
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Call the Ojibwa Motel front desk, 906-353-7611."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('Water Hookups', 'Sewer Hookups', 'Electricity (50, 30, or 20 amp service available)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park (no site count stated), read 2026-10-22. The stored 12 sites came from note prose that no operator page supports, so it is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('Wi-Fi Access', 'Paved Pads', 'Picnic Tables'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('All reservations are handled through the Ojibwa Motel Front Desk'; Campspot shows the park closed 2026-03-06 to 2027-03-06), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('All reservations are handled through the Ojibwa Motel Front Desk', 'Call 906-353-7611 to reserve your spot today'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -260303,8 +260443,9 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('$30 per night. All reservations are handled through the Ojibwa Motel Front Desk'), read 2026-10-13; https://www.campspot.com/park/ojibwa-casino-rv-park-baraga-mi (closed 2026-03-06 to 2027-03-06; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park ('Rates & Reservations $30 per night All reservations are handled through the Ojibwa Motel Front Desk'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -260320,7 +260461,12 @@
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "From the casino's RV park page (read 2026-10-13): $30 a night, reserved through the Ojibwa Motel front desk.  Campspot lists the same $30 for both site types but shows the park closed from March 6, 2026 to March 6, 2027."
+      "note": "$30 a night, reserved through the Ojibwa Motel front desk (casino page, read 2026-10-22). Campspot still lists the park but showed it closed from March 6, 2026 to March 6, 2027 (read 2026-10-13); the casino's own page takes phone reservations."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ojibwacasino.com/ojibwa-casino-baraga-rv-park https://www.ojibwacasino.com/ojibwa-casino-campgrounds",
+      "note": "Confirmed on the casino's own page: a dedicated RV park with paved pads, 20/30/50-amp, water and sewer hookups, Wi-Fi, $30/night, reserved by phone at the Ojibwa Motel front desk (906-353-7611, matches the entry). Not a casino-lot allowance. Cleared the derived 12-site count (no operator statement). Fee note tidied. Note unchanged. Not stated: season, site count, max rig length."
     }
   },
   {
@@ -261200,7 +261346,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'pond' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_campground.php\nhttps://www.oscodatownshipmi.gov/parks___recreation/old_orchard_reservations.php",
     "phone": "989-739-7814",
-    "note": "GOVERNMENT: large municipal campground operated by the Township of Oscoda (Consumers Energy FERC dam project land), nearly 4 mi along the Au Sable River overlooking Foote Pond; 500+ sites in modern/waterfront/primitive categories, electric/water hookups, accepts large RVs. Reservable online via township portal. --Claude",
+    "note": "GOVERNMENT: large municipal campground operated by the Township of Oscoda on Consumers Energy's FERC-licensed Foote Dam hydro project land in the Huron-Manistee National Forest, nearly 4 miles along Foote Pond on the Au Sable River (River Road Scenic Byway); modern, waterfront and primitive sites plus cabins, yurts, a beach and boat ramp; accepts large RVs. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -261212,24 +261358,76 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Reserve/Property/OldOrchardPark",
+      "window_opens_days": 120,
+      "max_stay_nights": 21,
+      "note": "Book online (Firefly) up to four months ahead, or call the office (989-739-7814 ext. 2). Unreserved sites can be taken without a reservation after checking in at the park office. Between Memorial Day and Labor Day a stay is limited to 21 days on one site (then move, 21 on / 21 off), waterfront electric sites to 14 days; no 30-day sites in summer. Check-in 3pm, check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_rates.php ('Fall/Winter (Electric/water) camping Rates', 'Seasonal Electric/water') + Firefly classes 'Electric Back Lot', 'Electric Waterfront', 'Electric Waterview', read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_rates.php ('Camping reservations begin up to four months in advance', 'Campers staying 21 days between Memorial Day and Labor Day will be required to moves sites', 'Waterfront sites with electric hook-ups have a maximum stay of 14 days') + old_orchard_campground.php FAQ ('book online ... You may also call our office'; 'Can I still camp without a reservation? If there are available sites that do not have reservations on them. However, you must contact the park office') + old_orchard_reservations.php (link to app.fireflyreservations.com/Reserve/Property/OldOrchardPark), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_rates.php ('Fall/Winter (Electric/water) camping Rates October, November, March, and April $20.00/night $135.00/week $500.00/month'; 'Modern 21 day (Campers or tents) - $525.00'; 'Seasonal Electric/water May 1 – Sept 30 $3,000.00'; '**Camping reservations begin up to four months in advance'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_campground.php ('The park is open from March 30 through November 30 each year'; FAQ 'not all amenities may be offered or available during these times such as water, multiple bath houses being open') + old_orchard_rates.php ('Park Closed December, January and February'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_campground.php ('525 licensed camp sites (Modern, Waterfront, and Primitive)') + https://app.fireflyreservations.com/Reserve/Property/OldOrchardPark (Class filter list), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_campground.php (Amenities: 'Department of Health approved water system', 'Sanitary dumping stations', 'Old-Fashioned General Grocery Store', 'Bathhouses', '$ WIFI'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "e8ad89a001090fb8",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 20,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "The township posts only off-season and long-stay camping rates: electric/water sites $20 a night ($135 a week, $500 a month) in October, November, March and April; a modern site for 21 days $525. Summer nightly rates appear only in the Firefly booking engine, which books four months ahead (no summer dates were open on 2026-10-22). Seasonal sites $1,500-3,000; cabins and yurts $60-75 a night; non-camper dump $10."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "03-30",
+      "closes": "11-30",
+      "note": "Spring and fall camping at reduced rates; water, some bathhouses and the store may be off or limited then. Closed December - February."
+    },
+    "sites": {
+      "count": 525,
+      "note": "525 licensed sites in modern (electric), waterfront and primitive categories; Firefly classes Electric Back Lot, Electric Waterfront, Electric Waterview, Electric Seasonal, rustic tent and rustic seasonal sites, group areas, cabins and yurts."
+    },
+    "facilities": {
+      "potable_water": true,
+      "dump": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Bathhouses; Wi-Fi is paid ('$ WIFI'); general grocery store; beach, boat ramp, watercraft rentals."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_campground.php https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_rates.php https://www.oscodatownshipmi.gov/parks___recreation/old_orchard_reservations.php https://app.fireflyreservations.com/Reserve/Property/OldOrchardPark",
+      "note": "Confirmed on the township's own pages: 525 sites, open Mar 30 - Nov 30, electric/water sites, reservable online via Firefly (four months ahead), phone 989-739-7814. Added off-season $20/night (summer nightly rates are only in the Firefly engine, not open for summer dates yet), season, site count, facilities, booking window and 21-day/14-day stay limits. Note trimmed of field facts. Not stated: amperage, sewer, summer nightly rate, max rig length."
     }
   },
   {
@@ -262960,13 +263158,13 @@
     "location": "42.79221,-86.16276",
     "elevation_meters": 184.0,
     "state": "MI",
-    "ownership": "local",
+    "ownership": "private",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Ottawa County Fair camping page: public camping Apr 17-Oct 15, $38/night RVs, Campspot reservations -> transient RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.ottawacountyfair.com/camping.html\nhttps://www.campspot.com/book/ottawa-county-fairgrounds",
     "phone": "616-422-5445",
-    "note": "Ottawa County Fairgrounds campground in Holland, run by the county fair board, with over 100 open, grassy sites.  Camping is limited or unavailable during fair week and special events; the rest of the season it runs as an ordinary campground. --Claude",
+    "note": "Fairgrounds campground on Ottawa Beach Road in Holland, run by the Ottawa County Fair, with open, grassy sites. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -262978,21 +263176,30 @@
       "water": true
     },
     "sites": {
-      "max_rig_ft": 40
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "Campspot sells about 90 electric-and-water RV sites (20/30-amp 63, with 50-amp 20, 20-amp 5) plus 25 electric-only sites and group areas; lengths to 40-50 ft, many pull-through. Area B is fair-week only."
     },
     "facilities": {
       "showers": true,
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "wifi": true,
+      "note": "Dump station behind the fair office; Wi-Fi paid per device; campfires only in community fire rings, none at sites; ice from the campground host."
     },
     "season": {
       "year_round": false,
-      "opens": "04-18",
-      "closes": "10-14"
+      "opens": "04-17",
+      "closes": "10-15",
+      "note": "Open to the public all season except around fairground events: in 2026 no camping June 18-21, Aug 6-9 and Aug 30 - Sep 10; fair week (July 27 - Aug 2) only for 4-H, vendors and fair board members; limited camping around other events. Tulip Time (early May) typically fills up."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/ottawa-county-fairgrounds",
+      "window_opens_days": 180,
+      "note": "Reserve on Campspot (the fair's 'Camping Reservations' link) six months ahead; questions by email or call/text 616-422-5445. Pets are not allowed during fair week."
     },
     "provenance": {
       "hookups": {
@@ -263000,27 +263207,29 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Campspot park record for ottawa-county-fairgrounds (site types '20/30 Amp Electric and Water RV Site' 63 sites max 50 ft Pull-Through, '20/30/50 Amp Electric and Water RV Site' 12 max 45, '20/50 Amp' 8, '30 Amp, NO Water' 23 max 40, 'Area B - Fair Week Only' 24), read 2026-10-13",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ottawacountyfair.com/camping.html ('Restrooms & Showers available on the grounds', 'Dump station is located behind the fair office', 'Wifi is available for purchase', 'Campfires only permitted in community campfire rings (no campfires in campsites)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "https://www.campspot.com/book/ottawa-county-fairgrounds (Campspot park record: closed 2025-10-15 to 2026-04-17 and from 2026-10-15), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.ottawacountyfair.com/camping.html ('Camping available April 17 through October 15'; 2026 dates table: 'NO Camping Available June 18-21', 'Camping only for 4H, vendors, and OCF board members' for the July 27 - Aug 2 fair, 'NO Camping Available Aug 6-9', 'NO Camping Available Aug 30 - Sept 10', 'Oct 15 End of Camping Season'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ottawacountyfair.com/camping.html ('Camping Reservations' -> campspot.com/book/ottawa-county-fairgrounds; 'Reservations for 2027 can be made 6 months in advance'; 'Call/Text 616-422-5445'; 'Well-behaved pets allowed except during fair week'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/ottawa-county-fairgrounds (Campspot's pricing for each RV site type, one night from 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.ottawacountyfair.com/camping.html ('Camping $38 per night'; 'Wifi is available for purchase - $5/day or $20/week') + Campspot quotes 2027-06-08 and 2027-06-12 (base 38, 'Booking Fee' 5, read 2026-10-13), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263034,7 +263243,12 @@
       "currency": "USD",
       "reservation_fee": 5,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (20 Amp Electric and Water RV Site; 20/30 Amp Electric and Water RV Site; 20/30 Amp, NO Water, RV Site; 20/30/50 Amp Electric and Water RV Site; 20/50 Amp Electric and Water RV Site; and 2 more). June 2027: $38, Tuesday and Saturday alike. Campspot shows the park closed in October 2026 and January 2027. June 2027 isn't open for booking yet; the prices above are the rates Campspot lists for June 2027. Plus the park's $5 'Booking Fee', once per stay. Read 2026-10-13."
+      "note": "$38 a night (fair's camping page, 2026; Campspot quoted the same $38 for June 2027, Tuesday and Saturday alike, plus a $5 booking fee once per stay). 4-H fair-week camping $250 for 8 nights. Wi-Fi $5 a day or $20 a week per device."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ottawacountyfair.com/camping.html https://www.ottawacountyfair.com/history.html https://www.ottawacountyfair.com/contact-us.html https://www.campspot.com/book/ottawa-county-fairgrounds (park record and quotes cached in audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13) https://projects.propublica.org/nonprofits/api/v2/search.json?q=\"Ottawa County Fair\"&state[id]=MI (EIN 38-6089492 'Ottawa County Fair Association', Holland, 501(c)(5))",
+      "note": "Confirmed on the fair's own page: $38/night (2026), public nightly camping Apr 17 - Oct 15 apart from a few event closures and fair week (4-H/vendors/board only), Campspot booking six months ahead, phone 616-422-5445. Changed season 04-18/10-14 -> 04-17/10-15 with the event closures in season.note; added max rig 50 ft and pull-throughs (Campspot), showers/flush toilets/paid Wi-Fi, booking window. Note trimmed (closures now in season.note). Not a fair-week-only campground, unlike Mason County."
     }
   },
   {
@@ -263501,7 +263715,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message) | dam screen 2026-10-21 (DEM vs NID pool, AWH below-dam rule): the compared dam (Henson Dam, 1306 m away) holds a different, higher lake; the camp sits at 261.6 m beside its own water (260.4 m), not below any dam",
     "website": "https://villageofotterlake.com/campground/",
     "phone": "810-793-4258",
-    "note": "Municipal campground operated by the Village of Otter Lake on Otter Lake, at 5902 Genesee St. ~44 lots: Waterfront (1-10) and Non-Waterfront (21-36) with electric/water/sewer 30/50-amp; Canal lots; plus rustic canal sites (no hookups). Drive-in RV access; dump station, laundry, beach, boat launch. Open April 15 - October 15. Reservable by phone (cash/check only), 50% deposit; unreserved sites FCFS. Distinct from the nearby private 'Genesee Otter Lake Campground.' --Claude",
+    "note": "Municipal campground operated by the Village of Otter Lake on Otter Lake at 5902 Genesee St, with waterfront, canal and back lots, rustic canal lots (no generators), a beach and boat launch. Distinct from the nearby private 'Genesee Otter Lake Campground.' --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 3,
@@ -263513,7 +263727,8 @@
       "sewer": true
     },
     "sites": {
-      "count": 44
+      "count": 43,
+      "note": "Lots 1-39 with full hookups (waterfront 1-10, canal 11-20 and 37-39, non-waterfront 21-36) and rustic canal lots 41-44 with no water or electricity (no generators). Lots 1-20 are seasonal waterfront lots with a waiting list. One dock per site, up to 25 ft."
     },
     "facilities": {
       "laundry": true,
@@ -263527,18 +263742,25 @@
     "booking": {
       "reservable": true,
       "platform": "phone",
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations open April 15 by phone (810-793-4258); 50% deposit within 5 days, balance 5 days before arrival; holiday stays paid in full. Memorial Day and Labor Day weekends 3 nights, the July 4th holiday 6 nights. Rustic canal lots 14 nights at most. A no-show by 9pm loses the lot unless paid in full."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofotterlake.com/campground/ ('(Electric/Water/Sewer – 30/50 amp)' on waterfront, canal and non-waterfront lots), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofotterlake.com/campground/ (lot ranges above; 'Lots 1 thru 20 are seasonal waterfront lots with a waiting list') + rules PDF ('One (1) dock per site must not exceed 25' in length'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -263546,18 +263768,19 @@
         "method": "derived"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofotterlake.com/campground/ ('Open April 15th – October 15th at 5902 Genesee Street'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://villageofotterlake.com/campground/ ('We begin taking reservations for the season on April 15, a security deposit of 50% down is required', 'Holiday Reservations require a 3-Day Minimum stay', 'July 4th holiday requires a 6 night minimum stay', 'Canal Rustic ... [14-night maximum stay]', 'Call (810) 793-4258'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://villageofotterlake.com/campground/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://villageofotterlake.com/campground/ ('Waterfront: Lots 1 thru 10 – (Electric/Water/Sewer – 30/50 amp) Daily – $38', 'Canal: Lots 11 thru 20 & 37, 38, 39 ... Daily – $38', 'Non-Waterfront: Lots 21 thru 36 ... Daily – $33', 'Canal Rustic: Lots 41 thru 44 ... Daily – $25', 'WE ACCEPT CHECK OR CASH ONLY'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263566,11 +263789,16 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 38,
+      "nightly_low": 33,
       "nightly_high": 38,
       "currency": "USD",
       "checked": "2026",
-      "note": "Village of Otter Lake: full-hookup 30/50-amp lots $38 a day. Read 2026-10-15."
+      "note": "Village rates (page undated, read 2026-10-22): non-waterfront lots 21-36 $33 a day ($445 a month); waterfront lots 1-10 and canal lots 11-20 and 37-39 $38 a day ($475-485 a month), all electric/water/sewer 30/50-amp; rustic canal lots 41-44 $25. Cash or check only; payments non-refundable. Boat trailer storage $50 a month."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://villageofotterlake.com/campground/ http://villageofotterlake.com/wp-content/uploads/2020/10/2019_Campground_Rates-merged-pages-deleted.pdf (rules)",
+      "note": "Confirmed on the village's page: open Apr 15 - Oct 15, full hookups 30/50-amp, phone 810-793-4258, phone reservations with a 50% deposit. Changed nightly_low 38 -> 33 (non-waterfront lots; waterfront/canal $38) and sites 44 -> 43 (lots 1-39 and 41-44); added holiday minimums (3 nights, July 4th 6), lot notes. Note trimmed of field facts. Not stated: laundry or dump (derived values left), max rig length, FCFS (derived some_sites left)."
     }
   },
   {
@@ -263694,59 +263922,68 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'coastal woods' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://muskegoncountyparks.org/pioneer-park/\nhttps://muskegoncounty.goingtocamp.com/",
     "phone": "231-744-3580",
-    "note": "Muskegon County park on the Lake Michigan shore at 1563 N. Scenic Dr., North Muskegon. 235 modern drive-in campsites (electric + water hookups) nestled in forested sand dunes, RVs to ~60 ft; ADA restrooms/showers, dump station, beach with stair access, courts/playground. Open first Friday in May through last Sunday in September. Reservations online only via goingtocamp (no call-in). --Claude",
+    "note": "Muskegon County park on the Lake Michigan shore at 1563 N. Scenic Dr., North Muskegon, with 2,000 ft of beach reached by stairs, overlook decks, courts and a playground; sites sit in forested sand dunes. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "electric": 50
     },
     "sites": {
       "count": 235,
-      "max_rig_ft": 60
+      "note": "235 modern sites, open and shaded, in forested dunes; 33 with 50-amp; some sites can't be reserved and are taken at the campground office."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "wifi": false,
+      "note": "Modern ADA restrooms and showers; sanitary dumping station; ice and firewood at the campground office. Cell service is extremely limited and there is no internet."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "First Friday in May through the last Sunday in September (2026: May 1 - Sept 27)."
     },
     "booking": {
       "reservable": true,
-      "platform": "goingtocamp"
+      "platform": "goingtocamp",
+      "url": "https://muskegoncounty.goingtocamp.com/",
+      "fcfs": "some_sites",
+      "note": "Online only (no phone reservations); the 2026 season opened for booking on January 2 at 8am. Non-reservable sites are taken in person at the campground office before 10am. ADA sites are requested by email or phone (231-744-3580). Check-out 1pm."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncountyparks.org/pioneer-park/ ('235 modern campsites ... all equipped with water and electric hookups') + goingtocamp resources (Electrical Service '20/30/50 amp' on 33 sites, '20/30 amp' on 204; Water Hookup Yes on all), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncountyparks.org/pioneer-park/ ('The park features 235 modern campsites with open and shaded areas') + goingtocamp resources, read 2026-10-22. The stored 60-ft maximum came from note prose; no county page or booking attribute states a length, so it is cleared.",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncountyparks.org/pioneer-park/ ('modern ADA restrooms and showers, a sanitary dumping station'; 'cell service is extremely limited in the campground and there is no internet'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncountyparks.org/pioneer-park/ ('The campground is open from the first Friday in May through the last Sunday in September'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://muskegoncountyparks.org/faqs/ ('Reservations for 2026 Camping season can be made on Friday, January 2nd at 8am. All reservations must be made online ... We do not accept reservations over the phone'; 'Non-reservable campsites must be reserved before 10:00 am in person at the campground office') + make-a-reservation/ ('calling the park office at 231-744-3580') + camping-rules/ ('Check-out time is at 1:00 p.m.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://muskegoncountyparks.org/pioneer-park/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://muskegoncountyparks.org/pioneer-park/ ('Day Pass: $7 Seasonal Park Pass: $25 Campsite Fee: $45/day'; 'A Muskegon County Motor Vehicle Entry Permit or “Park Pass” is required for all vehicles entering Pioneer County Park from May 1st – September 30th') + https://muskegoncountyparks.org/faqs/ ('each night of camping costs $60 for these specific dates'; refund policy), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263759,7 +263996,18 @@
       "nightly_high": 45,
       "currency": "USD",
       "checked": "2026",
-      "note": "Muskegon County: campsites $45 a day; vehicle day pass $7. Read 2026-10-15."
+      "note": "Campsites $45 a day, first Friday in May to last Sunday in September, one rate for everyone (no county-resident rate); $60 a night on the Halloween Harvest Festival dates (Sept 25-26, 2026). A Muskegon County vehicle permit is required May 1 - Sept 30: $7 a day or $25 for the season. Cancellation $10 at 7+ business days; within 6 days the first night or $75, whichever is less.",
+      "entrance": {
+        "resident": 7,
+        "nonresident": 7,
+        "per": "vehicle_day",
+        "name": "park pass"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://muskegoncountyparks.org/pioneer-park/ https://muskegoncountyparks.org/faqs/ https://muskegoncountyparks.org/make-a-reservation/ https://muskegoncountyparks.org/camping-rules/ https://muskegoncounty.goingtocamp.com/ (Pioneer Park, resourceLocationId -2147483647: /api/resourcelocation/resources + /api/attribute/filterable)",
+      "note": "Confirmed on the county's pages: 235 sites with water and electric, $45/day (one rate, no resident discount), open first Friday in May to last Sunday in September, online-only booking on goingtocamp. Added 50-amp (33 sites), the $7/day vehicle pass as entrance, flush toilets, no Wi-Fi, some non-reservable sites, booking notes. Cleared derived 60-ft maximum (no length published). Note trimmed of field facts. Phone 231-744-3580 is the only number published and the county calls it 'the park office'"
     }
   },
   {
@@ -268019,36 +268267,43 @@
     "inclusion_evidence": "Satellite at 44.966,-84.700: wooded lakeside campground loop w/ RV pads + boat launch; county page + itinio booking confirm 80 modern electric sites",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park\nhttps://secure.itinio.com/otsego/",
-    "phone": "989-732-6521",
-    "note": "Otsego County park on Otsego Lake, ~5 mi S of Gaylord. 80 modern sites (electric) + cabins, swim area, boat launch, showers/dump; open ~May-Oct. Reservable online (Itinio); 2-night minimum. --Claude",
+    "phone": "989-731-6448",
+    "note": "Otsego County park on Otsego Lake, about 5 mi south of Gaylord; swim area, boat launch, pavilions and cabins. Itinio booking reportedly takes a 2-night minimum (not stated on the county's pages). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
       "source": "rvlife"
     },
     "sites": {
-      "count": 80
+      "count": 80,
+      "note": "80 modern campsites and four cabins (plus two deluxe cabins); sites 28-39 are 'vertical' sites where a trailer parks hitch-toward-the-road; lake sites are the odd numbers 29-39."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "potable_water": true,
+      "note": "Camper flush-and-fill station; firewood, ice and snacks at the ranger station; swim area, boat launch (vehicle permit required)."
     },
     "season": {
       "year_round": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://secure.itinio.com/otsego/",
+      "note": "Book online through the county's Itinio page; seasonal sites (30-day blocks, up to about 150 days) by phone at 989-731-6448. Check-in 2pm, check-out 1pm."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park ('27 acres containing 80 modern campsites and four cabins'; 'Campsites 28-39 are vertical campsites only'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park ('Restroom and Shower Facilities', 'Camper Flush and Fill Station', 'Firewood, Ice, Ice Cream and snacks are available for purchase'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -268056,13 +268311,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park ('Click here for Reservations' -> secure.itinio.com/otsego/; 'To book a Seasonal Site, please call 989-731-6448'; 'Check-in time for campsites and cabins is 2:00 pm. Check-out time ... 1:00 pm'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-15"
+        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park ('Camping Fees (Nightly)': 30-amp sites 'Otsego County Residents: $27.00 per night Non-Otsego County Residents: $30.00 per night'; 50-amp '$32.00 ... $35.00'; 'Lake Sites 29, 31, 33, 35, 37, 39 (50-amp Service) ... $37.00 ... $40.00'; 'A 4% reservation fee is added to ALL campsite, cabin and pavilion reservations'; 'purchase a Season Pass for $15.00 or purchase a Day Pass for $5.00 per day'; seasonal 30 days $625/$730), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park ('80 modern campsites ... equipped with electricity'; rates by 30-amp/'50-amp service'; 'Each site has electrical service only and no water or sewer'; 'Camper Flush and Fill Station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -268071,11 +268332,27 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 27,
+      "nightly_low": 30,
       "nightly_high": 40,
       "currency": "USD",
       "checked": "2026",
-      "note": "Otsego County: $27-37 a night for county residents and $30-40 for others, by service level. Read 2026-10-16."
+      "note": "Non-Otsego County residents: 30-amp sites $30, 50-amp sites $35, 50-amp lake sites (29-39 odd) $40 a night; Otsego County residents pay $3 less ($27/$32/$37). A 4% reservation fee is added to every booking. Park entry needs a vehicle pass not included in the reservation: $5 a day or a $15 season pass (seniors 60+ $7, veterans and active military free). 30-day seasonal stays $625 (30-amp) or $730 (50-amp). Cabins $55-60 (deluxe from $95).",
+      "entrance": {
+        "resident": 5,
+        "nonresident": 5,
+        "per": "vehicle_day",
+        "name": "vehicle pass"
+      }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.otsegocountymi.gov/452/Otsego-Lake-County-Park (Cloudflare refuses plain HTTP; read in a browser) https://www.otsegocountymi.gov/453/Campground-PolicesRules https://secure.itinio.com/otsego/ (the county's 'Click here for Reservations' link; a bot check, read 2026-10-22)",
+      "note": "Confirmed on the county's page (browser; Cloudflare blocks plain HTTP): 80 electric sites, 2026 rates, Itinio booking. Changed nightly_low 27 -> 30 (non-resident base, residents $3 less in fees.note); added the $5/day vehicle pass as entrance, the 4% reservation fee, 50-amp, no water or sewer at sites, showers/flush toilets/flush-and-fill station, booking link and check-in times. Note trimmed of field facts. Not stated: campground season dates, minimum stay, max rig length."
     }
   },
   {
@@ -939961,7 +940238,7 @@
     "waterfront": "not waterfront",
     "waterfront_evidence": "satellite z17: RV loops on the bench north of the Little Muskegon River behind trees; the river-side sites are rustic tent sites",
     "inclusion_evidence": "Campspot booking (Mecosta Pines): nightly W/E 30/50A RV sites $50 and FHU $54 (June 2027 weeknight) -> real transient RV campground; published base $50 <= $50",
-    "website": "http://mecostapinescampground.com/\nhttps://www.campspot.com/park/mecosta-pines-campground-morley-mi",
+    "website": "http://mecostapinescampground.com/\nhttps://www.campspot.com/book/mecosta-pines-campground",
     "phone": "231-856-4556",
     "note": "Campground beside the Little Muskegon River near Morley, with something going on every weekend: kids' crafts, games, theme weekends, cornhole, dance parties and karaoke.  A swimming pool opens from Memorial Day weekend through Labor Day weekend, and there is a jump pad, mini-golf, a basketball court, a game room and rec room, and a large picnic area by the river.  It has an LP fill station and delivers firewood and ice to the site, and bikers on the White Pine Bike Trail get special rustic rates Sunday to Thursday.  Cabins and park models are rented. --Claude",
     "rating": {
@@ -939976,27 +940253,41 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 50,
+      "note": "The operator's site map shows about 122 numbered RV sites: about 75 seasonal full-hookup sites, about 30 water/electric and 17 full-hookup transient sites, and 3 park-model rentals, plus 10 primitive tent sites (A-J) by the Little Muskegon River. Campspot sells 48 RV sites: 30-amp W/E (20), 50-amp W/E (10), full-hookup back-in (11) and full-hookup pull-through (7), lengths to 45-50 ft."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/mecosta-pines-campground",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "The 2-night weekend minimum runs Memorial Day to Labor Day; holiday weekends take 3 nights including Friday and Saturday. Campspot refused Saturday arrivals and departures in June 2027. Deposit one night; $20 cancellation fee, 7 days' notice (14 for holidays). Check-in 1-8pm, check-out 11am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "http://mecostapinescampground.com/Rates.html ('Water/electric $50', 'Full hook-up $54') + Campspot park record (site types 'WATER & ELECTRICITY 50 AMP', 'F/H UP PULL THRU 50 AMP' with Sewer Hook-Up and Water Hook-Up, read 2026-10-13), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "http://mecostapinescampground.com/Site-Map.html (legend 'Seasonal Full Hookup', 'Full Hookup', 'Water/Electric', 'Park Model Rental', 'Primitive Tent Site'), read 2026-10-22 + Campspot park record (WATER & ELECTRICITY 30 AMP 20 sites max 50 ft, WATER & ELECTRICITY 50 AMP 10 sites max 50 ft, F/H UP BACK IN 50 AMP 11 sites max 45 ft, F/H UP PULL THRU 50 AMP 7 sites max 45 ft, read 2026-10-13)",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "http://mecostapinescampground.com/Rates.html ('2 night minimum on all weekends Memorial Day - Labor Day', '3 night minimum on all Holiday Weekends (Must include Friday & Saturday Nights)', 'CHECK-IN: 1PM- 8PM, CHECK-OUT: 11am', cancellation policy) + home page 'Book online' -> https://www.campspot.com/book/mecosta-pines-campground, read 2026-10-22; Campspot 2027-06-12 quote ('No Saturday arrivals. No Saturday departures.'), read 2026-10-13",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "http://mecostapinescampground.com/ ('Mecosta Pines Campground in Morley, Michigan in Van Buren County 5/1 - 9/30'), read 2026-10-13",
@@ -940042,6 +940333,11 @@
     },
     "discounts": {
       "good_sam": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://mecostapinescampground.com/ http://mecostapinescampground.com/Rates.html http://mecostapinescampground.com/Site-Map.html (images/mp_sitemap_001.png) https://www.campspot.com/book/mecosta-pines-campground (the site's 'Book Online' link; park record and quotes cached in audit/price_research/campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+      "note": "Operator's plain-http site is live and current (2026 rates, 'Now taking reservations for 2026'). Confirmed 2026 $50 W/E, $54 full hookup (Campspot 2027 $50-60), season 5/1-9/30, 50-amp/water/sewer, phone 231-856-4556. Added max rig 50 ft, pull-throughs, the Campspot /book/ link, 2-night summer-weekend and 3-night holiday minimums, and a site-mix note. Note unchanged. Gate: base exactly $50, not over."
     }
   },
   {
