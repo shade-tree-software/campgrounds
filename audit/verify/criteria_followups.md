@@ -641,3 +641,12 @@ me drop and report); each needs the research named before a verdict.
 - **121 Lake Buffalo**: FS designates no named camping area; forest order bans camping within 300 ft of the shore outside developed sites; FR 54 passenger-car gravel.
 - **14061 Mouth of Indian Creek**: DNR District 4 page "On the WMA: Camping is not permitted" vs DNR's Bluestone page + Summers County listing it as a county campsite (same conflict as 14057/14062/14063).
 - **13368 Mountwood**: own pages disagree on count (78/14 FHU vs 87/16).
+
+### p3-91 rest (NC, 2026-10-22)
+- **DROPPED:** 4283 Cotten's (long-stay/workforce park, "call us for pricing", phone/in-person booking only).
+- **15456 Cape Hatteras KOA**: temporarily_closed - Dare County 10/16/26 evacuation of Hatteras Island visitors, NC 12 closed (Isaias). RE-CHECK soon and lift. 2-night minimum Apr 1-Oct 31 (standing, marked). $35 off-season to $150+ in season; Cape Hatteras gateway 36 km.
+- **480 Crabtree Falls**: NPS closed to all camping in 2026 (Helene); reopens cleared (none published). Re-check early 2027.
+- **15457 Cherokee KOA** $50 base; GSMNP 3 km. Indoor pool closed for remodeling.
+- **4333 Contentnea Creekside**: website -> Town of Grifton page, phone 252-560-7828; town posts no rate (Campendium $30, 2023).
+- **601 Carolina Beach**: holiday minimum waived within 14 days (RA) vs state:NC row's 7 - the row now disagrees with every NC park checked (103/104/105/107/601); fix the row.
+- Verifier note: `pkill -f drv_server.py` kills every verifier's browser driver - stop only your own PID.

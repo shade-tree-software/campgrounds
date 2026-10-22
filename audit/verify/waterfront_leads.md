@@ -149,3 +149,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
 - **13367 Kennedy Park & Marina (WV)**: operator lists "Primitive: Riverfront Sites" on the Ohio; entry riverview (primitive sites may not take a 23-ft rig).
 - **747 Momma Tried (WV)** (weak): Hipcamp tent spots "by the river", "riverfront access"; entry field says riverfront while AWH's note says sites are not waterfront - the two stored statements disagree.
+- **4317 Cashie River Treehouses (NC)**: town's Campspot listing tags "Waterfront" and "Beach - Public Access" (on the Cashie River); entry not waterfront.
