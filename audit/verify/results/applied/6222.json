@@ -1,0 +1,48 @@
+{
+  "id": 6222,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.fs.usda.gov/r01/kootenai/recreation/mcgillivray-campground-and-group-sites",
+    "https://www.recreation.gov/api/camps/campgrounds/234465 (+ /rates)",
+    "recreation.gov public campsite search for facility 234465 (catx.py: 39 sites incl. host, tent-only, group)",
+    "https://www.fs.usda.gov/r01/kootenai/alerts"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 16, "nightly_high": 16, "currency": "USD", "checked": "2026", "note": "Single site $16/night. Group sites 7 and 23 $50/night (up to 25 people); group shelter (site 1) $100/night for 1-100 people, $200 for 101+."},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/mcgillivray-campground-and-group-sites ('Single Site: $16 per night', 'Group Site: $50 per night', 'Group Shelter: $100 per night (1-100 people), $200 per night (101-max people)', page last updated May 1, 2026) + recreation.gov /rates (2026 Peak Season single-site rate 16), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/mcgillivray-campground-and-group-sites ('$16.00 daily fee per single site; 50% discount with US Golden Age/Access or Interagency Senior/Access Passes'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234465 ('All sites at this campground have no electricity') + catalog (all sites NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 33, "max_rig_ft": 40},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234465 ('McGillivray Campground has 33 total campsites') + rec.gov catalog (max vehicle length 40 ft on every RV site), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"potable_water": true, "vault_toilets": true, "note": "Rec.gov and the FS narrative describe accessible vault toilets and drinking water by the group shelter; the FS page's generic amenity box says 'Restrooms are not available' and 'Potable water is not available', which contradicts its own narrative."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234465 ('Two Accessible vault toilets and drinking water are provided nearby'; amenities 'Drinking Water'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/234465", "fcfs": "some_sites", "max_stay_nights": 16, "note": "4 single sites, the 2 group sites and the group shelter are reservable on Recreation.gov; the other single sites are first-come, first-served (saving sites prohibited)."},
+      "source": "https://www.fs.usda.gov/r01/kootenai/recreation/mcgillivray-campground-and-group-sites ('In addition to the group sites there are 4 other single sites on the reservation list') + https://www.recreation.gov/api/camps/campgrounds/234465 (notices '16 Day Stay Limit', 'Non-reservable sites are first come-first serve. Saving sites is prohibited.'; rules maxConsecutiveStay 16), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Kootenai NF campground on the western shore of Lake Koocanusa, ~15 mi NE of Libby on Hwy 37 then W on FDR 228. Swim beach, picnic area and high/low-water boat ramp; large group shelter and 2 group sites. Open ~late May-early Sept. --Claude",
+  "summary": "FS page + rec.gov: confirmed $16 single site, 33 sites, 40-ft max, no electric, drinking water, vault toilets, FCFS with some reservable sites. Changed fees nightly_high 50 -> 16 (the $50 is the group-site rate). Added 16-day stay limit, rec.gov booking, Senior/Access 50% discount. Libby Ranger District (406-293-7773). No alert or closure for the campground or FDR 228. Note trimmed of restated values.",
+  "flags": [
+    "Missing phone: rec.gov and the FS notices give (406) 293-7773 (Libby Ranger District).",
+    "Facilities conflict on the FS page itself: its narrative and rec.gov describe vault toilets and drinking water, while its generic amenity box says 'Restrooms are not available at this site' and 'Potable water is not available at this site'."
+  ]
+}

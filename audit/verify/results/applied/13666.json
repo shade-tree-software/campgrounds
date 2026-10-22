@@ -1,0 +1,47 @@
+{
+  "id": 13666,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10386530",
+    "https://www.recreation.gov/api/camps/campgrounds/10386530/rates",
+    "recreation.gov campsite catalog for 10386530 (public search API, 7 sites), read 2026-10-22",
+    "https://www.nws.usace.army.mil/Missions/Civil-Works/Locks-and-Dams/Libby-Dam/ (Access Denied to plain and headless fetch)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 10, "currency": "USD", "checked": "2026", "note": "recreation.gov 2026 rate table: $10/night for every site in the reservable Peak Season (May 22 - Sep 6); free in the first-come, first-served seasons (Apr 1 - May 21 and Sep 7 - Nov 30: 'Sites are free and first-come-first serve')."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530/rates (Peak Season 2026-05-22..2026-09-06 PeakBlackwellSite1-7 $10; First-come, First-served Season 2026-04-01..05-21 and 2026-09-07..11-30 WalkInBlackwellSite1-7 $0) + https://www.recreation.gov/api/camps/campgrounds/10386530 (important dates 2026-09-07..11-30 'Sites are free and first-come-first serve'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "11-30", "note": "recreation.gov: 'Campground is closed.' December 1 - March 31."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530 (important dates 2026-12-01..2027-03-31 'Campground is closed.') + /rates (seasons run 2026-04-01..2026-11-30), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530 ('7 standard non-electric campsites') + recreation.gov catalog (7 STANDARD NONELECTRIC, water/sewer hookups 'No'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 7, "note": "7 standard non-electric sites; equipment allowed includes RV, fifth wheel, trailer and pickup camper; no maximum vehicle length published. Site limits: 2 motorized vehicles, 1 camping unit and 2 tents (or 3 tents), 8 people."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530 ('7 standard non-electric campsites'; notice 'Site Limits: 2 motorized vehicles 1 Camping unit (RV, motorhome, camper, van, etc) and 2 tents or 3 tents 8 people') + recreation.gov catalog (7 sites, equipment RV/Fifth Wheel/Caravan/Pickup Camper, Max Vehicle Length blank), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "note": "Picnic tables, fire rings, a vault toilet, trash collection and a boat ramp (recreation.gov's amenity list does not mention drinking water)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530 ('Amenities include picnic tables, fire rings, a vault toilet, and boat ramp'; amenities 'Boat Ramp', 'Fire Pit', 'Picnic Tables', 'Trash Collection', 'Vault Toilets'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "max_stay_nights": 14, "note": "Run by the Corps itself (USACE, not a concession). Peak season (2026: May 22 - Sep 6) is reservation only on recreation.gov with no first-come sites; the spring and fall seasons are free and first-come, first-served. 14 nights total within a rolling 30 days across the Libby Dam project (Alexander, Dunn Creek, Blackwell and Downstream)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10386530 (org USACE, is_commercially_managed false; notice 'Campsite during \"Peak Season\" are reservation only. There are no First Come, First Serve sites. First Come, First Serve sites are only available during \"Non-Peak Season\"', 'You may stay up to 14 nights total at the Libby Dam project (Alexander, Dunn Creek, Blackwell and Downstream (non-reservation)) within rolling 30 days') + /rates, read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Small Corps of Engineers campground on the west bank of the Kootenai River about 3.5 miles below Libby Dam, ~20 mi from Libby. Large, level gravel sites, some pull-through; a reviewer fit a 24-ft Class B. Train noise across the river; no cell service. --Claude",
+  "summary": "recreation.gov record and rate table: confirmed 7 non-electric sites, no hookups, vault toilet, reservable on recreation.gov. Changed fees 0/0 -> 0/10 ($10 peak, free in the FCFS shoulder seasons; the old value read only the current FCFS season). Added season 04-01 to 11-30 (closed Dec 1 - Mar 31), 14-night limit (rolling 30 days, project-wide), peak reservation-only / off-peak FCFS in booking note, site limits. Not stated: drinking water (derived potable_water left; rec.gov amenities don't list it), max rig length, pull-through. Note trimmed of restated fields.",
+  "flags": [
+    "Unconfirmed: recreation.gov's description and amenity list name picnic tables, fire rings, vault toilet, trash and boat ramp but not drinking water; the entry's potable_water: true (derived from note prose) was left as is. The USACE Libby Dam page (https://www.nws.usace.army.mil/Missions/Civil-Works/Locks-and-Dams/Libby-Dam/) refuses automated fetches, so it could not be checked."
+  ]
+}

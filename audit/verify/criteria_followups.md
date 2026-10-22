@@ -4,6 +4,47 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6329 Grasshopper (mt-23): temporarily closed by FS order 0600 Jul 27 - 1800 Nov 1, 2026 (site work, culverts). Re-check after Nov 1.
+- 6330 Graves Bay (mt-23): FS publishes it as 'Graves Creek Campground' ('also known as Graves Bay').
+- 6328 Gold Creek (mt-23): FS page gives two seasons (year round snow dependent vs Memorial Day - Labor Day); season unrecorded.
+- 6333 Harry's Flat (mt-23): FS amenity block says flush toilets, description says the rebuild added vault toilets; recorded vault.
+- 13257 Hellgate (mt-23): max_rig_ft 120 rests on 5 catalog sites at 100-120 ft; partial campsite closure from a shoreline project (from 2026-03-25) noted.
+- 14600 Heritage Hills Farm (mt-23, hipcamp): Hipcamp-only channel (live, 35 reviews to Oct 2026); Google lists it with phone 406-220-2656, 3 reviews. $32 + Hipcamp fee, under the gate. Max rig unrecorded (listing says under 100 ft, picker shows 30 ft).
+- 6325 Ekalaka Park (mt-22): FS says 'Open parking. Small trailers only.' with no length; the ~30 ft came from Campendium. 23-ft fit unconfirmed (asked AWH). FS page unclear on toilets.
+- 6326 Fishtrap Lake (mt-22): FS gives no rig max; last 2 mi (FR #7593) narrow; ~24 ft only from aggregators (cleared).
+- 6323 Dorr Skeels (mt-22): only 2 of 8 overnight sites are RV sites (5 tent-only, 1 host).
+- 14599 Duck Lake (mt-22): electric base exactly $50.00 (not over the gate; Glacier gateway anyway); primitive $30 but 23-ft fit unclear. Tribe lists (406) 338-2111 x2161/x2157 vs booking engine 406-338-4557.
+- 13577 Ed McGivern (mt-22): no city page or Visit Montana listing; kept on Google Maps (review a year old confirms camping). Website is still The Dyrt; no official URL. Values from The Dyrt were cleared.
+- 6327 Fourth of July (mt-22): temporarily closed (Sand Creek / Bobcat Lakes fires, page updated 2026-08-31); inherited rec.gov booking was wrong, FS says FCFS. Re-check spring 2027.
+- 14121 Eureka Reservoir FAS (mt-22): FishMT page says 'Lease expires in 2019' but still lists camping and fees.
+- 6321 Delmoe Lake (mt-21): temporarily closed for construction (Forest Order 01020426-01, Apr 1 - Oct 31, 2026, campground + FS Rd 9371). Re-check before 2027; site count/lengths may change with the rebuild. Butte RD phone: FS page 406-494-2147, order prints 406-497-2147.
+- 6318 Cow Creek (mt-21): 30-ft trailer max is note-only, not on the FS page; access is 5 mi of FR 4095.
+- 6310 Boulder Creek (mt-20): temporarily closed per FS fire banner (Sand Creek / Bobcat Lakes fires, page updated 2026-08-28); no matching closure order listed. Re-check spring 2027. FS page contradicts itself on water.
+- 6316 Clark Memorial (mt-20): only rig-size evidence is aggregator text (max ~24 ft, several 20-ft sites); FS gives no count or length. 23-ft fit unconfirmed by the agency.
+- 13666 Blackwell Flats (mt-20): drinking water unconfirmed (rec.gov silent; USACE Libby Dam page refuses fetches).
+- 6312 Cascade (mt-20): rec.gov gives 9+1 group vs 11+1 group sites.
+- 6313 Cave Mountain (mt-20): derived max_rig_ft 35 and FCFS rest on visitmt only.
+- 6302 Basin (mt-19): pin 45.17300,-109.45083 looks ~4.8 km off; FS gives 45.16108,-109.39183, rec.gov 45.1625,-109.3917. Re-pin (and re-fetch elevation). FS names concessionaire RRMA (928) 537-8888 for this campground; entry keeps Beartooth RD 406-446-2103.
+- 6300 Barry's Landing (mt-19): NPS/rec.gov name is 'Barry's Landing & Trail Creek Campground'; summer fee amount unpublished.
+- 6307 Big Therriault Lake (mt-19): FS page contradicts itself on potable water.
+- 6238 Pine Grove (mt-18): temporarily closed all of 2026 (Custer Gallatin order 01-11-82-26-04, hazard trees/Ips beetle); no reopening stated. Re-check spring 2027; may become long-term. No Beartooth RD phone on the page.
+- 14104 Arod Lake FAS (mt-18): FWP now says 'Limited access for trailers and RV's' and 'Difficult Accessibility'; unconfirmed whether a 23-ft motorhome can reach the site. No phone (FWP Region 4).
+- 6331 Bad Medicine (mt-18): inherits reservable/recreation.gov/180-day from the federal row, but it is not on rec.gov and the FS page has no reservation link; probably FCFS, unstated.
+- 6087 Hell Creek (mt-18): inherited 180-day window (federal row) doesn't fit a tribally run Campspot park; Campspot still links the old FWP page as its marketing site.
+- 6124 Canoe Launch (mt-18): the 2026-10-15 fee read came from the fair's other campground page (same rate table).
+- 6224 Crystal Lake (mt-18): removed the rec.gov 250004 link from website (it is the separate group campsite; individual sites are FCFS).
+- 6210 Cabin City (mt-17): temporarily closed for 2026 (storm damage; closure order May 11, 2026 - May 1, 2027). Re-check spring 2027.
+- 6101 Confederate (mt-17): Reclamation names it 'Confederate Campground' (entry: 'Confederate Recreation Area'); only campground-level source is a 2020 table PDF, big-rig claim aggregator-only.
+- 6092 Sanford Park (mt-17): no agency page names it (only Reclamation's Lake Elwell table); every detail is aggregator-sourced. Lack-of-information candidate, asked AWH.
+- 6064 Cooney SP (mt-17): manual year_round season rests on FWP park hours, not a campground statement.
+- 6112 Drummond City Park (mt-17): town's two pages give 3+7 vs 3+10 sites.
+- 6097 Coal Banks Landing (mt-17): its recreation.gov link is a POI page, not a bookable campground (BLM is FCFS).
+- 6222 McGillivray (mt-16): FS page contradicts itself on restrooms/potable water (narrative + rec.gov say vault toilets and water; amenity box says neither).
+- 6214 Pete Creek (mt-16): FS page no longer states the ~24-ft trailer limit or FCFS the note/inclusion evidence cite.
+- 6252 Blodgett (mt-16): FS page gives two seasons (May 1-Oct 31 vs Memorial Day-Labor Day); both recorded.
+- 6199 White Earth (mt-16): Reclamation has no page for it; agency presence rests on the managing office phone.
+- 6113 Tri-County Fairgrounds (mt-16): no website, Powell County fair page Cloudflare-blocked, no official phone; possible $30/night only from Oct 2025 meeting minutes. Lack-of-information candidate, asked AWH.
+- 6193 Barretts Park (mt-16): no Reclamation page or rec.gov facility; website is the generic Montana Area Office home; phone only on aggregators. Lack-of-information candidate, asked AWH.
 - **6118 Chester City Park** (mt-15, 2026-10-22): DROPPED by AWH (lack of information). No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
 - **6114 Zurich Park** (mt-15): fee schedule dated 2023-01-01 ($30/day hookup) recorded with checked 2023; website set to that PDF. Phone 406-357-4261 is on no county page (Commissioners 406-357-3240); left as is.
 - **6111 Lewis and Clark County Fairgrounds** (mt-15): '$35.00 per night' undated, not recorded; the Checkfront booking link is dead ('Account Not Found'), so booking looks phone/office only; facility-rentals page prepended to website.

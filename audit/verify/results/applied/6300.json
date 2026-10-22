@@ -1,0 +1,50 @@
+{
+  "id": 6300,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=bica (Barry's Landing & Trail Creek Campground record, the data behind https://www.nps.gov/bica/planyourvisit/campgrounds.htm)",
+    "https://www.nps.gov/bica/planyourvisit/campgrounds.htm",
+    "https://www.nps.gov/bica/planyourvisit/fees.htm",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=bica",
+    "https://www.hiddentreasurecharters.com/campsite-reservations/"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS campground record for Barry's Landing & Trail Creek (developer.nps.gov/api/v1/campgrounds?parkCode=bica: 'Vault toilets only, no running water or electricity', rvInfo 'There are NO utility sites', electricalHookups 0) + https://www.nps.gov/bica/planyourvisit/fees.htm ('All sites at Trail Creek are non-utility sites'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "max_rig_ft": 28, "pull_through": false, "note": "14 RV sites and 16 tent sites; 'Most RV sites are small for a 28 ft RV or smaller', though the NPS record also says sites accommodate most sizes of RV plus vehicle and boat. Gravel, level sites; no pull-throughs."},
+      "source": "NPS campground record (developer.nps.gov/api/v1/campgrounds?parkCode=bica: '14 RV sites, 16 tent sites - Most RV sites are small for a 28 ft RV or smaller', totalSites 30, tentOnly 16, rvInfo 'Sites accommodate most sizes of RV plus vehicle and boat. There are no pull through sites.', 'Paths and camp sites are gravel and level'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "showers": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false, "note": "Trash collection and food-storage lockers year round; seasonal campground host. No cell reception."},
+      "source": "NPS campground record amenities (toilets 'Vault Toilets - year round', potableWater 'No water', showers 'None', dumpStation 'No', laundry 'No', campStore 'No', internetConnectivity 'No', cellPhoneReception 'No', foodStorageLockers, staffOrVolunteerHostOnsite 'Yes - seasonal'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "NPS campground record ('Open All Year'; operatingHours 'Open year round. First come first serve.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "note": "'All sites are first come first serve except the group campground.' Fees are paid at the iron ranger at Trail Creek campground. Run by Hidden Treasure Charters under an NPS Commercial Use Agreement (pilot program). 14 cumulative days in a 28-day period; check-out noon."},
+      "source": "NPS campground record (reservationInfo 'All sites are first come first serve except the group campground.'; regulationsOverview 'Campsite occupancy may not exceed 14 cumulative days within a 28-day period', 'Check-out is 12:00 pm') + https://www.nps.gov/bica/planyourvisit/campgrounds.htm ('Please pay campground fees at the Iron Rangers at Horseshoe Bend and Trail Creek campground at Barry's Landing') + https://www.nps.gov/bica/planyourvisit/fees.htm ('HiddenTreasure Charters is running the Horeseshoe Bend Campground and Trail Creek Campground at Barry's Landing as part of a pilot program under a Commercial Use Agreement'), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 0, "currency": "USD", "note": "Free October through mid-May; fees are collected mid-May through September (amount not published by NPS or the concessionaire)."},
+      "source": "NPS campground record operatingHours ('Mid May through September there is a campground host and fees are collected. October through Mid May camping is free.'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "NPS campground in Bighorn Canyon National Recreation Area (MT side, ~27 mi north of Lovell WY via Hwy 37 and the signed Barry's Landing turn), on a point of Bighorn Lake at the Barry's Landing boat ramp. --Claude",
+  "summary": "NPS (Bighorn Canyon NRA), run by concessionaire Hidden Treasure Charters under a Commercial Use Agreement; all sites FCFS. Confirmed 30 sites (14 RV / 16 tent), 28-ft RV guidance, no hookups or water, vault toilets, FCFS. Added open all year, no pull-throughs, no showers/dump/laundry/store/wifi, 14-in-28-day limit, free Oct-mid May (summer fee amount unpublished). No current NPS alert for it. Note trimmed of restated values.",
+  "flags": [
+    "Missing phone: the NPS campground record gives 307-548-7230.",
+    "Name: NPS publishes this campground as \"Barry's Landing & Trail Creek Campground\" (recreation.gov POI 247536 uses the same name); the entry says \"Barry's Landing Campground\".",
+    "Summer camping fee amount is not published by NPS or by the concessionaire (hiddentreasurecharters.com only books Horseshoe Bend via Campspot)."
+  ]
+}

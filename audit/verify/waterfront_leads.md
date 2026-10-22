@@ -5,6 +5,17 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- 14121 Eureka Reservoir FAS (mt-22): FWP says the reservoir 'is drawn down for irrigation and water levels fluctuate seasonally'; the lakefront call may not hold late in the season.
+- 6310 Boulder Creek (mt-20): FS says 'The Wise River flows along the western border of this campground area'; entry is riverview.
+- 6315 Chisholm (mt-20): FS says 'next to Hyalite Reservoir', East Fork Hyalite Creek along the north side; rec.gov lists Lake and Beach Access; entry is lakeview.
+- 6125 Beaver Creek Park (mt-19): Hill County camping page lists non-reservable campsites 'at Beaver Creek Lake' and group areas with 'Access to Beaver Creek'; entry is not waterfront.
+- 6239 Murray Bay Campground (mt-18): rec.gov/FS say it 'is situated along the massive Hungry Horse Reservoir' (east shore), concrete boat ramp within the campground; entry is not waterfront.
+- 6233 Holland Lake Campground (mt-17): rec.gov says 'on the shores of Holland Lake', lists Lake and Beach Access; entry is lakeview.
+- 6097 Coal Banks Landing (mt-17, weak): BLM says 'situated along the Upper Missouri River'; entry is riverview.
+- 6065 Wayfarers Unit, Flathead Lake SP (mt-17, weak): FWP says 'on the northeast shore of Flathead Lake', ReserveAmerica tags sites 'Near Water'; entry is not waterfront.
+- 6214 Pete Creek Campground (mt-16): FS page lists 'access to the Yaak River'; entry is not waterfront.
+- 6173 Rainbow Point Campground (mt-16): rec.gov says 'on the banks of scenic Hebgen Lake' with Beach and Lake Access; entry is not waterfront.
+- 6245 Beaver Creek Campground, Spotted Bear (mt-16): FS says 'the campsites are less than 100 feet to the river', 'situated next to Spotted Bear River'; entry is riverview.
 - **6211 Big Larch** (mt-15, 2026-10-22): rec.gov/FS: 'located on the east shoreline of Seeley Lake', swimming beach and boat ramp; the entry is not waterfront.
 - **6225 Eagle Creek** (mt-15): FS: 'A campground along the Yellowstone River'; the entry is not waterfront.
 - **6220 Big Beaver** (mt-15): FS: 'Nestled close to the serene Blakely Creek'; the entry is riverfront (Boulder River). Check which water it's on.

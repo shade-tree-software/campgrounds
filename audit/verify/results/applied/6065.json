@@ -1,0 +1,43 @@
+{
+  "id": 6065,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/wayfarers",
+    "https://montanastateparks.reserveamerica.com/camping/wayfarers-unit--flathead-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630118 (read in a browser)",
+    "https://montanastateparks.reserveamerica.com/camping/wayfarers-unit--flathead-lake-state-park/r/campsiteDetails.do?siteId=312&contractCode=MT&parkId=630118 (read in a browser)",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630118, read 2026-10-12)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"note": "The only electric site is 023 (50 amp, back-in, 35 ft), and ReserveAmerica designates it for campers with accessibility needs (proof of eligibility required), so no electric site is open to the general public."},
+      "source": "https://montanastateparks.reserveamerica.com/camping/wayfarers-unit--flathead-lake-state-park/r/campsiteDetails.do?siteId=312&contractCode=MT&parkId=630118 ('Type: Campsite Electric', 'Electricity Hookup: 50', 'You have chosen to reserve a campsite designated for use by individuals with accessibility needs') + audit/state_park_fees/mt_sites_2026-10-12.json (one Campsite Electric among 31 sites), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "max_rig_ft": 40, "pull_through": true, "note": "30 campsites including a shared hike-bike site with 9 tent pads and five walk-in tent sites. ReserveAmerica's drive-in sites take 20-40 ft; seven are pull-throughs (four at 40 ft)."},
+      "source": "https://fwp.mt.gov/wayfarers ('There are 30 campsites in the park, including a shared hike-bike campsite with 9 tent pads', 'The maximum length for RV/trailer units is 40 feet') + audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica driveway entries and max vehicle lengths), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true, "note": "Water, the shower house and flush restrooms May through September; showers are coin-operated. Bear-resistant food lockers; firewood and ice sold."},
+      "source": "https://fwp.mt.gov/wayfarers (Amenities: 'RV Dump Station', 'Shower', 'Toilets (Flush)', 'Toilets (Vault)', 'Water'; 'Water Available May through September', 'Shower House & Flush Restrooms Available May through September') + ReserveAmerica park page ('comfort stations with coin-operated showers, boat and trailer dump stations, and firewood and ice for sale'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31"},
+      "source": "https://fwp.mt.gov/wayfarers (Seasons & Hours: 'Campgound: Open April through October'; the park itself is open year-round for day use), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "reserveamerica", "window_opens_days": 90, "reserve_until": {"relative_to": "arrival", "offset_hours": -24}},
+      "source": "https://montanastateparks.reserveamerica.com/camping/wayfarers-unit--flathead-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630118 (Booking Window, Campsite and Campsite Electric: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance') + https://fwp.mt.gov/wayfarers ('Reserve a Campsite', 855-922-6768), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT state park unit on the NE shore of Flathead Lake near Bigfork, in mature mixed forest; rocky shoreline and cliffs known for sunsets, boat launch (dock usable mainly mid-June to early September), playground and group shelter in adjacent Harry Horn Park. --Claude",
+  "summary": "FWP page + ReserveAmerica: confirmed 30 sites, 40-ft max, showers, flush/vault toilets, dump station, reservable on ReserveAmerica with the inherited 3-month window and 1-day cutoff; added pull-throughs, potable water (May-Sept), campground season April - October. The one electric site (50 amp) is ADA-designated, so no public electric is recorded (hookups note only). Fees left as recorded 2026-10-12 (FWP gives only the statewide $4-$34 range). Note trimmed of restated values and the 'open ~April-Nov' that FWP contradicts.",
+  "flags": [
+    "Missing phone: FWP gives the park's direct line 406-837-4196 (May-September) and the year-round Flathead Lake Ranger Station 406-837-3041 (https://fwp.mt.gov/wayfarers).",
+    "Waterfront re-audit lead (weak): FWP puts the unit 'on the northeast shore of Flathead Lake' and ReserveAmerica tags its sites 'Near Water'; the entry is not waterfront."
+  ]
+}
