@@ -231,3 +231,4 @@ Its domain is dead and Google's website link is an unrelated spam domain; Google
 
 ## 3984 Mason County Fairgrounds Campground (Ludington, MI) — still sold to the public?
 The operator's only camping page now offers just the 2026 Western Michigan Fair week registration ($150/week, exhibitor rules); nothing on masoncountyfairgrounds.com (read 2026-10-22) says public nightly camping is sold outside fair week, though an earlier read said it was open year-round except fair week and a big horse show. RV Life 5*/$$. Run by the fair association, so now `private`. Keep pending a call (231-843-8563), or drop as fair-only?
+**ANSWERED 2026-10-22 (AWH): drop.** Done.

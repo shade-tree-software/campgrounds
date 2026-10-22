@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    3984: ("2026-10-22", "fair-week camping only; no public nightly camping offered (AWH 2026-10-22)", "masoncountyfairgrounds.com (read 2026-10-22): the only camping page is the 2026 Western Michigan Fair week registration ($150/week, exhibitor rules); nothing offers public nightly camping outside fair week. Run by the Western Michigan Fair Association. AWH: drop. No --AWH note, no stays."),
     3845: ("2026-10-22", "over the US$50 price gate, no gateway (Good Sam 10% still over)", "Campspot cheapest site $53.56 (Tuesday, Oct 2026) plus a mandatory 7.99% Resort Fee = $57.84 before tax; Good Sam 10% leaves ~$52. Nearest gateway Grand Rapids 105 km; no stays. Read 2026-10-22 (Campspot record of 2026-10-13). No --AWH note."),
     3835: ("2026-10-22", "over the US$50 price gate, no gateway; mostly seasonal", "hilltopcampground.net (Wayback 2026-02-12): daily full hookup $85/night, the only nightly site type; every site also sold seasonally Apr 15-Oct 15 ($2,800-3,000). Site answered 503 on 2026-10-22 (last good capture 2026-06-17). Nearest gateway Detroit 81 km; no stays. Read 2026-10-22. No --AWH note."),
     3899: ("2026-10-22", "no web presence (private presence rule)", "Facebook-only (facebook.com/ClearLakeCamping); Google Maps 18 reviews (under 25), phone 906-635-0201; no operator website, booking engine or posted 2024+ rate; RV Life $$ only. Read 2026-10-22. No --AWH note, no stays."),
