@@ -123,3 +123,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **503 Big Rock (WV)**: entry riverfront, but its own --AWH note says "Sites are not waterfront"; rec.gov says "adjacent to the Cranberry River". Re-audit (likely a downgrade).
 - **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
+- **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).

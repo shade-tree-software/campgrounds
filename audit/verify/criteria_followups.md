@@ -436,3 +436,10 @@ me drop and report); each needs the research named before a verdict.
 - **733 South Cove**: county fee page vs reservations page disagree (as Chau Ram); county 86 sites vs ReserveAmerica 56 RV + 11 tent.
 - **4366 Aiken RV Park**: aikenrvpark.com redirects to a cabinetry company; Campspot is the only operator channel.
 - **15490 Mount Pleasant KOA**: $84.99+, Charleston gateway (17 km).
+
+### p3-69 (SC, 2026-10-21)
+- **4370 Mr. Z's** kept: workforce signals (6 mi from Michelin/US Foods plants; monthly $750, "Maximum stay 3 years for Monthly", monthly rigs under 10 years old) but a posted $50 nightly rate (at the gate), no application, rules say "temporary stays by transient guests". Passes test 2.
+- **4373 Saluda River / 4365 Sweetwater Lake / 4364 Swamp Fox / 4368 Sandy Oak**: no operator rate; presence on Google Maps (200 / 166 / 356 reviews) or the operator site (Sandy Oak); price from camper reports (Saluda $40 2024-01, Sweetwater $40 2024-12) or RV Life $$. Directory-only values cleared. Swamp Fox's domain is parked and its RoverPass unclaimed (no website). Sweetwater advertises "Long term and short term".
+- **4381 High Falls**: county fee page vs reservations page disagree (as Chau Ram / South Cove); 2-night waterfront minimum in booking.note.
+- **592 Lake Aire** $62.30-77 and **15491 Myrtle Beach KOA** $68.94: over the gate, Charleston / Myrtle Beach gateways.
+- **4363 Jolly Acres**: syrrrun.com is its own site; rate undated (© 2013), under the gate.
