@@ -725,3 +725,11 @@ me drop and report); each needs the research named before a verdict.
 - **4227 Flanners Beach**: season is year-round (FS); beach access still closed from Florence. Site rules override the campground-level minimums.
 - **31 Carolina Hemlocks**: open; fishing pier day-use closed (storm). Operator FIND Outdoors.
 - **14342 Button's**: posts $45 nightly with Firefly booking alongside monthly/annual residents - passes test 2.
+
+### p3-101 (NC, 2026-10-22)
+- No drops. **766 Hidden Orchard** (Hipcamp): $65 + $11.52 Hipcamp fee, over the gate, no gateway; KEPT because AWH's note priced it ("$65+fees"), like 747. Listing now "Hidden Orchard RV and Glamping"; new host, 1 booking, 0 reviews.
+- **13971 Gorges**: base moved $30 -> $45 (non-hookup driveways are 20 ft).
+- **4209 Hanging Rock** and **13972 Merchants Millpond** still closed (shower houses / construction) though RA says open year round - re-check 2027.
+- **4216 Goose Creek**: Camp Leach Rd entrance closed for bridge work from Aug 24 (detour); RA page gives the holiday 2-night minimum with no waiver.
+- **13204 Harmon Den lower loop**: rec.gov "tent campers and small trailers"; 30-ft sites, motorhomes not named. Kept.
+- **14343 Holly Bluff**: "Temporary Live-in Monthly Rates" from Aug 2026; nightly posted + bookable; RVs over 10 years old email a photo.

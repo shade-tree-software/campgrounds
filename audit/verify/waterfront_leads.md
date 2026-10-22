@@ -155,3 +155,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **32 Linville Falls (NC)** (weak): rec.gov "Linville River ... winds beside the campground"; entry not waterfront.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 - **4306 Almond Boat & RV Park (NC)** (DOWNGRADE): operator says "It is not water front but very close to the lake"; entry lakefront.
+
+- 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
