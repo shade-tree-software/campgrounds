@@ -5,6 +5,7 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **14172 Willow Creek Reservoir FAS** (mt-31): FWP says the reservoir is drawn down for irrigation and levels fluctuate seasonally; stored lakefront may sit well back late season.
 - **6258 Reservoir Lake** (mt-28): stored lakeview; FS calls it a 'lakeside campground' 'along the lake's south shore'.
 - **6284 Sage Creek** (mt-28): stored not waterfront; FS 'located along the banks of Sage Creek'.
 - **6286 Sheridan** (mt-28): stored not waterfront; FS 'on the banks of the Main Fork of Rock Creek', rec.gov 'on the banks of Rock Creek'.

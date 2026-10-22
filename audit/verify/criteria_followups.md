@@ -4,6 +4,8 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6269 Wood Lake** (mt-31): FS page contradicts itself on water ('provides restrooms and drinking water' vs 'Potable water is not available at this site'); derived potable_water cleared. Call Rocky Mountain RD 406-466-5341.
+- **13576 Williamson Park (Shelby)** (mt-31): directory-only site count (25) and showers cleared; city page states neither.
 - **6295 Tom Miner** (mt-30): temporarily closed, hazard-tree order 01-11-03-26-02 (2026-08-21 to 2026-12-31); recheck before the June 2027 season.
 - **14171 Whitebird FAS** (mt-30): FWP 'Site Closure - Partial' since 2025-12-23, walk-in only (vehicle bridge unsafe); recorded temporarily_closed. Recheck after the bridge repair.
 - **6296 Tuchuck** (mt-30): stored 22-ft max (note-derived) no longer on the FS page; reviews unreachable.
