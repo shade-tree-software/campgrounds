@@ -4,6 +4,7 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6283 Red Top** (mt-28): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility; free pack-in/pack-out page names no reservations).
 - **13309 Pleasant Valley (Kootenai)** (mt-27): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, page names no reservations).
 - **6280 North Dickey Lake** (mt-27): rec.gov contradicts itself on reservable sites (description says 5, catalog marks 13 of 24); both in booking.note.
 - **6281 Norton** (mt-27): phone changed from the Lolo NF supervisor's office to Missoula Ranger Station 406-329-3814 (the page's district contact).

@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **6258 Reservoir Lake** (mt-28): stored lakeview; FS calls it a 'lakeside campground' 'along the lake's south shore'.
+- **6284 Sage Creek** (mt-28): stored not waterfront; FS 'located along the banks of Sage Creek'.
+- **6286 Sheridan** (mt-28): stored not waterfront; FS 'on the banks of the Main Fork of Rock Creek', rec.gov 'on the banks of Rock Creek'.
 - **6280 North Dickey Lake** (mt-27): FS says 'next to scenic Dickey Lake', 'on a hillside next to the 800-acre lake'; entry says not waterfront.
 - **14148 Newlan Creek Reservoir FAS** (mt-27): FWP says the reservoir is drawn down for irrigation and levels fluctuate seasonally.
 - **6103 Painted Rocks SP** (mt-27): FWP alert (Oct 1, 2026) says water access is unavailable from the park as the reservoir drops; entry is lakeview, no change.
