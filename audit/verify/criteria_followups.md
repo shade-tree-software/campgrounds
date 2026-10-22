@@ -776,3 +776,10 @@ me drop and report); each needs the research named before a verdict.
 - **3827 Rockey's**: no posted rate, ResNexus captcha; RV Life $$ + booking engine; seasonal share unpublished.
 - **3964 School Section Lake**: ~50% seasonal (county park), 2-night minimum on all reservations; $10 daily vehicle permit required.
 - **411** renamed "...Rivermouth Rustic Campground" (DNR name); 9 of 35 sites take only 20-ft units, 26 take 25 ft+.
+
+### p3-106 (MI, 2026-10-22)
+- No drops. **3984 Mason County Fairgrounds**: ownership local -> private (run by the Western Michigan Fair Association, as 1472); see asks.md (public nightly camping still sold?).
+- **416 Lake Superior SF CG**: DNR "18 tent and small trailer sites", no length posted; AWH-noted.
+- **3975 Merrill-Gorrel**: up to ~half the sites seasonal (county park); $7/day county vehicle permit; 2-night standing minimum.
+- **14232 Northern Bear Paw**: $45/$50 at the line; monthly/seasonal "call for rates", 25 nightly sites online.
+- **790 Otsego Lake SP**: "Sites 34-83 reopened" (construction); $41-56 by site type.
