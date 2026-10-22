@@ -1,0 +1,93 @@
+{
+  "id": 4226,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.fs.usda.gov/r08/northcarolina/recreation/cedar-point-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/233312",
+    "https://www.recreation.gov/api/camps/campgrounds/233312/rates",
+    "trip_data/ridb_campsites.json (RIDB campsite catalog for 233312, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "status": {
+      "values": {
+        "operating": "open"
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/cedar-point-recreation-area ('Site Open'; no alert for the campground), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 27,
+        "nightly_high": 27,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Single site $27 ($20 camping fee + $7 electric; every site has electric); double site $54. Scan & Pay on first-come sites adds up to $2.75 a day. Arriving before 5 a.m. means paying for the previous night."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/cedar-point-recreation-area ('Single site camping fee per night: $20 plus a $7 electrical fee. Double site camping fee per night: $40 plus a $14 electric fee. All sites have electrical.') + https://www.recreation.gov/api/camps/campgrounds/233312 (fee description: 'Standard Single Electric Site = $27.00 ($20.00 Basic Fee + $7.00 Electrical Fee)') + /rates (2026 and 2027: STANDARD ELECTRIC 27), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233312 ('36 accessible sites with full electrical service (20/30/50 amps)') + RIDB catalog for 233312 (every public site 'Water Hookup: No'; the only two water hookups are host sites 013 and 037; no sewer attribute), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 36,
+        "max_rig_ft": 75,
+        "pull_through": true,
+        "note": "36 campsites, all electric (32 reservable, 4 first-come). recreation.gov's catalog lists max vehicle lengths of 50-75 ft (most 52-70 ft); one pull-through (site 20), the rest back-in."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233312 ('The campground has 36 accessible sites', '32 of the 36 sites may be reserved') + https://www.fs.usda.gov/r08/northcarolina/recreation/cedar-point-recreation-area ('The campground has 36 sites with electrical hookups') + RIDB catalog (Max Vehicle Length, Driveway Entry), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Bath house with private hot showers; dump station with a potable-water connection. Small-craft boat ramp and fishing pier; Tideland Trail."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233312 ('A modern, state-of-the-art bath house is available, with private, hot showers. Accessible flush toilets, and a dump station with potable water connection is also provided.') + the Forest Service page ('a bathhouse with flush toilets, warm showers, drinking water and a ramp for shallow water boats'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Hurricanes and tropical storms (usually July-September) sometimes close it temporarily."
+      },
+      "source": "https://www.fs.usda.gov/r08/northcarolina/recreation/cedar-point-recreation-area ('Seasons of Use: Open all year') + recreation.gov notice ('Cedar Point is sometimes impacted by hurricanes and tropical storms and must be closed temporarily'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -72},
+        "min_stay": [{"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "Run by the Forest Service's Croatan Ranger District (not a concession). Reservations up to 180 days ahead and no later than 3 days before arrival; 4 sites are first-come (see the host before paying; Scan & Pay only for those). Holiday weekends need 3 nights. 14 nights in any 30 days, then 16 days away."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233312 ('Reservations must be made 3 days prior to arrival ... but may be made up to 180 days in advance', '4 sites are first com-first served campsites', '14 day maximum consecutive stay rule ... cannot exceed 14 nights in a 30 day period'; rules minHolidayWeekendStay 3, reservationCutOff 3, maxStay 14 rolling 30 days; is_commercially_managed false), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {
+        "interagency_senior_access": true,
+        "note": "Senior/Access pass: half off the $20 basic fee on single sites; no discount on the electric fee. No camping discount for Veteran, Annual, Volunteer or 4th Grade passes."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233312 (fee description: 'America the Beautiful Senior and Access Passes qualify user for half off the Basic Fee for Single Sites. No discount is given for Electric. There are no camping discounts for Veteran, Annual, Volunteer, or 4th Grade passes'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "USFS Croatan NF at the junction of the White Oak River and Bogue Sound, beside Swansboro Inlet; salt marsh, shallow-draft boat launch. Within a mile of shopping. --Claude",
+  "summary": "Confirmed $27 (single site incl. electric), 50-amp electric, 36 sites, showers/dump, year-round, recreation.gov with 4 first-come sites. Changed max_rig_ft 39 -> 75 (catalog lengths 50-75 ft, one pull-through); set water/sewer false (water only at host sites). Added 3-day reservation cutoff, 180-day window, 3-night holiday minimum, 14-night max, Senior/Access half-off basic fee, flush toilets/potable water, status open. Operator: Forest Service (Croatan RD). Note trimmed to what no field holds.",
+  "flags": []
+}

@@ -718,3 +718,10 @@ me drop and report); each needs the research named before a verdict.
 - **246 Wilson's Riverfront**: reopened after Helene with no bathhouse/tents; Good Sam 10% from the operator.
 - **4284 Zooland**: cheapest RV type $45 Jan, $55-58 many nights; gate is on the base, kept.
 - **4295 Stony Fork** $50 (c 2023), Asheville 23 km.
+
+### p3-100 (NC, 2026-10-22)
+- No drops. Hipcamp 772 Camp Sea Horse / 773 Captain's Corner (same host, Grandy): $54-60 + ~18% Hipcamp fee, over $50 but Outer Banks gateway 29 km. 765 Escape near Cape Lookout $50 at the gate. 769 Evans Family Farm $24-30, no hookups.
+- **4220 Cheoah Point**: the $20 FCFS sites are tent-only (22-ft pads); 6 RV sites at $25.
+- **4227 Flanners Beach**: season is year-round (FS); beach access still closed from Florence. Site rules override the campground-level minimums.
+- **31 Carolina Hemlocks**: open; fishing pier day-use closed (storm). Operator FIND Outdoors.
+- **14342 Button's**: posts $45 nightly with Firefly booking alongside monthly/annual residents - passes test 2.
