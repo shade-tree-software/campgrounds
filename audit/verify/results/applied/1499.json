@@ -1,0 +1,50 @@
+{
+  "id": 1499,
+  "checked": "2026-10-21",
+  "sources": [
+    "http://niagarahartlandrv.com/",
+    "http://niagarahartlandrv.com/rates",
+    "http://niagarahartlandrv.com/reservation-2",
+    "https://www.campspot.com/book/niagarahartlandrv (Campspot park record and availability API, one night from 2026-10-27, 2 adults)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 60,
+        "nightly_high": 60,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Campspot, one night from Tue 2026-10-27 for 2 adults, before tax: every RV site type $60 (back-in dry camping, water/electric/sewer back-in, water/electric/sewer pull-through); rustic tent sites $35. June 2027 was not yet open for booking. The operator's own rates page still says '2023 Rates Call for current rates'."
+      },
+      "source": "https://www.campspot.com/book/niagarahartlandrv (Campspot availability API for 2026-10-27 to 2026-10-28, 2 adults: 'Back-in Site (DRY CAMPING)' 60.0, 'W/E/S Back In Site' 60.0, 'W/E/S Pull-through RV Site' 60.0, 'Rustic Tent Site' 35.0), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "http://niagarahartlandrv.com/rates ('30 and 50 amp service, full hookups') + Campspot site types ('30-Amp', '50-Amp', 'Sewer Hook-Up', 'Water Hook-Up'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 55, "pull_through": true, "note": "Campspot sold 17 RV sites for a late-October night: 10 full-hookup pull-throughs (40-55 ft), 5 full-hookup back-ins (35-45 ft), 2 dry back-ins (40 ft)."},
+      "source": "https://www.campspot.com/book/niagarahartlandrv (Campspot availability API, 2026-10-27: 'W/E/S Pull-through RV Site' rvLengthMax 55/50/45/40, 'W/E/S Back In Site' 45/40/35, 'Back-in Site (DRY CAMPING)' 40), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/niagarahartlandrv", "note": "The operator's reservation page links to Campspot. Check-in 3 pm, check-out noon."},
+      "source": "http://niagarahartlandrv.com/reservation-2 ('Click here to go to our new reservation site' -> campspot.com/book/niagarahartlandrv) + Campspot park record (checkinTime '3:00pm', checkoutTime '12:00pm'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"dump": true, "laundry": true, "camp_store": true},
+      "source": "Campspot park record for niagarahartlandrv (parkFeatures 'Dump Station', 'Laundry', 'General Store') + http://niagarahartlandrv.com/ ('Check out In-A-Pinch camp supplies store'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Gasport, midway between Rochester and Buffalo. Family-owned since 1985; 8-acre Lake Charles (swimming area, fishing, kayaks), some lake-view sites. --Claude",
+  "summary": "Operator site + its Campspot engine: every RV site type $60 a night (Oct 2026; new fees), 30/50 A full hookups (electric 50 added), pull-throughs to 55 ft, Campspot booking (platform added), dump, laundry, store; phone 716-795-3812 matches. Over the US$50 gate with no gateway within 40 km (Niagara Falls 48 km), not stayed at. Note: dropped the wrong '~$50' and the booking/RV Life text. Season not stated.",
+  "flags": [
+    "Price gate: $60 a night for the cheapest RV site (Campspot, 2026-10-27, every RV type the same price) is over US$50; gateways.py finds no gateway within 40 km (nearest Niagara Falls 48 km); the family has not stayed here.",
+    "Waterfront re-audit lead: Campspot's park record lists 'Waterfront' among the park's features; the entry is 'lakeview' (8-acre Lake Charles is on the property).",
+    "Stale operator page: niagarahartlandrv.com/rates still shows '2023 Rates Call for current rates' with no prices; current prices are only on Campspot. Possibly mostly seasonal: Campspot offered only 17 RV sites for a late-October night and the rates page advertises seasonal rates; not established either way."
+  ]
+}

@@ -534,3 +534,11 @@ me drop and report); each needs the research named before a verdict.
 - **1514 Thornbush Acres**: $40 + metered electric $0.30/kWh - under the gate.
 - **1395 Taughannock**: RA contact gives 607-539-4078; stored 607-387-6739 kept (the park's long-standing number).
 - **1466 Winding Hills**: website moved to orangecountyny.gov (old domain 301s there); FCFS except four holiday weekends by phone.
+
+### p3-82 (NY, 2026-10-21)
+- **1499 Niagara Hartland DROPPED** (Campspot $60 every RV type, no gateway within 40 km).
+- **1470 Little Wolf**: stored phone 518-359-3328 on no official page; town page gives Town Hall 518-359-9261 and 518-359-3341; tupperlake.com 518-817-6019. Left as is.
+- **1460 North Bay**: 31 daily / 33 seasonal / 8 tent - passes test 4; rates undated.
+- **15468 Lewiston KOA** $65-73 under the Niagara Falls gateway (15 km).
+- Short listed lengths: 1412 Max V. Shaul (6 of 30 at 25+ ft), 1416 Paradox Lake (13 of 55 at 30+ ft).
+- **350 Nicks Lake**: no dec.ny.gov page on the entry (403 to scripts).
