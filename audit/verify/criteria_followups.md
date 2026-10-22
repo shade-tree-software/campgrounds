@@ -4,7 +4,7 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
-- **6118 Chester City Park** (mt-15, 2026-10-22): ASK AWH. No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
+- **6118 Chester City Park** (mt-15, 2026-10-22): DROPPED by AWH (lack of information). No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
 - **6114 Zurich Park** (mt-15): fee schedule dated 2023-01-01 ($30/day hookup) recorded with checked 2023; website set to that PDF. Phone 406-357-4261 is on no county page (Commissioners 406-357-3240); left as is.
 - **6111 Lewis and Clark County Fairgrounds** (mt-15): '$35.00 per night' undated, not recorded; the Checkfront booking link is dead ('Account Not Found'), so booking looks phone/office only; facility-rentals page prepended to website.
 - **6225 Eagle Creek** (mt-15): Custer Gallatin order 01-11-03-26-01 (from 2026-07-09) bans open fires on 3.5 mi of Jardine Road, the access road.
