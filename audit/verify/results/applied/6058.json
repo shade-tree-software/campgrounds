@@ -1,0 +1,53 @@
+{
+  "id": 6058,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/salmon-lake",
+    "https://montanastateparks.reserveamerica.com/camping/salmon-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630219 (read in a browser)",
+    "https://montanastateparks.reserveamerica.com/camping/salmon-lake-state-park/r/campsiteDetails.do?siteId=521&contractCode=MT&parkId=630219 (read in a browser)",
+    "ReserveAmerica site list for parkId 630219, captured 2026-10-12 (audit/state_park_fees/mt_sites_2026-10-12.json)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://montanastateparks.reserveamerica.com/camping/salmon-lake-state-park/r/campsiteDetails.do?siteId=521&contractCode=MT&parkId=630219 (site 001, Campsite Electric: 'Electricity Hookup: 50') + https://fwp.mt.gov/salmon-lake (Amenities: 'Electricity', 'RV Electrical Hookups'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 24,
+        "max_rig_ft": 46,
+        "pull_through": true,
+        "note": "23 campsites (16 electric, all in the Upper Loop) plus a hike-bike site for up to 10 tents. Max vehicle lengths run 18 to 46 ft; three sites take only 18 ft. Two pull-throughs (sites 014 and 022)."
+      },
+      "source": "https://fwp.mt.gov/salmon-lake ('There are 24 campsites, including a hike-bike campsite. The hike-bike site accommodates up to 10 tent spaces') + ReserveAmerica site list for parkId 630219 (16 Campsite Electric, 7 Campsite, 1 Hike-Bike; Max Vehicle Length 18-46 ft; 014 '45 Pull-Through', 022 '38 Pull-Through'), captured 2026-10-12; site 001 details re-read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "note": "Potable water May 1 - September 30. Firewood for sale; boat launch."},
+      "source": "https://fwp.mt.gov/salmon-lake (Amenities: 'Shower', 'Toilets (Flush)', 'Toilets (Vault)', 'Water', 'Firewood for Sale', 'Boat Launch'; Seasons & Hours: 'Potable water May 1- September 30'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-30", "note": "From November 1 to April 30 the park is closed to motorized traffic: walk-in, day use only, no overnight camping."},
+      "source": "https://fwp.mt.gov/salmon-lake (Seasons & Hours: Campground 'Open 5/1 through 9/30'; Winter Season 'Nov 1 - April 30 Closed to all motorized traffic, walk-in only. Day-use only, no overnight camping.') + ReserveAmerica park page ('Status: Closed through Fri Apr 30 2027'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "url": "https://montanastateparks.reserveamerica.com/camping/salmon-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630219",
+        "window_opens_days": 90,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -24}
+      },
+      "source": "https://fwp.mt.gov/salmon-lake ('Reserve a Campsite', reservation phone 1-855-922-6768) + https://montanastateparks.reserveamerica.com/camping/salmon-lake-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630219 (Campsite and Campsite Electric: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance.'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT State Park 5 mi S of Seeley Lake on Salmon Lake (MT-83), in larch, pine and fir woods on the Clearwater River chain of lakes; hard-surface roads and driveways, boat launch; nearest dump 7 mi S at Clearwater Jct. --Claude",
+  "summary": "FWP page + ReserveAmerica: confirmed reservable on ReserveAmerica (3-month window, 1 day ahead), season May 1 - Sept 30, showers/flush+vault toilets/water (derived values now verified). Changed sites 20 -> 24 (23 campsites + hike-bike) and max_rig_ft 25 -> 46, added 50-amp electric at 16 sites and pull-throughs. Not stated: fcfs, max stay (inherited), dump (derived false left). Fees left as recorded (FWP page only gives the statewide $4-$34 range). Note: wrong site count/length and restated values dropped.",
+  "flags": [
+    "Phone conflict on FWP's own page: the entry's 406-825-2007 is given in the park manager's contact box ('Direct line to the park 406-825-2007'), but the page's Contact Information gives 'May 1 - Sept 30: Direct line to the park 406-677-3731' and 'Main office (year-round): 406-677-6804' (https://fwp.mt.gov/salmon-lake). 406-825-2007 is also the number earlier flagged as not Placid Lake's; it may be the manager's shared line. A human should pick."
+  ]
+}

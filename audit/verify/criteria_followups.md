@@ -4,6 +4,42 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6118 Chester City Park** (mt-15, 2026-10-22): DROPPED by AWH (lack of information). No official web presence (no town or county page); every value rests on Campendium/RV Life; aggregator phone 406-759-5635 unconfirmed. Town park, so exempt from the presence rule.
+- **6114 Zurich Park** (mt-15): fee schedule dated 2023-01-01 ($30/day hookup) recorded with checked 2023; website set to that PDF. Phone 406-357-4261 is on no county page (Commissioners 406-357-3240); left as is.
+- **6111 Lewis and Clark County Fairgrounds** (mt-15): '$35.00 per night' undated, not recorded; the Checkfront booking link is dead ('Account Not Found'), so booking looks phone/office only; facility-rentals page prepended to website.
+- **6225 Eagle Creek** (mt-15): Custer Gallatin order 01-11-03-26-01 (from 2026-07-09) bans open fires on 3.5 mi of Jardine Road, the access road.
+- **6088 Chief Looking Glass FAS** (mt-15): the 25-site count and pull-throughs aren't on FWP's current page; left as is.
+- **AWH 2026-10-22:** 14595 Big Sky RV Park RESTORED ('it sells nights on half of its sites'; half long-term is not a long-stay park). 6071 Homestake Pass Dispersed and 6159 Kiwanis Club Campground DROPPED for lack of information. Big Sky's phone: header 406-560-1561 (kept), FAQ/footer 406-563-2967.
+- **RESTORED 6148 Hyde RV Park and 6155 Riverside Cabins and RV Park** (2026-10-22): I had dropped them for 'no posted nightly rate', but test 2 binds only long-stay parks; an ordinary park with a working website + phone passes on an RV Life $/$$ (curation doc, AWH 2026-10-14). Both are $$ with working sites and phones (Hyde also Google 4.6 over 28). Re-checked the other MT drops on Google Maps: 6158 Rivers Bend 9 reviews and 6153 Happy Camper 23 reviews (presence fails, drops stand); 15380 Aspenwood is RV Life $$$ (no price indicator, reason corrected); 14595 Big Sky kept dropped as long-stay in character (test 2); 6168 Sand Springs' Google listing is the store (39 reviews), not the RV park, drop stands.
+- **6155 Riverside** name: operator calls itself 'Riverside Motel-Cabins-RV Park'; not renamed.
+- **6131 Shady Rest RV Park** (mt-14): shadyrestrvparkmt.com is NXDOMAIN; website replaced with the Visit Montana listing. Presence passes on Google (4.4 over 210, phone). Derived 50 A and Apr 1-Oct 31 season rested on the dead site; Visit Montana says 20 of 40 sites are year-round. It also says 'Good Sam Park' vs the directory's false.
+- **6141 Two-Bit Outfit** (mt-14): no posted nightly rate, advertises monthly/extended stays but reads as a traveller park (RV Life $$); derived max_rig_ft 80 not on the operator's pages.
+- **14598 Wagon Wheel** (mt-14): presence on Google only (4.3 over 93, phone); its Visit Montana link is 404, so no website.
+- **6140 Trout Creek Motel and RV Park** (mt-14): base $50, exactly at the gate.
+- **6068 White Sandy** (mt-14): phone 406-533-7600 was on neither official page; set to the BLM/rec.gov local line 406-258-0279.
+- **15368 Leaning Tree** (mt-13, 2026-10-22): presence is the host's Hipcamp listing only (plus Google 172 reviews), so ownership -> hipcamp and the listing went in `website`. Only 3 of 12 sites take a 23-ft rig (RV-6 60 ft, RV-2 30 ft, RV-1 28 ft).
+- **15379 Red Eagle** (mt-13): a Blackfeet Nation tribal campground recorded as private (no tribal class). Base $30 'Standard Primitive Sites' assumes they take a 23-ft RV; otherwise the base is the $50 electric site. Phone set to the campground page's 406-338-2111 (ext. 2161); was 844-335-5178.
+- **6093 Lost Creek SP** (mt-13): RV/trailer limit is exactly 23 ft (EKKO fits at the cap). Phone was Lewis & Clark Caverns'; now FWP Butte 406-224-0833.
+- **6151 Old Dorm RV Park** (mt-13): $35 rate undated (footer 2018), fee left as recorded; second phone 406-853-2970.
+- **6142 LaSalle RV Park** (mt-13): rules mention manager approval and permanent rentals, but nightly stays are sold ($75, by phone). Over $50; Glacier gateway 25 km.
+- **6231 Lodgepole** (mt-13): site count 29/30/31 across pages, left as is.
+- **6071 Homestake Pass Dispersed** (mt-12, 2026-10-22): ASK AWH. No FS/BLM page designates dispersed camping there; inclusion rests on aggregators; one Campendium listing says 'Permanently Closed', a Dyrt review (Mar 2026) has it in use with a potholed road; no agency word on whether a non-4WD 23-ft rig can reach it (Butte RD 406-494-2147). Derived values cleared.
+- **6159 Kiwanis Club Campground** (mt-12): ASK AWH. No official page (Kiwanis, city or county); listings say the Kiwanis Club owns and runs it, so `local` may be wrong (private would bring the presence rule); listings disagree on sites (8 vs 20) and address. Derived values cleared.
+- **6117 Fergus County Fairgrounds** (mt-12): $55/night 'Camping-All', over $50 with no gateway, but it is a county (local) entry so the private price gate does not apply. Kept.
+- **6147 Driftwaters Resort** (mt-12): no dated rate; the hunting page (c. 2021) quotes $30 electric RV sites; Campspot had no sites on the dates tried. Probably under $50; re-check.
+- **6202 Greek Creek** (mt-12): FS names Rocky Mountain Recreation Company, rec.gov ExplorUS (same as 6175/6190).
+- **6161 Cow Bells Campground** (mt-11, 2026-10-22): it is the county's campground at the Musselshell County Fairgrounds (the county spells it Cow Bells and Cow Belles), not Roundup City Park. Check the pin against the fairgrounds. Website and county phone added.
+- **6248 Cherry Creek** (mt-11): FS says 'No restroom available' but its site list mentions restrooms (vault_toilets left unconfirmed); general line says 'Average Parking Spur 20' long' but per-site driveways are 25-70 ft.
+- **6223 Cromwell Dixon** (mt-11): FS gives no site lengths; fit rests on Campendium reviews (25-31 ft rigs). No phone on the FS page (Helena RD).
+- **6249 Colter** (mt-11): no phone on the FS page (Gardiner RD).
+- **6188 Yaak River** (mt-11): rec.gov gives every site a 30-ft max (looks like a default); FS says sites average 32 ft. 30 recorded.
+- **6172 St. Mary (Glacier NP)** (mt-10, 2026-10-22): NPS: 'All sites ... closed to camping from January 1, 2027-June 30, 2027 due to construction.' Recorded open for now; set temporarily_closed (reopens July 2027) on Jan 1, 2027.
+- **6176 Two Medicine** (mt-10): closed for 2026 (construction), reopens 2027 (NPS calendar suggests May 24). Lift the status in spring 2027.
+- **15382 West Glacier RV Park** (mt-10): the note's '$12/night amenities fee' is not on the operator's page or booking widget; check at checkout. Entry phone 406-888-5580 isn't on the operator's pages (they list 844-868-7474).
+- **6058 Salmon Lake SP** (mt-10): FWP's own page gives 406-825-2007 ('Direct line to the park', kept) and also 406-677-3731 / 406-677-6804. Pick one.
+- **6190 Swan Creek** (mt-10): rec.gov names ExplorUS, the FS page Rocky Mountain Recreation Company; derived max_rig_ft 50 is on neither page (FS: average spur 16 x 45 ft).
+- **6059 West Shore** (mt-10): the manual season note says potable water May-September; FWP now says mid-March through November.
+- **6143 Trafton Park** (mt-10): no city page; website stays the Visit Montana listing; fee unverifiable ($3 undated, aggregators $5).
 - **6194 Riverside (Canyon Ferry)** (mt-9, 2026-10-22): Reclamation closed it from 2026-09-13 'through Spring 2027' for sidewalk construction (usbr.gov news release 5394); recorded temporarily_closed. Re-check spring 2027.
 - **15387 North American RV Park** (mt-9): undated rate page gives $105.56/night incl. tax; over the $50 gate but the Glacier NP gateway applies. Fees unrecorded (no 2024+ date); the site 403s plain fetches.
 - **6063 Placid Lake SP** (mt-9): phone 406-825-2007 is not on FWP's page; replaced with the year-round main office 406-677-6804 (park line 406-677-3874, May 1 - Sep 30).

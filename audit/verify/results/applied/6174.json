@@ -1,0 +1,48 @@
+{
+  "id": 6174,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232493",
+    "https://www.recreation.gov/api/camps/campgrounds/232493/rates",
+    "recreation.gov public campsite search API for asset 232493 (170 sites), read 2026-10-22",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Fish Creek Campground record) and /alerts?parkCode=glac, read 2026-10-22"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "2026 peak season (May 15 - Sep 3): $30 a night for every site type. Up to eight people and two vehicles, two tents."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232493/rates (Peak Season 2026-05-15 to 2026-09-03: STANDARD NONELECTRIC 30, TENT ONLY NONELECTRIC 30) + NPS campgrounds API ('Fish Creek summer fee' 30.00, 'Campsite capacity is limited to eight people and two vehicles'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "NPS campgrounds API (campsites.electricalHookups '0') + recreation.gov catalog (all 170 sites typed NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 178, "max_rig_ft": 35, "pull_through": true, "note": "178 sites (4 tent-only). NPS: '18 sites can accommodate up to a 35 foot RV or truck and trailer combination.' The rec.gov catalog's lengths run 14-35 ft: about 60 sites take 23 ft or more, mostly pull-throughs. Loop C is generator-free."},
+      "source": "NPS campgrounds API (totalSites 178, tentOnly 4, rvMaxLength 35, rvInfo) + recreation.gov catalog (Max Vehicle Length, Driveway Entry: 135 pull-through), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "showers": true, "potable_water": true, "dump": true, "laundry": false, "camp_store": false, "wifi": false, "note": "All seasonal: flush toilets, hot showers (incl. 2 accessible unisex stalls in Loop A), potable water, dump station, bear-proof food lockers, amphitheater ranger programs. No cell reception."},
+      "source": "NPS campgrounds API amenities ('toilets': 'Flush Toilets - seasonal', 'showers': 'Hot - Seasonal', 'potableWater': 'Yes - seasonal', 'dumpStation': 'Yes - seasonal', 'laundry': 'No', 'campStore': 'No', 'internetConnectivity': 'No', 'cellPhoneReception': 'No'; adaInfo 'Showers: 2 ADA accessible unisex shower stalls located in Loop A') + recreation.gov amenities (Dump Station, Flush Toilets), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "09-03", "note": "'Fish Creek Campground's summer season typically runs from about mid-May to early September.' 2026-27 winter closure listed 2026-09-04 to 2027-05-14."},
+      "source": "NPS campgrounds API operatingHours (description; exception 'Winter Closure' 2026-09-04 to 2027-05-14), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "never", "window_opens_days": 180, "max_stay_nights": 14, "note": "'All sites require a reservation.' Rolling 6-month window, with a handful of sites released 4 days ahead. 14-night maximum; up to 2 sites held at once."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232493 ('All sites require a reservation. Most sites have a 6-month booking window with a good handful having a 4-day booking window'; notice 'The maximum length of stay is 14 days'; rules maxStay 14, maxConcurrentStay 2) + NPS campgrounds API (numberOfSitesFirstComeFirstServe 0; 'Campsites become reservable on a rolling basis, 6 months in advance'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Glacier NP campground on the west side above Lake McDonald, 4 mi NW of the West Glacier entrance near Apgar; heavily forested, some sites with filtered lake views. Rigs over ~28 ft struggle in loop D. Rec.gov warns not to rely on GPS for directions. --Claude",
+  "summary": "NPS + rec.gov: confirmed $30 (2026), no electric, 178 sites, flush toilets, dump, reservable on rec.gov with the 6-month window. Changed showers false -> true (NPS: hot showers, seasonal). Added 35-ft max with pull-throughs, potable water, no laundry/store/wifi, season mid-May to early Sept, reservation-only (fcfs never), 14-night max. Water/sewer hookups (derived none) left. Note: dropped the incorrect 'no showers' and 'a few to 40' ft (NPS max 35) and restated values.",
+  "flags": [
+    "Missing phone: recreation.gov gives 406-888-7800 for Fish Creek (NPS, Glacier National Park).",
+    "Operated by the NPS (Glacier National Park); reservation-only, no first-come sites. No current alert for the campground; the only Glacier alert is the seasonal Going-to-the-Sun Road closure, which does not affect access from US 2 / West Glacier."
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": 6172,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232492",
+    "https://www.recreation.gov/api/camps/campgrounds/232492/rates",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (St. Mary Campground record; the data behind https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=glac",
+    "recreation.gov public campsite search API for 232492 (per-site catalog), read 2026-10-22"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "2026: $30 a night May 22 - September 11; $20 April 18 - May 21 and September 12 - October 31; free in the primitive winter season (November 1 - December 31: no water or dump station, comfort stations closed, vault toilets only). Group sites $90 peak, $40 off-peak."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232492/rates (2026 Peak Season 05-22 to 09-11 'PeakSTANDARD NONELECTRIC': 30; Non-Peak Season 04-18 to 05-21 and 09-12 to 10-31: 20; First-come, First-served Season 11-01 to 12-31: 0) + NPS campgrounds API (fees: 'St. Mary summer status' 30.00, 'St. Mary primitive status' 20.00, 'St. Mary winter status' 0.00 'No potable water sources or dump station facilities are provided during the primitive camping season. Comfort stations are closed; use vault toilets'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open year-round; a portion of the campground stays open in primitive status in winter (no water, dump or comfort stations). NPS: 'All sites in St. Mary Campground will be closed to camping from January 1, 2027-June 30, 2027 due to construction.'"},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (description: 'open year-round'; operatingHours: 'St. Mary operates year-round ... A portion of the campground is typically open during the winter months in primitive status' and 'All sites in St. Mary Campground will be closed to camping from January 1, 2027-June 30, 2027 due to construction.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "status": {
+      "values": {"operating": "open", "note": "Open now (primitive fall and winter season through December 31, 2026), but NPS says all sites will be closed to camping January 1 - June 30, 2027 for construction."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (operatingHours exception 'Primitive Fall and Winter Season' 2026-09-12 to 2026-12-31; 'All sites in St. Mary Campground will be closed to camping from January 1, 2027-June 30, 2027 due to construction.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (campsites electricalHookups 0) + recreation.gov catalog (every site STANDARD/TENT ONLY NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 148, "max_rig_ft": 40, "note": "148 sites, including 2 group sites and 7 tent-only. Only 3 sites take an RV or vehicle/trailer combination up to 40 ft and 22 up to 35 ft; recreation.gov lists most sites at 21-32 ft."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (totalSites 148, group 2, tentOnly 7; rvInfo '3 sites can accommodate RV or vehicle/trailer combinations up to 40 feet. 22 sites can accommodate up to 35 feet.', rvMaxLength 40) + recreation.gov catalog (Max Vehicle Length 20-40), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "showers": true, "dump": true, "laundry": false, "camp_store": false, "wifi": false, "note": "Flush toilets, water, showers and the dump station are seasonal. Hot showers in Loop C for registered campers only. Bear-proof food lockers year-round; no cell service. Stores, food and gas just outside the park at St. Mary."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (amenities: toilets 'Flush Toilets - seasonal', showers 'Hot - Seasonal', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', laundry 'No', campStore 'No', internetConnectivity 'No', cellPhoneReception 'No', foodStorageLockers 'Yes - year round'; 'Showers are located in Loop C for registered campers only'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "max_stay_nights": 14,
+        "note": "NPS-run. Reservations required for every site April 18 - October 31, 2026, on recreation.gov up to 6 months ahead; from August 17 to September 11 the campground switches to a day-of window (book on the day of arrival only). No reservations in winter (first-come, free). 14-night maximum; up to 8 people, 2 vehicles and 2 tents per site."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (reservationInfo: 'Campground sites can be reserved April 18 through October 31, 2026. Reservations are NOT required during the winter months ... Individual campsites may be reserved up to 6 months in advance.') + https://www.recreation.gov/api/camps/campgrounds/232492 (overview: 'Beginning August 17th through September 11th, St. Mary Campground will transition to a day-of reservation window'; notices 'Maximum Stay. The maximum length of stay in the campground is 14 days', 'maximum of 2 tents per site'; rules maxStay 14), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "50% camping discount with an Interagency Senior or Access Pass; the pass holder must be camping in the site and show the pass on arrival. Annual entrance passes give no camping discount."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232492 (notice 'Pass Discounts on Camping. Campers making a reservation using an Interagency Senior Pass or Interagency Access Pass for a 50% camping discount will be required to present the pass upon arrival'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Glacier NP's largest east-side campground, half a mile inside the St. Mary entrance near the foot of St. Mary Lake and the east end of Going-to-the-Sun Road; sparse shade among aspens, mountain views. Generators only in Loops B and C. Vehicles over 21 ft long or 8 ft wide are barred from Going-to-the-Sun Road between Rising Sun and Avalanche, so a 23-ft rig cannot cross Logan Pass. --Claude",
+  "summary": "recreation.gov + NPS API: confirmed 148 sites, 40-ft max (3 sites), no electric, flush toilets/water/dump (seasonal), reservable on recreation.gov 6 months ahead. Changed fees 20/20 -> 0/30 (2026: $30 peak, $20 shoulder, free primitive winter) and showers false -> true (hot showers in Loop C, seasonal). Added year-round season, status open with the announced Jan 1 - Jun 30, 2027 construction closure in its note, laundry/store/wifi none, 14-night max, day-of window Aug 17 - Sep 11, senior/access 50% discount. NPS-run. Not stated: water/sewer hookups (derived false left), pull-throughs.",
+  "flags": [
+    "Upcoming closure: NPS says 'All sites in St. Mary Campground will be closed to camping from January 1, 2027-June 30, 2027 due to construction.' Recorded as status open (it is open now, primitive season to Dec 31) with the closure in the note; on Jan 1, 2027 the status should become temporarily_closed, reopens July 2027.",
+    "Missing phone: recreation.gov gives 406-732-7708 for the campground (NPS lists only the recreation.gov line 1-877-444-6777).",
+    "Road caveat (not a criteria problem): a 23-ft rig must reach St. Mary from US-89 on the east side; Going-to-the-Sun Road over Logan Pass is closed to vehicles over 21 ft between Rising Sun and Avalanche."
+  ]
+}
