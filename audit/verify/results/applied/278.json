@@ -1,0 +1,48 @@
+{
+  "id": 278,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Many Glacier Campground record), read 2026-10-22",
+    "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (rendered in a browser)",
+    "https://www.recreation.gov/api/camps/campgrounds/251869",
+    "https://www.recreation.gov/api/camps/campgrounds/251869/rates",
+    "recreation.gov campsite catalog for 251869 (public search API, 103 sites), read 2026-10-22"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/251869 (notice 'No Hookups . There are no electric, water or sewer hookups at individual campsites.') + NPS campgrounds API ('electricalHookups': '0'), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 109, "max_rig_ft": 35, "pull_through": true, "note": "109 sites (8 tent-only, 1 group). 'Most campsites and driveways are very small and will not accommodate towed units over 21 feet'; only 13 sites take an RV or truck-and-trailer up to 35 ft. 'Many campsites will not accommodate camper slide-outs' (NPS points slide-out users to St. Mary Campground). Most catalog sites are pull-through."},
+      "source": "NPS campgrounds API, Many Glacier ('totalSites': '109', 'tentOnly': '8', 'group': '1', 'rvInfo': '13 sites will accommodate up to a 35 foot RV or truck and trailer combination.', 'rvMaxLength': '35') + https://www.recreation.gov/api/camps/campgrounds/251869 (notice 'Make Sure You Book the Correct Campsite!') + recreation.gov catalog (Driveway Entry Pull-through on all but two), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "wifi": false, "note": "All seasonal: no water during the primitive season (mid-September to mid-October). Coin/token showers, camp store and restaurant at the nearby Swiftcurrent Motor Inn. Bear-resistant food lockers. No cell coverage (nearest in Babb, 12 mi)."},
+      "source": "NPS campgrounds API, Many Glacier (amenities: toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', showers 'None', laundry 'No', internetConnectivity 'No', foodStorageLockers 'Yes - seasonal'; fees 'During primitive camping season there is no water available'; accessibility 'A separate building near the Swiftcurrent Motor Inn houses token operated showers') + recreation.gov notice ('One dump station is conveniently located at the entrance to the campground'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-05", "closes": "10-19", "note": "NPS: 'typical summer season is from early June to mid-September. There is a primitive camping season from mid-September to mid-October, weather permitting.' Winter closure 2026-10-20 to 2027-06-04."},
+      "source": "NPS campgrounds API, Many Glacier operatingHours (description, and exception 'Winter Closure' startDate 2026-10-20, endDate 2027-06-04), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD", "note": "$30 in the summer season, $20 in the primitive season (mid-September to mid-October, no water). Up to 8 people and 2 vehicles. Park entrance fee is separate: $35 per vehicle, valid 7 days."},
+      "source": "NPS campgrounds API, Many Glacier fees ('Many Glacier summer status' $30.00, 'Many Glacier primitive status' $20.00) + https://www.recreation.gov/api/camps/campgrounds/251869/rates (2026 Peak $30, Non-Peak $20) + recreation.gov notice ('The park entrance fee is $35 per vehicle ... valid for seven days'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "note": "NPS-run. 'Advanced reservations are required for all sites.' Most sites open 6 months ahead on a rolling basis; some only 4 days before arrival. Stays up to 14 days July 1 - Labor Day, 30 days Labor Day - June 30."},
+      "source": "NPS campgrounds API, Many Glacier reservationInfo ('Campsites become reservable on a rolling basis, 6 months in advance ... A certain number of sites will be reservable up to 4 days before the desired date.') + https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm ('Advanced reservations are required for all sites.') + https://www.recreation.gov/api/camps/campgrounds/251869 ('All sites require a reservation'; notice 'Camping is limited to 14 days between July 1 and Labor Day, and 30 days between Labor Day and June 30.'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed no hookups, reservable on recreation.gov with a 6-month window, phone. Changed fees 20/20 -> 20/30 (summer $30, primitive-season $20). Added 109 sites with 13 to 35 ft (most driveways 21 ft or less), flush toilets/water/dump (seasonal), no showers/laundry, season early June - mid October (winter closure 2026-10-20 to 2027-06-04), reservation-only, 14-night summer limit. AWH note kept unchanged.",
+  "flags": [
+    "Tight fit: NPS says most driveways 'will not accommodate towed units over 21 feet' and many sites not slide-outs; only 13 of 109 sites take up to 35 ft. A 23-ft motorhome must book one of those (criteria satisfied, but worth knowing).",
+    "Count disagreement: NPS gives 109 sites, the recreation.gov catalog lists 103."
+  ]
+}

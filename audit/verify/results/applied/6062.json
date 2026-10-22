@@ -1,0 +1,48 @@
+{
+  "id": 6062,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://fwp.mt.gov/logan",
+    "https://montanastateparks.reserveamerica.com/camping/logan-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630114",
+    "https://montanastateparks.reserveamerica.com/camping/logan-state-park/r/campsiteDetails.do?siteId=430&contractCode=MT&parkId=630114",
+    "audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630114, read 2026-10-12)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://montanastateparks.reserveamerica.com/camping/logan-state-park/r/campsiteDetails.do?siteId=430&contractCode=MT&parkId=630114 (site B001, Campsite Electric: 'Electricity Hookup: 50'; also A013 'Electricity Hookup: 50'; no water or sewer hookup listed), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 37,
+        "max_rig_ft": 40,
+        "pull_through": true,
+        "note": "37 campsites, no tent-only sites: 33 Campsite Electric and 4 Campsite on ReserveAmerica (24 in Loop A, 13 in Loop B). FWP's RV/trailer limit is 40 ft; RA's per-site max vehicle lengths run 18-45 ft, and A007 (20 ft) is the only pull-through. Also 12 day-use boat slips."
+      },
+      "source": "https://fwp.mt.gov/logan ('There are 37 total campsites, and no tent-only sites. The RV/trailer size limit is 40 feet in length.') + audit/state_park_fees/mt_sites_2026-10-12.json (ReserveAmerica site list for parkId 630114), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "note": "Water and showers close in late September (Sept. 21 in 2025). The RV dump station closes at the beginning of October and since 2024 is only for registered Logan campers."},
+      "source": "https://fwp.mt.gov/logan (Amenities: 'RV Dump Station', 'Shower', 'Toilets (Flush)', 'Water'; 'The RV dump station closes at the beginning of October'; 'Starting in 2024, the RV dump station will only be available to registered campers at Logan State Park'; 'Water and showers Closes Sept. 21, 2025'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "reserveamerica",
+        "window_opens_days": 90,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -24}
+      },
+      "source": "https://montanastateparks.reserveamerica.com/camping/logan-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630114 (Booking Window, Campsite: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance'; 'Status: Open year round') + https://fwp.mt.gov/logan ('Reserve a Campsite'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "MT state park on the north shore of Middle Thompson Lake, ~45 mi SE of Libby on Hwy 2; heavily forested. 30 sites reservable via ReserveAmerica, 7 FCFS. --Claude",
+  "summary": "FWP page + ReserveAmerica: confirmed 37 sites, 40-ft limit, showers/flush toilets/dump, reservable on ReserveAmerica (derived values now verified) with the inherited 3-month window and 1-day cutoff; added 50-amp electric, potable water, one pull-through. Season (B-loop year-round) already manual and still matches; fees left as recorded (FWP gives only the $4-$34 range). Water/sewer hookups (derived none) left: RA lists none. Not stated: 7-night limit (inherited), fcfs split. Note trimmed of restated values.",
+  "flags": [
+    "Waterfront re-audit lead: ReserveAmerica tags 8 campsites (A013-A015, A017, B001-B004) 'Near Water' and describes the park as having 'frontage on the north shore of Middle Thompson Lake'; the entry is lakeview.",
+    "Missing phone: Logan State Park 406-293-7190 (April 15 - Oct 15), 406-751-4590 (Oct 16 - April 14) (https://fwp.mt.gov/logan)."
+  ]
+}

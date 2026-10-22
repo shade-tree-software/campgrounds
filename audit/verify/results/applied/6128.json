@@ -1,0 +1,47 @@
+{
+  "id": 6128,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://conestoga-campground.com/ (read via a fetch tool; plain curl and the headless browser got connection resets)",
+    "https://conestoga-campground.com/rates",
+    "https://conestoga-campground.com/amenities",
+    "https://www.campspot.com/book/conestogacampground (Campspot park 2814 record and availability API, one night from 2026-10-24 and 2026-10-27, 2 adults; 2027 dates not yet open), read 2026-10-22"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 53, "max_rig_ft": 45, "pull_through": true, "note": "53 RV sites: Premium pull-throughs to 45 ft, Deluxe pull-throughs to 42 ft, Standard pull-through or back-in to 40 ft, Basic water/electric pull-throughs to 35 ft; also tent sites and rustic cabins."},
+      "source": "https://conestoga-campground.com/amenities ('53 RV Sites - Room for RVs of all sizes') + https://conestoga-campground.com/rates (Premium RV Site pull-through up to 45 ft, Deluxe 42 ft, Standard 40 ft pull-through or back-in, Basic 35 ft pull-through), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://conestoga-campground.com/rates ('Premium RV Site' and 'Deluxe RV Site': full hookups 20/30/50 amp; 'Basic RV Site': water/electric 20/30 amp) + https://conestoga-campground.com/amenities ('Up to full hook up 20/30/50A power'), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "wifi": true, "camp_store": true, "dump": true, "note": "Hot showers and coin laundry 24 hours a day, fiber-optic WiFi, small camp store, playground, pond for wildlife viewing. Dump station $15 per use for non-guests or dry campers."},
+      "source": "https://conestoga-campground.com/amenities ('Clean/Hot Showers 24 hours a day', 'Coin Operated Laundry 24 hours a day', 'High speed WiFi (Fiber Optic service)', 'Small camp store', 'Pond for wildlife viewing') + https://conestoga-campground.com/rates ('RV Dump Station - $15 per use'), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "11-01", "note": "'2026 Season - May 1st - Nov 1'. Some sites may have limited water early (May) and late (October) in the season because of cold weather."},
+      "source": "https://conestoga-campground.com/ ('2026 Season - May 1st - Nov 1', 'Due to cold weather conditions, there may be limited water available at some sites during the early (May) & late (Oct) parts of the season.'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "campspot", "url": "https://www.campspot.com/book/conestogacampground", "note": "Paid in full at booking; cancellations at least 48 hours before arrival are refunded less a cancellation fee; no refund for early departures or no-shows. Check-in from 1 pm, check-out 11 am."},
+      "source": "https://conestoga-campground.com/ (booking link https://www.campspot.com/book/conestogacampground; 'CHECK IN - STARTS @ 1 PM.', 'CHECK OUT - 11 am') + https://conestoga-campground.com/rates (payment and cancellation terms), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"passport_america": true, "note": "Passport America: call for a promo code. One membership discount per stay, 14 days at most, requested at booking; not on holiday weekends or during special events."},
+      "source": "https://conestoga-campground.com/rates (membership discounts, 'DISCOUNTS NOT AVAILABLE DURING HOLIDAY WEEKENDS OR SPECIAL EVENTS', Passport America promo code by phone) + https://conestoga-campground.com/ ('Membership Affiliations ... Passport America'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "summary": "Operator site + Campspot: confirmed 53 RV sites to 45 ft with pull-throughs, 50-amp full hookups, showers/laundry/dump, Campspot booking; fees ($30 dry camping, $45-53 hookup sites, $5 booking fee, 3.6% card fee) match the 2026-10-13 check and were left. Added season May 1 - Nov 1 (2026), WiFi, camp store, booking terms and URL, Passport America discount. Good Sam not mentioned (left). Note unchanged.",
+  "flags": [
+    "website second line is the Campspot marketplace page with a misspelled slug (https://www.campspot.com/park/conestoga-campground-rv-oark); the operator's own booking link is https://www.campspot.com/book/conestogacampground.",
+    "The operator site resets plain HTTP and headless-browser connections from this environment (read via a fetch tool); not dead, but worth a re-check if it recurs."
+  ]
+}
