@@ -4,6 +4,10 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6194 Riverside (Canyon Ferry)** (mt-9, 2026-10-22): Reclamation closed it from 2026-09-13 'through Spring 2027' for sidewalk construction (usbr.gov news release 5394); recorded temporarily_closed. Re-check spring 2027.
+- **15387 North American RV Park** (mt-9): undated rate page gives $105.56/night incl. tax; over the $50 gate but the Glacier NP gateway applies. Fees unrecorded (no 2024+ date); the site 403s plain fetches.
+- **6063 Placid Lake SP** (mt-9): phone 406-825-2007 is not on FWP's page; replaced with the year-round main office 406-677-6804 (park line 406-677-3874, May 1 - Sep 30).
+- **6215 Philipsburg Bay** (mt-9): FS says 68 sites, rec.gov 65; both in sites.note.
 - **6162 Seeley Lake Campground** (mt-8, 2026-10-22): the Boy Scout Road bridge is permanently closed (rec.gov notice); reach it from the north entrance off MT-83. Renamed from 'Lolo National Forest, Seeley Lake Campground' to the FS name.
 - **6060 Lonesomehurst** (mt-8): the FS page still carries an old fee line ($20 / $28 electric) beside the current $26 / $35, which matches rec.gov's 2026 table.
 - **6062 Logan SP** (mt-8): phone set to the summer number 406-293-7190 (Apr 15 - Oct 15); winter is 406-751-4590.
