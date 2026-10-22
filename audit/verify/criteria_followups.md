@@ -4,6 +4,17 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6297 South Van Houten** (mt-29): FS page says 6,700 ft; entry's 2145 m is ~7,040 ft.
+- **6288 Spar Lake** (mt-29): Kootenai order 01-14-04-26-04 (2026-02-06 to 2028-02-05) closes FS Rd #384 from the Whoopie Creek bridge (~MP 18) to the end; map shows it beyond the campground, call to confirm. FS page contradicts itself on water.
+- **6289 Spillway** (mt-29): FS says 13 sites, rec.gov 12; stored 13 left.
+- **6290 Spire Rock** (mt-29): FS says 17 sites, rec.gov catalog 20; stored 20 left. Concessionaire Rocky Mountain Recreation Co. (661) 702-1420; rec.gov phone field 406-646-1012.
+- **6259 Spring Creek** (mt-29): FS 'maximum trailer length of 35 feet, and is not recommended for campers with large RVs' (23 ft fits, kept); no office named (likely White Sulphur Springs RD 406-547-3361 or Musselshell RD 406-632-4391); water conflict on the page.
+- **6291 Steel Creek** (mt-29): FS page gives both $15 and $12 per night; FS coordinates (45.603415,-113.336572) ~0.7 km east of the entry's.
+- **14164 Stuart Mill Bay FAS** (mt-29): stored year_round: true (manual) contradicted by FWP banner 'Campground closed during winter months. The campground opens the Thursday before Memorial Day.' Needs a manual fix.
+- **6265 Sylvan Lake** (mt-29): FS page still says 'THIS CAMPGROUND WILL BE CLOSED IN 2018' (stale); no current alert. No length published.
+- **6292 Thain Creek** (mt-29): no office named (likely Belt Creek RS 406-236-5100); water conflict on the page.
+- **6293 Timberlane** (mt-29): closed all of 2026 (order 01-14-05-26-03); recheck spring 2027. Derived reservable: true reflects only the group shelter; derived max_rig_ft 30 no longer on either page.
+- **14601 Spotted Bear** (mt-29): phone changed 406-387-3800 -> Spotted Bear Ranger Station 406-758-5376 (FS page).
 - **6283 Red Top** (mt-28): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility; free pack-in/pack-out page names no reservations).
 - **13309 Pleasant Valley (Kootenai)** (mt-27): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, page names no reservations).
 - **6280 North Dickey Lake** (mt-27): rec.gov contradicts itself on reservable sites (description says 5, catalog marks 13 of 24); both in booking.note.
