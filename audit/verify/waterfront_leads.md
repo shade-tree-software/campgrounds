@@ -5,6 +5,7 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- 6125 Beaver Creek Park (mt-19): Hill County camping page lists non-reservable campsites 'at Beaver Creek Lake' and group areas with 'Access to Beaver Creek'; entry is not waterfront.
 - 6239 Murray Bay Campground (mt-18): rec.gov/FS say it 'is situated along the massive Hungry Horse Reservoir' (east shore), concrete boat ramp within the campground; entry is not waterfront.
 - 6233 Holland Lake Campground (mt-17): rec.gov says 'on the shores of Holland Lake', lists Lake and Beach Access; entry is lakeview.
 - 6097 Coal Banks Landing (mt-17, weak): BLM says 'situated along the Upper Missouri River'; entry is riverview.

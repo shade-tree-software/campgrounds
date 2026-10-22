@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6302 Basin (mt-19): pin 45.17300,-109.45083 looks ~4.8 km off; FS gives 45.16108,-109.39183, rec.gov 45.1625,-109.3917. Re-pin (and re-fetch elevation). FS names concessionaire RRMA (928) 537-8888 for this campground; entry keeps Beartooth RD 406-446-2103.
+- 6300 Barry's Landing (mt-19): NPS/rec.gov name is 'Barry's Landing & Trail Creek Campground'; summer fee amount unpublished.
+- 6307 Big Therriault Lake (mt-19): FS page contradicts itself on potable water.
 - 6238 Pine Grove (mt-18): temporarily closed all of 2026 (Custer Gallatin order 01-11-82-26-04, hazard trees/Ips beetle); no reopening stated. Re-check spring 2027; may become long-term. No Beartooth RD phone on the page.
 - 14104 Arod Lake FAS (mt-18): FWP now says 'Limited access for trailers and RV's' and 'Difficult Accessibility'; unconfirmed whether a 23-ft motorhome can reach the site. No phone (FWP Region 4).
 - 6331 Bad Medicine (mt-18): inherits reservable/recreation.gov/180-day from the federal row, but it is not on rec.gov and the FS page has no reservation link; probably FCFS, unstated.
