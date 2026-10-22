@@ -47,6 +47,8 @@ apply with audit/apply_waterfront_audit.py once approved), #11 (McNally 3494). D
 - **FL items to re-check:** 4855 Easterlin (after 11-01), 197 Topsail and 4720 Coldwater (Isaias), 163 Highlands Hammock (renovation), NWFWMD 13375/13376/13377 (storm banners), 4821 Hutch Gibson.
 - **Open ask:** 4822 Neals Landing.
 
+**RESUMED 2026-10-21 (new session):** p3-62 (7 WV + 4 Glacier MT + Liberty Harbor NJ, popup-log tier 3) and p3-63 (12 WV) running. Briefs are in session d7b90449's scratchpad as p3-62_prompt.txt / p3-63_prompt.txt (built from prompt_template_wv.txt with helper paths pointed at audit/verify/helpers_wv/). If the session died, check results/ for their files, else relaunch.
+
 **PAUSED AGAIN by AWH 2026-10-21, very late ("pause when convenient").** Nothing is in flight: p3-55..p3-61 are applied (84 WV entries). Commits after c8f95e89 are NOT pushed; deployed through f37f3ac7. Verified 838.
 - Dropped: Gheny Nook 13121 (long-stay test 2), The Dock 1221 (presence), Sunny Glen 1220 and Triple L 1223 (AWH).
 - AWH answers: 869 narrowed to Cokeley Campground; 509 Beckys Creek -> wma; Dolly Sods 515/516/499 KEPT (AWH has driven past: unpaved driveways to clearings off the road, outside the 300-ft FR 19/75 ban).
