@@ -670,3 +670,13 @@ me drop and report); each needs the research named before a verdict.
 - **4279 Leatherwood**: Boone route via Elk Creek Rd (3 mi gravel) "NOT INTENDED ... FOR ... LARGE RIGS"; use NC 268. In the note.
 - **600 Holden Beach**: renamed to the town's name; 2023 Campendium "permanently closed" is wrong (town takes 2026 reservations).
 - **4273 Mi Mountain** $47 + tax; GSMNP 33 km.
+
+### p3-95 (NC, 2026-10-22)
+- **4256 Pride RV Resort**: membership resort that also sells public nights ($65, phone) - see asks.md.
+- **4315 North River**: operator site behind Cloudflare to every automated read; camper reports $60-79 (2024-25), over the gate, no gateway (Outer Banks 43 km). Read the operator's rate by hand; drop if over $50.
+- **4262 River Valley (Cherokee)**: domain NXDOMAIN; website -> Facebook; Google 4.3/329 (recent reviews) but Campendium says "Permanently Closed"/long-term only. A phone call would settle it. Aggregator-only max rig/pull-through/season cleared.
+- **4274 River's Edge (Bay River)**: sells monthly/annual/permanent sites beside nightly ones but posts no nightly rate (phone booking); share unknown, so not judged "mostly" long-stay - kept on presence (Google 4.8/167) + RV Life $$. Phone -> (252) 714-3458. Long-term units must be ≤10 years old.
+- **4276 Moravian Falls**: website dead (TLS mismatch / error page, also 2026-10-16) -> cleared; kept on Google (4.2/338, phone) + RV Life $$. Google categorises it "Cabin rental agency" - RV sites still on reviews?
+- **4316 Riverside (Belhaven)**: Facebook-only, kept on Google 4.7/52 + RV Life $$.
+- **4269 Riverhouse**: adults-only, weekly/monthly welcome, "inquire about shorter stays" but posts a nightly rate; Asheville gateway 32 km.
+- **4259 Red Gates** $58, Asheville 31 km. **637 Ocracoke** open per NPS; ferry/NC 12 access after the October storm unconfirmed - re-check.
