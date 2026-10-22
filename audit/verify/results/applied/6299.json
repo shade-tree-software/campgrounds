@@ -1,0 +1,79 @@
+{
+  "id": 6299,
+  "checked": "2026-10-21",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/258796",
+    "https://www.recreation.gov/api/camps/campgrounds/258796/rates",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Avalanche Campground record)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2026"
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/258796/rates (Peak Season 2026-06-27 to 2026-09-20: PeakStandardNonelectric $30) + NPS campgrounds API ('Avalanche summer fee' cost 30.00), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "06-27",
+        "closes": "09-20",
+        "note": "NPS: 'Avalanche Campground's summer season typically runs from mid-July to mid-September.' Its posted winter closure runs 2026-09-21 to 2027-06-26, matching recreation.gov's 2026 season of June 27 - September 20 (2025: June 23 - September 21). Dates vary each year with snow and Going-to-the-Sun Road opening."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (operatingHours: 'Winter Closure' 2026-09-21 to 2027-06-26; 'summer season typically runs from mid-July to mid-September') + https://www.recreation.gov/api/camps/campgrounds/258796/rates (season dates), read 2026-10-21",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "window_opens_days": 180,
+        "max_stay_nights": 14,
+        "note": "Reservation only, all 87 sites ('Advanced reservations are required for all sites'). Most sites open 6 months ahead on a rolling basis; 'a certain number of sites will be reservable up to 4 days before the desired date.' Up to 8 people, 2 vehicles and 2 tents per site."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (reservationInfo 'Campsites become reservable on a rolling basis, 6 months in advance ... A certain number of sites will be reservable up to 4 days before'; numberOfSitesFirstComeFirstServe 0) + https://www.recreation.gov/api/camps/campgrounds/258796 ('All sites require a reservation'; notice 'Campground length of stay is limited to 14 days'), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 87,
+        "max_rig_ft": 26,
+        "note": "Only 50 of the 87 sites take an RV or truck-and-trailer up to 26 ft; 4 are walk-to."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (totalSites 87, walkBoatTo 4, rvInfo '50 sites can accommodate up to a 26 foot RV or truck and trailer combination', rvMaxLength 26), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (campsites electricalHookups 0), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "potable_water": true,
+        "showers": false,
+        "laundry": false,
+        "dump": false,
+        "camp_store": false,
+        "wifi": false,
+        "note": "Flush toilets and potable water are seasonal. Bear-proof food lockers; no cell service. Generators only 8-10 a.m., noon-2 p.m. and 5-7 p.m."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (amenities: toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', showers 'None', laundry 'No', dumpStation 'No', campStore 'No', internetConnectivity 'No', cellPhoneReception 'No', foodStorageLockers 'Yes - seasonal') + recreation.gov notice on generator hours, read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "note": "Glacier NP campground on Going-to-the-Sun Road in the Avalanche Creek/McDonald Creek forest. Vehicles over 21 ft long or 8 ft wide (mirrors included) are prohibited on the road between Sun Point and Avalanche, so approach from West Glacier. --Claude",
+  "summary": "Confirmed on recreation.gov and the NPS campgrounds API: $30/night (2026), reservation only (no first-come sites), 6-month window with some sites at 4 days, 14-night max, 87 sites with 50 taking 26 ft, no hookups, flush toilets and seasonal water, no showers/dump/store. Added season (2026: June 27 - September 20; NPS winter closure from Sept 21, 2026 to June 26, 2027). Note trimmed of the site/hookup/booking restatements. NPS-run (no concessioner named).",
+  "flags": [
+    "Missing phone: recreation.gov gives 406-888-7800 (Glacier National Park).",
+    "Road caveat (not a criteria problem for a west-side approach): 'Vehicle and vehicle combinations longer than 21 feet (6.5 m) or wider than 8 feet (2.4 m) including mirrors are prohibited between the Sun Point parking area and Avalanche Campground' (recreation.gov notice). Avalanche sits at the west end of the restricted stretch, so a 23-ft rig must come from West Glacier and cannot continue east over Logan Pass."
+  ]
+}

@@ -386,3 +386,12 @@ me drop and report); each needs the research named before a verdict.
 - **112 Short Mountain**: DNR lists 74 primitive tent/trailer campsites, so ownership wma -> state (agency-designated sites) and renamed "Short Mountain WMA Campsites".
 - **501**: renamed "Seneca State Forest Campground (Seven Mile)"; no official page uses "Seven Mile".
 - **14051 / 14053 / 112 / 13221 / 13222**: no page states a rig size. 14063 Shanklin's Ferry: same DNR "Camping is not permitted" boilerplate conflict as Cedar Branch 14062.
+
+### p3-62 (WV/MT/NJ, 2026-10-21)
+- **61 Red Creek**: FS page says "Restrooms are not available" (recorded no toilets; may be stale if a vault toilet exists). FR 19 closed Laneville gate to FR 75 since 2026-06-22, no end date; FS directions use the Jordan Run/Hopeville end. Forest Order 21-94's 300-ft roadside ban excludes the campground. Thedyrt link removed.
+- **744 Smalltown**: rates undated (©2021 footer; $45/$285 weekly/$700 monthly), under the gate anyway; management may refuse units older than 15 years.
+- **Glacier gateway parks 15377 / 15370 / 15378 / 15395**: over $50, kept under the Glacier NP gateway exception (bases $76 / $73.45 / $63.60 / $96). Heart of Glacier charges a $50 non-refundable booking fee per stay. St. Mary KOA is owned by the Blackfeet Nation (Siyeh Corp.); left `private`, as First Nations parks are in BC.
+- **6299 Avalanche**: Going-to-the-Sun vehicle limit (21 ft / 8 ft) between Sun Point and Avalanche; a 23-ft rig comes from West Glacier only.
+- **14057 Bertha**: same DNR "Camping is not permitted" boilerplate conflict as 14062/14063; no closure for the dam work found.
+- **503 Big Rock / 119 Bishop Knob**: first-come only, overriding the inherited rec.gov reservable row. FR 76 (Richwood side) closed 2026-09-08..11-20; both reachable from Dyer via FR 101.
+- **463 Horseshoe**: no FS page (expected URL 404s); rec.gov only. Note says "along a remote section of the Cheat River" (-AWH) where rec.gov says "along Horseshoe Run" (the run joins the Cheat nearby). Phone set to the district office 304-478-2481 (staffed season: 304-801-3262).
