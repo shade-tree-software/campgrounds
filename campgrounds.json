@@ -5875,20 +5875,77 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB campsite catalog for facility 232596 (32 public STANDARD ELECTRIC sites: 23 at 50 A and 9 at 30 A, Water Hookup Yes on all), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232596/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232596/rates (2026 'Peak Season': STANDARD ELECTRIC $32 and a STANDARD ELECTRIC variant $28), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232596 (rules minHolidayWeekendStay 3, maxStay 14 'Rolling 30 Days', reservationCutOff 0; notices 'Maximum stay is 14-days within 30 day period', 'Gates open at 7:00am and close at 10:00pm'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.sas.usace.army.mil/Media/News-Releases/Article/4589134/corps-of-engineers-announces-recreation-seasonal-closures-at-thurmond/ (Sept. 2, 2026: 'Campgrounds closing Sept. 13: ... (South Carolina) Hawe Creek, Modoc'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232596 ('this quaint 34 site campground') + RIDB catalog (Max Vehicle Length 30-45, 14 Pull-Through), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232596 ('two bathhouses with flushing toilets and showers. There is a boat ramp and courtesy dock with a nearby pit toilet. For camper convenience, there is a dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
-      "nightly_low": 32,
+      "nightly_low": 28,
       "nightly_high": 32,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 rates: $32 a night for a standard electric site, $28 for a cheaper site variant (the rate table does not name which sites)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Bookable on recreation.gov up to the arrival day (cutoff 0); 3-night minimum on holiday weekends. 14 days within any 30, across USACE campgrounds. Gate open 7 am - 10 pm (combination issued at check-in)."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Seasonal: the Corps closed Hawe Creek for the season on Sept. 13, 2026 (opening date not published on the Corps pages read)."
+    },
+    "sites": {
+      "count": 34,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "34 sites (32 public, 2 management/host), 14 pull-through; catalog maximum vehicle lengths 30-45 ft."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Two bathhouses with flush toilets and showers; dump station and dumpsters; boat ramp and courtesy dock (pit toilet at the ramp); gatehouse."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232596 https://www.recreation.gov/api/camps/campgrounds/232596/rates RIDB campsite catalog for facility 232596 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.sas.usace.army.mil/Media/News-Releases/Article/4589134/corps-of-engineers-announces-recreation-seasonal-closures-at-thurmond/",
+      "note": "USACE-operated (Savannah District, Thurmond Lake; rec.gov phone 864-443-5441): fees 32/32 -> $28-32; booking confirmed recreation.gov with a 3-night holiday minimum and 14-in-30 limit; season seasonal (closed Sept 13, 2026 per Corps release; reopening date unpublished); 50 A + water; 34 sites to 45 ft, pull-throughs; bathhouses with showers, dump. Not affected by the Thurmond paving schedule (Hawe Creek not listed). Note left as is."
+    },
+    "phone": "864-443-5441"
   },
   {
     "id": 92,
@@ -6190,7 +6247,7 @@
     "inclusion_evidence": "recreation.gov 10145499 (Sumter NF): 21-site primitive loop, horses optional (max 2/site, not required), open to regular RV/tent campers -> general campground offering horse sites",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'not waterfront' per owner: Small campground in Sumter National Forest.",
     "note": "Small campground in Sumter National Forest.  --AWH",
-    "website": "https://www.recreation.gov/camping/campgrounds/10145499",
+    "website": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/brick-house-campground\nhttps://www.recreation.gov/camping/campgrounds/10145499",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -6205,14 +6262,73 @@
     "fees": {
       "nightly_low": 5,
       "nightly_high": 5,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026"
     },
     "provenance": {
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10145499/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/brick-house-campground ('Overnight Use: Single Site: $5 per night') + https://www.recreation.gov/api/camps/campgrounds/10145499/rates (2026 'Peak Season' PeakEquestrianNightly $5), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145499 (notice 'Campsites are reservation only year round through recreation.gov. All sites available with same day reservations'; rules maxStay 14 'Rolling 30 Days') + https://www.fs.usda.gov/r08/francismarionsumter/recreation/brick-house-campground ('Reservations and payment must be made through recreation.gov'; 'Ensure you have a reservation before arrival'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/brick-house-campground ('Seasons of Use: All year'; 'open year-round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145499 ('There is no water, no electrical hookups, and no dump station available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145499 ('year-round access to 21 campsites ... Campsite parking spurs are level and vary in size and grade. Not all sites can accommodate all vehicles'; 'Up to two horses per campsite are allowed') + RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20: 20 EQUESTRIAN NONELECTRIC sites, driveway 30-72 ft, Pull-through at 04 and 14), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10145499 ('Two, double vault toilet buildings are centrally located at each end of the campground. There is no water, no electrical hookups, and no dump station available'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
-    }
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "'Campsites are reservation only year round through recreation.gov. All sites available with same day reservations' - book before arriving and clip the confirmation to the site post. 14 days within 30 rolling days (Forest Order FM-19-01). 8 people, 2 vehicles and up to 2 horses per site."
+    },
+    "season": {
+      "year_round": true
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 21,
+      "pull_through": true,
+      "note": "One gravel loop of 21 sites; spurs 'vary in size and grade. Not all sites can accommodate all vehicles.' RIDB catalog driveways 30-72 ft, pull-throughs at sites 4 and 14. Every site is typed equestrian (up to two horses, highlined behind the white-banded trees) but open to RVs and tents."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "dump": false,
+      "note": "Two double vault toilet buildings, one at each end of the loop; each site has a picnic table, fire ring and lantern post; cell coverage spotty."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/brick-house-campground https://www.recreation.gov/api/camps/campgrounds/10145499 https://www.recreation.gov/api/camps/campgrounds/10145499/rates https://www.fs.usda.gov/r08/francismarionsumter/alerts",
+      "note": "Forest Service (Enoree Ranger District) campground: confirmed $5/night (fees manual); booking reservation-only on recreation.gov year-round incl. same-day, never first-come, 14-day limit; open all year; no hookups, water or dump; 21 sites (pull-throughs 4 and 14); two vault toilet buildings. Horses allowed at every site but not required. No forest alert for FSR 358 / SC 66. Note left as is."
+    },
+    "phone": "803-276-4810"
   },
   {
     "id": 99,
@@ -7245,20 +7361,43 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "recreation.gov 10351788: 30 Standard Nonelectric drive-in riverside sites along Williams River Road -> real drive-in campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: There are 24 campsites on FR 86 (northern section of Williams River Road), many of which are right on the river.  Note that FR 86 is a narrow paved road.",
-    "note": "There are 24 campsites on FR 86 (northern section of Williams River Road), many of which are right on the river.  Note that FR 86 is a narrow paved road.  --AWH",
-    "website": "https://www.recreation.gov/camping/campgrounds/10351788",
+    "note": "Campsites on FR 86 (northern section of Williams River Road), many of which are right on the river.  Note that FR 86 is a narrow paved road.  --AWH",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites\nhttps://www.recreation.gov/camping/campgrounds/10351788",
     "sites": {
-      "count": 24
+      "count": 24,
+      "pull_through": true,
+      "note": "Sites 1-24 along FR 86, back-in spurs except pull-through site 10; catalog driveway lengths 13-90 ft (site 3 13 ft, sites 14 and 15 28-31 ft, most 40 ft or more). Site 7 is not in the RIDB catalog."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ridb.recreation.gov campsite catalog for facility 10351788 (trip_data/ridb_campsites.json, fetched 2026-10-20: per-site Driveway Entry / Driveway Length) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788/rates ('First-come, First-served Season' 2026-04-03 to 2026-11-30: WalkInSingleCampsite $10 (STANDARD NONELECTRIC), WalkInDoubleCampsite $20) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('four bulletin boards and self-service stations located beside the toilets near Sites 5, 8, 11, and 20'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Sites are not reservable. Sites are on a first come, first serve basis'; 'Maximum length of stay is 14 days'; 'Single site limit is one wheeled camping unit only, defined as motorhome or travel trailer; no more than 8 people; no more than 2 vehicles') + https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas (Order 09-21-12-05), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Seasons of Use: mid-March - end of November'; 'Toilets are closed in winter'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788 (notice 'No RV hookups are available'; all sites STANDARD NONELECTRIC, 'Water Hookup: No' in the RIDB campsite catalog), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788 ('Vautl toilets are spaced along the river corridor'; amenities Vault Toilets, Accessible Vault Toilets, Picnic Tables, Campfire Rings, Lantern Posts) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Potable water is not available at this site'; 'Dump station and water fill are available in Richwood ...'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -7269,8 +7408,38 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$10/night for a single site, paid at self-service stations by the toilets near sites 5, 8, 11 and 20. The facility also lists a $20 double site; recreation.gov does not say which number it is."
+    },
+    "booking": {
+      "reservable": false,
+      "platform": "none",
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "'Sites are not reservable. Sites are on a first come, first serve basis.' Checkout 2 pm; one motorhome or trailer, 8 people and 2 vehicles per site. A forest order restricts camping along the Williams River to these designated sites (and Tea Creek and Day Run campgrounds)."
+    },
+    "season": {
+      "year_round": false,
+      "closes": "11-30",
+      "note": "Seasons of use: mid-March to the end of November. Toilets are closed in winter."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "Vault toilets spaced along the river corridor (closed in winter); each site has a picnic table, fire ring and lantern post. No drinking water: the nearest dump and water fill are in Richwood and Marlinton (Cranberry Campground has a donation dump)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites https://www.recreation.gov/api/camps/campgrounds/10351788 https://www.recreation.gov/api/camps/campgrounds/10351788/rates https://www.fs.usda.gov/r09/monongahela/alerts/national-forest-system-road-86-closure-public-health-and-safety https://www.fs.usda.gov/r09/monongahela/alerts/forest-road-86-be-closed-construction-and-repair https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas",
+      "note": "Forest Service designated FCFS sites (Gauley Ranger District below the Highland Scenic Highway): confirmed $10 single-site fee (rec.gov FCFS season), now manual; booking changed to first-come only, not reservable, 14-day max (overrides the inherited rec.gov row); season mid-March to Nov 30; no hookups; vault toilets, no potable water; sites note with catalog driveway lengths (pull-through site 10). Count 24 left as derived. Note: dropped the restated count."
+    },
+    "phone": "304-846-2695"
   },
   {
     "id": 115,
@@ -7283,20 +7452,43 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "recreation.gov 10351788: same corridor, Standard Nonelectric drive-in riverside sites on FR 216 -> real drive-in campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'riverfront' per owner: There are 6 high-elevation campsites on FR 216 (southern section of Williams River Road), many of which are right on the river.  Note that FR 216 is a narrow gravel road.",
-    "note": "There are 6 high-elevation campsites on FR 216 (southern section of Williams River Road), many of which are right on the river.  Note that FR 216 is a narrow gravel road.  --AWH",
-    "website": "https://www.recreation.gov/camping/campgrounds/10351788",
+    "note": "High-elevation campsites on FR 216 (southern section of Williams River Road), many of which are right on the river.  Note that FR 216 is a narrow gravel road.  --AWH",
+    "website": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites\nhttps://www.recreation.gov/camping/campgrounds/10351788",
     "sites": {
-      "count": 6
+      "count": 6,
+      "pull_through": true,
+      "note": "Sites 25-30 on FR 216, back-in spurs except pull-through site 26; catalog driveway lengths 28-72 ft (25: 71, 26: 72, 27: 40, 28: 29, 29: 33, 30: 28)."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://ridb.recreation.gov campsite catalog for facility 10351788 (trip_data/ridb_campsites.json, fetched 2026-10-20: per-site Driveway Entry / Driveway Length) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites, read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788/rates ('First-come, First-served Season' 2026-04-03 to 2026-11-30: WalkInSingleCampsite $10 (STANDARD NONELECTRIC), WalkInDoubleCampsite $20) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('four bulletin boards and self-service stations located beside the toilets near Sites 5, 8, 11, and 20'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Sites are not reservable. Sites are on a first come, first serve basis'; 'Maximum length of stay is 14 days'; 'Single site limit is one wheeled camping unit only, defined as motorhome or travel trailer; no more than 8 people; no more than 2 vehicles') + https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas (Order 09-21-12-05), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Seasons of Use: mid-March - end of November'; 'Toilets are closed in winter'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788 (notice 'No RV hookups are available'; all sites STANDARD NONELECTRIC, 'Water Hookup: No' in the RIDB campsite catalog), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10351788 ('Vautl toilets are spaced along the river corridor'; amenities Vault Toilets, Accessible Vault Toilets, Picnic Tables, Campfire Rings, Lantern Posts) + https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites ('Potable water is not available at this site'; 'Dump station and water fill are available in Richwood ...'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -7307,8 +7499,38 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$10/night for a single site, paid at self-service stations by the toilets near sites 5, 8, 11 and 20. The facility also lists a $20 double site; recreation.gov does not say which number it is."
+    },
+    "booking": {
+      "reservable": false,
+      "platform": "none",
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "'Sites are not reservable. Sites are on a first come, first serve basis.' Checkout 2 pm; one motorhome or trailer, 8 people and 2 vehicles per site. A forest order restricts camping along the Williams River to these designated sites (and Tea Creek and Day Run campgrounds)."
+    },
+    "season": {
+      "year_round": false,
+      "closes": "11-30",
+      "note": "Seasons of use: mid-March to the end of November. Toilets are closed in winter."
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "Vault toilets spaced along the river corridor (closed in winter); each site has a picnic table, fire ring and lantern post. No drinking water: the nearest dump and water fill are in Richwood and Marlinton (Cranberry Campground has a donation dump)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r09/monongahela/recreation/williams-river-sites https://www.recreation.gov/api/camps/campgrounds/10351788 https://www.recreation.gov/api/camps/campgrounds/10351788/rates https://www.fs.usda.gov/r09/monongahela/alerts/national-forest-system-road-86-closure-public-health-and-safety https://www.fs.usda.gov/r09/monongahela/alerts/forest-road-86-be-closed-construction-and-repair https://www.fs.usda.gov/r09/monongahela/alerts/cranberry-and-williams-river-camping-areas",
+      "note": "Forest Service designated FCFS sites (Marlinton Ranger District, above the Highland Scenic Highway): confirmed $10 single-site fee (rec.gov FCFS season), now manual; booking changed to first-come only, not reservable, 14-day max (overrides the inherited rec.gov row); season mid-March to Nov 30; no hookups; vault toilets, no potable water; sites note with catalog driveway lengths (pull-through site 26). Count 6 left as derived. Note: dropped the restated count."
+    },
+    "phone": "304-846-2695"
   },
   {
     "id": 116,
@@ -28813,7 +29035,7 @@
   {
     "id": 458,
     "phone": "304-465-0508",
-    "website": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm\nhttps://www.recreation.gov/camping/poi/259060",
+    "website": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm",
     "kind": "campground",
     "location": "37.8453,-80.9852",
     "name": "War Ridge/Backus Mountain Campground",
@@ -28837,9 +29059,70 @@
     },
     "provenance": {
       "fees": {
-        "source": "https://www.nps.gov/neri/planyourvisit/camping.htm ('There are no camping fees at park campgrounds.', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API fees: cost 0.00, 'There are no fees for camping.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: reservationInfo 'All sites are managed on a first-come, first-served basis and reservations are not accepted'; numberOfSitesReservable 0, numberOfSitesFirstComeFirstServe 8; regulations 'Camping limit of no more than a total of 14 days per 28-day period in any park campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API operatingHours: 'War Ridge Campground is open year round.'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: 'These primitive camping areas have no drinking water or hookups'; electricalHookups 0), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: 'There are 8 drive-in sites for tents, RVs, or campers. Only small (less than 25 feet) RVs or campers are recommended'; rvInfo 'There are no pull-through campsites'; rvMaxLength 25; accessRoads 'Unpaved Roads - All vehicles OK in good weather'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API amenities: toilets 'No Toilets', showers 'None', potableWater 'No water', dumpStation 'No', laundry 'No', campStore 'No', internetConnectivity 'No', trashRecyclingCollection 'No'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
+    },
+    "booking": {
+      "reservable": false,
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "'All sites are managed on a first-come, first-served basis and reservations are not accepted.' Camp only at designated sites; campers must occupy the site each night. 14 days in any 28-day period across the park's campgrounds."
+    },
+    "season": {
+      "year_round": true
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 8,
+      "max_rig_ft": 25,
+      "pull_through": false,
+      "note": "8 drive-in sites for tents, RVs or campers on a ridgetop; 'Only small (less than 25 feet) RVs or campers are recommended'; no pull-throughs. One RV and one tent, 2 vehicles, 8 people per site. Unpaved access road, 'All vehicles OK in good weather'."
+    },
+    "facilities": {
+      "flush_toilets": false,
+      "showers": false,
+      "potable_water": false,
+      "dump": false,
+      "laundry": false,
+      "camp_store": false,
+      "wifi": false,
+      "note": "No water, no trash collection, no camp host. The NPS data contradicts itself on toilets ('No Toilets' in the amenity list, 'limited restroom facilities' in the fee text)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "NPS campgrounds API (developer.nps.gov/api/v1/campgrounds?parkCode=neri, 'War Ridge/Backus Mountain Campground', read 2026-10-21), the data behind https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm NPS alerts API (developer.nps.gov/api/v1/alerts?parkCode=neri, read 2026-10-21)",
+      "note": "NPS campground data: confirmed free (fees now manual), first-come only (overrides the inherited recreation.gov reservable), open year round, no hookups or water, 8 drive-in sites with RVs under 25 ft recommended (23 ft fits), no pull-throughs, no showers/flush toilets. No current park alert for War Ridge. Operator: National Park Service (New River Gorge); phone 304-465-0508 confirmed. Note left as is."
     }
   },
   {
@@ -38651,24 +38934,79 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area ('Visitors have access to flush toilets, warm showers and a dump station (no hook ups)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233343/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area ('Overnight Use: Single Site: $15 per night') + https://www.recreation.gov/api/camps/campgrounds/233343/rates (2026 Peak Season, STANDARD NONELECTRIC $15), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area ('Campsites must be reserved and paid for at Recreation.gov'; 'Reserve your site up to six months in advance'; 'Stay is limited to 14 days') + https://www.recreation.gov/api/camps/campgrounds/233343 (rules reservationCutOff 0), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area ('Open April 1 through October 31; closed for winter'; Seasons of Use 'April 1 - October 31') + recreation.gov overview 'Open April 1 - October 31', read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area ('this 29-site campground') + RIDB campsite catalog for facility 233343 (trip_data/ridb_campsites.json, fetched 2026-10-20: 20 STANDARD NONELECTRIC + 9 TENT ONLY NONELECTRIC, all Back-In, Max Vehicle Length up to 60 ft at site 004), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233343 ('centrally-located drinking water ... a restroom with flush toilets and hot showers'; amenities Dump Station, Flush Toilets, Showers, Water) + the Forest Service page ('flush toilets, warm showers and a dump station'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "'Campsites must be reserved and paid for at Recreation.gov', up to six months ahead; recreation.gov takes bookings up to the arrival day (cutoff 0). Clip the confirmation to the site post. 14-day stay limit."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "10-31"
+    },
+    "sites": {
+      "count": 29,
+      "max_rig_ft": 60,
+      "pull_through": false,
+      "note": "29 sites: 20 standard (RV/trailer) and 9 tent-only. All back-in; catalog maximum vehicle lengths 20-60 ft (sites 4: 60, 3: 50, 10/11/2: 40; site 14 only 20, sites 20/22 24)."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "dump": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.fs.usda.gov/r08/francismarionsumter/recreation/cherry-hill-recreation-area https://www.recreation.gov/api/camps/campgrounds/233343 https://www.recreation.gov/api/camps/campgrounds/233343/rates https://www.fs.usda.gov/r08/francismarionsumter/alerts",
+      "note": "Forest Service (Andrew Pickens Ranger District) campground: confirmed $15/night (fees manual); booking reservation-only on recreation.gov up to six months ahead, never first-come, 14-day limit; season Apr 1 - Oct 31; no hookups (electric 0 now manual); 29 sites (20 RV-capable, to 60 ft, all back-in); flush toilets, hot showers, drinking water, dump station. No forest alert for SC 107. Note left as is."
+    },
+    "phone": "864-638-9568"
   },
   {
     "id": 603,
@@ -48717,19 +49055,60 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232555 ('94 with full water and electric hookups') + RIDB catalog (94 sites Electricity Hookup 50, Water Hookup Yes), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232555/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232555/rates (2026 'Peak Season' 05-01 to 09-29: RV ELECTRIC $36/$38, STANDARD ELECTRIC $36/$38/$42 and $76, STANDARD NONELECTRIC $26), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232555 (rules maxStay 14 'Rolling 30 Days', reservationCutOff 0; notices 'Maximum stay is 14-days within 30 day period', 'Entrance gate OPENS at 7 a.m. and LOCKS at 10 p.m.') + RIDB catalog (106 sites, all reservable), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232555 ('106 public use campsites (94 with full water and electric hookups and 12 primitive sites with impact pad only)') + RIDB catalog (Max Vehicle Length up to 60, 32 pull-through), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232555 ('4 comfort stations with showers, 2 dump stations, 1 boat ramp, 1 courtesy dock, 4 playgrounds, 2 designated swim areas/beaches'; amenities Flush Toilets, Showers, Dump Station), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 36,
-      "nightly_high": 38,
-      "currency": "USD"
+      "nightly_high": 42,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 rates: electric/water sites $36-42 a night (the rate table carries $36, $38 and $42 site variants), a double site $76; the 12 primitive impact-pad sites (no hookups, vehicles 15-23 ft) $26."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "All 106 public sites bookable on recreation.gov, up to the arrival day (cutoff 0). 14 days within any 30; changing names, sites or chaining reservations to stay longer is prohibited. Gate locked 10 pm - 7 am; check in by 10 pm."
+    },
+    "sites": {
+      "count": 106,
+      "max_rig_ft": 60,
+      "pull_through": true,
+      "note": "106 public sites: 94 with water and electric (32 pull-through) and 12 primitive impact-pad sites for vehicles of 15-23 ft; 2 more are park-attendant sites."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "4 comfort stations with showers, 2 dump stations, boat ramp and courtesy dock, 2 swim beaches, 4 playgrounds; gatehouse."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/232555 https://www.recreation.gov/api/camps/campgrounds/232555/rates RIDB campsite catalog for facility 232555 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.sas.usace.army.mil/Missions/Civil-Works/Recreation/Hartwell-Lake/Camping/ (read 2026-10-21: no season or per-park detail on the page)",
+      "note": "USACE-operated (Savannah District, Hartwell project office 888-893-0678): fees updated 36/38 -> $36-42 (electric sites; primitive $26 noted, not the base since those pads cap at 23 ft and are primitive); booking confirmed recreation.gov, 14 in 30 days; 50 A + water (now manual); 106 sites to 60 ft with pull-throughs; showers, flush toilets, 2 dump stations. Season NOT recorded: no Corps page states Coneross's dates (the district camping page is bare, the rec.gov rate season May 1 - Sept 29 is no"
     }
   },
   {
@@ -49375,20 +49754,37 @@
     "waterfront": "creekside",
     "inclusion_evidence": "Hipcamp listing + firsthand --AWH note: multiple creekside RV sites with full hookups",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'creekside' per owner: Multiple RV sites along the creek with full hookups.  $60+fees.",
-    "note": "Multiple RV sites along the creek with full hookups.  $60+fees.  --AWH",
+    "note": "Multiple RV sites along the creek.  --AWH",
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (RV #7: 'full water, sewage and power hookups. The power is 50amp and the water is from a well'; RV #8 30 amp + water + sewer; RV #6 water and electric only), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (server-rendered site list read 2026-10-10: each RV-accessible site's pricePerNight, sites shorter than 23 ft and group/buyout/cabin units excluded; service fee ~18% of the nightly price)",
-        "checked": "2026-10-10"
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (listing data, status LIVE: sites RV #5, #6, #7, #8 accommodationType vehicles, pricePerNight $60.00; tent sites $20-25), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (status LIVE, isBookable true, isPaused false, bookingsCount 144, maxBookingWindowInMonths 12; RV #5-#8 isInstantBookable false, maxNights 7), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (RV #7 'along the river, in line with 10 other RV spots'; RV #5 'Easy back-in site ... The bridge to access the campground has a 9 ton weight limit'; campsitesConfiguration DRIVE_IN / TWO_WHEEL_DRIVE; tentCount 14, rvCount 4), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d (overview: 'a convenient shower house with well water and flush toilets, but we do ask that you bring your own drinking water'; site amenity water ABSENT), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -49400,7 +49796,29 @@
       "nightly_low": 60,
       "nightly_high": 60,
       "currency": "USD",
-      "note": "RV sites. Host's nightly price; Hipcamp adds a service fee (about 18%) at checkout."
+      "note": "Host's nightly price for each of the four Hipcamp RV sites (RV #5-#8); Hipcamp adds a service fee (about 18%) at checkout. Tent sites $20-25. Kids under 16 free.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "hipcamp",
+      "window_opens_days": 365,
+      "max_stay_nights": 7,
+      "note": "Request-to-book on Hipcamp (listing LIVE, 144 bookings; the RV sites are not instant-book), up to 12 months ahead, 7-night maximum on the RV sites. The overview also mentions 'annual RV sites'."
+    },
+    "sites": {
+      "note": "About 11-12 RV sites in a line along the North Fork River, four of them (RV #5-#8, back-in, drive-in 2WD) bookable nightly on Hipcamp; 14 tent sites. No RV length posted. The access bridge has a 9-ton weight limit."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "potable_water": false,
+      "note": "Shower house with well water and flush toilets; 'we do ask that you bring your own drinking water'. Firewood sold on site (cash)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.hipcamp.com/en-US/land/west-virginia-the-trout-camp-pw1hoz0d",
+      "note": "Live Hipcamp listing (aka Fontinalis Farms, 144 bookings): confirmed $60 RV sites (fees manual); added booking (Hipcamp request-to-book, 12 months ahead, 7-night max), hookups 50 A/water/sewer, sites note (RV row along the North Fork, 9-ton bridge - EKKO passes), shower house + flush toilets, no drinking water. Season not stated. Note: dropped the redundant price and 'with full hookups'."
     }
   },
   {
@@ -279129,46 +279547,33 @@
     "inclusion_evidence": "allstays/campgroundviews: ~20 full-hookup RV sites (30/50A), to 40 ft, open all year, transient (Passport America discount only) -> real RV park",
     "waterfront_evidence": "satellite at 33.4012,-81.8523: RV loops along US-1, no water in frame",
     "website": "https://www.facebook.com/bettysrvparksc/",
-    "phone": "803-827-1956",
+    "phone": "803-924-4135",
     "note": "Small family-owned park (~15 sites) on Hwy 125 (Atomic Rd) east of Beech Island, near Augusta GA. Full hookups (30/50 amp, water, sewer), dump station; RVs to 40 ft. Owners on-site; call for availability. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
       "source": "rvlife"
     },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 15,
-      "max_rig_ft": 40
-    },
-    "booking": {
-      "reservable": true,
-      "platform": "phone"
-    },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared 2026-10-21: the derived 50A/water/sewer rest on allstays/campgroundviews (per inclusion_evidence, via the note); the operator has no readable page (Facebook only) that states them.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared 2026-10-21: the derived 15 sites / 40 ft rest on allstays/campgroundviews (per inclusion_evidence); no operator page states them.",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared 2026-10-21: the derived 'reserve by phone' rests on directory listings; no operator page states how to book (Google Maps shows only 'Contact this property for rates and availability').",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Cleared 2026-10-21: the derived dump station rests on directory listings; no operator page states it.",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -279176,8 +279581,10 @@
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     },
-    "facilities": {
-      "dump": true
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.facebook.com/bettysrvparksc/ (unreadable without a login, 2026-10-21) Google Maps place 'Betty Rv Park', 142 Boettjer Rd, Beech Island SC (read 2026-10-21 with audit/private_gap_browser/gm.py)",
+      "note": "No operator page to read: the website is a Facebook page that does not load without a login, and no own site exists (search finds only The Dyrt / Campendium / AllStays). Google Maps has 'Betty Rv Park', 142 Boettjer Rd, open (no closed label), 4.6 over 56 reviews, phone (803) 924-4135, which meets the presence rule. Cleared the derived hookups, sites, booking and dump values (aggregator-only). No rate from the operator; RV Life $ only. Family has not stayed (no trip references). Note left as is."
     }
   },
   {
@@ -280744,9 +281151,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Campspot: 33 full-hookup RV campsites (big-rig friendly) + 16 tent sites, York County park -> real RV campground",
     "waterfront_evidence": "original pin on a subdivision construction site ~600m SW; real park at Campspot coord on Lake Wylie. Newly-established 33 full-hookup RV + 16 tent sites, no waterfront-site designation; base imagery predates the campground (interior woods W of the boat-ramp/day-use peninsula); no shoreline RV pads confirmable - default down",
-    "website": "https://www.yorkcountygov.com/1033/Allison-Creek-Park\nhttps://www.campspot.com/park/allison-creek-park",
-    "phone": "803-831-2630",
-    "note": "York County park on Lake Wylie, with 33 paved full-hookup RV sites and 16 primitive tent sites. --Claude",
+    "website": "https://www.yorkcountysc.gov/1033/Allison-Creek-Park\nhttps://www.campspot.com/park/allison-creek-park",
+    "phone": "803-323-2035",
+    "note": "York County park on Lake Wylie. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 3,
@@ -280758,7 +281165,8 @@
       "sewer": true
     },
     "sites": {
-      "count": 49
+      "count": 49,
+      "note": "33 paved full-hookup RV sites and 16 primitive tent sites."
     },
     "season": {
       "year_round": true
@@ -280766,32 +281174,36 @@
     "booking": {
       "reservable": true,
       "platform": "campspot",
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "window_opens_days": 395,
+      "url": "https://www.campspot.com/park/allison-creek-park",
+      "note": "Reservations up to 13 months ahead on Campspot (linked from the county's Reserve a Campsite page). 'NOT a long-term campground. The maximum length of stay is 14 nights on a campsite.' Check-in 2-9 pm, out by noon; the registering camper must be 21+ and present for the stay; one RV and one tent or two tents, 6 people per RV site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/1035/Camping-Information ('RV campsites are paved, and each equipped with water, sewer, electric (50/30/20 amp)'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/1035/Camping-Information ('Allison Creek Park has 33 full hook-up RV campsites and 16 primitive tent sites. RV campsites are paved'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/1035/Camping-Information ('The park is open year-round'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.yorkcountysc.gov/1035/Camping-Information ('camping reservations can be made 13 months in advance'; 'Allison Creek Park is NOT a long-term campground. The maximum length of stay is 14 nights on a campsite') + https://www.yorkcountysc.gov/1041/Reserve-a-Campsite (Campspot link), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/park/allison-creek-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.yorkcountysc.gov/1035/Camping-Information ('RV CAMPING RATES: (All reservations are subject to a $3.00 reservation fee and applicable taxes) York County Resident $35 / night ... Non-York County Resident $50 / night'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -280800,12 +281212,22 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 50,
-      "nightly_high": 50,
+      "nightly_low": 35,
+      "nightly_high": 35,
       "currency": "USD",
       "reservation_fee": 3,
       "checked": "2026",
-      "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (AC Site). October 2026, January 2027 and June 2027: $50, Tuesday and Saturday alike. Plus the park's $3 'Booking Fee', once per stay. Read 2026-10-13."
+      "note": "RV sites $35 a night for York County residents, $50 for non-residents; York County seniors 60+, disabled, active military and county employees $31. Primitive tent sites $21 / $35 / $18. Every reservation adds a $3.00 reservation fee plus tax.",
+      "nonresident": {
+        "type": "surcharge",
+        "amount": 15,
+        "per": "night"
+      }
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.yorkcountysc.gov/1035/Camping-Information https://www.yorkcountysc.gov/1033/Allison-Creek-Park https://www.yorkcountysc.gov/1041/Reserve-a-Campsite",
+      "note": "York County's camping page: fees restructured to the resident base $35 with a +$15/night non-resident surcharge ($50, matching the earlier Campspot read) and the $3 reservation fee; confirmed Campspot booking 13 months ahead, 14-night max, open year-round, 50/30/20 A + water + sewer, 33 RV + 16 tent sites (all now manual). Note trimmed of the site-count/hookup restatement."
     }
   },
   {
@@ -876334,6 +876756,11 @@
       "sig": "795b70b7ed8a675e",
       "checked": "2026-09-25",
       "model": "claude-opus-5/session"
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://kenovawv.com/virginia-point-campground",
+      "note": "City of Kenova's campground page says only 'Contact Camp Host (304)-690-5211 For availability and camp rates' - phone confirmed; no rates, hookups, site count or season posted, so the derived hookups/booking values stay as they are. Note left as is."
     }
   },
   {
@@ -925751,28 +926178,37 @@
     "inclusion_evidence": "yokum.com/lower-campground (read 2026-09-30): RV Camping $50 for 1-4 people with RV hook-ups along the river and throughout, first come first served, seasonal -> real transient RV campground; published base $50 <= $50; quality: operator Yokum's Vacationland Google Maps 4.6 over 569 reviews. Pin located by AWH 2026-09-30",
     "website": "https://www.yokum.com/lower-campground",
     "phone": "800-772-8342",
-    "note": "The larger of Yokum's Vacationland's two Seneca Rocks campgrounds, about 1 km north of the Rocks behind Yokum's restaurant along the North Fork of the South Branch Potomac, with a view of Seneca Rocks; RV hookup sites in a row along the river and around an open field, tent and electric pop-up sites, bathhouse. No reservations for camping (first come, first served); closes for winter. RV camping $50 for 1-4 people, electric tent/pop-up $40, tents $12/person. Sister campground Princess Snowbird (id 14255) stays open all winter. Unrated on RV Life; Yokum's Vacationland Google 4.6 over 569 reviews. --Claude",
+    "note": "The larger of Yokum's Vacationland's two Seneca Rocks campgrounds, about 1 km north of the Rocks behind Yokum's restaurant along the North Fork of the South Branch Potomac, with a view of Seneca Rocks; RV hookup sites in a row along the river and around an open field, tent and electric pop-up sites, playground. Sister campground Princess Snowbird (id 14255) stays open all winter. Unrated on RV Life; Yokum's Vacationland Google 4.6 over 569 reviews. --Claude",
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "'This campground closes during the winter' (no dates posted)."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "platform": "none",
+      "note": "'We do not take reservations for Camping.' (The page's 'For Reservations CALL' line is for the cabins and lodging.)"
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.yokum.com/lower-campground ('This campground closes during the winter'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.yokum.com/lower-campground ('Please Note: We do not take reservations for Camping'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.yokum.com/lower-campground, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.yokum.com/lower-campground ('RV Camping: $50 for 1-4 people, $10 each additional person (children under 10 stay free)'; page footer ©2026), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.yokum.com/lower-campground ('a bathhouse with bathrooms and showers. There is also a dump station in this campground'), read 2026-10-21",
+        "checked": "2026-10-21",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -925784,7 +926220,17 @@
       "nightly_low": 50,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "RV camping $50 for 1-4 people, $10 each additional; no reservations."
+      "note": "RV camping $50 a night for 1-4 people, $10 each additional person (children under 10 free); tent or pop-up site with electric $40; tents $12 per person.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-21",
+      "sources": "https://www.yokum.com/lower-campground",
+      "note": "Operator's page (©2026) confirms RV camping $50 for 1-4 people (fees now manual), no reservations for camping (booking manual: not reservable, FCFS), closes in winter (season manual, no dates), bathhouse with showers and a dump station. Not stated: hookup types/amps, site count or lengths. $50 base is at, not over, the US$50 line; working site with phones 800-772-8342 / 304-567-2351. Note trimmed of the booking, season and price restatements."
     }
   },
   {

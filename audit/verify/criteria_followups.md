@@ -405,3 +405,11 @@ me drop and report); each needs the research named before a verdict.
 - **Squirrel Gap 397-401**: GW&J NF Lee RD; FR 344 level 3 gravel, open to vehicles 04/01-01/15. No FS page names the sites; no rig size anywhere.
 - **14050 Teter Creek**: DNR lists 20 tent/trailer sites only; directions corrected (CR 9 from WV 92 at Meadowville).
 - **Monongahela 2026 opening dates** (fs.usda.gov/r09/monongahela/recreation) recorded only as season.note, year_round false.
+
+### p3-65 (WV/SC, 2026-10-21)
+- **750 The Trout Camp** (--AWH, hipcamp): host says "15 tent sites and annual RV sites"; only RV #5-#8 of ~11-12 riverside RV sites book nightly on Hipcamp (7-night max, 7-9 bookings each). Nightly sale is real, so test 2 passes; the rest of the row looks annual. $60 price is AWH's call (his note).
+- **114 / 115 Williams River**: FR 86 construction closure (Forest Order 09-21-02-26-04, to 2026-11-30) spans 114's pin; the FR 86 approach WV 150 -> FR 216 (115) closed since 2026-07-20. Road closure, not a status.
+- **4351 Betty's RV Park**: Facebook-only, passes presence on Google Maps (4.6 over 56, phone 803-924-4135). No posted nightly rate (RV Life $ tier + one 2026? camper report $30); derived hookups/sites/booking cleared (directory-only).
+- **740 Coneross**: no Corps page states a season (district page CDN-blocked).
+- **91 Hawe Creek**: closed for the season 2026-09-13 (Corps release), no reopening date; 3-night holiday-weekend minimum.
+- **13369 Virginia Point**: rates only by phone (camp host 304-690-5211).

@@ -1,0 +1,44 @@
+{
+  "id": 458,
+  "checked": "2026-10-21",
+  "sources": [
+    "NPS campgrounds API (developer.nps.gov/api/v1/campgrounds?parkCode=neri, 'War Ridge/Backus Mountain Campground', read 2026-10-21), the data behind https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm",
+    "NPS alerts API (developer.nps.gov/api/v1/alerts?parkCode=neri, read 2026-10-21)"
+  ],
+  "groups": {
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "note": "'All sites are managed on a first-come, first-served basis and reservations are not accepted.' Camp only at designated sites; campers must occupy the site each night. 14 days in any 28-day period across the park's campgrounds."},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: reservationInfo 'All sites are managed on a first-come, first-served basis and reservations are not accepted'; numberOfSitesReservable 0, numberOfSitesFirstComeFirstServe 8; regulations 'Camping limit of no more than a total of 14 days per 28-day period in any park campground'), read 2026-10-21",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 0, "nightly_high": 0, "currency": "USD"},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API fees: cost 0.00, 'There are no fees for camping.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API operatingHours: 'War Ridge Campground is open year round.'), read 2026-10-21",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: 'These primitive camping areas have no drinking water or hookups'; electricalHookups 0), read 2026-10-21",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 8, "max_rig_ft": 25, "pull_through": false, "note": "8 drive-in sites for tents, RVs or campers on a ridgetop; 'Only small (less than 25 feet) RVs or campers are recommended'; no pull-throughs. One RV and one tent, 2 vehicles, 8 people per site. Unpaved access road, 'All vehicles OK in good weather'."},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API: 'There are 8 drive-in sites for tents, RVs, or campers. Only small (less than 25 feet) RVs or campers are recommended'; rvInfo 'There are no pull-through campsites'; rvMaxLength 25; accessRoads 'Unpaved Roads - All vehicles OK in good weather'), read 2026-10-21",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": false, "showers": false, "potable_water": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false, "note": "No water, no trash collection, no camp host. The NPS data contradicts itself on toilets ('No Toilets' in the amenity list, 'limited restroom facilities' in the fee text)."},
+      "source": "https://www.nps.gov/neri/planyourvisit/war-ridge-backus-mountain-campground.htm (NPS campgrounds API amenities: toilets 'No Toilets', showers 'None', potableWater 'No water', dumpStation 'No', laundry 'No', campStore 'No', internetConnectivity 'No', trashRecyclingCollection 'No'), read 2026-10-21",
+      "method": "manual"
+    }
+  },
+  "summary": "NPS campground data: confirmed free (fees now manual), first-come only (overrides the inherited recreation.gov reservable), open year round, no hookups or water, 8 drive-in sites with RVs under 25 ft recommended (23 ft fits), no pull-throughs, no showers/flush toilets. No current park alert for War Ridge. Operator: National Park Service (New River Gorge); phone 304-465-0508 confirmed. Note left as is.",
+  "flags": [
+    "Website's second line is a recreation.gov POI page (https://www.recreation.gov/camping/poi/259060) for a campground that takes no reservations; the NPS page alone would do."
+  ]
+}
