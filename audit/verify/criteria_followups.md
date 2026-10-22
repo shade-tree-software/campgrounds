@@ -4,6 +4,13 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6325 Ekalaka Park (mt-22): FS says 'Open parking. Small trailers only.' with no length; the ~30 ft came from Campendium. 23-ft fit unconfirmed (asked AWH). FS page unclear on toilets.
+- 6326 Fishtrap Lake (mt-22): FS gives no rig max; last 2 mi (FR #7593) narrow; ~24 ft only from aggregators (cleared).
+- 6323 Dorr Skeels (mt-22): only 2 of 8 overnight sites are RV sites (5 tent-only, 1 host).
+- 14599 Duck Lake (mt-22): electric base exactly $50.00 (not over the gate; Glacier gateway anyway); primitive $30 but 23-ft fit unclear. Tribe lists (406) 338-2111 x2161/x2157 vs booking engine 406-338-4557.
+- 13577 Ed McGivern (mt-22): no city page or Visit Montana listing; kept on Google Maps (review a year old confirms camping). Website is still The Dyrt; no official URL. Values from The Dyrt were cleared.
+- 6327 Fourth of July (mt-22): temporarily closed (Sand Creek / Bobcat Lakes fires, page updated 2026-08-31); inherited rec.gov booking was wrong, FS says FCFS. Re-check spring 2027.
+- 14121 Eureka Reservoir FAS (mt-22): FishMT page says 'Lease expires in 2019' but still lists camping and fees.
 - 6321 Delmoe Lake (mt-21): temporarily closed for construction (Forest Order 01020426-01, Apr 1 - Oct 31, 2026, campground + FS Rd 9371). Re-check before 2027; site count/lengths may change with the rebuild. Butte RD phone: FS page 406-494-2147, order prints 406-497-2147.
 - 6318 Cow Creek (mt-21): 30-ft trailer max is note-only, not on the FS page; access is 5 mi of FR 4095.
 - 6310 Boulder Creek (mt-20): temporarily closed per FS fire banner (Sand Creek / Bobcat Lakes fires, page updated 2026-08-28); no matching closure order listed. Re-check spring 2027. FS page contradicts itself on water.
