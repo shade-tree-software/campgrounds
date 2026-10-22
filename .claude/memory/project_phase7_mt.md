@@ -19,4 +19,4 @@ not here), but AWH 2026-10-22: "We have never stayed anywhere in Montana", so st
 criteria_drops.py (MT block at the TOP of DROPS) and are reported. No RIDB key: helper catx.py reads rec.gov's
 public search API for the per-site catalog. No PA deploy from here.
 
-**Progress:** mt-1..mt-7 applied (mt-8 running). Dropped so far: 6166 B&L (presence), 6227 Grizzly (motorhomes not recommended), 6155 Riverside (no posted RV rate), 6168 Sand Springs (dead site), 6136 50,000 Silver Dollar (casino/truck-stop lot), 6148 Hyde (no posted RV rate). 6165 Gods Country -> hipcamp. bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.
+**Progress:** mt-1..mt-8 applied (mt-9 running). Dropped so far: 6166 B&L (presence), 6227 Grizzly (motorhomes not recommended), 6155 Riverside (no posted RV rate), 6168 Sand Springs (dead site), 6136 50,000 Silver Dollar (casino/truck-stop lot), 6148 Hyde (no posted RV rate). 6165 Gods Country -> hipcamp. bw.py here must point at /opt/pw-browsers/chromium-1194 (pip playwright wants a newer build); USACE nws.usace.army.mil pages 403 from the cloud.

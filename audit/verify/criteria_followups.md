@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6162 Seeley Lake Campground** (mt-8, 2026-10-22): the Boy Scout Road bridge is permanently closed (rec.gov notice); reach it from the north entrance off MT-83. Renamed from 'Lolo National Forest, Seeley Lake Campground' to the FS name.
+- **6060 Lonesomehurst** (mt-8): the FS page still carries an old fee line ($20 / $28 electric) beside the current $26 / $35, which matches rec.gov's 2026 table.
+- **6062 Logan SP** (mt-8): phone set to the summer number 406-293-7190 (Apr 15 - Oct 15); winter is 406-751-4590.
 - **6120 Lake Frances City Park** (mt-7, 2026-10-22): the town posts no nightly rate, only $800/month for full-service sites 6 & 7. Fees left unrecorded; nightly camping may be by self-pay with no posted price. Re-check.
 - **6075 Holter Lake** (mt-7): temporarily_closed Oct 12 - Nov 8, 2026. Lift the status after Nov 8.
 - **6119 Hooper Park** (mt-7): the website is the Lincoln Valley Chamber's page and the county has no page for it; values recorded as `reported`.

@@ -5,6 +5,9 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
+- **6062 Logan SP** (mt-8, 2026-10-22): ReserveAmerica tags 8 sites (A013-A015, A017, B001-B004) 'Near Water' and the park has 'frontage on the north shore of Middle Thompson Lake'; the entry is lakeview.
+- **6137 Merry Widow** (mt-8): the operator says 'The beautiful Boulder River flows through the campground, and many campsites have River frontage'; the entry is not waterfront.
+- **6162 Seeley Lake Campground** (mt-8): rec.gov lists 'Waterfront Sites' and 'Lake Access'; 'located on the western shore of Seeley Lake'; the entry is not waterfront.
 - **15386 Lake Five Resort** (mt-7, 2026-10-22): the operator sells "Lake Sites" / "waterfront RV sites" on Lake Five; the entry is not waterfront. Re-audit with a satellite look.
 - **6144 Camp Sula (MT, private)** (mt-6): operator 'lies along the beautiful Bitterroot River', 'River access on site'; entry not waterfront.
 - **6189 Emery Bay (MT, USFS)** (mt-6): rec.gov catalog marks 5 sites 'Lakefront'; entry not waterfront.
