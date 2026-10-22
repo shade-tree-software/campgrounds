@@ -162,3 +162,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4002 Beaver Lake Park (Alpena Co): county "On the shores of beautiful Beaver Lake"; Campspot sells "Waterfront RV Site" types; entry not waterfront (p3-103).
 - 3923 Camp Petosega: county "on the shores of Pickerel Lake"; entry not waterfront (p3-104).
 - 3881 Chalk Hills: operator "Riverview - not riverfront"; entry not waterfront - a river view value may apply (p3-104).
+- 3983 Caseville County Park: county sells 'Full Hookup Lakefront' sites ($78), seasonal sites 'some are even lake front on Lake Huron'; entry lakeview (p3-109).

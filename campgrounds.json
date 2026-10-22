@@ -58076,7 +58076,7 @@
     "inclusion_evidence": "Satellite at 45.402,-84.625: campground loops with parked RVs near lakeshore; ~306-site modern electric campground reservable MiDNRReservations -> real RV campground",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'lakefront' per owner: Popular state park on the southeast shore of Burt Lake.  Many sites are directly on the lakeshore.",
     "note": "Popular state park on the southeast shore of Burt Lake.  Many sites are directly on the lakeshore.  --AWH",
-    "website": "https://midnrreservations.com/",
+    "website": "https://www.michigan.gov/recsearch/parks/burtlake\nhttps://midnrreservations.com/",
     "phone": "231-238-9392",
     "location": "45.4024,-84.6249",
     "elevation_meters": 185.0,
@@ -58092,18 +58092,41 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 41,
-      "nightly_high": 46,
-      "currency": "USD"
+      "nightly_low": 43,
+      "nightly_high": 48,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (same on 2027-05-18, 06-15 and 09-21): 20/30-amp sites $43 (195 sites), 50-amp sites $48 (109). The DNR's 2026 rate table listed $41 / $46. A Recreation Passport is required for vehicle entry to all state park campgrounds."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Burt Lake / East and West Loops",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails per fee schedule ($43 for the 20/30-amp sites, $48 for the 50-amp sites, 2027-05-18 / 2027-06-15 / 2027-09-21) + https://www.michigan.gov/recsearch/parks/burtlake ('Recreation Passport required ... for vehicle entry into all state park and forest campgrounds'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Burt Lake / East and West Loops: May 15 - October 14), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://midnrreservations.com/ site attributes (109 sites 'Electrical Service=20 Amps/30 Amps/50 Amps', 195 sites '20 Amps/30 Amps'; every site 'Electric and Water Hookups=Electric Only', 'Sewer Hookup=No') + https://www.michigan.gov/recsearch/parks/burtlake ('either 20/30-amp or 50-amp service throughout the campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/parks/burtlake ('Number of sites: 306', 'Pull-through sites available', 'Campsites within view of Burt Lake are large and sunny') + midnrreservations.com equipment lists per site, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/burtlake (amenities 'Toilet & shower building, Vault toilet, Sanitation station, Concession or store'; 'The park's sanitation station is in the modern campground. There is potable water available and two lanes'; 'unable to offer sanitation station access to non-registered campers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.michigan.gov/recsearch/parks/burtlake ('Burt Lake Modern Campground: For reservations call 231-238-9392 or reserve online'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
@@ -58111,6 +58134,33 @@
       "year_round": false,
       "opens": "05-15",
       "closes": "10-14"
+    },
+    "hookups": {
+      "electric": 50,
+      "water": false,
+      "sewer": false
+    },
+    "sites": {
+      "count": 306,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "306 sites in the East and West loops (the booking site lists 304 campsites). Equipment lists run to 'Trailer or RV up to 40''. Sites within view of Burt Lake are large and sunny; the rest are shaded by oaks, maples and pines."
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "potable_water": true,
+      "vault_toilets": true,
+      "camp_store": true,
+      "note": "Sanitation station (two lanes, potable water) in the modern campground, registered campers only."
+    },
+    "booking": {
+      "reservable": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.michigan.gov/recsearch/parks/burtlake https://midnrreservations.com/ (Burt Lake State Park resources via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2027-05-18, 2027-06-15 and 2027-09-21; audit/state_park_fees/gtc_probe.py, read 2026-10-22) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site: 306 sites, 20/30 A everywhere and 50 A at 109, electric only (no water or sewer at sites), equipment to 40 ft, pull-throughs, showers/vault toilets/sanitation station/store, reservable online or by phone (231-238-9392, matches). Fees 41-46 (2026 DNR table) -> 43-48 (2027 booking site). Season May 15 - Oct 14 already manual. No closure notice. --AWH note kept unchanged."
     }
   },
   {
@@ -255868,7 +255918,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.betsieriver.com/",
     "phone": "231-352-9535",
-    "note": "Small family-owned campground on the Betsie River, 1923 River Road near Frankfort/Elberta. Mix of primitive tent sites and electric RV sites (20-amp and 30-amp pull-throughs); also rustic cabins. Self-described as 'not a big concrete pad RV park' but accommodates campers/travel trailers; bathhouse, cafe, fish station. Books via ResNexus. --Claude",
+    "note": "Small family-owned campground at 1923 River Road near Frankfort/Elberta, inside the Betsie River State Game Refuge about 400 swampy feet from the river (no river access from camp). Self-described as 'not a big concrete pad RV park' but takes campers and travel trailers; quiet, family-oriented, room for a boat on most sites. Betsie Valley Trail at hand; beaches about 3 miles. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -255876,29 +255926,34 @@
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 30
+      "electric": 30,
+      "water": true,
+      "sewer": false
     },
     "sites": {
       "pull_through": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/6ACC848A-3870-4E44-8846-1D0CB2CE8BC7",
+      "note": "Online through the operator's ResNexus page ('Book Now for 2026') or by phone; first night's payment as deposit. After-hours arrivals find their site on a board at the shop door. One camper and 4 adults per site. Not accepting new seasonals."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.betsieriver.com/reservations ('30 amp electric', 'Water hook up') + https://www.betsieriver.com/faq ('Do you have sewer hookup/50 amp? We don't! But we do have 30 amp and a dump station'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.betsieriver.com/reservations ('30 Amp Pullthrough or Back-In ... pull through from either side'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.betsieriver.com/reservations (ResNexus 'Book Now' link, deposit policy, 'Seasonal: Currently not accepting new seasonals') + https://www.betsieriver.com/faq, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -255906,8 +255961,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.betsieriver.com/reservations ('$43 -$48 pullthrough per night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.betsieriver.com/reservations ('30 Amp Pullthrough or Back-In: $43-$48 pullthrough per night, $40-$45 back in per night, 30 amp electric, Water hook up, pop ups, campers, boats'; '20 Amp Camper $38 - $40 per night ... medium campers, truck campers, popups and tents'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.betsieriver.com/ ('a tiny cafe, a small playground, a fish station, warm showers and bike rentals') + https://www.betsieriver.com/faq ('a dump station') + https://www.betsieriver.com/thingstodo ('Camp Shop & Tiny Cafe'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.betsieriver.com/faq ('When do you open/close for the season? ... April-ish to October-ish....ish'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -255919,10 +255985,26 @@
       "good_sam": false
     },
     "fees": {
-      "nightly_low": 38,
+      "nightly_low": 40,
       "nightly_high": 48,
       "currency": "USD",
-      "note": "20A with water $38-40, 30A back-ins $40-45, pull-throughs $43-48, plus taxes."
+      "note": "2026 (operator's 'Book Now for 2026' rate page), plus tax: 30-amp back-in with water $40-45, 30-amp pull-through $43-48. Smaller 20-amp water/electric sites 'for medium campers, truck campers, popups and tents' $38-40 (not taken as the base: not stated to fit a 23-ft motorhome); 15-amp tent sites $36-70; Kamper Kabins $85-105, vintage glampers $78. First night is the deposit; $10 processing fee on cancellations 14+ days out.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "showers": true,
+      "dump": true,
+      "camp_store": true,
+      "note": "Camp shop and tiny cafe (breakfast), fish-cleaning station, bike rentals."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Operator: 'We open when the ground thaws and we can turn the water on ... April-ish to October-ish'."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.betsieriver.com/ https://www.betsieriver.com/reservations https://www.betsieriver.com/faq https://www.betsieriver.com/thingstodo https://www.betsieriver.com/contact",
+      "note": "Confirmed on the operator's own site (2026): 30-amp with water, no sewer, pull-throughs, showers/dump/camp store, reservable online via ResNexus; phone (231) 352-9535 matches. Changed fees base 38 -> 40 (the $38-40 20-amp sites are for 'medium campers, truck campers, popups and tents'; the 30-amp back-in for campers starts at $40); high $48 confirmed. Added water yes / sewer no, season (April-ish to October-ish), booking platform/url. Note corrected: the camp is ~400 ft of swamp from the river,"
     }
   },
   {
@@ -256299,7 +256381,7 @@
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'riverfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://camperscovecampground.com/\nhttps://online.rezexpert.com/book?business_code=300164",
     "phone": "989-356-3708",
-    "note": "Private 26-acre campground at 5005 Long Rapids Rd with frontage on the Thunder Bay River and Lake Wynah; 98 sites incl. full-hookup RV (rigs to ~50 ft) and rustic, plus canoe/kayak livery and boat launch. Open ~May 1-mid Oct; reservable online via RezExpert. RV Life 4.5*/2$ (auto 6/2026). --Claude",
+    "note": "Private 26-acre campground at 5005 Long Rapids Rd with frontage on the Thunder Bay River and Lake Wynah; full-hookup and electric-water RV sites (some waterfront, some lakefront) plus rustic sites, canoe/kayak livery and boat launch. --Claude",
     "rating": {
       "stars": 4.5,
       "checked": "2026-06",
@@ -256311,34 +256393,46 @@
     },
     "sites": {
       "count": 98,
-      "max_rig_ft": 50
+      "max_rig_ft": 50,
+      "pull_through": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-15"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://online.rezexpert.com/book?business_code=300164",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Online through the operator's RezExpert page or by phone. Three-night minimum on holiday weekends (Memorial Day, 4th of July, Labor Day), paid in full 7 days before arrival. $25 deposit ($100 for monthly); cancellation $5 15+ days out, $25 under 15 days; reservations made a year ahead are non-refundable."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://camperscovecampground.com/guest-camping-rates/ (site types 'Elec-Water', 'Full Hookup Pull Thru', 'Full Hookup (Waterfront)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://camperscovecampground.com/guest-camping-rates/ ('Full Hookup Pull Thru'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://camperscovecampground.com/ ('Open: May 1 - Oct 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://camperscovecampground.com/ ('There is a three-day minimum reservation for holiday weekends (Memorial Day, 4th of July, Labor Day)') + https://online.rezexpert.com/book?business_code=300164 (business terms), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -256346,8 +256440,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://camperscovecampground.com/guest-camping-rates/ (Guest Camping Rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://camperscovecampground.com/guest-camping-rates/ ('2026 GUEST CAMPING RATES': Rustic $29, Elec-Water $37, Elec-Water (Waterfront) $39, Elec-Water (Lakefront) $40, Full Hookup Pull Thru $43, Full Hookup (Waterfront) $44) + https://online.rezexpert.com/book?business_code=300164 ('A 3% surcharge will be applied to all credit card transactions'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://camperscovecampground.com/ ('Clean Modern Restrooms, Dump station and LP Gas'; 'Seasonal Pool and Store') + https://camperscovecampground.com/guest-camping-rates/ ('Monthly rate includes Honey Wagon Service'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -256360,10 +256460,22 @@
       "military": true
     },
     "fees": {
-      "nightly_low": 29,
+      "nightly_low": 37,
       "nightly_high": 44,
       "currency": "USD",
-      "note": "Rustic $29, electric/water $37 ($39-40 waterfront/lakefront), full-hookup pull-through $43, full-hookup waterfront $44 per night; 2 adults + 4 children."
+      "note": "2026 guest rates per night: electric-water $37 (waterfront $39, lakefront $40), full-hookup pull-through $43, full-hookup waterfront $44; rustic sites $29 (not taken as the base). Weekly, monthly and seasonal rates also posted; stay 7 nights, pay for 6. Extra adults/children $3 each. RezExpert adds a 3% surcharge on credit-card payments; $25 deposit.",
+      "checked": "2026"
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "dump": true,
+      "camp_store": true,
+      "note": "Seasonal pool and store, LP gas, miniature golf; canoe/kayak livery. Monthly stays include weekly honey-wagon service."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://camperscovecampground.com/ https://camperscovecampground.com/guest-camping-rates/ https://online.rezexpert.com/book?business_code=300164",
+      "note": "Confirmed on the operator's own 2026 rate page: electric-water $37 to full-hookup waterfront $44, water and sewer hookups, pull-throughs, reservable on RezExpert; phone 989-356-3708 matches. Changed fees low 29 -> 37 (the $29 is a rustic site); added season May 1 - Oct 15, 3-night holiday minimum, booking platform/url, restrooms/dump/store. Note cleaned of season, booking and rating text the fields hold. Not stated by the operator: amperage, site count/98 and 50-ft max (left as derived), militar"
     }
   },
   {
@@ -257574,9 +257686,9 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "Satellite at 46.408,-89.130: drive-in campground loops/clearings along Bond Falls Flowage; established UPPCo FCFS campground (uppco recreation page currently 404)",
     "waterfront_evidence": "audited 2026-06 (MI private/federal evidence-gate sweep, commit 6b37f74); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.uppco.com/recreation/bond-falls/",
-    "phone": "800-562-7680",
-    "note": "Rustic drive-in campground (~20+ sites, West/Consolidated + East loops) on the Bond Falls Flowage, administered by Upper Peninsula Power Company (UPPCo utility - private, not USFS despite being inside Ottawa NF). Free camping, FCFS (14-night max); a host visits ~11am to issue the required permit. No hookups; vault toilets, hand-pump well. Packed-sand roads; big-rig friendly (longest reported 34 ft), so a 23-ft RV fits. FCFS - not on recreation.gov. --Claude",
+    "website": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/",
+    "phone": "(906) 449-2013",
+    "note": "Rustic drive-in campground on the Bond Falls Flowage (reservoir), near Bond Falls; run by Upper Peninsula Power Company (a utility, so private, not USFS despite sitting inside Ottawa NF). A host visits ~11am to issue the required permit. Packed-sand roads; big-rig friendly (longest reported 34 ft), so a 23-ft RV fits. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -257590,33 +257702,46 @@
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "showers": false,
+      "note": "Hand-pump water throughout; public boat launch at the campground."
     },
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "note": "UPPCO: 'Reservations: None. All campsites are available on a first-come, first-served basis.' Maximum stay is 14 nights PER YEAR. Holiday weekends (Memorial Day, Independence Day, Labor Day) often fill Bond Falls; plan a backup."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ ('While you won't find electric hookups, showers, or other modern conveniences'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ ('hand-pump water available throughout the campgrounds and vault toilets nearby'; no 'showers'; 'Each campground contains its own public, maintained boat launch'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ ('Reservations: None ...'; 'Length of stay: Maximum stay is 14 nights per year'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ (UPPCO, 2026-07-20: 'Cost: Camping is free.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ ('Bond Falls opens May 10 to accommodate early fishing season and remains open through October 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ ('48 rustic campsites situated by the Bond Falls Reservoir ... both traditional campground-style sites (West) and more dispersed campsites ... (East)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -257626,7 +257751,23 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-10",
+      "closes": "10-15"
+    },
+    "sites": {
+      "count": 48,
+      "note": "48 rustic sites in two areas: traditional campground-style sites (West) and more dispersed sites (East), each with picnic table and fire ring."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.uppco.com/news-releases/discover-uppcos-hidden-gems-three-free-waterfront-campgrounds/ https://www.uppco.com/recreation/bond-falls/",
+      "note": "Confirmed on UPPCO's own 2026 page: free, first-come only (no reservations), no electric, vault toilets, hand-pump water. Added season May 10 - Oct 15, 48 sites (West campground-style + East dispersed), no showers; the 14-night maximum is per year. Note cleaned: dropped the '~20+ sites' count (UPPCO says 48) and text the fields hold. Rig length and the permit host are not stated by UPPCO (left in the note)."
     }
   },
   {
@@ -263603,7 +263744,10 @@
       "sewer": true
     },
     "sites": {
-      "count": 58
+      "count": 58,
+      "max_rig_ft": 70,
+      "pull_through": true,
+      "note": "Campspot lists 29 electric sites (some pull-through, rigs to 69 ft), 13 full-hookup back-ins (to 70 ft) and 10 rustic tent sites, plus a cabin."
     },
     "facilities": {
       "showers": true,
@@ -263612,41 +263756,44 @@
     "season": {
       "year_round": false,
       "opens": "05-15",
-      "closes": "10-14"
+      "closes": "10-14",
+      "note": "Summer season May 15 - October 14, weather permitting. A fall hunters' season, November 1-30, by phone only: self-contained campers, electric and dump station only, no water hookups."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/calhouncampground"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/calhouncampground (site types: 'Full Hookup Site' with 50-Amp, Sewer Hook-Up, Water Hook-Up; 'Electric Site' 20/30-Amp with Water Hook-Up) + https://calhouncampground.org/rates/ ('FULL HOOKUP ... Sewer Included'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/calhouncampground (park record read 2026-10-13: site types, counts, max lengths, 'Pull-Through'), re-read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://calhouncampground.org/ ('all modern facilities including electricity, hot showers, sanitation station, handicap accessible fishing and boating dock'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://calhouncampground.org/ ('2026 SUMMER SEASON May 15 - October 14 Weather Permitting'; '2026 FALL SEASON November 1 - November 30'; 'Camper/Trailers must be fully self-contained ... NO water hook-ups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://calhouncampground.org/ ('CLICK HERE TO RESERVE A SITE' -> Campspot), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/calhouncampground (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://calhouncampground.org/rates/ ('2026 RATES ... ELECTRIC $36 / Day ... FULL HOOKUP $42 / Day') + https://calhouncampground.org/ ('Hunter Price: $100 /week') + Campspot record of 2026-10-13 ($36 / $42 plus 'online processing' $6 once per stay), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263660,7 +263807,12 @@
       "currency": "USD",
       "reservation_fee": 6,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Electric Site and Full Hookup Site). October 2026: $36-42, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $6 'online processing' fee, once per stay. Read 2026-10-13."
+      "note": "2026 (city's rates page): electric $36/day ($220/week, $684/month), full hookup $42/day ($255/week, $824/month), rustic $20, cabin $57. One rate for everyone (no resident/non-resident split posted). Campspot adds the park's $6 'online processing' fee once per stay. November hunters' season: $100/week, by phone."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://calhouncampground.org/ https://calhouncampground.org/rates/ https://www.campspot.com/book/calhouncampground (cached park record, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Confirmed on the city's own site (2026): electric $36 / full hookup $42 per day (one rate, no resident split), 50-amp full hookups with water and sewer, hot showers and sanitation station, season May 15 - Oct 14, reservable on Campspot ($6 processing fee per stay); phone (989) 324-8017 matches. Added the November hunters' season, max rig 70 ft and pull-throughs from Campspot. Site count 58 not restated (Campspot lists 52 sites); left. Note unchanged."
     }
   },
   {
@@ -263915,7 +264067,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://huroncountyparks.com/caseville-county-park\nhttps://huroncountyparks.com/caseville-park-reservations",
     "phone": "989-856-2080",
-    "note": "Huron County Parks (county government) campground, 6400 Main St, Caseville, on Saginaw Bay (Lake Huron). Large county park: electric & water, full-hookup, and full-hookup lakefront nightly sites plus seasonal and mobile-home sites; bathhouses (coin showers), dump station. Season May 1-Oct 31. Reservable online (central res 888-265-2583). --Claude",
+    "note": "Huron County Parks (county government) campground, 6400 Main St, Caseville, on Saginaw Bay (Lake Huron), with one of the state's nicer beaches; the town's shops are walkable. Electric & water, full-hookup and lakefront full-hookup nightly sites plus seasonal and mobile-home sites; pavilions and a playscape. Tents not allowed on full-hookup sites. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -263927,40 +264079,53 @@
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "wifi": true,
+      "note": "Coin-operated showers. Wi-Fi only at designated hotspots, not at the sites."
     },
     "season": {
       "year_round": false,
       "opens": "05-01",
-      "closes": "10-31"
+      "closes": "10-26"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://huroncountyparks.checkfront.com/reserve/",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Booked online through Huron County Parks' Checkfront page or by phone (888-265-2583). The next season opens to the public around December 1 (2026 season: Dec 1, 2025, noon). Holiday weekends need 3 consecutive nights. No cancellations within 30 days or over holidays/special events. Seasonal sites go each January to the Seasonal Interest List; parks are at capacity for seasonals."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/caseville-county-park ('water & electric sites, full hookup sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/caseville-county-park ('Bath houses with coin operated showers and flush toilets are available'; 'Wi-Fi available ... only designated hotspot areas - not at individual campsites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/caseville-county-park ('Open May 1 - October 26, 2026') + https://huroncountyparks.com/caseville-park-reservations ('Park Open May 1 - Oct 26'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://huroncountyparks.com/caseville-park-reservations ('All 2026 Reservations Open to the General Public on Monday, Dec. 1 at 12pm EST'; Checkfront 'Book a Site' link) + https://huroncountyparks.com/park-rules ('All reservations for holiday weekends will be a minimum of three consecutive nights') + https://huroncountyparks.com/seasonal-rentals, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://huroncountyparks.com/caseville-county-park (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://huroncountyparks.com/caseville-county-park ('Camping Rates: Electric and Water $55 per night + $5 Holidays -$5 Off Season Discount; Full Hookup $73; Full Hookup Lakefront $78; Seasonal $4,600+'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263973,7 +264138,12 @@
       "nightly_high": 78,
       "currency": "USD",
       "checked": "2026",
-      "note": "Huron County Parks: electric and water $55 a night, full hookup $73, lakefront full hookup $78, plus $5 on holidays, $5 off in the off season. Read 2026-10-15."
+      "note": "Huron County Parks, 2026: electric and water $55 a night, full hookup $73, full hookup lakefront $78; each +$5 on holidays and -$5 in the off season. Seasonal sites from $4,600. One rate for everyone (no resident/non-resident split posted). $15 cancellation fee."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://huroncountyparks.com/caseville-county-park https://huroncountyparks.com/caseville-park-reservations https://huroncountyparks.com/park-rules https://huroncountyparks.com/seasonal-rentals",
+      "note": "Confirmed on the county's pages (2026): $55 electric/water, $73 full hookup, $78 lakefront full hookup (+$5 holidays, -$5 off season, no resident split), water and sewer hookups, coin showers and flush toilets, reservable online; phone (989) 856-2080 matches. Changed season close 10-31 -> 10-26 (2026 dates). Added Checkfront booking url, 3-night holiday minimum, Dec 1 booking opening, wifi at hotspots. Note cleaned of season/booking/price text the fields hold. Seasonal sites exist (from $4,600,"
     }
   },
   {
@@ -264007,7 +264177,15 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/cartier-park-campground",
+      "min_stay": [
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations recommended, but not required. Booking for the season opens February 1 at 10 AM (2027 season: February 1, 2027). Full payment at booking; a 3-night minimum on holiday weekends, non-refundable."
     },
     "provenance": {
       "hookups": {
@@ -264020,13 +264198,24 @@
         "checked": "2026-10-13"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.ludington.mi.us/374/Cartier-Park-Campground ('Reservations for the 2027 camping season will be available online February 1 at 10AM'; 'Reservations recommended, but not required'; 'A minimum of 3 nights is required during holiday weekends and is nonrefundable'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/cartier-park-campground (Campspot's pricing for each RV site type, one night from 2026-10-14, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://www.ludington.mi.us/374/Cartier-Park-Campground (read 2026-10-13)",
-        "checked": "2026-10-13"
+        "source": "https://www.ludington.mi.us/374/Cartier-Park-Campground ('OFF SEASON RATES ... Electric and Water Only 20, 30, and 50 amp Daily $36/night'; 'NIGHTLY RATES JULY & AUGUST ... Full Hook Up: 50 amp ... $42.00 per night'; 'Electric Only One car and one Tent 20 or 30 amp shared water Daily $34/night') + Campspot record of 2026-10-13 ('Reservation Surcharge' $5 once per stay), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.campspot.com/book/cartier-park-campground (park record read 2026-10-13: '20/30 Amp Full Hook-Up Site' max length 50 ft with 'Pull-Through'; '50 Amp Full Hook-Up Site' 45 ft), re-read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.ludington.mi.us/374/Cartier-Park-Campground ('At The Site: Shower'; 'A dishwashing station is available in the South Bathhouse ... collect water from a shared water source') + Campspot site types ('Wi-Fi'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -264035,12 +264224,26 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 34,
+      "nightly_low": 36,
       "nightly_high": 42,
       "currency": "USD",
       "reservation_fee": 5,
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (20/30 Amp Electric Site, 20/30/50 Amp Water & Electric Site, 20/30 Amp Full Hook-Up Site and 50 Amp Full Hook-Up Site). October 2026: $34-40 on a Wednesday. Later dates show no sites: the season has ended and next year's isn't open for booking yet. Plus the park's $5 'Reservation Surcharge', once per stay. Read 2026-10-13. The city's page gives the same rates outside July and August, and $2 more in those months, up to $42 for a 50-amp full hookup."
+      "note": "City rates (2026): water & electric (20/30/50 amp) $36 a night ($38 in July-August), 30-amp full hookup $38 ($40), 50-amp full hookup $40 ($42). 'Electric Only - One car and one Tent, 20 or 30 amp, shared water' $34 ($36) is not taken as the base. Monthly full hookup $910 / $970, seasonal $3,365 / $3,485, each plus a $5/month transaction charge. One rate for everyone (no resident/non-resident split posted). Campspot adds the park's $5 'Reservation Surcharge' once per stay."
+    },
+    "sites": {
+      "max_rig_ft": 50,
+      "pull_through": true
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true,
+      "note": "Two bathhouses; dishwashing station in the South Bathhouse; shared water source for filling containers; firewood sold at the office."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ludington.mi.us/374/Cartier-Park-Campground https://www.campspot.com/book/cartier-park-campground (cached park record, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Confirmed on the city's page: season May 1 - Oct 15, 50-amp full hookups with water/sewer, showers, reservable on Campspot; phone matches the Campspot record. Changed fees low 34 -> 36 (the $34 'Electric Only' class is described as 'One car and one Tent'); high $42 (July-August 50-amp) confirmed. Added max rig 50 ft and pull-throughs (Campspot), 3-night holiday minimum, Feb 1 booking opening, wifi. Seasonal rates are posted but the seasonal share is not; nightly sites are sold on Campspot. Note"
     }
   },
   {
@@ -267605,17 +267808,19 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'riverfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.saultcity.com/parksrec/page/aune-osborn-campground",
     "phone": "906-632-3268",
-    "note": "100 modern sites (water & electric) on 20 waterfront acres of the lower St. Marys River; 24 designated waterfront sites + 76 with a view. Boat launch, fish-cleaning station, dump station, laundry, showers, WiFi. Waterfront $35/day, non-waterfront $32/day. Season ~mid May-mid Oct. Reservable online via the city portal (BookMySites). Operated by City of Sault Ste. Marie. --Claude",
+    "note": "City of Sault Ste. Marie campground on 20 waterfront acres of the lower St. Marys River; the campground fills the western end, while the eastern end holds the boat launches and event grounds. A good spot to watch lake freighters heading to and from the Soo Locks. Fish-cleaning station. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "water": true
+      "water": true,
+      "note": "City: '100 modern campsites (water & electricity)'; amperage not stated."
     },
     "sites": {
-      "count": 100
+      "count": 100,
+      "note": "24 premium waterfront sites and 76 non-waterfront sites."
     },
     "facilities": {
       "showers": true,
@@ -267624,22 +267829,26 @@
       "dump": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "10-15"
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://ao.bookmysites.com/reservations/checkout-availability",
+      "note": "Reservations recommended, online only (city's BookMySites system with an interactive site map); payment in full at booking; mail/email reservations no longer accepted. The whole season opens in March (2026: March 3 for stays of 15+ nights, March 5 for any length)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/parksrec/page/campgrounds ('The western end of the park houses 100 modern campsites (water & electricity)'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/parksrec/page/aune-osborn-campground ('Premium Waterfront (24 Sites)', 'Non-Waterfront Sites (76 Sites)') + https://www.saultcity.com/parksrec/page/campgrounds ('100 modern campsites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -267647,18 +267856,19 @@
         "method": "derived"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/node/3481 (Aune Osborn Seasonal Information: 'The Camping Season runs from May 15 - October 15') + 2026 season announcement PDF ('The entire 2026 season, May 15 - Oct 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/node/3481 ('Reservations for camping are recommended. All reservations will be through the online reservation system') + 2026 season announcement PDF + https://ao.bookmysites.com/reservations/checkout-availability (the city's reservation link), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.saultcity.com/parksrec/page/aune-osborn-campground (audit/price_research/local_browser_2026-10-16/browser.jsonl), read 2026-10-16",
-        "checked": "2026-10-15"
+        "source": "https://www.saultcity.com/parksrec/page/aune-osborn-campground ('2026 Aune Osborn Camping Rates: Premium Waterfront (24 Sites) $48 per night ... Non-Waterfront Sites (76 Sites) $42 per night'; 'Reservation Fee (non-refundable) $8.00'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -267672,7 +267882,12 @@
       "currency": "USD",
       "reservation_fee": 8,
       "checked": "2026",
-      "note": "City of Sault Ste. Marie: non-waterfront sites $42 a night, premium waterfront $48; $8 non-refundable reservation fee. Read 2026-10-16."
+      "note": "2026: non-waterfront sites (76) $42/night, premium waterfront (24) $48/night; monthly $1,000 / $1,150 (single reservation of 30 consecutive nights on one site). $8 non-refundable credit-card transaction and reservation fee. One rate for everyone (no resident/non-resident split posted)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.saultcity.com/parksrec/page/aune-osborn-campground https://www.saultcity.com/node/3481 https://www.saultcity.com/parksrec/page/campgrounds https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/parksrec/file/15751/Aune%20%26amp%3B%20Sherman%20Campground%202026%20Season%20Announcement%20Email.pdf https://ao.bookmysites.com/reservations/checkout-availability?checkin_date=2027-06-15&checkout_date=2027-06-16",
+      "note": "Confirmed on the city's pages: 2026 $42 non-waterfront / $48 premium waterfront, $8 reservation fee, 100 sites (24 waterfront + 76), water + electric (amps not stated), reservable online only via the city's BookMySites system; phone 906-632-3268 matches. Added season May 15 - Oct 15 and the monthly rates/booking-opening note. Note cleaned: dropped the stale $35/$32 prices and text the fields now hold. Facilities (showers/laundry/wifi/dump) not restated on the pages read; left as derived."
     }
   },
   {
@@ -934528,7 +934743,7 @@
     "inclusion_evidence": "chainolakescamp.com rates: nightly W/E ($44) and full-hookup ($48-55) RV sites incl. pull-throughs -> real transient RV campground; published base $44 <= $50",
     "website": "https://www.chainolakescamp.com/",
     "phone": "231-533-8432",
-    "note": "Campground near Bellaire in the Chain of Lakes area; full-hookup back-in concrete and gravel pull-through sites (30/50 amp), water/electric back-ins, tent and cabin sites. 2026 nightly: W/E 30A back-in $44, FHU 30A back-in $48, pull-through $50-52, concrete FHU $55; extra person $5; boat/trailer parking. RV Life 4.5*/$$$ ~$43/night (auto 9/2026). --Claude",
+    "note": "Campground at 7231 S. M-88 near Bellaire in the Chain of Lakes area; concrete and gravel full-hookup sites (back-in and pull-through), water/electric back-ins, tent sites and cabins, with a pool. Boat parking allowed at some sites if the boat fits on the pad. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -934545,23 +934760,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.chainolakescamp.com/rates-rules ('Full Hookup - Water, Sewer, 30/50 AMP'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.chainolakescamp.com/rates-rules ('Pull-Through, Gravel - $52/night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.chainolakescamp.com/rates-rules (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.chainolakescamp.com/rates-rules ('Water & Electric Only - 30 AMP Back-In, Gravel - $44/night'; 'Full Hookup - Water, Sewer, 30/50 AMP Back-In, Concrete Pad - $55/night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "booking": {
+        "source": "https://www.chainolakescamp.com/ (RESERVE NOW -> app.fireflyreservations.com) + https://www.chainolakescamp.com/rates-rules ('Site Lock Fee $15'; 'Adhere to posted RV length restrictions, including hitch and bumper'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -934574,10 +934795,21 @@
       "nightly_high": 55,
       "currency": "USD",
       "checked": "2026",
-      "note": "Chain O' Lakes: water/electric back-in $44, full hookup $48-55 by site type, for 2 adults and 2 children; tents $35. Read 2026-10-15."
+      "note": "Operator's rates page: water & electric 30-amp gravel back-in $44/night; full hookup 30-amp gravel back-in $48, 30-amp gravel pull-through $50, 30/50-amp gravel pull-through $52, 30/50-amp concrete back-in $55; tent site $35. Rates include 2 adults and 2 children (extra $5/person/night); pets $5/dog/night; optional $15 site lock; 7th night free. Seasonal and monthly by inquiry."
     },
     "discounts": {
       "good_sam": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/ChainOLakesCampground",
+      "note": "Online through the operator's Firefly Reservations page ('RESERVE NOW'). Without the optional $15 site lock the system may move you to another site. After-hours arrivals find their site on the check-in board by the office. Posted RV length restrictions (hitch and bumper included) are enforced per site."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.chainolakescamp.com/ https://www.chainolakescamp.com/rates-rules https://www.chainolakescamp.com/campground",
+      "note": "Confirmed on the operator's own rates page (2026): $44 water/electric back-in to $55 concrete full hookup, 30/50 amps with water and sewer, pull-throughs; reservable online via Firefly; phone (231) 533-8432 matches. Added the booking platform/url and fee details. Note cleaned of the prices, hookup detail and RV Life line the fields hold. Season, site count and max length not stated. Seasonal/monthly by inquiry only; not seasonal in character on the evidence. Price gate passes ($44)."
     }
   },
   {
@@ -934606,7 +934838,9 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 75,
+      "note": "Campspot lists about 61 full-hookup RV sites: 35 standard back-ins (30 A, rigs to 50 ft), 16 deluxe back-ins (50 A, to 60 ft), 4 pull-throughs (to 75 ft) and 6 deluxe seasonal sites; plus yurts. Every RV type lists motorhomes."
     },
     "booking": {
       "reservable": true,
@@ -934618,9 +934852,9 @@
         "checked": "2026-10-13"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.campspot.com/book/chandlerhillcampground (park record read 2026-10-13: site types, counts, max lengths, 'Pull-Through', RV types), re-read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -934628,8 +934862,9 @@
         "method": "derived"
       },
       "season": {
-        "source": "https://www.chandlerhillcampground.com ('Open From May 1st Till October 20th'), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.chandlerhillcampground.com/ ('Open From May 1st Till October 18th'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
         "source": "https://www.chandlerhillcampground.com/amenities ('Laundry Facilities'; 'CAMP STORE'; 'CLEAN BATHROOMS/ SHOWERS'), read 2026-10-13",
@@ -934653,7 +934888,7 @@
     "season": {
       "year_round": false,
       "opens": "05-01",
-      "closes": "10-20"
+      "closes": "10-18"
     },
     "facilities": {
       "laundry": true,
@@ -934670,6 +934905,11 @@
     },
     "discounts": {
       "good_sam": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.chandlerhillcampground.com/ https://www.chandlerhillcampground.com/booking-engine https://www.campspot.com/book/chandlerhillcampground (cached park record, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Re-read the operator's site and the cached Campspot record: $45 standard 30-amp / $50 deluxe 50-amp full hookup (back-in or pull-through), $55 on major holidays, $5 reservation fee per stay, monthly $725 + electric, seasonal $2,800 + electric; fees, hookups, facilities and booking as recorded on 2026-10-13. Changed season close 10-20 -> 10-18 (home page now says 'Open From May 1st Till October 18th'). Added max rig 75 ft and the site mix. Phone (231) 549-7878 matches. Seasonal share about 6 of 6"
     }
   },
   {
@@ -935233,16 +935473,18 @@
     },
     "provenance": {
       "hookups": {
-        "source": "https://www.campershavenonline.com/stay ('All of our campsites are water and electric.'; '50/30/20amp Electric & Water'), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.campershavenonline.com/stay ('All of our campsites are water and electric'; '50/30/20amp Electric & Water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "https://www.camplife.com/308/reservation/step1 (every date read from 2026-10-15 to 2027-06-12 answered 'A 2 night minimum stay is required for all online reservations.'; camplife_tier_2026-10-14.jsonl), read 2026-10-14",
         "checked": "2026-10-14"
       },
       "fees": {
-        "source": "https://www.campershavenonline.com/stay ('Regular Camping 30/20amp Electric & Water | $50 Per Night 50/30/20amp Electric & Water | $65 Per Night'; 'Holiday Camping 30/20amp Electric & Water | $60 Per Night 50/30/20amp Electric & Water | $75 Per Night'; 'Weekly Camping 30/20amp Electric & Water | $315 Per Week 50/30/20amp Electric & Water | $410 Per Week'), read 2026-10-14; https://www.camplife.com/308/reservation/step1 (2027-06-08: site 63 (30/20 Electric & Water) $60.00, $110.00 and $160.00 for one, two and three nights; site 14 (50/30/20 Electric & Water) $75.00, $140.00 and $205.00; camplife_tier/b30_camplife_stays.jsonl), read 2026-10-14",
-        "checked": "2026-10-14"
+        "source": "https://www.campershavenonline.com/stay ('Regular Camping 30/20amp Electric & Water | $50 Per Night; 50/30/20amp Electric & Water | $65 Per Night'; holiday, weekly, monthly and seasonal rates) + https://www.campershavenonline.com/policies ('Extra adults and kids over age 2 are subject to a fee of $5/person per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -935261,10 +935503,15 @@
       "currency": "USD",
       "reservation_fee": 10,
       "checked": "2026",
-      "note": "From the park's rates page (read 2026-10-14): $50 a night for a site with water and 30-amp power and $65 with 50-amp; holidays are $60 and $75, weeks $315 and $410. CampLife's June 2027 estimates are the same, plus $10 once a stay."
+      "note": "Operator's rates page: 30/20-amp water/electric $50/night, 50/30/20-amp $65; holidays $60 / $75; weekly $315 / $410; monthly $975 / $1,250; seasonal (May-October, select sites, waitlist) $3,250. Cabins $110. Rates cover 6 people; extra adults and kids over 2 $5/night. CampLife's estimates add $10 once per stay."
     },
     "discounts": {
       "good_sam": false
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.campershavenonline.com/stay https://www.campershavenonline.com/ https://www.campershavenonline.com/policies",
+      "note": "Re-read the operator's rates and policies pages: $50 (30/20-amp water/electric) to $65 (50-amp) a night, holiday/weekly/monthly/seasonal rates, every site water + electric; phone 989-269-7989 matches. Fees, hookups and the CampLife 2-night online minimum already recorded 2026-10-14; fee note updated with the monthly and seasonal rates. Seasonal sites are 'select sites only' with a waitlist, so not seasonal in character. Campground season not stated (May-October is the seasonal-site term). Note u"
     }
   },
   {
@@ -935559,6 +935806,11 @@
       "fees": {
         "source": "https://www.campspot.com/book/brushcreekcamp (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://brushcreekcamp.com/accommodations/ ('RATES MAY - OCTOBER (Weather Depending) CAMPER / RV 50 AMP Nightly: $40 Weekly: $280 Monthly: $690'; 'PRICE FOR 2 PEOPLE Additional: $5/person/night. CAMPER / RV 30 AMP Nightly: $35 Weekly: $220 Monthly: $600'; 'TENT / HAMMOCK 0 AMP Rustic, Primitive Nightly: $25'), read 2026-10-13",
         "checked": "2026-10-13"
+      },
+      "sites": {
+        "source": "https://www.campspot.com/book/brushcreekcamp (park record read 2026-10-13: site types with max length 50 ft, 'Pull-Through', RV types incl. Motorhome Class C; audit/price_research/campspot_tier_2026-10-13.jsonl), re-read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -935583,6 +935835,16 @@
       "reservation_fee": 5,
       "checked": "2026",
       "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30 AMP Electric Only RV/Tent Site, 30 AMP Standard Pull through site, 30 AMP Standard Pull-Through RV Site, 30 AMP Premium Creekside RV Site, 30/50 AMP Standard Pull-Through RV Site and 50 AMP Standard Pull-Through RV Site). October 2026: $37.50-47.50, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Plus the park's $5 'Booking Fee', once per stay. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13. The campground's own rates page, for May to October, lists less: $35 a night ($220 a week, $600 a month) for a 30-amp site and $40 ($280 a week, $690 a month) for 50 amps, for 2 people, with $5 a night for each additional person; tent and hammock sites are $25."
+    },
+    "sites": {
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "Campspot lists about 29 RV sites (most 30-amp pull-throughs with water, 8 with 50 amps) taking rigs to 50 ft, plus primitive tent and hammock sites. The cheapest types that list motorhomes are the 30-amp pull-throughs with water ($37.50 on Campspot in Oct 2026); the 30-amp electric-only back-ins are rated 25-30 ft and do not list motorhomes."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://brushcreekcamp.com/ https://brushcreekcamp.com/accommodations/ https://brushcreekcamp.com/contact/ https://www.campspot.com/book/brushcreekcamp (cached park record, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Re-read the operator's site (2026 rates: 30-amp $35, 50-amp $40 for 2 people May-Oct; 'OPEN MAY - OCTOBER (WEATHER DEPENDING)'; water + electric; showers, dump) and the cached Campspot record: fees, hookups, facilities, booking and season as already recorded on 2026-10-13. Added max rig 50 ft and pull-throughs. Phone 269-655-6427 matches. Not seasonal in character (monthly sites by application, nightly sites on Campspot). Price gate passes ($35-47.50; Campspot's $5 booking fee is per stay). Note"
     }
   },
   {
