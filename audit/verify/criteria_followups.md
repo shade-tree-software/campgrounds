@@ -4,6 +4,10 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6279 Mussigbrod** (mt-26): inherited 'reservable on recreation.gov' looks wrong (no rec.gov facility, FS page names no reservations); likely FCFS only.
+- **6278 Mortimer Gulch** (mt-26): derived max_rig_ft 35 no longer on the FS page; FS 'highly recommends' 4WD for the boat-ramp road only (not the campground approach).
+- **6277 Monture Creek** (mt-26): FS gives no site count/length; Hipcamp says one RV-suitable site. Agency silent on rig, so kept.
+- **6255 Muchwater** (mt-26): FS page is dead; website now the rec.gov POI. Note's 'some pull-offs fit a decent RV' is unsourced.
 - **6346 Lodgepole (Wise River)** (mt-25): FS page banner 'Closed due to Sand Creek and Bobcat Lakes Fires' (page updated 2026-09-01), no closure order listed; drinking water currently unavailable. Recorded temporarily_closed; re-check before next season.
 - **6345 Little Therriault Lake** (mt-25): FS page contradicts itself on potable water (description says yes, Water section says not available); derived potable_water: true left.
 - **6344 Lakeview** (mt-25): derived 22-ft max could not be re-confirmed on the current FS page; left in place.
