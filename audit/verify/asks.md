@@ -248,3 +248,4 @@ Huron County's listing says Bird Creek requires campers under 10 years old (no p
 
 ## 420 Culhane Lake State Forest Campground (Luce County, MI) — "tent and small trailer use"
 The DNR describes the 15 sites as "for tent and small trailer use", posts no length limit, and says nothing about County Road 500's surface (29 mi from Newberry via M-123 and CR-500). Your note ("Several sites right on the lake") is kept; no stays recorded. Does EKKO fit, or did you note it without seeing it? (My lean: keep — "small trailer" with no stated limit isn't a cap under 23 ft — unless you know the sites are short.)
+**ANSWERED 2026-10-22 (AWH): keep while it has a phone (DNR 906-492-3415), with a note to call about fit.** Done.
