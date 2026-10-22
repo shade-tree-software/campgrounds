@@ -19730,19 +19730,73 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar: 'Electric Hookups: 0') + recreation.gov catalog (all sites STANDARD NONELECTRIC), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10171274/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar fees: 'Apgar summer status' 30.00, 'Apgar primitive status' 20.00, 'Apgar winter status' 0.00 'Sites are free with a valid entrance pass') + https://www.recreation.gov/api/camps/campgrounds/10171274/rates (2026 seasons), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar: 'TOTAL SITES: 194', 'Group: 5', 'RV Max Length in Feet - 40') + NPS API fees text, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar amenities: toilets 'Flush Toilets - seasonal', 'Vault Toilets - seasonal'; showers 'Free - Seasonal'; potableWater 'Yes - seasonal'; dumpStation 'Yes - seasonal'; laundry 'No'; internetConnectivity 'No') + recreation.gov ('restroom facilities have flush toilets and sinks with running water'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar operating hours: 'In the spring and fall the campground converts to primitive status. From November 1 through March 31, the campground is open for winter camping.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm ('Reservations are required throughout the spring, summer, and fall at Apgar Campground. A reservation is not required during the winter months.') + https://www.recreation.gov/api/camps/campgrounds/10171274 (overview, 'Maximum Stay ... 14 days'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 20,
-      "nightly_high": 20,
-      "currency": "USD"
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "NPS: $30 in summer status, $20 in spring/fall primitive status (no potable water or dump station, comfort stations closed, vault toilets), and free in winter (November 1 - March 31) with a valid park entrance pass. recreation.gov 2026: $30 Peak Season April 19 - September 29, $20 Non-Peak April 13-18 and September 30 - October 31."
+    },
+    "sites": {
+      "count": 194,
+      "max_rig_ft": 40,
+      "note": "194 sites including 5 group sites (9-24 people); '25 sites can accommodate up to a 40 foot RV or truck and trailer combination'. Two tents, eight people and two vehicles per site."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "dump": true,
+      "laundry": false,
+      "wifi": false,
+      "note": "Flush toilets, free showers, potable water and the dump station are seasonal; in the primitive and winter seasons the comfort stations close and campers use the vault toilets. No cell reception. Food storage lockers year-round; amphitheater with ranger programs."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Open all year in three statuses: summer (recreation.gov Peak Season April 19 - September 29 in 2026), primitive in spring and fall (no water or dump, vault toilets), and winter camping November 1 - March 31 (free, no reservation)."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Reservations are required in spring, summer and fall and not required in winter. 'Most sites have a 6-month booking window with a good handful having a 4-day booking window.' Hiker/bicyclist sites A10, C144 and C146 are paid by recreation.gov Scan and Pay on site. 14-day stay limit. Note: Going-to-the-Sun Road bans vehicles over 21 ft between Sun Point and Avalanche Campground (not on the way to Apgar)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm (Apgar section, read in a browser 2026-10-22) https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Apgar Campground record) and /alerts?parkCode=glac (only the Going-to-the-Sun Road seasonal closure), read 2026-10-22 https://www.recreation.gov/api/camps/campgrounds/10171274 (+ /rates and the public per-site search catalog)",
+      "note": "Confirmed no electric, recreation.gov booking on a 6-month window, phone 406-888-7800. Changed fees 20/20 -> 20-30 (summer $30, primitive spring/fall $20, winter free). Added 194 sites (5 group), 40-ft max (25 sites), flush/vault toilets, free showers, water and dump (seasonal), no laundry/Wi-Fi, year-round in three statuses, reservations required except in winter, 14-day limit. Not stated: interagency discount (inherited, left). AWH note kept."
     }
   },
   {
@@ -395651,8 +395705,8 @@
     "waterfront_evidence": "satellite at 45.1606,-112.9961: campground loop on townsite flat; Grasshopper Creek runs in a dense continuous willow/cottonwood riparian corridor screening the sites; small screened creek",
     "inclusion_evidence": "MT FWP Bannack SP page + ReserveAmerica parkId 630310: Vigilante loop drive-in sites RVs 15-45 ft, Road Agent to ~25 ft, no hookups -> real RV campground",
     "website": "https://fwp.mt.gov/stateparks/bannack-state-park\nhttps://montanastateparks.reserveamerica.com/camping/bannack-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630310",
-    "phone": "",
-    "note": "MT FWP state park at the Bannack ghost town on Grasshopper Creek, ~25 mi SW of Dillon. Two loops: Road Agent (8 sites, max ~25 ft, first-come first-served) and Vigilante (18 sites, RVs to 45 ft, reservable). No hookups; tables, fire rings, vault toilets. --Claude",
+    "phone": "406-834-3413",
+    "note": "MT FWP state park at the Bannack ghost town on Grasshopper Creek, ~25 mi SW of Dillon. Tables, fire rings. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -395665,40 +395719,57 @@
       "sewer": false
     },
     "sites": {
-      "count": 26,
-      "max_rig_ft": 45
+      "count": 24,
+      "max_rig_ft": 60,
+      "pull_through": true,
+      "note": "ReserveAmerica: 'two campgrounds; Vigilante and Road Agent offering a total of 24 campsites, 8 of which are available on a first come, first served basis', plus one wall tent and a hike/bike site (FWP counts 28 sites including the wall tent, the hike/bike site and a group picnic site). Road Agent's 8 sites are mostly 15-18 ft back-ins (one 35 ft, one walk-in); Vigilante's 15 run 25-45 ft back-in, plus pull-throughs of 32 and 60 ft."
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water in the summer season only. Store/gift shop with firewood and ice at the park."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "reserveamerica",
+      "url": "https://montanastateparks.reserveamerica.com/camping/bannack-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630310",
+      "window_opens_days": 90,
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "note": "16 of the 24 campsites reservable; 8 first-come, first-served. Campsites: 'Reservations must be made 1 Day(s) ahead of arrival and can be made up to 3 Month(s) in advance.'"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "ReserveAmerica site list for parkId 630310 (every campsite 'Electric Hookup - no', 'Full Hookup - no'), captured 2026-10-12, page re-read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://montanastateparks.reserveamerica.com/camping/bannack-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630310 (description; site list with equipment length and driveway type) + https://fwp.mt.gov/stateparks/bannack-state-park ('The campground has 28 sites, including a Wall Tent, a hike-in/bike-in campsite, with 4 tent pads, and a group picnic site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://fwp.mt.gov/stateparks/bannack-state-park (Seasons & Hours: 'Potable water Available summer season'; 'Toilets (Vault)') + ReserveAmerica amenities ('Toilet, Pit/Vault', 'Water Drinking', 'Retail, Firewood', 'Retail, Ice'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://montanastateparks.reserveamerica.com/camping/bannack-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630310 (Booking Window; description), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://fwp.mt.gov/binaries/content/assets/fwp/stateparks/fees-and-regulations/fee-schedule-2020-2021-final-.pdf ('2020 Montana State Parks Schedule': campsite fees by season and residency, reservation fee) + https://fwp.mt.gov/binaries/content/assets/fwp/aboutfwp/public-comments/public-use-fees/2026-06-24-fee-schedule-justifications.pdf (the same figures as 'CURRENT') + montanastateparks.reserveamerica.com parkId 630310 (site types and lengths, mt_sites_2026-10-12.json), read 2026-10-12",
         "checked": "2026-10-12"
+      },
+      "season": {
+        "source": "https://fwp.mt.gov/stateparks/bannack-state-park (Seasons & Hours: 'Campground Open all year.') + ReserveAmerica ('Status: Open year round.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -395722,6 +395793,14 @@
       },
       "checked": "2026",
       "note": "Peak season (third Friday in May to third Sunday in September): standard $18 a night for Montana residents; non-residents $10 more, which includes their daily entrance fee (the resident rate with the $50 Nonresident Entrance Pass). Off season: standard $14 (non-residents $10 more). Plus the $10 reservation fee. Montana accommodation tax included. FWP proposed in June 2026 to raise the standard site to $24 ($38 non-residents) and electric to $32 ($46), no earlier than 2027. FWP's fee schedule (in force since 2020) and its booking site's site types, read 2026-10-12."
+    },
+    "season": {
+      "year_round": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://fwp.mt.gov/stateparks/bannack-state-park https://montanastateparks.reserveamerica.com/camping/bannack-state-park/r/campgroundDetails.do?contractCode=MT&parkId=630310 (read in a browser 2026-10-22; site list as captured 2026-10-12 in audit/state_park_fees/mt_sites_2026-10-12.json)",
+      "note": "Confirmed no hookups, vault toilets, reservable on ReserveAmerica with 8 first-come sites, the inherited 3-month window and 1-day cutoff. Changed site count 26 -> 24 (ReserveAmerica; FWP says 28 counting the wall tent, hike/bike and group picnic sites) and max length 45 -> 60 (one 60-ft pull-through; 45 back-in), added pull-throughs, summer-only drinking water and year-round campground season. Fees left as recorded (FWP page gives only the statewide $4-$34 range); 7-night limit not stated (inher"
     }
   },
   {
@@ -397925,7 +398004,7 @@
     "inclusion_evidence": "MT FWP FAS site-detail page: primitive campsites, camping allowed, posted trailer length 25 ft, gravel ramp+toilet -> real drive-in RV FAS fitting a 23-ft rig",
     "website": "https://myfwp.mt.gov/fishMT/fas/39753456",
     "phone": "",
-    "note": "Montana FWP Fishing Access Site on the Madison River, 0.25 mi south of Ennis on Hwy 287. Primitive campsites with gravel boat ramp and toilet; posted trailer length 25 ft; 7-day max stay; $12/night with a fishing license, $18 without. First-come, first-served. --Claude",
+    "note": "Montana FWP Fishing Access Site on the Madison River just north-east of Ennis: from Hwy 287 at milepost 48 (0.25 mi south of Ennis) turn onto Jeffers Road, then 2 mi north. Primitive campsites with gravel boat ramp and toilet. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -397950,14 +398029,14 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://myfwp.mt.gov/fishMT/fas/39753456 (Restrictions: 'Vehicle Length Trailer Length is 25ft.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://myfwp.mt.gov/fishMT/fas/39753456 (Restrictions: 'Stay Limit Maximum stay of 7 days'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://fwp.mt.gov/binaries/content/assets/fwp/fish/fas/2026-fas-fee-table_adopted.pdf (2026 FAS use fee table: camping $12.00/night Montana fishing license holders, $18.00 non-Montana license holders; $5.00/$7.50 for MT residents 62+, disabled or veterans); fee site per https://myfwp.mt.gov/fishMT/fas/39753456 ('Facilities & Fees' lists Without Valid Fishing License)",
@@ -397966,6 +398045,11 @@
       "season": {
         "source": "https://myfwp.mt.gov/fishMT/fas/39753456 (\"Open: 01-01 to 12-31\", placeholder year), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://myfwp.mt.gov/fishMT/fas/39753456 (Facilities: 'Toilet', 'Primitive Campsite', 'Ramp (Gravel)'), read 2026-10-22",
+        "checked": "2026-10-22",
         "method": "manual"
       }
     },
@@ -397983,7 +398067,15 @@
     "season": {
       "year_round": true
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "facilities": {
+      "note": "FWP lists a toilet, primitive campsites and a gravel boat ramp."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://myfwp.mt.gov/fishMT/fas/39753456",
+      "note": "FWP's FishMT page confirms the 25-ft trailer limit, 7-day stay limit, and the $12 (with fishing license) / $18 (without) camping fee already recorded; lists a toilet, primitive campsites and a gravel ramp. Not stated: how sites are taken (derived FCFS left), hookups (derived none left), site count. Note: directions corrected (the site is 2 mi north on Jeffers Rd, not on Hwy 287 south of Ennis) and restated values trimmed."
+    }
   },
   {
     "id": 6099,
@@ -399577,7 +399669,7 @@
     "inclusion_evidence": "Russell Country (regional tourism) Yogo RV Park page + RVparx: private drive-in RV park, all pull-through 20/30/50-amp sites, big rigs -> real RV campground (private, not local govt)",
     "website": "",
     "phone": "406-423-5322",
-    "note": "Privately (family) owned RV park in Sapphire Village, ~11 mi south of Utica on a maintained gravel county road, at the foot of the Judith Mountains with a stream through the property. All pull-through sites, 20/30/50-amp electric, big rigs OK; also cabin and sheepherder-wagon rentals. Reservations accepted; nightly/weekly/monthly; open ~Apr 15 through end of hunting season. --Claude",
+    "note": "Privately (family) owned RV park in Sapphire Village, 10 mi south of Utica on a gravel road, at the foot of the Judith Mountains with a stream through the property. Also cabin and sheepherder-wagon rentals. Nightly, weekly and monthly rates; also advertises itself as workforce housing (short or long term). --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -399588,40 +399680,62 @@
       "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "note": "'All Sites Pull Thru! Big Rigs Welcome!'"
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-15",
+      "note": "'We're open from April 15th to until the end of Hunting Season.'"
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://www.russellcountry.com/yogo-rv-park.html",
+      "note": "Online reservation REQUEST form: 'We will contact you within 24/48 hours of receiving your requested reservation.' Or call 406-423-5322."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.russellcountry.com/yogo-rv-park.html (Our Amenities: '20/30/50 amp Electric'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.russellcountry.com/yogo-rv-park.html, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.russellcountry.com/yogo-rv-park.html, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.russellcountry.com/yogo-rv-park.html ('Make Your Reservation Online!'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.russellcountry.com/yogo-rv-park.html ('Free WiFi hookup throughout the RV Park', 'Free Showers with 24 hour access', '24 hour access to Laundry Facilities'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "3d065200868723f5",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "note": "Free showers with 24-hour access, 24-hour laundry, free Wi-Fi throughout, picnic tables at the sites, BBQ grills."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "http://www.yogorvpark.com (redirects to https://www.russellcountry.com/yogo-rv-park.html, a page written in the park's own voice with its rates, phone and reservation form) Google Maps place 'Yogo RV Park', 14 Diamond Loop Dr, Hobson MT (4.3 over 15 reviews, phone 406-423-5322, not marked closed), read 2026-10-22",
+      "note": "The park's own page (yogorvpark.com redirects to its Russell Country page) confirms 20/30/50-amp, all pull-through, reservations, open from April 15 to the end of hunting season; added showers/laundry/Wi-Fi and the request-form booking. Phone 406-423-5322 confirmed. Fees not recorded: the posted $15 nightly / $90 weekly / $270 monthly table carries no date. Note trimmed of restated values; 'about 11 mi' corrected to the page's 10 mi."
     }
   },
   {
@@ -400442,78 +400556,6 @@
       "sig": "a1b858bb7688c24c",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
-    }
-  },
-  {
-    "id": 6136,
-    "kind": "campground",
-    "name": "50,000 Silver Dollar",
-    "location": "47.38573,-115.39830",
-    "elevation_meters": 953,
-    "state": "MT",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "research default-down (no water adjacent to camping): Roadside I-90 tourist-stop site; no water body nearby",
-    "inclusion_evidence": "Campendium + multiple dated firsthand reviews: ~13 designated drive-in RV sites with free electric hookups at the roadside complex -> real transient RV park (not just a parking lot)",
-    "website": "https://www.50000silverdollar.com/",
-    "phone": "",
-    "note": "Free RV park at the 50,000 Silver Dollar bar/casino/gift-shop complex off I-90 Exit 16 in Haugan; ~13 back-in sites, several with free 30/50A power poles and picnic tables; no on-site restrooms/showers (use the complex facilities); FCFS, fills fast. First-come, first-served (free). --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 1,
-      "checked": "2026-06",
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50
-    },
-    "sites": {
-      "count": 13
-    },
-    "facilities": {
-      "showers": false,
-      "flush_toilets": false,
-      "vault_toilets": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "54b525efb901f7af",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "fees": {
-      "nightly_low": 0,
-      "nightly_high": 0
     }
   },
   {
@@ -401467,9 +401509,9 @@
     "waterfront": "lakeview",
     "waterfront_evidence": "satellite at 47.7357,-108.7206: two prairie camp loops; small pond/reservoir ~150m S across open prairie, visible but beyond the on-water distance bound -> view",
     "inclusion_evidence": "American Prairie + Hipcamp listing: 12 pull-through RV sites w/ 30/50-amp power up to ~45 ft, bathhouse/showers -> real drive-in RV campground (American Prairie nonprofit, private — not BLM)",
-    "website": "https://www.americanprairie.org/\nhttps://www.hipcamp.com/en-US/land/montana-american-prairie-antelope-creek-campground-dw9hy8l2",
+    "website": "https://americanprairie.org/location/antelope-creek-campground/\nhttps://www.hipcamp.com/en-US/land/montana-american-prairie-antelope-creek-campground-dw9hy8l2",
     "phone": "",
-    "note": "Campground at Mars Vista operated by American Prairie (private nonprofit reserve), off US-191 between mileposts 96-97, ~7 mi north of the Missouri River near Zortman in the Little Rocky Mountains area. 12 pull-through RV sites with 30/50-amp power (fits Class A + vehicle, up to ~45 ft), plus 4 rental cabins and drive-in/walk-in tent platforms; potable water, modern bathhouse with showers, wifi. Certified dark-sky site. Reservable online. --Claude",
+    "note": "Campground at Mars Vista operated by American Prairie (private nonprofit reserve), off US-191 between mileposts 96-97, ~7 mi north of the Missouri River near Zortman in the Little Rocky Mountains area. RV sites fit a Class A plus a vehicle; also 4 rental cabins and drive-in/walk-in tent platforms. Certified dark-sky site. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -401482,40 +401524,52 @@
     "sites": {
       "count": 12,
       "max_rig_ft": 45,
-      "pull_through": true
+      "pull_through": true,
+      "note": "'RV sites are pull-through and can fit a Class A motorhome plus a vehicle.' One RV or tent per site, 2 vehicles, 6 people."
     },
     "facilities": {
       "potable_water": true,
       "showers": true,
-      "wifi": true
+      "wifi": true,
+      "note": "Bath house with showers; the water station is for filling containers/tanks only. Camp host on site."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "hipcamp",
+      "url": "https://www.hipcamp.com/en-US/land/montana-american-prairie-antelope-creek-campground-dw9hy8l2",
+      "max_stay_nights": 14,
+      "note": "Booked on Hipcamp from American Prairie's 'Make a Reservation' link. Check-in 4 p.m., check-out 10 a.m."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://americanprairie.org/location/antelope-creek-campground/ ('All RV sites include both 30 and 50A power'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://americanprairie.org/location/antelope-creek-campground/ (RV Sites; Campground Rules), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://americanprairie.org/location/antelope-creek-campground/ ('Potable water', 'Bath House with showers', 'Wi-Fi', 'The water station is for filling containers/tanks only') + https://americanprairie.org/mars-vista/ ('Full bathhouse, camp host on site'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://americanprairie.org/location/antelope-creek-campground/ ('Make a Reservation at Antelope Creek Campground' -> Hipcamp; 'Maximum stay is 14 days'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.hipcamp.com/en-US/land/montana-american-prairie-antelope-creek-campground-dw9hy8l2 (__NEXT_DATA__ sites, read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://americanprairie.org/location/antelope-creek-campground/ (rates table) + the Hipcamp listing's $39 RV site price (read 2026-10-16), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://americanprairie.org/location/antelope-creek-campground/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -401527,7 +401581,19 @@
       "nightly_low": 39,
       "nightly_high": 39,
       "currency": "USD",
-      "note": "RV sites $39 (host prices; Hipcamp adds a service fee)."
+      "note": "American Prairie: 'RV Site, 30A and 50A $39' (tent site $20, tipi $30, cabin $73); 'Rates do not include lodging tax and processing fees.' Current American Prairie donors get a 20% discount code. RV and tent cancellations are not refundable.",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-23",
+      "closes": "10-26",
+      "note": "American Prairie's page still shows the 2025 season: 'open May 23rd, 2025, through October 26th, 2025. The booking window for 2026 will open in early March of 2026.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://americanprairie.org/location/antelope-creek-campground/ https://americanprairie.org/mars-vista/ https://www.hipcamp.com/en-US/land/montana-american-prairie-antelope-creek-campground-dw9hy8l2 (the booking link on American Prairie's page)",
+      "note": "American Prairie's own page confirms $39 RV sites, 30/50-amp at every RV site, pull-throughs, potable water, showers, Wi-Fi, reservable; added Hipcamp as the booking platform, 14-day max, and the (2025-dated) season May 23 - Oct 26. Not stated: site count (12) and the 45-ft figure (derived, left; the page says 'can fit a Class A motorhome plus a vehicle'). Note trimmed of restated values."
     }
   },
   {
@@ -401836,8 +401902,8 @@
     "waterfront_evidence": "satellite at 48.5958,-109.9535: loops set back ~80-100m atop bank above drawn-down Fresno Reservoir, open ground/no screen, water visible -> lakeview floor | dam screen 2026-10-21 (DEM vs NID pool, AWH below-dam rule): pin on the bench 16 m above Fresno Reservoir's pool on the reservoir side of the dam's south abutment; the below-pool ground is the tailwater east of the dam",
     "inclusion_evidence": "Montana Walleyes Unlimited (fresno-cam) + USBR Fresno Reservoir info + RV Life reviews: developed free FCFS drive-in RV/tent loop on SE Fresno Reservoir shore -> real RV campground",
     "website": "https://montanawalleyesunlimited.net/fresno-cam/",
-    "phone": "",
-    "note": "Free public campground on the SE end of Fresno Reservoir (Bureau of Reclamation land ~14 mi west of Havre), maintained by the nonprofit Fresno Chapter of Walleyes Unlimited. Drive-in RV/tent sites with vault toilets; chapter has been adding electric for campers. First-come, first-served, 14-day max. --Claude",
+    "phone": "406-759-5077",
+    "note": "Public campground on the SE end of Fresno Reservoir (Bureau of Reclamation land ~14 mi west of Havre), maintained by the nonprofit Fresno Chapter of Walleyes Unlimited, which also runs a webcam and weather station there. Drive-in RV/tent sites; chapter has been adding electric for campers. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -401877,6 +401943,11 @@
     "fees": {
       "nightly_low": 0,
       "nightly_high": 0
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://montanawalleyesunlimited.net/fresno-cam/ (the entry's website: a webcam page only) https://montanawalleyesunlimited.net/fresno-chapter/ ('Please log into the site.') https://www.usbr.gov/gp/recreation/frrrec.html (Reclamation's Fresno Reservoir facilities page) https://www.visitmt.com/listings/general/recreation-area-campground/fresno-reservoir-campground.html (state tourism directory, secondary)",
+      "note": "No operator or agency page describes this campground: the website is a Walleyes Unlimited webcam page (it confirms only that the 'Fresno Walleyes Campground' is on the SE end of the reservoir), the chapter page is login-only, and Reclamation's Fresno page lists 0 campgrounds but no fees. Recorded the no-fee statement (free, as derived). Not stated by any operator page: sites, toilets, FCFS, 14-day limit (derived values left). Note trimmed of restated values. Fees not written: Reclamation's \"Camp"
     }
   },
   {
@@ -402317,8 +402388,8 @@
     "waterfront_evidence": "satellite at 44.705,-111.099: easternmost sites on river-access spur sit ~25m from Madison River with open sage/gravel bank; USFS lead notes sites back to the river",
     "inclusion_evidence": "recreation.gov #10231392 + fs.usda.gov Custer Gallatin: 73 sites, 33 electric, spurs avg 25x75 ft -> real drive-in RV campground",
     "website": "https://www.recreation.gov/camping/campgrounds/10231392\nhttps://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground",
-    "phone": "",
-    "note": "Custer Gallatin NF (Hebgen Lake RD) campground along the Madison River, 3 mi N of West Yellowstone on US-191. 73 sites, 33 with 30/50-amp electric; long spurs (avg 25x75 ft) fit big rigs. Vault toilets, drinking water, no showers or dump. Reservable mid-May to late Sep, FCFS off-season. Bear-country hard-sided-only rules in spring. --Claude",
+    "phone": "406-823-6961",
+    "note": "Custer Gallatin NF (Hebgen Lake RD) campground along the Madison River, 3 mi N of West Yellowstone on US-191; run by concessionaire ExplorUS. Long spurs (avg 25x75 ft) fit big rigs. Bear-country hard-sided-only rules in spring. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -402331,7 +402402,9 @@
       "sewer": false
     },
     "sites": {
-      "count": 73
+      "count": 73,
+      "max_rig_ft": 45,
+      "note": "73 sites and 1 picnic site; 33 electric sites (the recreation.gov catalog types 34 RV ELECTRIC). Trailer/RV parking spurs average 25 x 75 ft; the catalog lists 30 sites at 40 ft and one at 45, and 28 sites at 20 ft or less."
     },
     "facilities": {
       "vault_toilets": true,
@@ -402341,37 +402414,45 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "after_cutoff"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -72
+      },
+      "max_stay_nights": 16,
+      "note": "Run by concessionaire ExplorUS. 44 sites reservable on recreation.gov (May 15 - September 26 in 2026), 29 first-come; the whole campground is first-come in the shoulder seasons (early May, late September - October 10). recreation.gov stops taking reservations 3 days before arrival. 16 consecutive nights."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov public campsite catalog for facility 10231392 (Water Hookup 'No' on all 73 sites), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground ('Camp sites: 73 camp sites, 1 picnic site', 'Electrical Sites: 33', 'Trailer/RV sites average parking spur: 25' X 75'') + recreation.gov catalog (max vehicle length per site), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground ('No RV Dump Station', 'NO Shower Facilities available at this campground', 'Potable water is available at this site') + recreation.gov notices, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10231392 (rules: reservationCutOff 3, maxConsecutiveStay 16; rate seasons 'First-come, First-served Season'; catalog: 44 reservable, 29 not; contact email @goexplorus.com, notice 'USFS campgrounds managed by ExplorUS') + https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground ('Reserve this site on Recreation.gov'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 10231392 (112 days observed, edges closes)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground (Seasons of Use) + https://www.recreation.gov/api/camps/campgrounds/10231392/rates (2026 season dates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10231392/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground ('$26.00 for non-electric sites. Includes 2 driving vehicles', '$35.00 for electrical sites', '$9.00 each additional vehicle') + https://www.recreation.gov/api/camps/campgrounds/10231392/rates (2026: StandardNonelectric 26, StandardElectric 35), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -402380,12 +402461,22 @@
       "model": "claude-opus-5"
     },
     "season": {
-      "closes": "09-27"
+      "closes": "10-11",
+      "year_round": false,
+      "opens": "05-01",
+      "note": "Forest Service: 'Seasons of Use 5/1 – 10/11. Weather Dependent.' recreation.gov 2026: first-come May 1-14, reservable May 15 - September 26, first-come September 27 - October 10."
     },
     "fees": {
       "nightly_low": 26,
       "nightly_high": 35,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$26 non-electric, $35 electric (includes 2 vehicles); $9 each additional vehicle. 'Federal Recreation Passes not applicable toward electric' or additional vehicle fees. The Forest Service page also still carries an older table ($20 / $28 / $8)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/custergallatin/recreation/bakers-hole-campground (last updated August 31, 2026) https://www.recreation.gov/api/camps/campgrounds/10231392 (+ /rates and the public per-site search catalog) https://www.fs.usda.gov/r01/custergallatin/alerts (alerts listed on the campground page: none for Baker's Hole or US-191), read 2026-10-22",
+      "note": "Confirmed 73 sites (33 electric), no showers or dump, potable water, $26 non-electric / $35 electric (2026), recreation.gov booking. Changed season close 09-27 -> 10-11 (FS 'Seasons of Use 5/1 - 10/11') and added opens 05-01; fcfs after_cutoff -> some_sites (29 non-reservable sites, all-FCFS shoulder seasons); added 3-day reservation cutoff, 16-night max, 45-ft max (catalog), no water hookups, concessionaire ExplorUS. Not stated: amperage (derived 50 left), vault toilets (FS page says 'Restrooms"
     }
   },
   {
@@ -403238,8 +403329,8 @@
     "waterfront_evidence": "satellite at 47.9354,-113.8535: campground loops sit east of MT-83 in forest; lake frontage is private cabins + a day-use boat launch across the highway",
     "inclusion_evidence": "FS Flathead Swan Lake page + rec.gov 234480: two loops, 38 sites, max trailer 50 ft, boat ramp -> real drive-in RV campground",
     "website": "https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/234480",
-    "phone": "",
-    "note": "Flathead NF at the north end of Swan Lake, ~17 mi SE of Bigfork. Two loops (Ponderosa open/large sites, Birch shaded), 38 sites total (24 reservable via recreation.gov, 14 walk-up), max trailer 50 ft, fill station at entrance, 16-day limit; boat ramp and swim beach on the lake side of Hwy 83. Concessionaire-run in summer. --Claude",
+    "phone": "406-837-7500",
+    "note": "Flathead NF at the north end of Swan Lake, ~17 mi SE of Bigfork. Two loops (Ponderosa open/large sites, Birch shaded); boat ramp and swim beach on the lake side of Hwy 83. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -403248,33 +403339,51 @@
     },
     "sites": {
       "count": 38,
-      "max_rig_ft": 50
+      "max_rig_ft": 50,
+      "note": "38 family sites (24 reservable, 14 walk-up) plus a reservable group site for up to 100 people; paved parking areas. Ponderosa Loop has open, large sites; Birch Loop's are shaded and more clustered."
     },
     "booking": {
       "reservable": true,
       "platform": "recreation.gov",
       "fcfs": "some_sites",
-      "max_stay_nights": 16
+      "max_stay_nights": 16,
+      "note": "Run in summer by concessionaire Big Sky Recreation Company. 24 sites reservable on recreation.gov, 14 first-come walk-up sites (marked W). Reserved sites are held until 11 a.m. the day after arrival; a reservation holder may not move to a walk-up site. 16-day stay limit. Check-in 2 p.m., check-out 11 a.m."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground ('38 family-sized campsites and large group site with paved parking areas', 'Max trailer length is 50 feet') + https://www.recreation.gov/api/camps/campgrounds/234480 ('24 sites are reservable and 14 sites are for our walk-up visitors'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234480 (overview, notices, maxConsecutiveStay 16) + https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground ('managed by a concessionaire, Big Sky Recreation Company, during the summer months'; '16 day stay limit'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov public campsite catalog for facility 234480 (all 38 RV/trailer sites typed STANDARD NONELECTRIC), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234480/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234480/rates (Peak Season 2026-05-15 to 2026-09-30: STANDARD NONELECTRIC $22) + notices ('additional $22/per nite', 'extra vehicle charge of $5.00/vehicle per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234480 ('Drinking water and vault toilets are available. There is no dump station at this campground but there is a fill station as you enter the park') + https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground (Seasons of Use), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground ('A 50% discount on all standard site fees and day use fees will be offered to holders of the Golden Age and Golden Access Passports, as well as holders of the Interagency Senior and Access Passes'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -403288,7 +403397,28 @@
     "fees": {
       "nightly_low": 22,
       "nightly_high": 22,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$22 per camping unit per night; an additional camping unit on a double site pays another $22 (cash or check at the fee tube), and a second vehicle $5/night."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "dump": false,
+      "note": "No dump station, but a water fill station just past the pay kiosk at the entrance. Firewood sold by the host; kayak, paddleboard and canoe rentals."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "note": "Forest Service: 'Seasons of Use: Mid May - Late September'; concessionaire-run in the summer months."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/flathead/recreation/swan-lake-campground (last updated April 14, 2025) https://www.recreation.gov/api/camps/campgrounds/234480 (+ /rates and the public per-site search catalog) https://www.fs.usda.gov/r01/flathead/alerts (nothing for Swan Lake Campground or Hwy 83), read 2026-10-22",
+      "note": "Confirmed 38 sites (24 reservable / 14 walk-up), 50-ft max trailer, no electric, rec.gov booking with some FCFS, 16-day limit, $22 (2026). Added season (mid May - late September), vault toilets/potable water/no dump (fill station), senior/access 50% discount, concessionaire Big Sky Recreation Company. Not stated: booking window (inherited 6 months left). Note trimmed of restated values."
     }
   },
   {
@@ -407485,8 +407615,8 @@
     "waterfront_evidence": "research default-down (no water adjacent to camping): Small 6-site loop on Willow Creek; no lake",
     "inclusion_evidence": "fs.usda.gov Kootenai NF Willow Creek page: 6 gravel drive-in sites, RVs up to 40 ft, FCFS/free -> real RV campground fitting 23 ft",
     "website": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground",
-    "phone": "",
-    "note": "Kootenai NF campground on Willow Creek, ~19 mi NE of Trout Creek on NFS Rd #54 (gravel). 6 sites with tent pads, tables, fire rings; RVs up to 40 ft; vault toilets, no potable water. First-come, first-served and free. (RV Life mislabeled the city as Charlo; the campground is near Trout Creek.) --Claude",
+    "phone": "406-827-3533",
+    "note": "Kootenai NF campground on Willow Creek, ~19 mi NE of Trout Creek on NFS Rd #54 (gravel). Pack in, pack out. (RV Life mislabeled the city as Charlo; the campground is near Trout Creek.) --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -407495,7 +407625,8 @@
     },
     "sites": {
       "count": 6,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "6 sites, all with tent pads, tables and fire rings; gravel campground roads and parking spurs."
     },
     "facilities": {
       "vault_toilets": true,
@@ -407507,14 +407638,14 @@
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground ('The campground has 6 sites all with tent pads, tables and fire rings and able to accommodate up to a 40' RV. Campground roads and parking spurs are gravel.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground ('Amenities include vault toilets'; 'Potable water is not available at this site.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -407522,9 +407653,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground ('No fees are required for this site', '$0.00 Pack in/Pack out'; updated April 30, 2026), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground (Operational Hours), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -407534,7 +407670,18 @@
     },
     "fees": {
       "nightly_low": 0,
-      "nightly_high": 0
+      "nightly_high": 0,
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": true,
+      "note": "Forest Service: 'The campground is managed from Memorial Day through Labor Day, but is available all year to visitors. Access is dependent upon weather conditions.'"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.fs.usda.gov/r01/kootenai/recreation/willow-creek-campground (last updated April 30, 2026) https://www.fs.usda.gov/r01/kootenai/alerts/kootenai-flood-event-inaccessible-areas (NFS Road 54 not listed), read 2026-10-22 recreation.gov search for 'Willow Creek Campground' (no Montana listing), 2026-10-22",
+      "note": "Confirmed 6 sites, 40-ft RV max, vault toilets, no potable water, free (2026). Added season (managed Memorial Day - Labor Day, open all year weather permitting). No access-road closure on the Kootenai alerts. Not stated: how sites are taken (not on recreation.gov; derived FCFS left). Note trimmed of restated values."
     }
   },
   {
@@ -992933,7 +993080,7 @@
     "inclusion_evidence": "beargrasslodging.com live: 'Our RV park has 24 RV sites ... All RV sites include 20, 30 & 50 amp power, water, and sewer', Campspot booking (read 2026-10-19); Google 4.5 over 304 reviews; RV Life 4.5* over 75 reviews; Glacier NP gateway (13.9 km from an entrance, gateways.py), so the price gate is lifted",
     "website": "https://www.beargrasslodging.com/",
     "phone": "406-387-5531",
-    "note": "Good Sam Park in Hungry Horse, 9 mi from West Glacier; 24 RV sites, all with 20/30/50 A, water and sewer, plus motel rooms; booked on Campspot. RV Life 4.5*, $$$. --Claude",
+    "note": "In Hungry Horse, 9 mi from West Glacier; RV sites plus motel rooms, lodge and cabin. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
@@ -992950,19 +993097,34 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.beargrasslodging.com/rvandtentsites ('All RV sites include 20, 30 & 50 amp power, water, and sewer.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.beargrasslodging.com/rvandtentsites ('Our RV park has 24 RV sites and 2 tent sites'; 'All sites are back-in, we do not have any pull through sites'; per-site length list), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.beargrasslodging.com/rvandtentsites (Book Now links to Campspot) + the working Campspot booking page, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.campspot.com/book/beargrass (availability 2027-06-15 to 06-16: 'Back-in Full Hookup RV Site' $72.95 avg/night), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.beargrasslodging.com/rvandtentsites (bathrooms/showers and coin-op laundry open 24/7; 'the RV park has its own dedicated Wi-Fi'; pool; communal fire pit), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.beargrasslodging.com/rvandtentsites ('Our RV park will be open April to October weather dependent.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "hookups": {
@@ -992971,16 +993133,42 @@
       "sewer": true
     },
     "sites": {
-      "count": 24
+      "count": 24,
+      "max_rig_ft": 45,
+      "pull_through": false,
+      "note": "All back-in; per-site maximum lengths run 24 to 45 ft (sites 1 and 6 take 45 ft)."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/beargrass"
     },
     "note_scan": {
       "sig": "c998b3f4aaa348bc",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 72.95,
+      "nightly_high": 72.95,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "Campspot, 1 night 2027-06-15 (Tue), 2 adults, before tax: 'Back-in Full Hookup RV Site' $72.95 avg/night (the only RV site type); a tent site is $42.05. 20% non-refundable deposit."
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "note": "Outdoor pool; communal fire pit (no fire rings at sites). RV arrivals 1-7 pm."
+    },
+    "season": {
+      "year_round": false,
+      "note": "April to October, weather dependent."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.beargrasslodging.com/rvandtentsites (read in a browser) https://www.beargrasslodging.com/faq (read in a browser) https://www.campspot.com/book/beargrass (Campspot booking engine, park 5932: 1 night 2027-06-15, 2 adults)",
+      "note": "Confirmed on the operator's site and Campspot: 24 RV sites, 50-amp/water/sewer, reservable on Campspot; added $72.95 (mid-June 2027 weeknight, before tax), 45-ft max, all back-in, showers/laundry/Wi-Fi, season April-October. Phone 406-387-5531 confirmed. Not stated: Good Sam/military discounts (derived values left). Note trimmed of hookup, booking and rating text."
     }
   },
   {
@@ -994037,7 +994225,7 @@
     "inclusion_evidence": "KOA booking form (koa.com/campgrounds/west-glacier/reserve/) quoted 2027-06-15, 1 night, 23-ft motorhome: water/electric $145, full hookups $185, patio $205-269 (read 2026-10-19); Google 4.7 over 1,267 reviews; RV Life 5* over 535 reviews, 227 sites; Glacier NP gateway (3 km from an entrance, gateways.py), so the price gate is lifted",
     "website": "https://koa.com/campgrounds/west-glacier/",
     "phone": "406-387-5341",
-    "note": "Big KOA resort on Halfmoon Flats Rd, 3 km from Glacier's West Entrance; patio, full-hookup and water/electric RV sites, pool. RV sites $145-269 a night before tax for a mid-June 2027 weeknight on KOA's booking form. RV Life 5*, $$$$. --Claude",
+    "note": "Big KOA resort on Halfmoon Flats Rd, about 3 miles from Glacier's West Entrance; patio, full-hookup and water/electric RV sites, cabins and tent sites. --Claude",
     "rating": {
       "stars": 5.0,
       "price_tier": 4,
@@ -994054,28 +994242,78 @@
         "method": "derived"
       },
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/west-glacier/ ('50 Max Amp'; 'Spacious Pull-Thru and Back-In RV Sites with full hookups') + booking form site types ('50/30/20 Amps, Full Hookups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://koa.com/campgrounds/west-glacier/ ('BOOK NOW', 'Reserve: 1-406-387-5341') + the working reserve form, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://koa.com/campgrounds/west-glacier/reserve/ (step 2 site list, '$145.00 avg/night | Back In, 50/30 Amps, Water/Electric' ... '$269.00 avg/night | Back In, 50/30/20 Amps, Full Hookups, KOA Patio Deluxe Patio Sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://koa.com/campgrounds/west-glacier/ (\"75' Max Length\"; 'Spacious Pull-Thru and Back-In RV Sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://koa.com/campgrounds/west-glacier/amenities/ ('Restrooms & Showers', 'Laundry Facility', 'Grocery and Convenience Store', 'Wi-Fi', 'Pool (5/1 - 10/15)', 'Hot Tub / Sauna'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://koa.com/campgrounds/west-glacier/amenities/ ('West Glacier KOA Resort Open May 1 to October 15'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://koa.com/campgrounds/west-glacier/reserve/"
     },
     "note_scan": {
       "sig": "9394c497ea353bfd",
       "checked": "2026-10-20",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 145,
+      "nightly_high": 269,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "KOA booking form, 1 night 2027-06-15 (Tue), 23-ft motorhome, before tax: back-in 50/30-amp water/electric $145; full-hookup standard, landscape and combination RV & tent sites $185; pull-thru Deluxe Patio $205; back-in Deluxe Patio $269."
+    },
+    "sites": {
+      "max_rig_ft": 75,
+      "pull_through": true
+    },
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Heated pools (May 1 - Oct 15), hot tubs and saunas, Lazy Bear Cafe and Grille, espresso bar, ice cream shop, propane and firewood for sale, dog park."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-15"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://koa.com/campgrounds/west-glacier/ (read in a browser) https://koa.com/campgrounds/west-glacier/amenities/ (read in a browser) https://koa.com/campgrounds/west-glacier/reserve/ (KOA booking form: RV, 2 adults, 23-ft motorhome, no slide-outs, 2027-06-15 to 06-16, read in a browser)",
+      "note": "Confirmed on koa.com and its booking form: reservable online, water and sewer; added $145-269 (mid-June 2027 weeknight, before tax), 50-amp, 75-ft max with pull-thrus, showers/laundry/store/Wi-Fi, season May 1 - Oct 15. Phone 406-387-5341 confirmed. Not stated: site count, Good Sam/military discounts (derived values left). Note trimmed of the price and rating lines."
     }
   },
   {

@@ -4,6 +4,9 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6160 Walleye (MT, Fresno Reservoir)** (mt-5): no agency or operator page for the campground. Reclamation's Fresno page (usbr.gov/gp/recreation/frrrec.html) lists Campgrounds 0 / Campsites 0; the website is the Walleyes Unlimited webcam page (chapter page needs a login); only Visit Montana describes tent/trailer sites, toilets, no water, 14-day limit. Inclusion needs a real source or a drop.
+- **6123 Yogo RV Park (MT, private)** (mt-5): own domain yogorvpark.com redirects to russellcountry.com/yogo-rv-park.html (park's voice, phone, rates, request form; 429 from the cloud, so not yet in website). Rates $15/night undated. Pitches itself as 'an ideal Workforce Housing solution (short or long term)'; nights are offered, likely passes the long-stay tests. Google 15 reviews.
+- **6154 Antelope Creek, American Prairie (MT)** (mt-5): operator page still describes 2025 (season 05-23..10-26 recorded from it); re-read for 2026/27. No phone published (email/Hipcamp).
 - **6156 Silos, Canyon Ferry (MT)** (mt-4): ownership private -> federal (Reclamation land under a concession). Reclamation is re-bidding the concession (usbr.gov/gp/mtao/canyonferry), so operator, website (thesilosmt.camp) and Campspot booking may change for 2027.
 - **6085 Ruby Creek (MT, BLM)** (mt-4): BLM page now thin; the derived 50-ft max, water, toilets and FCFS can't be confirmed. Not on rec.gov.
 - **6232 Summit, Marias Pass (MT)** (mt-4): Helena-Lewis and Clark NF, not Flathead (website fixed); derived reservable/rec.gov cleared (no listing); FCFS and the 35-ft max unstated.
