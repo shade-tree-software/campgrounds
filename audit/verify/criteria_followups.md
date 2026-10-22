@@ -650,3 +650,13 @@ me drop and report); each needs the research named before a verdict.
 - **4333 Contentnea Creekside**: website -> Town of Grifton page, phone 252-560-7828; town posts no rate (Campendium $30, 2023).
 - **601 Carolina Beach**: holiday minimum waived within 14 days (RA) vs state:NC row's 7, which quotes ncparks.gov verbatim - two official pages disagree; every NC park checked (103/104/105/107/601) records RA's 14 as its own value. Row left as is.
 - Verifier note: `pkill -f drv_server.py` kills every verifier's browser driver - stop only your own PID.
+
+### p3-93 (NC, 2026-10-22)
+- **DROPPED:** 4267 Dickens (long-stay: full-timers/plant workers, no posted rate, no engine), 4271 Downtown RV Park Franklin (parked domain, likely closed, Google has no phone).
+- **380 Frisco**: temporarily_closed (NPS 2026-10-21 post-storm alert, with Cape Point 638); rec.gov shows sites Available from Oct 24 - RE-CHECK and lift.
+- **258 Falls Lake SRA**: pin sits on no campground (0.8 km from Hwy 50 boat ramp); see asks.md. Holly Point closed for wastewater construction until 2026-11-16.
+- **4318 Freedom Park RV Pads (Eden)**: city publishes only a one-line listing + a 2023 permit form with a blank fee; RV Life $$$. Thin; call 336-623-2110 before relying on it.
+- **4268 Gem City** $53, over the gate but GSMNP gateway at 40 km; standing 2-night minimum; Campspot name "Gem City Campground" (Rooted Retreats NC).
+- **4265 Cullasaja River** $50 at the gate; daily rate posted beside monthly/seasonal - passes test 2.
+- **4260 Farm Country**: no posted rate, ordinary transient park; presence + RV Life $$ pass.
+- **37 Doughton Park**: come in by the Parkway; rec.gov warns GPS routes onto steep gravel roads.

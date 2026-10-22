@@ -2118,20 +2118,70 @@
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253 ('32 campsites available, all with electric hookups') + RIDB catalog (all 32 STANDARD ELECTRIC sites: Electricity Hookup 50, Water Hookup Yes; no sewer attribute), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234253/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253/rates (Peak Season 2026-09-02 to 2026-09-06 and 2027-05-31 to 2027-09-06: STANDARD ELECTRIC 30, GROUP STANDARD ELECTRIC 125, GROUP SHELTER ELECTRIC 50), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253 ('There are 32 campsites available, all with electric hookups, and one large group site'; 'Most campsites have a gravel bases') + RIDB catalog (Max Vehicle Length, Driveway Entry per site), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253 ('Modern amenities like flush toilets, drinking water and showers'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253 (notices: 'Camping is permitted in designated campsites only, and only permitted to those who have a reservation', 'Maximun stay is 14 days within any 30 day period', gatehouse/gate-code and check-in notices; facility_rules maxStay 14 nights 'Rolling 30 Days'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234253 ('Golden Age/Access and America the Beautiful Interagency Senior and Access Passes are accepted at this campground. Cardholders receive a 50% discount on camping fees.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Standard electric/water site $30 a night (2026 and 2027 rate seasons); group site $125, group shelter $50."
+    },
+    "sites": {
+      "count": 32,
+      "pull_through": true,
+      "note": "32 electric/water sites plus one large group site. 3 pull-throughs, 29 back-ins; catalog Max Vehicle Length 28-90 ft on most sites (two read 129 and 143 ft, pad lengths or typos), so no maximum is recorded. Most sites have gravel bases."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "note": "Playground, sandy beach, basketball court, horseshoe pit; the Overmountain Victory NHT passes the lake."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Camping 'only permitted to those who have a reservation' (recreation.gov, 877-444-6777, or the app); the gatehouse makes no changes. If no attendant is present, guests self-check in with a gate code emailed at booking. 14 nights in any 30 days. Check-in 3 pm, check-out noon."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/234253 https://www.recreation.gov/api/camps/campgrounds/234253/rates trip_data/ridb_campsites.json (RIDB campsite catalog for facility 234253, fetched 2026-10-20) https://www.recreation.gov/api/camps/availability/campground/234253/month (Sep 2026 - May 2027), read 2026-10-22",
+      "note": "USACE-run (not concession), reservation-only. Confirmed $30 base, 50-amp electric + water. Added 32 sites with 3 pull-throughs, flush toilets/showers/water, no first-come camping, 14-night max, senior/access 50% discount. Not stated: sewer, dump station, a campground season statement (rate seasons vary: 2027 May 31-Sep 6; the calendar for 2026-27 is sparse), booking window. USACE district page did not answer plain HTTP."
+    },
+    "phone": "(336) 973-0104"
   },
   {
     "id": 37,
@@ -2160,14 +2210,83 @@
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 Peak Season (May 22 - Oct 25): $30 a night for RV, standard and tent sites alike; group sites $45."
     },
     "provenance": {
       "fees": {
-        "source": "https://www.recreation.gov/camping/campgrounds/233369 (per-campsite rates via /api/search/campsites, RV-usable sites, current season; read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233369/rates (Peak Season 2026-05-22 to 2026-10-25: RV NONELECTRIC 30, STANDARD NONELECTRIC 30, TENT ONLY NONELECTRIC 30, group 45) + https://www.nps.gov/blri/planyourvisit/camping.htm ('Campsites are available on a first-come, first-served basis at a fee of $30 per night'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233369 (notice: 'There are no showers. No electric, water or sewer hook-ups are available.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233369 ('flush toilets, drinking water and a dump station'; 'There are no showers') + https://www.nps.gov/blri/planyourvisit/camping.htm ('All campgrounds have potable water, comfort stations with flush toilets and sinks, and a dump station'; showers only at Julian Price and Mount Pisgah), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233369 ('In addition to the 33 sites available for advance reservation, 70 campsites are available on a first-come, first-served basis'; 'Three group sites') + recreation.gov campsite catalog (type, Max Vehicle Length, Driveway Entry per site), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233369 ('70 campsites are available on a first-come, first-served basis... These sites must be booked in person at the campground kiosk'; rules maxConsecutiveStay 30, maxStay 30 days Each Year) + https://www.nps.gov/blri/planyourvisit/camping.htm ('Reservations can be made up to six months in advance by visiting www.recreation.gov'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/blri/planyourvisit/camping.htm ('The parkway's eight campgrounds are open from May through late October, weather permitting. They are closed in winter.') + recreation.gov availability Oct 2026 (sites reservable through 2026-10-25, 'Not Available' from 10-26), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "https://www.recreation.gov/api/camps/availability/campground/233369/month (Oct 2026: sites Reserved/Available through Oct 25) + https://www.nps.gov/blri/planyourvisit/roadclosures.htm (MP 229.7-241.1 'US-21 to Doughton Park Recreation Area and The Bluffs Restaurant: Open'; Helene closures listed only for Linville Falls and Crabtree Falls campgrounds), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
-    }
+    },
+    "hookups": {
+      "electric": 0,
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "showers": false,
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": true
+    },
+    "sites": {
+      "pull_through": true,
+      "note": "recreation.gov: 33 sites for advance reservation and 70 first-come, plus three group sites; its catalog lists 25 RV sites, 49 standard and 45 tent-only. RV sites are back-ins of 20-43 ft, most 35 ft or more, with one 88-ft pull-through; no maximum recorded."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "window_opens_days": 180,
+      "fcfs": "some_sites",
+      "max_stay_nights": 30,
+      "note": "33 sites reservable up to six months ahead; 70 first-come sites are booked in person at the campground kiosk and are not tracked online. Stay limit 30 consecutive days and 30 days a year."
+    },
+    "season": {
+      "year_round": false,
+      "note": "NPS: the parkway's eight campgrounds are open from May through late October, weather permitting, and closed in winter. Reservations ran to October 25 in 2026."
+    },
+    "status": {
+      "operating": "open"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233369 https://www.recreation.gov/api/camps/campgrounds/233369/rates https://www.recreation.gov/api/search/campsites?fq=asset_id:233369 (campsite catalog), read 2026-10-22 https://www.recreation.gov/api/camps/availability/campground/233369/month (Oct 2026), read 2026-10-22 https://www.nps.gov/blri/planyourvisit/camping.htm https://www.nps.gov/blri/planyourvisit/roadclosures.htm (last updated October 21, 2026)",
+      "note": "NPS-run, open in 2026 (not on the parkway's Helene closure list; season ends Oct 25). Confirmed $30 (2026). Added no hookups, no showers, flush toilets/water/dump, 33 reservable + 70 first-come sites (kiosk), one pull-through, 6-month window, 30-night limit, season May-late October. Not stated: exact opening/closing dates (NPS API rate-limited; the nps.gov campground page loads its data by script), senior pass discount."
+    },
+    "phone": "336-372-8877"
   },
   {
     "id": 38,
@@ -17762,7 +17881,7 @@
     "state": "NC",
     "ownership": "state",
     "note": "Wooded campground with multiple lakefront RV sites.  --AWH",
-    "website": "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902",
+    "website": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area\nhttps://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -17793,12 +17912,65 @@
         "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area (Operating Season Schedule 2026: \"Rolling View Access ... Campground Loop A | Open year-round\"), read 2026-10-20",
         "checked": "2026-10-20",
         "method": "manual"
+      },
+      "hookups": {
+        "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping ('Holly Point offers 158 campsites total, 89 with water and 50/30-amp electric hookups. Rolling View offers 115 campsites total, 80 with water and 50/30-amp electric hookups.'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping (site counts per campground; Shinleaf 46 hike-in; group camping 'tents only') + ReserveAmerica site list (e.g. A-010 '30 Pull-Through', B-002 '45 Pull-Through', A-015 '100 Back-In'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping ('Both Holly Point and Rolling View have a dump station'; 'Bathhouses are centrally located in each camping loop'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902 (Booking Window: 'Campsite Electric ... Reservations can be made for today and can be made up to 6 Month(s) in advance'; 'Business Rules for Holiday Weekends': '2 nights Minimum Stay on holiday weekend', '1 night Minimum Stay on holiday weekend if the booking dates within 14 Days before Arrival Date'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "season": {
       "year_round": true,
       "note": "Rolling View's Loop A is open all year; its Loops B and C, Holly Point and B.W. Wells are seasonal and partly closed for construction in 2026."
-    }
+    },
+    "hookups": {
+      "electric": 50,
+      "water": true
+    },
+    "sites": {
+      "count": 273,
+      "pull_through": true,
+      "note": "Two drive-in campgrounds: Holly Point 158 sites (89 electric/water) and Rolling View 115 (80 electric/water), plus 46 hike-in tent sites at Shinleaf and tent-only group camps. The booking site lists back-ins and some pull-throughs, driveways mostly 30-100 ft."
+    },
+    "facilities": {
+      "dump": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "reserveamerica",
+      "window_opens_days": 180,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "holiday",
+          "waived_if": {
+            "booking_within_days": 14
+          }
+        }
+      ],
+      "note": "Electric and non-electric campsites can be booked for today and up to 6 months ahead. Holiday weekends need 2 nights, cut to 1 night when booking within 14 days of arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/camping https://www.ncparks.gov/state-parks/falls-lake-state-recreation-area/news/campground-closures (last updated 9/15/2026) https://northcarolinastateparks.reserveamerica.com/camping/falls-lake-state-recreation-area/r/campgroundDetails.do?contractCode=NC&parkId=552902",
+      "note": "Existing fees ($30 / +$10 electric) and season (Rolling View Loop A year-round) stand. Added 50-amp electric + water, 273 drive-in sites across Holly Point and Rolling View with some pull-throughs, dump stations, 6-month window and the booking site's holiday minimum (waived within 14 days, not the agency row's 7). Holly Point is closed for wastewater construction until November 16, 2026 (a partial closure; Rolling View operates). Not stated: showers by name, max stay."
+    },
+    "phone": "984-867-8000"
   },
   {
     "id": 259,
@@ -27428,7 +27600,7 @@
     "elevation_meters": 4.0,
     "state": "NC",
     "ownership": "federal",
-    "website": "https://www.recreation.gov/camping/campgrounds/251430",
+    "website": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm\nhttps://www.recreation.gov/camping/campgrounds/251430",
     "rating": {
       "stars": 4.5,
       "price_tier": 1,
@@ -27441,24 +27613,93 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251430 ('There are no RV hook ups in the campground') + https://www.nps.gov/caha/planyourvisit/campgrounds.htm (Frisco 'Hook-ups? No'; 'There are currently no utility connections at the other three campgrounds'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251430/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251430/rates (Peak Season 2026-04-03 to 2026-11-29 and 2027: STANDARD NONELECTRIC 28) + https://www.nps.gov/caha/planyourvisit/campgrounds.htm (Frisco: Cost '$28'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "status": {
+        "source": "NPS alert 'Cape Point & Frisco campgrounds and several ORV ramps remain closed' (developer.nps.gov/api/v1/alerts?parkCode=caha, dated 2026-10-21) + https://www.recreation.gov/api/camps/availability/campground/251430/month (Oct 2026: sites 'Closed' 10-16 to 10-23, 'Available' from 10-24), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251430 ('modern restrooms with flushing toilets, potable water, and outdoor unheated showers'; 'Wooden boardwalks'; ORV ramp), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm (Frisco 'Sites 127'; 'Frisco Campground is located among sand dunes') + https://www.recreation.gov/api/camps/campgrounds/251430 (paved parking pad; 'large RVs over 25 feet may have to park second vehicles in auxiliary parking'; 'limited sites with shade') + RIDB catalog, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251430 ('A reservation to camp is required. Same day reservations can be made based on availability'; 'Payment is only accepted through Recreation.gov'; maxStay 14 nights) + https://www.nps.gov/caha/planyourvisit/campgrounds.htm ('Walk-ups (same day) reservations are permitted; however, campers will need to make payment online'; 'From Easter Sunday until the Sunday after Thanksgiving, all camping is limited to 14 days at each campground'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/caha/planyourvisit/campgrounds.htm (Frisco Availability 'Open Spring-Fall, check www.recreation.gov for dates'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/251430 ('The Access Pass and both the Senior Annual and Senior Lifetime Pass are the only passes that provide a discount on the fee for the campsite physically occupied by the pass owner'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 28,
       "nightly_high": 28,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "status": {
+      "operating": "temporarily_closed",
+      "reopens": "NPS: after post-storm assessments, no date announced; recreation.gov shows sites bookable again from 2026-10-24",
+      "note": "NPS alert 2026-10-21: 'The Cape Point and Frisco campgrounds and several off-road vehicle routes are currently closed. Reopening will begin after conditions improve and post-storm assessments are complete.' recreation.gov marks every site Closed for the nights of Oct 16-23, 2026."
+    },
+    "facilities": {
+      "flush_toilets": true,
+      "showers": true,
+      "potable_water": true,
+      "note": "Outdoor unheated showers. Boardwalks to the beach; an ORV ramp at the entrance."
+    },
+    "sites": {
+      "count": 127,
+      "note": "127 sites (NPS); the catalog lists 112 standard, 10 RV and 2 tent-only sites, each with a paved pad, back-in or parallel, Max Vehicle Length mostly 31-45 ft. 'All equipment must fit on the site pad'; RVs over 25 ft may have to park a second vehicle in auxiliary parking or buy a second site. Sites sit among the dunes; few have shade."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "max_stay_nights": 14,
+      "note": "Reservation required, online at recreation.gov only; same-day bookings allowed by phone (877-444-6777) or smartphone, since rangers take no payment at the campground. 14 days at each campground from Easter Sunday to the Sunday after Thanksgiving."
+    },
+    "season": {
+      "year_round": false,
+      "note": "NPS: 'Open Spring-Fall, check www.recreation.gov for dates'. The 2026 rate season ran April 3 - November 29."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/251430 https://www.recreation.gov/api/camps/campgrounds/251430/rates trip_data/ridb_campsites.json (RIDB campsite catalog for facility 251430, fetched 2026-10-20) https://www.recreation.gov/api/camps/availability/campground/251430/month (Oct-Nov 2026), read 2026-10-22 https://www.nps.gov/caha/planyourvisit/campgrounds.htm (last updated June 22, 2026) NPS alert 'Cape Point & Frisco campgrounds and several ORV ramps remain closed' (developer.nps.gov/api/v1/alerts?parkCode=caha, dated 2026-10-21, as read for results/applied/638.json; the API was rate-limited on 2026-10-22)",
+      "note": "Currently CLOSED after a storm (NPS alert 2026-10-21; rec.gov closed Oct 16-23, bookable again from Oct 24). Confirmed $28 (2026) and no hookups. Added flush toilets/unheated showers/water, 127 sites (paved pads), reservation-only with same-day booking, 14-day Easter-Thanksgiving limit, spring-fall season, senior/access discount. Not stated: dump station at Frisco, booking window."
+    },
+    "phone": "(252) 475-9054"
   },
   {
     "id": 381,
@@ -280978,7 +281219,7 @@
     "waterfront_evidence": "satellite at 35.779,-77.140: RV rows in open field; small pond by buildings not adjacent to RV pads",
     "website": "https://farmcountrycampground.com/",
     "phone": "252-789-8482",
-    "note": "Family-owned rural campground (est. 2012) near Williamston; ~35-40 large sites, many pull-throughs with full hookups, big rigs OK. Walking/horse trails, store, propane, year-round. --Claude",
+    "note": "Family-owned rural campground (est. 2012) near Williamston; ~35-40 large sites, many pull-throughs, big rigs OK. Walking/horse trails, propane. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -280989,39 +281230,48 @@
       "sewer": true
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "note": "Amenities page: '40 Sites Available', '40-Foot x 100-Foot Lots'; the home page says '35 roomy RV and camper/tent sites'."
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "showers": true,
+      "wifi": true,
+      "note": "LP gas for sale, walking and horse trail, all-purpose room, shelters."
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmcountrycampground.com/amenities/ ('Full RV Hook-Ups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmcountrycampground.com/amenities/ + https://farmcountrycampground.com/, read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmcountrycampground.com/amenities/ ('Showers/Bath House', 'Wi-Fi', 'Camp Store', 'LP Gas for Sale', 'Walking and Horse Trail', 'All-Purpose Room'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://farmcountrycampground.com/amenities/ ('Open Year-Round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-09-20",
         "method": "derived"
+      },
+      "booking": {
+        "source": "https://farmcountrycampground.com/reservations/ ('Call to make a reservation or email us'; 'If we know you're coming, we can hold a spot for you'; hours), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -281031,6 +281281,16 @@
     },
     "discounts": {
       "good_sam": true
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Call (252) 789-8482 or email farmcountrycampground@centurylink.net to reserve; office Monday-Saturday 8-5."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://farmcountrycampground.com/ https://farmcountrycampground.com/amenities/ https://farmcountrycampground.com/reservations/ Google Maps place 'Farm Country Campground', 2301 Eds Grocery Rd, Williamston (4.5, 98 reviews, phone +12527898482, website farmcountrycampground.com), read 2026-10-22",
+      "note": "Operating (site (c) 2026, Google 4.5 over 98 reviews). Confirmed full hookups (water/sewer), year-round, camp store; added showers, Wi-Fi, phone/email reservations. No posted rate; priced only by RV Life $$ (an ordinary transient park, so that stands in). Not stated: electric amperage, pull-throughs, site count (35 vs 40 on two pages). Note trimmed of hookups, store and year-round."
     }
   },
   {
@@ -281099,7 +281359,7 @@
     "waterfront_evidence": "satellite at 35.1407,-83.2983: long rows of RV pads line both banks of the Cullasaja River at the water's edge, narrow grass apron",
     "website": "https://campnc.com/",
     "phone": "828-524-2559",
-    "note": "Mom-and-pop full-hookup RV park (est. 1982, ~83-90 sites) on the banks of the Cullasaja River near Franklin. All sites 30/50-amp full hookups, big-rig friendly, year-round; swim/fish/tube. --Claude",
+    "note": "Mom-and-pop RV park (est. 1982, ~83-90 sites) on the banks of the Cullasaja River near Franklin, with on-river and off-river sites; big-rig friendly; swim/fish/tube. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -281115,14 +281375,14 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campnc.com/ ('All our campsites are 30/50 amp service with full hook ups'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://campnc.com/ ('We are open all year, so you can enjoy our beautiful park in any season'; footer 'Campgrounds Open Year Round'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -281132,6 +281392,16 @@
       "fees": {
         "source": "https://campnc.com/events-rates/ ('Rates (Effective January 1, 2025)'; 'On River'; 'Off River'; '$65.00'; '$50.00'; 'All listed rates are for two registered people in one camping unit per site. The fee also covers the costs of water, sewer, and wifi.'), read 2026-10-14",
         "checked": "2026-10-14"
+      },
+      "facilities": {
+        "source": "https://campnc.com/campground-local-attractions/ (Amenities: 'Fully Equipped Laundromat', 'WIFI', 'Clean, Hot Showers', 'Dog Park', 'Propane Dispenser', 'Camp Store'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://campnc.com/ ('Contact us today to reserve a campsite') + https://campnc.com/events-rates/ ('we recommend that you book a reservation, especially for July and October'; Cancellation Policy; weekly/monthly/seasonal rates), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -281148,59 +281418,23 @@
       "currency": "USD",
       "checked": "2025",
       "note": "Rates effective January 1, 2025, still posted: $65 a night on the river, $50 off it, for two people (water, sewer and Wi-Fi included). Read 2026-10-14."
-    }
-  },
-  {
-    "id": 4267,
-    "kind": "campground",
-    "name": "Dickens RV Park",
-    "location": "35.5890,-79.0267",
-    "elevation_meters": 69,
-    "state": "NC",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "roverpass.com listing: RV park at 2501 Corinth Rd Moncure w/ 50/100-amp electric sites, active listing -> real RV park | live presence 2026-10-01: no operator website or bookable listing; Google Maps place at the pin (0.22 km), not marked closed, phone on file, 4.3 over 139 reviews - passes the amended rule (AWH 2026-10-01)",
-    "waterfront_evidence": "satellite at 35.5890,-79.0267: gravel RV rows in open lot; nearest pond ~250m across field",
-    "website": "https://www.roverpass.com/c/dickens-rv-park-moncure-nc/",
-    "phone": "919-776-1220",
-    "note": "Large year-round full-hookup RV park (108 sites) at 2501 Corinth Rd, Moncure; gravel sites in a rural setting, RVs up to 60 ft; near Jordan Lake. --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "source": "rvlife"
     },
-    "hookups": {
-      "water": true,
-      "sewer": true
+    "facilities": {
+      "showers": true,
+      "laundry": true,
+      "wifi": true,
+      "camp_store": true,
+      "note": "Dog park, propane dispenser, clubhouse with weekly activities (bingo, potluck suppers)."
     },
-    "sites": {
-      "count": 108,
-      "max_rig_ft": 60
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by phone (828-524-2559) or email (info@campnc.com); booking ahead recommended for July and October. Cancellation 14+ days out: full refund less $20; 7-14 days: 50%; under 7 days: none. Weekly, monthly and seasonal rates also posted."
     },
-    "season": {
-      "year_round": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "49791877d4d81584",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://campnc.com/ https://campnc.com/events-rates/ https://campnc.com/campground-local-attractions/",
+      "note": "Open and operating (no storm notice; 2025 & 2026 Visit Smokies award). Fees ($50 off river / $65 on river, effective Jan 1 2025, still posted) stand; $50 is at, not over, the gate. Confirmed 30/50-amp full hookups, year-round. Added hot showers, laundromat, Wi-Fi, camp store, phone/email reservations. Note trimmed of hookups and year-round."
     }
   },
   {
@@ -281216,7 +281450,7 @@
     "waterfront_evidence": "satellite at 35.1668,-83.4162: small RV loop in pasture/woods; pond across a field, far",
     "website": "https://gemcityrvresort.com/",
     "phone": "828-332-0842",
-    "note": "Small year-round full-hookup RV park (20 sites: 7 pull-thru/13 back-in) near downtown Franklin; 30/50-amp W/E/S, fire rings, bathhouse, laundry, mountain views. --Claude",
+    "note": "Small RV park near downtown Franklin with mountain views; 7 pull-throughs and 13 back-ins, a fire ring at each site. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -281229,34 +281463,38 @@
     },
     "sites": {
       "count": 20,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 40,
+      "note": "20 sites: 7 pull-through, 13 back-in, rock/gravel pads; Campspot lists rigs up to 40 ft with two slide-outs, motorhomes included."
     },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "wifi": true,
+      "dump": true
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gemcityrvresort.com/ ('30/50 amp', 'Water Hookup', 'Sewer Hookup'; 'full hookups with reliable electric, water, and sewer connections') + Campspot site types (full hookup 30/50-amp; the three Standard Back-in sites have no sewer), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gemcityrvresort.com/ ('20 RV sites available'; '7 Pull Thru sites / 13 back in sites') + Campspot campsites (rvTypes incl. 'Motorhome', rvLengthMax 40, rvSlideoutValue 2), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gemcityrvresort.com/ ('Laundry', 'Free Wifi', 'Bath House and Guest Laundry') + Campspot Standard Back-in description ('complimentary dump station is available'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://gemcityrvresort.com/rates/ ('OPEN ALL YEAR'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -281264,8 +281502,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://gemcityrvresort.com/rates/ ('$ 65.00 – Daily', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.campspot.com/book/Gem-City-Campground (availability 2026-11-10 to 11-11: '30/50 Amp Standard Back-in RV Site' averagePricePerNight 53, '30/50 Amp Pull-Through Full Hookup RV Site' 68, '30/50 Amp Back-in Full Hookup RV Site' 68; quote 2026-11-10 to 11-12 full hookup $60/night before tax, 'Campground Fee' $5) + https://gemcityrvresort.com/rates/ ('30/ 50 AMP $ 65.00 – Daily'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.campspot.com/book/Gem-City-Campground (RESERVATION_MIN_RULE on 2026-11-10 and 2026-12-08 one-night queries; long-term-stay text in site descriptions) + https://gemcityrvresort.com/ (cancellation policy), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -281278,10 +281522,28 @@
       "military": true
     },
     "fees": {
-      "nightly_low": 65,
-      "nightly_high": 65,
+      "nightly_low": 53,
+      "nightly_high": 68,
       "currency": "USD",
-      "note": "30/50A $65 daily."
+      "note": "Campspot, one night for 2 adults from Tuesday, November 10, 2026, before tax: 30/50-amp Standard Back-in site (electric and water, no sewer; 3 sites) $53; full-hookup back-in or pull-through $68 ($60 a night over two nights). Plus a $5 'Campground Fee' once per stay (and Campspot's booking fee). The website's rate page posts $65 daily, $350 weekly, $750 monthly. Read 2026-10-22.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/Gem-City-Campground",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        }
+      ],
+      "note": "Campspot asked for 2 nights on Tuesdays in November and December 2026 ('There is a 2 night minimum over the requested period of time'). Stays of 29+ nights are long-term, by approval through the office. Cancellations by phone only: over 30 days' notice refunded less $25; 14-30 days credit less $25; none for holiday/special-event weekends."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://gemcityrvresort.com/ https://gemcityrvresort.com/rates/ https://www.campspot.com/book/Gem-City-Campground (Campspot park 5711, site types and quotes for 2026-11-10, 2026-12-08, 2027-03-16), read 2026-10-22 Google Maps place 'GEM CITY RV RESORT', 2155 Old Murphy Rd (4.6, 21 reviews, phone +18283320842, website gemcityrvresort.com), read 2026-10-22",
+      "note": "Open year-round. Changed fees $65/$65 (website) -> $53-68 (Campspot one night, Nov 2026; $5 campground fee per stay). Confirmed 30/50-amp full hookups, 20 sites with pull-throughs, laundry, Wi-Fi; added 40-ft max, dump station, Campspot booking with a 2-night minimum seen on November and December weekdays. Base $53 is over the $50 line but within 40 km of Great Smoky Mountains NP (gateway). Note trimmed of what the fields hold."
     }
   },
   {
@@ -281406,53 +281668,6 @@
     },
     "note_scan": {
       "sig": "a6ea1f8728fcbbe1",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    }
-  },
-  {
-    "id": 4271,
-    "kind": "campground",
-    "name": "Downtown RV Park",
-    "location": "35.1796,-83.3819",
-    "elevation_meters": 630,
-    "state": "NC",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "RV Life review page (id 250986, 9.4/10) + downtownrv.com: small in-town Franklin full-hookup RV park -> real RV park",
-    "waterfront_evidence": "satellite at 35.1796,-83.3819: in-town Franklin lot, no water in frame",
-    "website": "https://downtownrv.com/",
-    "phone": "941-720-0067",
-    "note": "Small in-town park: ~10-11 wooded full-hookup (30-amp) sites in downtown Franklin, walkable to shops and the Little Tennessee River. Laundry, wifi, private shower rooms. --Claude",
-    "rating": {
-      "stars": 4.5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 30,
-      "water": true,
-      "sewer": true
-    },
-    "facilities": {
-      "showers": true,
-      "laundry": true,
-      "wifi": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      }
-    },
-    "note_scan": {
-      "sig": "bddd88017244a9c8",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
     }
@@ -284091,35 +284306,38 @@
     "waterfront_evidence": "satellite at 36.5071,-79.7264: in-town municipal ballfield park, no water adjacent",
     "website": "https://www.edennc.us/departments/parks-recreation",
     "phone": "336-623-2110",
-    "note": "City of Eden Parks & Recreation. ~10 RV pads within Freedom Park (splash pad, playground, ball fields, dog park). Call the city for availability/reservations. --Claude",
+    "note": "City of Eden Parks & Recreation RV pads within Freedom Park (splash pad, playground, ball fields, dog park). --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 3,
       "source": "rvlife"
     },
-    "sites": {
-      "count": 10
-    },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Rented by permit: the city's 'Application for use of Freedom Park RV Pads' asks for dates of use and a pad number, fees are paid before use, and the reservation fee is refunded only with 30 days' notice of cancellation. Call 336-623-2110 to check availability."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.edennc.us/departments/parks-recreation and the RV pad application (no pad count stated); the count of 10 came from note prose that the city's pages do not support, so it is cleared. Read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.edennc.us/home/showpublisheddocument/4714/638314053753900000 ('APPLICATION FOR USE OF FREEDOM PARK RV PADS'; 'Dates of use'; 'Pad Number'; 'Fees must be paid before use of park'; 'IN ORDER TO HAVE RESERVATION FEE REFUNDED FOR CANCELATION A 30 DAY NOTICE MUST BE GIVEN') + https://www.edennc.us/departments/parks-recreation ('Call 336-623-2110 to check rental availability'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "fb9b7b43466714f4",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.edennc.us/departments/parks-recreation (Freedom Park listing and the 'RV Park' documents folder), read 2026-10-22 in a browser (plain HTTP gets 403) https://www.edennc.us/home/showpublisheddocument/4714/638314053753900000 ('Application for use of Freedom Park RV Pads', PDF dated 2023-09-27)",
+      "note": "Confirmed reservable by phone/permit application (City of Eden, 336-623-2110). Cleared the derived pad count (10), which no city page states. The city publishes no fee (the application's 'Rental Fee' is blank), hookups, season or pad count. Note trimmed of the pad count and the call-to-reserve line (now in booking)."
     }
   },
   {
@@ -284133,9 +284351,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Guilford County parks page: Trailer/RV sites with water and electric, $25/night, county campground",
     "waterfront_evidence": "satellite: RV camping loop in woods 200m+ from the small fishing ponds, treeline buffer",
-    "website": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks/parks/hagan-stone-park",
-    "phone": "336-641-7275",
-    "note": "Guilford County park, ~86 sites in three loops: Loop A tent-only, Loop B 30-amp/water (shared), Loop C 41 gravel sites with 30/50-amp + water (shared), no sewer but dump station; Loop C fits units to 45 ft. Reservable online or by phone. --Claude",
+    "website": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping\nhttps://www.guilfordcountync.gov/government/departments-and-agencies/parks/parks/hagan-stone-park",
+    "phone": "336-641-2090",
+    "note": "Guilford County park. Section C is an open, grassed area of gravel sites popular with camping clubs; Section B is wooded. Tent sites are separate. --Claude",
     "rating": {
       "stars": 4.5,
       "price_tier": 2,
@@ -284143,40 +284361,55 @@
     },
     "hookups": {
       "electric": 50,
-      "water": false,
-      "sewer": false
+      "water": true,
+      "sewer": false,
+      "note": "Water hydrants are shared between each two sites (bring a splitter). Section C has 30- and 50-amp, Section B 30-amp."
     },
     "sites": {
       "count": 86,
-      "max_rig_ft": 45
+      "max_rig_ft": 45,
+      "note": "Section C: 41 gravel sites in an open grassed area, units up to 45 ft with multiple slide-outs; Section B: 29 wooded sites; 16 tent sites; plus 3 group tent sites."
     },
     "facilities": {
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "laundry": false,
+      "wifi": false
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://ncguilfordweb.myvscloud.com/webtrac/web/search.html?module=rn&display=detail",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Online (Guilford County WebTrac) up to 72 hours before arrival, otherwise by phone (336-641-2090, weekdays 8-4:30); drop-in reservations are made on site before 4 pm. RV sites: 2-night minimum when booking a Friday or Saturday, 14 nights in any 28 days. Off-season long-term stays (Nov 1 - Mar 31) $575 a month by application only. Check-in 2 pm, check-out noon."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping ('electrical connections with both 30- and 50-amp service, and water (shared between each two sites). No sewer connections are available'; Section B 'Electrical connections are 30-amp and water is shared between two sites') + .../hagan-stone-campground-policies-and-procedures ('all sites share water. It is advised to put a splitter on the hydrant'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping ('41 gravel sites ... can accommodate units up to 45 feet long'; 'Contains 29 sites in a wooded setting'; '16 tent camping sites'; 'three group camping sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping ('Two (2) bathhouses with showers and restrooms'; 'dump stations are onsite'; 'Please note Wi-Fi and cable are not available. There are no laundry facilities'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping/hagan-stone-campground-policies-and-procedures ('RV Sites: Maximum of 14 nights within a 28 day period... Two (2) night minimum when booking for Friday or Saturday'; 'online reservations can only be made up to three (3) days prior'; 'Pull-up/Drop-in reservations must be made on site before 4pm') + .../parks-and-recreation/camping ('Reservations can be made online or by calling 336-641-7275'; 'Long-term stay for RVs during non-peak season (November 1 to March 31) $575 per month. Reservations can be made by request only'; WebTrac reservation link), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks/parks/hagan-stone-park (audit/price_research/local_nc_2026-10-15/nc_pages.jsonl), read 2026-10-15",
@@ -284194,6 +284427,11 @@
       "currency": "USD",
       "checked": "2026",
       "note": "Guilford County: trailer/RV sites with water and electric $25 a night for five people; tents $15. Read 2026-10-15."
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping https://www.guilfordcountync.gov/government/departments-and-agencies/parks-and-recreation/camping/hagan-stone-campground-policies-and-procedures https://www.guilfordcountync.gov/government/departments-and-agencies/parks/parks/hagan-stone-park",
+      "note": "Fees ($25 a night, water and electric) stand. Confirmed 50-amp electric, no sewer, 86 sites, 45-ft units, dump. Changed water false -> true (a hydrant shared between each two sites; derived false read 'shared' as communal). Added showers, no laundry/Wi-Fi, WebTrac booking (72 h cutoff online, phone/drop-in after), weekend 2-night minimum, 14 nights in 28. Note trimmed of what the fields now hold."
     }
   },
   {
@@ -284554,31 +284792,46 @@
     },
     "sites": {
       "count": 70,
-      "max_rig_ft": 40,
-      "pull_through": true
+      "max_rig_ft": 44,
+      "pull_through": true,
+      "note": "70 sites, 12 of them on the 10-acre fishing lake and 12 pull-throughs (county page); Campspot lists RV site types up to 44 ft, its one pull-through lake site only 22 ft."
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/dan-nicholas-park",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        }
+      ],
+      "note": "County: 'We have a two night minimum for reservations on the weekends'; Campspot also asked for 2 nights from a Tuesday in October 2026. Payment in full holds a reservation; no refunds, but rain checks good for a year if notified 4 days ahead. Check-in 3 pm, check-out 11 am; the gate is locked at night (campers get the combination)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.rowancountync.gov/430/Camping ('67 sites with 30, 50, and 110 power and water'; 'We do not have sewer hookups on sites'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.rowancountync.gov/430/Camping ('Our 70-site campground includes 12 sites on our 10-acre fishing lake'; '12 sites are pull through'), read 2026-10-22 + https://www.campspot.com/book/dan-nicholas-park (site types Standard Site / Standard Lake Site / Standard Pull-through Site max length 44, Standard Pull-through Lake Site 22), read 2026-10-13",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "booking": {
-        "source": "https://www.campspot.com/book/dan-nicholas-park (Campspot park record and site types), read 2026-10-13; kept from the note: {\"reservable\": true}",
-        "checked": "2026-10-13"
+        "source": "https://www.rowancountync.gov/430/Camping ('We have a two night minimum for reservations on the weekends. Payment in full must be made to hold reservations. We do not do refunds, but we will issue rain checks...'; check-in/out and gate text) + https://www.campspot.com/book/dan-nicholas-park ('RESERVATION_MIN_RULE: There is a 2 night minimum' for 2026-10-20), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       },
       "fees": {
         "source": "https://www.campspot.com/book/dan-nicholas-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13; https://www.rowancountync.gov/430/Camping (site fees and the weekend minimum), read 2026-10-13",
         "checked": "2026-10-13"
+      },
+      "facilities": {
+        "source": "https://www.rowancountync.gov/430/Camping ('The dump station is for on-site campers only'; 'The Campground Store can be reached at 704-216-7808'), read 2026-10-22",
+        "checked": "2026-10-22",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -284593,6 +284846,15 @@
       "reservation_fee": 5,
       "checked": "2026",
       "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Primitive Site, Standard Lake Site, Standard Pull-through Site and Standard Site). October 2026: $25-35, Tuesday and Saturday alike. June 2027 isn't open for booking yet. Left out: Standard Pull-through Lake Site (sites under 23 ft). Plus the park's $5 'Camping Booking Fee', once per stay. Every RV type asks for at least 2 nights from Tuesday, October 20, 2026. Read 2026-10-13. Rowan County's camping page gives the same $35 with power and water and $25 without, and asks for 2 nights on weekend reservations."
+    },
+    "facilities": {
+      "dump": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-22",
+      "sources": "https://www.rowancountync.gov/430/Camping https://www.campspot.com/book/dan-nicholas-park (park record and site types as read 2026-10-13, audit/price_research/campspot_tier_2026-10-13.jsonl)",
+      "note": "Fees ($25 no hookups / $35 power and water, Campspot + county, 2026-10-13) stand. Confirmed 50-amp electric + water, no sewer, 70 sites with pull-throughs, Campspot booking. Changed max_rig_ft 40 (note prose) -> 44 (Campspot site types). Added dump station, camp store, weekend 2-night minimum. Not stated: season, showers by name."
     }
   },
   {
