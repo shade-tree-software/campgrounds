@@ -4,6 +4,8 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- 6321 Delmoe Lake (mt-21): temporarily closed for construction (Forest Order 01020426-01, Apr 1 - Oct 31, 2026, campground + FS Rd 9371). Re-check before 2027; site count/lengths may change with the rebuild. Butte RD phone: FS page 406-494-2147, order prints 406-497-2147.
+- 6318 Cow Creek (mt-21): 30-ft trailer max is note-only, not on the FS page; access is 5 mi of FR 4095.
 - 6310 Boulder Creek (mt-20): temporarily closed per FS fire banner (Sand Creek / Bobcat Lakes fires, page updated 2026-08-28); no matching closure order listed. Re-check spring 2027. FS page contradicts itself on water.
 - 6316 Clark Memorial (mt-20): only rig-size evidence is aggregator text (max ~24 ft, several 20-ft sites); FS gives no count or length. 23-ft fit unconfirmed by the agency.
 - 13666 Blackwell Flats (mt-20): drinking water unconfirmed (rec.gov silent; USACE Libby Dam page refuses fetches).
