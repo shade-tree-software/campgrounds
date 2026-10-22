@@ -4,6 +4,13 @@ Entries a verifier found may fail the inclusion criteria. I decide these (standi
 me drop and report); each needs the research named before a verdict.
 
 ## Montana (mt-N batches)
+- **6172 St. Mary (Glacier NP)** (mt-10, 2026-10-22): NPS: 'All sites ... closed to camping from January 1, 2027-June 30, 2027 due to construction.' Recorded open for now; set temporarily_closed (reopens July 2027) on Jan 1, 2027.
+- **6176 Two Medicine** (mt-10): closed for 2026 (construction), reopens 2027 (NPS calendar suggests May 24). Lift the status in spring 2027.
+- **15382 West Glacier RV Park** (mt-10): the note's '$12/night amenities fee' is not on the operator's page or booking widget; check at checkout. Entry phone 406-888-5580 isn't on the operator's pages (they list 844-868-7474).
+- **6058 Salmon Lake SP** (mt-10): FWP's own page gives 406-825-2007 ('Direct line to the park', kept) and also 406-677-3731 / 406-677-6804. Pick one.
+- **6190 Swan Creek** (mt-10): rec.gov names ExplorUS, the FS page Rocky Mountain Recreation Company; derived max_rig_ft 50 is on neither page (FS: average spur 16 x 45 ft).
+- **6059 West Shore** (mt-10): the manual season note says potable water May-September; FWP now says mid-March through November.
+- **6143 Trafton Park** (mt-10): no city page; website stays the Visit Montana listing; fee unverifiable ($3 undated, aggregators $5).
 - **6194 Riverside (Canyon Ferry)** (mt-9, 2026-10-22): Reclamation closed it from 2026-09-13 'through Spring 2027' for sidewalk construction (usbr.gov news release 5394); recorded temporarily_closed. Re-check spring 2027.
 - **15387 North American RV Park** (mt-9): undated rate page gives $105.56/night incl. tax; over the $50 gate but the Glacier NP gateway applies. Fees unrecorded (no 2024+ date); the site 403s plain fetches.
 - **6063 Placid Lake SP** (mt-9): phone 406-825-2007 is not on FWP's page; replaced with the year-round main office 406-677-6804 (park line 406-677-3874, May 1 - Sep 30).

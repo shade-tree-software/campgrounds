@@ -1,0 +1,67 @@
+{
+  "id": 6176,
+  "checked": "2026-10-22",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/258799",
+    "https://www.recreation.gov/api/camps/campgrounds/258799/rates",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (Two Medicine Campground record; the data behind https://www.nps.gov/glac/planyourvisit/reservation-campgrounds.htm)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=glac",
+    "recreation.gov public campsite search API for 258799 (per-site catalog), read 2026-10-22"
+  ],
+  "groups": {
+    "status": {
+      "values": {"operating": "temporarily_closed", "reopens": "2027", "note": "NPS: 'Two Medicine Campground will be closed in 2026 due to construction.' Its 2027 calendar shows the winter closure ending May 23, 2027."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (reservationInfo and operatingHours: 'Two Medicine Campground will be closed in 2026 due to construction.'; exception 'Winter Closure' 2026-10-15 to 2027-05-23), read 2026-10-22",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-24", "closes": "10-14", "note": "Summer season typically late May to mid-September (2027: from May 24); primitive season mid-September into October, weather permitting (2027: September 16 - October 14), with no running water, dump station or flush toilets (vault toilets only)."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (operatingHours: 'Two Medicine Campground's summer season is typically from late May to mid-September. There is a primitive camping season from mid-September into October, weather permitting.'; exceptions 'Winter Closure' 2026-10-15 to 2027-05-23 and 'Weather Dependent Fall Primitive Season' 2027-09-16 to 2027-10-14), read 2026-10-22",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 30, "currency": "USD", "checked": "2025", "note": "$30 a night in the summer season, $20 in the primitive fall season (no water or dump station, vault toilets only); group site $90. Last published rates are 2025 (no 2026 season)."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (fees: 'Two Medicine summer status' 30.00; 'Two Medicine primitive status' 20.00 'No potable water sources or dump station facilities are provided. Comfort stations are closed; use vault toilets') + https://www.recreation.gov/api/camps/campgrounds/258799/rates (Peak Season 2025-05-24 to 2025-09-15 'PeakStandardNonelectric': 30; Non-Peak 'OffPeakStandardNonelectric': 20; group 90), read 2026-10-22",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 100, "max_rig_ft": 35, "note": "100 sites including 1 group site. NPS: only 10 sites take an RV or truck-and-trailer combination up to 35 ft; recreation.gov lists those 10 at 40 ft and most others at 21-30 ft."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (totalSites 100, group 1; rvInfo '10 sites will accommodate up to a 35 foot RV or truck and trailer combination.', rvMaxLength 35) + recreation.gov catalog (Max Vehicle Length: 10 sites 40, 16 at 35, 17 at 30, 30 at 25, 14 at 21), read 2026-10-22",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (campsites electricalHookups 0) + recreation.gov catalog (every site STANDARD/TENT ONLY NONELECTRIC), read 2026-10-22",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "camp_store": true, "showers": false, "laundry": false, "wifi": false, "note": "Flush toilets, water and the RV dump/fresh-water station in summer only. Camp store and gift shop (seasonal) on the shore of Two Medicine Lake; bear-proof food lockers; no cell service."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=glac (amenities: toilets 'Flush Toilets - seasonal', showers 'None', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', campStore 'Yes - seasonal', laundry 'No', internetConnectivity 'No', cellPhoneReception 'No', foodStorageLockers 'Yes - seasonal'; 'The RV waste dump/fresh water station is operational during the summer months. There is a campstore and gift shop on the shore of Two Medicine Lake.') + https://www.recreation.gov/api/camps/campgrounds/258799 (amenities 'Drinking Water (peak season)', 'Dump Station', 'Flush Toilets (Seasonal)'), read 2026-10-22",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "window_opens_days": 180,
+        "max_stay_nights": 14,
+        "note": "NPS-run (no concessionaire; unstaffed, main office 406-888-7800). Every site requires a reservation on recreation.gov, 6 months ahead on a rolling basis; a handful of sites open only 4 days before arrival. 14-night maximum; up to 8 people, 2 vehicles and 2 tents per site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/258799 (overview: 'All sites require a reservation. Most sites have a 6-month booking window with a good handful having a 4-day booking window.'; notice 'The maximum length of stay in the campground is 14 days'; rules maxStay 14) + https://developer.nps.gov/api/v1/campgrounds?parkCode=glac ('Advanced reservations are required for all sites'; numberOfSitesFirstComeFirstServe 0; fees: 'limited to eight people and two vehicles ... A maximum of two tents per site'), read 2026-10-22",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Camping discount with an Interagency Senior or Access Pass; the pass holder must be camping in the site and show the pass on arrival. Annual entrance passes give no camping discount."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/258799 (notice 'Pass Discounts on Camping. Campers making a reservation using an Interagency Senior Pass or Interagency Access Pass to get a camping discount will be required to show the pass upon arrival'), read 2026-10-22",
+      "method": "manual"
+    }
+  },
+  "note": "Glacier NP, at the outlet of Two Medicine Lake, about 13 miles from East Glacier; sites generally shaded by trees. A ranger station and camp store are close by but nothing else in the valley. Generators only in Loops B and C. --Claude",
+  "summary": "recreation.gov + NPS API: confirmed temporarily closed for 2026 (construction; reopens 2027), 100 sites, no electric, reservable on recreation.gov 6 months ahead. Fees 30/30 -> 20/30 (2025: $30 summer, $20 primitive fall). Added season (late May - mid Oct incl. primitive; 2027 dates), max rig 35 ft (10 sites), flush toilets/water/dump/camp store, no showers/laundry/wifi, FCFS never, 14-night max, senior/access discount. NPS-run. Note: site/hookup/booking/closure restatements dropped.",
+  "flags": [
+    "Closed now: NPS says 'Two Medicine Campground will be closed in 2026 due to construction.' (status temporarily_closed confirmed; NPS's calendar shows the winter closure ending 2027-05-23, so the 2027 season looks set to open May 24). No current GLAC alert about it; the only alert is Going-to-the-Sun Road's seasonal closure.",
+    "Phone missing: recreation.gov and NPS give 406-888-7800 (Glacier NP main line; the campground is unstaffed).",
+    "Max rig length: NPS says 10 sites take up to 35 ft, recreation.gov's catalog lists those 10 at 40 ft. max_rig_ft 35 follows NPS; a 23-ft rig fits most of the campground either way (30+ sites at 25 ft)."
+  ]
+}
