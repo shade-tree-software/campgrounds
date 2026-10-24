@@ -198,10 +198,12 @@ Your entry: "large paved parking lot just off of US-48". The George Washington &
 
 ## 1454 McCann Campground (Village of Greenport, NY) — mostly seasonal?
 The village sells a $4,850 season and $800-865 months beside a $63 daily rate, and its 2026 map (https://villageofgreenport.gov/wp-content/uploads/2026/06/Campground_Rules_Fees_and_Map-v7-6-25-2026.pdf) labels only site 31 "TRANSIENT" among the 35 RV-field sites; nightly stays are by a request form. The map is also headed "TENTS • RVS • DRY CAMPING ONLY" (hookups now recorded as none). The long-stay five tests are written for private parks; on test 4 (1 site in 10 nightly) this one would fail if the map's labels are the count. Keep it (municipal, North Fork, rare spot) or drop? I'd lean keep with a "mostly seasonal" note line, since no page says the other 34 sites never sell nights.
+**ANSWERED 2026-10-24 (AWH): drop** — one nightly site reads as a trial spot for prospective seasonal renters, not a campground for travellers (long-stay test 4). Done.
 
 ## 1473 Cayuga Wine Trail Campground (Ovid, NY, Campspot) — does EKKO book as a "Van"?
 Its Campspot site types: $45 "Tent or Small RV Site" (max 25 ft, shared water, no electric; RV types Pop-Up/Van/Truck Camper/Tent - no Motorhome), $60 Water/Electric (also no Motorhome), and the first type that lists Motorhome is the 30A full hookup at $65 ($68 list). No gateway within 40 km (Rochester 86 km), never stayed. If EKKO (Transit-chassis) books as a Van, the $45 site makes it pass the gate; if it must book as a Motorhome, $65 is over and it drops. Which?
   - Same question at **1518 Rancho Pines** (Chestertown, NY): Campspot's only RV type ($49) accepts Fifth-Wheel/Pop-Up/Travel Trailer/Truck Camper/Van, no Motorhome; no other type lists Motorhome at all, so it may not be bookable online in a motorhome. Kept at $49 for now.
+**ANSWERED 2026-10-24 (AWH): EKKO books as a MOTORHOME** wherever a park offers both (AWH was turned away from a "van" site at Fort DeSoto that EKKO fit). Cayuga dropped ($65 over the gate, no gateway). Rancho Pines 1518: re-asked below (Campspot offers no motorhome type at all).
 
 ## 497 Mower Tract Dispersed Camping (WV, Monongahela NF) — pin on a high-clearance road?
 The Forest Service road layer puts the stored pin on FR 227C "Reigle Overlook", maintenance level 2 "HIGH CLEARANCE VEHICLES / Road, Not Maintained for Passenger Car"; the main road FR 227 is level 4 (passenger car). Your note says reviews report no problems for 22-25 ft trailers. Re-pin to a site on FR 227, keep as is, or drop under the high-clearance rule? (I'd re-pin if you know which sites sit on FR 227.)
@@ -218,12 +220,15 @@ Same shape as 258 Falls Lake: the entry is the whole SRA and the pin (near the V
 
 ## 4256 Pride RV Resort (Maggie Valley, NC) — membership resort that also sells nights
 Park rules: "new sites and amenities are funded through new membership sales" (no soliciting memberships); rate sheet has member/affiliate rates (Coast to Coast, AOR/RPI/Enjoy America) and "Pride Members" discounts. It also sells public nightly sites ("Open To The Public", $65, phone booking; 3-night holiday/October minimum). The 10-14 rule excludes membership/sales-pitch parks; you kept it earlier as a GSMNP-gateway park (28 km) for price. Keep or drop? (I'd drop it as a membership park, since nightly guests are what the membership sales are pitched at.)
+**ANSWERED 2026-10-24 (AWH): drop as a membership park.** Done.
 
 ## 4298 Bannister RV Park (Clayton, NC) — background question on the booking form
 Posts $60 nightly (Raleigh gateway 17 km) alongside weekly/monthly ("Long Term Stays", $825/month incl. electric). The only booking path is a reservation REQUEST form asking "Have you ever been convicted of a felony?" and the camper's model year. Long-stay test 2 forbids a background check, but only for a park that is long-stay in character, and the share of nightly sites isn't published. Keep (nights posted with a phone) or drop (the form is a resident screen)? I lean keep with a note line.
+**ANSWERED 2026-10-24 (AWH): keep with a note if it passes everything else.** It does (Raleigh gateway 17 km, site + phone, test 4 passes by default); SCREENING note line added.
 
 ## 4314 Whippoorwill Campground (Beulaville, NC) — horse camp?
 Its Facebook page: "Whippoorwill Campground is your horse trail destination!"; Onslow County tourism: "the Equestrians' home away from home". Only directories call it a general campground (~100 sites with water/sewer). Google 4.6/51, phone 910-915-9854; no website or rate; RV Life $$. Keep as a general campground, or drop as horse-oriented? (I'd keep it unless someone confirms non-horse campers are turned away, since horse-only is the exclusion.)
+**ANSWERED 2026-10-24 (AWH): keep only with clear wording that horses are not co-located near the non-horse camping.** None found (its website is now a parked domain; a Google review: 'Lots of horse activities mixed in nearby'). Dropped.
 
 ## 4229 Yates Place Camp and 4225 Sunburst Campground (NC Forest Service) — tent-only now?
 - **4229 Yates Place (Uwharrie NF):** the Forest Service page calls it "an attractive destination for tent camping" and never mentions RVs; only TheDyrt/Hipcamp reviews describe parking an RV at the drive-up sites. Free, primitive, vault toilet, no water.
@@ -255,3 +260,6 @@ Huron County's listing says Bird Creek requires campers under 10 years old (no p
 - **AWH 2026-10-22 (after the rig-length rule): agency boilerplate is silent, not vague** - 99 of 115 MI DNR state forest pages carry the same phrase. Kept; no qualifying review was found anyway (ParkAdvisor's 30-ft TT review is from 2020).
 The DNR describes the 15 sites as "for tent and small trailer use", posts no length limit, and says nothing about County Road 500's surface (29 mi from Newberry via M-123 and CR-500). Your note ("Several sites right on the lake") is kept; no stays recorded. Does EKKO fit, or did you note it without seeing it? (My lean: keep — "small trailer" with no stated limit isn't a cap under 23 ft — unless you know the sites are short.)
 **ANSWERED 2026-10-22 (AWH): keep while it has a phone (DNR 906-492-3415), with a note to call about fit.** Done.
+
+## 1518 Rancho Pines Campground (Chestertown, NY) — no motorhome site type on Campspot
+Campspot's only RV type ($49, full hookup) accepts Fifth-Wheel/Pop-Up/Travel Trailer/Truck Camper/Van and not Motorhome; no type lists Motorhome. The operator's page (still headed "2023 Season") says nothing about rig types, and lists dry ($30) and water/electric ($38) sites that aren't on Campspot. Booking online would mean booking as a Van, the Fort DeSoto risk. Keep with a "book by phone (518-494-3645) and say it's a motorhome" note, or drop? (My lean: keep with that note — nothing says motorhomes are refused, and the phone settles it.)
