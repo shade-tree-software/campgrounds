@@ -34,14 +34,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **6059 West Shore, Flathead Lake SP** (mt-10, 2026-10-22): ReserveAmerica tags all 12 Loop B electric sites (plus B013-B016) 'Near Water'; B001 'Proximity to Water: Water View'; FWP cites 'an extensive shoreline'. Entry is not waterfront.
 - **15376 Rocky Mountain Hi RV Park** (mt-10): operator rules cover swimming and fishing 'from the shore and dock'; a review mentions 'a real swimming hole'. Entry is not waterfront; probably a pond/creek on the grounds - check imagery.
 - **6062 Logan SP** (mt-8, 2026-10-22): ReserveAmerica tags 8 sites (A013-A015, A017, B001-B004) 'Near Water' and the park has 'frontage on the north shore of Middle Thompson Lake'; the entry is lakeview.
-- **6137 Merry Widow** (mt-8): the operator says 'The beautiful Boulder River flows through the campground, and many campsites have River frontage'; the entry is not waterfront.
-- **6162 Seeley Lake Campground** (mt-8): rec.gov lists 'Waterfront Sites' and 'Lake Access'; 'located on the western shore of Seeley Lake'; the entry is not waterfront.
-- **15386 Lake Five Resort** (mt-7, 2026-10-22): the operator sells "Lake Sites" / "waterfront RV sites" on Lake Five; the entry is not waterfront. Re-audit with a satellite look.
-- **6144 Camp Sula (MT, private)** (mt-6): operator 'lies along the beautiful Bitterroot River', 'River access on site'; entry not waterfront.
-- **6189 Emery Bay (MT, USFS)** (mt-6): rec.gov catalog marks 5 sites 'Lakefront'; entry not waterfront.
-- **6150 Parkside (MT, USFS)** (mt-4): FS + rec.gov 'on the banks of the Main Fork of Rock Creek', rec.gov 'Waterfront Sites', 'River Access'; entry riverview.
-- **6216 Rombo (MT, USFS)** (mt-4): 'along the West Fork Bitterroot River' (2025 shoreline stabilization along it); entry not waterfront.
-- **6241 Snowbank (MT, USFS)** (mt-4): 'on the banks of Mill Creek', 'Creek Access'; entry riverview.
 
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
@@ -63,6 +55,20 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
+
+## Resolved 2026-10-24, Montana wf-mt-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **6189 Emery Bay** not waterfront -> lakefront (rec.gov sites 2-6 tagged Lakefront; site 6 ~10-15 m
+  from Hungry Horse's high-water edge); **15386 Lake Five Resort** not waterfront -> lakefront (operator ResNexus
+  site map: Lake Sites 1-12 between road and shore, spurs ~10-15 m from the water; reverses the 10-19 call);
+  **6150 Parkside** riverview -> creekside (rec.gov 12 RV sites tagged Riverfront, ~25-30 m from Rock Creek
+  under open canopy; creekside to match Basin on the same creek); **6162 Seeley Lake** not waterfront ->
+  lakeview (rec.gov SLS27-29 tagged Lakefront but pads ~50-60 m back behind the day-use beach; SLS29 open
+  ground with the lake visible; low confidence); **6137 Merry Widow** not waterfront -> riverview (operator
+  sketch map puts sites 14-28 along the Boulder; ~35-45 m across a gravel flat that carries the footbridge
+  path, sightline open; low confidence).
+- Stand: **6241 Snowbank** riverview (no per-site water tags; creek behind a riparian band), **6216 Rombo** and
+  **6144 Camp Sula** not waterfront (pads 30-70 m back behind continuous riparian trees; operator prose only).
 
 ## Resolved 2026-10-22, Montana wf-mt-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
