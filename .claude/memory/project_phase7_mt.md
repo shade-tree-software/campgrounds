@@ -36,4 +36,4 @@ public search API for the per-site catalog. No PA deploy from here.
 The public no-web-presence ladder and the rig-length-from-reviews rule are now in docs/campground-curation.md (AWH agreed 2026-10-22), so both sessions follow them.
 
 
-**2026-10-24: the cloud session is GONE (AWH); the main session inherits its leftovers:** wf-mt-2..wf-mt-6 (37 entries, audit/verify/waterfront/, wf-mt-1 applied) and the MT re-checks in criteria_followups.md. Its wf_brief.txt died with it: rebuild from wf-mt-1_results.json + the waterfront procedure in docs/campground-curation.md.
+**2026-10-24: the cloud session is GONE (AWH); the main session inherits its leftovers:** wf-mt-2..wf-mt-6 (37 entries, audit/verify/waterfront/, wf-mt-1 applied) and the MT re-checks in criteria_followups.md. AWH revived it long enough to save its kit: audit/verify/kit/ (README, setup.sh, mkwfbrief.py, mkbrief.py, helpers), paths adapted to this checkout 2026-10-24.

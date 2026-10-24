@@ -7,7 +7,7 @@ stopped. Scratchpad paths are per-session, so the briefs carry `__SCRATCH__` and
   `SCRATCH/headless-browser.lock` the briefs tell subagents to `flock`.
 - `helpers/`: `rg.py <rec.gov facility id>` (campground record + rates), `catx.py <facility id>` (per-site
   catalog summary from rec.gov's public search API), `bw.py OUTPREFIX URL...` (headless Chromium render;
-  executable pinned to `/opt/pw-browsers/chromium-1194` - check `ls /opt/pw-browsers` on a new container),
+  uses the cloud container's `/opt/pw-browsers/chromium-1194` if present, else `/usr/bin/google-chrome`, else Playwright's own build; adds `~/.cache/ekko-pw` to `sys.path` for the local playwright install),
   `h2t.py` (HTML to text), `rev.py` (Google Maps reviews; works on a place URL, not a search URL).
 - `wf_brief.txt` + `mkwfbrief.py SCRATCH wf-mt-N` -> `SCRATCH/wf-mt-N_prompt.txt`, the waterfront re-audit
   brief. Inputs are `audit/verify/waterfront/wf-mt-N.json` (built from the Montana section of

@@ -263,3 +263,4 @@ The DNR describes the 15 sites as "for tent and small trailer use", posts no len
 
 ## 1518 Rancho Pines Campground (Chestertown, NY) — no motorhome site type on Campspot
 Campspot's only RV type ($49, full hookup) accepts Fifth-Wheel/Pop-Up/Travel Trailer/Truck Camper/Van and not Motorhome; no type lists Motorhome. The operator's page (still headed "2023 Season") says nothing about rig types, and lists dry ($30) and water/electric ($38) sites that aren't on Campspot. Booking online would mean booking as a Van, the Fort DeSoto risk. Keep with a "book by phone (518-494-3645) and say it's a motorhome" note, or drop? (My lean: keep with that note — nothing says motorhomes are refused, and the phone settles it.)
+**ANSWERED 2026-10-24 (AWH): keep with a note.** BOOK BY PHONE note line added.

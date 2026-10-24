@@ -10,5 +10,5 @@ para=(f"Then work through {R}/audit/verify/batches/{b}.json ({len(ds)} MONTANA e
       f"then write {R}/audit/verify/results/<id>.json immediately, before starting the next. Scratch files go in {S}/{b}/. "
       "Montana State Parks and FWP fishing access sites: fwp.mt.gov pages plus montanastateparks.reserveamerica.com (the booking site; may refuse plain fetches - use bw.py) and FWP's fee pages. "
       f"Earlier MT batches' scratch dirs ({S}/mt-*/) may hold reusable notes. {extra}")
-open(f'{S}/{b}_prompt.txt','w').write(open(f'{K}/brief_base.txt').read().replace('__SCRATCH__',S).replace('__BATCH__',para))
+open(f'{S}/{b}_prompt.txt','w').write(open(f'{K}/brief_base.txt').read().replace('/home/user/campgrounds',R).replace('__SCRATCH__',S).replace('__BATCH__',para))
 print('ok',b,len(ds))
