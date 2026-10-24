@@ -5,11 +5,6 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
-- **14172 Willow Creek Reservoir FAS** (mt-31): FWP says the reservoir is drawn down for irrigation and levels fluctuate seasonally; stored lakefront may sit well back late season.
-- **6258 Reservoir Lake** (mt-28): stored lakeview; FS calls it a 'lakeside campground' 'along the lake's south shore'.
-- **6284 Sage Creek** (mt-28): stored not waterfront; FS 'located along the banks of Sage Creek'.
-- **6286 Sheridan** (mt-28): stored not waterfront; FS 'on the banks of the Main Fork of Rock Creek', rec.gov 'on the banks of Rock Creek'.
-- **6280 North Dickey Lake** (mt-27): FS says 'next to scenic Dickey Lake', 'on a hillside next to the 800-acre lake'; entry says not waterfront.
 - 6125 Beaver Creek Park (mt-19): Hill County camping page lists non-reservable campsites 'at Beaver Creek Lake' and group areas with 'Access to Beaver Creek'; entry is not waterfront. **wf-mt-5 (2026-10-24), HELD for AWH:** the verifier found drive-in loops on open grass ~13-17 m from Beaver Creek Reservoir (48.4135,-109.7228; park map campground symbols) and called it lakefront, low confidence, but the pin sits on the creek near the Boy Scout camp ~12 km away and the entry covers 100+ FCFS sites across the 17-mile park. Re-pin to the reservoir loops, split, or leave? Result kept in waterfront/wf-mt-5_held_6125.json.
 
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
@@ -32,6 +27,15 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
+
+## Resolved 2026-10-24, Montana wf-mt-6 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **6286 Sheridan** not waterfront -> creekside (rec.gov RV sites 08/09, 30/33 ft, tagged Riverfront;
+  spur ~20 m from Rock Creek); **6284 Sage Creek** not waterfront -> creekside (legible satellite: pads ~15-23 m
+  from Sage Creek across open meadow; access route already in the note, kept by AWH 10-22).
+- Stand: **6280 North Dickey Lake** not waterfront (FS site map: no site at the shore; re-pinned from the access
+  road onto the loop); **6258 Reservoir Lake** lakeview (pads 40-50 m back behind open pines); **14172 Willow
+  Creek Reservoir** lakefront (open grass ~10-15 m from high water; dam 1.5 km E, not below it).
 
 ## Resolved 2026-10-24, Montana wf-mt-5 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
