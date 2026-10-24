@@ -38,4 +38,4 @@ The public no-web-presence ladder and the rig-length-from-reviews rule are now i
 
 **2026-10-24: the cloud session is GONE (AWH); the main session inherits its leftovers:** wf-mt-2..wf-mt-6 (37 entries, audit/verify/waterfront/, wf-mt-1 applied) and the MT re-checks in criteria_followups.md. AWH revived it long enough to save its kit: audit/verify/kit/ (README, setup.sh, mkwfbrief.py, mkbrief.py, helpers), paths adapted to this checkout 2026-10-24.
 
-**2026-10-24: wf-mt-2 applied (8b889d58); STOPPED there at AWH's request.** Next: wf-mt-3 (`sh audit/verify/kit/setup.sh $SCRATCH`, `python3 audit/verify/kit/mkwfbrief.py $SCRATCH wf-mt-3`, one background agent). After wf-mt-6, build batches from the ~105 non-MT leads at the bottom of waterfront_leads.md, then resume phase 7 MI (p3-126).
+**2026-10-24: wf-mt-2 and wf-mt-3 applied; STOPPED after wf-mt-3 (AWH ran them one at a time).** Next: wf-mt-4 (`sh audit/verify/kit/setup.sh $SCRATCH`, `python3 audit/verify/kit/mkwfbrief.py $SCRATCH wf-mt-4`, one background agent). After wf-mt-6, build batches from the ~105 non-MT leads at the bottom of waterfront_leads.md, then resume phase 7 MI (p3-126).
