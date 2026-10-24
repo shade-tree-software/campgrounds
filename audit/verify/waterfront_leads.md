@@ -5,7 +5,6 @@ the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, 
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
 ## Montana (mt-N batches)
-- 6125 Beaver Creek Park (mt-19): Hill County camping page lists non-reservable campsites 'at Beaver Creek Lake' and group areas with 'Access to Beaver Creek'; entry is not waterfront. **wf-mt-5 (2026-10-24), HELD for AWH:** the verifier found drive-in loops on open grass ~13-17 m from Beaver Creek Reservoir (48.4135,-109.7228; park map campground symbols) and called it lakefront, low confidence, but the pin sits on the creek near the Boy Scout camp ~12 km away and the entry covers 100+ FCFS sites across the 17-mile park. Re-pin to the reservoir loops, split, or leave? Result kept in waterfront/wf-mt-5_held_6125.json.
 
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
@@ -27,6 +26,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
+
+## Resolved 2026-10-24, 6125 Beaver Creek Park split (AWH; audit/verify/splits/6125.json)
+
+- **6125** is now **Shambo (Beaver Creek Park)**, not waterfront, re-pinned off the RV dump lot (the old pin)
+  onto the Shambo-Doney-Hagener sites; new **15559 Springs Campground** (south end, not waterfront, canopy) and
+  **15560 Beaver Creek Reservoir** (lakefront: NAIP, open unused grass 15-20 m from the beach, at pool level,
+  dam at the NW corner). Excluded: Bearpaw Lake FAS (FWP 20-ft trailer limit), reservable group sites, Camp
+  Kiwanis, Boy Scout Camp, picnic memorials, and the scattered northern-half pull-offs (no loops or rigs seen).
 
 ## Resolved 2026-10-24, Montana wf-mt-6 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
