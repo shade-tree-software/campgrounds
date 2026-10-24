@@ -26,14 +26,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 6173 Rainbow Point Campground (mt-16): rec.gov says 'on the banks of scenic Hebgen Lake' with Beach and Lake Access; entry is not waterfront.
 - 6245 Beaver Creek Campground, Spotted Bear (mt-16): FS says 'the campsites are less than 100 feet to the river', 'situated next to Spotted Bear River'; entry is riverview.
 - **6211 Big Larch** (mt-15, 2026-10-22): rec.gov/FS: 'located on the east shoreline of Seeley Lake', swimming beach and boat ramp; the entry is not waterfront.
-- **6225 Eagle Creek** (mt-15): FS: 'A campground along the Yellowstone River'; the entry is not waterfront.
-- **6220 Big Beaver** (mt-15): FS: 'Nestled close to the serene Blakely Creek'; the entry is riverfront (Boulder River). Check which water it's on.
-- **14597 River Edge Resort RV Park** (mt-13, 2026-10-22): operator advertises 'Full Hookup RV Sites by the Clark Fork River' with 'unbeatable riverfront scenery'; the entry is riverview.
-- **6126 Riverfront RV Park** (mt-13): operator: 'the Little Blackfoot River bordering the edge of the park', 'Walk along the river'; the entry is not waterfront.
-- **15452 Mountainside KOA Journey** (mt-11, 2026-10-22): KOA says 'Some of the Back-In Sites ... are situated near the creek'; tent sites 'right by Denny Creek'. Entry is not waterfront.
-- **6059 West Shore, Flathead Lake SP** (mt-10, 2026-10-22): ReserveAmerica tags all 12 Loop B electric sites (plus B013-B016) 'Near Water'; B001 'Proximity to Water: Water View'; FWP cites 'an extensive shoreline'. Entry is not waterfront.
-- **15376 Rocky Mountain Hi RV Park** (mt-10): operator rules cover swimming and fishing 'from the shore and dock'; a review mentions 'a real swimming hole'. Entry is not waterfront; probably a pond/creek on the grounds - check imagery.
-- **6062 Logan SP** (mt-8, 2026-10-22): ReserveAmerica tags 8 sites (A013-A015, A017, B001-B004) 'Near Water' and the park has 'frontage on the north shore of Middle Thompson Lake'; the entry is lakeview.
 
 - **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
   tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
@@ -55,6 +47,18 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
+
+## Resolved 2026-10-24, Montana wf-mt-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **6062 Logan SP** lakeview -> lakefront (ReserveAmerica per-site "Shore" on RV sites A013-A015/A017;
+  pads ~40-50 m from Middle Thompson Lake across open unused meadow; low confidence, loop labels read off FWP's
+  schematic); **6059 West Shore Unit (Flathead Lake SP)** not waterfront -> lakeview (ReserveAmerica per-site
+  "Water View" on all 12 RV sites; canopy-blind, low confidence).
+- Stand: **15376 Rocky Mountain Hi**, **15452 Yellowstone Park / Mountainside KOA**, **6126 Riverfront RV Park**
+  (old evidence misplaced the river; it runs along the SE edge, still behind the loop road) not waterfront;
+  **14597 River Edge Resort** riverview (tent sites hold the bank); **6220 Big Beaver** riverfront, re-pinned
+  off the road onto the Boulder River pads; **6225 Eagle Creek** not waterfront, re-pinned from the entrance
+  junction onto the loops.
 
 ## Resolved 2026-10-24, Montana wf-mt-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
