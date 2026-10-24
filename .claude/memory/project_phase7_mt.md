@@ -34,3 +34,6 @@ public search API for the per-site catalog. No PA deploy from here.
 **Rig length from reviews (AWH 2026-10-22):** a reviewer's rig length never goes into max_rig_ft. Agency silent on length -> keep, with a dated, attributed note caveat when a review from the last 3 years reports the reviewer's own 23-ft+ rig fitting. Agency vague ("small trailers only", "limited access for RVs") -> such a review settles it as a keep; none -> drop (14104 Arod Lake, 6325 Ekalaka Park). Agency explicit ("motorhomes/large RVs not recommended", 4WD, high clearance) -> drop whatever reviews say, EXCEPT (AWH 2026-10-22) when the same agency also states a length of 23 ft or more, which outranks the "large RVs" wording (6259 Spring Creek, 6264 Trout Creek kept); never for 4WD/high clearance. In brief_base.txt from mt-24 on.
 
 The public no-web-presence ladder and the rig-length-from-reviews rule are now in docs/campground-curation.md (AWH agreed 2026-10-22), so both sessions follow them.
+
+
+**2026-10-24: the cloud session is GONE (AWH); the main session inherits its leftovers:** wf-mt-2..wf-mt-6 (37 entries, audit/verify/waterfront/, wf-mt-1 applied) and the MT re-checks in criteria_followups.md. Its wf_brief.txt died with it: rebuild from wf-mt-1_results.json + the waterfront procedure in docs/campground-curation.md.
