@@ -279,3 +279,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3713 Black River SFC (weak): DNR "quick access to the Black River", carry-in access; entry not waterfront (p3-131).
 - 3797 Bob Lake (Ottawa NF) (weak): FS "Many of the sites are situated near the lake"; entry not waterfront (p3-131).
 - 3739 Bowman Bridge (weak): rec.gov "situated along the Pere Marquette National Scenic River", but FS puts it "up the hill from Bowman Bridge Boat Landing"; entry not waterfront (p3-131).
+- 3751 Brush Lake (Huron-Manistee NF): FS "located on the shores of Brush Lake", carry-in launch in the campground; entry not waterfront (p3-132).
+- 3802 Canoe Harbor SFC: DNR "located along the south branch of the Au Sable River", carry-in access in the campground, four sites reachable from the river; entry not waterfront (p3-132).
+- 3772 Camp 7 Lake (Hiawatha NF): rec.gov says some sites "are right on the lake"; entry lakeview (p3-132).
+- 14215 Camp Deer Trails (Harrison): operator sells "Rustic Lakefront Campsites" and "a half mile of lakefront access"; entry not waterfront. The lakefront type is NOT offered to motorhomes on Campspot, so only the RV-bookable types count. Also check the pin: Campspot's record is 44.084285,-84.748482, ~1 km ESE of the stored 44.08717,-84.76024 (p3-132).
+- 3682 Burton's Landing SFC (weak): DNR "riverside campground rests on the banks of the Au Sable River"; entry riverview (p3-132).
+- 3788 Burned Dam (Ottawa NF) (weak): FS gives river access on the Middle Branch Ontonagon "from the Burned Dam Campground"; entry not waterfront (p3-132).
+- 3770 Carp River (Hiawatha NF) (weak): FS "adjacent to the Carp Wild and Scenic River", stairs down the bank; entry not waterfront (p3-132).
