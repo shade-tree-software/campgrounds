@@ -38,7 +38,7 @@ while [ $# -gt 0 ]; do
 done
 
 for k in "$SYNC_KEY" "$DEPLOY_KEY"; do
-  [ -f "$k" ] || { echo "error: key $k not found (see CLAUDE.md)" >&2; exit 1; }
+  [ -f "$k" ] || { echo "error: key $k not found (see docs/hosting.md)" >&2; exit 1; }
 done
 
 SSH_OPTS=(-o StrictHostKeyChecking=accept-new -o IdentitiesOnly=yes
