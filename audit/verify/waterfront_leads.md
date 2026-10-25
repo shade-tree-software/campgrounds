@@ -286,3 +286,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3682 Burton's Landing SFC (weak): DNR "riverside campground rests on the banks of the Au Sable River"; entry riverview (p3-132).
 - 3788 Burned Dam (Ottawa NF) (weak): FS gives river access on the Middle Branch Ontonagon "from the Burned Dam Campground"; entry not waterfront (p3-132).
 - 3770 Carp River (Hiawatha NF) (weak): FS "adjacent to the Carp Wild and Scenic River", stairs down the bank; entry not waterfront (p3-132).
+- 14578 CreationView (weak): operator "Waterfront Views ... Nature Lake and Otto's Pond", "Scenic waterfront areas"; CampLife's Water-front amenity is on the cabin type only; entry not waterfront (p3-133).
