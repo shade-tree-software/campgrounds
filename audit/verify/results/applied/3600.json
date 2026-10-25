@@ -1,0 +1,69 @@
+{
+  "id": 3600,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/baraga",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+    "https://midnrreservations.com/ (Baraga State Park campsites via /api/resourcelocation/resources, /api/resource/feeDetails for 2027-01-12, 2027-06-08 and 2027-07-13, and /api/availability/map for 2026-11-10, 2027-05-12, 2027-08-11; audit/state_park_fees/gtc_probe.py)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 45,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 on the booking site (June 8 and July 13 alike): 20/30-amp electric $30, 50-amp $35, 20/30-amp with sewer $40, 50-amp with sewer $45. 2026 (DNR rates table): $28 / $33 / $38-43. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."
+      },
+      "source": "https://midnrreservations.com/ feeDetails per fee schedule (2027-06-08 and 2027-07-13: 54 20/30-amp sites $30, 28 50-amp $35, 8 20/30-amp sewer $40, 5 50-amp sewer $45) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Baraga South Camp: full-hookup '$38 to $43', 50 AMP $33, 20/30 AMP $28; North Camp $33 / $28) + https://www.michigan.gov/recsearch/parks/baraga ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baraga (Baraga Modern Campground: 'Electrical service, Full-hookup sites ... Some campsites with 50-amp service') + https://midnrreservations.com/ site attributes (13 sites 'Sewer Hookup=Yes', 5 of them 20/30/50 A; 28 more with 50 A), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 95,
+        "max_rig_ft": 50,
+        "pull_through": true,
+        "note": "South loop sites 1-40 (all 13 sewer sites are here) and north loop 41-95, back-in, pull-through and accessible sites; plus a mini cabin. On the booking site most sites take trailers/RVs to 35-45 ft and some 'over 50 ft'."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baraga ('Number of sites: 95', 'divided into two loops, the north loop and south loop. There is a mix of back-in, pull-through and accessible campsites') + https://midnrreservations.com/ (allowed equipment up to 'Trailer or RV over 50'' on several fee schedules), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "wifi": true,
+        "note": "Sanitation station (two lanes, potable water) for registered campers only. Free WiFi early May to late October."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baraga ('Toilet & shower building, Vault toilet, WiFi', 'The park's sanitation station is located at the modern campground. There is potable water available and two lanes', 'unable to offer sanitation station access to non-registered campers', 'Free WiFi is available early May to late October') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates ('Modern campgrounds include flush toilets, showers, a sanitation station, water spigots'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "note": "Reservation season May 1 - September 30 for the south loop (sites 1-40) and May 1 - October 31 for the north loop (41-95); the booking site shows the campground not operating on 2026-11-10."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baraga ('For reservations call 800-447-2757 or reserve online') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Baraga South Camp: May 1 - September 30; North Camp: May 1 - October 31) + https://midnrreservations.com/ availability (code 2 on every campsite 2026-11-10), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Modern campground of grassy, mostly flat sites shaded by oaks, maples and pines, in a north and a south loop; the full-hookup sites are in the south loop. On the west side of US-41 just south of Baraga; Keweenaw Bay (Lake Superior) is across the highway via three walkways. One of the few state parks where ORVs may be ridden from the campground to nearby ORV routes. --Claude",
+  "summary": "DNR park page + rates table + booking site: 95 sites (back-in and pull-through, RVs to 50+ ft), electric with 50 A, 13 sewer sites (full hookups), showers/flush and vault toilets/sanitation station/WiFi, reservable online. Fees 28-43 (2026 table) -> 30-45 (2027 booking site, 2026 rates and the Recreation Passport in fees.note). Season left (see flag). Inherited window/15-night max not stated on the park page; left inherited. Note trimmed of what the fields hold.",
+  "flags": [
+    "Phone: the DNR's Baraga State Park page lists 906-353-6558; the entry has 906-353-6651.",
+    "Season: the entry's derived year_round (from the old note's 'Open year-round') is stated by no DNR page; the rates table gives reservation seasons of May 1 - Sep 30 (south loop) and May 1 - Oct 31 (north loop), and the booking site shows every campsite not operating on 2026-11-10. A reservation season is not a campground season, so it was not changed; worth a human look."
+  ]
+}

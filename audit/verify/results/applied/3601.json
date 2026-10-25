@@ -1,0 +1,75 @@
+{
+  "id": 3601,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/baycity",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+    "https://midnrreservations.com/ (Bay City State Park campsites via /api/resourcelocation/resources, /api/resource/feeDetails for 2027-01-12, 2027-06-08 and 2027-07-13, and /api/availability/map for 2026-11-10, 2027-05-12, 2027-08-11; audit/state_park_fees/gtc_probe.py)"
+  ],
+  "groups": {
+    "status": {
+      "values": {
+        "operating": "temporarily_closed",
+        "reopens": "early July (year not stated)",
+        "note": "DNR banner: 'The modern campground is closed through early July due to sanitary sewer, electrical and water service upgrades, as well as roadway paving. We'll share reservation updates as soon as a reopening date is confirmed.' On the booking site every campsite was closed (availability code 4) on 2026-11-10, 2027-05-12 and 2027-08-11."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baycity (banner 'Bay City State Park modern campground closed through early July') + https://midnrreservations.com/ availability (all four campsite maps code 4 on the three dates probed), read 2026-10-25",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 27,
+        "nightly_high": 39,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 on the booking site: 20/30-amp $34, 50-amp $39 in summer (June 8 and July 13); $27 / $32 in January, the semi-modern off-season rate. 2026 (DNR rates table): $32 / $37 modern, $27 / $32 semi-modern. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."
+      },
+      "source": "https://midnrreservations.com/ feeDetails (182 20/30-amp sites $34 and 9 50-amp sites $39 on 2027-06-08 and 2027-07-13; $27 / $32 on 2027-01-12) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Bay City Campground: 50 AMP $37, 20/30 AMP $32, semi-modern 50 AMP $32, semi-modern $27) + https://www.michigan.gov/recsearch/parks/baycity ('A Recreation Passport (park pass) is required'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baycity ('Each site offers 20/30-amp electrical service, with some sites also providing 50-amp service') + https://midnrreservations.com/ site attributes (every campsite 'Electric and Water Hookups=Electric Only' or electric only, 'Sewer Hookup=No'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 189,
+        "max_rig_ft": 40,
+        "note": "Mostly wooded sites; trailers/RVs up to 40 ft on the booking site. Two mini cabins and a tent-only youth group camp besides. The current closure is for sewer, electrical and water upgrades, so hookups may change on reopening."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baycity ('Number of sites: 189', 'This modern campground features mostly wooded sites') + https://midnrreservations.com/ (allowed equipment up to 'Trailer or RV up to 40''), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "wifi": true,
+        "note": "Sanitation station (two lanes, potable water) for registered campers only. WiFi hot spot near the campground host site."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baycity ('Toilet & shower building', 'The park's sanitation station is located at the modern campground. There is potable water available and two lanes', 'The park has 11 vault toilets open year-round', 'three Wi-Fi hot spots in the campground (near campground host site)') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates ('Modern campgrounds include flush toilets, showers, a sanitation station, water spigots'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator"
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/baycity ('For reservations call 800-447-2757 or reserve online'), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Modern campground of mostly wooded sites in a mature-oak stand, inland across State Park Drive from the Saginaw Bay (Lake Huron) day-use beach; spray park and the Saginaw Bay Visitor Center in the park. --Claude",
+  "summary": "DNR park page + rates table + booking site: CLOSED (banner 'closed through early July' for sewer/electric/water upgrades and paving; booking site closed on every probed date through Aug 2027) -> status temporarily_closed. 189 sites (193 -> 189), RVs to 40 ft, 20/30 A with some 50 A, electric only, no sewer, showers/flush and vault toilets/sanitation station/WiFi. Fees 27-37 (2026) -> 27-39 (2027 booking site; details in fees.note). Season (manual year-round) and fcfs never left. Note trimmed of what the fields hold.",
+  "flags": [
+    "Temporary closure: the DNR page's banner reads 'Bay City State Park modern campground closed through early July ... We'll share reservation updates as soon as a reopening date is confirmed' with no year; midnrreservations.com shows every campsite closed on 2026-11-10, 2027-05-12 and 2027-08-11, so the closure looks current and possibly longer than the banner says. Recorded as status temporarily_closed."
+  ]
+}
