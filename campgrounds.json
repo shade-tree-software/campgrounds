@@ -241320,31 +241320,38 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/holly\nhttps://midnrreservations.com",
     "phone": "248-634-8811",
-    "note": "McGinnis Lake Modern Campground: ~144 modern sites with 30/50-amp electric across the Maple, Oak, Aspen, Hickory and Trillium loops, plus a handful of rustic sites; modern restrooms/showers, dump station, 2 mini-cabins. Open seasonally (approx Apr-Oct). Reservable online via MiDNRReservations or by phone; Recreation Passport required for entry. Sites are wooded; some near McGinnis Lake. --Claude",
+    "note": "Modern campground of Holly Recreation Area (8,000+ acres, northern Oakland County); the campground entrance is at 5300 McGinnis Road (8100 Grange Road is park headquarters). Often compared to campgrounds 'up north': the East Campground (Maple, Oak and Aspen loops) mixes trees and grass, the West Campground (Trillium and Hickory loops) is densely forested, with large sites throughout. Two mini cabins sit in the campground. --Claude",
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "camp_store": true,
+      "note": "Two-lane sanitation station with potable water in the modern campground. Golf discs sold at the campground office."
     },
     "season": {
       "year_round": false
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "note": "Reserve online on MiDNRReservations or at 800-447-2757. The DNR rates table gives reservation seasons of March 22 - November 29 (Aspen, Maple & Oak loops) and April 22 - October 21 (Hickory & Trillium loops); the toilet/shower building is open April 22 - October 21."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/holly ('The majority of sites have either 30- or 50-amp service. Sites 147-161 do not have electricity.') + https://midnrreservations.com/ (Holly Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (5 sites 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps/50 Amps, Sewer Hookup=No'; 139 'Electric Only, 20 Amps/30 Amps, Sewer Hookup=No'; 15 'Electrical Service=Not Available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/holly (McGinnis Lake Modern Campground amenities: 'Concession or store', 'Modern campground', 'Sanitation station', 'Toilet & shower building', 'Vault toilet'; 'The park's sanitation station is located in the modern campground. There is potable water available and two lanes.'; 'Golf discs can be purchased at the campground office'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -241352,13 +241359,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/holly (Holly McGinnis Lake Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Holly Recreation Area, 159 bookable campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Holly reservation season and shower-building dates), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Holly / Hickory & Trillium Loops; Holly / Aspen, Maple, & Oak Loops",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ (Holly Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (15 non-electric Aspen-loop sites $27 / $29 / $29; 139 '20 Amps/30 Amps' sites $32 / $34 / $34; 5 '20 Amps/30 Amps/50 Amps' sites $37 / $39 / $39) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Holly: Aspen, Maple & Oak Loops, Hickory & Trillium Loops) + https://www.michigan.gov/recsearch/parks/holly ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.michigan.gov/recsearch/parks/holly (Holly McGinnis Lake Modern Campground: 'Number of sites: 144', 'Sites 147-161 do not have electricity', amenities 'ADA-only sites available') + https://midnrreservations.com/ (Holly Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (allowed equipment on all 159 sites: Tents, Trailer or RV up to 20'...40'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -241367,9 +241380,21 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 27,
-      "nightly_high": 37,
-      "currency": "USD"
+      "nightly_low": 29,
+      "nightly_high": 39,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-05-18 and 07-13 alike): non-electric sites $29, 20/30-amp sites $34, 50-amp sites $39. 2026 on the booking site (2026-10-27): $27 / $32 / $37. The DNR rates table lists Aspen, Maple & Oak at $37 (50-amp) / $32 (20/30-amp) and Hickory & Trillium at $27. A Recreation Passport is required for vehicle entry to all state park campgrounds."
+    },
+    "sites": {
+      "count": 144,
+      "max_rig_ft": 40,
+      "note": "The DNR page gives 144 sites; the booking site lists 159 campsites (144 electric, 5 of them 50-amp, plus 15 non-electric, sites 147-161). Every site takes tents or a trailer/RV up to 40 ft on the booking site. ADA-only sites available."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/holly https://midnrreservations.com/ (Holly Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site + DNR rates table: 144 sites (booking site 159 incl. 15 non-electric; count new), every site to 40 ft (new), 50-amp at 5 sites, electric only (water/sewer false, new), showers/flush + vault toilets/two-lane dump/camp store, reservable on MiDNRReservations (platform confirmed). Fees 27-37 (2026) -> 29-39 (2027 booking site; $29 is the non-electric base). Season (derived year_round: false) left: only reservation seasons are stated, now in booking.note. Phone 248-634-88"
     }
   },
   {
@@ -243312,79 +243337,6 @@
     "fees": {
       "nightly_low": 28,
       "nightly_high": 33,
-      "currency": "USD"
-    }
-  },
-  {
-    "id": 3647,
-    "kind": "campground",
-    "name": "Highland Recreation Area - Rustic and Equestrian Campground",
-    "location": "42.6360,-83.5445",
-    "elevation_meters": 303.0,
-    "state": "MI",
-    "ownership": "state",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "MI DNR Highland SRA rustic camp open to BOTH equestrian and non-equestrian campers, 25 drive-in sites, RVs to 45 ft -> not equestrian-only, keep",
-    "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.michigan.gov/recsearch/parks/highland\nhttps://midnrreservations.com",
-    "phone": "248-889-3750",
-    "note": "25 rustic drive-in sites (no electric, vault toilets, hand-pump water) open to BOTH equestrian and non-equestrian campers; sites 20 & 21 ADA concrete pads; RVs up to 45 ft. Season ~April 1-Sept 30. Reservable online; MI Recreation Passport required. --Claude",
-    "hookups": {
-      "electric": 0
-    },
-    "sites": {
-      "count": 25,
-      "max_rig_ft": 45
-    },
-    "facilities": {
-      "vault_toilets": true,
-      "potable_water": true
-    },
-    "season": {
-      "year_round": false
-    },
-    "booking": {
-      "reservable": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Highland / Rustic Campground",
-        "checked": "2026-10-09"
-      }
-    },
-    "note_scan": {
-      "sig": "27cfdaeb23e037e2",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "fees": {
-      "nightly_low": 20,
-      "nightly_high": 20,
       "currency": "USD"
     }
   },
@@ -245359,17 +245311,19 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake",
     "phone": "989-539-3021",
-    "note": "Rustic MI DNR state forest campground in the Gladwin Field Trial Area, ~17 mi N of Gladwin. 41 sites in two loops with water access to House and Hoister lakes; 35 of the 41 sites accommodate up to 40-ft vehicles/trailers (easily fits a 23-ft rig). Vault toilets, hand-pump well water, no electric; ~$20/night. FCFS, no reservations; 15-day max stay. MI Recreation Passport required for entry. --Claude",
+    "note": "Secluded rustic state forest campground beside the Gladwin Field Trial Area, 17 mi N of Gladwin via M-18 and Adams Road; two loops, both with water access to House and Hoister lakes. Gravel boat launch on Hoister Lake (electric motors, kayaks and canoes); trail access to the 2.8-mile Trout Lake Pathway; Trout Lake State Forest Campground is next door to the north. Managed by Wilson State Park. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
       "count": 41,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "41 sites in two loops, 35 of which take a 40-ft vehicle/trailer. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Gravel boat launch on Hoister Lake."
     },
     "booking": {
       "reservable": false,
@@ -245378,28 +245332,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake ('There are 41 campsites available, 35 of which will accommodate a 40-foot vehicle/trailer.'; 'The campground is split into two loops.'; 'One camping unit and six people are allowed per site') + amenity table (41 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'A gravel boat launch is located on Hoister Lake, near House Lake.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (House Lake: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'House Lake State Forest Campground', Gladwin Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (House Lake State Forest Campground, Gladwin: 41 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (House Lake State Forest Campground, Gladwin Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -245416,11 +245371,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houselake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 41 sites, 35 to 40 ft (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, gravel launch, first-come only, 15-day maximum (all confirmed). Season (open all year) already manual and matches. Phone 989-539-3021 matches the campground page (the amenity table gives the managing Wilson SP, 989-386-4067). Note trimmed of field restatements."
     }
   },
   {
@@ -246387,57 +246348,63 @@
     "inclusion_evidence": "Satellite at 44.4006,-84.7722: campground loops along north shore of Houghton Lake, drive-in; note '50 sites, some fit up to 40 ft, semi-modern' -> real MI DNR SFCG",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake",
-    "phone": null,
-    "note": "50 sites on the north shore of Houghton Lake; semi-modern rustic, some sites accommodate up to 40 ft. Vault toilets plus a modern (no-shower) restroom building, hand-pump well water, no electric. FCFS — no reservations (fee ~$20, self-register at kiosk). Season late April to mid-September. MI Recreation Passport required. --Claude",
+    "phone": "989-821-6125",
+    "note": "Semi-modern state forest campground on the north shore of Houghton Lake (Michigan's largest inland lake, 20,000+ acres; walleye, pike, bass, perch), 8 mi N of the town of Houghton Lake via West Houghton Lake Drive and Old US 27, Roscommon County; managed by North Higgins Lake State Park. Muskegon River 2 mi west, Higgins Lake 6 mi north. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
       "count": 50,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "Sites 'suitable for tent and small trailer use' (the DNR's standard state forest wording). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
       "flush_toilets": true,
       "showers": false,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Modern restroom building without showers. Drinking water from a hand-pump well. The boating access site for Houghton Lake is off site."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Closed November to April (DNR amenity table)."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15,
+      "note": "No reservations or advance payment. Register by the phone number or website posted at the campground, no earlier than 8 a.m. on the day of arrival; the site must then be set up and occupied. Card, check or cash."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Houghton Lake State Forest Campground: 50 campsites) + https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake ('The sites are suitable for tent and small trailer use.'; 'One camping unit and six people are allowed per site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake ('Amenities include a modern restroom building (no showers)'; 'There are modern restrooms, but no showers.'; 'There are vault toilets.'; 'Potable (drinking) water is available from a hand-pump well.'; 'The boating access site for Houghton Lake is located off site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Houghton Lake State Forest Campground: 'Seasonal closure dates: November to April'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake ('No reservations. Sites available on a first-come, first-served basis. All registrations now processed online or via phone.'; 'You can register no earlier than 8 a.m. on the day of your arrival. Once you have registered, your campsite must be set up and occupied ... we do not accept advance payments or reservations. Mastercard, Visa, Discover, check and cash accepted.'; 'Camping is limited to a 15-day maximum stay.') + amenity table ('Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Houghton Lake State Forest Campground', Roscommon Co., $25",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Houghton Lake State Forest Campground, Roscommon, semi-modern: 50 sites, $25) + https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -246449,7 +246416,13 @@
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$25 a night on the DNR amenity table (the campground page carries the statewide '$20 for most sites' boilerplate). A Recreation Passport is required for vehicle entry to every state forest campground."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/houghtonlake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 50 sites (confirmed), $25 (table; confirmed) + Recreation Passport, no electric, modern restrooms without showers + vault toilets, hand-pump water, first-come only with same-day online/phone registration from 8 a.m., 15-day maximum (inherited max now confirmed), closed November to April (season note added). max_rig_ft 40 (derived from the note) left: the page says only 'tent and small trailer'. Note trimmed of field restatements and its stale '~$20, self-register at"
     }
   },
   {
@@ -248347,17 +248320,19 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint",
     "phone": "906-643-8620",
-    "note": "Rustic MI DNR state forest campground on Lake Michigan, ~42 sites for tent/small trailer (sites 7 and 32 are pull-through); no electric, vault toilets, hand-pump well water. FCFS, no reservations; 15-day max stay; ~$15/night. MI Recreation Passport required. 7.7 mi E of Naubinway on US-2; most campsites have direct shoreline access, day-use sandy beach on the east side. --Claude",
+    "note": "Rustic state forest campground on the Lake Michigan shoreline, 7.7 mi E of Naubinway on US-2 (Mackinac County); managed by Straits State Park. Many sites have direct access to the water (sites 7 and 32 are pull-through); part of the shoreline is rocky, with a sandy beach by the day-use picnic area on the east side. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
       "count": 42,
-      "pull_through": true
+      "pull_through": true,
+      "note": "42 sites 'for tents and small trailers' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in paddling access at the day-use area, about 200 ft from the parking area; day-use picnic area with tables, a fire ring and a charcoal grill on the east side."
     },
     "booking": {
       "reservable": false,
@@ -248366,28 +248341,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint ('With 42 sites for tents and small trailers, many offer direct access to the water'; 'One camping unit and six people are allowed per site') + amenity table (42 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'Carry-in access is located at the day-use area, approximately 200 feet from the parking area.' 'A picnic area is located on the east side of the campground and includes three picnic tables, one fire ring and one charcoal grill.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Hog Island: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Hog Island State Forest Campground', Mackinac Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Hog Island State Forest Campground, Mackinac: 42 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Hog Island State Forest Campground, Mackinac Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -248404,11 +248380,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hogislandpoint https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 42 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual and matches. Phone 906-643-8620 matches (Straits SP). Pull-through (derived from the note) left: the page is silent. Note trimmed of field restatements and its stale '~$15/night'."
     }
   },
   {
@@ -248670,16 +248652,18 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake",
     "phone": "906-658-3338",
-    "note": "15 rustic sites for tent and small trailer use on Holland Lake (a dammed flowage). Vault toilets, hand-pump well water, no electric. FCFS, no reservations; ~$20/night, 15-day max stay. Hilly terrain so leveling a larger rig can be a project. Pine Ridge ORV trail starts in the campground. MI Recreation Passport required. --Claude",
+    "note": "Rustic state forest campground on Holland Lake (a dammed flowage; brook trout), 25 mi NW of Newberry via M-123 and County Roads 407 and 426, Luce County; managed by Muskallonge Lake State Park. A base for ORV riders: direct access to the Pine Ridge Trail, which connects to the Two Heart Trail (riding allowed from campsites to the trails only), and snowmobile Trail #8. Hilly terrain, so leveling a larger rig can be a project. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 15
+      "count": 15,
+      "note": "15 'tent and small trailer sites' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in paddling access about 30 yards from the parking area."
     },
     "booking": {
       "reservable": false,
@@ -248688,28 +248672,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake ('Featuring 15 tent and small trailer sites'; 'One camping unit and six people are allowed per site') + amenity table (15 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'Carry-in access is located approximately 30 yards from the parking area.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Holland Lake: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Holland Lake State Forest Campground', Luce Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Holland Lake State Forest Campground, Luce: 15 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Holland Lake State Forest Campground, Luce Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -248726,11 +248711,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hollandlake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 15 tent/small-trailer sites, $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual and matches. Phone 906-658-3338 matches (Muskallonge Lake SP). Note trimmed of field restatements."
     }
   },
   {
@@ -251847,8 +251838,8 @@
     "inclusion_evidence": "fs.usda.gov Horseshoe Lake page: 'Site Open' May 3-Nov 30; satellite at 44.601,-83.765 shows a clear drive-in campground loop road east of the lake -> small drive-in campground (23-ft fits per note)",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground",
-    "phone": "989-826-3252 (Mio Ranger District)",
-    "note": "Huron NF near Curran, small lightly-used rustic campground (~9-11 sites) on 16-acre Horseshoe Lake with boat launch and a short lake-loop trail. Vault toilets, hand-pump water. Best for vans/tents/small RVs under 25 ft (a 23-ft rig fits; access is tight — survey on foot before bringing a larger rig). First-come, first-served; $10/night. Not on recreation.gov. --Claude",
+    "phone": "989-739-0728",
+    "note": "Huron NF campground near Curran (Alcona County), small and lightly used, on 16-acre Horseshoe Lake (~9-11 sites), with a boat access site and a short lake-loop trail; the Ann Arbor ORV and Snowmobile Trailhead is nearby. Best for vans, tents and small RVs under 25 ft: access is tight, so survey on foot before bringing a larger rig. --Claude",
     "facilities": {
       "vault_toilets": true,
       "potable_water": true
@@ -251859,18 +251850,29 @@
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Restrooms Vault toilet(s)', 'Potable water is available at this site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Reservations: All campsites are first-come, first-served.') + recreation.gov search API (lat=44.60083, lng=-83.76528, radius 15 mi; q=Horseshoe Lake Campground): no listing for this campground, read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Fee Site and Info | Overnight Use: | Single Site: $10 per night | Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. | *The discount applies only to the fee for the campsite ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Single Site: $10 per night'; page last updated June 4, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. *The discount applies only to the fee for the campsite physically occupied by the pass holder'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground ('Seasons of Use May 3 - November 30'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -251881,7 +251883,22 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $10 per night."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes give 50% off the pass holder's own single campsite only, not other fees or sites."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-03",
+      "closes": "11-30"
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/huron-manistee/recreation/horseshoe-lake-campground recreation.gov search API (https://www.recreation.gov/api/search?lat=44.60083&lng=-83.76528&radius=15&fq=entity_type:campground, and q=Horseshoe Lake Campground): no Michigan listing; nearest Gabions Campground 6.9 mi https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "FS page (updated June 4, 2026): $10/night (confirmed), Senior/Access 50% off the single site, all first-come (confirmed; no recreation.gov listing), vault toilets + potable water (confirmed), season May 3 - Nov 30 (new). Not stated: site count, length limit. No alert or order names Horseshoe Lake (forest-wide winter-storm 'down trees' caution for the Mio and Huron Shores districts only). Note trimmed of field restatements."
     }
   },
   {
@@ -253039,17 +253056,19 @@
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'riverview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground",
     "phone": "906-474-6442 (Rapid River/Manistique Ranger District)",
-    "note": "Small Hiawatha NF campground on a bluff overlooking the Indian River, ~20 miles north of Manistique on M-94. 5 large, wooded, private sites; drinking water and vault toilets. First-come, first-served (not on recreation.gov). Convenient overnight stop on the Indian River Canoe Trail. --Claude",
+    "note": "Small Hiawatha NF campground on a bluff overlooking the Indian River, 19.8 mi N of Manistique on M-94 (14.2 mi S of Shingleton); a short trail leads down to the river. Large, wooded, private sites. Near the halfway point of the Indian River Canoe Trail, a convenient overnight stop for canoeists. --Claude",
     "sites": {
       "count": 5
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "The FS page lists a pit toilet."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "Check-in 2 pm, check-out 11 am."
     },
     "provenance": {
       "sites": {
@@ -253058,18 +253077,29 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Potable water is available at this site.'; 'Other Amenities: Pit toilet'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Sites are first come, first served.'; 'Check-in Time: 2 pm', 'Check-out Time: 11 am') + recreation.gov search API (lat=46.15437, lng=-86.40377, radius 15 mi; q=Indian River Campground): no listing for this campground, read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Fee Site and Info | Overnight Use: | Single Site: $22 per night | Double Site: $44 per night | Getting There | Latitude / Longitude | Latitude: | 46.15436889 | Longitude: | -86.40376611 | Directions | From Munising trave')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Single Site: $22 per night', 'Double Site: $44 per night'; page last updated September 14, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Federal Recreation Passes (Golden/America the Beautiful) are accepted.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground ('Seasons of Use May 17 - September 5'; status 'Site Closed' on 2026-10-25), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -253080,7 +253110,21 @@
     "fees": {
       "nightly_low": 22,
       "nightly_high": 22,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $22 per night; double site $44 per night."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-17",
+      "closes": "09-05"
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/hiawatha/recreation/indian-river-campground recreation.gov search API (https://www.recreation.gov/api/search?lat=46.15437&lng=-86.40377&radius=15&fq=entity_type:campground, and q=Indian River Campground): no listing for this campground (only Hiawatha lake campsites and Colwell Lake nearby) https://www.fs.usda.gov/r09/hiawatha/alerts https://www.fs.usda.gov/r09/hiawatha/offices",
+      "note": "FS page (updated Sep 14, 2026): $22 single / $44 double (confirmed), federal passes accepted, first-come only (confirmed; no recreation.gov listing), potable water + pit toilet (confirmed), season May 17 - Sep 5 (new; page shows 'Site Closed' now, in season). Site count (5, derived) left: the page gives none. Phone 906-474-6442 is the Rapid River/Manistique Ranger District (Hiawatha offices page); the campground page names no concessionaire. No alert or order for M-94 (only the Indian River Wild"
     }
   },
   {
@@ -254392,29 +254436,49 @@
     "inclusion_evidence": "FS ottawa camping-cabins fee table lists Henry Lake as active campground; forest-wide RV/trailer policy -> real drive-in RV campground",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/10192062\nhttps://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground",
-    "phone": null,
-    "note": "Ottawa NF campground on Henry Lake, Bessemer RD near Marenisco. Drive-in sites, vault toilets. First-come, first-served (rec.gov listing is scan-and-pay self-registration, not reservable). --Claude",
+    "phone": "906-661-8870",
+    "note": "Ottawa NF campground beside Henry Lake (bass, bluegill), Bessemer Ranger District, 9 mi SW of Marenisco via FR 8100. A single loop of drive-in sites screened by natural vegetation; free concrete boat ramp with trailer parking, and a trail from the landing to an accessible fishing pier. Run by the concessionaire Camp Host, LLC. --Claude",
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water from a hand pump in the camping loop."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "No reservations. Claim a site in person (24-hour self pay); on site you may be able to pay with the Recreation.gov app's Scan and Pay (download it first: cell service is limited). Campers must occupy the site the first night."
     },
     "provenance": {
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('Vault in campground'; 'Potable water is available at this site.'; 'Drinking Water-Hand Pump'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10192062 ('This location is available on a first-come, first-served basis only. Visitors are required to physically arrive at the campground to purchase and claim a site ... Scan and Pay') + https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('24 hours – self pay'; 'allowed for a period not longer than 14 days'; 'Campers must occupy the site the first night'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('Overnight Use: Single Site: $22 per night', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('Single Site: $22 per night'; 'Fees shown are for the summer recreation period when full services are provided. During the early spring and late fall when no services are provided the fees at some areas are not charged.'; page last updated May 5, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('Golden Age/Interagency Senior and Access Passes accepted'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('Seasons of Use May 15 – October 15'; 'The campground is scheduled to open with full services the Friday before Memorial Day'; 'Reduced services beginning October 15, 2026, no water or garbage services will be provided. Visitors can use the facility until snow conditions reduce access or January 1st, whichever is sooner.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground ('No. of Sites: 7'; 'a single loop campground with 7 campsites' and elsewhere 'with 11 campsites'; 'drive-in sites that can accommodate tents, trailers, and motorhomes'; 'a maximum of one RV or camper trailer and two tents per camping site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254426,7 +254490,23 @@
       "nightly_low": 22,
       "nightly_high": 22,
       "currency": "USD",
-      "note": "Single site $22/night (Forest Service page)."
+      "note": "Single site $22/night. Fees are for the summer period with full services; in early spring and late fall, when no services are provided, fees at some areas are not charged."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "season": {
+      "year_round": false,
+      "note": "Seasons of use May 15 - October 15; opens with full services the Friday before Memorial Day (subject to change). 2026: reduced services from October 15 (no water or garbage); usable until snow limits access or January 1, whichever comes first."
+    },
+    "sites": {
+      "count": 7,
+      "note": "The FS page gives 'No. of Sites: 7' and once says 7 campsites, but its second description says 11. Drive-in sites with parking spurs for tents, trailers and motor homes; one RV or camper trailer per site. No length limit posted."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/ottawa/recreation/henry-lake-campground https://www.recreation.gov/api/camps/campgrounds/10192062 https://www.fs.usda.gov/r09/ottawa/alerts",
+      "note": "FS page (updated May 5, 2026) + rec.gov Scan and Pay listing (no rates, not reservable): $22 (confirmed), first-come only (confirmed), 14-day limit, 7 sites (page says 11 once), vault toilets (confirmed) + hand-pump water, Senior/Access passes accepted, season May 15 - Oct 15 with reduced services to snow/Jan 1 (added); concessionaire Camp Host, LLC. No forest alert or order for FR 8100 or Dunham Road. Note trimmed of field restatements."
     }
   },
   {
@@ -254441,37 +254521,53 @@
     "inclusion_evidence": "FS ottawa/imp-lake page: 'drive-in sites that can accommodate tents, trailers and motor homes', 22 sites two loops, FCFS, open -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground",
-    "phone": null,
-    "note": "Ottawa NF campground on 111-acre (no-wake) Imp Lake, Watersmeet/Iron River RD. 22 sites in two loops, vault toilets, boat ramp. First-come, first-served, $22/night. FS page notes lakeside sites with a view of a small loon-nesting island, off-lake sites set among hemlocks. --Claude",
+    "phone": "906-661-8870",
+    "note": "Ottawa NF campground on 111-acre, no-wake Imp Lake (trout, panfish), 6 mi SE of Watersmeet via US 2 and FR 3978, Watersmeet Ranger District. Two loops of screened drive-in sites: lakeside sites look onto a small island with nesting loons, off-lake sites sit beside towering hemlocks. Free concrete boat ramp and picnic area beside the campground, and the 1-mile wheelchair-accessible Imp Lake Interpretive Trail across the road. Run by the concessionaire Camp Host, LLC. --Claude",
     "sites": {
-      "count": 22
+      "count": 22,
+      "note": "Two loops of drive-in sites with parking spurs for tents, trailers and motor homes; one RV or camper trailer per site. No length limit posted."
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Three sets of vault toilets and two hand pumps for drinking water in the camping loops."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "No reservations; claim a site in person (24-hour self pay). Campers must occupy the site the first night."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('two camping loops, with a total of 22 campsites, and provides drive-in sites that can accommodate tents, trailers and motor homes'; 'No. of Sites: 22'; 'a maximum of one RV or camper trailer and two tents per camping site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('Three sets of vault toilets and two hand pumps for drinking water are located within the camping loops'; 'Potable water is available at this site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('No reservations; first come, first served.'; '24 hours - self pay'; 'allowed for a period not longer than 14 days'; 'Campers must occupy the site the first night') + recreation.gov search API (lat=46.21777, lng=-89.07029, radius 15 mi; q=Imp Lake Campground): no listing for this campground, read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('Fee Site and Info | Overnight Use: | Single Site: $22 per night | Contact Information | Contact Name: | Camp Host, LLC | Contact Phone: | (906) 661-8870 | Office Contact Information | Watersmeet/Iron River Ranger Distric')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('Single Site: $22 per night'; 'Fees shown are for the summer recreation period when full services are provided. During the early spring and late fall, when no services are provided, the fees at some areas are not charged.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('Golden Age/Interagency Senior and Access Passes are accepted.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground ('Seasons of Use May 15 – October 15'; 'The campground is scheduled to open with full services the Friday before Memorial Day'; 'Loop 1 - Gate will close on October 15, 2026. Loop 2 - Reduced services begin October 15, 2026; no water or garbage services will be provided. Visitors can use the facility until snow conditions reduce access or January 1, whichever is sooner.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254482,7 +254578,20 @@
     "fees": {
       "nightly_low": 22,
       "nightly_high": 22,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $22/night. Fees are for the summer period with full services; in early spring and late fall, when no services are provided, fees at some areas are not charged."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "season": {
+      "year_round": false,
+      "note": "Seasons of use May 15 - October 15; opens with full services the Friday before Memorial Day (subject to change). 2026: Loop 1's gate closes October 15; Loop 2 has reduced services from October 15 (no water or garbage) and is usable until snow limits access or January 1, whichever comes first."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/ottawa/recreation/imp-lake-campground recreation.gov search API (https://www.recreation.gov/api/search?lat=46.21777&lng=-89.07029&radius=15&fq=entity_type:campground, and q=Imp Lake Campground): no listing; nearest Marion Lake Group Site 5.7 mi and Lac Vieux Desert 11 mi https://www.fs.usda.gov/r09/ottawa/alerts",
+      "note": "FS page: 22 sites in two loops (confirmed), $22 (confirmed), first-come only (confirmed; no recreation.gov listing), 14-day limit, vault toilets (confirmed) + hand-pump water, Senior/Access passes accepted, season May 15 - Oct 15 with Loop 2 usable to snow/Jan 1 (added); concessionaire Camp Host, LLC. No forest alert or order for US 2 or FR 3978. Note trimmed of field restatements."
     }
   },
   {
@@ -937470,45 +937579,49 @@
     "inclusion_evidence": "MI DNR RecSearch page (https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge, 2026-09-29) and the DNR state forest campground amenity table: rustic drive-in campground, 6 tent and small trailer sites; first-come, vault toilets, hand-pump water -> real drive-in campground. Rig length unpublished ('tent and small trailer' is the DNR's standard SFC wording; 39 held MI SFCs carry it)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge",
     "phone": "906-658-3338",
-    "note": "Six-site rustic Michigan DNR state forest campground on the Two Hearted River, 22 miles north of Newberry via M-123 and County Road 407, Luce County. Tent and small-trailer sites; the banks are steep and the current strong, so river access is hard. ORV and snowmobile riding allowed to the Pine Ridge and Two Heart trails. Vault toilets, hand-pump water, no electric. First-come, $20; Recreation Passport required. --Claude",
+    "note": "Rustic state forest campground along the Two Hearted River (salmon, steelhead, brook trout), a favorite with anglers, 22 miles north of Newberry via M-123 and County Road 407, Luce County; managed by Muskallonge Lake State Park. The banks are steep and the current strong, so river access is hard. ORV and snowmobile riding allowed from the campground to the Pine Ridge and Two Heart trails; snowmobile Trail #8 runs in front. --Claude",
     "hookups": {
       "electric": 0
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in river access about 50 ft from the parking area on the west side, but steep banks and swift water."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15
     },
     "sites": {
-      "count": 6
+      "count": 6,
+      "note": "Six 'tent and small trailer sites' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'carry-in access is available but challenging due to steep banks and swift water. Access is located approximately 50 feet from the parking area on the west side of the campground.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (High Bridge: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge ('offers six tent and small trailer sites'; 'One camping unit and six people are allowed per site') + amenity table (6 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'High Bridge State Forest Campground', Luce Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (High Bridge State Forest Campground, Luce: 6 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (High Bridge State Forest Campground, Luce Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -937525,11 +937638,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/highbridge https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 6 tent/small-trailer sites, $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (inherited max now confirmed). Season (open all year, roads not plowed) already manual and matches. Phone 906-658-3338 matches (Muskallonge Lake SP). Note trimmed of field restatements."
     }
   },
   {
@@ -937545,45 +937664,49 @@
     "inclusion_evidence": "MI DNR RecSearch page (https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek, 2026-09-29) and the DNR state forest campground amenity table: rustic drive-in campground, 7 rustic sites for tents and small trailers plus a walk-in backpacker site; first-come, vault toilets, hand-pump water -> real drive-in campground. Rig length unpublished ('tent and small trailer' is the DNR's standard SFC wording; 39 held MI SFCs carry it)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek",
     "phone": "231-775-7911",
-    "note": "Seven-site rustic Michigan DNR state forest campground along Hopkins Creek in dense evergreen forest, Missaukee County (managed from Mitchell State Park); a stop on the Shore-to-Shore hiking and riding trail. Tent and small-trailer sites plus one walk-in backpacker site. Vault toilets, hand-pump water, no electric. First-come, $20; Recreation Passport required. (The adjoining Hopkins Creek Equestrian campground is separate.) --Claude",
+    "note": "Rustic state forest campground along the edge of Hopkins Creek (trout) in dense evergreen forest, 5.5 mi N of Arlene via M-42 and Lucas Road, Missaukee County; managed by Mitchell State Park. A stop on the 420-mile Shore-to-Shore hiking and riding trail. It shares an access road with the separate Hopkins Creek Equestrian State Forest Campground and Trail Camp, but horses and ORVs are prohibited in this campground. --Claude",
     "hookups": {
       "electric": 0
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15
     },
     "sites": {
-      "count": 7
+      "count": 7,
+      "note": "Seven rustic sites 'for tents and small trailers' (the DNR's standard state forest wording; no maximum length posted), plus one walk-in site for backpackers. One camping unit and six people per site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Hopkins Creek State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek ('provides seven rustic sites for tents and small trailers', 'There is one walk-in site for backpackers', 'One camping unit and six people are allowed per site') + amenity table (7 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Hopkins Creek State Forest Campground', Missaukee Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Hopkins Creek State Forest Campground, Missaukee: 7 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Hopkins Creek State Forest Campground, Missaukee Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -937600,11 +937723,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/hopkinscreek https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 7 tent/small-trailer sites + 1 walk-in, $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (inherited max now confirmed). Season (open all year) already manual and matches. Phone 231-775-7911 matches (Mitchell SP). Note trimmed of field restatements."
     }
   },
   {

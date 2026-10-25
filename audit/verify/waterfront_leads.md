@@ -296,3 +296,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3971 Haymarsh Lake (Mecosta Co): county sells "Rustic Waterfront Camping", campground "perched on the edge of Haymarsh Lake"; entry not waterfront (p3-136).
 - 3694 Guernsey Lake SFC: DNR "nestled on Guernsey Lake's north shore"; entry lakeview (p3-136).
 - 3660 Glidden Lake SFC: DNR "on Glidden Lake's eastern shore"; entry lakeview (p3-136).
+- 14030 High Bridge SFC: DNR "lies along the Two Hearted River", "is located on the Two Hearted River"; entry not waterfront (p3-137).
+- 14031 Hopkins Creek SFC: DNR "Nestled along the creek's edge", "located along the Hopkins Creek"; entry not waterfront (p3-137).

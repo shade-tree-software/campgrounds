@@ -1,0 +1,52 @@
+{
+  "id": 3619,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/holly",
+    "https://midnrreservations.com/ (Holly Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 29,
+        "nightly_high": 39,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 on the booking site (2027-05-18 and 07-13 alike): non-electric sites $29, 20/30-amp sites $34, 50-amp sites $39. 2026 on the booking site (2026-10-27): $27 / $32 / $37. The DNR rates table lists Aspen, Maple & Oak at $37 (50-amp) / $32 (20/30-amp) and Hickory & Trillium at $27. A Recreation Passport is required for vehicle entry to all state park campgrounds."
+      },
+      "source": "https://midnrreservations.com/ (Holly Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (15 non-electric Aspen-loop sites $27 / $29 / $29; 139 '20 Amps/30 Amps' sites $32 / $34 / $34; 5 '20 Amps/30 Amps/50 Amps' sites $37 / $39 / $39) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Holly: Aspen, Maple & Oak Loops, Hickory & Trillium Loops) + https://www.michigan.gov/recsearch/parks/holly ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://www.michigan.gov/recsearch/parks/holly ('The majority of sites have either 30- or 50-amp service. Sites 147-161 do not have electricity.') + https://midnrreservations.com/ (Holly Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (5 sites 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps/50 Amps, Sewer Hookup=No'; 139 'Electric Only, 20 Amps/30 Amps, Sewer Hookup=No'; 15 'Electrical Service=Not Available'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 144,
+        "max_rig_ft": 40,
+        "note": "The DNR page gives 144 sites; the booking site lists 159 campsites (144 electric, 5 of them 50-amp, plus 15 non-electric, sites 147-161). Every site takes tents or a trailer/RV up to 40 ft on the booking site. ADA-only sites available."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/holly (Holly McGinnis Lake Modern Campground: 'Number of sites: 144', 'Sites 147-161 do not have electricity', amenities 'ADA-only sites available') + https://midnrreservations.com/ (Holly Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (allowed equipment on all 159 sites: Tents, Trailer or RV up to 20'...40'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "camp_store": true, "note": "Two-lane sanitation station with potable water in the modern campground. Golf discs sold at the campground office."},
+      "source": "https://www.michigan.gov/recsearch/parks/holly (McGinnis Lake Modern Campground amenities: 'Concession or store', 'Modern campground', 'Sanitation station', 'Toilet & shower building', 'Vault toilet'; 'The park's sanitation station is located in the modern campground. There is potable water available and two lanes.'; 'Golf discs can be purchased at the campground office'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "note": "Reserve online on MiDNRReservations or at 800-447-2757. The DNR rates table gives reservation seasons of March 22 - November 29 (Aspen, Maple & Oak loops) and April 22 - October 21 (Hickory & Trillium loops); the toilet/shower building is open April 22 - October 21."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/holly (Holly McGinnis Lake Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Holly Recreation Area, 159 bookable campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Holly reservation season and shower-building dates), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Modern campground of Holly Recreation Area (8,000+ acres, northern Oakland County); the campground entrance is at 5300 McGinnis Road (8100 Grange Road is park headquarters). Often compared to campgrounds 'up north': the East Campground (Maple, Oak and Aspen loops) mixes trees and grass, the West Campground (Trillium and Hickory loops) is densely forested, with large sites throughout. Two mini cabins sit in the campground. --Claude",
+  "summary": "DNR park page + booking site + DNR rates table: 144 sites (booking site 159 incl. 15 non-electric; count new), every site to 40 ft (new), 50-amp at 5 sites, electric only (water/sewer false, new), showers/flush + vault toilets/two-lane dump/camp store, reservable on MiDNRReservations (platform confirmed). Fees 27-37 (2026) -> 29-39 (2027 booking site; $29 is the non-electric base). Season (derived year_round: false) left: only reservation seasons are stated, now in booking.note. Phone 248-634-8811 matches. Note trimmed of field restatements."
+}

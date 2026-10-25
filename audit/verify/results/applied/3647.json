@@ -1,0 +1,55 @@
+{
+  "id": 3647,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/highland",
+    "https://midnrreservations.com/ (Highland Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$20 a night on every site, 2026 and 2027 alike on the booking site. A Recreation Passport is required for vehicle entry to all state park campgrounds."
+      },
+      "source": "https://midnrreservations.com/ (Highland Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (all 25 sites one fee schedule: $20 on each date) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Highland / Rustic Campground: rustic camping rate $20) + https://www.michigan.gov/recsearch/parks/highland ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://midnrreservations.com/ (Highland Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (all 25 sites 'Electrical Service=Not Available, Sewer Hookup=No') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates ('Rustic campgrounds include access to vault toilets and hand pumps for fresh/potable water. Electrical is not available.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 25,
+        "max_rig_ft": 40,
+        "note": "25 sites, each with a picket pole, fire ring and picnic table; every site takes tents or a trailer/RV up to 40 ft on the booking site. Two accessible sites with concrete pads (20 and 21)."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/highland ('offers 25 campsites open to both equestrian and nonequestrian campers. Each site features a picket pole, fire ring and picnic table', 'two accessible sites outfitted with concrete pads (sites 20 and 21)', 'Number of sites: 25') + https://midnrreservations.com/ (Highland Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (allowed equipment on all 25 sites: Tents, Trailer or RV up to 20'...40'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "flush_toilets": false, "showers": false, "note": "No modern restrooms; vault toilets and a water pump with potable water."},
+      "source": "https://www.michigan.gov/recsearch/parks/highland ('While there are no modern restrooms, vault toilets and a water pump providing potable water are available.') + DNR rates table (Highland Rustic Campground: 'Rustic - No modern restrooms'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "note": "Reserve online on MiDNRReservations or at 800-447-2757. The DNR rates table gives a reservation season of April 1 - September 30."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/highland (Highland Rustic and Equestrian Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Highland Recreation Area, 25 bookable campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Highland / Rustic Campground: reservation season starts April 1, ends September 30), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Rustic and equestrian campground of Highland Recreation Area (Oakland County, 10-plus inland lakes), open to equestrian and non-equestrian campers alike. The Cedar Creek Trail links the campground to the park's 44-mile trail system, including its 11 miles of equestrian trail; the horse campground and trails are maintained with help from the Highland Trail Riders Association. --Claude",
+  "summary": "DNR park page + booking site + DNR rates table: 25 sites, $20 (2026 and 2027, confirmed) + Recreation Passport, no electric, vault toilets + pump water, no modern restrooms, reservable on MiDNRReservations (inherited platform confirmed). Changed max_rig_ft 45 -> 40 (booking site: every site 'Trailer or RV up to 40''). Season (derived year_round: false) left: only a reservation season (Apr 1 - Sep 30) is stated, now in booking.note. Phone 248-889-3750 matches. Note trimmed of field restatements and the reservation-season-as-season line.",
+  "flags": [
+    "Criteria (horse camp, co-located): the DNR park page says 'Highland's Rustic and Equestrian Campground offers 25 campsites open to both equestrian and nonequestrian campers. Each site features a picket pole, fire ring and picnic table.' The rates table types it 'equestrian campground'. There is no separate non-horse rustic loop: the only other camping is a 7-site Group-Use Area for groups and the Bass Lake Lodge. Horse and non-horse campers share the same 25 sites, so this fails AWH's rule (keep only with clear wording that horses are not co-located with the non-horse camping)."
+  ]
+}
