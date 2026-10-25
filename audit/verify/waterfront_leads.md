@@ -306,3 +306,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3651 Leverentz Lake SFC: DNR "sits on the shores of Little and Big Leverentz Lakes"; entry lakeview (p3-140).
 - 3686 Little Lake SFC: DNR "situated on the east side of Little Lake", "a small beach area centrally located in the campground"; entry lakeview (p3-140).
 - 13456 Log Lake (Kalkaska Co): Campspot sells a "Waterfront Electric Only Site" (site 40), county posts a $45 "Waterfront" rate; entry not waterfront (p3-140).
+- 3784 Marion Lake (Ottawa NF): FS "lakeside spurs provide grand views of the south and west shores"; entry not waterfront (p3-141).
+- 3629 Metamora-Hadley RA: DNR "The north loop offers some campsites on the water"; entry lakeview (p3-141).
