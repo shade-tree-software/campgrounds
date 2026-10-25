@@ -291,3 +291,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3613 Fort Wilkins East Loop: RE-PIN FIRST - the stored 47.4662,-87.8680 is inside the West campground; the East campground is ~0.7 km east (OSM centre 47.4661,-87.8585, own road off US-41). Then: DNR campground map puts sites 1-10 on the Lake Fanny Hooe shore with "STAIRS TO LAKE" and observation decks; entry not waterfront (p3-135).
 - 3612 Fort Wilkins West Loop: DNR campground map draws 50-amp pull-throughs 142-158 and sites 161-179 along the Lake Fanny Hooe shore; entry not waterfront (p3-135).
 - 3776 Flowing Well (Hiawatha NF): rec.gov + FS "Some sites are situated along the bank, overlooking the slow-moving river"; entry riverview (p3-135).
+- 14029 Goose Creek SFC: DNR "sits on the shore of the Upper Manistee River", all nine sites "have a view of the river"; entry not waterfront (p3-136).
+- 3997 Grass Lake SFC: DNR "Located on Grass Lake Flooding", ramp + Betsie River carry-in "on site"; entry not waterfront (p3-136).
+- 3971 Haymarsh Lake (Mecosta Co): county sells "Rustic Waterfront Camping", campground "perched on the edge of Haymarsh Lake"; entry not waterfront (p3-136).
+- 3694 Guernsey Lake SFC: DNR "nestled on Guernsey Lake's north shore"; entry lakeview (p3-136).
+- 3660 Glidden Lake SFC: DNR "on Glidden Lake's eastern shore"; entry lakeview (p3-136).
