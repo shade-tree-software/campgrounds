@@ -153,6 +153,14 @@ SCHEMA = {
                              season=STR,
                              waived_if=OBJ(booking_within_days=INT()))),
         "max_stay_nights": INT(),
+        # The dates reservations are TAKEN, which is not when the campground is
+        # open (AWH 2026-10-25). Michigan's DNR publishes only a "reservation
+        # season" per campground, and 57 of its entries had it written into
+        # `season`, telling the map a campground was shut on dates when it runs
+        # first-come (Algonac) or takes weekend bookings (Bishop Lake). Same
+        # shape as `season`, replaced whole like any OBJ: a reservation window is
+        # one span, and part-merging two of them yields a span nobody published.
+        "season": OBJ(year_round=BOOL, opens=MMDD, closes=MMDD),
         "note": STR,                         # anything the vocabulary can't hold
     },
     "fees": {
@@ -548,7 +556,7 @@ def policy_ref(entry):
 # reservation for long weekends is two nights"), and it was printing under 89
 # first-come entries, 48 of them BC's (2026-10-20).
 RESERVATION_ONLY_KEYS = ("platform", "url", "window_opens_days", "reserve_until",
-                         "min_stay")
+                         "min_stay", "season")
 # The same, in `fees`: a booking fee printed under a first-come campground (109
 # entries, 39 of them Nebraska walk-up areas under NE's $8.50 fee, 2026-10-20).
 RESERVATION_ONLY_FEE_KEYS = ("reservation_fee",)
@@ -754,21 +762,30 @@ FIELD_LABELS = {
 }
 
 
-def _label(key):
-    return FIELD_LABELS.get(key) or key.replace("_", " ").capitalize()
+# Where one key means different things in different places. `season` inside a
+# minimum-stay rule bounds the rule; directly under `booking` it is the
+# reservation season. Looked up before FIELD_LABELS.
+PATH_LABELS = {
+    "booking.season": "Reservation season",
+}
 
 
-def _spec_to_client(spec, key):
+def _label(key, path=None):
+    return (PATH_LABELS.get(path) or FIELD_LABELS.get(key)
+            or key.replace("_", " ").capitalize())
+
+
+def _spec_to_client(spec, key, path=None):
     kind, constraint = spec
     if kind == "list":
         item_spec, slots = constraint
-        return {"kind": "list", "label": _label(key), "slots": slots,
+        return {"kind": "list", "label": _label(key, path), "slots": slots,
                 "item": _spec_to_client(item_spec, key)}
     if kind == "obj":
-        return {"kind": "obj", "label": _label(key),
+        return {"kind": "obj", "label": _label(key, path),
                 "fields": [dict(_spec_to_client(s, k), key=k)
                            for k, s in constraint.items()]}
-    out = {"kind": kind, "label": _label(key)}
+    out = {"kind": kind, "label": _label(key, path)}
     if constraint is not None:
         out["choices"] = list(constraint)
     return out
@@ -789,6 +806,6 @@ def to_client():
     return [{"key": group,
              "label": GROUP_LABELS.get(group, group.title()),
              "none": group in NONE_GROUPS,
-             "fields": [dict(_spec_to_client(spec, key), key=key)
+             "fields": [dict(_spec_to_client(spec, key, f"{group}.{key}"), key=key)
                         for key, spec in fields.items()]}
             for group, fields in SCHEMA.items()]

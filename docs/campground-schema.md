@@ -192,7 +192,7 @@ triggered **only by the entry's own value**, never by an inherited one (a defaul
 switch off another default):
 
 - own `booking.reservable: false` → drop the agency's `platform`, `url`,
-  `window_opens_days`, `reserve_until`, `min_stay`. **`max_stay_nights` stays**: a
+  `window_opens_days`, `reserve_until`, `min_stay`, `season`. **`max_stay_nights` stays**: a
   14-night limit binds a first-come site too, whereas every registry minimum is a rule of
   the booking system (89 first-come entries, 48 of them BC's, printed one until 2026-10-20).
   The agency's `fees.reservation_fee` goes too (2026-10-20: 109 first-come entries were
@@ -321,7 +321,10 @@ manage form become unmanageable otherwise.
   "reserve_until": { ... },      // see §4.1
   "fcfs": "after_cutoff",        // "never" | "always" | "after_cutoff" | "some_sites"
   "min_stay": [ ... ],           // a LIST of rules — see §4.1
-  "max_stay_nights": 14
+  "max_stay_nights": 14,
+  "season": {                    // added 2026-10-25 — when reservations are TAKEN
+    "opens": "05-15", "closes": "10-14"   // same shape as "season"; or "year_round": true
+  }
 },
 
 "fees": {
@@ -382,6 +385,17 @@ deliberately rather than by adding a free-text escape.
 **These are evaluated against the query's arrival date and booking time**, never stored as a
 verdict. A rule the evaluator cannot interpret degrades to "verify" and the entry is still
 shown (§2.2).
+
+**A reservation season is not a campground season** (AWH 2026-10-25). `season` is when the
+campground is open; `booking.season` is when it takes reservations, and the two differ
+whenever a campground runs first-come either side of its booking window (Algonac Riverfront,
+D. H. Day, Keyhole) or takes only weekend bookings for part of the year (Bishop Lake). An
+agency table that publishes only the reservation dates — Michigan DNR's "reservation season
+starts/ends" — fills `booking.season` and leaves `season` absent (unknown) unless another
+source states when the campground is open. Fifty-seven Michigan entries had those dates in
+`season` until 2026-10-25 and were moved; a loop-by-loop table keeps the widest span in the
+field and the per-loop dates in `booking.note`. The popup chip says "reservable", never
+"open", so the span cannot be read as the season it was split from.
 
 Anything the vocabulary cannot hold goes in a prose `booking.note` — and the entry's `note`
 remains the source of truth for nuance (§6).

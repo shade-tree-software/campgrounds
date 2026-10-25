@@ -190,6 +190,27 @@ class TestCoercion(unittest.TestCase):
         with self.assertRaises(cs.SchemaError):
             cs.apply_update({}, {"hookups": {"electric": 42}})
 
+    def test_reservation_season_is_separate_from_the_season(self):
+        """booking.season is when reservations are taken, not when the
+        campground is open, so it never touches `season` (AWH 2026-10-25)."""
+        entry = {"season": {"year_round": True}}
+        cs.apply_update(entry, {"booking": {"season": {"opens": "05-15",
+                                                        "closes": "09-15"}}})
+        self.assertEqual(entry["booking"]["season"], {"opens": "05-15", "closes": "09-15"})
+        self.assertEqual(entry["season"], {"year_round": True})
+        with self.assertRaises(cs.SchemaError):
+            cs.apply_update({}, {"booking": {"season": {"opens": "May 15"}}})
+
+    def test_reservation_season_has_its_own_label(self):
+        """`season` inside a minimum-stay rule bounds the rule; directly under
+        booking it is the reservation season. One key, two labels."""
+        booking = next(g for g in cs.to_client() if g["key"] == "booking")
+        by_key = {f["key"]: f for f in booking["fields"]}
+        self.assertEqual(by_key["season"]["label"], "Reservation season")
+        rule = by_key["min_stay"]["item"]["fields"]
+        self.assertEqual(next(f for f in rule if f["key"] == "season")["label"],
+                         "Season it applies in")
+
     def test_season_dates_are_mmdd(self):
         entry = {}
         cs.apply_update(entry, {"season": {"opens": "04-01", "closes": "10-31"}})

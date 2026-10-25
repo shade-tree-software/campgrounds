@@ -29,7 +29,7 @@ GROUPS = {
     "sites": ["count", "max_rig_ft", "pull_through"],
     "season": ["year_round", "opens", "closes"],
     "booking": ["reservable", "window_opens_days", "reserve_until", "fcfs",
-                "min_stay", "max_stay_nights"],
+                "min_stay", "max_stay_nights", "season"],
     "fees": ["nightly_low", "nightly_high", "currency", "reservation_fee",
              "nonresident", "prereq_pass", "entrance", "surcharges"],
     "discounts": ["good_sam", "military", "interagency_senior_access"],
@@ -119,6 +119,15 @@ class ChipPhrasingTest(unittest.TestCase):
                 {"nights": 3, "applies": "holiday"}]}),
             ["min stay 2 nights on weekends (Memorial Day - Labor Day), "
              "3 on holidays"])
+
+    def test_reservation_season_says_reservable(self):
+        """A bare span under Booking would read as the campground's season,
+        which is exactly the confusion the field was split out to end."""
+        self.assertEqual(
+            self.chips("booking", {"season": {"opens": "05-15", "closes": "10-14"}}),
+            ["reservable May 15 \u2013 Oct 14"])
+        self.assertEqual(self.chips("booking", {"season": {"year_round": True}}),
+                         ["reservable year-round"])
 
     def test_booking_cutoff_says_what_closes_and_relative_to_what(self):
         self.assertEqual(

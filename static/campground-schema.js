@@ -177,6 +177,19 @@ function sfChip(groupKey, field, value, cur) {
       return nights + applies + season;
     }).join(', ');
   }
+  // When reservations are taken, which is not when the campground is open: the
+  // word "reservable" is the whole point of the chip, since an unlabelled span
+  // would read as the season it was split away from (AWH 2026-10-25).
+  if (k === 'booking.season') {
+    if (!value) return null;
+    if (value.year_round) return 'reservable year-round';
+    if (value.opens && value.closes) {
+      return 'reservable ' + sfDate(value.opens) + ' \u2013 ' + sfDate(value.closes);
+    }
+    if (value.opens) return 'reservable from ' + sfDate(value.opens);
+    if (value.closes) return 'reservable until ' + sfDate(value.closes);
+    return value.year_round === false ? 'reservable part of the year' : null;
+  }
   // "closes 21:00" left the reader two questions \u2014 what closes, and 21:00 of
   // which day. It is the reservation window, and it shuts relative to ARRIVAL.
   if (k === 'booking.reserve_until') {
