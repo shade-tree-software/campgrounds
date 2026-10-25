@@ -288,3 +288,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3770 Carp River (Hiawatha NF) (weak): FS "adjacent to the Carp Wild and Scenic River", stairs down the bank; entry not waterfront (p3-132).
 - 14578 CreationView (weak): operator "Waterfront Views ... Nature Lake and Otto's Pond", "Scenic waterfront areas"; CampLife's Water-front amenity is on the cabin type only; entry not waterfront (p3-133).
 - 3726 East Branch of Fox River SFC: DNR "located on the East Branch of the Fox River and King's Pond", fishing pier; entry not waterfront (p3-134).
+- 3613 Fort Wilkins East Loop: RE-PIN FIRST - the stored 47.4662,-87.8680 is inside the West campground; the East campground is ~0.7 km east (OSM centre 47.4661,-87.8585, own road off US-41). Then: DNR campground map puts sites 1-10 on the Lake Fanny Hooe shore with "STAIRS TO LAKE" and observation decks; entry not waterfront (p3-135).
+- 3612 Fort Wilkins West Loop: DNR campground map draws 50-amp pull-throughs 142-158 and sites 161-179 along the Lake Fanny Hooe shore; entry not waterfront (p3-135).
+- 3776 Flowing Well (Hiawatha NF): rec.gov + FS "Some sites are situated along the bank, overlooking the slow-moving river"; entry riverview (p3-135).
