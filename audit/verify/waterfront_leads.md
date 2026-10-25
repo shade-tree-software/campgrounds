@@ -303,3 +303,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3668 Lake Marjory SFC: DNR "sits on the north shore of Lake Marjory"; entry lakeview (p3-139).
 - 3763 Kneff Lake (Huron NF): rec.gov "centered around the 20-acre Kneff Lake"; entry not waterfront (weak, p3-139).
 - 3610 Lake Hudson RA: DNR "located near the lake, and some sites have a lake view"; entry not waterfront (weak, p3-139).
+- 3651 Leverentz Lake SFC: DNR "sits on the shores of Little and Big Leverentz Lakes"; entry lakeview (p3-140).
+- 3686 Little Lake SFC: DNR "situated on the east side of Little Lake", "a small beach area centrally located in the campground"; entry lakeview (p3-140).
+- 13456 Log Lake (Kalkaska Co): Campspot sells a "Waterfront Electric Only Site" (site 40), county posts a $45 "Waterfront" rate; entry not waterfront (p3-140).
