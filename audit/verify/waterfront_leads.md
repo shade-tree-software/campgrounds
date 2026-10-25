@@ -308,3 +308,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13456 Log Lake (Kalkaska Co): Campspot sells a "Waterfront Electric Only Site" (site 40), county posts a $45 "Waterfront" rate; entry not waterfront (p3-140).
 - 3784 Marion Lake (Ottawa NF): FS "lakeside spurs provide grand views of the south and west shores"; entry not waterfront (p3-141).
 - 3629 Metamora-Hadley RA: DNR "The north loop offers some campsites on the water"; entry lakeview (p3-141).
+- 3743 Minnie Pond (Huron-Manistee NF): FS "This site is located on Minnie Pond on a human-made impoundment"; entry not waterfront (p3-142).
+- 3769 Monocle Lake (Hiawatha NF): rec.gov campground "surrounds the south end of 172-acre Monocle Lake", FS "camped along the shores"; entry not waterfront (p3-142).
