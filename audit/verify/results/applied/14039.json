@@ -1,0 +1,41 @@
+{
+  "id": 14039,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/brighton",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+    "https://midnrreservations.com/"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2027", "note": "$20 a night for every Appleton site on the booking site for 2027 (probed 2027-05-20 and 2027-07-13); the DNR's 2026 rates table also gives $20. A Recreation Passport is required for vehicle entry."},
+      "source": "https://midnrreservations.com/ (Brighton Recreation Area, map 'Appleton', fee schedule -32523: /api/resource/feeDetails 2027-05-20 and 2027-07-13 = 20.0; audit/state_park_fees/gtc_probe.py) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Brighton, Appleton Lake campground: $20), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://midnrreservations.com/ (all 25 Appleton sites: 'Electrical Service=Not Available, Sewer Hookup=No'; no water hookup attribute) + https://www.michigan.gov/recsearch/parks/brighton ('Rustic sites'; 'a hand pump for potable water'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 24, "max_rig_ft": 45, "note": "The DNR page says 24 sites; the booking site maps 25 (A1-A25). Allowed equipment by site on the booking site: 3 to 30 ft, 11 to 35 ft, 9 to 40 ft, 2 to 45 ft."},
+      "source": "https://www.michigan.gov/recsearch/parks/brighton ('The Appleton Lake rustic campground offers 24 sites surrounded by oaks') + https://midnrreservations.com/ (Appleton map resources, allowedEquipment per site: largest class 'Trailer or RV up to 45'' on 2 sites), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Two vault toilets and a hand pump for potable water. Within walking distance of the Appleton Lake boating access site (dirt with a concrete ramp); direct access to trails open to mountain biking."},
+      "source": "https://www.michigan.gov/recsearch/parks/brighton ('There are two vault toilets and a hand pump for potable water. The campground is within walking distance to the Appleton Lake Boating Access Site and provides direct access to trails open to mountain biking'; 'Appleton Lake (dirt with concrete ramp)'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://midnrreservations.com/", "note": "Reserve online at MiDNRReservations.com or call 800-447-2757. The booking site takes Appleton reservations April 1 - October 14 (the DNR table's reservation season); dates outside it show every site unbookable."},
+      "source": "https://www.michigan.gov/recsearch/parks/brighton (Appleton Lake Rustic Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (/api/availability/map for Appleton: 2026-11-10, 2027-03-25 and 2027-10-16 all 25 sites unavailable (code 2); 2027-04-02 and 2027-10-13 all bookable) + rates table (reservation season April 1 - October 14), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Rustic campground in Brighton Recreation Area near Appleton Lake, in an oak forest; one of the park's several campgrounds (the modern Bishop Lake campground and the Murray Lake rustic campground are separate). --Claude",
+  "summary": "DNR park page + rates table + MiDNRReservations: Appleton Lake rustic campground, 24 sites (booking site maps 25), $20 (2027 on the booking site; 2026 table $20), no hookups, vault toilets + hand pump, rigs to 45 ft (equipment classes 30-45 ft), reservable online or 800-447-2757 (confirmed; platform/url now on the entry). Phone 810-229-6566 matches. Season left as recorded (manual) but flagged: it is the reservation season. Note trimmed of field restatements.",
+  "flags": [
+    "Season: the stored April 1 - October 14 (manual, 2026-10-20) is the DNR rates table's RESERVATION season, which is not a campground season. MiDNRReservations shows every Appleton site unbookable on 2026-11-10, 2027-03-25 and 2027-10-16 and bookable 2027-04-02 and 2027-10-13; no DNR page says whether the campground stays open for walk-ups outside those dates."
+  ]
+}

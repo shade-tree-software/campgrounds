@@ -275,3 +275,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3691 Big Bear Point SFC: DNR "sits on the north shore of Big Bear Lake", carry-in access "directly at some campsites"; entry lakeview (p3-130).
 - 3725 Black Creek SFC: DNR "on the banks of Black Creek", sites "nestled along Black Creek", 12 sites "accessible from the water"; entry not waterfront (p3-130).
 - 3728 Big Eric's Bridge SFC (weak): DNR "located along the Huron River"; entry riverview (p3-130).
+- 14025 Bray Creek SFC: DNR "situated along the banks of the Baldwin River", confluence "adjacent to the campground"; entry not waterfront (river reached by stairs from the day-use area) (p3-131).
+- 3713 Black River SFC (weak): DNR "quick access to the Black River", carry-in access; entry not waterfront (p3-131).
+- 3797 Bob Lake (Ottawa NF) (weak): FS "Many of the sites are situated near the lake"; entry not waterfront (p3-131).
+- 3739 Bowman Bridge (weak): rec.gov "situated along the Pere Marquette National Scenic River", but FS puts it "up the hill from Bowman Bridge Boat Landing"; entry not waterfront (p3-131).
