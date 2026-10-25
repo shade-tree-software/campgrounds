@@ -239766,40 +239766,47 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/sleeper\nhttps://midnrreservations.com",
     "phone": "989-856-4411",
-    "note": "Modern campground, 226 sites (~223 electric, 30/50-amp) in east and west loops with a sanitation station. Campground is across the park road from the Saginaw Bay (Lake Huron) beach; west loop nearer the beach. Reservable online. MI Recreation Passport required. --Claude",
+    "note": "Modern campground under oaks and pines, across M-25/Port Austin Road from the Saginaw Bay (Lake Huron) day-use beach, reached by a pedestrian overpass bridge; the west end is nearer the beach. --Claude",
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "count": 226
+      "count": 226,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "Modern campground of 226 sites in three map sections (1-17/59-94/126-139, 18-58/95-125, 140-226), mostly generous and shaded by oaks and pines; four ADA sites at the west end; plus a mini cabin. On the booking site the 20/30-amp sites take trailers/RVs to 40 ft and the 50-amp sites to 50 ft and over."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/sleeper ('There is 30- or 50-amp service available on each site') + midnrreservations.com site attributes (all 225 campsites 'Electric and Water Hookups=Electric Only', 'Sewer Hookup=No'; 85 with 20/30/50 A; one 'Auxiliary' site with sewer is not a public campsite map), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/sleeper ('Number of sites: 226', 'Pull-through sites available') + midnrreservations.com resources (equipment to 'Trailer or RV up to 40'' on 140 sites and 'Trailer or RV over 50'' on 85), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/sleeper (Sleeper Modern Campground: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/sleeper (Sleeper Modern Campground: 'Concession or store', 'Sanitation station', 'Toilet & shower building', 'Vault toilet', 'WiFi'; 'The park's sanitation station is located near the campground office. There is potable water available and two lanes'; 'The modern toilet/shower building is closed after mid-October, but vault toilets and water are available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Sleeper / Sleeper Campground",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails per fee schedule ($37 for 140 20/30-amp sites and $42 for 85 50-amp sites on 2027-06-08 and 2027-07-13; $35 / $40 on 2026-10-20) + https://www.michigan.gov/recsearch/parks/sleeper ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Sleeper / Sleeper Campground: May 1 - October 22), read 2026-10-20",
@@ -239813,17 +239820,31 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "The modern toilet/shower building closes after mid-October; vault toilets and water stay available."
     },
     "fees": {
-      "nightly_low": 35,
-      "nightly_high": 40,
-      "currency": "USD"
+      "nightly_low": 37,
+      "nightly_high": 42,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-06-08 and 07-13 alike): 20/30-amp sites $37, 50-amp sites $42; 2026 (Oct 20): $35 / $40. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."
     },
     "season": {
       "year_round": false,
       "opens": "05-01",
       "closes": "10-22"
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/sleeper https://midnrreservations.com/ (Sleeper State Park campsites via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-20, 2027-06-08 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+      "note": "DNR park page + booking site: 226 sites, 30/50 A on every site (85 with 50 A), electric only, pull-throughs, RVs to 40 ft (20/30 A sites) and 50+ ft (50 A sites), showers/flush and vault toilets/sanitation station with potable water, store, WiFi. Fees 35-40 (2026 table) -> 37-42 (2027 booking site; 2026 rates and the Recreation Passport in fees.note). Season (manual) left. Inherited window/15-night max not stated on the park page; left inherited. Note trimmed of what the fields hold."
     }
   },
   {
@@ -241454,7 +241475,7 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'riverview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/algonac\nhttps://midnrreservations.com",
     "phone": "810-765-5605",
-    "note": "Large modern campground (~220 sites in north/south loops, ~110 electric with 30/50-amp; north loop has full hookups), open grassy gravel-spur sites, fits RVs to 50 ft, along the half-mile St. Clair River frontage. A through-road runs between the front sites and the river; freighter-watching is the draw. Reservable online. MI Recreation Passport required for entry. --Claude",
+    "note": "Open, grassy sites along the park's half-mile St. Clair River frontage. A through-road runs between the front sites and the river; freighter-watching is the draw. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
@@ -241462,34 +241483,43 @@
     },
     "sites": {
       "count": 220,
-      "max_rig_ft": 50
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "North and south loops; mostly generous, level sites on gravel pads; two ADA sites. The full-hookup sites are in the north section, which has no shared restrooms or showers. On the booking site 202 sites take trailers/RVs to 50 ft (110 'over 50''), the 18 30-amp full-hookup sites to 40 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator"
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Riverfront: 'There is 30- or 50-amp service available on portion of sites', 'Full-hookup sites') + midnrreservations.com site attributes (110 sites 'Electric & Water, Electrical Service=20 Amps/30 Amps/50 Amps, Sewer Hookup=Yes'; 18 with 20/30 A, water and sewer; 92 'Electric Only' 20/30 A), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/algonac ('The modern campground has 220 sites in the north and south loops', 'A majority of sites have gravel pads', 'Pull-through sites available') + midnrreservations.com resources (equipment to 'Trailer or RV over 50'' on 110 sites, 'up to 50'' on 92, 'up to 40'' on 18), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Algonac Modern Riverfront: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Algonac / Riverfront",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails per fee schedule (Riverfront North/South: $37 for 92 electric-only sites, $47 for 18 and $52 for 110 full-hookup sites on 2027-06-08 and 2027-07-13; $35 / $45 / $50 on 2026-10-20) + https://www.michigan.gov/recsearch/parks/algonac ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Algonac / Riverfront: March 22 - November 29), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Algonac Modern Riverfront: 'Concession or store', 'Sanitation station', 'Toilet & shower building', 'Vault toilet'; 'the north section of the campground features full hookup sites, meaning there are no shared restrooms or showers in that area'), read 2026-10-25",
+        "checked": "2026-10-25",
         "method": "manual"
       }
     },
@@ -241499,13 +241529,27 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 30,
-      "nightly_high": 40,
-      "currency": "USD"
+      "nightly_low": 37,
+      "nightly_high": 52,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-06-08 and 07-13 alike): 20/30-amp electric-only sites $37, 30-amp full-hookup sites $47, 50-amp full-hookup sites $52; 2026 (Oct 20): $35 / $45 / $50. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."
     },
     "season": {
       "year_round": true,
       "note": "Reservable Mar 22 - Nov 29; semi-modern sites are first-come the rest of the year. Full-hookup sites have no water Oct 22 - Apr 15."
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/algonac https://midnrreservations.com/ (Algonac State Park campsites via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-20, 2027-06-08 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+      "note": "DNR park page + booking site: 220 sites in north/south loops, 20/30 A electric-only (92), 30 A full hookup (18) and 50 A full hookup (110), pull-throughs, RVs to 50+ ft, showers/flush and vault toilets/sanitation station, store. Fees 30-40 (old table) -> 37-52 (2027 booking site; 2026 $35-50 and the Recreation Passport in fees.note). Season (manual, year-round with reservable window) left. Inherited window/15-night max not stated on the park page. Already split from Wagon Wheel. Note trimmed of"
     }
   },
   {
@@ -241521,31 +241565,45 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/algonac\nhttps://midnrreservations.com",
     "phone": "810-765-5605",
-    "note": "87-site modern campground (~0.45 mi inland from Riverfront) in a wagon-wheel layout tucked in the woods, paved pads, more shade and privacy and away from road noise. Reservable online. MI Recreation Passport required for entry. --Claude",
+    "note": "Modern campground about 0.45 mi inland from Riverfront (the DNR calls the St. Clair River a 10-minute walk), laid out in a circle like a wagon wheel and set back in the woods; more shade and privacy and away from road noise. --Claude",
     "sites": {
-      "count": 87
+      "count": 76,
+      "max_rig_ft": 50,
+      "note": "Paved pad on each site; three ADA sites. The booking site lists trailers/RVs to 50 ft and over at some sites."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator"
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Algonac Modern Wagon Wheel: 'Number of sites: 76', 'features a paved pad on each site', 'three ADA accessible campground sites') + midnrreservations.com resources (equipment to 'Trailer or RV over 50''), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Algonac Modern Wagon Wheel: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Algonac / Wagon Wheel",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ feeDetails (Wagon Wheel: one fee schedule for all 76 sites, $30 on 2027-06-08 and 2027-07-13, $28 on 2026-10-20) + https://www.michigan.gov/recsearch/parks/algonac ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Algonac / Wagon Wheel: May 15 - October 21), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "midnrreservations.com site attributes (all 76 Wagon Wheel sites 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps, Sewer Hookup=No') + https://www.michigan.gov/recsearch/parks/algonac (Wagon Wheel: 'Electrical service'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.michigan.gov/recsearch/parks/algonac (Algonac Modern Wagon Wheel: 'Concession or store', 'Sanitation station', 'Toilet & shower building', 'Vault toilet'; 'There is a sanitation station'), read 2026-10-25",
+        "checked": "2026-10-25",
         "method": "manual"
       }
     },
@@ -241555,14 +241613,33 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 28,
-      "nightly_high": 28,
-      "currency": "USD"
+      "nightly_low": 30,
+      "nightly_high": 30,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-06-08 and 07-13 alike): every site $30; 2026 (Oct 20): $28. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."
     },
     "season": {
       "year_round": false,
       "opens": "05-15",
       "closes": "10-21"
+    },
+    "hookups": {
+      "electric": 30,
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "vault_toilets": true,
+      "dump": true,
+      "camp_store": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/algonac https://midnrreservations.com/ (Algonac State Park campsites via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-20, 2027-06-08 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+      "note": "DNR park page + booking site: 76 sites (was 87, from note prose), 20/30 A electric only, paved pads, RVs to 50+ ft, showers/flush and vault toilets/sanitation station, store. Fees 28 (2026 table) -> 30 (2027 booking site; 2026 rate and the Recreation Passport in fees.note). Season (manual) left. Already split from Riverfront. Note's '87-site' corrected out and trimmed of what the fields hold."
     }
   },
   {
@@ -245572,17 +245649,19 @@
     "inclusion_evidence": "Satellite at 46.2250,-87.4920: drive-in forest campground w/ clearings + boat landing on Anderson Lake; note '13 drive-in back-in sites, small and large trailer' -> real MI DNR SFCG",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest",
-    "phone": "906-346-9201",
-    "note": "Secluded rustic campground on Anderson Lake, 5 mi SW of Gwinn via CR 577. 13 drive-in back-in sites for tent, small and large trailer; pit toilets, hand-pump well, no electric. FCFS, no reservations, ~$20/night, 15-day max stay, MI Recreation Passport required. Boat landing and small sand swimming beach; Anderson Lake Pathway trailhead (6 mi of loops) in the campground. Only Anderson Lake SFCG currently listed by DNR (no separate 'East'). --Claude",
+    "phone": "906-789-8217",
+    "note": "Secluded rustic campground near Anderson Lake, 5 mi SW of Gwinn via CR 577. Small sand swimming beach; the Anderson Lake Pathway trailhead (6 mi of loops) is in the campground. The DNR lists only this West campground (no separate 'East'). --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 13
+      "count": 13,
+      "note": "13 sites 'for tent, small trailer and large trailer use', mostly shaded by large white pines. No length limit posted. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Small gravel boat launch on Anderson Lake."
     },
     "booking": {
       "reservable": false,
@@ -245591,28 +245670,33 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest ('This more-secluded, rustic campground features 13 sites for tent, small trailer and large trailer use', 'One camping unit and six people are allowed per site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest ('There are vault toilets', 'Potable (drinking) water is available from a hand-pump well', 'A small, gravel boat launch is located on Anderson Lake'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest ('No reservations. Sites available on a first-come, first-served basis', 'Camping is limited to a 15-day maximum stay'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Anderson Lake State Forest Campground, Marquette Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
         "checked": "2026-10-20",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground', 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
         "method": "manual"
       }
     },
@@ -245625,6 +245709,17 @@
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "fees": {
+      "nightly_low": 20,
+      "nightly_high": 20,
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/andersonlakewest",
+      "note": "DNR page: 13 sites for tent, small and large trailer, $20/night at the kiosk + Recreation Passport (fees, previously only inherited, now on the entry), no electric, vault toilets, hand-pump water, gravel boat launch; first-come only, 15-day maximum (all confirmed). Season (open all year) already manual. Note trimmed of what the fields hold."
     }
   },
   {
@@ -249227,17 +249322,19 @@
     "inclusion_evidence": "MI DNR recsearch page: 25 rustic drive-in sites on Ambrose Lake, boat launch, FCFS -> real state forest RV/tent campground",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake",
-    "phone": "989-345-0472",
-    "note": "Rustic MI DNR state forest campground on Ambrose Lake, 11 mi N of West Branch. 25 sites (incl. accessible #6, #8), no electric, vault toilets, hand-pump well water; ~$20/night. FCFS - not reservable online. 15-day max stay. Recreation Passport required. Boat launch + carry-in paddle access; some sites directly on the lake. --Claude",
+    "phone": "989-473-2258",
+    "note": "Rustic MI DNR state forest campground on Ambrose Lake, 11 mi N of West Branch via South Fairview and Houghton Creek roads; some sites directly on the lake. Direct access to 9 miles of ORV/ATV trails. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 25
+      "count": 25,
+      "note": "25 sites 'for tents and RVs', large and spacious with generous room between them, moderately shaded; accessible sites #6 and #8. No length limit posted. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch on the south side; carry-in kayak/canoe access on the north side and at some sites."
     },
     "booking": {
       "reservable": false,
@@ -249246,28 +249343,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake ('The campground offers 25 sites for tents and RVs, including accessible sites #6 and #8', 'the campsites are large and spacious', 'One camping unit and six people are allowed per site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake ('There are vault toilets', 'Potable (drinking) water is available from a hand-pump well', 'There's a boat launch on the south side and carry-in access for kayaks and canoes on the north'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake ('No reservations. Sites available on a first-come, first-served basis', 'Camping is limited to a 15-day maximum stay'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Ambrose Lake State Forest Campground', Ogemaw Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground', 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Ambrose Lake State Forest Campground, Ogemaw Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -249284,11 +249382,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/ambroselake",
+      "note": "DNR page: 25 sites for tents and RVs, $20/night at the kiosk + Recreation Passport (fees.note), no electric, vault toilets, hand-pump water, boat launch; first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual. Note trimmed of what the fields hold."
     }
   },
   {
@@ -263319,7 +263423,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.mijackson.org/Facility/Details/Pleasant-Lake-County-Park-Campground-19\nhttps://mijacksoncountyweb.myvscloud.com/webtrac/web/",
     "phone": "517-788-4320",
-    "note": "Jackson County Parks & Rec campground at Pleasant Lake; 60 modern sites with water + 50-amp electric, hot showers, modern restrooms, dump station, sandy swim beach and public boat launch on the lake. Reservable online via Jackson County WebTrac (opens Jan 2) or by phone in season; 10-night max stay. Low RV Life rating but confirmed currently operating via the official county page. --Claude",
+    "note": "Jackson County Parks & Rec campground at Pleasant Lake, 21 acres under mature trees; sandy swim beach, public boat launch nearby. --Claude",
     "rating": {
       "stars": 1,
       "price_tier": 2,
@@ -263339,32 +263443,35 @@
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "max_stay_nights": 10
+      "max_stay_nights": 10,
+      "url": "https://mijacksoncountyweb.myvscloud.com/webtrac/web/",
+      "note": "Reservations open January 2, online through Jackson County's WebTrac or by phone at (517) 788-4320. No more than 10 consecutive nights; a new permit after 24 hours. Check-in 1 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mijackson.org/Facility/Details/Pleasant-Lake-County-Park-Campground-19 ('60 modern campsites are available with water and electricity'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mijackson.org/Facility/Details/Pleasant-Lake-County-Park-Campground-19 ('60 modern campsites'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mijackson.org/DocumentCenter/View/22677/Camping-Fees-2026-Season?bidId= ('Dumping Station (campers) ... No Charge'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.mijackson.org/Facility/Details/Pleasant-Lake-County-Park-Campground-19 ('Reservations open the 2nd of January. Online reservations can be made here: https://mijacksoncountyweb.myvscloud.com/webtrac/web/ Or, call our office at (517) 788-4320'; 'Campers are not permitted to camp for more than 10 consecutive nights') + fee sheet ('Maximum 10 Nights'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mijackson.org/DocumentCenter/View/22677/Camping-Fees-2026-Season?bidId= (audit/price_research/local_2026-10-17/pdf_hits.jsonl), read 2026-10-17",
-        "checked": "2026-10-17"
+        "source": "https://www.mijackson.org/DocumentCenter/View/22677/Camping-Fees-2026-Season?bidId= ('Non-County Resident Modern Site (30 amp service) ... $38.00', 'Non-County Resident Modern Site (50 amp service) ... $43.00', 'County Resident Modern Site (30 amp service) ... $33.00'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -263373,11 +263480,16 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 33,
+      "nightly_low": 38,
       "nightly_high": 43,
       "currency": "USD",
       "checked": "2026",
-      "note": "Jackson County 2026 camping fees: modern 30A $33 county resident / $38 non-resident, 50A $38 / $43; 10-night maximum. Read 2026-10-17."
+      "note": "Jackson County Parks 2026 fees (one table for its campgrounds): modern site with 30-amp service $38 a night for non-county residents, 50-amp $43. Jackson County residents pay $5 less ($33 / $38). Ten-day notice for refunds, none for weather; $20 processing fee. Read 2026-10-25."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.mijackson.org/Facility/Details/Pleasant-Lake-County-Park-Campground-19 https://www.mijackson.org/DocumentCenter/View/22677/Camping-Fees-2026-Season?bidId=",
+      "note": "Read the county's facility page and 2026 fee sheet. Changed fees $33-43 (resident base) -> $38-43, the non-county-resident rate as base per the local rule (residents $5 less, in fees.note). Confirmed 60 modern sites with water and electric, free dump for campers, WebTrac booking opening Jan 2, 10-night max (url added). Not on these pages: the 50-amp at THIS park (the fee table is county-wide; electric 50 left as derived), showers, season dates. Note trimmed of what the fields hold and the RV Lif"
     }
   },
   {
@@ -265176,7 +265288,7 @@
     "waterfront": "lakefront",
     "inclusion_evidence": "Campspot Oxbow Park listing: 30/50A electric/water/sewer hookup RV sites, boat launch/waterfront (0 avail = booked, not closed) -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.campspot.com/park/oxbow-park-newaygo-mi",
+    "website": "https://www.bigprairietownship.org/copy-of-parks-template-page-draft-1\nhttps://www.campspot.com/book/oxbow-park",
     "phone": "231-856-4279",
     "note": "Big Prairie Township park on the east side of the Hardy Dam backwaters near Newaygo, with docks, a swimming beach, a boat launch and cabins. --Claude",
     "rating": {
@@ -265190,7 +265302,9 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/oxbow-park",
+      "note": "Booked online on the township's Campspot booking page; office (231) 856-4279, hours vary through the year. Cabins carry a 2-night minimum on Campspot; RV sites quoted for one night."
     },
     "provenance": {
       "sites": {
@@ -265199,9 +265313,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Campspot park record for park_id 3691 (engine_slug 'oxbow-park'; RV site types quoted for 1 night, cabins 'There is a 2 night minimum'), read 2026-10-13 (audit/price_research/campspot_tier_2026-10-13.jsonl; Campspot refuses plain HTTP, 403 on 2026-10-25) + https://business.rivercountrychamber.com/list/member/big-prairie-township-parks-oxbow-and-big-bend-48 ('Call Oxbow(231)856-4279 ... as our hours change throughout the year'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -265244,6 +265358,11 @@
       "reservation_fee": 6,
       "checked": "2026",
       "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Standard Back-in, Standard Pull Through, Water View Back-In and Water View Pull Through). $35 on Wednesday, October 14, 2026, the last night before the park closes for the season; Campspot lists $40 for Friday, October 16 and $35 for Tuesday, October 20, after the park closes, on every type. The water-view sites were priced at $2,000 on October 14, which isn't a real rate. Plus the park's $6 'Reservation Surcharge', once per stay. The park adds 3% of the site charge as a 'Credit Card Surcharge'. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.bigprairietownship.org/copy-of-parks-template-page-draft-1 https://business.rivercountrychamber.com/list/member/big-prairie-township-parks-oxbow-and-big-bend-48 https://www.campspot.com/book/oxbow-park (Campspot park record cached in audit/price_research/campspot_tier_2026-10-13.jsonl: park_id 3691, engine_slug 'oxbow-park')",
+      "note": "Operator is Big Prairie Township (the township's Oxbow Park page gives 2973 Cottonwood Ave, Newaygo, phone (231) 856-4279, matching the entry); it says nothing else. Fees ($35-40 RV base, $6 reservation surcharge), 50-amp, season and the 197-site count stand from the 2026-10-13 Campspot read, which offers every RV type to motorhomes. Booking url set to the operator's campspot.com/book link. The township's old parks domain (bigprairietownshipparks.com, named on Campspot) no longer resolves. Not l"
     }
   },
   {
@@ -269106,8 +269225,8 @@
     "inclusion_evidence": "emerickpark.com site list: full-hookup + water/electric back-in RV sites (1-26), 30/50A, reservable May-Oct -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'riverview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://emerickpark.com/",
-    "phone": "",
-    "note": "Village of Hillman park on the Thunder Bay River. 26 sites (full-hookup, electric/water, and rustic) on 20 acres; gravel pads, site #10 fits up to 38 ft; bathhouse, kayak/canoe launch. Opens ~May 1, reservable online. RV Life: 2.0* / $$ (lightly reviewed; operator page confirms current operation) --Claude",
+    "phone": "989-370-8845",
+    "note": "Village of Hillman park on the Thunder Bay River, 20 acres; gravel pads, kayak/canoe launch, bandshell with free Saturday-night bands in summer. --Claude",
     "rating": {
       "stars": 2,
       "price_tier": 2,
@@ -269115,49 +269234,61 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "count": 26
+      "count": 26,
+      "pull_through": true,
+      "note": "14 full-hookup sites (pull-thru, 21-26 back-in), 8 water/electric back-ins, family site #10 (back-in, max 38 ft, up to 3 RVs) and 3 tent sites."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "dump": true,
+      "wifi": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "10-31",
+      "note": "Off-season November 1-30."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://letscamp.ca/camps/emerick-park",
+      "note": "Book online through the village's Let's Camp page ('Reserve Now!', emerickpark.campgroundonline.org redirects there). Check-in 2 pm, check-out 11 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://emerickpark.com/ (Rates & Sites: 'Hookups: 30A/50A, water, sewer'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://emerickpark.com/ ('features 26 sites'; Rates & Sites: 'Access: pull-thru, back-in (21-26)'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://emerickpark.com/ (Amenities: 'Shower House', 'Free WiFi', 'Dump Station'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://emerickpark.com/ (Dates & Hours: 'Season: May 1 - Oct 31', 'Off-Season: Nov 1 - 30'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://emerickpark.com/ ('Reserve your site now by clicking the Reserve Now button above or visiting https://emerickpark.campgroundonline.org/') + Let's Camp camp data (status live, check-in 14:00, check-out 11:00), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://emerickpark.com/ (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://emerickpark.com/ (Rates & Sites: 'Nightly: $30' for sites 1, 11-17, 21-26 with 30A/50A, water, sewer; 'Nightly: $25' for sites 2, 5-8, 18-20 with 30A, water), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -269170,7 +269301,12 @@
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Emerick Park (Village of Hale): 30-amp and water $25 a night, full hookup $30. Read 2026-10-15."
+      "note": "Village of Hillman's rate table: RV sites with 30-amp and water $25 a night, full-hookup (30/50-amp, water, sewer) $30; monthly $500/$550, selected seasonal sites $3,000 (May 1 - Oct 31); family site #10 (up to 3 RVs) $75; tent sites $15. Read 2026-10-25 (page (c) 2026)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://emerickpark.com/ https://letscamp.ca/camps/emerick-park",
+      "note": "Confirmed on the village's own site: $25 (30A/water) to $30 (full hookup) nightly, 30/50-amp with water and sewer, 26 sites with pull-throughs, showers/dump/WiFi, reservable online (Let's Camp). Season set to May 1 - Oct 31 (off-season Nov). Fixed the fees note's 'Village of Hale'. Mostly nightly: only 'selected' sites are sold seasonally ($3,000) and monthly rates are posted beside the nightly ones; the share of seasonal sites isn't stated. Note trimmed of what the fields now hold and the RV Li"
     }
   },
   {
@@ -270975,7 +271111,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.troutlaketownship.com/trout-lake-campground",
     "phone": "906-569-3299",
-    "note": "Trout Lake Township municipal park on Trout Lake, Chippewa County UP (mis-tagged 'Moran' on RV Life). ~83-90 sites, 60 with electric; no water/sewer at sites but dump station, shower house, boat launch. Open ~mid-May to mid-Oct, reservations by phone with deposit. Only a few sites directly on lakefront. --Claude",
+    "note": "Trout Lake Township municipal park on Trout Lake, Chippewa County UP (mis-tagged 'Moran' on RV Life). Boat launch, swimming area; only a few sites directly on the lakefront. --Claude",
     "rating": {
       "stars": 2,
       "price_tier": 2,
@@ -270987,39 +271123,49 @@
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "potable_water": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-18",
+      "note": "The 2026 season opened Monday, May 18; no closing date is posted."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reservations by phone at (906) 569-3299, accepted from the first Monday in May (May 4 in 2026), and in person at the campground office once it opens; none before. A non-refundable 50% deposit is due no later than 30 days before arrival. Off-season questions: (906) 569-3291."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('we do NOT offer water or sewer at our campsites'; 'most of which have electricity', amperage not given), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('The camping area has a shower house, water station, dump station, and public restrooms'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('will open for the 2026 camping season on Monday, May 18, 2026'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('New reservations for the 2026 season will be accepted starting Monday, May 4th, 2026 ... please call (906) 569-3299'; 'non-refundable deposit in an amount equal to 50% of the total cost'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.troutlaketownship.com/trout-lake-campground (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('2026 Camping Rates ... Non-Electric Sites $20/night ... Electric Sites $30/night'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.troutlaketownship.com/trout-lake-campground ('Trout Lake Township Park offers 90 campsites, most of which have electricity'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -271028,11 +271174,19 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 30,
+      "nightly_low": 20,
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Trout Lake Township 2026: electric sites $30 a night, non-electric $20. Read 2026-10-15."
+      "note": "Trout Lake Township 2026 rates: non-electric sites $20 a night ($100/week, $320 for 28 nights), electric sites $30 ($150/week, $480 for 28 nights). Fees paid at check-in; every camper pays, even if doubled up. Read 2026-10-25."
+    },
+    "sites": {
+      "count": 90
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.troutlaketownship.com/trout-lake-campground",
+      "note": "Read the township's own campground page. Changed fees $30-30 -> $20-30 (base is the $20 non-electric site; electric $30, 2026). Confirmed no water/sewer at sites, showers/dump, phone booking (906-569-3299, the entry's phone) with a 50% deposit; added 90 sites, potable water, 2026 opening May 18. Amperage, closing date and rig length not posted. Weekly/28-night rates exist but it sells nightly. Note trimmed of the fields' content and of the unsourced '60 with electric' (the page says 'most')."
     }
   },
   {
@@ -271713,9 +271867,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "City of Sault Ste Marie operator domain saultcity.com + BookMySites reservation portal: RV+tent+walk-in sites w/ water/electric/sewer, reservable 2026 -> real municipal RV campground",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://www.saultcity.com/parksrec/page/sherman-park-campground\nhttps://sherman.bookmysites.com/widget/map_availability",
+    "website": "https://www.saultcity.com/parksrec/page/sherman-park-campground\nhttps://www.campspot.com/book/shermanparkcg",
     "phone": "906-632-3268",
-    "note": "Modernized 68.7-acre city campground on the upper St. Marys River (the city's public beach). RV + tent + walk-in sites with water, electric, sewer. Reservable online via BookMySites ($8 fee); walk-in for unreserved. Season ~May 15-Oct 15. Operated by City of Sault Ste. Marie. (RV Life 1.5* reflects a single 2023 restroom-vandalism review; confirmed operating with 2026 reservations open and a 2025 review reporting it clean.) --Claude",
+    "note": "Modernized 68.7-acre city campground on the upper St. Marys River (the city's public beach), operated by the City of Sault Ste. Marie. RV Life's low rating rests on a single 2023 restroom-vandalism review; a 2025 review reports it clean. --Claude",
     "rating": {
       "stars": 1.5,
       "price_tier": 2,
@@ -271723,36 +271877,69 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "10-15"
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/shermanparkcg",
+      "note": "The city's page now sends 'Online Reservation System - NOW OPEN' to Campspot (it was BookMySites in 2026). Payment in full at booking; no mail reservations. In 2026 the season opened for booking in March, stays of 15+ nights two days before any length; Campspot had no 2027 dates yet on 2026-10-25. Staff: (906) 632-3268."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Campspot park record for shermanparkcg (FULL HOOK-UP type: '20-Amp', '30-Amp', '50-Amp', 'Sewer Hook-Up', 'Water Hook-Up'; WATER - SEWER type: sewer and water, no electric) + the city's fee schedule ('Campground Sites with Full Hook-up (electric, water, sewer)', 'Campground Sites with Sewer and Water'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/parksrec/file/15751/Aune%20%26amp%3B%20Sherman%20Campground%202026%20Season%20Announcement%20Email.pdf ('The entire 2026 season, May 15 - Oct 15') + Campspot closed dates 2026-10-15 to 2027-05-15, read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.saultcity.com/parksrec/page/sherman-park-campground ('Online Reservation System - NOW OPEN' -> https://www.campspot.com/book/shermanparkcg) + https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/parksrec/file/15751/Aune%20%26amp%3B%20Sherman%20Campground%202026%20Season%20Announcement%20Email.pdf ('All reservations will be made through the online reservation system', 'Payment in full is due at the time the reservation is made'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/finance/file/16646/2026-2027%20Approved%20User%20Fees%20updated%207-6-26.pdf (Parks & Recreation - Summer, 1 Sherman Park, 7/1/2026 column: 'Daily - Full Hook-up $50.00', 'Daily - Sewer & Water $35.00', 'Daily - Rustic $25.00', 'Registration Fees, online/credit card $8.00') + Campspot availability API for park 6162 (RUSTIC $25.00 and FULL HOOK-UP $50.00 site charge, 'Reservation Fee' $8.00, every type open to Motorhome), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "Campspot park record for shermanparkcg (site types FULL HOOK-UP 2 sites max 40 ft, WATER - SEWER 9 sites max 40 ft, RUSTIC 6 sites max 42 ft, all 'Back-In'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "89c8ace3434b6dfd",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 25,
+      "nightly_high": 50,
+      "currency": "USD",
+      "reservation_fee": 8,
+      "checked": "2026",
+      "note": "City of Sault Ste. Marie user fees from 7/1/2026 (approved 2/16/2026): rustic sites $25 a night ($150/week, $550/month), sewer & water $35 ($200/$700), full hook-up (electric, water, sewer) $50 ($300/$1,100); seasonal rustic $600, residents only. $8 online/credit-card registration fee, non-refundable. Campspot quotes the same $25 and $50 site rates plus the $8 'Reservation Fee' and its own booking fee (3%, at least $3). One rate for everyone (no non-resident rate). Read 2026-10-25."
+    },
+    "sites": {
+      "max_rig_ft": 42,
+      "note": "Campspot lists 17 bookable RV sites: 2 full hook-up and 9 water-sewer (to 40 ft), 6 rustic (to 42 ft), all back-in. The city sells monthly and resident-only seasonal rustic sites besides."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.saultcity.com/parksrec/page/sherman-park-campground https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/parksrec/file/15751/Aune%20%26amp%3B%20Sherman%20Campground%202026%20Season%20Announcement%20Email.pdf https://www.saultcity.com/sites/g/files/vyhlif13741/files/media/finance/file/16646/2026-2027%20Approved%20User%20Fees%20updated%207-6-26.pdf https://www.campspot.com/book/shermanparkcg",
+      "note": "Read the city's page, its 2026 season announcement and the 7/1/2026 fee schedule, and the Campspot engine the city now links. Added fees $25 rustic (Campspot offers it to motorhomes, to 42 ft) to $50 full hookup, $8 reservation fee; 50-amp with water/sewer confirmed; season May 15 - Oct 15; booking moved to Campspot (url set). Not stated: total site count (Campspot lists 17 bookable RV sites), facilities, walk-up policy (fcfs some_sites left as derived). Note trimmed of booking/season/hookup tex"
     }
   },
   {
@@ -886832,38 +887019,60 @@
     "waterfront_evidence": "satellite at 44.6519,-84.1014 (OSM campground node): the loop sits in forest on the bench above the Au Sable, ~180 m from the river, reached by a short path; no per-site coordinates or water flag -> not waterfront",
     "website": "https://www.recreation.gov/camping/campgrounds/10214374",
     "phone": "989-826-3252",
-    "note": "Tiny Huron NF campground beside the Au Sable Loop Scenic Overlook off McKinley Road east of Mio, on the National Scenic stretch of the Au Sable River; a short path leads down to the river for wading and fishing. 5 sites, some reservable, some first-come first-served; no hookups. Not maintained in winter - road and lot not plowed, no toilets. --Claude",
+    "note": "Tiny Huron NF campground in mixed hardwoods beside the Au Sable Loop Scenic Overlook off McKinley Road east of Mio, reached on an unpaved road from the overlook, on the National Scenic stretch of the Au Sable River; a short path leads down to the river for wading and fishing. --Claude",
     "hookups": {
       "electric": 0,
       "water": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-22",
-        "method": "derived"
+        "source": "RIDB campsite catalog for facility 10214374 (trip_data/ridb_campsites.json, fetched 2026-10-20: all 5 sites 'STANDARD NONELECTRIC', 'Water Hookup: No'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-22",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10214374 ('The small five site campground') + RIDB campsite catalog (sites 2 and 5 'Driveway Entry: Pull-through', sites 1, 3, 4 back-in; RV and trailer equipment on all), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-22",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10214374 (org FS, is_commercially_managed false; 'This location is unstaffed'; notices 'Some sites are available on a first-come, first serve basis', 'You must occupy your site within 24 hours'; maxConsecutiveStay 14; minConsecutiveStay 1) + RIDB catalog (sites 1, 3, 5 reservable, 2 and 4 not) + FS page ('Recreation Region: Mio Ranger District', 'Recreation.gov Reservations'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10214374/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/au-sable-loop-campground-and-day-use-area ('Overnight Use: Single Site: $10 per night') + https://www.recreation.gov/api/camps/campgrounds/10214374/rates (Peak/Off-Peak/Walk-In Au Sable Loop camping fee 10 in every 2026-2028 season), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/au-sable-loop-campground-and-day-use-area ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10214374 ('provides a handpump well for drinking water, a vault toilet, and trash collection services'; notice 'No toilet facilities are available' in winter) + FS page ('Vault toilet(s)', 'drinking water is available from a hand pump'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/au-sable-loop-campground-and-day-use-area ('Seasons of Use: Year-round; Not maintained December 1 - April 30') + recreation.gov notice ('This site is not gated during the off season. It not maintained in winter. Access road and/or parking lot are not plowed. No toilet facilities are available') + rate seasons (Peak/Non-Peak May 15 - Sep 30; 'First-come, First-served Season' Oct 1 - Nov 30), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "sites": {
-      "count": 5
+      "count": 5,
+      "pull_through": true,
+      "note": "Five sites: two pull-throughs and three back-ins, all open to RVs. The catalog's vehicle lengths (38, 45, 75, 90, 99 ft) are not believable for a five-site rustic campground and are not used."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/10214374",
+      "max_stay_nights": 14,
+      "note": "Run directly by the Forest Service (Mio Ranger District), not a concessionaire; unstaffed. Three of the five sites are reservable on recreation.gov, two are first-come; the whole campground is first-come October 1 - November 30. Occupy a reserved site within 24 hours of its start or it may be forfeited. Up to 14 consecutive nights."
     },
     "note_scan": {
       "sig": "d4f1c4acd9d5f59b",
@@ -886873,7 +887082,27 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$10 a night per single site, the same in every rate season 2026-2028 on recreation.gov (peak, non-peak and the October-November first-come season)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Interagency Senior and Access passes take 50% off a single campsite occupied by the pass holder, not other sites of the party."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Hand-pump well, vault toilet, trash collection; picnic table, fire ring and lantern post at each site. In winter no toilet facilities."
+    },
+    "season": {
+      "year_round": true,
+      "note": "Not maintained December 1 - April 30: not gated, but the access road and lot are not plowed and there are no toilets. Reservations cover May 15 - September 30; October 1 - November 30 is a first-come season."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/10214374 https://www.recreation.gov/api/camps/campgrounds/10214374/rates https://www.fs.usda.gov/r09/huron-manistee/recreation/au-sable-loop-campground-and-day-use-area https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "recreation.gov + RIDB catalog + Forest Service page: FS-run (Mio Ranger District, phone 989-826-3252 matches), 5 sites (2 pull-through), 3 reservable and 2 first-come, all first-come Oct 1 - Nov 30, $10/night (confirmed), 14-night max, no hookups, vault toilet and hand-pump water; added year-round season (not maintained Dec 1 - Apr 30) and the stated Senior/Access 50% discount. Current forest alerts (March 2026 winter storm, April 2026 flooding, Iargo Springs closure) don't list this site; the a"
     }
   },
   {
@@ -934970,45 +935199,49 @@
     "inclusion_evidence": "MI DNR RecSearch page (https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake, 2026-09-29) and the DNR state forest campground amenity table: rustic drive-in campground, 24 sites (12 small-to-medium trailer sites, 11 tent-only with stair access); first-come, vault toilets, hand-pump water, accessible boat launch -> real drive-in campground. Rig length unpublished ('tent and small trailer' is the DNR's standard SFC wording; 39 held MI SFCs carry it)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake",
     "phone": "231-922-5270",
-    "note": "Rustic Michigan DNR state forest campground on the northwest shore of Arbutus Lake #4 (a chain of five small lakes), 10.6 miles southeast of Traverse City via US-31 and Three Mile Road. 24 sites: 12 small-to-medium trailer sites and 11 tent-only sites reached by stairs. Vault toilets, hand-pump water, no electric; accessible boat launch. First-come, $20, 15-night limit; Recreation Passport required. --Claude",
+    "note": "Rustic Michigan DNR state forest campground in hilly beech-maple hardwoods on the northwest shore of Arbutus Lake #4 (a chain of five small lakes), 10.6 miles southeast of Traverse City via US-31 and Three Mile Road. --Claude",
     "hookups": {
       "electric": 0
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Accessible boat launch."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15
     },
     "sites": {
-      "count": 24
+      "count": 24,
+      "note": "The DNR gives 24 sites: 12 'small-to-medium sites for trailer use' and 11 tent-only sites reached by stairs (23 of the 24 accounted for). No length limit posted. One camping unit and six people per site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake ('There are vault toilets', 'Potable (drinking) water is available from a hand-pump well', 'There is an accessible boat launch'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake ('No reservations. Sites available on a first-come, first-served basis', 'Camping is limited to a 15-day maximum stay'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-29",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake ('There are 24 sites (12 are small-to-medium sites for trailer use and 11 are tent-only sites with stair access)', 'One camping unit and six people are allowed per site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Arbutus Lake State Forest Campground', Grand Traverse Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground', 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Arbutus Lake State Forest Campground, Grand Traverse Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -935025,11 +935258,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/arbutuslake https://www.campendium.com/arbutus-lake-campground (reviews, for the rig-fit rule only)",
+      "note": "DNR page: 24 sites (12 small-to-medium trailer sites, 11 tent-only by stairs), $20/night at the kiosk + Recreation Passport (fees.note), no electric, vault toilets, hand-pump water, accessible boat launch; first-come only, 15-day maximum (max stay, previously inherited, now on the entry). Season (open all year) already manual. Phone matches. Note trimmed of what the fields hold."
     }
   },
   {
