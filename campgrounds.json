@@ -241274,40 +241274,51 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/ionia\nhttps://midnrreservations.com",
     "phone": "616-527-3750",
-    "note": "Modern campground of ~100 sites (97 modern with 30-amp electric) on a hilltop just east of Sessions Lake; picnic table and fire pit per site, restrooms/showers, dump station, drinking water, camper cabins. Reopened May 1 2026 after infrastructure upgrades. Open seasonally; reservable online via MiDNRReservations; Recreation Passport required. (Separate equestrian sites exist but the modern loop is general RV camping.) --Claude",
+    "note": "Modern campground of Ionia Recreation Area (4,500 acres between Grand Rapids and Lansing), on a hilltop just east of Sessions Lake; two mini cabins sit in the campground. Reopened May 1 2026 after infrastructure upgrades. The park's separate equestrian and hike-in campgrounds are not part of this entry. --Claude",
     "hookups": {
-      "electric": 30
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "sites": {
-      "count": 100
+      "count": 97,
+      "max_rig_ft": 40,
+      "note": "The DNR page gives 97 sites in two loops, mostly semi-secluded and wooded; the booking site lists 98 modern campsites (maps 'Modern 1-50' and 'Modern 51-100'), every one taking tents or a trailer/RV up to 40 ft. ADA-only sites available."
     },
     "facilities": {
       "showers": true,
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "flush_toilets": true,
+      "note": "Two-lane sanitation station with potable water near the campground entrance. Playground, swings, sandbox and horseshoe pits in the campground."
     },
     "season": {
       "year_round": false
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "note": "Reserve online on MiDNRReservations or at 800-447-2757.",
+      "season": {
+        "opens": "05-01",
+        "closes": "10-31"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'Each site offers 30-amp electrical service', amenities 'Some campsites with 50-amp service') + https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (42 sites 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps/50 Amps, Sewer Hookup=No'; 56 'Electric Only, 20 Amps/30 Amps, Sewer Hookup=No'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'Number of sites: 97', 'features two loops with mostly semi-secluded, wooded sites', amenities 'ADA-only sites available') + https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (allowed equipment on all 98 modern sites: Tents, Trailer or RV up to 20'...40'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground amenities: 'Modern campground', 'Playground', 'Sanitation station', 'Toilet & shower building'; 'The park's sanitation station is located near the entrance to the campground. There is potable water available and two lanes.'; 'Swings, a sandbox and horseshoe pits are located in the campground.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -241315,13 +241326,14 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Ionia Recreation Area, 98 bookable modern campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Ionia Modern Campground: reservation season starts May 1, ends October 31), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Ionia / Modern Campground",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (56 '20 Amps/30 Amps' modern sites $28 / $30 / $30; 42 '20 Amps/30 Amps/50 Amps' modern sites $33 / $35 / $35) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Ionia, Modern Campground: 20/30 AMP rate $28) + https://www.michigan.gov/recsearch/parks/ionia ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -241330,9 +241342,16 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 28,
-      "nightly_high": 28,
-      "currency": "USD"
+      "nightly_low": 30,
+      "nightly_high": 35,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-05-18 and 07-13 alike): 20/30-amp sites $30, 50-amp sites $35. 2026 on the booking site (2026-10-27): $28 / $33. The DNR rates table lists the Modern Campground at $28 (20/30-amp). A Recreation Passport is required for vehicle entry to all state park campgrounds."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/ionia https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site + DNR rates table: 97 sites (booking site 98; count 100 -> 97), every site to 40 ft (new), electric 30 -> 50 (42 sites 50-amp), electric only (water/sewer false, new), showers/flush toilets/potable water/two-lane dump (confirmed + flush new), reservable on MiDNRReservations (platform confirmed). Fees 28 -> 30-35 (2027 booking site; 2026 is $28/$33; $30 is the 20/30-amp base). Season (derived year_round: false) left: only a reservation season (May 1 - Oct 31) is state"
     }
   },
   {
@@ -243230,20 +243249,25 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake",
     "phone": "989-785-4388",
-    "note": "Rustic MI DNR state forest campground along the edge of Jackson Lake, 6 mi N of Atlanta via M-33. 18 sites; 15 accommodate a 40-ft vehicle/trailer. Vault toilets, hand-pump well water, no electric. FCFS, no reservations; ~$20/night, 15-day max. Boating/fishing, hiking pathway and ORV trail access. Open spring-fall. MI Recreation Passport required. --Claude",
+    "note": "Rustic state forest campground along the edge of Jackson Lake, 6 mi N of Atlanta via M-33 (Montmorency County); managed by Clear Lake State Park. Boating and fishing on the lake; the Clear Lake/Jackson Lake Pathway, the High Country Pathway and an ORV trail can be reached from the campground (ORVs may run between the campground and the trails). --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
       "count": 18,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "18 sites for tent and small trailer use, 15 of which take a 40-ft vehicle/trailer. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in paddling access to Jackson Lake."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-16",
+      "closes": "11-30",
+      "note": "Seasonal closure December 1 to April 15; state forest campground roads may not be plowed in winter."
     },
     "booking": {
       "reservable": false,
@@ -243252,33 +243276,34 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake ('There are 18 sites for tent and small trailer use, 15 of which will accommodate a 40-foot long vehicle or trailer.'; 'One camping unit and six people are allowed per site') + amenity table (18 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.'; amenity table: 'Boat ramp(R) OR carry-in access(C)' C), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Jackson Lake State Forest Campground: 'Seasonal closure dates*' 'Dec 1 to April 15'; '*Please note: SFCG campground roads may not be plowed in the winter'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Jackson Lake State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Jackson Lake State Forest Campground', Montmorency Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Jackson Lake State Forest Campground, Montmorency: 18 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -243290,7 +243315,13 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/JacksonLake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 18 sites, 15 to 40 ft (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season year_round false (derived) -> closed Dec 1 - Apr 15 (opens 04-16, closes 11-30). Phone 989-785-4388 matches (Clear Lake SP). Carry-in access, not a ramp. Not equestrian. Note trimmed of field restatements."
     }
   },
   {
@@ -243847,16 +243878,18 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake",
     "phone": "906-353-6558",
-    "note": "Rustic state forest CG on the north shore of King Lake (498-acre lake), 14.8 mi E of Covington. 6 sites for tents/small trailers; vault toilets, hand-pump well water, no electric. FCFS, no reservations; ~$20/night, 15-day max stay. Long narrow drive in — fine for a 23-ft rig, not for big rigs. MI Recreation Passport required. --Claude",
+    "note": "Rustic state forest campground on the north shore of 498-acre King Lake, 14.8 mi E of Covington via US-141 N, US-41 S and King Lake Road (Baraga County); managed by Baraga State Park. Rocky islands to paddle among; bass, pike, perch and crappie; moose, eagles and loons often seen. Long narrow drive in: fine for a 23-ft rig, not for big rigs. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 6
+      "count": 6,
+      "note": "Six sites 'for tent and small trailer camping' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch on King Lake, suited to smaller fishing boats and carry-in craft."
     },
     "booking": {
       "reservable": false,
@@ -243865,28 +243898,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake ('Discover a rustic campground with six sites for tent and small trailer camping'; 'One camping unit and six people are allowed per site') + amenity table (6 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'There is a boat launch on King Lake. This launch is ideal for smaller fishing boats and carry-in access.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (King Lake State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'King Lake State Forest Campground', Baraga Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (King Lake State Forest Campground, Baraga: 6 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -243898,7 +243932,13 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kinglake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 6 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season: the amenity table says only 'weather dependent', so none written. Phone 906-353-6558 matches (Baraga SP). Not equestrian. Note trimmed of field restatements."
     }
   },
   {
@@ -245426,17 +245466,19 @@
     "inclusion_evidence": "Satellite at 44.7834,-84.5908: multiple drive-in loops on E shore of Jones Lake, MI DNR AuSable SF SFC (42 sites in six loops) -> keep",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake",
-    "phone": "989-348-6371",
-    "note": "Rustic AuSable State Forest campground on Jones Lake; 42 sites for tent/small trailer across six loops, vault toilets, hand-pump well water, no electric. Boat launch on Jones Lake. FCFS self-register, no reservations; ~$20/night, 15-day max stay, one unit/6 people per site. MI Recreation Passport required. Near Grayling/Frederic. --Claude",
+    "phone": "989-348-7068",
+    "note": "Rustic AuSable State Forest campground on the shore of Jones Lake, 9 mi E of Frederic via County Road 612 and Jones Lake Road (Crawford County); sites across six loops; managed by Hartwick Pines State Park. Fishing, paddling and wildlife watching. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 42
+      "count": 42,
+      "note": "42 sites 'for tent and small trailer use' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch on Jones Lake, with a small picnic area beside it."
     },
     "booking": {
       "reservable": false,
@@ -245445,28 +245487,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake ('There are 42 sites for tent and small trailer use.'; 'One camping unit and six people are allowed per site') + amenity table (42 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'There is a small picnic area near the boat launch.'; amenity table: 'Boat ramp(R) OR carry-in access(C)' R), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Jones Lake State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Jones Lake State Forest Campground', Crawford Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Jones Lake State Forest Campground, Crawford: 42 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Jones Lake State Forest Campground, Crawford Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -245483,11 +245526,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/joneslake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 42 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual and matches. Boat launch + picnic area. Not equestrian. Note trimmed of field restatements."
     }
   },
   {
@@ -245502,17 +245551,19 @@
     "inclusion_evidence": "Satellite at 44.6647,-84.6244: riverside road + campground clearings on main Au Sable River, MI DNR SFC (18 tent/small-trailer sites) -> keep",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'riverview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding",
-    "phone": "989-348-6371",
-    "note": "Rustic state forest campground on the main branch of the Au Sable River, 4 mi E of Grayling. 18 sites for tent/small trailer; vault toilets, hand-pump water, no electric; ~$20/night. First-come-first-served (no reservations); 15-day max stay. Carry-in canoe/kayak access on site. MI Recreation Passport required. --Claude",
+    "phone": "989-348-7068",
+    "note": "Rustic riverside state forest campground on the main branch of the Au Sable River, 4 mi E of Grayling via M-72 and Keystone Landing Road (Crawford County); managed by Hartwick Pines State Park. Excellent fishing and paddling. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 18
+      "count": 18,
+      "note": "18 sites 'for tent and small trailer use' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in canoe/kayak access to the Au Sable River."
     },
     "booking": {
       "reservable": false,
@@ -245521,28 +245572,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding ('There are 18 sites for tent and small trailer use.'; 'One camping unit and six people are allowed per site') + amenity table (18 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.'; amenity table: 'Boat ramp(R) OR carry-in access(C)' C), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Keystone Landing State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Keystone Landing State Forest Campground', Crawford Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Keystone Landing State Forest Campground, Crawford: 18 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Keystone Landing State Forest Campground, Crawford Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -245559,11 +245611,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/keystonelanding https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 18 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual and matches. Carry-in paddling access. Not equestrian. Note trimmed of field restatements."
     }
   },
   {
@@ -249216,17 +249274,19 @@
     "inclusion_evidence": "Satellite at 46.5856,-86.2267 shows drive-in loop with road on the lakeshore + boat launch; official MI DNR SFC (16 sites, some fit a 23-ft rig per reviewer), FCFS drive-in",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake",
-    "phone": null,
-    "note": "16 rustic sites for tent and small trailer use on Kingston Lake SW of Grand Marais; vault toilets, hand-pump well, no electric. FCFS — not reservable; ~$20/night, 15-day max. Managed by Indian Lake State Park; nearly ringed by water with a boat launch and picnic area. Sites are tight — some fit a 23-ft rig but larger rigs struggle (a reviewer's 18-ft fit fine). MI Recreation Passport required. --Claude",
+    "phone": "906-341-2355",
+    "note": "Rustic state forest campground almost entirely surrounded by Kingston Lake, on the northern edge of the Kingston Plains, 18.8 mi SW of Grand Marais via H-58 (Alger County); managed by Indian Lake State Park. The closest state forest campground to Pictured Rocks National Lakeshore; the Fox River Pathway runs four miles to Lake Superior, and ORVs and snowmobiles may run to the trails (ORV Trail 8 is adjacent). Sites are tight: some fit a 23-ft rig but larger rigs struggle (a reviewer's 18-ft fit fine). --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 16
+      "count": 16,
+      "note": "16 'tent and small trailer sites' (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch on Kingston Lake (no-wake rules); carry-in access about 10 yards from the parking area or straight from some sites; picnic area with two tables on the south side."
     },
     "booking": {
       "reservable": false,
@@ -249235,28 +249295,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake ('This rustic campground offers 16 tent and small trailer sites, almost entirely surrounded by water'; 'One camping unit and six people are allowed per site') + amenity table (16 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'A boat launch is located on Kingston Lake. No-wake rules are in place.' 'Carry-in access is located approximately 10 yards from the parking area or directly from some campsites.' 'A picnic area is on the south side of the campground. There are two picnic tables.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Kingston Lake State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Kingston Lake State Forest Campground', Alger Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Kingston Lake State Forest Campground, Alger: 16 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Kingston Lake State Forest Campground, Alger Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -249273,11 +249334,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/kingstonlake https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 16 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (open all year, roads not plowed) already manual and matches the page. Boat launch, carry-in access, picnic area. Not equestrian. Note trimmed of field restatements."
     }
   },
   {
@@ -251628,9 +251695,11 @@
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground",
     "phone": "989-739-0728 (Huron Shores Ranger Station)",
-    "note": "Huron NF near Barton City, on the east side of 193-acre Jewell Lake with swimming beach and boat launch. Tent and RV sites (~32-vehicle capacity); spacious private sites. First-come, first-served; $15/night; open early May to late Oct. Not on recreation.gov. --Claude",
+    "note": "Huron NF campground near Barton City (Alcona County, Huron Shores Ranger District), on the east side of 193-acre Jewell Lake, with swimming and motorized and non-motorized boating; spacious private sites, parking for about 32 vehicles. A snowmobile trail runs through the area in winter; the Reid Lake backcountry sites and trailheads are nearby. --Claude",
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-03",
+      "closes": "10-31"
     },
     "booking": {
       "reservable": false,
@@ -251638,18 +251707,29 @@
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Seasons of Use May 3 - October 31'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Reservations: All sites are first-come, first-served.') + recreation.gov search API (q=Jewell Lake; lat=44.67778, lng=-83.59722, radius 10 mi): no listing for this campground, read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Fee Site and Info | Overnight Use: | Single Site: $15 per night | Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. | *The discount applies only to the fee for the campsite ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Single Site: $15 per night'; page last updated June 4, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. *The discount applies only to the fee for the campsite physically occupied by the pass holder'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground ('Restrooms Vault toilet(s)', 'Potable water is available at this site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -251660,7 +251740,21 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $15 per night."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes give 50% off the pass holder's own single campsite only, not other fees or sites."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/huron-manistee/recreation/jewell-lake-campground recreation.gov search API (https://www.recreation.gov/api/search?q=Jewell Lake&fq=entity_type:campground, and lat=44.67778&lng=-83.59722&radius=10&fq=entity_type:campground): no listing for this campground https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "FS page (updated June 4, 2026): $15/night (confirmed), Senior/Access 50% off the single site (new), all first-come (confirmed; no recreation.gov listing), season May 3 - Oct 31 (derived year_round false -> dates), vault toilets + potable water (new). Not stated: site count, length limit, hookups. Phone (989) 739-0728 matches (Huron Shores Ranger Station); FS-run, no concessionaire named. No alert or order names Jewell Lake (forest-wide March 2026 winter-storm caution names only trail systems). N"
     }
   },
   {
@@ -251806,13 +251900,16 @@
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/10214347\nhttps://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground",
     "phone": "989-826-3252 (Mio Ranger District)",
-    "note": "Huron NF near Rose City, on 58-acre Island Lake (25-ft-deep, cold, clear; swimming beach marked with buoys, non-motorized boating). 17 sites, no power, paved pads, dump station available; hand-pump wells, vault toilets. 1.25-mile loop trail; spur to Loon Lake Day Use Area. Mix of reservable (online) and first-come, first-served. --Claude",
+    "note": "Huron NF campground on 58-acre Island Lake, a short drive north of Rose City on M-33 (Mio Ranger District): the lake is cold and clear, 25 ft deep, with a buoyed swimming beach and non-motorized boating from the day-use area; several sites see the lake through the trees. 1.25-mile loop trail with a spur to Loon Lake Day Use Area; the M-33 trailhead nearby reaches the Mack Lake ORV trails (no ORVs in the campground). --Claude",
     "hookups": {
       "electric": 0,
       "water": false
     },
     "sites": {
-      "count": 17
+      "count": 17,
+      "max_rig_ft": 70,
+      "pull_through": false,
+      "note": "All 17 sites are back-in on paved parking pads; listed maximum vehicle lengths 30-70 ft (five sites 30 ft)."
     },
     "facilities": {
       "vault_toilets": true,
@@ -251821,32 +251918,46 @@
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "10 of the 17 sites are reservable on recreation.gov, 7 first-come. Occupy a reserved site within 24 hours of the reservation start or it may be forfeited."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB catalog for facility 10214347 (all 17 sites 'STANDARD NONELECTRIC', 'Water Hookup: No'; fetched 2026-10-20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RIDB catalog for facility 10214347 (17 sites, 'Driveway Entry: Back-in' on all, Max Vehicle Length 30 (5), 40 (2), 50 (2), 55 (3), 60 (3), 65, 70; fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/10214347 ('Campsites at Island Lake have paved parking pads'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Restrooms Vault toilet(s)') + https://www.recreation.gov/api/camps/campgrounds/10214347 ('several vault toilets'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10214347 (notices 'Some sites are available on a first-come, first serve basis.' and 'You must occupy your site within 24 hours of the start of your reservation'; rules maxConsecutiveStay 14 consecutive nights, minConsecutiveStay 1) + RIDB catalog for 10214347 (10 STANDARD NONELECTRIC sites reservable, 7 not) + https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Make Reservations Here - Recreation.gov Reservations'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10214347/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Single Site: $15 per night'; page last updated June 4, 2026) + https://www.recreation.gov/api/camps/campgrounds/10214347/rates (PeakIslandLakeStandard 15 and OffPeakIslandLakeStandard 15 for every season 2026-2028), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. *The discount applies only to the fee for the campsite physically occupied by the pass holder'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Seasons of Use May 1 - September 30') + https://www.recreation.gov/api/camps/campgrounds/10214347 ('This site is gated in the off-season.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -251857,7 +251968,23 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $15 per night (peak and non-peak alike on recreation.gov, 2026-2028)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes give 50% off the pass holder's own single campsite only, not other fees or sites."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-30",
+      "note": "Gated in the off-season."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground https://www.recreation.gov/api/camps/campgrounds/10214347 https://www.recreation.gov/api/camps/campgrounds/10214347/rates RIDB catalog for facility 10214347 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "FS page (updated June 4, 2026) + recreation.gov + RIDB: $15/night (confirmed), Senior/Access 50% (new), reservable on recreation.gov with some first-come sites (10 of 17 reservable; confirmed), 14-night max (new), season May 1 - Sep 30 (new), no electric/water hookups (confirmed), 17 back-in paved sites, lengths to 70 ft (count confirmed, length/pull-through new), vault toilets (confirmed). Potable water and dump (derived) left: the official pages conflict on water and are silent on a dump. Phon"
     }
   },
   {
@@ -253077,41 +253204,54 @@
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/251536\nhttps://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground",
     "phone": "906-387-2512 (Munising Ranger District)",
-    "note": "Small quiet Hiawatha NF campground on 32.5-acre Island Lake south of Munising. 11 wooded sites; fire pits, tables, vault toilets, drinking water. Reservable online. One of the few NF campgrounds allowing OHV riding within the campground with direct OHV trail access. Narrow one-way road - rustic, but a general campground (OHV-offering, not OHV-only). --Claude",
+    "note": "Small, quiet Hiawatha NF campground in a classic pine forest on 32.5-acre Island Lake, about 12 mi south of Munising via Forest Highway 13 and FR 2268/2254/2557; lighter use than most, with a boat slip for small carry-in boats and canoes and shore fishing. Off-road vehicles may ride in and out of the campground (in and out only), with ATV trails nearby; the campground road is narrow and one-way. --Claude",
     "sites": {
-      "count": 11
+      "count": 10,
+      "max_rig_ft": 45,
+      "pull_through": false,
+      "note": "Ten single-family sites (two families may double up, each paying a site fee) plus one group site; all back-in, listed maximum vehicle lengths 45 ft (8 sites) and 30 ft (2). One RV with tow vehicle per single site."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "note": "Five of the ten family sites are reservable on recreation.gov (or 1-877-444-6777), five first-come; the opening week (May 15-21 in 2026) is a first-come season. A reserved site is held until noon the day after arrival."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RIDB catalog for facility 251536 (10 STANDARD NONELECTRIC sites + 1 GROUP STANDARD AREA NONELECTRIC; 'Driveway Entry: Back-In' on all; Max Vehicle Length 45 (8), 30 (2)) + https://www.recreation.gov/api/camps/campgrounds/251536 ('This small campground offers a group site and single-family sites that can be doubled-up to occupy two families. Note: Each family has to pay a site fee if doubled up on one site.'; 'One RV with tow vehicle per single site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground ('Restrooms Vault toilets', 'Potable water is available at this site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground ('Reservations can be made online at Recreation.gov or by calling 1-877-444-6777') + RIDB catalog for 251536 (STANDARD NONELECTRIC: 5 reservable, 5 not; group site reservable) + https://www.recreation.gov/api/camps/campgrounds/251536/rates ('First-come, First-served Season' 2026-05-15 to 2026-05-21, 2027-05-14 to 05-20) + recreation.gov rules (maxConsecutiveStay 14, minConsecutiveStay 1, weekend/holiday minimums 0) and notice 'Reserved Sites will be held until checkout time (NOON) the day following your arrival date', read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB catalog for facility 251536 (all 10 family sites 'STANDARD NONELECTRIC', the group site 'GROUP STANDARD AREA NONELECTRIC'; fetched 2026-10-20) + https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground ('Standard Nonelectric: $26.00'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/251536/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground ('Standard Nonelectric: $26.00', 'Group Standard Area Nonelectric: $65.00'; page last updated October 15, 2026) + https://www.recreation.gov/api/camps/campgrounds/251536/rates (STANDARD NONELECTRIC 26 in the 2026, 2027 and 2028 seasons) + notice 'Most sites can accommodate 1 extra vehicle ... Extra vehicle will be charged an $8 per night fee', read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground ('Seasons of Use May 15 - September 7'; page last updated October 15, 2026, showing 'Site Closed' after the season), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -253125,7 +253265,18 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Standard nonelectric site $26 a night (group site $65). One extra vehicle fits most sites at $8 a night, collected at the campground unless booked as an add-on."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-07"
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/hiawatha/recreation/island-lake-campground https://www.recreation.gov/api/camps/campgrounds/251536 https://www.recreation.gov/api/camps/campgrounds/251536/rates RIDB catalog for facility 251536 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/hiawatha/alerts",
+      "note": "FS page (updated Oct 15, 2026; off-season 'Site Closed') + recreation.gov + RIDB: $26 standard site (confirmed), reservable on recreation.gov with some first-come sites and a first-come opening week (fcfs/platform/14-night max new), season May 15 - Sep 7 (new), no electric (confirmed), 10 family sites + 1 group site (count 11 -> 10), back-in to 45 ft (new), vault toilets + potable water (confirmed). 'Federal Recreation Passes are accepted' does not state a camping discount, so discounts were lef"
     }
   },
   {
@@ -269774,7 +269925,7 @@
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.villageofkaleva.com/kaleva-roadside-park",
     "phone": "231-362-3366",
-    "note": "Village of Kaleva municipal roadside park & campground. ~30 sites: electric (30-amp) and rustic; picnic table & grill per site, dump station, playground, restrooms. Drive-in, sites accept RVs up to ~42 ft. Open ~Apr 1-Dec 1. Reservable through the village office. RV Life: unrated / $ (0 reviews). --Claude",
+    "note": "Village of Kaleva municipal roadside park & campground at 14126 9 Mile Road, electric and rustic sites around a loop drive with a pavilion, ball field and playground. A base for anglers in the fall salmon and spring steelhead runs and for hunters; hosts Kaleva Days (3rd weekend of July) and Juhannus (around June 21). No open fires or fireworks. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -269787,7 +269938,9 @@
       "max_rig_ft": 42
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "04-01",
+      "closes": "12-01"
     },
     "booking": {
       "reservable": true,
@@ -269805,9 +269958,9 @@
         "method": "derived"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.villageofkaleva.com/kaleva-roadside-park ('Opens April 1st of every year and Closes December 1st.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
         "source": "note prose",
@@ -269815,13 +269968,14 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "rules brochure PDF (park map legend: 'Electric', 'Rustic', 'Drinking/Dump Station', 'Rustic Vault toilets') + Manistee County campsite map PDF (legend 'Privies', 'Water Spigots', 'RV Dump Station') + https://www.villageofkaleva.com/kaleva-roadside-park ('two new rustic bathrooms that were installed this spring and the refurbished playground'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.villageofkaleva.com/kaleva-roadside-park (audit/price_research/local_mi_2026-10-15/mi_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.villageofkaleva.com/kaleva-roadside-park ('Sites with Electric: $30 Overnight Rate $180 Weekly Rate (7 Nights)', 'Rustic Sites (without electric): $20 Overnight Rate $75 Weekly Rate (7 Nights)', 'Dump Station Only: $10') + registration form PDF ('Electric $30.00 per night', 'Rustic $20.00 per night') + rules brochure PDF ('PAYMENT IS DUE UPON ARRIVAL', 'Sites Limited to 1 Camper & 1 Tent. Additional ones will be charged the nightly Rate Accordingly.', 'Sewage Dump is included in camping fee for Electric & Rustic Sites. All Non-registered campers must pay a $10.00 Fee'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -269830,14 +269984,22 @@
       "model": "claude-opus-5"
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water and the dump station at one station; water spigots and rustic vault toilets around the loop (two new rustic bathrooms 'installed this spring', undated). Pavilion, playground and ball field."
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Village of Kaleva: electric sites $30 a night, rustic $20. Read 2026-10-15."
+      "note": "Electric sites $30 a night ($180 a week), rustic sites without electric $20 ($75 a week); one rate for everyone (no resident discount posted). Dump station only, for non-campers: $10. Payment is due on arrival; additional campers or tents beyond one camper and one tent per site are charged the nightly rate."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.villageofkaleva.com/kaleva-roadside-park https://www.villageofkaleva.com/_files/ugd/39838c_045eec64c29a43cf993e980d7a5870fe.pdf (campsite registration form) https://www.villageofkaleva.com/_files/ugd/39838c_b93c03693fda4c458c5d0de5ca1cd8c3.pdf (park map + campground rules brochure) https://www.villageofkaleva.com/_files/ugd/39838c_6c313119e2ff4759b27f836f1b08d010.pdf (Manistee County campsite map, 2014)",
+      "note": "Village page + registration form + rules brochure: electric $30 / rustic $20 a night (confirmed; one rate, no resident discount), season Apr 1 - Dec 1 (derived year_round false -> dates), vault toilets, water spigots, dump (dump confirmed, the rest new). Not stated: amperage, site count, lengths, reservations (the form has an 'advanced deposit' line, payment due on arrival); derived hookups/sites/booking left. Phone 231-362-3366 matches. Note trimmed of field restatements and the RV Life line (i"
     }
   },
   {
@@ -272373,9 +272535,9 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "Kinross Charter Twp campspot.com/book/rvwest-kincheloe live booking + township rv_parks page: 52 electric/water sites, all-season transient reservable -> real municipal RV park",
     "waterfront_evidence": "audited 2026-06 (MI local evidence-gate sweep, commit 4e31287); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
-    "website": "https://kinrosstownship-mi.gov/rv_parks.php\nhttps://www.campspot.com/book/rvwest-kincheloe",
+    "website": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php\nhttps://www.campspot.com/book/rvwest-kincheloe",
     "phone": "906-495-5381",
-    "note": "Kinross Township RV park behind Kinross Community Park, home of the Chippewa County Fairgrounds, half a mile off I-75 exit 378.  52 sites with electric, some with water as well, on grass pads off dirt roads, plus rustic tent sites and a modern bathhouse. --Claude",
+    "note": "Kinross Township RV park behind Kinross Community Park, home of the Chippewa County Fair, less than a mile off I-75 exit 378; a more rural setting than its sister R.V. Park East, with grass sites off dirt roads and a modern bathhouse. Golf, two swimming/fishing lakes, ORV and equestrian trails nearby. --Claude",
     "rating": {
       "price_tier": 1,
       "source": "rvlife"
@@ -272386,18 +272548,24 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "campspot"
+      "platform": "campspot",
+      "url": "https://www.campspot.com/book/rvwest-kincheloe",
+      "note": "Book ahead on Campspot (the township's 'RV West' link); availability may change with the weather and snow on the ground.",
+      "season": {
+        "opens": "05-15",
+        "closes": "10-14"
+      }
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php ('There are 52 sites with water and electric and many more rustic tent sites.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php ('Online Reservations ... Book your stay ahead of time using Campspot! Availability may change based on the weather and snow on the ground.' 'RV East RV West', RV West linking https://www.campspot.com/book/rvwest-kincheloe), read 2026-10-25; reservation season: https://www.campspot.com/book/rvwest-kincheloe (Campspot park record: closed 2025-10-01 to 2026-05-14 and from 2026-10-15), read 2026-10-13",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -272405,12 +272573,19 @@
         "method": "derived"
       },
       "season": {
-        "source": "https://www.campspot.com/book/rvwest-kincheloe (Campspot park record: closed 2025-10-01 to 2026-05-14 and from 2026-10-15), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php ('Both RV Parks are open from April 15th thru October 15'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/book/rvwest-kincheloe (Campspot's pricing for each RV site type, one night from 2026-10-14, 2026-10-16, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php ('R.V. West Camping Rates' - 'Senior Rate (65+) / Full Hook-Up / Primitive Sites - Per Day $27.00 $30.00 $25.00, Per Week $176.40 $196.00 $160.00, Per Month $540.00 $600.00 $435.00'; 'Fees are payable at check-in', 'No cash refunds', 'No discounts for early departure'), read 2026-10-25 + https://www.campspot.com/book/rvwest-kincheloe (one night for 2 adults on each RV site type, 2026-10-14/16, campspot_tier_2026-10-13.jsonl, read 2026-10-13)",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php ('R.V. West has dirt roads and grass campsites as well as a modern bathhouse. There are 52 sites with water and electric and many more rustic tent sites.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -272423,15 +272598,24 @@
     },
     "season": {
       "year_round": false,
-      "opens": "05-15",
-      "closes": "10-14"
+      "opens": "04-15",
+      "closes": "10-15"
     },
     "fees": {
       "nightly_low": 30,
       "nightly_high": 30,
       "currency": "USD",
       "checked": "2026",
-      "note": "Read on Campspot: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (Lambchop Lane - Electric only, Pine Loop - Electric only, RV West Loop 1 - Elec/Water and RV West Loop 2 - Elec/Water). October 2026: $30 on a Wednesday. Later dates show no sites: the season has ended and next year's isn't open for booking yet. The park adds 3% of the site charge as a 'Processing Fee'. Campspot adds its own booking fee at checkout (3%, at least $3). Read 2026-10-13."
+      "note": "Township rate table for R.V. West: hook-up sites $30 a day ($196 a week, $600 a month), seniors 65+ $27 ($176.40 / $540), primitive (tent) sites $25 ($160 / $435); one rate for residents and non-residents. On Campspot (read 2026-10-13): $30 a night for 2 adults on every RV site type a 23-ft rig fits, plus the park's 3% 'Processing Fee' and Campspot's own booking fee at checkout (3%, at least $3). Fees are payable at check-in; no refunds or discounts for early departure."
+    },
+    "sites": {
+      "count": 52,
+      "note": "52 water-and-electric RV sites on grass, off dirt roads, plus many rustic tent sites."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.kinrosstownship-mi.gov/recreation/rv_parks.php https://www.campspot.com/book/rvwest-kincheloe (linked from the township page as 'RV West'; Campspot read 2026-10-13 cited from the stored fees provenance)",
+      "note": "Township RV parks page + its Campspot link: $30/day hook-up rate (confirmed; senior $27, primitive tent $25, weekly/monthly rates in the fee note), water at the sites (confirmed), 52 water-and-electric sites plus rustic tent sites (count new), reservable on Campspot (platform confirmed, the /book/ link is the township's own). Amperage not stated for West (derived 30 left). Phone (906) 495-5381 matches the township. Note trimmed."
     }
   },
   {
@@ -947698,25 +947882,41 @@
     "inclusion_evidence": "jackslanding.com 2026 price list (.docx behind the Prices button): electric 15/30A $37/night, E&W $42, rustic $30 (4 people) -> real transient RV campground; published base $37 (2026) <= $50; quality: not on RV Life, Good Sam unrated, Google Maps 4.5 over 361 reviews",
     "website": "https://www.jackslanding.com/",
     "phone": "989-742-4370",
-    "note": "Resort on Fletcher Pond (Fletcher Floodwaters) at 20836 Tennis Rd, Hillman, running since 1938: lodge rooms, lakefront cabins and a campground of electric and water/electric sites in angled rows above the marina, plus rustic wooded sites; boat rentals, docks and shore fishing. 2026 price list: electric (15/30-amp) $37/night, water + electric $42, rustic $30, for 4 people. Not on RV Life; Google 4.5 over 361 reviews. --Claude",
+    "note": "Resort on Fletcher Pond (Fletcher Floodwaters, 9,000 acres) at 20836 Tennis Rd, Hillman, running since 1938: lodge rooms, lakefront cabins and a campground of electric and water/electric sites in angled rows above the marina, plus rustic wooded sites; boat rentals, docks, shore fishing, bar and seasonal restaurant. Not on RV Life; Google 4.5 over 361 reviews. --Claude",
     "hookups": {
       "electric": 30,
       "water": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://cdn.hibuwebsites.com/ceaf0fc0b7e243af8b88ac09e7d169c0/files/uploaded/2026+price+list+for+website.docx ('Elec.15/30amp', 'Elec. & Water') + https://www.jackslanding.com/campground ('We have electric and water sites that can accommodate your full-size RV and grassy electric sites for your camper'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://cdn.hibuwebsites.com/ceaf0fc0b7e243af8b88ac09e7d169c0/files/uploaded/2026+price+list+for+website.docx (linked from jackslanding.com/prices; read 2026-10-11)",
-        "checked": "2026-10-11"
+        "source": "https://cdn.hibuwebsites.com/ceaf0fc0b7e243af8b88ac09e7d169c0/files/uploaded/2026+price+list+for+website.docx (Jack's Landing 2026 Price List, linked from https://www.jackslanding.com/prices, 'Prices list updated 11/03/2025': 'Camping * 4 people/site, add. guests $8/night plus tax (6-person max.) Rustic:---Nightly/$30 ... Elec.15/30amp:---Nightly/$37 ... Elec. & Water---Nightly/$42'; '10% weekly camping discount') + https://www.jackslanding.com/campground ('You can also pitch a tent in our rustic wooded sites') + https://www.jackslanding.com/prices ('A deposit is required to hold a reservation'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "facilities": {
+        "source": "https://www.jackslanding.com/campground ('A modern bathhouse with flush toilets and showers is available in our Marina camp store, there is a smaller bath house near rustic camping as well'; 'A dump station and propane service station are available also.'; 'We have a playground') + https://www.jackslanding.com/ ('Electric and water sites, rustic wooded sites, dump and propane service stations, and wifi'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.jackslanding.com/campground ('Call Jack's Landing to reserve your campsite! 989-742-4370', 'Check-In 2pm Check-out 12pm') + https://www.jackslanding.com/prices ('A deposit is required to hold a reservation'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://cdn.hibuwebsites.com/ceaf0fc0b7e243af8b88ac09e7d169c0/files/uploaded/2026+price+list+for+website.docx ('*Sites allow either 2 tents or 1 camper w/1 tent maximum/site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -947725,13 +947925,35 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 30,
+      "nightly_low": 37,
       "nightly_high": 42,
       "currency": "USD",
-      "note": "Jack's Landing 2026 price list: camping rustic $30, electric (15/30-amp) $37, electric and water $42 a night plus tax, 4 people per site (extra guests $8); weekly 10% off."
+      "note": "2026 price list: electric (15/30-amp) sites $37, electric and water $42 a night plus tax, for 4 people (extra guests $8 a night, 6 max; extra tent $10). Rustic wooded sites, which the campground page offers for tents, are $30. Weekly stays 10% off. A deposit holds a reservation (20% forfeited on 30+ days' notice, all of it on shorter notice).",
+      "checked": "2026"
     },
     "discounts": {
       "good_sam": false
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "camp_store": true,
+      "wifi": true,
+      "note": "Modern bathhouse in the marina camp store, a smaller bathhouse near the rustic sites; propane station; playground; bait shop."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by calling 989-742-4370; a deposit is required. Check-in 2 pm, check-out noon."
+    },
+    "sites": {
+      "note": "Each site takes either 2 tents or 1 camper with 1 tent."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.jackslanding.com/ https://www.jackslanding.com/campground https://www.jackslanding.com/prices https://cdn.hibuwebsites.com/ceaf0fc0b7e243af8b88ac09e7d169c0/files/uploaded/2026+price+list+for+website.docx",
+      "note": "Operator site + 2026 price list (updated 11/03/2025): electric $37 / water+electric $42 per night for 4 (low 30 -> 37: the $30 rustic sites are offered for tents), 15/30-amp and water (confirmed), bathhouses with showers/flush toilets, dump, camp store, wifi (new), reservable by phone with deposit (new). Not stated: season, site count, lengths. Phone 989-742-4370 matches. Presence passes (working site with phone, posted 2026 nightly rates); under the US$50 line; sells nightly camping, not only c"
     }
   },
   {

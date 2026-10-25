@@ -1,0 +1,54 @@
+{
+  "id": 3766,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/10214347",
+    "https://www.recreation.gov/api/camps/campgrounds/10214347/rates",
+    "RIDB catalog for facility 10214347 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r09/huron-manistee/alerts"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 15, "nightly_high": 15, "currency": "USD", "note": "Single site $15 per night (peak and non-peak alike on recreation.gov, 2026-2028)."},
+      "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Single Site: $15 per night'; page last updated June 4, 2026) + https://www.recreation.gov/api/camps/campgrounds/10214347/rates (PeakIslandLakeStandard 15 and OffPeakIslandLakeStandard 15 for every season 2026-2028), read 2026-10-25",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Senior and Access passes give 50% off the pass holder's own single campsite only, not other fees or sites."},
+      "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. *The discount applies only to the fee for the campsite physically occupied by the pass holder'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "note": "10 of the 17 sites are reservable on recreation.gov, 7 first-come. Occupy a reserved site within 24 hours of the reservation start or it may be forfeited."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10214347 (notices 'Some sites are available on a first-come, first serve basis.' and 'You must occupy your site within 24 hours of the start of your reservation'; rules maxConsecutiveStay 14 consecutive nights, minConsecutiveStay 1) + RIDB catalog for 10214347 (10 STANDARD NONELECTRIC sites reservable, 7 not) + https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Make Reservations Here - Recreation.gov Reservations'), read 2026-10-25",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-30", "note": "Gated in the off-season."},
+      "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Seasons of Use May 1 - September 30') + https://www.recreation.gov/api/camps/campgrounds/10214347 ('This site is gated in the off-season.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false},
+      "source": "RIDB catalog for facility 10214347 (all 17 sites 'STANDARD NONELECTRIC', 'Water Hookup: No'; fetched 2026-10-20), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 70, "pull_through": false, "note": "All 17 sites are back-in on paved parking pads; listed maximum vehicle lengths 30-70 ft (five sites 30 ft)."},
+      "source": "RIDB catalog for facility 10214347 (17 sites, 'Driveway Entry: Back-in' on all, Max Vehicle Length 30 (5), 40 (2), 50 (2), 55 (3), 60 (3), 65, 70; fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/10214347 ('Campsites at Island Lake have paved parking pads'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true},
+      "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/island-lake-campground ('Restrooms Vault toilet(s)') + https://www.recreation.gov/api/camps/campgrounds/10214347 ('several vault toilets'), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Huron NF campground on 58-acre Island Lake, a short drive north of Rose City on M-33 (Mio Ranger District): the lake is cold and clear, 25 ft deep, with a buoyed swimming beach and non-motorized boating from the day-use area; several sites see the lake through the trees. 1.25-mile loop trail with a spur to Loon Lake Day Use Area; the M-33 trailhead nearby reaches the Mack Lake ORV trails (no ORVs in the campground). --Claude",
+  "summary": "FS page (updated June 4, 2026) + recreation.gov + RIDB: $15/night (confirmed), Senior/Access 50% (new), reservable on recreation.gov with some first-come sites (10 of 17 reservable; confirmed), 14-night max (new), season May 1 - Sep 30 (new), no electric/water hookups (confirmed), 17 back-in paved sites, lengths to 70 ft (count confirmed, length/pull-through new), vault toilets (confirmed). Potable water and dump (derived) left: the official pages conflict on water and are silent on a dump. Phone (989) 826-3252 matches FS and recreation.gov; FS-run, unstaffed, no concessionaire named. No alert or order names Island Lake or Loon Lake Loop Rd (the forest-wide March 2026 winter-storm caution names only trail systems). Note trimmed of field restatements.",
+  "flags": [
+    "Potable water: the FS page (updated June 4, 2026) says 'Potable water is not available at this site.', while recreation.gov says 'The campground provides handpump wells for drinking water'. The stored potable_water: true (derived from the note) was left; a person should check which is current.",
+    "Dump station: the stored facilities.dump: true (derived from the note's 'dump station available') is not supported by the FS or recreation.gov page; left as is."
+  ]
+}

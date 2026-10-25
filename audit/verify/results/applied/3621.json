@@ -1,0 +1,55 @@
+{
+  "id": 3621,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/ionia",
+    "https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 35,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "2027 on the booking site (2027-05-18 and 07-13 alike): 20/30-amp sites $30, 50-amp sites $35. 2026 on the booking site (2026-10-27): $28 / $33. The DNR rates table lists the Modern Campground at $28 (20/30-amp). A Recreation Passport is required for vehicle entry to all state park campgrounds."
+      },
+      "source": "https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resource/feeDetails for 2026-10-27, 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (56 '20 Amps/30 Amps' modern sites $28 / $30 / $30; 42 '20 Amps/30 Amps/50 Amps' modern sites $33 / $35 / $35) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Ionia, Modern Campground: 20/30 AMP rate $28) + https://www.michigan.gov/recsearch/parks/ionia ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'Each site offers 30-amp electrical service', amenities 'Some campsites with 50-amp service') + https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (42 sites 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps/50 Amps, Sewer Hookup=No'; 56 'Electric Only, 20 Amps/30 Amps, Sewer Hookup=No'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 97,
+        "max_rig_ft": 40,
+        "note": "The DNR page gives 97 sites in two loops, mostly semi-secluded and wooded; the booking site lists 98 modern campsites (maps 'Modern 1-50' and 'Modern 51-100'), every one taking tents or a trailer/RV up to 40 ft. ADA-only sites available."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'Number of sites: 97', 'features two loops with mostly semi-secluded, wooded sites', amenities 'ADA-only sites available') + https://midnrreservations.com/ (Ionia Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25) (allowed equipment on all 98 modern sites: Tents, Trailer or RV up to 20'...40'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "potable_water": true, "dump": true, "note": "Two-lane sanitation station with potable water near the campground entrance. Playground, swings, sandbox and horseshoe pits in the campground."},
+      "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground amenities: 'Modern campground', 'Playground', 'Sanitation station', 'Toilet & shower building'; 'The park's sanitation station is located near the entrance to the campground. There is potable water available and two lanes.'; 'Swings, a sandbox and horseshoe pits are located in the campground.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "note": "Reserve online on MiDNRReservations or at 800-447-2757. The DNR rates table gives the Modern Campground a reservation season of May 1 - October 31."
+      },
+      "source": "https://www.michigan.gov/recsearch/parks/ionia (Ionia Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Ionia Recreation Area, 98 bookable modern campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Ionia Modern Campground: reservation season starts May 1, ends October 31), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Modern campground of Ionia Recreation Area (4,500 acres between Grand Rapids and Lansing), on a hilltop just east of Sessions Lake; two mini cabins sit in the campground. Reopened May 1 2026 after infrastructure upgrades. The park's separate equestrian and hike-in campgrounds are not part of this entry. --Claude",
+  "summary": "DNR park page + booking site + DNR rates table: 97 sites (booking site 98; count 100 -> 97), every site to 40 ft (new), electric 30 -> 50 (42 sites 50-amp), electric only (water/sewer false, new), showers/flush toilets/potable water/two-lane dump (confirmed + flush new), reservable on MiDNRReservations (platform confirmed). Fees 28 -> 30-35 (2027 booking site; 2026 is $28/$33; $30 is the 20/30-amp base). Season (derived year_round: false) left: only a reservation season (May 1 - Oct 31) is stated, now in booking.note. Phone 616-527-3750 matches. Note trimmed of field restatements.",
+  "flags": [
+    "Season: the only dates the DNR publishes for the Modern Campground are its reservation season (May 1 - October 31, rates table); the stored season (derived year_round: false) was left as is."
+  ]
+}
