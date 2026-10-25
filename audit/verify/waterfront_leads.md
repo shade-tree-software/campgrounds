@@ -310,3 +310,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3629 Metamora-Hadley RA: DNR "The north loop offers some campsites on the water"; entry lakeview (p3-141).
 - 3743 Minnie Pond (Huron-Manistee NF): FS "This site is located on Minnie Pond on a human-made impoundment"; entry not waterfront (p3-142).
 - 3769 Monocle Lake (Hiawatha NF): rec.gov campground "surrounds the south end of 172-acre Monocle Lake", FS "camped along the shores"; entry not waterfront (p3-142).
+- 3717 Natalie SFC: DNR "located on Dollarville Flooding", boat launch adjacent; entry lakeview (p3-143).
+- 3708 Ocqueoc Falls SFC: DNR "located on the Ocqueoc River"; entry riverview (p3-143).
+- 3636 Newaygo SP: DNR park "sits atop 20-foot embankments overlooking the Hardy Dam Pond", buoyed swim area in the Poplar Rustic Campground; entry not waterfront (p3-143).
+- 3644 North Higgins Lake SP: DNR "The park's modern campground - set along the north shore of Higgins Lake", tagged Water access; entry not waterfront (its note: set back north of N. Higgins Lake Dr) (p3-143).
+- 3744 Old Grade (Huron-Manistee NF): FS "Located on the Little Manistee River"; entry not waterfront (p3-143).
+- 3738 Nichols Lake South: rec.gov "on the south side of Nichols Lake", "wood ramp and stairs lead down to the lake"; entry not waterfront (weak, p3-143).
+- 14245 Northern Sites: operator tags 'Waterfront', "our serene riverside location", two sandy beach areas; entry riverview (weak, p3-143).
