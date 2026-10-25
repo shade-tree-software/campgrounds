@@ -1,0 +1,51 @@
+{
+  "id": 3987,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://huroncountyparks.com/oak-beach-county-park",
+    "https://huroncountyparks.com/oak-beach-reservations",
+    "https://huroncountyparks.com/reservation-policy",
+    "https://huroncountyparks.checkfront.com/reserve/inventory/?inline=1&category_id=17&start_date=2027-06-08&end_date=2027-06-09"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 45, "nightly_high": 55, "currency": "USD", "checked": "2027",
+                 "note": "Huron County Parks: full hookup $50 a night, $5 more on holidays and $5 off in the off season; one rate for everyone. The booking engine prices every nightly site at $50.00 for June 8, 2027. Seasonal sites $3,100 (May 1 - Oct 15). Cancelling 30+ days out (not holidays or events) refunds an e-gift card less $15."},
+      "source": "https://huroncountyparks.com/oak-beach-county-park (Camping Rates: 'Full Hookup $50 per night', '+ $5 Holidays', '-$5 Off Season Discount', 'Seasonal $3,100') + the county's Checkfront inventory for 2027-06-08 ('$50.00 per night' on every Oak Beach Full Hookup site), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://huroncountyparks.checkfront.com/reserve/inventory/ (Oak Beach Full Hookup sites: 'Power: 50/30 amp 110 GFI') + https://huroncountyparks.com/oak-beach-county-park ('Full Hookup'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 40, "note": "Only 12 full-hookup sites are sold by the night (5, 6, 14, 15, 19, 20, 32, 34, 36-39); the rest are seasonal. Each nightly site has a recommended length: 'under 40ft' at most, sites 15 and 36 under 35 ft, 19 under 25 ft, and three are for a pop-up or tent only."},
+      "source": "https://huroncountyparks.checkfront.com/reserve/inventory/?inline=1&category_id=17&start_date=2027-06-08&end_date=2027-06-09 (12 'Oak Beach Full Hookup' sites with 'Site Dimensions', 'Recommended for camping units under NNft in length'), read 2026-10-25",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "10-15"},
+      "source": "https://huroncountyparks.com/oak-beach-county-park ('Open May 1 - October 15'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "dump": true, "wifi": true, "camp_store": null,
+                 "note": "Coin-operated showers. Wi-Fi only at designated hotspots, not at the sites. No ice or wood sold in the park; the Oak Beach Pantry next door sells groceries, pizza, ice cream and ice."},
+      "source": "https://huroncountyparks.com/oak-beach-county-park ('Bath houses with coin operated showers and flush toilets', 'Wi-Fi ... only designated hotspot areas', 'Where are Playgrounds? Restrooms? Dump Stations? ... check the map', 'No ice or wood is available at the park. Oak Beach Pantry is next door'), read 2026-10-25. The derived camp_store (from note prose) is cleared: the store is the pantry next door, not the park's.",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://huroncountyparks.com/oak-beach-reservations",
+                 "min_stay": [{"nights": 3, "applies": "holiday"}],
+                 "note": "Booked on the county's Checkfront engine (huroncountyparks.com, booking help 888-265-2583); the next year's sites open to the public around December 1 (2027: Tuesday, Dec 1 at noon EST). Every camper is assigned a site. Holiday weekends need 3 nights; Cheeseburger and Ribstock weekends a set minimum. Seasonal sites go to an interest list."},
+      "source": "https://huroncountyparks.com/oak-beach-reservations ('2027 Reservations Open to the General Public on Tues., Dec. 1 at 12pm (Noon) EST') + https://huroncountyparks.com/reservation-policy ('Reservations for holiday weekends will be a minimum of three consecutive nights'), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Huron County Parks (county government) campground, 3356 Port Austin Rd, ~9 mi SW of Port Austin on Lake Huron. Camping loop is south of M-25, across the highway from the beach. NOTE: coordinate is the camping loop south of M-25, offset from aggregator beach pins - satellite-verify the exact loop. --Claude",
+  "summary": "County park page, reservation policy and its Checkfront engine: confirmed full hookups (50/30 A), May 1 - Oct 15, showers/flush toilets; fees 50-50 -> 45-55 (+$5 holidays, -$5 off season); added dump, hotspot wifi, 12 nightly sites (rest seasonal) recommended to 40 ft, holiday 3-night minimum, booking opening Dec 1. Cleared the derived camp_store (the store is the pantry next door). Site count (55, derived) not stated by the county; left. Note dropped the facts the fields hold and the 'small camp store'. Phone matches the park manager (989-856-2344).",
+  "flags": [
+    "Mostly seasonal: the county's booking engine sells only 12 sites by the night (9 recommended for RVs, 3 for pop-ups/tents only) of the ~55 full-hookup sites; the rest are seasonal ($3,100 a season, 'Seasonal campsites are in high demand'). About 22% nightly, so long-stay test 4 (1 in 10) passes, but the park is seasonal in character; the other tests pass (posted $50 nightly rate and a booking engine, holiday-only 3-night minimum). County park, so the private long-stay rule may not apply; for AWH."
+  ]
+}

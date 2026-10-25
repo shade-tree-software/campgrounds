@@ -1,0 +1,41 @@
+{
+  "id": 788,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/young",
+    "https://midnrreservations.com/ (Young State Park campsites via the booking site's /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27, 2027-06-08 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 48, "nightly_high": 53, "currency": "USD", "checked": "2027",
+                 "note": "Same in all three campgrounds (Oak, Spruce, Terrace). 2027 on the booking site (2027-06-08 and 07-13 alike): 20/30-amp sites $48, 50-amp sites $53; 2026 (Oct 27): $45 / $50. A Recreation Passport is required for vehicle entry to all state park and forest campgrounds."},
+      "source": "https://midnrreservations.com/ feeDetails per fee schedule ($48 for 159 20/30-amp sites and $53 for 80 50-amp sites on 2027-06-08 and 2027-07-13; $45 / $50 on 2026-10-27) + https://www.michigan.gov/recsearch/parks/young ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://www.michigan.gov/recsearch/parks/young (each campground: 'Electrical service', 'Some campsites with 50-amp service') + midnrreservations.com site attributes (all 239 campsites 'Electric and Water Hookups=Electric Only', 'Sewer Hookup=No'; 80 with 20/30/50 A), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 240, "max_rig_ft": 50, "pull_through": true,
+                 "note": "Three modern campgrounds: Oak 41 sites (large oaks, partly shaded, paved walk to the day-use area), Spruce 158 (four open loops near the lake, popular with groups), Terrace 41 (terraced, cedar/birch/oak, boat launch, campground host); plus 2 mini cabins. The booking site allows trailers/RVs to 50 ft at some sites."},
+      "source": "https://www.michigan.gov/recsearch/parks/young ('Number of sites: 41' / '158' / '41'; 'Pull-through sites available' in each) + midnrreservations.com resources (equipment to 'Trailer or RV up to 50'''), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "dump": true, "potable_water": true, "camp_store": true},
+      "source": "https://www.michigan.gov/recsearch/parks/young ('Toilet & shower building' and 'Sanitation station' in each campground, 'Vault toilet' in Oak and Terrace; 'The park's sanitation station is located along the entrance road. There is potable water available and two lanes'; 'Lake to Lake ... sells snacks, ice cream and souvenirs'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator"},
+      "source": "https://www.michigan.gov/recsearch/parks/young (each campground: 'For reservations call 800-447-2757 or reserve online'), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "summary": "DNR park page + booking site: three modern campgrounds (Oak 41, Spruce 158, Terrace 41), 20/30 A everywhere and 50 A at 80 sites, electric only, pull-throughs, RVs to 50 ft, showers/flush and vault toilets/sanitation station with potable water, store. Fees 45-50 (2026 table) -> 48-53 (2027 booking site; 2026 rates and the Recreation Passport in fees.note). Season (manual, per campground) left. Inherited window/15-night max not stated on the park page; left inherited. The DNR page describes the three campgrounds as sharing one entrance-road sanitation station and the day-use area (walkways from Oak/Terrace), so not treated as a split (not measured). --AWH note kept unchanged.",
+  "flags": [
+    "Website: the entry links only the bare https://midnrreservations.com/ home page; the park's own page is https://www.michigan.gov/recsearch/parks/young (give it first, booking site second)."
+  ]
+}

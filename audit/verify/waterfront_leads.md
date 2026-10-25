@@ -267,3 +267,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14225 Vagabond Resort (Little Bay de Noc): operator advertises Bay De Noc sunsets and a fishing dock; entry not waterfront (p3-125).
 - 3963 Vanderbilt County Park: county "located along the Saginaw Bay Shoreline"; entry bayview (p3-125).
 - 3831 Walnut Hills: operator "the Shiawassee River runs right alongside the park", kayak launch from the park; entry pond (p3-125).
+- 580 Woodland Park (Grand Marais): township's Campspot sells 'Lakefront Campsite' (22) and 'Prime Lakefront Campsite' (5) types; entry lakeview, and the --AWH note says all sites are separated from the lake by a driveway (p3-126).
+- 4034 Eddy Park (Wakefield): city's site-dimension sheet types RV lots 4-24 'Lakeside' (Sunday Lake); entry lakeview (p3-126).
