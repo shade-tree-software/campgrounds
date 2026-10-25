@@ -28811,11 +28811,11 @@
     "name": "Lake Michigan at St. Ignace",
     "state": "MI",
     "ownership": "federal",
-    "website": "https://www.recreation.gov/camping/campgrounds/234081",
+    "website": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground\nhttps://www.recreation.gov/camping/campgrounds/234081",
     "waterfront": "coastal woods",
     "inclusion_evidence": "recreation.gov/234081: Hiawatha NF campground, 33 standard nonelectric sites for tent and RV camping; currently operating",
     "waterfront_evidence": "Firsthand manual audit by owner (--AWH note); waterfront 'coastal woods' per owner: Campsites are in the woods, very close to Lake Michigan.",
-    "note": "Campsites are in the woods, very close to Lake Michigan.  --AWH",
+    "note": "Campsites are in the woods, very close to Lake Michigan.  --AWH  Hiawatha NF campground along a bluff between US-2 and Lake Michigan, 16 mi west of the I-75/US-2 junction (about 18 mi from St. Ignace); sites sit among 20-30 ft dunes, steps from a long sand beach. The Sand Dunes Cross-Country Ski Trail and the North Country Trail are reachable from camp. Concession-run. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
@@ -28827,24 +28827,100 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Campground is rustic. There are no hookups for electricity, water or sewer.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234081/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Single Site: $26 per night', 'Additional Vehicle Fee: $7 per vehicle per night'; page last updated September 14, 2026) + https://www.recreation.gov/api/camps/campgrounds/234081/rates (PeakSTANDARD NONELECTRIC 26 and Walk InSTANDARD NONELECTRIC 26, 2026-2028) + https://www.recreation.gov/api/camps/campgrounds/234081 ('Extra vehicle will be charged an $8 per night fee'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Discount passes are honored with ½ price camping only include: Golden Age Passport and America the Beautiful (Interagency) Senior Pass issued to senior citizens and physically disabled citizens.' 'Military Annual and Gold Star Veteran Passes are good for covering day use fees ONLY, they do not cover camping fees.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Campground has first come, first served sites and reservable sites.' 'Reservations can be made using www.recreation.gov or by calling (877) 444-6777' 'Reservations are forfeited if you have not arrived by check-out time the day after your scheduled arrival.') + https://www.recreation.gov/api/camps/campgrounds/234081 (facility_rules: reservationCutOff 4 'day(s) prior to arrival', minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3, maxConsecutiveStay 14 'consecutive days'; notices 'reservation sites are for reservations only', 'Reservation sites cannot be traded for walk up sites.', 'It has a self pay station') + /rates ('First-come, First-served Season 2026-05-15 2026-05-21') + RIDB catalog (19 STANDARD NONELECTRIC reservable, 14 not), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Seasons of Use May 15 - September 13'; page last updated September 14, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "RIDB catalog for facility 234081 (33 STANDARD NONELECTRIC sites, 'Driveway Entry: Back-In' on all, Max Vehicle Length 45 (26), 40, 38, 30 (5); fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/234081 ('many shaded and open sites for tent and RV camping'; 'Parking spurs are comprised of grass and dirt') + https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Maximum 8 people per site'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground ('Vault toilet(s)'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/234081 ('Accessible vault toilets are available, as well as drinking water.' 'a dump station can be found at Brevort Lake'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "note": "Single site $26 per night (recreation.gov 2026-2028, peak and first-come weeks alike). One RV with tow vehicle per site; an extra vehicle is $7 a night on the FS page ($8 as a recreation.gov add-on or collected at the campground)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Half-price camping with the Golden Age Passport or America the Beautiful Senior/Access pass (not at day-use sites). Military Annual and Gold Star passes cover day-use fees only, not camping."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reserve on recreation.gov or (877) 444-6777 up to 4 days before arrival; 19 of the 33 sites are reservable, 14 first-come, and the rate table runs a first-come-only week at opening (2026: May 15-21). Weekends 2 nights, holiday weekends 3. Reserved sites stay reserved even when empty and cannot be traded for walk-up sites; a reservation is forfeited if you have not arrived by check-out time the next day. No office: self-pay station. Check-in 2 p.m., check-out noon."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-13"
+    },
+    "sites": {
+      "count": 33,
+      "max_rig_ft": 45,
+      "pull_through": false,
+      "note": "33 shaded and open sites for tents and RVs on grass-and-dirt parking spurs, all back-in; listed maximum vehicle lengths 30-45 ft (26 sites 45 ft). Maximum 8 people per site."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Accessible vault toilets, drinking water, trash bin. The nearest dump station is at Brevoort Lake Campground, about five miles away."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/hiawatha/recreation/lake-michigan-campground https://www.recreation.gov/api/camps/campgrounds/234081 https://www.recreation.gov/api/camps/campgrounds/234081/rates RIDB catalog for facility 234081 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/hiawatha/alerts",
+      "note": "FS page (updated Sep 14, 2026) + recreation.gov + RIDB: $26/night (confirmed), Senior/Access half price (new), reservable on recreation.gov to 4 days out with 14 of 33 sites first-come (fcfs/cutoff new), weekend 2-night and holiday 3-night minimums and 14-night max (new), season May 15 - Sep 13 (new), no electric/water/sewer hookups (electric confirmed, water/sewer new), 33 back-in sites to 45 ft (new), vault toilets + potable water (new). Concession-run (concessionaire (906) 767-1111). Access i"
+    },
+    "phone": "906-767-1111"
   },
   {
     "id": 376,
@@ -240428,19 +240504,21 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/lakehudson\nhttps://midnrreservations.com",
     "phone": "517-445-2265",
-    "note": "Semi-modern campground, ~50 sites in two loops, all with 20/30-amp electric (no individual water/sewer; hand pump + vault toilets). Max RV ~40 ft. Open Apr 1-Nov 30; reservable online via MiDNRReservations. Michigan Recreation Passport required for entry. Designated Dark Sky Preserve. --Claude",
+    "note": "Semi-modern campground of Lake Hudson Recreation Area near the Ohio border, in two loops by the no-wake lake; sites are large and private with some shade. Electrical pedestals often sit between sites, so bring a 50-ft extension cord. The park holds Michigan's first state-park dark sky preserve. --Claude",
     "hookups": {
       "electric": 30,
       "water": false,
       "sewer": false
     },
     "sites": {
-      "count": 50,
-      "max_rig_ft": 40
+      "count": 48,
+      "max_rig_ft": 40,
+      "note": "48 campsites plus two cabins (the Lakeview Cabin on site 19 and the Bear Creek tiny house on site 22; the DNR's 'Number of sites: 50' counts them). The booking site takes tents and trailers/RVs up to 40 ft."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "No modern restrooms; drinking water from a hand pump at the campground entrance."
     },
     "season": {
       "year_round": false,
@@ -240449,37 +240527,43 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "season": {
+        "opens": "04-15",
+        "closes": "11-29"
+      },
+      "note": "Reserve online on MiDNRReservations or at 800-447-2757."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://midnrreservations.com/ (Lake Hudson Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25: all 48 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps, Sewer Hookup=No') + https://www.michigan.gov/recsearch/parks/lakehudson ('Campsite electrical pedestals are often located between campsites, which may require an additional 50-foot extension cord.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakehudson ('This semi-modern campground includes 48 campsites and two cabins'; 'Number of sites: 50'; Lakeview Cabin 'on site #19', tiny house 'on site #22') + https://midnrreservations.com/ (Lake Hudson Recreation Area: 48 campsites on map '1-50, Mini Cabin & Tiny House', allowed equipment Tents and Trailer or RV up to 20' ... 40'; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakehudson ('Potable water is available via a hand pump at the entrance to the campground.' 'There are no modern restrooms; however, vault toilets are available.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakehudson (Lakeview Cabin section: 'The campground is open April 1 to Nov. 30.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakehudson (Lake Hudson Semi-Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Lake Hudson Recreation Area, 48 bookable campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lake Hudson, campground: reservation season starts April 15, ends November 29), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Lake Hudson / campground",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ (Lake Hudson Recreation Area, all 48 campsites on one fee schedule; /api/resource/feeDetails feeTotal $27 for 2026-10-27 and $29 for 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lake Hudson, campground: semi-modern rate $22) + https://www.michigan.gov/recsearch/parks/lakehudson ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -240488,9 +240572,16 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 22,
-      "nightly_high": 22,
-      "currency": "USD"
+      "nightly_low": 29,
+      "nightly_high": 29,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-07-13): $29 for every 20/30-amp campsite. 2026 on the booking site (2026-10-27): $27. The DNR rates table still lists the semi-modern campground at $22. A Recreation Passport is required for vehicle entry to all state park campgrounds."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/lakehudson https://midnrreservations.com/ (Lake Hudson Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates",
+      "note": "DNR park page + booking site + DNR rates table: 48 campsites + 2 cabins (count 50 -> 48), up to 40 ft (confirmed), 20/30-amp electric only (electric 30, water/sewer false confirmed), vault toilets + hand pump (confirmed), campground open April 1 - Nov 30 (confirmed), reservable on MiDNRReservations (platform confirmed), reservation season Apr 15 - Nov 29 (new, booking.season). Fees 22 -> 29 (2027 booking site; 2026 is $27; the DNR table still says $22). Phone 517-445-2265 matches. Note trimmed o"
     }
   },
   {
@@ -241439,48 +241530,58 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/parks/lakeport\nhttps://midnrreservations.com",
     "phone": "810-327-6224",
-    "note": "Main modern campground: 194 sites, 30/50-amp electric, some pull-throughs, paved/grass pads, two toilet/shower buildings, on the Lake Huron side of the park. Reservable online. MI Recreation Passport required for entry. --Claude",
+    "note": "Lakeport State Park's north modern campground, in woods along the Lake Huron shoreline 10 mi north of Port Huron (campground entrance 7605 Lakeshore Road); paved and grass pads. The park's day-use area with the buoyed swim beach is about a mile south, across the village of Lakeport. The separate South campground (56 sites, not on the lake) is its own entry. --Claude",
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "sites": {
       "count": 194,
-      "pull_through": true
+      "pull_through": true,
+      "max_rig_ft": 40,
+      "note": "194 sites (162 at 20/30 amps, 32 with 50 amps), some pull-through; the booking site takes tents and trailers/RVs up to 40 ft. Lake views from select sites."
     },
     "facilities": {
-      "showers": true
+      "showers": true,
+      "flush_toilets": true,
+      "dump": true,
+      "note": "Two toilet/shower buildings, sanitation station, playground; concession or store."
     },
     "booking": {
       "reservable": true,
       "season": {
         "opens": "05-01",
         "closes": "10-21"
-      }
+      },
+      "platform": "operator",
+      "note": "Reserve online on MiDNRReservations or at 800-447-2757."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakeport (Lakeport North Modern Campground: '30- and 50-amp electrical hookups') + https://midnrreservations.com/ (North sites: 162 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps, Sewer Hookup=No' and 32 'Electric Only, 20 Amps/30 Amps/50 Amps, Sewer Hookup=No'; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakeport ('The 194-site north campground offers lake views from select sites, pull-through options'; 'Number of sites: 194') + https://midnrreservations.com/ (194 campsites on the maps 'North 1-25, 68-97, 127-156, 181-194' and 'North 26-67, 98-126, 157-180'; allowed equipment Tents and Trailer or RV up to 20' ... 40'; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakeport (Lakeport North Modern Campground: 'a playground and two toilet/shower buildings'; tags 'Sanitation station', 'Toilet & shower building', 'Concession or store', 'Modern campground'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose; season: https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (reservation season starts/ends: Lakeport / North and South Loops: May 1 - October 21), read 2026-10-20",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/parks/lakeport (Lakeport North Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (194 bookable North campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lakeport, North and South Loops: reservation season starts May 1, ends October 21), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (DNR camping rates table): Lakeport / North and South Loops",
-        "checked": "2026-10-09"
+        "source": "https://midnrreservations.com/ (Lakeport State Park: fee schedule -32492, 162 sites on the North maps, '20 Amps/30 Amps', feeTotal $43; fee schedule -32491, 32 North sites '20 Amps/30 Amps/50 Amps' + the 56 South sites, feeTotal $48; for 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lakeport, North and South Loops: modern 50 AMP $46, 20/30 AMP $41) + https://www.michigan.gov/recsearch/parks/lakeport ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -241489,9 +241590,16 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 41,
-      "nightly_high": 46,
-      "currency": "USD"
+      "nightly_low": 43,
+      "nightly_high": 48,
+      "currency": "USD",
+      "checked": "2027",
+      "note": "2027 on the booking site (2027-05-18 and 07-13 alike): the North campground's 162 20/30-amp sites $43, its 32 50-amp sites $48. The DNR rates table (North and South Loops, 2026) lists $41 (20/30-amp) and $46 (50-amp). A Recreation Passport is required for vehicle entry to all state park campgrounds."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/parks/lakeport https://midnrreservations.com/ (Lakeport State Park campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2027-05-18 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates Esri World Imagery export around 43.1268,-82.4955 (pin check), read 2026-10-25",
+      "note": "DNR park page + booking site + DNR rates table, verified for the North campground alone: 194 sites (confirmed), pull-throughs (confirmed), to 40 ft (new), 30/50-amp electric only (electric 50 confirmed, water/sewer false new), two toilet/shower buildings + sanitation station (showers confirmed, flush/dump new), reservable on MiDNRReservations (platform confirmed), reservation season May 1 - Oct 21 (confirmed). Fees 41-46 (2026 table) -> 43-48 (2027 booking site). Season not stated (only day-use"
     }
   },
   {
@@ -244594,18 +244702,20 @@
     "inclusion_evidence": "MI DNR recsearch SFCG page cited; satellite at 44.8647,-84.6959 shows drive-in loop road with sites + boat launch on Lake Marjory -> 10 primitive tent/RV sites, 2 fit 40-ft so 23-ft fits",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory",
-    "phone": "989-732-3541",
-    "note": "Small rustic MI state forest CG near Frederic on Lake Marjory (a fishing lake); 10 primitive tent/RV sites, 2 of which accommodate up to a 40-ft trailer. Vault toilets, hand-pump potable water, no electric. First-come-first-served, not reservable online; ~$20/night, 15-day limit. MI Recreation Passport required. --Claude",
+    "phone": "989-732-5485",
+    "note": "Small rustic state forest campground on the north shore of Lake Marjory (bass and panfish), 11.9 mi S of Gaylord via Old Highway 27 South and Cottonwood Road (Otsego County); managed by Otsego Lake State Park. Otsego Lake is 4 mi north. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
       "count": 10,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "note": "10 'tent and small trailer' sites (the DNR's standard state forest wording). The current DNR page posts no maximum length; the stored 40-ft figure (two sites) came from earlier note prose. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Carry-in access to the lake (amenity table: C)."
     },
     "booking": {
       "reservable": false,
@@ -244614,28 +244724,29 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory ('There are 10 sites for tent and small trailer use.'; 'One camping unit and six people are allowed per site') + amenity table (10 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.'; amenity table: 'Boat ramp(R) OR carry-in access(C)' C), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.') + amenity table (Lake Marjory State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Lake Marjory State Forest Campground', Otsego Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Marjory State Forest Campground, Otsego: 10 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Marjory State Forest Campground, Otsego Co.: \"Seasonal closure dates: Nov 1 to April 15\"), read 2026-10-20",
@@ -244652,12 +244763,18 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": false,
       "opens": "04-15",
       "closes": "10-31"
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemarjory https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 10 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only, 15-day maximum (all confirmed). Season (closed Nov 1 - Apr 15) already manual. Carry-in access. max_rig_ft 40 (derived) left: the current page is silent on length. Not equestrian (type 'rustic'). Note trimmed of field restatements."
     }
   },
   {
@@ -245636,47 +245753,51 @@
     "inclusion_evidence": "Satellite at 44.6575,-84.8175: forested campground with access road to Lake Margrethe shore/beach, MI DNR SFC (37 drive-in + 9 walk-in sites) -> keep",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakefront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe",
-    "phone": "989-348-6371",
-    "note": "Rustic state forest campground on Lake Margrethe, ~6.6 mi W of Grayling. 37 drive-in sites (tent/small+large trailer) plus 9 separate walk-in sites; vault toilets, hand-pump water, no electric. First-come-first-served (official DNR page lists no reservations; older 'reservable' listings are stale); 15-day max stay. MI Recreation Passport required. --Claude",
+    "phone": "989-348-7068",
+    "note": "Rustic state forest campground in heavy woods on Lake Margrethe, 6.6 mi W of Grayling via M-72, McIntyres Landing Rd, Regimental Way and Euclid Ave (Crawford County); managed by Hartwick Pines State Park. Most sites have direct lake access; the Manistee and Au Sable rivers are close by for canoeing and fishing. DNR advisory (2026): MDHHS fish-consumption guidelines for PFOS and a warning not to swallow foam on Lake Margrethe, as high PFAS levels may be present. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 46
+      "count": 37,
+      "note": "37 sites 'for tent, small trailer and large trailer use' (no maximum length posted). Nine of them are walk-in sites a short hike (10-30 yards) from a designated trailhead: #1-3, 29-32, 34 and 36, numbered within the 37 the amenity table counts. One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Developed boat launch at the south side of the campground; lakefront picnic area with four tables at the north end; carry-in access straight from some sites."
     },
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "max_stay_nights": 15
+      "max_stay_nights": 15,
+      "note": "First-come only, but registration is now by phone or online (using the number or website posted at the campground), no earlier than 8 a.m. on the day of arrival; the site must then be set up and occupied. No advance payments or reservations."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe ('There are 37 sites for tent, small trailer and large trailer use. There are 9 walk-in sites that require you to hike in from a designated trailhead.' 'Campsites #1-3, 29-32, 34 and 36 require a hike in from a designated trailhead. The shortest hike is 10 yards, and the longest is 30 yards.'; 'One camping unit and six people are allowed per site') + amenity table (37 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'A developed boat launch is located on Lake Margrethe.' 'Carry-in access is located directly from some campsites, at the picnic area on the north side of the campground or at the boat launch at the south side of the campground.' 'A picnic area is located at the north end of the campground and includes four picnic tables and lake access.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.' 'All registrations at this campground processed online or via phone' 'You can register no earlier than 8 a.m. on the day of your arrival.' 'we do not accept advance payments or reservations') + amenity table (Lake Margrethe State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Lake Margrethe State Forest Campground', Crawford Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Margrethe State Forest Campground, Crawford: 37 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Margrethe State Forest Campground, Crawford Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -245693,11 +245814,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakemargrethe https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 37 sites for tent, small and large trailers, 9 of them walk-in (count 46 -> 37: the 9 walk-ins are numbered within the 37), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only (now registered by phone/online from 8 a.m. on arrival day), 15-day maximum (all confirmed, registration note new). Season (open all year, roads not plowed) already manual and matches the page. Boat launch, picnic area, PFAS advisory. Not equestr"
     }
   },
   {
@@ -246286,47 +246413,51 @@
     "inclusion_evidence": "Satellite near 44.6823,-85.8015: forest campground clearings among pines + boat launch on Lake Dubonnet, drive-in; note '50 tent/small-trailer sites, managed via Interlochen SP' -> real MI DNR SFCG",
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'lakeview' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest",
-    "phone": null,
-    "note": "Rustic state forest campground on Lake Dubonnet (managed via Interlochen State Park), 50 tent/small-trailer sites among pines; vault toilets, hand-pump water, no electric. FCFS only, not reservable; ~$20/night, 15-day max, one unit/6 people per site. Boat launch and Lost Lake Pathway in campground. MI Recreation Passport required. --Claude",
+    "phone": "231-276-9511",
+    "note": "Rustic state forest campground among soaring pines on Lake Dubonnet, 4.2 mi NW of Interlochen via US-31 South and Gonder Road (Grand Traverse County); managed by Interlochen State Park. The Lost Lake Pathway (hiking, ungroomed skiing, snowshoeing) runs through the campground; ORVs may be ridden from the campsite to local ORV routes. The separate Lake Dubonnet Trail Camp is not part of this entry. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 50
+      "count": 50,
+      "note": "50 'tent and small trailer' sites (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat ramp access to Lake Dubonnet from the campground."
     },
     "booking": {
       "reservable": false,
       "fcfs": "always",
-      "max_stay_nights": 15
+      "max_stay_nights": 15,
+      "note": "First-come only, but registration is now by phone or online (using the number or website posted at the campground), no earlier than 8 a.m. on the day of arrival; the site must then be set up and occupied. No advance payments or reservations."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest ('Lake Dubonnet's rustic campground offers 50 tent and small trailer sites along the tranquil shores of Lake Dubonnet.'; 'One camping unit and six people are allowed per site') + amenity table (50 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'There is boat ramp access to Lake Dubonnet from the campground.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.' 'All registrations at this campground processed online or via phone' 'You can register no earlier than 8 a.m. on the day of your arrival.' 'we do not accept advance payments or reservations') + amenity table (Lake Dubonnet State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Lake Dubonnet State Forest Campground', Grand Traverse Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Dubonnet State Forest Campground, Grand Traverse: 50 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Dubonnet State Forest Campground, Grand Traverse Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -246343,11 +246474,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakedubonnetforest https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 50 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only (now registered by phone/online from 8 a.m. on arrival day), 15-day maximum (all confirmed, registration note new). Season (open all year, roads not plowed) already manual and matches. Boat ramp. Not equestrian (type 'rustic'). Note trimmed of field restatements."
     }
   },
   {
@@ -246854,45 +246991,50 @@
     "waterfront_evidence": "audited 2026-06 (MI state evidence-gate sweep, commit 35f5f25); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann",
     "phone": "231-276-9511",
-    "note": "30 rustic sites near Lake Ann, 2 mi SW of Lake Ann village via Almira & Reynolds Rds. Vault toilets, hand-pump water, no electric. FCFS, no reservations; ~$20/night. Beech/maple forest. MI Recreation Passport required. --Claude",
+    "note": "Rustic state forest campground in mature beech and maple forest on Lake Ann, 2 mi SW of Lake Ann village via Almira and Reynolds Roads (Benzie County); managed by Interlochen State Park. The Lake Ann Pathway (hiking, mountain biking, ungroomed skiing) is adjacent, the Platte River half a mile south; ORVs may be ridden from the campsite to local ORV routes. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 30
+      "count": 30,
+      "note": "30 'tent and small trailer' sites (the DNR's standard state forest wording; no maximum length posted). One camping unit and six people per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from a hand-pump well. Boat launch on Lake Ann."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 15,
+      "note": "First-come only, but registration is now by phone or online (using the number or website posted at the campground), no earlier than 8 a.m. on the day of arrival; the site must then be set up and occupied. No advance payments or reservations."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann ('No electrical available'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann ('There are 30 sites for tent and small trailer use.'; 'One camping unit and six people are allowed per site') + amenity table (30 campsites), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann ('There are vault toilets.' 'Potable (drinking) water is available from a hand-pump well.' 'There is a boat launch on Lake Ann.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann ('No reservations. Sites available on a first-come, first-served basis.' 'Camping is limited to a 15-day maximum stay.' 'All registrations at this campground processed online or via phone' 'You can register no earlier than 8 a.m. on the day of your arrival.' 'we do not accept advance payments or reservations') + amenity table (Lake Ann State Forest Campground: 'Reservable at MiDNRReservations.com' no), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (DNR state forest campground amenities & rates table): 'Lake Ann State Forest Campground', Benzie Co., $20",
-        "checked": "2026-10-09"
+        "source": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann ('Overnight fees ($20 for most sites) and registration procedures are posted at the information kiosk at each campground'; 'A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds') + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Ann State Forest Campground, Benzie: 30 sites, $20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "season": {
         "source": "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table (Lake Ann State Forest Campground, Benzie Co.: \"Seasonal closure dates: open all year\"), read 2026-10-20",
@@ -246909,11 +247051,17 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$20 a night, with the fee and registration procedure posted at the campground kiosk. A Recreation Passport is required for vehicle entry to every state forest campground."
     },
     "season": {
       "year_round": true,
       "note": "Campground roads may not be plowed in winter."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.michigan.gov/recsearch/sfcampgroundsa-m/lakeann https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/state-forest-campgrounds/amenity-table",
+      "note": "DNR page + SF amenity table: 30 tent/small-trailer sites (confirmed), $20 at the kiosk + Recreation Passport, no electric, vault toilets, hand-pump water, first-come only (now registered by phone/online from 8 a.m. on arrival day), 15-day maximum (all confirmed, registration note new). Season (open all year, roads not plowed) already manual and matches. Boat launch. Phone 231-276-9511 matches (Interlochen SP). Not equestrian (type 'rustic'). Note trimmed of field restatements."
     }
   },
   {
@@ -251146,8 +251294,8 @@
     "inclusion_evidence": "recreation.gov 233714: Standard Nonelectric + few Tent-Only + group sites, drive-in, operating -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'coastal dunes' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/233714\nhttps://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground",
-    "phone": "231-723-2211 (Manistee Ranger District)",
-    "note": "Manistee NF campground on the shore of Lake Michigan ~15 mi south of Manistee, in the Nordhouse Dunes area along Porter Creek; ~99 sites (4 loops, incl. group + tent-only), vault toilets, boardwalk/stairs to the beach. Reservable online. No hookups. Forestcamping lists pads to ~56 ft. --Claude",
+    "phone": "231-848-7090",
+    "note": "Manistee NF campground on the Lake Michigan shore 15 mi south of Manistee (between Manistee and Ludington), along Porter Creek beside the Nordhouse Dunes Wilderness. Boardwalk/stairs to a sandy beach, overlook deck, amphitheater with peak-season programs, playground; the Arrowhead Trail loops between the campground and the beach and a Nordhouse Dunes trailhead is in the recreation area. 8 mi in from US-31 on Forest Trail Road (FS 5629). --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -251155,38 +251303,56 @@
     },
     "sites": {
       "count": 99,
-      "max_rig_ft": 56
+      "max_rig_ft": 54,
+      "note": "99 single family sites in four loops plus 3 group sites (tent camping only, up to 50 guests each). The 48 RV sites in the recreation.gov catalog are all back-in, listed maximum vehicle lengths 28-54 ft (most 34-44 ft); the rest of the single sites are not in the catalog."
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "flush_toilets": true,
+      "potable_water": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 16,
+      "note": "Run by a concessionaire (American Land & Leisure; customer service 801-226-3564). Only about half the 99 single sites are on recreation.gov (46 bookable standard sites + 2 tent sites in the catalog); the campground also has first-come sites. A reserved site is yours: you may not move to another. Check-in 2 p.m., check-out 11 a.m."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233714 (notice 'No electric hookups available') + RIDB catalog for 233714 (every site NONELECTRIC; fetched 2026-10-20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('a four loop campground ... the 99 single family sites and 3 group sites') + RIDB catalog for 233714 (48 RV-equipment sites, 'Driveway Entry: Back-In' on all, Max Vehicle Length 28-54; fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/233714 ('Group sites are for tent camping only'; 'Group campsites can each accommodate a maximum of 50 guests'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('Vault toilet(s)'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/233714 ('Other amenities include flush and vault toilets, beach access and an overlook deck.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233714 (notices 'This campground has first-come, first-serve sites', 'The site you reserve is your site. You may not move to another site.', 'Check in time is 2:00pm and Check out time is 11:00am', 'Customer Service Contact 801-226-3564 or Help.Huron.Manistee@AmericanLL.com'; rule maxConsecutiveStay 16) + RIDB catalog for 233714 (46 STANDARD NONELECTRIC + 2 TENT ONLY + 3 GROUP reservable, 2 STANDARD NONELECTRIC not) + https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('Make Reservations Here - Recreation.gov Reservations'; '99 single family sites and 3 group sites'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233714/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('Single Site: $40 per night', 'Group Site (Up to 25): $100 per night', 'Group Site (26 to 50): $115 per night', 'Additional Vehicle Fee: $10 per vehicle per day'; page last updated June 4, 2026) + https://www.recreation.gov/api/camps/campgrounds/233714/rates (PeakSTANDARD NONELECTRIC 40 for 2026-05-09 to 10-12 and 2027-05-09 to 10-12) + https://www.recreation.gov/api/camps/campgrounds/233714 ('Limit two vehicle per site; a fee will be charged for additional vehicles'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only.') + https://www.recreation.gov/api/camps/campgrounds/233714 ('Any accepted senior passes must be entered for the discount at the time of booking for single sites only.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground ('Seasons of Use Early May - Mid October'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -251197,7 +251363,21 @@
     "fees": {
       "nightly_low": 40,
       "nightly_high": 40,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $40 per night (recreation.gov peak season 2026 and 2027 alike); additional vehicle $10 per vehicle per day (two vehicles per site, extras in the overflow lot). Group sites $100 (up to 25) or $115 (26-50) per night on the FS page."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes give 50% off the pass holder's own single campsite only; enter the pass when booking."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Early May to mid October (the FS page gives no exact dates)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/huron-manistee/recreation/lake-michigan-recreation-area-campground https://www.recreation.gov/api/camps/campgrounds/233714 https://www.recreation.gov/api/camps/campgrounds/233714/rates RIDB catalog for facility 233714 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "FS page (updated June 4, 2026) + recreation.gov + RIDB: $40/night (confirmed) + $10 extra vehicle, Senior/Access 50% (new), reservable on recreation.gov with some first-come sites (fcfs new), 16-night max (new), season early May - mid October (new, no exact dates), no electric (confirmed), 99 single sites + 3 group (count confirmed), max_rig_ft 56 (derived from Forestcamping, an aggregator) -> 54 from the catalog, vault + flush toilets and potable water (flush/potable new). Concessionaire-run (A"
     }
   },
   {
@@ -251770,42 +251950,60 @@
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/10218922\nhttps://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground",
     "phone": "989-826-3252 (Mio Ranger District)",
-    "note": "Huron NF near Grayling, on 20-acre Kneff Lake (designated trout lake, stocked rainbow trout; carry-in non-motorized boats only). 27 sites; sites 1-18 crushed-stone pads, 19-27 asphalt, site 9 tent-only. Hand-pump wells, vault toilets. Mix of reservable (online) and first-come, first-served sites. --Claude",
+    "note": "Huron NF campground on the far west side of the Mio Ranger District, east of Grayling, around 20-acre Kneff Lake (designated trout lake stocked with rainbow trout in spring; carry-in non-motorized boats only; buoyed swim beach at the day-use area). Site 9 is tent-only. Reached from M-72 via Stephan Bridge Rd and FR 4003; campground host on site in season. --Claude",
     "sites": {
-      "count": 27
+      "count": 27,
+      "max_rig_ft": 80,
+      "pull_through": false,
+      "note": "27 sites, one of them tent-only. All 26 RV sites are back-in; listed maximum vehicle lengths 40-80 ft (two sites 40 ft, most 50-70). Sites 1-18 have crushed-stone parking pads, 19-27 asphalt."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Drinking water from hand-pump wells; trash collection; day-use area with picnic tables, grills and a buoyed, ramp-accessible swim beach."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "note": "16 of the 27 sites are reservable on recreation.gov (15 standard + the tent site), 11 first-come. Occupy a reserved site within 24 hours of the reservation start or it may be forfeited."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RIDB catalog for facility 10218922 (27 sites; 26 RV sites 'Driveway Entry: Back-in' (25) or unset; Max Vehicle Length 40 (2), 50 (5), 55 (2), 60 (6), 65 (4), 70 (4), 75 (2), 80 (1); fetched 2026-10-20) + https://www.recreation.gov/api/camps/campgrounds/10218922 ('The campground has 27 sites'; 'Sites 1-18 have crushed stone parking pads and sites 19-27 have asphalt parking pads'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground ('Vault toilet(s)'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/10218922 ('The campground provides handpump wells for drinking water, several vault toilets, and trash collection services'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10218922 (notices 'Some sites are available on a first-come, first serve basis.' and 'You must occupy your site within 24 hours of the start of your reservation'; rules maxConsecutiveStay 14 consecutive nights, minConsecutiveStay 1) + RIDB catalog for 10218922 (15 STANDARD NONELECTRIC + 1 TENT ONLY reservable, 11 STANDARD NONELECTRIC not) + https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground ('Make Reservations Here - Recreation.gov Reservations'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "RIDB catalog for facility 10218922 (26 sites 'STANDARD NONELECTRIC', 1 'TENT ONLY NONELECTRIC'; fetched 2026-10-20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10218922/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground ('Single Site: $15 per night'; page last updated June 4, 2026) + https://www.recreation.gov/api/camps/campgrounds/10218922/rates (PeakKneffStandard 15 and OffPeakKneffStandard 15 for every season 2026-2028), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground ('Interagency Senior and Access Recreation Passes provide a 50% discount to single campsites only. *The discount applies only to the fee for the campsite physically occupied by the pass holder'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground ('Seasons of Use May 1 - September 30') + https://www.recreation.gov/api/camps/campgrounds/10218922 ('This site is gated during the off season.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -251819,7 +252017,23 @@
     "fees": {
       "nightly_low": 15,
       "nightly_high": 15,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $15 per night (peak and non-peak alike on recreation.gov, 2026-2028)."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes give 50% off the pass holder's own single campsite only, not other fees or sites."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-30",
+      "note": "Gated in the off-season."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/huron-manistee/recreation/kneff-lake-campground https://www.recreation.gov/api/camps/campgrounds/10218922 https://www.recreation.gov/api/camps/campgrounds/10218922/rates RIDB catalog for facility 10218922 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/huron-manistee/alerts",
+      "note": "FS page (updated June 4, 2026) + recreation.gov + RIDB: $15/night (confirmed), Senior/Access 50% (new), reservable on recreation.gov with some first-come sites (16 of 27 reservable; confirmed), 14-night max (new), season May 1 - Sep 30 (new), no electric (confirmed), 27 sites (confirmed), back-in lengths 40-80 ft (new), vault toilets + hand-pump potable water (confirmed). Phone (989) 826-3252 matches FS and recreation.gov; FS-run (not commercially managed) with a seasonal host. No HMNF alert or"
     }
   },
   {
@@ -253885,13 +254099,15 @@
     "inclusion_evidence": "rec.gov 10047120: 32 Standard Nonelectric sites, RV dump station, 'one RV or camper trailer per site' -> real NF RV campground",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.recreation.gov/camping/campgrounds/10047120\nhttps://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area",
-    "phone": null,
-    "note": "Ottawa NF campground in the Lake Ottawa Recreation Area on Lake Ottawa, ~7 mi W of Iron River, Watersmeet/Iron River RD. 32 non-electric sites; paved access, pressurized water, flush toilets, dump station. Reservable on recreation.gov, $22/night. --Claude",
+    "phone": "906-661-8870",
+    "note": "Ottawa NF campground beside Lake Ottawa (deep and cold, with a boat ramp) in the Lake Ottawa Recreation Area, 5 mi SW of Iron River via US-2, M-73 and Lake Ottawa Road (Iron River Ranger District). CCC-built log toilet buildings and pavilion (the pavilion is closed for rehabilitation in 2026); the day-use area has a swimming beach and a CCC recreation building, and the Ge-Che Trail starts in the campground. OHVs may use the campground roads. --Claude",
     "hookups": {
       "electric": 0
     },
     "sites": {
-      "count": 32
+      "count": 32,
+      "pull_through": false,
+      "note": "The FS page counts 32 sites; recreation.gov's catalog has 31 campsites plus one management (host) site, all back-in, with no vehicle lengths listed. Eight people, two motorized vehicles and one RV or trailer per site."
     },
     "facilities": {
       "flush_toilets": true,
@@ -253900,32 +254116,52 @@
     },
     "booking": {
       "reservable": true,
-      "platform": "recreation.gov"
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "always"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Operated by Camp Host, LLC under a Forest Service permit. 23 of the 31 public sites are reservable on recreation.gov, 8 first-come. recreation.gov's 2-night minimum is marked 'soft' and may be relaxed for a same-day booking. Occupy the site the first night; after 14 days move elsewhere for at least 24 hours."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RIDB catalog for facility 10047120 (all 31 campsites 'STANDARD NONELECTRIC'; fetched 2026-10-20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('No. of Sites: 32'; 'Eight people and 2 motorized vehicles are allowed per campsite with a maximum of one RV or camper trailer') + RIDB catalog for 10047120 (31 STANDARD NONELECTRIC + 1 MANAGEMENT, 'Driveway Entry: Back-in' on all 32; fetched 2026-10-20), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('a pressurized water system and sewage dump station, and two log toilet buildings with flush toilets'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/10047120 ('A pressurized water system and RV dump station are located in the campground'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/10047120 (facility_rules: minConsecutiveStay 2 'soft', maxConsecutiveStay 14 consecutive nights, weekend/holiday minimums 0; notices 'This campground is operated by Camp Host, LLC under a special use permit with the Ottawa National Forest.' 'Campers must occupy the site the first night.') + RIDB catalog for 10047120 (23 STANDARD NONELECTRIC reservable, 8 not, 1 MANAGEMENT) + https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('Camping in a developed recreation site is allowed for a period not longer than 14 days'; 'Make Reservations Here'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10047120/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('Single Site: $22 per night'; 'Day use/boat launch - $5/vehicle/day or $30/vehicle/season'; 'Day use fees will not be charged to those who have already paid for a campground campsite.') + https://www.recreation.gov/api/camps/campgrounds/10047120/rates (PeakStandardNonelectric 22, 2026-2028), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('Golden Age/Interagency Senior and Access Passes Accepted'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area ('Seasons of Use May 22 – September 30' 'The campground gate will close at 12:00 p.m. CT on September 30, 2026.' 'The day use area and boat launch are open year-round'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -253936,7 +254172,22 @@
     "fees": {
       "nightly_low": 22,
       "nightly_high": 22,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "Single site $22 per night (recreation.gov 2026-2028). Campers pay no day-use fee; otherwise day use/boat launch is $5/vehicle/day or $30/season (May 15 - Oct 15)."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-22",
+      "closes": "09-30",
+      "note": "The campground gate closes at noon CT on September 30. The day-use area and boat launch stay open year-round."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ottawa-recreation-area https://www.recreation.gov/api/camps/campgrounds/10047120 https://www.recreation.gov/api/camps/campgrounds/10047120/rates RIDB catalog for facility 10047120 (trip_data/ridb_campsites.json, fetched 2026-10-20) https://www.fs.usda.gov/r09/ottawa/alerts",
+      "note": "FS page + recreation.gov + RIDB: $22/night (confirmed), Senior/Access accepted (new), reservable on recreation.gov with 8 of 31 sites first-come (fcfs new), soft 2-night minimum and 14-night max (new), season May 22 - Sep 30 (new), no electric (confirmed), 32 back-in sites (count confirmed, pull-through new; no lengths published), flush toilets + pressurized water + dump (confirmed). Run by Camp Host, LLC under permit. No Ottawa NF alert or order names Lake Ottawa Road (the October 9-10 rally ro"
     }
   },
   {
@@ -254471,38 +254722,53 @@
     "inclusion_evidence": "FS ottawa camping-cabins page: Lake Ste Kathryn among detailed listings accommodating 'tents, trailers, or larger camping units', 24 drive-in sites -> real RV campground",
     "waterfront_evidence": "audited 2026-06 (MI federal/state-forest evidence-gate sweep, commit a56256a); waterfront 'not waterfront' set by that satellite/per-site-map sweep (per-entry bucket detail in the commit message)",
     "website": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground",
-    "phone": null,
-    "note": "Ottawa NF campground on 151-acre Lake Ste. Kathryn, Kenton RD near Trout Creek. 24 drive-in sites, vault toilets, hand-pump water; each site has table, fire ring, lantern post. First-come, first-served, $22/night. Adjacent boat ramp; small beach/picnic area near site 13. --Claude",
+    "phone": "906-661-8870",
+    "note": "Ottawa NF campground on 151-acre Lake Ste. Kathryn (25 ft deep), 8 mi south of Sidnaw on Sidnaw Road (Kenton Ranger District, Iron County). Boat ramp beside the campground; small beach and picnic area near site 13; the Deer Marsh Interpretive Trail starts at the east entrance. Run by Camp Host, LLC. --Claude",
     "sites": {
-      "count": 24
+      "count": 24,
+      "note": "One loop of 24 drive-in sites that take tents, trailers and motor homes, each naturally screened, with table, fire ring, lantern post and parking spur. Eight people, two motorized vehicles and one RV or trailer per site."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Three sets of vault toilets and two hand pumps for drinking water."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "Occupy the site the first night; after 14 days move elsewhere for at least 24 hours."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('This one loop campground provides 24 drive-in camping sites that can accommodate tents, trailers and motor homes.' 'No. of Sites: 24'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Three sets of toilets and two hand pumps for drinking water are located in the campground.' 'Three sets of vault toilets'; 'Potable water is available at this site.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Reservations No reservations - first come, first serve.'; 'Camping in a developed recreation site is allowed for a period not longer than 14 days'; 'Campers must occupy the site the first night.') + recreation.gov search for 'Ste Kathryn' (no campground facility), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Fee Site and Info | Camping - $22 a night | Day use/boat launch - $5/vehicle/day or $30/vehicle/season | Day use fees will not be charged to those who have already paid for a campground campsite. | Contact Information | ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Camping - $22 a night'; 'Fees shown are for the summer recreation period when full services are provided. During the early spring and late fall when no services are provided the fees at some areas are not charged.' 'Day use fees will not be charged to those who have already paid for a campground campsite.'; page last updated May 5, 2026), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Golden Age/Interagency Senior and Access Passes Accepted'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground ('Seasons of Use May 15 – October 15'; 'The campground is scheduled to open with full services the Friday before Memorial Day.'; 'Reduced services beginning October 15, 2026, no water or garbage services will be provided. Visitors can use the facility until snow conditions reduce access.'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -254513,7 +254779,22 @@
     "fees": {
       "nightly_low": 22,
       "nightly_high": 22,
-      "currency": "USD"
+      "currency": "USD",
+      "note": "$22 a night during the full-service summer period; fees may not be charged in early spring and late fall when no services are provided. Campers pay no day-use/boat-launch fee."
+    },
+    "discounts": {
+      "interagency_senior_access": true
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "10-15",
+      "note": "Full services from the Friday before Memorial Day. From October 15 there is no water or garbage service, but the campground can be used until snow limits access."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://www.fs.usda.gov/r09/ottawa/recreation/lake-ste-kathryn-campground https://www.recreation.gov/api/search?q=Ste%20Kathryn (no campground facility; Ottawa NF results only Perch Lake, Lake Ottawa, Marion Lake Group Site, Black River Harbor) https://www.fs.usda.gov/r09/ottawa/alerts",
+      "note": "FS page (updated May 5, 2026): $22/night (confirmed), Senior/Access accepted (new), first-come only, no recreation.gov listing (confirmed), 14-day limit (new), season May 15 - Oct 15 with reduced services after (new), 24 drive-in sites for tents, trailers and motor homes (confirmed), vault toilets + hand pumps (confirmed). Hookups not stated (rustic). Operator Camp Host, LLC. No Ottawa NF alert or order names Sidnaw Road or the campground. Note corrected (8 mi S of Sidnaw, not 'near Trout Creek'"
     }
   },
   {
@@ -948346,7 +948627,7 @@
     "inclusion_evidence": "lakegeorgecamp.wordpress.com/about (read by AWH 2026-09-30; the site sits behind a human check for automated readers): $50 per night with your own camper, $55 holiday nights -> live operator site taking nightly campers; published base $50 (2026) <= $50; quality: not on RV Life, Good Sam unrated, Google Maps 4.6 over 128 reviews",
     "website": "https://lakegeorgecamp.wordpress.com/",
     "phone": "989-588-4075",
-    "note": "Family campground of about 74 wooded sites at 1935 S Jackson Ave, south of Harrison in Clare County (not the New York park of the same name). Operator rate: $50/night with your own camper, $55 on holiday nights. Not on RV Life; Google 4.6 over 128 reviews. --Claude",
+    "note": "Family campground of about 74 wooded sites at 1935 S Jackson Ave, just off US-127 south of Harrison in Clare County (not the New York park of the same name); owned and run by the Baird family since 2017. Also rents cabins and two campers. Not on RV Life; Google 4.6 over 128 reviews. --Claude",
     "sites": {
       "count": 74
     },
@@ -948357,14 +948638,24 @@
         "method": "derived"
       },
       "fees": {
-        "source": "our note (entry added 2026-09-30): '$50/night with your own camper, $55 on holiday nights'; recheck https://lakegeorgecamp.wordpress.com/",
-        "checked": "2026-10-11",
-        "method": "derived"
+        "source": "https://lakegeorgecamp.wordpress.com/about/ ('$50 per night with your own camper $55 per holiday night with your own camper'; 'Please call for seasonal prices'; '$15 charge for use of our dump station for campers not staying in the campground. $10 charge for fresh water fill.'; page modified 2026-08-31 per the WordPress.com API), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "booking": {
+        "source": "https://lakegeorgecamp.wordpress.com/contact/ ('Please email us your reservation request and we'll look into our calendar to get you scheduled') + https://lakegeorgecamp.wordpress.com/about/ ('To reserve specific dates we ask for one night paid (non-refundable) and the payment is good for one year if needing to reschedule. Balance due at check in.' 'Check in at 4pm Check out no later than 3pm with your camper') + https://lakegeorgecamp.wordpress.com/ (camp store hours; 'Monday-Thursday I check in with phone messages'; 989-588-4075), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://lakegeorgecamp.wordpress.com/about/ ('There are no public restrooms or showers, bathhouse and pool use is for campers only. $15 charge for use of our dump station for campers not staying in the campground.') + https://lakegeorgecamp.wordpress.com/ ('Camp store Hours May – end of October'), read 2026-10-25",
+        "checked": "2026-10-25",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -948376,10 +948667,26 @@
       "nightly_low": 50,
       "nightly_high": 55,
       "currency": "USD",
-      "note": "$50/night with your own camper, $55 on holiday nights. From our own note (entry added 2026-09-30); not re-confirmed with the operator as of 2026-10-11."
+      "note": "$50 per night with your own camper, $55 per holiday night (operator's About page, last modified 2026-08-31). Seasonal prices by phone. Dump station $15 and fresh-water fill $10 for campers not staying in the campground.",
+      "checked": "2026"
     },
     "discounts": {
       "good_sam": false
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://lakegeorgecamp.wordpress.com/contact/",
+      "note": "No booking engine: email a reservation request (contact form or lakegeorgecamp2@gmail.com) or call 989-588-4075 and the operator schedules you. Reserving specific dates needs one night paid in advance (non-refundable, good for a year if you reschedule); balance at check-in. Check-in 4 p.m., check-out by 3 p.m. Messages are returned Monday-Thursday; the camp store is staffed Friday-Sunday."
+    },
+    "facilities": {
+      "dump": true,
+      "note": "Bathhouse and pool for campers only (no public restrooms or showers); pavilion; camp store open May to the end of October."
+    },
+    "verify_scan": {
+      "checked": "2026-10-25",
+      "sources": "https://lakegeorgecamp.wordpress.com/ https://lakegeorgecamp.wordpress.com/about/ https://lakegeorgecamp.wordpress.com/contact/ https://lakegeorgecamp.wordpress.com/gallery/ https://lakegeorgecamp.wordpress.com/2026/08/31/our-last-weekend-for-2026-season-is-october-23rd/",
+      "note": "Operator's WordPress.com site is live (the About page with rates modified 2026-08-31; a 2026-08-31 post says the last weekend of the 2026 season is October 23): $50/night with your own camper, $55 holiday nights (confirmed, now dated 2026 from the operator), reservable by email/phone with one night's non-refundable deposit (new), dump station (new). Phone 989-588-4075 matches. Not stated: hookups, site count/lengths, season dates (only the 2026 closing weekend and camp store hours May - end of O"
     }
   },
   {

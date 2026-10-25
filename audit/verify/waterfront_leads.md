@@ -298,3 +298,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3660 Glidden Lake SFC: DNR "on Glidden Lake's eastern shore"; entry lakeview (p3-136).
 - 14030 High Bridge SFC: DNR "lies along the Two Hearted River", "is located on the Two Hearted River"; entry not waterfront (p3-137).
 - 14031 Hopkins Creek SFC: DNR "Nestled along the creek's edge", "located along the Hopkins Creek"; entry not waterfront (p3-137).
+- 3696 Lake Ann SFC: DNR "on the peaceful shores of Lake Ann", "located on Lake Ann" (boat launch); entry not waterfront (p3-139).
+- 3689 Lake Dubonnet SFC: DNR 50 sites "along the tranquil shores of Lake Dubonnet"; entry lakeview (p3-139).
+- 3668 Lake Marjory SFC: DNR "sits on the north shore of Lake Marjory"; entry lakeview (p3-139).
+- 3763 Kneff Lake (Huron NF): rec.gov "centered around the 20-acre Kneff Lake"; entry not waterfront (weak, p3-139).
+- 3610 Lake Hudson RA: DNR "located near the lake, and some sites have a lake view"; entry not waterfront (weak, p3-139).

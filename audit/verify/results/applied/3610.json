@@ -1,0 +1,47 @@
+{
+  "id": 3610,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.michigan.gov/recsearch/parks/lakehudson",
+    "https://midnrreservations.com/ (Lake Hudson Recreation Area campsites via /api/maps, /api/resourcelocation/resources and /api/resource/feeDetails for 2026-10-27 and 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+    "https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 29, "nightly_high": 29, "currency": "USD", "checked": "2027", "note": "2027 on the booking site (2027-07-13): $29 for every 20/30-amp campsite. 2026 on the booking site (2026-10-27): $27. The DNR rates table still lists the semi-modern campground at $22. A Recreation Passport is required for vehicle entry to all state park campgrounds."},
+      "source": "https://midnrreservations.com/ (Lake Hudson Recreation Area, all 48 campsites on one fee schedule; /api/resource/feeDetails feeTotal $27 for 2026-10-27 and $29 for 2027-07-13; audit/state_park_fees/gtc_probe.py, read 2026-10-25) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lake Hudson, campground: semi-modern rate $22) + https://www.michigan.gov/recsearch/parks/lakehudson ('A Recreation Passport (park pass) is required for vehicle entry into all state park and forest campgrounds'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": false, "sewer": false},
+      "source": "https://midnrreservations.com/ (Lake Hudson Recreation Area campsites via /api/resourcelocation/resources; audit/state_park_fees/gtc_probe.py, read 2026-10-25: all 48 'Electric and Water Hookups=Electric Only, Electrical Service=20 Amps/30 Amps, Sewer Hookup=No') + https://www.michigan.gov/recsearch/parks/lakehudson ('Campsite electrical pedestals are often located between campsites, which may require an additional 50-foot extension cord.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 48, "max_rig_ft": 40, "note": "48 campsites plus two cabins (the Lakeview Cabin on site 19 and the Bear Creek tiny house on site 22; the DNR's 'Number of sites: 50' counts them). The booking site takes tents and trailers/RVs up to 40 ft."},
+      "source": "https://www.michigan.gov/recsearch/parks/lakehudson ('This semi-modern campground includes 48 campsites and two cabins'; 'Number of sites: 50'; Lakeview Cabin 'on site #19', tiny house 'on site #22') + https://midnrreservations.com/ (Lake Hudson Recreation Area: 48 campsites on map '1-50, Mini Cabin & Tiny House', allowed equipment Tents and Trailer or RV up to 20' ... 40'; audit/state_park_fees/gtc_probe.py, read 2026-10-25)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "No modern restrooms; drinking water from a hand pump at the campground entrance."},
+      "source": "https://www.michigan.gov/recsearch/parks/lakehudson ('Potable water is available via a hand pump at the entrance to the campground.' 'There are no modern restrooms; however, vault toilets are available.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "11-30"},
+      "source": "https://www.michigan.gov/recsearch/parks/lakehudson (Lakeview Cabin section: 'The campground is open April 1 to Nov. 30.'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "season": {"opens": "04-15", "closes": "11-29"}, "note": "Reserve online on MiDNRReservations or at 800-447-2757."},
+      "source": "https://www.michigan.gov/recsearch/parks/lakehudson (Lake Hudson Semi-Modern Campground: 'For reservations call 800-447-2757 or reserve online') + https://midnrreservations.com/ (Lake Hudson Recreation Area, 48 bookable campsites) + https://www.michigan.gov/dnr/things-to-do/camping-and-lodging/camping-and-lodging-rates-and-operating-dates (Lake Hudson, campground: reservation season starts April 15, ends November 29), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "Semi-modern campground of Lake Hudson Recreation Area near the Ohio border, in two loops by the no-wake lake; sites are large and private with some shade. Electrical pedestals often sit between sites, so bring a 50-ft extension cord. The park holds Michigan's first state-park dark sky preserve. --Claude",
+  "summary": "DNR park page + booking site + DNR rates table: 48 campsites + 2 cabins (count 50 -> 48), up to 40 ft (confirmed), 20/30-amp electric only (electric 30, water/sewer false confirmed), vault toilets + hand pump (confirmed), campground open April 1 - Nov 30 (confirmed), reservable on MiDNRReservations (platform confirmed), reservation season Apr 15 - Nov 29 (new, booking.season). Fees 22 -> 29 (2027 booking site; 2026 is $27; the DNR table still says $22). Phone 517-445-2265 matches. Note trimmed of field restatements.",
+  "flags": [
+    "Fees: the DNR rates table lists the semi-modern campground at $22, but the booking site prices every campsite at $27 for 2026-10-27 and $29 for 2027-07-13; the booking site's figure was used.",
+    "Waterfront re-audit lead (weak): the DNR page says 'The campground is located near the lake, and some sites have a lake view'; the entry has 'not waterfront'."
+  ]
+}
