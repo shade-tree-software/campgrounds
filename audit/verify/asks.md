@@ -266,4 +266,5 @@ Campspot's only RV type ($49, full hookup) accepts Fifth-Wheel/Pop-Up/Travel Tra
 **ANSWERED 2026-10-24 (AWH): keep with a note.** BOOK BY PHONE note line added.
 
 ## 3931 Angel Cove Park (Branch County, MI) — mostly seasonal? (p3-127, 2026-10-25)
+**ANSWERED 2026-10-25: drop** (applied via criteria_drops.py).
 The county page: "The park has a continual waiting list for waterfront sites with many of the park residents returning annually to well-maintained and highly personalized lots." It posts no nightly rate, no season and no booking method (phone 517-278-8541 only); a directory reports $40/night (June 2025). Long-stay test 2 fails if the park counts as long-stay in character, but it's a county park and the count of nightly sites is unknown (the 60 pull-throughs may be the transient side). Same shape as 1454 McCann, which you dropped. Keep or drop?
