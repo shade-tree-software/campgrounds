@@ -272,3 +272,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3959 Big Bend Park (Big Prairie Twp, Hardy Dam Pond): engine sells 13 "Water View Back-in" sites, the other 107 "Standard"; entry lakefront - a view label suggests a downgrade; re-run the gate (p3-127).
 - 3937 Pleasant Lake County Park (Jackson Co): county "Positioned on the lake shore" with a sandy swim beach; entry not waterfront (p3-128).
 - 14023 Arbutus Lake SFC: DNR "sits along the northwest shore of Arbutus Lake #4"; entry not waterfront (p3-128).
+- 3691 Big Bear Point SFC: DNR "sits on the north shore of Big Bear Lake", carry-in access "directly at some campsites"; entry lakeview (p3-130).
+- 3725 Black Creek SFC: DNR "on the banks of Black Creek", sites "nestled along Black Creek", 12 sites "accessible from the water"; entry not waterfront (p3-130).
+- 3728 Big Eric's Bridge SFC (weak): DNR "located along the Huron River"; entry riverview (p3-130).
