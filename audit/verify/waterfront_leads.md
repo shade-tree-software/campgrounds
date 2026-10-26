@@ -27,6 +27,16 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-8 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3610 Lake Hudson RA** not waterfront -> lakeview (north-point sites 37/38 and the east-loop north
+  spurs ~25-30 m from the lake through a continuous wooded shore band; DNR 'some sites have a lake view').
+- Stand: **3689 Lake Dubonnet**, **3668 Lake Marjory** (on the SOUTH shore, not the north as DNR says),
+  **3651 Leverentz Lake** (re-pinned off the access road onto the campground road), **3686 Little Lake** (one
+  sandy clearing ~17-25 m from the water, no vehicle in any frame and no site map) - lakeview; **14031 Hopkins
+  Creek**, **3696 Lake Ann** (~25-30 m bluff), **3763 Kneff Lake** (rec.gov sites ~50-60 m back, ~25 m up) - not
+  waterfront. Hopkins Creek, Lake Ann, Dubonnet, Leverentz and Little Lake are low-confidence canopy calls.
+
 ## Resolved 2026-10-26, Michigan wf-mi-7 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3612 Fort Wilkins - West Loop** not waterfront -> lakeview (DNR map: the loop road runs between
@@ -328,14 +338,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 14031 Hopkins Creek SFC: DNR "Nestled along the creek's edge", "located along the Hopkins Creek"; entry not waterfront (p3-137).
-- 3696 Lake Ann SFC: DNR "on the peaceful shores of Lake Ann", "located on Lake Ann" (boat launch); entry not waterfront (p3-139).
-- 3689 Lake Dubonnet SFC: DNR 50 sites "along the tranquil shores of Lake Dubonnet"; entry lakeview (p3-139).
-- 3668 Lake Marjory SFC: DNR "sits on the north shore of Lake Marjory"; entry lakeview (p3-139).
-- 3763 Kneff Lake (Huron NF): rec.gov "centered around the 20-acre Kneff Lake"; entry not waterfront (weak, p3-139).
-- 3610 Lake Hudson RA: DNR "located near the lake, and some sites have a lake view"; entry not waterfront (weak, p3-139).
-- 3651 Leverentz Lake SFC: DNR "sits on the shores of Little and Big Leverentz Lakes"; entry lakeview (p3-140).
-- 3686 Little Lake SFC: DNR "situated on the east side of Little Lake", "a small beach area centrally located in the campground"; entry lakeview (p3-140).
 - 13456 Log Lake (Kalkaska Co): Campspot sells a "Waterfront Electric Only Site" (site 40), county posts a $45 "Waterfront" rate; entry not waterfront (p3-140).
 - 3784 Marion Lake (Ottawa NF): FS "lakeside spurs provide grand views of the south and west shores"; entry not waterfront (p3-141).
 - 3629 Metamora-Hadley RA: DNR "The north loop offers some campsites on the water"; entry lakeview (p3-141).
