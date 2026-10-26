@@ -1,0 +1,71 @@
+{
+  "id": 14577,
+  "checked": "2026-10-25",
+  "sources": [
+    "https://www.rifleriverresort.com/",
+    "https://www.rifleriverresort.com/rates/",
+    "https://www.camplife.com/1068/reservation/step1"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 30,
+        "nightly_high": 40,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "CampLife, 2027: RV sites $30 on a Tuesday (2027-06-08), $40 on a Saturday (2027-06-12), $60 for two weeknights; no other charge or tax in the quote. The operator's rates page: daily from $30, weekend from $40, weekly from $215, monthly from $600; seasonal sites by phone."
+      },
+      "source": "https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (RV Site quotes resSubTotal 30 / 40, items none; equipment list for RV Site includes 'MOTORHOME') + https://www.rifleriverresort.com/rates/ ('Daily Rate Starting at $30', 'Weekend Rate Starting at $40', 'Weekly Rate Starting at $215', 'Monthly Rate Starting at $600', 'Call (989) 460-8468 today for 2026 seasonal sites!'), read 2026-10-25",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://www.rifleriverresort.com/rates/ ('W/E Only Sites Available', '20/30/50 Amp Electric') + https://www.rifleriverresort.com/ ('From our spacious, full hookup sites') + https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (RV Site type amenities '20 Amp', '30-Amp', '50-Amp', 'Full Hook Up', 'Water'), read 2026-10-25",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 163,
+        "pull_through": true,
+        "note": "163 RV sites on the CampLife booking map (137 open online for June 2027 dates), some riverfront, some water/electric only, plus a house, two park-model rentals and golf-cart rentals. Sampled sites list 40-50 ft maximum length; motorhomes are an allowed equipment type."
+      },
+      "source": "https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (siteMap: 163 'RV Site' entries; RV Site amenities include 'Pull Through', 'Water-front'; sites P3, 77, 162 maxLength 50, 45, 40) + https://www.rifleriverresort.com/rates/ ('Riverfront Sites Available', 'Spacious RV Sites'), read 2026-10-25",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "dump": true,
+        "laundry": true,
+        "camp_store": true,
+        "note": "Outdoor heated pool and hot tub (Memorial Day-Labor Day), laundry, store, firewood, LP gas, clubhouse, game room, private pond with swimming area."
+      },
+      "source": "https://www.rifleriverresort.com/rates/ ('Dump Station') + https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (park description: 'Outdoor Heated Pool (Open Memorial Day thru Labor Day)', 'Laundry Facilities', 'Firewood', 'LP gas', 'Current Store Closed for the Season'), read 2026-10-25",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "10-12"
+      },
+      "source": "https://www.rifleriverresort.com/rates/ ('The camping season runs from May 1st to October 12th!') + https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (park description: 'RIFLE RIVER RESORT CLOSED FOR THE SEASON ON 10/11/2026'), read 2026-10-25",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.camplife.com/1068/reservation/step1",
+        "note": "Nightly RV sites book online on CampLife ('Book Now' on the rates page) or at 989-671-1125; seasonal sites at 989-460-8468."
+      },
+      "source": "https://www.rifleriverresort.com/rates/ ('Book Now' -> https://www.camplife.com/1068/reservation/step1; 'Call (989) 460-8468 today for 2026 seasonal sites!') + https://www.camplife.com/1068/reservation/step1 (CampLife booking API via audit/private_gap_browser/camplife_api.py: park record, session, availability and /api/invoice/estimate quotes for 2027-06-08 and Sat 2027-06-12, 2 adults) (campgroundPhone '+1 989-671-1125'; 137 RV sites open on 2027-06-08), read 2026-10-25",
+      "method": "manual"
+    }
+  },
+  "note": "RV resort on a bend of the Rifle River at the Melita Road bridge (334 Melita Rd, Sterling) in the Saginaw lowlands; riverfront and water/electric-only sites among the full hookups. Canoe and tube rentals (Memorial Day-Labor Day), a private pond with a swimming area, trails. Run by the Outdoor Adventures family but books nightly to the public. --Claude",
+  "summary": "Operator site + CampLife booking API: $30 weekday / $40 Saturday (2027 quotes, no added fees; confirmed), 20/30/50-amp with full and W/E-only sites, dump (confirmed), season May 1 - Oct 12 (confirmed, derived -> manual); new: 163 RV sites, pull-throughs, laundry, store, CampLife booking URL. Under the US$50 gate; presence passes (own site with phone 989-671-1125, which matches, plus a booking engine). Long-stay: weekly/monthly/seasonal rates exist, but 137 of 163 sites were open for one night online in June 2027, so it sells nightly. CampLife's RV Site type lists Motorhome (no separate van type). Good Sam false (derived) left. Note trimmed of field restatements."
+}

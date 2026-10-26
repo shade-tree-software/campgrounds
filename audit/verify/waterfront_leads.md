@@ -327,3 +327,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3653 Platte River SFC: DNR "nestled along the majestic Platte River", "accessible by water"; entry not waterfront (p3-145).
 - 3730 Pigeon River SFC: DNR "along the Pigeon River"; entry riverview (weak, p3-145).
 - 3737 Pine Grove SFC: DNR "located along the Pigeon River", carry-in access within the campground; entry riverview (weak, p3-145).
+- 14034 Rainbow Bend SFC: DNR "sits along the picturesque shore of the Au Sable River"; entry not waterfront (p3-146).
+- 3714 Pretty Lake SFC: DNR "located on Pretty Lake"; entry lakeview (weak, p3-146).
