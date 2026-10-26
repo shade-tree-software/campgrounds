@@ -1,0 +1,44 @@
+{
+  "id": 2287,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://cpw.state.co.us/state-parks/vega-state-park",
+    "https://cpw.state.co.us/state-parks/vega-state-park/vega-state-park-camping-lodging",
+    "https://www.cpwshop.com/camping/vega-state-park/r/campgroundDetails.page?parkID=50045",
+    "cpwshop campsiteDetails for parkID 50045 site 303 (Oak Point; arvdate 10/20/2026-10/15/2027), read 2026-10-26",
+    "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (cpwshop per-site reads for parkID 50045)",
+    "https://api.openstreetmap.org/api/0.6/map.json?bbox=-107.795,39.218,-107.775,39.236 (campground road layout)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://cpw.state.co.us/state-parks/vega-state-park/vega-state-park-camping-lodging ('Early Settlers is the only campground with hookups'; Oak Point: 'water spigots to fill containers ... but not at each individual site') + cpwshop site list (every Oak Point site typed Basic or Tent, '<=40 FT. NON-ELEC BASIC'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23, "max_rig_ft": 45, "pull_through": true, "note": "cpwshop sells 36 Oak Point sites: 32 Basic (vehicle lengths 20-45 ft; 9 of them cap at 20 ft) and 4 tent sites. The count is the 23 Basic sites taking 25 ft or more. At least one pull-through."},
+      "source": "https://www.cpwshop.com/camping/vega-state-park/r/campgroundDetails.page?parkID=50045 (Oak Point site list, co_sites_2026-10-12.jsonl: 32 Basic maxlen 20-45, 4 Tent; Driveway Entry 'Pull-Through' on an Oak Point Basic site in co_booking_rates_2026-10-12.jsonl), re-read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "flush_toilets": false, "showers": false, "dump": true, "note": "Water spigots through the loop (shut off Oct 31). No flush toilets or showers in Oak Point; campers may use the camper services building (showers, flush toilets) in Early Settlers campground. The park's dump station closes Oct 31."},
+      "source": "https://cpw.state.co.us/state-parks/vega-state-park/vega-state-park-camping-lodging ('Oak Point and Aspen Grove Campgrounds: There are water spigots to fill containers throughout ... These campgrounds have no flushing toilets or showers, but those campers are welcome to use the camper services building'; 'Dump station (Closes annually Oct. 31, pending weather)'; 'Water spigots are turned off annually Oct. 31 within the Oak Point and Aspen Grove Campgrounds'; 'Vault toilets nearby'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.cpwshop.com/camping/vega-state-park/r/campgroundDetails.page?parkID=50045", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "note": "A reservation is required: cpwshop.com or 1-800-244-5613, up to six months ahead; a vehicle pass must be displayed. 14 days in any 28-day period; six people, two vehicles and one camping unit per site."},
+      "source": "https://cpw.state.co.us/state-parks/vega-state-park/vega-state-park-camping-lodging ('A reservation is required to camp at Vega State Park ... cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance'; 'The maximum stay is 14 days within a 28-day period. A maximum of six people, two motorized vehicles and only one camping unit'), read 2026-10-26",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "surcharges": {"weekend": 0}, "note": "Oak Point basic sites $28 a night (late October 2026; June 2027, Saturday the same). CPW's park page gives campsites at $20-$36 by type and season. A daily vehicle pass ($10-$12 with Colorado plates, $15-$17 without) or an annual pass is required on top; CPW's reservation fee is charged per stay."},
+      "source": "cpwshop campsiteDetails parkID 50045 site 303 ('$28.00 /Per Night', read 2026-10-26) + co_booking_rates_2026-10-12.jsonl (Oak Point Basic 06/15/2027 and Sat 06/19/2027 '$28.00 /Per Night') + https://cpw.state.co.us/state-parks/vega-state-park (Daily Vehicle Pass '$10-$12' / '$15-$17'; camping page Campsite '$20 to $36'), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Basic loop on the north shore of Vega Reservoir. --Claude",
+  "summary": "CPW camping page + cpwshop: confirmed no hookups, $28 basic, vault toilets, spigot water, reservation-only. Sites count 32 -> 23 (the Basic sites over 20 ft; 9 cap at 20 ft, 4 are tent sites), added max 45 ft, pull-through, no flush toilets/showers, dump (park's), url/window/fcfs never/14-night max. Season left (CPW: 'No campsites are available in the winter'; no open/close dates stated; cpwshop shows Oak Point unavailable from Nov 1). Pin is at the Oak Point site centroid. Note: dropped the site/water/toilet/hookup/length/season/booking restatements and the old 'Camp Colorado' name.",
+  "flags": [
+    "Split question: the evidence points to Oak Point being a SEPARATE campground from Aspen Grove (2286) and Early Settlers (2285). Its site centroid (39.2317,-107.7885) is ~1.3 km from Aspen Grove's (39.2221,-107.7796) and ~2.5 km from Early Settlers' across the reservoir; OSM shows Oak Point's own campground roads entering from the north (off Vega Vista Drive / Big Elk Drive near 39.2350,-107.7897), while Aspen Grove is reached from CR 64.6 / N.6 Road near the visitor center. CPW names it a campground ('Oak Point and Aspen Grove Campgrounds'), though cpwshop lists every loop under one park (parkID 50045)."
+  ]
+}

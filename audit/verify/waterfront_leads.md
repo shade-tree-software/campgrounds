@@ -447,3 +447,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2656 Marble RV Park and Campground (CO): stored riverfront, operator says "up from the Crystal River" (p3-155).
 - 14480 Mountainside RV Park (CO, temporarily closed): operator "The 'Muddy Creek' runs next to the sites"; entry not waterfront (p3-155).
 - 2280 State Forest SP (North Michigan) (CO): the stored "not waterfront" evidence was read at the old pin ("Reservoir lies 500m+ north"). Re-pinned to 40.5522,-105.9957; per-site catalog coordinates sit 31-228 m from OSM-mapped water, several at ~31-41 m, and the old note claimed shoreline sites. Re-run the gate at the sites (p3-156).
+- 2408 White Star (CO, Pike-San Isabel NF): FS "on the northern shore of Twin Lakes Reservoir"; entry lakeview (p3-157).
+- 2634 Woodlake Park (CO, private): operator says the River Loop's 28 sites are "placed right along the Lake Fork River"; entry not waterfront. Per-site pins sit in the operator's map.html PARK_DATA (p3-157).

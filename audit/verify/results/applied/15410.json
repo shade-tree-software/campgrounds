@@ -1,0 +1,75 @@
+{
+  "id": 15410,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://koa.com/campgrounds/alamosa/",
+    "https://koa.com/campgrounds/alamosa/amenities/",
+    "https://koa.com/campgrounds/alamosa/reserve/ (RV, 2 adults, 23-ft motorhome, no slide-outs; 1 night from 2027-05-18 and from 2027-07-13), read 2026-10-26",
+    "python3 audit/price_research/gateways.py 37.47532,-105.79735"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 60.12,
+        "nightly_high": 101.73,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "KOA's booking form for a 23-ft motorhome, before tax: $60.12-95.66 a night on Tue 2027-05-18 and $63.82-101.73 on Tue 2027-07-13, from a water/electric buddy site (one RV per reservation) up to a KOA Patio site; full-hookup pull-throughs $71.86-81.27 in July. The optional 'Select My Site' charge is not included."
+      },
+      "source": "https://koa.com/campgrounds/alamosa/reserve/ (step 2 'avg/night' per site type, 1 night from 2027-05-18 and 2027-07-13, RV 23 ft), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": true
+      },
+      "source": "https://koa.com/campgrounds/alamosa/ ('50 Max Amp'; 'We offer sites with full hookup, partial hookup') + reserve form site types ('Pull Thru, 50/30/20 Amps, Full Hookups'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "max_rig_ft": 100,
+        "pull_through": true
+      },
+      "source": "https://koa.com/campgrounds/alamosa/ ('100' Max Length'; 'Every RV site is Pull-Thru'), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "laundry": true,
+        "wifi": true,
+        "dump": true,
+        "camp_store": true,
+        "note": "24-hour laundry, camp store with RV supplies, propane refill, dump station, EV charging, heated pool (5/22 - 9/7), KampK9 dog park, pedal-kart track, DJ's Kitchen."
+      },
+      "source": "https://koa.com/campgrounds/alamosa/amenities/ (amenity list: 'Dump Station', 'EV Charging Station', 'Expanded Camp Store', 'Laundry Room', 'Propane Refill', 'Swimming Pool', 'Wi-Fi', 'Pool (5/22 - 9/7)') + https://koa.com/campgrounds/alamosa/ ('a 24-hour laundry facility ... a fully-stocked camping and RV supply store'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "03-01",
+        "closes": "11-14"
+      },
+      "source": "https://koa.com/campgrounds/alamosa/amenities/ ('Open March 1 to November 14'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://koa.com/campgrounds/alamosa/reserve/",
+        "note": "Online on koa.com or at 1-719-589-9757; no minimum stay asked for the two weeknights probed."
+      },
+      "source": "https://koa.com/campgrounds/alamosa/ ('Check our availability and book your stay online or give us a call today'; 'Reserve: 1-719-589-9757') + reserve form, read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "KOA Journey at 6900 Juniper Lane, Alamosa, at 7,544 ft in the San Luis Valley, a short drive from Great Sand Dunes. --Claude",
+  "summary": "koa.com read (live, phone matches): fees 60.12-95.66 confirmed for mid-May 2027 and widened to 60.12-101.73 with a July 2027 quote; hookups 50 A full/partial, every site pull-through, max 100 ft, laundry/Wi-Fi/dump/propane/store/pool, season Mar 1 - Nov 14 added, booking url. Note trimmed of the rate, hookup and RV Life restatements.",
+  "flags": [
+    "Price gate: every RV type is over US$50 (low $60.12), but Great Sand Dunes NP is 38 km away (gateways.py), inside the 40-km gateway exception, so it passes."
+  ]
+}

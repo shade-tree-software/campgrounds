@@ -1,0 +1,48 @@
+{
+  "id": 2634,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://woodlakervpark.com/",
+    "https://woodlakervpark.com/camping.html",
+    "https://woodlakervpark.com/amenities.html",
+    "https://woodlakervpark.com/policies.html",
+    "https://woodlakervpark.com/reservation-form.html",
+    "https://woodlakervpark.com/map.html (interactive site map: per-site maxLength)",
+    "Status sheet behind the site's banners (docs.google.com/spreadsheets/d/e/2PACX-1vQx7zcLho9XEQMbiA6VY2ZOisNFLeWrl4j3oOzqKOndiOyBfXQ1BGQbOOm7MLftIKrKOjOZeC_hHYya/pub?output=csv)",
+    "python3 audit/price_research/gateways.py 37.99740,-107.29300"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://woodlakervpark.com/camping.html ('30 & 50 Amp Full Hookups. Water, sewer, and high-quality electrical outlets at every single RV site.'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 50, "max_rig_ft": 96, "note": "River Loop 28 sites along the Lake Fork, Forest Loop 22 under pines and aspens. The site map lists 52 RV sites (30 River, 22 Forest), 26-96 ft, nearly all 35 ft or more. Site assignments are made by the office to fit the rig; a loop or site can be requested, not guaranteed."},
+      "source": "https://woodlakervpark.com/camping.html ('50 Level RV Sites'; 'The River Loop features 28 premier RV sites'; 'The Forest Loop offers 22 uncrowded sites') + https://woodlakervpark.com/map.html (PARK_DATA: 52 type 'rv' sites, maxLength 26'-96'), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "wifi": true, "note": "Heated shower house with private stalls and restrooms, guest laundry, park-wide Wi-Fi, game room, covered pavilions; ice and firewood at the loop service buildings."},
+      "source": "https://woodlakervpark.com/amenities.html ('Our heated shower house features private, individual shower stalls and clean restrooms'; 'Park Laundromat') + https://woodlakervpark.com/camping.html ('Park-Wide Free Wi-Fi'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "closes": "09-30", "note": "Opens the Friday before Memorial Day; the site shows it open through September 30."},
+      "source": "https://woodlakervpark.com/ (seasonal status banner: 'Currently Closed — Reopening Friday, <Friday before Memorial Day>', 'NOW OPEN!' from that Friday until October 1; the manual override in the status sheet is OFF), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "phone", "note": "Book by calling the office, 970-901-6713 (daily 9-5 MT); the online stay-request form is paused. A deposit is taken and is non-refundable; cancel at least 2 weeks ahead, by phone. No check-in after dark or after 8 PM."},
+      "source": "https://woodlakervpark.com/reservation-form.html ('Online Requests Temporarily Paused. To request your lodging, RV site, or tent stay during this time, please call our park office directly'; status sheet 'Booking Form Control' OFF -> 'Call 970-901-6713') + https://woodlakervpark.com/policies.html ('cancellation requests must be made at least 2 weeks before the reservation date. Deposits are non-refundable for all reservations'), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Family-run since 1978, 2.5 mi south of Lake City on Hwy 149 at the foot of Slumgullion Pass. River Loop along the Lake Fork of the Gunnison, Forest Loop under pines and aspens; also cabins, bunkhouses and riverside tent sites. No generators. --Claude",
+  "summary": "Operator site read (live, phone 970-901-6713 matches): confirmed 30/50-amp full hookups, showers, laundry, Wi-Fi, seasonal; count 50 kept, max rig 60 -> 96 ft (site map), season closes 09-30 with Friday-before-Memorial-Day opening, booking by phone (online form paused). No posted rate (RV Life $$ is the price indicator; no long-stay character, so it passes); pull-through not stated, left as is. Note trimmed of the hookup/site/facility/season restatements.",
+  "flags": [
+    "Waterfront re-audit lead: stored 'not waterfront', but the operator says 'The River Loop features 28 premier RV sites placed right along the Lake Fork River ... throw out a line just paces from your slide-outs' (camping.html). The site map's per-site pins (map.html PARK_DATA lat/lng, e.g. A1 37.99738,-107.29231) would let the gate check it.",
+    "No posted nightly rate on the operator site; price rests on the RV Life $$ tier. Not long-stay in character (nightly stays, weekly events, cabin 2-night minimum only). Gateways: none within 40 km (nearest Black Canyon of the Gunnison NP 70 km), so if a $$ rate turns out over $50 the gate would apply.",
+    "Pull-through: the stored true (from note prose, '18 pull-throughs') is not stated on the operator pages or the site map; left unchanged."
+  ]
+}

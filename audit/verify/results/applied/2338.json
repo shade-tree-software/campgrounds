@@ -1,0 +1,53 @@
+{
+  "id": 2338,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/west-lake-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table)",
+    "https://www.fs.usda.gov/r02/arp/offices",
+    "https://www.recreation.gov/api/camps/campgrounds/231855",
+    "https://www.recreation.gov/api/camps/campgrounds/231855/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231855 (per-site catalog and coordinates)",
+    "https://www.recreation.gov/api/camps/availability/campground/231855/month (July 2026)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 41, "nightly_high": 41, "currency": "USD", "checked": "2026", "note": "2026 and 2027: single electric site $41, double electric $81, walk-to tent site $28. One vehicle included; extra vehicles $8 a night. The forest's status table also lists $28/70 (non-electric single/double)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231855/rates (2026 and 2027 Peak: STANDARD ELECTRIC 41, double 81, WALK TO 28) + https://www.fs.usda.gov/r02/arp/recreation/west-lake-campground ('Single Site: $28 per night (walk-to), $41 per night (electric) Double Site: $81 per night (electric)') + recreation.gov notice ('Any additional vehicles will be charged $8.00 per vehicle per night'), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 15, "water": false, "sewer": false},
+      "source": "recreation.gov campsite catalog for 231855 (all 30 STANDARD ELECTRIC sites 'Electricity Hookup' 15, 22 of them reservable by the public, sites 06-28) + recreation.gov notice ('Sewer and water hookups are not available') + FS page ('All have electricity except for the walk-in sites'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 30, "max_rig_ft": 40, "pull_through": true, "note": "30 electric RV/tent sites (22 reservable, 29-36 first-come; several doubles) plus 5 walk-to tent sites (1-5); the FS page says 36 sites. Catalog vehicle lengths 30-40 ft, most 30; FS and recreation.gov give parking spurs of 35-80 ft and the forest's status table a 50-ft max spur. Some pull-throughs. Each site has a bear locker."},
+      "source": "recreation.gov campsite catalog for 231855 (Max Vehicle Length 30-40, Driveway Entry Back-In/Pull-Through, reservable flag) + https://www.fs.usda.gov/r02/arp/recreation/west-lake-campground ('There are 36 sites; sites 1-5 are walk-in tent sites', 'The parking length ranges from 35 to 80 feet', 'bear locker') + https://www.fs.usda.gov/r02/arp/conditions (West Lake: 35 sites, Max Spur 50'), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water until Sept 30; filling RV tanks at the hydrants is not allowed. Firewood sold by the host."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231855 ('Vault toilets and drinking water are provided'; notice 'Drinking water is available until Sept. 30 each year ... Filling at campground hydrants cross-contaminates the system and is not allowed') + FS page ('Vault toilet(s)', 'Potable water is available at this site'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "09-20"},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: West Lake, Operating Season 'May 15 - Sept 20'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "fcfs": "some_sites", "season": {"opens": "05-14", "closes": "09-18"}, "note": "Sites 06-28 are reservable on recreation.gov up to 4 days before arrival; electric sites 29-36 and the walk-to sites are not reservable (first-come). A reserved site must be occupied within 26 hours of the reservation start or it is let first-come. Dates are recreation.gov's 2027 Peak season (2026: May 15 - Sept 19)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231855 (facility_rules reservationCutOff 4 'day(s) prior to arrival'; notice 'All campsites must be occupied within 26 hours of the beginning of the reservation. If not present the site will be rented by first come first serve basis.') + campsite catalog (sites 29-36 and 01-05 reservable false; July 2026 availability lists bookings only on 06-28) + /rates (Peak 2027-05-14 to 2027-09-18), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "On the shore of the 25-acre, no-wake West Lake in ponderosa pine near the village of Red Feather Lakes (Canyon Lakes RD, Arapaho-Roosevelt NF); some sites have less shade since beetle-killed trees were removed. --Claude",
+  "summary": "FS page (Sept 2026), forest status table, rec.gov facility/rates/catalog: confirmed $41 (2026-27), 15-amp electric (public, bookable sites 06-28), max 40 ft. Count 35 -> 30 (electric sites; 5 walk-to tent sites besides). Added no water/sewer, pull-through, vault toilets, drinking water (to Sept 30), season May 15 - Sept 20 (status table), 4-day cutoff, some_sites FCFS (29-36), booking.season. Pin ~175 m from the per-site centroid. FS page shows 'Site Closed' now (end of season). Note: dropped the count/length/electric/reservable restatements.",
+  "flags": [
+    "Entry phone is empty. Canyon Lakes Ranger District office 970-295-6600 (FS offices page; the same number as the supervisor's office, which shares the building); recreation.gov lists 970-295-6700, and (530) 529-0578 for facility-specific information (concessionaire).",
+    "Length conflict: recreation.gov's catalog gives Max Vehicle Length 30-40 ft (most 30); the FS page and recreation.gov description say parking spurs run 35-80 ft; the forest's status table gives Max Spur 50'. Kept 40 (the catalog); every source fits 23 ft.",
+    "Site count conflict: FS page 36 sites, status table and catalog 35 (site 13 absent from the catalog).",
+    "Agency page for the website if wanted: https://www.fs.usda.gov/r02/arp/recreation/west-lake-campground (website is the recreation.gov listing)."
+  ]
+}
