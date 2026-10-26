@@ -27,6 +27,18 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-11 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3714 Pretty Lake SFC** lakeview -> lakefront (drive-in pads on the NE shore ~5-20 m from the water,
+  a trailer on one in NAIP, <1 m above the lake); **3730 Pigeon River SFC** riverview -> creekside (a pad at the
+  bend ~10-15 m from the bank, ~1.3 m above the water; the Pigeon is ~7-9 m wide, under the riverfront bar).
+- Downgraded: **3737 Pine Grove SFC** riverview -> not waterfront (main clearing on a terrace ~5 m up, ~30 m back
+  behind a conifer belt; low confidence).
+- Stand: **3736 Pickerel Lake (Otsego) SFC**, **14033 Pigeon Bridge SFC**, **3742 Pine Lake (Huron-Manistee NF)**
+  (loop's east end ~10-20 m from shore, pads canopy-hidden; low confidence), **3653 Platte River SFC**, **14034
+  Rainbow Bend SFC** (re-pinned onto the drive-in loop; the riverbank clearing is the canoe group area) - not
+  waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-10 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3794 Perch Lake (Ottawa NF)** not waterfront -> lakefront (rec.gov per-site 'Lakefront' on 9 of 20
@@ -364,14 +376,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3736 Pickerel Lake (Otsego) SFC: DNR "set against the sandy shoreline of Pickerel Lake"; entry not waterfront (p3-145).
-- 14033 Pigeon Bridge SFC: DNR "The Pigeon River flows past this peaceful, rustic campground"; entry not waterfront (p3-145).
-- 3742 Pine Lake (Huron-Manistee NF): FS "located on the shores of beautiful Pine Lake"; entry not waterfront (p3-145).
-- 3653 Platte River SFC: DNR "nestled along the majestic Platte River", "accessible by water"; entry not waterfront (p3-145).
-- 3730 Pigeon River SFC: DNR "along the Pigeon River"; entry riverview (weak, p3-145).
-- 3737 Pine Grove SFC: DNR "located along the Pigeon River", carry-in access within the campground; entry riverview (weak, p3-145).
-- 14034 Rainbow Bend SFC: DNR "sits along the picturesque shore of the Au Sable River"; entry not waterfront (p3-146).
-- 3714 Pretty Lake SFC: DNR "located on Pretty Lake"; entry lakeview (weak, p3-146).
 - 13450 Riverside Park (Evart): city lists "River Sites (sites 4-8)" on the Muskegon River; entry not waterfront (p3-147).
 - 13459 Riverside RV Park (Vassar): city "borders the Cass River"; entry not waterfront (p3-147).
 - 14044 Rifle River RA - Ranch Rustic: DNR sites "grassy and set along the Rifle River"; entry not waterfront (p3-147).
