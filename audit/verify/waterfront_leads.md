@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-7 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3612 Fort Wilkins - West Loop** not waterfront -> lakeview (DNR map: the loop road runs between
+  every lakeside site and Lake Fanny Hooe; pads ~10-25 m back, ~5 m above the lake); **14029 Goose Creek SFC**
+  not waterfront -> riverview (old pin and evidence were the equestrian Trail Camp's loop; re-pinned to the
+  DNR's point on the river road; DNR "all nine sites have a view of the river"; pads canopy-blind, low
+  confidence).
+- Stand: **3776 Flowing Well** riverview (rec.gov pads ~27-36 m back under canopy); **3694 Guernsey Lake** and
+  **3660 Glidden Lake** (re-pinned off the entrance) lakeview (canopy-blind, low-confidence keeps); **3997 Grass
+  Lake SFC** and **14030 High Bridge SFC** not waterfront; **3971 Haymarsh Lake** not waterfront (re-pinned off
+  the entrance; the verifier's lakeview rested on a hand-drawn map over a cattail marsh, canopy-blind - held
+  down).
+
 ## Resolved 2026-10-26, Michigan wf-mi-6 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3613 Fort Wilkins - East Loop** not waterfront -> lakeview (re-pinned out of the West campground
@@ -315,14 +328,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3612 Fort Wilkins West Loop: DNR campground map draws 50-amp pull-throughs 142-158 and sites 161-179 along the Lake Fanny Hooe shore; entry not waterfront (p3-135).
-- 3776 Flowing Well (Hiawatha NF): rec.gov + FS "Some sites are situated along the bank, overlooking the slow-moving river"; entry riverview (p3-135).
-- 14029 Goose Creek SFC: DNR "sits on the shore of the Upper Manistee River", all nine sites "have a view of the river"; entry not waterfront (p3-136).
-- 3997 Grass Lake SFC: DNR "Located on Grass Lake Flooding", ramp + Betsie River carry-in "on site"; entry not waterfront (p3-136).
-- 3971 Haymarsh Lake (Mecosta Co): county sells "Rustic Waterfront Camping", campground "perched on the edge of Haymarsh Lake"; entry not waterfront (p3-136).
-- 3694 Guernsey Lake SFC: DNR "nestled on Guernsey Lake's north shore"; entry lakeview (p3-136).
-- 3660 Glidden Lake SFC: DNR "on Glidden Lake's eastern shore"; entry lakeview (p3-136).
-- 14030 High Bridge SFC: DNR "lies along the Two Hearted River", "is located on the Two Hearted River"; entry not waterfront (p3-137).
 - 14031 Hopkins Creek SFC: DNR "Nestled along the creek's edge", "located along the Hopkins Creek"; entry not waterfront (p3-137).
 - 3696 Lake Ann SFC: DNR "on the peaceful shores of Lake Ann", "located on Lake Ann" (boat launch); entry not waterfront (p3-139).
 - 3689 Lake Dubonnet SFC: DNR 50 sites "along the tranquil shores of Lake Dubonnet"; entry lakeview (p3-139).
