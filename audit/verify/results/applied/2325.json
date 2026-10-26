@@ -1,0 +1,53 @@
+{
+  "id": 2325,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/dowdy-lake-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table)",
+    "https://www.recreation.gov/api/camps/campgrounds/231854",
+    "https://www.recreation.gov/api/camps/campgrounds/231854/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/231854/month (Nov 2026, Dec 2026, Feb 2027, Apr 2027)",
+    "recreation.gov campsite catalog for 231854 (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r02/arp/alerts"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 41, "currency": "USD", "checked": "2026", "note": "Every RV site is electric: $41 a night in the peak season (2026: May 15 - Sept 19), $20 the rest of the year; electric double sites $81 peak / $47 non-peak; walk-in tent sites $30 / $20. Same in recreation.gov's 2027 table. One vehicle included; $8 per extra vehicle per night."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/dowdy-lake-campground ('Peak Season: Single Site (non-electric): $30 per night, Single Site (electric): $41 per night, Double site (electric): $81 per night; Non-Peak Season: Single Site (non-electric): $20 per night, Single Site (electric): $20 per night, Double Site (electric): $47 per night'; last updated April 24, 2026) + https://www.recreation.gov/api/camps/campgrounds/231854/rates (2026 and 2027 seasons, same figures) + recreation.gov notice on extra vehicles, read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Loops A, B and C are open year-round; Loops D and E May 15 - Sept 20. Drinking water until Sept 30."},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Dowdy Lake: 'Loops A, B & C: OPEN year-round / Loops D & E: May 15 - Sept 20') + https://www.recreation.gov/api/camps/campgrounds/231854 (notice 'Drinking water is available until Sept. 30'), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false},
+      "source": "recreation.gov campsite catalog for 231854 (all 52 RV sites STANDARD ELECTRIC: 25 list Electricity Hookup 20/30/50, 27 list 20/30) + https://www.recreation.gov/api/camps/campgrounds/231854 (notice 'No RV water connections are available. Come with your RV/trailer water tank filled'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 62, "max_rig_ft": 70, "pull_through": true, "note": "The catalog lists 62 sites: 52 electric (five of them doubles; 42 reservable, 10 first-come) and 10 walk-in tent sites; the FS and recreation.gov descriptions say 70 (60 electric + 10 tent). The FS page gives parking spurs of 30-70 ft (the forest's Campground Status table says 'Max Spur 40''); one pull-through. Extra parking is not available."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/dowdy-lake-campground ('The campground has 70 sites, including 10 walk-in tent sites', 'There are five double sites', 'The parking length ranges from 30 to 70 feet') + https://www.fs.usda.gov/r02/arp/conditions ('Dowdy Lake | 62 | 40'') + campsite catalog for 231854 (site types, reservable flag, Driveway Entry), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Filling RV tanks at the hydrants is not allowed. Day-use area and boat ramp; Dowdy Lake is no-wake. Firewood from the host."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/dowdy-lake-campground ('Vault toilet(s)', 'Potable water is available', 'The complex also includes a day-use area and boat ramp') + https://www.recreation.gov/api/camps/campgrounds/231854 ('Filling at campground hydrants cross-contaminates the system and is not allowed', 'Dowdy Lake is a no-wake lake'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "fcfs": "some_sites", "max_stay_nights": 14, "season": {"year_round": true}, "note": "Reservable on recreation.gov all year, closing 4 days before arrival: outside the summer season only Loops A and C (20 sites) take bookings, the rest showing Closed. Ten electric sites are first-come. A reserved site must be occupied within 26 hours or it goes first-come. 14 nights in any 30; no weekend minimum."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231854 (facility_rules maxStay 14 'Rolling 30 Days', reservationCutOff 4 days, no minimum-stay rule; notice on the 26-hour rule) + recreation.gov availability for Nov 2026 - Apr 2027 (Loops A and C Available, other sites Closed or Not Reservable) + campsite catalog (10 STANDARD ELECTRIC sites not reservable), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Ponderosa pine forest beside Dowdy Lake near Red Feather Lakes, 48 mi northwest of Fort Collins (Canyon Lakes RD, Arapaho-Roosevelt NF), 8,100 ft; day-use area and boat ramp on the lake. --Claude",
+  "summary": "Confirmed 50-amp electric (catalog), 62 catalog sites, reservable on recreation.gov. Changed fees 20/20 -> 20/41 ($41 peak, $20 non-peak electric; 2026 and 2027), max_rig_ft 130 -> 70 (FS spurs 30-70 ft; table says 40). Added year-round season (Loops A-C; D-E May 15 - Sept 20), year-round reservations (A and C in winter), some FCFS sites, 4-day cutoff, 14-night limit, no water hookups, vault toilets, potable water. Note: dropped '~130 ft' and field repeats. No alert affects CR 74E or the campground (Forest Order 10-05-01 Dowdy Lake restrictions date from 1993).",
+  "flags": [
+    "Site count differs between official sources: the catalog has 62 sites (52 electric, 10 tent) and the forest's Campground Status table says 62, but the FS campground page and the recreation.gov description say 70 (60 electric + 10 tent). Kept 62.",
+    "Max length: the FS campground page says 'The parking length ranges from 30 to 70 feet' but the Campground Status table lists 'Max Spur 40''. Recorded 70; both are well over 23 ft.",
+    "Entry phone is empty. recreation.gov facility phone 970-295-6700; '(530) 529-0578' for facility-specific information (concessionaire line, not named). The FS page lists only the forest Supervisor's Office 970-295-6600 (also the Canyon Lakes RD number on fs.usda.gov/r02/arp/offices).",
+    "Agency page for the website if wanted: https://www.fs.usda.gov/r02/arp/recreation/dowdy-lake-campground (website is the recreation.gov listing)."
+  ]
+}

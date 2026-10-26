@@ -440,3 +440,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2320 Camp Dick (CO, Arapaho-Roosevelt NF): FS "adjacent to Middle Saint Vrain Creek"; entry not waterfront (p3-153).
 - 2321 Chambers Lake (CO, Arapaho-Roosevelt NF): rec.gov "on beautiful Chambers Lake"; entry lakeview (p3-153).
 - 2360 Chapman (CO, White River NF): FS + rec.gov "several [sites] at the river's edge" on the Fryingpan; entry lakeview (p3-153).
+- 2362 Difficult (CO, White River NF): re-pinned 2026-10-26 ~1.5 km to the rec.gov campsite centroid 39.1413,-106.7722 (p3-154); re-check the riverfront call at the new pin.
+- 2364 Elliott Creek (CO, White River NF): FS "Located on the northwest shore of Green Mountain Reservoir"; entry lakeview (p3-154).
+- 2412 Father Dyer (CO, Pike-San Isabel NF): rec.gov "situated on the eastern shore of Turquoise Lake"; entry not waterfront (p3-154).

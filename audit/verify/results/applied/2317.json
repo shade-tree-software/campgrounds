@@ -1,0 +1,56 @@
+{
+  "id": 2317,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=dino (Gates of Lodore Campground record; page https://www.nps.gov/dino/planyourvisit/gatesoflodorecampground.htm)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=dino",
+    "https://developer.nps.gov/api/v1/feespasses?parkCode=dino",
+    "https://www.recreation.gov/api/camps/campgrounds/10199750",
+    "https://www.recreation.gov/api/camps/campgrounds/10199750/rates",
+    "recreation.gov campsite catalog for 10199750 (trip_data/ridb_campsites.json, fetched 2026-10-20)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 12, "nightly_high": 14, "currency": "USD", "checked": "2026", "entrance": {"resident": 25, "nonresident": 25, "per": "vehicle_stay", "name": "7-day vehicle entrance pass"}, "note": "$14 a night in the peak season when water is on, $12 in the low-use season without water (2026 and 2027 recreation.gov tables). Dinosaur National Monument's entrance fee is charged on top: $25 per private vehicle, good for seven consecutive days (federal interagency passes honored)."},
+      "source": "NPS campground record ('Standard Campground Fee - Peak Season' 14.00 'when water is available'; 'Campground Fee - Low Use Season' 12.00 'when water isn't available') + https://www.recreation.gov/api/camps/campgrounds/10199750/rates (2026 and 2027 First-come, First-served Season: WalkInSummerRate 14, WalkInWinterRate 12) + recreation.gov notice ('All campers must pay Dinosaur National Monument's entrance fee in addition to the fees for camping') + NPS feespasses for dino ('Entrance - Private Vehicle 25.00 ... Admission is good for seven consecutive days'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Water (and the peak rate) only in the warm season. 'Access in the winter may be difficult due to snow and road conditions.'"},
+      "source": "NPS campground record operatingHours ('The Gates of Lodore Campground is open 24 hours per day, seven days per week, year round. Access in the winter may be difficult due to snow and road conditions'; amenities potableWater 'Yes - seasonal'), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "NPS campground record ('The campsites can accommodate tents and RVs (but there are no hook-ups)'; campsites electricalHookups 0; rvInfo 'There are no hookups, dump stations, or facilities for filling an RV water tank anywhere in Dinosaur National Monument'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 19, "pull_through": true, "note": "'All sites are pull-throughs and can easily accommodate a 25 foot (8 m) RV. Some sites can accommodate larger RVs. All sites are level.' NPS gives no maximum. Compacted gravel or dirt; 8 people and 2 vehicles per site."},
+      "source": "NPS campground record (campsites totalSites 19; accessibility rvInfo quoted; adaInfo 'Sites are level and consist of compacted gravel or dirt'; regulations 'Each site is limited to 8 people and 2 vehicles'), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "showers": false, "dump": false, "laundry": false, "camp_store": false, "wifi": false, "note": "Drinking-water spigots in the summer season only; no RV tank filling anywhere in the monument. Food-storage lockers; seasonal host. No trash collection, no cell service from some carriers."},
+      "source": "NPS campground record amenities (toilets 'Vault Toilets - year round', potableWater 'Yes - seasonal', showers 'None', dumpStation 'No', laundry 'No', campStore 'No', internetConnectivity 'No', trashRecyclingCollection 'No', foodStorageLockers 'Yes - year round', staffOrVolunteerHostOnsite 'Yes - seasonal'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "max_stay_nights": 14, "note": "'Reservations are not accepted for sites. All sites are first come, first served.' Pay on site, including by recreation.gov Scan & Pay. Stays limited to 14 consecutive days."},
+      "source": "NPS campground record reservationInfo (quoted) + https://www.recreation.gov/api/camps/campgrounds/10199750 (facility_rules scanAndPay; notice 'Stays are limited to 14 consecutive days'; every catalog site non-reservable), read 2026-10-26",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "Senior and Access Pass holders pay half: $7 peak, $6 low season."},
+      "source": "NPS campground record fees ('Senior and Access Pass holders qualify for a 50% discount on the regular peak season camping rate for Gates of Lodore Campground', 7.00; low use season 6.00), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Dinosaur NM campground at the Green River's Gates of Lodore boat ramp at the head of Lodore Canyon (Colorado side), popular with rafters the night before launching; some sites shaded. Remote: 106 mi from the Canyon Visitor Center. Access is CO-318 from Maybell, then about 6 mi of unpaved Moffat CR 34N/34 (NPS: 'All vehicles OK in good weather'); avoid when wet. --Claude",
+  "summary": "Confirmed $12-14 (2026, 2027), FCFS only (Scan & Pay), no hookups, 19 sites, vault toilets, seasonal water. Added year-round season (NPS 'open ... year round'), all pull-throughs (25-ft rigs easily, some larger; no max given), $25 7-day vehicle entrance fee, 14-day limit, no showers/dump/laundry/store/wifi, senior/access 50%. Note: dropped the field repeats (19 sites, toilets, water, FCFS) and kept the access caveat with NPS's wording. NPS alerts close Echo Park and Rainbow Park only; nothing affects Gates of Lodore or its road.",
+  "flags": [
+    "Access road, as NPS states it: accessRoads 'Unpaved Roads - All vehicles OK in good weather'; 'Access in the winter may be difficult due to snow and road conditions.' recreation.gov: CO 318 for 46.2 mi, then Moffat CR 34N 1.7 mi and CR 34 4.5 mi. NPS on RVs: 'All sites are pull-throughs and can easily accommodate a 25 foot (8 m) RV' (no trailer or RV length limit given).",
+    "Entry phone is empty. Dinosaur National Monument 435-781-7700 (NPS campground record and recreation.gov facility phone).",
+    "Website is the recreation.gov listing (a Scan & Pay page, no reservations); the NPS page is https://www.nps.gov/dino/planyourvisit/gatesoflodorecampground.htm."
+  ]
+}
