@@ -1,0 +1,52 @@
+{
+  "id": 2280,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://cpw.state.co.us/state-parks/state-forest-state-park",
+    "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging",
+    "https://www.cpwshop.com/camping/state-forest-state-park/r/campgroundDetails.page?parkID=50042",
+    "cpwshop campsiteDetails for parkID 50042 (North Michigan Reservoir 201, 211, 215, 237; arvdate 10/27/2026 to 07/04/2027), read 2026-10-26",
+    "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (cpwshop per-site reads for parkID 50042, loop 'North Michigan Reservoir')",
+    "https://api.openstreetmap.org/api/0.6/map.json?bbox=-106.004,40.548,-105.988,40.560 (mapped water vs the catalog's site coordinates)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "surcharges": {"weekend": 0}, "note": "Every site in the loop (basic RV sites and tent sites alike) is $28 a night, Saturday and winter the same. A daily vehicle pass ($10-$12 with Colorado plates, $15-$17 without) or an annual Colorado state parks pass is required on top; CPW's reservation fee is charged per stay."},
+      "source": "cpwshop campsiteDetails for parkID 50042 (North Michigan Reservoir 201 Basic '$28.00 /Per Night' 10/27/2026-04/10/2027; 237 Basic $28.00 07/04/2027; 211/215 Tent $28.00) + co_booking_rates_2026-10-12.jsonl (all 38 RV sites $28 on Tue 06/15 and Sat 06/19/2027) + https://cpw.state.co.us/state-parks/state-forest-state-park ('Daily Vehicle Pass' '$10-$12' / '$15-$17'), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "cpwshop site list and per-site details for parkID 50042: every North Michigan Reservoir site is type Basic or Tent with no electricity, water or sewer hookup (the park's electric and full-hookup sites are in Ranger Lakes and North Park), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 48, "max_rig_ft": 87, "pull_through": true, "note": "Sites 201-248: 38 basic RV sites (one ADA), 40-87 ft gravel pads, 6 of them pull-throughs (237-241 and 203), plus 10 tent sites. Sites 201-210 are on the north shore, 214-248 on the south side."},
+      "source": "https://www.cpwshop.com/camping/state-forest-state-park/r/campgroundDetails.page?parkID=50042 (co_sites_2026-10-12.jsonl: 201-248 = 37 Basic + 1 Basic - ADA + 10 Tent) + co_booking_rates_2026-10-12.jsonl (Maximum Vehicle Length 40-87, Driveway Entry: 32 Back-In / 6 Pull-Through, Driveway Surface Gravel), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "flush_toilets": null, "potable_water": true, "dump": true, "note": "Hand pumps and water spigots; the water is turned off on October 31, after which the park's dump station supplies potable water. Only vault toilets in winter."},
+      "source": "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging (amenities: 'Vault toilets', 'Dump station', 'Hand-pumped water and water spigots'; 'Oct. 31 - Water will be turned off. At that time, use the dump station for potable water'; 'Winter amenities: Vault toilets'). The note-derived flush toilets are stated by no CPW page and are cleared. Read 2026-10-26.",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": null, "note": "CPW lists 'Nov. 1 - North Park Campground & Cabins, Bockman & North Michigan' among its winter campground closures, yet cpwshop sells (and has bookings on) the north-shore sites 201-210 through the winter; the south-side sites stop at October 31."},
+      "source": "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging ('Winter Campground Closures ... Nov. 1 - North Park Campground & Cabins, Bockman & North Michigan'; 'Reservations are available year-round') + cpwshop campsiteDetails (201: available/reserved nights 11/01/2026-04/10/2027; 237: last night 10/31/2026, 'X' through 04/25/2027). The stored year_round false came from note prose; the sources conflict, so it is cleared. Read 2026-10-26.",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.cpwshop.com/camping/state-forest-state-park/r/campgroundDetails.page?parkID=50042", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "note": "A reservation is required to camp: cpwshop.com or 1-800-244-5613, up to six months ahead. North-shore sites 201-210 take bookings all winter; the south-side sites close after October 31 (their 2027 opening is past the current booking window). 14 days in any 28-day period; six people, two vehicles per site."},
+      "source": "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging ('A reservation is required to camp at State Forest State Park ... cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance', 'camping is allowed only in designated areas. The maximum stay is 14 days within a 28-day period. A maximum of six people, two motorized vehicles') + cpwshop campsiteDetails (201 and 237 calendars), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Campground around North Michigan Reservoir at ~9,000 ft: a north-shore row and a larger south-side loop, near the park's lakeside rustic cabins. --Claude",
+  "summary": "CPW pages + cpwshop (parkID 50042, loop 'North Michigan Reservoir'): entry covers this campground only (sites 201-248). Confirmed $28 basic, no hookups, pull-throughs, reservation-only. Sites stays 48 (38 RV 40-87 ft + 10 tent); added max 87, vault toilets, dump, hand-pump water, url/window/fcfs never/14-night max. Cleared note-derived flush toilets (CPW lists vault toilets only) and season year_round false (CPW's Nov 1 closure vs cpwshop selling the north-shore sites all winter). Note: dropped site count, hookups, toilets/water, dump, season and reservable restatements, and 'shoreline sites' (an unaudited water claim).",
+  "flags": [
+    "Pin: 40.5475,-105.993 is ~420 m south of the southernmost site (238, 40.5514,-105.9943) and ~640 m from mapped water; the 38 RV sites span 40.5513-40.5560, -105.9995 to -105.9914 (centroid 40.5533,-105.9959, which falls between the two shores). Suggest re-pinning to the south-side loop, e.g. ~40.5522,-105.9957 (site 234 area), where 28 of the 38 RV sites are.",
+    "Waterfront: the stored 'not waterfront' evidence was read at the wrong pin ('Reservoir lies 500m+ north'). The catalog's site coordinates sit 31-228 m from water mapped in OSM (north-shore 201/207HD/208 and south-side 214/248/227 at ~31-41 m), and the old note claimed 'shoreline sites'. Re-run the waterfront gate at the real site locations (contrary-claim rule).",
+    "Season conflict: CPW's Winter Campground Closures list 'Nov. 1 ... Bockman & North Michigan', but cpwshop sells and has bookings on sites 201-210 through the winter (Nov 2026-Apr 2027). Ask the park (970-723-8366) whether the north-shore row is the winter loop.",
+    "Other drive-in RV campgrounds in State Forest SP (cpwshop parkID 50042): Bockman (51 basic sites, 46-114 ft) = entry 2279; Ranger Lakes (31 electric, 40-60 ft) = entry 2281; North Park (14 full-hookup/electric, 60 ft) = entry 14476. No entry: the 'Primitive Loop' ($18, drive-in gravel back-ins, 30-60 ft) - mostly single sites scattered across ~8 km, but sites 469-483 form a 15-site cluster at ~40.566,-105.988 (40-50 ft, 'RV Site,Trailer Site' category), ~1.4 km north of North Michigan - a possible candidate (closes Oct 1). Mendenhall Loop (6 primitive sites, 20 ft max) is under the 23-ft minimum. Crags is listed separately by CPW (closes Oct 1; not in the cpwshop RV catalog read)."
+  ]
+}
