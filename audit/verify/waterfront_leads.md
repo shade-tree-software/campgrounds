@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-4 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4034 Eddy Park** lakeview -> lakefront (city site-dimension PDF types lots 4-24 'Lakeside'; RVs
+  ~10-20 m from Sunday Lake across open grass); **3831 Walnut Hills Family Campground** pond -> riverfront
+  (river-side row ~7-13 m from the Shiawassee through a thin open fringe; nightly vs seasonal unknown).
+- Downgraded: **3959 Big Bend Park** lakefront -> lakeview (re-pinned off a pine plantation ~600 m N onto the
+  SE point; every RV site inside the perimeter road, units ~25-50 m back on a high bank; 13 'Water View' sites).
+- Stand: **3963 Vanderbilt County Park** bayview (low confidence: ~120-160 m from a marsh arm across a brushy
+  slope); **580 Woodland Park** lakeview (--AWH: a driveway separates every site); **3937 Pleasant Lake County
+  Park** not waterfront (private lake-house strip between); **14023 Arbutus Lake SFC** not waterfront
+  (re-pinned from the entrance onto the loop; trailer pads not resolvable, lakeshore sites tent-only; low
+  confidence); **3691 Big Bear Point SFC** lakeview (pads not legible under pines).
+
 ## Resolved 2026-10-26, Michigan wf-mi-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **14257 Rivers Bend RV Resort** riverview -> riverfront (re-pinned off the mobile-home rows onto the
@@ -280,14 +293,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3963 Vanderbilt County Park: county "located along the Saginaw Bay Shoreline"; entry bayview (p3-125).
-- 3831 Walnut Hills: operator "the Shiawassee River runs right alongside the park", kayak launch from the park; entry pond (p3-125).
-- 580 Woodland Park (Grand Marais): township's Campspot sells 'Lakefront Campsite' (22) and 'Prime Lakefront Campsite' (5) types; entry lakeview, and the --AWH note says all sites are separated from the lake by a driveway (p3-126).
-- 4034 Eddy Park (Wakefield): city's site-dimension sheet types RV lots 4-24 'Lakeside' (Sunday Lake); entry lakeview (p3-126).
-- 3959 Big Bend Park (Big Prairie Twp, Hardy Dam Pond): engine sells 13 "Water View Back-in" sites, the other 107 "Standard"; entry lakefront - a view label suggests a downgrade; re-run the gate (p3-127).
-- 3937 Pleasant Lake County Park (Jackson Co): county "Positioned on the lake shore" with a sandy swim beach; entry not waterfront (p3-128).
-- 14023 Arbutus Lake SFC: DNR "sits along the northwest shore of Arbutus Lake #4"; entry not waterfront (p3-128).
-- 3691 Big Bear Point SFC: DNR "sits on the north shore of Big Bear Lake", carry-in access "directly at some campsites"; entry lakeview (p3-130).
 - 3725 Black Creek SFC: DNR "on the banks of Black Creek", sites "nestled along Black Creek", 12 sites "accessible from the water"; entry not waterfront (p3-130).
 - 3728 Big Eric's Bridge SFC (weak): DNR "located along the Huron River"; entry riverview (p3-130).
 - 14025 Bray Creek SFC: DNR "situated along the banks of the Baldwin River", confluence "adjacent to the campground"; entry not waterfront (river reached by stairs from the day-use area) (p3-131).
