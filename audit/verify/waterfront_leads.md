@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-10 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3794 Perch Lake (Ottawa NF)** not waterfront -> lakefront (rec.gov per-site 'Lakefront' on 9 of 20
+  drive-in RV sites; plotted, 11/12/15/16/17 sit 3-16 m from shore, site 16 ~1 m above the lake on 3DEP).
+- Stand: **14245 Northern Sites** riverview (RVs ~25-40 m back with the campground lane between; low
+  confidence); **3718 Perch Lake SFC** lakeview (pads on an 8-12 m bank, stairs down); **3644 North Higgins Lake
+  SP** (private shore strip / forest), **3744 Old Grade** (canopy, no site map; low confidence), **3738 Nichols
+  Lake South** (rec.gov 'Lakefront' tag is blanket - on interior #20 too; pads 65-100 m back on a bench),
+  **3745 Peterson Bridge** (Riverfront tags only on tent-only boat-in sites), **3778 Petes Lake** (re-pinned
+  ~450 m off the access road; canopy, low confidence) - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-9 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3629 Metamora-Hadley RA** lakeview -> lakefront (DNR map: north-loop sites ~151-169 on the lake
@@ -353,14 +364,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3644 North Higgins Lake SP: DNR "The park's modern campground - set along the north shore of Higgins Lake", tagged Water access; entry not waterfront (its note: set back north of N. Higgins Lake Dr) (p3-143).
-- 3744 Old Grade (Huron-Manistee NF): FS "Located on the Little Manistee River"; entry not waterfront (p3-143).
-- 3738 Nichols Lake South: rec.gov "on the south side of Nichols Lake", "wood ramp and stairs lead down to the lake"; entry not waterfront (weak, p3-143).
-- 14245 Northern Sites: operator tags 'Waterfront', "our serene riverside location", two sandy beach areas; entry riverview (weak, p3-143).
-- 3794 Perch Lake (Ottawa NF): rec.gov "many of the spacious sites having lake access"; entry not waterfront (p3-144).
-- 3718 Perch Lake SFC: DNR "on the shore of Perch Lake"; entry lakeview (p3-144).
-- 3745 Peterson Bridge (Huron-Manistee NF): rec.gov "located on the Pine River", riverbank tent sites reachable from the river; entry not waterfront (weak, p3-144).
-- 3778 Petes Lake (Hiawatha NF): rec.gov "A few sites overlook the lake" (weak, p3-144).
 - 3736 Pickerel Lake (Otsego) SFC: DNR "set against the sandy shoreline of Pickerel Lake"; entry not waterfront (p3-145).
 - 14033 Pigeon Bridge SFC: DNR "The Pigeon River flows past this peaceful, rustic campground"; entry not waterfront (p3-145).
 - 3742 Pine Lake (Huron-Manistee NF): FS "located on the shores of beautiful Pine Lake"; entry not waterfront (p3-145).
