@@ -346,3 +346,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3673 South Manistique Lake SFC: DNR "Some campsites have direct water access via a narrow footpath"; entry lakeview (weak, p3-148).
 - 14036 Sunrise Lake SFC: DNR "nestled on a forested bluff overlooking Sunrise Lake", "set on Sunrise Lake"; entry not waterfront (weak, p3-149).
 - 14041 Tippy Dam RA: DNR sites "within close proximity to the dammed portion of the Manistee River", a viewing area overlooks the water; entry not waterfront (weak, p3-149).
+- 3720 Tomahawk Lake SFC: DNR "Nestled along the serene shores of the 40-acre Tomahawk Lake", "Some campsites have direct access to the lake"; entry not waterfront (p3-150).
+- 3669 Upper Manistee River SFC: DNR "Located along the Upper Manistee River ... access the river from many points throughout the campground"; entry not waterfront (p3-150).
+- 3722 Van Etten Lake SFC: DNR "Sites 36-46 have direct lake access via footpaths"; entry lakeview (p3-150).
+- 3675 Trout Lake SFC: DOWNWARD - DNR now "near House and Hoister lakes (Trout Lake has receded due to an emergency drawdown)", dam drawdown since April 2025, no water-access tag; entry lakefront (p3-150).
+- 3721 Tomahawk Creek Flooding SFC: DNR "The east and west units are both located on the Tomahawk Creek Flooding"; entry not waterfront (weak, p3-150).
+- 3657 Twin Lakes SFC: DNR "set on Twin Lake", Water access tag; entry lakeview (weak, p3-150).
+- 13449 Trailway Campground (Montague): city "adjacent to the White River", "across the street from beautiful White Lake"; entry not waterfront (weak, p3-150).
