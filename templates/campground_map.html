@@ -202,9 +202,15 @@
        ellipsis isn't clipped on narrow phones; it still stops ~2px short of
        the top-right layer icon. The reduced input right padding gives the "…"
        a few more px without moving the left-aligned text. */
-    .cg-search { width: calc(100vw - 66px); }
+    /* The search sits under the quick-filter row. The layer icon normally
+       keeps the top-right corner beside the row, leaving the search the whole
+       width; when the row needs that width the icon drops down beside the
+       search (body.cg-layers-down, set by layoutTopControls) and the search
+       makes room for it as before. */
+    .cg-search { width: calc(100vw - 20px); max-width: none; }
+    body.cg-layers-down .cg-search { width: calc(100vw - 66px); }
     .cg-search input { padding-right: .45rem; }
-    body.cg-layers-open .cg-search { width: 11rem; }
+    body.cg-layers-down.cg-layers-open .cg-search { width: 11rem; }
 
     /* Bottom controls + attribution layout (bottom → top: attribution, then the
        legend above it). Three coordinated rules:
@@ -342,22 +348,65 @@
   }
 
   /* ── Quick-filter row ──────────────────────────────────────────────────
-     A Leaflet control straight under the search box: the Filters button plus
-     the few filters asked for most, one tap each. One line that scrolls
-     sideways rather than wrapping, so it never pushes the locate / route
-     buttons down the map. Sized like the search box on a phone, and shrinks
-     with it while the layer box is open. */
+     The first Leaflet control at the top of the map, above the search box:
+     the Filters button plus the few filters asked for most, one tap each.
+     One line that scrolls sideways rather than wrapping, so it never pushes
+     the search and buttons down the map. Its width is set by
+     layoutTopControls(): up to the layer icon when the icon fits beside it,
+     the whole map width when it doesn't. The wrapper doesn't scroll, so the
+     chevrons saying there is more can sit over the row's edges. */
+  .cg-chips-wrap {
+    position: relative;
+    margin: 6px 0 0 7px !important;
+  }
   .cg-chips {
     display: flex;
     gap: .35rem;
-    max-width: min(34rem, calc(100vw - 80px));
+    max-width: calc(100vw - 80px);
     overflow-x: auto;
     scrollbar-width: none;
     /* Room for the chips' shadows, which overflow-x would otherwise clip. */
     padding: 3px 3px 5px;
-    margin: 6px 0 0 7px !important;
   }
   .cg-chips::-webkit-scrollbar { display: none; }
+  /* Chips running off an edge fade out under that edge's chevron. */
+  .cg-chips.fade-r {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent calc(100% - 6px));
+            mask-image: linear-gradient(to right, #000 calc(100% - 44px), transparent calc(100% - 6px));
+  }
+  .cg-chips.fade-l {
+    -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 44px), transparent calc(100% - 6px));
+            mask-image: linear-gradient(to left, #000 calc(100% - 44px), transparent calc(100% - 6px));
+  }
+  .cg-chips.fade-l.fade-r {
+    -webkit-mask-image: linear-gradient(to right, transparent 6px, #000 44px, #000 calc(100% - 44px), transparent calc(100% - 6px));
+            mask-image: linear-gradient(to right, transparent 6px, #000 44px, #000 calc(100% - 44px), transparent calc(100% - 6px));
+  }
+  .cg-chips-more {
+    position: absolute;
+    top: calc(50% - 1px);
+    transform: translateY(-50%);
+    z-index: 1;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gray-light);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.35);
+    color: var(--navy);
+    cursor: pointer;
+  }
+  .cg-chips-more[hidden] { display: none; }
+  .cg-chips-more:hover { background: var(--blue-bg); }
+  .cg-chips-more.next { right: 0; }
+  .cg-chips-more.prev { left: 0; }
+  .cg-chips-more svg { width: 14px; height: 14px; }
+  /* The layer box, opened, paints over the row rather than under it. */
+  body.cg-layers-open .leaflet-top.leaflet-right { z-index: 1002; }
   .cg-chip {
     flex: none;
     display: inline-flex;
@@ -505,8 +554,6 @@
     cursor: pointer;
   }
   @media (max-width: 700px) {
-    .cg-chips { max-width: calc(100vw - 66px); }
-    body.cg-layers-open .cg-chips { max-width: 11rem; }
     /* A sheet from the bottom, leaving the top of the map in view. */
     .cg-filter-panel {
       top: auto;
@@ -1612,6 +1659,7 @@ function applyCampgroundsToggle() {
     const el = ctl.getContainer();
     if (el) el.style.display = disp;
   }
+  layoutTopControls();
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
 // circleMarker stays on the map (canvas-rendered) and still captures clicks
@@ -2042,13 +2090,41 @@ const QUICK_FILTERS = [
 ];
 
 const quickFilterControl = L.control({ position: 'topleft' });
+const CHEVRON_SVG = d => '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="' + d +
+  '" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 quickFilterControl.onAdd = function() {
-  const div = L.DomUtil.create('div', 'cg-chips');
+  const wrap = L.DomUtil.create('div', 'cg-chips-wrap');
+  const div = L.DomUtil.create('div', 'cg-chips', wrap);
   div.setAttribute('role', 'toolbar');
   div.setAttribute('aria-label', 'Quick filters');
   // A swipe along the row scrolls it; without these it would pan the map.
-  L.DomEvent.disableClickPropagation(div);
-  L.DomEvent.disableScrollPropagation(div);
+  L.DomEvent.disableClickPropagation(wrap);
+  L.DomEvent.disableScrollPropagation(wrap);
+
+  // Chevrons over the row's edges while chips are scrolled out of view there.
+  // Mouse affordances: a finger swipes the row, and Tab scrolls each chip into
+  // view, so they stay out of the tab order.
+  const arrow = (cls, label, path, dir) => {
+    const b = L.DomUtil.create('button', 'cg-chips-more ' + cls, wrap);
+    b.type = 'button';
+    b.tabIndex = -1;
+    b.hidden = true;
+    b.setAttribute('aria-label', label);
+    b.innerHTML = CHEVRON_SVG(path);
+    b.addEventListener('click', () =>
+      div.scrollBy({ left: dir * Math.max(80, div.clientWidth * 0.7), behavior: 'smooth' }));
+    return b;
+  };
+  const prev = arrow('prev', 'Earlier filters', 'M10 3 5 8l5 5', -1);
+  const next = arrow('next', 'More filters', 'M6 3l5 5-5 5', 1);
+  updateChipArrows = () => {
+    const max = div.scrollWidth - div.clientWidth;
+    prev.hidden = div.scrollLeft <= 1;
+    next.hidden = div.scrollLeft >= max - 1;
+    div.classList.toggle('fade-l', !prev.hidden);
+    div.classList.toggle('fade-r', !next.hidden);
+  };
+  div.addEventListener('scroll', updateChipArrows, { passive: true });
 
   const filtersBtn = document.createElement('button');
   filtersBtn.type = 'button';
@@ -2080,13 +2156,45 @@ quickFilterControl.onAdd = function() {
       chips[i].textContent = q.label();
       chips[i].setAttribute('aria-pressed', on ? 'true' : 'false');
     });
+    // A chip's label can change width ("4★ and up" / "3★ and up").
+    layoutTopControls();
   });
-  return div;
+  return wrap;
 };
+let updateChipArrows = () => {};
 quickFilterControl.addTo(map);
-// Straight under the search box, above the locate / route buttons that were
-// added to the same corner first.
-searchControl.getContainer().after(quickFilterControl.getContainer());
+// At the very top of the corner, above the search box and the locate / route
+// buttons that were added to it first.
+searchControl.getContainer().before(quickFilterControl.getContainer());
+
+// ── Top band layout ──
+// The quick-filter row runs along the top with the search box under it. The
+// layer control's icon keeps the top-right corner while the row leaves room
+// for it; when the row's chips would run under the icon, the icon drops below
+// the row instead (level with the search box) and the row takes the whole
+// width, scrolling sideways with chevrons if even that isn't enough.
+const ROW_LEFT = 7, CORNER_MARGIN = 10, ROW_GAP = 8;
+let layersIconW = 0;
+function layoutTopControls() {
+  const wrap = quickFilterControl.getContainer();
+  const row = wrap.querySelector('.cg-chips');
+  const lc = layersControl.getContainer();
+  const corner = lc.parentNode;
+  // Measure the icon only while it's collapsed; the open box is far wider.
+  if (!lc.classList.contains('leaflet-control-layers-expanded')) layersIconW = lc.offsetWidth || layersIconW;
+  const iconW = layersIconW || 44;
+  const mapW = map.getContainer().clientWidth;
+  const rowShown = wrap.style.display !== 'none';
+  const beside = mapW - ROW_LEFT - ROW_GAP - iconW - CORNER_MARGIN;
+  const down = rowShown && row.scrollWidth > beside;
+  row.style.maxWidth = (down ? mapW - 2 * ROW_LEFT : beside) + 'px';
+  corner.style.top = down ? (wrap.offsetTop + wrap.offsetHeight) + 'px' : '';
+  document.body.classList.toggle('cg-layers-down', down);
+  updateChipArrows();
+}
+map.on('resize', layoutTopControls);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutTopControls);
+layoutTopControls();
 
 // ── Filters panel ──
 // Outside the Leaflet container on purpose: a click, drag or wheel inside it
