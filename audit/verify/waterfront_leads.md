@@ -317,3 +317,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3744 Old Grade (Huron-Manistee NF): FS "Located on the Little Manistee River"; entry not waterfront (p3-143).
 - 3738 Nichols Lake South: rec.gov "on the south side of Nichols Lake", "wood ramp and stairs lead down to the lake"; entry not waterfront (weak, p3-143).
 - 14245 Northern Sites: operator tags 'Waterfront', "our serene riverside location", two sandy beach areas; entry riverview (weak, p3-143).
+- 3794 Perch Lake (Ottawa NF): rec.gov "many of the spacious sites having lake access"; entry not waterfront (p3-144).
+- 3718 Perch Lake SFC: DNR "on the shore of Perch Lake"; entry lakeview (p3-144).
+- 3745 Peterson Bridge (Huron-Manistee NF): rec.gov "located on the Pine River", riverbank tent sites reachable from the river; entry not waterfront (weak, p3-144).
+- 3778 Petes Lake (Hiawatha NF): rec.gov "A few sites overlook the lake" (weak, p3-144).
