@@ -27,6 +27,20 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3808 Sunset Cove Resort** not waterfront -> lakefront (operator lot map: cove-frontage lots within
+  ~10 m of Marble Lake; nightly 'Lakefront' sites sold); **3912 Wolverine Campground** not waterfront ->
+  lakefront (Genesee Co site map: Lakefront sites 1-21 and 127-155 ~10-15 m from Holloway Reservoir; re-pinned
+  off the day-use beach ~450 m; those sites carry a 3-night minimum, the rest don't); **3895 Big Lake
+  Campground** lakeview -> lakefront (RVs ~15 m from the beach across open unused lawn); **3956 Sandy Beach
+  County Park** not waterfront -> lakeview (Water View pads ~15-20 m back behind a lane and brush on a 5 m bank).
+- Downgraded: **3982 Stafford County Park** lakefront -> lakeview (the shore sites 3-10 are tent-only on
+  Checkfront; the Lake View electric sites sit behind the pavilion lawn).
+- Stand: **407 Silver Lake SP** lakeview (--AWH: driveway between sites and lake); **3904 Bay Mills Sunrise RV
+  Park** not waterfront (150-250 m back behind road and casino); **14236 Bay Ridge** bayview (pads 40-60 m up a
+  brushy bluff).
+
 ## Resolved 2026-10-25, Michigan wf-mi-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4002 Beaver Lake Park** not waterfront -> lakefront (county campground map: sites 1-4, 57-58 front
@@ -255,14 +269,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3956 Sandy Beach County Park (Newaygo): county sells 'Full-hookup, Pull-thru, Water View' sites on Hardy Dam Pond; entry not waterfront (p3-114).
-- 3982 Stafford County Park (Huron Co): county's best RV sites are "Electric Only Lakeview" ("Lake view sites, electric only" on the map); only rustic sites 3-10 sit on the shore; entry lakefront - may be a downgrade (p3-114/115).
-- 407 Silver Lake SP: DNR "sites 1-13 are on Silver Lake", booking site tags 4 sites "Adjacent To: Waterfront"; entry lakeview, which AWH's firsthand note supports (driveway between sites and lake) - likely stays (p3-115).
-- 3808 Sunset Cove Resort (Marble Lake): operator sells "Lakefront" full-hookup nightly sites ($50); entry not waterfront (p3-116).
-- 3912 Wolverine Campground (Genesee Co): county sells "Lakefront" sites ($52/$57) and advertises "lake-front camping"; entry not waterfront (p3-116).
-- 3904 Bay Mills Sunrise RV Park: operator "overlooks the Back Bay of Lake Superior" (Waiska Bay); entry not waterfront (p3-117).
-- 14236 Bay Ridge RV Park: operator "sits on over 400' of waterfront" with boat docking; entry bayview (p3-117).
-- 3895 Big Lake Campground (Curtis): operator "located right on Big Manistique Lake ... beautiful shallow waterfront" (2013 blog); entry lakeview (p3-117).
 - 3894 Log Cabin Resort (Curtis): operator "on Big Manistique Lake", beach, marina, slips, "the oldest log cabin on the waterfront"; campsites' relation to shore unstated; entry not waterfront (p3-121).
 - 3862 Loomis Landing: operator "on the Backwaters of Tippy Dam", record walleye "caught right here in front of Loomis Landing"; entry not waterfront (p3-121).
 - 3813 Potawatomie Campground (Union City): operator "We are located on Fox Lake", sandy beach, fishing dock; entry not waterfront (p3-123).
