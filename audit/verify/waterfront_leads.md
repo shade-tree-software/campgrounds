@@ -27,6 +27,20 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
+
+- Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
+  sites 069 and 077 'Waterfront'; OSM pitches 61-71 ~0-25 m from Frye Pond. The --AWH note never discussed
+  water, so the earlier 'per owner' value was inferred); **15491 Myrtle Beach KOA (SC)** not waterfront ->
+  creekside (Lakeside Loop back-ins 344-352 with decks ~15-25 m from the Withers Swash channel); **4353
+  Briarcliffe RV Resort (SC)** not waterfront -> riverview (the old 'marina strip' read was wrong; the pads on
+  the ICW are owners' private sites 128-131, guest sites sit behind a knoll and are assigned at check-in; low
+  confidence).
+- Stand: **3532 Totogatic Park (WI)** lakefront (county map; re-pinned ~250 m onto the campground); **1140 Glen
+  Maury Park (VA)** riverview (river rows are tent-recommended); **255 Bath County Recreational (VA)** lakeview;
+  **13086 Riverside (VA)** (on-river sites are tent/pop-up), **236 Amelia WMA (VA)** (AWH 2026-10-21; DWR 300-ft
+  rule), **530 Bark Camp (VA)** - not waterfront.
+
 ## Resolved 2026-10-26, North Carolina wf-nc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - NC leads done
 
 - Upgraded: **15454 Asheville East KOA** not waterfront -> riverfront (KOA map, rev. Aug 2026: A1-A10 and B28/B29
@@ -444,9 +458,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   below Bond Falls Main Dam (10 m under the flowage's pool), not at a campground; the camp loops
   are along the flowage shore somewhere south. Find the loops (UPPCo map) and re-pin before the
   lakefront call can be re-checked.
-- **3532 Totogatic Park (WI)** — dam screen 2026-10-21: pin is in woods ~250 m from the Minong
-  Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.
-- **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
-- **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
