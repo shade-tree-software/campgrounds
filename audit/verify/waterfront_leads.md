@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **14257 Rivers Bend RV Resort** riverview -> riverfront (re-pinned off the mobile-home rows onto the
+  RV peninsula; pads with docks ~10-20 m from the Menominee; transient Riverfront W&E sold); **14237 Sunset Bay
+  RV Resort** not waterfront -> coastal woods (RV clearings in open shore spruce ~35-65 m from Lake Superior,
+  only the campground's own lanes between; the prior 100-150 m call was contradicted at 0.22 m/px).
+- Stand: **3894 Log Cabin Resort** (RVs behind the cabin row), **3862 Loomis Landing** (canopy, no per-site
+  source; low confidence), **3813 Potawatomie** (lake frontage is day use), **4024 Runkle Lake Park** (site 44
+  ~45 m behind the loop road), **3830 Tyler Creek** (creek-side loop is primitive sites), **14225 Vagabond
+  Resort** (bay ~300 m across County 513) - all not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3808 Sunset Cove Resort** not waterfront -> lakefront (operator lot map: cove-frontage lots within
@@ -269,14 +280,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3894 Log Cabin Resort (Curtis): operator "on Big Manistique Lake", beach, marina, slips, "the oldest log cabin on the waterfront"; campsites' relation to shore unstated; entry not waterfront (p3-121).
-- 3862 Loomis Landing: operator "on the Backwaters of Tippy Dam", record walleye "caught right here in front of Loomis Landing"; entry not waterfront (p3-121).
-- 3813 Potawatomie Campground (Union City): operator "We are located on Fox Lake", sandy beach, fishing dock; entry not waterfront (p3-123).
-- 14257 Rivers Bend RV Resort (Iron Mountain): operator sells "Riverfront water & electric" sites, Firefly "Waterfront Premium" class, site 99 on the river with a dock; entry riverview (p3-123).
-- 4024 Runkle Lake Park (Crystal Falls): operator "lakeside camping", beach and pier; entry not waterfront (p3-123).
-- 14237 Sunset Bay RV Resort (Ahmeek): operator "Spots along the water go quickly once summer hits"; entry not waterfront on satellite (sites 100-150 m back behind a treeline) (p3-124).
-- 3830 Tyler Creek (Alto): operator "set along a beautiful Pure Michigan trout stream", primitive sites along the Tyler Creek Trout Trail; map draws rustic loop 1-27 beside the creek; entry not waterfront (p3-125).
-- 14225 Vagabond Resort (Little Bay de Noc): operator advertises Bay De Noc sunsets and a fishing dock; entry not waterfront (p3-125).
 - 3963 Vanderbilt County Park: county "located along the Saginaw Bay Shoreline"; entry bayview (p3-125).
 - 3831 Walnut Hills: operator "the Shiawassee River runs right alongside the park", kayak launch from the park; entry pond (p3-125).
 - 580 Woodland Park (Grand Marais): township's Campspot sells 'Lakefront Campsite' (22) and 'Prime Lakefront Campsite' (5) types; entry lakeview, and the --AWH note says all sites are separated from the lake by a driveway (p3-126).
