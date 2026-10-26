@@ -27,6 +27,15 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Florida wf-fl-4 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - FL leads done
+
+- Upgraded: **14870 Seminole Campground** not waterfront -> creekside (a 2021 canopy-gap frame shows west-loop RV
+  pads ~5-10 m from Popash Creek, no road between; some may be park models); **14387 Panhandle RV Resort** not
+  waterfront -> lakeview (west-loop pads ~20 m from the fishing pond across the loop road; the 1163 precedent).
+- Stand: **168 River Junction (Withlacoochee SF)** not waterfront (--AWH; RA 'Riverfront' sites plot 30-55 m
+  across wooded swamp; re-pinned ~200 m off the access road); **14434 Scott's Ferry** not waterfront (road and
+  bank treeline between the RV sites and the Chipola).
+
 ## Resolved 2026-10-26, Florida wf-fl-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4719 Karick Lake South (Blackwater River SF)** lakeview -> lakefront (ReserveAmerica 'Lakefront' on
@@ -358,11 +367,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
   tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
   Same question as asks #8 for the rest of AWH's beach camping areas.
-- **168 River Junction (Withlacoochee SF)** — ReserveAmerica marks sites 001, 014, 016 "Near Water";
-  entry and the --AWH note say not waterfront.
-- **14387 Panhandle RV Resort** (minor) — "Two Fishing Ponds ... right on the property".
-- **14870 Seminole Campground** — "47 creek side campsites" on Pop Ash Creek; entry not waterfront.
-- **14434 Scott's Ferry** (weak) — "Located on the Chipola River with boat launch"; entry not waterfront.
 - **266 Big Bend (USFS, WV)** — entry riverfront on the --AWH note ("sites adjacent to the water");
   rec.gov and the FS page say "The river is located 200 feet from campground".
 - **1227 East Fork (WV)** — operator: "waterside" sites, "primitive waterfront sites", a river that
