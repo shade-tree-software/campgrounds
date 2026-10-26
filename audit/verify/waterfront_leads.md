@@ -329,3 +329,11 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3737 Pine Grove SFC: DNR "located along the Pigeon River", carry-in access within the campground; entry riverview (weak, p3-145).
 - 14034 Rainbow Bend SFC: DNR "sits along the picturesque shore of the Au Sable River"; entry not waterfront (p3-146).
 - 3714 Pretty Lake SFC: DNR "located on Pretty Lake"; entry lakeview (weak, p3-146).
+- 13450 Riverside Park (Evart): city lists "River Sites (sites 4-8)" on the Muskegon River; entry not waterfront (p3-147).
+- 13459 Riverside RV Park (Vassar): city "borders the Cass River"; entry not waterfront (p3-147).
+- 14044 Rifle River RA - Ranch Rustic: DNR sites "grassy and set along the Rifle River"; entry not waterfront (p3-147).
+- 14043 Rifle River RA - Spruce Rustic: DNR sites "located near the Rifle River"; entry not waterfront (weak, p3-147).
+- 3706 Ross Lake SFC: DOWNWARD - DNR "the forested campground doesn't offer direct lake views"; entry lakeview (p3-147).
+- 3731 Round Lake SFC: DNR "sits along the shoreline of Round Lake providing amazing views"; entry lakeview (p3-147).
+- 3747 Sand Lake RA (Huron-Manistee NF): rec.gov "situated on the scenic shores of Sand Lake"; entry not waterfront (p3-147).
+- 14035 Schecks Place SFC: DNR "sits on the banks of the Boardman River"; entry not waterfront (p3-147).
