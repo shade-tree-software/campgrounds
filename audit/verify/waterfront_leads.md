@@ -337,3 +337,10 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3731 Round Lake SFC: DNR "sits along the shoreline of Round Lake providing amazing views"; entry lakeview (p3-147).
 - 3747 Sand Lake RA (Huron-Manistee NF): rec.gov "situated on the scenic shores of Sand Lake"; entry not waterfront (p3-147).
 - 14035 Schecks Place SFC: DNR "sits on the banks of the Boardman River"; entry not waterfront (p3-147).
+- 4014 Shakey Lakes Park (Menominee Co): booking site types 20 sites "Water Frontage?: Yes" (56-59, 65, 66, 69-75, P3-P5, P7-P10); entry lakeview (p3-148).
+- 3719 Shoepac Lake SFC: DNR "located on Shoepac Lake", carry-in launch; entry not waterfront (weak, p3-148).
+- 3678 Shupac Lake SFC: DNR "nestled among hardwoods along the shore of Shupac Lake"; entry lakeview (weak, p3-148).
+- 3702 Silver Creek SFC: DNR "sits on the banks of the Pine River", "Sites #10-26 are accessible from the Pine River"; entry riverview (weak, p3-148).
+- 14100 Ski-Kwe zaag'igan Lake SFC: DNR "on the shore of Ski-Kwe zaag'igan Lake"; entry lakeview (weak, p3-148).
+- 3707 South Gemini Lake SFC: DNR "Nestled on the southern shore of Gemini Lake", carry-in access central; entry lakeview (weak, p3-148).
+- 3673 South Manistique Lake SFC: DNR "Some campsites have direct water access via a narrow footpath"; entry lakeview (weak, p3-148).
