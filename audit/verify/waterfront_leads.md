@@ -358,3 +358,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3639 W.J. Hayes SP: DNR "the modern campground is situated on Round Lake (no wake)", "set along Round Lake"; entry not waterfront (p3-151).
 - 3765 Wagner Lake (Huron-Manistee NF): rec.gov "set on the banks of Wagner Lake"; entry not waterfront (p3-151).
 - 3608 Waterloo RA - Portage Lake: DNR the modern campground "is located on Portage Lake"; entry not waterfront (p3-151).
+- 3631 Yankee Springs RA - Deep Lake Rustic: RE-PINNED 2026-10-25 (old pin was forest 2.3 km WNW; the 2026-06 call was made there) - audit at the new pin; DNR says the first loop's group-use sites are "set along Deep Lake"; entry not waterfront (p3-152).
+- 3618 Wilson SP: DNR "Most sites ... overlook Budd Lake"; entry not waterfront (p3-152).
+- 3630 Yankee Springs RA - Gun Lake Modern: DNR sites "set along Gun Lake"; entry not waterfront (p3-152).
