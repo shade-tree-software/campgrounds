@@ -321,3 +321,9 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3718 Perch Lake SFC: DNR "on the shore of Perch Lake"; entry lakeview (p3-144).
 - 3745 Peterson Bridge (Huron-Manistee NF): rec.gov "located on the Pine River", riverbank tent sites reachable from the river; entry not waterfront (weak, p3-144).
 - 3778 Petes Lake (Hiawatha NF): rec.gov "A few sites overlook the lake" (weak, p3-144).
+- 3736 Pickerel Lake (Otsego) SFC: DNR "set against the sandy shoreline of Pickerel Lake"; entry not waterfront (p3-145).
+- 14033 Pigeon Bridge SFC: DNR "The Pigeon River flows past this peaceful, rustic campground"; entry not waterfront (p3-145).
+- 3742 Pine Lake (Huron-Manistee NF): FS "located on the shores of beautiful Pine Lake"; entry not waterfront (p3-145).
+- 3653 Platte River SFC: DNR "nestled along the majestic Platte River", "accessible by water"; entry not waterfront (p3-145).
+- 3730 Pigeon River SFC: DNR "along the Pigeon River"; entry riverview (weak, p3-145).
+- 3737 Pine Grove SFC: DNR "located along the Pigeon River", carry-in access within the campground; entry riverview (weak, p3-145).
