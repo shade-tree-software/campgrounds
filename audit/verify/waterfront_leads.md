@@ -27,6 +27,22 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Florida wf-fl-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4837 John Prince Park** lakeview -> lakefront (east-edge RV pads ~10-17 m from Lake Osborne across
+  open grass; re-pinned ~400 m off the causeway); **4813 Coe Landing County Park** lakeview -> lakefront (Leon
+  Co. per-site map flags sites 7, 9, 11, 13, 15, 16 Waterfront at the Lake Talquin shore; cypress shadow hides
+  the shore; low confidence); **4715 Bear Lake (Blackwater River SF)** not waterfront -> lakeview (ReserveAmerica
+  'Lakefront' on 11 RV sites, but the pads sit 63-83 m from the water in open pine); **170 Mutual Mine** not
+  waterfront -> lakeview (site 1 'Type of View: Lake', ~40 m behind trees); **4841 Turtle Beach** not
+  waterfront -> coastal woods (west-end pads ~40 m behind shore hammock + a ~20 m foredune, footpath to the
+  Gulf, no lot between - the old 'beach-parking complex' reading was wrong; low confidence).
+- Stand: **587 Cypress Glen** not waterfront (--AWH firsthand; its one lake-view site asked in asks.md);
+  **393 St. Joseph Peninsula - Shady Pines** coastal dunes; **15417 Naples/Marco Island KOA** not waterfront
+  (the creek lane is cabins, tents and boat parking).
+- Tool: the verifier's FFS ReserveAmerica per-site fetcher (plain HTTP, GIS lat/lng per site) is copied to
+  audit/verify/kit/ra_sites.py.
+
 ## Resolved 2026-10-26, Michigan wf-mi-15 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - MI done but 3900 (held)
 
 - Upgraded: **3630 Yankee Springs - Gun Lake Modern** not waterfront -> lakefront (channel-row RVs ~10-15 m from
@@ -316,21 +332,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
   tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
   Same question as asks #8 for the rest of AWH's beach camping areas.
-- **587 Cypress Glen (Withlacoochee SF)** — FDACS: "several sites having a view of the water"
-  (Silver Lake); entry is not waterfront. Lakeview tier may apply to some sites.
-- **170 Mutual Mine (FFS)** — FDACS: sites "in a horseshoe formation next to a ... rain-filled lake
-  that was formerly a mine pit"; ReserveAmerica "Type of View: Lake". Entry not waterfront.
-- **393 St. Joseph Peninsula (Shady Pines)** — coastal dunes rested on AWH's note about two dune
-  campgrounds; only Shady Pines remains (Gulf Breeze gone). Check Shady Pines sits behind the dunes.
-- **4841 Turtle Beach (Sarasota Co.)** — county: "premier beachfront campground", "direct beach
-  access"; entry not waterfront.
-- **4715 Bear Lake (Blackwater River SF)** — booking site: 11 of 31 RV sites "Proximity to Water:
-  Lakefront"; entry not waterfront.
-- **4813 Coe Landing (Leon Co.)** — county booking site marks six sites "Waterfront"; entry lakeview.
-- **4837 John Prince Park (Palm Beach Co.)** — county: "51 sites located on beautiful Lake Osborne",
-  lakefront-site rules; entry lakeview.
-- **15417 Naples / Marco Island KOA** — KOA: "surrounded by the beautiful Rookery Bay", sites
-  "backed by trees and mangroves", boat ramp, creek fishing; entry not waterfront.
 - **158 Oscar Scherer SP** — Reserve Florida: sites 1-17 and 70-90 "adjacent to a creek"; park page
   "several campsites along the creek"; entry not waterfront.
 - **153 Rainbow Springs SP** (weak) — campground "located along the Rainbow River", but the swim

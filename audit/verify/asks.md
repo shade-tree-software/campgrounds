@@ -275,3 +275,6 @@ Toward staging camp: the name; FS "The campground is primarily used by ORV trail
 
 ## 4018 St. James Township Campground (Beaver Island, MI) — keep a campground reached only by car ferry? (p3-149, 2026-10-25)
 Drive-in once on the island (17 sites, $20/$30, Firefly online booking, 8 sites take 25-28 ft). The Beaver Island Boat Co. car ferry from Charlevoix (Emerald Isle only: 13'6" height, 46-ft length, 50 tons GVW, vehicle reservation by phone required) would take EKKO. 2026 vehicle fare "over 7'6" tall, 10' long & above" $110.41+ one way ($220.82+ round trip; call with dimensions for an exact price) plus $33.50 per adult each way. Keep or drop?
+
+## 587 Cypress Glen Campground (Withlacoochee SF, FL) — lakeview for its one lake-view site? (wf-fl-1, 2026-10-26)
+Your note: "in a forested setting, not directly on a lake or river" (entry: not waterfront). The Florida Forest Service's ReserveAmerica page marks one of 34 sites, RV site 47, "Type of View: Lake" (the rest "Woods"); it sits ~35-45 m from Silver Lake, high above it on a bluff, under canopy. That would make the entry lakeview (still not "on the water"). I kept your not waterfront. Change to lakeview?
