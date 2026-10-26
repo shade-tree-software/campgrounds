@@ -27,6 +27,21 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-9 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3629 Metamora-Hadley RA** lakeview -> lakefront (DNR map: north-loop sites ~151-169 on the lake
+  side of the loop road; RVs ~15-20 m from Lake Minnawanna across open lawn); **13456 Log Lake** not waterfront
+  -> lakefront (county + Campspot maps: site 40, the 'Waterfront Electric Only Site', ~30-35 m across the park's
+  own sand beach - the Fuller precedent; low confidence, lakeview if a swim beach is read as a used strip);
+  **3784 Marion Lake** not waterfront -> lakeview (lakeside spurs ~20-45 m above the lake behind a conifer belt;
+  FS 'lakeside spurs give views'); **3717 Natalie SFC** stays lakeview (the verifier's lakefront rested on one
+  2014 leaf-off frame with no site map - held down).
+- Downgraded: **3708 Ocqueoc Falls SFC** riverview -> not waterfront (pads ~25-32 m behind a continuous conifer
+  belt, no sightline; low confidence).
+- Stand: **3743 Minnie Pond** (sites not located; low confidence), **3769 Monocle Lake** (rec.gov sites ~70-80 m
+  behind forest), **3636 Newaygo SP** (re-pinned ~480 m onto the Oak loop; atop a 20-ft embankment) - not
+  waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-8 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3610 Lake Hudson RA** not waterfront -> lakeview (north-point sites 37/38 and the east-loop north
@@ -338,14 +353,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 13456 Log Lake (Kalkaska Co): Campspot sells a "Waterfront Electric Only Site" (site 40), county posts a $45 "Waterfront" rate; entry not waterfront (p3-140).
-- 3784 Marion Lake (Ottawa NF): FS "lakeside spurs provide grand views of the south and west shores"; entry not waterfront (p3-141).
-- 3629 Metamora-Hadley RA: DNR "The north loop offers some campsites on the water"; entry lakeview (p3-141).
-- 3743 Minnie Pond (Huron-Manistee NF): FS "This site is located on Minnie Pond on a human-made impoundment"; entry not waterfront (p3-142).
-- 3769 Monocle Lake (Hiawatha NF): rec.gov campground "surrounds the south end of 172-acre Monocle Lake", FS "camped along the shores"; entry not waterfront (p3-142).
-- 3717 Natalie SFC: DNR "located on Dollarville Flooding", boat launch adjacent; entry lakeview (p3-143).
-- 3708 Ocqueoc Falls SFC: DNR "located on the Ocqueoc River"; entry riverview (p3-143).
-- 3636 Newaygo SP: DNR park "sits atop 20-foot embankments overlooking the Hardy Dam Pond", buoyed swim area in the Poplar Rustic Campground; entry not waterfront (p3-143).
 - 3644 North Higgins Lake SP: DNR "The park's modern campground - set along the north shore of Higgins Lake", tagged Water access; entry not waterfront (its note: set back north of N. Higgins Lake Dr) (p3-143).
 - 3744 Old Grade (Huron-Manistee NF): FS "Located on the Little Manistee River"; entry not waterfront (p3-143).
 - 3738 Nichols Lake South: rec.gov "on the south side of Nichols Lake", "wood ramp and stairs lead down to the lake"; entry not waterfront (weak, p3-143).
