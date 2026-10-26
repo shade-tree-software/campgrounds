@@ -27,6 +27,21 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Florida wf-fl-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4719 Karick Lake South (Blackwater River SF)** lakeview -> lakefront (ReserveAmerica 'Lakefront' on
+  RV sites 1-13 odd; GIS of 5/7/9 ~16-22 m from shore under open-understory pines); **4728 Okaloacoochee Slough
+  SF - Panther Pond** not waterfront -> pond (RV site 016, a 50-ft back-in, on an open apron ~20-25 m from the
+  pond; the other 15 sites are woods); **4734 Wright Lake (Apalachicola NF)** not waterfront -> lakeview (rec.gov
+  tags 15/17/18 'Lakefront' but they plot ~45-90 m back behind a tree band; low confidence).
+- Downgraded: **633 Little Talbot Island SP** coastal woods -> not waterfront (A1A runs between the campground and
+  the ocean; pads 40-110 m from Myrtle Creek marsh in hammock; matches --AWH 'campground is not waterfront';
+  re-pinned off the beach day-use lot).
+- Stand: **165 Silver Lake (Withlacoochee SF)** lakeview (--AWH partial view; sites 13/15/16 'View: Lake' ~45-55 m
+  back); **14398 Sunny Shores** (a dead-end ditch, rows behind road and buildings), **14385 Wewa RV Park**
+  (cypress fringe), **4823 Newport Park** (re-pinned ~150 m onto the loop; river deck reached by walkways) - not
+  waterfront.
+
 ## Resolved 2026-10-26, Florida wf-fl-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4770 Sportsman's Cove Resort** not waterfront -> lakefront (occupied RV sites ~5-10 m from the
@@ -343,20 +358,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
   tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
   Same question as asks #8 for the rest of AWH's beach camping areas.
-- **165 Silver Lake (Withlacoochee SF)** — booking page "On the shore of Silver Lake"; entry lakeview
-  (AWH note supports lakeview).
-- **4728 Panther Pond** (weak) — its one RV site, 016, "Type of View: Lake".
-- **14398 Sunny Shores MH & RV** — "Our canal opens straight onto 5,000-acre, spring-fed Lake
-  Panasoffkee", fishing dock; entry not waterfront.
-- **14385 Wewa RV Park** — "The back of Wewa RV Park borders pristine Stone Mill Creek"; entry not waterfront.
-- **4734 Wright Lake (USFS)** — "along one portion of the lakeshore", "views of the lake"; entry not waterfront.
-- **633 Little Talbot Island SP** — entry coastal woods, but the --AWH note says "campground is not
-  waterfront"; park page: sites a half-mile from the beach, "tidal creeks border the western edge",
-  several RV sites "can get wet during ... high tides".
-- **4719 Karick Lake South (Blackwater River SF)** — ReserveAmerica marks 7 of 14 sites "Proximity to
-  Water: Lakefront" (siteIds 1202-1214 even); entry lakeview.
-- **4823 Newport Park (Wakulla Co.)** — "nestled along the St. Marks River"; entry not waterfront (a
-  "short nature path" to the deck suggests the sites sit back).
 - **168 River Junction (Withlacoochee SF)** — ReserveAmerica marks sites 001, 014, 016 "Near Water";
   entry and the --AWH note say not waterfront.
 - **14387 Panhandle RV Resort** (minor) — "Two Fishing Ponds ... right on the property".
