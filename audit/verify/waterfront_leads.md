@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Florida wf-fl-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4770 Sportsman's Cove Resort** not waterfront -> lakefront (occupied RV sites ~5-10 m from the
+  resort's boat canal into Orange Lake; operator sells 'Waterside' RV sites; the 14625 canal precedent);
+  **158 Oscar Scherer SP** not waterfront -> creekside (Reserve Florida: RV sites 1-17 and 70-90 'adjacent to a
+  creek'; GIS points ~20-35 m from South Creek under bank canopy).
+- Stand: **743 Wickham Park** pond (bears out --AWH 'several sites are on small ponds'); **153 Rainbow Springs
+  SP** (every site 280 m+ from the river), **14391 RV Village at Lake Panasoffkee** (ramp/cabin strip between),
+  **4740 Ocean Pond (Osceola NF)** (cypress fringe + marsh), **14383 Pine Lake RV Park**, **15421 St. Petersburg
+  / Madeira Beach KOA** (continuous mangrove belt; kayak cuts don't make on-water) - not waterfront.
+
 ## Resolved 2026-10-26, Florida wf-fl-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4837 John Prince Park** lakeview -> lakefront (east-edge RV pads ~10-17 m from Lake Osborne across
@@ -332,21 +343,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
   tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
   Same question as asks #8 for the rest of AWH's beach camping areas.
-- **158 Oscar Scherer SP** — Reserve Florida: sites 1-17 and 70-90 "adjacent to a creek"; park page
-  "several campsites along the creek"; entry not waterfront.
-- **153 Rainbow Springs SP** (weak) — campground "located along the Rainbow River", but the swim
-  area/launch is "a substantial walk from campsites".
-- **4770 Sportsman's Cove (Orange Lake)** — operator sells "Waterside" sites ($50-55) and a
-  "waterfront" cabin; entry not waterfront.
-- **743 Wickham Park (Brevard Co.)** — county rate rules: "there are no water access or water view
-  sites at Wickham Park"; entry pond (AWH: "Several sites are on small ponds"). Contrary, downward.
-- **14391 RV Village at Lake Panasoffkee** — operator: "Situated on the southern banks of Lake
-  Panasoffkee", "FISHING DOCK/BOAT SLIPS ON SITE"; entry not waterfront.
-- **4740 Ocean Pond (USFS)** — rec.gov: "on the north shore of Ocean Pond", "multiple campsites provide
-  lakeside access"; entry not waterfront.
-- **14383 Pine Lake RV Park** — operator: "along the shimmering waters of Pine Lake"; entry not waterfront.
-- **15421 St. Pete / Madeira Beach KOA** — "Kayak Access" sites through the mangroves, "Along Bayou"
-  sites with bayou views; entry not waterfront.
 - **165 Silver Lake (Withlacoochee SF)** — booking page "On the shore of Silver Lake"; entry lakeview
   (AWH note supports lakeview).
 - **4728 Panther Pond** (weak) — its one RV site, 016, "Type of View: Lake".
