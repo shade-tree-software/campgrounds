@@ -450,3 +450,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2408 White Star (CO, Pike-San Isabel NF): FS "on the northern shore of Twin Lakes Reservoir"; entry lakeview (p3-157).
 - 2634 Woodlake Park (CO, private): operator says the River Loop's 28 sites are "placed right along the Lake Fork River"; entry not waterfront. Per-site pins sit in the operator's map.html PARK_DATA (p3-157).
 - 2644 Clear Creek RV Park (CO, City of Golden): city says the park is "on the banks of Clear Creek" and sells "Creek-side sites" (the $85 tier); entry riverview (p3-158).
+- 2297 Crawford SP (Clear Fork) (CO): the stored lakefront evidence names perimeter sites 46-49, which CPW lists as tent sites - re-check which RV sites sit on the apron (p3-159).
+- 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).

@@ -1,0 +1,60 @@
+{
+  "id": 2250,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://cpw.state.co.us/state-parks/eleven-mile-state-park/eleven-mile-state-park-camping-lodging",
+    "https://www.cpwshop.com/camping/eleven-mile-state-park/r/campgroundDetails.page?parkID=50024",
+    "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (cpwshop site list, types, maximum vehicle lengths and driveway entries for the North Shore A-E loops)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "cpwshop site list for North Shore A-E loops (all 79 sites type Basic / Basic - ADA; sampled site pages list no hookups) + https://cpw.state.co.us/state-parks/eleven-mile-state-park/eleven-mile-state-park-camping-lodging (electric campsites are a separate $36 type), read 2026-10-12/2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 79,
+        "max_rig_ft": 110,
+        "pull_through": true,
+        "note": "79 basic sites in five loops: A 15, B 22 (one ADA), C 10, D 22, E 10. Lengths 25-110 ft (most 40-75); pull-throughs in the C and D loops among others."
+      },
+      "source": "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (cpwshop: North Shore A-E loop sites, Maximum Vehicle Length 25-110, Driveway Entry Pull-Through on sampled sites 241 and 251), read 2026-10-12",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Only A Loop (sites 201-217) stays open in winter, with limited services; Loops B-E close for the season November 1."
+      },
+      "source": "https://cpw.state.co.us/state-parks/eleven-mile-state-park/eleven-mile-state-park-camping-lodging ('Eleven Mile is open for winter camping, but not all campsites are available during the winter months'; 'Campgrounds closing for the season November 1 ... North Shore Loops B through E') + cpwshop availability grids (A Loop sites 210 and 215 bookable Jan 2027; B and C loop sites 218 and 245 nothing from Nov 1), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.cpwshop.com/camping/eleven-mile-state-park/r/campgroundDetails.page?parkID=50024",
+        "window_opens_days": 180,
+        "fcfs": "never",
+        "max_stay_nights": 14,
+        "note": "A reservation is required: cpwshop.com (Eleven Mile State Park listing, loop North Shore A-E) or 1-800-244-5613, up to six months ahead; a vehicle pass must be displayed. A Loop takes bookings through the winter; Loops B-E close November 1. 14 days in any 28-day period; six people and up to two motorized vehicles per site.",
+        "season": {
+          "year_round": true
+        }
+      },
+      "source": "https://cpw.state.co.us/state-parks/eleven-mile-state-park/eleven-mile-state-park-camping-lodging ('A reservation is required to camp at Eleven Mile State Park ... cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance of your arrival date'; 'The maximum stay is 14 days within a 28-day period. A maximum of six people, up to two motorized vehicles') + cpwshop availability grids, read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Drive-in north-shore campground at Eleven Mile Reservoir with its own boat ramp; Rocky Ridge is the park's electric campground. --Claude",
+  "summary": "CPW camping page + cpwshop site data: sites 80 -> 79 (A 15, B 22, C 10, D 22, E 10), confirmed no electric and pull-throughs, added max 110 ft, year-round season (A Loop only in winter; B-E close Nov 1), url/window/fcfs never/14-night max/booking season. Fees ($28 basic) and facilities left as stored (vault toilets, hand pumps and the dump station are stated park-wide). Note: dropped the site-count/amenity/big-rig/booking restatements and 'Camp Colorado'.",
+  "flags": [
+    "Split question: the evidence is mixed and points toward North Shore being its own campground along the shared north-shore park road (County Road 333): CPW names it separately, and its D/E loops sit ~1.3 km west of Rocky Ridge (2249), but its A-C loops are only ~250-600 m west of Rocky Ridge's A/B loops, each loop of both campgrounds being its own spur off the same county road from the main entrance. No change suggested.",
+    "Eleven Mile's other campgrounds: see the flag on 2254 - every drive-in one has an entry; only the Backcountry Walk-In tent area (not drive-in) has none.",
+    "Pin 38.9384,-105.5141 sits at the D/E loops, ~420 m from the 79-site centroid (38.9372,-105.5095); the loops span ~1.5 km, so within tolerance.",
+    "cpwshop shows North Shore A Loop site 201 not bookable on any date sampled (Oct 2026 - Apr 2027) while its neighbours 210 and 215 are; possibly a site out of service."
+  ]
+}

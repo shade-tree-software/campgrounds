@@ -1,0 +1,77 @@
+{
+  "id": 2323,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/crow-valley-recreation-area",
+    "https://www.fs.usda.gov/r02/arp/conditions",
+    "https://www.recreation.gov/api/camps/campgrounds/233845",
+    "https://www.recreation.gov/api/camps/campgrounds/233845/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233845",
+    "https://www.fs.usda.gov/r02/arp/offices/pawnee-national-grassland-office",
+    "trip_data/ridb_campsites.json (RIDB catalog, fetched 2026-10-20)",
+    "audit/recgov_calendar.json (233845, checked 2026-10-20)"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 10,
+        "max_rig_ft": 35,
+        "pull_through": false,
+        "note": "10 family sites (001-010), all back-in; the three group sites (Hawk, Lark, Plover) and the educational and picnic group areas are not counted."
+      },
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Pawnee National Grassland Campground Status: 'Crow Valley 10 sites, Max Spur 35'') + https://www.recreation.gov/api/camps/campgrounds/233845 (notice 'Maximum Vehicle Length: 35' on single units') + RIDB catalog (Driveway Entry Back-In on all 10 family sites), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233845 (notice 'No RV water connections are available'; all family sites typed STANDARD NONELECTRIC), read 2026-10-26",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 17,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$17 a night; double sites 004-006 (up to 16 people) $25. One vehicle included, each extra vehicle $8 a night."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233845/rates (2026 Peak Season: STANDARD NONELECTRIC $17 / $25) + https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233845 (price_range per site) + https://www.recreation.gov/api/camps/campgrounds/233845 (extra vehicle notice) + https://www.fs.usda.gov/r02/arp/conditions ('$17/25'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-01",
+        "closes": "11-08"
+      },
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Crow Valley 'Operating Season May 1 - Nov 8'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "season": {
+          "opens": "05-01",
+          "closes": "11-07"
+        },
+        "note": "Sites 001-004 and 009 are reservable on recreation.gov (up to 4 days before arrival); 005-008 and 010 are first-come. Sites may be available first-come outside the reservation season."
+      },
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A233845 (campsite_reserve_type: 001-004, 009 Open; 005-008, 010 Not Reservable) + https://www.recreation.gov/api/camps/campgrounds/233845 (rule reservationCutOff 4 days prior to arrival; notice 'Sites may be available on a first-come, first-served basis outside the reservation season') + https://www.recreation.gov/api/camps/campgrounds/233845/rates (2026 season 2026-05-01 to 2026-11-07), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Family campground in the Crow Valley Recreation Area, Pawnee National Grassland (Arapaho-Roosevelt NF), ~4,800 ft; cottonwood and elm shade. --Claude",
+  "summary": "recreation.gov API + FS Pawnee campground status table: sites 15 -> 10 (the family sites; the 15 counted the group and picnic areas), max 81 -> 35 ft (FS 'Max Spur 35'' and rec.gov's 35-ft notice), all back-in; no electric or water hookups; fees 17 -> 17-25 (double sites $25, $8 extra vehicle); season May 1 - Nov 8 (FS); booking: 5 reservable + 5 first-come sites, 4-day cutoff, reservation season 05-01 to 11-07. FS-run (rec.gov not commercially managed). FS page shows 'Site Open'; no Pawnee closures listed. Note rewritten.",
+  "flags": [
+    "Phone: entry has none. The FS Pawnee National Grassland Office page (115 2nd Ave, Ault) gives 970-295-6600 - the grassland's own office listing, though ARP routes every office (supervisor's included) through that one number. recreation.gov lists (970) 834-9270 as the facility phone and, in its contact text, (530) 529-0578 (a California number) - both look stale.",
+    "Website: recreation.gov only; the FS page is https://www.fs.usda.gov/r02/arp/recreation/crow-valley-recreation-area (add it).",
+    "Max length conflict: the RIDB per-site catalog gives the family sites 40-81 ft (009 = 81), while recreation.gov's own notice says 'Maximum Vehicle Length: 35' on single units' and the forest's status table says Max Spur 35'. Wrote 35; either way a 23-ft rig fits.",
+    "Drinking water conflict: recreation.gov's description says 'Vault toilets and drinking water are provided', but the FS page says 'Potable water is not available at this site.' facilities left unwritten.",
+    "Pin 40.64389,-104.33778 (the FS page's lat/lng 40.644272,-104.33858 is similar) sits by the CR 77 entrance, ~490 m east of the 10 family sites' centroid (40.64496,-104.34343); just inside the ~500 m line, consider moving it to the loop."
+  ]
+}
