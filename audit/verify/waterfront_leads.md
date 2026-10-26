@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-12 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **13450 Riverside Park Campground (Evart)** not waterfront -> riverfront (city per-site map: River
+  Sites 4-8 on the Muskegon bank, ~20-30 m across open grass; re-pinned 150 m off the playfield); **14044 Rifle
+  River RA - Ranch Rustic** not waterfront -> creekside (sites 150/152/153 ~20-30 m from the ~15 m Rifle across
+  grass; midnrreservations tags 152-153 'Adjacent To: River').
+- Downgraded: **3706 Ross Lake SFC** lakeview -> not waterfront (DNR: no direct lake views, steep footpaths down).
+- Stand: **3731 Round Lake SFC** lakeview (canopy, loop not located; low confidence; pin left - the GNIS/OSM node
+  is 120 m S, unconfirmed); **13459 Riverside RV Park (Vassar)**, **14043 Rifle River - Spruce Rustic**, **3747
+  Sand Lake RA**, **14035 Schecks Place SFC** - not waterfront.
+- Tip for later MI batches: midnrreservations.com/api/resourcelocation/resources?resourceLocationId=<id> returns a
+  per-site 'Adjacent To' attribute (a booking tag - supporting evidence only).
+
 ## Resolved 2026-10-26, Michigan wf-mi-11 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3714 Pretty Lake SFC** lakeview -> lakefront (drive-in pads on the NE shore ~5-20 m from the water,
@@ -376,14 +389,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 13450 Riverside Park (Evart): city lists "River Sites (sites 4-8)" on the Muskegon River; entry not waterfront (p3-147).
-- 13459 Riverside RV Park (Vassar): city "borders the Cass River"; entry not waterfront (p3-147).
-- 14044 Rifle River RA - Ranch Rustic: DNR sites "grassy and set along the Rifle River"; entry not waterfront (p3-147).
-- 14043 Rifle River RA - Spruce Rustic: DNR sites "located near the Rifle River"; entry not waterfront (weak, p3-147).
-- 3706 Ross Lake SFC: DOWNWARD - DNR "the forested campground doesn't offer direct lake views"; entry lakeview (p3-147).
-- 3731 Round Lake SFC: DNR "sits along the shoreline of Round Lake providing amazing views"; entry lakeview (p3-147).
-- 3747 Sand Lake RA (Huron-Manistee NF): rec.gov "situated on the scenic shores of Sand Lake"; entry not waterfront (p3-147).
-- 14035 Schecks Place SFC: DNR "sits on the banks of the Boardman River"; entry not waterfront (p3-147).
 - 4014 Shakey Lakes Park (Menominee Co): booking site types 20 sites "Water Frontage?: Yes" (56-59, 65, 66, 69-75, P3-P5, P7-P10); entry lakeview (p3-148).
 - 3719 Shoepac Lake SFC: DNR "located on Shoepac Lake", carry-in launch; entry not waterfront (weak, p3-148).
 - 3678 Shupac Lake SFC: DNR "nestled among hardwoods along the shore of Shupac Lake"; entry lakeview (weak, p3-148).
