@@ -4,29 +4,6 @@ A verifier's source (operator page or booking engine) claims water access that d
 the stored `waterfront`. Per the curation doc's rule #7 that triggers the gate, both ways; a
 booking-engine tag alone decides nothing. Work these with the full waterfront procedure.
 
-## Open leads carried over from the Montana section
-
-- **806 Loraine Campground, Harold Parker SF (MA)** — stored "not waterfront" (--AWH). ReserveAmerica
-  tags 14 sites in loop "Sites 59-90" Waterfront; RV-capable STANDARD sites 61, 63, 69, 71, 75,
-  77, 81, 83, 87 (25-40 ft). Still open: the stored pin (42.6056,-71.1003) is in empty woods and
-  Google's "Lorraine Park Campground" pin (42.6106,-71.0907) shows no loop either; mass.gov and
-  the RA catalog both refuse plain HTTP. Needs the DCR campground map. AWH's call stands meanwhile.
-- **1140 Glen Maury Park (VA, City of Buena Vista)** — stored riverview. The city's camping page
-  (2026 kiosk map) names lower-campground RV areas "Riverside" (sites 104-115) and "Water's Edge"
-  on the Maury River. Names alone prove nothing; needs the map + satellite for pads at the bank.
-- **13086 Riverside Campground (VA, Holston)** — stored not waterfront. Operator: "2,000 feet of
-  scenic river frontage along the North Fork Holston River", fishing "right from your campsite",
-  tent/pop-up sites "most situated right on the river". The question is whether any of the 94
-  full-hookup RV sites front the river; needs the site map + satellite.
-- **236 Amelia WMA (VA)** — stored lakefront (--AWH: "one [parking area] on the lake"). DWR's
-  statewide rule (https://dwr.virginia.gov/camping-on-wmas/): "It is unlawful to camp within 300
-  feet of any lake or facility (building, boat ramp, etc.)" - so no legal camp spot is within the
-  ~50 m on-water bound; at best lakeview from 90 m+ if the view is open.
-- **530 Bark Camp (VA, USFS)** — stored not waterfront (--AWH: trees likely block the view). USFS:
-  "situated beside a 45-acre lake" with a shoreline trail; needs the site map + satellite.
-- **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
-  lakeside camping" at the recreation ponds.
-
 ## Resolved 2026-10-26, VA/SC/MA/WI wf-misc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - all-state leads done but 3900 (held)
 
 - Upgraded: **806 Loraine (Harold Parker SF, MA)** not waterfront -> pond (ReserveAmerica tags RV-capable 25-ft
