@@ -344,3 +344,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14100 Ski-Kwe zaag'igan Lake SFC: DNR "on the shore of Ski-Kwe zaag'igan Lake"; entry lakeview (weak, p3-148).
 - 3707 South Gemini Lake SFC: DNR "Nestled on the southern shore of Gemini Lake", carry-in access central; entry lakeview (weak, p3-148).
 - 3673 South Manistique Lake SFC: DNR "Some campsites have direct water access via a narrow footpath"; entry lakeview (weak, p3-148).
+- 14036 Sunrise Lake SFC: DNR "nestled on a forested bluff overlooking Sunrise Lake", "set on Sunrise Lake"; entry not waterfront (weak, p3-149).
+- 14041 Tippy Dam RA: DNR sites "within close proximity to the dammed portion of the Manistee River", a viewing area overlooks the water; entry not waterfront (weak, p3-149).
