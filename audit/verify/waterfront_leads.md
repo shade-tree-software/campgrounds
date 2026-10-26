@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, New York wf-ny-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - NY leads done
+
+- Upgraded: **13727 Rogers Rock** not waterfront -> lakefront (DEC map + RA photos: drive-in site 004, 30-ft RV,
+  on open grass ~10 m from Lake George; most other shore sites are tent-only or across the road); **14320 Pine
+  Ridge Park** riverview -> riverfront (operator map and rate sheet: 'Waterfront' RV sites along the Salmon
+  River bank, open meadow to the water on 2024 0.3 m ortho); **13728 Luzerne** not waterfront -> lakeview (DEC
+  map: drive-in sites 81/113/114/116 on Fourth Lake, but lidar shows a 10-15 m bank; RA photos show the lake
+  below through trees).
+- Stand: **14339 Niagara Shores** lakeview (RVs on the Lake Ontario bluff top); **13359 Korn's Campground** not
+  waterfront (the Shawangunk Kill is in a wooded ravine 80-150 m off; ownership question in criteria_followups).
+
 ## Resolved 2026-10-26, New York wf-ny-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - No value changes. Stand: **21 North-South Lake** lakefront (--AWH; NE-shore pads ~12-16 m from the water);
@@ -411,11 +422,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
-- **13359 Korn's (NY)**: "39 acres of wooded land on the Shawangunk Kill River"; entry not waterfront.
-- **14339 Niagara Shores (NY)**: lakeview RV sites "Most ... currently located waters edge with panoramic views of Lake Ontario"; entry lakeview.
-- **14320 Pine Ridge (NY)**: sells "Deluxe Waterfront" and "Waterfront - No Hookups" sites on the river through the park; entry riverview.
-- **13728 Luzerne (NY)** (weak): RA "partially surrounds Fourth Lake"; entry not waterfront.
-- **13727 Rogers Rock (NY)** (weak): west shore of Lake George with a sand beach; entry not waterfront.
 - **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
 - **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
 - **13367 Kennedy Park & Marina (WV)**: operator lists "Primitive: Riverfront Sites" on the Ohio; entry riverview (primitive sites may not take a 23-ft rig).
