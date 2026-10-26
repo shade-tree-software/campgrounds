@@ -27,7 +27,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
-## Resolved 2026-10-26, Michigan wf-mi-14 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - MI LEADS DONE
+## Resolved 2026-10-26, Michigan wf-mi-14 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Stand: **3675 Trout Lake SFC** lakefront (pads ~10-22 m from the pre-drawdown shore; low confidence - the lake
   is drawn down and dam removal is recommended, see criteria_followups.md); **3722 Van Etten Lake** (re-pinned
