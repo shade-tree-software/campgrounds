@@ -278,3 +278,9 @@ Drive-in once on the island (17 sites, $20/$30, Firefly online booking, 8 sites 
 
 ## 587 Cypress Glen Campground (Withlacoochee SF, FL) — lakeview for its one lake-view site? (wf-fl-1, 2026-10-26) — ANSWERED 2026-10-26: lakeview, note says only site 47 qualifies (done)
 Your note: "in a forested setting, not directly on a lake or river" (entry: not waterfront). The Florida Forest Service's ReserveAmerica page marks one of 34 sites, RV site 47, "Type of View: Lake" (the rest "Woods"); it sits ~35-45 m from Silver Lake, high above it on a bluff, under canopy. That would make the entry lakeview (still not "on the water"). I kept your not waterfront. Change to lakeview?
+
+## 266 Big Bend (Monongahela NF, WV) and 490 Watoga SP - Riverside (WV) — keep your riverfront? (wf-wv-1, 2026-10-26)
+Your notes: Big Bend "sites adjacent to the water"; Watoga Riverside "several sites back up to the river". Both are riverfront on your word, and both stay riverfront unless you say otherwise. The re-audit found nothing on the record to back either one up:
+- Big Bend: recreation.gov tags no site as near water, the river-loop site photos show only woods, and the Forest Service says the river is "200 feet from campground". Under the trees, the pads plot ~25-35 m from a side channel and 60-100 m from the main river.
+- Watoga Riverside: the state parks' booking system tags ~24 sites "Riverview" and none "Riverfront" (the same system does use Riverfront at North Bend). A wooded bank strip ~35-45 m wide separates the south loop from the Greenbrier.
+Do you remember RV pads right on the bank (keep riverfront), or should either drop to riverview?

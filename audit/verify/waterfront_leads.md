@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, West Virginia wf-wv-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **1227 East Fork (Monongahela NF)** riverview -> riverfront (CampLife 'River Front' RV back-ins 2-15,
+  pads within ~20 m of the East Fork across open grass; re-pinned ~240 m off the Durbin rail depot).
+- Downgraded: **83 Stuart RA** riverview -> not waterfront (rec.gov site coords put all 26 sites in the woods
+  150-200 m from Shavers Fork; the earlier call read the day-use pavilion field).
+- Stand: **266 Big Bend** and **490 Watoga - Riverside** riverfront on --AWH firsthand (the verifier proposed
+  riverview at low confidence; asked in asks.md); **426 Riverside Cabins & RV** riverview (--AWH; RVs set back
+  behind cabins); **1192 Great Bend** riverfront; **263 Summersville Lake Retreat** (lake ~750 m off, 100 m
+  below), **498 Army Camp Rd** (--AWH) - not waterfront.
+
 ## Resolved 2026-10-26, New York wf-ny-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - NY leads done
 
 - Upgraded: **13727 Rogers Rock** not waterfront -> lakefront (DEC map + RA photos: drive-in site 004, 30-ft RV,
@@ -399,19 +410,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - **3532 Totogatic Park (WI)** — dam screen 2026-10-21: pin is in woods ~250 m from the Minong
   Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.
-- **247 Hog Island WMA, Carlisle Tract** — bayfront. DWR's 300-ft rule names boat ramps; the
-  tract's ramp is its one named facility, so a camping area at the ramp lot would be unlawful.
-  Same question as asks #8 for the rest of AWH's beach camping areas.
-- **266 Big Bend (USFS, WV)** — entry riverfront on the --AWH note ("sites adjacent to the water");
-  rec.gov and the FS page say "The river is located 200 feet from campground".
-- **1227 East Fork (WV)** — operator: "waterside" sites, "primitive waterfront sites", a river that
-  "runs the length of the campground"; entry riverview.
-- **426 Riverside Cabins & RV Park (WV)**: operator says "RV Sites – On the bank of the Potomac River"; entry is riverview, and the --AWH note says the RV sites are set back from the river.
-- **490 Riverside, Watoga SP (WV)** (weak): the booking site tags ~20 sites "Riverview" and none "Riverfront"; entry is riverfront (--AWH firsthand).
-- **263 Summersville Lake Retreat (WV)**: FAQ "We overlook Summersville Lake and have a fantastic view of the lake but we do not have direct access"; premium sites "stare out on Summersville Lake". Entry is not waterfront, so a view tier may be earned.
-- **498 Army Camp, NPS (WV)**: NPS says the sites are "along the banks of the New River at one of its many horseshoe bends"; entry is not waterfront (--AWH says the sites are not waterfront).
-- **1192 Great Bend (WV)**: the city says it's "Nestled along the Sandy Creek close to where it flows into the Ohio River"; entry riverfront, so the water at the sites may be the creek.
-- **83 Stuart Recreation Area (WV)**: rec.gov says "perched along a bend on the Shavers Fork River" and "along the banks"; entry riverview.
 - **428 Brooklyn Heights Riverfront (WV)**: operator names RV6-RV10 "Primitive Riverfront RV site" (the river is across a narrow dead-end road); RV1 is "about 50 feet from the Dry Fork River"; entry riverview.
 - **232 Bluestone SP (WV)**: camping page calls it "the perfect lakeside retreat camping spot" and the note says "lakeside campsites"; entry not waterfront. Old Mill and East Shore are closed for dam work, and Meador is the RV campground.
 - **13120 Eagle's Nest (WV)**: operator offers "permanent waterfront lodging", "Family Campground Near Water" with swimming and fishing in Patterson Creek; entry not waterfront.
