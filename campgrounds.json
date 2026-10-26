@@ -154211,7 +154211,7 @@
     "inclusion_evidence": "recreation.gov 231852: Standard Electric sites 1-32 + Non-Electric 33-54, parking 35-45 ft, drive-in",
     "waterfront_evidence": "riverfront -- riverside loops along the Poudre's south bank ~20-30m.",
     "website": "https://www.recreation.gov/camping/campgrounds/231852",
-    "note": "Canyon Lakes RD, Poudre Canyon (Arapaho-Roosevelt NF); 30 sites incl. an electric loop, sites to ~45 ft, along the Cache la Poudre River. Reservable online. --Claude",
+    "note": "Canyon Lakes RD, Arapaho-Roosevelt NF: 6,500 ft in ponderosa pine on the banks of the Cache la Poudre (a National Wild and Scenic River) beside CO-14, 40 mi northwest of Fort Collins (mile marker 98.8). Rafting and trout fishing; playground, volleyball and basketball courts, horseshoe pits. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -154219,31 +154219,56 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 30,
-      "max_rig_ft": 45
+      "count": 54,
+      "max_rig_ft": 45,
+      "pull_through": true,
+      "note": "Sites 1-32 have 50/30-amp electric and are reservable; 33-54 have no hookups and are first-come; plus a group site for up to 75. Parking spurs 35-45 ft per the FS page and recreation.gov, but the catalog's electric spurs run 20-45 ft (most 30-35), and the forest's status table gives a 50-ft Max Spur. A few pull-throughs (2, 31, 32)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-15",
+        "closes": "09-19"
+      },
+      "note": "The electric sites (1-32) and the group site book on recreation.gov for the 2026 season May 15 - Sept 19 (2027: May 14 - Sept 18), closing 4 days before arrival; sites 33-54 are first-come, and 'additional sites may be available on a first-come, first-served basis before, during and after the reservation season'. No minimum stay; 14 nights in a rolling 60 days. A reserved site must be occupied within 26 hours."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Electrical hook-ups are available in sites 1-32. Sites 33-54 do not have electricity and are first-come, first-served'; 'The parking length ranges from 35 to 45 feet') + per-site catalog (29 electric sites, Max Vehicle Length 20-45, Pull-Through 002, 031, 032) + https://www.fs.usda.gov/r02/arp/conditions (55 sites, Max Spur 50'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231852 (facility_rules maxStay 14 'Rolling 60 Days', reservationCutOff 4 'day(s) prior to arrival', no minimum-stay rules; notices quoted) + /rates (Peak Season 2026-05-15 to 09-19, 2027-05-14 to 09-18) + https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground, read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov per-site catalog for 231852 (all 29 electric sites 'Electricity Hookup: 50/30') + https://www.recreation.gov/api/camps/campgrounds/231852 ('Sites 1 through 32 have electric hookups'; 'RV water and sewer connections are not available. Come with your RV/trailer water tank filled'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/231852/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Single Site Non-Electric: $30 per night', 'Single Site Electric: $41 per night', doubles $60/$80; updated September 21, 2026) + https://www.fs.usda.gov/r02/arp/conditions ('Mountain Park | 55 | 50' | Reserve Now | $30/60 $41/81*') + https://www.recreation.gov/api/camps/campgrounds/231852/rates (2026 and 2027 Peak Season: STANDARD ELECTRIC 41, double 81) + notice 'Any additional vehicles will be charged $8.00 per vehicle per night', read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231852 ('vault toilets and drinking water. Coin showers are located on-site'; 'Filling at campground hydrants cross-contaminates the system and is not allowed') + https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Vault toilet(s)', 'Potable water is available', 'pay showers'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: 'Mountain Park | 55 | 50' | Reserve Now | $30/60 $41/81* | May 15 - Sept 20'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -154252,13 +154277,34 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 50
+      "electric": 50,
+      "water": false,
+      "sewer": false
     },
     "fees": {
-      "nightly_low": 41,
+      "nightly_low": 30,
       "nightly_high": 41,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Non-electric sites (33-54, first-come) $30 a night; electric sites (1-32, reservable) $41 on recreation.gov in 2026 and 2027. Doubles $60 non-electric, $80 electric ($81 on recreation.gov). One vehicle included; $8 per extra vehicle per night."
+    },
+    "facilities": {
+      "showers": true,
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Coin showers. Drinking-water hydrants, but RVs may not fill tanks from them. Firewood from the host."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-20"
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table) https://www.fs.usda.gov/r02/arp/alerts https://www.fs.usda.gov/r02/arp/offices https://www.recreation.gov/api/camps/campgrounds/231852 https://www.recreation.gov/api/camps/campgrounds/231852/rates https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231852 (per-site catalog with coordinates)",
+      "note": "Corrected site count 30 -> 54 (1-32 electric and reservable, 33-54 non-electric first-come) plus a group site; fees 41 -> $30-41 (FS non-electric $30, electric $41 = recreation.gov 2026/2027). Electric 50 confirmed from the catalog's '50/30' on every electric site (no water/sewer). Added operating season May 15 - Sept 20 (status table), reservable season May 15 - Sept 19, 4-day cutoff, some sites FCFS, 14 nights in 60 days, coin showers, vault toilets, water (no tank filling). Pin 118 m from the"
+    },
+    "phone": "970-295-6700"
   },
   {
     "id": 2331,
@@ -154332,7 +154378,7 @@
     "inclusion_evidence": "recreation.gov 232281: 56 sites, 26 suitable for RV camping (DIPP/SNEE/PIKA loops, Standard/RV Nonelectric) -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 40.20883,-105.52239: dry forest campground W of Hwy 7; no water body adjacent, only a distant small pond in far corner",
     "website": "https://www.recreation.gov/camping/campgrounds/232281",
-    "note": "Boulder RD, near Allenspark (Arapaho-Roosevelt NF); 53 sites, sites to ~60 ft. Reservable online. --Claude",
+    "note": "Boulder RD, Arapaho-Roosevelt NF: 8,350 ft in ponderosa pine and aspen on the west side of CO-7 at mile marker 14, between Allenspark and Meeker Park, near the Wild Basin area of Rocky Mountain NP (main park entrance 14 mi north in Estes Park). Gravel/dirt interior roads. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -154340,31 +154386,66 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 53,
-      "max_rig_ft": 60
+      "count": 56,
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "56 sites; recreation.gov calls 26 suitable for RVs and 30 better for tents. Parking spurs vary a lot: in the catalog 12 of 53 are under 23 ft (18-22), the longest 45-50 ft are first-come sites (19-22, 25); the reservable sites run to 40 ft. All back-in (one parallel)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-15",
+        "closes": "09-12"
+      },
+      "note": "Sites 26-40, 42 and 44-56 book on recreation.gov for the 2026 season May 15 - Sept 12 (2027: May 14 - Sept 11), closing 4 days before arrival; sites 1-24, 38, 41, 42 and 46 are first-come (the FS list numbers 38 and 42 both ways). 2-night weekend and 3-night holiday-weekend minimums; 14 nights in a rolling 60 days. A reserved site not occupied within 26 hours goes first-come."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground ('There are 56 sites that will accommodate tents, campers, trailers, and RVs') + https://www.fs.usda.gov/r02/arp/conditions ('Olive Ridge | 56 | 40'') + https://www.recreation.gov/api/camps/campgrounds/232281 ('There are 56 sites in the campground. Twenty six are suitable for RV camping and 30 are more suitable for tents') + per-site catalog (53 sites, Max Vehicle Length 18-50, 52 Back-In, 1 Parallel), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232281 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 60 Days', reservationCutOff 4 'day(s) prior to arrival'; notice 'All campsites must be occupied within 26 hours') + /rates (Peak Season 2026-05-15 to 2026-09-12, 2027-05-14 to 2027-09-11) + https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground ('Campsites 1 - 24, 38, 41, 42, and 46 are first come, first served. Campsites 26 - 40, 42, and 44 - 56 are reservable'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground ('There is no electricity, hook-ups, dump stations, or showers') + recreation.gov notice ('There are not utility or water hook-ups, dump stations, or showers within the campground'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232281/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground ('Single Site: $29 per night Double Site: $58 per night', updated September 14, 2026) + https://www.fs.usda.gov/r02/arp/conditions ('Olive Ridge | 56 | 40' | Reserve now | $29/58') + https://www.recreation.gov/api/camps/campgrounds/232281/rates (Peak Season 2026 and 2027: STANDARD NONELECTRIC 29, double 58) + notice 'Any additional vehicles will be charged $8.00 per vehicle per night', read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground ('vault toilets, and trash services are provided. There is no electricity, hook-ups, dump stations, or showers. All campsites with a tent pad have a bear locker') + https://www.recreation.gov/api/camps/campgrounds/232281 ('Firewood is for sale in the campground'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Boulder Ranger District Campground Status: 'Olive Ridge | 56 | 40' | Reserve now | $29/58 | May 15 - Sept 13'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -154373,13 +154454,34 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 29,
       "nightly_high": 29,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single site $29 a night, double $58 (FS page, status table, and recreation.gov 2026 and 2027). One vehicle included; $8 per extra vehicle per night."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "showers": false,
+      "dump": false,
+      "note": "Firewood sold in the campground; bear lockers at tent-pad sites."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-13"
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.fs.usda.gov/r02/arp/recreation/olive-ridge-campground https://www.fs.usda.gov/r02/arp/conditions https://www.recreation.gov/camping/campgrounds/232281 https://www.recreation.gov/api/camps/campgrounds/232281 https://www.recreation.gov/api/camps/campgrounds/232281/rates recreation.gov per-site catalog for 232281 (public search API)",
+      "note": "Fees $29 confirmed (FS, status table, rec.gov 2026/2027). Sites count 53 -> 56 (FS and rec.gov), max_rig_ft 60 -> 40 (forest status table Max Spur 40'; nothing supports 60), pull_through false. Hookups none confirmed (electric 0, water/sewer false). Added vault toilets, no showers/dump, season May 15 - Sept 13 (status table), booking on rec.gov with 4-day cutoff, some FCFS sites, 2/3-night weekend/holiday minimums, 14-night max, booking season 05-15 to 09-12. Pin 134 m from the catalog centroid."
+    },
+    "phone": "303-541-2500"
   },
   {
     "id": 2333,
@@ -154393,7 +154495,7 @@
     "inclusion_evidence": "recreation.gov 232282 + search: 39 drive-in Standard Nonelectric sites (ELK/MOOSE loops) accommodating RVs up to ~100 ft, plus separate walk-in tent loop -> real drive-in RV campground",
     "waterfront_evidence": "pin was ~5.7km N of the campground; real Pawnee loops (ELK/MOOSE) sit in dense forest SE of Brainard Lake, separated from the lake by a continuous treed buffer and a developed day-use/shore strip; satellite at 40.0785,-105.5690 shows loops well back from water",
     "website": "https://www.recreation.gov/camping/campgrounds/232282",
-    "note": "Boulder RD, Brainard Lake area (Arapaho-Roosevelt NF); 45 sites, sites to ~100 ft. Reservable online. --Claude",
+    "note": "Boulder RD, Arapaho-Roosevelt NF: 10,400 ft in spruce-fir forest on the east side of Brainard Lake in the Brainard Lake Recreation Area, at the foot of the Continental Divide beside the Indian Peaks Wilderness; about 4.5 mi up Brainard Lake Road from CO-72 at Ward. Parking is limited to the campground during a stay; trailhead lots need a separate timed ticket. Expect cold, wet weather at any time. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -154401,31 +154503,65 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 45,
-      "max_rig_ft": 100
+      "count": 47,
+      "max_rig_ft": 100,
+      "pull_through": true,
+      "note": "47 sites, eight of them tent-only in the catalog. Catalogued RV spurs mostly 48 ft; a few pull-throughs at 45-100 ft; one reservable site 20 ft. Book a site that fits: you may not move to another (but snow drifts can force a move until mid-July)."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -24
+      },
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "season": {
+        "opens": "06-26",
+        "closes": "09-12"
+      },
+      "note": "Recreation.gov for the 2026 season June 26 - Sept 12 (2027: June 25 - Sept 11), closing 1 day before arrival; 2-night weekend and 3-night holiday-weekend minimums. A few sites are first-come, admitted only from 2 p.m. and not guaranteed. Do not arrive before 2 p.m.: there is nowhere to wait or turn around. A reserved site not occupied within 26 hours goes first-come."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground ('a total of 47 campsites for tents, campers, trailers, or RVs') + https://www.fs.usda.gov/r02/arp/conditions ('Pawnee | 47 | 100'') + per-site catalog (45 sites: 37 standard, 8 tent-only; Max Vehicle Length 20-100, 14 at 48 ft; Pull-Through at 45, 60, 90 x3, 100) + recreation.gov notices ('You may not move to another campsite'; 'Due to the unpredictable snow drifting you may be moved to another site at Pawnee Campground up until mid-July'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232282 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 1 'day(s) prior to arrival'; no maxStay rule; notices quoted) + /rates (Peak Season 2026-06-26 to 2026-09-12, 2027-06-25 to 2027-09-11) + per-site catalog (9 of 45 Not Reservable) + https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground ('First come, first served site admittance is not accepted until 2 p.m. daily and sites cannot be guaranteed'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground ('Not provided: electricity, hook-ups, dump stations, or showers') + recreation.gov notice ('No RV water connections are available'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232282/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground ('Single Site: $29 per night Double Site: $58 per night'; 'Pawnee Campground visitors are subject to Brainard Lake Recreation Area fees', updated September 14, 2026) + https://www.fs.usda.gov/r02/arp/conditions ('Pawnee | 47 | 100' | Reserve now | $29/58') + https://www.recreation.gov/api/camps/campgrounds/232282/rates (Peak Season 2026 and 2027: STANDARD NONELECTRIC 29, double 58) + notices ('Any additional vehicles will be charged $8.00 per vehicle per night'; 'Visitors with a Pawnee Campground reservation do not need to purchase a timed ticket to enter'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground ('Picnic tables, fire grates, water, vault toilets, and trash services are provided. Not provided: electricity, hook-ups, dump stations, or showers'; 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/232282 ('Vault toilets and drinking water are provided'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Boulder Ranger District Campground Status: 'Pawnee | 47 | 100' | Reserve now | $29/58 | June 26 - Sept 13'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -154434,13 +154570,35 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 29,
       "nightly_high": 29,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single site $29 a night, double $58 (FS page, status table, and recreation.gov 2026 and 2027). One vehicle included; $8 per extra vehicle per night. Campers are also 'subject to Brainard Lake Recreation Area fees' (amount not posted on the FS pages); a Pawnee reservation stands in for the area's timed-entry ticket."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "showers": false,
+      "dump": false,
+      "note": "Bear lockers at tent-pad sites."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "06-26",
+      "closes": "09-13"
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.fs.usda.gov/r02/arp/recreation/pawnee-campground https://www.fs.usda.gov/r02/arp/recreation/brainard-lake-recreation-area https://www.fs.usda.gov/r02/arp/conditions https://www.recreation.gov/camping/campgrounds/232282 https://www.recreation.gov/api/camps/campgrounds/232282 https://www.recreation.gov/api/camps/campgrounds/232282/rates recreation.gov per-site catalog for 232282 (public search API)",
+      "note": "Fees $29 confirmed (FS, status table, rec.gov 2026/2027); added the Brainard Lake Recreation Area fee mention to the fee note. Sites count 45 -> 47 (FS and status table), max 100 kept on the status table's Max Spur 100', pull_through true. Hookups none confirmed. Added vault toilets, potable water, no showers/dump, season June 26 - Sept 13 (status table), booking on rec.gov (1-day cutoff, some FCFS sites, 2/3-night weekend/holiday minimums, booking season 06-26 to 09-12). Pin 132 m from the cata"
+    },
+    "phone": "303-541-2500"
   },
   {
     "id": 2334,
@@ -156586,7 +156744,7 @@
     "inclusion_evidence": "recreation.gov 253680 site 5: STANDARD NONELECTRIC drive-in pull-through, max 35 ft; standard sites RV-capable plus equestrian -> keep",
     "waterfront_evidence": "rec.gov: stream 'about 200 yards from the campground'; satellite at 40.0069,-107.4261 shows loop in forest-ringed meadow, no water at pads",
     "website": "https://www.recreation.gov/camping/campgrounds/253680",
-    "note": "Blanco RD, Flat Tops (White River NF); 23 sites, sites to ~40 ft, near Marvine Lakes. Reservable online. --Claude",
+    "note": "Blanco RD, White River NF: 8,200 ft in conifer and aspen on Marvine Creek, 35 mi east of Meeker (the last 6 mi on Rio Blanco CR 12). Marvine and East Marvine trails into the Flat Tops Wilderness start beside it, toward Marvine Lakes. The horse sites sit in their own loop. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -156594,31 +156752,50 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 23,
-      "max_rig_ft": 40
+      "count": 22,
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "17 standard sites in loops 1-2 (max vehicle 20-40 ft; 6 pull-throughs, three of them 40 ft) and 5 equestrian sites with corrals in their own loop 3, for campers with stock only (the FS page says six). Several standard spurs take only 20 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -48
+      },
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-13",
+        "closes": "11-01"
+      },
+      "note": "Every site is reservable on recreation.gov; 2026 season May 13 - Nov 1 (2027: May 13 - Oct 31), closing 2 days before arrival. No minimum stay (weekend minimums set to 0). 14 nights at most, and 14 a month. A site must be occupied the first night; reserved sites are held until 11 am the next day. Run for the Forest Service by American Land & Leisure."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov per-site catalog for 253680 (loops 1-2: 17 STANDARD NONELECTRIC, Max Vehicle Length 20-40, Pull-Through sites 2, 4, 5, 11, 14, 18; loop 3: 5 EQUESTRIAN NONELECTRIC, equipment Horse) + https://www.fs.usda.gov/r02/whiteriver/recreation/marvine-campground ('Marvine has six horse campsites with corrals for campers with stock only. Campers inside the main campground may not use these corrals'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/253680 (facility_rules maxConsecutiveStay 14, maxStay 14 'Each Month', minWeekendStay 0 soft, minHolidayWeekendStay 0 soft, reservationCutOff 2; notices quoted; 'Help.WhiteRiver.Blanco@AmericanLL.com') + /rates (Peak Season dates) + per-site catalog (22 of 22 reservable), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/253680 ('Electrical hook-ups are not available') + per-site catalog (all 22 sites STANDARD/EQUESTRIAN NONELECTRIC, no water or sewer hookup), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/253680/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/253680/rates (Peak Season 2026-05-13 to 2026-11-01 and 2027-05-13 to 2027-10-31: STANDARD NONELECTRIC 23, EQUESTRIAN NONELECTRIC 29, double STANDARD NONELECTRIC 52) + https://www.fs.usda.gov/r02/whiteriver/recreation/marvine-campground ('Single Site: $28 per night', last updated June 8, 2026), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/marvine-campground ('There is no water at the campground due to the well being dry'; 'Potable water is not available at this site'; 'Vault Toilet'; alert 'Water not available at Lowry, Prospector, Windy Point and Marvine Campgrounds') + https://www.recreation.gov/api/camps/campgrounds/253680 ('vault toilets and hand pump drinking water. Trash service is provided'; 'Bear-proof food lockers are provided at each site'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -156627,13 +156804,28 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 23,
       "nightly_high": 23,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "recreation.gov: $23 a standard site in 2026 and 2027 ($52 a double site, $29 an equestrian site). The Forest Service page says 'Single Site: $28 per night'. One RV per single site; an extra vehicle pays a nightly fee collected at the campground."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "No water in 2026: the Forest Service says the well is dry, so bring all you need (recreation.gov still describes hand-pump drinking water). Bear-proof food lockers at each site; trash service."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.fs.usda.gov/r02/whiteriver/recreation/marvine-campground https://www.fs.usda.gov/r02/whiteriver/recreation/east-marvine-campground https://www.fs.usda.gov/r02/whiteriver/alerts/water-not-available-lowry-prospector-windy-point-and-marvine-campgrounds https://www.fs.usda.gov/r02/whiteriver/offices https://www.recreation.gov/api/camps/campgrounds/253680 https://www.recreation.gov/api/camps/campgrounds/253680/rates https://www.recreation.gov/api/search/campsites?fq=asset_id%3A253680 (per-site catalog with coordinates)",
+      "note": "This is the family campground: loops 1-2 hold the 17 standard sites, and the stock sites are a separate equestrian loop 3 'for campers with stock only' (East Marvine next door is the other, non-reservable camp), so no horse-camp issue. Recorded rec.gov's $23 (2026, 2027; FS says $28), no hookups, 22 sites to 40 ft with pull-throughs, reservable season May 13 - Nov 1, 2-day cutoff, 14-night limit, no minimum. Facilities: vault toilets; potable water false for now (well dry, FS 2026). Operating se"
+    },
+    "phone": "970-878-4039"
   },
   {
     "id": 2369,
@@ -158051,7 +158243,7 @@
     "inclusion_evidence": "recreation.gov 234104: standard + RV nonelectric site types, operating/reservable, drive-in (rough gravel last 4 mi) -> real RV campground",
     "waterfront_evidence": "satellite at 37.2525,-105.1092 + rec.gov 234104: 20 forested/meadow sites on bench; Purgatoire (North Fork) is small creek screened by treeline, no per-site waterfront flag",
     "website": "https://www.recreation.gov/camping/campgrounds/234104",
-    "note": "Spanish Peaks/Cuchara (Pike-San Isabel NF); 20 sites, sites to ~45 ft. Reservable online. --Claude",
+    "note": "San Carlos RD, Pike-San Isabel NF: 9,800 ft in aspen and spruce near the headwaters of the Purgatoire (North Fork) in the Culebra Range, 25 mi south of La Veta off CO-12 and 4 mi of rough gravel up County Road 34. North Fork Trail #1309 trailhead at the north end. Remote: no real-time information. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 1,
@@ -158060,21 +158252,44 @@
     },
     "sites": {
       "count": 20,
-      "max_rig_ft": 45
+      "max_rig_ft": 35,
+      "note": "Two loops: a wooded loop of 14 standard/RV sites (spurs 18-35 ft; six at 25, four at 35) and a grassy meadow loop of 6 equestrian sites for horse campers (spurs to 45 ft). Grass-and-gravel aprons, all back-in. One RV per site."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "fcfs": "some_sites",
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-15",
+        "closes": "09-19"
+      },
+      "note": "Recreation.gov or 877-444-6777 at least four days ahead, for the 2026 season May 15 - Sept 19 (2027: May 14 - Sept 18); some sites are first-come and must be occupied the first night. Reservations need Friday and Saturday nights on weekends and three nights on holiday weekends; walk-ups are exempt. 14 consecutive nights at most."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov per-site catalog for 234104 (20 sites: 13 STANDARD NONELECTRIC + 1 RV NONELECTRIC, Max Vehicle Length 18-35; 6 EQUESTRIAN NONELECTRIC, equipment 'Horse', 22-45; all Back-In) + https://www.recreation.gov/api/camps/campgrounds/234104 ('laid out on two loops. One is a large grassy meadow with sites that accommodate equestrian campers and one that is wooded'; 'parking aprons are grass and gravel'; '1 RV in each campsite'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/purgatoire-campground ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt'; 'No more than a 14-night consecutive stay') + https://www.recreation.gov/api/camps/campgrounds/234104 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4; 'This facility also has first-come, first-served campsites'; 8 of 20 catalog sites Not Reservable) + /rates (Peak Season 2026-05-15 to 09-19, 2027-05-14 to 09-18), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -158082,13 +158297,19 @@
         "method": "derived"
       },
       "season": {
-        "source": "recreation.gov availability calendar, facility 234104 (105 days observed, edges closes)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/purgatoire-campground ('This campground is open early May to late September, weather dependent') + https://www.recreation.gov/api/camps/campgrounds/234104/rates (2026 seasons: First-come, First-served 2026-05-08 to 05-14, Peak 2026-05-15 to 09-19, First-come, First-served 2026-09-20 to 09-26), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234104/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/purgatoire-campground ('$25 fee per site for overnight camping. Two vehicles are included in the camping fee. $10 fee for a third vehicle'; 'Fees are payable by cash, check or money order. A self-service fee tube'; 'Senior Pass and the Interagency Access Pass qualify for a 50% discount') + https://www.recreation.gov/api/camps/campgrounds/234104/rates (2026 and 2027 Peak Season: STANDARD/RV NONELECTRIC 25; facility_rules hasTaxes), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/purgatoire-campground ('There are 3 outhouses, 2 are accessible'; 'Potable water is available at this site. A hand pump is available'; 'a bear closure order is in place') + https://www.recreation.gov/api/camps/campgrounds/234104 ('vault toilets', 'Drinking water is from a hand pump'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -158100,13 +158321,29 @@
       "electric": 0
     },
     "season": {
-      "closes": "09-19"
+      "closes": "09-26",
+      "year_round": false,
+      "opens": "05-08",
+      "note": "Early May to late September, weather dependent; services may be limited early and late. In 2026 first-come May 8-14 and Sept 20-26, reservable May 15 - Sept 19."
     },
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$25 a site per night (FS page; recreation.gov 2026 and 2027, plus tax online). Two vehicles included; $10 for a third. Senior and Access passes halve the site fee. On-site payment by cash, check or money order at the fee tube."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Three outhouses (two accessible); drinking water from a hand pump. Bear closure order in force."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.fs.usda.gov/r02/psicc/recreation/purgatoire-campground https://www.recreation.gov/camping/campgrounds/234104 https://www.recreation.gov/api/camps/campgrounds/234104 https://www.recreation.gov/api/camps/campgrounds/234104/rates recreation.gov per-site catalog for 234104 (public search API)",
+      "note": "Fees $25 confirmed (FS + rec.gov 2026/2027). Sites count 20 kept; max_rig_ft 45 -> 35 (45 is an equestrian-only site; the standard/RV sites run 18-35 ft). Season: closes 09-19 (calendar-derived) -> early May to late September on the FS page, dated 05-08 to 09-26 from rec.gov's 2026 operating seasons. Added vault toilets, hand-pump potable water, booking on rec.gov (4-day cutoff, some FCFS, 2/3-night weekend/holiday minimums for reservations, 14-night max, booking season 05-15 to 09-19). Hookups"
+    },
+    "phone": "719-269-8500"
   },
   {
     "id": 2396,
@@ -171905,7 +172142,8 @@
     "sites": {
       "count": 18,
       "max_rig_ft": 45,
-      "pull_through": true
+      "pull_through": true,
+      "note": "18 RV sites: 10 back-in (to 45 ft) and 8 pull-through (to 30 ft); no tent sites. Campspot offers both to motorhomes."
     },
     "season": {
       "year_round": true
@@ -171916,14 +172154,14 @@
     },
     "provenance": {
       "hookups": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/park/main-street-manor-rv-park (filters: '50-Amp 18', 'Sewer Hook-Up 18', 'Water Hook-Up 18' of 18 RV sites), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/park/main-street-manor-rv-park ('RV Sites 18', 'Back-In 10', 'Pull-Through 8', 'Tent Sites 0'), read 2026-10-26 + Campspot API 2026-10-13 (type 6090 back-in max length 45, type 6091 pull-thru max length 30; rv_types Fifth-Wheel, Motorhome, Travel Trailer)",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "season": {
         "source": "note prose (cleaned out of the note 2026-10-13)",
@@ -171931,13 +172169,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose (cleaned out of the note 2026-10-13)",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campspot.com/park/main-street-manor-rv-park (online booking, '10 Available Locations' / '8 Available Locations'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campspot.com/park/main-street-manor-rv-park (Campspot's pricing for each RV site type, one night from 2026-10-17, 2026-10-20, 2027-01-26, 2027-01-30, 2027-06-08, 2027-06-12, 2 adults; two nights from each Tuesday for the park's fees; campspot_tier_2026-10-13.jsonl), read 2026-10-13",
-        "checked": "2026-10-13"
+        "source": "https://www.campspot.com/park/main-street-manor-rv-park ('Up to $40/night'; both types 'Starting at $40.00 night'; 'Weekly Pricing for All Sites is $260'; 'Monthly Pricing for All Sites + your electricity bill ($200 upfront payment will be your electricity deposit)'), read 2026-10-26 + Campspot quotes of 2026-10-13 (campspot_tier_2026-10-13.jsonl: base 40.0, 'Transaction Fee' 3.5 per stay)",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.campspot.com/park/main-street-manor-rv-park ('What to expect... Pavilion, Showers, Bathrooms, Internet Access'; every site 'Wi-Fi'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -171951,7 +172195,16 @@
       "currency": "USD",
       "reservation_fee": 3.5,
       "checked": "2026",
-      "note": "Read on the Campspot marketplace: one night for 2 adults, site rate before tax, every RV site type a 23-ft rig fits (30/50 AMP Back-in Full Hookup RV Site and 30/50 AMP Pull-Thru Full Hookup RV Site). October 2026, January 2027 and June 2027: $40, Tuesday and Saturday alike. Plus the park's $3.50 'Transaction Fee', once per stay. Read 2026-10-13."
+      "note": "Campspot: $40 a night for 2 adults on both RV site types (back-in and pull-through, full hookups), October 2026, January 2027 and June 2027 alike; the park's $3.50 'Transaction Fee' once per stay. Weekly $260; monthly priced on request plus the site's electric bill ($200 electric deposit)."
+    },
+    "facilities": {
+      "showers": true,
+      "wifi": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.campspot.com/park/main-street-manor-rv-park audit/price_research/campspot_tier_2026-10-13.jsonl (Campspot API read of park 663, 2026-10-13) http://msmrvpark.com/ https://www.google.com/maps/search/Main+Street+Manor+RV+Park+Florence+CO",
+      "note": "Confirmed $40 (Campspot, through June 2027; $3.50 transaction fee per stay), 18 full-hookup 50-A sites (10 back-in to 45 ft, 8 pull-through to 30 ft), Campspot booking; added weekly $260 / monthly-plus-electric to the fee note, showers, wifi. Season left (no statement; Campspot shows no closures and January dates bookable). Presence: Campspot engine + Google Maps 4.8 / 117 reviews, phone 719-784-7373 (matches), 700 E Main St. Not a long-stay failure: every site is sold nightly on Campspot. Gate:"
     }
   },
   {
@@ -172073,77 +172326,6 @@
     }
   },
   {
-    "id": 2610,
-    "kind": "campground",
-    "name": "Observer Ranch Campground & Learning Center",
-    "location": "38.4619,-105.1040",
-    "elevation_meters": 1690.0,
-    "state": "CO",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "inclusion_evidence": "Operator site observerranch.com: 'public, nightly-bookable RV campground open to anyone', full-hookup RV sites $55+/night, book online via Newbook -> real transient RV park, learning center is just an amenity",
-    "waterfront_evidence": "satellite at 38.4619,-105.1040: RV rows in open semi-arid field, no water anywhere near",
-    "website": "https://observerranch.com/",
-    "phone": "(719) 203-2436",
-    "note": "22 full-hookup RV sites (20/30/50 amp, level concrete pads, ~1/10 acre, fire pit). Year-round; book nightly online via Newbook. New 2026 commercial campground with an on-site astronomy/nature learning center; also planet-themed camper + cabin rentals (not RV-relevant). Eightmile Creek crosses the property but RV pads sit ~130 m back across CR 123 -- not waterfront. --Claude",
-    "rating": {
-      "stars": 5,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 22
-    },
-    "season": {
-      "year_round": true
-    },
-    "booking": {
-      "reservable": true
-    },
-    "provenance": {
-      "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://observerranch.com/ ('Full Hookup RV Spots from $49/night', read 2026-10-16)",
-        "checked": "2026-10-16"
-      }
-    },
-    "note_scan": {
-      "sig": "175ff6e740525f82",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "fees": {
-      "nightly_low": 49,
-      "nightly_high": 49,
-      "currency": "USD",
-      "note": "Full-hookup 30/50A concrete pads from $49."
-    }
-  },
-  {
     "id": 2611,
     "kind": "campground",
     "name": "Outback RV",
@@ -172156,7 +172338,7 @@
     "waterfront_evidence": "satellite at 37.381,-108.493: small cleared RV loop in pinon-juniper scrub; irrigation ponds 400m+ SW, Mancos River ~1.5km W",
     "website": "https://outback-rv.net/",
     "phone": "970-560-4754",
-    "note": "8 level gravel pull-through sites, all full hookup (W/E/S, 30/50/110-amp); big-rig friendly at 45'x75' (max ~75 ft). No restrooms/showers; WiFi. Open Apr-Oct; owner-operated. Near BLM lands and Phil's World mountain-bike trails, ~5 mi from Cortez and a gateway to Mesa Verde NP; dark-sky stargazing. --Claude",
+    "note": "Out in the countryside on Road L about 5 mi east of Cortez, next to 2,000+ acres of BLM land and Phil's World mountain-bike trails; 9 mi to Mesa Verde NP. Large pull-through spaces, 45' x 75'. Dark-sky stargazing. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -172176,16 +172358,20 @@
       "showers": false,
       "flush_toilets": false,
       "vault_toilets": false,
-      "wifi": true
+      "wifi": false,
+      "laundry": false,
+      "note": "For fully self-contained rigs only. Electric-car charging prohibited at RV sites. Cell service from the major carriers."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "closes": "10-15",
+      "note": "April (no day given) to October 15."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://outback-rv.net/ ('Full Hook-ups, 30, 50, 110'; 'Water, Sewer, Garbage'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "sites": {
         "source": "note prose",
@@ -172193,18 +172379,24 @@
         "method": "derived"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://outback-rv.net/ ('RV sites are set for FULLY SELF-CONTAINED vehicles \"ONLY\" ( \"NO\" Restroom ~ Laundry ~ WiFi services PROVIDED! )'; 'ELECTRIC CAR CHARGING IS PROHIBITED IN ALL RV SITES'; 'Cell Service * AT&T * T-Mobile * Verizon & more'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://outback-rv.net/ ('SEASONAL \"APRIL to OCTOBER 15th\"'; 'RV ACCESS OPENS SEASONALLY \"APRIL - OCTOBER\" ONLY'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://outback-rv.net/ ('Nightly $38.00 +Tax', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://outback-rv.net/ ('Rates@ ( 2 Adults & 2 Children per space ) Nightly $38.00 +Tax / Weekly $250.00 +Tax Monthly $550.00 +Tax'; 'Additional guests $3.00 each child per night'; 'Reservation Hold = $38.00 + tax Payments are \"NON-REFUNDABLE\" & applied to \"1 NIGHT\" stay'), Copyright 2026, read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://outback-rv.net/ ('CALL FOR RESERVATIONS'; 'Please \"CALL\" for space AVAILABILITY before making any payment. PAY NOW' -> square.link; 'Office Hours: 8:00 am - 6:00 pm'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -172216,7 +172408,18 @@
       "nightly_low": 38,
       "nightly_high": 38,
       "currency": "USD",
-      "note": "Big-rig pull-throughs $38 plus tax."
+      "note": "$38 a night plus tax for 2 adults and 2 children (extra children $3 a night); weekly $250, monthly $550, plus tax. A one-night $38 deposit, non-refundable, holds a reservation.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Call for availability (970-560-4754, 8 a.m. - 6 p.m.), then pay the one-night hold online by Square."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://outback-rv.net/ https://www.google.com/maps/search/Outback+RV+Mancos+CO",
+      "note": "Confirmed $38 + tax (weekly $250, monthly $550 added to the fee note), full hookups 30/50 A, no restrooms or showers. Changed wifi true -> false (the operator says no restroom, laundry or WiFi), added laundry false; season now April - Oct 15 (closes 10-15; no opening day given); booking by phone with a Square-paid one-night hold. Sites (8, 75 ft, pull-through) left: the page gives space size 45' x 75' and pull-through but no site count. Presence: own site + phone 970-560-4754 (matches) + Google"
     }
   },
   {
@@ -175069,8 +175272,8 @@
     "inclusion_evidence": "townoflyons.com camping page: 16 full-hookup RV sites year-round (plus 50A electric + tent sites Apr-Oct), RVs permitted, reservable online -> real municipal RV campground, not tent-only",
     "waterfront_evidence": "Satellite at 40.2235,-105.2718: RV/camp loop set back behind continuous riparian brush/treeline from St. Vrain Creek channel (~30-50m); creek adjacent/visible across park's open grass from edge sites but screened channel = view not on-water apron",
     "website": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park\nhttps://lyonscolorado.com/349/LaVern-M-Johnson-Park",
-    "phone": "303-823-6622",
-    "note": "Town of Lyons municipal park (formerly Meadow Park) on North St. Vrain Creek at 432 5th Ave. ~15 full-hookup RV sites (year-round) and ~15 50-amp electric sites plus tent sites (Apr-Oct); RV sites up to 45-55 ft, so a 23-ft rig fits easily. Reservable online up to 12 months ahead via Lyons Parks & Rec; summer weekends fill. RV ~$50-60/night. --Claude",
+    "phone": "303-823-6150",
+    "note": "Town of Lyons municipal park (formerly Meadow Park) at 600 Park Drive, bounded on three sides by North St. Vrain Creek and sandstone cliffs, with the Lyons Whitewater Park. The park closes its gates at capacity (often by noon on summer weekends) to all but campers and reservation holders. No campfires. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 2,
@@ -175082,31 +175285,58 @@
       "sewer": true
     },
     "sites": {
-      "max_rig_ft": 55
+      "max_rig_ft": 55,
+      "count": 39,
+      "note": "16 full-hookup RV sites (Firefly lists 'RV Full Hookup' and 'Deluxe RV Full Hookup' classes) and 23 tent sites; tent sites 9-23 are walk-in. One RV and one vehicle per site."
     },
     "booking": {
       "reservable": true,
-      "platform": "operator"
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/LaVernMJohnsonPark",
+      "window_opens_days": 365,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "max_stay_nights": 14,
+      "note": "Reservations online only, on the town's Firefly Reservations portal, up to 12 months ahead; summer weekends fill quickly. 2-night weekend and 3-night Memorial Day / 4th of July / Labor Day minimums (day-of overrides by phone, 303-823-6150). Peak season (Memorial Day - Labor Day) caps a stay at 14 consecutive nights with 7 nights between stays, 21 nights in all. Some summer community events close camping."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('There are 16 RV sites with full hookups'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('There are 16 RV sites with full hookups and 23 tent sites'; 'Tent sites 9-23 are walk-in sites') + Firefly class filter, read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('Camping reservations must be made online. Reservations may be made up to 12 months in advance'; '*2-night minimum required for weekend reservations'; '*3-night minimum required for Memorial Day, 4th of July, and Labor Day holidays'; 'Maximum consecutive stay during the peak season (Memorial Day through Labor Day) is 14 nights') + https://app.fireflyreservations.com/reserve/property/LaVernMJohnsonPark ('FOR DAY OF MINIMUM NIGHT OVERRIDES, CALL (303) 823-6150'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park (audit/price_research/local_co_2026-10-15/co_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('Camping Fee Scale': 'RV with Full Hookups Nightly: $62-$67 Weekly: $385 | $64-$69 | Nightly: $57 - $62 Weekly: $310'; 'Additional parking permits may be purchased from the Park/Camp Host for $15 each per night'; cancellation policy 'plus reservation fee ($5)'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('The RV camping season runs year-round. Tent camping is available from mid-April through mid-October') + https://lyonscolorado.com/349/LaVern-M-Johnson-Park ('RV camping with full hookups that runs year-round'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park ('There is access to potable water, flush toilets, and showers (additional fee) within the park'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -175119,13 +175349,29 @@
       "nightly_high": 69,
       "currency": "USD",
       "checked": "2026",
-      "note": "Town of Lyons: full hookups $62-67 a night in season, $64-69 on holidays, $57-62 off-season; tents $37-47; 2-night weekend minimum. Read 2026-10-15."
+      "note": "RV with full hookups: $62-67 a night in peak season (May-Sept), $64-69 on Memorial Day, 4th of July and Labor Day, $57-62 off-season (Oct 1 - Apr 30); weekly $385 peak / $310 off-season. Tent sites $37-42 ($42-47 holidays). One vehicle included; an extra parking permit is $15 a night (one per site). Showers cost extra. $5 reservation fee.",
+      "reservation_fee": 5
+    },
+    "season": {
+      "year_round": true,
+      "note": "RV sites year-round; tent sites mid-April to mid-October (April 1 - October 15 on the park page)."
+    },
+    "facilities": {
+      "potable_water": true,
+      "flush_toilets": true,
+      "showers": true,
+      "note": "Showers cost extra; the code comes from the park host."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.townoflyons.com/351/Camping-at-LaVern-M-Johnson-Park https://lyonscolorado.com/349/LaVern-M-Johnson-Park https://www.townoflyons.com/736/Camping-Rules-and-Regulations https://app.fireflyreservations.com/reserve/property/LaVernMJohnsonPark http://www.townoflyons.com/DocumentCenter/View/1397/LaVern-Johnson-Park-Camping-Site-Map",
+      "note": "Confirmed 2026 fee scale ($57-69 RV full hookup; weekly rates; $5 reservation fee), year-round RV season, online-only booking 12 months out (now Firefly Reservations), 2/3-night weekend/holiday minimums. Added 14-night peak-season cap, 39 sites (16 full-hookup RV + 23 tent), facilities. Water/sewer confirmed; amperage not stated (stored 50 A left). max_rig_ft 55 left (pages silent). Note: dropped field repeats and the wrong address (432 5th Ave is Town Hall)."
     }
   },
   {
     "id": 2656,
     "kind": "campground",
-    "name": "Marble Campground - Meri Daes",
+    "name": "Marble RV Park and Campground",
     "location": "39.07020,-107.18975",
     "elevation_meters": 2437.0,
     "state": "CO",
@@ -175135,7 +175381,7 @@
     "waterfront_evidence": "satellite at 39.0686,-107.1905: RV pad rows with open gravel/cobble apron directly to Crystal River channel, closest pads ~15-30m to water; operator confirms half-mile river frontage, RVs to 30ft",
     "website": "http://marblecampground.com/",
     "phone": "970-963-1714",
-    "note": "Town-run campground in Marble (operator states proceeds fund the community). Small park, RVs 30 ft or less, sites with 15/20/30-amp electric and water, dump station, showers. Reservable online. --Claude",
+    "note": "Town-run campground in the heart of Marble (proceeds fund the community), among blocks of Yule marble, beside the old Catholic church foundation and across from Millsite Park, up from the Crystal River. An easy walk to the town's galleries, BBQ and coffee shop. Tight turns at the entrance and exits. --Claude",
     "rating": {
       "stars": 5,
       "price_tier": 3,
@@ -175146,41 +175392,61 @@
       "water": true
     },
     "sites": {
-      "max_rig_ft": 30
+      "max_rig_ft": 30,
+      "count": 15,
+      "pull_through": true,
+      "note": "ResNexus lists 15 sites (numbered 1-14 and 16): four small back-in RV/tent sites (1-4) take 20 ft, the rest 30 ft; sites 5-10 are pull-throughs, 11-14 back-in tent/RV sites, 16 a premium site. 30 ft is the campground's maximum because the entrance and exits are tight."
     },
     "facilities": {
       "showers": true,
       "dump": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://reserve6.resnexus.com/resnexus/reservations/lodging/F566BA9F-683A-43B0-AA52-1EA45005B344",
+      "max_stay_nights": 14,
+      "note": "Booked online on the campground's ResNexus page. Card payment only (no cash). Cancel 7+ days out for a full refund less a $25 service fee; 50% with 48 hours' notice."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.marblecampground.com/ ('Each campsite has a fire ring, picnic table, 15/20/30 electric and water') + ResNexus site list (every site 'Water, electric 30 amp'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.marblecampground.com/our-policies ('The maximum allowed length is 30'. Please understand we are a small campground, and the entrance and exits are very tight turns. Longer RVs have gotten stuck in the past') + ResNexus site list ('01) Small RV / Tent Site Back-in site ... 20' max', '05) RV Site, 30' Pull through site', 'Showing 15 results'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.marblecampground.com/ ('There is a shower house and dump station on-site'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.marblecampground.com/ ('Book a Campsite' -> ResNexus) + https://www.marblecampground.com/our-policies ('Maximum Stay cannot exceed 14 days'; 'We are unable to accept cash payment'; cancellation policy), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "fees": {
+        "source": "https://www.marblecampground.com/our-policies ('Additional vehicles fee is $10 per extra vehicle'; 'All OHVs are an additional $15 fee per OHV per day'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "669550291617c0f4",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "note": "No nightly rate is posted. One vehicle included (an RV's towed vehicle counts as one); extra vehicles $10, and each OHV $15 a day."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.marblecampground.com/ https://www.marblecampground.com/our-policies https://reserve6.resnexus.com/resnexus/reservations/lodging/F566BA9F-683A-43B0-AA52-1EA45005B344 https://www.townofmarble.com/ (2026 Budget PDF: 'Campground Revenue 55,611 60,000 59,000') https://www.google.com/maps/search/Marble+Campground+Marble+CO",
+      "note": "Ownership confirmed local: the operator says 'we are a town run campground where proceeds go to fund and benefit our community' and the Town of Marble's 2026 budget carries 'Campground Revenue'. Confirmed 30 ft maximum, 30-A electric + water at every site, showers, dump, online booking (ResNexus). Added 15 sites incl. pull-throughs, 14-night maximum, extra-vehicle/OHV fees. No nightly rate posted anywhere (ResNexus shows every site 'OCCUPIED' off-season, no prices). Season unstated. Note: droppe"
     }
   },
   {
@@ -962374,7 +962640,7 @@
     "inclusion_evidence": "ponderosaco.com live with a rate page (RV sites $49.50/day, two people) and reservation policy; RV Life 5* $$ over 15 reviews; Google 4.8 over 89 with phone (read 2026-10-02)",
     "website": "https://www.ponderosaco.com/",
     "phone": "719-376-5857",
-    "note": "Private campground on the Conejos River on CO-17 west of Antonito with RV sites (some without sewer; dump station), cabins and tent sites. RV $49.50/day for two (2026); monthly off-river sites. RV Life 5*/$$. --Claude",
+    "note": "Family-run (Frank and Kim O'Connor) campground on CO-17 between mile markers 18 and 19 west of Antonito, at 8,600 ft in Conejos Canyon beside the Conejos River, surrounded by national forest; also 6 cabins. Catch-and-release fly fishing on the property; OHV passes sold on site. All vehicles and trailers must fit within the site (otherwise $5 a day to park elsewhere by arrangement). --Claude",
     "rating": {
       "stars": 5.0,
       "price_tier": 2,
@@ -962382,25 +962648,45 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 30
     },
     "facilities": {
-      "dump": true
+      "dump": true,
+      "laundry": true,
+      "wifi": true,
+      "note": "Sewer at most off-river sites; the river sites use the dump station. Limited Wi-Fi. Propane fire pits only (no campfires). Small store with fly-fishing supplies and licenses."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.ponderosaco.com/camping/ ('Water & 30 amp. electricity included. We ask that you not run air conditioners'; 'Sewer available at most off-river sites. For sites w/o sewer, a dump station is available'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.ponderosaco.com/camping/ ('For sites w/o sewer, a dump station is available'; 'Limited WIFI (available at most sites)') + https://www.ponderosaco.com/info/ ('Laundry: Washers and dryers are available'; 'Campfires: Propane firepits only') + https://www.ponderosaco.com/ ('There is a small store'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.ponderosaco.com/camping/ (audit/price_research/note_priced_2026-10-15/pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://www.ponderosaco.com/camping/ ('All rates are based on double occupancy'; 'Additional person rate (age 6+) is $5 /day/per person'; 'Dog fee is $5/dog/day'; 'RV Sites $49.50/day $960/month off river No monthly river rates'; 'Receive a 5% discount by paying fees with cash or check') + https://www.ponderosaco.com/ ('RV Deposits 1 night-$50 ... 2-7 nights-$100'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://www.ponderosaco.com/ ('We have 20 RV sites and 6 cabins') + https://www.ponderosaco.com/camping/ ('20 camping sites located in the scenic Conejos Canyon'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.ponderosaco.com/camping/ ('Campsites are Open June 1—September 30') + https://www.ponderosaco.com/ ('Open June 01-September 30'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.ponderosaco.com/ ('Reservations may be made one year in advance with a non refundable deposit'; 'please fill out the form below or call us at (719) 376-5857'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -962413,7 +962699,26 @@
       "nightly_high": 49.5,
       "currency": "USD",
       "checked": "2026",
-      "note": "Ponderosa (Antonito): RV sites $49.50 a day for 2 people. Read 2026-10-15."
+      "note": "RV sites $49.50 a day for two; extra persons (6+) $5 a day each, 6 maximum; dogs $5 a day each for stays of a week or less. Monthly $960 on off-river sites only (no monthly river rates). 5% off for cash or check. Non-refundable deposit: $50 for one night, $100 for 2-7 nights."
+    },
+    "sites": {
+      "count": 20
+    },
+    "season": {
+      "year_round": false,
+      "opens": "06-01",
+      "closes": "09-30"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "window_opens_days": 365,
+      "note": "Request a site with the form on the operator's site or by phone, up to a year ahead, with a non-refundable deposit."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "https://www.ponderosaco.com/ https://www.ponderosaco.com/camping/ https://www.ponderosaco.com/info/ https://www.google.com/maps/search/Ponderosa+Campground+Antonito+CO",
+      "note": "Confirmed $49.50 for two (2026), water/sewer (sewer at most off-river sites), dump; added electric 30 (A/C not to be run), 20 sites, season June 1 - Sept 30, laundry, Wi-Fi (limited), booking by the operator's request form or phone up to a year ahead; fee note gains extras, dog fee, monthly off-river $960, cash discount and deposits. Presence: own site + phone 719-376-5857 (matches) + Google Maps 4.8 / 89. $49.50 under US$50. Seasonal summer park selling nights; monthly only on off-river sites,"
     }
   },
   {
@@ -963406,8 +963711,8 @@
     "waterfront_evidence": "satellite (Esri, 500 m frame) at 39.0264,-107.3641: buildings and RV pads in trees west of a creek that runs beside CO-133; sites not legible on the bank - not waterfront",
     "inclusion_evidence": "RV Life 5* $$ (avg ~$40), 27 sites; Google 5.0 over 66. Operator site states '***WE WILL NOT BE OPEN THIS YEAR 2026***' (AWH 2026-10-02) - added closed with a caveat per feedback_add_with_caveat_not_withhold; recheck for 2027",
     "website": "http://mountainsidervpark.com/",
-    "phone": "",
-    "note": "RV park on CO-133 at Somerset in the North Fork valley. TEMPORARILY CLOSED: the operator's site says it will not open in 2026 (read 2026-10-02) - check before planning a 2027 stay. RV Life 5*/$$. --Claude",
+    "phone": "970-929-5006",
+    "note": "On CO-133 (West Elk Loop) at mile marker 31, on the south side of McClure Pass about 3 mi above Paonia Reservoir, beside Muddy Creek. No cell service. Kayak rentals. --Claude",
     "rating": {
       "stars": 5.0,
       "price_tier": 2,
@@ -963423,12 +963728,59 @@
         "source": "add-stage research",
         "checked": "2026-10-02",
         "method": "manual"
+      },
+      "fees": {
+        "source": "http://web.archive.org/web/20250812084118/https://mountainsidervpark.com/pricing ('Small Campsites $45/Night Sites 13-15. *ELECTRIC ONLY*', 'Large Campsites $50/Night Sites 1-12, 19-21. *ELECTRIC ONLY*', 'Tent Campsites $25/Night'), capture of 2025-08-12, read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "hookups": {
+        "source": "http://web.archive.org/web/20260414182038/https://mountainsidervpark.com/ ('We offer RV sites with electrical hookups only'; 'we are ELECTRIC ONLY.... no full hookups and no dump station'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "http://web.archive.org/web/20260414182038/https://mountainsidervpark.com/ ('restrooms with hot showers and flushable toilets', 'no dump station', 'Wi-Fi is available in designated areas only', 'We sell ice, firewood, and propane'), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "http://web.archive.org/web/20250812084118/https://mountainsidervpark.com/pricing (site numbers per class), read 2026-10-26",
+        "checked": "2026-10-26",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "37b4290d622be2a5",
       "checked": "2026-10-09",
       "model": "claude-opus-5/session"
+    },
+    "fees": {
+      "nightly_low": 45,
+      "nightly_high": 50,
+      "currency": "USD",
+      "checked": "2025",
+      "note": "2025 rates (the last the operator posted): small electric-only sites (13-15) $45 a night, large electric-only sites (1-12, 19-21) $50; tent sites $25. Not open in 2026."
+    },
+    "hookups": {
+      "water": false,
+      "sewer": false
+    },
+    "facilities": {
+      "showers": true,
+      "flush_toilets": true,
+      "dump": false,
+      "wifi": true,
+      "note": "Wi-Fi in designated areas only; ice, firewood and propane sold."
+    },
+    "sites": {
+      "count": 26,
+      "note": "Sites 1-26: 18 electric-only RV sites (1-15, 19-21), three camping cabins (16-18) and five tent sites (22-26), besides a cottage and the main house's lower floor."
+    },
+    "verify_scan": {
+      "checked": "2026-10-26",
+      "sources": "http://mountainsidervpark.com/ (404 Not Found, read 2026-10-26) http://web.archive.org/web/20260414182038/https://mountainsidervpark.com/ http://web.archive.org/web/20250812084118/https://mountainsidervpark.com/pricing https://www.google.com/maps/search/Mountainside+RV+Park+Somerset+CO",
+      "note": "Still closed: the operator's last captured site (April 2026) says it will not open this year, the site is now a 404, and Google marks it 'Temporarily closed'; no reopening date. The stored status (temporarily_closed, manual 2026-10-02) is right and left untouched. Added from the operator's archived pages: 2025 rates $45-50 (electric-only RV sites), no water/sewer hookups, showers, flush toilets, no dump, Wi-Fi in designated areas, 26 sites. Note: dropped the closure and RV Life lines (status and"
     }
   },
   {

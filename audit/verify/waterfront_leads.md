@@ -443,3 +443,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2362 Difficult (CO, White River NF): re-pinned 2026-10-26 ~1.5 km to the rec.gov campsite centroid 39.1413,-106.7722 (p3-154); re-check the riverfront call at the new pin.
 - 2364 Elliott Creek (CO, White River NF): FS "Located on the northwest shore of Green Mountain Reservoir"; entry lakeview (p3-154).
 - 2412 Father Dyer (CO, Pike-San Isabel NF): rec.gov "situated on the eastern shore of Turquoise Lake"; entry not waterfront (p3-154).
+- 2333 Pawnee (CO, Arapaho-Roosevelt NF): rec.gov "next to 25-acre Brainard Lake", FS "on the east side of Brainard Lake"; entry not waterfront (p3-155).
+- 2656 Marble RV Park and Campground (CO): stored riverfront, operator says "up from the Crystal River" (p3-155).
+- 14480 Mountainside RV Park (CO, temporarily closed): operator "The 'Muddy Creek' runs next to the sites"; entry not waterfront (p3-155).

@@ -1,0 +1,57 @@
+{
+  "id": 2330,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table)",
+    "https://www.fs.usda.gov/r02/arp/alerts",
+    "https://www.fs.usda.gov/r02/arp/offices",
+    "https://www.recreation.gov/api/camps/campgrounds/231852",
+    "https://www.recreation.gov/api/camps/campgrounds/231852/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231852 (per-site catalog with coordinates)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 41, "currency": "USD", "checked": "2026",
+                 "note": "Non-electric sites (33-54, first-come) $30 a night; electric sites (1-32, reservable) $41 on recreation.gov in 2026 and 2027. Doubles $60 non-electric, $80 electric ($81 on recreation.gov). One vehicle included; $8 per extra vehicle per night."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Single Site Non-Electric: $30 per night', 'Single Site Electric: $41 per night', doubles $60/$80; updated September 21, 2026) + https://www.fs.usda.gov/r02/arp/conditions ('Mountain Park | 55 | 50' | Reserve Now | $30/60 $41/81*') + https://www.recreation.gov/api/camps/campgrounds/231852/rates (2026 and 2027 Peak Season: STANDARD ELECTRIC 41, double 81) + notice 'Any additional vehicles will be charged $8.00 per vehicle per night', read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "recreation.gov per-site catalog for 231852 (all 29 electric sites 'Electricity Hookup: 50/30') + https://www.recreation.gov/api/camps/campgrounds/231852 ('Sites 1 through 32 have electric hookups'; 'RV water and sewer connections are not available. Come with your RV/trailer water tank filled'), read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 54, "max_rig_ft": 45, "pull_through": true,
+                 "note": "Sites 1-32 have 50/30-amp electric and are reservable; 33-54 have no hookups and are first-come; plus a group site for up to 75. Parking spurs 35-45 ft per the FS page and recreation.gov, but the catalog's electric spurs run 20-45 ft (most 30-35), and the forest's status table gives a 50-ft Max Spur. A few pull-throughs (2, 31, 32)."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Electrical hook-ups are available in sites 1-32. Sites 33-54 do not have electricity and are first-come, first-served'; 'The parking length ranges from 35 to 45 feet') + per-site catalog (29 electric sites, Max Vehicle Length 20-45, Pull-Through 002, 031, 032) + https://www.fs.usda.gov/r02/arp/conditions (55 sites, Max Spur 50'), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "vault_toilets": true, "potable_water": true, "note": "Coin showers. Drinking-water hydrants, but RVs may not fill tanks from them. Firewood from the host."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231852 ('vault toilets and drinking water. Coin showers are located on-site'; 'Filling at campground hydrants cross-contaminates the system and is not allowed') + https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground ('Vault toilet(s)', 'Potable water is available', 'pay showers'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "fcfs": "some_sites", "max_stay_nights": 14,
+                 "season": {"opens": "05-15", "closes": "09-19"},
+                 "note": "The electric sites (1-32) and the group site book on recreation.gov for the 2026 season May 15 - Sept 19 (2027: May 14 - Sept 18), closing 4 days before arrival; sites 33-54 are first-come, and 'additional sites may be available on a first-come, first-served basis before, during and after the reservation season'. No minimum stay; 14 nights in a rolling 60 days. A reserved site must be occupied within 26 hours."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231852 (facility_rules maxStay 14 'Rolling 60 Days', reservationCutOff 4 'day(s) prior to arrival', no minimum-stay rules; notices quoted) + /rates (Peak Season 2026-05-15 to 09-19, 2027-05-14 to 09-18) + https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground, read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "09-20"},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: 'Mountain Park | 55 | 50' | Reserve Now | $30/60 $41/81* | May 15 - Sept 20'), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Canyon Lakes RD, Arapaho-Roosevelt NF: 6,500 ft in ponderosa pine on the banks of the Cache la Poudre (a National Wild and Scenic River) beside CO-14, 40 mi northwest of Fort Collins (mile marker 98.8). Rafting and trout fishing; playground, volleyball and basketball courts, horseshoe pits. --Claude",
+  "summary": "Corrected site count 30 -> 54 (1-32 electric and reservable, 33-54 non-electric first-come) plus a group site; fees 41 -> $30-41 (FS non-electric $30, electric $41 = recreation.gov 2026/2027). Electric 50 confirmed from the catalog's '50/30' on every electric site (no water/sewer). Added operating season May 15 - Sept 20 (status table), reservable season May 15 - Sept 19, 4-day cutoff, some sites FCFS, 14 nights in 60 days, coin showers, vault toilets, water (no tank filling). Pin 118 m from the catalog centroid. No road alerts for CO-14.",
+  "flags": [
+    "Length conflict (all above 23 ft): FS page and recreation.gov say 'The parking length ranges from 35 to 45 feet'; the catalog's electric spurs run 20-45 ft (site 016 is 20, 024 is 24); the Campground Status table lists Max Spur 50'. Kept 45.",
+    "Phone missing: Canyon Lakes Ranger District 970-295-6600 (fs.usda.gov/r02/arp/offices). recreation.gov gives 970-295-6700 as the facility phone and (530) 529-0578 for facility information (concessionaire).",
+    "Website is the recreation.gov listing; agency page if wanted: https://www.fs.usda.gov/r02/arp/recreation/mountain-park-campground",
+    "Site count: the status table says 55 sites, the FS page numbers 1-54 plus a group site; recreation.gov's catalog lists only the 29 reservable electric sites and the group site."
+  ]
+}
