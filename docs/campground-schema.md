@@ -1035,9 +1035,10 @@ Since 2026-10-26 the campground map's filters live in three places with one job 
 (the bottom-right Filters box below had run out of room, and was too big for a phone):
 
 - the **legend** (bottom-left) explains the colours — the Color-by picker, one row per
-  category in the current mode, and "Showing N of M · F faded". A row is still a click
-  to hide its category;
-- a **quick-filter row** under the search box — the Filters button with a count of what
+  category in the current mode, and "Showing N of M · F faded". A read-only key since
+  AWH 2026-10-26: the panel holds the same category filters, so a row no longer hides
+  its category, and a row a filter has hidden stays listed, dimmed;
+- a **quick-filter row** along the top of the map, above the search box — the Filters button with a count of what
   is set, then `$50 or less`, `Electric`, `On the water`, `4★ and up`. Off, a chip offers
   that common setting; on, it shows the setting actually in force (so `Full hookups` when
   the panel set that) and a tap clears it;
@@ -1047,7 +1048,7 @@ Since 2026-10-26 the campground map's filters live in three places with one job 
   hidden) and "Show N campgrounds".
 
 All three read and write the same state, and every change goes through `applyVisibility()`,
-which re-syncs every control — so a legend row, a panel checkbox and a chip can never
+which re-syncs every control — so the legend key, a panel checkbox and a chip can never
 disagree. **The category filters belong to their field, not to the colour mode**: one
 `hiddenCategories` set holds water and climate categories (the names never collide), so a
 lakefront-only map stays lakefront-only when coloured by climate. New filters (season,

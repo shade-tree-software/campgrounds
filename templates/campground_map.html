@@ -314,27 +314,15 @@
     background: #fff;
   }
 
+  /* A read-only key (AWH 2026-10-26): the category filters live in the
+     Filters panel. A category a filter is hiding stays listed, dimmed, so the
+     key still says what the map is showing. */
   .map-legend .legend-row {
     display: flex;
     align-items: center;
     gap: .4rem;
-    cursor: pointer;
-    user-select: none;
-    padding: .15rem .25rem;
-    margin: 0 -.25rem;
-    border-radius: 4px;
-    transition: background .12s;
+    padding: .1rem 0;
   }
-
-  .map-legend .legend-row:hover { background: rgba(0,0,0,.05); }
-  /* Keyboard focus ring for the now-focusable filter rows. */
-  .map-legend .legend-row:focus-visible {
-    outline: 2px solid var(--navy);
-    outline-offset: 1px;
-    background: rgba(0,0,0,.05);
-  }
-  /* Touch users have no hover — show a momentary press state instead. */
-  .map-legend .legend-row:active { background: rgba(0,0,0,.12); }
 
   .map-legend .legend-row.dimmed { opacity: .35; }
 
@@ -1863,11 +1851,6 @@ function setOnWaterOnly(on) {
   });
 }
 
-function toggleCategory(c) {
-  if (hiddenCategories.has(c)) hiddenCategories.delete(c);
-  else hiddenCategories.add(c);
-}
-
 const ownerOrder = Object.keys(OWNERSHIP_LABELS);
 const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
 const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
@@ -1971,21 +1954,6 @@ function updateUnratedNote(faded, unratedHidden) {
   }
 }
 
-// Turn a legend <div> into a keyboard-operable toggle. It stays a div rather
-// than becoming a <button> because Leaflet controls and the existing CSS both
-// key off .legend-row; role + tabindex + Enter/Space is the same contract for
-// assistive tech.
-function makeToggleRow(row, pressed) {
-  row.setAttribute('role', 'button');
-  row.setAttribute('tabindex', '0');
-  row.setAttribute('aria-pressed', pressed ? 'true' : 'false');
-  row.addEventListener('keydown', e => {
-    if (e.key !== 'Enter' && e.key !== ' ') return;
-    e.preventDefault();          // Space would scroll the page
-    row.click();
-  });
-}
-
 // Functions that bring one control back in line with the state; run by
 // syncFilterUi() after every change, wherever it came from.
 const filterSyncers = [];
@@ -1995,6 +1963,9 @@ function syncFilterUi() {
 }
 
 // ── Legend ──
+// A read-only colour key: the Color-by picker, one row per category with its
+// count, and the running "Showing N of M". Hiding a category is done in the
+// Filters panel; a hidden one stays here, dimmed.
 let legendRowsEl = null;
 
 function rebuildLegend() {
@@ -2007,8 +1978,6 @@ function rebuildLegend() {
     row.dataset.category = category;
     row.innerHTML = `<span class="legend-dot" style="background:${colors[category]};"></span>`
       + `${category} (${categoryCounts.get(category).toLocaleString()})`;
-    makeToggleRow(row, !hiddenCategories.has(category));
-    row.addEventListener('click', () => { toggleCategory(category); filtersChanged(); });
     legendRowsEl.appendChild(row);
   });
   syncLegend();
@@ -2019,7 +1988,7 @@ function syncLegend() {
   legendRowsEl.querySelectorAll('.legend-row').forEach(row => {
     const hidden = hiddenCategories.has(row.dataset.category);
     row.classList.toggle('dimmed', hidden);
-    row.setAttribute('aria-pressed', hidden ? 'false' : 'true');
+    row.title = hidden ? 'Hidden by a filter' : '';
   });
 }
 filterSyncers.push(syncLegend);
