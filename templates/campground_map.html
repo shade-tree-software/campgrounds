@@ -205,10 +205,10 @@
     /* The search sits under the quick-filter row. The layer icon normally
        keeps the top-right corner beside the row, leaving the search the whole
        width; when the row needs that width the icon drops down beside the
-       search (body.cg-layers-down, set by layoutTopControls) and the search
-       makes room for it as before. */
+       search (body.cg-layers-down, set by layoutTopControls). Either way
+       layoutTopControls caps the search's max-width short of the icon when
+       the two share a band. */
     .cg-search { width: calc(100vw - 20px); max-width: none; }
-    body.cg-layers-down .cg-search { width: calc(100vw - 66px); }
     .cg-search input { padding-right: .45rem; }
     body.cg-layers-down.cg-layers-open .cg-search { width: 11rem; }
 
@@ -2142,7 +2142,7 @@ searchControl.getContainer().before(quickFilterControl.getContainer());
 // for it; when the row's chips would run under the icon, the icon drops below
 // the row instead (level with the search box) and the row takes the whole
 // width, scrolling sideways with chevrons if even that isn't enough.
-const ROW_LEFT = 7, CORNER_MARGIN = 10, ROW_GAP = 8;
+const ROW_LEFT = 7, SEARCH_LEFT = 10, CORNER_MARGIN = 10, ROW_GAP = 8;
 let layersIconW = 0;
 function layoutTopControls() {
   const wrap = quickFilterControl.getContainer();
@@ -2158,6 +2158,15 @@ function layoutTopControls() {
   const down = rowShown && row.scrollWidth > beside;
   row.style.maxWidth = (down ? mapW - 2 * ROW_LEFT : beside) + 'px';
   corner.style.top = down ? (wrap.offsetTop + wrap.offsetHeight) + 'px' : '';
+  // Wherever the icon reaches down into the search box's band (level with it
+  // once dropped; and the icon is taller than the row, so even up top on a
+  // phone-wide map), the search stops a gap short of it.
+  const search = searchControl.getContainer();
+  search.style.maxWidth = '';
+  const iconBottom = down ? Infinity : lc.getBoundingClientRect().bottom;
+  if (iconBottom > search.getBoundingClientRect().top) {
+    search.style.maxWidth = (mapW - SEARCH_LEFT - ROW_GAP - iconW - CORNER_MARGIN) + 'px';
+  }
   document.body.classList.toggle('cg-layers-down', down);
   updateChipArrows();
 }
