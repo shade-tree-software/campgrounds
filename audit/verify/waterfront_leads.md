@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-25, Michigan wf-mi-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4002 Beaver Lake Park** not waterfront -> lakefront (county campground map: sites 1-4, 57-58 front
+  the lake; RVs ~25 m from shore across open lawn; re-pinned off the woods ~150 m SE); **4049 Hancock Recreation
+  Area** not waterfront -> lakefront (pads ~12-17 m from Portage Lake behind a thin brush fringe, the city's
+  waterfront sites 47, 49-55); **4016 O.B. Fuller Park** not waterfront -> lakefront (re-pinned off the M-35
+  bridge onto the loop ~700 m SSE; pads ~20-30 m from Lake Michigan across open grass and the park's own beach).
+- Stand: **3923 Camp Petosega** not waterfront (pads ~190 m back behind forest, road and the day-use beach);
+  **3881 Chalk Hills** not waterfront (re-pinned onto the OSM campground polygon; ~100 m and 26 m above the
+  flowage behind forest); **3983 Caseville County Park** lakeview (rows ~150-200 m from the bay behind the public
+  beach); **3969 John Gurney Park** not waterfront (~55 m behind a continuous wooded bank).
+- Held: **3900 Bond Falls Consolidated** (see its open lead).
+
 ## Resolved 2026-10-24, 6125 Beaver Creek Park split (AWH; audit/verify/splits/6125.json)
 
 - **6125** is now **Shambo (Beaver Creek Park)**, not waterfront, re-pinned off the RV dump lot (the old pin)
@@ -129,7 +142,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   note ("partial bay view, but none are directly on the beach") keeps bayview.
 ## Open leads, all states (appended during phase 7; work these with audit/verify/kit/mkwfbatch.py)
 
-- **3900 Bond Falls Consolidated (MI)** — dam screen 2026-10-21: the pin sits in the woods just
+- **3900 Bond Falls Consolidated (MI)** — dam screen 2026-10-21: the pin sits in the woods just **HELD wf-mi-1 (2026-10-25): two UPPCo areas ~4 km apart (West at the dam, East dispersed ~46.4067,-89.0865) - split question; West pads not legible under canopy; results in audit/verify/waterfront/wf-mi-1_held_3900.json.**
   below Bond Falls Main Dam (10 m under the flowage's pool), not at a campground; the camp loops
   are along the flowage shore somewhere south. Find the loops (UPPCo map) and re-pin before the
   lakefront call can be re-checked.
@@ -242,13 +255,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 4002 Beaver Lake Park (Alpena Co): county "On the shores of beautiful Beaver Lake"; Campspot sells "Waterfront RV Site" types; entry not waterfront (p3-103).
-- 3923 Camp Petosega: county "on the shores of Pickerel Lake"; entry not waterfront (p3-104).
-- 3881 Chalk Hills: operator "Riverview - not riverfront"; entry not waterfront - a river view value may apply (p3-104).
-- 3983 Caseville County Park: county sells 'Full Hookup Lakefront' sites ($78), seasonal sites 'some are even lake front on Lake Huron'; entry lakeview (p3-109).
-- 4049 Hancock Recreation Area: city's BookMySites sells '50 Amp Waterfront' (52-55, 'view of the water right from your own camper') and '30 Amp Waterfront' (47, 49-51) on Portage Lake; entry not waterfront (p3-111).
-- 3969 John Gurney Park (Hart): operator 'sits along the East Shore of Hart Lake', 'Overlooking Hart Lake', beach + boat launch; entry not waterfront (p3-112).
-- 4016 O.B. Fuller Park (Delta Co): county 'on the shores of Bark River and Lake Michigan', 'a lakeside camping area'; Campspot sells 7 'Lake Front' + 4 'Lake View' sites; entry not waterfront (p3-113).
 - 3956 Sandy Beach County Park (Newaygo): county sells 'Full-hookup, Pull-thru, Water View' sites on Hardy Dam Pond; entry not waterfront (p3-114).
 - 3982 Stafford County Park (Huron Co): county's best RV sites are "Electric Only Lakeview" ("Lake view sites, electric only" on the map); only rustic sites 3-10 sit on the shore; entry lakefront - may be a downgrade (p3-114/115).
 - 407 Silver Lake SP: DNR "sites 1-13 are on Silver Lake", booking site tags 4 sites "Adjacent To: Waterfront"; entry lakeview, which AWH's firsthand note supports (driveway between sites and lake) - likely stays (p3-115).
