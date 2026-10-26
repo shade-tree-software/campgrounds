@@ -470,27 +470,68 @@ function sfLinkDetail(parts) {
   const last = segs.length ? segs[segs.length - 1] : '';
   if (/\.pdf$/i.test(last)) return sfLinkWords(last.replace(/\.pdf$/i, '')) + ' (PDF)';
   if (/campgroundDetails|reserv|booking|book-a/i.test(parts.path + parts.query)) return 'reservations';
-  const stem = last.replace(/\.(do|dot|html?|php|aspx?|jsp)$/i, '');
+  // "park.marshall.html" (Illinois DNR) names the park after the last dot.
+  const stem = last.replace(/\.(do|dot|html?|php|aspx?|jsp)$/i, '').split('.').pop();
   if (!segs.length || /^(index|default|home)$/i.test(stem)) return 'home page';
   // CivicPlus county sites serve their PDFs from /DocumentCenter/View/<n>/<title>.
   if (/^documentcenter$/i.test(segs[0])) return sfLinkWords(stem) + ' (document)';
+  // A bare id says nothing; the segment above it says what kind of page it is
+  // (recreation.gov's /camping/campgrounds/232802 is a campground).
+  if (/^\d+$/.test(stem)) {
+    return segs.length > 1 ? sfLinkWords(segs[segs.length - 2].replace(/s$/i, '')).toLowerCase() : 'page';
+  }
   return sfLinkWords(stem);
 }
 
+// A site code as a PA state-forest name spells it: 081, 001C, S003, PCG001, CR 001.
+const SF_SITE_CODE = /\b[A-Z]{1,3} ?\d{2,3}[A-Z]?\b|\b\d{2,3}[A-Z]?\b/g;
+
 // Labels for one entry's website links, in order. A link that won't parse is
-// "website", as before.
-function sfLinkLabels(urls) {
+// "website", as before. `name` is the entry's name (see the site rule below).
+function sfLinkLabels(urls, name) {
   const parts = urls.map(sfLinkParts);
   const seen = {};
   parts.forEach(p => { if (p) seen[p.host] = (seen[p.host] || 0) + 1; });
-  const labels = parts.map(p => {
+  let labels = parts.map(p => {
     if (!p) return 'website';
     if (seen[p.host] > 1) return p.host + ' · ' + sfLinkDetail(p);
     return /\.pdf$/i.test(p.path) ? p.host + ' (PDF)' : p.host;
   });
-  // Whatever still repeats is numbered in order: a PA state-forest entry links
-  // one booking page per site, in the order its name lists the sites.
-  const count = {}, nth = {};
-  labels.forEach(l => { count[l] = (count[l] || 0) + 1; });
-  return labels.map(l => count[l] > 1 ? `${l} ${nth[l] = (nth[l] || 0) + 1}` : l);
+  const tally = ls => {
+    const c = {};
+    ls.forEach(l => { c[l] = (c[l] || 0) + 1; });
+    return c;
+  };
+  let count = tally(labels);
+  // Two pages with one title in different folders (Illinois DNR's park page and
+  // its /camp/ page): the later ones say which folder.
+  const firstDir = {};
+  labels = labels.map((l, i) => {
+    if (count[l] < 2 || !parts[i]) return l;
+    const segs = parts[i].path.split('/').filter(Boolean);
+    const dir = segs.length > 1 ? segs[segs.length - 2] : '';
+    if (!(l in firstDir)) { firstDir[l] = dir; return l; }
+    return dir && dir !== firstDir[l] && !/\d/.test(dir)
+      ? `${l} (${sfLinkWords(dir).toLowerCase()})` : l;
+  });
+  count = tally(labels);
+  // A PA state-forest entry links one booking page per site, and its name lists
+  // those sites in the same order ("Tuscarora State Forest Campsites 081, 082,
+  // 084"), so its booking links are named for their sites. Only when the name
+  // holds exactly one code per booking link; tests pin the order against the
+  // ReserveAmerica site list.
+  const codes = (name || '').match(SF_SITE_CODE) || [];
+  const booking = labels.filter(l => count[l] > 1 && / reservations$/.test(l));
+  const bySite = booking.length > 0 && booking.length === codes.length
+    && new Set(booking).size === 1;
+  const nth = {};
+  let site = 0;
+  return labels.map((l, i) => {
+    if (count[l] < 2) return l;
+    if (bySite && booking[0] === l) {
+      return parts[i].host + ' · site ' + codes[site++].replace(/^0+(?=\d)/, '');
+    }
+    // Whatever else still repeats is numbered in order.
+    return `${l} ${nth[l] = (nth[l] || 0) + 1}`;
+  });
 }

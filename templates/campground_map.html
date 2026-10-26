@@ -1435,7 +1435,7 @@ function cgPopupHtml(cg) {
     }
     if (d.website) {
       const urls = d.website.split('\n').map(u => u.trim()).filter(Boolean);
-      sfLinkLabels(urls).forEach((label, i) => {
+      sfLinkLabels(urls, d.name || cg.name).forEach((label, i) => {
         popup += `<br><a href="${urls[i]}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
       });
     }
