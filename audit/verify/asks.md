@@ -5,6 +5,8 @@ Answered items move to the bottom with the answer.
 
 ## Open
 
+1. **2640 Campo City Park (CO, local, free) — keep?** (p3-158, 2026-10-26) No official source mentions overnight RV use: neither the Town of Campo nor Baca County has a page for it, and the stored website is only a town contact page. Google Maps shows only "Campo Community Center" (4.6/31), ~60 m from the pin. The free, ~3-site, water, year-round, first-come facts come from RV Life and AllStays alone, so they were cleared and the note now calls them directory-reported. No site length is published, and the note warns of low trees. The presence rule is written for private parks. Keep with that caveat, or drop until the town (719-787-2416) confirms?
+
 ## Answered (AWH 2026-10-21)
 
 12. **129 Green Ridge State Forest (MD)** — DNR: "Roads leading to campsites are gravel or dirt.

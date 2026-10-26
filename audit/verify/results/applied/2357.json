@@ -1,0 +1,90 @@
+{
+  "id": 2357,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/10122661 (description, notices, rules)",
+    "https://www.recreation.gov/api/camps/campgrounds/10122661/rates",
+    "recreation.gov campsite search API for asset 10122661 (24 sites)",
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/blue-river-campground",
+    "https://www.fs.usda.gov/sites/nfs/files/publication/2026%20Campground%20Table%20WhiteRiverNF_All%20Campgrounds_0.pdf (2026 Campground and Day Use Area Operating Dates)",
+    "https://www.fs.usda.gov/r02/whiteriver/offices",
+    "https://www.fs.usda.gov/r02/whiteriver/conditions"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$25 a night on recreation.gov (2026 and 2027 peak seasons); the Forest Service page and 2026 table say $27. One RV with tow vehicle per site; an extra vehicle pays a nightly fee collected at the campground."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10122661/rates (Peak Season 2026-05-20..10-01 and 2027-05-20..10-01: PeakStandardNonelectric 25) + notice 'One RV with tow vehicle per single site ... Extra vehicle will be charged a per night fee'; FS page 'Single Site: $27 per night' and 2026 table '$27', read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false
+      },
+      "source": "recreation.gov campsite catalog for 10122661 (all 24 sites STANDARD/TENT ONLY NONELECTRIC) + notice 'No drinking water available at this campground'; FS page 'Potable water is not available at this site', read 2026-10-26",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 24,
+        "max_rig_ft": 25,
+        "pull_through": false,
+        "note": "All sites back-in. recreation.gov calls them 'suitable for tents and smaller trailers'; its catalog gives driveway lengths of 10-20 ft at most sites (site 009 45 ft). Sites 003, 005 and 008 are tent-only."
+      },
+      "source": "https://www.fs.usda.gov/sites/nfs/files/publication/2026%20Campground%20Table%20WhiteRiverNF_All%20Campgrounds_0.pdf ('Blue River CG 8,400 25/25'' # of sites / max site length) + FS page ('There are 24 camping sites') + recreation.gov catalog (24 sites, all Back-in; Driveway Length 10-20, one 45), read 2026-10-26",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false,
+        "note": "Bear-proof trash receptacles and a food storage locker at each site."
+      },
+      "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/blue-river-campground ('vault toilets, picnic tables and a fire pit'; 'Potable water is not available at this site') + recreation.gov ('Each site has a picnic table, fire ring and bear box'; 'Bear-proof trash receptacles are provided'), read 2026-10-26",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "05-20",
+        "closes": "10-02",
+        "note": "Estimated opening dates; they can shift with the weather."
+      },
+      "source": "https://www.fs.usda.gov/sites/nfs/files/publication/2026%20Campground%20Table%20WhiteRiverNF_All%20Campgrounds_0.pdf ('Blue River CG ... Season 5/20-10/2'; 'These are estimated opening dates. Opening dates can adjust based on weather'), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/10122661",
+        "reserve_until": {
+          "relative_to": "arrival",
+          "offset_hours": -72
+        },
+        "max_stay_nights": 14,
+        "season": {
+          "opens": "05-20",
+          "closes": "10-01"
+        },
+        "note": "Book at least 3 days ahead. The site must be occupied the first night; a reserved site is held until 11am the day after arrival, then released. Two catalog sites (011, 022) are not reservable."
+      },
+      "source": "recreation.gov 10122661 rules (reservationCutOff 3; minWeekendStay/minHolidayWeekendStay 0 soft = no rule) + notices ('Campers must occupy the site the first night'; 'Reserved Sites will be held until check out time (ELEVEN) the day following your arrival date') + rates Peak Season 2026-05-20..10-01; FS page 'Stay limit is 14 days'; FS 2026 table 'R', read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "note": "Dillon Ranger District, White River NF: along the Blue River on Hwy 9 between Silverthorne and Green Mountain Reservoir; run by concessionaire American Land & Leisure. Site access is difficult when the road is wet, and sites may close for flooding. --Claude",
+  "summary": "rec.gov + catalog + FS page + 2026 forest table: confirmed $25 (rec.gov 2026), no electric (added no water hookup), 24 sites; added max 25 ft (FS table), back-in only, vault toilets/no potable water, season 5/20-10/2, 3-day cutoff, 14-night max, booking season 5/20-10/1. Pin 31 m from the site centroid. Not open now (season ended 10/2); no alert or closure order for it. Note: dropped '24 sites' and 'Reservable online'.",
+  "flags": [
+    "Fee conflict: recreation.gov's 2026 and 2027 rate is $25; the FS campground page and the forest's 2026 table say $27. Recorded $25.",
+    "Fit check: FS 2026 table gives max site length 25 ft (passes for 23 ft), but recreation.gov calls the sites 'suitable for tents and smaller trailers' and its catalog lists driveway lengths of 10-20 ft at 22 of 24 sites (site 009 45 ft). EKKO may fit only a few spurs; worth a look before booking.",
+    "Site count: FS page and recreation.gov 24; the 2026 FS table says 25. Kept 24.",
+    "Phone empty: Dillon Ranger District (970) 468-5400 (forest offices page; the campground page lists no phone). recreation.gov lists facility phone 970-468-7681 and concessionaire American Land & Leisure 801-226-3564.",
+    "Website: FS agency page https://www.fs.usda.gov/r02/whiteriver/recreation/blue-river-campground could sit beside the recreation.gov link."
+  ]
+}
