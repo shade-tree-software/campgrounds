@@ -353,3 +353,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 3721 Tomahawk Creek Flooding SFC: DNR "The east and west units are both located on the Tomahawk Creek Flooding"; entry not waterfront (weak, p3-150).
 - 3657 Twin Lakes SFC: DNR "set on Twin Lake", Water access tag; entry lakeview (weak, p3-150).
 - 13449 Trailway Campground (Montague): city "adjacent to the White River", "across the street from beautiful White Lake"; entry not waterfront (weak, p3-150).
+- 3654 Veterans Memorial SFC: DNR "sits on the majestic Platte River", carry-in access from the campground; entry not waterfront (p3-151).
+- 3735 Weber Lake SFC: DNR "on the shore of Weber Lake" (stairway to the lake on the south side); entry lakeview (p3-151).
+- 3639 W.J. Hayes SP: DNR "the modern campground is situated on Round Lake (no wake)", "set along Round Lake"; entry not waterfront (p3-151).
+- 3765 Wagner Lake (Huron-Manistee NF): rec.gov "set on the banks of Wagner Lake"; entry not waterfront (p3-151).
+- 3608 Waterloo RA - Portage Lake: DNR the modern campground "is located on Portage Lake"; entry not waterfront (p3-151).
