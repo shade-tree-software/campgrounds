@@ -27,6 +27,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-14 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - MI LEADS DONE
+
+- Stand: **3675 Trout Lake SFC** lakefront (pads ~10-22 m from the pre-drawdown shore; low confidence - the lake
+  is drawn down and dam removal is recommended, see criteria_followups.md); **3722 Van Etten Lake** (re-pinned
+  ~200 m off private lakefront homes) and **3657 Twin Lakes** lakeview; **14041 Tippy Dam RA** (bluff),
+  **3720 Tomahawk Lake**, **3669 Upper Manistee River** (re-pinned ~350 m off the entrance road), **3721 Tomahawk
+  Creek Flooding** (re-pinned ~800 m onto the east unit), **13449 Trailway** - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-13 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4014 Shakey Lakes Park** lakeview -> lakefront (county per-site booking pages flag 'Water Frontage'
@@ -399,14 +407,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 14041 Tippy Dam RA: DNR sites "within close proximity to the dammed portion of the Manistee River", a viewing area overlooks the water; entry not waterfront (weak, p3-149).
-- 3720 Tomahawk Lake SFC: DNR "Nestled along the serene shores of the 40-acre Tomahawk Lake", "Some campsites have direct access to the lake"; entry not waterfront (p3-150).
-- 3669 Upper Manistee River SFC: DNR "Located along the Upper Manistee River ... access the river from many points throughout the campground"; entry not waterfront (p3-150).
-- 3722 Van Etten Lake SFC: DNR "Sites 36-46 have direct lake access via footpaths"; entry lakeview (p3-150).
-- 3675 Trout Lake SFC: DOWNWARD - DNR now "near House and Hoister lakes (Trout Lake has receded due to an emergency drawdown)", dam drawdown since April 2025, no water-access tag; entry lakefront (p3-150).
-- 3721 Tomahawk Creek Flooding SFC: DNR "The east and west units are both located on the Tomahawk Creek Flooding"; entry not waterfront (weak, p3-150).
-- 3657 Twin Lakes SFC: DNR "set on Twin Lake", Water access tag; entry lakeview (weak, p3-150).
-- 13449 Trailway Campground (Montague): city "adjacent to the White River", "across the street from beautiful White Lake"; entry not waterfront (weak, p3-150).
 - 3654 Veterans Memorial SFC: DNR "sits on the majestic Platte River", carry-in access from the campground; entry not waterfront (p3-151).
 - 3735 Weber Lake SFC: DNR "on the shore of Weber Lake" (stairway to the lake on the south side); entry lakeview (p3-151).
 - 3639 W.J. Hayes SP: DNR "the modern campground is situated on Round Lake (no wake)", "set along Round Lake"; entry not waterfront (p3-151).
