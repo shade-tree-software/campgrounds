@@ -441,3 +441,56 @@ function sfSummary(group, values, limit = 3) {
   const shown = parts.slice(0, limit).join(' \u00b7 ');
   return parts.length > limit ? `${shown} +${parts.length - limit} more` : shown;
 }
+
+// A popup link is labelled by its site's domain, which says nothing once two
+// links share one: Mower Tract's Forest Service recreation page and its trail
+// map PDF both read "fs.usda.gov" (343 entries have two links on one domain).
+// So a domain that repeats in the set is followed by what its path names, and
+// a PDF says it is one wherever it sits. Parsed by hand rather than with URL so
+// the test engine (quickjs, which has no URL) runs the shipped code.
+function sfLinkParts(url) {
+  const m = /^[a-z][a-z0-9+.-]*:\/\/([^/?#:]+)[^/?#]*([^?#]*)(\?[^#]*)?/i.exec(url.trim());
+  if (!m) return null;
+  return { host: m[1].toLowerCase().replace(/^www\./, ''), path: m[2] || '', query: m[3] || '' };
+}
+
+function sfLinkWords(stem) {
+  let s = stem;
+  try { s = decodeURIComponent(s); } catch (e) { /* keep it encoded */ }
+  s = s.replace(/[_-]\d+(x\d+)?$/i, '')            // MowerBasinTrailMap_0, ..._11x17
+       .replace(/([a-z])([A-Z])/g, '$1 $2')         // MowerBasin -> Mower Basin
+       .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2')   // WMAMap -> WMA Map
+       .replace(/[-_+]+/g, ' ').replace(/\s+/g, ' ').trim();
+  if (s.length > 40) s = s.slice(0, 39).replace(/\s+\S*$/, '') + '…';
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+function sfLinkDetail(parts) {
+  const segs = parts.path.split('/').filter(Boolean);
+  const last = segs.length ? segs[segs.length - 1] : '';
+  if (/\.pdf$/i.test(last)) return sfLinkWords(last.replace(/\.pdf$/i, '')) + ' (PDF)';
+  if (/campgroundDetails|reserv|booking|book-a/i.test(parts.path + parts.query)) return 'reservations';
+  const stem = last.replace(/\.(do|dot|html?|php|aspx?|jsp)$/i, '');
+  if (!segs.length || /^(index|default|home)$/i.test(stem)) return 'home page';
+  // CivicPlus county sites serve their PDFs from /DocumentCenter/View/<n>/<title>.
+  if (/^documentcenter$/i.test(segs[0])) return sfLinkWords(stem) + ' (document)';
+  return sfLinkWords(stem);
+}
+
+// Labels for one entry's website links, in order. A link that won't parse is
+// "website", as before.
+function sfLinkLabels(urls) {
+  const parts = urls.map(sfLinkParts);
+  const seen = {};
+  parts.forEach(p => { if (p) seen[p.host] = (seen[p.host] || 0) + 1; });
+  const labels = parts.map(p => {
+    if (!p) return 'website';
+    if (seen[p.host] > 1) return p.host + ' · ' + sfLinkDetail(p);
+    return /\.pdf$/i.test(p.path) ? p.host + ' (PDF)' : p.host;
+  });
+  // Whatever still repeats is numbered in order: a PA state-forest entry links
+  // one booking page per site, in the order its name lists the sites.
+  const count = {}, nth = {};
+  labels.forEach(l => { count[l] = (count[l] || 0) + 1; });
+  return labels.map(l => count[l] > 1 ? `${l} ${nth[l] = (nth[l] || 0) + 1}` : l);
+}

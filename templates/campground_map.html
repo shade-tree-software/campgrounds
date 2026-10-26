@@ -1434,15 +1434,9 @@ function cgPopupHtml(cg) {
       });
     }
     if (d.website) {
-      d.website.split('\n').forEach(url => {
-        url = url.trim();
-        if (!url) return;
-        try {
-          const domain = new URL(url).hostname.replace(/^www\./, '');
-          popup += `<br><a href="${url}" target="_blank" rel="noopener">${domain}</a>`;
-        } catch (e) {
-          popup += `<br><a href="${url}" target="_blank" rel="noopener">website</a>`;
-        }
+      const urls = d.website.split('\n').map(u => u.trim()).filter(Boolean);
+      sfLinkLabels(urls).forEach((label, i) => {
+        popup += `<br><a href="${urls[i]}" target="_blank" rel="noopener">${escapeHtml(label)}</a>`;
       });
     }
   }
