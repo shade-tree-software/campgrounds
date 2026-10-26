@@ -10,11 +10,13 @@ heavily visited first):
   2. the other campgrounds stayed at
   3. campgrounds anyone in the family opened on the map in the last 60 days
      (trip_data/campground_views.jsonl), most-opened first
-  4. everything else, by state in order of stays there, then RV Life stars, then name
+  4. everything else, by state in order of stays there, then RV Life stars, then name;
+     states never stayed in follow, whole state by whole state, nearest to home first
+     (AWH 2026-10-26: they used to tie and interleave by stars across the continent)
 An entry whose verify_scan is present is done and drops out; results already on disk in
 results/ (written, not yet applied) also drop out, so two batches never overlap.
 """
-import argparse, datetime, json, os, sys
+import argparse, datetime, json, math, os, statistics, sys
 from collections import Counter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -57,6 +59,40 @@ def views():
 LATE = range(15183, 15339)
 
 
+def _home():
+    try:
+        h = json.load(open(os.path.join(ROOT, "home.json"), encoding="utf-8"))
+        return float(h["home_lat"]), float(h["home_long"])
+    except (OSError, KeyError, ValueError):
+        return None
+
+
+def _km(a, b):
+    la1, lo1, la2, lo2 = map(math.radians, (*a, *b))
+    h = (math.sin((la2 - la1) / 2) ** 2
+         + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2)
+    return 12742 * math.asin(math.sqrt(h))
+
+
+def state_distances(rows):
+    """Km from home to the middle of each state's campgrounds (median lat, median lng), so a
+    state's rank follows where its campgrounds are, not its borders."""
+    home = _home()
+    if not home:
+        return {}
+    pts = {}
+    for e in rows:
+        if e.get("kind") != "campground":
+            continue
+        try:
+            lat, lng = (float(x) for x in e["location"].split(","))
+        except (KeyError, ValueError):
+            continue
+        pts.setdefault(e["state"], []).append((lat, lng))
+    return {st: _km(home, (statistics.median(p[0] for p in v), statistics.median(p[1] for p in v)))
+            for st, v in pts.items()}
+
+
 def ranked(rows, reg, trips):
     by = {e["id"]: e for e in rows}
     stays = Counter(s.get("campground_id") for t in trips for s in t.get("stays", [])
@@ -66,6 +102,9 @@ def ranked(rows, reg, trips):
         if cid in by:
             state_stays[by[cid]["state"]] += n
     state_rank = {s: i for i, (s, _) in enumerate(state_stays.most_common())}
+    dist = state_distances(rows)
+    for st in sorted(set(dist) - set(state_rank), key=dist.get):
+        state_rank[st] = len(state_rank)
     seen = views()
     pending = {int(f[:-5]) for f in os.listdir(os.path.join(HERE, "results")) if f.endswith(".json")}
     # Entries handed to a batch whose verifier hasn't finished yet: without this, a new
