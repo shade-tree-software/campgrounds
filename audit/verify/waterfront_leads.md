@@ -437,3 +437,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
 
+- 2320 Camp Dick (CO, Arapaho-Roosevelt NF): FS "adjacent to Middle Saint Vrain Creek"; entry not waterfront (p3-153).
+- 2321 Chambers Lake (CO, Arapaho-Roosevelt NF): rec.gov "on beautiful Chambers Lake"; entry lakeview (p3-153).
+- 2360 Chapman (CO, White River NF): FS + rec.gov "several [sites] at the river's edge" on the Fryingpan; entry lakeview (p3-153).

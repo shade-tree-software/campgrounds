@@ -1,0 +1,49 @@
+{
+  "id": 408,
+  "checked": "2026-10-26",
+  "sources": [
+    "https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park",
+    "https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging",
+    "https://www.cpwshop.com/camping/cheyenne-mountain-state-park/r/campgroundDetails.page?parkID=50081",
+    "https://www.cpwshop.com/camping/cheyenne-mountain-state-park/r/campsiteDetails.page?parkID=50081&siteID=6519 (site 011, Loop: Gobbler Grove)",
+    "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (cpwshop per-site reads for parkID 50081)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 41, "nightly_high": 41, "currency": "USD", "checked": "2026", "note": "Every RV site is full hookup at $41/night, the same on Tue 2026-11-03, Tue 2027-01-12, Tue 2027-06-15 and Sat 2027-06-19; CPW's fee table gives campsites $21-$41 (the low end is the walk-in tent sites). A daily vehicle pass ($10-$15 on the park page) or an annual Colorado state parks pass must be displayed on top; CPW's reservation fee is charged per stay."},
+      "source": "https://www.cpwshop.com/camping/cheyenne-mountain-state-park/r/campsiteDetails.page?parkID=50081&siteID=6519 ('$41.00 /Per Night' for arrivals 11/03/2026 and 01/12/2027), read 2026-10-26 + co_booking_rates_2026-10-12.jsonl (every loop's Full Hookup $41 on 2027-06-15 and 2027-06-19) + https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging (Fees: 'Single campsite (max 6 occupants) | 1 Night | $21 - $41'; 'Visitors are required to display a vehicle pass and have a valid reservation') + https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park ('Daily Vehicle Pass: $10-$15')",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging ('Full hook-up and tent campsites are available year-round') + https://www.cpwshop.com/camping/cheyenne-mountain-state-park/r/campgroundDetails.page?parkID=50081 ('Current Status - Open year round.'), read 2026-10-26",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "cpwshop.com parkID 50081 per-site details (every RV site 'Full Hookup', Electricity Hookup '20/30/50'), co_booking_rates_2026-10-12.jsonl + https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging ('Full hook-up and tent campsites')",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 67, "max_rig_ft": 70, "pull_through": true, "note": "57 full-hookup sites in five loops (Big Bear, Gobbler Grove, Raptor Glen, Swift Puma Heights, The Meadows; max vehicle lengths mostly 30-50 ft, up to 70 in The Meadows, many pull-throughs) and 10 walk-in tent sites, besides 2 cabins and the Turkey Roost group loop. CPW's camping page says 61 campsites."},
+      "source": "cpwshop.com parkID 50081 site list (co_sites_2026-10-12.jsonl: loop, type, maximum vehicle length) and per-site details (Driveway Entry) + https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging ('61 Campsites')",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "laundry": true, "note": "Camper services building with coin-operated showers, laundry and an activity room, April to November only (closed November to April); flush toilets in winter. Playground; firewood and ice sold."},
+      "source": "https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging ('The camper services building offers coin operated showers, a laundry room and an activity room from April to November'; 'Our camper services building is closed from November to April each year'; 'Winter amenities: Flush toilets'; amenities list), read 2026-10-26",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "operator", "url": "https://www.cpwshop.com/camping/cheyenne-mountain-state-park/r/campgroundDetails.page?parkID=50081", "window_opens_days": 180, "fcfs": "never", "max_stay_nights": 14, "season": {"year_round": true}, "note": "Reservation required, on cpwshop.com or 1-800-244-5613, up to six months ahead. Reservable all year, but 'Winter camping reservations are limited to the loop available.' 14 days in any 28; one camping unit and six people per site."},
+      "source": "https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park/cheyenne-mountain-state-park-camping-lodging ('Reservations can be made online at cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance'; 'A reservation is necessary'; 'The maximum stay is 14 days within a 28-day period'; 'Not all campsites are available during the winter months. Winter camping reservations are limited to the loop available.') + cpwshop Season Schedule (Peak Jan 1 - Dec 31, 2026 and 2027), read 2026-10-26",
+      "method": "manual"
+    }
+  },
+  "summary": "Confirmed $41 full hookup (2026-27, same in winter), entrance via the vehicle pass. Added year-round season and reservable season, 50-amp full hookups, 67 sites (57 RV + 10 walk-in tent) to 70 ft with pull-throughs, showers/laundry (Apr-Nov) and flush toilets, reservation-only (fcfs never), 6-month window, 14 days per 28, cpwshop deep link. Note unchanged.",
+  "flags": [
+    "Website field holds two URLs on two lines (the CPW park page and the cpwshop listing); it should be just https://cpw.state.co.us/state-parks/cheyenne-mountain-state-park (the cpwshop link is now booking.url).",
+    "CPW's camping page says '61 Campsites' and its reservation paragraph reads 'A reservation is required to camp at Chatfield State Park' (a copy-paste slip on CPW's page); cpwshop lists 57 full-hookup RV sites and 10 walk-in tent sites. Recorded 67.",
+    "state:CO policy row (reservation only, 6-month window, vehicle pass $10/$15) matches this park's pages; the park adds a 14-days-in-28 maximum stay that the row does not carry (it may be statewide - the AHRA page states the same 14-in-28 for dispersed camping)."
+  ]
+}
