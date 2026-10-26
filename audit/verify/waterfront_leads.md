@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-15 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - MI done but 3900 (held)
+
+- Upgraded: **3630 Yankee Springs - Gun Lake Modern** not waterfront -> lakefront (channel-row RVs ~10-15 m from
+  Gun Lake across open grass, boats at the bank; midnrreservations tags that row Waterfront; re-pinned ~400 m
+  out of the forest); **3618 Wilson SP** not waterfront -> lakeview (DNR map: sites 1-14 and 122-135 front Budd
+  Lake with steps down; pads atop a ~10 m wooded bank; low confidence); **3631 Yankee Springs - Deep Lake
+  Rustic** not waterfront -> lakeview (re-audited at the corrected pin; DNR per-site text 'view of the lake' on
+  D46-49, D51-52, D69-72; loop ~45 m back on a 13 m bluff; low confidence).
+- Stand: **3735 Weber Lake** lakeview (re-pinned ~130 m); **3654 Veterans Memorial** (re-pinned off the US-31
+  bridge), **3639 W.J. Hayes SP** (re-pinned ~550 m off the day-use lot; loops ~250 m from Round Lake), **3765
+  Wagner Lake** (pine band at the high-water edge; low confidence), **3608 Waterloo - Portage Lake** (DNR site
+  text: 'lake is not visible') - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-14 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Stand: **3675 Trout Lake SFC** lakefront (pads ~10-22 m from the pre-drawdown shore; low confidence - the lake
@@ -407,11 +420,3 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3654 Veterans Memorial SFC: DNR "sits on the majestic Platte River", carry-in access from the campground; entry not waterfront (p3-151).
-- 3735 Weber Lake SFC: DNR "on the shore of Weber Lake" (stairway to the lake on the south side); entry lakeview (p3-151).
-- 3639 W.J. Hayes SP: DNR "the modern campground is situated on Round Lake (no wake)", "set along Round Lake"; entry not waterfront (p3-151).
-- 3765 Wagner Lake (Huron-Manistee NF): rec.gov "set on the banks of Wagner Lake"; entry not waterfront (p3-151).
-- 3608 Waterloo RA - Portage Lake: DNR the modern campground "is located on Portage Lake"; entry not waterfront (p3-151).
-- 3631 Yankee Springs RA - Deep Lake Rustic: RE-PINNED 2026-10-25 (old pin was forest 2.3 km WNW; the 2026-06 call was made there) - audit at the new pin; DNR says the first loop's group-use sites are "set along Deep Lake"; entry not waterfront (p3-152).
-- 3618 Wilson SP: DNR "Most sites ... overlook Budd Lake"; entry not waterfront (p3-152).
-- 3630 Yankee Springs RA - Gun Lake Modern: DNR sites "set along Gun Lake"; entry not waterfront (p3-152).
