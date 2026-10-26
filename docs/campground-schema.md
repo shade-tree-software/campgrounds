@@ -529,7 +529,7 @@ Two population notes:
 
 A campground closed for a season — renovation, fire, a washed-out road — stays in the
 database and on the map (AWH: it is still worth seeing when planning a later trip),
-drawn **grey with a dark rim** and hideable from the Filters box ("Show temporarily
+drawn **grey with a dark rim** and hideable from the Filters panel ("Show temporarily
 closed", on by default). A permanent closure is not a status: that entry leaves the
 database. Seasonal winter closing is `season`, and a partial closure (one loop, the
 showers, a boat launch) while the campground operates is a `note`, not a status.
@@ -1019,15 +1019,39 @@ unreadable client code, because gzip already collapses 12.8k repetitions of a ke
 nearly nothing. Absent stays absent here too (§2.1): an unrated entry carries no key, which
 is the distinction the whole filter turns on.
 
+(2026-10-26: a fourth exception, `rate` — `fees.nightly_low`, the entry's OWN base rate —
+plus `cad: true` on the ~1.5k Canadian-dollar rates, for the Nightly rate filter. +21 KB
+gzipped on a 396 KB marker payload. A Canadian entry with no stored `currency` is read as
+C$. The registry is never consulted for it: an entry priced only by its agency's row
+carries no `rate` and is unknown to the filter, because §3 forbids an inherited value
+being the sole reason an entry is hidden.)
+
 The audit-evidence strip applies unchanged: `waterfront_evidence` and `inclusion_evidence`
 never reach the browser, and the whitelist is what makes that safe.
 
 ### 8.5 Search surfaces
 
-The campground map already had the pattern to extend: a legend control with clickable
-toggles and a second ownership box built from `OWNERSHIP_LABELS` with
-`DEFAULT_HIDDEN_OWNERSHIPS` seeding a sessionStorage fallback. New filters (hookups, season,
-FCFS, Good Sam) follow that shape.
+Since 2026-10-26 the campground map's filters live in three places with one job each
+(the bottom-right Filters box below had run out of room, and was too big for a phone):
+
+- the **legend** (bottom-left) explains the colours — the Color-by picker, one row per
+  category in the current mode, and "Showing N of M · F faded". A row is still a click
+  to hide its category;
+- a **quick-filter row** under the search box — the Filters button with a count of what
+  is set, then `$50 or less`, `Electric`, `On the water`, `4★ and up`. Off, a chip offers
+  that common setting; on, it shows the setting actually in force (so `Full hookups` when
+  the panel set that) and a tap clears it;
+- the **Filters panel** — every filter, grouped (Price, Rating, Hookups, Proximity to
+  water, Climate, Ownership, Status, Missing data), a side panel on a desktop and a sheet
+  from the bottom on a phone, with Clear all (back to the defaults, so `wma`/`hipcamp`
+  hidden) and "Show N campgrounds".
+
+All three read and write the same state, and every change goes through `applyVisibility()`,
+which re-syncs every control — so a legend row, a panel checkbox and a chip can never
+disagree. **The category filters belong to their field, not to the colour mode**: one
+`hiddenCategories` set holds water and climate categories (the names never collide), so a
+lakefront-only map stays lakefront-only when coloured by climate. New filters (season,
+FCFS, Good Sam) go in the panel, and earn a chip only if they are asked for constantly.
 
 Every such filter obeys §2.2: an unknown value is **shown and flagged**, never filtered out.
 A filter that silently hides unverified entries turns a 30%-populated field into a search
@@ -1041,12 +1065,10 @@ that quietly returns a tenth of the database.
   populated in `booking`/`fees` is inherited from the registry, which §3 forbids being the
   sole basis for excluding an entry. A filter for a field nothing carries is a control that
   empties the map. **Measure coverage before building the next one.**
-- **One box, not three.** The rating controls went *into* the bottom-right ownership box,
-  which is now headed **Filters** with an `Ownership` sub-heading. A third bottom-corner
-  control costs a phone ~90 px of map even fully collapsed, and the mobile rule that lifts
-  bottom controls clear of the attribution (`margin-bottom: 28px`) applies to each of them,
-  so stacked boxes also open a dead gap between themselves. The legend stays separate
-  because it explains the colors; these two both narrow what is drawn.
+- **One box, not three** (superseded 2026-10-26 by the panel above). The rating controls
+  went *into* the bottom-right ownership box, because a third bottom-corner control costs
+  a phone ~90 px of map even fully collapsed. That reasoning still rules out more corner
+  boxes; the panel is a sheet that costs nothing until opened.
 - **§2.2 is implemented as fading, plus an explicit opt-out.** An entry the active threshold
   cannot evaluate stays on the map at `fillOpacity` 0.25 instead of 0.8 — opacity because
   the fill color already carries the waterfront/climate category the legend explains, so it
@@ -1100,6 +1122,22 @@ it possible and on the same pattern.
 - `tests/test_rating_filter.py` now lifts the whole block, from `includeUnknown` through
   `schemaFaded`, and builds its fixture through `_map_marker_rows` itself, so the tests
   see exactly what rides inline.
+
+**Shipped 2026-10-26: the nightly rate filter** (AWH: hide what is over the $50 cap).
+
+- **Coverage:** 11,592 of 14,302 campgrounds (81%) carry their own `fees.nightly_low`;
+  2,710 do not, and fade. 925 are free and 393 are over US$50.
+- **Any / $50 or less / $30 or less / $20 or less / Free**, in US dollars. A Canadian rate
+  is converted at the price gate's own exchange, **C$69 = US$50**, so "$50 or less" keeps
+  exactly what the curation gate keeps on both sides of the border. Compared in cents so
+  C$69 lands on 50.00 exactly.
+- **It is the base rate, and nothing else.** It is the cheapest site before tax, so a park
+  with a $45 dry site and $80 hookup sites passes "$50 or less". Gateway, Good Sam and
+  family-stay exceptions to the curation gate are about whether an entry belongs in the
+  database at all. The filter ignores them and simply compares the rate.
+- RV Life's `$` tier stays beside it in the Price section: a different, rougher number
+  (§4.3) with more coverage on private parks.
+- The unknown switch reads "Include unpriced" when this is the only filter set.
 
 ### 8.6 The popup marks inherited chips in place
 

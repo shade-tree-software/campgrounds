@@ -207,18 +207,18 @@
     body.cg-layers-open .cg-search { width: 11rem; }
 
     /* Bottom controls + attribution layout (bottom → top: attribution, then the
-       legend & ownership boxes above it). Three coordinated rules:
+       legend above it). Three coordinated rules:
 
        1. Lift the whole bottom band a few px off the map's edge so nothing sits
           flush against — or bleeds past — the bottom into the tab bar.
        2. Pin the attribution at the band's bottom, out of the corner's flow and
-          on one line. Out-of-flow so it can't push the ownership box up by its
+          on one line. Out-of-flow so it can't push the legend up by its
           (width-variable) height; one line so its height is constant. The
           selector is scoped to `.leaflet-bottom` (specificity 0,2,0) so its
           `margin: 0` beats Leaflet's own bottom-control margin.
-       3. Raise the legend + ownership equally, clear above the attribution.
+       3. Raise the bottom controls equally, clear above the attribution.
           Their baseline no longer depends on the attribution's height, so the
-          two boxes always align at every phone width. */
+          legend and the scale bar opposite always align at every phone width. */
     .leaflet-bottom { bottom: 8px; }
     .leaflet-bottom .leaflet-control-attribution {
       position: absolute;
@@ -332,24 +332,7 @@
 
   .map-legend .legend-row.dimmed { opacity: .35; }
 
-  /* "On the water" quick filter — sits above the category rows. */
-  .map-legend .legend-toggle {
-    display: flex;
-    align-items: center;
-    gap: .4rem;
-    cursor: pointer;
-    user-select: none;
-    padding: .15rem .25rem;
-    margin: 0 -.25rem .25rem;
-    border-radius: 4px;
-    font-weight: 600;
-    color: var(--navy);
-    border-bottom: 1px solid #eee;
-  }
-  .map-legend .legend-toggle:hover { background: rgba(0,0,0,.05); }
-  .map-legend .legend-toggle input { margin: 0; cursor: pointer; flex-shrink: 0; }
-
-  .map-legend .legend-dot {
+  .map-legend .legend-dot, .cgf-check .legend-dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -358,65 +341,181 @@
     flex-shrink: 0;
   }
 
-  /* Ownership filter uses a square checkbox-style swatch instead of a color dot. */
-  .map-legend .legend-box {
-    width: 12px;
-    height: 12px;
-    border-radius: 3px;
-    border: 1.5px solid var(--navy);
-    background: var(--navy);
-    flex-shrink: 0;
-    position: relative;
+  /* ── Quick-filter row ──────────────────────────────────────────────────
+     A Leaflet control straight under the search box: the Filters button plus
+     the few filters asked for most, one tap each. One line that scrolls
+     sideways rather than wrapping, so it never pushes the locate / route
+     buttons down the map. Sized like the search box on a phone, and shrinks
+     with it while the layer box is open. */
+  .cg-chips {
+    display: flex;
+    gap: .35rem;
+    max-width: min(34rem, calc(100vw - 80px));
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* Room for the chips' shadows, which overflow-x would otherwise clip. */
+    padding: 3px 3px 5px;
+    margin: 6px 0 0 7px !important;
   }
-  .map-legend .legend-row.dimmed .legend-box { background: #fff; }
+  .cg-chips::-webkit-scrollbar { display: none; }
+  .cg-chip {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .3rem;
+    padding: .3rem .7rem;
+    border: 1px solid var(--gray-light);
+    border-radius: 999px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.3);
+    color: var(--navy);
+    font-family: inherit;
+    font-size: .85rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+  }
+  .cg-chip:hover { background: var(--blue-bg); }
+  .cg-chip:focus-visible { outline: 2px solid var(--red); outline-offset: 1px; }
+  /* On: filled, with a × saying a tap takes it off. */
+  .cg-chip[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+  .cg-chip[aria-pressed="true"]::after { content: '\00D7'; font-size: 1.05em; line-height: 1; }
+  .cg-chip-filters[aria-expanded="true"] { border-color: var(--navy); }
+  .cg-chip-badge {
+    min-width: 1.15rem;
+    padding: 0 .3rem;
+    border-radius: 999px;
+    background: var(--red);
+    color: #fff;
+    font-size: .72rem;
+    line-height: 1.15rem;
+    text-align: center;
+  }
 
-  /* Rating filter: two threshold selects plus the unrated switch. Reuses the
-     legend-color-by row shape so the three boxes read as one family. */
-  .map-legend .legend-select {
+  /* ── Filters panel ─────────────────────────────────────────────────────
+     A sibling of the map, not a Leaflet control, so nothing done inside it
+     reaches the map. A side panel down the right edge on a desktop (the map
+     stays usable beside it); a sheet from the bottom on a phone. Above the
+     map's control corners (z-index 1000/1001) and the route bar. */
+  .cg-filter-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1060;
+    width: 340px;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    box-shadow: -2px 0 12px rgba(0,0,0,.25);
+    color: var(--navy);
+  }
+  .cg-filter-panel[hidden] { display: none; }
+  .cgf-head {
     display: flex;
     align-items: center;
-    gap: .4rem;
-    font-size: .8rem;
-    font-weight: 600;
-    color: var(--gray);
-    margin-bottom: .35rem;
+    gap: .75rem;
+    padding: .6rem .75rem .6rem 1rem;
+    border-bottom: 1px solid var(--gray-light);
   }
-  /* A common label width, so the Rating / Price / Hookups selects line up. */
-  .map-legend .legend-select label { flex-shrink: 0; min-width: 3.9rem; }
-  .map-legend .legend-select select {
+  .cgf-head h2 { flex: 1; margin: 0; font-size: 1.05rem; color: var(--navy); }
+  .cgf-clear {
+    border: none;
+    background: none;
+    padding: .25rem;
+    color: var(--navy);
+    font: inherit;
+    font-size: .85rem;
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .cgf-close {
+    border: none;
+    background: none;
+    padding: 0 .3rem;
+    color: var(--gray);
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .cgf-body {
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0 1rem .5rem;
+  }
+  .cgf-section { padding: .65rem 0; border-bottom: 1px solid #eee; }
+  .cgf-section:last-child { border-bottom: 0; }
+  .cgf-section h3 {
+    margin: 0 0 .35rem;
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+  .cgf-select {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin: .3rem 0;
+    font-size: .9rem;
+  }
+  .cgf-select > span { flex: 0 0 6.5rem; }
+  .cgf-select select {
     flex: 1;
     min-width: 0;
-    font-size: .8rem;
-    padding: .2rem .35rem;
+    padding: .3rem .4rem;
     border: 1px solid var(--gray-light);
     border-radius: 6px;
-    color: var(--navy);
     background: #fff;
+    color: var(--navy);
+    /* 16px keeps iOS Safari from zooming the page on focus. */
+    font-size: 1rem;
+    font-family: inherit;
   }
-  /* The unrated count, explaining the faded dots. Only rendered while a rating
-     threshold is actually active, so it never nags on an unfiltered map. */
-  .map-legend .legend-note {
-    font-size: .72rem;
-    line-height: 1.3;
-    color: var(--gray);
-    font-variant-numeric: tabular-nums;
+  .cgf-check {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .25rem 0;
+    font-size: .9rem;
+    cursor: pointer;
+    user-select: none;
   }
-  .map-legend .legend-note:empty { display: none; }
-
-  /* The "Include unrated" switch reuses .legend-toggle for its shape, but that
-     class carries a bottom rule meant to separate the legend's "On the water"
-     from the category rows below it. Here the Ownership subhead's own top rule
-     does that job, and the two land ~7px apart as a double line. */
-  .map-legend .legend-rows > .legend-toggle:not(:first-child) { border-bottom: 0; }
-
-  /* Divider heading between the two halves of the Filters box. */
-  .map-legend .legend-subhead {
-    margin: .5rem 0 .3rem;
-    padding-top: .4rem;
-    border-top: 1px solid var(--gray-light);
-    font-size: .8rem;
+  .cgf-check input { width: 1.05rem; height: 1.05rem; margin: 0; flex-shrink: 0; cursor: pointer; }
+  .cgf-check .cgf-text { flex: 1; }
+  .cgf-check.cgf-strong { font-weight: 600; }
+  .cgf-count { color: var(--gray); font-size: .78rem; font-variant-numeric: tabular-nums; }
+  .cgf-hint { margin: .35rem 0 0; font-size: .78rem; line-height: 1.35; color: var(--gray); }
+  .cgf-hint:empty { display: none; }
+  .cgf-foot { padding: .6rem 1rem; border-top: 1px solid var(--gray-light); }
+  .cgf-show {
+    width: 100%;
+    padding: .6rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--navy);
+    color: #fff;
+    font: inherit;
+    font-size: .95rem;
     font-weight: 600;
-    color: var(--gray);
+    cursor: pointer;
+  }
+  @media (max-width: 700px) {
+    .cg-chips { max-width: calc(100vw - 66px); }
+    body.cg-layers-open .cg-chips { max-width: 11rem; }
+    /* A sheet from the bottom, leaving the top of the map in view. */
+    .cg-filter-panel {
+      top: auto;
+      left: 0;
+      width: auto;
+      max-height: 80%;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -3px 14px rgba(0,0,0,.3);
+    }
   }
 
   /* Visit-list "Show more" toggle inside campground popups */
@@ -784,13 +883,14 @@ const STORE = {
 // question than "where can we camp", so they're opt-in. Only the FALLBACK is
 // seeded: a session that has turned either on keeps it on across page loads.
 const DEFAULT_HIDDEN_OWNERSHIPS = ['wma', 'hipcamp'];
+// One set holds the hidden water AND climate categories. Their names never
+// collide, so a category filter belongs to its field rather than to the colour
+// mode: a "lakefront only" map can be coloured by climate and stays lakefront.
 const hiddenCategories = new Set(STORE.get('hiddenCategories', []));
 const hiddenOwnerships = new Set(STORE.get('hiddenOwnerships', DEFAULT_HIDDEN_OWNERSHIPS));
-function persistCategories() { STORE.set('hiddenCategories', [...hiddenCategories]); }
-function persistOwnerships() { STORE.set('hiddenOwnerships', [...hiddenOwnerships]); }
 // Master campground on/off — lets the map show only the roadside stops. When off,
 // every campground marker leaves the map and the campground-only widgets (color
-// legend, ownership filter, "Color by" picker) are hidden as irrelevant.
+// legend, quick filters, Filters panel) are hidden as irrelevant.
 let campgroundsOn = STORE.get('campgroundsOn', true);
 
 const MODES_BY_KEY = Object.fromEntries(COLOR_MODES.map(m => [m.key, m]));
@@ -808,12 +908,11 @@ function escapeHtml(s) {
 }
 function noteHtml(s) { return escapeHtml(s).replace(/\n/g, '<br>'); }
 
-// Category / ownership selected (shown) state. Markers render only when their
-// color category AND their ownership are both active.
-const activeCategories = new Set();   // reset whenever the color mode changes
-const activeOwnerships = new Set();
-
 function colorCat(cg) { return cg[currentMode.field] || 'not waterfront'; }
+// Each entry's category per field, for the category filters. An entry with no
+// climate has no climate category, so no climate filter can hide it (§2.2).
+function waterCat(cg) { return cg.waterfront || 'not waterfront'; }
+function climateCat(cg) { return cg.climate || ''; }
 function ownerKey(cg) { return cg.ownership || ''; }
 function ownerLabel(v) {
   if (OWNERSHIP_LABELS[v]) return OWNERSHIP_LABELS[v];
@@ -856,6 +955,24 @@ const HOOKUP_LEVELS = {
   full: ['electric', 'water', 'sewer'],
 };
 let hookupMin = STORE.get('hookupMin', '');
+
+// ── Nightly rate (doc §8.5, AWH 2026-10-26) ─────────────────────────────────
+// The entry's own base rate (`fees.nightly_low`, the cheapest site before tax)
+// against a US-dollar cap; null = any, 0 = free only. A Canadian rate (`cad`)
+// is converted at the price gate's own exchange, C$69 = US$50, so "$50 or less"
+// keeps exactly the parks the curation gate keeps on both sides of the border.
+// An entry with no rate of its own is unknown and fades — including one priced
+// only by its agency's registry row, which the marker never carries (doc §3).
+let rateMax = STORE.get('rateMax', null);
+if (rateMax !== null && typeof rateMax !== 'number') rateMax = null;
+function rateUsd(cg) { return cg.cad ? cg.rate * 50 / 69 : cg.rate; }
+function rateFilterActive() { return rateMax !== null; }
+function rateUnknown(cg) { return rateFilterActive() && cg.rate == null; }
+function ratePasses(cg) {
+  // Compared in cents so C$69 lands on exactly 50.00, not 50.0000001.
+  return !rateFilterActive() || cg.rate == null
+    || Math.round(rateUsd(cg) * 100) <= rateMax * 100;
+}
 
 // ── Temporary closures (AWH 2026-09-30) ─────────────────────────────────────
 // A campground closed for renovation, fire damage or a washed-out road is still
@@ -903,9 +1020,11 @@ function hookupPasses(cg) { return !hookupNeeds().some(k => cg[k] === false); }
 // The combined answer every caller uses. Unknown on ANY active filter makes an
 // entry unknown; failing ANY on a measured value hides it — so an unknown on one
 // filter still never launders a measured failure on another.
-function schemaFilterActive() { return ratingFilterActive() || hookupFilterActive(); }
-function schemaUnknown(cg) { return ratingUnknown(cg) || hookupUnknown(cg); }
-function schemaPasses(cg) { return ratingPasses(cg) && hookupPasses(cg); }
+function schemaFilterActive() {
+  return ratingFilterActive() || hookupFilterActive() || rateFilterActive();
+}
+function schemaUnknown(cg) { return ratingUnknown(cg) || hookupUnknown(cg) || rateUnknown(cg); }
+function schemaPasses(cg) { return ratingPasses(cg) && hookupPasses(cg) && ratePasses(cg); }
 
 function schemaVisible(cg) {
   if (!schemaPasses(cg)) return false;
@@ -1469,12 +1588,12 @@ function cgPopupHtml(cg) {
   return popup;
 }
 
-// Split out so the Filters box can count the entries the unrated switch is
+// Split out so the Filters panel can count the entries the unknown switch is
 // suppressing WITHOUT double-counting ones the ownership or category filters
 // had already removed — the note has to describe the dots actually on screen.
 function passesNonRatingFilters(cg) {
-  return campgroundsOn && activeCategories.has(colorCat(cg))
-    && activeOwnerships.has(ownerKey(cg));
+  return campgroundsOn && !hiddenCategories.has(waterCat(cg))
+    && !hiddenCategories.has(climateCat(cg)) && !hiddenOwnerships.has(ownerKey(cg));
 }
 
 function markerVisible(cg) {
@@ -1482,16 +1601,17 @@ function markerVisible(cg) {
 }
 
 // Apply the master campground toggle: re-evaluate marker visibility and show or
-// hide the campground-only controls (color legend — which now also hosts the
-// "Color by" picker — and the Filters box). Called on load (for a restored
+// hide the campground-only controls (the legend with its "Color by" picker, the
+// quick-filter row and the Filters panel). Called on load (for a restored
 // off-state) and whenever the toggle flips.
 function applyCampgroundsToggle() {
+  if (!campgroundsOn) closeFilterPanel();
   applyVisibility();
   const disp = campgroundsOn ? '' : 'none';
-  const legendEl = legendControl.getContainer();
-  const filterEl = filterControl.getContainer();
-  if (legendEl) legendEl.style.display = disp;
-  if (filterEl) filterEl.style.display = disp;
+  for (const ctl of [legendControl, quickFilterControl]) {
+    const el = ctl.getContainer();
+    if (el) el.style.display = disp;
+  }
 }
 // Add/remove the marker from the map rather than just fading it: an opacity-0
 // circleMarker stays on the map (canvas-rendered) and still captures clicks
@@ -1517,6 +1637,9 @@ function setMarkerFade(rec, faded) {
   else rec.marker.options.fillOpacity = fillOpacity;
 }
 
+// The one place a filter change lands: every control mutates the state above,
+// then calls this, which redraws the markers and brings every control showing
+// that state (legend rows, quick-filter row, panel, counts) back in line.
 function applyVisibility() {
   let shown = 0;
   let faded = 0;
@@ -1535,19 +1658,25 @@ function applyVisibility() {
     if (f) faded++;
     setMarkerFade(rec, f);
   });
-  updateShownCount(shown);
+  updateShownCount(shown, faded);
   updateUnratedNote(faded, unratedHidden);
+  syncFilterUi();
 }
 
-// "Showing N of M" under the legend. Filters are sticky across a session, so
-// without a running total there was no way to tell a sparse region from a
-// filter quietly hiding two thirds of the database.
-function updateShownCount(shown) {
+// "Showing N of M" under the legend, and the panel's "Show N" button. Filters
+// are sticky across a session, so without a running total there was no way to
+// tell a sparse region from a filter quietly hiding two thirds of the database.
+function updateShownCount(shown, faded) {
+  const total = markers.length.toLocaleString();
   const el = document.getElementById('cg-shown-count');
-  if (!el) return;   // legend not built yet (first applyVisibility runs early)
-  el.textContent = shown === markers.length
-    ? `${markers.length.toLocaleString()} campgrounds`
-    : `Showing ${shown.toLocaleString()} of ${markers.length.toLocaleString()}`;
+  if (el) {   // legend not built yet (first applyVisibility runs early)
+    el.textContent = (shown === markers.length
+      ? `${total} campgrounds`
+      : `Showing ${shown.toLocaleString()} of ${total}`)
+      + (faded ? ` · ${faded.toLocaleString()} faded` : '');
+  }
+  const btn = document.getElementById('cgf-show');
+  if (btn) btn.textContent = `Show ${shown.toLocaleString()} campground${shown !== 1 ? 's' : ''}`;
 }
 
 const familyCoords = FAMILY.map(f => [f.lat, f.lng]);
@@ -1640,18 +1769,164 @@ function syncMarkerTier() {
 }
 map.on('zoomend', syncMarkerTier);
 
-// ── Legend (color categories for the current mode) ──────────────────────────
-// On-water categories the "On the water" quick filter switches on: sites at the
-// water's edge. Excludes the in-view (*view) categories, coastal woods (set back
-// in trees), and not-waterfront.
-const ON_WATER = new Set(['bayfront', 'lakefront', 'riverfront', 'creekside', 'pond', 'coastal dunes']);
-let legendRowsEl = null;
-let onWaterCb = null;  // the "On the water" checkbox (waterfront mode only)
+// ── Filters: legend, quick-filter row, Filters panel (AWH 2026-10-26) ───────
+// Three pieces with one job each, replacing the bottom-right Filters box that
+// had run out of room (and was already too big for a phone):
+//   * the LEGEND explains the colours: the "Color by" picker, one row per
+//     category in the current mode, and the running count. A row is still a
+//     shortcut that hides or shows its category — the same state the panel's
+//     checkbox shows, so the two can never disagree;
+//   * the QUICK-FILTER ROW, under the search box, holds the few filters asked
+//     for most, one tap each, plus the Filters button with a count of what is set;
+//   * the PANEL holds every filter, grouped. A side panel on a desktop, a sheet
+//     from the bottom on a phone, with the map still visible behind it.
+// All three read and write the state declared at the top of the script, and
+// every change goes through applyVisibility(), which calls syncFilterUi().
 
-// Turn a legend/ownership <div> into a keyboard-operable toggle. They stay
-// divs rather than becoming <button>s because Leaflet controls and the
-// existing CSS both key off .legend-row; role + tabindex + Enter/Space is the
-// same contract for assistive tech.
+// On-water categories the "On the water" filter keeps: sites at the water's
+// edge. Excludes the in-view (*view) categories, coastal woods (set back in
+// trees), and not-waterfront.
+const ON_WATER = new Set(['bayfront', 'lakefront', 'riverfront', 'creekside', 'pond', 'coastal dunes']);
+
+// Entries per category, per field, counted once. Categories nobody has are
+// left out of the legend and the panel rather than offered as a dead option.
+const WATER_COLORS = (MODES_BY_KEY.waterfront || {}).colors || {};
+const CLIMATE_COLORS = (MODES_BY_KEY.climate || {}).colors || {};
+const categoryCounts = new Map();
+CAMPGROUNDS.forEach(cg => {
+  for (const c of [waterCat(cg), climateCat(cg)]) {
+    if (c) categoryCounts.set(c, (categoryCounts.get(c) || 0) + 1);
+  }
+});
+const presentWater = Object.keys(WATER_COLORS).filter(c => categoryCounts.has(c));
+const presentClimate = Object.keys(CLIMATE_COLORS).filter(c => categoryCounts.has(c));
+
+// "On the water" is a view of the water categories, not state of its own: it
+// is on exactly when the shown water categories are the on-water ones.
+function onWaterOnly() {
+  return presentWater.some(c => ON_WATER.has(c))
+    && presentWater.every(c => ON_WATER.has(c) === !hiddenCategories.has(c));
+}
+// Only the water categories are touched — climate and ownership are left alone.
+function setOnWaterOnly(on) {
+  presentWater.forEach(c => {
+    if (on && !ON_WATER.has(c)) hiddenCategories.add(c);
+    else hiddenCategories.delete(c);
+  });
+}
+
+function toggleCategory(c) {
+  if (hiddenCategories.has(c)) hiddenCategories.delete(c);
+  else hiddenCategories.add(c);
+}
+
+const ownerOrder = Object.keys(OWNERSHIP_LABELS);
+const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
+const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
+  .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
+const ownerCounts = new Map();
+CAMPGROUNDS.forEach(cg => ownerCounts.set(ownerKey(cg), (ownerCounts.get(ownerKey(cg)) || 0) + 1));
+
+// Star thresholds are the half-steps the data actually takes; anything finer
+// would offer a cut that matches nothing.
+const STAR_STEPS = [4.5, 4, 3.5, 3];
+const PRICE_LABELS = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
+const RATE_TEXT = { 50: '$50 or less', 30: '$30 or less', 20: '$20 or less', 0: 'Free' };
+const HOOKUP_TEXT = { electric: 'Electric', ew: 'Electric + water', full: 'Full hookups' };
+
+function persistFilters() {
+  STORE.set('hiddenCategories', [...hiddenCategories]);
+  STORE.set('hiddenOwnerships', [...hiddenOwnerships]);
+  STORE.set('ratingMin', ratingMin);
+  STORE.set('priceMax', priceMax);
+  STORE.set('hookupMin', hookupMin);
+  STORE.set('rateMax', rateMax);
+  STORE.set('includeUnknown', includeUnknown);
+  STORE.set('showClosed', showClosed);
+}
+
+// Every filter change: persist, redraw, resync the controls.
+function filtersChanged() {
+  persistFilters();
+  applyVisibility();
+}
+
+// "Clear all" returns to the page's defaults, not to "everything": WMA and
+// HipCamp start hidden on a fresh session, so they start hidden here too.
+function clearFilters() {
+  ratingMin = 0; priceMax = 0; hookupMin = ''; rateMax = null;
+  includeUnknown = true; showClosed = true;
+  hiddenCategories.clear();
+  hiddenOwnerships.clear();
+  DEFAULT_HIDDEN_OWNERSHIPS.forEach(v => hiddenOwnerships.add(v));
+  filtersChanged();
+}
+
+// How many filters are set, for the Filters button's badge. Each group counts
+// once (three hidden ownership classes are one filter), and the defaults count
+// as nothing — a fresh map reads "Filters", not "Filters (1)".
+function activeFilterCount() {
+  const defaultOwners = ownerValues.every(v =>
+    hiddenOwnerships.has(v) === DEFAULT_HIDDEN_OWNERSHIPS.includes(v));
+  return [
+    rateMax !== null, priceMax > 0, ratingMin > 0, !!hookupMin,
+    presentWater.some(c => hiddenCategories.has(c)),
+    presentClimate.some(c => hiddenCategories.has(c)),
+    !defaultOwners, !showClosed, !includeUnknown && schemaFilterActive(),
+  ].filter(Boolean).length;
+}
+
+// What "unknown" means for the filters actually set, in words a reader can act
+// on. Scoped like the predicates: with only a hookup level set, a campground
+// with no stars is not unknown, so the note must not call it unrated.
+function unknownReasons() {
+  const r = [];
+  if (ratingFilterActive()) r.push('unrated');
+  if (hookupFilterActive()) r.push('without hookup data');
+  if (rateFilterActive()) r.push('unpriced');
+  return r;
+}
+function unknownReason() {
+  const r = unknownReasons();
+  return r.length === 1 ? r[0] : 'missing data a filter needs';
+}
+const UNKNOWN_TOGGLE_TEXT = {
+  'unrated': 'Include unrated',
+  'without hookup data': 'Include unknown hookups',
+  'unpriced': 'Include unpriced',
+};
+
+let unratedNoteEl = null;
+let unknownToggleText = null;
+
+// Explains the faded dots, and only while a filter is on — with none active
+// nothing is faded and the line would just be noise. Doc §2.2: the count is the
+// honest answer to "is this all of them?", which a filtered map otherwise
+// cannot give.
+function updateUnratedNote(faded, unratedHidden) {
+  if (!unratedNoteEl) return;
+  const reason = unknownReason();
+  if (unknownToggleText) {
+    unknownToggleText.textContent = UNKNOWN_TOGGLE_TEXT[reason] || 'Include unknown';
+  }
+  if (!schemaFilterActive()) { unratedNoteEl.textContent = ''; return; }
+  // Both counts come from the pass that just ran, so they describe the map as
+  // drawn. Counting over all of CAMPGROUNDS instead would quietly include the
+  // entries the ownership filter had already taken off the map.
+  if (!includeUnknown) {
+    const n = unratedHidden.toLocaleString();
+    unratedNoteEl.textContent = `Hidden: ${n} campground${unratedHidden !== 1 ? 's' : ''} ${reason}`;
+  } else {
+    unratedNoteEl.textContent = faded === 1
+      ? `1 faded dot is ${reason}, not excluded`
+      : `${faded.toLocaleString()} faded dots are ${reason}, not excluded`;
+  }
+}
+
+// Turn a legend <div> into a keyboard-operable toggle. It stays a div rather
+// than becoming a <button> because Leaflet controls and the existing CSS both
+// key off .legend-row; role + tabindex + Enter/Space is the same contract for
+// assistive tech.
 function makeToggleRow(row, pressed) {
   row.setAttribute('role', 'button');
   row.setAttribute('tabindex', '0');
@@ -1663,81 +1938,43 @@ function makeToggleRow(row, pressed) {
   });
 }
 
+// Functions that bring one control back in line with the state; run by
+// syncFilterUi() after every change, wherever it came from.
+const filterSyncers = [];
+
+function syncFilterUi() {
+  filterSyncers.forEach(fn => fn());
+}
+
+// ── Legend ──
+let legendRowsEl = null;
+
 function rebuildLegend() {
   if (!legendRowsEl) return;
   legendRowsEl.innerHTML = '';
-  onWaterCb = null;
-  activeCategories.clear();
-
-  // Quick filter, waterfront mode only: one click to show just the on-water
-  // categories (sites at the water's edge) and hide everything else.
-  if (currentMode.key === 'waterfront') {
-    const toggle = document.createElement('label');
-    toggle.className = 'legend-toggle';
-    onWaterCb = document.createElement('input');
-    onWaterCb.type = 'checkbox';
-    onWaterCb.addEventListener('change', () => setOnWaterOnly(onWaterCb.checked));
-    toggle.appendChild(onWaterCb);
-    toggle.appendChild(document.createTextNode('On the water'));
-    legendRowsEl.appendChild(toggle);
-  }
-
-  Object.entries(currentMode.colors).forEach(([category, color]) => {
-    const count = CAMPGROUNDS.filter(c => colorCat(c) === category).length;
-    if (count === 0) return;  // skip categories with no campgrounds in this mode
-    const hidden = hiddenCategories.has(category);  // restored from the session
-    if (!hidden) activeCategories.add(category);
+  const colors = currentMode.colors;
+  Object.keys(colors).filter(c => categoryCounts.has(c)).forEach(category => {
     const row = document.createElement('div');
-    row.className = 'legend-row' + (hidden ? ' dimmed' : '');
+    row.className = 'legend-row';
     row.dataset.category = category;
-    row.innerHTML = `<span class="legend-dot" style="background:${color};"></span>${category} (${count})`;
-    // These rows are real filter controls, but they were bare <div>s — no way
-    // to reach or operate them without a mouse. Give them button semantics and
-    // an aria-pressed that says whether the category is currently showing.
-    makeToggleRow(row, !hidden);
-    row.addEventListener('click', () => {
-      if (activeCategories.has(category)) {
-        activeCategories.delete(category);
-        row.classList.add('dimmed');
-        hiddenCategories.add(category);
-      } else {
-        activeCategories.add(category);
-        row.classList.remove('dimmed');
-        hiddenCategories.delete(category);
-      }
-      row.setAttribute('aria-pressed', activeCategories.has(category) ? 'true' : 'false');
-      applyVisibility();
-      syncOnWaterCheckbox();
-      persistCategories();
-    });
+    row.innerHTML = `<span class="legend-dot" style="background:${colors[category]};"></span>`
+      + `${category} (${categoryCounts.get(category).toLocaleString()})`;
+    makeToggleRow(row, !hiddenCategories.has(category));
+    row.addEventListener('click', () => { toggleCategory(category); filtersChanged(); });
     legendRowsEl.appendChild(row);
   });
-  syncOnWaterCheckbox();  // reflect any restored "on the water" state
+  syncLegend();
 }
 
-// Turn the on-water categories on and everything else off (or, when unchecked,
-// re-show every category). Only the category filter is touched — the ownership
-// filter is left untouched.
-function setOnWaterOnly(on) {
+function syncLegend() {
+  if (!legendRowsEl) return;
   legendRowsEl.querySelectorAll('.legend-row').forEach(row => {
-    const cat = row.dataset.category;
-    const show = on ? ON_WATER.has(cat) : true;
-    if (show) { activeCategories.add(cat); row.classList.remove('dimmed'); hiddenCategories.delete(cat); }
-    else { activeCategories.delete(cat); row.classList.add('dimmed'); hiddenCategories.add(cat); }
+    const hidden = hiddenCategories.has(row.dataset.category);
+    row.classList.toggle('dimmed', hidden);
+    row.setAttribute('aria-pressed', hidden ? 'false' : 'true');
   });
-  applyVisibility();
-  persistCategories();
 }
-
-// Keep the checkbox honest when categories are toggled individually: checked
-// only when the active set is exactly the present on-water categories.
-function syncOnWaterCheckbox() {
-  if (!onWaterCb) return;
-  const cats = [...legendRowsEl.querySelectorAll('.legend-row')].map(r => r.dataset.category);
-  onWaterCb.checked = cats.length > 0
-    && cats.every(c => ON_WATER.has(c) === activeCategories.has(c))
-    && cats.some(c => ON_WATER.has(c) && activeCategories.has(c));
-}
+filterSyncers.push(syncLegend);
 
 const legendControl = L.control({ position: 'bottomleft' });
 legendControl.onAdd = function() {
@@ -1750,13 +1987,14 @@ legendControl.onAdd = function() {
   header.addEventListener('click', () => div.classList.toggle('collapsed'));
   div.appendChild(header);
 
-  // Color-mode picker — moved out of the old white header bar into the legend
-  // (it drives the very colors the legend explains). No label: the dropdown
-  // stands alone. Built from COLOR_MODES; wired up by the change handler below.
+  // Color-mode picker — it drives the very colors the legend explains. No
+  // label: the dropdown stands alone. Built from COLOR_MODES; wired up by the
+  // change handler below.
   const colorBy = document.createElement('div');
   colorBy.className = 'legend-color-by';
   const colorSel = document.createElement('select');
   colorSel.id = 'color-mode';
+  colorSel.setAttribute('aria-label', 'Color by');
   COLOR_MODES.forEach(m => {
     const opt = document.createElement('option');
     opt.value = m.key;
@@ -1783,246 +2021,247 @@ legendControl.onAdd = function() {
 legendControl.addTo(map);
 rebuildLegend();
 
-// ── Filters (rating + hookups + ownership) ──────────────────────────────────
-// One box, not two. A third bottom-corner control would cost a phone ~90px of
-// map even fully collapsed, and the mobile rule that lifts bottom controls
-// clear of the attribution (`margin-bottom: 28px`) applies to each of them, so
-// stacked boxes also open a dead gap between themselves. The legend stays
-// separate because it explains the colors; these two both narrow what is drawn.
-const ownerOrder = Object.keys(OWNERSHIP_LABELS);
-const presentOwners = new Set(CAMPGROUNDS.map(ownerKey));
-const ownerValues = ownerOrder.filter(k => presentOwners.has(k))
-  .concat([...presentOwners].filter(k => !ownerOrder.includes(k)).sort());
-ownerValues.forEach(v => { if (!hiddenOwnerships.has(v)) activeOwnerships.add(v); });
+// ── Quick-filter row ──
+// Each chip is ONE filter: off, it offers the common setting; on, it shows the
+// setting actually in force (set from the panel or from the chip) and a tap
+// clears it. So a chip can never claim a different filter than the map is
+// running, which a fixed "Electric" chip would do under "Full hookups".
+const QUICK_FILTERS = [
+  { label: () => RATE_TEXT[rateMax === null ? 50 : rateMax],
+    on: () => rateMax !== null,
+    flip: () => { rateMax = rateMax === null ? 50 : null; } },
+  { label: () => HOOKUP_TEXT[hookupMin || 'electric'],
+    on: () => !!hookupMin,
+    flip: () => { hookupMin = hookupMin ? '' : 'electric'; } },
+  { label: () => 'On the water',
+    on: onWaterOnly,
+    flip: () => setOnWaterOnly(!onWaterOnly()) },
+  { label: () => `${ratingMin || 4}★ and up`,
+    on: () => ratingMin > 0,
+    flip: () => { ratingMin = ratingMin ? 0 : 4; } },
+];
 
-// Star thresholds are the half-steps the data actually takes; anything finer
-// would offer a cut that matches nothing. `null` = no threshold.
-const STAR_STEPS = [4.5, 4, 3.5, 3];
-const PRICE_LABELS = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
-
-let unratedNoteEl = null;
-
-// Explains the faded dots, and only while a threshold is on — with no filter
-// active nothing is faded and the line would just be noise. Doc §2.2: the
-// count is the honest answer to "is this all of them?", which a filtered map
-// otherwise cannot give.
-let unknownToggleText = null;
-
-// What "unknown" means for the filters actually set, in words a reader can act
-// on. Scoped like the predicates: with only a hookup level set, a campground
-// with no stars is not unknown, so the note must not call it unrated.
-function unknownReason() {
-  const r = ratingFilterActive(), h = hookupFilterActive();
-  if (r && h) return 'unrated or without hookup data';
-  if (h) return 'without hookup data';
-  return 'unrated';
-}
-
-function updateUnratedNote(faded, unratedHidden) {
-  if (!unratedNoteEl) return;
-  const reason = unknownReason();
-  if (unknownToggleText) {
-    unknownToggleText.textContent = reason === 'unrated' ? 'Include unrated'
-      : reason === 'without hookup data' ? 'Include unknown hookups'
-      : 'Include unknown';
-  }
-  if (!schemaFilterActive()) { unratedNoteEl.textContent = ''; return; }
-  // Both counts come from the pass that just ran, so they describe the map as
-  // drawn. Counting over all of CAMPGROUNDS instead would quietly include the
-  // entries the ownership filter had already taken off the map.
-  if (!includeUnknown) {
-    const what = reason === 'unrated'
-      ? (unratedHidden === 1 ? 'unrated campground' : 'unrated campgrounds')
-      : (unratedHidden === 1 ? 'campground' : 'campgrounds') + ' ' + reason;
-    unratedNoteEl.textContent = `${unratedHidden.toLocaleString()} ${what} hidden`;
-  } else {
-    unratedNoteEl.textContent = faded === 1
-      ? `1 faded dot is ${reason}, not excluded`
-      : `${faded.toLocaleString()} faded dots are ${reason}, not excluded`;
-  }
-}
-
-function persistRating() {
-  STORE.set('ratingMin', ratingMin);
-  STORE.set('priceMax', priceMax);
-  STORE.set('hookupMin', hookupMin);
-  STORE.set('includeUnknown', includeUnknown);
-}
-
-// Bottom-right, across the map from the bottom-left legend.
-const filterControl = L.control({ position: 'bottomright' });
-filterControl.onAdd = function() {
-  const div = L.DomUtil.create('div', 'map-legend');
+const quickFilterControl = L.control({ position: 'topleft' });
+quickFilterControl.onAdd = function() {
+  const div = L.DomUtil.create('div', 'cg-chips');
+  div.setAttribute('role', 'toolbar');
+  div.setAttribute('aria-label', 'Quick filters');
+  // A swipe along the row scrolls it; without these it would pan the map.
   L.DomEvent.disableClickPropagation(div);
-  // Without this a scroll/drag started on the selects zooms or pans the map
-  // underneath, which on a phone makes the box nearly unusable.
   L.DomEvent.disableScrollPropagation(div);
 
-  const header = document.createElement('div');
-  header.className = 'legend-header';
-  header.textContent = 'Filters';
-  header.addEventListener('click', () => div.classList.toggle('collapsed'));
-  div.appendChild(header);
-
-  const rows = document.createElement('div');
-  rows.className = 'legend-rows';
-  div.appendChild(rows);
-
-  // ── Rating thresholds ──
-  const starRow = document.createElement('div');
-  starRow.className = 'legend-select';
-  const starLabel = document.createElement('label');
-  starLabel.textContent = 'Rating';
-  starLabel.htmlFor = 'cg-rating-min';
-  const starSel = document.createElement('select');
-  starSel.id = 'cg-rating-min';
-  [['0', 'Any']].concat(STAR_STEPS.map(v => [String(v), `${v}\u2605 and up`]))
-    .forEach(([value, text]) => {
-      const opt = document.createElement('option');
-      opt.value = value;
-      opt.textContent = text;
-      if (parseFloat(value) === ratingMin) opt.selected = true;
-      starSel.appendChild(opt);
-    });
-  starSel.addEventListener('change', () => {
-    ratingMin = parseFloat(starSel.value) || 0;
-    applyVisibility();
-    persistRating();
+  const filtersBtn = document.createElement('button');
+  filtersBtn.type = 'button';
+  filtersBtn.className = 'cg-chip cg-chip-filters';
+  filtersBtn.id = 'cg-filters-btn';
+  filtersBtn.setAttribute('aria-haspopup', 'dialog');
+  filtersBtn.setAttribute('aria-controls', 'cg-filter-panel');
+  filtersBtn.addEventListener('click', () => {
+    if (filterPanel.hidden) openFilterPanel(); else closeFilterPanel();
   });
-  starRow.appendChild(starLabel);
-  starRow.appendChild(starSel);
-  rows.appendChild(starRow);
+  div.appendChild(filtersBtn);
 
-  const priceRow = document.createElement('div');
-  priceRow.className = 'legend-select';
-  const priceLabel = document.createElement('label');
-  priceLabel.textContent = 'Price';
-  priceLabel.htmlFor = 'cg-price-max';
-  const priceSel = document.createElement('select');
-  priceSel.id = 'cg-price-max';
-  [['0', 'Any']].concat([1, 2, 3, 4].map(v => [String(v), `${PRICE_LABELS[v]} or less`]))
-    .forEach(([value, text]) => {
-      const opt = document.createElement('option');
-      opt.value = value;
-      opt.textContent = text;
-      if (parseInt(value, 10) === priceMax) opt.selected = true;
-      priceSel.appendChild(opt);
-    });
-  priceSel.addEventListener('change', () => {
-    priceMax = parseInt(priceSel.value, 10) || 0;
-    applyVisibility();
-    persistRating();
-  });
-  priceRow.appendChild(priceLabel);
-  priceRow.appendChild(priceSel);
-  rows.appendChild(priceRow);
-
-  const hookupRow = document.createElement('div');
-  hookupRow.className = 'legend-select';
-  const hookupLabel = document.createElement('label');
-  hookupLabel.textContent = 'Hookups';
-  hookupLabel.htmlFor = 'cg-hookup-min';
-  const hookupSel = document.createElement('select');
-  hookupSel.id = 'cg-hookup-min';
-  [['', 'Any'], ['electric', 'Electric'], ['ew', 'Electric + water'],
-   ['full', 'Full (elec/water/sewer)']]
-    .forEach(([value, text]) => {
-      const opt = document.createElement('option');
-      opt.value = value;
-      opt.textContent = text;
-      if (value === hookupMin) opt.selected = true;
-      hookupSel.appendChild(opt);
-    });
-  hookupSel.addEventListener('change', () => {
-    hookupMin = HOOKUP_LEVELS[hookupSel.value] ? hookupSel.value : '';
-    applyVisibility();
-    persistRating();
-  });
-  hookupRow.appendChild(hookupLabel);
-  hookupRow.appendChild(hookupSel);
-  rows.appendChild(hookupRow);
-
-  // The §2.2 escape hatch, checked by default. Unchecking is the user saying
-  // "I accept losing the ones nobody rated" — which is a legitimate thing to
-  // want, and quite different from the filter deciding it for them.
-  const unratedToggle = document.createElement('label');
-  unratedToggle.className = 'legend-toggle';
-  const unratedCb = document.createElement('input');
-  unratedCb.type = 'checkbox';
-  unratedCb.checked = includeUnknown;
-  unratedCb.addEventListener('change', () => {
-    includeUnknown = unratedCb.checked;
-    applyVisibility();
-    persistRating();
-  });
-  unratedToggle.appendChild(unratedCb);
-  // Worded for the filters actually set (updateUnratedNote keeps it current).
-  unknownToggleText = document.createTextNode('Include unrated');
-  unratedToggle.appendChild(unknownToggleText);
-  rows.appendChild(unratedToggle);
-
-  unratedNoteEl = document.createElement('div');
-  unratedNoteEl.className = 'legend-note';
-  rows.appendChild(unratedNoteEl);
-
-  // ── Temporarily closed ──
-  const closedCount = CAMPGROUNDS.filter(c => c.closed).length;
-  if (closedCount) {
-    const closedToggle = document.createElement('label');
-    closedToggle.className = 'legend-toggle';
-    const closedCb = document.createElement('input');
-    closedCb.type = 'checkbox';
-    closedCb.checked = showClosed;
-    closedCb.addEventListener('change', () => {
-      showClosed = closedCb.checked;
-      STORE.set('showClosed', showClosed);
-      applyVisibility();
-    });
-    closedToggle.appendChild(closedCb);
-    closedToggle.appendChild(document.createTextNode(
-      `Show temporarily closed (${closedCount}, grey)`));
-    rows.appendChild(closedToggle);
-  }
-
-  // ── Ownership ──
-  const ownerHeading = document.createElement('div');
-  ownerHeading.className = 'legend-subhead';
-  ownerHeading.textContent = 'Ownership';
-  rows.appendChild(ownerHeading);
-
-  ownerValues.forEach(v => {
-    const count = CAMPGROUNDS.filter(c => ownerKey(c) === v).length;
-    const row = document.createElement('div');
-    row.className = 'legend-row' + (hiddenOwnerships.has(v) ? ' dimmed' : '');
-    row.innerHTML = `<span class="legend-box"></span>${ownerLabel(v)} (${count})`;
-    makeToggleRow(row, !hiddenOwnerships.has(v));
-    row.addEventListener('click', () => {
-      if (activeOwnerships.has(v)) {
-        activeOwnerships.delete(v);
-        row.classList.add('dimmed');
-        hiddenOwnerships.add(v);
-      } else {
-        activeOwnerships.add(v);
-        row.classList.remove('dimmed');
-        hiddenOwnerships.delete(v);
-      }
-      row.setAttribute('aria-pressed', activeOwnerships.has(v) ? 'true' : 'false');
-      applyVisibility();
-      persistOwnerships();
-    });
-    rows.appendChild(row);
+  const chips = QUICK_FILTERS.map(q => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'cg-chip';
+    b.addEventListener('click', () => { q.flip(); filtersChanged(); });
+    div.appendChild(b);
+    return b;
   });
 
-  if (window.innerWidth <= 700) div.classList.add('collapsed');
+  filterSyncers.push(() => {
+    const n = activeFilterCount();
+    filtersBtn.innerHTML = 'Filters' + (n ? ` <span class="cg-chip-badge">${n}</span>` : '');
+    filtersBtn.setAttribute('aria-label', n ? `Filters, ${n} set` : 'Filters');
+    filtersBtn.setAttribute('aria-expanded', filterPanel.hidden ? 'false' : 'true');
+    QUICK_FILTERS.forEach((q, i) => {
+      const on = q.on();
+      chips[i].textContent = q.label();
+      chips[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  });
   return div;
 };
-filterControl.addTo(map);
+quickFilterControl.addTo(map);
+// Straight under the search box, above the locate / route buttons that were
+// added to the same corner first.
+searchControl.getContainer().after(quickFilterControl.getContainer());
 
-// Apply a restored "campgrounds off" state now that both controls exist (hides
-// their widgets + the "Color by" picker, and keeps every campground marker off).
+// ── Filters panel ──
+// Outside the Leaflet container on purpose: a click, drag or wheel inside it
+// never reaches the map, and the search box's results (inside the map's own
+// stacking) can't paint over it.
+const filterPanel = document.createElement('div');
+filterPanel.className = 'cg-filter-panel';
+filterPanel.id = 'cg-filter-panel';
+filterPanel.hidden = true;
+filterPanel.setAttribute('role', 'dialog');
+filterPanel.setAttribute('aria-label', 'Filters');
+filterPanel.innerHTML = `
+  <div class="cgf-head">
+    <h2>Filters</h2>
+    <button type="button" class="cgf-clear" id="cgf-clear">Clear all</button>
+    <button type="button" class="cgf-close" id="cgf-close" aria-label="Close filters">&times;</button>
+  </div>
+  <div class="cgf-body" id="cgf-body"></div>
+  <div class="cgf-foot"><button type="button" class="cgf-show" id="cgf-show">Show campgrounds</button></div>`;
+document.querySelector('.map-container').appendChild(filterPanel);
+const filterBody = filterPanel.querySelector('#cgf-body');
+
+function openFilterPanel() {
+  filterPanel.hidden = false;
+  syncFilterUi();
+  filterPanel.querySelector('#cgf-close').focus();
+}
+function closeFilterPanel() {
+  if (filterPanel.hidden) return;
+  const hadFocus = filterPanel.contains(document.activeElement);
+  filterPanel.hidden = true;
+  syncFilterUi();
+  if (hadFocus) document.getElementById('cg-filters-btn')?.focus();
+}
+filterPanel.querySelector('#cgf-close').addEventListener('click', closeFilterPanel);
+filterPanel.querySelector('#cgf-show').addEventListener('click', closeFilterPanel);
+filterPanel.querySelector('#cgf-clear').addEventListener('click', clearFilters);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && !filterPanel.hidden) closeFilterPanel();
+});
+
+function filterSection(title) {
+  const sec = document.createElement('section');
+  sec.className = 'cgf-section';
+  const h = document.createElement('h3');
+  h.textContent = title;
+  sec.appendChild(h);
+  filterBody.appendChild(sec);
+  return sec;
+}
+
+// A labelled <select>; `get` reads the state as an option value, `set` writes it.
+function filterSelect(sec, label, options, get, set) {
+  const row = document.createElement('label');
+  row.className = 'cgf-select';
+  const span = document.createElement('span');
+  span.textContent = label;
+  const sel = document.createElement('select');
+  options.forEach(([value, text]) => {
+    const opt = document.createElement('option');
+    opt.value = value;
+    opt.textContent = text;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', () => { set(sel.value); filtersChanged(); });
+  row.appendChild(span);
+  row.appendChild(sel);
+  sec.appendChild(row);
+  filterSyncers.push(() => { sel.value = get(); });
+}
+
+// A checkbox row, optionally with a colour dot and a count.
+function filterCheck(sec, text, get, set, opts = {}) {
+  const row = document.createElement('label');
+  row.className = 'cgf-check' + (opts.strong ? ' cgf-strong' : '');
+  const cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.addEventListener('change', () => { set(cb.checked); filtersChanged(); });
+  row.appendChild(cb);
+  if (opts.color) {
+    const dot = document.createElement('span');
+    dot.className = 'legend-dot';
+    dot.style.background = opts.color;
+    row.appendChild(dot);
+  }
+  const t = document.createElement('span');
+  t.className = 'cgf-text';
+  t.textContent = text;
+  row.appendChild(t);
+  if (opts.count != null) {
+    const c = document.createElement('span');
+    c.className = 'cgf-count';
+    c.textContent = opts.count.toLocaleString();
+    row.appendChild(c);
+  }
+  sec.appendChild(row);
+  filterSyncers.push(() => { cb.checked = get(); });
+  return t;
+}
+
+function categoryChecks(sec, cats, colors) {
+  cats.forEach(c => filterCheck(sec, c,
+    () => !hiddenCategories.has(c),
+    on => { if (on) hiddenCategories.delete(c); else hiddenCategories.add(c); },
+    { color: colors[c], count: categoryCounts.get(c) }));
+}
+
+// Price. The nightly rate is the entry's own base rate; the $ tier is RV
+// Life's, a different and rougher number (doc §4.3), so both are offered.
+const priceSec = filterSection('Price');
+filterSelect(priceSec, 'Nightly rate',
+  [['', 'Any']].concat([50, 30, 20, 0].map(v => [String(v), RATE_TEXT[v]])),
+  () => rateMax === null ? '' : String(rateMax),
+  v => { rateMax = v === '' ? null : Number(v); });
+filterSelect(priceSec, 'RV Life $',
+  [['0', 'Any']].concat([1, 2, 3, 4].map(v => [String(v), `${PRICE_LABELS[v]} or less`])),
+  () => String(priceMax),
+  v => { priceMax = parseInt(v, 10) || 0; });
+const priceHint = document.createElement('p');
+priceHint.className = 'cgf-hint';
+priceHint.textContent = 'Nightly rate is the cheapest site, before tax. Canadian rates are compared at C$69 = US$50.';
+priceSec.appendChild(priceHint);
+
+const ratingSec = filterSection('Rating');
+filterSelect(ratingSec, 'RV Life stars',
+  [['0', 'Any']].concat(STAR_STEPS.map(v => [String(v), `${v}★ and up`])),
+  () => String(ratingMin),
+  v => { ratingMin = parseFloat(v) || 0; });
+
+const hookupSec = filterSection('Hookups');
+filterSelect(hookupSec, 'At some sites',
+  [['', 'Any'], ['electric', 'Electric'], ['ew', 'Electric + water'],
+   ['full', 'Full (elec/water/sewer)']],
+  () => hookupMin,
+  v => { hookupMin = HOOKUP_LEVELS[v] ? v : ''; });
+
+if (presentWater.length) {
+  const waterSec = filterSection('Proximity to water');
+  filterCheck(waterSec, 'On the water only', onWaterOnly, setOnWaterOnly, { strong: true });
+  categoryChecks(waterSec, presentWater, WATER_COLORS);
+}
+if (presentClimate.length) {
+  categoryChecks(filterSection('Climate'), presentClimate, CLIMATE_COLORS);
+}
+
+const ownerSec = filterSection('Ownership');
+ownerValues.forEach(v => filterCheck(ownerSec, ownerLabel(v),
+  () => !hiddenOwnerships.has(v),
+  on => { if (on) hiddenOwnerships.delete(v); else hiddenOwnerships.add(v); },
+  { count: ownerCounts.get(v) }));
+
+// Unlike the structured filters this hides a KNOWN value (`status.operating`),
+// so hiding is allowed outright (doc §2.2 only protects unknowns).
+const closedCount = CAMPGROUNDS.filter(c => c.closed).length;
+if (closedCount) {
+  filterCheck(filterSection('Status'), 'Show temporarily closed (grey)',
+    () => showClosed, on => { showClosed = on; }, { count: closedCount });
+}
+
+// The §2.2 escape hatch, checked by default. Unchecking is the user saying
+// "I accept losing the ones nobody rated" — which is a legitimate thing to
+// want, and quite different from the filter deciding it for them.
+const unknownSec = filterSection('Missing data');
+unknownToggleText = filterCheck(unknownSec, 'Include unknown',
+  () => includeUnknown, on => { includeUnknown = on; });
+unratedNoteEl = document.createElement('p');
+unratedNoteEl.className = 'cgf-hint';
+unknownSec.appendChild(unratedNoteEl);
+
+// Apply a restored "campgrounds off" state now that the controls exist (hides
+// the legend, the quick-filter row and the panel, and keeps every campground
+// marker off).
 applyCampgroundsToggle();
 
-// Turning campgrounds off also hides the legend and ownership filter, and the
+// Turning campgrounds off also hides the legend and the filters, and the
 // checkbox that did it lives inside the layer control — collapsed by default on
 // a phone. So a session that ends with it off reopens on a map with no pins and
 // nothing on screen explaining why, which reads as a broken page rather than a
@@ -2040,6 +2279,8 @@ if (!campgroundsOn) {
 }
 
 // ── Color-mode picker ───────────────────────────────────────────────────────
+// Changes only the colours and the legend's rows. The category filters are
+// per field, not per mode, so a water filter keeps working on a climate map.
 // Reflect the restored mode (URL/session may differ from the server default).
 document.getElementById('color-mode').value = currentMode.key;
 document.getElementById('color-mode').addEventListener('change', (e) => {
@@ -2047,8 +2288,7 @@ document.getElementById('color-mode').addEventListener('change', (e) => {
   markers.forEach(({ marker, cg }) => {
     marker.setStyle({ fillColor: markerFill(cg) });
   });
-  rebuildLegend();   // re-applies any session-hidden categories for the new mode
-  applyVisibility();
+  rebuildLegend();
   STORE.set('color', currentMode.key);
   // Keep the URL in sync so the view is shareable / survives reload.
   const url = new URL(window.location);

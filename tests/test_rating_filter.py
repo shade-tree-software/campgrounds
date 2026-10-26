@@ -1,4 +1,4 @@
-"""The campground map's rating and hookup filters, and the one rule they obey.
+"""The campground map's rating, hookup and rate filters, and the one rule they obey.
 
 Doc §2.2 inverts the waterfront rule on purpose: an unknown value may never be
 what removes an entry from a search. A wrong `waterfront` is visible on arrival;
@@ -24,6 +24,7 @@ Run from the project root:
 """
 
 import json
+import math
 import os
 import unittest
 
@@ -52,6 +53,7 @@ def _predicate_source():
     src = tpl[start:end]
     for name in ("ratingFilterActive", "ratingUnknown", "ratingPasses",
                  "hookupUnknown", "hookupPasses",
+                 "rateUnknown", "ratePasses",
                  "schemaVisible", "schemaFaded"):
         assert f"function {name}(" in src, f"{name} missing — template moved?"
     return src
@@ -70,7 +72,7 @@ def _markers():
     with open(CAMPGROUNDS, encoding="utf-8") as fh:
         rows = [r for r in json.load(fh)
                 if r.get("kind", "campground") == "campground"]
-    keep = ("stars", "price_tier", "electric", "water", "sewer")
+    keep = ("stars", "price_tier", "electric", "water", "sewer", "rate", "cad")
     return [{k: m[k] for k in keep if k in m} for m in A._map_marker_rows(rows)]
 
 
@@ -88,9 +90,9 @@ class TestRatingFilter(unittest.TestCase):
                      "var ratingMin = 0, priceMax = 0;")
         cls.ctx.eval(_predicate_source())
         cls.ctx.eval("""
-            function setFilter(mn, mx, unknown, hk) {
+            function setFilter(mn, mx, unknown, hk, rate) {
               ratingMin = mn; priceMax = mx; includeUnknown = unknown;
-              hookupMin = hk;
+              hookupMin = hk; rateMax = rate;
             }
             function classify(rows) {
               var shown = 0, faded = 0, hidden = 0;
@@ -105,8 +107,8 @@ class TestRatingFilter(unittest.TestCase):
         """)
         cls.ctx.eval("var ROWS = " + json.dumps(cls.markers) + ";")
 
-    def run_filter(self, stars=0, price=0, unrated=True, hookups=""):
-        self.ctx.get("setFilter")(stars, price, unrated, hookups)
+    def run_filter(self, stars=0, price=0, unrated=True, hookups="", rate=None):
+        self.ctx.get("setFilter")(stars, price, unrated, hookups, rate)
         return json.loads(self.ctx.get("classify")(self.ctx.get("ROWS")))
 
     def test_no_threshold_shows_everything_unfaded(self):
@@ -229,6 +231,62 @@ class TestHookupFilter(TestRatingFilter):
                                          if "electric" not in m))
 
 
+class TestRateFilter(TestRatingFilter):
+    """The nightly-rate cap (AWH 2026-10-26: hide what is over the $50 line).
+
+    Same §2.2 rule: an entry with no rate of its own fades. The one twist is
+    the currency — a Canadian rate is compared at the price gate's own
+    exchange, C$69 = US$50, so the map's "$50 or less" keeps exactly the parks
+    the curation gate keeps.
+    """
+
+    @staticmethod
+    def usd_cents(m):
+        usd = m["rate"] * 50 / 69 if m.get("cad") else m["rate"]
+        return math.floor(usd * 100 + 0.5)          # JS Math.round
+
+    def expected(self, cap):
+        fail = sum(1 for m in self.markers
+                   if "rate" in m and self.usd_cents(m) > cap * 100)
+        unknown = sum(1 for m in self.markers if "rate" not in m)
+        return fail, unknown
+
+    def test_each_cap_hides_measured_failures_and_fades_unknowns(self):
+        for cap in (50, 30, 20, 0):
+            with self.subTest(cap=cap):
+                fail, unknown = self.expected(cap)
+                self.assertGreater(unknown, 0, "fixture no longer exercises §2.2")
+                c = self.run_filter(rate=cap)
+                self.assertEqual(c["hidden"], fail)
+                self.assertEqual(c["faded"], unknown)
+
+    def test_no_cap_is_not_a_filter(self):
+        c = self.run_filter(rate=None)
+        self.assertEqual((c["hidden"], c["faded"]), (0, 0))
+
+    def test_canadian_rates_use_the_gate_exchange(self):
+        self.ctx.eval("rateMax = 50; includeUnknown = true;"
+                      "ratingMin = 0; priceMax = 0; hookupMin = '';")
+        visible = self.ctx.get("schemaVisible")
+        row = lambda js: self.ctx.eval("(" + js + ")")
+        self.assertTrue(visible(row("{rate: 69, cad: true}")), "C$69 is the line")
+        self.assertFalse(visible(row("{rate: 70, cad: true}")))
+        self.assertFalse(visible(row("{rate: 69}")), "US$69 is over")
+        self.assertTrue(visible(row("{rate: 50}")))
+        self.assertFalse(visible(row("{rate: 50.01}")))
+        self.ctx.eval("rateMax = 0;")
+        self.assertTrue(visible(row("{rate: 0}")), "free means $0")
+        self.assertFalse(visible(row("{rate: 5}")))
+
+    def test_a_rate_unknown_does_not_rescue_a_hookup_failure(self):
+        c = self.run_filter(rate=50, hookups="electric")
+        self.assertEqual(
+            c["hidden"],
+            sum(1 for m in self.markers
+                if m.get("electric") is False
+                or ("rate" in m and self.usd_cents(m) > 5000)))
+
+
 class TestMarkerPayload(unittest.TestCase):
     """The filter can only run on what rides inline (doc §8.4)."""
 
@@ -270,6 +328,31 @@ class TestMarkerPayload(unittest.TestCase):
                                    "hookups": {"electric": 0, "sewer": False}}])[0]
         self.assertIs(out["electric"], False, "0 amps is a measured no")
         self.assertIs(out["sewer"], False)
+
+    def test_the_base_rate_rides_inline_with_its_currency(self):
+        import sys
+        sys.path.insert(0, ROOT)
+        import ekko_trips_app as A
+        rows = A._map_marker_rows([
+            {"id": 1, "name": "US", "location": "1,2", "state": "CO",
+             "fees": {"nightly_low": 25, "nightly_high": 40, "note": "x"}},
+            {"id": 2, "name": "Free", "location": "1,2", "state": "CO",
+             "fees": {"nightly_low": 0}},
+            {"id": 3, "name": "ON", "location": "1,2", "state": "ON",
+             "fees": {"nightly_low": 45}},
+            {"id": 4, "name": "Stated", "location": "1,2", "state": "BC",
+             "fees": {"nightly_low": 30, "currency": "USD"}},
+            {"id": 5, "name": "None", "location": "1,2", "state": "ON",
+             "fees": {"nightly_high": 60}},
+        ])
+        self.assertEqual(rows[0]["rate"], 25)
+        self.assertNotIn("cad", rows[0])
+        self.assertNotIn("nightly_high", rows[0])
+        self.assertEqual(rows[1]["rate"], 0, "$0 is a known rate, not an absent one")
+        self.assertIs(rows[2]["cad"], True, "a province with no currency is C$")
+        self.assertNotIn("cad", rows[3], "a stated currency wins over the province")
+        self.assertNotIn("rate", rows[4], "no base rate, no key (doc §2.1)")
+        self.assertNotIn("cad", rows[4])
 
 
 if __name__ == "__main__":

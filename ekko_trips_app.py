@@ -2539,6 +2539,17 @@ _MAP_HOOKUP_FIELDS = ("electric", "water", "sewer")
 # hide. Only `closed: true` (+ the free-text `reopens`) rides inline, and only on
 # the ~100 closed entries, so it costs a few hundred bytes. An entry recorded
 # `open`, or with no status at all, carries nothing: neither changes the dot.
+# The fourth (2026-10-26): the base nightly rate, `fees.nightly_low`, for the
+# map's Nightly rate filter (AWH: hide what is over the $50 cap). 81% of entries
+# carry their own; the registry's rows are never consulted here, because doc §3
+# forbids an inherited value being the sole reason an entry is hidden, so an
+# entry priced only by its agency is unknown to the filter and fades. `cad`
+# rides only on Canadian-dollar rates (~1.5k), so the client can apply the
+# gate's own exchange (C$69 = US$50) instead of reading C$45 as $45. A Canadian
+# entry with no stored currency is priced in C$ too — nobody posts US dollars
+# in a province. Measured: +21 KB gzipped on a 396 KB marker payload.
+_CANADIAN_PROVINCES = frozenset(
+    ("AB", "BC", "MB", "NB", "NL", "NS", "NT", "NU", "ON", "PE", "QC", "SK", "YT"))
 
 
 def _map_marker_rows(rows):
@@ -2568,6 +2579,13 @@ def _map_marker_rows(rows):
             v = hookups.get(k)
             if v is not None:
                 d[k] = v > 0 if k == "electric" else bool(v)
+        fees = r.get("fees") or {}
+        if fees.get("nightly_low") is not None:
+            d["rate"] = fees["nightly_low"]
+            currency = fees.get("currency") or (
+                "CAD" if r.get("state") in _CANADIAN_PROVINCES else "USD")
+            if currency == "CAD":
+                d["cad"] = True
         status = r.get("status") or {}
         if status.get("operating") == "temporarily_closed":
             d["closed"] = True
