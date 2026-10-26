@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, New York wf-ny-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- No value changes. Stand: **21 North-South Lake** lakefront (--AWH; NE-shore pads ~12-16 m from the water);
+  **1481 Brookside Beach** lakeview (RV rows atop a ~20 m shale bluff between Rt 5 and Lake Erie; re-pinned off
+  the pond field; note corrected - the beach is below the bluff, not across Rt 5); **1460 North Bay** lakeview
+  (the shore camp lane between); **1395 Taughannock Falls SP**, **1511 Massena International** (unnamed
+  'WATERFRONT' sites; NE-edge pads ~60-70 m back across a reed meadow; low confidence), **1416 Paradox Lake**
+  (nearest sites ~50+ m back; the note's '~5 waterfront sites' removed), **15466 Lake Placid KOA** (Riverside
+  section ~75-85 m from the Ausable behind pines and houses), **1453 Cedar Point County Park** (re-pinned off a
+  residential street onto the loops) - not waterfront.
+
 ## Resolved 2026-10-26, New York wf-ny-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **1516 Royal Mountain Campsites** not waterfront -> pond (ResNexus map: sites 16, 17 and the lettered
@@ -400,14 +411,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
-- **21 North-South Lake (NY)** (weak, contrary): RA marks all 203 sites "Near Water - no"; entry lakefront, --AWH "Some campsites are on the lake" supports it.
-- **1481 Brookside Beach (NY)** (contrary operator claim): "A peaceful campground located directly on Lake Erie", "sunsets right from your campsite"; entry lakeview, note says the beach is across Rt 5.
-- **1395 Taughannock Falls (NY)** (weak): RA description "Campsites and cabins overlook Cayuga Lake"; entry not waterfront; RA tags every site "Near Water - no".
-- **1511 Massena International Kampground (NY)**: 2026 rate sheet sells "WATER, ELEC. & SEWER (WATERFRONT)" sites at $50; entry not waterfront.
-- **1460 North Bay Campground (NY)**: city page "A peaceful lakefront setting" with "waterfront sites"; entry lakeview.
-- **1416 Paradox Lake (NY)**: RA "located on the shore of Dark Bay, which is on Paradox Lake"; note counts ~5 waterfront sites; entry not waterfront.
-- **15466 Lake Placid / Whiteface KOA (NY)** (weak): KOA sells "Riverside" site types "near the beautiful Ausable River"; entry not waterfront - look at the Riverside sites on imagery.
-- **1453 Cedar Point County Park (NY)** (weak): "commanding views of Gardiner's Bay" (park + glamping tents, not the family sites); entry not waterfront.
 - **13359 Korn's (NY)**: "39 acres of wooded land on the Shawangunk Kill River"; entry not waterfront.
 - **14339 Niagara Shores (NY)**: lakeview RV sites "Most ... currently located waters edge with panoramic views of Lake Ontario"; entry lakeview.
 - **14320 Pine Ridge (NY)**: sells "Deluxe Waterfront" and "Waterfront - No Hookups" sites on the river through the park; entry riverview.
