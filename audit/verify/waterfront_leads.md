@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-6 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3613 Fort Wilkins - East Loop** not waterfront -> lakeview (re-pinned out of the West campground
+  onto the East loop; sites 1-10 ~20-25 m from Lake Fanny Hooe but ~7 m up a climb-down bank with stairs).
+- Downgraded: **3682 Burton's Landing SFC** riverview -> not waterfront (campers on the camp road ~100-110 m
+  behind a continuous forest band; re-pinned off the canoe landing).
+- Stand: **3772 Camp 7 Lake** lakeview (rec.gov 'Lakefront' sites 022-031 sit ~55 m back up a forested slope;
+  re-pinned off the day-use beach); **14215 Camp Deer Trails** (the 'Rustic waterfront' sites are not sold to
+  motorhomes), **3788 Burned Dam**, **3770 Carp River** (climb-down ravine), **14578 CreationView** (pond lawn
+  holds no pads), **3726 East Branch Fox River** (canopy, no site map; low confidence) - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-5 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **3725 Black Creek SFC** not waterfront -> riverview (re-pinned out of the trailer park onto the
@@ -304,14 +315,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3772 Camp 7 Lake (Hiawatha NF): rec.gov says some sites "are right on the lake"; entry lakeview (p3-132).
-- 14215 Camp Deer Trails (Harrison): operator sells "Rustic Lakefront Campsites" and "a half mile of lakefront access"; entry not waterfront. The lakefront type is NOT offered to motorhomes on Campspot, so only the RV-bookable types count. Also check the pin: Campspot's record is 44.084285,-84.748482, ~1 km ESE of the stored 44.08717,-84.76024 (p3-132).
-- 3682 Burton's Landing SFC (weak): DNR "riverside campground rests on the banks of the Au Sable River"; entry riverview (p3-132).
-- 3788 Burned Dam (Ottawa NF) (weak): FS gives river access on the Middle Branch Ontonagon "from the Burned Dam Campground"; entry not waterfront (p3-132).
-- 3770 Carp River (Hiawatha NF) (weak): FS "adjacent to the Carp Wild and Scenic River", stairs down the bank; entry not waterfront (p3-132).
-- 14578 CreationView (weak): operator "Waterfront Views ... Nature Lake and Otto's Pond", "Scenic waterfront areas"; CampLife's Water-front amenity is on the cabin type only; entry not waterfront (p3-133).
-- 3726 East Branch of Fox River SFC: DNR "located on the East Branch of the Fox River and King's Pond", fishing pier; entry not waterfront (p3-134).
-- 3613 Fort Wilkins East Loop: RE-PIN FIRST - the stored 47.4662,-87.8680 is inside the West campground; the East campground is ~0.7 km east (OSM centre 47.4661,-87.8585, own road off US-41). Then: DNR campground map puts sites 1-10 on the Lake Fanny Hooe shore with "STAIRS TO LAKE" and observation decks; entry not waterfront (p3-135).
 - 3612 Fort Wilkins West Loop: DNR campground map draws 50-amp pull-throughs 142-158 and sites 161-179 along the Lake Fanny Hooe shore; entry not waterfront (p3-135).
 - 3776 Flowing Well (Hiawatha NF): rec.gov + FS "Some sites are situated along the bank, overlooking the slow-moving river"; entry riverview (p3-135).
 - 14029 Goose Creek SFC: DNR "sits on the shore of the Upper Manistee River", all nine sites "have a view of the river"; entry not waterfront (p3-136).
