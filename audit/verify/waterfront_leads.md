@@ -27,6 +27,22 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, North Carolina wf-nc-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - NC leads done
+
+- Upgraded: **15454 Asheville East KOA** not waterfront -> riverfront (KOA map, rev. Aug 2026: A1-A10 and B28/B29
+  typed 'Riverfront' along the Swannanoa); **4275 At The Ridge** riverview -> riverfront (pads ~15-30 m across
+  the sites' own lawn from the North Fork French Broad); **4326 Mayo Lake Park** not waterfront -> lakefront
+  (county map: Area 2 sites 3-23 at the peninsula shore, ~12-30 m through open-understory woods; re-pinned
+  from the woods E of Area 1); **4221 Jackrabbit Mountain** lakeview -> lakefront (rec.gov RV sites 018-020
+  ~12-20 m from Lake Chatuge's high-water edge over an open slope); **14350 Old Fort RV Park** not waterfront ->
+  creekside (lots 20-40 back onto Brevard Creek, ~15-20 m across a low graded bank).
+- Downgraded: **4306 Almond Boat and RV Park** lakefront -> not waterfront (the RV sites are on the woods road
+  30-50 m from Fontana's high-water edge; the old call read the marina/cabin peninsula; operator 'not water
+  front ... woodsy'; re-pinned to the RV loop).
+- Stand: **4317 Cashie River Treehouses** (Campspot 'Waterfront' is the launch), **245 Lake Powhatan**, **32
+  Linville Falls** (--AWH; re-pinned ~800 m onto the rec.gov site coords), **13205 Oyster Point** (rec.gov tags
+  7 sites 'Riverfront' but a ~30 m wooded/marsh fringe; low confidence) - not waterfront.
+
 ## Resolved 2026-10-26, West Virginia wf-wv-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - WV leads done
 
 - Downgraded: **747 Momma Tried RV & Camping** riverfront -> not waterfront (Hipcamp's own pins put all 38 RV
@@ -432,15 +448,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
-- **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
-- **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
-- **4317 Cashie River Treehouses (NC)**: town's Campspot listing tags "Waterfront" and "Beach - Public Access" (on the Cashie River); entry not waterfront.
-- **4326 Mayo Lake Park (NC)** (strong): former county RV page "on-water RV and tent sites" (1-28); county map shows Area 2 lining the shore; entry not waterfront.
-- **245 Lake Powhatan (NC)**: FS + rec.gov "on the banks of Lake Powhatan", loops "within walking distance of the lake"; entry not waterfront (note says not on the lake).
-- **32 Linville Falls (NC)** (weak): rec.gov "Linville River ... winds beside the campground"; entry not waterfront.
 - Kerr Lake / Jordan Lake (NC: 104/106/108/146) ReserveAmerica "Near Water - no" on every site - a blanket attribute, ignore.
-- **4306 Almond Boat & RV Park (NC)** (DOWNGRADE): operator says "It is not water front but very close to the lake"; entry lakefront.
 
-- 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
-- 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
-- 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
