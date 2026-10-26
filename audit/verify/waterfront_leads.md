@@ -27,6 +27,14 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, West Virginia wf-wv-3 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - WV leads done
+
+- Downgraded: **747 Momma Tried RV & Camping** riverfront -> not waterfront (Hipcamp's own pins put all 38 RV
+  sites 100-140 m from the North Fork behind a treeline; only the 2 tent sites on 'The Island' are riverside;
+  the stored riverfront contradicted --AWH 'Sites are not waterfront').
+- Stand: **13367 Kennedy Park & Marina** riverview (RV rows behind the campground road; the riverside row is ~20-30
+  m back across lawn and a riprap climb-down; the 'Primitive Riverfront Sites' are unplaced).
+
 ## Resolved 2026-10-26, West Virginia wf-wv-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Downgraded: **503 Big Rock (Monongahela NF)** riverfront -> not waterfront (rec.gov site coords: spurs north of
@@ -426,8 +434,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
 - **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
 - **4275 At The Ridge (NC)**: "Premium sites are on the river"; ResNexus River Campsites #4 and #6 full hookup "on the river" (North Fork French Broad); entry riverview.
-- **13367 Kennedy Park & Marina (WV)**: operator lists "Primitive: Riverfront Sites" on the Ohio; entry riverview (primitive sites may not take a 23-ft rig).
-- **747 Momma Tried (WV)** (weak): Hipcamp tent spots "by the river", "riverfront access"; entry field says riverfront while AWH's note says sites are not waterfront - the two stored statements disagree.
 - **4317 Cashie River Treehouses (NC)**: town's Campspot listing tags "Waterfront" and "Beach - Public Access" (on the Cashie River); entry not waterfront.
 - **4326 Mayo Lake Park (NC)** (strong): former county RV page "on-water RV and tent sites" (1-28); county map shows Area 2 lining the shore; entry not waterfront.
 - **245 Lake Powhatan (NC)**: FS + rec.gov "on the banks of Lake Powhatan", loops "within walking distance of the lake"; entry not waterfront (note says not on the lake).
