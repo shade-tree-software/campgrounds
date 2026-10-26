@@ -27,6 +27,16 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-13 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **4014 Shakey Lakes Park** lakeview -> lakefront (county per-site booking pages flag 'Water Frontage'
+  on transient RV sites 59, 65, 66, 69-75 and P3/P4/P7-P10; imagery: peninsula-tip loop ~10-15 m from shore).
+- Stand: **3678 Shupac Lake**, **3702 Silver Creek** (riverview; the river-side sites are walk-ins), **14100
+  Ski-Kwe zaag'igan Lake** (re-pinned ~110 m onto the OSM pitch cluster), **3707 South Gemini Lake** (one
+  clearing ~15 m from the water, not resolvable as an RV pad; low confidence), **3673 South Manistique Lake** -
+  lakeview/riverview; **3719 Shoepac Lake** (pads 80-130 m back), **14036 Sunrise Lake** (lake across the road,
+  on a bluff) - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-12 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **13450 Riverside Park Campground (Evart)** not waterfront -> riverfront (city per-site map: River
@@ -389,14 +399,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 4014 Shakey Lakes Park (Menominee Co): booking site types 20 sites "Water Frontage?: Yes" (56-59, 65, 66, 69-75, P3-P5, P7-P10); entry lakeview (p3-148).
-- 3719 Shoepac Lake SFC: DNR "located on Shoepac Lake", carry-in launch; entry not waterfront (weak, p3-148).
-- 3678 Shupac Lake SFC: DNR "nestled among hardwoods along the shore of Shupac Lake"; entry lakeview (weak, p3-148).
-- 3702 Silver Creek SFC: DNR "sits on the banks of the Pine River", "Sites #10-26 are accessible from the Pine River"; entry riverview (weak, p3-148).
-- 14100 Ski-Kwe zaag'igan Lake SFC: DNR "on the shore of Ski-Kwe zaag'igan Lake"; entry lakeview (weak, p3-148).
-- 3707 South Gemini Lake SFC: DNR "Nestled on the southern shore of Gemini Lake", carry-in access central; entry lakeview (weak, p3-148).
-- 3673 South Manistique Lake SFC: DNR "Some campsites have direct water access via a narrow footpath"; entry lakeview (weak, p3-148).
-- 14036 Sunrise Lake SFC: DNR "nestled on a forested bluff overlooking Sunrise Lake", "set on Sunrise Lake"; entry not waterfront (weak, p3-149).
 - 14041 Tippy Dam RA: DNR sites "within close proximity to the dammed portion of the Manistee River", a viewing area overlooks the water; entry not waterfront (weak, p3-149).
 - 3720 Tomahawk Lake SFC: DNR "Nestled along the serene shores of the 40-acre Tomahawk Lake", "Some campsites have direct access to the lake"; entry not waterfront (p3-150).
 - 3669 Upper Manistee River SFC: DNR "Located along the Upper Manistee River ... access the river from many points throughout the campground"; entry not waterfront (p3-150).
