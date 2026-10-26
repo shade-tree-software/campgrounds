@@ -11,3 +11,5 @@ A park entry with one pin that covers several campgrounds gets split into one en
 **Why:** the harm is a pin on the wrong part of a lake, which a park-level entry produces; splitting adjacent loops adds entries with no map value.
 
 **How to apply:** verifier briefs ask the verifier to flag such a park with each campground's name, coordinates, site count and booking link. Each new campground then needs the full curation pipeline (pin, waterfront gate on imagery, inclusion evidence, fields); the original id stays on one of them, and an --AWH note is not copied onto a campground it may not describe. Related: [[project-phase7-verification]].
+
+**Exception, AWH 2026-10-26:** split anyway when one entry combines two separately named recreation.gov facilities with their own booking rules, even a few hundred metres apart (Lupine / Cedar Bluff 11918, Robinson Creek North / South 12003, ~200-250 m). Check the distance before claiming a pair meets the 1 km rule: I once told AWH they did without measuring.
