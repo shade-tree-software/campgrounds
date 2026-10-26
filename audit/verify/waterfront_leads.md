@@ -27,6 +27,19 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, New York wf-ny-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **1516 Royal Mountain Campsites** not waterfront -> pond (ResNexus map: sites 16, 17 and the lettered
+  sites between the north driveway and the pond; a trailer ~15 m from the pond across open unused lawn);
+  **1505 Birch Haven** not waterfront -> riverview (front-row trailers ~40-45 m from the St. Lawrence behind a
+  wooded climb-down bank; re-pinned off Rt 12E onto the park; low confidence); **1518 Rancho Pines** not
+  waterfront -> riverview (Campspot draws the RV cluster beside the Schroon; one RV ~17-20 m from the water under
+  canopy - the verifier's riverfront rested on a hand-scaled drawn map, held down).
+- Stand: **335 Cedar Point SP** riverview (RA's 'Waterfront' tag is distance-only - sites 006-020 sit inside the
+  loop across the shore drive; low confidence); **1442 Myers Park** riverfront (Salmon Creek, ~30-35 m wide);
+  **1409 Limekiln Lake** lakefront; **1407 Frontier Town**, **334 Oneida Shores Park** (waterfront sites are
+  tent-only) - not waterfront.
+
 ## Resolved 2026-10-26, Florida wf-fl-4 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence) - FL leads done
 
 - Upgraded: **14870 Seminole Campground** not waterfront -> creekside (a 2021 canopy-gap frame shows west-loop RV
@@ -387,14 +400,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
-- **1505 Birch Haven (NY)**: operator claims "a majestic view of the St. Lawrence shipping channel"; entry not waterfront (a view tier may be earned).
-- **335 Cedar Point SP (NY)** (weak): ReserveAmerica tags 13 sites "Near Water" (003-011, 014, 016, 018, 020) - its generic icon; entry riverview, note says one 20-ft riverfront site.
-- **1407 Frontier Town (NY)** (weak): ReserveAmerica puts the 91-acre facility "on the shores of the Schroon River"; entry not waterfront. Property-level claim.
-- **1442 Myers Park (NY)**: on Cayuga Lake ("extensive Cayuga Lake frontage", Campspot "Waterfront") but entry says `riverfront` - type looks wrong.
-- **1409 Limekiln Lake (NY)** (weak, contrary): ReserveAmerica tags all 263 sites "Near Water - no"; entry lakefront. DEC pages 403.
-- **334 Oneida Shores (NY)** (contrary operator claim): county page "over 50 shaded lake view campsites" and "Basic & Waterfront Site" (tents only); entry not waterfront.
-- **1518 Rancho Pines (NY)**: Campspot feature "Waterfront"; along the Schroon River with a canoe launch; entry not waterfront.
-- **1516 Royal Mountain (NY)** (weak): site 16 "by the pond" (stocked fishing pond).
 - **21 North-South Lake (NY)** (weak, contrary): RA marks all 203 sites "Near Water - no"; entry lakefront, --AWH "Some campsites are on the lake" supports it.
 - **1481 Brookside Beach (NY)** (contrary operator claim): "A peaceful campground located directly on Lake Erie", "sunsets right from your campsite"; entry lakeview, note says the beach is across Rt 5.
 - **1395 Taughannock Falls (NY)** (weak): RA description "Campsites and cabins overlook Cayuga Lake"; entry not waterfront; RA tags every site "Near Water - no".
