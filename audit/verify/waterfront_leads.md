@@ -27,6 +27,17 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, Michigan wf-mi-5 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Upgraded: **3725 Black Creek SFC** not waterfront -> riverview (re-pinned out of the trailer park onto the
+  loops; pad clearings ~30-40 m from Black Creek over an open bank ~15 m above the water; low confidence);
+  **3751 Brush Lake (Huron-Manistee NF)** not waterfront -> lakeview (open grass ~25 m to a marsh fringe, water
+  ~45 m; the verifier proposed lakefront at low confidence, held at the view by default-down).
+- Stand: **3728 Big Eric's Bridge SFC** riverview (pitches 66-75 m back); **14025 Bray Creek SFC**, **3713 Black
+  River SFC** (re-pinned onto the loop), **3797 Bob Lake** (canopy, no per-site map; low confidence), **3739
+  Bowman Bridge** (re-pinned onto the rec.gov site coords; ~90 m, up the hill), **3802 Canoe Harbor** (river
+  sites are walk-in only) - not waterfront.
+
 ## Resolved 2026-10-26, Michigan wf-mi-4 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **4034 Eddy Park** lakeview -> lakefront (city site-dimension PDF types lots 4-24 'Lakeside'; RVs
@@ -293,14 +304,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 4221 Jackrabbit Mountain (Lake Chatuge): entry lakeview; rec.gov says some sites "lie on the water's edge" - re-audit per site (p3-101, 2026-10-22).
 - 14350 Old Fort RV Park: operator "21 Premium lots on Brevard Creek"; entry not waterfront (p3-102).
 - 13205 Oyster Point: rec.gov "located on the banks of the Newport River"; entry not waterfront (p3-102).
-- 3725 Black Creek SFC: DNR "on the banks of Black Creek", sites "nestled along Black Creek", 12 sites "accessible from the water"; entry not waterfront (p3-130).
-- 3728 Big Eric's Bridge SFC (weak): DNR "located along the Huron River"; entry riverview (p3-130).
-- 14025 Bray Creek SFC: DNR "situated along the banks of the Baldwin River", confluence "adjacent to the campground"; entry not waterfront (river reached by stairs from the day-use area) (p3-131).
-- 3713 Black River SFC (weak): DNR "quick access to the Black River", carry-in access; entry not waterfront (p3-131).
-- 3797 Bob Lake (Ottawa NF) (weak): FS "Many of the sites are situated near the lake"; entry not waterfront (p3-131).
-- 3739 Bowman Bridge (weak): rec.gov "situated along the Pere Marquette National Scenic River", but FS puts it "up the hill from Bowman Bridge Boat Landing"; entry not waterfront (p3-131).
-- 3751 Brush Lake (Huron-Manistee NF): FS "located on the shores of Brush Lake", carry-in launch in the campground; entry not waterfront (p3-132).
-- 3802 Canoe Harbor SFC: DNR "located along the south branch of the Au Sable River", carry-in access in the campground, four sites reachable from the river; entry not waterfront (p3-132).
 - 3772 Camp 7 Lake (Hiawatha NF): rec.gov says some sites "are right on the lake"; entry lakeview (p3-132).
 - 14215 Camp Deer Trails (Harrison): operator sells "Rustic Lakefront Campsites" and "a half mile of lakefront access"; entry not waterfront. The lakefront type is NOT offered to motorhomes on Campspot, so only the RV-bookable types count. Also check the pin: Campspot's record is 44.084285,-84.748482, ~1 km ESE of the stored 44.08717,-84.76024 (p3-132).
 - 3682 Burton's Landing SFC (weak): DNR "riverside campground rests on the banks of the Au Sable River"; entry riverview (p3-132).
