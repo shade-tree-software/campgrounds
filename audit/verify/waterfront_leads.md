@@ -27,6 +27,18 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - **255 Bath County Recreational Campground (VA, Dominion)** — stored lakeview; DWR says "Seasonal
   lakeside camping" at the recreation ponds.
 
+## Resolved 2026-10-26, West Virginia wf-wv-2 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
+
+- Downgraded: **503 Big Rock (Monongahela NF)** riverfront -> not waterfront (rec.gov site coords: spurs north of
+  FR 76, ~45-50 m from the Cranberry with the road and a wooded bank between; the stored riverfront contradicted
+  --AWH 'across the road, sites are not waterfront').
+- Stand: **428 Brooklyn Heights Riverfront** riverview (the dead-end road runs between the RV pads and the river);
+  **232 Bluestone SP** (bench ~19 m above a slough; low confidence), **13120 Eagle's Nest**, **1201 Blue Heron
+  Landing** (creek-side spots are tent sites and cabins), **457 Gauley Tailwaters** (below the dam), **456 Glade
+  Creek** (canopy, no per-site source; low confidence), **463 Horseshoe** (creek meadow is day use) - not
+  waterfront.
+- Source: WV leaf-off imagery (services.wvgis.wvu.edu, wv_imagery_WVGISTC_leaf_off_mosaic) sees under canopy.
+
 ## Resolved 2026-10-26, West Virginia wf-wv-1 (audit/apply_waterfront_audit.py; evidence in waterfront_evidence)
 
 - Upgraded: **1227 East Fork (Monongahela NF)** riverview -> riverfront (CampLife 'River Front' RV back-ins 2-15,
@@ -410,14 +422,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
   lakefront call can be re-checked.
 - **3532 Totogatic Park (WI)** — dam screen 2026-10-21: pin is in woods ~250 m from the Minong
   Flowage, 15 m above it; OSM's campground node is 46.14171,-91.93697. Re-pin onto the loops.
-- **428 Brooklyn Heights Riverfront (WV)**: operator names RV6-RV10 "Primitive Riverfront RV site" (the river is across a narrow dead-end road); RV1 is "about 50 feet from the Dry Fork River"; entry riverview.
-- **232 Bluestone SP (WV)**: camping page calls it "the perfect lakeside retreat camping spot" and the note says "lakeside campsites"; entry not waterfront. Old Mill and East Shore are closed for dam work, and Meador is the RV campground.
-- **13120 Eagle's Nest (WV)**: operator offers "permanent waterfront lodging", "Family Campground Near Water" with swimming and fishing in Patterson Creek; entry not waterfront.
-- **1201 Blue Heron Landing (WV)** (weak): "camp, and kayak right on Mill Creek with direct access on-site", but the rate page puts the tent sites, not the RV lots, along the creek.
-- **457 Gauley Tailwaters (WV, NPS)**: the entry's own note says "with sites directly along the river"; NPS says only "located just below Summersville Dam" (below a dam: river value only, from the river itself). Entry not waterfront.
-- **456 Glade Creek, NPS (WV)**: the note says "sites directly adjacent to the creek" and NPS says "near the banks of the New River and the Glade Creek Trailhead"; entry not waterfront.
-- **503 Big Rock (WV)**: entry riverfront, but its own --AWH note says "Sites are not waterfront"; rec.gov says "adjacent to the Cranberry River". Re-audit (likely a downgrade).
-- **463 Horseshoe (WV)** (weak): rec.gov "relaxing beside the creek" (Horseshoe Run, a snorkel site); entry not waterfront.
 - **4353 Briarcliffe RV Resort (SC)**: operator "located on the Intracoastal Waterway", pool "overlooking the Intracoastal Waterway"; entry not waterfront (sites may be set back; check imagery).
 - **15491 Myrtle Beach KOA (SC)**: KOA's booking form sells a back-in full-hookup type with "your private deck overlooking the water"; two tidal lakes connect to the Atlantic via Withers Swash; a 2026-10-15 review "patio site with a deck on the water". Entry not waterfront (2026-10-19 audit saw only an owners' waterfront type).
 - **15454 Asheville East KOA (NC)**: KOA "Riverfront camping", sells "Riverside" back-in/pull-through types "parallel to the serene Swannanoa River" (B28, B29; reviewers name A1-A10); entry not waterfront.
