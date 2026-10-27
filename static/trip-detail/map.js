@@ -293,36 +293,6 @@ window.addEventListener('beforeunload', _saveMapView);
 // don't need the saved-view dance above). Mutations that change stay/event
 // data still go through `_reloadKeepingMapView()` because the cards and
 // stay markers are server-rendered and would need fresh HTML.
-// Sum haversine segments along the polyline → miles → header chip.
-// Hidden when the polyline is empty / has only one point (no GPS track
-// rendered this load).
-function computeAndShowGpsMiles(latlngs) {
-  // Desktop-only chip: the phone's condensed line drops GPS miles along with
-  // the other statistical counts (see the .meta-mobile comment in the template).
-  const el = document.getElementById('trip-gps-miles');
-  if (!el) return;
-  if (!latlngs || latlngs.length < 2) {
-    el.style.display = 'none';
-    return;
-  }
-  const R_KM = 6371;
-  const toRad = d => d * Math.PI / 180;
-  let km = 0;
-  for (let i = 1; i < latlngs.length; i++) {
-    const [la1, lo1] = latlngs[i - 1];
-    const [la2, lo2] = latlngs[i];
-    const dLa = toRad(la2 - la1);
-    const dLo = toRad(lo2 - lo1);
-    const a = Math.sin(dLa / 2) ** 2
-            + Math.cos(toRad(la1)) * Math.cos(toRad(la2)) * Math.sin(dLo / 2) ** 2;
-    km += 2 * R_KM * Math.asin(Math.sqrt(a));
-  }
-  const miles = km * 0.621371;
-  const shown = miles >= 100 ? Math.round(miles) : miles.toFixed(1);
-  el.querySelector('span').textContent = shown;
-  el.style.display = '';
-}
-
 function refetchAndRenderTrack() {
   if (!window.__renderGpsTrack) return Promise.resolve();
   // Clear any active ping selection so a freshly-suppressed batch doesn't
@@ -1277,11 +1247,6 @@ window.__refetchAndRenderTrack = refetchAndRenderTrack;
       map.removeLayer(straightRouteLayer);
     }
     gpsRouteLayer.addTo(map);
-    // Total polyline length in miles → trip header summary chip. Stays
-    // hidden when no GPS layer renders. Recomputed every time the
-    // polyline is rebuilt (the chip just gets the latest value).
-    computeAndShowGpsMiles(latlngs);
-
     // Current-location marker: when *now* sits inside the trip window, drop
     // a pulsing green dot at the most recent in-window ping so anyone
     // following the trip can see where the travelers currently are. The

@@ -162,22 +162,6 @@
     top: 2px;
   }
 
-  /* Span of years the library covers, a third segment on the title line.
-     Same faint rule + size as the subtitle so the three read as one line;
-     upright and letter-spaced rather than italic so the digits don't read as
-     part of the subtitle's phrase. */
-  .site-years {
-    font-size: .95rem;
-    font-weight: 400;
-    opacity: .7;
-    padding-left: .75rem;
-    border-left: 1px solid rgba(255,255,255,.3);
-    letter-spacing: .04em;
-    white-space: nowrap;
-    position: relative;
-    top: 2px;  /* match the subtitle's baseline nudge */
-  }
-
 
   .nav-toggle {
     display: none;
@@ -207,8 +191,8 @@
      shorter than the two were, and fills the title band's empty middle.
 
      When the row doesn't fit, fitSiteTop() (inline after the markup) adds
-     .fit-1.. .fit-5 to .site-top, one at a time: drop the years, then the
-     subtitle, then the counts, then tighten the buttons' spacing, and as a
+     .fit-1.. .fit-4 to .site-top, one at a time: drop the subtitle, then
+     the counts, then tighten the buttons' spacing, and as a
      last resort wrap the buttons onto a second row under the title. The
      button labels are never dropped (AWH 2026-10-27: icon-only buttons
      don't say where they go). Measured rather than set by breakpoints
@@ -304,16 +288,15 @@
       border-radius: 0 0 8px 8px;
     }
 
-    .site-top.fit-1 .site-years,
-    .site-top.fit-2 .site-subtitle,
-    .site-top.fit-3 nav#site-nav .stats { display: none; }
-    .site-top.fit-4 { gap: .75rem; padding-left: 1rem; padding-right: 1rem; }
-    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-group a,
-    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-logout,
-    .site-top.fit-4 .nav-more-btn { min-width: 0; padding-left: .35rem; padding-right: .35rem; }
-    .site-top.fit-4 nav#site-nav .nav-group + .nav-group { margin-left: .25rem; padding-left: .25rem; }
-    .site-top.fit-5 { flex-wrap: wrap; row-gap: 0; padding-top: .45rem; }
-    .site-top.fit-5 nav#site-nav { flex-basis: 100%; }
+    .site-top.fit-1 .site-subtitle,
+    .site-top.fit-2 nav#site-nav .stats { display: none; }
+    .site-top.fit-3 { gap: .75rem; padding-left: 1rem; padding-right: 1rem; }
+    .site-top.fit-3 nav#site-nav > .nav-collapse > .nav-group a,
+    .site-top.fit-3 nav#site-nav > .nav-collapse > .nav-logout,
+    .site-top.fit-3 .nav-more-btn { min-width: 0; padding-left: .35rem; padding-right: .35rem; }
+    .site-top.fit-3 nav#site-nav .nav-group + .nav-group { margin-left: .25rem; padding-left: .25rem; }
+    .site-top.fit-4 { flex-wrap: wrap; row-gap: 0; padding-top: .45rem; }
+    .site-top.fit-4 nav#site-nav { flex-basis: 100%; }
   }
 
   /* Short desktop screens (e.g. 1366×768 laptops). The navy bar eats a
@@ -327,7 +310,6 @@
     .site-top { padding-top: .1rem; padding-bottom: .1rem; }
     header h1 { font-size: 1.3rem; }
     .site-subtitle { font-size: .82rem; }
-    .site-years { font-size: .82rem; }
     nav#site-nav a, .nav-more-btn { padding-top: .25rem; padding-bottom: .25rem; }
   }
 
@@ -714,11 +696,9 @@
     }
     header h1 { font-size: 1.2rem; }
     .header-title { gap: .25rem; }
-    /* Below the two-item width, drop the subtitle too so only the title
-       remains. (Stats are already hidden ≤900px above and the year range
-       ≤780px; the stats counters live on the Stats page, one tap away in the
-       bottom tab bar.) */
-    .site-subtitle, .site-years { display: none; }
+    /* Only the title on phones; the stats counters live on the Stats page,
+       one tap away in the bottom tab bar. */
+    .site-subtitle { display: none; }
   }
 
   {% block style %}{% endblock %}
@@ -737,7 +717,6 @@
     {% if current_user.is_authenticated %}<button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">&#9776;</button>{% endif %}
     <h1><a href="/">EKKOing Around</a></h1>
     <span class="site-subtitle">Hamilton family road trips</span>
-    {% if year_range %}<span class="site-years">{{ year_range }}</span>{% endif %}
   </div>
 </header>
 
@@ -810,7 +789,7 @@
 </div>
 <script>
   // Fit the desktop bar to the window by shedding text, one step at a time
-  // (see the "Desktop/tablet bar" CSS): years, subtitle, counts, spacing,
+  // (see the "Desktop/tablet bar" CSS): subtitle, counts, spacing,
   // then a second row. Labels are never dropped. Runs
   // inline, before first paint, so the bar never shows overflowing; reruns
   // on resize ahead of the --site-top-height measurement below.
@@ -819,10 +798,10 @@
     if (!top) return;
     const phone = window.matchMedia('(max-width: 700px)');
     const fit = () => {
-      top.classList.remove('fit-1', 'fit-2', 'fit-3', 'fit-4', 'fit-5');
+      top.classList.remove('fit-1', 'fit-2', 'fit-3', 'fit-4');
       let level = 0;
       if (!phone.matches) {
-        while (level < 5 && top.scrollWidth > top.clientWidth) top.classList.add('fit-' + ++level);
+        while (level < 4 && top.scrollWidth > top.clientWidth) top.classList.add('fit-' + ++level);
       }
     };
     fit();

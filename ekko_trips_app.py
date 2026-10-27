@@ -266,6 +266,25 @@ def _daterange(start, end=None):
         return f"{s.strftime('%b')} {s.day} – {e.strftime('%b')} {e.day}, {s.year}"
     return f"{s.strftime('%b')} {s.day}, {s.year} – {e.strftime('%b')} {e.day}, {e.year}"
 
+@app.template_filter('monthspan')
+def _monthspan(start, end=None):
+    """Format ISO 'YYYY-MM-DD' start/end as the month(s) they fall in.
+
+    'August 2026', 'August–September 2026', 'December 2025–January 2026'.
+    The trip header's only date (AWH 2026-10-27). Unparseable input passes
+    through like `daterange`.
+    """
+    try:
+        s = datetime.strptime(str(start), "%Y-%m-%d").date()
+        e = datetime.strptime(str(end), "%Y-%m-%d").date() if end else s
+    except (ValueError, TypeError):
+        return f"{start} – {end}" if end and end != start else start
+    if (s.year, s.month) == (e.year, e.month):
+        return f"{s.strftime('%B')} {s.year}"
+    if s.year == e.year:
+        return f"{s.strftime('%B')}–{e.strftime('%B')} {s.year}"
+    return f"{s.strftime('%B')} {s.year}–{e.strftime('%B')} {e.year}"
+
 @app.template_filter('daylabel')
 def _daylabel(value):
     """'Thu, Jun 5' for a timeline day divider. Falls through unchanged if the
@@ -390,17 +409,6 @@ def inject_trip_stats():
     # is_day_trip(), matching the stats page — an empty placeholder trip has
     # no campspots AND no events and counts as neither.
     daytrips = sum(1 for t in trips if is_day_trip(t))
-    # Span of years the trips cover, for the header's title line. Dateless
-    # placeholder trips carry start == "" and are skipped the same way the
-    # calendar's year range skips them; a single-year library renders as just
-    # that year rather than "2022–2022".
-    years = sorted({t["start"][:4] for t in trips if t.get("start")})
-    if not years:
-        year_range = ""
-    elif years[0] == years[-1]:
-        year_range = years[0]
-    else:
-        year_range = f"{years[0]}–{years[-1]}"
     return {
         # The header shows the combined figure; the two parts stay available
         # for anything that still wants the breakdown.
@@ -410,7 +418,6 @@ def inject_trip_stats():
         # camping_nights(), matching the stats page — the header's nights
         # figure and the Nights hero/by-year chart must never disagree.
         "night_count": sum(camping_nights(t) for t in trips),
-        "year_range": year_range,
     }
 
 
