@@ -1,0 +1,83 @@
+{
+  "id": 2310,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (content served from developer.nps.gov/api/v1/campgrounds?parkCode=cure, read 2026-10-27)",
+    "https://www.recreation.gov/api/camps/campgrounds/234053 and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234053 (per-site catalog)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=cure"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 50},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234053 ('Electric hookups are in Loop D for both 30 and 50 amps') + per-site catalog (34 sites list Electricity Hookup 50; no site lists water or sewer) + NPS campground data ('the only campground with electric hookups (Loops C and D) at Curecanti', 35 electrical hookup sites), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 155,
+        "max_rig_ft": 55,
+        "pull_through": true,
+        "note": "NPS: 155 sites (14 tent-only, 35 electric in Loops C and D); RVs to 55 ft, trailers to 35 ft. The recreation.gov catalog lists 150 (16 tent-only, 38 'Standard Electric', 11 pull-throughs) with lengths to 62 ft. Blue Mesa Adventure Pods in Loop C are booked only through the concessioner (Elk Creek Marina LLC)."
+      },
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (NPS campground data: totalSites 155, tentOnly 14, electricalHookups 35, rvMaxLength 55, trailerMaxLength 35, 'This campground can accommodate large RVs', 'Blue Mesa Adventure Pods are located in Elk Creek Campground Loop C') + recreation.gov per-site catalog for 234053 (Driveway Entry Pull-Through on 11 sites), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "flush_toilets": true,
+        "vault_toilets": true,
+        "showers": false,
+        "laundry": false,
+        "camp_store": false,
+        "dump": true,
+        "potable_water": true,
+        "note": "Flush toilets, potable water and the dump station are seasonal; vault toilets year-round. Paved campground with very few trees; seasonal amphitheater programs and host."
+      },
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (NPS campground data: toilets 'Flush Toilets - seasonal', 'Vault Toilets - year round'; showers 'None'; laundry 'No'; campStore 'No'; dumpStation 'Yes - seasonal'; potableWater 'Yes - seasonal'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": true,
+        "note": "Open all year; typically Loops B and C are closed in winter."
+      },
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (Operating Hours & Seasons: 'Open all year. Typically loops B & C are closed in winter.'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "max_stay_nights": 14,
+        "note": "'All sites can be reserved on Recreation.gov and can be made the same day of arrival. Dates are released on a 6-month rolling basis.' NPS lists 111 sites reservable and 49 first-come; cell service is unreliable, so book before arriving. Up to 14 nights in a rolling 30 days; at most 2 sites held."
+      },
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (Reservations, quoted) + https://www.recreation.gov/api/camps/campgrounds/234053 (rules maxConsecutiveStay 14, maxStay 14 'Rolling 30 Days', maxConcurrentStay 2), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 34,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$24 a night for non-electric sites (Loops A, B and C), $34 for electric sites (Loops C and D); half price with a Senior or Access pass ($12 / $17). recreation.gov's 2026 and 2027 tables carry the same $24 / $34."
+      },
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm (fees: 'The nightly camping fee for non-electric sites in Loops A, B, and C at Elk Creek is $24.00', 'sites with electricity (Loops C and D) ... $34.00', Senior/Access $12 and $17) + https://www.recreation.gov/api/camps/campgrounds/234053/rates (2026-01-01 to 2026-12-31 Peak: Standard Nonelectric 24, Standard Electric 34), read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm ('Discounted camping rate for valid Senior or Access passes': $12 non-electric, $17 electric), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Curecanti NRA's largest campground, on the north shore of Blue Mesa Reservoir off US-50 (~7,540 ft); paved, very few trees. Marina and visitor center nearby. --Claude",
+  "summary": "NPS (Curecanti) and recreation.gov: confirmed 50-amp electric (Loops C/D), $24 non-electric / $34 electric for 2026, reservable on recreation.gov 6 months out and same-day, open all year (B and C usually closed in winter). Corrected sites 153 -> 155 and max length 74 -> 55 ft (NPS RV max; trailers 35), added pull-throughs, facilities (seasonal flush toilets/water/dump, vault toilets, no showers/laundry/store), 14-night max, Senior/Access half price. Pin 285 m from the centroid of the catalog's sites. Only alert: possible toxic algae in Blue Mesa (no closure). Note trimmed of field facts.",
+  "flags": [
+    "Missing phone: Curecanti NRA (970) 641-2337 (NPS campground page contacts; also recreation.gov facility phone 970-641-2337).",
+    "Length sources differ: NPS gives RV max 55 ft and trailer max 35 ft; the recreation.gov per-site catalog lists lengths up to 62 ft (69 sites at 0). Recorded the NPS 55; the old 74 ft had no agency source. All fit a 23-ft rig.",
+    "Website: the stored link is the recreation.gov booking page; the park's own campground page is https://www.nps.gov/cure/planyourvisit/camp_elk_creek.htm."
+  ]
+}

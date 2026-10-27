@@ -460,3 +460,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2285 Vega SP (Early Settlers) (CO, p3-164): stored lakefront, but cpwshop pads sit 64-259 m from the OSM reservoir polygon; z17 imagery near full pool shows the NE pads ~50-80 m from the water across open grass. Lakeview certain, lakefront borderline - re-run the gate.
 - 2577 Arkansas River Rim (CO, p3-164): river ~60-90 m east of the sites behind conifers; stored riverview, possibly generous.
 - 2267 Clear Creek Reservoir SWA (CO, p3-164): stored creekside looks supportable - SE pull-outs 10-30 m from Clear Creek under conifers; reservoir 151 m.
+- 15412 Estes Park KOA (CO, p3-165): stored lakeview, but no source mentions a lake view; KOA says Lake Estes is "across the street" - re-run the gate.
