@@ -461,3 +461,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2577 Arkansas River Rim (CO, p3-164): river ~60-90 m east of the sites behind conifers; stored riverview, possibly generous.
 - 2267 Clear Creek Reservoir SWA (CO, p3-164): stored creekside looks supportable - SE pull-outs 10-30 m from Clear Creek under conifers; reservoir 151 m.
 - 15412 Estes Park KOA (CO, p3-165): stored lakeview, but no source mentions a lake view; KOA says Lake Estes is "across the street" - re-run the gate.
+- 2283 Island Acres (CO, p3-166): stored not waterfront; Loop D west row 20-40 m from the pond's east shore, Loop B ~40 m from the Colorado River through trees - re-run the gate.
+- 2658 Molas Lake (CO, p3-166): stored lakeview; operator sells "Premium Water View" sites described as waterfront that take 23-ft RVs - possible lakefront, needs the satellite gate.
+- 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.

@@ -1,0 +1,81 @@
+{
+  "id": 2402,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.recreation.gov/camping/campgrounds/232350",
+    "https://www.recreation.gov/api/camps/campgrounds/232350",
+    "https://www.recreation.gov/api/camps/campgrounds/232350/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232350 (per-site coordinates)",
+    "RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r02/psicc/recreation/monarch-park-campground"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 0,
+        "water": false,
+        "sewer": false
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232350 ('No electrical or sewer hookups are available'; 'No RV hookups are available') + RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20) (all 35 sites STANDARD NONELECTRIC, Water/Sewer Hookup 'No'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 35,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "12 pull-through sites. The catalog gives lengths for only 8 sites (20-40 ft); the Forest Service's posted maximum is 45 ft. Vehicles must fit on the parking spur."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/monarch-park-campground ('Maximum RV length is 45 feet') + RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20) (35 standard sites, 12 Pull-Through) + https://www.recreation.gov/api/camps/campgrounds/232350 ('Vehicles must fit on parking spur'), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "dump": false,
+        "note": "Water comes from a hand pump, out of service at last report (bring all water). Nearest dump station at the Poncha Springs Visitor Center."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232350 ('Vault toilets are available'; 'The hand pump is still being repaired so water is currently not available'; 'The nearest RV dump station is at the Poncha Springs Visitor Center'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "note": "June to September per the Forest Service, weather dependent; recreation.gov's 2027 first-come season runs May 28 - September 18."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/monarch-park-campground ('Seasons of Use: June to September') + https://www.recreation.gov/api/camps/campgrounds/232350/rates (First-come, First-served Season 2027-05-28 to 2027-09-18), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "platform": "none",
+        "url": "https://www.recreation.gov/camping/campgrounds/232350",
+        "fcfs": "always",
+        "note": "First-come, first-served only since the 2026 reopening; pay at the self-service fee tube (cash or check). Sites must be occupied the first night paid. No phone service at the campground."
+      },
+      "source": "RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20) (all 35 sites reservable false) + https://www.recreation.gov/api/camps/campgrounds/232350/rates (2026 and 2027 seasons 'First-come, First-served') + https://www.fs.usda.gov/r02/psicc/recreation/monarch-park-campground ('Reservations are not available at this time'; 'A self-service fee tube is available'), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 22,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$22 a night on recreation.gov's 2026 and 2027 rate tables (a no-water discount is reflected while the pump is out); the Forest Service page posts $24. A third vehicle is $10. Senior/Access pass 50% off."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232350/rates (Walk In STANDARD NONELECTRIC 22, 2026-08-21 to 2026-09-19 and 2027-05-28 to 2027-09-18) + https://www.fs.usda.gov/r02/psicc/recreation/monarch-park-campground ('$24 fee per site for overnight camping'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Salida RD (Pike-San Isabel NF) campground at 10,500 ft below Monarch Pass, along the South Fork of the Arkansas River; reopened August 21, 2026 after a renovation. --Claude",
+  "summary": "rec.gov API + rate table + RIDB catalog + FS page: confirmed 35 sites, no hookups, max 45 ft, $22. Changed booking reservable true -> false (first-come only since the 2026 reopening, fcfs always); added pull-through, vault toilets, no dump, season June-Sept, fees $22-24. Note: dropped the site count/length and the wrong 'Reservable online'.",
+  "flags": [
+    "Status conflict: the Forest Service page still says 'Site Closed' for the National Forest Foundation renovation, while recreation.gov says it reopened Friday, August 21, 2026 and posts a first-come season for 2027 (May 28 - Sep 18). Treat as open next season; closed now for winter.",
+    "Water: recreation.gov notice says the hand pump is being repaired and no water is available; bring water.",
+    "Phone: none stored. FS Salida Ranger District 719-539-3591 (recreation.gov's facility line is (661) 702-1420, the concessionaire's). Suggest 719-539-3591.",
+    "Pin is ~125 m from the centroid of the 35 rec.gov site coordinates (38.51655,-106.32488) - fine.",
+    "Waterfront (stored creekside): rec.gov says 'Some campsites ... are located on the banks of the South Fork Arkansas River, while others lie along a creek'. Esri imagery is snow-covered; the visible meandering channel and beaver ponds are in the meadow east of the northern sites, ~100-150 m from the nearest site coordinates. Could not confirm or veto; left as is."
+  ]
+}
