@@ -207,10 +207,12 @@
      shorter than the two were, and fills the title band's empty middle.
 
      When the row doesn't fit, fitSiteTop() (inline after the markup) adds
-     .fit-1.. .fit-4 to .site-top, one at a time: drop the years, then the
-     subtitle, then the counts, then the button labels (icon-only, the label
-     kept for screen readers and as a tooltip). Measured rather than set by
-     breakpoints because the button count depends on the account's role. */
+     .fit-1.. .fit-5 to .site-top, one at a time: drop the years, then the
+     subtitle, then the counts, then tighten the buttons' spacing, and as a
+     last resort wrap the buttons onto a second row under the title. The
+     button labels are never dropped (AWH 2026-10-27: icon-only buttons
+     don't say where they go). Measured rather than set by breakpoints
+     because the button count depends on the account's role. */
   @media (min-width: 701px) {
     .site-top {
       display: flex;
@@ -305,14 +307,13 @@
     .site-top.fit-1 .site-years,
     .site-top.fit-2 .site-subtitle,
     .site-top.fit-3 nav#site-nav .stats { display: none; }
-    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-group a .nav-text,
-    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-logout .nav-text,
-    .site-top.fit-4 .nav-more-btn .nav-text {
-      position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0;
-      overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
-    }
-    .site-top.fit-4 nav#site-nav a, .site-top.fit-4 .nav-more-btn { min-width: 0; padding: .55rem; }
-    .site-top.fit-4 nav#site-nav .nav-more-menu a { padding: .55rem .7rem; }
+    .site-top.fit-4 { gap: .75rem; padding-left: 1rem; padding-right: 1rem; }
+    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-group a,
+    .site-top.fit-4 nav#site-nav > .nav-collapse > .nav-logout,
+    .site-top.fit-4 .nav-more-btn { min-width: 0; padding-left: .35rem; padding-right: .35rem; }
+    .site-top.fit-4 nav#site-nav .nav-group + .nav-group { margin-left: .25rem; padding-left: .25rem; }
+    .site-top.fit-5 { flex-wrap: wrap; row-gap: 0; padding-top: .45rem; }
+    .site-top.fit-5 nav#site-nav { flex-basis: 100%; }
   }
 
   /* Short desktop screens (e.g. 1366×768 laptops). The navy bar eats a
@@ -809,7 +810,8 @@
 </div>
 <script>
   // Fit the desktop bar to the window by shedding text, one step at a time
-  // (see the "Desktop/tablet bar" CSS): years, subtitle, counts, labels. Runs
+  // (see the "Desktop/tablet bar" CSS): years, subtitle, counts, spacing,
+  // then a second row. Labels are never dropped. Runs
   // inline, before first paint, so the bar never shows overflowing; reruns
   // on resize ahead of the --site-top-height measurement below.
   (function() {
@@ -817,17 +819,11 @@
     if (!top) return;
     const phone = window.matchMedia('(max-width: 700px)');
     const fit = () => {
-      top.classList.remove('fit-1', 'fit-2', 'fit-3', 'fit-4');
+      top.classList.remove('fit-1', 'fit-2', 'fit-3', 'fit-4', 'fit-5');
       let level = 0;
       if (!phone.matches) {
-        while (level < 4 && top.scrollWidth > top.clientWidth) top.classList.add('fit-' + ++level);
+        while (level < 5 && top.scrollWidth > top.clientWidth) top.classList.add('fit-' + ++level);
       }
-      // Icon-only buttons still need a name on hover.
-      top.querySelectorAll('#site-nav a, .nav-more-btn').forEach(el => {
-        const t = el.querySelector(':scope > .nav-text');
-        if (!t || el.closest('.nav-more-menu')) return;
-        if (level >= 4) el.title = t.textContent.trim(); else el.removeAttribute('title');
-      });
     };
     fit();
     window.fitSiteTop = fit;
