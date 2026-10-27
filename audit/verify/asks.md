@@ -289,3 +289,5 @@ Your notes: Big Bend "sites adjacent to the water"; Watoga Riverside "several si
 - Big Bend: recreation.gov tags no site as near water, the river-loop site photos show only woods, and the Forest Service says the river is "200 feet from campground". Under the trees, the pads plot ~25-35 m from a side channel and 60-100 m from the main river.
 - Watoga Riverside: the state parks' booking system tags ~24 sites "Riverview" and none "Riverfront" (the same system does use Riverfront at North Bend). A wooded bank strip ~35-45 m wide separates the south loop from the Greenbrier.
 Do you remember RV pads right on the bank (keep riverfront), or should either drop to riverview?
+
+- **2628 Trailing Edge Park, Limon CO (p3-163, 2026-10-27):** passes your five long-stay tests ($45/night quoted for a Class C, nights booked online with a 1-night minimum, 5 of 37 sites open for a November night), but the operator's own rules are written for monthly tenants (rent due on the 1st, winter skirting), and it is a gravel lot with no office, restrooms or showers. Kept. Drop it?
