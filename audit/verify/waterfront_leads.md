@@ -454,3 +454,4 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).
 - 2340 Green Ridge (CO, Arapaho NF): FS and rec.gov say "located on beautiful Shadow Mountain Reservoir", with a boat ramp and dock in the campground; entry lakeview (p3-160).
 - 2366 Heaton Bay (CO, White River NF): FS "located on the shores of Lake Dillon"; entry lakeview. Pin ~340 m north of the RV-site centroid (39.60198,-106.07693) - check at the sites (p3-160).
+- 2367 Lowry (CO, White River NF): the stored "not waterfront" evidence was read at the old pin 39.6060,-106.0435, 1.76 km from the sites. Re-pinned to the per-site centroid 39.5972,-106.0264 (FS point 39.597101,-106.027543); re-run the gate at the sites (p3-161).

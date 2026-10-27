@@ -1,0 +1,78 @@
+{
+  "id": 14462,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://mapesrv.com/rates",
+    "https://mapesrv.com/amenities",
+    "https://mapesrv.com/policies (incl. FAQ)",
+    "https://mapesrv.com/api/sites and https://mapesrv.com/api/availability (the park's own booking engine at https://mapesrv.com/book)",
+    "https://mapesrv.com/api/settings"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true,
+        "sewer": false
+      },
+      "source": "https://mapesrv.com/policies FAQ ('RV sites include water and electric hookups (30/50 amp). We do not have sewer hookups on-site. The nearest dump station is at John Martin Reservoir') + amenities ('Both 30-amp and 50-amp electric service available') + /api/sites (25 RV sites hasWater true; maxAmps 50 on 6, 30 on 19), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 25,
+        "max_rig_ft": 40,
+        "pull_through": true,
+        "note": "24 pull-through and 1 back-in RV site (30-amp on 19, 50-amp on 6), all listed to 40 ft, plus 4 tent sites."
+      },
+      "source": "https://mapesrv.com/rates ('Back-In Sites 1 site $29', 'Pull-Through Sites 24 sites $29', 'Tent Sites 4 sites $20') + /api/sites (maxLength 40 on every site), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "camp_store": true,
+        "wifi": true,
+        "dump": false,
+        "laundry": false,
+        "note": "Grocery store with bait, tackle, fishing licenses, firewood and propane (8 a.m. - 5 p.m.). No dump station on site; the nearest is at John Martin Reservoir State Park."
+      },
+      "source": "https://mapesrv.com/amenities ('Clean Showers & Restrooms'; 'Complimentary WiFi'; 'On-Site Grocery Store'; 'Propane exchange and fill service'; 'A dump station is available at John Martin Reservoir State Park') + policies ('We do not have a sewer dump station on-site'; FAQ 'No, we do not have laundry facilities on-site'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://mapesrv.com/book",
+        "note": "Book online at mapesrv.com or call. A one-night deposit is required and nothing is refunded for cancellations, no-shows or early departures. Monthly stays ($650 + tax) under a long-term stay license. Check-in 2 p.m., check-out 11 a.m."
+      },
+      "source": "https://mapesrv.com/policies ('Reservations require a deposit equal to one night's stay'; 'No refunds will be issued for early departures, no-shows, or cancellations for any reason'; Long-Term Stay Policy) + rates ('$650.00/month') + /book (date picker over /api/availability), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 29,
+        "nightly_high": 29,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "Every RV site $29 a night plus 5.9% tax; tent sites $20. No seasonal rates are posted, and the engine has no rig-type choice. Extra vehicles $5 a night."
+      },
+      "source": "https://mapesrv.com/rates ('Back-In Sites ... $29', 'Pull-Through Sites ... $29', 'Taxes and fees not included') + /api/sites (baseRate '29.00', taxRate '5.90' on every RV site) + /api/seasonal-rates and /api/fees (both empty) + policies ('Additional vehicles: $5/night each'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "RV park with a grocery, bait and propane store at Hasty, about 1 km north of John Martin Reservoir; the nearest dump station is at John Martin Reservoir State Park. --Claude",
+  "summary": "Operator site + its own booking engine's site list: confirmed $29 (2026, +5.9% tax), 50-amp max, 24 pull-throughs, 40-ft max, store, online booking. Changed sites 29 -> 25 (25 RV sites; the other 4 are tent sites). Added water yes / sewer no, showers, wifi, no dump or laundry, deep link, deposit/refund terms. Note: dropped the field restatements, the rate and the RV Life line.",
+  "flags": [
+    "Price gate: passes ($29 + 5.9% tax; no mandatory per-night fees). No gateway within 40 km (nearest Great Sand Dunes NP 228 km); not needed.",
+    "Presence: passes; own site with booking engine, phone (719) 691-1856 matches, email info@mapeslakeview.com.",
+    "Long-stay tests: pass. Nightly rate posted, booking engine sells every site nightly; monthly stays ($650) are a revocable license and the engine shows 1 of 29 sites reserved this week.",
+    "Booking engine offers no rig type at all (no motorhome/van choice); it lists every RV site to 40 ft, so EKKO fits.",
+    "Site data conflicts: the engine marks one pull-through as hasSewer, but the FAQ says 'We do not have sewer hookups on-site' (recorded false). Amenities says 'Most pull-through sites offer 50-amp', the engine lists 5 of 24 at 50 A. The pet fee is $2/pet/night on the amenities page but 'no extra charge' in the policies.",
+    "Water claim: the about text says 'the crystal-clear waters of Mapes Lake' and 'nestled on the shores'; it is boilerplate, and the reservoir is ~1.2 km south (not waterfront stands).",
+    "Season: no statement of operating dates; the engine takes January 2027 bookings. Left unset.",
+    "Open now."
+  ]
+}

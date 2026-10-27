@@ -1,0 +1,55 @@
+{
+  "id": 2311,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.nps.gov/cure/planyourvisit/camp_lake_fork.htm (rendered from the NPS campgrounds API: https://developer.nps.gov/api/v1/campgrounds?parkCode=cure)",
+    "https://www.nps.gov/cure/planyourvisit/fees.htm",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=cure",
+    "https://www.recreation.gov/api/camps/campgrounds/234054",
+    "https://www.recreation.gov/api/camps/campgrounds/234054/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A234054"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 83, "max_rig_ft": 55, "pull_through": true, "note": "recreation.gov lists 83 sites: 78 RV/trailer sites (paved spurs 20-52 ft, 16 of them 50-ft pull-throughs) and walk-in tent sites 46-50 (RVs may not use their parking). NPS gives 90 sites in all and 'Small to large trailers can be accommodated'."},
+      "source": "NPS campground record (rvMaxLength '55', totalSites '90', rvInfo 'Small to large trailers can be accommodated at Lake Fork', 'The campground is paved except for the walk-in tent sites') + rec.gov catalog (83 sites; Driveway Entry 16 Pull-Through, 67 Back-In; Max Vehicle Length/Driveway Length up to 52) + rec.gov notice ('please reserve one of the walk- in tent sites (sites 046 to 050). RV's are not allowed to park in walk-in campsite parking'), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234054 (notice 'Lake Fork Campground does not offer electric hookups') + NPS campground record (electricalHookups '0'), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "vault_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "camp_store": false, "wifi": false, "note": "Flush toilets, water and the dump station are seasonal (summer). Fish-cleaning station. Cell reception unreliable."},
+      "source": "NPS campground record (toilets 'Flush Toilets - seasonal', 'Vault Toilets - seasonal'; potableWater 'Yes - seasonal'; dumpStation 'Yes - seasonal'; showers 'None'; laundry 'No'; campStore 'No'; internetConnectivity 'No') + rec.gov ('Flush toilets are available in summer months', 'a fish cleaning station is provided'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "window_opens_days": 180, "max_stay_nights": 14, "note": "Reserve on recreation.gov ('Dates are released on a 6-month rolling basis'); same-day booking allowed. NPS recommends reserving because cell service is poor and first-come sites may be unavailable. The NPS pages disagree on walk-ups (see flags), so fcfs is not recorded. 14 consecutive nights."},
+      "source": "NPS campground record (reservationInfo 'The upper and middle sections can be reserved. Dates are released on a 6-month rolling basis'; operatingHours 'All sections are reservable on Recreation.gov') + https://www.nps.gov/cure/planyourvisit/fees.htm (Lake Fork: reservable online Yes, first-come sites No) + rec.gov rules (maxConsecutiveStay 14, reservationCutOff 0), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 a night for every site; $12 with a Senior or Access pass."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234054/rates (Peak Season 2026-04-13 to 2026-10-31: STANDARD NONELECTRIC 24, TENT ONLY NONELECTRIC 24) + https://www.nps.gov/cure/planyourvisit/fees.htm (Lake Fork '$24') + NPS campground record fees ('The nightly camping fee for the Upper and Middle Sections at Lake Fork is $24.00'; 'Senior/Access ... $12.00'), read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.nps.gov/cure/planyourvisit/fees.htm ('Visitors with a Senior or Access Pass receive a 50% discount on campground fees'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Curecanti NRA (National Park Service) campground on Blue Mesa Reservoir near the dam, on CO 92 just off US 50 about 27 mi west of Gunnison, 7,580 ft. Set up for RVs: paved loops, little room for tents outside the walk-in sites. Lake Fork boat ramp with mussel inspection nearby. --Claude",
+  "summary": "NPS campground record + fees page + rec.gov rates/rules/catalog: confirmed no electric, $24 (2026), flush toilets and dump, 83 catalogued sites, reservable on rec.gov. Max rig 52 (note) -> 55 (NPS rvMaxLength). Added pull-throughs, vault toilets/water/no showers/laundry/store/wifi, 6-month window, 14-night max, senior/access 50%. Note rewritten. Not stated: a campground season (NPS gives none), fcfs (NPS pages conflict).",
+  "flags": [
+    "Missing phone: Curecanti NRA (970) 641-2337 (NPS campground record and rec.gov).",
+    "Website: recreation.gov only; NPS page https://www.nps.gov/cure/planyourvisit/camp_lake_fork.htm (add it).",
+    "Walk-ups conflict: the NPS fees page lists Lake Fork with no first-come sites and the NPS operating-hours text says 'All sections are reservable on Recreation.gov', but the NPS fee list still says 'The Lower Section is non-reservable (first-come first-served)' and the record counts 57 reservable + 19 first-come sites; rec.gov's catalog has 82 of 83 sites reservable. fcfs left unset.",
+    "Reservation season conflict: the NPS description says 'Reservations may be made on recreation.gov from mid-May to mid-September', while rec.gov's 2026 Peak rate season runs April 13 - October 31. Neither is a statement of when the campground is open, so season and booking.season were left unset.",
+    "Site count: rec.gov catalog 83 sites, NPS record totalSites 90 (57 reservable + 19 first-come = 76 in the same record). Kept 83.",
+    "Pin: 475 m from the centroid of the catalog's site coordinates (38.45502,-107.32547) and ~530 m from the NPS campground point (38.45483,-107.32698); just under the ~500 m threshold for the centroid, consider moving it onto the loops.",
+    "Open now: no closure alert; NPS caution (2026-10-13) that toxic algae may still be present in Blue Mesa Reservoir."
+  ]
+}
