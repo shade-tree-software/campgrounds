@@ -1,0 +1,69 @@
+{
+  "id": 2304,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.nps.gov/romo/planyourvisit/gbcg.htm (content served by https://developer.nps.gov/api/v1/campgrounds?parkCode=romo)",
+    "https://www.nps.gov/romo/planyourvisit/camping.htm",
+    "https://www.nps.gov/romo/planyourvisit/fees.htm",
+    "https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm",
+    "https://www.recreation.gov/api/camps/campgrounds/232462",
+    "https://www.recreation.gov/api/camps/campgrounds/232462/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232462"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 (notice 'No Hookups. There are no hookups available'; description 'RV sites without hookups') + NPS campground record (electricalHookups 0), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 150,
+        "max_rig_ft": 35,
+        "pull_through": true,
+        "note": "150 campsites: 13 group sites (no RVs or trailers in the group loop) and 73 tent-only, leaving about 65 standard sites that take RVs. Catalog lengths on those run 15-35 ft; about 48 take 25 ft or more. Parallel, back-in and pull-through spurs."
+      },
+      "source": "https://www.nps.gov/romo/planyourvisit/camping.htm ('Glacier Basin Campground: 35 feet') + NPS campground record (totalSites 150, group 13, tentOnly 73, rvMaxLength 35, 'RVs and trailers are not allowed in the group loop') + https://www.recreation.gov/api/camps/campgrounds/232462 ('There are 150 campsites'; notice 'maximum vehicle length of 35 feet (Trailer Length = Trailer + Hitch + Vehicle)') + rec.gov campsite catalog (Max Vehicle Length, Driveway Entry), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "showers": false, "laundry": false, "camp_store": false, "wifi": false, "note": "One solar shower stall; bring your own solar shower bag. Food storage lockers; firewood sold in the campground 5-8 p.m. (one rec.gov notice says it is not sold - the two notices conflict)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 ('Flush toilets and drinking water are provided'; 'Dump Station'; 'No Shower or Laundry facilities in the campground') + NPS campground record (showers None, laundry No, campStore No, internetConnectivity No, dumpStation Yes - seasonal; 'One solar shower stall are available; visitors must provide their own solar heated shower bag'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-21", "closes": "09-07", "note": "2026 season: May 21 through the night of September 7 (closes at noon September 8). NPS lists the summer 2027 dates as TBD (check back mid-November)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 (fee description: 'a seasonal campground open from May 21 through the night of September 7, 2026. The campground will close at noon on September 8') + https://www.nps.gov/romo/planyourvisit/camping.htm (Campground Dates for Summer 2027: 'TBD'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "window_opens_days": 180,
+        "fcfs": "never",
+        "max_stay_nights": 7,
+        "note": "Reservation only (recreation.gov or 1-877-444-6777); no same-day sales and no booking in person at the park. Some sites open 6 months ahead on a rolling window, some only 2 weeks or 1 week ahead; group sites 1 year ahead. From May 1 to October 15 the 7-night limit is 7 nights in total across all RMNP campgrounds."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 (Overview: 'All campsites ... are available by reservation only'; 6-month / 2-week / 1-week releases; 7-night limit; rule maxConsecutiveStay 7) + https://www.nps.gov/romo/planyourvisit/camping.htm ('There are no same day sales available at RMNP's campgrounds'; 'From May 1 through October 15, you can camp in the park 7 nights total parkwide'), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026", "note": "$35 a night for standard non-electric sites (group sites $50-70). Park entrance fee extra: $30 per vehicle for 1 day or $35 for 7 days (annual and lifetime passes accepted); non-US residents 16 and over pay an extra $100 each unless admitted with an annual or America the Beautiful pass. The camping reservation includes the Timed Entry + Bear Lake Road permit: campers may enter from 1 p.m. on their first day; to enter earlier they need their own timed entry reservation or must arrive outside the timed-entry hours (2026: 9 a.m.-2 p.m. park-wide from May 22 to October 12; Bear Lake Road 5 a.m.-6 p.m. to October 18)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 (fee description '$35.00 for standard nonelectric sites'; timed entry notice) + /rates (2026 Peak: STANDARD NONELECTRIC 35) + https://www.nps.gov/romo/planyourvisit/fees.htm (1-Day Vehicle $30.00, 7-Day Vehicle $35.00, non-US residents $100) + https://www.nps.gov/romo/planyourvisit/timed-entry-permit-system.htm, read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232462 (notice 'If you use a Senior or Access Pass for a camping fee discount while booking a reservation, you must present the pass and photo ID upon check-in'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Rocky Mountain NP campground on Bear Lake Road, ~8,500 ft, with peak views; fir and pine with open meadows. A free park shuttle stop in the campground serves the Bear Lake Road trailheads. Generators allowed 7:30-10 a.m. and 4-8:30 p.m. in Loops A, B, D and part of C (not Loop C sites 76-104 or the group sites). --Claude",
+  "summary": "NPS (camping page + campground record) and recreation.gov: confirmed 150 sites, 35-ft max, no hookups, flush toilets, dump, $35. Added water/sewer false, pull-throughs, drinking water, no showers/laundry/store/wifi, season 2026 May 21-Sep 7, reservation-only (fcfs never) with a 7-night parkwide limit, senior/access discount, entrance fee and timed-entry permit wording in fees.note. NPS shows it closed now for the 2026/2027 winter (ordinary season end). Note rewritten.",
+  "flags": [
+    "Missing phone: the park's number on NPS and recreation.gov is 970-586-1206.",
+    "Website: recreation.gov only; the NPS campground page is https://www.nps.gov/romo/planyourvisit/gbcg.htm (add it).",
+    "Pin 40.32917,-105.59333 is ~120 m from the RV-site centroid (40.32947,-105.59471); fine."
+  ]
+}

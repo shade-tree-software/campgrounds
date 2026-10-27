@@ -452,3 +452,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2644 Clear Creek RV Park (CO, City of Golden): city says the park is "on the banks of Clear Creek" and sells "Creek-side sites" (the $85 tier); entry riverview (p3-158).
 - 2297 Crawford SP (Clear Fork) (CO): the stored lakefront evidence names perimeter sites 46-49, which CPW lists as tent sites - re-check which RV sites sit on the apron (p3-159).
 - 2649 Gateway RV Park (Carbondale) (CO, local): town says "along the Roaring Fork River"; entry not waterfront (p3-159, mild).
+- 2340 Green Ridge (CO, Arapaho NF): FS and rec.gov say "located on beautiful Shadow Mountain Reservoir", with a boat ramp and dock in the campground; entry lakeview (p3-160).
+- 2366 Heaton Bay (CO, White River NF): FS "located on the shores of Lake Dillon"; entry lakeview. Pin ~340 m north of the RV-site centroid (39.60198,-106.07693) - check at the sites (p3-160).

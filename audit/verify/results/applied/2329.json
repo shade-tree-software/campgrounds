@@ -1,0 +1,51 @@
+{
+  "id": 2329,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/kelly-dahl-campground (last updated 2026-10-13)",
+    "https://www.fs.usda.gov/r02/arp/conditions (Boulder RD campground status table)",
+    "https://www.recreation.gov/api/camps/campgrounds/232280",
+    "https://www.recreation.gov/api/camps/campgrounds/232280/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232280"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 46, "max_rig_ft": 45, "pull_through": false, "note": "Sites 1-20 are first-come, first-served; 25 sites reservable on recreation.gov (all back-in, spurs listed 22-40 ft)."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/kelly-dahl-campground ('There are 46 sites that will accommodate tents, trailers and RVs. Campsites 1 - 20 are first come, first served') + https://www.fs.usda.gov/r02/arp/conditions (Kelly Dahl: '46', Max Spur '45'') + rec.gov catalog (25 reservable STANDARD NONELECTRIC, all 'Back-In', max 22-40), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/kelly-dahl-campground ('There is no electricity, hook-ups, dump stations or showers') + rec.gov notice ('RV water connections are not available. Utility hookups are not available.'), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "showers": false, "note": "Bear lockers at every site with a tent pad; firewood sold in the campground."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/kelly-dahl-campground ('Picnic tables, fire grates, water, vault toilets, and trash services are provided. There is no electricity, hook-ups, dump stations or showers. All campsites with a tent pad have a bear locker'; 'Potable water is available at this site') + rec.gov ('Firewood is for sale in campground'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-15", "closes": "10-11", "note": "2026 dates; first-come, first-served only (at the lower rate) after the reservation season ends in late September."},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Kelly Dahl 'May 15 - Oct 11') + rec.gov rates (Peak 2026-05-15 to 2026-09-19, Walk In 2026-09-20 to 2026-10-10), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "season": {"opens": "05-15", "closes": "09-19"}, "note": "Sites 1-20 first-come, first-served. Reservations close 4 days before arrival; 2-night minimum on weekends, 3 on holiday weekends; 14 nights in a rolling 60 days. Sites must be occupied within 26 hours or go to walk-ups. One vehicle included, extras $8 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232280 (rules minWeekendStay 2 'Ignore Holidays', minHolidayWeekendStay 3, maxStay 14 'Rolling 60 Days', reservationCutOff 4; notices 'All campsites must be occupied within 26 hours ...', '$8.00 per vehicle per night') + rates (reservable Peak season 2026-05-15 to 2026-09-19) + FS page ('Campsites 1 - 20 are first come, first served'), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 18.75, "nightly_high": 29, "currency": "USD", "checked": "2026", "note": "$29 a night in the reservation season; $18.75 in the first-come fall season (2026: Sept 20 - Oct 10). Extra vehicle $8 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232280/rates (Peak 2026-05-15 to 2026-09-19 STANDARD NONELECTRIC 29; 'Walk In' 2026-09-20 to 2026-10-10 18.75; same pattern 2027/2028) + FS page ('Single Site: $29 per night'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Boulder RD, wooded, beside the Peak-to-Peak Scenic Byway (CO 119, mile marker 22) about 4 mi south of Nederland (Arapaho-Roosevelt NF), 8,660 ft. Gravel campground road. The lakes across the highway are private, no access. --Claude",
+  "summary": "FS page + ARP status table + rec.gov rates/rules/catalog: confirmed 45-ft max, no electric, $29 and the $18.75 low (it is the fall first-come rate, not a senior rate). Count 25 -> 46 (20 FCFS); season closes 09-19 (calendar-derived) -> May 15 - Oct 11 open, with reservations May 15 - Sep 19 in booking.season. Added back-in only, no hookups/dump/showers, vault toilets, water, FCFS some sites, weekend 2-night / holiday 3-night minimums, 14-night max. Note rewritten.",
+  "flags": [
+    "Missing phone: rec.gov's facility phone for Kelly Dahl is 303-541-2500 (the Boulder Ranger District number, used on 3 DB entries); the ARP offices page lists 970-295-6600 (the forest's shared line) for the Boulder office. rec.gov's contact-info text gives (530) 529-0578 (concessionaire).",
+    "Website: recreation.gov only; FS page https://www.fs.usda.gov/r02/arp/recreation/kelly-dahl-campground (add it).",
+    "Minimum stay: rec.gov enforces a 2-night weekend and 3-night holiday-weekend minimum (rules, not 'soft'); weeknights are open to 1 night, so it stays.",
+    "Pin ~230 m from the centroid of the 25 reservable sites (the 20 FCFS sites are not in the catalog); fine."
+  ]
+}
