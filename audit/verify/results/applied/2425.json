@@ -1,0 +1,69 @@
+{
+  "id": 2425,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/233721",
+    "https://www.recreation.gov/api/camps/campgrounds/233721/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233721 (per-site catalog and coordinates, 22 sites)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 22,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "recreation.gov sells sites at $22 a night in the peak season and $24 in the fall first-come season; the Forest Service page says $24 per site. A one-time $11 fee to enter the Eleven Mile Canyon Recreation Area (annual pass $100); $11 for a third vehicle."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233721/rates (Peak Season 2026-05-15 to 2026-10-11 and 2027-05-28 to 2027-09-05: STANDARD NONELECTRIC 22; First-come, First-served Season 2027-09-06 to 2027-10-10: 24) + https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('$24 fee per site for overnight camping ... $11 fee for a third vehicle') + recreation.gov notice ('one-time fee of $11.00 to enter Eleven Mile Canyon Recreation Area'), read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 23, "max_rig_ft": 45, "note": "Parking spurs 20-45 ft; trailers 25 ft maximum. recreation.gov's catalog lists 22 sites, 13 of them tent-only; the 8 RV/trailer sites are back-ins of 25-35 ft. One RV per site."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('It has 23 campsites with parking spurs 20-45 feet and a maximum trailer length of 25 feet'; 'The max length for RVs/trailers is 20-45 feet') + recreation.gov per-site catalog, read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Well water from a hand pump. Firewood sold at the host site."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('Vault toilet(s)'; 'Potable water is available at this site. Well water is available.') + https://www.recreation.gov/api/camps/campgrounds/233721 ('vault toilets, picnic tables, hand pump for drinking water'; 'Firewood is available for sale at host site'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-15", "closes": "10-15", "note": "Mid-May to mid-October, weather dependent."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('This campground is open mid-May to mid-October, weather dependent.'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233721",
+        "fcfs": "after_cutoff",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -120},
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "season": {"opens": "05-28", "closes": "09-05"},
+        "note": "Reserve on recreation.gov or at 877-444-6777, up to 180 days ahead; booking closes 5 days before arrival (the Forest Service says four), and sites left unreserved become first-come. The 2027 reservation season runs May 28 to September 5, then first-come until October 10 (in 2026 reservations ran May 15 to October 11). Weekend minimum 2 nights, holiday weekends 3; recreation.gov marks the weekend minimum soft, so it may be relaxed for a same-day booking, and walk-ups are exempt."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground ('Call 877-444-6777 or visit recreation.gov at least four days or a maximum of 180 days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.'; 'No more than a 14-night consecutive stay') + https://www.recreation.gov/api/camps/campgrounds/233721 (rules minWeekendStay 2 'soft', reservationCutOff 5, maxConsecutiveStay 14) + /rates (season dates), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Last campground up Eleven Mile Canyon, on the South Platte River below the Eleven Mile Reservoir dam; trailhead for the Overlook Trail. Concessionaire-run (recreation.gov contact (661) 702-1420). Bear closure order: store attractants hard-sided. --Claude",
+  "summary": "FS page + rec.gov API/rates/per-site catalog: confirmed fees $22-24, electric 0, reservable on recreation.gov, riverfront (sites ~70 m from the South Platte), pin (~110 m from the site centroid). Changed count 22 -> 23 (FS), max 45 (derived) -> 45 confirmed from the FS spur range. Added vault toilets, well water, season mid-May to mid-Oct, booking 180-day window, 5-day cutoff then first-come, 2/3-night weekend/holiday minimums, 14-night max, 2027 booking season, senior/access discount, canyon entry fee in fees.note. Note cleaned (count/length/booking restatements dropped).",
+  "flags": [
+    "Phone: none stored. South Park Ranger District 719-836-2031 (FS page). Suggest 719-836-2031; the concessionaire's line on recreation.gov is (661) 702-1420.",
+    "Website: stored is the recreation.gov page; suggest the FS page https://www.fs.usda.gov/r02/psicc/recreation/spillway-campground (recreation.gov stays as booking.url).",
+    "Length conflict: FS gives spurs 20-45 ft but a 25-ft trailer maximum (recreation.gov also says 25 ft); the catalog's longest RV site is 35 ft. Kept 45 with the 25-ft trailer cap in sites.note. EKKO (23 ft) fits the 8 RV/trailer sites (25-35 ft).",
+    "Only 9 of 22 catalogued sites are standard sites (13 tent-only), so RV capacity is small.",
+    "Count: FS 23, recreation.gov 'about 23', catalog 22. Wrote 23.",
+    "Cutoff conflict: recreation.gov reservationCutOff 5 days vs FS 'at least four days'. Wrote 5 days (the booking system's value)."
+  ]
+}

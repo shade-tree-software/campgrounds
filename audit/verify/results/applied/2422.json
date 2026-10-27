@@ -1,0 +1,67 @@
+{
+  "id": 2422,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/233718",
+    "https://www.recreation.gov/api/camps/campgrounds/233718/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233718 (per-site catalog and coordinates, 14 sites)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 24,
+        "nightly_high": 24,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$24 per site. A one-time $11 fee to enter the Eleven Mile Canyon Recreation Area (annual pass $100); $11 for a third vehicle."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('$24 fee per site for overnight camping ... $11 fee for a third vehicle') + https://www.recreation.gov/api/camps/campgrounds/233718/rates (Peak Season 2027-05-14 to 2027-10-10: STANDARD NONELECTRIC 24) + recreation.gov notice ('one-time fee of $11.00 to enter Eleven Mile Canyon Recreation Area'), read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 15, "max_rig_ft": 25, "note": "Parking spurs 20-28 ft; RVs or trailers 25 ft maximum. recreation.gov's catalog lists 14 sites, 4 of them tent-only; the rest are back-ins of 20-28 ft. One RV per site."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('It has 15 campsites with parking spurs 20-28 feet and a maximum trailer length of 25 feet'; 'The max length for RVs or trailers is 25 feet') + recreation.gov per-site catalog, read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water from a hand pump. Firewood sold at the host site."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('Vault toilet(s)'; 'Potable water is available at this site. A hand pump is available.') + https://www.recreation.gov/api/camps/campgrounds/233718, read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-15", "closes": "10-15", "note": "Mid-May to mid-October, weather dependent; not all services early or late in the season."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('This campground is open mid-May to mid-October, weather dependent.'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/233718",
+        "fcfs": "after_cutoff",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -120},
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "season": {"opens": "05-14", "closes": "10-10"},
+        "note": "Reserve on recreation.gov or at 877-444-6777; booking closes 5 days before arrival (the Forest Service says four) and unreserved sites become first-come walk-ups. Reservations run May 14 to October 10 in 2027. Weekend minimum 2 nights, holiday weekends 3; recreation.gov marks the weekend minimum soft, so it may be relaxed for a same-day booking, and walk-ups are exempt."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.'; 14-night limit) + https://www.recreation.gov/api/camps/campgrounds/233718 (notice 'Sites not reserved 5 days before become walk-up'; rules minWeekendStay 2 'soft', reservationCutOff 5, maxConsecutiveStay 14) + /rates (Peak Season 2027-05-14 to 2027-10-10), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "In Eleven Mile Canyon about 6 miles up County Road 96, a short walk from the South Platte River; scattered ponderosa, aspen and fir. Concessionaire-run (recreation.gov contact (661) 702-1420). Bear closure order: store attractants hard-sided. --Claude",
+  "summary": "FS page + rec.gov API/rates/per-site catalog: confirmed $24, electric 0, reservable on recreation.gov, not waterfront (river ~280 m), pin (~70 m from the site centroid). Changed count 14 -> 15 (FS), max_rig_ft 28 -> 25 (FS: 'The max length for RVs or trailers is 25 feet'). Added vault toilets, hand-pump water, season mid-May to mid-Oct, 5-day cutoff then first-come, 2/3-night weekend/holiday minimums, 14-night max, 2027 booking season, senior/access discount, canyon entry fee in fees.note. Note cleaned (count/length/booking restatements dropped).",
+  "flags": [
+    "Phone: none stored. South Park Ranger District 719-836-2031 (FS page). Suggest 719-836-2031; the concessionaire's line on recreation.gov is (661) 702-1420.",
+    "Website: stored is the recreation.gov page; suggest the FS page https://www.fs.usda.gov/r02/psicc/recreation/springer-gulch-campground (recreation.gov stays as booking.url).",
+    "Max length 28 -> 25: FS states spurs 20-28 ft but a 25-ft RV/trailer maximum (recreation.gov: 'fit trailers up to 25 feet'). EKKO (23 ft) still fits; only sites 001 (25 ft) and 006 (28 ft) list RV/Motorhome in the catalog, the 20-28 ft sites 002-004 and 010-014 list trailers.",
+    "Count: FS 15, recreation.gov 'about 14', catalog 14 (4 tent-only). Wrote 15.",
+    "Cutoff conflict: recreation.gov 5 days vs FS 'at least four days'. Wrote 5 days."
+  ]
+}

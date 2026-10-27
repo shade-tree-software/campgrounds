@@ -1,0 +1,67 @@
+{
+  "id": 2309,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234052",
+    "https://www.recreation.gov/api/camps/campgrounds/234052/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234052 (per-site catalog and coordinates, 84 sites)",
+    "https://www.nps.gov/blca/planyourvisit/camp_southrim.htm (rendered from the NPS campground record)",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (NPS record for South Rim Campground)"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 34,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Loop A (non-electric) $20 a night, Loop B (electric) $34; Senior/Access pass holders $10 and $17. The park entrance fee is separate."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234052/rates (Peak Season 2026-05-14 to 2026-12-31 and 2027-01-01 to 2027-03-31: STANDARD NONELECTRIC 20, STANDARD ELECTRIC 34) + https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (fees: 'The nightly camping fee for Loop A at the South Rim is $20.00'; 'Loop B (RV sites with electricity) ... $34.00'; Senior/Access $10.00 / $17.00), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30, "water": false, "sewer": false},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca ('Only Loop B offers 20 and 30 amp electric hookups'; 'no ... water for RV tanks'; electricalHookups 23) + https://www.recreation.gov/api/camps/campgrounds/234052 (notice 'There are no water hookups or dump station at South Rim Campground'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 88, "max_rig_ft": 55, "pull_through": true, "note": "88 sites in Loops A, B and C; 23 with electric (Loop B). Loop B takes RVs or car-plus-trailer up to 55 ft combined, most Loop B sites about 30 ft; Loops A and C typically fit a 23-ft RV. recreation.gov's catalog: Loop A sites 16-65 ft (most 27 ft or more, several pull-throughs), Loop B 16-50 ft, Loop C mostly 21 ft."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (campsites totalSites 88, electricalHookups 23; rvInfo 'Loop B has sites large enough for RVs and trailers (combined length) up to 55 feet. Most sites in Loop B average about 30 feet. Sites in Loops A and C can typically fit a 23-foot RV'; rvMaxLength 55) + recreation.gov per-site catalog (Max Vehicle Length by loop; Driveway Entry Pull-through 12), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "flush_toilets": false, "potable_water": true, "showers": false, "dump": false, "laundry": false, "camp_store": false, "note": "Drinking water seasonal (about mid-May to mid-September/October); no water for RV tanks. Bear boxes, amphitheater, seasonal host."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (amenities: toilets ['Vault Toilets - year round'], potableWater 'Yes - seasonal', showers 'None', dumpStation 'No', laundry 'No', campStore 'No'; 'there are no showers, dish cleaning stations, or water for RV tanks') + recreation.gov ('drinking water is only available mid-May through mid-October'; 'no water hookups or dump station'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Open all year; in winter only Loop B (electric) is open."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (operatingHours 'Campground is open 24 hours a day, all year ... In the winter, only Loop B is open (has electrical hookups).') + https://www.recreation.gov/api/camps/campgrounds/234052 ('Campsites are open year round'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234052",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "note": "Reserve on recreation.gov. The NPS record counts 74 reservable and 14 first-come sites but also says all sites in all loops must be reserved; recreation.gov says the campground is first-come in winter, while its rate table now sells 'Peak Season' through March 31, 2027. 14 consecutive nights, 30 days a year; 8 people and 2 vehicles per site; 2 sites per booking."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=blca (numberOfSitesReservable 74, numberOfSitesFirstComeFirstServe 14; reservationInfo 'All sites in all loops must be reserved through Recreation.gov'; regulations 'Stay is limited to 14 consecutive nights for a total of 30 days within a calendar year') + https://www.recreation.gov/api/camps/campgrounds/234052 (rules maxConsecutiveStay 14, maxConcurrentStay 2; 'South Rim Campground is first-come, first-served in winter') + /rates, read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Black Canyon of the Gunnison NP campground on the South Rim, a mile from the South Rim Visitor Center; sites fairly close together, partly shaded by tall scrub oak. Loop B is the electric loop. After the 2025 South Rim Fire only limited non-electric sites are open in 2026, electric hookups are unavailable and some areas are closed (NPS, 2026-10-27). No generators; no firewood collection or sales. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + NPS campground record/page: confirmed 88 sites, max 55 ft, $20/$34, vault toilets, reservable on recreation.gov with some first-come sites. Changed electric 30 (derived) -> 30 confirmed (NPS: Loop B 20 and 30 amp; the RIDB '50' attribute is wrong), flush_toilets true -> false (NPS lists vault only). Added no water/sewer hookups, potable water (seasonal), no showers/dump/laundry/store, pull-throughs, season year-round (winter Loop B only), 14-night max. Note: dropped the count/length/toilet/booking restatements, added the fire-damage caveat.",
+  "flags": [
+    "Re-pin: stored 38.55056,-107.68667 is recreation.gov's facility point, on a road bend near the canyon edge ~800 m NNE of the campground (Esri imagery). The 84 recreation.gov site points centre on 38.54384,-107.68979 (spread under 190 m), on the loops in imagery; the NPS record gives 38.54381,-107.68942. Suggest 38.5438,-107.6896.",
+    "Phone: none stored. Black Canyon of the Gunnison NP 970-641-2337 (NPS campground page footer; the NPS campground record gives (970) 641-2337 ext. 205). recreation.gov lists 970-249-1914 ext 425. Suggest 970-641-2337.",
+    "Partial closure (2025 South Rim Fire): NPS says 'Due to wildfire damage, limited sites (non-electric only) are currently available' and 'Electrical hookups are currently unavailable' in 2026; recreation.gov's catalog shows every Loop B (electric) and Loop C site unreservable, only 25 Loop A sites reservable. The campground is operating (Loop A), so no status written; recorded in the note.",
+    "Electric amperage: NPS says Loop B has 20 and 30 amp hookups; recreation.gov's catalog tags 22 Loop B sites (and 5 Loop C sites) with Electricity Hookup '50'. Kept 30 per the NPS. NPS counts 23 electric sites, the catalog 22 in Loop B.",
+    "First-come/booking conflict: NPS says all sites must be reserved but counts 14 first-come sites; recreation.gov describes winter as first-come while its 2026-27 rate table sells reservations through 2027-03-31. Kept fcfs some_sites.",
+    "Max length: NPS rvMaxLength 55 (Loop B); the catalog has Loop A sites at 58 and 65 ft. Kept 55. EKKO fits: Loops A and C 'typically fit a 23-foot RV'; most Loop C sites are catalogued at 21 ft (C is closed in 2026).",
+    "Waterfront (stored not waterfront): correct, the campground is on the rim, away from the river."
+  ]
+}
