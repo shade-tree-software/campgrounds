@@ -1155,11 +1155,8 @@
     color: #fff;
   }
 
-  /* Named rather than `.day-divider span`, which also matched the drive chip
-     and the `.nb` spans inside it — every property here had to be undone
-     there, and anything added here silently leaked into the mileage. With a
-     class the chip simply doesn't match, and `.nb` inherits from `.day-drive`
-     the way it always should have. */
+  /* Named rather than `.day-divider span`: an element selector here once
+     leaked into a facts chip that sat in this row (removed 2026-10-27). */
   .day-divider .day-num {
     /* Plain type, not a pill (AWH 2026-09-30). Size does the job the fill
        used to: well above the 1.05rem card titles, so it still reads as the
@@ -1190,42 +1187,11 @@
        navy so it still reads as structure, not as content. */
     height: 2px;
     background: rgba(0, 40, 104, .16);
-    /* The rule is drawn last so it fills whatever the labels leave; `order`
-       lets the facts sit after it, pushing them to the right edge while the
-       day's name stays left. */
+    /* The rule is drawn last so it fills whatever the labels leave. */
     order: 1;
   }
-  /* Stops, photos, miles and driving time for the day, right-aligned opposite
-     its name. Deliberately lighter than the name: it qualifies the day rather
-     than naming it, and on a long trip these repeat every few cards.
-
-     Keep these rules scoped to `.day-divider .day-facts` rather than
-     reintroducing element selectors inside this row: a `.day-divider span`
-     rule once beat the chip on specificity and silently overrode every
-     property here, `.nb` included (it rendered "9H 06M DRIVING"). */
-  .day-divider .day-facts {
-    order: 2;
-    background: var(--offwhite);
-    padding: 0 0 0 .6rem;
-    font-size: .75rem;
-    font-weight: 600;
-    color: var(--gray);
-    letter-spacing: .02em;
-    /* "9H 06M" reads as an abbreviation gone wrong; lowercase units are what
-       make it scan as a measurement, and the mixed case separates the two
-       halves of the row without spending another colour on it. */
-    text-transform: none;
-  }
-  /* Each fact is nowrap so a narrow screen breaks BETWEEN them rather than
-     through "9h 06m" — same treatment as the stats page's drive list. */
-  .day-divider .day-facts .nb { white-space: nowrap; }
   @media (max-width: 700px) {
-    /* Below ~360px the name, the rule and the facts stop fitting on one line;
-       wrapping drops the facts to their own row under the name rather than
-       letting them push the layout wide. */
-    .day-divider { flex-wrap: wrap; row-gap: .3rem; }
     .day-divider .day-num { font-size: 1.3rem; }
-    .day-divider .day-facts { padding-left: 0; }
   }
   /* ── Time column ─────────────────────────────────────────────────────────
      A zero-height block in flow just above its card, with the time hung out
@@ -2541,60 +2507,22 @@
     carries no card of its own (see below). Duplicating this markup was
     the alternative, and the write-up slot is the part that must not
     drift. -#}
-{% macro day_divider(day, drive, writeup, can_add_road, no_road_card) %}
-    {#- What the GPS says the day drove.
-
-        A day that ENDED SOMEWHERE ELSE reports the leg — leaving where the
-        day started to reaching where it ended — which is exactly the figure
-        the stats page's Longest Driving Days shows for it, so the two pages
-        cannot disagree about the same day. Anything driven on top of that
-        (an evening run to the camp store, a loop before setting off) is
-        counted but not printed: it is a couple of miles on a day of several
-        hundred, and putting it on the line cost a third of the row's width
-        to say almost nothing. It lives in the tooltip instead, where it
-        still explains why the day's total is a shade above the leg.
-
-        A day that came back to where it started has no leg to report — that
-        is the case the stats page drops, and the whole reason this needs its
-        own measure — so it reports the whole day and says "round trip" to
-        name what it is counting.
-
-        `driving_by_day` omits a day under a mile, so a day parked at camp
-        shows just its date rather than a measured-looking "0 mi".
-
-        The day is named by its NUMBER first and its date second (AWH
+{% macro day_divider(day, writeup, can_add_road, no_road_card) %}
+    {#- The day is named by its NUMBER first and its date second (AWH
         2026-09-30): "Day 3" is how the family talks about a trip, and the
         number is what the day picker steps through. It is the calendar
         offset from the trip's first day (`_timeline_days`), so a day with no
         cards of its own leaves a gap in the numbering rather than shifting
         every later day down by one.
 
-        Stops and photos sit with the mileage on the right: together they are
-        the day at a glance, and none of them is worth a line of its own. A
-        zero is left out rather than printed — "0 photos" on a driving day is
-        noise, not information. -#}
+        The day's stops, photos, miles and driving time that sat on the right
+        of this row were removed (AWH 2026-10-27). -#}
     {%- set info = trip_days.get(day) or {} %}
     <div class="day-divider" id="day-{{ day }}" data-day="{{ day }}"{% if info.num %} data-day-num="{{ info.num }}"{% endif %}>
       {%- if info.num %}
       <span class="day-num">Day {{ info.num }}</span>
       {%- endif %}
       <span class="day-date">{{ day | daylabel }}</span>
-      {%- if info.stops or info.photos or drive %}
-      <span class="day-facts"
-        >{#- whitespace between these spans is the only place the line may
-             break on a narrow screen, so it is kept deliberate and minimal -#}
-        {%- if info.stops %}<span class="nb">{{ info.stops }} stop{{ '' if info.stops == 1 else 's' }}</span>{% endif %}
-        {%- if info.photos %}{% if info.stops %} &middot; {% endif %}<span class="nb">{{ info.photos }} photo{{ '' if info.photos == 1 else 's' }}</span>{% endif %}
-        {%- if drive %}
-        {%- set tip = ('Driven this day, ending back where it started. The stats page ranks only days that ended somewhere else, so this one does not appear there.'
-                       if drive.round_trip
-                       else '{:,}'.format(drive.miles) ~ ' mi from where the day started to where it ended — the same figure the stats page shows'
-                            ~ (', plus ' ~ drive.local_miles ~ ' mi driven locally on either side of it.' if drive.local_miles else '.')) %}
-        {%- if info.stops or info.photos %} &middot; {% endif %}<span class="day-drive" title="{{ tip }}"
-          ><span class="nb">{{ '{:,}'.format(drive.miles) }} mi{% if drive.round_trip %} round trip{% endif %}</span>{% if drive.moving %} &middot;
-          <span class="nb">{{ drive.moving }} driving</span>{% endif %}</span>
-        {%- endif %}</span>
-      {%- endif %}
     </div>
     {%- if can_add_road and no_road_card %}
     {#- A road card exists exactly when its directory has photos, which leaves
@@ -2671,7 +2599,7 @@
   {% for item in trip.timeline %}
   {% if item.sort_date and item.sort_date != ns.last_date %}
     {% set ns.last_date = item.sort_date %}
-    {{ day_divider(item.sort_date, driving_by_day.get(item.sort_date),
+    {{ day_divider(item.sort_date,
                    day_writeups.get(item.sort_date),
                    is_admin or is_uploader,
                    item.sort_date not in road_photos) }}
@@ -3152,7 +3080,7 @@
       the drive home that nothing displayed. `ns.last_date` is the last divider
       the loop actually emitted, so this fires exactly when the two disagree. -#}
   {% if trip.timeline and trip.end and trip.end > ns.last_date %}
-    {{ day_divider(trip.end, driving_by_day.get(trip.end),
+    {{ day_divider(trip.end,
                    day_writeups.get(trip.end),
                    is_admin or is_uploader,
                    trip.end not in road_photos) }}

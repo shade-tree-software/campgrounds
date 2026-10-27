@@ -4263,13 +4263,7 @@ def trip_detail(trip_id):
     # convention rather than carrying a `tz` of their own. Only computed when
     # the trip spans several zones — on those, leaving the trip's start and end
     # as the one pair of bare times would make them the ambiguous ones.
-    # Per-day miles + driving time for the timeline's day dividers. Shown to
-    # every viewer: the numbers are precomputed, so unlike the stats page's
-    # Longest Driving Days there is no per-viewer work to skip by gating, and
-    # "we drove 520 miles that day" is a good detail for anyone reading the
-    # trip rather than a planning tool.
     derived = _trip_derived_entry(trip)
-    driving_by_day = _trip_driving_by_day(trip, derived)
 
     home_tz_abbr = ""
     if trip.get("multi_timezone") and home:
@@ -4312,7 +4306,6 @@ def trip_detail(trip_id):
         trip_days=trip_days,
         home_tz_abbr=home_tz_abbr,
         home_tz_offset_min=home_tz_offset_min,
-        driving_by_day=driving_by_day,
         stay_photos=stay_photos,
         event_photos=event_photos,
         road_photos=road_photos,
