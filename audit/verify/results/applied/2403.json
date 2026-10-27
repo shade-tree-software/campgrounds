@@ -1,0 +1,57 @@
+{
+  "id": 2403,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/ohaver-lake-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/231870",
+    "https://www.recreation.gov/api/camps/campgrounds/231870/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A231870",
+    "https://api.openstreetmap.org/api/0.6/map?bbox=-106.152,38.421,-106.136,38.433 (Lake O'Haver outline, for site-to-shore distances)"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "rec.gov notice ('No RV hookups are available. No dumping waste water.') + per-site catalog (all 32 STANDARD/TENT NONELECTRIC, Water Hookup 'No'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 32, "max_rig_ft": 45, "pull_through": true, "note": "29 RV/trailer sites and 3 tent-only (18-20), gravel spurs, 5 pull-throughs (8, 21, 23, 26, 28). Most RV sites sit within about 80 m of the lake, sites 9-12 and 32 within 30 m. The catalog gives no vehicle lengths; FS states a 45-ft RV maximum."},
+      "source": "FS page ('This facility has 32 sites'; 'Maximum RV length is 45 feet') + rec.gov catalog (types, Driveway Entry, Driveway Surface Gravel, per-site coordinates vs the OSM Lake O'Haver outline), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Water, trash and the host may not be available early and late in the season. Firewood sold at the host site ($10 a bundle)."},
+      "source": "FS page (Restrooms 'vault toilet'; 'Potable water is available at this site'; 'Services such as water, trash or a host may not be available during early and late season'; 'Firewood is available for sale at the host site for $10 per bundle'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "closes": null, "note": "FS: open May to October, dates weather dependent. In 2026 rec.gov ran walk-up only May 8-21 and September 22-October 11 either side of the reservation season."},
+      "source": "FS page (Seasons of Use: 'May to October. Opening and closing dates are weather dependent') + rec.gov rates (2026 'First-come, First-served Season' 2026-05-08 to 05-21 and 2026-09-22 to 10-11), read 2026-10-27. The derived close of 09-21 was the end of the reservation season, not of the campground's.",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "season": {"opens": "05-22", "closes": "09-21"}, "note": "Reserve on recreation.gov or 877-444-6777 at least four days ahead. Sites 1-5, 7, 13, 21, 23 and 24 are always first-come, and site 6 too once the host leaves after September; every site is walk-up outside the reservation season. Walk-ups are exempt from the weekend and holiday minimums and must be occupied the night paid for. Usually full from Friday (sometimes Thursday); no phone service at the campground."},
+      "source": "FS page ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum') + rec.gov description ('Sites #1-5, 7 ,13,21,23 and 24 are first-come, first-served ... Site #6 is used by the host from mid-May through September') + rules (minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4) + rates (2026 Peak Season 2026-05-22 to 2026-09-21), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "$28 a site (2026, the same in 2027-28); double sites 11 and 12 $56. Two vehicles or one RV included, $10 for a third vehicle."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231870/rates (2026 Peak Season: STANDARD NONELECTRIC 28, double STANDARD NONELECTRIC 56, TENT ONLY 28) + FS page ('$28 fee per site for overnight camping ... $10 fee for a third vehicle'), read 2026-10-27",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true, "note": "50% for Senior and Access pass holders, on the site the pass holder occupies; not on double sites 11 and 12."},
+      "source": "FS page ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites') + rec.gov notice ('Double sites are not eligible for Senior or Access Pass discounts, this includes sites 11 and 12'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Salida Ranger District campground (Pike-San Isabel NF) on the shore of O'Haver Lake at 9,200 ft, 2.5 miles up County Road 202 off Marshall Pass Road (CR 200) southwest of Poncha Springs. Non-motorized boats only; accessible fishing pier. --Claude",
+  "summary": "FS page + rec.gov description/rules/rates/catalog: confirmed 32 sites, no hookups, $28 (2026), reservable with walk-up sites. Changed max rig 85 -> 45 ft (FS stated maximum; catalog gives no lengths). Cleared the derived season close 09-21 (that is the end of the reservation season; FS says May to October, walk-up to Oct 11 in 2026) and recorded year_round false. Added pull-throughs, vault toilets, potable water, fcfs some_sites, 2-night weekend / 3-night holiday minimum, 14-night max, booking season 05-22 to 09-21, Senior/Access discount. Note: ranger district corrected South Platte -> Salida.",
+  "flags": [
+    "Phone missing: the FS page gives the Salida Ranger District, 719-539-3591 (5575 Cleora Road, Salida); rec.gov also lists (661) 702-1420 for facility-specific information. The stored note had the wrong district (South Platte RD); Ohaver Lake is on the Salida Ranger District.",
+    "Website is the recreation.gov listing; the FS campground page is https://www.fs.usda.gov/r02/psicc/recreation/ohaver-lake-campground.",
+    "Access: the last 4.8 miles are County Road 200 (Marshall Pass Road, unpaved per OSM) and County Road 202; rec.gov warns 'Access road to campground has sharp curves; drive with caution'. No FS rig-length or 4WD warning; FS allows RVs to 45 ft.",
+    "Pin checked: 124 m from the centroid of the 29 RV-site coordinates (FS gives 38.42596,-106.14361). Lakefront supported: most RV sites are within ~80 m of the OSM lake outline, five within 30 m.",
+    "Closed now for the season (FS: May to October; 2026 walk-up season ended Oct 11). Salida RD fire danger 'High' on the FS page; no closure order found for this campground."
+  ]
+}
