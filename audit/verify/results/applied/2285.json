@@ -1,0 +1,73 @@
+{
+  "id": 2285,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://cpw.state.co.us/state-parks/vega-state-park/vega-state-park-camping-lodging",
+    "https://www.cpwshop.com/camping/vega-state-park/r/campgroundDetails.page?parkID=50045",
+    "https://www.cpwshop.com/camping/vega-state-park/r/campsiteDetails.page?parkID=50045&siteID=4502 (read 2026-10-27)",
+    "audit/state_park_fees/co_sites_2026-10-12.jsonl + co_booking_rates_2026-10-12.jsonl (parkID 50045: every site's loop, type, maximum vehicle length and GIS point)",
+    "OpenStreetMap way 40064055 (Vega Reservoir) via Overpass, read 2026-10-27",
+    "Esri World Imagery z17 at 39.2156,-107.8106, 2026-10-27"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {
+        "electric": 50,
+        "water": true
+      },
+      "source": "cpwshop campsiteDetails, Early Settlers (Electricity Hookup '20/30/50', Water Hookup 'Y' on site 100HA, read 2026-10-27; the same on every Early Settlers site in co_booking_rates_2026-10-12.jsonl) + CPW camping page ('Early Settlers is the only campground with hookups'; 'Full water hookups ... are turned off Nov 15, pending weather, for the Early Settlers Campground'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 34,
+        "max_rig_ft": 45,
+        "pull_through": true,
+        "note": "31 Electric and 3 Electric-ADA sites, listed for vehicles 30-45 ft (most 35-40), so all take a 23-ft rig; the ADA sites 101HD and 104HD are pull-through."
+      },
+      "source": "cpwshop site list for parkID 50045, Early Settlers loop (Maximum Vehicle Length 30-45; Driveway Entry Pull-Through on 101HD/104HD) via co_sites_2026-10-12.jsonl + live campsiteDetails for 100HA (40 ft, read 2026-10-27)",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "showers": true,
+        "flush_toilets": true,
+        "potable_water": true,
+        "dump": true,
+        "note": "Camper services building (showers, flush toilets) in Early Settlers; its water is shut off about Nov 15. Dump station closes about Oct 31."
+      },
+      "source": "CPW camping page ('Showers are available for guests in the camper services building located in Early Settlers Campground (Annually water shut off Nov. 15 pending weather)', 'Flush toilets', 'Dump station (Closes annually Oct. 31, pending weather)', 'Water'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "note": "No winter camping (cabins only); Early Settlers' water, showers and flush toilets are turned off about Nov 15. CPW states no opening date."
+      },
+      "source": "CPW camping page ('Staying During Winter: No campsites are available in the winter'; 'Full water hookups, showers and flush toilet water are turned off Nov 15, pending weather, for the Early Settlers Campground'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.cpwshop.com/camping/vega-state-park/r/campgroundDetails.page?parkID=50045",
+        "window_opens_days": 180,
+        "fcfs": "never",
+        "max_stay_nights": 14,
+        "note": "A reservation is required: cpwshop.com or 1-800-244-5613, up to six months ahead. 14 days within a 28-day period; six people, two motorized vehicles and one camping unit per site. Check-in 1 p.m., check-out noon. Display a vehicle pass."
+      },
+      "source": "CPW camping page ('A reservation is required to camp at Vega State Park ... online at cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance'; 'The maximum stay is 14 days within a 28-day period'; check-in/out), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "The only Vega Reservoir loop with hookups (~8,000 ft, Grand Mesa), home of the park's camper services building; boat ramp on the SW side. --Claude",
+  "summary": "CPW camping page + cpwshop: Early Settlers has 34 electric sites (31 + 3 ADA) at 20/30/50 A with water, 30-45 ft, 2 pull-throughs. Added electric 50, max rig 45, potable water, booking url/window/fcfs never/14-night max; confirmed water, 34 sites, pull-through, showers/flush/dump, reservable, no winter camping (season note: water off ~Nov 15). Fees unchanged ($36 electric, June 2027 on cpwshop, 2026-10-12 read). Opening date not stated. Note trimmed.",
+  "flags": [
+    "Waterfront re-audit lead: stored 'lakefront', but the Early Settlers pads (cpwshop GIS points) sit 64 m (sites 113, 114) to 259 m from OpenStreetMap's Vega Reservoir polygon; none within the ~50 m bound. Esri imagery (z17, reservoir near full) shows the loop on an open grass slope, the NE pads ~50-80 m from the water with nothing but grass between, the rest 100 m+. Lakeview is certain; lakefront is borderline at best for a few NE sites.",
+    "Possible missing entry: Vega's 'Island Campground' loop on cpwshop (parkID 50045) has 2 Basic sites listed for 60-ft vehicles (403, 404; $28 June 2027) plus 1 tent site, centroid ~39.2291,-107.8142, 1.5 km from this entry. Aspen Grove (2286) and Oak Point (2287) have entries; Island does not. Whether 2 sites is worth an entry is AWH's call.",
+    "Season conflict: cpwshop's campsite page says 'Status: Open year round' (max reservation window Apr 27 2027), while CPW's park page says 'No campsites are available in the winter'. Kept year_round false (CPW's statement); no opening date is published.",
+    "Pin is ~5 m from the centroid of the 34 Early Settlers sites (39.21559,-107.81064). Fine.",
+    "Open now (late October, before the Nov 15 water shut-off); nothing about closures on either page."
+  ]
+}
