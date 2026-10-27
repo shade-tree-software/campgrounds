@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    2596: ("2026-10-27", "long-stay in character with no RV nights visibly for sale (long-stay test 2; AWH 2026-10-27: drop)", "p3-165, read 2026-10-27: fourseasonsriverinn.com advertises 'short term and seasonal lodging', but its booking engine sells only motel rooms and tent sites, no RV rate is posted (price rested on RV Life $$ alone), and recent Google reviews (3.2/105) describe month-long stays and long-term renters. No stays."),
     2645: ("2026-10-27", "no designated campsites: RV parking by permission in areas the Town Clerk designates, a parking allowance (curation doc)", "p3-165, read 2026-10-27: Del Norte municipal code Secs. 11-4-60 and 11-4-110 allow RV parking by permission in clerk-designated areas; the town has no camping page, sites, fee or booking. No stays."),
     2591: ("2026-10-27", "no RV campground there today: Google lists it permanently closed and the operator sells only cabins and glamping", "p3-165, read 2026-10-27: Google Maps 'Permanently closed' (117 reviews); raftecho.com offers Royal Gorge cabins and glamping with no RV sites. No stays."),
     2592: ("2026-10-27", "over the US$50 price gate, no gateway (standing rule AWH 2026-10-19)", "p3-165, read 2026-10-27: now Grandote Lodge & RV Park (grandotelodge.com/rv-park): 'Rates are $60 per night'; elkvalleyrv.com NXDOMAIN; nearest gateway Great Sand Dunes NP 51 km (gateways.py: none within 40 km, family homes included). No stays."),
