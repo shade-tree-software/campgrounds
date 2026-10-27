@@ -1,0 +1,69 @@
+{
+  "id": 2307,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234685",
+    "https://www.recreation.gov/api/camps/campgrounds/234685/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234685 (per-site catalog and coordinates)",
+    "RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.nps.gov/grsa/planyourvisit/camping.htm",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsa (NPS record for Piñon Flats Campground)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=grsa"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 20,
+        "nightly_high": 20,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "$20 a site, tent or RV, on recreation.gov's 2026 and 2027 tables and the NPS record. The park entrance pass is required and not included in the camping fee."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234685/rates (Peak RV NONELECTRIC 20, TENT ONLY NONELECTRIC 20; 2026 and 2027) + https://developer.nps.gov/api/v1/campgrounds?parkCode=grsa (fees 'Individual Site, Per Night' 20.00) + recreation.gov notice ('An entrance pass is required while in the park and is not included in the camping fee'), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234685 (notice 'No showers, hookups or laundry facilities available in the park') + NPS record (electricalHookups 0), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 88, "max_rig_ft": 35, "pull_through": true, "note": "88 sites in Loops 1 and 2 (52 RV, 34 tent-only) plus 3 tent-only group sites. RV, or vehicle plus trailer, limited to 35 ft combined; the NPS says 'RVs or trailers up to 33 feet may fit in a few sites'. Most sites are small and unlevel: per-site lengths on recreation.gov run 15-35 ft, 28 of the 54 RV-usable sites at 25 ft or more. Mostly back-in or parallel, 2 pull-throughs. If the rig is longer than the site booked there is no alternative site."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234685 ('The campground offers 88 campsites'; 'Total combined length limit is 35 feet. RVs over 35 feet, or combined vehicle plus trailer length over 35 feet, are not allowed'; 'Most sites are small and unlevel') + per-site catalog (Max Vehicle Length 20 x20, 25 x19, 30 x7, 35 x2 among RV-usable sites; Driveway Entry Back-in 40, Parallel 12, Pull-through 2) + https://developer.nps.gov/api/v1/campgrounds?parkCode=grsa (rvInfo, rvMaxLength 33, trailerMaxLength 20), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": true, "camp_store": true, "showers": false, "laundry": false, "wifi": false, "note": "All seasonal. Restrooms with sinks and a dishwashing basin; bear boxes; firewood and ice sold in summer. Limited cell signal; nearest wifi in Alamosa."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=grsa (amenities: toilets 'Flush Toilets - seasonal', potableWater 'Yes - seasonal', dumpStation 'Yes - seasonal', campStore 'Yes - seasonal', showers 'None', laundry 'No', internetConnectivity 'No') + recreation.gov notice ('No showers, hookups or laundry facilities'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-01", "closes": "10-31"},
+      "source": "https://www.nps.gov/grsa/planyourvisit/camping.htm ('The campground is open April 1st through October 31st each year') + NPS record ('Open April through October, closed November through March'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234685",
+        "window_opens_days": 90,
+        "fcfs": "never",
+        "season": {"opens": "04-01", "closes": "10-30"},
+        "note": "Reservation required for every site, on recreation.gov or 877-444-6777, up to 3 months ahead (shortened from 6 months for 2026 while the campground is improved); no first-come camping, no waiting list. Reservable 'Peak Season' 2027: April 1 - October 30. Pick a site that fits the rig - there is no alternative site if it doesn't. 8 people, 2 vehicles per site (a trailer counts)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234685 (rules reservationWindow 3 Months; notices 'You must have a reservation ... First-come, first-serve camping is not available', 'There is no waiting list') + /rates (Peak Season 2027-04-01 to 2027-10-30) + https://developer.nps.gov/api/v1/alerts?parkCode=grsa ('sites can be reserved 3 months in advance beginning in 2026') + NPS record (reservationInfo 'All sites are by reservation only through recreation.gov 1-877-444-6777'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Great Sand Dunes NP & Preserve campground among piñon pines and sagebrush a mile north of the visitor center, with views of the dunefield and the Sangre de Cristo peaks. Paved, historic-design loops. Generators only 8-10 a.m., noon-2 p.m. and 5-7 p.m. Medano Creek at the foot of the dunes runs in late spring and summer. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + NPS camping page and API record: confirmed 88 sites, no hookups, flush toilets, $20, reservable on recreation.gov. Changed max rig 47 -> 35 (rec.gov combined length limit). Added pull-throughs, water, dump, store, no showers/laundry, season April 1 - October 31, reservation season, 3-month window, fcfs never. Note: dropped the count/length/toilet/reservable restatements and the 'No water body' line (read as no water).",
+  "flags": [
+    "Phone: none stored. Great Sand Dunes NP & Preserve (719) 378-6395 (NPS camping page; also the NPS campground record's contact). Suggest it.",
+    "Max length: stored 47 was wrong. recreation.gov: 'Total combined length limit is 35 feet'; NPS record: 'RVs or Trailers up to 33 feet may fit in a few sites', rvMaxLength 33, trailerMaxLength 20; per-site catalog tops out at 35 ft (2 sites). Wrote 35. EKKO (23 ft) fits the 28 RV sites rated 25 ft+.",
+    "Pin is ~250 m from the centroid of the 89 recreation.gov site points (37.74645,-105.50484); the NPS record gives 37.74494,-105.50470 - fine.",
+    "Waterfront (stored not waterfront): correct, no water body at the campground.",
+    "Open: no campground closure alert (a Medano Pass Primitive Road creek-crossing caution and Stage 1 fire restrictions only). Closes for the season October 31.",
+    "Website: recreation.gov page kept; the NPS camping page is https://www.nps.gov/grsa/planyourvisit/camping.htm."
+  ]
+}

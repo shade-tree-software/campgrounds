@@ -1,0 +1,69 @@
+{
+  "id": 2308,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.visitmesaverde.com/stay/morefield-campground",
+    "https://book.visitmesaverde.com/lodging/supplier/30085691 (Aramark booking engine, 2 adults, 2027-06-15 one night)",
+    "https://www.nps.gov/meve/planyourvisit/camping.htm",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=meve (NPS campground record: fees, sites, amenities, reservation info, coordinates)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=meve"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 38,
+        "nightly_high": 51,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Dry tent/RV sites $38, the 15 full-hookup sites $51, a night for two people; extra persons age 6+ pay more. Senior/Access passes apply to the site the holder occupies. The booking engine shows the same $38 / $51 for June 2027. Mesa Verde locations are cash-free."
+      },
+      "source": "https://book.visitmesaverde.com/lodging/supplier/30085691 (2027-06-15: 'Dry Site' 24-49 FT $38/night, 'Full Hook Up' 35-49 FT $51/night) + https://developer.nps.gov/api/v1/campgrounds?parkCode=meve (Dry Camping '38.00 ... based on double occupancy'; Full Hook-Up '51.00'; 'Senior and Access passes apply to all camping'), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": true, "sewer": true},
+      "source": "https://www.visitmesaverde.com/stay/morefield-campground ('15 full hook-up RV sites with water, electric, and sewer'), read 2026-10-27; amperage not stated",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 267,
+        "max_rig_ft": 46,
+        "note": "267 sites: 15 full-hookup RV sites, 17 group tent sites, the rest dry tent/RV sites (85 tent-only per the NPS record). The booking engine lists dry sites by length class 24-49 ft and full-hookup sites 35-49 ft, but the concessioner says RVs longer than 46 ft are not allowed."
+      },
+      "source": "https://www.visitmesaverde.com/stay/morefield-campground ('267 in total'; 'NOTE: Morefield RV & Campground does not allow RV's longer than 46''; '17 group sites each accommodating up to 25 guests in tents only') + https://developer.nps.gov/api/v1/campgrounds?parkCode=meve (totalSites 267, tentOnly 85, rvOnly 15, rvMaxLength 46) + booking engine site classes, read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "laundry": true, "dump": true, "camp_store": true, "flush_toilets": true, "potable_water": true, "wifi": true, "note": "All seasonal. Free dump station; showers and coin laundry beside the Campground Store; high-speed internet throughout the loops. No cell reception."},
+      "source": "https://www.visitmesaverde.com/stay/morefield-campground ('Showers & Laundry - Adjacent to Campground Store'; 'Dumping Station - Free'; 'well-stocked grocery and camp store'; 'potable water near campsites'; 'high-speed internet is available throughout all site loops') + https://developer.nps.gov/api/v1/campgrounds?parkCode=meve (toilets 'Flush Toilets - seasonal'; cellPhoneReception 'No'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "04-24", "closes": "10-18", "note": "2026 operating dates April 24 - October 18. Off-season primitive camping with no services about a week either side (2026: April 16-24 and October 19-25); closed November to late April."},
+      "source": "https://www.visitmesaverde.com/stay/morefield-campground ('Operating Dates April 24 - October 18'; 'Winter Closure October 19 at 10:00 am'; 'Primitive Camping Dates ... Off-season limited camping - no service offered. Spring: April 16 - April 24, Fall: October 19 - October 25') + NPS campground record ('Closed for the Season' 2026-11-03 to 2027-04-24), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://book.visitmesaverde.com/lodging/supplier/30085691",
+        "fcfs": "some_sites",
+        "max_stay_nights": 14,
+        "note": "Run by the park concessioner, Aramark: book online, at 1-800-449-2288, or at the Campground Store. Reservations are accepted but not required for the dry sites; highly recommended for the 15 full-hookup sites. Check in at the Campground Store for a site assignment. 14 consecutive nights and 14 total nights a calendar year."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=meve (reservationInfo: 'managed by park concessionaire, Aramark. Reservations are accepted but not required. Reservations are highly recommended for one of the 15, RV full hook-up sites ... online at www.visitmesaverde.com, by calling 1-800-449-2288, or at the Morefield Campground Store') + https://www.visitmesaverde.com/stay/morefield-campground ('Nearly 267 dry tent/RV sites (reservations accepted, not required)'; 'no more than 14 consecutive nights and no more than 14 total nights in a calendar year'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Mesa Verde NP campground in Morefield Canyon, 4.5 mi inside the park entrance, among Gambel oaks; deer and wild turkeys. Trailers/towed vehicles not permitted beyond the campground. Concessioner-run (Aramark). --Claude",
+  "summary": "Concessioner page + its booking engine + NPS campground record: confirmed 267 sites, 46-ft limit, water/sewer at the 15 full-hookup sites, $38 / $51 (also for June 2027), dump, store. Added showers, laundry, flush toilets, water, wifi, season April 24 - October 18 with off-season primitive weeks, booking URL, some walk-up (dry sites need no reservation), 14-night max. Amperage not stated anywhere. Note: dropped the count/length/amenity/booking/season restatements.",
+  "flags": [
+    "Re-pin: stored 37.2391,-108.4624 is on an empty mesa slope about 7.6 km SW of the campground (Esri imagery shows no road or site there). The NPS campground record gives 37.30150,-108.41791, which sits in the middle of the camping loops on imagery. Suggest 37.3015,-108.4179.",
+    "Phone: none stored. Mesa Verde NP 970-529-4465 (NPS camping page); campground reservations through Aramark at 1-800-449-2288 (the NPS record's campground contact). Suggest 800-449-2288 for the campground, or the park's 970-529-4465.",
+    "Website order: the concessioner's page now lives at https://www.visitmesaverde.com/stay/morefield-campground (the stored /lodging-camping/morefield-campground/ redirects there).",
+    "Ownership: federal (NPS) land, campground run by the concessioner Aramark; kept federal.",
+    "Closed now for the season (2026 winter closure October 19; off-season primitive camping to October 25). Not a status."
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "id": 2369,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232357",
+    "https://www.recreation.gov/api/camps/campgrounds/232357/rates",
+    "https://www.recreation.gov/api/camps/availability/campground/232357/month?start_date=2026-10-01 (October 2026 statuses)",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232357 (per-site catalog and coordinates)",
+    "RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/north-fork-campground",
+    "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates' PDF)",
+    "https://www.fs.usda.gov/r02/whiteriver/offices"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 30,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "recreation.gov charges $28 a site (2026 and 2027 tables, no weekend surcharge); the Forest Service page and its 2026 fee sheet say $30 a night, with 'rates differ between weekdays/weekends'. One RV with tow per site; an extra vehicle pays a nightly fee collected at the campground. Senior pass discount on single sites."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232357/rates (Peak STANDARD NONELECTRIC per_night 28, weekend 0; 2026 and 2027) + https://www.fs.usda.gov/r02/whiteriver/recreation/north-fork-campground ('Single Site: $30 per night') + https://www.fs.usda.gov/media/263354 ('North Fork CG ... $30 ... Rates differ between weekdays/weekends'), read 2026-10-27",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232357 ('Electrical hook-ups are not available') + catalog (all 28 sites STANDARD NONELECTRIC), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 28, "max_rig_ft": 40, "pull_through": true, "note": "21 back-in and 6 pull-through RV sites (one pop-up/tent site); per-site lengths 30, 35 or 40 ft on recreation.gov (6 at 40 ft). The Forest Service fee sheet lists '28/60''; level parking areas."},
+      "source": "https://www.recreation.gov/api/search/campsites?fq=asset_id:232357 + RIDB catalog (28 sites; Max Vehicle Length 30 x11, 35 x11, 40 x6; Driveway Entry Back-In 21, Pull-Through 6) + https://www.fs.usda.gov/r02/whiteriver/recreation/north-fork-campground ('28 sites with picnic tables, fire rings, level parking areas, and food lockers'), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Bear-proof food lockers at every site and bear-proof trash; firewood sold on site. Water is shut off after September 30."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232357 ('vault toilets, and drinking water'; 'Bear-proof food lockers are provided at each site'; 'Firewood is available on-site') + https://www.fs.usda.gov/r02/whiteriver/recreation/north-fork-campground ('Potable water is available at this site') + https://www.fs.usda.gov/media/263354 ('Water will not be provided after 9/30'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-13", "closes": "11-02", "note": "2026 estimated dates May 13 - November 2; the late season depends on weather and road conditions."},
+      "source": "https://www.fs.usda.gov/media/263354 ('2026 Campground and Day Use Area Operating Dates ... These are estimated opening dates'; 'North Fork CG ... 5/13-11/2*'; '*If season extends into October or November it is weather and road condition dependent'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232357",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -48},
+        "max_stay_nights": 14,
+        "season": {"opens": "05-13", "closes": "10-31"},
+        "note": "Reservable 'Peak Season' 2027: May 13 - October 31 (2026 ran to November 1, with sites booked through the October hunting seasons). Book at least 2 days ahead. 14 nights a stay and 14 a month. The site must be occupied the first night; a reservation is forfeited if not occupied by 11 a.m. the day after arrival. Group site currently closed."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232357 (rules maxConsecutiveStay 14, maxStay 14 'Each Month', reservationCutOff 2, minWeekendStay 0, minHolidayWeekendStay 0; notices on first-night occupancy, forfeiture, group site closed) + /rates (Peak Season 2027-05-13 to 2027-10-31; 2026-05-13 to 2026-11-01) + October 2026 availability (sites 'Reserved' through October), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Blanco RD (White River NF) campground at 7,800 ft, 32 mi up County Road 8 from Meeker, in an aspen grove on a bench above the North Fork of the White River (across the road). Fly fishing on the river; OHV routes and Flat Tops trailheads nearby. Livestock may graze in the area. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + FS page and 2026 fee sheet: confirmed 28 sites, 40-ft max (per-site), no electric, reservable on recreation.gov, $28 (rec.gov). Changed fees high 28 -> 30 (FS page/sheet); added pull-throughs, vault toilets, water, season May 13 - Nov 2 (2026 est.), 2-day cutoff, 14-night max, reservation season. Note: dropped the count/length/reservable restatements and 'along the river'.",
+  "flags": [
+    "Phone: none stored. Blanco Ranger District (970) 878-4039 (FS offices page). recreation.gov lists 970-927-0107 and a customer-service line 801-226-3564 (the concessionaire, American Land & Leisure). Suggest 970-878-4039.",
+    "Re-pin: stored 40.05833,-107.44972 is the old recreation.gov facility point, ~1.5 km west of the campground on open sage slope (no road or site on Esri imagery). The 28 recreation.gov site coordinates centre on 40.0595,-107.4322, inside the loops on imagery (the FS page's 40.058281,-107.434665 is the west entrance). Suggest 40.0595,-107.4322; Open-Meteo elevation there 2394 m (stored 2437 m is the old pin's).",
+    "Fee discrepancy: recreation.gov books at $28; the FS page and 2026 sheet say $30 with weekday/weekend differences. Fees written as 28-30.",
+    "Max length: per-site catalog tops out at 40 ft (kept); the FS 2026 sheet says '28/60''.",
+    "Waterfront (stored not waterfront): consistent. The nearest sites sit ~95 m from the river channel on a bench above it, with County Road 8 between (rec.gov: 'The North Fork of the White River is across from the campground'; 'Most sites ... open up to the river valley'). A possible riverview upgrade if the view holds - imagery shows grass/shrub slope to the road and willows along the river; not changed (gate).",
+    "Open: no closure alert; 2026 season runs to about November 2 weather permitting (sites reserved for late-October hunting)."
+  ]
+}

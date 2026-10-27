@@ -464,3 +464,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2283 Island Acres (CO, p3-166): stored not waterfront; Loop D west row 20-40 m from the pond's east shore, Loop B ~40 m from the Colorado River through trees - re-run the gate.
 - 2658 Molas Lake (CO, p3-166): stored lakeview; operator sells "Premium Water View" sites described as waterfront that take 23-ft RVs - possible lakefront, needs the satellite gate.
 - 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.
+- 2612 Pleasant Valley Cabins & Campground (CO, p3-167): stored not waterfront; operator says all sites are "along the north bank" of the Little Cimarron, and the RV pads are ~20 m from the channel behind riparian cottonwoods - run the gate (treeline-screen rule).
+- 2369 North Fork (CO, p3-167): stored not waterfront; sites ~95 m from the North Fork White River on a bench above it, CR 8 between; rec.gov "most sites ... open up to the river valley" - possible riverview.

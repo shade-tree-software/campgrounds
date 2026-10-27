@@ -1,0 +1,64 @@
+{
+  "id": 2406,
+  "checked": "2026-10-27",
+  "sources": [
+    "https://www.recreation.gov/camping/campgrounds/231869",
+    "https://www.recreation.gov/api/camps/campgrounds/231869",
+    "https://www.recreation.gov/api/camps/campgrounds/231869/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231869 (per-site catalog and coordinates)",
+    "RIDB campsite catalog (trip_data/ridb_campsites.json, fetched 2026-10-20)",
+    "https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground"
+  ],
+  "groups": {
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231869 (notice 'No hookups available') + RIDB catalog (all 19 sites STANDARD NONELECTRIC, Water/Sewer Hookup 'No'), read 2026-10-27",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 19, "max_rig_ft": 45, "pull_through": false, "note": "All back-in gravel spurs. The catalog gives a length for only 2 sites (45 ft); the Forest Service posts a 45-ft maximum."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground ('Mount Princeton Campground offers 19 sites'; 'Maximum RV length is 45 feet'; 'Parking spurs are gravel') + RIDB catalog (19 sites, Driveway Entry all Back-In, Max Vehicle Length 45 on 2 sites, blank on 17), read 2026-10-27",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Wheelchair-accessible vault toilets; firewood sold on site. Water, trash or the host may be missing early and late in the season."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground ('Wheelchair accessible vault toilets are provided'; 'Potable water is available at this site'; 'Services such as water, trash or a host may not be available during early and late season'), read 2026-10-27",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "May to September per the Forest Service, opening and closing weather dependent."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground ('Seasons of Use: May to September. Opening and closing dates are weather dependent'), read 2026-10-27",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/231869",
+        "window_opens_days": 180,
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "some_sites",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "season": {"opens": "05-21", "closes": "09-18"},
+        "note": "Sites 1 and 14-17 are walk-up only, and site 2 is the host's until Labor Day weekend, then walk-up; the other 13 are reservable at least four days ahead, up to 6 months out. Walk-ups are exempt from the weekend (Fri+Sat) and 3-night holiday minimums. Reservable 'Peak Season' 2027: May 21 - September 18 (2026: May 22 - September 19); the week before is first-come only. Walk-up sites must be occupied the night paid; normally full from Friday, sometimes Thursday."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground ('Sites 1 and 14-17 are walk-up ... All other sites are reservable'; 'Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt') + https://www.recreation.gov/api/camps/campgrounds/231869 (rules maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; notice 'Reservations can be made 6 months in advanced') + /rates (Peak Season 2027-05-21 to 2027-09-18; First-come, First-served Season 2027-05-14 to 2027-05-20), read 2026-10-27",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 25, "nightly_high": 25, "currency": "USD", "checked": "2027", "note": "$25 a site on recreation.gov's 2026 and 2027 tables and the Forest Service page; two vehicles or one RV included, $10 a third vehicle. Senior/Access pass 50% off the holder's site."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231869/rates (Peak STANDARD/RV NONELECTRIC 25, 2026 and 2027) + https://www.fs.usda.gov/r02/psicc/recreation/mount-princeton-campground ('$25 fee per site for overnight camping ... $10 fee for a third vehicle'), read 2026-10-27",
+      "method": "manual"
+    }
+  },
+  "note": "Salida RD (Pike-San Isabel NF) campground at 8,600 ft in Chalk Creek Canyon under ponderosa pine and Douglas fir; Chalk Creek can be reached from the campground. Mount Princeton Hot Springs is 4 mi away. No phone service at the campground. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + FS page: confirmed 19 sites, no hookups, reservable on recreation.gov, $25. Changed max rig 60 -> 45 (FS 'Maximum RV length is 45 feet'); added back-in only, vault toilets and water, season May-Sept, fcfs some_sites (5 walk-up sites + host site after Labor Day), 4-day cutoff, 180-day window, weekend 2 / holiday 3 minimums, 14-night max, reservation season. Note: dropped the 60-ft and reservable restatements.",
+  "flags": [
+    "Phone: none stored. Salida Ranger District 719-539-3591 (FS page 'Contact Phone'). Suggest it; recreation.gov's (661) 702-1420 is the concessionaire's line.",
+    "Reservable vs first-come: 13 of 19 sites reservable (unlike Monarch Park); sites 1, 14-17 walk-up, site 2 host then walk-up.",
+    "Pin is ~85 m from the centroid of the 19 rec.gov site coordinates (38.71376,-106.22361) - fine.",
+    "Waterfront (stored creekside): on Esri imagery Chalk Creek's channel runs along the south edge of the campground, roughly 15-40 m below the southern row of site points (sites 1-11). Consistent with creekside; no lead.",
+    "Open: the forest's current Willow Fire Area Closure is on the Leadville RD, not here; closed now only for the season."
+  ]
+}
