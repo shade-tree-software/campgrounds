@@ -1,0 +1,63 @@
+{
+  "id": 2335,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234509",
+    "https://www.recreation.gov/api/camps/campgrounds/234509/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234509 (per-site catalog and coordinates, 9 sites)",
+    "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table)",
+    "https://www.fs.usda.gov/r02/arp/offices",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 29, "nightly_high": 29, "currency": "USD", "checked": "2026", "note": "2026: $29 a night for a single site (double site $58). One vehicle included; each extra vehicle $8 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234509/rates (Peak Season 2026-05-01 to 2026-10-10 and 2027-04-30 to 2027-10-09: 'PeakSTANDARD NONELECTRIC': 29) + https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground ('Single Site: $29 per night / Double Site: $58 per night') + recreation.gov notice ('Any additional vehicles will be charged $8.00 per vehicle per night'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false},
+      "source": "recreation.gov campsite catalog for 234509 (every RV site typed STANDARD NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/234509 (notice 'No RV water connections are available.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 9, "max_rig_ft": 40, "pull_through": false, "note": "Nine sites: five back-in drive-in sites for RVs and trailers (catalogued at 35-40 ft) and four walk-in tent sites. FS page: parking spurs 30-55 ft; the forest's status table: max spur 30 ft."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground ('There are nine sites including four walk-in tent sites'; 'The parking length ranges from 30 to 55 feet') + https://www.fs.usda.gov/r02/arp/conditions (Stove Prairie: Sites '9', Max Spur '30''') + recreation.gov catalog for 234509 (5 STANDARD NONELECTRIC sites, Max Vehicle Length 35 and 40, Driveway Entry Back-In; 4 WALK TO tent sites), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water in peak season only; filling RV tanks at the hydrants is not allowed. Bear lockers at the tent sites; firewood sold by the host."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/234509 (amenities 'Accessible Vault Toilets', 'Drinking Water (peak season)'; notices 'Come with your RV/trailer water tank filled. Filling at campground hydrants ... is not allowed', 'All campsites with a tent pad have a bear locker'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "10-11", "note": "2026 dates."},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: Stove Prairie, Operating Season 'May 1 - Oct 11'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234509",
+        "fcfs": "some_sites",
+        "season": {"opens": "05-01", "closes": "10-10"},
+        "note": "Reservations close 4 days before arrival; a site not occupied within 26 hours of the start goes to walk-ups. One drive-in site is first-come, and sites are first-come outside the reservation season. Check in with the host at Ansel Watrous before setting up."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234509 (rules reservationCutOff 4 'day(s) prior to arrival'; notices 'Sites may be available on a first-come, first-served basis before and after the reservation season', 'All campsites must be occupied within 26 hours ...', 'Check-in with host at Ansel Watrous prior to setting up camp') + /rates (2026 Peak Season 2026-05-01 to 2026-10-10) + catalog (site 001 not reservable) + FS page ('Sites are available on a first-come first-serve basis outside the reservation season'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Canyon Lakes RD, Poudre Canyon (Arapaho-Roosevelt NF), 26 miles northwest of Fort Collins on CO-14, on a bend of the Cache la Poudre River among ponderosa pine and aspen. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + FS page + ARP status table: confirmed $29, 9 sites, max 40 ft, no electric, reservable on recreation.gov. Added no water hookups, vault toilets + potable water, season May 1-Oct 11 (2026), reservation season May 1-Oct 10, fcfs some_sites, back-in only. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Waterfront (stored riverfront): supported. FS/rec.gov: 'situated ... on the banks of the Cache la Poudre River'. On Esri imagery the loop sits on a peninsula inside a river bend; the drive-in sites (001/002 east end, 007-009 west end) are about 25-40 m from the channel through a fringe of trees, the walk-in tent sites closer on the north side.",
+    "Max length conflict: FS page 'parking length ranges from 30 to 55 feet'; ARP status table 'Max Spur 30''; recreation.gov catalog 35 ft (1 site) and 40 ft (4 sites). Kept 40 from the catalog. All fit 23 ft.",
+    "Phone: none stored. The ARP offices page lists the Canyon Lakes Ranger District Office at 970-295-6600 (the same number it gives for every district office, i.e. the forest's shared line; the FS campground page shows only the Supervisor's Office 970-295-6600). recreation.gov's facility phone is 970-295-6700; its description says 'call (530) 529-0578' (concessionaire). Suggest 970-295-6600.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground (or use it as website and keep rec.gov as booking.url).",
+    "Status: FS page shows 'Site Closed' on 2026-10-28, which is the ordinary end of season (status table season May 1 - Oct 11); no closure order found for CO-14. Not a status.",
+    "Pin: stored 40.68339,-105.39665 is recreation.gov's facility point, 48 m from the centroid of the 9 site points (40.68371,-105.39703); fine.",
+    "Operator: concessionaire (rec.gov contact (530) 529-0578, mailing address Morrison CO); ownership federal correct."
+  ]
+}

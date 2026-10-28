@@ -1,0 +1,56 @@
+{
+  "id": 2305,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/233187",
+    "https://www.recreation.gov/api/camps/campgrounds/233187/rates",
+    "RIDB campsite catalog for facility 233187",
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=romo (Aspenglen Campground record; park page https://www.nps.gov/romo/planyourvisit/agcg.htm)",
+    "OSM water features via Overpass; Esri World Imagery around 40.3998,-105.5897"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 35, "currency": "USD", "checked": "2026", "note": "2026 and 2027: $35 a night. The park entrance fee (or a park pass) is extra; the camping reservation doubles as the timed-entry reservation."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233187/rates (Peak Season 2026-05-21 to 2026-09-27 and 2027-05-27 to 2027-09-26: 'PeakSTANDARD NONELECTRIC': 35) + NPS API (fees 'Camping Fee - Standard Non-Electric' 35.00 'Per site, per night') + recreation.gov notice ('A park entrance fee is required to enter Rocky Mountain National Park'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233187 (notice 'No hookups. Aspenglen Campground does not offer RV hookups') + NPS API (electricalHookups '0'; 'no dump station or fresh water fill available'), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 52, "max_rig_ft": 30, "pull_through": false, "note": "52 sites, 13 of them tent-only (5 walk-to); the rest back-in or parallel drive-in sites on paved spurs. Vehicle + trailer + hitch 30 ft maximum."},
+      "source": "NPS API (campsites totalSites '52', tentOnly '13', walkBoatTo '5'; rvMaxLength '30'; 'Campsites are available for RVs and trailers up to 30 feet long') + https://www.recreation.gov/api/camps/campgrounds/233187 ('Vehicles larger than 30-feet are not permitted in Aspenglen campground'; 'Maximum Vehicle + Trailer Length = Vehicle + Trailer + Hitch = 30 ft') + RIDB catalog (Driveway Entry Back-in x28, Parallel x3), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"flush_toilets": true, "potable_water": true, "dump": false, "showers": false, "laundry": false, "note": "Flush toilets and drinking water in season only; no RV fresh-water fill or dump (use Moraine Park or Glacier Basin). Generators only in Loop C, 7:30-10 a.m. and 4-8:30 p.m. No wifi; cell service unreliable."},
+      "source": "NPS API (toilets 'Flush Toilets - seasonal'; potableWater 'Yes - seasonal'; dumpStation 'No'; showers 'None'; laundry 'No'; rvInfo 'Use Moraine Park or Glacier Basin Campgrounds to fill and empty tanks ... Generators may be used in Loop C') + recreation.gov notice ('No Dump Station ... No Shower or Laundry'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-26", "closes": "09-27", "note": "NPS: closed for winter 2026-09-28 to 2027-05-25. The 2026 season opened May 21."},
+      "source": "NPS API operatingHours (exception 'Closed for Winter', startDate 2026-09-28, endDate 2027-05-25) + https://www.recreation.gov/api/camps/campgrounds/233187/rates (2026 season 2026-05-21 to 2026-09-27), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "url": "https://www.recreation.gov/camping/campgrounds/233187", "fcfs": "never", "window_opens_days": 180, "season": {"opens": "05-21", "closes": "09-27"}, "max_stay_nights": 7, "note": "Reservation only. Some sites open 6 months ahead on a rolling window, others only 2 weeks or 1 week ahead. The campground reservation includes the park's timed-entry (Timed Entry + Bear Lake Road) reservation: enter from 1 p.m. on the first day and show the confirmation at the entrance station. Seven nights a year maximum."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233187 (Overview 'All campsites in Aspenglen Campground are available by reservation only'; 'A number of campsites are available to be reserved up to 6-months in advance ... Some ... 2-weeks prior ... Some ... 1-week prior'; 'Campers with reservations for Aspenglen Campground have a \"Timed Entry+ Bear Lake Road\" reservation included'; rules maxStay 7 'Each Year', maxConsecutiveStay 7) + /rates (2026 Peak Season 05-21 to 09-27) + NPS API (numberOfSitesFirstComeFirstServe '0'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Rocky Mountain NP, just inside the Fall River Entrance west of Estes Park on US-34; pine and fir forest with meadows, paved loops, a few walk-to tent sites. --Claude",
+  "summary": "recreation.gov + NPS API: confirmed $35 (2026/2027), 52 sites, electric 0, flush toilets, reservable; max length 35 -> 30 (NPS and recreation.gov both 30 ft vehicle+trailer); added water/sewer false, potable water, no dump/showers/laundry, season 05-26..09-27 (NPS winter closure), booking reservation-only (fcfs never), 6-month window, booking.season 05-21..09-27, 7-night max, timed-entry included in booking.note, entrance fee in fees.note. Note rewritten.",
+  "flags": [
+    "Timed entry: the camping reservation includes the park's 'Timed Entry + Bear Lake Road' reservation (enter from 1 p.m. on day one, show the confirmation). Recorded in booking.note; the park entrance fee/pass is extra (fees.note).",
+    "Max length: NPS 'rvMaxLength 30' and recreation.gov 'Vehicles larger than 30-feet are not permitted' (vehicle + trailer + hitch). Stored 35 was wrong; set 30. EKKO's 23 ft fits. The catalog's per-site lengths are unusable (values 1-2).",
+    "Waterfront (stored not waterfront): weak lead. The Fall River runs in a rocky channel along the north edge of the campground; drive-in sites 045 and 046 are ~43-49 m from it (OSM), 041/042 ~55-62 m, with trees and a slope between on imagery; walk-to tent sites C/D/E are 34-40 m. Not obviously on the bank; a re-audit could look at riverside/view for the 045/046 area.",
+    "Phone: none stored. NPS and recreation.gov give 970-586-1206 (Rocky Mountain NP information). Suggest 970-586-1206.",
+    "Website: recreation.gov only; add the NPS page https://www.nps.gov/romo/planyourvisit/agcg.htm.",
+    "Season text conflict: NPS reservationInfo says 'summer camping season (late May-mid-Oct)', but the park's operating hours close it for winter from 2026-09-28 and recreation.gov's 2026 season ended 09-27. Used the closure dates. No winter first-come camping this year (2024 had a 10-21 to 12-31 walk-in season).",
+    "Status: closed for winter since 2026-09-28 (ordinary end of season). Not a status.",
+    "Pin: stored 40.40019,-105.59255 is recreation.gov's facility point, 138 m from the centroid of the 32 catalogued site points (40.39941,-105.59129); NPS point 40.39935,-105.59305. Fine.",
+    "Operator: NPS; ownership federal correct."
+  ]
+}

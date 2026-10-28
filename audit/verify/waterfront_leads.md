@@ -466,3 +466,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2402 Monarch Park (CO, p3-166): stored creekside; rec.gov says some sites are on the banks of the South Fork Arkansas, imagery (snow) shows the channel ~100-150 m from the nearest sites - re-check in summer imagery.
 - 2612 Pleasant Valley Cabins & Campground (CO, p3-167): stored not waterfront; operator says all sites are "along the north bank" of the Little Cimarron, and the RV pads are ~20 m from the channel behind riparian cottonwoods - run the gate (treeline-screen rule).
 - 2369 North Fork (CO, p3-167): stored not waterfront; sites ~95 m from the North Fork White River on a bench above it, CR 8 between; rec.gov "most sites ... open up to the river valley" - possible riverview.
+- 2668 Wupperman (CO, p3-169): stored lakeview; the county says "Sites are available on the lake or on the cliffs above", and the 21-22 loop and north loop (26-31) sit at the water's edge on imagery - possible lakefront.
+- 2633 Wolford (CO, p3-169): stored lakeview; loops on a point, outer east-loop sites ~50-100 m from high water across open sage - re-run the gate.
+- 2305 Aspenglen (CO, p3-169): stored not waterfront; sites 045/046 ~43-49 m from the Fall River with trees and a slope between - weak lead.

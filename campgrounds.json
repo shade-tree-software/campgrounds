@@ -152989,8 +152989,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 233187 (Rocky Mtn NP): standard nonelectric sites for tents and RVs, vehicle+trailer max 30 ft, paved drives, open for summer -> real RV campground fitting 23 ft",
     "waterfront_evidence": "satellite at 40.40019,-105.59255: loops in forest set back south of braided Fall River channel behind treeline; rec.gov 233187 lists no riverside/waterfront sites",
-    "website": "https://www.recreation.gov/camping/campgrounds/233187",
-    "note": "Rocky Mountain NP campground near the Fall River (Estes Park) entrance; 52 sites, flush toilets, paved drives, sites to ~35 ft. Reservable online; timed-entry permit may also be needed. --Claude",
+    "website": "https://www.nps.gov/romo/planyourvisit/agcg.htm\nhttps://www.recreation.gov/camping/campgrounds/233187",
+    "note": "Rocky Mountain NP, just inside the Fall River Entrance west of Estes Park on US-34; pine and fir forest with meadows, paved loops, a few walk-to tent sites. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 2,
@@ -152999,38 +152999,61 @@
     },
     "sites": {
       "count": 52,
-      "max_rig_ft": 35
+      "max_rig_ft": 30,
+      "pull_through": false,
+      "note": "52 sites, 13 of them tent-only (5 walk-to); the rest back-in or parallel drive-in sites on paved spurs. Vehicle + trailer + hitch 30 ft maximum."
     },
     "facilities": {
-      "flush_toilets": true
+      "flush_toilets": true,
+      "potable_water": true,
+      "dump": false,
+      "showers": false,
+      "laundry": false,
+      "note": "Flush toilets and drinking water in season only; no RV fresh-water fill or dump (use Moraine Park or Glacier Basin). Generators only in Loop C, 7:30-10 a.m. and 4-8:30 p.m. No wifi; cell service unreliable."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/233187",
+      "fcfs": "never",
+      "window_opens_days": 180,
+      "season": {
+        "opens": "05-21",
+        "closes": "09-27"
+      },
+      "max_stay_nights": 7,
+      "note": "Reservation only. Some sites open 6 months ahead on a rolling window, others only 2 weeks or 1 week ahead. The campground reservation includes the park's timed-entry (Timed Entry + Bear Lake Road) reservation: enter from 1 p.m. on the first day and show the confirmation at the entrance station. Seven nights a year maximum."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API (campsites totalSites '52', tentOnly '13', walkBoatTo '5'; rvMaxLength '30'; 'Campsites are available for RVs and trailers up to 30 feet long') + https://www.recreation.gov/api/camps/campgrounds/233187 ('Vehicles larger than 30-feet are not permitted in Aspenglen campground'; 'Maximum Vehicle + Trailer Length = Vehicle + Trailer + Hitch = 30 ft') + RIDB catalog (Driveway Entry Back-in x28, Parallel x3), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "NPS API (toilets 'Flush Toilets - seasonal'; potableWater 'Yes - seasonal'; dumpStation 'No'; showers 'None'; laundry 'No'; rvInfo 'Use Moraine Park or Glacier Basin Campgrounds to fill and empty tanks ... Generators may be used in Loop C') + recreation.gov notice ('No Dump Station ... No Shower or Laundry'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233187 (Overview 'All campsites in Aspenglen Campground are available by reservation only'; 'A number of campsites are available to be reserved up to 6-months in advance ... Some ... 2-weeks prior ... Some ... 1-week prior'; 'Campers with reservations for Aspenglen Campground have a \"Timed Entry+ Bear Lake Road\" reservation included'; rules maxStay 7 'Each Year', maxConsecutiveStay 7) + /rates (2026 Peak Season 05-21 to 09-27) + NPS API (numberOfSitesFirstComeFirstServe '0'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233187 (notice 'No hookups. Aspenglen Campground does not offer RV hookups') + NPS API (electricalHookups '0'; 'no dump station or fresh water fill available'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233187/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/233187/rates (Peak Season 2026-05-21 to 2026-09-27 and 2027-05-27 to 2027-09-26: 'PeakSTANDARD NONELECTRIC': 35) + NPS API (fees 'Camping Fee - Standard Non-Electric' 35.00 'Per site, per night') + recreation.gov notice ('A park entrance fee is required to enter Rocky Mountain National Park'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "NPS API operatingHours (exception 'Closed for Winter', startDate 2026-09-28, endDate 2027-05-25) + https://www.recreation.gov/api/camps/campgrounds/233187/rates (2026 season 2026-05-21 to 2026-09-27), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -153039,13 +153062,28 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 35,
       "nightly_high": 35,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 and 2027: $35 a night. The park entrance fee (or a park pass) is extra; the camping reservation doubles as the timed-entry reservation."
+    },
+    "season": {
+      "opens": "05-26",
+      "closes": "09-27",
+      "note": "NPS: closed for winter 2026-09-28 to 2027-05-25. The 2026 season opened May 21."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/233187 https://www.recreation.gov/api/camps/campgrounds/233187/rates RIDB campsite catalog for facility 233187 https://developer.nps.gov/api/v1/campgrounds?parkCode=romo (Aspenglen Campground record; park page https://www.nps.gov/romo/planyourvisit/agcg.htm) OSM water features via Overpass; Esri World Imagery around 40.3998,-105.5897",
+      "note": "recreation.gov + NPS API: confirmed $35 (2026/2027), 52 sites, electric 0, flush toilets, reservable; max length 35 -> 30 (NPS and recreation.gov both 30 ft vehicle+trailer); added water/sewer false, potable water, no dump/showers/laundry, season 05-26..09-27 (NPS winter closure), booking reservation-only (fcfs never), 6-month window, booking.season 05-21..09-27, 7-night max, timed-entry included in booking.note, entrance fee in fees.note. Note rewritten."
+    },
+    "phone": "970-586-1206"
   },
   {
     "id": 2306,
@@ -155826,8 +155864,8 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "recreation.gov cg 234509 (USFS): 8 single-family drive-in sites, parking spurs 30-55 ft, reservable -> real RV campground",
     "waterfront_evidence": "riverfront -- loop in a Poudre bend, N/E pads within a pad-depth.",
-    "website": "https://www.recreation.gov/camping/campgrounds/234509",
-    "note": "Canyon Lakes RD, Poudre Canyon (Arapaho-Roosevelt NF); 9 sites, sites to ~40 ft, along the Cache la Poudre River. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground\nhttps://www.recreation.gov/camping/campgrounds/234509",
+    "note": "Canyon Lakes RD, Poudre Canyon (Arapaho-Roosevelt NF), 26 miles northwest of Fort Collins on CO-14, on a bend of the Cache la Poudre River among ponderosa pine and aspen. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -155836,30 +155874,51 @@
     },
     "sites": {
       "count": 9,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "Nine sites: five back-in drive-in sites for RVs and trailers (catalogued at 35-40 ft) and four walk-in tent sites. FS page: parking spurs 30-55 ft; the forest's status table: max spur 30 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/234509",
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "05-01",
+        "closes": "10-10"
+      },
+      "note": "Reservations close 4 days before arrival; a site not occupied within 26 hours of the start goes to walk-ups. One drive-in site is first-come, and sites are first-come outside the reservation season. Check in with the host at Ansel Watrous before setting up."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground ('There are nine sites including four walk-in tent sites'; 'The parking length ranges from 30 to 55 feet') + https://www.fs.usda.gov/r02/arp/conditions (Stove Prairie: Sites '9', Max Spur '30''') + recreation.gov catalog for 234509 (5 STANDARD NONELECTRIC sites, Max Vehicle Length 35 and 40, Driveway Entry Back-In; 4 WALK TO tent sites), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234509 (rules reservationCutOff 4 'day(s) prior to arrival'; notices 'Sites may be available on a first-come, first-served basis before and after the reservation season', 'All campsites must be occupied within 26 hours ...', 'Check-in with host at Ansel Watrous prior to setting up camp') + /rates (2026 Peak Season 2026-05-01 to 2026-10-10) + catalog (site 001 not reservable) + FS page ('Sites are available on a first-come first-serve basis outside the reservation season'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "recreation.gov campsite catalog for 234509 (every RV site typed STANDARD NONELECTRIC) + https://www.recreation.gov/api/camps/campgrounds/234509 (notice 'No RV water connections are available.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234509/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234509/rates (Peak Season 2026-05-01 to 2026-10-10 and 2027-04-30 to 2027-10-09: 'PeakSTANDARD NONELECTRIC': 29) + https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground ('Single Site: $29 per night / Double Site: $58 per night') + recreation.gov notice ('Any additional vehicles will be charged $8.00 per vehicle per night'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/234509 (amenities 'Accessible Vault Toilets', 'Drinking Water (peak season)'; notices 'Come with your RV/trailer water tank filled. Filling at campground hydrants ... is not allowed', 'All campsites with a tent pad have a bear locker'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: Stove Prairie, Operating Season 'May 1 - Oct 11'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -155868,13 +155927,32 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false
     },
     "fees": {
       "nightly_low": 29,
       "nightly_high": 29,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026: $29 a night for a single site (double site $58). One vehicle included; each extra vehicle $8 a night."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water in peak season only; filling RV tanks at the hydrants is not allowed. Bear lockers at the tent sites; firewood sold by the host."
+    },
+    "season": {
+      "opens": "05-01",
+      "closes": "10-11",
+      "note": "2026 dates."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/234509 https://www.recreation.gov/api/camps/campgrounds/234509/rates https://www.recreation.gov/api/search/campsites?fq=asset_id:234509 (per-site catalog and coordinates, 9 sites) https://www.fs.usda.gov/r02/arp/recreation/stove-prairie-campground https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status table) https://www.fs.usda.gov/r02/arp/offices Esri World_Imagery around the site points",
+      "note": "rec.gov API + rates + per-site catalog + FS page + ARP status table: confirmed $29, 9 sites, max 40 ft, no electric, reservable on recreation.gov. Added no water hookups, vault toilets + potable water, season May 1-Oct 11 (2026), reservation season May 1-Oct 10, fcfs some_sites, back-in only. Note trimmed of count/length/booking restatements."
+    },
+    "phone": "970-295-6600"
   },
   {
     "id": 2336,
@@ -155947,8 +156025,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 231859: 15 sites Standard/RV Nonelectric, parking length 30-45 ft, accommodates RV and tent -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 39.67904,-105.65742: sites scattered in forest/meadow on a slope; West Chicago Creek runs in the drainage below, not at the pads; rec.gov sites 002-016 carry no waterfront designation",
-    "website": "https://www.recreation.gov/camping/campgrounds/231859",
-    "note": "Clear Creek RD, near Idaho Springs (Arapaho-Roosevelt NF); 14 sites, sites to ~40 ft, along the West Chicago Creek. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground\nhttps://www.recreation.gov/camping/campgrounds/231859",
+    "note": "Clear Creek RD (Arapaho-Roosevelt NF), at 9,600 ft along West Chicago Creek below Mount Blue Sky, 6.5 mi south of Idaho Springs on CO-103 then 3 mi up FSR 188; the last mile is one-lane gravel with pullouts and two sharp switchbacks. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -155956,31 +156034,62 @@
       "source": "rvlife"
     },
     "sites": {
-      "count": 14,
-      "max_rig_ft": 40
+      "count": 15,
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "15 sites for RVs and tents (recreation.gov catalogues 14: 12 for RVs, 2 tent-only), all back-in. Parking spurs 30-45 ft per the FS page; the forest's status table gives max spur 30 ft; catalogued at 30-40 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/231859",
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "05-15",
+        "closes": "09-19"
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Reservations close 4 days before arrival; a site not occupied within 26 hours of the start goes to walk-ups. A few sites are first-come. No site swapping."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground ('There are 15 sites available for RV and tent camping'; 'The parking length ranges from 30 to 45 feet') + https://www.fs.usda.gov/r02/arp/conditions (Clear Creek RD Campground Status: West Chicago Creek, Sites '15', Max Spur '30''') + RIDB catalog for 231859 (Max Vehicle Length 32 ft x8, 40 ft x2, 30 ft x1; Driveway Entry Back-In x11), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231859 (rules minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4 'day(s) prior to arrival'; notices 'Limited first-come, first-served sites are available', 'All campsites must be occupied within 26 hours ...', 'site swapping is not allowed') + /rates (2026 Peak Season 2026-05-15 to 2026-09-19) + RIDB catalog (2 RV-capable sites not reservable), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground ('Electric/water/sewer site hook-ups are not available at this campground') + RIDB catalog (every site NONELECTRIC), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/231859/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/231859/rates (Peak Season 2026-05-15 to 2026-09-19 and 2027-05-14 to 2027-09-18: 'PeakSTANDARD NONELECTRIC': 25, 'PeakRV NONELECTRIC': 25) + https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground ('Single Site: $25 per night') + recreation.gov notice ('Any additional vehicles will be charged $8.00 per vehicle per night'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is not available at this site.', page last updated September 21, 2026) + https://www.recreation.gov/api/camps/campgrounds/231859 (notice 'The well is not working. Please bring all the water you will need for your stay.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Clear Creek Ranger District Campground Status: West Chicago Creek, 'May 15 - Sept 20'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -155989,13 +156098,33 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 and 2027: $25 a night. One vehicle included; each extra vehicle $8 a night."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "No drinking water: the well is out of service, so bring all the water you need."
+    },
+    "season": {
+      "opens": "05-15",
+      "closes": "09-20",
+      "note": "2026 dates."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/231859 https://www.recreation.gov/api/camps/campgrounds/231859/rates RIDB campsite catalog for facility 231859 https://www.fs.usda.gov/r02/arp/recreation/west-chicago-creek-campground https://www.fs.usda.gov/r02/arp/conditions Esri World Imagery around 39.6786,-105.6581",
+      "note": "recreation.gov + FS page + ARP status table: confirmed $25 (2026 and 2027), electric 0, reservable on recreation.gov; site count 14 -> 15 (FS), max 40 kept (catalog; FS 30-45 ft, status table 30 ft); added water/sewer false, vault toilets, potable water false (well out), season 05-15..09-20 (status table), booking fcfs some_sites, booking.season 05-15..09-19, weekend 2-night / holiday 3-night minimums. Note rewritten with the access road."
+    },
+    "phone": "970-295-6600"
   },
   {
     "id": 2338,
@@ -160031,8 +160160,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov/254082 + USFS PSICC Blue Lake page: operating, 16 standard nonelectric tent+RV sites, max RV/trailer 40 ft -> real RV campground",
     "waterfront_evidence": "satellite at 37.3132,-105.1390: campground loops in dense forest, Blue Lake not adjacent to pinned loops; no water within 50m",
-    "website": "https://www.recreation.gov/camping/campgrounds/254082",
-    "note": "Spanish Peaks/Cuchara (Pike-San Isabel NF); 16 sites, sites to ~56 ft. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground\nhttps://www.recreation.gov/camping/campgrounds/254082",
+    "note": "San Carlos RD (San Isabel NF) at 10,500 ft, 4 mi up gravel FSR 422 from CO-12 south of Cuchara; Blue Lake is a short walk north, Bear Lake a mile up the road. Trees blown down in 2022 were cleared in 2024, so the campground is treeless and can be very windy. --Claude",
     "rating": {
       "stars": 3.5,
       "price_tier": 1,
@@ -160041,21 +160170,31 @@
     },
     "sites": {
       "count": 16,
-      "max_rig_ft": 56
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "16 back-in sites. FS page: max RV/trailer 40 ft; recreation.gov catalogues 35-36 ft."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "url": "https://www.recreation.gov/camping/campgrounds/254082",
+      "fcfs": "some_sites",
+      "season": {
+        "opens": "06-12",
+        "closes": "09-26"
+      },
+      "note": "Six of the 16 sites are reservable on recreation.gov from mid-June; the other ten, and every site before mid-June, are first-come (self-pay tube, cash or check). Reservations close 4 days before arrival."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground ('The max length for RVs/trailers is 40 feet') + RIDB catalog for 254082 (16 STANDARD NONELECTRIC sites, Max Vehicle Length 35 ft x13 and 36 ft x3, Driveway Entry Back-In x16) + recreation.gov ('This rustic campground has 16 campsites'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "RIDB catalog for 254082 (6 sites reservable, 10 not) + https://www.recreation.gov/api/camps/campgrounds/254082/rates (2026 'First-come, First-served Season' 05-22 to 06-11, Peak 06-12 to 09-12, Non-Peak 09-13 to 09-26) + rules (reservationCutOff 4) + notice 'First-come, first-served sites are available' + FS page ('A self-service fee tube is available for on-site payment'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
         "source": "recreation.gov campsite catalog (RIDB)",
@@ -160063,8 +160202,19 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/254082/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/254082/rates (2026: First-come 05-22 to 06-11, Peak 06-12 to 09-12, Non-Peak 09-13 to 09-26, all 'STANDARD NONELECTRIC': 25; 2027 the same) + https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground ('Single Site: $25 per night'; 'Additional Vehicle Fee: $10 for third vehicle'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground (Restrooms '2 double vault accessible outhouse'; Water 'Potable water is available at this site. A hand pump is available.') + recreation.gov amenities ('Drinking Water (Peak Season)', 'Vault Toilets'; notice 'Firewood is available for sale at host site'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground ('This campground is open late May to late September, weather dependent.') + https://www.recreation.gov/api/camps/campgrounds/254082/rates (2026 fee seasons 2026-05-22 to 2026-09-26), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -160080,8 +160230,26 @@
     "fees": {
       "nightly_low": 25,
       "nightly_high": 25,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "2026 and 2027: $25 a night. Two vehicles or one RV included; a third vehicle $10."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water from a hand pump (peak season). Firewood sold by the host."
+    },
+    "season": {
+      "opens": "05-22",
+      "closes": "09-26",
+      "note": "FS: open late May to late September, weather dependent; dates are the 2026 fee seasons."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.recreation.gov/api/camps/campgrounds/254082 https://www.recreation.gov/api/camps/campgrounds/254082/rates RIDB campsite catalog for facility 254082 https://www.fs.usda.gov/r02/psicc/recreation/blue-lake-campground https://www.fs.usda.gov/r02/psicc/alerts OSM water features via Overpass; Esri World Imagery around 37.3145,-105.1388",
+      "note": "recreation.gov + FS page: confirmed $25 (2026/2027), 16 sites, no hookups, reservable on recreation.gov; max length 56 -> 40 (FS-stated; catalog 35-36); added vault toilets, potable water (hand pump), season 05-22..09-26 (FS 'late May to late September' + fee seasons), booking fcfs some_sites (6 of 16 reservable), booking.season 06-12..09-26. Note rewritten (2024 clear-cut, wind)."
+    },
+    "phone": "719-269-8500"
   },
   {
     "id": 2397,
@@ -175477,7 +175645,7 @@
     "waterfront_evidence": "satellite at 38.06135,-102.61725: highway-side RV lot on high plains near Lamar, no water",
     "website": "https://www.sundance-highplains.com/",
     "phone": "719-336-1031",
-    "note": "In-town highway stopover on US-287 at the south edge of Lamar. ~22 pull-through full-hookup sites (30/50-amp, water, sewer) plus a few deluxe pull-throughs with patios/fire pits; cabins and tent sites also available. Gravel sites ~50 ft long x 18 ft wide; big-rig friendly (rigs to 50 ft). Free WiFi, hot showers. Year-round; nightly/weekly/monthly. --Claude",
+    "note": "In-town highway stopover on US-287 at the south edge of Lamar. Deluxe pull-throughs have patios and fire pits; cabins and tent sites also available. Clubhouse with kitchenette, covered event area with grills. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -175491,30 +175659,33 @@
     "sites": {
       "count": 22,
       "max_rig_ft": 50,
-      "pull_through": true
+      "pull_through": true,
+      "note": "22 pull-through lots 50 ft long by 18 ft wide, including 3 deluxe pull-throughs longer than 50 ft with patio, fire pit and table; also 2 tent sites and cabins."
     },
     "facilities": {
       "showers": true,
-      "wifi": true
+      "wifi": true,
+      "flush_toilets": true,
+      "laundry": true
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.sundance-highplains.com/camping/ ('Full hook-ups of 30 and 50 amp electrical, water and sewer are provided'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.sundance-highplains.com/camping/ ('22 easy pull-through lots of 50 feet long and 18 feet wide. There are 3 deluxe pull-through sites longer than 50 feet'; '2 Tent Camping Sites'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.sundance-highplains.com/amenities/ ('Our coin-operated laundromat is located in the clubhouse ... clean, communal bathrooms and showers') + /camping/ ('Free High Speed Internet with Wi-Fi is functional throughout the grounds'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -175522,8 +175693,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.sundance-highplains.com/rates/ ('RV Site 30a | $48 | Deluxe RV Site 50a | $55', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://resnexus.com/resnexus/reservations/book/BBAB5BA4-5E93-4B1D-8B6D-C1B5EC9022F2 (Wed Jul 14 2027, 1 night: 'Grand Pull Through 30 amp ... Standard Rate $49.87 / night', 'Deluxe Pull Though 30/50 amp ... $57.15 / night', 'Deluxe Back In 30/50 amp ... $57.15'; cart 'Total Due $49.87'; same prices for Oct 28 2026) + https://www.sundance-highplains.com/rates/ ('RV Site 30a $48', 'Deluxe RV Site 50a $55', Weekly '$275' / '$300'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.sundance-highplains.com/rates/ ('Reserve Now' link; 'In order to receive the “Monthly Rate”, unit must be ten (10) years or newer, or manager’s prior approval is required') + the ResNexus page, read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -175532,10 +175709,22 @@
       "model": "claude-opus-5"
     },
     "fees": {
-      "nightly_low": 48,
-      "nightly_high": 55,
+      "nightly_low": 49.87,
+      "nightly_high": 57.15,
       "currency": "USD",
-      "note": "30A RV sites $48, deluxe 50A $55."
+      "note": "Posted rates $48 (30A RV site) and $55 (deluxe 50A); the booking engine charges $49.87 for a Grand Pull Through 30 amp and $57.15 for a Deluxe Pull Through or Back In 30/50 amp, the same in October 2026 and July 2027 (no breakdown shown). Weekly $275/$300.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/BBAB5BA4-5E93-4B1D-8B6D-C1B5EC9022F2",
+      "note": "Book online (ResNexus, linked from the park's 'Reserve Now') or by phone. Monthly rate only for units ten years old or newer, or with the manager's approval."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.sundance-highplains.com/rates/ https://www.sundance-highplains.com/camping/ https://www.sundance-highplains.com/amenities/ https://resnexus.com/resnexus/reservations/book/BBAB5BA4-5E93-4B1D-8B6D-C1B5EC9022F2 (ResNexus quotes for 2026-10-28 and 2027-07-14, one night, 2 adults, read in the driver browser)",
+      "note": "Operator site + ResNexus engine: price now $49.87 (Grand Pull Through 30 amp) to $57.15 (deluxe 30/50 amp) per night as the engine quotes it in season (posted $48/$55); confirmed 22 pull-through full-hookup 30/50A sites, 50-ft lots, showers, wifi; added flush toilets, laundry (confirmed), booking via ResNexus. Season not stated on the operator's pages (stored year_round left). Note trimmed of hookups/length/amenity/season restatements."
     }
   },
   {
@@ -175754,45 +175943,41 @@
     "waterfront_evidence": "satellite at 38.9695,-105.3463: RV rows on open hillside near US-24; no lake/river adjacent to pads",
     "website": "",
     "phone": "719-748-8191",
-    "note": "Small full-hookup RV/tent campground on US-24 at Lake George, ~20 wooded sites, 30/50 amp water/sewer, pull-through, big-rig friendly. Near Eleven Mile and Spinney Mtn reservoirs (good fishing base). --Claude",
+    "note": "Small family-run RV/tent campground on US-24 at Lake George, wooded sites off the highway; near Eleven Mile and Spinney Mountain reservoirs. Directory listings (not the operator) describe full-hookup 30/50 amp sites, some pull-through. No website of its own; phone from its Google listing. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
       "source": "rvlife"
     },
-    "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
-    },
-    "sites": {
-      "count": 20,
-      "pull_through": true
-    },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "No operator page exists (no website on its Google listing; a web search finds only directories, read 2026-10-28). The stored 50 A / water / sewer were derived from note prose that rests only on directory listings, so they are cleared.",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "Same as hookups: the ~20-site count and pull-through rest only on directory listings (AAA lists 26 sites); no operator page exists (read 2026-10-28).",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "05509a6d805c021a",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.google.com/maps/search/Travel+Port+Campground,+39284+US-24,+Lake+George,+CO+80827 web search 'Travel Port Campground Lake George Colorado' (directories only: AAA, allstays, The Dyrt, campsitephotos, Campground Views), 2026-10-28",
+      "note": "No operator website or booking engine exists. Google Maps: 'Travel Port Campground', 39284 US-24, 4.1 stars from 75 reviews, phone 719-748-8191 (matches the entry), not marked closed, so the presence rule's Google path is met. No 2024+ operator rate anywhere, so fees stay empty (price indicator is only RV Life $$). Cleared aggregator-only hookups, site count and pull-through; note rewritten to say the hookup description is from directories."
     }
   },
   {
     "id": 2630,
     "kind": "campground",
     "name": "Twin Rivers Cabins and RV Park",
-    "location": "37.06340,-106.09950",
-    "elevation_meters": 2461.0,
+    "location": "37.0624,-106.1003",
+    "elevation_meters": 2468,
     "state": "CO",
     "ownership": "private",
     "waterfront": "not waterfront",
@@ -175800,7 +175985,7 @@
     "waterfront_evidence": "satellite at 37.0634,-106.0995: central RV pads set back from Conejos River channels behind continuous riparian treeline (~50-80m), no open-bank pads at waterline",
     "website": "https://twnrvrs.com/",
     "phone": "719-376-5710",
-    "note": "Private RV park 5 mi west of Antonito on CO Hwy 17 at the base of Conejos Canyon, ~8,000 ft, in a grove of old cottonwoods. 39 full-hookup RV sites, most 30/50 amp, both back-in and pull-through (14 pull-throughs), sites accommodate large rigs incl. 40+ ft with slideouts; also 8 cabins and tent sites. Nightly rates ~$39-49 (monthly available). Year-round. Camp store, propane, dump station, dog park, playground. A small branch of the Conejos River runs through the property (trout fishing); near the Cumbres & Toltec railroad. RV Life 4 stars, $$ (~22 reviews). --Claude",
+    "note": "Private RV park 5 mi west of Antonito on CO Hwy 17 at the base of Conejos Canyon, ~8,000 ft, in a grove of old cottonwoods; also 8 cabins and tent sites. Directory listings (not the operator) describe back-in and pull-through sites (14 pull-throughs) taking rigs of 40+ ft with slideouts, and nightly rates ~$39-49. A small branch of the Conejos River runs through the property (trout fishing); the RV loop is in an open field away from it. Propane, dog park; near the Cumbres & Toltec railroad. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -175812,105 +175997,155 @@
       "sewer": true
     },
     "sites": {
-      "count": 39,
-      "pull_through": true
+      "count": 39
     },
     "facilities": {
       "camp_store": true,
-      "dump": true
+      "dump": true,
+      "showers": true
     },
     "season": {
-      "year_round": true
+      "year_round": false,
+      "closes": "10-31",
+      "note": "The RV park opens in spring (no date given) and generally closes at the end of October; cabins stay open into December for hunting season."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://twnrvrs.com/rv-park ('Full hookups included with most being 30/50 amp sites'; 'both 30 and 50 Amp RV Sites'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://twnrvrs.com/about-us ('We have 8 cabins, 39 RV sites, a tent camping area'), read 2026-10-28. Pull-through cleared: it was derived from note prose resting on directory listings, and the operator's pages do not mention pull-throughs.",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://twnrvrs.com/ ('Propane, snacks, Gift Shop, Hot showers, Water, Dump Station'; 'CAMP STORE / OFFICE') + https://twnrvrs.com/guest-facilities ('Shower House'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://twnrvrs.com/rv-park ('RV Park, tent sites , and wagon generally close end of October each year') + https://twnrvrs.com/cabin-rental-rates ('We're open Spring through late November, or into December, depending on weather') + /guest-facilities ('CABINS OPEN THROUGH 12/15 FOR HUNTING'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://twnrvrs.com/rv-park ('Make an RV Site Reservation call now: 719-376-5710') + https://twnrvrs.com/policies ('All campground reservations are eligible for a refund of 80% ... 21 days or longer from arrival'; 'The office is open from 8:00 AM to 7:00 PM'; '8:00-10:00pm $10.00 / After 10:00 PM $20 fee'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "79df358e88a6b124",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "phone",
+      "note": "Reserve by phone, 719-376-5710 (no online booking). 80% refund on cancellations 21 or more days before arrival, none after. Office 8 am-7 pm; late-arrival fee $10 (8-10 pm) or $20 (after 10 pm)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://twnrvrs.com/ https://twnrvrs.com/rv-park https://twnrvrs.com/about-us https://twnrvrs.com/cabin-rental-rates https://twnrvrs.com/guest-facilities https://twnrvrs.com/policies https://www.google.com/maps/search/Twin+Rivers+Cabins+and+RV+Park+Antonito+CO (gm.py, 2026-10-28) OpenStreetMap features within 800 m + Esri World_Imagery",
+      "note": "Operator site (GoDaddy, phone booking only): confirmed 39 RV sites, full hookups 30/50 A, showers, dump, camp store. Changed season year_round -> closes end of October (opens spring, no date); booking platform phone. Cleared directory-only pull_through. No RV rate is posted anywhere on the operator's site (only cabin rates and '$3 per night' per extra person), so fees stay empty. Note: dropped the year-round claim, the RV Life line and the hookup/amenity restatements."
     }
   },
   {
     "id": 2631,
     "kind": "campground",
     "name": "Ute Bluff Lodge, Cabins & RV Park",
-    "location": "37.66790,-106.64279",
-    "elevation_meters": 2505.0,
+    "location": "37.6762,-106.5922",
+    "elevation_meters": 2483,
     "state": "CO",
     "ownership": "private",
     "waterfront": "not waterfront",
     "inclusion_evidence": "Operator uteblufflodge.com: 50-amp drive-thru & back-in + 30-amp RV campsites, daily/weekly/monthly rental, office open -> currently-operating transient RV park",
     "waterfront_evidence": "satellite at 37.6679,-106.6428: RV sites near highway in South Fork; operator page states Rio Grande river access is 'across the street' — pads not riverfront",
-    "website": "https://www.uteblufflodge.com/",
+    "website": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT",
     "phone": "719-873-5595",
-    "note": "Year-round private park at 27680 US Hwy 160 in South Fork on 17 acres adjacent to the Rio Grande NF and Rio Grande River; ~minutes from Wolf Creek ski area. 30 full-hookup RV sites, big-rig friendly: 8 50-amp pull-throughs, 11 50-amp back-ins, 11 30-amp back-ins. Laundry, dump station, fish-cleaning station; also lodge rooms and cabins. River access is across the highway, not riverside. --Claude",
+    "note": "Lodge, cabins and RV park on US-160 just east of South Fork, on the south side of the highway under the bluff, beside the Rio Grande National Forest; 30-amp back-in and 50-amp pull-through/back-in sites. River access is across the highway, not riverside. Also lodge rooms and cabins, hot tub, rec room with kitchen, trail up the bluff. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
       "source": "rvlife"
     },
     "hookups": {
-      "electric": 50,
-      "water": true,
-      "sewer": true
+      "electric": 50
     },
     "sites": {
-      "count": 30,
       "pull_through": true
     },
     "facilities": {
       "laundry": true,
-      "dump": true
+      "wifi": true
     },
     "season": {
       "year_round": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/about ('50AMP & 30AMP pull thru and back in RV spots'); water and sewer are not stated on any current operator page, and the old operator site that the note's 'full-hookup' came from now serves spam, read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/about ('Our RV Park offers 30AMP & 50AMP pull thru & back-in spots for daily, weekly, and monthly rental'); no current operator page gives a site count (directories say 27, 33 and 39), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/about ('laundry facilities', 'Free Wifi', 'Guest Laundry (charges apply)'); no current operator page mentions a dump station, read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
         "checked": "2026-09-15",
         "method": "derived"
+      },
+      "fees": {
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT ('RV 30-AMP CAMP SITE ... 30 AMP spots are $40 and include electric ... Standard Rate ... USD 42.80 Cost for 1 night, 2 guests'; 'RV 50-AMP CAMP SITE ... 50 AMP DRIVE-THRU & BACK-IN CAMPSITES ... 50 AMP spots are $50 ... USD 53.50'; 'WEEKLY(10% OFF) & MONTHLY ($750) DISCOUNTS') + /policies ('$750 for 30AMP & $795 FOR 50 AMP'; 'Pets are allowed at $20 per pet per night charge'), read 2026-10-28 for 2026-10-28 and 2027-06-09",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT ('Standard Rate 50% deposit required'; 'Non Refundable Pay today') + /policies ('Lodge Rooms & RV Sites are a 1 night minimum'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/policies ('We offer an active duty military a 10% discount. Military ID required at physical check-in'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
       "sig": "6901e3cfccf56ff3",
       "checked": "2026-09-15",
       "model": "claude-opus-5"
+    },
+    "fees": {
+      "nightly_low": 42.8,
+      "nightly_high": 53.5,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Posted $40 (30-amp back-in) and $50 (50-amp pull-through or back-in); the booking engine's Standard Rate is $42.80 and $53.50 with tax, the same for October 2026 and June 2027 (5% less non-refundable). Weekly 10% off; monthly $750 (30 amp) / $795 (50 amp). Pets $20 per pet per night."
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT",
+      "note": "Book online (SiteMinder direct-book page; 50% deposit, or pay in full for the non-refundable rate) or by phone. One-night minimum."
+    },
+    "discounts": {
+      "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT (SiteMinder booking engine linked from the Google listing as 'Official site'; quotes for 2026-10-28, 2027-06-09 and 2027-07-14, one night, 2 adults, read in the driver browser) https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/about https://direct-book.com/properties/UteBluffLodgeCabinRVParkDIRECT/policies Google Maps listing 'Ute Bluff Lodge, Cabins & RV Park', 27680 US-160, South Fork, CO 81154, (719) 873-5595, 4.4 over 149 reviews, at 37.6764256,-106.592858 (read 2026-10-28) https://www.uteblufflodge.com/ (redirects to unrelated gambling spam, read 2026-10-28) Esri World Imagery around 37.6764,-106.5929 and 37.6679,-106.6428",
+      "note": "Old operator domain is spam; the operator now books through a SiteMinder direct-book page (the Google listing's 'Official site'). Fees set $42.80-$53.50 (engine Standard Rate with tax; posted $40 30-amp / $50 50-amp), 2026 and 2027 the same; electric 50 and pull-through confirmed; laundry confirmed, wifi added; military 10% (active duty) added; booking via the direct-book engine. Cleared water/sewer, site count and dump (no current operator source). Season year_round left (no current statement e"
     }
   },
   {
@@ -176004,13 +176239,13 @@
     "location": "40.143652,-106.413245",
     "elevation_meters": 2294.0,
     "state": "CO",
-    "ownership": "private",
+    "ownership": "local",
     "waterfront": "lakeview",
     "inclusion_evidence": "Operator site wolfordcampground.com: electrical + group + overflow D loop RV campsites, marina/boat ramp, currently operating; note cites 40-43 ft big-rig sites",
     "waterfront_evidence": "waterfront 'lakeview' assessed in commit 1ca1bea (Add 60 CO private campgrounds (commercial RV parks + 1 Hipcamp)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://wolfordcampground.com/",
-    "phone": "970-724-1266",
-    "note": "~75 sites in 4 loops: A/B/C electric (30/50-amp), D non-electric; central water + dump station, no full hookups at site. Big-rig friendly (40-43 ft rigs reported, some pull-throughs). Reservable online; 2-night min weekends, 3-night holidays. Open year-round; Dec 1-Apr 30 limited to Loop A, FCFS, cash/check only. Boat ramp, marina, swim beach on Wolford Mountain Reservoir. Private concessionaire on Colorado River Water Conservation District land. --Claude",
+    "phone": "970-531-8466",
+    "note": "Colorado River District campground and marina on Wolford Mountain Reservoir, 10 mi north of Kremmling on US-40. Four loops on a point in the reservoir: A-C electric, D non-electric; sites are not level, so bring levelers. Winter camping in Loop A only. Boat ramp, marina, swim beach. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -176023,48 +176258,69 @@
     },
     "sites": {
       "count": 75,
-      "pull_through": true
+      "max_rig_ft": 50,
+      "note": "75 campsites in four loops (A-C electric, D non-electric) plus group areas. The engine lists Loop A sites for RVs up to 32-50 ft. Sites are not level; leveling equipment required."
     },
     "facilities": {
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "note": "Drinking water, dump station and fish-cleaning station May 20 to September 30 only. Swim beach, marina, boat ramp."
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "Dec 1-Apr 30 first-come only (cash or check), electric but no water or dump, minimal road maintenance; Oct 1-May 15 camping limited to Loop A."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/reserve/property/WolfordCampgroundandMarina",
+      "season": {
+        "opens": "05-01",
+        "closes": "11-30"
+      },
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "note": "Book online (Firefly, the site's 'Book Now') May 1 to November 30; drop-ins welcome when sites are free, and December 1 to April 30 is first-come only. $10 to cancel; one night charged within 2 days of arrival."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://wolfordcampground.com/camping/ ('Loop A, B and C - Every site has electricity'; 'Central water and dump station available') + Firefly engine (Loop A sites listed '30 Amp' and '50 Amp'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.coloradoriverdistrict.org/wolford-mountain-reservoir/ ('There are 75 campsites available at Wolford Campground') + https://wolfordcampground.com/camping/ ('Please note that our site are not level! Leveling equipment is required') + Firefly engine ('Fits RVs up to 50 ft' at A1/A3/A7, 32-47 ft at others), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.coloradoriverdistrict.org/wolford-mountain-reservoir/ ('Drinking water, dump stations and the fish cleaning station are only available from May 20 to 7 p.m. September 30'; 'boat ramp, picnic areas, camping, public restrooms, a swim beach and marina'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.coloradoriverdistrict.org/wolford-mountain-reservoir/ ('The campground is open year-round, though some facilities are not available in the winter. December 1 through April 30 the campsites are available on a first-come, first-served basis') + https://wolfordcampground.com/camping/ ('Campground – 24/7/365. 10/1 through 5/15 no water service is available and camping is limited to loop A'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://wolfordcampground.com/camping/ ('2-night minimum for weekend reservations. Drop-in camping welcome too'; 'Holiday Day weekends are a 3-night minimum for reservations'; 'There is a $10 fee to cancel') + /contact/ ('May 1st - November 30th Camping: Wolford Campground & Marina') + home page ('Reservations through 11/30/26') + River District page (Dec 1-Apr 30 first-come), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://wolfordcampground.com/camping/ ('$40/night per camping unit', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://wolfordcampground.com/camping/ ('Loops A, B, & C (electric) $40/night per camping unit* $240/week'; 'Loop D (non-electric) $35/night campers per unit'; '$10/additional vehicle per day'; '$20/night for an extra tent') + Firefly engine ('ELECTRICAL SITE A1 ... $40.00 Subtotal' for Oct 29-30 2026, Class C 23 ft), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -176076,7 +176332,13 @@
       "nightly_low": 35,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Electric loops A-C $40; non-electric loop D $35."
+      "note": "Electric loops A-C $40 a night ($240 a week); non-electric loop D $35 (tents $30). One camping unit, one vehicle and one boat included; extra vehicle $10, extra tent $20.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://wolfordcampground.com/ (plain HTTP returns 403; read in the driver browser) https://wolfordcampground.com/camping/ https://wolfordcampground.com/contact/ https://app.fireflyreservations.com/reserve/property/WolfordCampgroundandMarina (quote for 2026-10-29, one night, 2 adults, Class C motorhome 23 ft, read in the driver browser) https://www.coloradoriverdistrict.org/wolford-mountain-reservoir/ Esri World Imagery around 40.1437,-106.4132; OSM water features via Overpass",
+      "note": "Operator site + Firefly engine + Colorado River District page: confirmed $35-40 (2026; engine $40 for a Class C), 75 sites, electric 50 with central water/dump, year-round (winter FCFS, Loop A only), reservable with some first-come; added max length 50 (engine), weekend 2-night / holiday 3-night minimums, booking.season 05-01..11-30, Firefly booking URL; cleared pull_through (not stated). Note rewritten. Ownership should be local (see flags)."
     }
   },
   {
@@ -176184,7 +176446,7 @@
     "waterfront_evidence": "satellite at 40.0635,-102.2268: RV pads along US-34 in arid landscape, no water body adjacent",
     "website": "https://www.campwraycolorado.com/",
     "phone": "970-630-3432",
-    "note": "Family-run RV park just south of Wray on US-385 (~1 mile south of the US-34/385 junction, east side of 385). Year-round, transient and long-term. 12 large pull-through full-hookup sites (water/electric/sewer) plus back-in sites with electric or water+electric; covered picnic tables, restrooms, dump station, 24/7 coin laundry, fiber WiFi. Online booking via Firefly. Near Stalker Lake and Sandsage Wildlife Area (not on the water). --Claude",
+    "note": "Family-run, tree-lined RV park on the south hill just outside Wray, off US-385. Long-term spaces also rented. Not on the water (Stalker Lake and Sandsage Wildlife Area are nearby). --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 2,
@@ -176192,37 +176454,47 @@
     },
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "sites": {
-      "pull_through": true
+      "pull_through": true,
+      "count": 20,
+      "max_rig_ft": 50,
+      "note": "12 full-hookup pull-throughs (30/50 amp) and 8 full-hookup back-ins (T1-T8, four 30 amp, four 50 amp). The engine lists back-ins for rigs up to 40 ft and pull-throughs up to 50 ft. Tent/car camping also offered."
     },
     "facilities": {
       "laundry": true,
       "wifi": true,
-      "dump": true
+      "dump": true,
+      "showers": true,
+      "flush_toilets": true,
+      "note": "Two private shower rooms and two restrooms; coin laundry 24/7; fiber wifi (busy weekends can be slow); dump station free to overnight campers."
     },
     "season": {
       "year_round": true
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://app.fireflyreservations.com/Kiosk/Property/WrayHitchnPost",
+      "note": "Book short stays online (Firefly kiosk) or call/text 970-630-3432, including for a same-night space. Stays of a month or longer by phone only. Self check-in envelopes in the off season (November-April)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campwraycolorado.com/facility-features-rates ('12 Large pull through stations with water, electricity and sewer hookups'; '4 Back in stations ... 30 amp only'; '4 Back in stations ... 50 amp only'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campwraycolorado.com/facility-features-rates (site list above) + Firefly engine ('Fits RVs up to 40 ft' at T1/T5/T6, up to 50 ft at the pull-throughs), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campwraycolorado.com/facility-features-rates ('Two large and secure shower rooms. Two large and secure restrooms. Coin-Op Washer & Dryer Available 24/7'; 'Free Wi-Fi'; 'On-site RV Dump Station - $10 cash fee at dropbox, FREE for those camping overnight'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
         "source": "note prose",
@@ -176230,13 +176502,19 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.campwraycolorado.com/ ('Click here to be taken to our Firefly Reservation kiosk'; 'Only short term spaces are available on the kiosk so please call or text us to discuss long term camping'; 'TEXT us to get a quick availability and rate check'; Off Season Hours November-April 'We kindly request the use of self check in envelopes'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.campwraycolorado.com/facility-features-rates ('Pull Through Sites Full Hookups | $40/night', read 2026-10-16)",
-        "checked": "2026-10-16"
+        "source": "https://www.campwraycolorado.com/facility-features-rates ('Pull Through Sites Full Hookups $40/night $240/week (one night FREE!) $650/month available on the 1st'; 'Back In Sites ... $40/night'; 'Additional campers $5/person per night') + Firefly engine (every listed unit '$40.00 avg per night' for May 12-13 2027), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.campwraycolorado.com/facility-features-rates ('10% Military discount available w/valid military ID'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -176248,7 +176526,16 @@
       "nightly_low": 40,
       "nightly_high": 40,
       "currency": "USD",
-      "note": "Full-hookup pull-throughs and back-ins $40; 7th night free."
+      "note": "All RV sites $40 a night for 1-2 people ($5 per extra camper; children 12 and under free); $240 a week (one night free); $650 a month starting on the 1st only. No refunds.",
+      "checked": "2026"
+    },
+    "discounts": {
+      "military": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.campwraycolorado.com/ https://www.campwraycolorado.com/facility-features-rates https://app.fireflyreservations.com/Kiosk/Property/WrayHitchnPost (Firefly engine; quotes for 2027-05-12 and 2027-07-14, one night, 2 adults, Class C motorhome 23 ft, read in the driver browser)",
+      "note": "Operator site + Firefly engine: confirmed $40 (engine quotes $40 for May 2027), full hookups, pull-throughs, laundry, wifi, dump, online booking; added electric 50 (30 and 50 amp sites), 20 RV sites (12 pull-through, 8 back-in), max 50 ft, showers, flush toilets, military 10%, Firefly URL. Season year_round left (off-season hours November-April imply year-round operation). Note trimmed of hookup/amenity/booking restatements."
     }
   },
   {
@@ -178832,7 +179119,7 @@
     "waterfront_evidence": "waterfront 'lakeview' assessed in commit 55d14b2 (Add 32 CO local-government campgrounds (county/city/regional)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock",
     "phone": "970-944-2225",
-    "note": "Hinsdale County campground on the east shore of Lake San Cristobal, ~4 mi south of Lake City at ~9,000 ft via gravel County Road 33 (narrow with some steep dropoffs; CR30 is a paved/wider alternative). 31 sites, no hookups; max length ~25 ft but lower lakeshore sites reportedly take bigger rigs (EKKO's 23 ft fits). Vault toilets, water, dump station ($20). FCFS, no reservations; $15-20/night. --Claude",
+    "note": "Hinsdale County campground on the east shore of Lake San Cristobal south of Lake City, at about 9,000 ft on gravel County Road 33. The county's map marks a steep, narrow stretch of CR33 at the overlook between the main sites and the north loop. Sites on the lakeshore and on the cliffs above; public fishing access. --Claude",
     "rating": {
       "stars": 4,
       "price_tier": 1,
@@ -178844,41 +179131,51 @@
       "sewer": false
     },
     "sites": {
-      "count": 31
+      "count": 31,
+      "note": "31 sites of various lengths for RVs, tents and ADA campers, on the lakeshore or on the cliffs above; a few tent-only sites; the north loop (26-31) has no water. No maximum length published."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "note": "Water spigots at the toilets; RV tanks may be filled. Bear lockers."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "First-come, first-served; no reservations. 14-night limit per site."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('No electricity.'; water from spigots at the toilets per the county map) + Wupperman Rules 2026.pdf ('Faucet adaptors and hoses must be disconnected after use'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('31 sites with excellent views of the lake. Various site lengths will accommodate ADA campsites, RVs and/or tents. Sites are available on the lake or on the cliffs above.') + Wupperman map new.pdf (tent sites 12-15, ADA sites 7-8, 'NO WATER' at sites 26-31), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('Water, trash removal, vault toilets, picnic tables, grills and fire gates'; 'RV Dump Located At Campground') + Wupperman Rules 2026.pdf ('Campers and Visitors are welcome to fill water jugs and RV water tanks'; 'Campers should use provided bear lockers'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('We do not accept reservations. Camping spots are available on a first-come, first-serve basis.') + Wupperman Rules 2026.pdf ('No reservations, no deposits'; 'limited to fourteen (14) days'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock (audit/price_research/local_co_2026-10-15/co_pages.jsonl), read 2026-10-15",
-        "checked": "2026-10-15"
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('Rates: $20.00 per night. RV Dump Located At Campground, Dump Fee: $20.') + Wupperman Rules 2026.pdf ('depositing the registration form and $20 per day, per site fee with the campground host ... Camper must pay for entire stay at time of check-in'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock ('Wupperman closes the last week of September and opens for the summer on Memorial Day Weekend.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -178891,7 +179188,17 @@
       "nightly_high": 20,
       "currency": "USD",
       "checked": "2026",
-      "note": "Hinsdale County: $20 a night, no electricity; dump $20. Read 2026-10-15."
+      "note": "$20 a night per site, paid at check-in for the whole stay (host or drop box); no refunds. Dump station $20, registered campers only."
+    },
+    "season": {
+      "opens": "05-23",
+      "closes": "09-30",
+      "note": "Opens Memorial Day weekend, closes the last week of September."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://hinsdalecounty.colorado.gov/recreation-campground-boatdock https://hinsdalecounty.colorado.gov/sites/g/files/lrnvjt1826/files/documents/Wupperman%20Rules%202026.pdf https://hinsdalecounty.colorado.gov/sites/g/files/lrnvjt1826/files/documents/Wupperman%20map%20new.pdf https://lakecity.com/camping/ Esri World Imagery around 37.9640,-107.2880 and 37.9695,-107.2840",
+      "note": "Hinsdale County page + 2026 rules + map: confirmed $20 (2026), 31 sites, no hookups, vault toilets, water, dump ($20), FCFS only; added season Memorial Day weekend to last week of September, 14-night limit, payment rules; note trimmed of fee/amenity restatements and the unsourced length and CR30 claims."
     }
   },
   {
@@ -966461,42 +966768,6 @@
     },
     "discounts": {
       "good_sam": false
-    }
-  },
-  {
-    "id": 14474,
-    "kind": "campground",
-    "name": "Ute Bluff Lodge, Cabins & RV Park",
-    "location": "37.6764,-106.5929",
-    "elevation_meters": 2484,
-    "state": "CO",
-    "ownership": "private",
-    "waterfront": "not waterfront",
-    "waterfront_evidence": "satellite (Esri, 500 m frame) at 37.6764,-106.5929: lodge and RV lot south of US-160; the South Fork of the Rio Grande is north of the highway and railroad - not waterfront",
-    "inclusion_evidence": "Google listing open with phone, 4.4 over 149 reviews (read 2026-10-02); RV Life 4* $$ (avg ~$34) over 17 reviews, 39 sites. Its old domain uteblufflodge.com now serves unrelated gambling spam, so no website is recorded",
-    "website": "",
-    "phone": "719-873-5595",
-    "note": "Lodge, cabins and RV park on US-160 just west of South Fork. RV Life 4*/$$. --Claude",
-    "rating": {
-      "stars": 4.0,
-      "price_tier": 2,
-      "source": "rvlife"
-    },
-    "note_scan": {
-      "sig": "82ca9ad8d39567dc",
-      "checked": "2026-10-09",
-      "model": "claude-opus-5/session"
-    },
-    "discounts": {
-      "good_sam": false,
-      "military": true
-    },
-    "provenance": {
-      "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
-      }
     }
   },
   {

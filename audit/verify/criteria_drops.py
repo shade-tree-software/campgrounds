@@ -17,6 +17,7 @@ CG = os.path.join(ROOT, "campgrounds.json")
 LOG = os.path.join(HERE, "removals.json")
 
 DROPS = {
+    14474: ("2026-10-28", "duplicate of 2631 Ute Bluff Lodge, Cabins & RV Park", "p3-169, read 2026-10-28: same name, phone 719-873-5595 and address (27680 US-160, South Fork) as 2631, which was verified and re-pinned to the RV rows; 14474 carried only an RV Life line. No stays."),
     2617: ("2026-10-27", "over the US$50 price gate, no gateway (standing rule AWH 2026-10-19)", "p3-168, read 2026-10-27: now Lamar Sportsman RV Park and Horse Motel; rvandhorses.com is a parked domain and its RoverPass listing is unclaimed, so dated 2026 camper reports are the price (camper-report rule): $57-65 a night; gateways.py: none within 40 km, family homes included. No stays."),
     2621: ("2026-10-27", "over the US$50 price gate, no gateway (standing rule AWH 2026-10-19)", "p3-168, read 2026-10-27: Silver Thread Basecamp's Campspot engine quotes June 2027 RV sites at $56 (pull-through) to $74 (riverfront) a night plus a $1 per-stay fee; gateways.py: none within 40 km (Great Sand Dunes NP 93 km), family homes included. No stays."),
     2596: ("2026-10-27", "long-stay in character with no RV nights visibly for sale (long-stay test 2; AWH 2026-10-27: drop)", "p3-165, read 2026-10-27: fourseasonsriverinn.com advertises 'short term and seasonal lodging', but its booking engine sells only motel rooms and tent sites, no RV rate is posted (price rested on RV Life $$ alone), and recent Google reviews (3.2/105) describe month-long stays and long-term renters. No stays."),
