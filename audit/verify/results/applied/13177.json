@@ -1,0 +1,73 @@
+{
+  "id": 13177,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.blm.gov/visit/pumphouse-recreation-area",
+    "https://www.recreation.gov/api/camps/campgrounds/261786",
+    "https://www.recreation.gov/api/camps/campgrounds/261786/rates",
+    "recreation.gov campsite catalog for 261786 (search/campsites API, and trip_data/ridb_campsites.json fetched 2026-10-20)",
+    "Esri World_Imagery around the catalog site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 18,
+        "max_rig_ft": 35
+      },
+      "source": "https://www.blm.gov/visit/pumphouse-recreation-area + https://www.recreation.gov/api/camps/campgrounds/261786 ('18 Single Campsites and 2 Group Campsites'; 'For campsites 1-8, driveway parking is 35 feet or less in length and is back-in/pull-in.'; 'Campsites 9-18 are parallel parking and typically have space for two vehicles and small trailers.') + catalog Driveway Length (sites 1, 2, 5: 35; 3, 4: 30; 6-8: 20; 9-18 parallel: 60), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true
+      },
+      "source": "https://www.blm.gov/visit/pumphouse-recreation-area ('12 vault toilets'; 'close proximity to a vault toilet and trash receptacles'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "04-01",
+        "closes": "11-30"
+      },
+      "source": "https://www.blm.gov/visit/pumphouse-recreation-area ('Fees are required for day use and camping between April 1 - November 30.'; 'Campgrounds are closed with no service between December 1 - March 31.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "max_stay_nights": 6,
+        "season": {
+          "opens": "04-01",
+          "closes": "11-29"
+        },
+        "note": "Every site must be reserved on recreation.gov; no first-come camping. Stays are limited to 6 nights April 1 - August 31 and 13 nights (14 days) September 1 - November 30. A site must be occupied within 24 hours of the first reserved day and not left unattended for more than 24 hours, or it may be cancelled. Up to 10 people and 2 vehicles a site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/261786 (notice 'All sites require a reservation through recreation.gov . Camping is limited to 7 consecutive days (6 nights) from April 1 through August 31 and 14 consecutive days from September 1 through November 30, annually. Campsites must be attended within 24 hours of the 1st reserved day or may be cancelled.'; rules maxStay 13 'Rolling 30 Days' Sept 1 - Nov 29) and /rates (Peak Season 2026-04-01 to 2026-11-29, same for 2027 and 2028) + https://www.blm.gov/visit/pumphouse-recreation-area ('Each campsite must be reserved through Recreation.gov'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 25,
+        "nightly_high": 25,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$25 per single site (up to 10 people; the reservation includes 2 vehicle vouchers); group sites $75; $10 day use."
+      },
+      "source": "https://www.blm.gov/visit/pumphouse-recreation-area ('Single Campsites - $25.00 per site - maximum of 10 people'; 'Group Campsites - $75.00 per site') + https://www.recreation.gov/api/camps/campgrounds/261786/rates (2026-2028 Peak Season StandardNonelectric 25, day use 10), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "BLM (Kremmling Field Office) campground and the busiest put-in on the Upper Colorado between Kremmling and State Bridge, between Gore Canyon and Hartman Canyon, reached by Trough Road (the Colorado Headwaters Byway) and Grand County Road 106. Three boat ramps, the Gore Canyon Whitewater Playpark and foot trails up and down the river. Seasonal drinking water may run May-October but is not reliable and is not for filling RV tanks; no cell service without a booster. Supplies in Kremmling, ~15 miles east. --Claude",
+  "summary": "BLM page + recreation.gov: confirmed 18 sites, no hookups, reservable on recreation.gov, $25, phone 970-724-3000. Changed max_rig_ft 60 -> 35: the 60 is the parallel-parking length of sites 9-18, which the BLM says take 'small trailers'; sites 1-8 are 35 ft or less. Added season April 1 - November 30 (BLM), reservation-only, 6-night (Apr-Aug) limit, booking season, vault toilets, fees checked 2026. Note rewritten: count, hookups, the 60-ft figure and booking dropped.",
+  "flags": [
+    "Length: the BLM/recreation.gov text gives 'For campsites 1-8, driveway parking is 35 feet or less in length' (catalog: 1, 2 and 5 at 35; 3 and 4 at 30; 6-8 at 20) and 'Campsites 9-18 are parallel parking and typically have space for two vehicles and small trailers' (catalog Driveway Length 60). The stored 60 was the parallel-parking length; recorded 35. The 'small trailers' wording at 9-18 has no figure, and sites 1, 2 and 5 take 35 ft, so a 23-ft rig fits.",
+    "Max stay: 6 nights April 1 - August 31, 13 nights September 1 - November 30 (recreation.gov notice and rules). Recorded 6 in max_stay_nights; the fall figure is in booking.note.",
+    "Waterfront riverview confirmed (no change): the Colorado River here is ~50-60 m wide (a river). On Esri imagery sites 6-8 sit ~35-40 m from the water, but a road, the boat-ramp parking and a riparian tree band lie between, so not an open apron; sites 9-18 on the southwest loop are ~50-80 m back up a slope. A view, not riverfront.",
+    "Pin 39.987278,-106.508467 (the recreation.gov facility point) is at the entrance building: sites 1-8 are 60-130 m west, but sites 9-18 are on a separate loop ~450-600 m to the southwest (catalog 39.9833-39.9853, -106.5140 to -106.5133). Worth noting; not moved.",
+    "Phone 970-724-3000 confirmed (BLM page and recreation.gov, Kremmling Field Office).",
+    "Access: neither page says anything about Trough Road's surface or RV suitability; no RV/4WD wording."
+  ]
+}
