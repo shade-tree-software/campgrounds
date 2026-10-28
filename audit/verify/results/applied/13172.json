@@ -1,0 +1,55 @@
+{
+  "id": 13172,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/riogrande/recreation/lake-fork-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/231850 and /rates",
+    "recreation.gov campsite catalog for 231850 (api/search/campsites, read 2026-10-28)",
+    "https://www.fs.usda.gov/r02/riogrande/conditions (Current Rio Grande National Forest Road Status, October 2026)",
+    "https://www.fs.usda.gov/r02/riogrande/alerts and https://www.fs.usda.gov/r02/riogrande/offices",
+    "Esri World Imagery z18 with the catalog site coordinates"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 18, "max_rig_ft": 45, "pull_through": true, "note": "FS: 18 sites, maximum RV 45 ft. The catalog lists 19 (site 013 is the host's) at 20-70 ft; only 004 is under 23 ft (20 ft). Pull-throughs: 008, 009, 011, 015, 016, 019."},
+      "source": "https://www.fs.usda.gov/r02/riogrande/recreation/lake-fork-campground ('the campground has 18 sites'; 'Maximum RV length is 45'') + recreation.gov catalog 231850 (Max Vehicle Length and Driveway Entry per site; '013 Host'), read 2026-10-28; the stored 70 was the catalog's longest spur",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231850 ('No electric hookups are available'; notice 'No electric hookups at this facility'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "One central water spigot. Pack in, pack out all trash. Firewood sold on site."},
+      "source": "https://www.fs.usda.gov/r02/riogrande/recreation/lake-fork-campground ('Vault toilets'; 'Potable water is available at this site. One centrally located water spigot'; 'Pack In/Pack Out all trash') + recreation.gov 231850 ('Firewood can be purchased on-site'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Memorial Day to Labor Day weekends (FS), with a cheaper shoulder season either side; FR 250 has an annual seasonal closure March 15 - May 15."},
+      "source": "https://www.fs.usda.gov/r02/riogrande/recreation/lake-fork-campground ('Seasons of Use: Memorial Day to Labor Day weekends'; 'Single Site: $10 per night (during shoulder season)'; 'annual seasonal road closures from March 15th to May 15th'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "reserve_until": {"relative_to": "arrival", "offset_hours": -168}, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "season": {"opens": "05-22", "closes": "09-07"}, "note": "11 of the 18 public sites reservable (recreation.gov or 877-444-6777), the rest first-come. Booking closes 7 days before arrival. Two nights on weekends, three on holiday weekends (not marked soft). 14 nights in any 30, strictly enforced. A reserved site not occupied by check-out time the day after arrival goes first-come."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231850 (rules maxStay 14 'Rolling 30 Days', minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 7; notices) + /rates (2026 Peak Season 05-22 to 09-07) + catalog (11 reservable, 8 not incl. the host site) + FS page ('Reservations can be made through www.recreation.gov or by calling 1-877-444-6777'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 10, "nightly_high": 29, "currency": "USD", "checked": "2026", "note": "$29 a single site in the main season, $58 a double; $10 in the shoulder season."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231850/rates (2026 Peak STANDARD NONELECTRIC 29; 2027 29) + FS page ('Single Site: $29 per night | Double Site: $58 per night | Single Site: $10 per night (during shoulder season)'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Rio Grande NF campground on the Conejos River (Gold Medal trout water) in upper Conejos Canyon at ~9,500 ft, 17.5 mi up dirt FR 250 from CO 17, below Platoro; aspen and mixed conifers, some sites overlooking the river. --Claude",
+  "summary": "FS page + recreation.gov: confirmed 18 sites, no electric, vault toilets, central water spigot, reservable with some first-come sites, $29 (2026, 2027). Changed max_rig_ft 70 -> 45 (FS 'Maximum RV length is 45''); added pull-through, $10 shoulder-season low, season note (Memorial Day-Labor Day), booking.season 05-22..09-07, 14 in 30 max, 2/3-night minimums, 7-day cutoff. Note trimmed of field facts.",
+  "flags": [
+    "Phone: replace 719-852-5941 with the Conejos Peak Ranger District, 719-274-8971 (FS campground page office block: 'Contact the Conejos Peak Ranger District Office at 719-274-8971'). 719-852-5941 is recreation.gov's facility phone and appears on no current FS page; it looks like the former Rio Grande NF supervisor's office in Monte Vista (the SO moved to Del Norte in 2023, now 719-657-3321). recreation.gov's contact text gives (805) 434-1996 for the concessionaire (SCRS).",
+    "Website: add the FS page https://www.fs.usda.gov/r02/riogrande/recreation/lake-fork-campground (the entry has only recreation.gov).",
+    "Max length conflict: FS 'Maximum RV length is 45'' vs the catalog's 20-70 ft (60/60/60/70 on 001, 016, 019, 015). Recorded 45.",
+    "ROAD (current): the Rio Grande NF conditions page (October 2026 storm damage) says 'FSR 250 between Stunner to Highway 17 has damage - 4WD is recommended' - that is the campground's access road (17.5 mi from CO 17), and 'FSR 250 between the Alamosa Guard Station and the Science Camp is impassable'. EKKO is not 4WD; a temporary storm-damage recommendation, not a standing one, but check before any trip. The campground itself is FS 'Site Closed' (season over). Recorded as a flag, not a status.",
+    "Waterfront re-audit lead (stored riverfront): FS 'Located along the beautiful Conejos River ... some sites overlooking the river'; recreation.gov 'on the banks of the Conejos River'. On Esri imagery the Conejos at the campground is only ~15-20 m wide, under the ~30 m river line, so the size rule gives 'creekside'. West-loop sites 014, 015 and 016 sit ~25-35 m from the water across open grass with a fringe of conifers on the bank; the east-loop sites are 80-150 m back.",
+    "Operator: concessionaire-run (recreation.gov notice 'SCRS & Recreation.gov policy'). Ownership federal stands.",
+    "Pin 37.308564,-106.477711 is 18 m from the catalog site centroid. OK."
+  ]
+}

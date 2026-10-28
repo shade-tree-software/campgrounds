@@ -512,3 +512,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
 - 2515 Jefferson Creek (CO, p3-179): stored riverview is the wrong kind - Jefferson Creek is well under 30 m wide and the sites are 60-100 m through conifers. Likely not waterfront.
 - 2344 Kelly Flats (CO, p3-179): stored riverfront; nearest pads ~20-40 m from the Poudre behind riparian trees (river ~25-30 m wide here, at the river/creek line); cloud on imagery, open apron unconfirmed.
+- 2476 Lodgepole (Taylor River) (CO, p3-180): stored riverfront, but every site is south of paved CR 742 and the river north of it; nearest sites 007/009 ~45-50 m with the road and a fishing lot between. Fails the open apron - riverview at most.
+- 13172 Lake Fork (Conejos) (CO, p3-180): stored riverfront, but the Conejos is ~15-20 m wide here (creekside by the size rule); sites 014-016 ~25-35 m across open grass.
+- 2458 Lake Irwin (CO, p3-180): stored lakefront; only RV site 004 (~45-50 m, open slope), maybe 003, could hold it; the rest read lakeview.
+- 2553 Lost Lake (Paonia RD) (CO, p3-180): stored lakeview; north-shore pull-outs ~15-30 m from the slough across open grass - lakefront if they are numbered sites (needs a site map).
