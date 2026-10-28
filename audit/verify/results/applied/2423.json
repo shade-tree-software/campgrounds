@@ -1,0 +1,56 @@
+{
+  "id": 2423,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/cove-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/233722 and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233722 (per-site catalog) + RIDB facilities/233722/campsites (per-site coordinates)",
+    "Esri World_Imagery with the per-site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 4, "max_rig_ft": 16, "pull_through": false, "note": "FS: 'Max RV length is 16 feet', though its own description gives parking spurs of 25-34 ft. recreation.gov: site 1 tent-only, sites 2-4 back-in for tent, pop-up or trailer (no RV type) with max vehicle lengths 20, 25 and 25 ft."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/cove-campground (Parking 'Parking for two vehicles or one RV are allowed at each site. Max RV length is 16 feet.'; 'four campsites with parking spurs 25-34 feet') + recreation.gov per-site catalog for 233722 (001 TENT ONLY 20 ft; 002 20 ft, 003 25 ft, 004 25 ft, equipment Tent/Trailer/Pop up, Back-in), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233722 (notice 'No RV hookups are available'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water from a hand pump."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/cove-campground (Restrooms 'Vault toilet(s)'; 'Potable water is available at this site. A hand pump is available.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Mid-May to mid-October, weather dependent (the FS page's Seasons of Use says early May)."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/cove-campground (Current Conditions 'This campground is open mid-May to mid-October, weather dependent.'; Seasons of Use 'Early May to mid-October'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "after_cutoff", "reserve_until": {"relative_to": "arrival", "offset_hours": -120}, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "season": {"opens": "05-15", "closes": "10-11"}, "note": "All four sites reservable up to 5 days before arrival (the FS page says 4); unreserved sites then go walk-up and must be occupied the same night. Walk-ups are exempt from the weekend/holiday minimums, and recreation.gov marks the weekend minimum soft, so it may be relaxed for a same-day booking."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233722 (notice 'Reservations are available up to 5 days prior to arrival date. Sites not reserved 5 days before become walk-up'; rules minWeekendStay 2 soft, maxConsecutiveStay 14, reservationCutOff 5; rates Peak Season 2026-05-15 to 2026-10-11) + FS page ('A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 a site, 2026-2028; a one-time $11 Eleven Mile Canyon entry fee per stay; no third vehicle (no overflow parking)."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233722/rates (STANDARD NONELECTRIC 24, 2026-2028) + notices ('a one-time fee of $11.00 to enter Eleven Mile Canyon Recreation Area'; 'This campground has no overflow parking available for a third vehicle') + FS page ('$24 fee per site'), read 2026-10-28",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/cove-campground ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites.'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "South Park RD (Pike-San Isabel NF), concessionaire-run: a tiny primitive campground on the South Platte River in Eleven Mile Canyon at ~9,900 ft, ~5 miles up gravel CR 96 from Lake George and just below Eleven Mile Reservoir; anglers and climbers. --Claude",
+  "summary": "FS page + recreation.gov: 4 sites (1 tent-only), vault toilet, hand-pump water, no hookups, $24 (2026-28) plus a one-time $11 canyon fee. Max length 34 (note-derived) replaced by the FS page's 16 ft - a CRITERIA problem (see flags). Added season, booking (rec.gov to 5 days out then walk-up, 2/3-night weekend/holiday minimum, 14 nights, reservation season May 15 - Oct 11), senior/access discount. Pin 67 m from the site centroid; OK. Riverfront plausible (sites 1-2 ~25 m from the river across open ground). Note corrected (wrong district) and trimmed.",
+  "flags": [
+    "CRITERIA (drop candidate): FS page 'Parking for two vehicles or one RV are allowed at each site. Max RV length is 16 feet.' recreation.gov agrees the sites are small: site 1 tent-only, sites 2-4 back-in with max vehicle 20/25/25 ft and permitted equipment Tent / Trailer / Pop up only (no RV type, so EKKO can't book it as a motorhome). The FS page's own description ('parking spurs 25-34 feet') conflicts with its 16-ft RV limit; the stored 34 came from that line. No review from the last 3 years with a reviewer's own 23 ft+ rig was found in this pass.",
+    "Missing phone: South Park Ranger District, 719-836-2031 (FS page). recreation.gov lists the concessionaire (goexplorus.com) at (661) 702-1420.",
+    "Wrong district in the old note: the FS page puts Cove in the South Park Ranger District, not 'South Park/Tarryall (South Platte RD)'.",
+    "Website: stored link is the recreation.gov booking page only; the FS page is https://www.fs.usda.gov/r02/psicc/recreation/cove-campground.",
+    "Riverfront not re-audited in depth: sites 1-2 are ~25 m and sites 3-4 ~50 m from the South Platte across open grass and brush (imagery); stored 'riverfront' looks consistent but site 1 is the tent-only one."
+  ]
+}

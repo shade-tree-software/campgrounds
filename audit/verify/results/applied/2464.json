@@ -1,0 +1,45 @@
+{
+  "id": 2464,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd",
+    "https://www.fs.usda.gov/r02/gmug/offices",
+    "https://www.recreation.gov/api/camps/campgrounds/233936 and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:233936 (per-site catalog) + RIDB facilities/233936/campsites (per-site coordinates)",
+    "Esri World_Imagery with the per-site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 20, "max_rig_ft": 42, "note": "All but 2 sites shaded. recreation.gov's catalog lists site lengths 15-45 ft: 16 of the 20 take 25 ft or more (sites 8, 10, 11 are 20 ft; 13 and 17 are 15 ft); three are pull-throughs (9, 15, 18)."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd ('All but 2 sites are shady with a maximum spur length if 42 feet.') + recreation.gov per-site catalog for 233936 (20 sites, Max Vehicle Length 15/20/25/30/35/45, Pull-Through at 009, 015, 018), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "The FS page's amenity list says 'Potable water is not available at this site', but its current conditions and description say water is available, as does recreation.gov."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233936 ('Vault toilets, drinking water and trash collection are provided.') + https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd (Current Conditions 'Water is available.'; Restrooms 'Vault toilet(s)'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"closes": null, "note": "Late spring to early fall, weather dependent. In 2026 recreation.gov sold first-come nights June 8-25 and Sept 13-29 either side of the reservation season."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd (Seasons of Use 'Late Spring to Early Fall - weather dependent.') + https://www.recreation.gov/api/camps/campgrounds/233936/rates (2026 First-come seasons 06-08..06-25 and 09-13..09-29, Peak Season 06-26..09-12), read 2026-10-28. The stored closes 09-12 was the end of the reservation season, not of the campground's.",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "min_stay": [{"nights": 2, "applies": "weekend"}], "max_stay_nights": 16, "season": {"opens": "06-26", "closes": "09-12"}, "note": "Sites 7-11, 13 and 15-18 are reservable; the other 10 are first-come, booked in person only. Reservations close 4 days before arrival. Up to 16 nights in a rolling 60 days. One camping unit per site; extra vehicles paid to the host on arrival."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233936 (rules minWeekendStay 2, maxStay 16 'Rolling 60 Days', reservationCutOff 4; notices 'FIRST COME FIRST SERVE sites must be booked in person', 'Extra Vehicles: Cannot be paid for in advance'; rates Peak Season 2026-06-26 to 2026-09-12) + per-site catalog (10 reservable, 10 'Not Reservable') + https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd ('a combination of first come, first serve and reservable campsites'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 22, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$22 a standard site, $24 a premium site; additional vehicle $11-12 a night. Same on recreation.gov for 2027."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/cobbett-campground-grand-valley-rd ('$22 per night per camping unit; $24 per night per premium camping unit'; 'Additional Vehicle Fee: $11-12 per night') + https://www.recreation.gov/api/camps/campgrounds/233936/rates (2026 and 2027 STANDARD NONELECTRIC 22, Standard Nonelectric Premium 24), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Grand Valley RD, Grand Mesa NF (GMUG), along the Grand Mesa Scenic Byway within walking distance of the visitor center at ~10,300 ft; dense spruce grove beside Cobbett Lake (non-motorized boats). --Claude",
+  "summary": "FS page + recreation.gov: confirmed 20 sites, 42-ft max spur, vault toilets, drinking water, $22/$24 (2026 and 2027), mixed reservable/FCFS on recreation.gov. Added the booking rules (4-day cutoff, 2-night weekend minimum, 16 nights per 60 days, reservation season June 26 - Sept 12), the site-length breakdown. Cleared the stored season close 09-12 (it was the reservation season's end; first-come nights ran to Sept 29). Lakeview confirmed: the nearest sites (1, 2, 20) sit ~30-40 m from Cobbett Lake's NE shore behind a band of spruce and the entry road. Pin 245 m from the site centroid, on the Hwy 65 turnoff. Note trimmed of field facts.",
+  "flags": [
+    "Missing phone: the Grand Valley Ranger District's number on https://www.fs.usda.gov/r02/gmug/offices is (970) 242-8211. recreation.gov gives 970-874-6600 (GMUG Supervisor's Office) and the concessionaire's (928) 537-8888.",
+    "Pin 39.04206,-107.98618 is on the campground turnoff from CO-65, 245 m west of the per-site centroid 39.04166,-107.98339 (under the ~500 m threshold).",
+    "The FS page contradicts itself on water: 'Water is available.' (Current Conditions) and 'Potable water is not available at this site.' (amenity list). Kept potable_water true with recreation.gov ('drinking water ... provided')."
+  ]
+}

@@ -490,3 +490,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2563 Cayton (CO, p3-173): stored riverfront doubtful - Loop A pads ~35-45 m from the Dolores behind a continuous conifer band; no waterfront_evidence.
 - 2469 Cement Creek (CO, p3-173): stored creekside rests only on the note's "Sites 3-9 sit along the creek"; no evidence, no per-site points, winter imagery.
 - 2493 Cimarrona (CO, p3-173): stored not waterfront; FS quotes a visitor "Can see the reservoir from sites" - possible lakeview.
+- 2449 Cottonwood Lake (PSICC) (CO, p3-174): stored lakeview doubtful - loops on an aspen hillside ~350-450 m from open water with marsh between; FS says only "within walking distance". Likely not waterfront.
+- 2505 Comstock (CO, p3-174): stored not waterfront; the bench is ~20-40 m from the South Fork of Rock Creek - possible creekside, sites not visible on imagery.
+- 2423 Cove (CO, p3-174): dropped; moot.
+- 2576 Cochetopa Creek (CO, p3-174): stored creekside unaudited; no site locations to check.

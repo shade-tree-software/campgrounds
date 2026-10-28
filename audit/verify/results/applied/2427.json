@@ -1,0 +1,55 @@
+{
+  "id": 2427,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/232340 and /rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232340 (per-site catalog) + RIDB facilities/232340/campsites (per-site coordinates)",
+    "Esri World_Imagery with the per-site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 79, "max_rig_ft": 30, "note": "The FS page says 80 sites 'with parking areas up to 30 feet long'; recreation.gov warns that RVs or trailers over 36 ft 'will have a very tough time making it through the campground because of tight corners and trees'. The catalog's lengths (41 sites at 30 ft, 19 at 40, a few 45-80, one 100) run longer than either. Rigs must fit the spur; no overflow parking."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground ('This family-oriented campground has 80 campsites with parking areas up to 30 feet long.') + https://www.recreation.gov/api/camps/campgrounds/232340 (notice 'RV or trailers over 36 feet will have a very tough time ...'; 'There is NO overflow parking in this campground.') + per-site catalog (79 sites besides two host sites), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"water": false, "sewer": false, "note": "Two electric sites, 56 (reservable pull-through) and 58 (first-come); amperage not published. All other sites are non-electric."},
+      "source": "recreation.gov per-site catalog for 232340 (every site 'Water Hookup: No', 'Sewer Hookup: No'; sites 056 and 058 type STANDARD ELECTRIC, no amperage attribute) + /rates ('STANDARD ELECTRIC - SITES 56 & 58'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Hydrants may not be used to fill RV tanks (state rule). Amphitheater with weekend campfire programs."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground (Restrooms 'Restroom, Vault toilets'; 'Potable water is available at this site.') + recreation.gov notice ('Colorado State regulations prohibit attaching hoses to hydrants to fill RV's'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Memorial Day weekend to Labor Day weekend, weather permitting (the FS page's 'Seasons of Use' dates, May 26 - September 4, are a past year's)."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground (Current Conditions 'The campground is open from Memorial Day weekend to Labor Day weekend, depending on weather.'; Seasons of Use 'May 26 - September 4'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "reserve_until": {"relative_to": "arrival", "offset_hours": -96}, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "max_stay_nights": 14, "season": {"opens": "05-22", "closes": "09-06"}, "note": "49 of the 79 sites are reservable, up to four days before arrival; the rest are first-come and must be occupied the same night. Up to 14 days in a 30-day period. Concessionaire-run; check in with the host."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground ('Limited campsites reservation can be made four days prior to arrival'; 'First-come, first-served sites must be occupied the same night.') + https://www.recreation.gov/api/camps/campgrounds/232340 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4; notice 'Maximum 14-day stay limit within 30-day period'; rates Peak Season 2026-05-22 to 2026-09-06) + catalog (49 reservable, 30 not), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "surcharges": {"electric": 10}, "note": "$28 a site (two vehicles or one RV included); electric sites 56 and 58 $38; third vehicle $11. Same for 2027."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground ('$28.00 fee per site for overnight camping. Two vehicles or one RV per site is included in the camping fee. $11.00 for a third vehicle.') + https://www.recreation.gov/api/camps/campgrounds/232340/rates (2026 and 2027 STANDARD NONELECTRIC 28, 'STANDARD ELECTRIC - SITES 56 & 58' 38), read 2026-10-28",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites.'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Pikes Peak RD (Pike-San Isabel NF), concessionaire-run, in ponderosa pine at ~7,800 ft on CO-67 about 7 miles north of Woodland Park; a short trail and the paved Centennial Trail lead to Manitou Lake. --Claude",
+  "summary": "FS page + recreation.gov: confirmed 79 sites (FS says 80), $28 (2026/2027), vault toilets and water, no water/sewer hookups. Replaced the 100-ft placeholder with the FS page's 30 ft; added the two electric sites (56 reservable, 58 first-come; $38, amperage unpublished), season Memorial Day - Labor Day, booking rules (4-day cutoff, 2/3-night weekend/holiday minimum, 14 in 30 days, reservation season May 22 - Sept 6), electric surcharge, senior/access discount. Pin 222 m from the site centroid, at site 61's corner of the loop; OK. Not waterfront confirmed: Manitou Lake is ~400 m NW across CO-67. Note corrected (wrong district) and trimmed.",
+  "flags": [
+    "Length sources differ: FS page 'parking areas up to 30 feet long' (recorded), recreation.gov 'RV or trailers over 36 feet will have a very tough time making it through the campground because of tight corners and trees', catalog 30-80 ft (and a 100-ft placeholder at site 19). EKKO fits under all of them.",
+    "Electric: sites 56 and 58 are STANDARD ELECTRIC at $38 (56 reservable, 58 first-come; neither is a host site - the host sites are 1 and 60), but no source gives the amperage, so hookups.electric stays unset.",
+    "Wrong district in the old note: the FS page puts it in the Pikes Peak Ranger District, not 'Eleven Mile/Lake George (South Platte RD)'. Missing phone: Pikes Peak Ranger District, 719-636-1602 (FS page; recreation.gov gives the same as 'INFORMATION ONLY').",
+    "Website: stored link is the recreation.gov booking page; the FS page is https://www.fs.usda.gov/r02/psicc/recreation/colorado-campground."
+  ]
+}
