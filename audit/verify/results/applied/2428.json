@@ -1,0 +1,63 @@
+{
+  "id": 2428,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/231876",
+    "https://www.recreation.gov/api/camps/campgrounds/231876/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231876 (per-site catalog and coordinates, 17 sites)",
+    "https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "2026 and 2027: $28 a night. Two vehicles or one RV included; $11 for each additional vehicle."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231876/rates (Peak Season 2026-05-22 to 2026-09-06 and 2027-05-28 to 2027-09-05: 'PeakSTANDARD NONELECTRIC': 28; first-come seasons 2026 'Walk InSTANDARD NONELECTRIC': 28) + https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground ('$28 fee per site for overnight camping. Two vehicles or one RV per site is included in the camping fee. $11 fee for each additional vehicle.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231876 ('Drinking water is available from a hand pump, but hookups are not available') + catalog (every RV site STANDARD NONELECTRIC), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 30, "pull_through": false, "note": "17 sites, 2 of them tent-only; back-in parking spurs up to 30 ft."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231876 ('Kelsey Campground has 17 single-family campsites'; 'Each site has a parking spur (up to 30 feet)') + catalog (15 STANDARD NONELECTRIC all Driveway Entry Back-In, 2 TENT ONLY; per-site Max Vehicle Length 20-60), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Drinking water from a hand pump; water, trash and the host may be missing in the spring and fall shoulder season. Firewood from the host. Poor cell service."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground (Restrooms 'Vault toilet'; Water 'Potable water is available at this site. A hand pump is available.'; 'services such as water, trash or a host may not be available in the fall and spring') + https://www.recreation.gov/api/camps/campgrounds/231876 ('Firewood is also available to purchase from the camp host. Cell service is poor in the area.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "09-19", "note": "FS: open early May to late September, weather dependent; full service Memorial Day weekend to Labor Day weekend. Dates are 2026's, from recreation.gov's first-come seasons."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground ('This campground is open from early May to late September, dependent on weather'; Seasons of Use 'Early May to late September') + https://www.recreation.gov/api/camps/campgrounds/231876/rates (First-come, First-served Season 2026-05-01 to 2026-05-21 and 2026-09-07 to 2026-09-19), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/231876",
+        "fcfs": "some_sites",
+        "season": {"opens": "05-22", "closes": "09-06"},
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "Reserve at least four days ahead; walk-ups are exempt from the weekend and holiday minimums. Two sites are first-come, and the whole campground is first-come outside the reservation season (early May to Memorial Day, after Labor Day). Fees on site by cash, check or money order."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.') + https://www.recreation.gov/api/camps/campgrounds/231876 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4; notice 'Facility has first-come, first-served sites') + /rates (2026 Peak Season 05-22 to 09-06; First-come seasons either side) + catalog (sites 001 and 004 not reservable), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "South Platte RD (Pike-San Isabel NF), in the Buffalo Creek Recreation Area on Jefferson County Road 126, 16.5 miles south of Pine Junction; ponderosa forest at about 8,000 ft, with the Kelsey Overlook just north. Bear closure order in place: store attractants hard-sided. --Claude",
+  "summary": "rec.gov API + rates + catalog + FS page: confirmed $28 (2026/2027), 17 sites, no hookups, reservable on recreation.gov. Changed max_rig_ft 60 -> 30 (rec.gov 'parking spur (up to 30 feet)'; 60 was one catalog value); added pull_through false, vault toilets + hand-pump water, season 05-01..09-19 (FS early May-late Sept), booking.season 05-22..09-06, fcfs some_sites, weekend 2 / holiday 3 minimum (walk-ups exempt), 14-night max. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Pin: stored 39.31639,-105.26667 is recreation.gov's facility point, 1,159 m north of the centroid of the 17 catalogued site points (39.30606,-105.26488), in forest away from the road. FS page gives 39.30493,-105.26693; on imagery the sites sit in a pine stand beside CR-126. Re-pin to about 39.30606,-105.26488.",
+    "Max length conflict: rec.gov description 'Each site has a parking spur (up to 30 feet)' (inclusion_evidence also says 30); per-site catalog 20 (1), 35 (2), 40 (6), 45 (4), 50 (1), 60 (1). FS page states no maximum. Set 30 from the description; EKKO's 23 ft fits either way. One site (006) is catalogued at 20 ft.",
+    "Phone: none stored. FS page: South Platte Ranger District 303-275-5610 (Conifer; also rec.gov's facility phone). Concessionaire contact (303) 647-2366 (Explorus, goexplorus.com). Suggest 303-275-5610.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/psicc/recreation/kelsey-campground.",
+    "Elevation: FS page says 8,000 ft, rec.gov 7,400 ft; stored elevation_meters 2525 (8,284 ft). Not changed.",
+    "Status: ordinary end of season (FS: early May to late September). No closure order found for CR-126; the forest's alerts list the Willow Fire area closure, reduced Aspen Acres Fire order and prescribed fire, none naming Kelsey or CR-126. Not a status.",
+    "Operator: concessionaire (Explorus); ownership federal correct. Not waterfront: nothing on the pages suggests water at the sites."
+  ]
+}

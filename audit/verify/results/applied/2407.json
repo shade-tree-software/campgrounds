@@ -1,0 +1,61 @@
+{
+  "id": 2407,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232067",
+    "https://www.recreation.gov/api/camps/campgrounds/232067/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232067 (per-site catalog and coordinates, 51 sites)",
+    "https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground",
+    "https://www.fs.usda.gov/r02/psicc/alerts (Willow Fire area closure order 02-12-01-26-39)",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 30, "currency": "USD", "checked": "2026", "note": "2026 and 2027: $30 a night. Two vehicles (or one RV and its tow vehicle) included; $11 a night for each further vehicle, boat/ATV trailers included."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232067/rates (Peak Season 2026-05-22 to 2026-09-06 and 2026-09-07 to 2026-09-19, 2027-05-21 to 2027-09-05: 'PeakSTANDARD NONELECTRIC': 30, 'PeakRV NONELECTRIC': 30) + https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground ('$30 fee per site for overnight camping ... $11 fee for a third vehicle') + recreation.gov notice ('additional vehicle fee ($11.00/night)'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232067 (notice 'No hookups available') + catalog (every site STANDARD or RV NONELECTRIC), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": null, "max_rig_ft": 60, "pull_through": true, "note": "51 reservable sites in loops A-F (catalogued 24-60 ft, one pull-through); loops G and H are first-come and their sites are not counted on either page."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground ('The campground has eight loops, labeled A through H. Loops A-F are reservable sites, while sites in loops G and H are available on a first-come, first-served basis and are not reservable.') + recreation.gov catalog (51 sites in loops A-F; Max Vehicle Length 24-60, one 60; Driveway Entry Back-In 50, Pull-Through 1), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "dump": false, "note": "No water in the campground in 2026 (none in 2025 either): bring all you need. The RV dumps at Printer Boy and White Star are closed this season. Firewood from the host."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232067 (notice 'Water will not be available in this campground in 2026 ... RV dump stations at both Printer Boy & White Star Campgrounds will remain closed this season') + https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground ('Vault toilets are available in the campground'; 'Potable water is not available at this site'; 'Firewood is available at the host site'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232067",
+        "fcfs": "some_sites",
+        "season": {"opens": "05-22", "closes": "09-19"},
+        "max_stay_nights": 14,
+        "note": "Loops A-F reservable (closes 4 days before arrival); loops G and H first-come, and a first-come site must be occupied the first night. Self-pay fee tube on site."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground ('Loops A-F are reservable sites, while sites in loops G and H are available on a first-come, first-served basis'; 'A self-service fee tube is available for on-site payment. First-come, first-served sites must be occupied the first night.') + https://www.recreation.gov/api/camps/campgrounds/232067 (rules maxConsecutiveStay 14, reservationCutOff 4) + /rates (2026 Peak Seasons 05-22 to 09-19), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Leadville RD (Pike-San Isabel NF), on Lake County Road 24 a mile north of CO-82, about 20 miles south of Leadville. Lodgepole, ponderosa and sage on a hillside at 9,500 ft above Twin Lakes Reservoir; some sites look out over the lakes, about 1 km off. --Claude",
+  "summary": "rec.gov API + rates + catalog + FS page: confirmed $30 (2026/2027), electric 0, max 60 (catalog, one site), reservable on recreation.gov. Site count 51 cleared (51 is only the reservable loops A-F; loops G-H first-come, uncounted). Added water/sewer false, pull_through, vault toilets, no potable water in 2026, no dump, booking.season 05-22..09-19, fcfs some_sites, 14-night max, extra-vehicle fee. Season: FS says only 'May to September' (no dates), left absent. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Waterfront (stored lakeview): supported as a view. FS: 'overlooking Twin Lakes Reservoir ... Some of the sites have beautiful views'. On Esri imagery the 51 catalogued sites sit on a sage-and-pine hillside north of CO-82, about 1.0-1.1 km from Twin Lakes' shore at the nearest (beach band included, so also from the full-pool edge) and roughly 90 m above it (sites ~2,900 m; full pool ~2,804 m). Nowhere near the water's edge; a view only.",
+    "Max length: no FS or rec.gov stated maximum; catalog per-site 24-60 ft (one site 60, three 50, most 30-42). Kept 60 from the catalog. Lengths vary site to site, so the stored 60 is a real per-site figure, not a placeholder; all loops have sites EKKO's 23 ft fits.",
+    "Site count: FS describes eight loops A-H; rec.gov lists 51 sites in A-F only. Stored 51 (derived) undercounts; cleared. Two more loops on imagery south of CO-82 may be G and H (unconfirmed).",
+    "Season: FS 'Seasons of Use: May to September', 'Opening and closing dates are weather dependent'. No dates published, so season left absent; reservation season 2026 is 05-22 to 09-19.",
+    "Water: none in 2026 (rec.gov notice; FS page still says 2025). Recorded potable_water false with the year in facilities.note; it may return in a later year.",
+    "Phone: none stored. FS page: Leadville Ranger District 719-486-0749 (also rec.gov's facility phone, 'for information only'). Concessionaire contact (661) 702-1420. Suggest 719-486-0749.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/psicc/recreation/lakeview-campground.",
+    "Closures: the Leadville RD Willow Fire area closure (order 02-12-01-26-39, Oct 1 - Dec 31 2026) covers NFS lands south of Turquoise Lake to Halfmoon Creek, north of Twin Lakes; it does not include Lakeview. Interlaken Hotel area closure (south shore) does not affect the campground. Ordinary end of season. Not a status.",
+    "Pin: stored 39.09972,-106.36111 is recreation.gov's facility point, 391 m NE of the centroid of the 51 site points (39.09741,-106.36451), on the access road above loops A-B; FS page gives 39.09895,-106.36193. Within tolerance; could be moved to the centroid.",
+    "Operator: concessionaire; ownership federal correct."
+  ]
+}

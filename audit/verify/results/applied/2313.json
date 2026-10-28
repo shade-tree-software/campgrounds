@@ -1,0 +1,62 @@
+{
+  "id": 2313,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (Ponderosa Campground record behind https://www.nps.gov/cure/planyourvisit/camp_ponderosa.htm)",
+    "https://www.nps.gov/cure/planyourvisit/conditions.htm",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=cure",
+    "https://www.recreation.gov/api/camps/campgrounds/10091427",
+    "https://www.recreation.gov/api/camps/campgrounds/10091427/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10091427 (per-site catalog and coordinates, 29 entries)",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 20, "nightly_high": 20, "currency": "USD", "checked": "2026", "note": "$20 a night, $10 with a Senior or Access pass. Pay at the entrance fee station or Elk Creek Visitor Center (scan-and-pay on recreation.gov) and display the stub at the site."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (Ponderosa fees: 'The nightly camping fee at Ponderosa is $20.00.'; 'The nightly camping fee with valid passes is $10.00.') + https://www.recreation.gov/api/camps/campgrounds/10091427/rates (2026 First-come, First-served Season: 20) + rec.gov notice ('Payment must be made immediately after occupying the site and may be made at the campground entrance fee station or Elk Creek Visitor Center'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (campsites electricalHookups '0') + recreation.gov catalog (all STANDARD NONELECTRIC), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 28, "pull_through": true, "note": "28 sites in three loops: Upper 7 (with the horse corral), Middle 16 and Lower 5 near the boat ramp; one pull-through. NPS: tents and medium-sized RVs; no length posted."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (campsites totalSites '28'; rvInfo 'Medium sized rv's and trailers can be accommodated at Ponderosa.'; rvMaxLength '0') + recreation.gov catalog (28 numbered sites 1-29 without 25, loops Upper 7 / Middle 16 / Lower 5, plus a 'Scan and Pay' placeholder; Driveway Entry Back-in 19, Pull-through 1) + rec.gov 'Horse Corral in upper loop.', read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "showers": false, "dump": false, "note": "No water. Trash/recycling and food-storage lockers in season; horse corral in the upper loop; boat ramp (hand-launch only when no inspection is offered)."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (toilets 'Vault Toilets - seasonal'; potableWater 'No water'; showers 'None'; dumpStation 'No'; trashRecyclingCollection 'Yes - seasonal'; foodStorageLockers 'Yes - seasonal') + rec.gov ('Vault toilets only. Horse Corral in upper loop.'; amenities Boat Ramp) + https://www.nps.gov/cure/planyourvisit/conditions.htm ('No watercraft inspections are available at Ponderosa or Stevens Creek boat ramps. Hand-launched craft only at those locations.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-01", "closes": "10-31", "note": "NPS: typically open May through October."},
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (operatingHours: 'All sites are first-come, first-served. Typically open May through October.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": false,
+        "fcfs": "always",
+        "max_stay_nights": 14,
+        "note": "All sites first-come, first-served. 14 nights in any 30 days."
+      },
+      "source": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure ('All sites are first-come first-served.'; numberOfSitesReservable '0') + rec.gov notice ('Camping is limited to 14 nights during a 30 day period.'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Curecanti NRA campground at the northwest end of the Soap Creek arm of Blue Mesa Reservoir, 7,880 ft, with wide views and solitude. Access is 7 miles of gravel Soap Creek Road (CR 721): passable to trailers and RVs when dry, impassable when wet. --Claude",
+  "summary": "NPS campground record + conditions + rec.gov API/rates/catalog: confirmed $20 FCFS, vault toilets, electric 0, first-come. Changed count 29 -> 28 (NPS totalSites; rec.gov's 29th is a scan-and-pay placeholder). Added pull_through, no water/showers/dump, season May-October (typical), 14-night max. Note trimmed of count/toilets/FCFS restatements.",
+  "flags": [
+    "Waterfront (stored lakeview): upgrade LEAD for the Lower loop only. On Esri imagery (low reservoir) the 5 Lower-loop sites (24, 26-29) sit on open ground right at the vegetation line above Blue Mesa's Soap Creek arm, roughly 20-40 m from the high-water edge, with a wide exposed drawdown band below; the Middle loop (16) is ~400 m from the arm's inlet and the Upper loop ~1.5 km. Needs the gate against Blue Mesa full pool (7,519 ft) vs the Lower loop's elevation.",
+    "Pin: stored 38.52571,-107.3149 is the NPS/rec.gov facility point, on the Upper loop (7 sites, horse corral). The 28 site points span three loops ~1 km apart (overall centroid 38.52324,-107.30756, 696 m away, falls between them). Suggest re-pinning to the Middle loop, the largest, at about 38.5238,-107.3061.",
+    "Site mix: NPS lists totalSites 28 with horse 2, tentOnly 10, walkBoatTo 10, rvOnly 0, which would leave few RV-usable sites, but rec.gov's catalog has no tent-only or walk-to type and the NPS text says 'Tents and medium sized RVs can be accommodated'. Probably stale NPS breakdown; not applied. No maximum length is published ('medium sized').",
+    "Season conflict: NPS 'Typically open May through October'; rec.gov's 2026 fee season is 2026-10-08 to 2026-11-16 (2025: 04-26 to 09-30). The conditions page currently (late October) lists Ponderosa open. Recorded the NPS typical May-October.",
+    "Access: Soap Creek Road advisory kept in the note ('During dry conditions, the first 7 miles of Soap Creek Road are passable to trailers and RVs. Rain can make the Soap Creek Road impassable.').",
+    "Phone: none stored. NPS and rec.gov both give (970) 641-2337 (Curecanti). Suggest adding.",
+    "Website: recreation.gov (scan-and-pay only); add the NPS page https://www.nps.gov/cure/planyourvisit/camp_ponderosa.htm.",
+    "Alert: Blue Mesa cyanotoxin advisory (2026-10-13: below state thresholds, keep kids and pets out of the water). Not a closure."
+  ]
+}

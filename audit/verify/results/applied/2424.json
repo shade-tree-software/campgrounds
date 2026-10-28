@@ -1,0 +1,64 @@
+{
+  "id": 2424,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/231877",
+    "https://www.recreation.gov/api/camps/campgrounds/231877/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231877 (per-site catalog and coordinates, 17 sites)",
+    "https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground",
+    "https://www.fs.usda.gov/r02/psicc/alerts",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "2026 and 2027: $28 a night, the same off-season for walk-ups. Two vehicles or one RV included; $11 for a third vehicle."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231877/rates (Peak Season 2026-05-22 to 2026-09-06 and 2027-06-05 to 2027-09-05: 'PeakSTANDARD NONELECTRIC': 28; First-come seasons 2026-01-01 to 05-21 and 09-07 to 12-31: 28) + https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground ('$28 fee per site for overnight camping. Two vehicles or one RV per site is included in the camping fee. $11 fee for a third vehicle.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground ('Lone Rock does not have electricity or water hook-ups. There is no dump station available.') + recreation.gov notice ('No RV hookups are available'), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 40, "pull_through": true, "note": "16 RV/tent sites and one tent-only; 10 pull-throughs. Spurs catalogued 20-40 ft, most 25 ft (sites 006 and 007 are 20 ft)."},
+      "source": "recreation.gov catalog for 231877 (16 STANDARD NONELECTRIC with RV/Trailer equipment, 1 TENT ONLY; Driveway Entry Pull-Through 10, Back-In 6; Max Vehicle Length 20 x2, 25 x10, 30 x2, 35, 40) + https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground ('the only campground on the river that accepts recreational vehicles'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "dump": false, "note": "Hand-pump water in peak season only. Pack in, pack out: bring garbage bags."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground (Restrooms 'Vault toilets'; Water 'Potable water is available at this site. A hand pump is available during peak season only.'; 'There is no dump station available.') + recreation.gov notice ('this is a 'pack in-pack out' facility'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true, "note": "Full service Memorial Day weekend to Labor Day weekend; water, trash or a host may be missing the rest of the year."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground ('This campground is open year-round.'; Seasons of Use 'Open year-round'; 'Visitors may expect full service from Memorial Day weekend to Labor Day weekend'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/231877",
+        "season": {"opens": "05-22", "closes": "09-06"},
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "Every site is reservable in the reservation season (closes 4 days before arrival) and the campground fills fast: the two designated walk-up sites are usually taken by the hosts. Outside the reservation season (2026: Jan 1-May 21, Sept 7-Dec 31) all sites are first-come."
+      },
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground ('the only campground on the river that accepts reservations'; 'Walk-up sites are not usually available as the two designated walk-ups sites are occupied by campground hosts.') + https://www.recreation.gov/api/camps/campgrounds/231877 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxConsecutiveStay 14, reservationCutOff 4) + /rates (2026 Peak Season 05-22 to 09-06; First-come, First-served Seasons either side) + catalog (all 17 reservable), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "South Platte RD (Pike-San Isabel NF), on the South Platte River's gold-medal water beside Jefferson County Road 126 about a mile west of Deckers; the only campground on that stretch of river that takes RVs. Private land lines the river nearby: mind the fences. --Claude",
+  "summary": "rec.gov API + rates + catalog + FS page: confirmed $28 (2026/2027), 17 sites, max 40, no hookups, reservable on recreation.gov. Added pull_through, vault toilets + hand-pump water, no dump, season year-round (FS), booking.season 05-22..09-06, weekend 2 / holiday 3 minimum, 14-night max, off-season first-come in booking.note. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Waterfront (stored riverfront): supported. FS: 'located on the South Platte River ... views of the river'. On Esri imagery the loop fills an open, lightly treed flat inside a bend of the South Platte; the eastern sites (009, 010, 012) are about 30-40 m from the channel and the southern ones (002-004, 017) about 30-50 m, with open ground (no berm or road) between.",
+    "Pin: stored 39.25167,-105.23417 is recreation.gov's facility point, 127 m from the centroid of the 17 site points (39.25208,-105.23555) but ACROSS THE RIVER, in forest on the east/south bank where there is no campground. FS page gives 39.25320,-105.23626 (the entrance road). Suggest re-pinning to about 39.25208,-105.23555 so routing lands on the right bank.",
+    "Max length: no FS or rec.gov stated maximum; catalog per-site 20-40 ft (most 25). Kept 40 from the catalog; EKKO's 23 ft fits all but sites 006/007 (20 ft).",
+    "Phone: none stored. FS page: South Platte Ranger District 303-275-5610 (also rec.gov's facility phone). Concessionaire contact (303) 647-2366 (Explorus). Suggest 303-275-5610.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/psicc/recreation/lone-rock-campground.",
+    "Status: open (year-round campground, now in its first-come off-season). Access by paved CR-126; no forest order found naming it (the South Platte RD alerts are wilderness, climbing, over-snow and downed-tree notices). Not a status.",
+    "fcfs left unset: in season nothing is first-come in practice (hosts hold the two walk-ups), off-season everything is; booking.note says so.",
+    "Operator: concessionaire (Explorus); ownership federal correct."
+  ]
+}

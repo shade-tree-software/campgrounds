@@ -1,0 +1,64 @@
+{
+  "id": 2324,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/231856",
+    "https://www.recreation.gov/api/camps/campgrounds/231856/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:231856 (per-site catalog and coordinates, 40 sites)",
+    "https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Clear Creek Ranger District Campground Status and Road Status tables)",
+    "https://www.fs.usda.gov/r02/arp/offices"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 27, "nightly_high": 27, "currency": "USD", "checked": "2026", "note": "2026 and 2027: $27 a night. One vehicle included; each extra vehicle $8 a night."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231856/rates (Peak Season 2026-05-15 to 2026-09-19 and 2027-05-14 to 2027-09-18: 'PeakSTANDARD NONELECTRIC': 27) + https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground ('Single Site: $27 per night') + recreation.gov notice ('Any additional vehicles will be charged $8.00 per vehicle per night'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground ('There are no electric/water/sewer site hook-ups at this campground') + recreation.gov notices ('No RV water connections are available', 'Utility hookups are not available'), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 38, "max_rig_ft": 40, "pull_through": true, "note": "38 sites, 31 of them suitable for RVs; also five walk-in tent sites. Parking spurs 25-50 ft; sites 1-5 and 9-11 are pull-overs that won't take slide-outs or large RVs."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground ('There are 38 sites in the campground, 31 of which are suitable for RV camping'; 'The parking length ranges from 25 to 50 feet') + https://www.recreation.gov/api/camps/campgrounds/231856 ('The maximum vehicle length that can be accommodated is 40 feet'; 'Sites 1 through 5 are pull-over's ... not suitable for RVs with slide-outs. Sites 9 & 11 are pull-over's'; notice 'Sites 1-5, 9 and 10 will not accommodate RVs with slide-outs') + catalog (32 RV/trailer sites: Back-In 22, Parallel 7, Pull-Through 3; Max Vehicle Length 20-45), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground (Restrooms 'Vault toilet(s)'; Water 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/231856 ('Water hydrants, tent pads, vault toilets and trash service are provided'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-15", "closes": "09-20", "note": "2026 dates."},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Clear Creek Ranger District Campground Status: Cold Springs, 'May 15 - Sept 20'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/231856",
+        "fcfs": "some_sites",
+        "season": {"opens": "05-15", "closes": "09-19"},
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "note": "Reservations close 4 days before arrival; a site not occupied within 26 hours of the start goes to walk-ups. A few sites are first-come. 14 nights in any 60 days."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231856 (rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 60 Days', reservationCutOff 4 'day(s) prior to arrival'; notices 'The campground has limited first-come, first-served sites', 'All campsites must be occupied within 26 hours ...') + /rates (2026 Peak Season 2026-05-15 to 2026-09-19) + catalog (5 drive-in sites and the walk-ins not reservable), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Clear Creek RD (Arapaho-Roosevelt NF), beside CO-119 on the Peak to Peak Byway five miles north of Black Hawk, among aspen and lodgepole pine at 9,200 ft. Gravel interior roads; a playground and a short steep trail to views of the Mount Evans Wilderness. --Claude",
+  "summary": "rec.gov API + rates + per-site catalog + FS page + ARP status table: confirmed $27 (2026/2027), electric 0, reservable on recreation.gov. Changed count 40 -> 38 (FS and rec.gov), max_rig_ft 50 -> 40 (rec.gov's stated max vehicle length); added water/sewer false, pull_through, vault toilets + potable water, season May 15-Sept 20, booking.season 05-15..09-19, fcfs some_sites, weekend 2 / holiday 3 minimum, 14-night max, extra-vehicle fee. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Max length conflict: recreation.gov 'The maximum vehicle length that can be accommodated is 40 feet'; FS page and rec.gov notice 'parking length ranges from 25 to 50 feet'; ARP status table 'Max Spur 50''; catalog per-site 20-45 ft (one 45). Set 40 from the stated vehicle maximum. All fit 23 ft.",
+    "Site count conflict: FS page and rec.gov description 38; ARP status table 37; catalog 40 (35 numbered drive-in incl. 3 tent-only, plus 5 walk-in W1-W5). Set 38.",
+    "Phone: none stored. ARP offices page: Clear Creek Ranger District Office (Idaho Springs) 970-295-6600 (the same line the forest gives for every district; the FS campground page shows only the Supervisor's Office 970-295-6600). recreation.gov facility phone 801-226-3564; its description says 'call (530) 529-0578' (concessionaire). Suggest 970-295-6600.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/arp/recreation/cold-springs-campground.",
+    "Status: FS page shows 'Site Closed' on 2026-10-28 = ordinary end of season (status table May 15 - Sept 20). Access is paved CO-119; no closure order found. Not a status.",
+    "Pin: stored 39.84167,-105.49417 is recreation.gov's facility point (east end, by site 001), 225 m from the centroid of the 40 catalogued site points (39.84172,-105.49680); FS page gives 39.84163,-105.49659. Fine.",
+    "Operator: concessionaire (rec.gov contact (530) 529-0578, mailing address Morrison CO); ownership federal correct. Not waterfront: nothing on the pages suggests water."
+  ]
+}

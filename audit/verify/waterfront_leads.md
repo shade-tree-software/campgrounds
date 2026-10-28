@@ -469,3 +469,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2668 Wupperman (CO, p3-169): stored lakeview; the county says "Sites are available on the lake or on the cliffs above", and the 21-22 loop and north loop (26-31) sit at the water's edge on imagery - possible lakefront.
 - 2633 Wolford (CO, p3-169): stored lakeview; loops on a point, outer east-loop sites ~50-100 m from high water across open sage - re-run the gate.
 - 2305 Aspenglen (CO, p3-169): stored not waterfront; sites 045/046 ~43-49 m from the Fall River with trees and a slope between - weak lead.
+- 2266 AHRA Railroad Bridge (CO, p3-170): stored not waterfront; cpwshop tags sites 1407/1408 "Riverfront", ~40-50 m from the Arkansas through a tree band - run the gate.
+- 2641 Carter Lake Eagle (CO, p3-170): stored not waterfront; operator says E01-E22 are "on a hill overlooking the lake" (~250 m) - possible lakeview.
+- 2313 Ponderosa (CO, p3-170): stored lakeview; the 5 Lower-loop sites are ~20-40 m from Blue Mesa's full-pool line on open ground - possible lakefront (gate against 7,519 ft).
+- 2361 Cow Creek South (CO, p3-170): stored lakeview; sites on open ground ~20-40 m from Green Mountain Reservoir's high-water line - possible lakefront.

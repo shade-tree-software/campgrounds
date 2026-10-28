@@ -1,0 +1,63 @@
+{
+  "id": 2361,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/234596",
+    "https://www.recreation.gov/api/camps/campgrounds/234596/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:234596 (per-site catalog and coordinates, 43 sites)",
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/cow-creek-south-campground",
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins",
+    "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates' PDF)",
+    "https://www.fs.usda.gov/r02/whiteriver/offices",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 21, "nightly_high": 21, "currency": "USD", "checked": "2026", "note": "recreation.gov: $21 a night ($42 for a double site) in 2026 and 2027; the Forest Service's 2026 table says $23. One RV with its tow vehicle per site; an extra vehicle pays a nightly fee at the campground."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234596/rates (Peak Season 2026-05-20 to 2026-10-01 and 2027-05-20 to 2027-10-01: 'STANDARD NONELECTRIC' 21, 'STANDARD NONELECTRIC-DOUBLE' 42) + https://www.fs.usda.gov/media/263354 (Cow Creek South CG '$23') + recreation.gov notice ('Extra vehicle will be charged a per night fee and collected at the campground'), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 43, "max_rig_ft": 30, "pull_through": true, "note": "recreation.gov catalogues 43 reservable sites (2 pull-through), most listed for 40-ft vehicles; its description says 44, and the Forest Service's 2026 table says 32 sites, longest 30 ft."},
+      "source": "recreation.gov catalog for 234596 (43 sites, all reservable; Driveway Entry Back-In 41, Pull-Through 2; Max Vehicle Length 25 (1), 40 (33), 50-90 (7)) + rec.gov description ('44 standard sites suitable for tents, trailers and RVs') + https://www.fs.usda.gov/media/263354 (Cow Creek South CG '# of sites / max site length' '32/30''), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "note": "No drinking water. Bear-proof food lockers at every site."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234596 ('Vault toilets are provided.'; notices 'No drinking water available at this campground', 'Bear-proof food lockers are provided at each site') + https://www.fs.usda.gov/r02/whiteriver/recreation/cow-creek-south-campground ('Vault toilets are provided.'; Water 'Potable water is not available at this site.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"opens": "05-20", "closes": "10-02", "note": "2026 dates, estimated and weather dependent."},
+      "source": "https://www.fs.usda.gov/media/263354 ('These are estimated opening dates'; Cow Creek South CG Season '5/20-10/2'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/234596",
+        "fcfs": "never",
+        "season": {"opens": "05-20", "closes": "10-01"},
+        "max_stay_nights": 14,
+        "note": "Every site is reservable; booking closes 3 days before arrival and no reservations are taken after October 1. A site must be occupied by 11 a.m. the day after arrival or it is released. 14 days within 30."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/234596 (reservationCutOff 3; minWeekendStay/minHolidayWeekendStay 0 'soft' = no rule; notice 'Reserved Sites will be held until check out time (ELEVEN) the day following your arrival date') + /rates (2026 Peak Season 05-20 to 10-01) + catalog (43 of 43 reservable) + https://www.fs.usda.gov/media/263354 (Cow Creek South 'R'; '*Reservations will no longer be accepted after October 1st') + https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins ('Unless otherwise noted, maximum stay is 14 days within a 30-day period'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Dillon RD (White River NF), on the northeast shore of Green Mountain Reservoir off CO-9 near mile marker 124; open sage bench with the sites strung along the shoreline bluff. Site access is difficult when the road is wet. Motorboats launch at Heeney Marina after an ANS inspection. --Claude",
+  "summary": "rec.gov API + rates + catalog + FS page + WRNF 2026 table: confirmed $21 (rec.gov 2026/2027; FS says $23), 43 sites, electric 0, reservable on recreation.gov. Changed max_rig_ft 90 -> 30 (FS table; the 90 is one catalog site). Added pull_through, vault toilets, no water, season 05-20..10-02, booking.season 05-20..10-01, fcfs never, 14-night max. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Fee conflict: recreation.gov $21 (2026 and 2027) vs the WRNF 2026 table $23. Recorded $21 (rec.gov current year).",
+    "Count conflict: rec.gov catalog 43 sites (all reservable), rec.gov description 44, WRNF 2026 table 32. Kept 43.",
+    "Max length conflict: WRNF 2026 table max site length 30 ft; catalog 25 ft (1), 40 ft (33), 50-90 ft (7). Set 30 from the FS table, as done for Prospector; the stored 90 was a single catalog site. EKKO's 23 ft fits either way.",
+    "Restrooms conflict: rec.gov and the FS page's facilities text both say 'Vault toilets are provided', but the FS page's amenity block says 'Restrooms are not available at this site'. Recorded vault_toilets true from the explicit sentence.",
+    "Waterfront (stored lakeview): upgrade LEAD. On Esri imagery (taken at a low reservoir level) the sites are strung along the edge of the sage bench directly above the shoreline, on open ground with no trees between, roughly 20-40 m from the vegetation line that marks the high-water edge; a wide exposed drawdown beach lies below. rec.gov/FS: 'located on the northeast shore'. Needs the gate against Green Mountain Reservoir's full-pool elevation (heavily drawn down late season).",
+    "Pin: stored 39.87944,-106.27722 is the FS GPS point at the entrance off CO-9, 762 m NE of the centroid of the 43 site points (39.87685,-106.28548). Re-pin to about 39.87685,-106.28548 (or onto the south shore loop, e.g. 39.8755,-106.2830).",
+    "Phone: none stored. WRNF offices page: Dillon Ranger District (Silverthorne) (970) 468-5400. rec.gov facility phone 970-468-7681; concessionaire (American Land & Leisure) 801-226-3564. Suggest 970-468-5400.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/whiteriver/recreation/cow-creek-south-campground.",
+    "Status: ordinary end of season (2026 season 5/20-10/2); no closure found.",
+    "Operator: concessionaire (American Land & Leisure); ownership federal correct."
+  ]
+}

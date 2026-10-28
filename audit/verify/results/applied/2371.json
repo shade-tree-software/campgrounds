@@ -1,0 +1,90 @@
+{
+  "id": 2371,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.recreation.gov/api/camps/campgrounds/232273",
+    "https://www.recreation.gov/api/camps/campgrounds/232273/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:232273 (per-site catalog and coordinates, 106 sites)",
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/prospector-campground",
+    "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates' PDF, linked from https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins)",
+    "Esri World_Imagery around the site points",
+    "https://www.fs.usda.gov/r02/whiteriver/offices"
+  ],
+  "groups": {
+    "fees": {
+      "values": {
+        "nightly_low": 27,
+        "nightly_high": 27,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "recreation.gov: $27 a night in 2026 and 2027; the Forest Service lists $29. One RV with its tow vehicle per site; an extra vehicle pays a nightly fee at the campground."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232273/rates (Peak Season 2026-05-20 to 2026-10-01 and 2027-05-20 to 2027-10-01: 'PeakSTANDARD NONELECTRIC': 27) + https://www.fs.usda.gov/r02/whiteriver/recreation/prospector-campground ('Single Site: $29 per night') + https://www.fs.usda.gov/media/263354 (Prospector CG fee '$29') + recreation.gov notice ('Extra vehicle will be charged a per night fee and collected at the campground'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {
+        "electric": 0
+      },
+      "source": "recreation.gov catalog for 232273 (all 106 sites STANDARD NONELECTRIC), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {
+        "count": 107,
+        "max_rig_ft": 32,
+        "pull_through": true,
+        "note": "Forest Service: 107 sites, longest 32 ft. recreation.gov catalogues 106 sites in loops A-E at 16-70 ft (22 pull-throughs); a few are under 23 ft."
+      },
+      "source": "https://www.fs.usda.gov/media/263354 (2026 table: Prospector CG '# of sites / max site length' '107/32''') + recreation.gov catalog for 232273 (106 sites; Driveway Entry Back-In 84, Pull-Through 22; Max Vehicle Length 16-70), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false,
+        "note": "No water: the campground's well is dry (2026); bring enough for the stay."
+      },
+      "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/prospector-campground (Restrooms 'Vault Toilets'; 'There is no water at the campground due to the well being dry'; Water 'Potable water is not available at this site.'; alert 'Water not available at Lowry, Prospector, Windy Point and Marvine Campgrounds'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "opens": "05-20",
+        "closes": "10-02",
+        "note": "2026 dates, estimated and weather dependent."
+      },
+      "source": "https://www.fs.usda.gov/media/263354 ('2026 Campground and Day Use Area Operating Dates'; 'These are estimated opening dates'; Prospector CG Season '5/20-10/2'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "url": "https://www.recreation.gov/camping/campgrounds/232273",
+        "fcfs": "never",
+        "season": {
+          "opens": "05-20",
+          "closes": "10-01"
+        },
+        "max_stay_nights": 14,
+        "note": "All sites reservable (the host has one more); booking closes 2 days before arrival and no reservations are taken after October 1. A site must be occupied by 11 a.m. the day after arrival or it is released. 14 nights a month."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232273 (rules maxConsecutiveStay 14, maxStay 14 'Each Month', reservationCutOff 2; minWeekendStay/minHolidayWeekendStay 0 'soft' = no rule; notice 'Reserved Sites will be held until check out time (ELEVEN) the day following your arrival date') + /rates (2026 Peak Season 05-20 to 10-01) + catalog (105 reservable; the other is '067 HOST') + https://www.fs.usda.gov/media/263354 (Prospector 'R'; '*Reservations will no longer be accepted after October 1st'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Dillon RD (White River NF), in the Swan Mountain Recreation Area on Dillon Reservoir between Frisco and Keystone, a mile of dirt road off Swan Mountain Road at 9,100 ft. Open sites with little or no shade since the beetle-kill clearing, looking out over the reservoir to the Gore and Tenmile ranges. No swimming or body contact with the reservoir. --Claude",
+  "summary": "rec.gov API + rates + catalog + FS page + WRNF 2026 operating-dates table: confirmed $27 (rec.gov 2026/2027; FS says $29), electric 0, reservable on recreation.gov. Changed count 106 -> 107 and max_rig_ft 70 -> 32 (FS table '107/32''); added pull_through, vault toilets, no water (dry well), season 05-20..10-02, booking.season 05-20..10-01, fcfs never, 14-night max. Note trimmed of count/length/booking restatements.",
+  "flags": [
+    "Fee conflict: recreation.gov rate table $27 (2026 and 2027); FS campground page and the WRNF 2026 table both say $29. Recorded $27 (rec.gov current year) per the batch rule.",
+    "Max length conflict: WRNF 2026 table max site length 32 ft; recreation.gov catalog per-site 16-70 ft (12 at 50, one each 64/65/70; 14 sites under 23 ft). Set 32 from the FS table; EKKO's 23 ft fits most sites but not all (16-22 ft sites exist).",
+    "Waterfront (stored lakeview): supported as a view. rec.gov: 'The sites offer open views to Dillon Reservoir'. On Esri imagery the loops sit on a sage bench east of the reservoir; the westernmost sites (loop D: 055, 058-060) are about 130-150 m from the full-pool shoreline, with a perimeter dirt road and a band of trees/sage between. A view, not on the water.",
+    "Pin: stored 39.59583,-106.03444 is recreation.gov's facility point, 877 m SE of the centroid of the 104 site points (39.60002,-106.04311), in a meadow by Swan Mountain Road. FS page gives 39.600857,-106.04022 (campground road). Re-pin to about 39.60002,-106.04311.",
+    "Phone: none stored. WRNF offices page: Dillon Ranger District (Silverthorne) (970) 468-5400 (the FS campground page shows no phone). rec.gov facility phone 970-468-7681; concessionaire (American Land & Leisure) customer service 801-226-3564. Suggest 970-468-5400.",
+    "Website: recreation.gov only; add the FS page https://www.fs.usda.gov/r02/whiteriver/recreation/prospector-campground.",
+    "Water: the well is dry; FS alert 'Water not available at Lowry, Prospector, Windy Point and Marvine Campgrounds'. Recorded potable_water false with the 2026 caveat.",
+    "Status: ordinary end of season (2026 season 5/20-10/2). No closure found. Not a status.",
+    "Operator: concessionaire (American Land & Leisure); ownership federal correct."
+  ]
+}

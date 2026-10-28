@@ -1,0 +1,60 @@
+{
+  "id": 2641,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 (Carter Lake park page and its full 113-site list, pages startIdx 0-100 via /campsitePaging.do)",
+    "https://www.larimercamping.com/camping/carter-lake/r/campsiteDetails.do?contractCode=LARC&siteId=<425,433,447,454,416> (Eagle E02, E43, E23, E47, E35)",
+    "https://www.larimercamping.com/camping/carter-lake/r/campsiteDetails.do?contractCode=LARC&siteId=<484-487,469,473> (North Pines N01-N04, Carter Knolls C02, C05)",
+    "https://www.larimer.gov/naturalresources/parks/permits",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 35, "nightly_high": 45, "currency": "USD", "reservation_fee": 8.75, "checked": "2026", "note": "Electric sites April-September: $35 weeknights, $45 weekends, $55 holidays; October-March $25-30. Plus the $8.75 reservation fee and a daily entrance permit ($10 a vehicle, $20 with a trailered boat)."},
+      "source": "https://www.larimer.gov/naturalresources/parks/permits (Reservoirs incl. Carter Lake: 'Electric campsite (April – September) $35 / $45 / $55'; '(October – March) $25 / $30'; 'Reservation fee: $8.75 per site, per camping trip') + https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 ('Daily Permits: $10/day per vehicle or trailered watercraft. $20/day for vehicle + trailered watercraft.'; 'Campsite Reservation Fee: $8.75'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": false, "sewer": false},
+      "source": "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 (all 47 Eagle sites 'STANDARD ELECTRIC') + Eagle site pages E02/E23/E35/E43/E47 ('Electricity Hookup: 50'; no water or sewer hookup listed; 'Water spigots (with hookups) are located in each campground' = communal spigots), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"count": 47, "max_rig_ft": 80, "pull_through": true, "note": "47 50-amp electric sites (E02-E49 without E34), 43 of them pull-through, listed for vehicles 32-80 ft (most 40-50). E01-E22 sit on a hill overlooking the lake; E23-E49 are in a meadow below the dam with no lake view."},
+      "source": "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 (site list, loop 'Eagle Campground': 47 rows 'STANDARD ELECTRIC', 'Equip length/ Driveway' 32-80 with Pull-Through 43 / Back-In 4) + site E02 page ('Sites E23–E49 are not near the water, they are in a meadow below the dam with no view of the lake. Sites E01-E22 are on a hill overlooking the lake.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"showers": true, "flush_toilets": true, "vault_toilets": true, "potable_water": true, "note": "Token-operated shower house with flush toilets next to the overflow lot; vault toilets around the loop. Water spigots are shut off September-April except the frost-free ones."},
+      "source": "https://www.larimercamping.com/camping/carter-lake/r/campsiteDetails.do?contractCode=LARC&siteId=425&parkId=710102 ('Shower House: Located next to the overflow parking lot, is token operated, and has standard flushing toilets. Additional vault toilets are located throughout the campground.'; 'Water spigots (with hookups) are located in each campground except for Carter Knolls ... Water is available at frost-free spigots year round. All other spigots are turned off from September–April (tentative).'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": true},
+      "source": "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 ('Status: Open year round.'; 'It is open year round.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "operator",
+        "url": "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102",
+        "fcfs": "never",
+        "note": "A reservation and a park entrance permit are required before setting up at any site; a no-show unannounced within 24 hours may lose the site (call 970-619-4570). Check-in noon, check-out 11 am. One wheeled camping unit per site."
+      },
+      "source": "https://www.larimercamping.com/campgroundDetails.do?contractCode=LARC&parkId=710102 ('Campers MUST make a reservation and purchase a park entrance permit BEFORE setting up at any campsite.'; 'One Camping Unit Per Site'; 'No Shows: ...') + site E02 page (Checkin 12:00 pm, Checkout 11:00 am), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Larimer County campground at the north end of Carter Lake, west of Loveland; the loop runs from a hill above the lake (E01-E22, with lake views) down into a meadow below the dam (E23-E49, no view). --Claude",
+  "summary": "Larimer County booking site (park page, full site list, five Eagle site pages) + county permits page: confirmed electric 50 (no water/sewer), $35/$45 + $8.75, year-round, showers, reservable. Changed count 19 -> 47 and max_rig_ft 70 -> 80; added pull_through, flush/vault toilets, potable water, fcfs never, booking url/note. Note: dropped the wrong '~19 sites' and 'lengths 36-70', the 'set back from the lake' blanket statement (E01-E22 overlook it), and field restatements; dump left as stored (page silent for Eagle).",
+  "flags": [
+    "Waterfront (stored not waterfront): partly contradicted by the operator. Site E02's page: 'Sites E01-E22 are on a hill overlooking the lake' (E23-E49 'no view of the lake'). On Esri imagery E02 is about 250 m north of the shore, across the county road from the marina. Lakeview lead for 21 of 47 sites; needs the gate.",
+    "MISSING CAMPGROUND (Carter Lake has five loops on the county booking site, the DB holds only Eagle 2641 and South Shore 2642): North Pines Campground, 4 drive-in non-electric STANDARD sites N01-N04 (24 Back-In, 35 Back-In, 45 Pull-Through, 25 Back-In), water spigots, N04 tagged 'Proximity to Water: Lakefront'; centroid about 40.35409,-105.22050, on the lakeshore at the north end west of Eagle. Fits EKKO (all 24 ft+) -> candidate add (non-electric $25/$30/$35).",
+    "Carter Knolls Campground: 5 drive-in STANDARD sites (C02-C04, C06 at 20 ft; C05 at 40 ft Pull-Through) + 2 walk-to (C08, C09); no water ('except for Carter Knolls'); 'on a rocky overlook above the lake', non-electric; centroid about 40.3382,-105.2113. Only one site fits 23 ft -> probably fails the site-length rule; listed for completeness, not proposed.",
+    "Sky View Campground: 3 GROUP ELECTRIC pods only (VP1-VP3, 5 sites each, 45 ft) -> group-only, out of scope.",
+    "Pin: stored 40.35362,-105.21344 is at the county road by the marina entrance, about 100 m from the Eagle site points (E02 40.35434,-105.21548 to E47 40.35306,-105.21094). Fine.",
+    "Phone 970-619-4570 confirmed (county no-show / questions line on every site page).",
+    "Website field holds two URLs separated by a newline; the larimer.gov page returns 403 to plain HTTP but loads via WebFetch. Booking URL recorded in booking.url."
+  ]
+}
