@@ -154055,38 +154055,47 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 10104815/nps.gov cure: Curecanti NRA 21-22 site drive-in campground, blacktop pads accepting tents to medium RVs, FCFS, operating",
     "waterfront_evidence": "not waterfront, coord fix 38.4445,-107.5548 (was 320m N) -- loop E of Cimarron R. behind a riparian buffer + road.",
-    "website": "https://www.nps.gov/cure/planyourvisit/camping.htm",
-    "note": "Curecanti NRA campground off US-50 near Cimarron, ~20 mi east of Montrose, in the Cimarron River canyon below Morrow Point Dam; 22 sites, vault toilets, narrow-gauge railroad exhibit nearby. Largest sites ~35 ft. FCFS, rarely fills. --Claude",
+    "website": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm",
+    "note": "Curecanti NRA campground on US-50 between mile markers 112 and 113, ~20 mi east of Montrose, at the old narrow-gauge railroad town of Cimarron beside the Cimarron River; the Cimarron Canyon rail exhibit is next door and Crystal Reservoir at Morrow Point Dam is ~1.5 mi away. Rarely fills. No cell service; an emergency 911 phone is by the visitor center door. --Claude",
     "sites": {
-      "count": 22,
-      "max_rig_ft": 35
+      "count": 21,
+      "note": "Tents to medium-sized RVs; NPS gives no length. Paved parking pads, mostly back-in, a few parallel."
     },
     "facilities": {
-      "vault_toilets": true
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Potable water is seasonal and may be off when nights stay below freezing."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "First-come only; recreation.gov lists it for on-site Scan and Pay."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (campsites totalSites '21'; 'The campground accommodates tents to medium sized RVs.'; rvInfo 'Medium sized Rvs are allowed.'; 'Only parking pads are paved.') + recreation.gov catalog for 10104815 (21 numbered sites 001, 003-022 plus one 'Scan and Pay' placeholder; no lengths), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (toilets 'Vault Toilets - seasonal'; potableWater 'Yes - seasonal'; 'Water may not be available if temperatures remain freezing overnight.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API ('All sites are first-come, first-served and the campground rarely fills.') + https://www.recreation.gov/api/camps/campgrounds/10104815 (rules scanAndPay 1; rate 'First-come, First-served Season' WalkInCimarron), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.nps.gov/cure/planyourvisit/fees.htm ('Cimarron Campground | No | No | Yes | $24', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (fees 'The nightly camping fee at Cimarron is $24.00. Group size limit is eight people and two vehicles.'; Senior/Access $12.00) + https://www.nps.gov/cure/planyourvisit/fees.htm (Cimarron Campground $24) + recreation.gov /rates (2026 WalkInCimarron 24), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (operatingHours 'All sites are first-come, first-served. Typically open May to October.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -154098,8 +154107,19 @@
       "nightly_low": 24,
       "nightly_high": 24,
       "currency": "USD",
-      "note": "$24/night, first come first served (Curecanti NRA fees table)."
-    }
+      "note": "$24 a night ($12 with a Senior or Access pass); up to 8 people and 2 vehicles.",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "note": "Typically open May to October."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (record for https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm) https://www.nps.gov/cure/planyourvisit/fees.htm https://www.recreation.gov/api/camps/campgrounds/10104815 (+ /rates; per-site catalog via api/search/campsites) https://developer.nps.gov/api/v1/alerts?parkCode=cure Esri World_Imagery with the rec.gov per-site points",
+      "note": "NPS campground record + rec.gov 10104815: confirmed vault toilets, FCFS only, $24. Changed sites.count 22->21 (NPS totalSites 21; rec.gov's 22nd 'site' is the Scan and Pay placeholder), max_rig_ft 35->null (unsourced; NPS says only 'medium sized RVs'). Added potable water (seasonal), season note (typically May-October). Note cleaned of field restatements and the unsourced 35-ft figure; 'Cimarron River canyon below Morrow Point Dam' reworded to the agency's description."
+    },
+    "phone": "970-641-2337"
   },
   {
     "id": 2315,
@@ -159880,18 +159900,17 @@
     "id": 2385,
     "kind": "campground",
     "name": "Cataract Creek Campground",
-    "location": "39.8380,-106.3150",
-    "elevation_meters": 2669.0,
+    "location": "39.83879,-106.30699",
+    "elevation_meters": 2621,
     "state": "CO",
     "ownership": "federal",
     "waterfront": "lakeview",
     "inclusion_evidence": "USFS White River NF page: 5-site fee developed campground, drive-in; reported RVs up to 25 ft (>23 ft) -> fits 23-ft RV though tight interior",
     "waterfront_evidence": "satellite at 39.8380,-106.3150: sites on open sage bench above Lower Cataract Lake, lake ~150m+ downslope SW with open sightline; set back beyond on-water bound",
-    "website": "https://www.fs.usda.gov/r02/whiteriver",
-    "note": "Dillon RD, near Green Mountain Reservoir (White River NF); 5 small sites on Cataract Creek near the Lower Cataract Lake trailhead (Eagles Nest Wilderness), vault toilet, no potable water, max ~25 ft (tight interior). FCFS. --Claude",
+    "website": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground",
+    "note": "White River NF (Dillon RD) campground in the Cataract Creek drainage above Green Mountain Reservoir: off Heeney Rd (County Rd 30) 5.3 mi from Hwy 9, then Cataract Creek Rd (FDR 1725). Trails into the Eagles Nest Wilderness nearby, including the Lower Cataract Lake trailhead. --Claude",
     "sites": {
-      "count": 5,
-      "max_rig_ft": 25
+      "count": 5
     },
     "facilities": {
       "vault_toilets": true,
@@ -159903,23 +159922,24 @@
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground ('This small campground with 5 campsites is located in the Cataract Creek drainage just above Green Mountain Reservoir.'; no RV length stated), read 2026-10-28. max_rig_ft 25 was derived from note prose whose only source is Campendium's 'Longest Vehicle Reported'; the FS page states none, so it is cleared.",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground ('Vault Toilet'; 'Potable water is not available at this site.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground (no reservation information) + recreation.gov search API for 'Cataract Creek' (no Colorado campground facility), read 2026-10-28: a federal campground with no recreation.gov listing is first-come only (README rule, AWH 2026-10-22)",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground ('Fee Site and Info | Overnight Use: | Single Site: $23 per night | Office Contact Information | Dillon Ranger District | Address: | 680 Blue River Parkway Silverthorne, CO 80498 | Phone: | (970) 468-5400 | Hours: | Monday')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground ('Overnight Use: Single Site: $23 per night'; page last updated February 26, 2026), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -159930,8 +159950,15 @@
     "fees": {
       "nightly_low": 23,
       "nightly_high": 23,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/whiteriver/recreation/cataract-creek-campground https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins recreation.gov search API (q='Cataract Creek': no Colorado campground facility) Esri World_Imagery around the FS coordinates and the stored pin",
+      "note": "FS page: confirmed 5 sites, vault toilet, no potable water, $23 (2026); FCFS confirmed (no recreation.gov listing). Cleared the derived max_rig_ft 25 (Campendium-only). Note trimmed of field restatements and the unsourced size remarks."
+    },
+    "phone": "970-468-5400"
   },
   {
     "id": 2386,
@@ -163969,8 +163996,8 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 231875 / FS PSICC: 37 sites (35 accommodate RVs/trailers 15-40 ft, 2 tent-only), open mid-May to Aug, currently reservable -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 39.3416,-105.3296: dense forest, small drainage only, no adjacent water; rec.gov: near Buffalo Creek but not adjacent to sites",
-    "website": "https://www.recreation.gov/camping/campgrounds/231875",
-    "note": "South Park/Tarryall (South Platte RD) (Pike-San Isabel NF); 37 sites, sites to ~40 ft. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground\nhttps://www.recreation.gov/camping/campgrounds/231875",
+    "note": "Pike-San Isabel NF (South Platte RD) campground in the Buffalo Creek Recreation Area at ~7,400 ft, 5 mi west on FR 550 off Jefferson County Road 126 south of Pine Junction. Creek access across from the entrance; several trailheads (Colorado Trail, the Buffalo Creek trail system) within walking distance. A bear closure order is in force: store attractants in hard-sided vehicles or bear boxes. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
@@ -163978,30 +164005,61 @@
     },
     "sites": {
       "count": 37,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "pull_through": true,
+      "note": "recreation.gov lists 37 sites: 35 standard sites open to RVs and trailers (24 reservable, 11 first-come) and 2 tent-only; the FS page says 38 (24 reservable, 14 first-come). Catalogued vehicle lengths run 15-40 ft, most sites 30 ft; only site 022 takes 40 ft and sites 007, 009, 010 32 ft. 3 pull-throughs. Camp host usually at site 2."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "some_sites",
+      "max_stay_nights": 14,
+      "min_stay": [
+        {
+          "nights": 2,
+          "applies": "weekend"
+        },
+        {
+          "nights": 3,
+          "applies": "holiday"
+        }
+      ],
+      "season": {
+        "opens": "05-15",
+        "closes": "09-06"
+      },
+      "note": "24 sites reservable on recreation.gov (or 877-444-6777) at least 4 days ahead; the rest first-come, and unreserved sites are first-come too (must be occupied the same night). Friday+Saturday minimum on weekends, 3 nights on holiday weekends; walk-ups are exempt from the minimums. 2026 reservable (Peak) season May 15 - Sep 6, with first-come walk-in seasons May 1-14 and Sep 7-19; recreation.gov's 2027 Peak season is Jun 5 - Sep 5."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov per-site catalog for 231875 (type, reservable flag, Max Vehicle Length, Driveway Entry) + https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('The are 38 campsites available. 24 sites are reservable, and 14 sites are first-come, first-served.'; 'On-site Host is usually at campsite #2.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.') + https://www.recreation.gov/api/camps/campgrounds/231875 (rules maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4) + /rates (2026 Peak Season 2026-05-15 to 2026-09-06; First-come seasons 2026-05-01..05-14 and 2026-09-07..09-19; 2027 Peak 2027-06-05..09-05), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Buffalo Campground does not have electricity or water hook-ups'; 'No dump station or hook-ups are available.') + recreation.gov catalog (all sites STANDARD/TENT ONLY NONELECTRIC), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/231875/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Single Site: $28 per night / Additional Vehicle Fee: $11 for third vehicle'; 'Two vehicles or one recreation vehicle (RV) per site is included in the camping fee.') + https://www.recreation.gov/api/camps/campgrounds/231875/rates (2026 and 2027 Peak: STANDARD NONELECTRIC 28), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Vault toilets'; 'Potable water is not available at this site.'; 'There is no dump station available. The closest dump station is Chatfield Lake State Park in Littleton.') + https://www.recreation.gov/api/camps/campgrounds/231875 (notice 'No water available. Bring all the water you will need for your stay.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('The campground is typically open from early May to late September, depending on weather conditions.'; Seasons of Use 'Early May to late September'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -164010,13 +164068,33 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 28,
       "nightly_high": 28,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$28/night includes two vehicles or one RV; third vehicle $11. Cash, check or money order at the self-service fee tube for walk-ups. Same rate listed for 2027."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "dump": false,
+      "note": "No water: bring all you need. Nearest dump station is Chatfield State Park, Littleton."
+    },
+    "season": {
+      "year_round": false,
+      "note": "Typically open early May to late September, depending on weather."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground https://www.recreation.gov/api/camps/campgrounds/231875 (+ /rates; per-site catalog via api/search/campsites) https://www.fs.usda.gov/r02/psicc/alerts",
+      "note": "FS page + rec.gov 231875: confirmed $28 (2027 same), 37 sites with max 40 ft (catalog site 022; most 30 ft), no hookups. Added pull_through, no water/dump, vault toilets, season note (early May - late Sep), booking details (some FCFS, 14-night limit, 2-night weekend / 3-night holiday minimums, booking.season 05-15..09-06). Note's wrong 'South Park/Tarryall' location replaced."
+    },
+    "phone": "303-275-5610"
   },
   {
     "id": 2431,
@@ -166524,7 +166602,7 @@
     "inclusion_evidence": "recreation.gov 10165210: operating USFS FCFS campground, Standard Nonelectric drive-in sites -> real RV campground",
     "waterfront_evidence": "waterfront 'creekside' assessed in commit 0e40be5 (Add 23 CO GMUG-area USFS campgrounds (Grand Mesa/Uncompahgre/Gunnison)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://www.recreation.gov/camping/campgrounds/10165210\nhttps://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd",
-    "note": "GMUG (Gunnison RD) campground ~3.8 mi up Cement Creek Rd (FR 740, fairly wide dirt with some washboard) off CO-135 near Crested Butte South. 13 FCFS sites, no hookups, pit toilets, no potable water (creek only); $18/night. Max RV ~28 ft but loop is narrow with tight turns, so a 23-ft rig is comfortable while 30+ ft is discouraged. Sites 3-9 sit along the creek. Open ~May 23-Oct 1, weather dependent. --Claude",
+    "note": "GMUG (Gunnison RD) campground in a narrow aspen valley 4 mi up Cement Creek Rd (FR 740, fairly wide dirt with some washboard) off CO-135, 7.5 mi southeast of Crested Butte. The loop is narrow with tight turns: a 23-ft rig is comfortable, 30 ft and up is discouraged. Sites 3-9 sit along the creek. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -166535,14 +166613,18 @@
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": true
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-23",
+      "closes": "10-01",
+      "note": "Weather dependent."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "First-come only; recreation.gov lists it for on-site Scan and Pay (claim the site in person, pay by QR code in the Recreation.gov app where available)."
     },
     "provenance": {
       "hookups": {
@@ -166551,28 +166633,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd ('The landscape is mostly aspen in a narrow valley. There are 13 campsites.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd ('Vault toilet(s)'; 'Potable water is available at this site.'; page last updated September 29, 2026), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd (Seasons of Use 'May 23 - Oct. 1 (weather dependent)'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd ('This site is a first come, first serve campground.'; 'No Reservations. First-Come, First-Serve Camping.') + https://www.recreation.gov/api/camps/campgrounds/10165210 ('This location is available on a first-come, first-served basis only.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd ('Fee Site and Info | Single Site: $18 per night | Additional Vehicle Fee: $9 per night', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd ('Single Site: $18 per night / Additional Vehicle Fee: $9 per night'; '$18 per night per camping unit; $10 per firewood bundle.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -166584,8 +166667,15 @@
       "nightly_low": 18,
       "nightly_high": 18,
       "currency": "USD",
-      "note": "Single site $18/night; additional vehicle $9/night. (Forest Service page)"
-    }
+      "note": "$18 per camping unit; additional vehicle $9/night; firewood $10 a bundle.",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/gmug/recreation/cement-creek-campground-gunnison-rd https://www.recreation.gov/api/camps/campgrounds/10165210 https://www.fs.usda.gov/r02/gmug/offices Esri World_Imagery around the FS point (winter scene)",
+      "note": "FS page + rec.gov 10165210 (Scan and Pay listing): confirmed 13 sites, vault toilets, FCFS only, $18 (+$9 vehicle). Changed potable_water false->true (FS: 'Potable water is available'). Added season 05-23..10-01. Note's 'no potable water (creek only)' and field restatements removed."
+    },
+    "phone": "970-641-0471"
   },
   {
     "id": 2470,
@@ -168135,7 +168225,7 @@
     "inclusion_evidence": "USFS sanjuan burro-bridge page: 14 sites, 'Max RV Size 35 ft', RVs allowed; the 'last 6 miles not recommended for trailers' is the upper Rico segment beyond camp, approach gravel/passable -> RV campground",
     "waterfront_evidence": "satellite at 37.787,-108.068 + FS page: sites on a sloping hillside 'above the West Dolores River,' set back in spruce forest, 'not easy access to the water'",
     "website": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground",
-    "note": "San Juan NF (Dolores RD), on a sloping hillside above the West Dolores River ~2 mi NE of Dunton. 14 sites, FCFS only, max RV 35 ft. Vault toilets, potable water, picnic tables, fire grates; two sites have horse corrals. Access via West Dolores Rd (FR 535) gravel; approach from the Dolores/Hwy 145 side - the steep, narrow last 6 miles 'not recommended for trailers' are the upper segment toward Rico, beyond the campground. Mid-May through Sept. No hookups. --Claude",
+    "note": "San Juan NF (Dolores RD), on a sloping hillside with a few shade trees above the West Dolores River ~2 mi NE of Dunton: easy access to the Lizard Head Wilderness (Navajo Lake and Calico trails) but not easy access to the water. Reached on West Dolores Rd (FR 535, gravel) from Hwy 145 about 13 mi north of Dolores; the Forest Service says the road's last 6 miles, rejoining Hwy 145 north of Rico, are steep, narrow and not recommended for trailers, so come in from the Dolores end. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -168143,18 +168233,22 @@
     },
     "sites": {
       "count": 14,
-      "max_rig_ft": 35
+      "max_rig_ft": 35,
+      "note": "14 sites on a sloping hillside. Max RV size 35 ft; RVs and other wheeled equipment must fit in the parking spur (no overflow parking)."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Potable water in the main season only: none in the late-season extension (late September on) and no services at all October-May. No trash service; pack it out. Two horse bays."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Mid-May through September; in 2026 extended from Sept 27 to Nov 22 (or until snow closes it) with no host, water or trash service."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "First-come only. recreation.gov lists it for on-site Scan and Pay (claim a site in person, then pay by QR code in the Recreation.gov app where available) or the fee tube."
     },
     "provenance": {
       "hookups": {
@@ -168163,28 +168257,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground ('The campground has 14 sites with a few shade trees on a sloping hillside above the West Dolores River.'; 'Equipment with wheels (RVs, campers, cars) must fit in the parking spur. There is not any overflow parking available.'; 'Max RV size = 35 ft'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground ('Vault Toilet (2)'; 'Potable water is available at this site.'; 'Campground open from Sept. 27, through Nov. 22 ... No host, water or electric.'; 'Between October and May there are no services (water, trash pick up or restrooms).'; 'Two bays can accommodate 2 horses a day.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground (Seasons of Use 'Mid-May through September'; Current Conditions 'Campground open from Sept. 27, through Nov. 22, or if snow/weather closes campground. No host, water or electric.'; last updated September 25, 2026), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground ('All sites are first come, first serve.') + https://www.recreation.gov/api/camps/campgrounds/10165190 ('This location is available on a first-come, first-served basis only. Visitors are required to physically arrive at the campground to purchase and claim a site.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground ('Fee Site and Info | Overnight Use: | Single Site: $23 per night | Maximum number of people per site: 8 ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground ('Single Site: $23 per night / Maximum number of people per site: 8') + https://www.recreation.gov/api/camps/campgrounds/10165190/rates (2026 and 2027 First-come seasons: 23), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -168195,8 +168290,16 @@
     "fees": {
       "nightly_low": 23,
       "nightly_high": 23,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Up to 8 people per site. recreation.gov lists the same $23 for 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/sanjuan/recreation/burro-bridge-campground https://www.recreation.gov/api/camps/campgrounds/10165190 (+ /rates) https://www.fs.usda.gov/r02/sanjuan/conditions (Dolores Ranger District Road Status as of 2026-10-25) https://www.fs.usda.gov/r02/sanjuan/alerts/closures-and-dangerous-conditions-roads-bridges-and-trails-flooding",
+      "note": "FS page + rec.gov 10165190 (Scan and Pay listing): confirmed 14 sites, 35-ft max RV, vault toilets, potable water (main season), FCFS only, $23 (2027 same). Added season note (mid-May-Sept; 2026 extension Sept 27-Nov 22 with no water) and facility/booking notes. Note trimmed of field restatements."
+    },
+    "phone": "970-882-7296"
   },
   {
     "id": 2493,
@@ -168210,7 +168313,7 @@
     "inclusion_evidence": "USFS sanjuan cimarrona page: 21 FCFS sites, max RV 35 ft, 'a few sites can handle large-sized RVs', gravel FR access, open May-Sep -> RV campground",
     "waterfront_evidence": "satellite at 37.539,-107.210 + FS page: sites 'well treed and private' set back in forest; Cimarrona Creek is a small channel ~150-250m out across the meadow (a 'short walk' to fish), beyond on-water bound and screened",
     "website": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground",
-    "note": "San Juan NF (Pagosa RD), beside Cimarrona Creek near the head of the road above Williams Creek Reservoir, ~27 mi NW of Pagosa Springs on FR 640. 21 sites, FCFS only; a few sites fit large RVs (max 35 ft). Vault toilets, potable water, picnic tables, fire grates. Adjacent Cimarrona Trailhead; short walk to creek/reservoir fishing. Open roughly May-Sept. No hookups. --Claude",
+    "note": "San Juan NF (Pagosa RD) campground near the end of FR 640, 2.3 mi north of Teal Campground above Williams Creek Reservoir: from Pagosa Springs ~15.5 mi on Piedra Rd, ~6 mi on FR 631, then 4 mi on FR 640. Mix of sunny and shady sites beside a meadow, a short walk to Cimarrona Creek; adjacent Cimarrona Trailhead. No dispersed camping within 300 yards. Generators limited to an hour at a time. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -168218,18 +168321,22 @@
     },
     "sites": {
       "count": 21,
-      "max_rig_ft": 35
+      "max_rig_ft": 35,
+      "note": "A few sites can take large RVs; the rig must fit in the parking spur, with no overflow parking."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Water and trash are off during the late-season extension (end of September to November 15)."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "May through September (2026 fee season May 8 - Sep 26), plus a 2026 limited-service extension from the end of September through November 15 with no water or trash."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "First-come only; pay on site, via Scan and Pay in the Recreation.gov app where available."
     },
     "provenance": {
       "hookups": {
@@ -168238,28 +168345,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground ('The campground has 21 sites. ... a few sites that can handle large-sized RVs.'; 'Equipment with wheels (RVs, campers, cars) must fit in the parking spur. There is not any overflow parking available.'; 'Max RV size = 35 ft'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground ('Vault Toilet (2)'; 'Potable water is available at this site.'; Current Conditions 'Campground open from end of September through November 15th, 2026 with limited services. No water or trash available.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground (Seasons of Use 'May through September.'; Current Conditions 'Campground open from end of September through November 15th, 2026 with limited services.') + https://www.recreation.gov/api/camps/campgrounds/10165225/rates (First-come, First-served Season 2026-05-08..2026-09-26), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground ('The 21 sites are all first-come, first-serve.') + https://www.recreation.gov/api/camps/campgrounds/10165225 ('This location is available on a first-come, first-served basis only.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground ('Fee Site and Info | Overnight Use: | Single Site: $28 per night | Maximum number of people per site: 8 ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground ('Single Site: $28 per night / Maximum number of people per site: 8') + https://www.recreation.gov/api/camps/campgrounds/10165225/rates (2026 and 2027 WalkInScanPay1 28), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -168270,8 +168378,16 @@
     "fees": {
       "nightly_low": 28,
       "nightly_high": 28,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$28 a night, up to 8 people; same on recreation.gov for 2027."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/sanjuan/recreation/cimarrona-campground https://www.recreation.gov/api/camps/campgrounds/10165225 (+ /rates; per-site catalog via api/search/campsites) https://www.fs.usda.gov/r02/sanjuan/conditions (Pagosa RD road table as of 2026-10-27) Esri World_Imagery with the rec.gov per-site points",
+      "note": "FS page + rec.gov 10165225: confirmed 21 sites, 35-ft max RV, vault toilets, potable water, FCFS only, $28 (2027 same). Added season note with the 2026 late-season extension to Nov 15 (no water/trash). '~27 mi NW of Pagosa Springs' replaced by the FS directions; note cleaned of field restatements."
+    },
+    "phone": "970-264-2268"
   },
   {
     "id": 2495,
@@ -168903,7 +169019,7 @@
     "waterfront_evidence": "satellite at 38.18472,-106.51687: forest/meadow loop with RVs visible, no water body anywhere in 700m frame",
     "website": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground",
     "phone": "719-655-2547",
-    "note": "19 large, well-spaced sites (4 pull-through) in a single loop in a ponderosa grove/grass meadow at ~9,100 ft; max vehicle 30 ft (a 32-ft fifth wheel has fit per a review). Reached via 27.6 mi west on Hwy 114 from Saguache then 1.7 mi gravel road. Vault toilets, no potable water, no hookups. FCFS, not reservable; $10/night. Open mid-May to mid-November. Sites 16-18 on a no-turnaround dead-end spur. --Claude",
+    "note": "Single loop in a ponderosa pine grove ringed by grass meadow at ~9,100 ft, just off CO-114 (27.6 mi west of Saguache, then 1.7 mi of gravel on FR 775). Sites 16-18 sit on a dead-end spur with no turnaround. A 32-ft fifth wheel has fit, per a review. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -168912,14 +169028,18 @@
     "sites": {
       "count": 19,
       "max_rig_ft": 30,
-      "pull_through": true
+      "pull_through": true,
+      "note": "19 large, well-spaced sites in one loop, 4 of them pull-through. Maximum trailer length 30 ft; two vehicles per site."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": false
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-19",
+      "closes": "11-18",
+      "note": "2026 season scheduled May 19 - November 18 ('Dates may change'); seasons of use mid-May to mid-November."
     },
     "booking": {
       "reservable": false,
@@ -168932,28 +169052,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('There are 19 large, well-spaced sites, with 4 pull-through options.'; 'Maximum two vehicles per site. Extra vehicle fee may apply. Maximum length trailer is 30 feet.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('Vault toilet(s)'; 'Potable water is not available at this site.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('Campground is scheduled to open for the 2026 season from May 19th to November 18th. Dates may change.'; Seasons of Use 'Mid-May to Mid-November'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('This campground is first-come, first-served.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('Fee Site and Info | Day Use: | $10 per vehicle per day | Overnight Use: | Single and Double Site: $10 per night | Credit cards not accepted. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground ('Day Use: $10 per vehicle per day / Overnight Use: Single and Double Site: $10 per night / Credit cards not accepted.'; page last updated May 20, 2026), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -168964,7 +169085,14 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Single and double sites $10/night; day use $10 per vehicle. Credit cards not accepted."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/riogrande/recreation/buffalo-pass-campground https://www.fs.usda.gov/r02/riogrande/conditions/saguache-ranger-district-current-roads-status https://www.fs.usda.gov/r02/riogrande/conditions",
+      "note": "FS page: confirmed 19 sites / 4 pull-throughs / 30-ft max trailer, vault toilets, no potable water, FCFS only, $10. Added the 2026 season dates (05-19..11-18) and a fee note; phone 719-655-2547 confirmed (Saguache RD). Note trimmed of field restatements."
     }
   },
   {
@@ -169342,71 +169470,6 @@
       "note": "FS page: confirmed 8 non-reservable sites, vault toilet, potable water, $20 cash/check only; not on recreation.gov. Season as a note (typically June-October). Cleared max_rig_ft 33 (derived from a camper review; the FS states no limit). Note trimmed of field restatements."
     },
     "phone": "970-638-4516"
-  },
-  {
-    "id": 2509,
-    "kind": "campground",
-    "name": "Chapman Reservoir Campground",
-    "location": "40.18666,-107.08622",
-    "elevation_meters": 2849.0,
-    "state": "CO",
-    "ownership": "federal",
-    "waterfront": "lakeview",
-    "inclusion_evidence": "FS r02/mbrtb page: 12 sites, MAX TRAILER LENGTH 22 ft, 2WD FR16/940 access, currently 'Site Open'; a 23-ft Class C fits marginally -> borderline keep",
-    "waterfront_evidence": "satellite at 40.1867,-107.0862: camp loop set back NE of drawn-down reservoir across open ground (>50m), reservoir visible; FS page: 'some campsites offer a beautiful view of Chapman Reservoir'",
-    "website": "https://www.fs.usda.gov/r02/mbrtb/recreation/chapman-reservoir-campground",
-    "note": "Primitive Routt NF campground at Chapman Reservoir off the Flat Tops Trail Scenic Byway west of Yampa, reached via FR 16/FR 940 (2WD, typically open Memorial Day to mid-October). 12 first-come, first-served sites, $20/night cash or check only; 22-ft max trailer length (a 23-ft Class C fits marginally), vault toilet, camp host on site in summer, NO potable water (bring your own). Elevation ~9,300 ft. --Claude",
-    "sites": {
-      "count": 12,
-      "max_rig_ft": 22
-    },
-    "facilities": {
-      "vault_toilets": true,
-      "potable_water": false
-    },
-    "season": {
-      "year_round": false
-    },
-    "booking": {
-      "reservable": false,
-      "fcfs": "always"
-    },
-    "provenance": {
-      "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
-      },
-      "fees": {
-        "source": "https://www.fs.usda.gov/r02/mbrtb/recreation/chapman-reservoir-campground ('Fee Site and Info | $20 per site. Exact cash or check only as there is no option for change back if paying cash. | NO CREDIT CARDS | accepted. Payment instructions are found on the kiosk. | Getting There | Latitude / Lon')",
-        "checked": "2026-10-09"
-      }
-    },
-    "note_scan": {
-      "sig": "d5a9346371c0f43d",
-      "checked": "2026-09-15",
-      "model": "claude-opus-5"
-    },
-    "fees": {
-      "nightly_low": 20,
-      "nightly_high": 20,
-      "currency": "USD"
-    }
   },
   {
     "id": 2510,
@@ -173182,58 +173245,70 @@
     "inclusion_evidence": "recreation.gov 233250: 27 single-family sites (18 electric/9 non-electric), RV dump station, drive-in via FR 578, operational",
     "waterfront_evidence": "waterfront 'riverfront' assessed in commit 2466e2c (Add 10 more CO San Juan NF campgrounds (Durango/Vallecito/Pagosa/Rico)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://www.recreation.gov/camping/campgrounds/233250\nhttps://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground",
-    "note": "USFS campground along the Dolores River, ~6 mi NE of Rico on Hwy 145 (San Juan Skyway, paved access) then 0.5 mi on Barlow Creek Rd (FR 578). 27 sites in two loops; riverside Loop A has 30-amp electric sites, Loop B is non-electric and set back; max RV ~50 ft, pull-throughs available; vault toilets, potable water, dump station (fee). Elev ~9,400 ft, open mid-May through September. Reservable online; some sites FCFS. --Claude",
+    "note": "San Juan NF (Dolores RD) campground in a meadow ringed by fir and aspen beside the Dolores River, ~9,400 ft: 6 mi NE of Rico on Hwy 145 (San Juan Skyway, paved), then 0.5 mi on Barlow Creek Rd (FR 578). The electric sites are in Loop A on the river side, behind a band of conifers; non-electric Loop B is set back up the slope. Barlow Creek Rd beyond the campground over Bolam Pass is often limited to 4WD. --Claude",
     "hookups": {
       "electric": 30,
       "water": false,
-      "sewer": false
+      "sewer": false,
+      "note": "30-amp electric at the Loop A sites (2-20), both reservable and first-come; no water hookups. The FS page counts 16 electric sites (11 reservable + 5 first-come), recreation.gov's description 18, its catalog 19 (11 reservable + 8 first-come)."
     },
     "sites": {
       "count": 27,
       "max_rig_ft": 50,
-      "pull_through": true
+      "pull_through": true,
+      "note": "27 sites in two loops plus 3 day-use picnic sites. The FS page states 'Max RV size = 50 ft'; recreation.gov's catalog lists 30-70 ft, 10 of them pull-throughs (9 in Loop A). Rigs must fit in the parking spur (no overflow parking)."
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": true,
-      "dump": true
+      "dump": true,
+      "note": "Dump station costs $15 to use."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Mid-May through September."
     },
     "booking": {
       "reservable": true,
-      "fcfs": "some_sites"
+      "fcfs": "some_sites",
+      "platform": "recreation.gov",
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-15",
+        "closes": "09-26"
+      },
+      "note": "16 sites reservable on recreation.gov, booking closing 4 days before arrival; 11 first-come. 14 nights in any 30 days. Reservable (Peak) season May 15 - Sep 26 in both 2026 and 2027."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose; recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground ('Of the 27 sites, there are 16 reservable sites, 11 with an electrical hookup, 30 amp. Of the remaining 11 first-come, first-serve sites, 5 have an electrical hookup.') + recreation.gov catalog for 233250 (Electricity Hookup 30 on 19 Loop A sites, 11 reservable; Water Hookup 'No' on all 27) + https://www.recreation.gov/api/camps/campgrounds/233250 ('Eighteen sites offer electric hookups.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground ('has 27 campsites and 3 picnic sites'; 'Both loops have pull-throughs'; 'Equipment with wheels (RVs, campers, cars) must fit in the parking spur.'; 'Max RV size = 50 ft') + recreation.gov catalog for 233250 (Max Vehicle Length, Driveway Entry), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground ('Vault Toilet (4)'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/233250 (notice 'There is a dump station (fee to use is $15.00) on site.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground (Seasons of Use 'Mid-May through September.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground ('there are 16 reservable sites ... the remaining 11 first-come, first-serve sites') + https://www.recreation.gov/api/camps/campgrounds/233250 (rules maxStay 14 'Rolling 30 Days', maxConsecutiveStay 14, reservationCutOff 4) + /rates (Peak Season 2026-05-15..2026-09-26 and 2027-05-15..2027-09-26), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/233250/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground ('Single Site Non-Electric: $30 per night / Single Site Electric: $41 per night') + https://www.recreation.gov/api/camps/campgrounds/233250/rates (2026 and 2027 Peak: STANDARD ELECTRIC 41, STANDARD NONELECTRIC 30), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -173244,8 +173319,16 @@
     "fees": {
       "nightly_low": 30,
       "nightly_high": 41,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Non-electric $30, electric $41 a night; same on recreation.gov for 2027. Up to 8 people per site."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/sanjuan/recreation/cayton-campground https://www.recreation.gov/api/camps/campgrounds/233250 (+ /rates; per-site catalog via api/search/campsites) https://www.fs.usda.gov/r02/sanjuan/conditions (Dolores RD road status as of 2026-10-25) Esri World_Imagery with the rec.gov per-site points",
+      "note": "FS page + rec.gov 233250: confirmed 27 sites, 30-amp electric (public, 11 reservable + first-come; counts differ 16/18/19), 50-ft FS max, pull-throughs, vault toilets, potable water, dump ($15), $30/$41 (2027 same), some sites FCFS. Added water hookup false, 14-night limit, booking.season 05-15..09-26, season note. Note trimmed of field restatements."
+    },
+    "phone": "970-882-7296"
   },
   {
     "id": 2564,
@@ -174523,34 +174606,38 @@
     "waterfront_evidence": "satellite at 38.34198,-107.78993: gridded RV pads set in farm fields off US-50; river/water is >250m east across the highway and fields, sites inland",
     "website": "https://www.centennialrv550.com/",
     "phone": "970-240-3832",
-    "note": "Full-hookup RV park 10 mi south of Montrose on Hwy 550 with San Juan Mountain views. 60 large grassy sites, all pull-through full hookup (20/30/50-amp), wide alternating-direction sites with grass/trees between; spotless restrooms, on-site propane, laundry. Not adjacent to any river or lake. Highly rated transient park (RV Life ~9.2/10, 4.5★), $$. --Claude",
+    "note": "RV park 10 mi south of Montrose on US-550 (23449 Highway 550) with San Juan Mountain views; wide, alternating-direction sites with grass and trees between. Highly rated transient park (RV Life ~9.2/10, 4.5★). --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "note": "Full hookups at every site; the home page says 20/30/50-amp, the rates page 30 and 50 amp."
     },
     "sites": {
       "count": 60,
-      "pull_through": true
+      "pull_through": true,
+      "note": "Large grassy pull-through sites, level, sized for big rigs with multiple slide-outs. Premium sites are 2-10, 20, 30, 40, 50 and 60. Tents not permitted."
     },
     "facilities": {
-      "laundry": true
+      "laundry": true,
+      "showers": true,
+      "note": "Coin laundry, free Wi-Fi, on-site Ferrellgas propane, a pavilion/rec room, dog walk areas."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.centennialrv550.com/ ('Spacious grassy full hook-up sites with 20/30/50 amp service') + https://www.centennialrv550.com/rates-and-reservations ('Pull - Thru FHU (Full Hook Up) Water, Sewer & Electric 30 & 50 amp'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.centennialrv550.com/ ('60 Large Grassy RV Sites'; 'Pull-Thru & Full Hook-ups'; 'Our spacious pull-through sites are designed to accommodate today's larger RVs with multiple slide-outs') + https://www.centennialrv550.com/rates-and-reservations ('Sites (2 thru 10, 20, 30, 40, 50 & 60)'; 'Tents are NOT permitted.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.centennialrv550.com/ ('Sparkling clean showers and restrooms'; 'Coin-operated laundry facilities'; 'Complimentary Wi-Fi'; 'Onsite propane service'; 'Ferrellgas Propane Service'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
@@ -174558,8 +174645,14 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.centennialrv550.com/rates-and-reservations, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.centennialrv550.com/rates-and-reservations ('Nightly $70.00 / Weekly (7th Night FREE!) $420.00'; premium 'Nightly $75.00 / Weekly (7th Night FREE!) $450.00'; monthly peak $950.00/$1,000.00, off-peak $800.00/$900.00 '* Plus Electric @ .18 /kwh'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.centennialrv550.com/rates-and-reservations (BOOK NOW / Check Availability link to resnexus.com; 'All rates are based on double occupancy.'; 'RV sites are limited to a Maximum of 6 people.'; 'no more than 20 years old') + https://www.centennialrv550.com/park-rules ('please do so at least 7 days in advance of your arrival date to avoid a 1 night cancellation fee'; 'no more than 10 years old'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -174574,7 +174667,19 @@
       "nightly_low": 70,
       "nightly_high": 75,
       "currency": "USD",
-      "note": "Regular site $70/night, premium $75; weekly 7th night free."
+      "note": "Regular site $70 a night, premium $75; weekly 7th night free ($420/$450). Monthly $950/$1,000 May-Sep, $800/$900 Oct-Apr, plus metered electric.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://resnexus.com/resnexus/reservations/book/60F5B8F8-BCF9-40D5-8973-D4286F45423F",
+      "note": "Book online through the park's ResNexus page or by phone. Cancel at least 7 days ahead to avoid a one-night fee. Rates for two people, max 6 per site. RVs must be self-contained and in good condition; the age limit is given as 10 years on the rules page and 20 years on the rates page, with case-by-case exceptions."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.centennialrv550.com/ https://www.centennialrv550.com/rates-and-reservations https://www.centennialrv550.com/park-rules https://www.centennialrv550.com/contact audit/price_research/gateways.py 38.34198,-107.78993 Esri World_Imagery at the pin",
+      "note": "Operator site (live, own domain, phone 970-240-3832 and address match): confirmed 60 pull-through full-hookup 50-amp sites, laundry, $70/$75 nightly. Added showers, booking via ResNexus with the cancellation/occupancy/rig-age terms, monthly rates in the fee note. Note cleaned of field restatements ($$ tier, amenities, hookup detail)."
     }
   },
   {
@@ -918311,46 +918416,56 @@
     "inclusion_evidence": "Elizabeth Park & Recreation District: Casey Jones RV Hideaway in Casey Jones Park, 4189 Hwy 86 - 24 RV sites with 50/30-amp and water, sewer at 22, dump station, restroom/shower building; open year-round; $45-65",
     "website": "https://www.elizabethpr.com/casey-jones-rv-hideaway",
     "phone": "303-646-3599",
-    "note": "Elizabeth Park & Recreation District campground in the ponderosa pines of Casey Jones Park, east of Elizabeth. 24 RV sites with 50/30-amp and water (22 with sewer), showers, dump station. Open year-round, $45-65. --Claude",
+    "note": "Elizabeth Park & Recreation District campground in the ponderosa pines of 103-acre Casey Jones Park, 4189 Hwy 86 just east of Elizabeth; the campground entrance is separate from the park's, just east of it off Hwy 86. The park also has ballfields, an equestrian arena with overnight corrals (fee; no livestock in the campground), a dog park and a 1.4-mi trail; Evans Park next door has a fishing pond and trails to Main Street. Camp host near the entrance. No wood or charcoal fires; propane only. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "note": "50/30-amp and a water hydrant at every RV site; sewer at 22 of the 24. Some utilities sit in non-traditional spots, so extra hose and cord length may be needed."
     },
     "sites": {
-      "count": 24
+      "count": 24,
+      "note": "Gravel pads; site lengths and orientation vary (read the site descriptions before booking). Site 3 is tent-only. One camping unit and one vehicle per site, with overflow parking around the campground."
     },
     "facilities": {
       "showers": true,
-      "dump": true
+      "dump": true,
+      "note": "Restroom/shower building a short walk north of the campground, now open year-round (entry code on the receipt). Dump station free to registered campers only."
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "Open all year. Tent camping may be unavailable in winter (Nov 1 - Apr 30)."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('The campground offers 24 - RV sites with 50/30 amp service, a water hydrant at each site, and sewer connects at 22 of the sites.'; 'some site utilities in non-traditional locations, extra lengths for hoses and plugs may be required'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('24 - RV sites'; 'Site 3 is for tent camping only. Please read site descriptions prior to making a reservation as site lengths and orientation vary.'; 'all sites are gravel pads'; 'One camping unit and one vehicle Per Site. Overflow parking spaces are available throughout the campground.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('There is a dump station on the grounds available for use by registered campers at no additional cost as well as a restroom and shower building.'; 'Restrooms and showers are now available year-round!'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('The campground is open year-round.'; 'Winter Season : Nov 1st – April 30th. Tent camping may be unavailable during Winter.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway (Rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('Rates: $65/night for full hook-up: all other sites / $45/night for electric and water hook-up: Sites 17 and 19 only / $20/night for tent site : Site 3 only'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.elizabethpr.com/casey-jones-rv-hideaway ('Reservations are Required- No Exceptions. We are not staffed to manage drop-in camping requests. An account with Elizabeth Park and Recreation needs to be created in order to make a reservation.'; 'Reservations may only be made for the current calendar year.'; 'Max stay is 30 days within a calendar year.'; 'Summer Season : May 1st - Oct 31st Daily rates only, Max stay for the season 30 days for RVs'; 'Winter Season : ... 30 day permits are avaible upon request.'; Reserve Here link to secure.rec1.com), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -918362,7 +918477,21 @@
       "nightly_low": 45,
       "nightly_high": 65,
       "currency": "USD",
-      "note": "Full hookup $65/night; electric + water (sites 17 and 19) $45; tent $20."
+      "note": "Full hookup $65 a night; electric + water (sites 17 and 19) $45; tent (site 3) $20.",
+      "checked": "2026"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://secure.rec1.com/CO/elizabeth-parks-recreation-district-co/catalog?filter=bG9jYXRpb25bMzYxMjddPTE=",
+      "fcfs": "never",
+      "max_stay_nights": 30,
+      "note": "Advance reservations required, no drop-ins: online through the district's Rec1 catalog (a free account is needed at booking) or by phone to the park office Mon-Fri 9-5. Reservations only for the current calendar year. Elbert County limits campers to 30 days a calendar year; in summer (May 1 - Oct 31) daily rates only, 30 days a season for RVs; winter 30-day permits on request. Check-in 3 pm, check-out 2 pm. Cancellation fee 10%, no refund within 14 days."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.elizabethpr.com/casey-jones-rv-hideaway Esri World_Imagery at the pin",
+      "note": "District page: confirmed 24 RV sites, 50/30-amp + water at all, sewer at 22, showers, dump, year-round, $45-65. Added booking (reservations required via Rec1/phone, fcfs never, 30-night calendar-year cap) and notes. Note cleaned of field restatements."
     }
   },
   {
@@ -923357,8 +923486,8 @@
     "inclusion_evidence": "FS Rio Grande NF page + RIDB (facility 10405276): 22 sites, 17 back-in spurs and 5 pull-throughs, 35-45 ft long, all FCFS -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 37.8220,-106.6049 (z17): two loops in aspen and spruce; Embargo Creek runs along the east side under canopy and no pad can be confirmed at the water, no per-site map or flag -> default down",
     "website": "https://www.recreation.gov/camping/campgrounds/10405276\nhttps://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground",
-    "phone": "",
-    "note": "Rio Grande NF campground on Embargo Creek northwest of Del Norte, reached by county roads and FS Road 650 (gravel). 22 sites in two loops - 17 back-in spurs and 5 pull-throughs, 35-45 ft - one loop open around a meadow, the other in dense aspen and spruce, with a view of Cathedral Rock. No trash service, no hookups. All sites first-come, first-served; open year-round but may be snowed in. --Claude",
+    "phone": "719-657-3321",
+    "note": "Rio Grande NF (Divide RD) campground on Embargo Creek northwest of Del Norte, ~9,400 ft. Reached by county roads 18, 15 and 65, then 7.6 mi on FR 640, which the Forest Service describes as dirt, single lane with no turnouts. Two loops: the left one around a meadow with a few open sites, the right in dense aspen and spruce; view of Cathedral Rock to the north. Fremont's 1848 winter camp is nearby. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -923367,14 +923496,18 @@
     "sites": {
       "count": 22,
       "max_rig_ft": 45,
-      "pull_through": true
+      "pull_through": true,
+      "note": "22 sites in two loops: 17 dead-end spurs and 5 pull-throughs, 35-45 ft long. 'Not all sites will fit vehicles of this length' (45 ft)."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "First-come only; pay on site by cash/check or with recreation.gov Scan to Pay (QR code in the Recreation.gov app)."
     },
     "season": {
-      "year_round": true
+      "year_round": true,
+      "note": "May be inaccessible due to snow levels or spring road closures."
     },
     "provenance": {
       "hookups": {
@@ -923383,23 +923516,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground ('The campground has 22 sites, all first come, first served. 17 are dead end spurs and 5 are pull through sites. The sites vary from 35 to 45 feet in length.'; 'Maximum spur length is 45 feet. Not all sites will fit vehicles of this length.') + recreation.gov catalog for 10405276 (22 sites), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground ('All sites are first come, first served and cannot be reserved.'; '14-day camping limit.'; 'Now pay through Scan to Pay on recreation.gov.') + https://www.recreation.gov/api/camps/campgrounds/10405276 (rule scanAndPay 'S&P Only'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-28",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground (Seasons of Use 'Open Year-Round. May be inaccessible due to snow levels or spring road closures.') + recreation.gov 10405276 notice (same), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/10405276/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground ('Single Site: $10 per night / Day use - $10 (picnicking)') + https://www.recreation.gov/api/camps/campgrounds/10405276/rates (2026 First-come season Jan 1 - Dec 31: WalkInSingleSite 10), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground ('Vault toilets'; 'Potable water is not available at this site.'; 'No trash service or receptacles. Please pack out all garbage.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -923410,7 +923549,19 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "Day use (picnicking) $10."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "No trash service or receptacles: pack out all garbage."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/riogrande/recreation/cathedral-campground https://www.recreation.gov/api/camps/campgrounds/10405276 (+ /rates; per-site catalog via api/search/campsites) https://www.fs.usda.gov/r02/riogrande/conditions/divide-ranger-district-current-roads-status https://www.fs.usda.gov/r02/riogrande/conditions",
+      "note": "FS page + rec.gov 10405276: confirmed 22 sites (5 pull-through, 35-45 ft), FCFS only, year-round, $10. Added vault toilets / no potable water, 14-day limit, Scan to Pay note. Note's 'FS Road 650' corrected to FR 640 (650 is only the junction); field restatements trimmed."
     }
   },
   {

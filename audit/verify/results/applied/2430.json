@@ -1,0 +1,52 @@
+{
+  "id": 2430,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground",
+    "https://www.recreation.gov/api/camps/campgrounds/231875 (+ /rates; per-site catalog via api/search/campsites)",
+    "https://www.fs.usda.gov/r02/psicc/alerts"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 37, "max_rig_ft": 40, "pull_through": true, "note": "recreation.gov lists 37 sites: 35 standard sites open to RVs and trailers (24 reservable, 11 first-come) and 2 tent-only; the FS page says 38 (24 reservable, 14 first-come). Catalogued vehicle lengths run 15-40 ft, most sites 30 ft; only site 022 takes 40 ft and sites 007, 009, 010 32 ft. 3 pull-throughs. Camp host usually at site 2."},
+      "source": "recreation.gov per-site catalog for 231875 (type, reservable flag, Max Vehicle Length, Driveway Entry) + https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('The are 38 campsites available. 24 sites are reservable, and 14 sites are first-come, first-served.'; 'On-site Host is usually at campsite #2.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Buffalo Campground does not have electricity or water hook-ups'; 'No dump station or hook-ups are available.') + recreation.gov catalog (all sites STANDARD/TENT ONLY NONELECTRIC), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": false, "dump": false, "note": "No water: bring all you need. Nearest dump station is Chatfield State Park, Littleton."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Vault toilets'; 'Potable water is not available at this site.'; 'There is no dump station available. The closest dump station is Chatfield Lake State Park in Littleton.') + https://www.recreation.gov/api/camps/campgrounds/231875 (notice 'No water available. Bring all the water you will need for your stay.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Typically open early May to late September, depending on weather."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('The campground is typically open from early May to late September, depending on weather conditions.'; Seasons of Use 'Early May to late September'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "max_stay_nights": 14, "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}], "season": {"opens": "05-15", "closes": "09-06"}, "note": "24 sites reservable on recreation.gov (or 877-444-6777) at least 4 days ahead; the rest first-come, and unreserved sites are first-come too (must be occupied the same night). Friday+Saturday minimum on weekends, 3 nights on holiday weekends; walk-ups are exempt from the minimums. 2026 reservable (Peak) season May 15 - Sep 6, with first-come walk-in seasons May 1-14 and Sep 7-19; recreation.gov's 2027 Peak season is Jun 5 - Sep 5."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Call 877-444-6777 or visit recreation.gov at least four days in advance. A minimum stay on Friday and Saturday night is required on weekends. A three-night minimum stay is required on holiday weekends. Walk-ups are exempt from the nightly minimum.') + https://www.recreation.gov/api/camps/campgrounds/231875 (rules maxConsecutiveStay 14, minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4) + /rates (2026 Peak Season 2026-05-15 to 2026-09-06; First-come seasons 2026-05-01..05-14 and 2026-09-07..09-19; 2027 Peak 2027-06-05..09-05), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 28, "nightly_high": 28, "currency": "USD", "checked": "2026", "note": "$28/night includes two vehicles or one RV; third vehicle $11. Cash, check or money order at the self-service fee tube for walk-ups. Same rate listed for 2027."},
+      "source": "https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground ('Single Site: $28 per night / Additional Vehicle Fee: $11 for third vehicle'; 'Two vehicles or one recreation vehicle (RV) per site is included in the camping fee.') + https://www.recreation.gov/api/camps/campgrounds/231875/rates (2026 and 2027 Peak: STANDARD NONELECTRIC 28), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Pike-San Isabel NF (South Platte RD) campground in the Buffalo Creek Recreation Area at ~7,400 ft, 5 mi west on FR 550 off Jefferson County Road 126 south of Pine Junction. Creek access across from the entrance; several trailheads (Colorado Trail, the Buffalo Creek trail system) within walking distance. A bear closure order is in force: store attractants in hard-sided vehicles or bear boxes. --Claude",
+  "summary": "FS page + rec.gov 231875: confirmed $28 (2027 same), 37 sites with max 40 ft (catalog site 022; most 30 ft), no hookups. Added pull_through, no water/dump, vault toilets, season note (early May - late Sep), booking details (some FCFS, 14-night limit, 2-night weekend / 3-night holiday minimums, booking.season 05-15..09-06). Note's wrong 'South Park/Tarryall' location replaced.",
+  "flags": [
+    "Missing phone: South Platte Ranger District 303-275-5610 (FS page 'Contact Phone'; also recreation.gov's facility phone). recreation.gov's description also gives a concessionaire number, (661) 702-1420, for facility-specific information.",
+    "Website is recreation.gov only; the FS page is https://www.fs.usda.gov/r02/psicc/recreation/buffalo-campground (add it).",
+    "Max length: the FS page states no maximum RV length. 40 ft is one site (022) in the rec.gov catalog, not a placeholder; most sites are catalogued at 30 ft, and 5 at 15-22 ft. Plenty of sites take a 23-ft rig.",
+    "Site count: FS page says 38 (24 reservable / 14 FCFS); rec.gov catalog has 37 (26 reservable incl. 2 tent-only, 11 FCFS). Count 37 recorded.",
+    "Status: open; no current PSICC alert or forest order closes the campground or FR 550 (the current closures are the Willow Fire area on the Leadville RD and Aspen Acres on the San Carlos RD).",
+    "Pin 39.34159,-105.32962 is the rec.gov/FS facility point, 137 m from the centroid of the 37 catalogued site points (39.34036,-105.32974). OK.",
+    "Operator: concessionaire-run (FS passes text 'concessionaire-run campsites'; rec.gov contact email goexplorus.com); ownership federal is correct."
+  ]
+}

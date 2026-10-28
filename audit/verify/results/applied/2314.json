@@ -1,0 +1,49 @@
+{
+  "id": 2314,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://developer.nps.gov/api/v1/campgrounds?parkCode=cure (record for https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm)",
+    "https://www.nps.gov/cure/planyourvisit/fees.htm",
+    "https://www.recreation.gov/api/camps/campgrounds/10104815 (+ /rates; per-site catalog via api/search/campsites)",
+    "https://developer.nps.gov/api/v1/alerts?parkCode=cure",
+    "Esri World_Imagery with the rec.gov per-site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 21, "max_rig_ft": null, "note": "Tents to medium-sized RVs; NPS gives no length. Paved parking pads, mostly back-in, a few parallel."},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (campsites totalSites '21'; 'The campground accommodates tents to medium sized RVs.'; rvInfo 'Medium sized Rvs are allowed.'; 'Only parking pads are paved.') + recreation.gov catalog for 10104815 (21 numbered sites 001, 003-022 plus one 'Scan and Pay' placeholder; no lengths), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Potable water is seasonal and may be off when nights stay below freezing."},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (toilets 'Vault Toilets - seasonal'; potableWater 'Yes - seasonal'; 'Water may not be available if temperatures remain freezing overnight.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Typically open May to October."},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (operatingHours 'All sites are first-come, first-served. Typically open May to October.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": false, "fcfs": "always", "note": "First-come only; recreation.gov lists it for on-site Scan and Pay."},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API ('All sites are first-come, first-served and the campground rarely fills.') + https://www.recreation.gov/api/camps/campgrounds/10104815 (rules scanAndPay 1; rate 'First-come, First-served Season' WalkInCimarron), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 24, "nightly_high": 24, "currency": "USD", "checked": "2026", "note": "$24 a night ($12 with a Senior or Access pass); up to 8 people and 2 vehicles."},
+      "source": "https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm via the NPS campgrounds API (fees 'The nightly camping fee at Cimarron is $24.00. Group size limit is eight people and two vehicles.'; Senior/Access $12.00) + https://www.nps.gov/cure/planyourvisit/fees.htm (Cimarron Campground $24) + recreation.gov /rates (2026 WalkInCimarron 24), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Curecanti NRA campground on US-50 between mile markers 112 and 113, ~20 mi east of Montrose, at the old narrow-gauge railroad town of Cimarron beside the Cimarron River; the Cimarron Canyon rail exhibit is next door and Crystal Reservoir at Morrow Point Dam is ~1.5 mi away. Rarely fills. No cell service; an emergency 911 phone is by the visitor center door. --Claude",
+  "summary": "NPS campground record + rec.gov 10104815: confirmed vault toilets, FCFS only, $24. Changed sites.count 22->21 (NPS totalSites 21; rec.gov's 22nd 'site' is the Scan and Pay placeholder), max_rig_ft 35->null (unsourced; NPS says only 'medium sized RVs'). Added potable water (seasonal), season note (typically May-October). Note cleaned of field restatements and the unsourced 35-ft figure; 'Cimarron River canyon below Morrow Point Dam' reworded to the agency's description.",
+  "flags": [
+    "Missing phone: Curecanti NRA (970) 641-2337 (NPS campground record contact; park footer gives ext. 205).",
+    "Website: the stored URL is the park-wide camping page; the campground's own page is https://www.nps.gov/cure/planyourvisit/camp_cimarron.htm.",
+    "Rig length (informational, not a drop): the NPS says 'tents to medium sized RVs' / 'Medium sized Rvs are allowed', with no length; a 23-ft Class C is medium at most. The NPS API record's trailerAllowed '0' and rvMaxLength '0' look like unfilled defaults, not a trailer ban (no NPS prose says so). Campendium lists 30 ft max; Campendium/Dyrt reviewers report a 33-ft fifth wheel and a 45-ft toy hauler fitting (dates not checked). The old 35-ft figure had no source and was cleared.",
+    "Facilities conflict: recreation.gov's description says 'Seasonal potable water, flush toilets, dump station', while the NPS record says vault toilets and dumpStation 'No'. The NPS (operator) was followed; dump left unset. Worth asking the park.",
+    "Waterfront check (stored not waterfront, no change): on imagery the Cimarron River runs along the campground's west side, ~30-50 m from the western sites (012, 015, 017, 019, 021). Between them are the paved park road to Morrow Point Dam and a cottonwood riparian band, a developed buffer, so no open apron. riverview at most through the trees; not waterfront is defensible. The campground is on the Cimarron, a tributary ~2.4 km from the Gunnison/Crystal Reservoir.",
+    "Status: the only Curecanti alert (toxic algae, Blue Mesa Reservoir) does not concern Cimarron. The recreation.gov 2026 rate window ends Oct 28; a search snippet cites NPS 'open May 4 - October 13, 2026'.",
+    "Pin 38.4445,-107.5548 is 48 m from the centroid of the 21 catalogued site points (38.44464,-107.55532), on the campground's east edge near site 005. OK."
+  ]
+}

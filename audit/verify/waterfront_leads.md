@@ -486,3 +486,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2491 Bradfield (CO, p3-172): stored riverfront doubtful - loops 20-40 m from the Dolores behind a continuous dense riparian band.
 - 2561 Bridge (CO, p3-172): stored riverview; sites 05 and 13 ~25-35 m from Williams Creek across open meadow - possible riverfront.
 - 2471 Buckeye / Pioneer (CO, p3-172): stored lakeview; sites 08, 11-15 ~20-40 m from the bank on open ground - possible lakefront (reservoir drainable).
+- 2385 Cataract Creek (CO, p3-173): stored lakeview unsupported - the spur is in dense conifer, Green Mountain Reservoir ~2.3 km+, Lower Cataract Lake ~1 km behind trees and a rise. Likely not waterfront.
+- 2563 Cayton (CO, p3-173): stored riverfront doubtful - Loop A pads ~35-45 m from the Dolores behind a continuous conifer band; no waterfront_evidence.
+- 2469 Cement Creek (CO, p3-173): stored creekside rests only on the note's "Sites 3-9 sit along the creek"; no evidence, no per-site points, winter imagery.
+- 2493 Cimarrona (CO, p3-173): stored not waterfront; FS quotes a visitor "Can see the reservoir from sites" - possible lakeview.
