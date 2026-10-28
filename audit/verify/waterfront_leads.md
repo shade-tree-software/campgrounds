@@ -521,3 +521,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2544 Lottis Creek (CO, p3-181): stored not waterfront vs rec.gov "on the shores of Lottis Creek" (creek runs through). Contrary claim - gate; possible creekside.
 - 2479 Mavreeso (CO, p3-181): stored riverfront, but the West Dolores is ~10-15 m wide (creek vocabulary); Loop B 01-04 sit 5-20 m above an open gravel bank - creekside.
 - 2523 Marshall Park (CO, p3-181): riverfront looks supported (east/south sites ~30-50 m across open meadow and a thin tree line) - confirm sites.
+- 13173 Mill Creek (Lake Fork Gunnison) (CO, p3-182): stored not waterfront vs BLM "Nestled along the Lake Fork of the Gunnison River"; creek-sized river ~30-60 m from sites 16/13/12 through dense spruce, no open apron. Contrary claim - gate; possible creekview.
+- 2530 Mix Lake (CO, p3-182): stored not waterfront vs FS "overlooks Mix Lake" (Mix Lake Overlook on site); loops ~300-350 m east of the NE arm on open ground - possible lakeview for the west loop. The Conejos below Platoro dam has river value only.
