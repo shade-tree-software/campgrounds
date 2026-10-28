@@ -294,4 +294,4 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **2596 Four Seasons River Inn & RV Park, Delta CO (p3-165, 2026-10-27):** advertises "short term and seasonal lodging", but its booking engine sells only motel rooms and tent sites, no RV rate is posted (price rests on RV Life $$), and recent Google reviews (3.2/105) describe month-long stays and long-term renters. Kept for now; drop under long-stay test 2 (nights not visibly for sale), as 2595 / 3931? **ANSWERED AWH 2026-10-27: drop.**
 
-- **2521 Coffee Pot Spring (CO, p3-174, 2026-10-28):** missing from the White River NF's campground list and 2026 operating-dates sheet; Campendium lists it as dispersed. Kept with a dated caveat. Drop it as no longer a campground, or keep until the district confirms?
+- **2521 Coffee Pot Spring (CO, p3-174, 2026-10-28):** missing from the White River NF's campground list and 2026 operating-dates sheet; Campendium lists it as dispersed. Kept with a dated caveat. Drop it as no longer a campground, or keep until the district confirms? **ANSWERED 2026-10-28: keep with the caveat (AWH).**
