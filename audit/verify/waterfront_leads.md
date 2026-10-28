@@ -476,3 +476,13 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2346 Aspen Glen (CO, p3-171): stored riverfront doubtful - spurs end 30-70 m from Joe Wright Creek through unbroken forest. Re-audit.
 - 2411 Baby Doe (CO, p3-171): stored not waterfront vs rec.gov "perched along the scenic lakeshore"; the $33 sites (4-11, 13, 14) are 40-100 m from Turquoise Lake's high-water line through lodgepole, no open apron. Contrary claim triggers the gate; at most lakeview.
 - 2540 Aspen Glade (CO, p3-171): riverfront stands on loop B west (015-017, ~20-30 m, open) - recorded for the per-site question; loop C 020-026 under canopy.
+- 2568 Bear Lake (CO, p3-172): stored lakeview may rest on the day-use loop; the conifer spur loops by the FS point sit ~200-600 m east, below the dam, no sightline. Possible downgrade.
+- 2347 Big Bend (CO, p3-172): stored riverfront borderline - spurs ~20-30 m from the Poudre through conifer/willow with gaps.
+- 2550 Big Creek (CO, p3-172): stored lakeview; loop spurs ~25-40 m from full pool behind a conifer fringe, west end open meadow ~50-60 m. Re-look both ways.
+- 2506 Big Creek Lakes (CO, p3-172): stored lakefront holds only for the north-shore loop (043-045 ~35-40 m, partly open); west loops 60-200 m back in lodgepole.
+- 2535 Big Meadows (CO, p3-172): stored not waterfront; west loop's sites ~130-145 m across open slope to the shore - possible lakeview.
+- 2350 Big South (CO, p3-172): stored riverfront borderline - sites 3-4 ~20-30 m from the Poudre through conifers, no open strip.
+- 2239 Boyd Lake Cottonwood (CO, p3-172): stored lakeview vs cpwshop Lakefront tags on loop B-F perimeter sites, ~75-150 m from the shore path; operator claim triggers the gate.
+- 2491 Bradfield (CO, p3-172): stored riverfront doubtful - loops 20-40 m from the Dolores behind a continuous dense riparian band.
+- 2561 Bridge (CO, p3-172): stored riverview; sites 05 and 13 ~25-35 m from Williams Creek across open meadow - possible riverfront.
+- 2471 Buckeye / Pioneer (CO, p3-172): stored lakeview; sites 08, 11-15 ~20-40 m from the bank on open ground - possible lakefront (reservoir drainable).
