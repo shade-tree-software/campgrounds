@@ -494,3 +494,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2505 Comstock (CO, p3-174): stored not waterfront; the bench is ~20-40 m from the South Fork of Rock Creek - possible creekside, sites not visible on imagery.
 - 2423 Cove (CO, p3-174): dropped; moot.
 - 2576 Cochetopa Creek (CO, p3-174): stored creekside unaudited; no site locations to check.
+- 2392 Deep Lake (CO, p3-175): stored not waterfront vs FS "on the east side of 37 acre Deep Lake ... nice views" and rec.gov "Nestled against Deep Lake"; main loops on the open east shore, west loop road ~30-60 m from the water behind a thin fringe. Contrary claim - gate; possible lakeview or better.
+- 2462 Dinner Station (CO, p3-175): stored not waterfront; rec.gov "The Taylor River can be accessed from within the campground"; ponderosa sites 001-013 ~20-60 m from the river. Possible riverview/riverfront.
+- 2380 Dearhamer (CO, p3-175): stored riverfront; sites 1-5 ~20-40 m from the Fryingpan behind cottonwoods (open apron unclear); 7-8 ~60 m from the drawdown-prone inlet arm.
+- 2513 Deer Creek (Bailey) (CO, p3-175): stored creekside not re-audited - dense canopy on imagery.
