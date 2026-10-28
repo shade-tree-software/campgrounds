@@ -506,3 +506,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13589 Estes Park Campground at Mary's Lake (CO, p3-177): stored not waterfront; operator says sites "look over Mary's Lake", nearest sites ~50-80 m across Mary's Lake Rd. Possible lakeview.
 - 2486 Golden Horn (CO, p3-177): stored creekside; FS "Do not camp within 100 ft of any water source" and a 2025-08-21 review says the riverside spots are now blocked with wooden X's.
 - 2447 Goose Creek (CO, p3-177): stored not waterfront; FS "Goose Creek runs through the campground" (bank under canopy). Possible creekside.
+- 2554 Haviland Lake (CO, p3-178): stored lakefront, nearest sites ~55-65 m from the shore. Looks like lakeview.
+- 2512 Hidden Lakes (CO, p3-178): stored lakeview, open clearing ~25-35 m from the shore. Possible lakefront.
+- 2446 Hayden Creek (CO, p3-178): stored not waterfront vs FS "on the banks of Hayden Creek" (canopy). Contrary claim - gate; possible creekside.
+- 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
