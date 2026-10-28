@@ -473,3 +473,6 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2641 Carter Lake Eagle (CO, p3-170): stored not waterfront; operator says E01-E22 are "on a hill overlooking the lake" (~250 m) - possible lakeview.
 - 2313 Ponderosa (CO, p3-170): stored lakeview; the 5 Lower-loop sites are ~20-40 m from Blue Mesa's full-pool line on open ground - possible lakefront (gate against 7,519 ft).
 - 2361 Cow Creek South (CO, p3-170): stored lakeview; sites on open ground ~20-40 m from Green Mountain Reservoir's high-water line - possible lakefront.
+- 2346 Aspen Glen (CO, p3-171): stored riverfront doubtful - spurs end 30-70 m from Joe Wright Creek through unbroken forest. Re-audit.
+- 2411 Baby Doe (CO, p3-171): stored not waterfront vs rec.gov "perched along the scenic lakeshore"; the $33 sites (4-11, 13, 14) are 40-100 m from Turquoise Lake's high-water line through lodgepole, no open apron. Contrary claim triggers the gate; at most lakeview.
+- 2540 Aspen Glade (CO, p3-171): riverfront stands on loop B west (015-017, ~20-30 m, open) - recorded for the per-site question; loop C 020-026 under canopy.

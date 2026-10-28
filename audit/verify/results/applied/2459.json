@@ -1,0 +1,87 @@
+{
+  "id": 2459,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/gmug/recreation/amphitheater-campground-ouray-rd",
+    "https://www.recreation.gov/api/camps/campgrounds/232275",
+    "https://www.recreation.gov/api/camps/campgrounds/232275/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id%3A232275 (per-site catalog, 35 sites)",
+    "https://www.fs.usda.gov/r02/gmug/offices",
+    "https://www.fs.usda.gov/r02/gmug/alerts/gold-mountain-wildfire-roads-and-trails-closure-order-v-40",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 35,
+        "max_rig_ft": 35,
+        "pull_through": true,
+        "note": "35 sites: 17 take RVs, 18 are tent-only. The FS caps total RV length at 35 ft, but most RV sites are catalogued at 15-20 ft; only six take 23 ft or more: 004 (30 ft), 006 (25), 016 (26, pull-through) and 024 (25), reservable, and 030 (35) and 032 (30, pull-through), first-come. 017 is a 20-ft pull-through."
+      },
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/amphitheater-campground-ouray-rd ('35 camping spurs'; 'best suited for tent camping and smaller trailers/RVs (RVs can park at sites 3 through 15 ...). Total RV length should not exceed 35 feet.') + rec.gov per-site catalog (type, permitted equipment, Max Vehicle Length, Driveway Entry), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true,
+        "note": "Trash collection; picnic table and fire ring at each site."
+      },
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/amphitheater-campground-ouray-rd ('Vault toilet(s)'; 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/232275 ('Vault toilets, drinking water and trash collection are provided'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-23",
+        "closes": "10-07",
+        "note": "rec.gov: opening and closing dates are weather permitting."
+      },
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/amphitheater-campground-ouray-rd ('Seasons of Use: May 23 - Oct. 7'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "max_stay_nights": 7,
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          }
+        ],
+        "season": {
+          "opens": "05-31",
+          "closes": "09-12"
+        },
+        "note": "Reservable sites book on recreation.gov for the peak season (2026: May 31 - Sep 12; 2027: May 28 - Sep 12); the shoulder weeks (2026: May 17-30 and Sep 13-30) are first-come only. First-come sites must be claimed in person ('DO NOT call to determine availability'). recreation.gov closes booking 3 days before arrival (reservationCutOff 3). 7 consecutive nights maximum; 2-night weekend minimum on reservations. One camping unit per site; extra vehicles are paid to the host on arrival. Run by a concessionaire (contact 928-537-8888)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232275 (facility_rules maxConsecutiveStay 7, minWeekendStay 2 (not marked soft), reservationCutOff 3; notices 'FIRST COME FIRST SERVE sites must be booked in person', 'Opening and closing dates are weather permitting, please call 928-537-8888') + /rates (2026 Peak Season 2026-05-31 to 2026-09-12; First-come, First-served Season 2026-05-17 to 05-30 and 2026-09-13 to 09-30; 2027 Peak 2027-05-28 to 09-12) + FS page ('a combination of first come, first serve and reservable campsites'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 28,
+        "nightly_high": 28,
+        "currency": "USD",
+        "checked": "2026",
+        "note": "$28 a night per camping unit, every site type, reservable or first-come; extra vehicle $14 a night (FS)."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/232275/rates (2026 Peak and First-come seasons: RV/STANDARD/TENT ONLY NONELECTRIC 28) + https://www.fs.usda.gov/r02/gmug/recreation/amphitheater-campground-ouray-rd ('Single Site: $28 per night; Extra Vehicle Fee: $14 per night'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "USFS campground at ~8,400 ft on a steep hillside above Ouray off US-550, among Gambel oak and mixed conifers, overlooking the town and the Amphitheater cliffs; the Upper Cascade Falls trail starts here. The FS calls it best suited to tents and smaller trailers/RVs: the access road and loops are steep with tight turns, and RVs follow the 'trailer' signs (second right). --Claude",
+  "summary": "FS page + rec.gov (description, rates, 35-site catalog): confirmed 35 sites, max 35 ft, vault toilets/water, reservable with some first-come sites, $28 (now dated 2026). Added pull-throughs, the 6 sites that take 23 ft+, season May 23 - Oct 7 (replacing the calendar-derived close 09-12), booking.season May 31 - Sep 12, 7-night max, 2-night weekend minimum, extra-vehicle fee. Note: dropped the amenity/booking/site-count restatements and the 'sites 3-15' line the catalog contradicts.",
+  "flags": [
+    "Fit: only 6 of 35 sites take a 23-ft rig per the rec.gov catalog (004 30 ft, 006 25, 016 26 PT, 024 25 reservable; 030 35, 032 30 PT first-come); the other 11 RV sites are 15-20 ft. FS: 'Total RV length should not exceed 35 feet' and 'best suited for tent camping and smaller trailers/RVs'. EKKO fits, but only those six.",
+    "Conflict on which sites take RVs: the FS page says 'RVs can park at sites 3 through 15', but rec.gov's catalog makes 007-014 tent-only and lists RV sites at 003-006, 015-025 (not 021), 030 and 032. The catalog's lengths (max 35) agree with the FS 35-ft limit.",
+    "Missing phone: the Ouray Ranger District is (970) 240-5300 (https://www.fs.usda.gov/r02/gmug/offices). rec.gov gives the concessionaire's 928-537-8888 (camping@rrmofa.com) for opening/closing questions.",
+    "Operator: run by a concessionaire (rec.gov contact camping@rrmofa.com, 928-537-8888) on GMUG land; ownership federal is right.",
+    "Pin 38.02256,-107.66259 sits on site 020, ~70 m from the 35-site centroid. Fine. (The FS page's point, 38.02439,-107.662743, is ~200 m north at the entrance road.)",
+    "Access: no agency page gives a grade or RV advisory for the 1-mile access road beyond 'best suited for ... smaller trailers/RVs'. No 4WD advice. The Gold Mountain Fire closure order (Ouray RD) covers Dexter Creek, Cutler, Jackass Flats, Middle Fork Cimarron, Cow Creek and Blowout roads, not this campground's road.",
+    "Status: the FS page header reads 'Site Closed' on 2026-10-28, after its Oct. 7 season end - ordinary seasonal closing."
+  ]
+}
