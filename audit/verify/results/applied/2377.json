@@ -1,0 +1,73 @@
+{
+  "id": 2377,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/whiteriver/recreation/willows-campground",
+    "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates', linked from https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins)",
+    "https://www.recreation.gov/api/camps/campgrounds/10122834",
+    "https://www.recreation.gov/api/camps/campgrounds/10122834/rates",
+    "https://www.recreation.gov/api/search/campsites?fq=asset_id:10122834 (per-site catalog)",
+    "USGS NAIP",
+    "https://www.fs.usda.gov/r02/whiteriver/alerts"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 21,
+        "max_rig_ft": 20,
+        "pull_through": true,
+        "note": "The forest's 2026 operating-dates table gives a 20-ft maximum site length; recreation.gov's catalog lists mostly parallel roadside pull-outs (catalog driveway lengths 30-93 ft) and one 25-ft pull-through (site 11)."
+      },
+      "source": "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates', linked from https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins) ('Dillon | Willow CG | 7,950 | 25/20’ | 5/20-10/2 | $23 | R | N | N', column '# of sites / max site length') + https://www.recreation.gov/api/camps/campgrounds/10122834 ('Willows Campground has 21 standard sites suitable for tents, trailers and RVs.') + catalog (21 sites; site 011 'Pull-through', Max Vehicle Length 25), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": false
+      },
+      "source": "https://www.fs.usda.gov/r02/whiteriver/recreation/willows-campground ('Restrooms: Vault Toilet'; 'Potable water is not available at this site.') + https://www.recreation.gov/api/camps/campgrounds/10122834 ('No drinking water available at this campground'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "opens": "05-20",
+        "closes": "10-02",
+        "note": "Estimated dates; opening can shift with weather."
+      },
+      "source": "https://www.fs.usda.gov/media/263354 (White River NF '2026 Campground and Day Use Area Operating Dates', linked from https://www.fs.usda.gov/r02/whiteriver/recreation/camping-cabins) ('Willow CG ... 5/20-10/2'; 'These are estimated opening dates. Opening dates can adjust based on weather'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "never",
+        "reserve_until": {
+          "relative_to": "arrival",
+          "offset_hours": -48
+        },
+        "season": {
+          "opens": "05-20",
+          "closes": "10-01"
+        },
+        "note": "All 21 sites reservable on recreation.gov up to 2 days ahead; a reserved site is forfeited if not occupied by 11 am the day after arrival. No day use. Check-in 2 pm, check-out 11 am."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/10122834 (catalog: all 21 sites reservable; rules reservationCutOff 2; notices 'Reserved Sites will be held until check out time (ELEVEN) the day following your arrival date', 'No Day Use available at this campground.', 'Check in time is 2:00pm and Check out time is 11:00am') + /rates (Peak Season 2026-05-20 to 2026-10-01), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "On the north arm of Green Mountain Reservoir at ~7,950 ft, off Heeney Road (County Road 30) just west of CO-9, between Silverthorne and Kremmling. Sites line the shore along a dirt loop; the reservoir is drawn down through late summer. Recreation.gov: site access is difficult when the road is wet. Motorboats launch only from Heeney Marina after an Aquatic Nuisance Species inspection. --Claude",
+  "summary": "FS page + White River 2026 operating-dates PDF + recreation.gov: confirmed 21 sites, electric 0, reservable; added max 20 ft (agency table), pull_through (site 11), vault toilets, no potable water, season 05-20 to 10-02 (estimated), booking detail (2-day cutoff, rec.gov season 05-20 to 10-01). Fees left at $21 (recreation.gov 2026-2028 rate tables) - FS page and PDF say $23 (flagged). Note rewritten.",
+  "flags": [
+    "CRITERIA (length): the White River NF 2026 operating-dates table (https://www.fs.usda.gov/media/263354) gives 'Willow CG ... 25/20’' - 25 sites / 20-ft maximum site length - under EKKO's 23 ft. Against that, recreation.gov's catalog shows 21 sites, almost all 'Parallel' roadside pull-outs with driveway lengths 30-93 ft (only site 011, a 25-ft pull-through, carries a Max Vehicle Length), and on NAIP the sites are open gravel pull-outs along the loop road with no trees boxing them in. The 20 ft looks like a table default (Prairie Point gets the same) but it is the agency's own figure; recorded as max_rig_ft 20. AWH to decide keep/drop.",
+    "Fee conflict: FS campground page 'Single Site: $23 per night' and the 2026 table '$23' vs recreation.gov's rate table $21 (PeakStandardNonelectric) for 2026, 2027 and 2028. Left fees at $21 (what recreation.gov charges); change to $23 if the FS figure is preferred.",
+    "Count conflict: 2026 table '25' sites vs recreation.gov/catalog 21. Recorded 21.",
+    "Website: stored recreation.gov link is fine; FS page is https://www.fs.usda.gov/r02/whiteriver/recreation/willows-campground.",
+    "Phone: none stored, and no Dillon RD number appears on the FS pages read (the only number there is 970 945-2521, the Glenwood Springs Supervisor's Office). Suggest the Dillon Ranger District line 970-468-5400 (from the brief; not seen on a page today). recreation.gov's facility phone is 970-468-7681 and its customer-service line 801-226-3564 / Help.WhiteRiver.Dillon@AmericanLL.com (concessionaire American Land & Leisure).",
+    "Road: Heeney Road (CR 30) is paved from CO-9 (NAIP); the campground loop is dirt. recreation.gov: 'Site access is difficult when road is wet'. FS directions: 'Make sure you pass the reservoir and turn onto the 2nd entrance to the Heeney Rd.' No RV/trailer advisory.",
+    "Pin 39.88944,-106.30833 sits between sites 6 and 7 at the south end of the shoreline row, 182 m from the site centroid. OK.",
+    "Waterfront (stored lakefront) - confirmed at full pool, with a caveat: sites 1-12 sit along the top of the reservoir's bathtub ring with an open, treeless apron to the water and sites 16-21 line the north arm. On this NAIP frame (autumn drawdown) open water is ~100-150 m out across bare lakebed and the north arm is dry. Lakefront holds at high water (early-mid summer); late-season visitors will find mudflat. The White River alerts page (read 2026-10-28) says 'The boat ramp at Green Mountain Reservoir is closed for the 2026 season for public safety due to low water' - so in a dry year the drawdown starts early."
+  ]
+}

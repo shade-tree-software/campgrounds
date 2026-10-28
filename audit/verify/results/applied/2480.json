@@ -1,0 +1,91 @@
+{
+  "id": 2480,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground",
+    "https://www.recreation.gov/camping/campgrounds/233268",
+    "https://www.recreation.gov/api/camps/campgrounds/233268",
+    "https://www.recreation.gov/api/camps/campgrounds/233268/rates",
+    "recreation.gov per-site catalog https://www.recreation.gov/api/search/campsites?fq=asset_id:233268",
+    "https://www.fs.usda.gov/r02/sanjuan/conditions",
+    "https://www.fs.usda.gov/r02/sanjuan/alerts",
+    "https://www.fs.usda.gov/r02/sanjuan/alerts/west-fork-road-and-bridge-closure-order",
+    "USGS NAIP with the catalog site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {
+        "count": 28,
+        "max_rig_ft": 35,
+        "note": "28 sites per the Forest Service (recreation.gov's catalog has 27: 15 reservable, 12 first-come). Catalog lengths 26-40 ft, most 30; the Forest Service gives 35 ft and says most sites suit large RVs. Vehicles must fit the parking spur, no overflow parking."
+      },
+      "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground ('has 28 campsites'; 'There are 15 reservable sites with the remaining first-come, first-serve. Most sites are suitable for large RVs.'; 'Equipment with wheels (RVs, campers, cars) must fit in the parking spur. There is not any overflow parking available.'; 'Max RV size = 35 ft') + recreation.gov per-site catalog https://www.recreation.gov/api/search/campsites?fq=asset_id:233268 (27 sites, 15 reservable; Max Vehicle Length 26-40, 17 of them 30), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {
+        "vault_toilets": true,
+        "potable_water": true
+      },
+      "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground ('Vault Toilet (2)'; 'Potable water is available at this site.') + https://www.recreation.gov/api/camps/campgrounds/233268 (amenities 'Drinking Water', 'Vault Toilets'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {
+        "nightly_low": 32,
+        "nightly_high": 32,
+        "currency": "USD",
+        "checked": "2027",
+        "note": "Single site $32 (recreation.gov 2026-2028 tables). Up to 8 people per site."
+      },
+      "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground ('Single Site: $32 per night'; 'Maximum number of people per site: 8') + https://www.recreation.gov/api/camps/campgrounds/233268/rates (Peak Season 2026-05-15 to 2026-09-26, 2027-06-05 to 2027-09-26: PeakSTANDARD NONELECTRIC 32), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {
+        "year_round": false,
+        "note": "Mid-May through September per the Forest Service; specific dates on recreation.gov."
+      },
+      "source": "https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground ('Seasons of Use: Mid-May through September. For specific open / closure dates, visit recreation.gov.'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "fcfs": "some_sites",
+        "reserve_until": {
+          "relative_to": "arrival",
+          "offset_hours": -96
+        },
+        "max_stay_nights": 14,
+        "min_stay": [
+          {
+            "nights": 2,
+            "applies": "weekend"
+          },
+          {
+            "nights": 3,
+            "applies": "holiday"
+          }
+        ],
+        "season": {
+          "opens": "05-15",
+          "closes": "09-26"
+        },
+        "note": "15 sites reservable on recreation.gov up to 4 days ahead; the rest first come, first served. 2-night weekend and 3-night holiday-weekend minimums. 14 nights in a rolling 30 days. 2026 reservation season May 15 - Sept 26; the 2027 table starts June 5. Check-in 2 pm, check-out noon."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233268 (rules maxStay 14 'Rolling 30 Days', minWeekendStay 2, minHolidayWeekendStay 3, reservationCutOff 4; notice 'First Come First Served (FCFS) Campsites are also available at this campground') + /rates (Peak Season 2026-05-15 to 2026-09-26; 2027-06-05 to 2027-09-26) + https://www.fs.usda.gov/r02/sanjuan/recreation/west-fork-campground ('There are 15 reservable sites with the remaining first-come, first-serve'; 'Check-in time: 2:00 pm | Check-out time: 12:00 pm'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Wooded USFS campground (mixed conifer, sun and shade) near the West Fork of the San Juan River, 1.5 mi up FR 648 off US-160 between Pagosa Springs and Wolf Creek Pass. The river can be heard but not seen from the sites, and since the October 2025 flood it runs farther from them. --Claude",
+  "summary": "FS page + recreation.gov (233268) API/rates/catalog: confirmed 28 sites (catalog 27), max 35 (FS), no hookups, vault toilets, potable water, $32 (2026-2028), reservable with FCFS sites; added season mid-May-Sept, booking (15 reservable, 4-day cutoff, 2/3-night weekend/holiday minimums, 14 nights, reservation season 05-15 to 09-26). Note cleaned of field facts.",
+  "flags": [
+    "Phone: none stored. Pagosa Ranger District (970) 264-2268 (FS West Fork page, Office Contact Information; recreation.gov facility phone the same). recreation.gov's '(661) 702-1420' is the concessionaire's (Explorus). Suggest 970-264-2268.",
+    "Road: San Juan NF conditions page, Pagosa Ranger District table 'As of October 27, 2026': 'West Fork 648 Open to campground only--dangerous passage ... See closure order for details on bridge closure following 2025 flooding damage.' Forest Order #02-13-08-25-02 (since Oct 24, 2025): 'The Pagosa Ranger District's West Fork Bridge is closed ... Forest Road 648 (West Fork) is closed at location identified by this order' - beyond the campground. The Oct 22-25, 2026 flood alert names no new damage on FR 648. The road to the campground is open but marked 'dangerous passage' as of Oct 27, 2026; the campground's season ended Sept 26 and it is not itself named as closed. No surface/RV wording on the FS or recreation.gov page.",
+    "Length conflict (minor): FS 'Max RV size = 35 ft'; the catalog lists 26-40 ft (one 26, one 28, 17 at 30, a few 34-40). Recorded 35 (agency). Every figure is over 23 ft.",
+    "Pin 37.44485,-106.90304 (= FS facility point) is at the north end of the loop by site 5, 142 m from the catalog centroid (37.44383,-106.90207). OK.",
+    "Waterfront (stored not waterfront, confirmed both ways): recreation.gov 'some of which are adjacent to the river but without direct views'; 'The West Fork can be heard, but not seen from the campground'; notice 'FYI: Due to the flooding rains in October 2025, the river has repositioned itself away from the campsites that were once along side it.' On NAIP (pre-flood) the closest sites (15-18 at the south end) were ~40-60 m from the channel through conifers; 9-14 75 m+."
+  ]
+}

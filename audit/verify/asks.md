@@ -313,3 +313,5 @@ Do you remember RV pads right on the bank (keep riverfront), or should either dr
 
 - **2483 Ute (CO, p3-190, 2026-10-28):** recreation.gov notice says the gravel spurs fit "an extended cab pickup truck size (approximately 20 feet in length)"; the FS page says max RV 35 ft and the site catalog lists 28-62-ft driveways. Kept with a backup-plan caveat. Drop if you trust the 20-ft notice.
 - **2541 Trujillo Meadows (CO, p3-190, 2026-10-28):** the FS page calls FR 118 a "4WD Forest Road" in its trail paragraph (Los Pinos trail access); the campground directions use 2.1 mi of FR 118 with no 4WD wording. Kept. Is the stretch to the campground 2WD?
+
+- **2377 Willows (CO, p3-191, 2026-10-28):** the White River NF 2026 operating-dates table lists a 20-ft maximum site; recreation.gov's catalog shows roadside pull-outs of 30-93 ft and one 25-ft pull-through, and imagery shows open gravel pull-outs (the table gives Prairie Point the same 20, so it may be a default). Kept with a backup-plan caveat; max_rig_ft stored as the agency's 20. Keep or drop?
