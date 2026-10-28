@@ -1,0 +1,59 @@
+{
+  "id": 2454,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/gmug/recreation/jumbo-campground-grand-valley-rd",
+    "https://www.recreation.gov/api/camps/campgrounds/233189 and /rates",
+    "recreation.gov campsite catalog for 233189 (api/search/campsites, read 2026-10-28)",
+    "https://www.fs.usda.gov/r02/gmug/offices",
+    "https://www.fs.usda.gov/r02/gmug/alerts",
+    "Esri World Imagery z17 with the catalog site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 26, "max_rig_ft": 60, "pull_through": false, "note": "FS: 26 sites, 21 with electric and 5 without, maximum spur 60 ft; hilly terrain and closely spaced sites are 'a challenge to drivers'. recreation.gov's catalog lists every RV site as a back-in of 30-45 ft (one, 21, at 20 ft) and four tent-only sites (2, 5, 25, 26)."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/jumbo-campground-grand-valley-rd ('There are 21 sites with electric and 5 without. Maximum spur length is 60 ft'; '26 campsites'; 'The hilly terrain provides privacy for closely spaced sites and a challenge to drivers') + catalog 233189 (Max Vehicle Length 20-45, every Driveway Entry Back-In), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 30},
+      "source": "recreation.gov catalog 233189 (Electricity Hookup 30 on the 15 reservable Standard Electric sites 6-17, 22-24; site 3, first-come, lists no amperage) + FS page ('There are 21 sites with electric'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/jumbo-campground-grand-valley-rd ('Vault toilet(s)'; 'Yes, drinking water is available') + https://www.recreation.gov/api/camps/campgrounds/233189 ('Vault toilets, drinking water and trash collection are provided'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "note": "Late spring to early fall, weather dependent (FS)."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/jumbo-campground-grand-valley-rd ('Seasons of Use: Late Spring to Early Fall - weather dependent'), read 2026-10-28; the stored closes 09-12 was the end of recreation.gov's reservation season, now in booking.season",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "recreation.gov", "fcfs": "some_sites", "min_stay": [{"nights": 2, "applies": "weekend"}], "season": {"opens": "06-26", "closes": "09-12"}, "note": "First-come sites must be claimed in person. In 2026 the whole campground was first-come May 21 - June 25 and Sept 13-30, with reservations June 26 - Sept 12."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233189 (rules minWeekendStay 2; notice 'FIRST COME FIRST SERVE sites must be booked in person') + /rates (2026 First-come Season 05-21 to 06-25 and 09-13 to 09-30; Peak Season 06-26 to 09-12) + FS page ('a combination of first come, first serve and reservable campsites'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 36, "currency": "USD", "checked": "2026", "note": "$26 single, $36 with electric; doubles $52 ($72 with electric). America the Beautiful annual passes are not accepted here."},
+      "source": "https://www.fs.usda.gov/r02/gmug/recreation/jumbo-campground-grand-valley-rd ('Single Site: $26 per night | Electric Fee: $10 per night | Double Site: $52 per night | Electric Fee: $20 per night') + https://www.recreation.gov/api/camps/campgrounds/233189/rates (2026: STANDARD NONELECTRIC 26, STANDARD ELECTRIC 36, double 72) + notice ('America the Beautiful annual passes are not accepted at this campground'), read 2026-10-28",
+      "method": "manual"
+    },
+    "discounts": {
+      "values": {"interagency_senior_access": true},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/233189 ('senior and Access passes are accepted'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Grand Mesa NF campground at ~9,800 ft in the Mesa Lakes area on the north slope of the Mesa, between Jumbo and Sunset Lakes in mature spruce and aspen; most sites look over the lakes. Hilly loop, closely spaced sites. Mosquitoes are plentiful. Paved CO-65 access; CCC-built Mesa Lakes Ranger Station nearby. --Claude",
+  "summary": "FS page + recreation.gov: confirmed 26 sites, 30-amp electric (15 reservable sites), vault toilets, water, $26/$36, recreation.gov + first-come. Changed max length 50 -> 60 (FS spur figure; catalog tops at 45). Season: dropped closes 09-12 (that was the reservation season's end) for a late spring-early fall note; added booking.season 06-26..09-12, weekend 2-night minimum, pull_through false, senior/access discount.",
+  "flags": [
+    "Phone: stored 970-268-5579 is recreation.gov's facility_phone for Jumbo; no web page identifies whose line it is (not on the FS page or the GMUG offices page). recreation.gov's contact block gives the concessionaire's 928-537-8888 (camping@rrmofa.com). Replace with Grand Valley Ranger District (970) 242-8211 (https://www.fs.usda.gov/r02/gmug/offices).",
+    "Max length conflict: FS 'Maximum spur length is 60 ft' vs recreation.gov per-site lengths 30-45 ft (one at 20). Recorded 60 per the agency figure. FS also warns the hilly terrain is 'a challenge to drivers' - not a criteria problem for a 23-ft rig.",
+    "Electric count: FS says 21 electric sites; the catalog types 16 as Standard Electric (15 at 30 amp, reservable).",
+    "Waterfront (stored lakeview) stands: FS and recreation.gov 'Most sites have views of the lakes'. On Esri imagery the east-side sites (2, 3, 5, 21-23) sit 20-40 m above the small lake's west shore with scattered trees; Jumbo Lake is ~150 m south. Nothing vetoes a view; no site is on an open apron at the water.",
+    "Operator: concessionaire-run (recreation.gov contact rrmofa.com). FS page: 'Site Closed' (season over). No GMUG alert names Jumbo or CO-65 at Mesa Lakes.",
+    "Pin 39.05310,-108.09086 sits on the east side of the small lake by CO-65, ~270 m E of the catalog site centroid 39.05369,-108.09388. Under the 500 m line but across the water from the sites; re-pin to the centroid if wanted."
+  ]
+}

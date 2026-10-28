@@ -510,3 +510,5 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2512 Hidden Lakes (CO, p3-178): stored lakeview, open clearing ~25-35 m from the shore. Possible lakefront.
 - 2446 Hayden Creek (CO, p3-178): stored not waterfront vs FS "on the banks of Hayden Creek" (canopy). Contrary claim - gate; possible creekside.
 - 2507 Hahns Peak Lake (CO, p3-178): stored lakefront, pads ~40-60 m from the water - borderline.
+- 2515 Jefferson Creek (CO, p3-179): stored riverview is the wrong kind - Jefferson Creek is well under 30 m wide and the sites are 60-100 m through conifers. Likely not waterfront.
+- 2344 Kelly Flats (CO, p3-179): stored riverfront; nearest pads ~20-40 m from the Poudre behind riparian trees (river ~25-30 m wide here, at the river/creek line); cloud on imagery, open apron unconfirmed.
