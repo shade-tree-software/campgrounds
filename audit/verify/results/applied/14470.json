@@ -1,0 +1,51 @@
+{
+  "id": 14470,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.northshorervparks.com/",
+    "https://www.northshorervparks.com/rates",
+    "RoverPass booking API for north-shore-rv-store-loveland-co (park record + rates for 2027-05-01, 05-04, 06-08, 06-12), read 2026-10-28"
+  ],
+  "groups": {
+    "fees": {
+      "values": {"nightly_low": 30, "nightly_high": 50, "currency": "USD", "checked": "2027", "note": "Dry RV sites $30 a night ($210 a week, $650 a month); full-hookup RV sites $50 ($350 a week, $850 a month, electric extra for a month or more). Same on RoverPass for May and June 2027."},
+      "source": "https://www.northshorervparks.com/rates ('Dry RV Sites Daily $30 Weekly $210 Monthly $650'; 'Full Hook Up RV Sites Daily $50 Weekly $350 Monthly $850') + RoverPass booking API (2027-05-01/05-04/06-08/06-12: 'RV Sites - Dry RV Sites' $30.00, 'RV Sites - Full Hook Up RV Sites' $50.00) + rules ('Electricity is not included in the price for a monthly rental'), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 50, "water": true, "sewer": true},
+      "source": "https://www.northshorervparks.com/ ('offers full 20/30/50 amp water and sewer sites') + RoverPass rate 'Full Hook Up RV Sites' (amenities amps_30, amps_50, water_hookups, sewer_hookups), read 2026-10-28",
+      "method": "manual"
+    },
+    "sites": {
+      "values": {"max_rig_ft": 70, "pull_through": false, "note": "Back-in sites: full-hookup sites take rigs to 70 ft, dry sites to 46 ft (no water at the dry sites - arrive with a full tank). Long-term monthly sites too; 4 guests a site short-term."},
+      "source": "RoverPass booking API, 2027-06-08 rates ('Full Hook Up RV Sites' maxLength 70, back_in; 'Dry RV Sites' maxLength 46, back_in) + park 'What to know' ('For dry campsites, please arrive with water in your RV as our water facets are located in our full service sites only') + rules ('4 guests are welcome in short term RV Rentals'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"camp_store": true, "laundry": true},
+      "source": "https://www.northshorervparks.com/ ('amenities offered that include laundry facilities, fire ring/grill, trash services, general store'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "05-01", "closes": "09-30"},
+      "source": "RoverPass booking API park record (closeSeasonDates 2026-10-01 to 2027-04-30, 2027-10-01 to 2028-04-30, 2028-10-01 to 2029-04-30; dates in October and January answer 'Campground is closed'), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {"reservable": true, "platform": "roverpass", "url": "https://www.roverpass.com/c/north-shore-rv-store-loveland-co/booking/", "note": "Book online through RoverPass (up to 24 months ahead) or call. Full refund up to 3 days before arrival, 50% up to 1 day before. Check in 2-5 pm at the general store; call for a later arrival."},
+      "source": "https://www.northshorervparks.com/ ('Book online today!') + RoverPass booking API park record (isBookable true, systemType CRS, advancedMonths 24, cancellation '100% refund until 3 days prior to check-in. 50% percent refund 1 day prior', checkInProcedure, check-in 2pm-5pm), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Small RV park with a general store and two cabins on County Road 31 above the north end of Carter Lake (Larimer County), west of Loveland, among ponderosa pines; part of the park is long-term monthly sites. --Claude",
+  "summary": "Operator site (RoverPass-hosted, claimed and bookable) + RoverPass API: confirmed $30 dry / $50 full hookup, full hookups, general store. Added 50 A, max 70 ft (back-in), laundry, season 05-01..09-30, online booking via RoverPass, weekly/monthly rates. Note trimmed of prices.",
+  "flags": [
+    "Presence: northshorervparks.com is live and the operator's own (a RoverPass-built site, claimed listing, isBookable true, own booking system), phone +1 (970) 663-6200 = stored. Address 3505 S County Road 31, Loveland.",
+    "Price gate: $50 full hookup / $30 dry; Rocky Mountain NP is 29 km away, so the US$50 gate is lifted anyway. No park fee shown on the rate table; RoverPass carts were not quoted (the script priced no cart), so platform/processing fees, never stored, were not checked.",
+    "Long-stay tests (part long-term: a 'Longterm RV Site' $850/month rate, '2 guests ... in longterm RV Rentals (no children please)'): (1) $50, gateway-exempt - pass; (2) nightly rates on its own site and an online booking engine selling one night, no application - pass; (3) no minimum stay - pass; (4) RoverPass shows 9 RV sites on nightly sale on each June/May 2027 date; no total site count is published - pass; (5) not a home community - pass. Keeps.",
+    "Fire note on the booking page: 'FIRE DANGER IS EXTREMELY HIGH at this time with Carter Lake experiencing one WILD FIRE in early April 2026' and a Larimer County no-smoking-outdoors rule. Not a closure; season ended Sept 30.",
+    "Waterfront (stored not waterfront) confirmed on Esri imagery: the RV rows sit around the store beside CR 31 on a pine hillside; Carter Lake's shore is ~280 m southeast down the slope behind trees. Pin on the RV area; OK.",
+    "Good Sam false (derived, Good Sam directory) left as is; the operator states no discounts. RoverPass offers a 10% non-refundable-booking discount (platform option, not recorded)."
+  ]
+}

@@ -155965,39 +155965,63 @@
     "waterfront": "riverfront",
     "inclusion_evidence": "recreation.gov 234510: Upper Narrows Standard Nonelectric sites, parking 30-50 ft, drive-in RV/tent",
     "waterfront_evidence": "riverfront -- loops on the thin bench between US-14 and the Poudre, ~30m.",
-    "website": "https://www.recreation.gov/camping/campgrounds/234510",
-    "note": "Canyon Lakes RD, Poudre Canyon (Arapaho-Roosevelt NF); 14 sites, sites to ~40 ft, along the Cache la Poudre River. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/arp/recreation/narrows-campground-upper-and-lower\nhttps://www.recreation.gov/camping/campgrounds/234510",
+    "note": "USFS (Arapaho-Roosevelt NF, Canyon Lakes Ranger District) campground in Poudre Canyon on CO-14, ~32 mi northwest of Fort Collins at 6,400 ft, in ponderosa pine and aspen on the Cache la Poudre, Colorado's first National Wild and Scenic River. Rafting, trout fishing and nearby trails (Mt. McConnel, Kreutzer, Young Gulch). Only Upper Narrows takes RVs; Lower Narrows is walk-in tent sites on a slope that drops steeply to the river. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
       "source": "rvlife"
     },
     "sites": {
-      "count": 14,
-      "max_rig_ft": 40
+      "count": 15,
+      "max_rig_ft": 50,
+      "pull_through": false,
+      "note": "Two sections. Upper Narrows has 7 drive-in sites with back-in parking spurs of 30 to 50 ft (vehicles must fit on the spur; no parking off the road). Lower Narrows is 8 walk-in tent sites reached on foot paths from separate parking. Up to 8 people a site."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "season": {
+        "opens": "05-15",
+        "closes": "09-19"
+      },
+      "note": "Reserve on recreation.gov up to four days ahead; a reserved site not occupied within 26 hours goes first-come. Sites may be first-come before and after the reservation season (2026: May 15 - Sept 19; 2027: May 14 - Sept 18)."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/narrows-campground-upper-and-lower ('Each of the seven sites contain a tent pad'; 'This is a walk-in tent camping area with eight sites'; 'RVs, trailers or other vehicles must fit on the parking spur ... The parking length ranges from 30 to 50 feet. Lower Narrows: Parking spaces provided separate from the campsites'; 'A single site may hold up to eight people') + https://www.fs.usda.gov/r02/arp/conditions (Narrows: 15 sites) + catalog 234510 (Upper RV sites all Back-In), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234510 (rules reservationCutOff 4 days; notices 'Sites may be available on a first-come, first-served basis before and after the reservation season', 'All campsites must be occupied within 26 hours ... If not present the site will be rented by first come first serve basis') + /rates (Peak Season 2026-05-15 to 2026-09-19, 2027-05-14 to 2027-09-18) + https://www.fs.usda.gov/r02/arp/conditions ('Reserve Now'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/234510 (notice 'RV water connections are not available. Utility hookups are not available. Come with your RV/trailer water tank filled.') + catalog 234510 (all sites NONELECTRIC), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/234510/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/narrows-campground-upper-and-lower ('Single Site: $29 per night') + https://www.recreation.gov/api/camps/campgrounds/234510 (notice 'One vehicle is included in your reservation. Any additional vehicles will be charged $8.00 per vehicle per night') + /rates (2026-2028 Peak Season STANDARD NONELECTRIC 29), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/narrows-campground-upper-and-lower ('Vault toilet(s)'; 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/234510 (notices 'Drinking water is available at the campground until Sept. 30 ... Filling at campground hydrants cross-contaminates the system and is not allowed', 'All campsites with a tent pad have a bear locker'; 'purchased from the host'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: Narrows, Operating Season 'May 15 - Sept 20'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -156006,13 +156030,33 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 29,
       "nightly_high": 29,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$29 a site; one vehicle included (a towed camper or towed car counts with its tow), $8 a night per extra vehicle, which must fit on the site's spur. recreation.gov's 2027 and 2028 tables are also $29."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": true,
+      "note": "Drinking water until Sept. 30; filling RV tanks at the hydrants is not allowed. Bear lockers at every tent-pad site. Firewood from the host."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "09-20"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/arp/recreation/narrows-campground-upper-and-lower https://www.fs.usda.gov/r02/arp/conditions https://www.recreation.gov/api/camps/campgrounds/234510 https://www.recreation.gov/api/camps/campgrounds/234510/rates recreation.gov campsite catalog for 234510 (search/campsites API, read 2026-10-28)",
+      "note": "FS + ARP status table + rec.gov: confirmed $29, no hookups, reservable on recreation.gov. Changed sites count 14->15 (FS: 7 Upper + 8 walk-in Lower; ARP table 15) and max 40->50 (FS: spurs 30-50 ft). Added pull_through false, vault toilets/potable water, season 05-15..09-20, 4-day cutoff, fcfs after_cutoff, booking.season 05-15..09-19, extra-vehicle fee. Note rewritten (said 14 sites/~40 ft)."
+    },
+    "phone": "970-295-6600"
   },
   {
     "id": 2332,
@@ -157185,10 +157229,12 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "USFS arp page + search: 9 sites, parking 30-35 ft, RVs/trailers must fit spur, tent pads -> fits 23-ft rig, real drive-in campground",
     "waterfront_evidence": "satellite at 40.81387,-105.71: campground loop sits in dry lodgepole forest on a bench with no water body or creek visible anywhere nearby; North Fork is well downslope/away",
-    "website": "https://www.fs.usda.gov/r02/arp/recreation",
-    "note": "9 sites, vault toilets, no potable water, ~7 mi W of Red Feather Lakes off gravel Deadman Rd (washboarded, no 4WD); short spurs. FCFS. --Claude",
+    "website": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground",
+    "note": "USFS (Arapaho-Roosevelt NF, Canyon Lakes Ranger District) campground on the north side of gravel Deadman Road (CR 86) about 7 mi west of Red Feather Lakes, ~9,200 ft, in dense lodgepole pine near the North Fork of the Cache la Poudre. --Claude",
     "sites": {
-      "count": 9
+      "count": 9,
+      "max_rig_ft": 35,
+      "note": "Older campground with short parking spurs (30-35 ft; the forest's status table lists 30 ft max) that the FS says will not take larger RVs; vehicles must fit on the spur, no parking off the road. Up to 8 people a site."
     },
     "facilities": {
       "vault_toilets": true,
@@ -157200,23 +157246,29 @@
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground ('This is an older facility with short parking spurs that will not accommodate larger RVs. Each of the nine sites'; 'RVs, trailers or other vehicles must fit on the parking spur ... The parking length ranges from 30 to 35 feet.') + https://www.fs.usda.gov/r02/arp/conditions (North Fork Poudre: 9 sites, Max Spur 30'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground ('Vault toilet(s)'; 'Potable water is not available at this site.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground ('First come, first served campground.') + https://www.fs.usda.gov/r02/arp/conditions ('First-come, first-served'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground ('Fee Site and Info | Overnight Use: | Single Site: $19 per night | View fee information at | Current Conditions | under Campground Status. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground ('Single Site: $19 per night') + https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes status table: North Fork Poudre $19), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/arp/conditions (Canyon Lakes Ranger District Campground Status: North Fork Poudre, Operating Season 'June 12 - Nov 8'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -157227,8 +157279,20 @@
     "fees": {
       "nightly_low": 19,
       "nightly_high": 19,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026"
+    },
+    "season": {
+      "year_round": false,
+      "opens": "06-12",
+      "closes": "11-08"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/arp/recreation/north-fork-poudre-campground https://www.fs.usda.gov/r02/arp/conditions https://www.fs.usda.gov/r02/arp/alerts https://www.fs.usda.gov/r02/arp/alerts/cameron-peak-fire-road-closures",
+      "note": "FS page + ARP status table: confirmed 9 sites, $19, FCFS, vault toilets, no water. Added max_rig_ft 35 (spurs 30-35 ft), season 06-12..11-08. Note rewritten (dropped field facts and the unsourced washboard/no-4WD line)."
+    },
+    "phone": "970-295-6600"
   },
   {
     "id": 2346,
@@ -162650,15 +162714,15 @@
     "id": 2410,
     "kind": "campground",
     "name": "Molly Brown Campground",
-    "location": "39.26639,-106.34972",
-    "elevation_meters": 3022.0,
+    "location": "39.26436,-106.35238",
+    "elevation_meters": 3032,
     "state": "CO",
     "ownership": "federal",
     "waterfront": "not waterfront",
     "inclusion_evidence": "recreation.gov 232073: Standard Nonelectric RV sites plus 2 tent-only sites, '1 RV and 2 tents' per site, operating 2026 -> real RV campground",
     "waterfront_evidence": "satellite at 39.2638,-106.3551 (rec.gov westernmost sites 011-013): pads set back ~60-80m in dense forest behind a continuous treeline screening the sandy beach; no open apron, water screened",
-    "website": "https://www.recreation.gov/camping/campgrounds/232073",
-    "note": "Turquoise/Twin Lakes (Leadville RD) (Pike-San Isabel NF); 45 sites, sites to ~40 ft. Reservable online. --Claude",
+    "website": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground\nhttps://www.recreation.gov/camping/campgrounds/232073",
+    "note": "USFS (Pike-San Isabel NF, Leadville Ranger District), concessionaire-run, on the east shore of Turquoise Lake at 9,900 ft in shaded lodgepole pine, about 5 mi west of Leadville via County Road 4 and County Road 9C. The Turquoise Lake Nature Trail crosses to Silver Dollar Campground and loops along the shore. --Claude",
     "rating": {
       "price_tier": 1,
       "checked": "2026-06",
@@ -162666,30 +162730,60 @@
     },
     "sites": {
       "count": 45,
-      "max_rig_ft": 40
+      "max_rig_ft": 40,
+      "pull_through": false,
+      "note": "43 back-in RV/tent sites catalogued at 20-40 ft (eight at 20 ft, the rest 25-40) plus 2 tent-only sites, on two loops. Every vehicle must fit on the spur, no parking on the grass. One RV and two tents, or three tents, per site; 8 people max."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "after_cutoff",
+      "reserve_until": {
+        "relative_to": "arrival",
+        "offset_hours": -96
+      },
+      "max_stay_nights": 14,
+      "season": {
+        "opens": "05-22",
+        "closes": "09-19"
+      },
+      "note": "All sites are reservable on recreation.gov or 877-444-6777 at least four days ahead; walk-ups take what is left (the FS page says walk-ups are exempt from the weekend minimum, and a first-come site must be occupied the first night). Reservation season 2026 May 22 - Sept 19; recreation.gov's 2027 table runs May 21 - Sept 5."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "recreation.gov catalog 232073 (43 STANDARD NONELECTRIC, Max Vehicle Length 20 x8, 25 x7, 30 x9, 35 x11, 40 x8, all Back-In; 2 TENT ONLY) + https://www.recreation.gov/api/camps/campgrounds/232073 ('The two-loop campground offers single family sites'; 'all vehicles must fit in the parking spur. Please no parking on the grass'; '3 tent maximum per site, or 1 RV and 2 tents'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground ('All sites are by reservation only. Call 877-444-6777 or visit Recreation.gov at least four days in advance'; 'Walk-ups are exempt from the nightly minimum'; 'First-come, first-served sites must be occupied the first night') + https://www.recreation.gov/api/camps/campgrounds/232073 (rules maxConsecutiveStay 14 to 2050, reservationCutOff 4) + /rates (2026 Peak Seasons 05-22 to 09-06 and 09-07 to 09-19; 2027 05-21 to 09-05) + catalog (all 45 sites reservable), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-18",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/232073 (notice 'No hookups available') + catalog 232073 (all sites NONELECTRIC), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/232073/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground ('$30 fee per site for overnight camping. $33 fee for overnight camping at sites 4-10, 12 and 13. Two vehicles or one recreational vehicle are included in the camping fee. $11 fee for a third vehicle') + https://www.recreation.gov/api/camps/campgrounds/232073/rates (2026, 2027, 2028 Peak Season: STANDARD NONELECTRIC 30, premium STANDARD NONELECTRIC 33), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground ('Vault toilets are located throughout the campground'; 'Potable water is not available at this site. Water will not be available in this campground in 2026') + https://www.recreation.gov/api/camps/campgrounds/232073 (notices 'Water will NOT be available in this campground in 2026 ... the RV Dump Stations at both Printer Boy & White Star Campgrounds will remain closed this season', 'Firewood is available for sale at host site for $10.00/bundle'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground ('Seasons of Use: May to September. Opening and closing dates are weather dependent. Services such as water, trash or a host may not be available during early and late season.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground ('The Interagency Senior Pass and the Interagency Access Pass qualify for a 50% discount at concessionaire-run campsites. The discount only applies to the fee for the campsite physically occupied by the pass owner'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -162698,13 +162792,36 @@
       "model": "claude-opus-5"
     },
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "fees": {
       "nightly_low": 30,
-      "nightly_high": 30,
-      "currency": "USD"
-    }
+      "nightly_high": 33,
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$30 per site; $33 at sites 4-10, 12 and 13 (same in recreation.gov's 2026-2028 tables). Two vehicles or one RV included; $11 a night for a third vehicle (boat/ATV trailers count as one)."
+    },
+    "facilities": {
+      "vault_toilets": true,
+      "potable_water": false,
+      "note": "No water in 2026 - bring your own, including enough to put out a campfire; the campground normally has potable water. The White Star and Printer Boy RV dump stations are closed for 2026. Trash collection; firewood $10 a bundle at the host site."
+    },
+    "season": {
+      "year_round": false,
+      "note": "May to September; opening and closing dates are weather dependent, and water, trash or a host may be missing early and late in the season."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes: 50% off the campsite the pass holder occupies (concessionaire-run campground)."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/psicc/recreation/molly-brown-campground https://www.recreation.gov/api/camps/campgrounds/232073 https://www.recreation.gov/api/camps/campgrounds/232073/rates recreation.gov campsite catalog for 232073 (search/campsites API, read 2026-10-28) https://www.fs.usda.gov/r02/psicc/alerts https://www.fs.usda.gov/r02/psicc/alerts/willow-fire-area-closure-0",
+      "note": "FS + rec.gov + catalog: confirmed 45 sites, max 40 ft (catalog), no hookups, reservable on recreation.gov, $30 base. Added $33 high (sites 4-10, 12, 13), all back-in, vault toilets, no water in 2026, season May-Sept (note), fcfs after_cutoff with 4-day cutoff, 14-night limit, booking.season 05-22..09-19, senior/access 50%. Note rewritten (it said 'Turquoise/Twin Lakes' and repeated fields). Min-stay not recorded (FS states it, rec.gov rules do not)."
+    },
+    "phone": "719-486-0749"
   },
   {
     "id": 2411,
@@ -170295,46 +170412,59 @@
     "waterfront_evidence": "waterfront 'creekside' assessed in commit ad1da0d (Add 8 CO Rio Grande NF campgrounds (Conejos/South Fork/Saguache)); on-water value recorded at that commit (no separate per-entry evidence string)",
     "website": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground",
     "phone": "719-655-2547",
-    "note": "13 FCFS sites (one pull-through) strung 0.7 mi up the canyon along North Crestone Creek at ~8,300 ft near Crestone; no posted length limit but described as best for smaller rigs, so a 23-ft Class C should aim for the pull-through. No reservations; $10/night, vault toilets, bear lockers, no potable water. Reached via unpaved county road / Alder St north of Crestone. Open mid-May to mid-November. --Claude",
+    "note": "Rio Grande NF (Saguache Ranger District) rustic campground strung up the canyon along North Crestone Creek at ~8,300 ft, 1.3 mi north of Crestone on Alder Street; quiet, widely spaced sites. Camping is not allowed at the North Crestone Trailhead. --Claude",
     "sites": {
       "count": 13,
-      "pull_through": true
+      "pull_through": true,
+      "note": "Sites spaced far apart along 0.7 mile of North Crestone Creek among aspen, juniper and fir; one is a pull-through. No length limit is posted."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": false
+      "potable_water": false,
+      "note": "Bear-resistant food locker at every site (food only, not trash)."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-15",
+      "closes": "11-18",
+      "note": "2026 season May 15 (the conditions line says May 11) to November 18. The forest road beyond (FR 950) is closed Nov 25 - May 1."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14,
+      "note": "Best chance at a site is a weekday (Monday-Friday) morning."
     },
     "provenance": {
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('This rustic campground runs 0.7 mile up the mountain along North Crestone Creek and includes 13 first-come, first-served sites. One site is pull-through.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('Vault toilet(s)'; 'Potable water is not available at this site.'; 'Every site has a secure, bear-resistant food locker'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('Seasons of Use: Open May 15th to November 18th, 2026.'; 'Campground is open for the 2026 season from May 11th to November 18th.') + https://www.fs.usda.gov/r02/riogrande/alerts/forest-road-950-n-crestone-closure (RG-94-14, FSR 950 closed November 25 to May 1 annually), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('First come, first served. The best time to secure sites is Monday through Friday mornings.'; '14-day camping limit.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('Fee Site and Info | Day Use: | $10 per vehicle per day | Overnight Use: | Single and Double Site: $10 per night | Fee envelopes and a collection box are provided near the entrance. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('Single and Double Site: $10 per night'; 'Day Use: $10 per vehicle per day'; 'Fee envelopes and a collection box are provided near the entrance.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground ('Interagency Senior/Access Recreation Passes provide a 50% discount to single campsites ONLY.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -170345,7 +170475,18 @@
     "fees": {
       "nightly_low": 10,
       "nightly_high": 10,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$10 a night for a single or double site; day use $10 per vehicle. Fee envelopes and collection box near the entrance."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes: 50% off a single campsite, only the site the pass holder occupies."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/riogrande/recreation/north-crestone-creek-campground https://www.fs.usda.gov/r02/riogrande/alerts https://www.fs.usda.gov/r02/riogrande/alerts/forest-road-950-n-crestone-closure",
+      "note": "FS page: confirmed 13 sites with one pull-through, $10, FCFS only, vault toilets, no potable water. Added season 05-15..11-18, 14-day limit, day-use fee, bear lockers, senior/access 50%. Note rewritten: dropped field facts and the unsourced 'best for smaller rigs' line (the FS page now says nothing about rig size)."
     }
   },
   {
@@ -172182,25 +172323,30 @@
     "inclusion_evidence": "USFS riogrande page: 21 sites, max spur 40 ft (not all fit), FR 510 open/passable -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 37.8347,-107.1391: small braided North Clear Creek runs through center meadow; camp loops set back in forest/meadow ~100-200m across open park, no pad on shoreline apron within 50m",
     "website": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground",
-    "note": "Rio Grande NF, ~2.1 mi north on FR 510 off Hwy 149 (~24.5 mi west of Creede), ~9,900 ft, adjacent to North Clear Creek (firsthand reviews put sites ~50 yd from the creek, not on the bank). 21 sites; max spur 40 ft, not all fit it. Two vault toilets, well potable water, camp host. No hookups. FCFS - not on recreation.gov. Memorial Day-Labor Day. --Claude",
+    "note": "Rio Grande NF (Divide Ranger District) concessionaire campground ~2.1 mi north on FR 510 off CO-149, about 24.5 mi west of Creede, ~9,900 ft. Hidden from the road, beside North Clear Creek (fishing; firsthand reviews put sites ~50 yd from the creek, not on the bank); quiet and well away from towns, with fall aspen color and moose. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
       "sewer": false
     },
     "sites": {
-      "count": 21
+      "count": 21,
+      "max_rig_ft": 40,
+      "note": "Maximum spur 40 ft; not every site fits that length. Some sites sit in sunny openings, others are shaded by small aspen, spruce and fir."
     },
     "facilities": {
       "vault_toilets": true,
-      "potable_water": true
+      "potable_water": true,
+      "note": "Well water; central garbage cans; no firewood provided; camp host."
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "note": "Memorial Day weekend through Labor Day weekend (2026 opening May 22)."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "max_stay_nights": 14
     },
     "provenance": {
       "hookups": {
@@ -172209,28 +172355,34 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('has 21 sites with parking spurs'; 'Maximum spur length is 40 feet. Not all sites will fit vehicles of this length.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('2 vault type toilets are provided and potable drinking water comes from a well'; 'Garbage cans are centrally located. Firewood is not provided. A host is stationed at the campground.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('Seasons of Use: Memorial Day weekend through Labor Day Weekend.'; 'Concessionaire operations for 2026 season will begin May 22nd.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('All sites are first come, first served and cannot be reserved.'; '14-day camping limit.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('Fee Site and Info | Day Use: | $12 per day | Overnight Use: | Single Site: $26 per night | Double Site: $52 per night | Fee envelopes and a collection box are provided near the entrance. ')",
-        "checked": "2026-10-09"
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('Single Site: $26 per night | Double Site: $52 per night'; 'Day Use: $12 per day'; 'Please be prepared to pay with cash or check.'; 'Fee envelopes and a collection box are provided near the entrance.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "discounts": {
+        "source": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground ('Interagency Senior/Access Recreation Passes provide a 50% discount to single campsites ONLY.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -172241,8 +172393,20 @@
     "fees": {
       "nightly_low": 26,
       "nightly_high": 26,
-      "currency": "USD"
-    }
+      "currency": "USD",
+      "checked": "2026",
+      "note": "$26 single site, $52 double; day use $12. Pay cash or check at the fee envelopes by the entrance."
+    },
+    "discounts": {
+      "interagency_senior_access": true,
+      "note": "Senior and Access passes: 50% off a single campsite, only the site the pass holder occupies."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/riogrande/recreation/north-clear-creek-campground https://www.fs.usda.gov/r02/riogrande/alerts https://www.fs.usda.gov/r02/riogrande/alerts/nfs-road-510-and-5103b-area-clsoure",
+      "note": "FS page: confirmed 21 sites, $26, FCFS only, vault toilets, well water, no hookups (stored, unchanged). Added max spur 40 ft, $52 double/day-use, 14-day limit, season Memorial Day-Labor Day note, senior/access 50%. Note trimmed of field facts."
+    },
+    "phone": "719-657-3321"
   },
   {
     "id": 2527,
@@ -173759,7 +173923,7 @@
     "inclusion_evidence": "rec.gov 10165480 / USFS GMUG: 16 tent/RV sites at Spring Creek Reservoir, 35 ft max RV (Campendium longest-reported 35 ft), graded gravel FR744 12 mi (reviewers bring RVs), open May 23-Oct 1 -> drive-in RV campground",
     "waterfront_evidence": "GMUG page calls it 'on the banks of Spring Creek Reservoir' (overview prose, no per-site flag); satellite at 38.8601,-106.7097 is snow/canopy-degraded but shows the bulk of loops set back in forest behind a buffer, with only the boat-ramp road reaching the open SW shore; no per-site shoreline RV pad confirmable",
     "website": "https://www.recreation.gov/camping/campgrounds/10165480\nhttps://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd",
-    "note": "16 spacious tent/RV sites at Spring Creek Reservoir, ~12 miles up graded gravel Spring Creek Rd (FR744); a boat ramp and fishing site are within the campground. No hookups, no potable water, vault toilets, fire rings and tables. First-come-first-served only - arrive in person; not reservable. Open ~May 23 to Oct 1, ~9,990 ft. --Claude",
+    "note": "Gunnison NF (Gunnison Ranger District) campground at Spring Creek Reservoir, ~9,990 ft, about 12 mi up graded gravel Spring Creek Road (FR 744) from County Road 742 north of Almont. A boat ramp and fishing site are in the campground; the area's trails and 4WD roads draw mountain bikers, hikers and OHV riders. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
@@ -173773,11 +173937,15 @@
       "potable_water": false
     },
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-23",
+      "closes": "10-01",
+      "note": "Weather dependent."
     },
     "booking": {
       "reservable": false,
-      "fcfs": "always"
+      "fcfs": "always",
+      "note": "First-come only: arrive in person to claim and pay for a site; recreation.gov lists it for Scan and Pay only (download the app before arriving - little or no cell service)."
     },
     "provenance": {
       "hookups": {
@@ -173786,28 +173954,29 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('There are 16 campsites.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('Vault toilet(s)'; 'Potable water is not available at this site'; Current Conditions 'No water.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('Seasons of Use: May 23 - Oct. 1 (weather dependent)'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-15",
-        "method": "derived"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('This site is a first come, first serve campground'; 'This campground is not reservable.') + https://www.recreation.gov/api/camps/campgrounds/10165480 ('available on a first-come, first-served basis only. Visitors are required to physically arrive at the campground to purchase and claim a site ... Scan and Pay'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('Fee Site and Info | Single Site: $14 per night | Additional Vehicle Fee: $7 per night', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd ('Single Site: $14 per night | Additional Vehicle Fee: $7 per night | Day Use: $6 per vehicle per day'; '$10 per firewood bundle') + https://www.recreation.gov/api/camps/campgrounds/10165480 (Scan and Pay), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -173819,8 +173988,15 @@
       "nightly_low": 14,
       "nightly_high": 14,
       "currency": "USD",
-      "note": "Single site $14/night; additional vehicle $7/night. (Forest Service page)"
-    }
+      "note": "$14 per night per camping unit; additional vehicle $7 a night; day use $6 per vehicle; firewood $10 a bundle. Pay on site (recreation.gov Scan and Pay where cell service allows).",
+      "checked": "2026"
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.fs.usda.gov/r02/gmug/recreation/mosca-campground-gunnison-rd https://www.recreation.gov/api/camps/campgrounds/10165480 https://www.fs.usda.gov/r02/gmug/alerts https://www.fs.usda.gov/r02/gmug/conditions",
+      "note": "FS + rec.gov: confirmed 16 sites, $14, first-come only, vault toilets, no water. Added season 05-23..10-01 (FS), vehicle/day-use fees, Scan and Pay note. Hookups and lengths not stated by FS or rec.gov (no catalog sites). Note trimmed of field facts."
+    },
+    "phone": "970-641-0471"
   },
   {
     "id": 2548,
@@ -895565,32 +895741,34 @@
     "waterfront": "not waterfront",
     "inclusion_evidence": "RIDB per-campsite catalog (facility 274413): 98 RV-capable sites, 94 bookable, max vehicle length up to 99 ft -> real drive-in RV campground",
     "waterfront_evidence": "satellite at 39.3340,-108.7040: high-desert pinyon-juniper bench with no standing water anywhere in frame, only dry washes -> not waterfront",
-    "website": "https://www.recreation.gov/camping/campgrounds/274413",
+    "website": "https://www.blm.gov/visit/north-fruita-desert-campground\nhttps://www.recreation.gov/camping/campgrounds/274413",
     "phone": "970-244-3000",
-    "note": "BLM campground at the 18 Road mountain-biking area north of Fruita, in high-desert pinyon-juniper. 98 sites, no hookups, no water; the catalog takes rigs to 99 ft. Reservable online. --Claude",
+    "note": "BLM (Grand Junction Field Office) campground at the 18 Road (North Fruita Desert) mountain-bike trail system, ~7-8.5 mi north of Fruita at the foot of the Book Cliffs, among scattered juniper with wide views of the Grand Valley. Ride to the trails from the campsites; the Lower Campground doubles as an event staging area. Hot in summer, sparse shade. --Claude",
     "hookups": {
-      "electric": 0
+      "electric": 0,
+      "water": false,
+      "sewer": false
     },
     "provenance": {
       "hookups": {
-        "source": "recreation.gov campsite catalog (RIDB)",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/north-fruita-desert-campground ('At both the upper and lower units there no water, electricity, or garbage collection service'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/north-fruita-desert-campground ('The Upper Campground contains 58 campsites'; 'The Lower Campground contains 53 campsites'; 'The site size and parking capacity vary, so be sure to check site dimensions before making a reservation'; 'During events, some campsites may be closed') + catalog 274413 (RV/trailer equipment lengths to 80 ft at B12 and F01; Pull-through sites throughout; three 99-ft values at G07/G15/G22 carry no equipment list and were not used), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.blm.gov/visit/north-fruita-desert-campground ('Vault toilets are within walking distance of the campsites'; 'there no water, electricity, or garbage collection service'; 'no firewood collection is allowed'; 'We try to have a volunteer campground host on site during the spring and fall seasons') + https://www.recreation.gov/api/camps/campgrounds/274413 (notice 'All trash, including dog waste, must be packed out'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-09-21",
-        "method": "derived"
+        "source": "https://www.recreation.gov/api/camps/campgrounds/274413 (notices 'available for reservation up to six months in advance ... Sites A1 through A14 ...'; 'available for reservation up to four days in advance of your stay: Sites C1-C21 ...'; 'Reservations are required for all camping within the campground'; rules maxConsecutiveStay 14) + https://www.blm.gov/visit/north-fruita-desert-campground ('Camping is limited to 14 days'; 'you cannot change your check-in date'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "season": {
         "source": "recreation.gov availability calendar, facility 274413 (323 days observed, none closed)",
@@ -895598,19 +895776,29 @@
         "method": "derived"
       },
       "fees": {
-        "source": "https://www.recreation.gov/api/camps/campgrounds/274413/rates (recreation.gov rate table, current seasons, standard/RV sites)",
-        "checked": "2026-10-09"
+        "source": "https://www.blm.gov/visit/north-fruita-desert-campground ('Campsite rates are $20 per night and include up to 10 people and 2 vehicles. There is an $8 non-refundable reservation fee for each reservation.') + https://www.recreation.gov/api/camps/campgrounds/274413/rates (2026-2028 Peak and Non-Peak: StandardSite 20, group types 40/50), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "sites": {
-      "count": 98,
-      "max_rig_ft": 99
+      "count": 111,
+      "max_rig_ft": 80,
+      "pull_through": true,
+      "note": "Two units 1.5 mi apart on 18 Road: the Upper Campground (58 sites incl. group sites D9, D11; graveled spurs, no tent pads) and the Lower Campground (53 sites incl. group site G24, 12x12 tent pads) at the trailhead and event staging area, where some sites may close during races and festivals. Site sizes vary - check the dimensions before booking; many pull-throughs, a few spurs as short as 20 ft. 10 people and 2 vehicles a site."
     },
     "facilities": {
-      "potable_water": false
+      "potable_water": false,
+      "vault_toilets": true,
+      "note": "No water, electricity or trash service - bring water and pack out all trash (dog waste included). Bring firewood; no gathering. Volunteer host in spring and fall at the north end of the upper campground."
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "recreation.gov",
+      "fcfs": "never",
+      "window_opens_days": 180,
+      "max_stay_nights": 14,
+      "note": "Reservations are required for all camping. Sites A1-A14, B1-B12, G1-G23, H1-H5, J5-J7, K8-K15 and the group sites book up to six months ahead; C, D, E, F, J1-J4 and K1-K7 open only four days before arrival. Changes until 24 hours before; you cannot change the check-in date."
     },
     "note_scan": {
       "sig": "488ef8b69397e413",
@@ -895623,7 +895811,15 @@
     "fees": {
       "nightly_low": 20,
       "nightly_high": 20,
-      "currency": "USD"
+      "currency": "USD",
+      "checked": "2026",
+      "reservation_fee": 8,
+      "note": "$20 a site, up to 10 people and 2 vehicles; group sites (D9, D11, G24) $40-50. $8 non-refundable reservation fee per reservation. Same rates all year in recreation.gov's 2024-2028 tables."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.blm.gov/visit/north-fruita-desert-campground https://www.recreation.gov/api/camps/campgrounds/274413 https://www.recreation.gov/api/camps/campgrounds/274413/rates recreation.gov campsite catalog for 274413 (search/campsites API, read 2026-10-28)",
+      "note": "BLM page + rec.gov + catalog: confirmed $20, no hookups, no water, reservable on recreation.gov, year-round (stored, unchanged). Changed sites count 98->111 (BLM: 58 Upper + 53 Lower) and max 99->80 (99 was a placeholder; real RV equipment max 80 ft). Added pull_through, vault toilets, reservations required (fcfs never), 6-month window (some loops 4 days), 14-night limit, $8 reservation fee, group-site rates. Note rewritten."
     }
   },
   {
@@ -969452,33 +969648,51 @@
     "inclusion_evidence": "northshorervparks.com live with a rate page (full hookup $50/day, dry $30); Google 4.2 over 54 with phone (read 2026-10-02); Good Sam directory listing",
     "website": "https://www.northshorervparks.com/",
     "phone": "970-663-6200",
-    "note": "RV park and general store on County Road 31 near the north end of Carter Lake, west of Loveland: full-hookup sites $50/day, dry sites $30, plus cabins; many long-term sites. --Claude",
+    "note": "Small RV park with a general store and two cabins on County Road 31 above the north end of Carter Lake (Larimer County), west of Loveland, among ponderosa pines; part of the park is long-term monthly sites. --Claude",
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "facilities": {
-      "camp_store": true
+      "camp_store": true,
+      "laundry": true
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.northshorervparks.com/ ('offers full 20/30/50 amp water and sewer sites') + RoverPass rate 'Full Hook Up RV Sites' (amenities amps_30, amps_50, water_hookups, sewer_hookups), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.northshorervparks.com/ ('amenities offered that include laundry facilities, fire ring/grill, trash services, general store'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.northshorervparks.com/rates (read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.northshorervparks.com/rates ('Dry RV Sites Daily $30 Weekly $210 Monthly $650'; 'Full Hook Up RV Sites Daily $50 Weekly $350 Monthly $850') + RoverPass booking API (2027-05-01/05-04/06-08/06-12: 'RV Sites - Dry RV Sites' $30.00, 'RV Sites - Full Hook Up RV Sites' $50.00) + rules ('Electricity is not included in the price for a monthly rental'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "sites": {
+        "source": "RoverPass booking API, 2027-06-08 rates ('Full Hook Up RV Sites' maxLength 70, back_in; 'Dry RV Sites' maxLength 46, back_in) + park 'What to know' ('For dry campsites, please arrive with water in your RV as our water facets are located in our full service sites only') + rules ('4 guests are welcome in short term RV Rentals'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "RoverPass booking API park record (closeSeasonDates 2026-10-01 to 2027-04-30, 2027-10-01 to 2028-04-30, 2028-10-01 to 2029-04-30; dates in October and January answer 'Campground is closed'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "booking": {
+        "source": "https://www.northshorervparks.com/ ('Book online today!') + RoverPass booking API park record (isBookable true, systemType CRS, advancedMonths 24, cancellation '100% refund until 3 days prior to check-in. 50% percent refund 1 day prior', checkInProcedure, check-in 2pm-5pm), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -969490,10 +969704,32 @@
       "nightly_low": 30,
       "nightly_high": 50,
       "currency": "USD",
-      "note": "Dry RV sites $30/day; full-hookup RV sites $50/day ($350/week)."
+      "note": "Dry RV sites $30 a night ($210 a week, $650 a month); full-hookup RV sites $50 ($350 a week, $850 a month, electric extra for a month or more). Same on RoverPass for May and June 2027.",
+      "checked": "2027"
     },
     "discounts": {
       "good_sam": false
+    },
+    "sites": {
+      "max_rig_ft": 70,
+      "pull_through": false,
+      "note": "Back-in sites: full-hookup sites take rigs to 70 ft, dry sites to 46 ft (no water at the dry sites - arrive with a full tank). Long-term monthly sites too; 4 guests a site short-term."
+    },
+    "season": {
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-30"
+    },
+    "booking": {
+      "reservable": true,
+      "platform": "roverpass",
+      "url": "https://www.roverpass.com/c/north-shore-rv-store-loveland-co/booking/",
+      "note": "Book online through RoverPass (up to 24 months ahead) or call. Full refund up to 3 days before arrival, 50% up to 1 day before. Check in 2-5 pm at the general store; call for a later arrival."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.northshorervparks.com/ https://www.northshorervparks.com/rates RoverPass booking API for north-shore-rv-store-loveland-co (park record + rates for 2027-05-01, 05-04, 06-08, 06-12), read 2026-10-28",
+      "note": "Operator site (RoverPass-hosted, claimed and bookable) + RoverPass API: confirmed $30 dry / $50 full hookup, full hookups, general store. Added 50 A, max 70 ft (back-in), laundry, season 05-01..09-30, online booking via RoverPass, weekly/monthly rates. Note trimmed of prices."
     }
   },
   {
@@ -969590,33 +969826,43 @@
     "inclusion_evidence": "mvonwc.com live with 2026 rates (DAY = $42, May-Sep); Google 4.7 over 28 with phone (read 2026-10-02); Good Sam directory listing",
     "website": "https://www.mvonwc.com/",
     "phone": "719-873-5216",
-    "note": "RV park on US-160 west of South Fork toward Wolf Creek Pass; $42/day, weekly and monthly rates; May-September; reservations by phone. --Claude",
+    "note": "Family-owned RV park (since 1969) on US-160 about 6 mi southwest of South Fork on the way up Wolf Creek Pass, ~8,000 ft. Mostly a destination park - guests stay a week to several months and many return every summer - but nightly stays are sold. --Claude",
     "season": {
-      "year_round": false
+      "year_round": false,
+      "opens": "05-01",
+      "closes": "09-15",
+      "note": "'Usually' May 1 to September 15."
     },
     "booking": {
       "reservable": true,
-      "platform": "phone"
+      "platform": "phone",
+      "note": "Reservations by phone (recommended; it books up at times). A $100 non-refundable deposit is due at booking for each month reserved."
     },
     "provenance": {
       "season": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.mvonwc.com/ ('Our season usually lasts from May 1st to September 15th.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://www.mvonwc.com/ ('Please call to book reservations.'; 'A DEPOSIT OF $100 IS REQUIRED AT THE TIME OF RESERVATION FOR EACH MONTH YOU WANT TO RESERVE. DEPOSITS ARE NON-REFUNDABLE UNDER ANY CIRCUMSTANCE.'; 'Reservations are recommended because we tend to book up during certain parts of the season'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.mvonwc.com/ (rates, read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://www.mvonwc.com/ (RATES: 'MAY - JUNE - SEPT DAY = $42 WEEK = $250 MONTH = $495'; 'JUL - AUG DAY = $42 WEEK = $265 MONTH = $565'; 'SEASON = $1,795 (MAY through SEPT)'; 'Cash or check only. Rates are subject to change.'; 'Guests staying a month or longer are required to pay their electric bills.'; page 'Last Published: Mon Feb 24 2025'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "discounts": {
         "source": "Good Sam campground directory",
         "checked": "2026-10-20",
         "method": "derived"
+      },
+      "hookups": {
+        "source": "https://www.mvonwc.com/ ('FULL RV HOOKUPS, CAMPING, HIKING, FISHING, SOLITUDE'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -969628,10 +969874,20 @@
       "nightly_low": 42,
       "nightly_high": 42,
       "currency": "USD",
-      "note": "Daily $42 (all season); weekly $250-265."
+      "note": "$42 a day all season; weekly $250 (May, June, Sept) or $265 (July-Aug), monthly $495 or $565, whole season (May-Sept) $1,795. Guests staying a month or longer pay their own electric. Cash or check only; rates subject to change.",
+      "checked": "2025"
     },
     "discounts": {
       "good_sam": false
+    },
+    "hookups": {
+      "water": true,
+      "sewer": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://www.mvonwc.com/",
+      "note": "Operator site (published Feb 2025): confirmed $42/day, reservations by phone, May-Sept. Added season 05-01..09-15, full hookups (water+sewer; amperage not stated), weekly/monthly/season rates and deposit/cash-only terms. Site count and amperage not stated. Note trimmed of price/season/booking facts; long-stay character recorded."
     }
   },
   {
@@ -969704,54 +969960,61 @@
     "inclusion_evidence": "CPW: the former KOA property incorporated into State Forest State Park as North Park Campground, ~30 full-hookup sites, reservable through CPW (web search of CPW-sourced listings, 2026-10-02); Google 4.3 over 41 with phone; RV Life lists it as North Park Campground (formerly North Park Walden KOA). Surfaced by the CO private-gap list - missed by the state gap pass",
     "website": "https://cpw.state.co.us/state-parks/state-forest-state-park",
     "phone": "970-723-8366",
-    "note": "Colorado Parks and Wildlife campground on CO-14 near Gould, the former Walden KOA now part of State Forest State Park: about 30 full-hookup sites (30/50 amp, pull-throughs) with showers, laundry and a playground. Reservable via CPW (cpwshop.com, 800-244-5613); 14-night limit. --Claude",
+    "note": "Colorado Parks and Wildlife campground on CO-14 near Gould, the former Walden KOA, now a loop of State Forest State Park on open sagebrush slopes. --Claude",
     "hookups": {
       "electric": 50,
       "water": true,
       "sewer": true
     },
     "sites": {
-      "count": 30,
-      "pull_through": true
-    },
-    "facilities": {
-      "showers": true,
-      "laundry": true
+      "count": 14,
+      "pull_through": true,
+      "max_rig_ft": 60,
+      "note": "North Park loop: 10 full-hookup and 4 electric-and-water RV sites, gravel, 60 ft (two pull-throughs, 624 and 626; the rest back-in), plus two deluxe cabins. Six people, two vehicles and one camping unit a site."
     },
     "booking": {
       "reservable": true,
       "platform": "operator",
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "fcfs": "never",
+      "window_opens_days": 180,
+      "note": "Reservation required: cpwshop.com or 1-800-244-5613, up to six months ahead. Maximum 14 days in any 28."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "cpwshop.com site pages, parkID=50042, North Park loop: all 14 sites 'Electricity Hookup: 50', 'Water Hookup: Y'; sites 620-629 'Full Hookup: 50', 'Sewer Hookup: Y', read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "cpwshop.com site pages, parkID=50042 ('Loop: North Park'; sites 620-629 Full Hookup, 630-633 Electric; 'Maximum Vehicle Length: 60'; 'Driveway Entry: Pull-Through' at 624 and 626, 'Back-In' elsewhere; 'Driveway Surface: Gravel') + https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging ('Two deluxe cabins are also available at the North Park campground'; 'A maximum of six people, two motorized vehicles and only one camping unit is allowed per individual site'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "The stored showers and laundry came from note prose resting on web listings of the former KOA; CPW's State Forest camping page lists the park's amenities as 'ADA accessibility, Vault toilets, Electrical hook-ups, Dump station, Hand-pumped water and water spigots' and says nothing of showers or laundry at North Park, read 2026-10-28. Cleared.",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-09",
-        "method": "derived"
+        "source": "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging ('A reservation is required to camp at State Forest State Park ... online at cpwshop.com or by phone at 1-800-244-5613. Reservations can be made up to six months in advance'; 'The maximum stay is 14 days within a 28-day period.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://www.cpwshop.com/camping/state-forest-state-park/r/campsiteDetails.page?parkID=50042&siteID=24052 ('North Park loop, Full Hookup (60 ft): $41.00/Per Night, $287.00/Per Week (park page: Single campsite $18 to $41)', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "cpwshop.com site pages, parkID=50042, North Park loop (sites 630-633 'Electric' '$36.00 /Per Night $252.00 /Per Week'; sites 620-629 'Full Hookup' '$41.00 /Per Night $287.00 /Per Week'; arrivals 06/16/2027 and 08/11/2027) + https://cpw.state.co.us/state-parks/state-forest-state-park ('Daily Vehicle Pass: $12-$17') + camping page ('Visitors are required to display a vehicle pass and have a valid reservation'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "discounts": {
-        "source": "Good Sam campground directory",
-        "checked": "2026-10-20",
-        "method": "derived"
+        "source": "The stored military discount came from the Good Sam directory (derived 2026-10-20), whose listing describes the former Walden KOA; CPW's State Forest pages state no military camping discount (only disabled-veteran license-plate and pass programs), read 2026-10-28. Cleared.",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "season": {
+        "source": "https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging ('Winter Campground Closures ... Nov. 1 - North Park Campground & Cabins, Bockman & North Michigan'; 'Oct. 31 - Water will be turned off'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -969760,13 +970023,20 @@
       "model": "claude-opus-5/session"
     },
     "fees": {
-      "nightly_low": 41,
+      "nightly_low": 36,
       "nightly_high": 41,
       "currency": "USD",
-      "note": "Full-hookup sites $41/night ($287/week); plus the daily vehicle pass."
+      "note": "Electric (with water) sites $36 a night ($252 a week), full-hookup sites $41 ($287 a week), same in June and August 2027. Plus a daily vehicle pass ($12-17) or annual park pass for every vehicle.",
+      "checked": "2027"
     },
-    "discounts": {
-      "military": true
+    "season": {
+      "year_round": false,
+      "note": "Closes for the winter Nov. 1 (CPW's 2026 winter campground closures); the opening date is not posted. Park water is shut off Oct. 31."
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://cpw.state.co.us/state-parks/state-forest-state-park https://cpw.state.co.us/state-parks/state-forest-state-park/state-forest-state-park-camping-lodging https://www.cpwshop.com/camping/state-forest-state-park/r/campgroundDetails.page?parkID=50042 (site map: 226 units; North Park loop = sites 620-633) https://www.cpwshop.com/camping/state-forest-state-park/r/campsiteDetails.page?parkID=50042&siteID=<id> (all 14 North Park sites, arrival 06/16/2027; sites 620 and 630 also 08/11/2027)",
+      "note": "CPW + cpwshop (all 14 North Park sites): confirmed 50 A full hookups, pull-throughs, reservable. Changed count 30->14 (10 full hookup + 4 electric/water), fees 41/41->36/41 (2027), added max 60, fcfs never, 6-month window, 14-in-28 limit, Nov 1 closing. Cleared showers/laundry (no CPW statement) and military discount (Good Sam directory of the old KOA). Note rewritten."
     }
   },
   {
@@ -969860,21 +970130,19 @@
     "inclusion_evidence": "CPW South Republican SWA page live; Campendium: 21 dirt-pad sites, vault toilets, 14-day limit, license requirement; Google 3.8 over 4. Agency-designated campground under the wildlife-agency rule (feedback_wildlife_agency_camping). Surfaced by the CO private-gap list - missed by the state gap pass",
     "website": "https://cpw.state.co.us/state-wildlife-areas/south-republican-swa",
     "phone": "719-227-5200",
-    "note": "CPW campground at the South Republican State Wildlife Area (the former Bonny Lake State Park, whose reservoir was drained): 21 dirt-pad dry sites with vault toilets, no water; 14-day limit. Everyone 16 or older on a State Wildlife Area needs a CPW SWA pass or a hunting/fishing license (CPW, checked 2026-10-11). --Claude",
+    "note": "Colorado Parks and Wildlife campground at the South Republican State Wildlife Area, the former Bonny Lake State Park: the reservoir was partly drained and the park became a wildlife area in October 2011, and North Cove is one of two campgrounds left open (East Beach is the other) with limited amenities. Dry dirt-pad sites among scattered trees on a bench above the old lake bed. Everyone 16 or older on a State Wildlife Area needs a CPW SWA pass or a hunting/fishing license. --Claude",
     "hookups": {
       "electric": 0,
       "water": false,
       "sewer": false
-    },
-    "sites": {
-      "count": 21
     },
     "facilities": {
       "vault_toilets": true,
       "potable_water": false
     },
     "booking": {
-      "max_stay_nights": 14
+      "max_stay_nights": 14,
+      "note": "State Wildlife Area rule: no more than 14 days on any one SWA in any 45-day period, and a camp, vehicle or trailer may not be left unattended for more than 48 hours."
     },
     "provenance": {
       "hookups": {
@@ -969883,9 +970151,9 @@
         "method": "derived"
       },
       "sites": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "The stored 21 sites came from note prose resting only on Campendium (a directory); CPW's South Republican SWA page gives no site count ('Limited amenities are available at the East Beach and North Cove Campgrounds'), read 2026-10-28. Cleared.",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "facilities": {
         "source": "note prose",
@@ -969893,9 +970161,9 @@
         "method": "derived"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://cpw.widen.net/s/lslsz2gqlj/chapter-w-9---wildlife-properties (CPW Chapter W-9, general SWA prohibitions #6: 'to camp or to park a travel trailer or camper on any one state wildlife area for more than 14 days in any 45-day period'; 'to leave a camp, pitched tent, shelter, motor vehicle, or trailer unattended for more than 48 hours'; #249 South Republican SWA d. 'Camping is allowed in designated and established camping areas.'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
         "source": "https://cpw.state.co.us/swa-finder (everyone 16+ needs an SWA pass or a hunting/fishing license; one-day pass $10, valid only on its date; annual $43.87; license exemptions) and https://cpw.state.co.us/state-wildlife-areas/south-republican-swa (camping in designated areas, no camping fee listed); two people, one night per AWH 2026-10-11",
@@ -969914,7 +970182,12 @@
       "currency": "USD",
       "note": "Two people, one night: $40. There is no camping fee; the cost is Colorado Parks and Wildlife's State Wildlife Area pass, which everyone 16 or older needs on the property. 2 people x 2 one-day passes x $10 = $40: a one-day pass is valid only on the date printed on it, and a night spans the arrival and departure dates. Nobody holding an annual Colorado fishing, small-game, big-game or turkey license needs the pass, and neither do under-16s. An annual SWA pass is $43.87 (March 1 to March 31 of the next year; youth/senior $11.96). The pass is per person, not per vehicle; buy it online or in the My CPW app, up to 60 days ahead. (AWH 2026-10-11: price as two people, one night.)"
     },
-    "policy_ref": "none"
+    "policy_ref": "none",
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://cpw.state.co.us/state-wildlife-areas/south-republican-swa https://cpw.state.co.us/swa-finder https://cpw.widen.net/s/lslsz2gqlj/chapter-w-9---wildlife-properties",
+      "note": "CPW SWA page + Chapter W-9: confirmed camping in designated areas, the SWA pass/license rule and the 14-day limit (14 days in any 45). Cleared sites.count 21 (Campendium only). Fees ($40 for two people, one night of SWA passes) are manual and untouched. Note rewritten."
+    }
   },
   {
     "id": 14479,
@@ -969927,30 +970200,49 @@
     "waterfront": "lakeview",
     "waterfront_evidence": "satellite (Esri, 900 m frame) at 37.2066,-105.0465: RV loops among scattered pines just south of the lake's south end and dam, ~90 m from the water across open ground - lakeview, not lakefront",
     "inclusion_evidence": "themonumentlakeresort.com live with online booking; AWH read 'Primitive Tent or RV Space - Nightly & Weekly Stays From $47.70' (2026-10-02); 2025 capture lists full hookup $55, partial $50; Google 4.4 over 15. City-owned lake park under concession -> local (no price gate)",
-    "website": "https://fareharbor.com/embeds/book/monumentlakeresort/items/?flow=536885&full-items=yes\nhttps://themonumentlakeresort.com/",
-    "phone": "719-868-2226",
-    "note": "City of Trinidad's Monument Lake, run as a resort by a concessionaire, on CO-12 (Highway of Legends) west of Weston: full and partial hookup RV sites, primitive tent/RV spaces, cabins, lodge rooms, restaurant, marina rentals. Primitive spaces from $47.70 (2026); partial hookup $53 and full hookup $58.30 (FareHarbor, 2026-10-10). Online booking. --Claude",
+    "website": "https://themonumentlakeresort.com/",
+    "phone": "719-680-0580",
+    "note": "City of Trinidad's Monument Lake, a mile-long spring-fed lake in the Sangre de Cristos, run as a resort by a concessionaire on CO-12 (Highway of Legends) west of Weston, with lodge rooms, adobe cabins, a restaurant, marina and boat rentals beside the campground. Full-hookup sites sit back in the trees, partial-hookup sites on the hillside above Cherry Creek, and primitive tent-or-RV spaces along the lake and creek. --Claude",
     "hookups": {
       "water": true,
-      "sewer": true
+      "sewer": true,
+      "electric": 50
     },
     "booking": {
-      "reservable": true
+      "reservable": true,
+      "platform": "operator",
+      "url": "https://fareharbor.com/embeds/book/monumentlakeresort/items/?flow=536885&full-items=yes",
+      "season": {
+        "opens": "05-21",
+        "closes": "09-05"
+      },
+      "note": "Booked per site on the operator's FareHarbor pages (RV sites, and a separate primitive-sites page). FareHarbor's 2027 calendar sells nights from May 21 to Sept 5 for the full, partial and primitive sites; nothing is bookable in October. Check-in noon (3 pm at some primitive spaces), check-out 10 am."
     },
     "provenance": {
       "hookups": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://themonumentlakeresort.com/ ('Each hook up has full water electric and sewer. 30 and 50 amp power is available depending on the site'; partial sites 'all new electric pedestals providing 20, 30 and 50 amp service throughout. Partial hook ups also include water') + FareHarbor item notes (full hookup: '50-30-20 Amp Electrical Service, Concrete Sewer Basins ... Water Hookup'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "booking": {
-        "source": "note prose",
-        "checked": "2026-10-12",
-        "method": "derived"
+        "source": "https://fareharbor.com/api/v1/companies/monumentlakeresort/items/292373/calendar/2027/05/ .. /2027/10/ (and items 292412, 292581, 429873: availabilities 2027-05-21 to 2027-09-05; none in 2026-10, 2026-11, 2027-04, 2027-10) + FareHarbor item notes ('Check In: 12PM, Check Out: 10AM'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       },
       "fees": {
-        "source": "https://fareharbor.com/embeds/book/monumentlakeresort/items/?flow=536885&full-items=yes ('Primitive Tent or RV Space From $47.70 (flow 537241); RV Partial Hookup Site From $53; RV Full Hookup Site From $58.30', read 2026-10-10)",
-        "checked": "2026-10-10"
+        "source": "https://fareharbor.com/embeds/book/monumentlakeresort/items/292581/availability/-14460923/book/ ('Primitive Tent or RV Space #1, Saturday, June 19, 2027 ... One Night Stay $47.70') + .../292412/availability/-14454370/book/ ('RV Partial Hookup Site #50, Tuesday, June 15, 2027 ... One Night Stay $53') + .../292373/availability/-14452859/book/ ('RV Full Hookup Site #1, Tuesday, June 15, 2027 ... One Night Stay $58.30 ... Seven Night Stay $408.10 ... One Month Stay $1,749') + FareHarbor availability fields ('Your lodging or camping reservation must have a daily or annual resort pass for the length of your stay'; 'Daily passes are $6 per vehicle per day. Annual passes are $45 per vehicle'; with trailer 'Daily passes are $12 per day'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "sites": {
+        "source": "https://fareharbor.com/api/v1/companies/monumentlakeresort/items/ (item names and headlines, e.g. 'RV Full Hookup Site #14 ... 50' Maximum', 'RV Partial Hookup Site #60 ... No Maximum', 'Primitive Tent or RV Space #63 | Pull Throw RV Site') + https://themonumentlakeresort.com/ (full hookups), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
+      },
+      "facilities": {
+        "source": "https://themonumentlakeresort.com/ ('Monument Lake Resort has a Convenient fill/ dump station on site'), read 2026-10-28",
+        "checked": "2026-10-28",
+        "method": "manual"
       }
     },
     "note_scan": {
@@ -969962,7 +970254,28 @@
       "nightly_low": 47.7,
       "nightly_high": 58.3,
       "currency": "USD",
-      "note": "Operator's FareHarbor booking, read 2026-10-10: primitive tent-or-RV space $47.70, partial hookup $53, full hookup $58.30 per night."
+      "note": "FareHarbor quotes for June 2027 (a Tuesday and a Saturday, same price): primitive tent-or-RV space $47.70, partial hookup $53, full hookup $58.30 a night; weekly and monthly stays also sold (full hookup $408.10 a week, $1,749 a month). Every camping or lodging reservation must also carry a resort pass for the length of the stay: $6 per vehicle per day ($12 with a trailer), or $45 a year per vehicle, picked up at the entry booth.",
+      "checked": "2027",
+      "entrance": {
+        "resident": 6,
+        "nonresident": 6,
+        "per": "vehicle_day",
+        "name": "resort pass"
+      }
+    },
+    "sites": {
+      "count": 124,
+      "max_rig_ft": 50,
+      "pull_through": true,
+      "note": "FareHarbor sells 14 full-hookup sites (25-50 ft, two at 50 ft), 26 partial-hookup sites (#50-59 25 ft, #60-75 'No Maximum', #72 a 25-ft trailer only), 34 primitive tent-or-RV spaces (#23 a 21-ft trailer max, #42 20 ft max, #63 a pull-through) and 50 tent-only spaces (no pop-ups). Operator: 'a few sites that can handle up to a 50 foot RV about half the sites can handle up to a 30 foot RV and the other half ... up to a 25 foot RV'."
+    },
+    "facilities": {
+      "dump": true
+    },
+    "verify_scan": {
+      "checked": "2026-10-28",
+      "sources": "https://themonumentlakeresort.com/ https://fareharbor.com/api/v1/companies/monumentlakeresort/items/ (item list, read 2026-10-28) https://fareharbor.com/embeds/book/monumentlakeresort/items/292373/availability/-14452859/book/ https://fareharbor.com/embeds/book/monumentlakeresort/items/292412/availability/-14454370/book/ https://fareharbor.com/embeds/book/monumentlakeresort/items/292581/availability/-14460923/book/",
+      "note": "Operator site + FareHarbor: confirmed $47.70 primitive tent-or-RV / $53 partial / $58.30 full (now June 2027 quotes), water+sewer. Added electric 50, 124 sites (74 take RVs), max 50 ft, pull-through, dump station, mandatory resort pass ($6/vehicle/day) as fees.entrance, FareHarbor booking url and booking.season 05-21..09-05 (2027 calendar). Note trimmed of prices. No operating-season statement on the operator's pages."
     }
   },
   {
