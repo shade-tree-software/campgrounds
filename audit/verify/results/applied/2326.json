@@ -1,0 +1,63 @@
+{
+  "id": 2326,
+  "checked": "2026-10-28",
+  "sources": [
+    "https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground",
+    "https://www.fs.usda.gov/r02/arp/conditions (Clear Creek Ranger District Campground Status table)",
+    "https://www.fs.usda.gov/r02/arp/offices",
+    "https://www.recreation.gov/api/camps/campgrounds/231857 and /rates",
+    "recreation.gov per-site catalog for 231857 (search/campsites and RIDB campsites with coordinates)",
+    "Esri World_Imagery around the site points"
+  ],
+  "groups": {
+    "sites": {
+      "values": {"count": 17, "max_rig_ft": 55, "pull_through": true, "note": "17 sites: 10 suitable for RVs and 7 tent-only (FS; recreation.gov says 11 and 7). Parking spurs run 20 to 55 ft (FS and recreation.gov). Per the catalog, nine RV sites take 25 ft or more (006, 007, 009-014, 018; 014 to 55 ft, 011 a 35-ft pull-through); 005 is 20 ft and 015-017 15 ft. The forest's status table gives a 20-ft maximum spur."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground ('There are 17 sites available. Ten sites are suitable for RV camping and seven sites are suitable for tents'; 'The parking length ranges from 20 to 55 feet') + recreation.gov catalog for 231857 (13 STANDARD/RV NONELECTRIC + 4 TENT ONLY + 008 MANAGEMENT; Max Vehicle Length 15-55; 011 Pull-Through), read 2026-10-28",
+      "method": "manual"
+    },
+    "hookups": {
+      "values": {"electric": 0, "water": false, "sewer": false},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground ('There are no electric/water/sewer site hook-ups at this campground') + recreation.gov 231857 notice ('No RV water connections are available'), read 2026-10-28",
+      "method": "manual"
+    },
+    "facilities": {
+      "values": {"vault_toilets": true, "potable_water": true, "note": "Hand pumps with potable water; trash service."},
+      "source": "https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground ('Vault toilet(s)'; 'Potable water is available at this site') + https://www.recreation.gov/api/camps/campgrounds/231857 ('vault toilets, hand pumps with potable water and trash service'), read 2026-10-28",
+      "method": "manual"
+    },
+    "season": {
+      "values": {"year_round": false, "opens": "06-05", "closes": "09-13"},
+      "source": "https://www.fs.usda.gov/r02/arp/conditions (Clear Creek Ranger District Campground Status: Echo Lake, Operating Season June 5 - Sept 13), read 2026-10-28",
+      "method": "manual"
+    },
+    "booking": {
+      "values": {
+        "reservable": true,
+        "platform": "recreation.gov",
+        "reserve_until": {"relative_to": "arrival", "offset_hours": -96},
+        "fcfs": "some_sites",
+        "min_stay": [{"nights": 2, "applies": "weekend"}, {"nights": 3, "applies": "holiday"}],
+        "max_stay_nights": 14,
+        "season": {"opens": "06-05", "closes": "09-12"},
+        "note": "Reservable on recreation.gov for the 2026 season June 5 - Sept 12 (2027: June 4 - Sept 11), closing 4 days before arrival; 'Limited sites available on a first-come, first-served basis.' 2-night weekend and 3-night holiday-weekend minimums (not marked soft); 14 nights in a rolling 60 days. A reserved site must be occupied within 26 hours or it goes first-come; no site swapping. Check-in 2 p.m., check-out noon; up to eight people a site."
+      },
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231857 (facility_rules minWeekendStay 2, minHolidayWeekendStay 3, maxStay 14 'Rolling 60 Days', reservationCutOff 4 days; notices quoted) + /rates (Peak Season 2026-06-05 to 2026-09-12, 2027-06-04 to 2027-09-11) + https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground ('A single site may hold up to eight people'), read 2026-10-28",
+      "method": "manual"
+    },
+    "fees": {
+      "values": {"nightly_low": 26, "nightly_high": 26, "currency": "USD", "checked": "2026", "note": "$26 a site (2026 and 2027), one vehicle included; each extra vehicle $8 a night and must fit on the spur."},
+      "source": "https://www.recreation.gov/api/camps/campgrounds/231857/rates (2026 and 2027 Peak Season RV/STANDARD NONELECTRIC 26) and notice ('Any additional vehicles will be charged $8.00 per vehicle per night') + https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground ('Single Site: $26 per night'), read 2026-10-28",
+      "method": "manual"
+    }
+  },
+  "note": "Clear Creek RD (Arapaho-Roosevelt NF), ~10,600 ft in the trees at the Hwy 103 / Mount Blue Sky Road junction; Echo Lake is about 500 m west across the road. Several trails leave from the campground. --Claude",
+  "summary": "FS page + ARP status table + recreation.gov 231857 + catalog: confirmed 17 sites, spurs 20-55 ft (max 55 kept), no hookups, $26 (2026/2027), reservable. Added vault toilets/potable water, season June 5 - Sept 13 (status table), booking.season 06-05..09-12, 4-day cutoff, 2-night weekend/3-night holiday minimums, 14-night max, some first-come sites, pull-through (011). Phone missing: Clear Creek RD 970-295-6600. Pin 128 m from the site centroid. Note trimmed.",
+  "flags": [
+    "CRITERIA (length conflict): the ARP Campground Status table gives Echo Lake 'Max Spur 20''. The campground page and recreation.gov both say 'The parking length ranges from 20 to 55 feet', and the per-site catalog has nine RV sites at 25-55 ft (006, 007, 009-014, 018). The 20-ft figure is likely the shortest spur, not the maximum; kept 55 on the FS page's range.",
+    "Missing phone: Clear Creek Ranger District Office, 970-295-6600 (https://www.fs.usda.gov/r02/arp/offices). recreation.gov instead lists 801-226-3564 and 'please call (530) 529-0578', apparently the concessionaire's.",
+    "Missing FS page in website: https://www.fs.usda.gov/r02/arp/recreation/echo-lake-campground (website holds only the recreation.gov page).",
+    "Waterfront (stored not waterfront): the site points are in conifer forest ~500 m east of Echo Lake's east shore, across the Hwy 103/Mount Blue Sky Road junction. Agrees with not waterfront.",
+    "Operator: recreation.gov's contact numbers ((530) 529-0578, 801-226-3564) point to a concessionaire; ownership left federal.",
+    "FS page header reads 'Site Closed' (2026-10-28): the ordinary end of the June 5 - Sept 13 season, not recorded as a status."
+  ]
+}

@@ -498,3 +498,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 2462 Dinner Station (CO, p3-175): stored not waterfront; rec.gov "The Taylor River can be accessed from within the campground"; ponderosa sites 001-013 ~20-60 m from the river. Possible riverview/riverfront.
 - 2380 Dearhamer (CO, p3-175): stored riverfront; sites 1-5 ~20-40 m from the Fryingpan behind cottonwoods (open apron unclear); 7-8 ~60 m from the drawdown-prone inlet arm.
 - 2513 Deer Creek (Bailey) (CO, p3-175): stored creekside not re-audited - dense canopy on imagery.
+- 2278 Elkhead Bears Ears (CO, p3-176): stored lakeview vs cpwshop Lakefront tags on 009, 010, 012, 014, 016 (north/west rim, ~15-40 m from the water on imagery; stored evidence said 40-70 m). Reservoir side of the dam, so the below-dam rule doesn't apply. Operator claim - gate; possible lakefront.
+- 13170 Elk Creek (Conejos) (CO, p3-176): stored riverfront, but the water beside it is Elk Creek, a small stream (creekside at most); only sites 01, 03, 10, 11 are ~35-55 m from it.
+- 2450 Elbert Creek (CO, p3-176): stored not waterfront; Halfmoon Creek 50-100 m north, no site points.
+- 2388 Elk Wallow (CO, p3-176): stored not waterfront; a stream ~40-60 m across willow meadow, no site points.
