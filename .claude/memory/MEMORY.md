@@ -104,6 +104,7 @@
 - [rec.gov calendar limits](reference_recgov_calendar_limits.md) — NYR is no information, ~120 days per run, FCFS not derivable, fetch-window and 6-month-horizon artifacts guarded, year-round never
 - [EKKO weight](user_ekko_weight.md) — ~9,500 lb empty, 11,000 lb GVWR; a 5-ton bridge limit excludes, 6+ tons passes
 - [EKKO height](user_ekko_height.md) — under 10.5 ft (AWH 2026-10-21); an 11-ft+ clearance passes (Harpers Ferry 815 kept)
+- [EKKO width](user_ekko_width.md) — ~7 ft 3 in body, ~8 ft 1 in with mirrors; an 8 ft 6 in bridge passes with mirrors folded (AWH 2026-10-28)
 - [EKKO is not 4WD](user_ekko_no_4wd.md) — an agency 4WD requirement OR recommendation drops a site unless AWH confirms 2WD access (Flagpole, Long Run, 10-21); AWD does not count
 - [Private-gap sources are enough](feedback_private_sources_standard.md) — AWH 2026-10-02: keep RV Life + Good Sam with the 4*/$$ screens; a private park on neither is a red flag
 - [Off-road parks out of scope](feedback_offroad_parks_out_of_scope.md) — off-road parks + OHV staging camps of any owner are out, general campgrounds with an OHV side stay (AWH 2026-10-02)
