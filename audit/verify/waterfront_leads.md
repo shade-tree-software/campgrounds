@@ -527,3 +527,12 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 14479 Monument Lake Resort (CO, p3-183): stored lakeview; the primitive sites are "Lakeside and Creekside" but the hookup sites sit below the dam above Cherry Creek (no lake value). Needs a site map to split the groups.
 - 2547 Mosca (CO, p3-183): stored not waterfront vs FS "located on the banks of Spring Creek Reservoir" (boat ramp in the campground); pin ~150 m south of the south shore west of the dam; winter-only imagery, no per-site points.
 - 2331 Narrows (CO, p3-183): stored riverfront; Upper RV sites 001-004 are ~40-50 m from the Poudre across a brushy riparian strip, closer at 004-005 - open-apron question.
+- 2299 Paonia State Park (Hawsapple & Spruce) (CO, p3-184): stored riverfront, but the water at the sites is the Muddy Creek inflow, ~10-20 m wide - creekside by size; the stored evidence names the North Fork Gunnison, which begins below the dam. cpwshop tags 006-009 Lakefront. Re-run the gate (likely creekside, or lakefront on 006-009 at full pool).
+- 2245 North Sterling (Inlet Grove & Chimney View) (CO, p3-184): stored lakeview; cpwshop tags 8 Inlet Grove sites Lakefront - re-audit up, both ways.
+- 13175 Oh Be Joyful (CO, p3-184): stored riverfront on the Slate River - re-audit (which RV sites, open apron).
+- 14475 One Mile (CO, p3-184): stored not waterfront vs a source's "banks of the Taylor River" - contrary claim, gate.
+- 2565 Ophir Creek (CO, p3-184): stored not waterfront; creekside possible under canopy.
+- 14471 Outpost Motel (CO, p3-184): stored not waterfront vs Campspot "directly on the banks of the Dolores River" + Waterfront tag; pads ~20-40 m back behind cottonwoods on imagery.
+- 2537 Park Creek (CO, p3-184): stored riverfront, but the South Fork is ~15-20 m wide here - creekside by size.
+- 2441 Parry Peak (CO, p3-184): stored not waterfront; south-spur pullouts ~10-30 m from Lake Creek (~10 m wide) - possible creekside.
+- 2334 Peaceful Valley (CO, p3-184): stored creekside; creek in a wooded gully, sites 1-4 ~25-40 m behind trees - creekside doubtful under the open-apron rule.
