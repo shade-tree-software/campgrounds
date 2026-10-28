@@ -516,3 +516,8 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13172 Lake Fork (Conejos) (CO, p3-180): stored riverfront, but the Conejos is ~15-20 m wide here (creekside by the size rule); sites 014-016 ~25-35 m across open grass.
 - 2458 Lake Irwin (CO, p3-180): stored lakefront; only RV site 004 (~45-50 m, open slope), maybe 003, could hold it; the rest read lakeview.
 - 2553 Lost Lake (Paonia RD) (CO, p3-180): stored lakeview; north-shore pull-outs ~15-30 m from the slough across open grass - lakefront if they are numbered sites (needs a site map).
+- 2445 Matchless (CO, p3-181): stored lakefront with NO waterfront_evidence; agencies say "eastern shore", but imagery shows the boat-ramp lot and a paved lot 60-110 m inland behind conifers above a 20-40 m drawdown beach. Needs a real audit.
+- 2414 May Queen (CO, p3-181): stored lakefront; rec.gov "on a level, open field along a creek"; nearest sites 55-75 m from the lake across road and day-use parking. Lakeview or creek value.
+- 2544 Lottis Creek (CO, p3-181): stored not waterfront vs rec.gov "on the shores of Lottis Creek" (creek runs through). Contrary claim - gate; possible creekside.
+- 2479 Mavreeso (CO, p3-181): stored riverfront, but the West Dolores is ~10-15 m wide (creek vocabulary); Loop B 01-04 sit 5-20 m above an open gravel bank - creekside.
+- 2523 Marshall Park (CO, p3-181): riverfront looks supported (east/south sites ~30-50 m across open meadow and a thin tree line) - confirm sites.
