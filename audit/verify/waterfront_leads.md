@@ -502,3 +502,7 @@ booking-engine tag alone decides nothing. Work these with the full waterfront pr
 - 13170 Elk Creek (Conejos) (CO, p3-176): stored riverfront, but the water beside it is Elk Creek, a small stream (creekside at most); only sites 01, 03, 10, 11 are ~35-55 m from it.
 - 2450 Elbert Creek (CO, p3-176): stored not waterfront; Halfmoon Creek 50-100 m north, no site points.
 - 2388 Elk Wallow (CO, p3-176): stored not waterfront; a stream ~40-60 m across willow meadow, no site points.
+- 2495 Florida (CO, p3-177): stored riverfront, but the Florida River is ~10-20 m wide here - creekside at most under the size rule.
+- 13589 Estes Park Campground at Mary's Lake (CO, p3-177): stored not waterfront; operator says sites "look over Mary's Lake", nearest sites ~50-80 m across Mary's Lake Rd. Possible lakeview.
+- 2486 Golden Horn (CO, p3-177): stored creekside; FS "Do not camp within 100 ft of any water source" and a 2025-08-21 review says the riverside spots are now blocked with wooden X's.
+- 2447 Goose Creek (CO, p3-177): stored not waterfront; FS "Goose Creek runs through the campground" (bank under canopy). Possible creekside.
